@@ -23,101 +23,121 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.formula.MolecularFormula;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
+ * Debugging implementation of {@link IMolecularFormula}.
+ *
  * @cdk.module datadebug
+ * @cdk.githash tag
  */
 public class DebugMolecularFormula extends MolecularFormula implements IMolecularFormula {
 
     private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugMolecularFormula.class);
 
-	public IMolecularFormula add(IMolecularFormula formula) {
+    /** {@inheritDoc}} */ @Override
+    public IMolecularFormula add(IMolecularFormula formula) {
 	    logger.debug("Adding formula: ", formula);
 	    return super.add(formula);
     }
 
-	public IMolecularFormula addIsotope(IIsotope isotope) {
+    /** {@inheritDoc}} */ @Override
+    public IMolecularFormula addIsotope(IIsotope isotope) {
 	    logger.debug("Adding isotope: ", isotope);
 	    return super.addIsotope(isotope);
     }
 
-	public IMolecularFormula addIsotope(IIsotope isotope, int count) {
+    /** {@inheritDoc}} */ @Override
+    public IMolecularFormula addIsotope(IIsotope isotope, int count) {
 		logger.debug("Adding 'count' isotopes: ", isotope);
 	    return super.addIsotope(isotope, count);
     }
 
-	public boolean contains(IIsotope isotope) {
+    /** {@inheritDoc}} */ @Override
+    public boolean contains(IIsotope isotope) {
 		logger.debug("Contains isotope?: ", isotope);
 	    return super.contains(isotope);
     }
 
-	public Integer getCharge() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getCharge() {
 		Integer charge = super.getCharge();
 		logger.debug("Getting charge: ", charge);
 	    return charge;
     }
 
-	public int getIsotopeCount(IIsotope isotope) {
+    /** {@inheritDoc}} */ @Override
+    public int getIsotopeCount(IIsotope isotope) {
 	    logger.debug("Getting isotope count for: ", isotope);
 	    return super.getIsotopeCount(isotope);
     }
 
-	public int getIsotopeCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getIsotopeCount() {
 		logger.debug("Getting isotope count: ", super.getIsotopeCount());
 	    return super.getIsotopeCount();
     }
 
-	public Map<Object, Object> getProperties() {
+    /** {@inheritDoc}} */ @Override
+    public Map<Object, Object> getProperties() {
 	    logger.debug("Getting properties...");
       return super.getProperties();
     }
 
-	public Object getProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public Object getProperty(Object description) {
 	    logger.debug("Getting property: " + description);
 	    return super.getProperty(description);
     }
 
-	public Iterable<IIsotope> isotopes() {
+    /** {@inheritDoc}} */ @Override
+    public Iterable<IIsotope> isotopes() {
 		logger.debug("Getting isotope iterator..");
 	    return super.isotopes();
     }
 
-	public void removeAllIsotopes() {
+    /** {@inheritDoc}} */ @Override
+    public void removeAllIsotopes() {
 	    logger.debug("Removing all isotopes...");
 	    super.removeAllIsotopes();
     }
 
-	public void removeIsotope(IIsotope isotope) {
+    /** {@inheritDoc}} */ @Override
+    public void removeIsotope(IIsotope isotope) {
 	    logger.debug("Removing this isotope: ", isotope);
 	    super.removeIsotope(isotope);
     }
 
-	public void removeProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public void removeProperty(Object description) {
 	    logger.debug("Removing property: " + description);
       super.removeProperty(description);
     }
 
-	public void setCharge(Integer charge) {
+    /** {@inheritDoc}} */ @Override
+    public void setCharge(Integer charge) {
 		logger.debug("Setting the charge to: ", charge);
 	    super.setCharge(charge);
     }
 
-	public void setProperties(Map<Object, Object> properties) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperties(Map<Object, Object> properties) {
 	    logger.debug("Setting new properties...");
 	    super.setProperties(properties);
     }
 
-	public void setProperty(Object description, Object property) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperty(Object description, Object property) {
 	    logger.debug("Setting new property: " + description + " -> " + property);
 	    super.setProperty(description, property);
     }
 
+    /** {@inheritDoc}} */ @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }

@@ -74,97 +74,116 @@ public class DebugBond extends Bond
         super(atoms, order);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());
 		return super.getElectronCount();
 	}
 
-	public void setElectronCount(Integer electronCount) {
+    /** {@inheritDoc}} */ @Override
+    public void setElectronCount(Integer electronCount) {
 		logger.debug("Setting electron count: ", electronCount);
 		super.setElectronCount(electronCount);
 	}
 
-	public void addListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
 
-	public int getListenerCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getListenerCount() {
 		logger.debug("Getting listener count: ", super.getListenerCount());
 		return super.getListenerCount();
 	}
 
-	public void removeListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
 
-	public void notifyChanged() {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged() {
 		logger.debug("Notifying changed");
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(IChemObjectChangeEvent evt) {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
 
-	public void setProperty(Object description, Object property) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperty(Object description, Object property) {
 		logger.debug("Setting property: ", description + "=" + property);
 		super.setProperty(description, property);
 	}
 
-	public void removeProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public void removeProperty(Object description) {
 		logger.debug("Removing property: ", description);
 		super.removeProperty(description);
 	}
 
-	public Object getProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public Object getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}
 
-	public Map<Object,Object> getProperties() {
+    /** {@inheritDoc}} */ @Override
+    public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
 
-	public String getID() {
+    /** {@inheritDoc}} */ @Override
+    public String getID() {
 		logger.debug("Getting ID: ", super.getID());
 		return super.getID();
 	}
 
-	public void setID(String identifier) {
+    /** {@inheritDoc}} */ @Override
+    public void setID(String identifier) {
 		logger.debug("Setting ID: ", identifier);
 		super.setID(identifier);
 	}
 
-	public void setFlag(int flag_type, boolean flag_value) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlag(int flag_type, boolean flag_value) {
 		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
 		super.setFlag(flag_type, flag_value);
 	}
 
-	public boolean getFlag(int flag_type) {
+    /** {@inheritDoc}} */ @Override
+    public boolean getFlag(int flag_type) {
 		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Map<Object,Object> properties) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}
 
-	public void setFlags(boolean[] flagsNew) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlags(boolean[] flagsNew) {
 		logger.debug("Setting flags:", flagsNew.length);
 		super.setFlags(flagsNew);
 	}
 
-	public boolean[] getFlags() {
+    /** {@inheritDoc}} */ @Override
+    public boolean[] getFlags() {
 		logger.debug("Getting flags:", super.getFlags().length);
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
+    /** {@inheritDoc}} */ @Override
+    public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -175,81 +194,97 @@ public class DebugBond extends Bond
         return clone;
 	}
 
+    /** {@inheritDoc}} */ @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
 
-	public Iterable<IAtom> atoms() {
+    /** {@inheritDoc}} */ @Override
+    public Iterable<IAtom> atoms() {
 		logger.debug("Getting atoms iterable");
 		return super.atoms();
 	}
 
-	public void setAtoms(IAtom[] atoms) {
+    /** {@inheritDoc}} */ @Override
+    public void setAtoms(IAtom[] atoms) {
 		logger.debug("Setting atoms: ", atoms.length);
 		super.setAtoms(atoms);
 	}
 
-	public int getAtomCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getAtomCount() {
 		logger.debug("Getting atom count: ", super.getAtomCount());
 		return super.getAtomCount();
 	}
 
-	public IAtom getAtom(int position) {
+    /** {@inheritDoc}} */ @Override
+    public IAtom getAtom(int position) {
 		logger.debug("Getting atom at position: ", position);
 		return super.getAtom(position);
 	}
 
-	public IAtom getConnectedAtom(IAtom atom) {
+    /** {@inheritDoc}} */ @Override
+    public IAtom getConnectedAtom(IAtom atom) {
 		logger.debug("Getting connected atom to atom: ", atom);
 		return super.getConnectedAtom(atom);
 	}
 
-	public boolean contains(IAtom atom) {
+    /** {@inheritDoc}} */ @Override
+    public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
 		return super.contains(atom);
 	}
 
-	public void setAtom(IAtom atom, int position) {
+    /** {@inheritDoc}} */ @Override
+    public void setAtom(IAtom atom, int position) {
 		logger.debug("Setting atom at position: ", atom);
 		super.setAtom(atom, position);
 	}
 
-	public Order getOrder() {
+    /** {@inheritDoc}} */ @Override
+    public Order getOrder() {
 		logger.debug("Getting order: ", super.getOrder());
 		return super.getOrder();
 	}
 
-	public void setOrder(Order order) {
+    /** {@inheritDoc}} */ @Override
+    public void setOrder(Order order) {
 		logger.debug("Setting order: ", order);
 		super.setOrder(order);
 	}
 
-	public IBond.Stereo getStereo() {
+    /** {@inheritDoc}} */ @Override
+    public IBond.Stereo getStereo() {
 		logger.debug("Getting stereo: ", super.getStereo());
 		return super.getStereo();
 	}
 
-	public void setStereo(IBond.Stereo stereo) {
+    /** {@inheritDoc}} */ @Override
+    public void setStereo(IBond.Stereo stereo) {
 		logger.debug("Setting stereo: ", stereo);
 		super.setStereo(stereo);
 	}
 
-	public Point2d get2DCenter() {
+    /** {@inheritDoc}} */ @Override
+    public Point2d get2DCenter() {
 		logger.debug("Getting 2d center: ", super.get2DCenter());
 		return super.get2DCenter();
 	}
 
-	public Point3d get3DCenter() {
+    /** {@inheritDoc}} */ @Override
+    public Point3d get3DCenter() {
 		logger.debug("Getting 3d center: ", super.get3DCenter());
 		return super.get3DCenter();
 	}
 
-	public boolean compare(Object object) {
+    /** {@inheritDoc}} */ @Override
+    public boolean compare(Object object) {
 		logger.debug("Comparing to object: ", object);
 		return super.compare(object);
 	}
 
-	public boolean isConnectedTo(IBond bond) {
+    /** {@inheritDoc}} */ @Override
+    public boolean isConnectedTo(IBond bond) {
 		logger.debug("Is connected to bond: ", bond);
 		return super.isConnectedTo(bond);
 	}

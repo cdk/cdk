@@ -39,71 +39,85 @@ public class DebugPDBStructure extends PDBStructure {
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
+    /** {@inheritDoc}} */ @Override
     public Character getEndChainID() {
     	logger.debug("Getting End Chain ID: ", super.getEndChainID());
 		return super.getEndChainID();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setEndChainID(Character endChainID) {
     	logger.debug("Setting End Chain ID: ", endChainID);
 		super.setEndChainID(endChainID);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Character getEndInsertionCode() {
     	logger.debug("Getting End Insertion Code: ", super.getEndInsertionCode());
 		return super.getEndInsertionCode();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setEndInsertionCode(Character endInsertionCode) {
     	logger.debug("Setting End Insertion Code: ", endInsertionCode);
 		super.setEndInsertionCode(endInsertionCode);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Integer getEndSequenceNumber() {
     	logger.debug("Getting End Sequence Number: ", super.getEndSequenceNumber());
 		return super.getEndSequenceNumber();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setEndSequenceNumber(Integer endSequenceNumber) {
     	logger.debug("Setting End Sequence Number: ", endSequenceNumber);
 		super.setEndSequenceNumber(endSequenceNumber);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Character getStartChainID() {
     	logger.debug("Getting Start Chain ID: ", super.getStartChainID());
 		return super.getStartChainID();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setStartChainID(Character startChainID) {
     	logger.debug("Setting Start Chain ID: ", startChainID);
 		super.setStartChainID(startChainID);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Character getStartInsertionCode() {
     	logger.debug("Getting Start Insertion Code: ", super.getStartInsertionCode());
 		return super.getStartInsertionCode();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setStartInsertionCode(Character startInsertionCode) {
     	logger.debug("Setting Star tInsertion Code: ", startInsertionCode);
 		super.setStartInsertionCode(startInsertionCode);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Integer getStartSequenceNumber() {
     	logger.debug("Getting Start Sequence Number: ", super.getStartSequenceNumber());
 		return super.getStartSequenceNumber();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setStartSequenceNumber(Integer startSequenceNumber) {
     	logger.debug("Setting Start Sequence Number: ", startSequenceNumber);
 		super.setStartSequenceNumber(startSequenceNumber);
     }
 
+    /** {@inheritDoc}} */ @Override
     public String getStructureType() {
     	logger.debug("Getting Structure Type: ", super.getStructureType());
 		return super.getStructureType();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setStructureType(String structureType) {
     	logger.debug("Setting Structure Type: ", structureType);
 		super.setStructureType(structureType);

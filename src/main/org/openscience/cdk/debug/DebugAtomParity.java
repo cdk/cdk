@@ -51,11 +51,13 @@ public class DebugAtomParity extends AtomParity
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomParity.class);
 
+    /** {@inheritDoc}} */ @Override
 	public IAtom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());
 		return super.getAtom();
 	}
 
+    /** {@inheritDoc}} */ @Override
 	public IAtom[] getSurroundingAtoms() {
 		logger.debug("Getting surrounding atoms: ", super.getSurroundingAtoms().length);
 		return super.getSurroundingAtoms();
@@ -88,7 +90,7 @@ public class DebugAtomParity extends AtomParity
 
     }
 
-
+    /** {@inheritDoc}} */ @Override
     public int getParity() {
 		logger.debug("Getting atom parity: ", super.getParity());
 		return super.getParity();

@@ -58,131 +58,157 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point3d=" + point3d);
 	}
 
-	public String getRecord() {
+    /** {@inheritDoc}} */ @Override
+    public String getRecord() {
 		logger.debug("Getting Record: ", super.getRecord());
 		return super.getRecord();
     }
 
-	public void setRecord(String newRecord) {
+    /** {@inheritDoc}} */ @Override
+    public void setRecord(String newRecord) {
 		logger.debug("Setting Record: ", newRecord);
 		super.setRecord(newRecord);
     }
 
-	public Double getTempFactor() {
+    /** {@inheritDoc}} */ @Override
+    public Double getTempFactor() {
 		logger.debug("Getting Temp Factor: ", super.getTempFactor());
 		return super.getTempFactor();
     }
 
-	public void setTempFactor(Double newTempFactor) {
+    /** {@inheritDoc}} */ @Override
+    public void setTempFactor(Double newTempFactor) {
 		logger.debug("Setting Temp Factor: ", newTempFactor);
 		super.setTempFactor(newTempFactor);
     }
 
-	public void setResName(String newResName) {
+    /** {@inheritDoc}} */ @Override
+    public void setResName(String newResName) {
 		logger.debug("Setting Res Name: ", newResName);
 		super.setResName(newResName);
     }
 
-	public String getResName() {
+    /** {@inheritDoc}} */ @Override
+    public String getResName() {
 		logger.debug("Getting Res Name: ", super.getResName());
 		return super.getResName();
     }
 
-	public void setICode(String newICode) {
+    /** {@inheritDoc}} */ @Override
+    public void setICode(String newICode) {
 		logger.debug("Setting I Code: ", newICode);
 		super.setICode(newICode);
     }
 
-	public String getICode() {
+    /** {@inheritDoc}} */ @Override
+    public String getICode() {
 		logger.debug("Getting I Code: ", super.getICode());
 		return super.getICode();
     }
 
-	public void setName(String newName) {
+    /** {@inheritDoc}} */ @Override
+    public void setName(String newName) {
 		logger.debug("Setting Name: ", newName);
 		super.setName(newName);
     }
 
-	public String getName() {
+    /** {@inheritDoc}} */ @Override
+    public String getName() {
 		logger.debug("Getting Name: ", super.getName());
 		return super.getName();
     }
 
-	public void setChainID(String newChainID) {
+    /** {@inheritDoc}} */ @Override
+    public void setChainID(String newChainID) {
 		logger.debug("Setting Chain ID: ", newChainID);
 		super.setChainID(newChainID);
     }
 
-	public String getChainID() {
+    /** {@inheritDoc}} */ @Override
+    public String getChainID() {
 		logger.debug("Getting Chain ID: ", super.getChainID());
 		return super.getChainID();
     }
 
-	public void setAltLoc(String newAltLoc) {
+    /** {@inheritDoc}} */ @Override
+    public void setAltLoc(String newAltLoc) {
 		logger.debug("Setting Alt Loc: ", newAltLoc);
 		super.setAltLoc(newAltLoc);
     }
 
-	public String getAltLoc() {
+    /** {@inheritDoc}} */ @Override
+    public String getAltLoc() {
 		logger.debug("Getting Alt Loc: ", super.getAltLoc());
 		return super.getAltLoc();
     }
 
-	public void setSegID(String newSegID) {
+    /** {@inheritDoc}} */ @Override
+    public void setSegID(String newSegID) {
 		logger.debug("Setting SegID: ", newSegID);
 		super.setSegID(newSegID);
     }
 
-	public String getSegID() {
+    /** {@inheritDoc}} */ @Override
+    public String getSegID() {
 		logger.debug("Getting Seg ID: ", super.getSegID());
 		return super.getSegID();
     }
 
-	public void setSerial(Integer newSerial) {
+    /** {@inheritDoc}} */ @Override
+    public void setSerial(Integer newSerial) {
 		logger.debug("Setting Serial: ", newSerial);
 		super.setSerial(newSerial);
     }
 
-	public Integer getSerial() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getSerial() {
 		logger.debug("Getting Serial: ", super.getSerial());
 		return super.getSerial();
     }
 
-	public void setResSeq(String newResSeq) {
+    /** {@inheritDoc}} */ @Override
+    public void setResSeq(String newResSeq) {
 		logger.debug("Setting Res Seq: ", newResSeq);
 		super.setResSeq(newResSeq);
     }
 
-	public String getResSeq() {
+    /** {@inheritDoc}} */ @Override
+    public String getResSeq() {
 		logger.debug("Getting Res Seq: ", super.getResSeq());
 		return super.getResSeq();
     }
     
+    /** {@inheritDoc}} */ @Override
     public void setOxt(Boolean newOxt) {
 		logger.debug("Setting Oxt: ", newOxt);
 		super.setOxt(newOxt);
     }
     
+    /** {@inheritDoc}} */ @Override
     public Boolean getOxt() {
 		logger.debug("Getting Oxt: ", super.getOxt());
 		return super.getOxt();
     }
     
+    /** {@inheritDoc}} */ @Override
     public void setHetAtom(Boolean newHetAtom) {
 		logger.debug("Setting Het Atom: ", newHetAtom);
 		super.setHetAtom(newHetAtom);
     }
     
+    /** {@inheritDoc}} */ @Override
     public Boolean getHetAtom() {
 		logger.debug("Getting Het Atom: ", super.getHetAtom());
 		return super.getHetAtom();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void setOccupancy(Double newOccupancy) {
 		logger.debug("Setting Occupancy: ", newOccupancy);
 		super.setOccupancy(newOccupancy);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Double getOccupancy() {
 		logger.debug("Getting Occupancy: ", super.getOccupancy());
 		return super.getOccupancy();

@@ -39,21 +39,25 @@ public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
+    /** {@inheritDoc}} */ @Override
 	public void setICode(String newICode) {
     	logger.debug("Setting I Code: ", newICode);
 		super.setICode(newICode);
     }
 	
+    /** {@inheritDoc}} */ @Override
     public String getICode() {
     	logger.debug("Getting I Code: ", super.getICode());
 		return super.getICode();
     }
     
+    /** {@inheritDoc}} */ @Override
     public void setChainID(String newChainID) {
     	logger.debug("Setting ChainID: ", newChainID);
 		super.setChainID(newChainID);
     }
     
+    /** {@inheritDoc}} */ @Override
     public String getChainID() {
     	logger.debug("Getting ChainID: ", super.getChainID());
 		return super.getChainID();

@@ -50,87 +50,104 @@ public class DebugMapping extends Mapping
 		super(objectOne, objectTwo);
 	}
 
-	public void addListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
 
-	public int getListenerCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getListenerCount() {
 		logger.debug("Getting listener count: ", super.getListenerCount());
 		return super.getListenerCount();
 	}
 
-	public void removeListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
 
-	public void notifyChanged() {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged() {
 		logger.debug("Notifying changed");
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(IChemObjectChangeEvent evt) {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
 
-	public void setProperty(Object description, Object property) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperty(Object description, Object property) {
 		logger.debug("Setting property: ", description + "=" + property);
 		super.setProperty(description, property);
 	}
 
-	public void removeProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public void removeProperty(Object description) {
 		logger.debug("Removing property: ", description);
 		super.removeProperty(description);
 	}
 
-	public Object getProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public Object getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}
 
-	public Map<Object,Object> getProperties() {
+    /** {@inheritDoc}} */ @Override
+    public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
 
-	public String getID() {
+    /** {@inheritDoc}} */ @Override
+    public String getID() {
 		logger.debug("Getting ID: ", super.getID());
 		return super.getID();
 	}
 
-	public void setID(String identifier) {
+    /** {@inheritDoc}} */ @Override
+    public void setID(String identifier) {
 		logger.debug("Setting ID: ", identifier);
 		super.setID(identifier);
 	}
 
-	public void setFlag(int flag_type, boolean flag_value) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlag(int flag_type, boolean flag_value) {
 		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
 		super.setFlag(flag_type, flag_value);
 	}
 
-	public boolean getFlag(int flag_type) {
+    /** {@inheritDoc}} */ @Override
+    public boolean getFlag(int flag_type) {
 		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Map<Object,Object> properties) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}
 
-	public void setFlags(boolean[] flagsNew) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlags(boolean[] flagsNew) {
 		logger.debug("Setting flags:", flagsNew.length);
 		super.setFlags(flagsNew);
 	}
 
-	public boolean[] getFlags() {
+    /** {@inheritDoc}} */ @Override
+    public boolean[] getFlags() {
 		logger.debug("Getting flags:", super.getFlags().length);
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
+    /** {@inheritDoc}} */ @Override
+    public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -141,15 +158,18 @@ public class DebugMapping extends Mapping
         return clone;
 	}
 
+    /** {@inheritDoc}} */ @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
     
+    /** {@inheritDoc}} */ @Override
     public IChemObject getChemObject(int pos) {
         logger.debug("Getting related ChemObject:", pos);
         return super.getChemObject(pos);
     }
 
+    /** {@inheritDoc}} */ @Override
     public Iterable<IChemObject> relatedChemObjects() {
     	logger.debug("Getting related ChemObjects");
     	return super.relatedChemObjects();

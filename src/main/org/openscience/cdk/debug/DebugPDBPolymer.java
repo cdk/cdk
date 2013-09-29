@@ -37,17 +37,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugPDBPolymer extends PDBPolymer  implements IBioPolymer {
 
-   
 	private static final long serialVersionUID = -8485559594520919850L;
 	
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 	
-	public Collection getStructures() {
+    /** {@inheritDoc}} */ @Override
+    public Collection<IPDBStructure> getStructures() {
     	logger.debug("Getting Structure: ", super.getStructures());
 		return super.getStructures();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void addStructure(IPDBStructure structure) {
     	logger.debug("Adding Structure: ", structure);
 		super.addStructure(structure);

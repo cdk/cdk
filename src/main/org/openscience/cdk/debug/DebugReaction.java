@@ -51,87 +51,104 @@ public class DebugReaction extends Reaction
     	super();
     }
 
+    /** {@inheritDoc}} */ @Override
     public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
 
-	public int getListenerCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getListenerCount() {
 		logger.debug("Getting listener count: ", super.getListenerCount());
 		return super.getListenerCount();
 	}
 
-	public void removeListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
 
-	public void notifyChanged() {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged() {
 		logger.debug("Notifying changed");
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(IChemObjectChangeEvent evt) {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
 
-	public void setProperty(Object description, Object property) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperty(Object description, Object property) {
 		logger.debug("Setting property: ", description + "=" + property);
 		super.setProperty(description, property);
 	}
 
-	public void removeProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public void removeProperty(Object description) {
 		logger.debug("Removing property: ", description);
 		super.removeProperty(description);
 	}
 
-	public Object getProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public Object getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}
 
-	public Map<Object,Object> getProperties() {
+    /** {@inheritDoc}} */ @Override
+    public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
 
-	public String getID() {
+    /** {@inheritDoc}} */ @Override
+    public String getID() {
 		logger.debug("Getting ID: ", super.getID());
 		return super.getID();
 	}
 
-	public void setID(String identifier) {
+    /** {@inheritDoc}} */ @Override
+    public void setID(String identifier) {
 		logger.debug("Setting ID: ", identifier);
 		super.setID(identifier);
 	}
 
-	public void setFlag(int flag_type, boolean flag_value) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlag(int flag_type, boolean flag_value) {
 		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
 		super.setFlag(flag_type, flag_value);
 	}
 
-	public boolean getFlag(int flag_type) {
+    /** {@inheritDoc}} */ @Override
+    public boolean getFlag(int flag_type) {
 		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Map<Object,Object> properties) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}
 
-	public void setFlags(boolean[] flagsNew) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlags(boolean[] flagsNew) {
 		logger.debug("Setting flags:", flagsNew.length);
 		super.setFlags(flagsNew);
 	}
 
-	public boolean[] getFlags() {
+    /** {@inheritDoc}} */ @Override
+    public boolean[] getFlags() {
 		logger.debug("Getting flags:", super.getFlags().length);
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
+    /** {@inheritDoc}} */ @Override
+    public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -142,116 +159,139 @@ public class DebugReaction extends Reaction
         return clone;
 	}
 
-	public IChemObjectBuilder getBuilder() {
+    /** {@inheritDoc}} */ @Override
+    public IChemObjectBuilder getBuilder() {
 		return DebugChemObjectBuilder.getInstance();
 	}
 
-	public int getReactantCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getReactantCount() {
 		logger.debug("Getting reactant count: ", super.getReactantCount());
 		return super.getReactantCount();
 	}
 
-	public int getProductCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getProductCount() {
 		logger.debug("Getting product count: ", super.getProductCount());
 		return super.getProductCount();
 	}
 
-	public IAtomContainerSet getReactants() {
+    /** {@inheritDoc}} */ @Override
+    public IAtomContainerSet getReactants() {
 		logger.debug("Getting reactants: ", super.getReactants());
 		return super.getReactants();
 	}
 
-	public void setReactants(IAtomContainerSet reactants) {
+    /** {@inheritDoc}} */ @Override
+    public void setReactants(IAtomContainerSet reactants) {
 		logger.debug("Setting reactants: ", reactants);
 		super.setReactants(reactants);
 	}
 
-	public IAtomContainerSet getProducts() {
+    /** {@inheritDoc}} */ @Override
+    public IAtomContainerSet getProducts() {
 		logger.debug("Getting products: ", super.getProducts());
 		return super.getProducts();
 	}
 
-	public void setProducts(IAtomContainerSet products) {
+    /** {@inheritDoc}} */ @Override
+    public void setProducts(IAtomContainerSet products) {
 		logger.debug("Setting products: ", products);
 		super.setProducts(products);
 	}
 
-	public IAtomContainerSet getAgents() {
+    /** {@inheritDoc}} */ @Override
+    public IAtomContainerSet getAgents() {
 		logger.debug("Getting agents: ", super.getAgents());
 		return super.getAgents();
 	}
 
-	public void addReactant(IAtomContainer reactant) {
+    /** {@inheritDoc}} */ @Override
+    public void addReactant(IAtomContainer reactant) {
 		logger.debug("Adding reactant: ", reactant);
 		super.addReactant(reactant);
 	}
 
-	public void addAgent(IAtomContainer agent) {
+    /** {@inheritDoc}} */ @Override
+    public void addAgent(IAtomContainer agent) {
 		logger.debug("Adding agent: ", agent);
 		super.addAgent(agent);
 	}
 
-	public void addReactant(IAtomContainer reactant, Double coefficient) {
+    /** {@inheritDoc}} */ @Override
+    public void addReactant(IAtomContainer reactant, Double coefficient) {
 		logger.debug("Adding reactant with coefficient: ", reactant, ""+coefficient);
 		super.addReactant(reactant, coefficient);
 	}
 
-	public void addProduct(IAtomContainer product) {
+    /** {@inheritDoc}} */ @Override
+    public void addProduct(IAtomContainer product) {
 		logger.debug("Adding product: ", product);
 		super.addProduct(product);
 	}
 
-	public void addProduct(IAtomContainer product, Double coefficient) {
+    /** {@inheritDoc}} */ @Override
+    public void addProduct(IAtomContainer product, Double coefficient) {
 		logger.debug("Adding product with coefficient: ", product, ""+coefficient);
 		super.addProduct(product, coefficient);
 	}
 
-	public Double getReactantCoefficient(IAtomContainer reactant) {
+    /** {@inheritDoc}} */ @Override
+    public Double getReactantCoefficient(IAtomContainer reactant) {
 		logger.debug("Setting reactant coefficient: ", reactant, ""+ super.getReactantCoefficient(reactant));
 		return super.getReactantCoefficient(reactant);
 	}
 
-	public Double getProductCoefficient(IAtomContainer product) {
+    /** {@inheritDoc}} */ @Override
+    public Double getProductCoefficient(IAtomContainer product) {
 		logger.debug("Setting product coefficient: ", product, ""+ super.getProductCoefficient(product));
 		return super.getProductCoefficient(product);
 	}
 
-	public boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient) {
+    /** {@inheritDoc}} */ @Override
+    public boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient) {
 		logger.debug("Setting reactant coefficient: ", reactant, ""+coefficient);
 		return super.setReactantCoefficient(reactant, coefficient);
 	}
 
-	public boolean setProductCoefficient(IAtomContainer product, Double coefficient) {
+    /** {@inheritDoc}} */ @Override
+    public boolean setProductCoefficient(IAtomContainer product, Double coefficient) {
 		logger.debug("Setting product coefficient: ", product, ""+coefficient);
 		return super.setProductCoefficient(product, coefficient);
 	}
 
-	public Double[] getReactantCoefficients() {
+    /** {@inheritDoc}} */ @Override
+    public Double[] getReactantCoefficients() {
 		logger.debug("Getting reactant coefficients: ", super.getReactantCoefficients().length);
 		return super.getReactantCoefficients();
 	}
 
-	public Double[] getProductCoefficients() {
+    /** {@inheritDoc}} */ @Override
+    public Double[] getProductCoefficients() {
 		logger.debug("Getting product coefficients: ", super.getProductCoefficients().length);
 		return super.getProductCoefficients();
 	}
 
-	public boolean setReactantCoefficients(Double[] coefficients) {
+    /** {@inheritDoc}} */ @Override
+    public boolean setReactantCoefficients(Double[] coefficients) {
 		logger.debug("Setting reactant coefficients: ", coefficients.length);
 		return super.setReactantCoefficients(coefficients);
 	}
 
-	public boolean setProductCoefficients(Double[] coefficients) {
+    /** {@inheritDoc}} */ @Override
+    public boolean setProductCoefficients(Double[] coefficients) {
 		logger.debug("Setting product coefficients: ", coefficients.length);
 		return super.setProductCoefficients(coefficients);
 	}
 
-	public void setDirection(IReaction.Direction direction) {
+    /** {@inheritDoc}} */ @Override
+    public void setDirection(IReaction.Direction direction) {
 		logger.debug("Setting direction: ", direction);
 		super.setDirection(direction);
 	}
 
-	public IReaction.Direction getDirection() {
+    /** {@inheritDoc}} */ @Override
+    public IReaction.Direction getDirection() {
 		logger.debug("Getting direction: ", super.getDirection());
 		return super.getDirection();
 	}

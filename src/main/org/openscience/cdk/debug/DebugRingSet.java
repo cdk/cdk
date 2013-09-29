@@ -47,27 +47,32 @@ public class DebugRingSet extends RingSet
 		super();
 	}
 	
-	public IRingSet getRings(IBond bond) {
+    /** {@inheritDoc}} */ @Override
+    public IRingSet getRings(IBond bond) {
 		logger.debug("Getting rings for bond: ", bond);
 		return super.getRings(bond);
 	}
 
-	public IRingSet getRings(IAtom atom) {
+    /** {@inheritDoc}} */ @Override
+    public IRingSet getRings(IAtom atom) {
 		logger.debug("Getting rings for atom: ", atom);
 		return super.getRings(atom);
 	}
 
-	public IRingSet getConnectedRings(IRing ring) {
+    /** {@inheritDoc}} */ @Override
+    public IRingSet getConnectedRings(IRing ring) {
 		logger.debug("Getting connected rings for ring: ", ring);
 		return super.getConnectedRings(ring);
 	}
 
-	public void add(IRingSet ringSet) {
+    /** {@inheritDoc}} */ @Override
+    public void add(IRingSet ringSet) {
 		logger.debug("Adding ring set: ", ringSet);
 		super.add(ringSet);
 	}
 
-	public boolean contains(IAtom atom) {
+    /** {@inheritDoc}} */ @Override
+    public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", super.contains(atom));
 		return super.contains(atom);
 	}

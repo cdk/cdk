@@ -23,14 +23,17 @@ package org.openscience.cdk.debug;
 import java.util.Iterator;
 
 import org.openscience.cdk.formula.MolecularFormulaSet;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
+ * Debugging implementation of {@link IMolecularFormulaSet}.
+ * 
  * @cdk.module datadebug
+ * @cdk.githash tag
  */
 public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMolecularFormulaSet {
 
@@ -45,56 +48,67 @@ public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMo
     	super(formula);
     }
     
-	public void add(IMolecularFormulaSet formulaSet) {
+    /** {@inheritDoc}} */ @Override
+    public void add(IMolecularFormulaSet formulaSet) {
 	    logger.debug("Adding formula set: ", formulaSet);
 	    super.add(formulaSet);
     }
 
-	public void addMolecularFormula(IMolecularFormula formula) {
+    /** {@inheritDoc}} */ @Override
+    public void addMolecularFormula(IMolecularFormula formula) {
 		logger.debug("Adding formula: ", formula);
 	    super.addMolecularFormula(formula);
     }
 
-	public boolean contains(IMolecularFormula formula) {
+    /** {@inheritDoc}} */ @Override
+    public boolean contains(IMolecularFormula formula) {
 		logger.debug("Contains formula?: ", formula);
 	    return super.contains(formula);
     }
 
-	public IMolecularFormula getMolecularFormula(int position) {
+    /** {@inheritDoc}} */ @Override
+    public IMolecularFormula getMolecularFormula(int position) {
 		logger.debug("Getting formula at: ", position);
 	    return super.getMolecularFormula(position);
     }
 
-	public Iterator<IMolecularFormula> iterator() {
+    /** {@inheritDoc}} */ @Override
+    public Iterator<IMolecularFormula> iterator() {
 		logger.debug("Getting molecular formula iterator...");
 	    return super.iterator();
     }
 
-	public Iterable<IMolecularFormula> molecularFormulas() {
+    /** {@inheritDoc}} */ @Override
+    public Iterable<IMolecularFormula> molecularFormulas() {
 		logger.debug("Getting molecular formula iterable...");
 	    return super.molecularFormulas();
     }
 
-	public void removeAllMolecularFormulas() {
+    /** {@inheritDoc}} */ @Override
+    public void removeAllMolecularFormulas() {
 	    logger.debug("Removing all formulas...");
 	    super.removeAllMolecularFormulas();
     }
 
-	public void removeMolecularFormula(IMolecularFormula formula) {
+    /** {@inheritDoc}} */ @Override
+    public void removeMolecularFormula(IMolecularFormula formula) {
 	    logger.debug("Removing this formula: ", formula);
 	    super.removeMolecularFormula(formula);
     }
 
-	public void removeMolecularFormula(int position) {
+    /** {@inheritDoc}} */ @Override
+    public void removeMolecularFormula(int position) {
 	    logger.debug("Removing the formula at position: ", position);
 	    super.removeMolecularFormula(position);
     }
 
-	public int size() {
+    /** {@inheritDoc}} */ @Override
+    public int size() {
 	    logger.debug("Getting the size of this adduct: " + super.size());
 	    return super.size();
     }
 
+    /** {@inheritDoc}} */ @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }

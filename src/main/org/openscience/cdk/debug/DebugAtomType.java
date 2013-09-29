@@ -64,107 +64,128 @@ public class DebugAtomType extends AtomType
 		logger.debug("Instantiated a DebugAtomType: element= ", element);
 	}
 
-	public Integer getAtomicNumber() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getAtomicNumber() {
 		logger.debug("Getting atomic number: ", super.getAtomicNumber());
 		return super.getAtomicNumber();
 	}
 
-	public void setAtomicNumber(Integer atomicNumber) {
+    /** {@inheritDoc}} */ @Override
+    public void setAtomicNumber(Integer atomicNumber) {
 		logger.debug("Setting atomic number: ", atomicNumber);
 		super.setAtomicNumber(atomicNumber);
 	}
 
-	public String getSymbol() {
+    /** {@inheritDoc}} */ @Override
+    public String getSymbol() {
 		logger.debug("Getting symbol: ", super.getSymbol());
 		return super.getSymbol();
 	}
 
-	public void setSymbol(String symbol) {
+    /** {@inheritDoc}} */ @Override
+    public void setSymbol(String symbol) {
 		logger.debug("Setting symbol: ", symbol);
 		super.setSymbol(symbol);
 	}
 
-	public void addListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
 		super.addListener(col);
 	}
 
-	public int getListenerCount() {
+    /** {@inheritDoc}} */ @Override
+    public int getListenerCount() {
 		logger.debug("Getting listener count: ", super.getListenerCount());
 		return super.getListenerCount();
 	}
 
-	public void removeListener(IChemObjectListener col) {
+    /** {@inheritDoc}} */ @Override
+    public void removeListener(IChemObjectListener col) {
 		logger.debug("Removing listener: ", col);
 		super.removeListener(col);
 	}
 
-	public void notifyChanged() {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged() {
 		logger.debug("Notifying changed");
 		super.notifyChanged();
 	}
 
-	public void notifyChanged(IChemObjectChangeEvent evt) {
+    /** {@inheritDoc}} */ @Override
+    public void notifyChanged(IChemObjectChangeEvent evt) {
 		logger.debug("Notifying changed event: ", evt);
 		super.notifyChanged(evt);
 	}
 
-	public void setProperty(Object description, Object property) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperty(Object description, Object property) {
 		logger.debug("Setting property: ", description + "=" + property);
 		super.setProperty(description, property);
 	}
 
-	public void removeProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public void removeProperty(Object description) {
 		logger.debug("Removing property: ", description);
 		super.removeProperty(description);
 	}
 
-	public Object getProperty(Object description) {
+    /** {@inheritDoc}} */ @Override
+    public Object getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}
 
-	public Map<Object,Object> getProperties() {
+    /** {@inheritDoc}} */ @Override
+    public Map<Object,Object> getProperties() {
 		logger.debug("Getting properties");
 		return super.getProperties();
 	}
 
-	public String getID() {
+    /** {@inheritDoc}} */ @Override
+    public String getID() {
 		logger.debug("Getting ID: ", super.getID());
 		return super.getID();
 	}
 
-	public void setID(String identifier) {
+    /** {@inheritDoc}} */ @Override
+    public void setID(String identifier) {
 		logger.debug("Setting ID: ", identifier);
 		super.setID(identifier);
 	}
 
-	public void setFlag(int flag_type, boolean flag_value) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlag(int flag_type, boolean flag_value) {
 		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
 		super.setFlag(flag_type, flag_value);
 	}
 
-	public boolean getFlag(int flag_type) {
+    /** {@inheritDoc}} */ @Override
+    public boolean getFlag(int flag_type) {
 		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
 		return super.getFlag(flag_type);
 	}
 
-	public void setProperties(Map<Object,Object> properties) {
+    /** {@inheritDoc}} */ @Override
+    public void setProperties(Map<Object,Object> properties) {
 		logger.debug("Setting properties: ", properties);
 		super.setProperties(properties);
 	}
 
-	public void setFlags(boolean[] flagsNew) {
+    /** {@inheritDoc}} */ @Override
+    public void setFlags(boolean[] flagsNew) {
 		logger.debug("Setting flags:", flagsNew.length);
 		super.setFlags(flagsNew);
 	}
 
-	public boolean[] getFlags() {
+    /** {@inheritDoc}} */ @Override
+    public boolean[] getFlags() {
 		logger.debug("Getting flags:", super.getFlags().length);
 		return super.getFlags();
 	}
 
-	public Object clone() throws CloneNotSupportedException {
+    /** {@inheritDoc}} */ @Override
+    public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -175,117 +196,140 @@ public class DebugAtomType extends AtomType
         return clone;
 	}
 
+    /** {@inheritDoc}} */ @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
 
-	public void setNaturalAbundance(Double naturalAbundance) {
+    /** {@inheritDoc}} */ @Override
+    public void setNaturalAbundance(Double naturalAbundance) {
 		logger.debug("Setting natural abundance: ", naturalAbundance);
 		super.setNaturalAbundance(naturalAbundance);
 	}
 
-	public void setExactMass(Double exactMass) {
+    /** {@inheritDoc}} */ @Override
+    public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
 		
 	}
 
-	public Double getNaturalAbundance() {
+    /** {@inheritDoc}} */ @Override
+    public Double getNaturalAbundance() {
 		logger.debug("Getting natural abundance: ", super.getNaturalAbundance());
 		return super.getNaturalAbundance();
 	}
 
-	public Double getExactMass() {
+    /** {@inheritDoc}} */ @Override
+    public Double getExactMass() {
 		logger.debug("Getting exact mass: ", super.getExactMass());
 		return super.getExactMass();
 	}
 
-	public Integer getMassNumber() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getMassNumber() {
 		logger.debug("Getting mass number: ", super.getMassNumber());
 		return super.getMassNumber();
 	}
 
-	public void setMassNumber(Integer massNumber) {
+    /** {@inheritDoc}} */ @Override
+    public void setMassNumber(Integer massNumber) {
 		logger.debug("Setting mass number: ", massNumber);
 		super.setMassNumber(massNumber);
 	}
 
-	public void setAtomTypeName(String identifier) {
+    /** {@inheritDoc}} */ @Override
+    public void setAtomTypeName(String identifier) {
 		logger.debug("Setting atom type name: ", identifier);
 		super.setAtomTypeName(identifier);
 	}
 
-	public void setMaxBondOrder(IBond.Order maxBondOrder) {
+    /** {@inheritDoc}} */ @Override
+    public void setMaxBondOrder(IBond.Order maxBondOrder) {
 		logger.debug("Setting max bond order: ", maxBondOrder);
 		super.setMaxBondOrder(maxBondOrder);
 	}
 
-	public void setBondOrderSum(Double bondOrderSum) {
+    /** {@inheritDoc}} */ @Override
+    public void setBondOrderSum(Double bondOrderSum) {
 		logger.debug("Setting bond order sum: ", bondOrderSum);
 		super.setBondOrderSum(bondOrderSum);
 	}
 
-	public String getAtomTypeName() {
+    /** {@inheritDoc}} */ @Override
+    public String getAtomTypeName() {
 		logger.debug("Getting atom type name: ", super.getAtomTypeName());
 		return super.getAtomTypeName();
 	}
 
-	public IBond.Order getMaxBondOrder() {
+    /** {@inheritDoc}} */ @Override
+    public IBond.Order getMaxBondOrder() {
 		logger.debug("Getting max bond order: ", super.getMaxBondOrder());
 		return super.getMaxBondOrder();
 	}
 
-	public Double getBondOrderSum() {
+    /** {@inheritDoc}} */ @Override
+    public Double getBondOrderSum() {
 		logger.debug("Getting bond order sum: ", super.getBondOrderSum());
 		return super.getBondOrderSum();
 	}
 
-	public void setFormalCharge(Integer charge) {
+    /** {@inheritDoc}} */ @Override
+    public void setFormalCharge(Integer charge) {
 		logger.debug("Setting formal charge: ", charge);
 		super.setFormalCharge(charge);
 	}
 
-	public Integer getFormalCharge() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getFormalCharge() {
 		logger.debug("Getting formal charge: ", super.getFormalCharge());
 		return super.getFormalCharge();
 	}
 
-	public void setFormalNeighbourCount(Integer count) {
+    /** {@inheritDoc}} */ @Override
+    public void setFormalNeighbourCount(Integer count) {
 		logger.debug("Setting forml neighbour count: ", count);
 		super.setFormalNeighbourCount(count);
 	}
 
-	public Integer getFormalNeighbourCount() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getFormalNeighbourCount() {
 		logger.debug("Getting formal neighbour count: ", super.getFormalNeighbourCount());
 		return super.getFormalNeighbourCount();
 	}
 
-	public void setHybridization(IAtomType.Hybridization hybridization) {
+    /** {@inheritDoc}} */ @Override
+    public void setHybridization(IAtomType.Hybridization hybridization) {
 		logger.debug("Setting hybridization: ", hybridization);
 		super.setHybridization(hybridization);
 	}
 
-	public IAtomType.Hybridization getHybridization() {
+    /** {@inheritDoc}} */ @Override
+    public IAtomType.Hybridization getHybridization() {
 		logger.debug("Getting hybridization: ", super.getHybridization());
 		return super.getHybridization();
 	}
 
-	public void setCovalentRadius(Double radius) {
+    /** {@inheritDoc}} */ @Override
+    public void setCovalentRadius(Double radius) {
 		logger.debug("Setting covalent radius: ", radius);
 		super.setCovalentRadius(radius);
 	}
 
-	public Double getCovalentRadius() {
+    /** {@inheritDoc}} */ @Override
+    public Double getCovalentRadius() {
 		logger.debug("Getting covalent radius: ", super.getCovalentRadius());
 		return super.getCovalentRadius();
 	}
 
-	public void setValency(Integer valency) {
+    /** {@inheritDoc}} */ @Override
+    public void setValency(Integer valency) {
 		logger.debug("Setting valency: ", valency);
 		super.setValency(valency);
 	}
 
-	public Integer getValency() {
+    /** {@inheritDoc}} */ @Override
+    public Integer getValency() {
 		logger.debug("Getting valency: ", super.getValency());
 		return super.getValency();
 	}
