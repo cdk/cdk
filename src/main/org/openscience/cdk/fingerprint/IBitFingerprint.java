@@ -40,6 +40,8 @@ public interface IBitFingerprint extends Serializable {
 	public int cardinality();
 	
 	/**
+	 * Returns the number of bits of this fingerprint.
+	 *
 	 * @return the size of the fingerprint.
 	 */
 	public long size();
@@ -52,6 +54,7 @@ public interface IBitFingerprint extends Serializable {
 	 * corresponding bit in the fingerprint argument also had the value 
 	 * <code>true</code>.
 	 * 
+	 * @param  fingerprint the fingerprint with which to perform the AND operation
 	 * @throws {@link IllegalArgumentException} if the two fingerprints are 
 	 * not of same size 
 	 */
@@ -65,6 +68,7 @@ public interface IBitFingerprint extends Serializable {
 	 * it either already had the value <code>true</code> or the corresponding 
 	 * bit in the bit set argument has the value <code>true</code>.
 	 * 
+	 * @param  fingerprint the fingerprint with which to perform the OR operation
 	 * @throws {@link IllegalArgumentException} if the two fingerprints are 
 	 * not of same size 
 	 */

@@ -103,6 +103,7 @@ public class AtomTypeHandler extends DefaultHandler {
         logger.info("DocType root SYSTEM: " + systemId);
     } */
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testStartDocument")
     public void startDocument() {
         atomTypes = new ArrayList<IAtomType>();
@@ -110,6 +111,7 @@ public class AtomTypeHandler extends DefaultHandler {
         atomType = null;
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {  //NOPMD
         logger.debug("END Element: ", raw);
@@ -184,6 +186,7 @@ public class AtomTypeHandler extends DefaultHandler {
         currentChars = "";
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testStartElement_String_String_String_Attributes")
     public void startElement(String uri, String local,       //NOPMD
                              String raw, Attributes atts) {
@@ -261,6 +264,7 @@ public class AtomTypeHandler extends DefaultHandler {
         }
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         logger.debug("character data");

@@ -34,16 +34,24 @@ import java.io.Serializable;
 public interface ICountFingerprint extends Serializable {
 
 	/**
+	 * Returns the number of bits of this fingerprint.
+	 *
 	 * @return the size of the fingerprint.
 	 */
 	public long size();
 	
 	/**
+	 * Returns the number of bins that are populated. This number is typically smaller
+	 * then the total number of bins.
+	 *
 	 * @return the number of populated bins
+	 * @see    #size()
 	 */
 	public int numOfPopulatedbins();
 	
 	/**
+	 * Returns the count value for the bin with the given index.
+	 *
 	 * @param index the index of the bin to return the number of hits for.
 	 * @return the count for the bin with given index.
 	 */

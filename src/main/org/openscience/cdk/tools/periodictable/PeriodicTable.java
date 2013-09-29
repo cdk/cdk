@@ -290,7 +290,7 @@ public class PeriodicTable {
         else return element.getPaulingEneg();
     }
 
-    /*
+    /**
      * Get the symbol for the specified atomic number.
      *
      * @param atomicNumber the atomic number of the element

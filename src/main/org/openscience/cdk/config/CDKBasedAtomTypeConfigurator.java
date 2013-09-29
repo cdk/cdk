@@ -57,6 +57,7 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public CDKBasedAtomTypeConfigurator() {
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;

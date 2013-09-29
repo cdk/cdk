@@ -50,6 +50,7 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public OWLBasedAtomTypeConfigurator() {
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;

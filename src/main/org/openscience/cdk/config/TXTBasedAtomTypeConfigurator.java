@@ -60,9 +60,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 	public TXTBasedAtomTypeConfigurator() {
 	}
 
-    /**
-     * Sets the file containing the config data.
-     */
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;

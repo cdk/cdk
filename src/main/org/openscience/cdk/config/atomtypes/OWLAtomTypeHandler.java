@@ -82,12 +82,14 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     // SAX Parser methods
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testStartDocument")
     public void startDocument() {
         atomTypes = new ArrayList<IAtomType>();
         currentAtomType = null;
     }
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testedByOtherClass")
     public void endElement(String uri, String local, String raw) {
         if (NS_ATOMTYPE.equals(uri)) {
@@ -119,6 +121,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     	}
 	}
 
+    /** {@inheritDoc}} */ @Override
 	@TestMethod("testedByOtherClass")
     public void startElement(String uri, String local,
                              String raw, Attributes atts) {
@@ -187,6 +190,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     	}
 	}
 
+    /** {@inheritDoc}} */ @Override
     @TestMethod("testedByOtherClass")
     public void characters(char chars[], int start, int length) {
         logger.debug("character data");

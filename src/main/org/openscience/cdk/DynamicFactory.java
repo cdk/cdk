@@ -1115,7 +1115,7 @@ public class DynamicFactory {
     public static interface InterfaceProvider {
 
         /**
-         * Access the interfaces for a given class
+         * Access the interfaces for a given class.
          *
          * @param c the class to access the interfaces of
          * @return a set of interfaces
@@ -1127,14 +1127,14 @@ public class DynamicFactory {
      * An interface that allows posterior modification of an instance after it
      * has been created.
      *
-     * @param <T>
+     * @param <T> instance instance to be modified
      */
     public static interface CreationModifier<T> {
         public void modify(T instance);
     }
 
     /**
-     * A Creator wrapper which can include a modifier
+     * A Creator wrapper which can include a modifier.
      *
      * @param <T> the type of object that will be created
      */
@@ -1202,7 +1202,7 @@ public class DynamicFactory {
                                                  InstantiationException;
 
         /**
-         * Access the implementation of this class
+         * Access the implementation of this class.
          *
          * @return the implementation class to be created
          */
@@ -1241,7 +1241,7 @@ public class DynamicFactory {
 
     /**
      * A simple creator that wraps the object parameters before invoking {@link
-     * #create(Object[])} on the proivded parent.
+     * #create(Object[])} on the provided parent.
      *
      * @param <T> the type of object that will be created
      */

@@ -45,10 +45,11 @@ import java.util.List;
 @TestClass("org.openscience.cdk.graph.PathToolsTest")
 public class PathTools {
 
+	/** Boolean with which debugging can be turned on. */
     public final static boolean DEBUG = false;
 
     /**
-     * Sums up the columns in a 2D int matrix
+     * Sums up the columns in a 2D int matrix.
      *
      * @param apsp The 2D int matrix
      * @return A 1D matrix containing the column sum of the 2D matrix
