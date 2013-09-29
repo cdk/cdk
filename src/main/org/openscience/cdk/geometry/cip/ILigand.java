@@ -67,6 +67,7 @@ public interface ILigand {
     /**
      * Returns a true if the atom has been visited before.
      *
+     * @param  atom the atom to be analyzed
      * @return true if the {@link IAtom} is the chiral atom, or part of the
      *              ligand
      */
