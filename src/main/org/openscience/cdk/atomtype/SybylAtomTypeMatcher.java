@@ -21,6 +21,7 @@ package org.openscience.cdk.atomtype;
 
 import java.io.InputStream;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
@@ -33,6 +34,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
@@ -120,10 +122,50 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
         else atom.setAtomTypeName(type.getAtomTypeName());
         String mappedType = mapCDKToSybylType(atom);
         if (mappedType == null) return null;
+        // special case: O.co2
+        if (("O.3".equals(mappedType) || "O.2".equals(mappedType))
+        	&& isCarbonyl(atomContainer, atom)) mappedType = "O.co2";
         return factory.getAtomType(mappedType);
     }
 
-    private String mapCDKToSybylType(IAtom atom) {
+    private boolean isCarbonyl(IAtomContainer atomContainer, IAtom atom) {
+    	List<IBond> neighbors = atomContainer.getConnectedBondsList(atom);
+    	if (neighbors.size() != 1) return false;
+    	IBond neighbor = neighbors.get(0);
+    	IAtom neighborAtom = neighbor.getConnectedAtom(atom);
+		if (neighborAtom.getSymbol().equals("C")) {
+			if (neighbor.getOrder() == IBond.Order.SINGLE) {
+    			if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.DOUBLE, "O") == 1) return true;
+			} else if (neighbor.getOrder() == IBond.Order.DOUBLE) {
+    			if (countAttachedBonds(atomContainer, neighborAtom, IBond.Order.SINGLE, "O") == 1) return true;
+			}
+    	}
+    	return false;
+	}
+
+    private int countAttachedBonds(IAtomContainer container, IAtom atom, IBond.Order order, String symbol) {
+    	List<IBond> neighbors = container.getConnectedBondsList(atom);
+    	int neighborcount = neighbors.size();
+    	int doubleBondedAtoms = 0;
+    	for (int i=neighborcount-1;i>=0;i--) {
+            IBond bond =  neighbors.get(i);
+    		if (bond.getOrder() == order) {
+    			if (bond.getAtomCount() == 2 && bond.contains(atom)) {
+    				if (symbol != null) {
+    					IAtom neighbor = bond.getConnectedAtom(atom);
+    					if (neighbor.getSymbol().equals(symbol)) {
+    						doubleBondedAtoms++;
+    					}
+    				} else {
+    					doubleBondedAtoms++;
+    				}
+    			}
+    		}
+    	}
+    	return doubleBondedAtoms;
+	}
+
+	private String mapCDKToSybylType(IAtom atom) {
         String typeName = atom.getAtomTypeName();
         if (typeName == null) return null;
         String mappedType = mapper.mapAtomType(typeName);

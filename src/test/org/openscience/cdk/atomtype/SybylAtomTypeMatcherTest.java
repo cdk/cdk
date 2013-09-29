@@ -359,6 +359,37 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
+    @Test public void testCarboxylicAcid() throws Exception {
+    	IAtomContainer mol = new AtomContainer();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("O");
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,CDKConstants.BONDORDER_DOUBLE);
+        mol.addBond(1,2,CDKConstants.BONDORDER_SINGLE);
+
+        String[] expectedTypes = {"O.co2", "C.2", "O.co2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
+    @Test public void testCarboxylate() throws Exception {
+    	IAtomContainer mol = new AtomContainer();
+        IAtom atom = new Atom("O");
+        IAtom atom2 = new Atom("C");
+        IAtom atom3 = new Atom("O");
+        atom3.setFormalCharge(-1);
+        mol.addAtom(atom);
+        mol.addAtom(atom2);
+        mol.addAtom(atom3);
+        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(1,2,IBond.Order.SINGLE);
+
+        String[] expectedTypes = {"O.co2", "C.2", "O.co2"};
+        assertAtomTypes(testedAtomTypes, expectedTypes, mol);
+    }
+
     @Test public void testMethylAmine() throws Exception {
     	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("N");
