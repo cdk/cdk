@@ -794,9 +794,15 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[O-][n+]1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        Assert.assertFalse(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
+        Assert.assertTrue(DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol));
         for (IAtom atom : mol.atoms()) {
-            if (atom.getSymbol().equals("O")) continue;
+            if (atom.getSymbol().equals("O")) {
+                Assert.assertFalse(
+                    "The oxygen should not be labeled as aromatic",
+                    atom.getFlag(CDKConstants.ISAROMATIC)
+                );
+                continue;
+            }
             Assert.assertTrue(atom.getSymbol() + " was not aromatic but should have been", atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
