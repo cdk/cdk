@@ -152,9 +152,9 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 		atasc.decideBondOrder(mol, true);
 		
 		Assert.assertTrue(mol.getAtom(1).getHybridization() == IAtomType.Hybridization.SP2);
-		
-		Assert.assertTrue(mol.getBond(0).getAtom(0).getSymbol().equals("C"));
-		Assert.assertTrue(mol.getBond(0).getAtom(1).getSymbol().equals("O"));
+
+		Assert.assertTrue(mol.getBond(0).getAtom(1).getSymbol().equals("C"));
+		Assert.assertTrue(mol.getBond(0).getAtom(0).getSymbol().equals("O"));
 		Assert.assertEquals(mol.getBond(0).getOrder(), IBond.Order.DOUBLE);
 		
 		Assert.assertTrue(mol.getBond(1).getAtom(0).getSymbol().equals("C"));
@@ -169,8 +169,8 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 		Assert.assertTrue(mol.getBond(3).getAtom(1).getSymbol().equals("C"));
 		Assert.assertEquals(mol.getBond(3).getOrder(), IBond.Order.SINGLE);
 		
-		Assert.assertTrue(mol.getBond(4).getAtom(0).getSymbol().equals("O"));
-		Assert.assertTrue(mol.getBond(4).getAtom(1).getSymbol().equals("C"));
+		Assert.assertTrue(mol.getBond(4).getAtom(1).getSymbol().equals("O"));
+		Assert.assertTrue(mol.getBond(4).getAtom(0).getSymbol().equals("C"));
 		Assert.assertEquals(mol.getBond(4).getOrder(), IBond.Order.DOUBLE);
 		
 		Assert.assertTrue(mol.getBond(5).getAtom(0).getSymbol().equals("C"));
@@ -185,7 +185,7 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
 		Assert.assertTrue(mol.getBond(7).getAtom(1).getSymbol().equals("C"));
 		Assert.assertEquals(mol.getBond(7).getOrder(), IBond.Order.SINGLE);
 	
-		Assert.assertEquals(mol.getBond(0).getAtom(0), mol.getBond(7).getAtom(1));
+		Assert.assertEquals(mol.getBond(0).getAtom(1), mol.getBond(7).getAtom(0));
 	}
 	
 	/**
