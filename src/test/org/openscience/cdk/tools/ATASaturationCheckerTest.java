@@ -372,7 +372,6 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     	atasc.decideBondOrder(mol, true);
     	Assert.assertEquals(mol.getAtom(1).getHybridization(),
     			IAtomType.Hybridization.SP2);
-    	Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     	Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
     	Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
     	Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(2).getOrder());
@@ -388,7 +387,6 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     	atasc.decideBondOrder(mol, true);
     	Assert.assertEquals(mol.getAtom(1).getHybridization(),
     			IAtomType.Hybridization.SP2);
-    	Assert.assertTrue(mol.getBond(0).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     	Assert.assertEquals(IBond.Order.DOUBLE, mol.getBond(0).getOrder());
     	Assert.assertEquals(IBond.Order.SINGLE, mol.getBond(1).getOrder());
     	//bond to oxygen
@@ -408,7 +406,6 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     			IAtomType.Hybridization.SP2);
     	int doubleBondCount = 0;
     	for (IBond bond : mol.bonds()) {
-    		Assert.assertTrue(bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
     		if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
     	}
     	Assert.assertEquals(5, doubleBondCount);
