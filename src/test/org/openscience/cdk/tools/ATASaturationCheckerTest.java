@@ -554,21 +554,7 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     	}
     	Assert.assertEquals(4, doubleBondCount);
 	}
-	
-	@Test
-	public void testIndoles1() throws CDKException {
-		IAtomContainer mol = sp.parseSmiles("c1ccc(C[C@@H](C(N[C@H](Cc2c3ccccc3[nH]c2)C(N[C@@H](CCCN)C(N[C@@H](Cc2ccc(cc2)O)C(N[C@H](C(N[C@@H]");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
-		atasc.decideBondOrder(mol, true);
-
-    	int doubleBondCount = 0;
-    	for (IBond bond : mol.bonds()) {
-    		if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
-    	}
-    	Assert.assertEquals(7, doubleBondCount);
-	}
-		
 	@Test
 	public void testIndoles2() throws CDKException {
 		IAtomContainer mol = sp.parseSmiles("Cl.Cl.Oc1ccc2CC3[C@](Cc4c(-c5ccccc5)c(C)[nH0](Cc5ccccc5)c4[C@@H]([C@](CCN3CC3CC3)(c2c1O1)2)1)2(O)");
