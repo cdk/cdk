@@ -1,3 +1,5 @@
 jgrapht-0.6.0.jar
 log4j*.jar
 vecmath*.jar
+beam-core-0.2-SNAPSHOT.jar
+beam-func-0.2-SNAPSHOT.jar

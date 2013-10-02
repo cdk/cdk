@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.ValencycheckCoverageTest;
+import org.openscience.cdk.tools.ATASaturationCheckerTest;
 import org.openscience.cdk.tools.CDKHydrogenAdderTest;
 import org.openscience.cdk.tools.CDKValencyCheckerTest;
 import org.openscience.cdk.tools.DeduceBondOrderTestFromExplicitHydrogens;
@@ -40,6 +41,7 @@ import org.openscience.cdk.tools.SaturationCheckerTest;
     SaturationCheckerTest.class,
     DeduceBondOrderTestFromExplicitHydrogens.class,
     CDKHydrogenAdderTest.class,
-    CDKValencyCheckerTest.class
+    CDKValencyCheckerTest.class,
+    ATASaturationCheckerTest.class
 })
 public class MvalencycheckTests {}
