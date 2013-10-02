@@ -481,52 +481,6 @@ public class ATASaturationCheckerTest extends org.openscience.cdk.CDKTestCase {
     	Assert.assertEquals(2, doubleBondCount);
 	}
 	
-	/* Note: this molecule should not be saturated as long at ALL 
-	 * atoms has hybridization SP2, or...?*/
-	@Test
-	public void mailCase2a() throws CDKException {
-		IAtomContainer mol = sp.parseSmiles("c1cc2ccccc2c1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		atasc.decideBondOrder(mol, true);
-
-		int doubleBondCount = 0;
-		for (IBond bond : mol.bonds()) {
-			if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
-		}
-
-		Assert.assertEquals(4, doubleBondCount);
-	}
-	
-	/* Note: this molecule should not be saturated as long at ALL 
-	 * atoms has hybridization SP2, or...?*/
-	@Test
-	public void mailCase2b() throws CDKException {
-		IAtomContainer mol = sp.parseSmiles("c1ccc2ccccc12");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		atasc.decideBondOrder(mol, true);
-
-    	int doubleBondCount = 0;
-    	for (IBond bond : mol.bonds()) {
-    		if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
-    	}
-    	Assert.assertEquals(4, doubleBondCount);
-	}
-	
-	/* Note: The small five carbon ring can't be saturated as log as 
-	 * ALL atoms has hybridization SP2*/
-	@Test
-	public void mailCase3a() throws CDKException {
-		IAtomContainer mol = sp.parseSmiles("c1ccccc1Oc1cccc1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		atasc.decideBondOrder(mol, true);
-
-    	int doubleBondCount = 0;
-    	for (IBond bond : mol.bonds()) {
-    		if (bond.getOrder() == IBond.Order.DOUBLE) doubleBondCount++;
-    	}
-    	Assert.assertEquals(5, doubleBondCount);
-	}
-	
 	@Test
 	public void mailCase3b() throws CDKException {
 		IAtomContainer mol = sp.parseSmiles("c1ccccc1Oc1cOcc1");
