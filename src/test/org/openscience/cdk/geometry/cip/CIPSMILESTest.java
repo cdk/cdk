@@ -186,9 +186,6 @@ public class CIPSMILESTest extends CDKTestCase {
         IStereoElement stereo = stereoElements.next();
         Assert.assertNotNull(stereo);
         Assert.assertTrue(stereo instanceof ITetrahedralChirality);
-        System.out.println(((ITetrahedralChirality) stereo).getStereo());
-        for (IAtom a : ((ITetrahedralChirality) stereo).getLigands())
-            System.out.println(mol.getAtomNumber(a));
         Assert.assertEquals(
                 CIP_CHIRALITY.R,
                 CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo));    
