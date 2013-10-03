@@ -28,6 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
@@ -173,6 +174,40 @@ public class CIPSMILESTest extends CDKTestCase {
             CIP_CHIRALITY.S,
             CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo)
         );
+    }
+
+    /**
+     * @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6+/s2
+     */
+    @Test public void r_sulfinyl() throws Exception {
+        IAtomContainer mol = smiles.parseSmiles("CCC[S@@](C)=O");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereo = stereoElements.next();
+        Assert.assertNotNull(stereo);
+        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
+        System.out.println(((ITetrahedralChirality) stereo).getStereo());
+        for (IAtom a : ((ITetrahedralChirality) stereo).getLigands())
+            System.out.println(mol.getAtomNumber(a));
+        Assert.assertEquals(
+                CIP_CHIRALITY.R,
+                CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo));    
+    }
+
+    /**
+     * @cdk.inchi InChI=1/C4H10OS/c1-3-4-6(2)5/h3-4H2,1-2H3/t6-/s2
+     */
+    @Test public void s_sulfinyl() throws Exception {
+        IAtomContainer mol = smiles.parseSmiles("CCC[S@](C)=O");
+        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        Assert.assertTrue(stereoElements.hasNext());
+        IStereoElement stereo = stereoElements.next();
+        Assert.assertNotNull(stereo);
+        Assert.assertTrue(stereo instanceof ITetrahedralChirality);
+        Assert.assertEquals(
+                CIP_CHIRALITY.S,
+                CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo)
+                           );   
     }
 }
 
