@@ -80,7 +80,12 @@ class LigancyFourChirality {
         this.ligands = new ILigand[ligandAtoms.length];
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         for (int i=0; i<ligandAtoms.length; i++) {
-            this.ligands[i] = new Ligand(container, visitedAtoms, chiralAtom, ligandAtoms[i]);
+            // ITetrahedralChirality stores a impl hydrogen as the central atom 
+            if (ligandAtoms[i] == chiralAtom) {
+                this.ligands[i] = new ImplicitHydrogenLigand(container, visitedAtoms, chiralAtom);
+            } else {
+                this.ligands[i] = new Ligand(container, visitedAtoms, chiralAtom, ligandAtoms[i]);
+            }
         }
         this.stereo = cdkChirality.getStereo();
     }
