@@ -1077,7 +1077,6 @@ public class AtomContainerManipulator {
         }
 		return count;
 	}    
-    }
 
     /**
      * Assigns {@link CDKConstants#SINGLE_OR_DOUBLE} flags to the bonds of
@@ -1117,5 +1116,6 @@ public class AtomContainerManipulator {
             ac.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
         }
         return ac;
+    }
 }
 
