@@ -345,12 +345,20 @@ final class BeamToCDK {
                                 atoms[v],
                                 toCDKBondOrder(edge));
 
-        if (edge.bond() == Bond.AROMATIC
-                || (edge.bond() == Bond.IMPLICIT 
-                && atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC))) {
-            bond.setFlag(ISAROMATIC, true);
-            atoms[u].setFlag(ISAROMATIC, true);
-            atoms[v].setFlag(ISAROMATIC, true);
+        // switch on the edge label to set aromatic flags
+        switch (edge.bond()) {
+            case AROMATIC:
+            case IMPLICIT_AROMATIC:
+            case DOUBLE_AROMATIC:
+                bond.setFlag(ISAROMATIC, true);
+                atoms[u].setFlag(ISAROMATIC, true);
+                atoms[v].setFlag(ISAROMATIC, true);
+            case IMPLICIT:
+                if (atoms[u].getFlag(ISAROMATIC) && atoms[v].getFlag(ISAROMATIC)) {
+                    bond.setFlag(ISAROMATIC, true);
+                    atoms[u].setFlag(ISAROMATIC, true);
+                    atoms[v].setFlag(ISAROMATIC, true);
+                }
         }
 
         return bond;
@@ -372,10 +380,12 @@ final class BeamToCDK {
             case SINGLE:
             case UP:
             case DOWN:
-            case IMPLICIT:  // single/aromatic - aromatic ~ single atm.
-            case AROMATIC:  // we will also set the flag
+            case IMPLICIT:              // single/aromatic - aromatic ~ single atm.
+            case IMPLICIT_AROMATIC:  
+            case AROMATIC:              // we will also set the flag
                 return IBond.Order.SINGLE;
             case DOUBLE:
+            case DOUBLE_AROMATIC:
                 return IBond.Order.DOUBLE;
             case TRIPLE:
                 return IBond.Order.TRIPLE;

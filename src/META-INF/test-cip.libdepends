@@ -1,4 +1,4 @@
 vecmath*.jar
 jgrapht-0.6.0.jar
-beam-core-0.2-SNAPSHOT.jar
-beam-func-0.2-SNAPSHOT.jar
+beam-core-0.3-SNAPSHOT.jar
+beam-func-0.3-SNAPSHOT.jar
