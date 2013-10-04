@@ -1,6 +1,6 @@
-[beam-core-0.1-SNAPSHOT.jar]
-Library=beam-core
-Version=0.2-SNAPSHOT
+[beam-func-0.3-SNAPSHOT.jar]
+Library=beam-func
+Version=0.3-SNAPSHOT
 Copyright=European Bioinformatics Institute
 License=BSD 2-Clause
 LicenseURL=http://opensource.org/licenses/BSD-2-Clause
