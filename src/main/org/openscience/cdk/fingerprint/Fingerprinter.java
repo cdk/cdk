@@ -97,6 +97,9 @@ import java.util.Set;
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterTest")
 public class Fingerprinter implements IFingerprinter {
 	
+    /** Throw an exception if too many paths (per atom) are generated. */
+    private final static int PATH_LIMIT = 150;
+    
 	/** The default length of created fingerprints. */
 	public final static int DEFAULT_SIZE = 1024;
 	/** The default search depth used to create the fingerprints. */
@@ -213,7 +216,7 @@ public class Fingerprinter implements IFingerprinter {
      * @param searchDepth The maximum path length desired
      * @return A Map of path strings, keyed on themselves
      */
-    protected int[] findPathes(IAtomContainer container, int searchDepth) {
+    protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException{
 
         List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
@@ -222,16 +225,18 @@ public class Fingerprinter implements IFingerprinter {
         
         for (IAtom startAtom : container.atoms()) {
                 List<List<IAtom>> p 
-                    = PathTools.getPathsOfLengthUpto(container, 
-                                                     startAtom, 
-                                                     searchDepth);
+                    = PathTools.getLimitedPathsOfLengthUpto(container, 
+                                                            startAtom, 
+                                                            searchDepth,
+                                                            PATH_LIMIT);
                 for (List<IAtom> path : p) {
                     StringBuffer sb = new StringBuffer();
                     IAtom x = path.get(0);
 
                     // TODO if we ever get more than 255 elements, this will 
                     // fail maybe we should use 0 for pseudo atoms and 
-                    // malformed symbols?
+                    // malformed symbols? - nope a char 16 bit, up to 65,535
+                    // is okay :)
                     if (x instanceof IPseudoAtom)
                         sb.append((char) PeriodicTable.getElementCount() + 1);
                     else {
