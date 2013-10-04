@@ -27,8 +27,13 @@ package org.openscience.cdk.graph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
-import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.ISingleElectron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -625,6 +630,51 @@ public class PathTools {
         return (allpaths);
     }
 
+    /**
+     * Get all the paths starting from an atom of length 0 up to the specified
+     * length. If the number of paths exceeds the the set {@code limit} then an
+     * exception is thrown. <p/> This method returns a set of paths. Each path
+     * is a <code>List</code> of atoms that make up the path (ie they are
+     * sequentially connected).
+     *
+     * @param atomContainer The molecule to consider
+     * @param start         The starting atom
+     * @param length        The maximum length of paths to look for
+     * @param limit         Limit the number of paths - thrown an exception if
+     *                      exceeded
+     * @return A  <code>List</code> containing the paths found
+     * @throws CDKException throw if the number of paths generated was larger
+     *                      than the limit.
+     */
+    @TestMethod("testGetLimitedPathsOfLengthUpto")
+    public static List<List<IAtom>> getLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length, int limit) throws CDKException {
+        List<IAtom> curPath = new ArrayList<IAtom>();
+        List<List<IAtom>> paths = new ArrayList<List<IAtom>>();
+        List<List<IAtom>> allpaths = new ArrayList<List<IAtom>>();
+        curPath.add(start);
+        paths.add(curPath);
+        allpaths.add(curPath);
+        for (int i = 0; i < length; i++) {
+            List<List<IAtom>> tmpList = new ArrayList<List<IAtom>>();
+            for (List<IAtom> path : paths) {
+                curPath = path;
+                IAtom lastVertex = curPath.get(curPath.size() - 1);
+                List<IAtom> neighbors = atomContainer.getConnectedAtomsList(lastVertex);
+                for (IAtom neighbor : neighbors) {
+                    List<IAtom> newPath = new ArrayList<IAtom>(curPath);
+                    if (newPath.contains(neighbor)) continue;
+                    newPath.add(neighbor);
+                    tmpList.add(newPath);
+                }
+            }
+            if (allpaths.size() + tmpList.size() > limit)
+                throw new CDKException("Too many paths generate. We're working making this faster but for now try generating paths with a smaller length");
 
+            paths.clear();
+            paths.addAll(tmpList);
+            allpaths.addAll(tmpList);
+        }
+        return (allpaths);
+    }
 }
 
