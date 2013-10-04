@@ -387,39 +387,6 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     }
 
     /**
-     * @cdk.bug 1208740
-     */
-    @Test public void testSFBug1208740() throws Exception {
-        String file1 = "data/mdl/bug1208740_1.mol";
-        String file2 = "data/mdl/bug1208740_2.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
-
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-        new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-        new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
-
-        List list = uiTester.getOverlaps(mol1, mol2);
-        Assert.assertEquals(5, list.size());
-        list = uiTester.getOverlaps(mol2, mol1);
-        Assert.assertEquals(5, list.size());
-
-        // now apply aromaticity detection, then 8 overlaps should be found
-        // see cdk-user@list.sf.net on 2005-06-16
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-//		CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-		Iterator<IAtom> atoms = mol1.atoms().iterator();
-		int i= 1;
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-		Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
-        list = uiTester.getOverlaps(mol1, mol2);
-        Assert.assertEquals(8, list.size());
-        list = uiTester.getOverlaps(mol2, mol1);
-        Assert.assertEquals(8, list.size());
-    }
-
-    /**
      * @cdk.bug 999330
      */
     @Test public void testSFBug999330() throws Exception {

@@ -261,66 +261,6 @@ public class CDKMCSTest extends CDKTestCase {
     }
 
     /**
-     * @cdk.bug 1208740
-     * @throws Exception
-     */
-    @Test
-    public void testSFBug1208740() throws Exception {
-        String file1 = "data/mdl/bug1208740_1.mol";
-        String file2 = "data/mdl/bug1208740_2.mol";
-        IAtomContainer mol1 = new AtomContainer();
-        IAtomContainer mol2 = new AtomContainer();
-
-        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(file1);
-        new MDLV2000Reader(ins1, Mode.STRICT).read(mol1);
-        InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
-        new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
-
-        List<IAtomContainer> list = CDKMCS.getOverlaps(mol1, mol2, true);
-        Assert.assertEquals(7, list.size());
-        list = CDKMCS.getOverlaps(mol2, mol1, true);
-        Assert.assertEquals(10, list.size());
-
-        // now apply aromaticity detection, then 8 overlaps should be found
-        // see cdk-user@list.sf.net on 2005-06-16
-//         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-//        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
-//        adder.addImplicitHydrogens(mol1);
-//        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-//
-//        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-//        adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
-//        adder.addImplicitHydrogens(mol2);
-//        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-
-        Iterator<IAtom> atoms = mol1.atoms().iterator();
-        int i = 1;
-        while (atoms.hasNext()) {
-            IAtom nextAtom = atoms.next();
-            System.out.println(i + ": " + nextAtom.getSymbol()
-                    + " T:" + nextAtom.getAtomTypeName()
-                    + " A:" + nextAtom.getFlag(CDKConstants.ISAROMATIC));
-            i++;
-        }
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
-        CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
-        adder.addImplicitHydrogens(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
-        adder.addImplicitHydrogens(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-
-        list = CDKMCS.getOverlaps(mol1, mol2, true);
-        //Fix me should return 8 hits
-        Assert.assertEquals(8, list.size());
-        list = CDKMCS.getOverlaps(mol2, mol1, true);
-        Assert.assertEquals(8, list.size());
-
-    }
-
-    /**
      * @cdk.bug 999330
      * @throws Exception
      */
