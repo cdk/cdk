@@ -487,16 +487,8 @@ public class SmilesParserTest extends CDKTestCase {
 	public void testAromaticSmiles() throws Exception {
 		String smiles = "c1ccccc1";
 		IAtomContainer molecule = sp.parseSmiles(smiles);
-        
-        // automatically kekulised but...
-		assertFalse(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-		assertFalse(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
-        
-        // adding aromaticity is easy
-        atomtype(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
-        assertTrue(molecule.getAtom(0).getFlag(CDKConstants.ISAROMATIC));
-        assertTrue(molecule.getBond(0).getFlag(CDKConstants.ISAROMATIC));
+        for (IBond bond : molecule.bonds())
+            assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
 	}
 	
 	
@@ -2433,15 +2425,15 @@ public class SmilesParserTest extends CDKTestCase {
 
     /**
      *  'C:1:C:C:C:C:C1' is actually cyclo-hexane not benzene. Beam will kekulise
-     *  this correctly.
+     *  this correctly and leave single bonds the aromaticity flags are preserved.
      */
     @Test public void cyclohexaneWithAromaticBonds() throws Exception {
         IAtomContainer molecule = sp.parseSmiles("C:1:C:C:C:C:C1");
-        Assert.assertEquals(0, countAromaticAtoms(molecule));
-        Assert.assertEquals(0, countAromaticBonds(molecule));
+        Assert.assertEquals(6, countAromaticAtoms(molecule));
+        Assert.assertEquals(6, countAromaticBonds(molecule));
         for (IBond bond : molecule.bonds()) {
             assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-            assertFalse(bond.getFlag(CDKConstants.ISAROMATIC));
+            assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
         }
     }
 
