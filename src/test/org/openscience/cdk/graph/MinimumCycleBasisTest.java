@@ -41,12 +41,12 @@ public class MinimumCycleBasisTest {
 
     @Test(expected = NullPointerException.class)
     public void noGraph() {
-        new RelevantCycles((int[][]) null);
+        new MinimumCycleBasis((int[][]) null);
     }
 
     @Test(expected = NullPointerException.class)
     public void noInitialCycles() {
-        new RelevantCycles((InitialCycles) null);
+        new MinimumCycleBasis((InitialCycles) null);
     }
 
     @Test public void paths_norbornane() {

@@ -90,7 +90,7 @@ public final class MinimumCycleBasis {
      */
     @TestMethod("noGraph")
     public MinimumCycleBasis(final int[][] graph) {
-        this(new InitialCycles(graph));
+        this(new InitialCycles(checkNotNull(graph, "No graph provided")));
     }
 
     /**
