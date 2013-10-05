@@ -158,7 +158,7 @@ public class IsomorphismTesterTest extends CDKTestCase
 
         //get the biphenyl as aromatic smiles
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        IAtomContainer biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1c2ccccc2");
+        IAtomContainer biphenyl_aromaticsmiles = parser.parseSmiles("c1ccccc1-c2ccccc2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_aromaticsmiles);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(biphenyl_aromaticsmiles.getBuilder());
         hAdder.addImplicitHydrogens(biphenyl_aromaticsmiles);
