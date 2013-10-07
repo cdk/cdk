@@ -120,8 +120,6 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     		"bug1014344-1.mol",
     		"bug1089770-1.mol",
     		"bug1089770-2.mol",
-    		"bug1208740_1.mol",
-    		"bug1208740_2.mol",
     		"bug1328739.mol",
     		"bug_1750968.mol",
     		"bug1772609.mol",
