@@ -91,19 +91,28 @@ import java.util.Vector;
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public class SmilesGenerator
 {
-	/**
-	 *  Create the SMILES generator.
-	 */
-	public SmilesGenerator() {}
 
-	/**
-	 *  Create the SMILES generator.
-	 *  @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
-	 */
-	public SmilesGenerator(boolean useAromaticityFlag) {
-		// ignore for now
-	}
-	
+    private final boolean isomeric;
+
+    /**
+     *  Create the SMILES generator.
+     */
+    public SmilesGenerator() {
+        this(false);
+    }
+
+    /**
+     *  Create the SMILES generator.
+     *  @param isomeric if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
+     */
+    private SmilesGenerator(boolean isomeric) {
+        this.isomeric = isomeric;
+    }
+    
+    public SmilesGenerator isomericGenerator() {
+        return new SmilesGenerator(true);
+    }
+
     /**
      *  Generate canonical SMILES from the <code>molecule</code>. This method
      *  canonicaly lables the molecule but does not perform any checks on the
@@ -117,184 +126,53 @@ public class SmilesGenerator
      * @return the SMILES representation of the molecule
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
-    public synchronized String createSMILES(IAtomContainer molecule)
-	{
+    public synchronized String createSMILES(IAtomContainer molecule) {
         return "";
-	}
+    }
 
-	/**
-	 *  Generate a SMILES for the given <code>Reaction</code>.
+    /**
+     *  Generate a SMILES for the given <code>Reaction</code>.
      * @param reaction the reaction in question
      * @return the SMILES representation of the reaction
      * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
      */
-	public synchronized String createSMILES(IReaction reaction) throws CDKException
-	{
-		StringBuffer reactionSMILES = new StringBuffer();
-		IAtomContainerSet reactants = reaction.getReactants();
-		for (int i = 0; i < reactants.getAtomContainerCount(); i++)
-		{
-			reactionSMILES.append(createSMILES(reactants.getAtomContainer(i)));
-			if (i + 1 < reactants.getAtomContainerCount())
-			{
-				reactionSMILES.append('.');
-			}
-		}
-		reactionSMILES.append('>');
-		IAtomContainerSet agents = reaction.getAgents();
-		for (int i = 0; i < agents.getAtomContainerCount(); i++)
-		{
-			reactionSMILES.append(createSMILES(agents.getAtomContainer(i)));
-			if (i + 1 < agents.getAtomContainerCount())
-			{
-				reactionSMILES.append('.');
-			}
-		}
-		reactionSMILES.append('>');
-		IAtomContainerSet products = reaction.getProducts();
-		for (int i = 0; i < products.getAtomContainerCount(); i++)
-		{
-			reactionSMILES.append(createSMILES(products.getAtomContainer(i)));
-			if (i + 1 < products.getAtomContainerCount())
-			{
-				reactionSMILES.append('.');
-			}
-		}
-		return reactionSMILES.toString();
-	}
-
-
-	/**
-	 *  Generate canonical and chiral SMILES from the <code>molecule</code>. This
-	 *  method canonicaly lables the molecule but dose not perform any checks on
-	 *  the chemical validity of the molecule. The chiral smiles is done like in
-	 *  the <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">
-	 *  daylight theory manual</a> . I did not find rules for canonical and chiral
-	 *  smiles, therefore there is no guarantee that the smiles complies to any
-	 *  externeal rules, but it is canonical compared to other smiles produced by
-	 *  this method. The method checks if there are 2D coordinates but does not
-	 *  check if coordinates make sense. Invalid stereo configurations are ignored;
-	 *  if there are no valid stereo configuration the smiles will be the same as
-	 *  the non-chiral one. Note that often stereo configurations are only complete
-	 *  and can be converted to a smiles if explicit Hs are given.
-	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
-	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
-	 *  assign the SAR.
-	 *
-	 * @param  molecule                 The molecule to evaluate.
-     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
-     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
-     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
-     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
-     *                                  possible, but note the coordinates might be arbitrary).
-	 * @exception  CDKException         At least one atom has no Point2D;
-	 *      coordinates are needed for creating the chiral smiles.
-	 * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-     * @return the SMILES representation of the molecule
-	 */
-    @TestMethod("testAlaSMILES,testSugarSMILES")
-    public synchronized String createChiralSMILES(IAtomContainer molecule, boolean[] doubleBondConfiguration) throws CDKException
-	{
-        return "";
-	}
-
+    public synchronized String createSMILES(IReaction reaction) throws CDKException {
+        StringBuffer reactionSMILES = new StringBuffer();
+        IAtomContainerSet reactants = reaction.getReactants();
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
+            reactionSMILES.append(createSMILES(reactants.getAtomContainer(i)));
+            if (i + 1 < reactants.getAtomContainerCount()) {
+                reactionSMILES.append('.');
+            }
+        }
+        reactionSMILES.append('>');
+        IAtomContainerSet agents = reaction.getAgents();
+        for (int i = 0; i < agents.getAtomContainerCount(); i++) {
+            reactionSMILES.append(createSMILES(agents.getAtomContainer(i)));
+            if (i + 1 < agents.getAtomContainerCount()) {
+                reactionSMILES.append('.');
+            }
+        }
+        reactionSMILES.append('>');
+        IAtomContainerSet products = reaction.getProducts();
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
+            reactionSMILES.append(createSMILES(products.getAtomContainer(i)));
+            if (i + 1 < products.getAtomContainerCount()) {
+                reactionSMILES.append('.');
+            }
+        }
+        return reactionSMILES.toString();
+    }
 
     /**
-     *  Generate canonical SMILES from the <code>molecule</code>. This method
-     *  canonicaly lables the molecule but dose not perform any checks on the
-     *  chemical validity of the molecule. This method also takes care of multiple
-     *  molecules.
-     *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this
-     *  SmilesGenerator in order to avoid recomputing it. Use setRings() to
-     *  assign the SAR.
-     *
-     * @param  molecule                 The molecule to evaluate.
-     * @param  chiral                   true=SMILES will be chiral, false=SMILES.
-     *      will not be chiral.
-     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
-     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
-     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
-     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
-     *                                  possible, but note the coordinates might be arbitrary).
-     * @exception CDKException          At least one atom has no Point2D;
-     *      coordinates are needed for crating the chiral smiles. This excpetion
-     *      can only be thrown if chiral smiles is created, ignore it if you want a
-     *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
-     *      exception).
-     * @see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-     * @return the SMILES representation of the molecule
-     */
-	public synchronized String createSMILES(IAtomContainer molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
-	{
-	   return "";
-	}
-
-
-	/**
-	 *  Generate canonical SMILES from the <code>molecule</code>. This method
-	 *  canonicaly lables the molecule but dose not perform any checks on the
-	 *  chemical validity of the molecule. Does not care about multiple molecules.
-	 *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this 
-	 *  SmilesGenerator in order to avoid recomputing it. Use setRings() to 
-	 *  assign the SAR.
-	 *
-	 * @param  molecule                 The molecule to evaluate.
-	 * @param  chiral                   true=SMILES will be chiral, false=SMILES
-	 *      will not be chiral.
-     * @param  doubleBondConfiguration  Should E/Z configurations be read at these positions? If the flag at position X is set to true, 
-     *                                  an E/Z configuration will be written from coordinates around bond X, if false, it will be ignored. 
-     *                                  If flag is true for a bond which does not constitute a valid double bond configuration, it will be 
-     *                                  ignored (meaning setting all to true will create E/Z indication will be pu in the smiles wherever 
-     *                                  possible, but note the coordinates might be arbitrary).
-	 * @exception  CDKException         At least one atom has no Point2D;
-	 *      coordinates are needed for creating the chiral smiles. This excpetion
-	 *      can only be thrown if chiral smiles is created, ignore it if you want a
-	 *      non-chiral smiles (createSMILES(AtomContainer) does not throw an
-	 *      exception).
-	 *@see                             org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-     * @return the SMILES representation of the molecule
-	 */
-	@TestMethod("testCreateSMILESWithoutCheckForMultipleMolecules_withDetectAromaticity,testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity")
-	public synchronized String createSMILESWithoutCheckForMultipleMolecules(IAtomContainer molecule, boolean chiral, boolean doubleBondConfiguration[]) throws CDKException
-	{
-        return "";
-	}
-
-	/**
-	 *  Returns the current AllRingsFinder instance
-	 *
-	 *@return   the current AllRingsFinder instance
-	 */
-	public AllRingsFinder getRingFinder()
-	{
-		return null;
-	}
-
-
-	/**
-	 *  Sets the current AllRingsFinder instance
-	 * Use this if you want to customize the timeout for 
-	 * the AllRingsFinder. AllRingsFinder is stopping its 
-	 * quest to find all rings after a default of 5 seconds.
-	 *
-	 * @see org.openscience.cdk.ringsearch.AllRingsFinder
-	 * 
-	 * @param  ringFinder  The value to assign ringFinder.
-	 */
-	public void setRingFinder(AllRingsFinder ringFinder)
-	{
-        // ignore for now
-	}
-
-	/**
      * Indicates whether output should be an aromatic SMILES.
      *
-	 * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
+     * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
      * true=SP2 or aromaticity trigger lower case
-	 */
+     */
     @TestMethod("testSFBug956923")
     public void setUseAromaticityFlag(boolean useAromaticityFlag) {
-		// ignore for now
-	}
+        // ignore for now
+    }
 
 }
