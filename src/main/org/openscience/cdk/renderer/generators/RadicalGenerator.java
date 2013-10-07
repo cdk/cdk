@@ -53,7 +53,7 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
     
     public RadicalGenerator() {}
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
@@ -96,7 +96,7 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         return group;
     }
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {

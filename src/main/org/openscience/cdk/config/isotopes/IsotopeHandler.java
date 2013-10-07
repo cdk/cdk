@@ -91,13 +91,13 @@ public class IsotopeHandler extends DefaultHandler {
 
     // SAX Parser methods
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testStartDocument")
     public void startDocument() {
         isotopes = new ArrayList<IIsotope>();
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
@@ -123,7 +123,7 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testEndElement_String_String_String")
     public void startElement(String uri, String local,
                              String raw, Attributes atts) {
@@ -146,7 +146,7 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         currentChars += new String(chars, start, length);

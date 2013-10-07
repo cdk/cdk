@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.elements.RectangleElement;
 @TestClass("org.openscience.cdk.renderer.generators.AtomContainerBoundsGeneratorTest")
 public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> {
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testEmptyContainer")
     public IRenderingElement generate( IAtomContainer container, RendererModel model) {
@@ -49,7 +49,7 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
         
     }
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {

@@ -88,7 +88,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     	return factories.get(mode).get(builder);
     }
     
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
@@ -100,7 +100,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
         return types;
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testFindMatchingAtomType_IAtomContainer_IAtom")
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         throws CDKException {

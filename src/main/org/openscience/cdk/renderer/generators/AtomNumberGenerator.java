@@ -56,7 +56,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 	/** Color to draw the atom numbers with. */
     public static class AtomNumberTextColor extends
         AbstractGeneratorParameter<Color> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Color getDefault() {
             return Color.BLACK;
         }
@@ -68,7 +68,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
      * this feature to be disabled temporarily. */
     public static class WillDrawAtomNumbers extends
                         AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -80,7 +80,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
      * the {@link ColorByType} boolean is true. */
     public static class AtomColorer extends
     AbstractGeneratorParameter<IAtomColorer> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public IAtomColorer getDefault() {
     		return new CDK2DAtomColors();
     	}
@@ -90,7 +90,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
     /** Boolean to indicate of the {@link AtomColorer} scheme will be used. */
     public static class ColorByType extends
     AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Boolean getDefault() {
     		return Boolean.FALSE;
     	}
@@ -103,14 +103,14 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
      */
     public static class Offset extends
     AbstractGeneratorParameter<Vector2d> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Vector2d getDefault() {
     		return new Vector2d();
     	}
     }
     private Offset offset = new Offset();
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
     @TestMethod("testEmptyContainer")
 	public IRenderingElement generate(IAtomContainer container, RendererModel model) {
@@ -141,7 +141,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 		return numbers;
 	}
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {

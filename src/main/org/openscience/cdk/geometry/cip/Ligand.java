@@ -85,13 +85,13 @@ public class Ligand implements ILigand {
         return ligandAtom;
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testVisitedTracking")
     public VisitedAtoms getVisitedAtoms() {
         return visitedAtoms;
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     @TestMethod("testVisitedTracking")
     public boolean isVisited(IAtom atom) {
         return visitedAtoms.isVisited(atom);

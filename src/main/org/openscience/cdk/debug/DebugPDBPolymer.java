@@ -42,13 +42,13 @@ public class DebugPDBPolymer extends PDBPolymer  implements IBioPolymer {
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 	
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     public Collection<IPDBStructure> getStructures() {
     	logger.debug("Getting Structure: ", super.getStructures());
 		return super.getStructures();
     }
 
-    /** {@inheritDoc}} */ @Override
+    /** {@inheritDoc} */ @Override
     public void addStructure(IPDBStructure structure) {
     	logger.debug("Adding Structure: ", structure);
 		super.addStructure(structure);

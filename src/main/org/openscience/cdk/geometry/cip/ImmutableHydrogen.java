@@ -49,7 +49,7 @@ class ImmutableHydrogen implements IAtom {
 
     private static final String SYMBOL = "H";
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testClone")
     public Object clone() {
         return this;
@@ -412,7 +412,7 @@ class ImmutableHydrogen implements IAtom {
     @TestMethod("testOverwriteStaticValues")
     public void setSymbol(String symbol) {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public void addListener(IChemObjectListener col) {}
 
@@ -449,7 +449,7 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     /**
      * This field is not used by this immutable hydrogen.
      *
@@ -460,13 +460,13 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public int getListenerCount() {
         return 0;
     }
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public boolean getNotification() {
         return false;
@@ -505,23 +505,23 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public void notifyChanged() {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public void notifyChanged(IChemObjectChangeEvent evt) {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public void removeListener(IChemObjectListener col) {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testSetIsSilent")
     public void removeProperty(Object description) {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testSetIsSilent")
     public void setFlag(int flagType, boolean flagValue) {}
 
@@ -543,7 +543,7 @@ class ImmutableHydrogen implements IAtom {
     @TestMethod("testSetIsSilent")
     public void setID(String identifier) {}
 
-    /** {@inheritDoc}} */
+    /** {@inheritDoc} */
     @TestMethod("testListenerStuff")
     public void setNotification(boolean bool) {}
 

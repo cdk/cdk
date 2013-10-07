@@ -49,7 +49,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 @TestClass("org.openscience.cdk.renderer.generators.ProductsBoxGeneratorTest")
 public class ProductsBoxGenerator implements IGenerator<IReaction> {
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
@@ -89,7 +89,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
         return diagram;
 	}
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {

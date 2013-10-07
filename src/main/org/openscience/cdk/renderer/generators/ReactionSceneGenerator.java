@@ -42,7 +42,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 	/** Boolean that indicates if boxes are drawn around the reaction. */
     public static class ShowReactionBoxes extends
     AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Boolean getDefault() {
     		return Boolean.TRUE;
     	}
@@ -53,7 +53,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     /** Double which indicates how wide the arrow head is in screen pixels. */
     public static class ArrowHeadWidth extends
     AbstractGeneratorParameter<Double> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Double getDefault() {
     		return 10.0;
     	}
@@ -61,14 +61,14 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     private IGeneratorParameter<Double> arrowHeadWidth =
     	new ArrowHeadWidth();
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
     @TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		return new ElementGroup();
 	}
 	
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {

@@ -43,7 +43,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 @TestClass("org.openscience.cdk.renderer.generators.ReactionArrowGeneratorTest")
 public class ReactionArrowGenerator implements IGenerator<IReaction> {
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
@@ -69,7 +69,7 @@ public class ReactionArrowGenerator implements IGenerator<IReaction> {
         );
 	}
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")
 	public List<IGeneratorParameter<?>> getParameters() {

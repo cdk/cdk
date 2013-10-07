@@ -52,7 +52,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 	/** Boolean that indicates if implicit hydrogens should be depicted. */
     public static class ShowImplicitHydrogens extends
     AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
     	public Boolean getDefault() {
     		return Boolean.TRUE;
     	}
@@ -64,7 +64,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
      * of element symbols. */
     public static class ShowAtomTypeNames extends
                         AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc}} */
+    	/** {@inheritDoc} */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -72,7 +72,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     private ShowAtomTypeNames showAtomTypeNames =
     	new ShowAtomTypeNames();
     
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
     @TestMethod("testSingleAtom")
     public IRenderingElement generate(
@@ -211,7 +211,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
     }
 
-	/** {@inheritDoc}} */
+	/** {@inheritDoc} */
 	@Override
     @TestMethod("getParametersTest")
     public List<IGeneratorParameter<?>> getParameters() {
