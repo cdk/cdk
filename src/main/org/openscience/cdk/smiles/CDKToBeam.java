@@ -173,7 +173,7 @@ final class CDKToBeam {
                 try {
                     IsotopeFactory isotopes = IsotopeFactory.getInstance(a.getBuilder());
                     IIsotope       isotope  = isotopes.getMajorIsotope(a.getSymbol());
-                    if (isotope != null && !isotope.getMassNumber().equals(massNumber))
+                    if (isotope == null || !isotope.getMassNumber().equals(massNumber))
                         ab.isotope(massNumber);        
                 } catch (IOException e) {
                     throw new InternalError("Isotope factory wouldn't load: " + e.getMessage());
