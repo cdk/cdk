@@ -84,8 +84,8 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertThat(frags, is(new String[]{"c1ccccc1",
-                                                 "Cc1ccccc1"}));
+        Assert.assertThat(frags, is(new String[]{"c1ccc(cc1)C",
+                                                 "c1ccccc1"}));
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
 
