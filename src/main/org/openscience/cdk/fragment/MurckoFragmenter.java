@@ -38,7 +38,9 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -329,6 +331,8 @@ public class MurckoFragmenter implements IFragmenter {
         List<String> smis = new ArrayList<String>();
         for (IAtomContainer mol : mols) {
             try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+                CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol);
                 smis.add(smigen.createSMILES(mol));
             } catch (CDKException e) {
