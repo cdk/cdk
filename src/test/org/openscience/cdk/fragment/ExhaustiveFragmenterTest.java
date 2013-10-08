@@ -27,6 +27,8 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import static org.hamcrest.CoreMatchers.is;
+
 /**
  * Test exhaustive fragmenter.
  *
@@ -63,10 +65,8 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     public void testEF3() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1CCCCC1CC");
         fragmenter.generateFragments(mol);
-        String[] frags = fragmenter.getFragments();
-        Assert.assertNotNull(frags);
-        Assert.assertEquals(1, frags.length);
-        Assert.assertTrue(frags[0].equals("C1CCCCC1"));
+        String[] frags = fragmenter.getFragments();                
+        Assert.assertThat(frags, is(new String[]{"C1CCCCC1"}));
     }
 
     @Test
@@ -75,8 +75,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertEquals(1, frags.length);
-        Assert.assertTrue(frags[0].equals("c1ccccc1"));
+        Assert.assertThat(frags, is(new String[]{"c1ccccc1"}));
     }
 
     @Test
@@ -85,10 +84,8 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertEquals(2,frags.length);
-        Assert.assertTrue(frags[1].equals("Cc1ccccc1"));
-        Assert.assertTrue(frags[0].equals("c1ccccc1"));
-
+        Assert.assertThat(frags, is(new String[]{"c1ccccc1",
+                                                 "Cc1ccccc1"}));
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
 
@@ -100,8 +97,7 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertEquals(1,frags.length);
-        Assert.assertTrue(frags[0].equals("c1ccccc1"));
+        Assert.assertThat(frags, is(new String[]{"c1ccccc1"}));
 
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(1, fragmenter.getFragmentsAsContainers().length);
