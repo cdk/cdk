@@ -488,7 +488,34 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 * 
 	 * @cdk.bug 956923
 	 */
-	@Test public void testSFBug956923() throws Exception
+	@Test public void testSFBug956923_aromatic() throws Exception
+	{
+		String smiles = "";
+		IAtomContainer molecule = new AtomContainer();
+        SmilesGenerator sg = new SmilesGenerator();
+        sg.setUseAromaticityFlag(true);
+		Atom sp2CarbonWithOneHydrogen = new Atom("C");
+		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
+		sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
+		molecule.addAtom(sp2CarbonWithOneHydrogen);
+		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+		molecule.addAtom((Atom) sp2CarbonWithOneHydrogen.clone());
+		molecule.addBond(0, 1, IBond.Order.SINGLE);
+		molecule.addBond(1, 2, IBond.Order.SINGLE);
+		molecule.addBond(2, 3, IBond.Order.SINGLE);
+		molecule.addBond(3, 4, IBond.Order.SINGLE);
+		molecule.addBond(4, 5, IBond.Order.SINGLE);
+		molecule.addBond(5, 0, IBond.Order.SINGLE);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+		smiles = sg.createSMILES(molecule);
+		Assert.assertEquals("c1ccccc1", smiles);	
+	}
+    
+    @Test public void testSFBug956923_nonAromatic() throws Exception
 	{
 		String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
@@ -510,10 +537,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		molecule.addBond(5, 0, IBond.Order.SINGLE);
 		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("c1ccccc1", smiles);
-		sg.setUseAromaticityFlag(false);
-		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("C1CCCCC1", smiles);
+		Assert.assertEquals("[CH]1[CH][CH][CH][CH][CH]1", smiles);
 	}
 
 
