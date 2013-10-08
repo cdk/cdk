@@ -809,11 +809,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	    Assert.assertNotNull(mol1);
 	    
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        addImplicitHydrogens(mol1);
 	    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol1));
 	    
 	    SmilesGenerator sg = new SmilesGenerator();
-      sg.setUseAromaticityFlag(true);
-        addImplicitHydrogens(mol1);
+        sg.setUseAromaticityFlag(true);
+        
 	    String mol1SMILES = sg.createSMILES(mol1);
 	    Assert.assertTrue(mol1SMILES.contains("nH"));
 	}
@@ -866,11 +867,11 @@ public class SmilesGeneratorTest extends CDKTestCase {
     @Test public void testIndole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        addImplicitHydrogens(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         SmilesGenerator smilesGenerator = new SmilesGenerator();
-        smilesGenerator.setUseAromaticityFlag(true);
-        addImplicitHydrogens(mol);
+        smilesGenerator.setUseAromaticityFlag(true);        
         String smiles = smilesGenerator.createSMILES(mol);
         Assert.assertTrue( smiles.indexOf("[nH]") >= 0);
     }
@@ -878,8 +879,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
     @Test public void testPyrrole() throws Exception {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
         addImplicitHydrogens(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);        
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
         String smiles = smilesGenerator.createSMILES(mol);
@@ -908,8 +909,8 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
         addImplicitHydrogens(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);        
 
         SmilesGenerator smilesGenerator = new SmilesGenerator();
         smilesGenerator.setUseAromaticityFlag(true);
