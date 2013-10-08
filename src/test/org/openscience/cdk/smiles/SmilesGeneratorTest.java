@@ -421,7 +421,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
                                                             IDoubleBondStereochemistry.Conformation.OPPOSITE));
         String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("F/C(=C/(F)S)S", smiles1);
+		Assert.assertEquals("F/C(=C(/F)S)S", smiles1);
 
         mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
@@ -433,7 +433,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("F/C(=C\\(F)S)S", smiles1);
+		Assert.assertEquals("F/C(=C(\\F)S)S", smiles1);
 
         // hydrogens in-lined from hydrogen adder/placer
         mol1.addAtom(new Atom("H", new Point2d(-0.71, -0.71)));
@@ -455,7 +455,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]S/C(F)=C/(F)S[H]", smiles1);
+		Assert.assertEquals("[H]S/C(F)=C(/F)S[H]", smiles1);
         
         mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
         mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
@@ -467,7 +467,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]S/C(F)=C\\(F)S[H]", smiles1);
+		Assert.assertEquals("[H]S/C(F)=C(\\F)S[H]", smiles1);
 	}
 
 
