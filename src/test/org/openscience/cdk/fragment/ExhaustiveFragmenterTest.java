@@ -110,17 +110,17 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertEquals(26,frags.length);
+        Assert.assertEquals(25,frags.length);
 
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
-        Assert.assertEquals(26, fragmenter.getFragmentsAsContainers().length);
+        Assert.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
 
         int n = 0;
         for (String s : frags) {
             if (s.equals("c1ccccc1")) {
                 n++;
-            } else if (s.equals("CCC3CCC(c1ccccc1)(CC2C=CC=C2)C3")) n++;
-            else if (s.equals("CC2CCC(C)(c1ccccc1)C2")) n++;
+            } else if (s.equals("c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3")) n++;
+            else if (s.equals("c1ccc(cc1)C2(C)CCC(C)C2")) n++;
         }
         Assert.assertEquals(3, n);
     }
