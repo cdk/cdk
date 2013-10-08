@@ -72,7 +72,7 @@ public class FragmentUtilsTest extends CDKTestCase {
             }
         }
         List<IAtomContainer> frags = FragmentUtils.splitMolecule(mol, splitBond);
-        SmilesGenerator sg = new SmilesGenerator(true);
+        SmilesGenerator sg = new SmilesGenerator();
         Set<String> uniqueFrags = new HashSet<String>();
         for (IAtomContainer frag : frags) {
             uniqueFrags.add(sg.createSMILES(frag));

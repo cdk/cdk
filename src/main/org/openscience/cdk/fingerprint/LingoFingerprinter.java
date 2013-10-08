@@ -25,6 +25,7 @@ package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -52,7 +53,7 @@ import java.util.regex.Pattern;
 public class LingoFingerprinter implements IFingerprinter {
 
     int q = 4;
-    SmilesGenerator gen = new SmilesGenerator(true);
+    SmilesGenerator gen = new SmilesGenerator();
     Pattern ringClosurePattern = Pattern.compile("[0-9]+");
 
     /**
@@ -78,6 +79,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     @TestMethod("testFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
+        DoubleBondAcceptingAromaticityDetector.detectAromaticity(atomContainer);
         String smiles = refactorSmiles(gen.createSMILES(atomContainer));
         Map<String, Integer> map = new HashMap<String,Integer>();
         for (int i = 0; i < smiles.length()-q+1; i++) {

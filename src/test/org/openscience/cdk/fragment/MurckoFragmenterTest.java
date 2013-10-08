@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -234,8 +235,9 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals(f.length, fc.length);
         Assert.assertEquals("c1ccc(cc1)Cc2ncccc2", f[0]);
 
-        SmilesGenerator sg = new SmilesGenerator(true);
+        SmilesGenerator sg = new SmilesGenerator();
         for (int i = 0; i < f.length; i++) {
+            DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
             String newsmiles = sg.createSMILES(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
@@ -246,7 +248,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
      */
     @Test
     public void testPirenperone_Bug3088164() throws Exception {
-        SmilesGenerator sg = new SmilesGenerator(true);
+        SmilesGenerator sg = new SmilesGenerator();
 
         IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -271,7 +273,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
      */
     @Test
     public void testIsomoltane_Bug3088164() throws Exception {
-        SmilesGenerator sg = new SmilesGenerator(true);
+        SmilesGenerator sg = new SmilesGenerator();
 
         IAtomContainer mol = smilesParser.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -285,6 +287,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals("c1ccccc1n2cccc2", f[0]);
 
         for (int i = 0; i < f.length; i++) {
+            DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
             String newsmiles = sg.createSMILES(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }

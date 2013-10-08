@@ -26,6 +26,7 @@ package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
@@ -80,7 +81,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
     public ExhaustiveFragmenter(int minFragSize) {
         this.minFragSize = minFragSize;
         fragMap = new HashMap<String, IAtomContainer>();
-        smilesGenerator = new SmilesGenerator(true);
+        smilesGenerator = new SmilesGenerator();
     }
 
     /**
@@ -138,6 +139,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             for (IAtomContainer frag : frags) {
                 if (frag.getBondCount() < 3) continue;
+                DoubleBondAcceptingAromaticityDetector.detectAromaticity(frag);
                 tmpSmiles = smilesGenerator.createSMILES(frag);
                 if (frag.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     tmp.add(frag);
