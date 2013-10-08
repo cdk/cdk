@@ -84,7 +84,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		addImplicitHydrogens(mol2);
 		String smiles2 = sg.createSMILES(mol2);        
 		Assert.assertNotNull(smiles2);
-		Assert.assertEquals("C1=C(C)C2CC(C1)C2(C)(C)", smiles2);
+		Assert.assertEquals("C1=C(C)C2CC(C1)C2(C)C", smiles2);
 	}
 
 
@@ -98,7 +98,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		fixCarbonHCount(mol1);
 		String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("C=1C=C2C=3C=CC(=CC=3(C=CC2=C(C=1)CC))CCC", smiles1);
+		Assert.assertEquals("C=1C=C2C=3C=CC(=CC=3C=CC2=C(C=1)CC)CCC", smiles1);
 	}
 
 	
@@ -733,7 +733,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String moleculeSmile = sg.createSMILES(mol1);
 		//logger.debug(filename + " -> " + moleculeSmile);
-		Assert.assertEquals(moleculeSmile, "C12(=C(CCC1)CCCC2)");
+		Assert.assertEquals(moleculeSmile, "C12=C(CCC1)CCCC2");
 	}
 
 	/**
