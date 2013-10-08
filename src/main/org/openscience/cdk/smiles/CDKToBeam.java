@@ -28,10 +28,12 @@ import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import uk.ac.ebi.beam.Atom;
@@ -42,6 +44,7 @@ import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.GraphBuilder;
 
+import java.io.IOException;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -165,8 +168,17 @@ final class CDKToBeam {
         // use the mass number to specify isotope?
         if (isomeric) {
             Integer massNumber = a.getMassNumber();
-            if (massNumber != null)
-                ab.isotope(massNumber);
+            if (massNumber != null) {
+                // XXX: likely causing some overhead but okay for now
+                try {
+                    IsotopeFactory isotopes = IsotopeFactory.getInstance(a.getBuilder());
+                    IIsotope       isotope  = isotopes.getMajorIsotope(a.getSymbol());
+                    if (isotope != null && !isotope.getMassNumber().equals(massNumber))
+                        ab.isotope(massNumber);        
+                } catch (IOException e) {
+                    throw new InternalError("Isotope factory wouldn't load: " + e.getMessage());
+                }
+            }
         }
 
         // could also add atom class from property (overhead of ChemObject

@@ -152,6 +152,14 @@ public class CDKToBeamTest {
         assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
                    is(13));
     }
+    
+    @Test public void defaultIsotope() throws Exception {
+        IAtom a = new Atom("C");
+        a.setImplicitHydrogenCount(0);
+        a.setMassNumber(12);
+        assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
+                   is(-1));
+    }
 
     @SuppressWarnings("unchecked")
     @Test(expected = IllegalArgumentException.class)
