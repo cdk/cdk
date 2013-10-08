@@ -34,8 +34,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,7 +121,10 @@ public class ExhaustiveFragmenter implements IFragmenter {
             List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
             // make sure we don't add the same fragment twice
             for (IAtomContainer partContainer : parts) {
-                tmpSmiles = smilesGenerator.createSMILES(partContainer);;
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
+                CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
+                DoubleBondAcceptingAromaticityDetector.detectAromaticity(partContainer);
+                tmpSmiles = smilesGenerator.createSMILES(partContainer);
                 if (partContainer.getAtomCount() >= minFragSize &&
                         !fragMap.containsKey(tmpSmiles)) {
                     fragments.add(partContainer);
@@ -139,6 +144,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             for (IAtomContainer frag : frags) {
                 if (frag.getBondCount() < 3) continue;
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
+                CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(frag);
                 tmpSmiles = smilesGenerator.createSMILES(frag);
                 if (frag.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
