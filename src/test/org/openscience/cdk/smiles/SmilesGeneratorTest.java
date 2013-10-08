@@ -481,7 +481,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
 		fixCarbonHCount(molecule);
 		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("C[13C]", smiles);
+		Assert.assertEquals("C[13CH3]", smiles);
 	}
 
 	/**
