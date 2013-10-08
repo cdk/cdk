@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.Arrays;
 
 import javax.vecmath.Point2d;
 
@@ -54,12 +55,15 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.io.CMLWriter;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -1075,5 +1079,33 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smileswitharomaticity = sg.createSMILES(benzene);
         Assert.assertEquals("c1ccccc1", smileswitharomaticity);
     }
+    
+    static ITetrahedralChirality anticlockwise(IAtomContainer container, 
+                                       int central, int a1, int a2, int a3, int a4) {
+        return new TetrahedralChirality(container.getAtom(central),
+                                        new IAtom[]{
+                                                container.getAtom(a1),
+                                                container.getAtom(a2),
+                                                container.getAtom(a3),
+                                                container.getAtom(a4)                                                
+                                        },
+                                        ITetrahedralChirality.Stereo.ANTI_CLOCKWISE);    
+    }
+    
+    static ITetrahedralChirality clockwise(IAtomContainer container, 
+                                       int central, int a1, int a2, int a3, int a4) {
+        return new TetrahedralChirality(container.getAtom(central),
+                                        new IAtom[]{
+                                                container.getAtom(a1),
+                                                container.getAtom(a2),
+                                                container.getAtom(a3),
+                                                container.getAtom(a4)                                                
+                                        },
+                                        ITetrahedralChirality.Stereo.CLOCKWISE);    
+    }
+    
+    static void define(IAtomContainer container, IStereoElement ... elements) {
+        container.setStereoElements(Arrays.<IStereoElement>asList(elements));
+    }      
 }
 
