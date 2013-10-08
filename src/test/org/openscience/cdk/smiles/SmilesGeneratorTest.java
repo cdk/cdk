@@ -448,7 +448,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 */
 	@Test public void testBug791091()
 	{
-		String smiles = "";
+        String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
 		molecule.addAtom(new Atom("C"));
@@ -463,7 +463,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(4, 3, IBond.Order.SINGLE);
 		fixCarbonHCount(molecule);
 		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("N1(C)CCC1", smiles);
+        Assert.assertEquals("N1(C)CCC1", smiles);
 	}
 
 	/**
@@ -1040,7 +1040,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator();
         String smileswithoutaromaticity = sg.createSMILES(benzene);
-        Assert.assertEquals("C=1C=CC=CC=1", smileswithoutaromaticity);
+        Assert.assertEquals("C=1C=CC=CC1", smileswithoutaromaticity);
     }
 
     @Test public void testCreateSMILESWithoutCheckForMultipleMolecules_withoutDetectAromaticity() throws Exception {
