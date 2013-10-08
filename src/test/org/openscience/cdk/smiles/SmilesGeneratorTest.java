@@ -614,7 +614,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addAtom(atom);
         addImplicitHydrogens(molecule);
 		smiles = sg.createSMILES(molecule);
-		Assert.assertEquals("[*]", smiles);
+		Assert.assertEquals("*", smiles);
 	}
 
 
@@ -640,7 +640,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		SmilesGenerator sg = new SmilesGenerator();
 		String smiles = sg.createSMILES(reaction);
 		//logger.debug("Generated SMILES: " + smiles);
-		Assert.assertEquals("C>[*]>[Au]", smiles);
+		Assert.assertEquals("C>*>[Au]", smiles);
 	}
 
 
