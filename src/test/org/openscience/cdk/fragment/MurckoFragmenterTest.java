@@ -131,12 +131,12 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         List<String> trueFrameworks = new ArrayList<String>();
         trueFrameworks.add("c1ccc(cc1)C2(CCCC2)CC3C=CC=C3");
-        trueFrameworks.add("c1ccc(cc1)CCC4CCC(c2ccccc2)(CC3C=CC=C3)C4");
-        trueFrameworks.add("C=1C=CC(C=1)CC2CCCC2");
-        trueFrameworks.add("C1CCC(C1)CCc2ccccc2");
+        trueFrameworks.add("c1ccc(cc1)CCC2CCC(c3ccccc3)(CC4C=CC=C4)C2");
+        trueFrameworks.add("C=1C=CC(C1)CC2CCCC2");
+        trueFrameworks.add("c1ccc(cc1)CCC2CCCC2");
         trueFrameworks.add("c1ccc(cc1)C2CCCC2");
-        trueFrameworks.add("c1ccc(cc1)C2CCC(C2)CCc3ccccc3");
-        trueFrameworks.add("c1ccc(cc1)CCC2CC(CC2)CC3C=CC=C3");
+        trueFrameworks.add("c1ccc(cc1)CCC2CCC(CC3C=CC=C3)C2");
+        trueFrameworks.add("c1ccc(cc1)CCC2CCC(c3ccccc3)C2");
         for (String s : frameworks) {
             Assert.assertTrue(s + " is not a valid framework", trueFrameworks.contains(s));
         }
@@ -161,9 +161,9 @@ public class MurckoFragmenterTest extends CDKTestCase {
         String[] frameworks = fragmenter.getFrameworks();
         Assert.assertEquals(3, frameworks.length);
         List<String> trueFrameworks = new ArrayList<String>();
-        trueFrameworks.add("c1ncc(o1)c2ccccc2");
-        trueFrameworks.add("c1nc(co1)c2ccccc2");
-        trueFrameworks.add("c2nc(c1ccccc1)c(o2)c3ccccc3");
+        trueFrameworks.add("n1coc(c1)c2ccccc2");
+        trueFrameworks.add("n1cocc1c2ccccc2");     
+        trueFrameworks.add("n1coc(c1c2ccccc2)c3ccccc3");
         for (String s : frameworks) {
             Assert.assertTrue(s + " is not a valid framework", trueFrameworks.contains(s));
         }
@@ -233,7 +233,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("c1ccc(cc1)Cc2ncccc2", f[0]);
+        Assert.assertEquals("n1ccccc1Cc2ccccc2", f[0]);
 
         SmilesGenerator sg = new SmilesGenerator();
         for (int i = 0; i < f.length; i++) {
@@ -260,7 +260,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("C=1N=C4C=CC=CN4(CC=1CCN3CCC(Cc2ccccc2)CC3)", f[0]);
+        Assert.assertEquals("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             String newsmiles = sg.createSMILES(fc[i]);
