@@ -24,39 +24,16 @@
  */
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
-import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.BondTools;
-import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
-import org.openscience.cdk.graph.invariant.MorganNumbersTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.RingSetManipulator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
+import uk.ac.ebi.beam.Functions;
+import uk.ac.ebi.beam.Graph;
 
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
@@ -89,10 +66,10 @@ import java.util.Vector;
  * @cdk.bug        1793446
  */
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
-public class SmilesGenerator
-{
+public final class SmilesGenerator {
 
-    private final boolean isomeric;
+    private final boolean   isomeric;
+    private final CDKToBeam converter;
 
     /**
      *  Create the SMILES generator.
@@ -102,36 +79,47 @@ public class SmilesGenerator
     }
 
     /**
-     *  Create the SMILES generator.
-     *  @param isomeric if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case (same as using setUseAromaticityFlag later)
+     * Create the SMILES generator.
+     *
+     * @param isomeric include isotope and stereo configurations in produced
+     *                 SMILES
      */
     private SmilesGenerator(boolean isomeric) {
-        this.isomeric = isomeric;
+        this.isomeric  = isomeric;
+        this.converter = new CDKToBeam(isomeric);
     }
-    
-    public SmilesGenerator isomericGenerator() {
+
+    /**
+     * Convenience method for creating an isomeric generator.
+     * @return a new isomeric SMILES generator
+     */
+    public static SmilesGenerator isomericGenerator() {
         return new SmilesGenerator(true);
     }
 
     /**
-     *  Generate canonical SMILES from the <code>molecule</code>. This method
-     *  canonicaly lables the molecule but does not perform any checks on the
-     *  chemical validity of the molecule.
-     *  IMPORTANT: A precomputed Set of All Rings (SAR) can be passed to this
-     *  SmilesGenerator in order to avoid recomputing it. Use setRings() to
-     *  assign the SAR.
+     * Generate SMILES for the provided {@code molecule}.
      *
-     * @param  molecule  The molecule to evaluate
-     * @see              org.openscience.cdk.graph.invariant.CanonicalLabeler#canonLabel(IAtomContainer)
-     * @return the SMILES representation of the molecule
+     * @param molecule The molecule to evaluate
+     * @return the SMILES string
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
     public synchronized String createSMILES(IAtomContainer molecule) {
-        return "";
+        Graph g = converter.toBeamGraph(molecule);
+
+        // collapse() removes redundant hydrogen labels
+        g = Functions.collapse(g);
+        
+        // apply the CANON labelling
+        g = Functions.canonicalize(g, labels(molecule));
+
+        // collapse() removes redundant hydrogen labels
+        return g.toSmiles();
     }
 
     /**
-     *  Generate a SMILES for the given <code>Reaction</code>.
+     * Generate a SMILES for the given <code>Reaction</code>.
+     * 
      * @param reaction the reaction in question
      * @return the SMILES representation of the reaction
      * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
@@ -173,6 +161,33 @@ public class SmilesGenerator
     @TestMethod("testSFBug956923")
     public void setUseAromaticityFlag(boolean useAromaticityFlag) {
         // ignore for now
+    }
+
+    /**
+     * Given a molecule (possibly disconnected) compute the labels which
+     * would order the atoms by increasing canonical labelling.
+     * 
+     * @param molecule the molecule to 
+     * @return the permutation
+     */
+    private final long[] labels(final IAtomContainer molecule) {
+        CanonicalLabeler canon = new CanonicalLabeler();
+        canon.canonLabel(molecule);
+        long[] labels = new long[molecule.getAtomCount()];
+        for (int i = 0; i < labels.length; i++) {
+            
+            IAtom atom  = molecule.getAtom(i);
+            Long  label = atom.getProperty(InvPair.CANONICAL_LABEL);
+                                                                     
+            // clean up the maps on each atom if there are no more properties
+            atom.removeProperty(InvPair.CANONICAL_LABEL);
+            if (atom.getProperties().isEmpty())
+                atom.setProperties(null);
+            
+            // note - permutations start at '0' labels start at '1'
+            labels[i] = label - 1;              
+        }
+        return labels;
     }
 
 }
