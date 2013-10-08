@@ -173,17 +173,22 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
+        
+        define(mol1,
+               anticlockwise(mol1, 1, 0, 2, 3, 4));
 
 		String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]", smiles1);
-		
-		//by setting additional stereo descriptors, we should get another smiles
-		mol1.getBond(1).setStereo(IBond.Stereo.DOWN);
-		mol1.getBond(2).setStereo(IBond.Stereo.UP);
+        Assert.assertEquals("[H]OC(=O)[C@](F)(N([H])[H])C([H])([H])[H]",
+                            smiles1);
+
+        define(mol1,
+               clockwise(mol1, 1, 0, 2, 3, 4));
+        
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]OC(=O)[C@](F)(C([H])([H])[H])N([H])[H]", smiles1);
+		Assert.assertEquals("[H]OC(=O)[C@@](F)(N([H])[H])C([H])([H])[H]",
+                            smiles1);
 	}
 
 
@@ -263,9 +268,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
+        define(mol1,
+               clockwise(mol1, 2, 0, 1, 3, 7),
+               clockwise(mol1, 7, 2, 6, 8, 9));
 		String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]O[C@]1(C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@]1(O[H])([H]))([H])", smiles1);
+        Assert.assertEquals("[H]O[C@@]1([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@@]1([H])O[H]", smiles1);
 		mol1 = AtomContainerManipulator.removeHydrogens(mol1);
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
@@ -350,10 +358,16 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol1);
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
+        define(mol1,
+               clockwise(mol1, 1, 0, 2, 4, 8),
+               clockwise(mol1, 2, 1, 3, 7, 1));
 		String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("[H]C1([H])(C([H])([H])C([H])([H])C\\2([H])(C([H])([H])C([H])([H])C([H])([H])C([H])([H])C\\2([H])(C1([H])([H]))))", smiles1);
-		mol1.getBond(2).setStereo(IBond.Stereo.UP);
+        Assert.assertEquals("[H]C1([H])C([H])([H])C([H])([H])[C@]2([H])C([H])([H])C([H])([H])C([H])([H])C([H])([H])[C@@]2([H])C1([H])[H]",
+                            smiles1);
+        define(mol1,
+               clockwise(mol1, 1, 0, 2, 4, 8),
+               anticlockwise(mol1, 2, 1, 3, 7, 1));                                                                                                                  
 		String smiles3 = sg.createSMILES(mol1);
         Assert.assertThat(smiles1, is(not(smiles3)));
 	}
@@ -684,9 +698,15 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol2 = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 		SmilesGenerator sg = SmilesGenerator.isomericGenerator();
+        
+        define(mol1,
+               anticlockwise(mol1, 1, 0, 2, 3, 6));
+        define(mol2,
+               clockwise(mol2, 1, 0, 2, 3, 6));
+        
 		String smiles1 = sg.createSMILES(mol1);
 		String smiles2 = sg.createSMILES(mol2);
-		Assert.assertThat(smiles1, is(not(smiles2)));
+        Assert.assertThat(smiles1, is(not(smiles2)));
 	}
 
 
@@ -703,6 +723,19 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		reader = new MDLV2000Reader(ins, Mode.STRICT);
 		IAtomContainer mol2 = reader.read(new AtomContainer());
 		SmilesGenerator sg = SmilesGenerator.isomericGenerator();
+        
+        define(mol1,
+               anticlockwise(mol1, 0, 0, 1, 5, 9),
+               anticlockwise(mol1, 1, 1, 0, 2, 8),
+               clockwise(mol1, 2, 2, 1, 3, 6),
+               anticlockwise(mol1, 5, 5, 0, 4, 10));
+        define(mol2,
+               anticlockwise(mol2, 0, 0, 1, 5, 9),
+               anticlockwise(mol2, 1, 1, 0, 2, 8),
+               clockwise(mol2, 2, 2, 1, 3, 6),
+               clockwise(mol2, 5, 5, 0, 4, 10),
+               anticlockwise(mol2, 4, 4, 3, 5, 11));
+               
 		String smiles1 = sg.createSMILES(mol1);
 		String smiles2 = sg.createSMILES(mol2);
         Assert.assertThat(smiles1, is(not(smiles2)));
@@ -815,8 +848,19 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		
 		SmilesGenerator sg = SmilesGenerator.isomericGenerator();
 		
-		String moleculeSmile1 = sg.createSMILES(mol1);
-		String moleculeSmile2 = sg.createSMILES(mol2);
+        define(mol1,
+               clockwise(mol1, 0, 1, 5, 12, 13),
+               clockwise(mol1, 1, 0, 2, 6, 12),
+               clockwise(mol1, 2, 1, 3, 9, 10),
+               clockwise(mol1, 5, 0, 4, 11, 18));
+        define(mol2,
+               clockwise(mol2, 0, 1, 5, 12, 13),
+               clockwise(mol2, 1, 0, 2, 6, 12),
+               anticlockwise(mol2, 2, 1, 3, 9, 10),
+               clockwise(mol2, 5, 0, 4, 11, 18));
+        
+		String moleculeSmile1 = sg.createSMILES(mol1);        
+        String moleculeSmile2 = sg.createSMILES(mol2);
         Assert.assertThat(moleculeSmile1, is(not(moleculeSmile2)));
 	}
 	
