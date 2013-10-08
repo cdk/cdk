@@ -43,6 +43,8 @@ public class LingoSimilarityTest extends CDKTestCase {
     public void testLingoSim() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeIndole();
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
+        addImplicitHydrogens(mol1);
+        addImplicitHydrogens(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> bs1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> bs2 = fingerprinter.getRawFingerprint(mol2);

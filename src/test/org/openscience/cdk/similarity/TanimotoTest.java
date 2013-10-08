@@ -97,6 +97,8 @@ public class TanimotoTest extends CDKTestCase
     @Test public void testExactMatch() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeIndole();
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
+        addImplicitHydrogens(mol1);
+        addImplicitHydrogens(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> feat1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> feat2 = fingerprinter.getRawFingerprint(mol2);
