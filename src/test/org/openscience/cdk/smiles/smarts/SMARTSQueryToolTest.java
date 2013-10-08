@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -176,9 +177,9 @@ public class SMARTSQueryToolTest extends CDKTestCase {
     public void testIndoleAgainstItself() throws Exception {
 
         IAtomContainer indole = MoleculeFactory.makeIndole();
-
-        SmilesGenerator generator = new SmilesGenerator();
-        generator.setUseAromaticityFlag(true);
+        addImplicitHydrogens(indole);
+        DoubleBondAcceptingAromaticityDetector.detectAromaticity(indole);
+        SmilesGenerator generator = new SmilesGenerator();        
         String indoleSmiles = generator.createSMILES(indole);
 
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
