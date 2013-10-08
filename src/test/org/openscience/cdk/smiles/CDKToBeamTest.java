@@ -160,6 +160,17 @@ public class CDKToBeamTest {
         assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
                    is(-1));
     }
+    
+    // special check that a CDK pseudo atom will default to 0 hydrogens if
+    // the hydrogens are set to null
+    @Test public void pseudoAtom_nullH() throws Exception {
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("R")).hydrogens(),
+                   is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("*")).hydrogens(),
+                   is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("R1")).hydrogens(),
+                   is(0));
+    }
 
     @SuppressWarnings("unchecked")
     @Test(expected = IllegalArgumentException.class)

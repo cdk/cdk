@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
+import uk.ac.ebi.beam.Element;
 import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Edge;
@@ -151,16 +152,25 @@ final class CDKToBeam {
     @TestMethod("aliphaticAtom,aromaticAtom") Atom toBeamAtom(final IAtom a) {
 
         final boolean aromatic = a.getFlag(CDKConstants.ISAROMATIC);
-        final Integer hCount   = checkNotNull(a.getImplicitHydrogenCount(),
-                                              "An atom had an undefined number of implicit hydrogens");
         final Integer charge   = a.getFormalCharge();
         final String  symbol   = checkNotNull(a.getSymbol(),
                                               "An atom had an undefined symbol");
 
-        AtomBuilder ab = aromatic ? AtomBuilder.aromatic(symbol)
-                                               .hydrogens(hCount)
-                                  : AtomBuilder.aliphatic(symbol)
-                                               .hydrogens(hCount);
+        Element element = Element.ofSymbol(symbol);
+        if (element == null)
+            element = Element.Unknown;
+        
+        AtomBuilder ab = aromatic ? AtomBuilder.aromatic(element)
+                                  : AtomBuilder.aliphatic(element);
+            
+        
+        // CDK leaves nulls on pseudo atoms - we need to check this special case
+        Integer hCount = a.getImplicitHydrogenCount();
+        if (element == Element.Unknown) {
+            ab.hydrogens(hCount != null ? hCount : 0);
+        } else {
+            ab.hydrogens(checkNotNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
+        }        
 
         if (charge != null)
             ab.charge(charge);
