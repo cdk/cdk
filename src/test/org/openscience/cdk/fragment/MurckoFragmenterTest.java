@@ -284,7 +284,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("c1ccccc1n2cccc2", f[0]);
+        Assert.assertEquals("c1ccc(cc1)-n2cccc2", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
