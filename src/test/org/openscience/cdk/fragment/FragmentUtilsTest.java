@@ -42,6 +42,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -78,8 +79,10 @@ public class FragmentUtilsTest extends CDKTestCase {
             uniqueFrags.add(sg.createSMILES(frag));
         }
         Assert.assertEquals(2, uniqueFrags.size());
-        Assert.assertTrue(uniqueFrags.contains("C1CC1"));
-        Assert.assertTrue(uniqueFrags.contains("C1CCC1"));
+        // You can put the fragments back together with a ring closure and dot
+        // [CH]12CC1.[CH]12CCC1
+        Assert.assertThat(uniqueFrags, hasItems("[CH]1CC1",
+                                                "[CH]1CCC1"));        
     }
 
     @Test public void testMakeAtomContainer() {
