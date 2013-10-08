@@ -422,8 +422,12 @@ public class SmilesGeneratorTest extends CDKTestCase {
 
         // hydrogens in-lined from hydrogen adder/placer
         mol1.addAtom(new Atom("H", new Point2d(-0.71, -0.71)));
+        mol1.getAtom(0).setImplicitHydrogenCount(0);
+        mol1.getAtom(mol1.getAtomCount()-1).setImplicitHydrogenCount(0);
         mol1.addBond(0, 6, IBond.Order.SINGLE);
         mol1.addAtom(new Atom("H", new Point2d(2.71, 3.71)));
+        mol1.getAtom(5).setImplicitHydrogenCount(0);
+        mol1.getAtom(mol1.getAtomCount()-1).setImplicitHydrogenCount(0);
         mol1.addBond(5, 7, IBond.Order.SINGLE);
 
 		bool = new boolean[mol1.getBondCount()];
