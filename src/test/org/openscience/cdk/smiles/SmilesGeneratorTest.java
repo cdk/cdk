@@ -78,11 +78,10 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	 *  A unit test for JUnit
 	 */
 	@Test
-    public void testSmilesGenerator()
-	{
+    public void testSmilesGenerator() throws Exception {
 	    IAtomContainer mol2 = TestMoleculeFactory.makeAlphaPinene();
 		SmilesGenerator sg = new SmilesGenerator();
-		fixCarbonHCount(mol2);
+		addImplicitHydrogens(mol2);
 		String smiles2 = sg.createSMILES(mol2);        
 		Assert.assertNotNull(smiles2);
 		Assert.assertEquals("C1=C(C)C2CC(C1)C2(C)(C)", smiles2);
