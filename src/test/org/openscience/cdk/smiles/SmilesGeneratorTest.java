@@ -27,6 +27,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.vecmath.Point2d;
@@ -55,6 +56,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.CMLReader;
@@ -63,6 +65,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -408,14 +411,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol1);
 		IsotopeFactory ifac = IsotopeFactory.getInstance(mol1.getBuilder());
 		ifac.configureAtoms(mol1);
-		boolean[] bool = new boolean[mol1.getBondCount()];
-		bool[2] = true;
-		String smiles1 = sg.createSMILES(mol1);
+
+        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
+                                                            new IBond[]{
+                                                                    mol1.getBond(1),
+                                                                    mol1.getBond(3)
+                                                            },
+                                                            IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        String smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("F/C(=C/(F)S)S", smiles1);
-		mol1.getAtom(4).setPoint2d(new Point2d(0, 3));
-		mol1.getAtom(5).setPoint2d(new Point2d(2, 3));
-		
+
+        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
+                                                            new IBond[]{
+                                                                    mol1.getBond(1),
+                                                                    mol1.getBond(3)
+                                                            },
+                                                            IDoubleBondStereochemistry.Conformation.TOGETHER));
+        
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("F/C(=C\\(F)S)S", smiles1);
@@ -430,14 +445,26 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.getAtom(mol1.getAtomCount()-1).setImplicitHydrogenCount(0);
         mol1.addBond(5, 7, IBond.Order.SINGLE);
 
-		bool = new boolean[mol1.getBondCount()];
-		bool[2] = true;
+        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
+                                                            new IBond[]{
+                                                                    mol1.getBond(0),
+                                                                    mol1.getBond(3)
+                                                            },
+                                                            IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("[H]S/C(F)=C/(F)S[H]", smiles1);
+        
+        mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
+        mol1.addStereoElement(new DoubleBondStereochemistry(mol1.getBond(2),
+                                                            new IBond[]{
+                                                                    mol1.getBond(0),
+                                                                    mol1.getBond(3)
+                                                            },
+                                                            IDoubleBondStereochemistry.Conformation.TOGETHER));
 		
-		mol1.getAtom(5).setPoint2d(new Point2d(0, 3));
-		mol1.getAtom(4).setPoint2d(new Point2d(2, 3));
 		smiles1 = sg.createSMILES(mol1);
 		Assert.assertNotNull(smiles1);
 		Assert.assertEquals("[H]S/C(F)=C\\(F)S[H]", smiles1);
