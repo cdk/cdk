@@ -202,6 +202,13 @@ public class InitialCyclesTest {
         assertThat(family[0], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
         assertThat(family[1], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}));
     }
+    
+    // ensure using the biconnected optimisation will still find the cycle in
+    // a simple cycle, cylcohexane (there are no vertices with deg 3)
+    @Test public void bioconnected_simpleCycle() {
+        InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane());
+        assertThat(ic.numberOfCycles(), is(1));
+    }
 
     @Test public void join() {
         int[] a = new int[]{0, 1, 2};
@@ -270,6 +277,17 @@ public class InitialCyclesTest {
                 {0, 2, 3},
                 {0, 1, 3},
                 {0, 1, 2}
+        };
+    }
+    /** benzene/cyclohexane graph */ 
+    static int[][] cyclohexane() {
+        return new int[][]{
+                {1, 5},
+                {0, 2},
+                {1, 3},
+                {2, 4},
+                {3, 5},
+                {4, 0}
         };
     }
 

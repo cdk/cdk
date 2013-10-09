@@ -25,7 +25,6 @@ package org.openscience.cdk.graph;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.TreeMultimap;
 import com.google.common.primitives.Ints;
@@ -35,8 +34,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import java.util.BitSet;
 import java.util.Collection;
 
-import static java.util.Arrays.copyOf;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Arrays.copyOf;
 
 /**
  * Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
@@ -75,17 +74,39 @@ final class InitialCycles {
      */
     private final static int DEFAULT_DEGREE = 4;
 
+    /** Number of vertices which have degree 2. */
+    private int nDeg2Vertices;
+
+    /**
+     * Is the graph known to be a biconnected component. This allows a small
+     * optimisation.
+     */
+    private final boolean biconnected;
+
     /**
      * Create a set of initial cycles for the provided graph.
      *
      * @param graph input graph
-     * @throws NullPointerException the graphw as null
+     * @throws NullPointerException the graph was null
      */
     InitialCycles(final int[][] graph) {
+        this(graph, false);
+    }
+    
+    /**
+     * Internal constructor - takes a graph and a flag that the graph is a
+     * biconnected component. This allows a minor optimisation to trigger.
+     *
+     * @param graph input graph
+     * @param biconnected the graph is known to be biconnected             
+     * @throws NullPointerException the graph was null
+     */
+    private InitialCycles(final int[][] graph, boolean biconnected) {
         this.graph = checkNotNull(graph, "no graph provided");
 
         // ordering ensures the number of initial cycles is polynomial
-        this.ordering = ordering(graph);
+        this.biconnected = biconnected;
+        this.ordering    = ordering(graph);
 
         // index the edges to allow us to jump between edge and path representation
         // - edge representation: binary vector indicates whether an edge
@@ -226,8 +247,16 @@ final class InitialCycles {
             vertices[ordering[v]] = v;
         }
 
-        // smallest possible cycle is {0,1,2} (no parallel edges or loops)
-        for (int i = 2; i < n; i++) {
+        // if the graph is known to be a biconnected component (prepossessing) 
+        // and there is at least one vertex with a degree > 2 we can skip all 
+        // vertices of degree 2.  
+        //
+        // otherwise the smallest possible cycle is {0,1,2} (no parallel edges
+        // or loops) we can therefore don't need to do the first two shortest
+        // paths calculations
+        int first = biconnected && nDeg2Vertices < n ? nDeg2Vertices : 2;
+
+        for (int i = first; i < n; i++) {
             final int r = vertices[i];
 
             ShortestPaths pathsFromR = new ShortestPaths(graph, null, r, ordering);
@@ -341,7 +370,7 @@ final class InitialCycles {
      *
      * @return the order of each vertex
      */
-    private static int[] ordering(final int[][] graph) {
+    private int[] ordering(final int[][] graph) {
 
         final int n = graph.length;
 
@@ -363,6 +392,7 @@ final class InitialCycles {
         for (int v = 0; v < n; v++) {
             order[v] = count[graph[v].length]++;
         }
+        nDeg2Vertices = count[2];
         return order;
     }
 
@@ -420,6 +450,18 @@ final class InitialCycles {
             path[j--] = pathToQ[i];
         }
         return path;
+    }
+
+    /**
+     * Compute the initial cycles of a biconnected graph.
+     *
+     * @param graph the biconnected graph
+     * @return computed initial cycles
+     * @throws NullPointerException the graph was null
+     */
+    @TestMethod("bioconnected_simpleCycle")
+    static InitialCycles ofBiconnectedComponent(int[][] graph) {
+        return new InitialCycles(graph, true);
     }
 
     /**
