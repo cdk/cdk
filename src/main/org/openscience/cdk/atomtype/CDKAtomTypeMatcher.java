@@ -43,6 +43,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
+import org.openscience.cdk.ringsearch.RingSearch;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
@@ -993,8 +994,8 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
     }
 
     private boolean isRingAtom(IAtom atom, IAtomContainer atomContainer) {
-    	SpanningTree st = new SpanningTree(atomContainer);
-        return st.getCyclicFragmentsContainer().contains(atom);
+    	RingSearch searcher = new RingSearch(atomContainer);
+        return searcher.cyclic(atom);
     }
 
     private IRing getRing(IAtom atom, IAtomContainer atomContainer) {
