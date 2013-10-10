@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -100,6 +99,7 @@ import java.util.Set;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph
  *      Theory) - Wikipedia</a>
  * @see <a href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling
@@ -108,7 +108,6 @@ import java.util.Set;
  * @see SSSRFinder
  * @see AllRingsFinder
  * @see CyclicVertexSearch
- * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.RingSearchTest")
 public final class RingSearch {
@@ -183,33 +182,24 @@ public final class RingSearch {
         // values to represent our sets of vertices
         if (graph.length <= 64) {
             return new RegularCyclicVertexSearch(graph);
-        } else {
+        }
+        else {
             return new JumboCyclicVertexSearch(graph);
         }
     }
 
 
     /**
-     * Determine whether the vertex at index <i>i</i> is a cyclic vertex.
+     * Determine whether the edge between the vertices <i>u</i> and <i>v</i> is
+     * cyclic.
      *
-     * <blockquote><pre>
-     * IAtomContainer  mol    = ...;
-     * RingSearch      tester = new RingSearch(mol);
-     *
-     * int n = mol.getAtomCount();
-     * for(int i = 0; i < n; i++){
-     *     if(tester.cyclic(i)){
-     *         ...
-     *     }
-     * }
-     * </pre></blockquote>
-     *
-     * @param i atom index
-     * @return whether the vertex at the given index is in a cycle
+     * @param u an end point of the edge
+     * @param v another end point of the edge
+     * @return whether the edge formed by the given end points is in a cycle
      */
-    @TestMethod("testCyclic_Int")
-    public boolean cyclic(int i) {
-        return searcher.cyclic(i);
+    @TestMethod("testCyclic_IntInt")
+    public boolean cyclic(int u, int v) {
+        return searcher.cyclic(u, v);
     }
 
     /**
@@ -236,6 +226,46 @@ public final class RingSearch {
         if (i < 0)
             throw new NoSuchElementException("no such atom");
         return cyclic(i);
+    }
+
+    /**
+     * Determine whether the bond is cyclic. Note this currently requires a
+     * linear search to look-up the indices of each atoms.
+     *
+     * @param bond a bond of the container
+     * @return whether the vertex at the given index is in a cycle
+     */
+    @TestMethod("testCyclic_Bond")
+    public boolean cyclic(IBond bond) {
+        // XXX: linear search - but okay for now
+        int u = container.getAtomNumber(bond.getAtom(0));
+        int v = container.getAtomNumber(bond.getAtom(1));
+        if (u < 0 || v < 0)
+            throw new NoSuchElementException("atoms of the bond are not found in the container");
+        return searcher.cyclic(u, v);
+    }
+
+    /**
+     * Determine whether the vertex at index <i>i</i> is a cyclic vertex.
+     *
+     * <blockquote><pre>
+     * IAtomContainer  mol    = ...;
+     * RingSearch      tester = new RingSearch(mol);
+     *
+     * int n = mol.getAtomCount();
+     * for(int i = 0; i < n; i++){
+     *     if(tester.cyclic(i)){
+     *         ...
+     *     }
+     * }
+     * </pre></blockquote>
+     *
+     * @param i atom index
+     * @return whether the vertex at the given index is in a cycle
+     */
+    @TestMethod("testCyclic_Int")
+    public boolean cyclic(int i) {
+        return searcher.cyclic(i);
     }
 
     /**

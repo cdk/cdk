@@ -113,6 +113,18 @@ public class RingSearchTest {
 
         verify(cyclicSearch, times(1)).cyclic(1);
     }
+    
+    @Test
+    public void testCyclic_IntInt() throws Exception {
+
+        CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
+        IAtomContainer container = mock(IAtomContainer.class);
+
+        RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+        ringSearch.cyclic(2, 4);
+
+        verify(cyclicSearch, times(1)).cyclic(2, 4);
+    }
 
     @Test
     public void testCyclic_Atom() throws Exception {
@@ -129,6 +141,29 @@ public class RingSearchTest {
         // verify the number returned from getAtomNumber is passed on
         verify(container, times(1)).getAtomNumber(atom);
         verify(cyclicSearch, times(1)).cyclic(42);
+    }
+    
+    @Test
+    public void testCyclic_Bond() throws Exception {
+
+        CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
+        IAtomContainer container = mock(IAtomContainer.class);
+        IAtom a1   = mock(IAtom.class);
+        IAtom a2   = mock(IAtom.class);
+        IBond bond = mock(IBond.class);
+
+        when(container.getAtomNumber(a1)).thenReturn(42);
+        when(container.getAtomNumber(a2)).thenReturn(43);
+        when(bond.getAtom(0)).thenReturn(a1);
+        when(bond.getAtom(1)).thenReturn(a2);
+
+        RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+        ringSearch.cyclic(bond);
+
+        // verify the number returned from getAtomNumber is passed on
+        verify(container, times(1)).getAtomNumber(a1);
+        verify(container, times(1)).getAtomNumber(a2);
+        verify(cyclicSearch, times(1)).cyclic(42, 43);
     }
 
     @Test(expected = NoSuchElementException.class)
