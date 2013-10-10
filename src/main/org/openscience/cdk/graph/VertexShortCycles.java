@@ -38,7 +38,7 @@ import java.util.List;
  * @author John May
  * @cdk.module core
  */
-@TestClass("graph.VertexShortCyclesTest")
+@TestClass("org.openscience.cdk.graph.VertexShortCyclesTest")
 final class VertexShortCycles {
 
     /** Shortest cycles stored as closed walks. */
