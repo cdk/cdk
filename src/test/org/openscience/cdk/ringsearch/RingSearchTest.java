@@ -23,6 +23,7 @@
 package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -31,7 +32,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -305,4 +308,163 @@ public class RingSearchTest {
         // builder was invoked
         verify(builder, times(2)).newInstance(IAtomContainer.class, 0, 0, 0, 0);
     }
+
+    
+    @Test public void connectingEdge1() {
+        IAtomContainer mol  = diSpiroPentane();
+        RingSearch     rs   = new RingSearch(mol);
+        IAtomContainer frag = rs.ringFragments();
+        assertThat(mol.getBondCount(), is(frag.getBondCount() + 1));
+    }
+    
+    @Test public void connectingEdge2() {
+        IAtomContainer mol  = triSpiroPentane();
+        RingSearch     rs   = new RingSearch(mol);
+        IAtomContainer frag = rs.ringFragments();
+        assertThat(mol.getBondCount(), is(frag.getBondCount()));
+    }
+
+    /**
+     * Hypothetial molecule - C1C[C]11(CC1)[C]123CC1.C2C3
+     *
+     * @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
+     */
+    public static IAtomContainer diSpiroPentane() {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
+        a8.setFormalCharge(0);
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
+        a9.setFormalCharge(0);
+        mol.addAtom(a9);
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
+        a10.setFormalCharge(0);
+        mol.addAtom(a10);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class, a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class, a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        IBond b7 = builder.newInstance(IBond.class, a3, a6, IBond.Order.SINGLE);
+        mol.addBond(b7);
+        IBond b8 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class, a7, a8, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class, a6, a8, IBond.Order.SINGLE);
+        mol.addBond(b10);
+        IBond b11 = builder.newInstance(IBond.class, a6, a9, IBond.Order.SINGLE);
+        mol.addBond(b11);
+        IBond b12 = builder.newInstance(IBond.class, a9, a10, IBond.Order.SINGLE);
+        mol.addBond(b12);
+        IBond b13 = builder.newInstance(IBond.class, a6, a10, IBond.Order.SINGLE);
+        mol.addBond(b13);
+        return mol;
+    }
+    
+    /**
+     * Hypothetial molecule - C1C[C]1123CC1.C1C[C]211(CC1)C3
+     *
+     * @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
+     */
+    public static IAtomContainer triSpiroPentane() {
+
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        a1.setFormalCharge(0);
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        a2.setFormalCharge(0);
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        a3.setFormalCharge(0);
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        a4.setFormalCharge(0);
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        a5.setFormalCharge(0);
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        a6.setFormalCharge(0);
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        a7.setFormalCharge(0);
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        a8.setFormalCharge(0);
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        a9.setFormalCharge(0);
+        mol.addAtom(a9);
+        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        a10.setFormalCharge(0);
+        mol.addAtom(a10);
+        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        a11.setFormalCharge(0);
+        mol.addAtom(a11);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        IBond b7 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        mol.addBond(b7);
+        IBond b8 = builder.newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class,a3, a8, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class,a6, a8, IBond.Order.SINGLE);
+        mol.addBond(b10);
+        IBond b11 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        mol.addBond(b11);
+        IBond b12 = builder.newInstance(IBond.class,a9, a10, IBond.Order.SINGLE);
+        mol.addBond(b12);
+        IBond b13 = builder.newInstance(IBond.class,a8, a10, IBond.Order.SINGLE);
+        mol.addBond(b13);
+        IBond b14 = builder.newInstance(IBond.class,a8, a11, IBond.Order.SINGLE);
+        mol.addBond(b14);
+        IBond b15 = builder.newInstance(IBond.class,a3, a11, IBond.Order.SINGLE);
+        mol.addBond(b15);
+        return mol;
+    }
+    
 }

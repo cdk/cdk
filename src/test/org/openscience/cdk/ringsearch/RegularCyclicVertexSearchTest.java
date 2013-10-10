@@ -24,6 +24,8 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -56,6 +58,40 @@ public class RegularCyclicVertexSearchTest {
         CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
         for (int v = 0; v < g.length; v++)
             assertTrue(search.cyclic(v));
+    }
+
+    @Test public void testCyclic_IntInt() {
+        int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {5}};
+        CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+        assertTrue(search.cyclic(0, 1));
+        assertTrue(search.cyclic(1, 2));
+        assertTrue(search.cyclic(2, 3));
+        assertTrue(search.cyclic(3, 4));
+        assertTrue(search.cyclic(4, 5));
+        assertTrue(search.cyclic(5, 0));
+        assertFalse(search.cyclic(5, 6));
+    }
+
+    @Test public void vertexColor() {
+        // medium size spiro cyclo hexane like
+        int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5},
+                                {0, 4, 7, 8}, {7, 10}, {5, 6}, {5, 9}, {8, 10},
+                                {6, 9, 12, 13}, {12, 15}, {10, 11}, {10, 14},
+                                {13, 15}, {11, 14, 17, 18}, {17, 20}, {15, 16},
+                                {15, 19}, {18, 20}, {16, 19, 22, 23}, {22, 25},
+                                {20, 21}, {20, 24}, {23, 25}, {21, 24, 27, 28},
+                                {27, 30}, {25, 26}, {25, 29}, {28, 30},
+                                {26, 29, 32, 33}, {32, 35}, {30, 31}, {30, 34},
+                                {33, 35}, {31, 34, 37, 38}, {37, 40}, {35, 36},
+                                {35, 39}, {38, 40}, {36, 39, 42, 43}, {42, 45},
+                                {40, 41}, {40, 44}, {43, 45}, {41, 44, 47, 48},
+                                {47, 50}, {45, 46}, {45, 49}, {48, 50},
+                                {46, 49, 52, 53}, {52, 55}, {50, 51}, {50, 54},
+                                {53, 55}, {51, 54, 57, 58}, {57, 60}, {55, 56},
+                                {55, 59}, {58, 60}, {56, 59}};
+        CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
+        int[] colors = search.vertexColor();
+        System.out.println(Arrays.toString(colors));
     }
 
     @Test public void testIsolated() {

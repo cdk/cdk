@@ -26,6 +26,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
 
@@ -55,6 +56,9 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
 
     /* the vertices in our path at a given vertex index */
     private BitSet[] state;
+    
+    /** vertex colored by each component. */
+    private int[] colors;
 
     /**
      * Create a new cyclic vertex search for the provided graph.
@@ -132,6 +136,53 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
 
     }
 
+    /** Synchronisation lock. */
+    private final Object lock = new Object();
+
+    /**
+     * Lazily build an indexed lookup of vertex color. The vertex color
+     * indicates which cycle a given vertex belongs. If a vertex belongs to more
+     * then one cycle it is colored '0'. If a vertex belongs to no cycle it is
+     * colored '-1'.
+     *
+     * @return vertex colors
+     */
+    @TestMethod("vertexColor")
+    public int[] vertexColor() {
+        int[] result = colors;
+        if (result == null) {
+            synchronized (this) {
+                result = colors;
+                if (result == null) {
+                    colors = result = buildVertexColor();
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Build an indexed lookup of vertex color. The vertex color indicates which
+     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
+     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+     *
+     * @return vertex colors
+     */
+    private int[] buildVertexColor() {
+        int[] color = new int[g.length];
+
+        int n = 1;
+        Arrays.fill(color, -1);
+        for (BitSet cycle : cycles) {
+            for (int i = cycle.nextSetBit(0); i >= 0; i = cycle.nextSetBit(i + 1)) {
+                color[i] = color[i] < 0 ? n : 0;
+            }
+            n++;
+        }
+
+        return color;
+    }
+
     /**
      * @inheritDoc
      */
@@ -139,6 +190,35 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
     @Override
     public boolean cyclic(int v) {
         return cyclic.get(v);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("testCyclic_IntInt")
+    @Override public boolean cyclic(int u, int v) {
+        
+        final int[] colors = vertexColor();
+        
+        // if either vertex has no color then the edge can not
+        // be cyclic
+        if (colors[u] < 0 || colors[v] < 0)
+            return false;
+        
+        // if the vertex color is 0 it is shared between
+        // two components (i.e. spiro-rings) we need to 
+        // check each component
+        if (colors[u] == 0 || colors[v] == 0) {
+            // either vertices are shared - need to do the expensive check
+            for (final BitSet cycle : cycles) {
+                if (cycle.get(u) && cycle.get(v))
+                    return true;
+            }
+            return false;
+        }
+        
+        // vertex is not shared between components
+        return colors[u] == colors[v];
     }
 
     /**

@@ -43,6 +43,15 @@ public interface CyclicVertexSearch {
     boolean cyclic(int v);
 
     /**
+     * Is the edge between the two vertices <i>u</i> and <i>v</i> in a cycle?
+     *
+     * @param u a vertex
+     * @param v another vertex
+     * @return whether the edge is cycle
+     */
+    boolean cyclic(int u, int v);
+
+    /**
      * The set of cyclic vertices.
      *
      * @return the cyclic vertices of the molecule.
@@ -68,5 +77,13 @@ public interface CyclicVertexSearch {
      */
     int[][] fused();
 
+    /**
+     * Build an indexed lookup of vertex color. The vertex color indicates which
+     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
+     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+     *
+     * @return vertex colors
+     */
+    int[] vertexColor();
 }
 

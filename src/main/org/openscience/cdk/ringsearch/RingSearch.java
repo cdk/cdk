@@ -306,8 +306,6 @@ public final class RingSearch {
     @TestMethod("testRingFragments")
     public IAtomContainer ringFragments() {
 
-        // color our vertices, 1..n+1, -1:no cycle, 0:in two cycles (spiro)
-        int[] color = vertexColor();
         int[] vertices = cyclic();
 
         int n = vertices.length;
@@ -328,9 +326,8 @@ public final class RingSearch {
             int v = container.getAtomNumber(other);
 
             // add the bond if the vertex colors match
-            if (match(color[u], color[v]))
+            if (searcher.cyclic(u, v))
                 bonds.add(bond);
-
         }
 
         IChemObjectBuilder builder = container.getBuilder();
@@ -358,31 +355,6 @@ public final class RingSearch {
         return (eitherColor != -1 && otherColor != -1)
                 && (eitherColor == otherColor
                 || (eitherColor == 0 || otherColor == 0));
-    }
-
-    /**
-     * Build an indexed lookup of vertex color. The vertex color indicates which
-     * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-     * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-     *
-     * @return vertex colors
-     */
-    private int[] vertexColor() {
-        int[] color = new int[container.getAtomCount()];
-
-        int[][] isolated = searcher.isolated();
-        int[][] fused = searcher.fused();
-
-        Arrays.fill(color, -1);
-        for (int i = 0; i < isolated.length; i++) {
-            for (int v : isolated[i])
-                color[v] = color[v] < 0 ? i + 1 : 0;
-        }
-        for (int i = 0; i < fused.length; i++) {
-            for (int v : fused[i])
-                color[v] = color[v] < 0 ? isolated.length + i + 1 : 0;
-        }
-        return color;
     }
 
     /**
