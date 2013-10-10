@@ -95,12 +95,11 @@ final class EdgeShortCycles {
     @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
                         "paths_cyclophane_even")
     int[][] paths() {
-        int[][] cpy = new int[paths.size()][0];
-        for (int i = 0; i < paths.size(); i++) {
-            int[] path = paths.get(i);
-            cpy[i] = Arrays.copyOf(path, path.length);
+        int[][] paths = new int[this.paths.size()][0];
+        for (int i = 0; i < this.paths.size(); i++) {            
+            paths[i] = this.paths.get(i);
         }
-        return cpy;
+        return paths;
     }
 
     /**
