@@ -264,7 +264,7 @@ public final class TripletShortCycles {
 
         // all minimum cycle basis paths belong to the set
         for (final int[] path : mcb.paths())
-            basis.add(new Path(path));
+            basis.add(new Path(Arrays.copyOf(path, path.length - 1)));
 
         // count the number of cycles each vertex belongs to and try to find a
         // cycle though the triple of 'v' and two of it's neighbors
