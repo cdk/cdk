@@ -1623,14 +1623,9 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 * @cdk.bug 1962419
 	 */
-	@org.junit.Test public void testPyrrole3() throws Exception {
+	@Test(expected = InvalidSmilesException.class) public void testPyrrole3() throws Exception {
 		String smiles = "n1cccc1";
-		try {
 			sp.parseSmiles(smiles);
-			Assert.fail("The SMILES string 'n1cccc1' is invalid but no exception was thrown.");
-		} catch (Exception e) {
-			// yes! it should fail
-		}
 	}
 
 	/**
@@ -1715,14 +1710,9 @@ public class SmilesParserTest extends CDKTestCase {
 	/**
 	 * @cdk.bug 1962419
 	 */
-	@org.junit.Test public void testImidazole3() throws Exception {
+	@Test(expected = InvalidSmilesException.class) public void testImidazole3() throws Exception {
 		String smiles = "n1cncc1";
-		try {
 			sp.parseSmiles(smiles);
-			Assert.fail("The SMILES string 'n1cncc1' is invalid but no exception was thrown.");
-		} catch (Exception e) {
-			// yes! it should fail
-		}
 	}
 		 
 	/**
