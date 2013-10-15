@@ -139,8 +139,7 @@ final class AtomTypeModel extends ElectronDonation {
                 int u = indexMap.get(a1);
                 int v = indexMap.get(a2);
 
-                // XXX: bond may be between rings, need patch under review to change for this
-                if (!ringSearch.cyclic(u) || !ringSearch.cyclic(v)) {
+                if (!ringSearch.cyclic(u, v)) {
                     
                     // XXX: single exception - we could make this more general but
                     // for now this mirrors the existing behavior
