@@ -41,16 +41,16 @@ import org.openscience.cdk.interfaces.IIsotope;
  * @cdk.module  core 
  * @cdk.githash
  */
-public class BODRIsotopes extends IsotopeFactory {
+public class Isotopes extends IsotopeFactory {
 
-	private static BODRIsotopes myself = null;
+	private static Isotopes myself = null;
 
-	public static BODRIsotopes getInstance() throws IOException {
-		if (myself == null) myself = new BODRIsotopes();
+	public static Isotopes getInstance() throws IOException {
+		if (myself == null) myself = new Isotopes();
 		return myself;
 	}
 
-	private BODRIsotopes() throws IOException {
+	private Isotopes() throws IOException {
 		String configFile = "org/openscience/cdk/config/data/isotopes.txt";
 		isotopes = new ArrayList<IIsotope>();
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);

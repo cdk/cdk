@@ -48,7 +48,8 @@ import net.sf.jniinchi.JniInchiWrapper;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -57,7 +58,6 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -205,9 +205,9 @@ public class InChIGenerator {
         }
 
         // Process atoms
-        XMLIsotopeFactory ifact = null;
+        IsotopeFactory ifact = null;
         try {
-            ifact = XMLIsotopeFactory.getInstance(atomContainer.getBuilder());
+            ifact = Isotopes.getInstance();
         } catch (Exception e) {
             // Do nothing
         }

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.RendererModel;
@@ -58,7 +58,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 		if (massNumber != null) {
 			try {
 				Integer expectedMassNumber 
-						= XMLIsotopeFactory.getInstance(container.getBuilder())
+						= Isotopes.getInstance()
 							.getMajorIsotope(atom.getSymbol())
 								.getMassNumber(); 
 				if (massNumber != expectedMassNumber)

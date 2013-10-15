@@ -31,8 +31,6 @@ import java.io.StringReader;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -45,6 +43,7 @@ import org.openscience.cdk.io.formats.Gaussian03Format;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * A reader for Gaussian03 output.
@@ -264,11 +263,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 throw new IOException("Error reading coordinates");
             }
             String symbol = "Du";
-            try {
-                symbol = XMLIsotopeFactory.getInstance(model.getBuilder()).getElementSymbol(atomicNumber);
-            } catch (Exception exception) {
-                throw new CDKException("Could not determine element symbol!", exception);
-            }
+            symbol = PeriodicTable.getSymbol(atomicNumber);
             IAtom atom = model.getBuilder().newInstance(IAtom.class,symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             container.addAtom(atom);

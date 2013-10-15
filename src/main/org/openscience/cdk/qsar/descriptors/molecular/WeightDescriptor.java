@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -167,7 +167,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += XMLIsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                    weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
                     if (hcount == CDKConstants.UNSET) hcount = 0;
                     weight += (hcount * 1.00782504);
@@ -178,10 +178,10 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         }
         else if (elementName.equals("H")) {
             try {
-                IIsotope h=XMLIsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope("H");
+                IIsotope h=Isotopes.getInstance().getMajorIsotope("H");
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += XMLIsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                     else {
                         weight += (container.getAtom(i).getImplicitHydrogenCount() * h.getExactMass());
@@ -195,7 +195,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += XMLIsotopeFactory.getInstance(container.getBuilder()).getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
                     }
                 }
             } catch (Exception e) {

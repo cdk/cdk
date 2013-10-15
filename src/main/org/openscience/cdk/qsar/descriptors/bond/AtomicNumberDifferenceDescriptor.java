@@ -24,7 +24,8 @@ import java.io.IOException;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -50,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest")
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
-	private static XMLIsotopeFactory factory = null;
+	private static IsotopeFactory factory = null;
 	
 	private final static String[] descriptorName = {"MNDiff"};
 	
@@ -60,7 +61,7 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     private void ensureIsotopeFactory(IChemObjectBuilder builder) {
     	if (factory == null) {
     		try {
-	            factory = XMLIsotopeFactory.getInstance(builder);
+	            factory = Isotopes.getInstance();
             } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();

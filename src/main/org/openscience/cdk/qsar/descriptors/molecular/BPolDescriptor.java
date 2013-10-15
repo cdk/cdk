@@ -27,7 +27,8 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -152,7 +153,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
         int atomicNumber1;
         double difference;
         try {
-            XMLIsotopeFactory ifac = XMLIsotopeFactory.getInstance(container.getBuilder());
+            IsotopeFactory ifac = Isotopes.getInstance();
             IElement element0;
             IElement element1;
 

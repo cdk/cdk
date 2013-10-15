@@ -31,7 +31,8 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -58,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class InductivePartialCharges implements IChargeCalculator {
 
 	private static double[] pauling;
-	private XMLIsotopeFactory ifac = null;
+	private IsotopeFactory ifac = null;
 	private AtomTypeFactory factory = null;
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(InductivePartialCharges.class);
@@ -154,7 +155,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 		String symbol = null;
 		int atomicNumber = 0;
 		try {
-			ifac = XMLIsotopeFactory.getInstance(ac.getBuilder());
+			ifac = Isotopes.getInstance();
 			for (int i = 0; i < ac.getAtomCount(); i++) {
 				IAtom atom = ac.getAtom(i);
 				symbol = ac.getAtom(i).getSymbol();

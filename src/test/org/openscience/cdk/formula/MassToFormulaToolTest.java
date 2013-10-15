@@ -28,16 +28,17 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.IsotopePatternRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
@@ -49,7 +50,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class MassToFormulaToolTest extends CDKTestCase {
 
 	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-	private XMLIsotopeFactory ifac;
+	private IsotopeFactory ifac;
 	
 	/**
 	 *  Constructor for the MassToFormulaToolTest object.
@@ -58,7 +59,7 @@ public class MassToFormulaToolTest extends CDKTestCase {
 		
 		super();
     	try {
-			ifac = XMLIsotopeFactory.getInstance(builder);
+			ifac = Isotopes.getInstance();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

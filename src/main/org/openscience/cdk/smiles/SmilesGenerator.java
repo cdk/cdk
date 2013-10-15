@@ -24,6 +24,15 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.Vector;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -34,7 +43,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
-
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
  * isotope and formal charge information of the atoms. In addition to this it

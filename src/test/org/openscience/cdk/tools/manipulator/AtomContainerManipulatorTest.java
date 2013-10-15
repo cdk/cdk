@@ -44,7 +44,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -522,8 +522,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("Cl"));
     	
         double expectedMass = 0.0;
-        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
-        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
+        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"C"));
+        expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"Cl"));
         
     	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 

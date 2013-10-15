@@ -25,9 +25,11 @@
 package org.openscience.cdk.smiles;
 
 import com.google.common.collect.Maps;
+
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,6 +38,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
@@ -181,7 +184,7 @@ final class CDKToBeam {
             if (massNumber != null) {
                 // XXX: likely causing some overhead but okay for now
                 try {
-                    IsotopeFactory isotopes = IsotopeFactory.getInstance(a.getBuilder());
+                    IsotopeFactory isotopes = Isotopes.getInstance();
                     IIsotope       isotope  = isotopes.getMajorIsotope(a.getSymbol());
                     if (isotope == null || !isotope.getMassNumber().equals(massNumber))
                         ab.isotope(massNumber);        

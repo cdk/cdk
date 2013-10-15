@@ -42,6 +42,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -910,7 +911,7 @@ public class MM2BasedParameterSetReader {
     private Integer massNumber(int atomicNumber, double exactMass) throws IOException {
         String symbol = PeriodicTable.getSymbol(atomicNumber);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IIsotope isotope = XMLIsotopeFactory.getInstance(builder)
+        IIsotope isotope = Isotopes.getInstance()
                                          .getIsotope(symbol,
                                                      exactMass,
                                                      0.001);

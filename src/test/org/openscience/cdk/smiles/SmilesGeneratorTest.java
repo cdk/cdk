@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.smiles;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,9 +46,9 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -70,9 +73,6 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 
 /**
  * @author         steinbeck
@@ -175,7 +175,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.addBond(5, 12, IBond.Order.SINGLE);
         addImplicitHydrogens(mol1);
 
-		IsotopeFactory ifac = XMLIsotopeFactory.getInstance(mol1.getBuilder());
+		IsotopeFactory ifac = Isotopes.getInstance();
 		ifac.configureAtoms(mol1);
         
         define(mol1,
@@ -269,7 +269,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.addBond(8, 19, IBond.Order.SINGLE);
         
         addImplicitHydrogens(mol1);
-        IsotopeFactory ifac = XMLIsotopeFactory.getInstance(mol1.getBuilder());
+        IsotopeFactory ifac = Isotopes.getInstance();
 
 		ifac.configureAtoms(mol1);
         define(mol1,
@@ -360,7 +360,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol1.addAtom(new Atom("H", new Point2d(-0.84, -2.75)));
         mol1.addBond(11, 27, IBond.Order.SINGLE);
         addImplicitHydrogens(mol1);
-		IsotopeFactory ifac = XMLIsotopeFactory.getInstance(mol1.getBuilder());
+		IsotopeFactory ifac = Isotopes.getInstance();
 		ifac.configureAtoms(mol1);
         define(mol1,
                clockwise(mol1, 1, 0, 2, 4, 8),
@@ -410,7 +410,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol1.addBond(3, 5, IBond.Order.SINGLE);
 		// 4
         addImplicitHydrogens(mol1);
-		IsotopeFactory ifac = XMLIsotopeFactory.getInstance(mol1.getBuilder());
+		IsotopeFactory ifac = Isotopes.getInstance();
 		ifac.configureAtoms(mol1);
 
         mol1.setStereoElements(new ArrayList<IStereoElement>()); // clear existing
@@ -1111,7 +1111,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer m1 = sp.parseSmiles(s1);
         IAtomContainer m2 = sp.parseSmiles(s2);
 
-        IsotopeFactory fact = XMLIsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+        IsotopeFactory fact = Isotopes.getInstance();
         fact.configureAtoms(m1);
         fact.configureAtoms(m2);
 
@@ -1130,7 +1130,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String testSmiles = "C1(C(C(C(C(C1Br)Br)Br)Br)Br)Br";
         IAtomContainer mol = sp.parseSmiles(testSmiles);
-        IsotopeFactory fact = XMLIsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
+        IsotopeFactory fact = Isotopes.getInstance();
         fact.configureAtoms(mol);
         SmilesGenerator sg = new SmilesGenerator();
         String smiles = sg.createSMILES((IAtomContainer) mol);

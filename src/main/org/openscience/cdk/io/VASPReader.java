@@ -38,7 +38,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -231,7 +231,7 @@ public class VASPReader extends DefaultChemObjectReader {
             for(int i = 0; i < ntype; i++) {
                 for(int j = 0; j < natom_type[i] ; j++) {
                     try {
-                        atomType[atomIndex] = XMLIsotopeFactory.getInstance(sequence.getBuilder()).
+                        atomType[atomIndex] = Isotopes.getInstance().
                             getElement(anames[i]).getAtomicNumber();
                     } catch (Exception exception) {
                         throw new CDKException("Could not determine atomic number!", exception);
@@ -263,7 +263,7 @@ public class VASPReader extends DefaultChemObjectReader {
             for (int i=0; i<atomType.length; i++) {
                 String symbol = "Du";
                 try {
-                    symbol = XMLIsotopeFactory.getInstance(sequence.getBuilder()).
+                    symbol = Isotopes.getInstance().
                         getElement(atomType[i]).getSymbol();
                 } catch (Exception exception) {
                     throw new CDKException("Could not determine element symbol!", exception);

@@ -23,8 +23,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import Jama.EigenvalueDecomposition;
-import Jama.Matrix;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -32,7 +30,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -50,6 +48,9 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import Jama.EigenvalueDecomposition;
+import Jama.Matrix;
 
 /**
  * Eigenvalue based descriptor noted for its utility in chemical diversity.
@@ -364,7 +365,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         try {
             for (int i = 0; i < molecule.getAtomCount(); i++) {
                 if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-                diagvalue[counter] = XMLIsotopeFactory.getInstance(molecule.getBuilder()).
+                diagvalue[counter] = Isotopes.getInstance().
                         getMajorIsotope(molecule.getAtom(i).getSymbol()).getExactMass();
                 counter++;
             }

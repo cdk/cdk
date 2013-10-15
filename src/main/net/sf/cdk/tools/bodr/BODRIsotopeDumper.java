@@ -24,7 +24,8 @@ package net.sf.cdk.tools.bodr;
 
 import java.io.IOException;
 
-import org.openscience.cdk.config.BODRIsotopes;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -32,7 +33,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 /**
  * Support class that converts a BODR CML file with isotope data into a CDK-specific
  * test file. This class uses the {@link XMLIsotopeFactory} to creates input for the
- * {@link BODRIsotopes} class.
+ * {@link Isotopes} class.
  *
  * @author egonw
  */
@@ -45,7 +46,7 @@ public class BODRIsotopeDumper {
 	 * @throws IOException thrown when the input text file cannot be read
 	 */
 	public static void main(String[] args) throws IOException {
-		XMLIsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
+		IsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
 		for (IIsotope isotope : fac.getIsotopes()) {
 			String line = "";
 			line += isotope.getSymbol();

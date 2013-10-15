@@ -30,10 +30,11 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.formula.MolecularFormula;
-import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IMolecularFormula;
 
 /**
  * @cdk.module test-formula
@@ -41,14 +42,14 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 	
 	private static IChemObjectBuilder builder;
-	private static XMLIsotopeFactory ifac;
+	private static IsotopeFactory ifac;
 	
 	/**
      *  The JUnit setup method
      */
     @BeforeClass public static void setUp() throws Exception {
     	builder = DefaultChemObjectBuilder.getInstance();
-    	ifac = XMLIsotopeFactory.getInstance(builder);
+    	ifac = Isotopes.getInstance();
     	setRule(IsotopePatternRule.class);
     }
 

@@ -32,17 +32,18 @@ import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.ToleranceRangeRule;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IMolecularFormulaSet;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
@@ -212,7 +213,7 @@ public class MassToFormulaTool {
 	private void callDefaultRestrictions() throws  CDKException, IOException {
 		
 		List<IRule> rules1 = new ArrayList<IRule>();
-		XMLIsotopeFactory ifac = XMLIsotopeFactory.getInstance(builder);
+		IsotopeFactory ifac = Isotopes.getInstance();
 		
 		// restriction for occurrence elements
 		MolecularFormulaRange mfRange1 = new MolecularFormulaRange();

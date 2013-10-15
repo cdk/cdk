@@ -28,19 +28,18 @@
  */
 package org.openscience.cdk.structgen;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
-
-import java.util.List;
 
 /**
  * @cdk.module test-structgen
@@ -56,7 +55,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	@Test public void testVicinitySampler_sample() throws Exception {
 	    IAtomContainer mol = MoleculeFactory.makeEthylPropylPhenantren();
 		
-	    XMLIsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+	    Isotopes.getInstance().configureAtoms(mol);
 		addImplicitHydrogens(mol);
 		
 		IAtomContainer temp = null;
@@ -77,7 +76,7 @@ public class VicinitySamplerTest extends CDKTestCase {
 	public  void testCycloButene() throws Exception {
 	    IAtomContainer mol = parser.parseSmiles("C=CC=C");
 		
-	    XMLIsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+	    Isotopes.getInstance().configureAtoms(mol);
 		addImplicitHydrogens(mol);
 		
 		IAtomContainer temp = null;

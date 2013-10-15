@@ -33,8 +33,8 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IIsotope;
 
 /**
- * A read-only class used by {@link BODRIsotopes} for the natural elements. This class is not to
- * be used than by only {@link BODRIsotopes}.
+ * A read-only class used by {@link Isotopes} for the natural elements. This class is not to
+ * be used than by only {@link Isotopes}.
  * 
  * @author      egonw
  * @cdk.module  core 

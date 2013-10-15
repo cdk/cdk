@@ -22,7 +22,8 @@ package org.openscience.cdk.validate;
 import java.util.Iterator;
 
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -180,7 +181,7 @@ public class BasicValidator extends AbstractValidator {
         } else {
             // check whether atom is really an element
             try {
-                XMLIsotopeFactory isotopeFactory = XMLIsotopeFactory.getInstance(atom.getBuilder());
+                IsotopeFactory isotopeFactory = Isotopes.getInstance();
                 IElement element = isotopeFactory.getElement(atom.getSymbol());
                 if (element == null) {
                     isElementOrPseudo.setDetails(
@@ -272,7 +273,7 @@ public class BasicValidator extends AbstractValidator {
             "Isotope with this mass number is not known for this element."
         );
         try {
-            XMLIsotopeFactory isotopeFac = XMLIsotopeFactory.getInstance(isotope.getBuilder());
+            IsotopeFactory isotopeFac = Isotopes.getInstance();
             IIsotope[] isotopes = isotopeFac.getIsotopes(isotope.getSymbol());
             if (isotope.getMassNumber() != 0) {
                 boolean foundKnownIsotope = false;

@@ -33,7 +33,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -480,7 +480,7 @@ public class PDBConvention extends CMLCoreModule {
                 }
                 currentAtom.setSymbol(symbol);
                 try {
-                	XMLIsotopeFactory.getInstance(currentAtom.getBuilder()).configure(currentAtom);
+                	Isotopes.getInstance().configure(currentAtom);
 				} catch (Exception e) {
 					logger.error("Could not configure atom: " + currentAtom);
 					logger.debug(e);

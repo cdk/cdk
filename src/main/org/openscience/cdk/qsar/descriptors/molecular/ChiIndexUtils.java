@@ -18,9 +18,16 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -29,12 +36,6 @@ import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.qsar.AtomValenceTool;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Utility methods for chi index calculations.
@@ -133,7 +134,7 @@ class ChiIndexUtils {
      */
     public static double evalValenceIndex(IAtomContainer atomContainer, List fragList) throws CDKException {
         try {
-            XMLIsotopeFactory ifac = XMLIsotopeFactory.getInstance(atomContainer.getBuilder());
+            IsotopeFactory ifac = Isotopes.getInstance();
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
             throw new CDKException("IO problem occured when using the CDK atom config\n"+e.getMessage(), e);

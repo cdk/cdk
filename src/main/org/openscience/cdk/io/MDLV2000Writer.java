@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.XMLIsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -638,7 +638,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             if (!(atom instanceof IPseudoAtom)) {
                 Integer atomicMass = atom.getMassNumber();
                 if (atomicMass != null) {
-                	int majorMass = XMLIsotopeFactory.getInstance(atom.getBuilder()).getMajorIsotope(atom.getSymbol()).getMassNumber();
+                	int majorMass = Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getMassNumber();
                 	if (atomicMass != majorMass) {
                 		writer.write("M  ISO  1 ");
                 		writer.write(formatMDLInt(i+1,3));
