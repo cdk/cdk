@@ -26,8 +26,10 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.AtomTypeModelTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
+import org.openscience.cdk.aromaticity.DaylightModelTest;
 import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetectorTest;
 import org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest;
+import org.openscience.cdk.aromaticity.PiBondModelTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
 import org.openscience.cdk.coverage.StandardCoverageTest;
 import org.openscience.cdk.dict.DictRefTest;
@@ -215,7 +217,10 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     RingSearchTest_NonCyclic.class,
     RingSearchTest_SpiroRings.class,
 
+    // aromaticity models       
     AtomTypeModelTest.class,
-    ExocyclicAtomTypeModelTest.class
+    ExocyclicAtomTypeModelTest.class,
+    PiBondModelTest.class,
+    DaylightModelTest.class
 })
 public class MstandardTests {}
