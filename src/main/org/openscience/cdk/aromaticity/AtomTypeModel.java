@@ -54,8 +54,8 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization;
  * @author John May
  * @cdk.module standard
  */
-@TestClass("org.openscience.cdk.aromaticity.AtomTypeModelTest," +
-                   "org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest")
+@TestClass("org.openscience.cdk.aromaticity.AtomTypeModelTest")
+// mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
 final class AtomTypeModel extends ElectronDonation {
 
     /** Predefined electron contribution for several atom types. */

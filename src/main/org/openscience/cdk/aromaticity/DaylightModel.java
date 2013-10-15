@@ -79,7 +79,7 @@ final class DaylightModel extends ElectronDonation {
     private static final int SELENIUM   = 34;
 
     /** @inheritDoc */
-    @TestMethod("benzen,furan,pyrrole")
+    @TestMethod("benzene,furan,pyrrole")
     @Override int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 
         int n = container.getAtomCount();
