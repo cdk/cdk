@@ -31,6 +31,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTest;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcherTestFileReposTest;
 import org.openscience.cdk.atomtype.RepeatedCDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
+import org.openscience.cdk.config.BODRIsotopesTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.IsotopeFactoryTest;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest;
@@ -87,6 +88,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
 
     // cdk.config
     IsotopeFactoryTest.class,
+    BODRIsotopesTest.class,
     AtomTypeFactoryTest.class,
     CDKBasedAtomTypeConfiguratorTest.class,
     TXTBasedAtomTypeConfiguratorTest.class,

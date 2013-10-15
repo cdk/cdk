@@ -1,3 +1,4 @@
+org/openscience/cdk/config/data/isotopes.txt
 org/openscience/cdk/config/data/*_atomtypes.txt
 org/openscience/cdk/config/data/*_atomtypes.xml
 org/openscience/cdk/config/data/isotopes.xml
