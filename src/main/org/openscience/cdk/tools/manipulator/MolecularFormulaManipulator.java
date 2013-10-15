@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -530,7 +531,7 @@ public class MolecularFormulaManipulator {
 				IIsotope isotope = formula.getBuilder().newInstance(IIsotope.class, RecentElementSymbol);
 				if (assumeMajorIsotope) {
 					try {
-						isotope = IsotopeFactory.getInstance(isotope.getBuilder()).getMajorIsotope(RecentElementSymbol);
+						isotope = XMLIsotopeFactory.getInstance(isotope.getBuilder()).getMajorIsotope(RecentElementSymbol);
 					} catch (IOException e) {
 						throw new RuntimeException("Cannot load the IsotopeFactory");
 					}
@@ -616,7 +617,7 @@ public class MolecularFormulaManipulator {
 		for (IIsotope isotope : formula.isotopes()) {
 			if (isotope.getExactMass() == CDKConstants.UNSET) {
 				try {
-					mass += IsotopeFactory.getInstance(builder).getMajorIsotope(isotope.getSymbol()).getExactMass() *
+					mass += XMLIsotopeFactory.getInstance(builder).getMajorIsotope(isotope.getSymbol()).getExactMass() *
 					formula.getIsotopeCount(isotope);
 				} catch (IOException e) {
 					throw new RuntimeException("Could not instantiate the IsotopeFactory.");
@@ -658,7 +659,7 @@ public class MolecularFormulaManipulator {
 		double mass = 0.0;
 		for (IIsotope isotope : formula.isotopes()) {
 			try {
-				IIsotope isotope2 = IsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
+				IIsotope isotope2 = XMLIsotopeFactory.getInstance(formula.getBuilder()).getMajorIsotope(isotope.getSymbol());
 				mass += isotope2.getMassNumber() * formula.getIsotopeCount(isotope);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -678,7 +679,7 @@ public class MolecularFormulaManipulator {
 		double mass = 0.0;
 		IsotopeFactory factory;
 		try {
-			factory = IsotopeFactory.getInstance(formula.getBuilder());
+			factory = XMLIsotopeFactory.getInstance(formula.getBuilder());
 		} catch (IOException e) {
 			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		}
@@ -700,7 +701,7 @@ public class MolecularFormulaManipulator {
 		double mass = 0.0;
 		IsotopeFactory factory;
 		try {
-			factory = IsotopeFactory.getInstance(formula.getBuilder());
+			factory = XMLIsotopeFactory.getInstance(formula.getBuilder());
 		} catch (IOException e) {
 			throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		}

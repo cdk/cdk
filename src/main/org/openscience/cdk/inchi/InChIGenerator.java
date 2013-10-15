@@ -48,7 +48,7 @@ import net.sf.jniinchi.JniInchiWrapper;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -205,9 +205,9 @@ public class InChIGenerator {
         }
 
         // Process atoms
-        IsotopeFactory ifact = null;
+        XMLIsotopeFactory ifact = null;
         try {
-            ifact = IsotopeFactory.getInstance(atomContainer.getBuilder());
+            ifact = XMLIsotopeFactory.getInstance(atomContainer.getBuilder());
         } catch (Exception e) {
             // Do nothing
         }

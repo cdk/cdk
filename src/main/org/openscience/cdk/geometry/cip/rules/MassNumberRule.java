@@ -26,7 +26,7 @@ import java.io.IOException;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.geometry.cip.ILigand;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 class MassNumberRule implements ISequenceSubRule<ILigand> {
 
     ILoggingTool logger = LoggingToolFactory.createLoggingTool(MassNumberRule.class);
-    IsotopeFactory factory;
+    XMLIsotopeFactory factory;
 
     /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
@@ -53,7 +53,7 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
     private void ensureFactory(ILigand ligand) {
         if (factory == null) {
             try {
-                factory = IsotopeFactory.getInstance(
+                factory = XMLIsotopeFactory.getInstance(
                     ligand.getCentralAtom().getBuilder()
                 );
             } catch (IOException exception) {

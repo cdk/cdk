@@ -23,6 +23,12 @@
  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -38,7 +44,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -57,12 +63,6 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-standard
@@ -522,8 +522,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("Cl"));
     	
         double expectedMass = 0.0;
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
+        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
+        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
         
     	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 

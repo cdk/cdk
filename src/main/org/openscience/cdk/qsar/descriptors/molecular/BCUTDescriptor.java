@@ -32,7 +32,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
@@ -364,7 +364,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         try {
             for (int i = 0; i < molecule.getAtomCount(); i++) {
                 if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-                diagvalue[counter] = IsotopeFactory.getInstance(molecule.getBuilder()).
+                diagvalue[counter] = XMLIsotopeFactory.getInstance(molecule.getBuilder()).
                         getMajorIsotope(molecule.getAtom(i).getSymbol()).getExactMass();
                 counter++;
             }

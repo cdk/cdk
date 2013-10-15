@@ -28,6 +28,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.MolecularFormula;
 import org.openscience.cdk.interfaces.IAtom;
@@ -64,7 +65,7 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 		super();
 		try {
-			ifac = IsotopeFactory.getInstance(builder);
+			ifac = XMLIsotopeFactory.getInstance(builder);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -285,8 +286,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
 		
 		Assert.assertEquals(28, MolecularFormulaManipulator.getAtomCount(mf2));
 		Assert.assertEquals(2, mf2.getIsotopeCount());
-		IIsotope carbon = IsotopeFactory.getInstance(builder).getMajorIsotope("C");
-		IIsotope hydrogen = IsotopeFactory.getInstance(builder).getMajorIsotope("H");
+		IIsotope carbon = XMLIsotopeFactory.getInstance(builder).getMajorIsotope("C");
+		IIsotope hydrogen = XMLIsotopeFactory.getInstance(builder).getMajorIsotope("H");
 		double totalMass = carbon.getExactMass()*11;
 		totalMass += hydrogen.getExactMass()*17;
 		Assert.assertEquals(totalMass, MolecularFormulaManipulator.getTotalExactMass(mf2), 0.0000001);
@@ -379,8 +380,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class,"Cl"));
     	
         double expectedMass = 0.0;
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
-        expectedMass += IsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
+        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"C"));
+        expectedMass += XMLIsotopeFactory.getInstance(builder).getNaturalMass(builder.newInstance(IElement.class,"Cl"));
         
     	double totalExactMass = MolecularFormulaManipulator.getNaturalExactMass(formula);
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
@@ -401,8 +402,8 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         formula.addIsotope(builder.newInstance(IIsotope.class,"H"), 4);
 
         double expectedMass = 0.0;
-        expectedMass += IsotopeFactory.getInstance(builder).getMajorIsotope("C").getExactMass();
-        expectedMass += 4.0*IsotopeFactory.getInstance(builder).getMajorIsotope("H").getExactMass();
+        expectedMass += XMLIsotopeFactory.getInstance(builder).getMajorIsotope("C").getExactMass();
+        expectedMass += 4.0*XMLIsotopeFactory.getInstance(builder).getMajorIsotope("H").getExactMass();
 
         double totalExactMass = MolecularFormulaManipulator.getMajorIsotopeMass(formula);
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);

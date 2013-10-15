@@ -82,21 +82,21 @@ public class BODRIsotopesTest extends CDKTestCase {
 
     @Test
     public void testGetElement_String() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("Br");
 		Assert.assertEquals(35, element.getAtomicNumber().intValue());
 	}    
 
     @Test
     public void testGetElement_int() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement(6);
 		Assert.assertEquals("C", element.getSymbol());
 	}    
 
     @Test
     public void testGetElementSymbol_int() throws Exception {
-		IsotopeFactory elfac = IsotopeFactory.getInstance(new ChemObject().getBuilder());
+		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         String symbol = elfac.getElementSymbol(8);
 		Assert.assertEquals("O", symbol);
 	}    

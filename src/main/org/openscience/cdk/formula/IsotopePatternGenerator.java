@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 public class IsotopePatternGenerator{
 
 	private IChemObjectBuilder builder = null;
-	private IsotopeFactory isoFactory;
+	private XMLIsotopeFactory isoFactory;
 	private IsotopePattern abundance_Mass = null;
 	
 	private ILoggingTool logger =
@@ -85,7 +85,7 @@ public class IsotopePatternGenerator{
     	
 		if(builder==null){
 			try {
-				isoFactory = IsotopeFactory.getInstance(molFor.getBuilder());
+				isoFactory = XMLIsotopeFactory.getInstance(molFor.getBuilder());
 				builder = molFor.getBuilder();
 			} catch (Exception e) {
 				e.printStackTrace();

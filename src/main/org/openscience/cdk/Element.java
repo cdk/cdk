@@ -46,7 +46,7 @@ import java.io.Serializable;
  *
  * @cdk.keyword element
  *
- * @see org.openscience.cdk.config.IsotopeFactory
+ * @see org.openscience.cdk.config.XMLIsotopeFactory
  */
 public class Element extends ChemObject implements Serializable, IElement, Cloneable
 {

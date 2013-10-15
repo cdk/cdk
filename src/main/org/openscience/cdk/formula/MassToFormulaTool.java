@@ -32,7 +32,7 @@ import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.ElementRule;
@@ -212,7 +212,7 @@ public class MassToFormulaTool {
 	private void callDefaultRestrictions() throws  CDKException, IOException {
 		
 		List<IRule> rules1 = new ArrayList<IRule>();
-		IsotopeFactory ifac = IsotopeFactory.getInstance(builder);
+		XMLIsotopeFactory ifac = XMLIsotopeFactory.getInstance(builder);
 		
 		// restriction for occurrence elements
 		MolecularFormulaRange mfRange1 = new MolecularFormulaRange();

@@ -23,19 +23,19 @@
  */
 package org.openscience.cdk.templates;
 
+import javax.vecmath.Point2d;
+
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import javax.vecmath.Point2d;
 
 /**
  * This class contains methods for generating simple organic molecules and is
@@ -1899,7 +1899,7 @@ public class TestMoleculeFactory {
 
     private static void configureAtoms(IAtomContainer mol) {
         try {
-            IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+        	XMLIsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
         } catch (Exception exc) {
             logger.error("Could not configure molecule!");
             logger.debug(exc);

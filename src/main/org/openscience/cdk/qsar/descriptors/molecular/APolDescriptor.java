@@ -27,7 +27,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -163,14 +163,14 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      *@param  container  The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return The sum of atomic polarizabilities
-     * {@link IsotopeFactory}
+     * {@link XMLIsotopeFactory}
      */
     @TestMethod("testCalculate_IAtomContainer,testAPolDescriptorTest")
     public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
         int atomicNumber;
         try {
-            IsotopeFactory ifac = IsotopeFactory.getInstance(container.getBuilder());			
+            XMLIsotopeFactory ifac = XMLIsotopeFactory.getInstance(container.getBuilder());			
             IElement element;
             String symbol;
             for (IAtom atom : container.atoms()) {

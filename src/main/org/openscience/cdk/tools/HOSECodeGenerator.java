@@ -36,6 +36,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
@@ -177,7 +178,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	private void ensureIsotopeFactory(IChemObjectBuilder builder) throws CDKException {
 		if (isotopeFac == null) {
 			try {
-	            isotopeFac = IsotopeFactory.getInstance(builder);
+	            isotopeFac = XMLIsotopeFactory.getInstance(builder);
             } catch (IOException e) {
 	            throw new CDKException("Could not instantiate the IsotopeFactory: " + e.getMessage(), e);
             }

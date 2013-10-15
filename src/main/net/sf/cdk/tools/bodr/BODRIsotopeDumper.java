@@ -25,7 +25,7 @@ package net.sf.cdk.tools.bodr;
 import java.io.IOException;
 
 import org.openscience.cdk.config.BODRIsotopes;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
@@ -45,7 +45,7 @@ public class BODRIsotopeDumper {
 	 * @throws IOException thrown when the input text file cannot be read
 	 */
 	public static void main(String[] args) throws IOException {
-		IsotopeFactory fac = IsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
+		XMLIsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
 		for (IIsotope isotope : fac.getIsotopes()) {
 			String line = "";
 			line += isotope.getSymbol();

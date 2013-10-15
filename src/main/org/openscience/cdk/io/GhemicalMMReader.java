@@ -36,6 +36,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -245,7 +246,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     IAtomContainer container = model.getBuilder().newInstance(IAtomContainer.class);
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            IAtom atom = model.getBuilder().newInstance(IAtom.class,IsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
+                            IAtom atom = model.getBuilder().newInstance(IAtom.class,XMLIsotopeFactory.getInstance(container.getBuilder()).getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);

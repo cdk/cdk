@@ -25,7 +25,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -124,9 +124,9 @@ public class KabschAlignment {
     
     private double[] getAtomicMasses(IAtom[] a) {
         double[] am = new double[a.length];
-        IsotopeFactory factory = null;
+        XMLIsotopeFactory factory = null;
         try {
-            factory = IsotopeFactory.getInstance(a[0].getBuilder());
+            factory = XMLIsotopeFactory.getInstance(a[0].getBuilder());
         } catch (Exception e) {
         	logger.error("Error while instantiating the isotope factory: ",
         		e.getMessage());
@@ -142,9 +142,9 @@ public class KabschAlignment {
     
     private double[] getAtomicMasses(IAtomContainer ac) {
         double[] am = new double[ac.getAtomCount()];
-        IsotopeFactory factory = null;
+        XMLIsotopeFactory factory = null;
         try {
-            factory = IsotopeFactory.getInstance(ac.getAtom(0).getBuilder());
+            factory = XMLIsotopeFactory.getInstance(ac.getAtom(0).getBuilder());
         } catch (Exception e) {
         	logger.error("Error while instantiating the isotope factory: ",
             	e.getMessage());

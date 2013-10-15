@@ -27,7 +27,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.formula.rules.ChargeRule;
 import org.openscience.cdk.formula.rules.IRule;
 import org.openscience.cdk.formula.rules.MMElementRule;
@@ -43,7 +43,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 public class MolecularFormulaCheckerTest extends CDKTestCase {
 
 	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-	private IsotopeFactory ifac;
+	private XMLIsotopeFactory ifac;
 
 	/**
 	 *  Constructor for the MolecularFormulaCheckerTest object.
@@ -53,7 +53,7 @@ public class MolecularFormulaCheckerTest extends CDKTestCase {
 		
 		super();
     	try {
-			ifac = IsotopeFactory.getInstance(builder);
+			ifac = XMLIsotopeFactory.getInstance(builder);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

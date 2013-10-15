@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -1387,7 +1387,7 @@ public class MoleculeFactory {
 	{
 		try
 		{
-            IsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
+			XMLIsotopeFactory.getInstance(mol.getBuilder()).configureAtoms(mol);
 		}
 		catch(Exception exc)
 		{

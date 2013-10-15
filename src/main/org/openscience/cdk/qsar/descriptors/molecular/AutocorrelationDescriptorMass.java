@@ -22,7 +22,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.matrix.TopologicalMatrix;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,7 +55,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     private static double scaledAtomicMasses(IElement element)
             throws java.io.IOException, ClassNotFoundException {
 
-    	IsotopeFactory isofac = IsotopeFactory.getInstance(element.getBuilder());
+    	XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(element.getBuilder());
         double realmasses = isofac.getNaturalMass(element);
         return (realmasses / CARBON_MASS);
 

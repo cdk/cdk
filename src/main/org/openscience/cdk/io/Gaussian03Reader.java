@@ -32,6 +32,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -264,7 +265,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
             }
             String symbol = "Du";
             try {
-                symbol = IsotopeFactory.getInstance(model.getBuilder()).getElementSymbol(atomicNumber);
+                symbol = XMLIsotopeFactory.getInstance(model.getBuilder()).getElementSymbol(atomicNumber);
             } catch (Exception exception) {
                 throw new CDKException("Could not determine element symbol!", exception);
             }

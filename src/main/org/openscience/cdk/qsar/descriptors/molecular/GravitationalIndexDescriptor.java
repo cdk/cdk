@@ -30,7 +30,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -194,11 +194,11 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         if (!GeometryTools.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
-        IsotopeFactory factory = null;
+        XMLIsotopeFactory factory = null;
         double mass1;
         double mass2;
         try {
-            factory = IsotopeFactory.getInstance(container.getBuilder());
+            factory = XMLIsotopeFactory.getInstance(container.getBuilder());
         } catch (Exception e) {
             logger.debug(e);
         }

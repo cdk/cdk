@@ -41,7 +41,7 @@ import java.util.Vector;
 
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
@@ -581,7 +581,7 @@ public class MMFF94BasedParameterSetReader {
     private Integer massNumber(int atomicNumber, double exactMass) throws IOException {
         String symbol = PeriodicTable.getSymbol(atomicNumber);
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-        IIsotope isotope = IsotopeFactory.getInstance(builder)
+        IIsotope isotope = XMLIsotopeFactory.getInstance(builder)
                                          .getIsotope(symbol,
                                                      exactMass,
                                                      0.001);

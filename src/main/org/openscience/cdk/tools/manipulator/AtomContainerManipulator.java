@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -190,7 +191,7 @@ public class AtomContainerManipulator {
 		 double mass = 0.0;
 		 IsotopeFactory factory;
 		 try {
-			 factory = IsotopeFactory.getInstance(atomContainer.getBuilder());
+			 factory = XMLIsotopeFactory.getInstance(atomContainer.getBuilder());
 		 } catch (IOException e) {
 			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
 		 }

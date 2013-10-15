@@ -24,6 +24,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -40,6 +41,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -210,7 +212,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     	logger.info("Reading ATOM block");
     	IsotopeFactory isotopeFactory;
         try {
-	        isotopeFactory = IsotopeFactory.getInstance(readData.getBuilder());
+	        isotopeFactory = XMLIsotopeFactory.getInstance(readData.getBuilder());
         } catch (IOException exception) {
 	        throw new CDKException("Could not initiate the IsotopeFactory.", exception);
         }

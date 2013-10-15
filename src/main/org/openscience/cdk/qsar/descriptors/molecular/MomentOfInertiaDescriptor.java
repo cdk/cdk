@@ -23,7 +23,7 @@ import javax.vecmath.Point3d;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -181,10 +181,10 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         IAtomContainer clone;
-        IsotopeFactory factory;
+        XMLIsotopeFactory factory;
         try {
             clone = (IAtomContainer)container.clone();
-            factory = IsotopeFactory.getInstance(container.getBuilder());
+            factory = XMLIsotopeFactory.getInstance(container.getBuilder());
             factory.configureAtoms(clone);
         } catch (Exception e) {
             logger.debug(e);

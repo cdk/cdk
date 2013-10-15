@@ -34,6 +34,7 @@ import java.util.Comparator;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -153,7 +154,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
   private double getMolecularWeight(IAtomContainer atomContainer) throws CDKException {
       double mw = 0.0;
       try {
-            final IsotopeFactory isotopeFactory = IsotopeFactory.getInstance(atomContainer.getBuilder());
+            final IsotopeFactory isotopeFactory = XMLIsotopeFactory.getInstance(atomContainer.getBuilder());
 
             for (IAtom atom : atomContainer.atoms()) {
                 if (!atom.getSymbol().equals("H")) {

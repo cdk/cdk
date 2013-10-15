@@ -29,16 +29,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
-import org.openscience.cdk.tools.ILoggingTool;
-import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * List of isotopes. Data is taken from the Blue Obelisk Data Repository,
@@ -48,12 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module  core 
  * @cdk.githash
  */
-public class BODRIsotopes {
-
-	private List<IIsotope> isotopes = new ArrayList<IIsotope>();
-    private Map<String, IIsotope> majorIsotopes = null;
-    private static ILoggingTool logger =
-       LoggingToolFactory.createLoggingTool(BODRIsotopes.class);
+public class BODRIsotopes extends IsotopeFactory {
 
 	private static BODRIsotopes myself = null;
 
@@ -64,6 +52,7 @@ public class BODRIsotopes {
 
 	private BODRIsotopes() throws IOException {
 		String configFile = "org/openscience/cdk/config/data/isotopes.txt";
+		isotopes = new ArrayList<IIsotope>();
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 		String line = reader.readLine();
@@ -82,17 +71,6 @@ public class BODRIsotopes {
 			line = reader.readLine();
 		}
         majorIsotopes = new HashMap<String, IIsotope>();
-	}
-
-	/**
-	 *  Returns the number of isotopes defined by this class.
-	 *
-	 *@return    The size value
-	 */
-    @TestMethod("testGetSize")
-    public int getSize()
-	{
-		return isotopes.size();
 	}
 
 	/**
@@ -211,17 +189,6 @@ public class BODRIsotopes {
     }
 
     /**
-     * Checks whether the given element exists.
-     *
-     * @param  elementName   The element name to test
-     * @return               True is the element exists, false otherwise
-     */
-    @TestMethod("testIsElement_String")
-    public boolean isElement(String elementName) {
-        return (getElement(elementName) != null);
-    }
-    
-    /**
      *  Returns the most abundant (major) isotope whose symbol equals element.
      *
      *@param  symbol  the symbol of the element in question
@@ -250,117 +217,4 @@ public class BODRIsotopes {
         return major;
     }
 
-	/**
-	 *  Returns an Element with a given element symbol.
-	 *
-	 *@param  symbol  The element symbol for the requested element
-	 *@return         The configured element
-	 */
-    @TestMethod("testGetElement_String")
-    public IElement getElement(String symbol)
-	{
-        return getMajorIsotope(symbol);
-	}
-
-
-	/**
-	 *  Returns an element according to a given atomic number.
-	 *
-	 *@param  atomicNumber  The elements atomic number
-	 *@return               The Element
-	 */
-    @TestMethod("testGetElement_int")
-    public IElement getElement(int atomicNumber)
-	{
-        return getMajorIsotope(atomicNumber);
-	}
-
-    /**
-     * Returns the symbol matching the element with the given atomic number.
-     *
-     * @param  atomicNumber  The elements atomic number
-     * @return               The symbol of the Element
-     */
-    @TestMethod("testGetElementSymbol_int")
-    public String getElementSymbol(int atomicNumber) {
-        IIsotope isotope = getMajorIsotope(atomicNumber);
-        return isotope.getSymbol();
-    }
-
-	/**
-	 * Configures an atom. Finds the correct element type
-	 * by looking at the atoms element symbol. If the element symbol is not recognized, it will
-	 * throw an {@link IllegalArgumentException}.
-	 *
-	 * @param  atom  The atom to be configured
-	 * @return       The configured atom
-	 */
-    @TestMethod("testConfigure_IAtom")
-    public IAtom configure(IAtom atom)
-	{
-		IIsotope isotope;
-
-        if (atom.getMassNumber() == null) isotope = getMajorIsotope(atom.getSymbol());
-        else isotope = getIsotope(atom.getSymbol(), atom.getMassNumber());
-
-        if (isotope == null)
-        	throw new IllegalArgumentException("Cannot configure an unrecognized element: " + atom);
-		return configure(atom, isotope);
-	}
-
-
-	/**
-	 *  Configures an atom to have all the data of the
-	 *  given isotope.
-	 *
-	 *@param  atom     The atom to be configure
-	 *@param  isotope  The isotope to read the data from
-	 *@return          The configured atom
-	 */
-    @TestMethod("testConfigure_IAtom_IIsotope")
-    public IAtom configure(IAtom atom, IIsotope isotope)
-	{
-		atom.setMassNumber(isotope.getMassNumber());
-		atom.setSymbol(isotope.getSymbol());
-		atom.setExactMass(isotope.getExactMass());
-		atom.setAtomicNumber(isotope.getAtomicNumber());
-		atom.setNaturalAbundance(isotope.getNaturalAbundance());
-		return atom;
-	}
-
-
-	/**
-	 *  Configures atoms in an AtomContainer to 
-	 *  carry all the correct data according to their element type.
-	 *
-	 *@param  container  The AtomContainer to be configured
-	 */
-    @TestMethod("testConfigureAtoms_IAtomContainer")
-    public void configureAtoms(IAtomContainer container)
-	{
-		for (int f = 0; f < container.getAtomCount(); f++)
-		{
-			configure(container.getAtom(f));
-		}
-	}
-    /**
-	 *  Gets the natural mass of this element, defined as average of masses of isotopes, 
-	 *  weighted by abundance.
-	 *
-	 * @param  element                     the element in question
-	 * @return                             The natural mass value
-	 */
-    @TestMethod("testGetNaturalMass_IElement")
-	public double getNaturalMass(IElement element){
-		IIsotope[] isotopes = getIsotopes(element.getSymbol());
-		double summedAbundances = 0;
-		double summedWeightedAbundances = 0;
-		double getNaturalMass = 0;
-		for (int i = 0; i < isotopes.length; i++) {
-			summedAbundances += isotopes[i].getNaturalAbundance();
-			summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
-			getNaturalMass = summedWeightedAbundances / summedAbundances;
-		}
-		return getNaturalMass;
-	}
 }
