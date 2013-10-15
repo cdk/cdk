@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainerSet;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
@@ -33,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.SMILESReader;
-import org.openscience.cdk.tools.CDKHydrogenAdder;
+import org.openscience.cdk.silent.AtomContainerSet;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
