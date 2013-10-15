@@ -156,9 +156,16 @@ public class PiBondModelTest {
              -1, 1, 1, -1, 1, 1, 1, 1);
     }
 
-    @Test public void pyridinone() throws Exception {
+    // 1-oxide pyridine
+    @Test public void oxidepyridine() throws Exception {
         test(smiles("O=N1=CC=CC=C1"),
              -1, 1, 1, 1, 1, 1, 1);
+    }
+
+    // 2-Pyridone
+    @Test public void pyridinone() throws Exception {
+        test(smiles("O=C1NC=CC=C1"),
+             -1, -1, -1, 1, 1, 1, 1);
     }
 
     static IAtomContainer smiles(String smi) throws Exception {
