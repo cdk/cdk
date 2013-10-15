@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * Checks the functionality of the IsotopeFactory
  *
- * @cdk.module test-core
+ * @cdk.module test-extra
  */
 public class IsotopeHandlerTest extends CDKTestCase {
 

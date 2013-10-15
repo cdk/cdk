@@ -24,6 +24,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.CloneAtomContainerTest;
+import org.openscience.cdk.config.XMLIsotopeFactoryTest;
+import org.openscience.cdk.config.isotopes.IsotopeHandlerTest;
+import org.openscience.cdk.config.isotopes.IsotopeReaderTest;
 import org.openscience.cdk.coverage.ExtraCoverageTest;
 import org.openscience.cdk.geometry.RDFCalculatorTest;
 import org.openscience.cdk.geometry.alignment.KabschAlignmentTest;
@@ -51,6 +54,9 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     ExtraCoverageTest.class,
+    XMLIsotopeFactoryTest.class,
+    IsotopeReaderTest.class,
+    IsotopeHandlerTest.class,        
     CloneAtomContainerTest.class,
     RDFCalculatorTest.class,
     KabschAlignmentTest.class,

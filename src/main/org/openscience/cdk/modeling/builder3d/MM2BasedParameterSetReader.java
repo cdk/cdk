@@ -43,7 +43,6 @@ import java.util.Vector;
 import org.openscience.cdk.AtomType;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
-import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;

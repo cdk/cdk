@@ -52,7 +52,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * </isotopeList>
  * </pre>
  *
- * @cdk.module core
+ * @cdk.module  extra
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")

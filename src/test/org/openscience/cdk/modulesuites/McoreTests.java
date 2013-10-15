@@ -33,15 +33,12 @@ import org.openscience.cdk.atomtype.RepeatedCDKAtomTypeMatcherSMILESTest;
 import org.openscience.cdk.config.AtomTypeFactoryTest;
 import org.openscience.cdk.config.IsotopesTest;
 import org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest;
-import org.openscience.cdk.config.XMLIsotopeFactoryTest;
 import org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest;
 import org.openscience.cdk.config.atomtypes.AtomTypeHandlerTest;
 import org.openscience.cdk.config.atomtypes.AtomTypeReaderTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeHandlerTest;
 import org.openscience.cdk.config.atomtypes.OWLAtomTypeReaderTest;
-import org.openscience.cdk.config.isotopes.IsotopeHandlerTest;
-import org.openscience.cdk.config.isotopes.IsotopeReaderTest;
 import org.openscience.cdk.coverage.CoreCoverageTest;
 import org.openscience.cdk.exception.CDKExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
@@ -62,8 +59,8 @@ import org.openscience.cdk.graph.matrix.AdjacencyMatrixTest;
 import org.openscience.cdk.ringsearch.JumboCyclicVertexSearchTest;
 import org.openscience.cdk.ringsearch.RegularCyclicVertexSearchTest;
 import org.openscience.cdk.ringsearch.RingSearchTest;
-import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 import org.openscience.cdk.stereo.DoubleBondStereochemistryTest;
+import org.openscience.cdk.stereo.TetrahedralChiralityTest;
 import org.openscience.cdk.tools.DataFeaturesTest;
 import org.openscience.cdk.tools.LoggingToolFactoryTest;
 import org.openscience.cdk.tools.SystemOutLoggingToolTest;
@@ -87,7 +84,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     DataFeaturesTest.class,
 
     // cdk.config
-    XMLIsotopeFactoryTest.class,
     IsotopesTest.class,
     AtomTypeFactoryTest.class,
     CDKBasedAtomTypeConfiguratorTest.class,
@@ -97,8 +93,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     AtomTypeHandlerTest.class,
     OWLAtomTypeReaderTest.class,
     OWLAtomTypeHandlerTest.class,
-    IsotopeReaderTest.class,
-    IsotopeHandlerTest.class,        
     PeriodicTableElementTest.class,
     PeriodicTableTest.class,
     ElementPTFactoryTest.class,

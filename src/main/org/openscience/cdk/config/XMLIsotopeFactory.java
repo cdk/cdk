@@ -52,7 +52,7 @@ import org.openscience.cdk.interfaces.IIsotope;
  *   Isotope major = factory.getMajorIsotope("H");
  * </pre> 
  *
- * @cdk.module core
+ * @cdk.module     extra
  * @cdk.githash
  *
  * @author     steinbeck

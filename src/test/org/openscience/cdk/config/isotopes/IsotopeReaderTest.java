@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * Checks the functionality of the IsotopeFactory
  *
- * @cdk.module test-core
+ * @cdk.module test-extra
  */
 public class IsotopeReaderTest extends CDKTestCase {
     @Test

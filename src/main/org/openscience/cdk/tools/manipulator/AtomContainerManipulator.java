@@ -22,6 +22,8 @@
  *  */
 package org.openscience.cdk.tools.manipulator;
 
+import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,14 +38,20 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
-import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.ringsearch.RingSearch;
-import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-
-import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
+import org.openscience.cdk.interfaces.IElectronContainer;
+import org.openscience.cdk.interfaces.IElement;
+import org.openscience.cdk.interfaces.ILonePair;
+import org.openscience.cdk.interfaces.IMolecularFormula;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.ringsearch.RingSearch;
 
 /**
  * Class with convenience methods that provide methods to manipulate

@@ -1,7 +1,6 @@
 org/openscience/cdk/config/data/isotopes.txt
 org/openscience/cdk/config/data/*_atomtypes.txt
 org/openscience/cdk/config/data/*_atomtypes.xml
-org/openscience/cdk/config/data/isotopes.xml
 org/openscience/cdk/config/data/chemicalElements.xml
 org/openscience/cdk/dict/data/cdk-atom-types.owl
 org/openscience/cdk/config/data/radii-vdw.txt

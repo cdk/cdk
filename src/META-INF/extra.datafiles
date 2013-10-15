@@ -1,3 +1,4 @@
+org/openscience/cdk/config/data/isotopes.xml
 org/openscience/cdk/dict/data/*.xml
 org/openscience/cdk/config/data/radii-vdw.txt
 org/openscience/cdk/config/data/radii-covalent.txt

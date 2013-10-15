@@ -58,7 +58,7 @@ import org.xml.sax.SAXParseException;
 /**
  * Checks the functionality of the IsotopeFactory
  *
- * @cdk.module test-core
+ * @cdk.module test-extra
  */
 public class XMLIsotopeFactoryTest extends CDKTestCase
 {
