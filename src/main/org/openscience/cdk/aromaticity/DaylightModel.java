@@ -174,6 +174,8 @@ final class DaylightModel extends ElectronDonation {
                 int v = valence(element, charge);
                 if (v - bondOrderSum[i] >= 2)
                     electrons[i] = 2;
+                else
+                    electrons[i] = -1;
             }
                         
             else {
