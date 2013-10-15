@@ -65,7 +65,7 @@ public abstract class ElectronDonation {
      * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
      */
-    static ElectronDonation cdkAtomTypes(boolean exocyclic) {
+    public static ElectronDonation cdkAtomTypes(boolean exocyclic) {
         return new AtomTypeModel(exocyclic);
     }
 
@@ -78,7 +78,38 @@ public abstract class ElectronDonation {
      *
      * @return electron donation model to use for aromaticity perception
      */
-    static ElectronDonation piBonds() {
+    public static ElectronDonation piBonds() {
         return new PiBondModel();
+    }
+
+    /**
+     * Electron donation model closely mirroring the Daylight model for use in
+     * generating SMILES. The model was interpreted from various resources and
+     * as such may not match exactly. If you find an inconsistency please add a
+     * request for enhancement to the patch tracker. One known limitation is
+     * that this model does not currently consider unknown/pseudo atoms '*'.
+     * <p/>
+     *
+     * The model makes a couple of assumptions which it will not correct for.
+     * Checked assumptions cause the model to throw a runtime exception. <ul>
+     * <li>there should be no valence errors (unchecked)</li> <li>every atom has
+     * a set implicit hydrogen count (checked)</li> <li>every bond has defined
+     * order, single, double etc (checked)</li> <li>atomic number of non-pseudo
+     * atoms is set (checked)</li> </ul> <p/>
+     *
+     * The aromaticity model in SMILES was designed to simplify canonicalisation
+     * and express symmetry in a molecule. The contributed electrons can be
+     * summarised as follows (refer to code for exact specification): <ul>
+     * <li>carbon, nitrogen, oxygen, phosphorus, sulphur, arsenic and selenium
+     * are allow to be aromatic</li> <li>atoms should be Sp2 hybridised - not
+     * actually computed</li> <li>atoms adjacent to a single cyclic pi bond
+     * contribute 1 electron</li> <li>neutral or negatively charged atoms with a
+     * lone pair contribute 2 electrons</li> <li>exocyclic pi bonds are allowed
+     * but if the exocyclic atom is more electronegative it consumes an
+     * electron. As an example ketone groups contribute '0'
+     * electrons.</li></ul>
+     */
+    public static ElectronDonation daylight() {
+        return new DaylightModel();
     }
 }
