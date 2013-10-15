@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
+ *  
+ * Contact: cdk-devel@lists.sourceforge.net
+ *  
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above 
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
+ */
+
+package org.openscience.cdk.aromaticity;
+
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.ringsearch.RingSearch;
+
+import java.util.Arrays;
+
+import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
+
+/**
+ * A simple aromatic model which only allows cyclic pi-bonds to contribute to an
+ * aromatic system. Lone pairs are not considered and as such molecules like
+ * furan and pyrrole are not considered aromatic. This model is suitable for
+ * storing aromaticity in the MDL/Mol2 file formats.
+ *
+ * @author John May
+ * @cdk.module standard
+ */
+@TestClass("org.openscience.cdk.aromaticity.PiBondModelTest")
+final class PiBondModel extends ElectronDonation {
+
+    /** @inheritDoc */
+    @TestMethod("bezene,furan,pyrrole")
+    @Override int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+        
+        int   n         = container.getAtomCount();
+        int[] electrons = new int[n];
+        
+        Arrays.fill(electrons, -1);
+        
+        for (IBond bond : container.bonds()) {
+            int u = container.getAtomNumber(bond.getAtom(0));
+            int v = container.getAtomNumber(bond.getAtom(1));
+        
+            if (bond.getOrder() == DOUBLE && ringSearch.cyclic(u, v))
+                electrons[u] = electrons[v] = 1;
+        }
+        
+        return electrons;
+    }
+}

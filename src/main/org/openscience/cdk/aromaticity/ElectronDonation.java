@@ -62,10 +62,23 @@ public abstract class ElectronDonation {
      * <i>TODO - flesh out model description</i>
      *
      * @param exocyclic allow exocyclic (sprouting) pi bonds to contribute
-     * @return
+     * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
      */
     static ElectronDonation cdkAtomTypes(boolean exocyclic) {
         return new AtomTypeModel(exocyclic);
+    }
+
+    /**
+     * A very simple aromaticity model which only allows atoms adjacent to
+     * cyclic pi bonds. Lone pairs are not consider and as such molecules like
+     * furan and pyrrole are not considered aromatic. The model is useful for
+     * storing aromaticity in MDL and Mol2 file formats where aromatic systems
+     * involving a lone pair can not be properly stored.
+     *
+     * @return electron donation model to use for aromaticity perception
+     */
+    static ElectronDonation piBonds() {
+        return new PiBondModel();
     }
 }
