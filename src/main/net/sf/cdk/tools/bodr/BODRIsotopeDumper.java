@@ -22,7 +22,10 @@
  */
 package net.sf.cdk.tools.bodr;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -46,20 +49,28 @@ public class BODRIsotopeDumper {
 	 * @throws IOException thrown when the input text file cannot be read
 	 */
 	public static void main(String[] args) throws IOException {
+		String path = "src/main/org/openscience/cdk/config/data/isotopes.dat";
 		IsotopeFactory fac = XMLIsotopeFactory.getInstance(SilentChemObjectBuilder.getInstance());
-		for (IIsotope isotope : fac.getIsotopes()) {
-			String line = "";
-			line += isotope.getSymbol();
-			line += ", ";
-			line += isotope.getAtomicNumber();
-			line += ", ";
-			line += isotope.getMassNumber();
-			line += ", ";
-			line += isotope.getExactMass();
-			line += ", ";
-			line += isotope.getNaturalAbundance();
-			System.out.println(line);
+		IIsotope[] isotopes = fac.getIsotopes();
+		ByteBuffer bout = ByteBuffer.allocate(50000); // file is < 50kB
+		System.out.println("Put length: " + isotopes.length);
+		bout.putInt(isotopes.length);
+		for (IIsotope isotope : isotopes) {
+			// chars a little more tricky
+			bout.putShort((short) (isotope.getAtomicNumber() - Short.MAX_VALUE));
+			bout.putShort((short) (isotope.getMassNumber() - Short.MAX_VALUE));
+			bout.putDouble(isotope.getExactMass());
+			if (isotope.getNaturalAbundance() == 0.0) {
+				bout.put((byte) 0);
+			} else {
+				bout.put((byte) 1);
+				bout.putDouble(isotope.getNaturalAbundance());
+			}
 		}
+		bout.limit(bout.position()).position(0);
+        FileChannel fc = new FileOutputStream(path).getChannel();
+        fc.write(bout);
+        fc.close();
 	}
 
 }

@@ -23,10 +23,11 @@
  */
 package org.openscience.cdk.config;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,24 +54,26 @@ public class Isotopes extends IsotopeFactory {
 	}
 
 	private Isotopes() throws IOException {
-		String configFile = "org/openscience/cdk/config/data/isotopes.txt";
+		String configFile = "org/openscience/cdk/config/data/isotopes.dat";
 		isotopes = new HashMap<String, List<IIsotope>>();
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
-		String line = reader.readLine();
-		while (line != null) {
-			String[] fields = line.split(",");
-			if (!fields[0].trim().isEmpty()) {
-				IIsotope isotope = new BODRIsotope(
-					fields[0].trim().intern(),
-					Integer.valueOf(fields[1].trim()),
-					Integer.valueOf(fields[2].trim()),
-					Double.valueOf(fields[3].trim()),
-					Double.valueOf(fields[4].trim())
-				);
-				add(isotope);
-			}
-			line = reader.readLine();
+		ReadableByteChannel fcIn = Channels.newChannel(ins);
+		ByteBuffer bin = ByteBuffer.allocate(50000); // file is < 50kB
+		int ret = fcIn.read(bin);
+		fcIn.close(); ins.close();
+		bin.position(0);
+        int isotopeCount = bin.getInt();
+        for (int i = 0; i < isotopeCount; i++) {
+            int atomicNum    = bin.getShort() + Short.MAX_VALUE;
+            int massNum      = bin.getShort() + Short.MAX_VALUE;
+            double exactMass = bin.getDouble();
+            double natAbund  = bin.get() == 1 ? bin.getDouble() : 0.0;
+            IIsotope isotope = new BODRIsotope(
+                PeriodicTable.getSymbol(atomicNum),
+                atomicNum, massNum,
+                exactMass, natAbund
+            );
+            add(isotope);
 		}
         majorIsotopes = new HashMap<String, IIsotope>();
 	}
