@@ -190,4 +190,26 @@ public class IsotopesTest extends CDKTestCase {
         isofac.configure(xxAtom);
     }
 
+    @Test
+    public void testGetIsotopes_Nonelement() throws Exception {
+        IsotopeFactory isofac = Isotopes.getInstance();
+        IIsotope[] list = isofac.getIsotopes("E");
+		Assert.assertNotNull(list);
+		Assert.assertEquals(0, list.length);
+	}
+
+    @Test
+    public void testGetElement_Nonelement() throws Exception {
+        IsotopeFactory isofac = Isotopes.getInstance();
+        IElement element = isofac.getElement("E");
+		Assert.assertNull(element);
+	}
+
+    @Test
+    public void testGetMajorIsotope_Nonelement() throws Exception {
+        IsotopeFactory isofac = Isotopes.getInstance();
+        IIsotope isotope = isofac.getMajorIsotope("E");
+		Assert.assertNull(isotope);
+	}
+
 }

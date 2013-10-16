@@ -26,6 +26,7 @@ package org.openscience.cdk.config;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -95,7 +96,9 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         }
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
-        isotopes = reader.readIsotopes();
+        this.isotopes = new HashMap<String,List<IIsotope>>();
+        List<IIsotope> isotopes = reader.readIsotopes();
+        for (IIsotope isotope : isotopes) add(isotope);
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
         /* for (int f = 0; f < isotopes.size(); f++) {
               Isotope isotope = (Isotope)isotopes.elementAt(f);

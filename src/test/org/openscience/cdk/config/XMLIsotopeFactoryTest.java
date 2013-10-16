@@ -123,6 +123,13 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 	}
 
     @Test
+    public void testGetMajorIsotope_Nonelement() throws Exception {
+		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope isotope = isofac.getMajorIsotope("E");
+		Assert.assertNull(isotope);
+	}
+
+    @Test
     public void testGetMajorIsotope_int() throws Exception {
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope isotope = isofac.getMajorIsotope(17);
@@ -134,6 +141,13 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("Br");
 		Assert.assertEquals(35, element.getAtomicNumber().intValue());
+	}    
+
+    @Test
+    public void testGetElement_Nonelement() throws Exception {
+		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IElement element = elfac.getElement("E");
+		Assert.assertNull(element);
 	}    
 
     @Test
@@ -155,6 +169,14 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes("He");
 		Assert.assertEquals(8, list.length);
+	}    
+
+    @Test
+    public void testGetIsotopes_Nonelement() throws Exception {
+		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
+        IIsotope[] list = isofac.getIsotopes("E");
+		Assert.assertNotNull(list);
+		Assert.assertEquals(0, list.length);
 	}    
 
     @Test

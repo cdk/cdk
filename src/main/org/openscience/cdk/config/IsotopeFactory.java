@@ -20,8 +20,8 @@
 package org.openscience.cdk.config;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * Used to store and return data of a particular isotope.
@@ -42,8 +43,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public abstract class IsotopeFactory {
 
-	protected List<IIsotope> isotopes = null;
-	protected HashMap<String, IIsotope> majorIsotopes = null;
+	protected Map<String, List<IIsotope>> isotopes = null;
+	protected Map<String, IIsotope> majorIsotopes = null;
     protected static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
@@ -58,6 +59,19 @@ public abstract class IsotopeFactory {
 		return isotopes.size();
 	}
 
+    /**
+     * Protected methods only to be used by classes extending this class to add
+     * an IIsotope.
+     */
+    protected void add(IIsotope isotope) {
+    	List<IIsotope> isotopesForSymbol = isotopes.get(isotope.getSymbol());
+    	if (isotopesForSymbol == null) {
+    		isotopesForSymbol = new ArrayList<IIsotope>();
+    		isotopes.put(isotope.getSymbol(), isotopesForSymbol);
+    	}
+    	isotopesForSymbol.add(isotope);
+    }
+    
 	/**
 	 * Gets an array of all isotopes known to the IsotopeFactory for the given
 	 * element symbol.
@@ -67,16 +81,15 @@ public abstract class IsotopeFactory {
 	 */
     @TestMethod("testGetIsotopes_String")
     public IIsotope[] getIsotopes(String symbol) {
-        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-        for (IIsotope isotope : isotopes) {
-            if (isotope.getSymbol().equals(symbol)) {
-                try {
-                    IIsotope clone = (IIsotope) isotope.clone();
-                    list.add(clone);
-                } catch (CloneNotSupportedException e) {
-                    logger.error("Could not clone IIsotope: ", e.getMessage());
-                    logger.debug(e);
-                }
+    	if (isotopes.get(symbol) == null) return new IIsotope[0];
+        List<IIsotope> list = new ArrayList<IIsotope>();
+        for (IIsotope isotope : isotopes.get(symbol)) {
+            try {
+                IIsotope clone = (IIsotope) isotope.clone();
+                list.add(clone);
+            } catch (CloneNotSupportedException e) {
+                logger.error("Could not clone IIsotope: ", e.getMessage());
+                logger.debug(e);
             }
         }
         return list.toArray(new IIsotope[list.size()]);
@@ -90,13 +103,15 @@ public abstract class IsotopeFactory {
     @TestMethod("testGetIsotopes")
     public IIsotope[] getIsotopes() {
     	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (IIsotope isotope : isotopes) {
-            try {
-                IIsotope clone = (IIsotope) isotope.clone();
-                list.add(clone);
-            } catch (CloneNotSupportedException e) {
-                logger.error("Could not clone IIsotope: ", e.getMessage());
-                logger.debug(e);
+    	for (String element : isotopes.keySet()) {
+            for (IIsotope isotope : isotopes.get(element)) {
+                try {
+                    IIsotope clone = (IIsotope) isotope.clone();
+                    list.add(clone);
+                } catch (CloneNotSupportedException e) {
+                    logger.error("Could not clone IIsotope: ", e.getMessage());
+                    logger.debug(e);
+                }
             }
     	}
     	return list.toArray(new IIsotope[list.size()]);
@@ -113,14 +128,16 @@ public abstract class IsotopeFactory {
     @TestMethod("testGetIsotopes_double_double")
     public IIsotope[] getIsotopes(double exactMass, double difference) {
     	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (IIsotope isotope : isotopes) {
-    		if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
-    			try {
-    				IIsotope clone = (IIsotope) isotope.clone();
-    				list.add(clone);
-    			} catch (CloneNotSupportedException e) {
-    				logger.error("Could not clone IIsotope: ", e.getMessage());
-    				logger.debug(e);
+    	for (String element : isotopes.keySet()) {
+            for (IIsotope isotope : isotopes.get(element)) {
+    		    if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
+    			    try {
+    			        IIsotope clone = (IIsotope) isotope.clone();
+    			        list.add(clone);
+    		        } catch (CloneNotSupportedException e) {
+    	                logger.error("Could not clone IIsotope: ", e.getMessage());
+    	                logger.debug(e);
+    		        }
     			}
     		}
     	}
@@ -137,7 +154,7 @@ public abstract class IsotopeFactory {
     @TestMethod("testGetIsotope")
     public IIsotope getIsotope(String symbol, int massNumber) {
         IIsotope ret = null;
-        for (IIsotope isotope : isotopes) {
+        for (IIsotope isotope : isotopes.get(symbol)) {
             if (isotope.getSymbol().equals(symbol) && isotope.getMassNumber() == massNumber) {
                 try {
                     ret = (IIsotope) isotope.clone();
@@ -163,7 +180,7 @@ public abstract class IsotopeFactory {
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         IIsotope ret     = null;
         double   minDiff = Double.MAX_VALUE;
-        for (IIsotope isotope : isotopes) {
+        for (IIsotope isotope : isotopes.get(symbol)) {
             double diff = Math.abs(isotope.getExactMass() - exactMass);
             if (isotope.getSymbol().equals(symbol) &&
             	diff <= tolerance && diff < minDiff) {
@@ -195,20 +212,16 @@ public abstract class IsotopeFactory {
     @TestMethod("testGetMajorIsotope_int")
     public IIsotope getMajorIsotope(int atomicNumber) {
         IIsotope major = null;
-        for (IIsotope isotope : isotopes) {
-            if (isotope.getAtomicNumber() == atomicNumber) {
-                try {
-                    if (major == null) {
-                        major = (IIsotope) isotope.clone();
-                    } else {
-                        if (isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
-                            major = (IIsotope) isotope.clone();
-                        }
-                    }
-                } catch (CloneNotSupportedException e) {
-                    logger.error("Could not clone IIsotope: ", e.getMessage());
-                    logger.debug(e);
+        for (IIsotope isotope : isotopes.get(PeriodicTable.getSymbol(atomicNumber))) {
+            try {
+                if (major == null) {
+                    major = (IIsotope) isotope.clone();
+                } else if (isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                    major = (IIsotope) isotope.clone();
                 }
+            } catch (CloneNotSupportedException e) {
+                logger.error("Could not clone IIsotope: ", e.getMessage());
+                logger.debug(e);
             }
         }
         if (major == null) logger.error("Could not find major isotope for: ", atomicNumber);
@@ -238,7 +251,11 @@ public abstract class IsotopeFactory {
         if (majorIsotopes.containsKey(symbol)) {
             major = majorIsotopes.get(symbol);
         } else {
-            for (IIsotope isotope : isotopes) {
+        	if (isotopes.get(symbol) == null) {
+        		logger.error("Could not find major isotope for: ", symbol);
+        		return null;
+        	}
+            for (IIsotope isotope : isotopes.get(symbol)) {
                 if (isotope.getSymbol().equals(symbol)) {
                     try {
                         if (major == null) {
