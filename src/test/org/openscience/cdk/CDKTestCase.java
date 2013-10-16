@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -175,13 +174,22 @@ public class CDKTestCase {
      * @param container to which implicit hydrogens are added.
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());    	
-    	for (IAtom atom : container.atoms()) {
-    		IAtomType type = matcher.findMatchingAtomType(container, atom);
-    		AtomTypeManipulator.configure(atom, type);
-    	}
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
+        int atomCount = container.getAtomCount();
+        String[] originalAtomTypeNames = new String[atomCount];
+        for (int i=0; i<atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            IAtomType type = matcher.findMatchingAtomType(container, atom);
+            originalAtomTypeNames[i] = atom.getAtomTypeName();
+            atom.setAtomTypeName(type.getAtomTypeName());
+        }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
     	hAdder.addImplicitHydrogens(container);
+        // reset to the original atom types
+        for (int i=0; i<atomCount; i++) {
+            IAtom atom = container.getAtom(i);
+            atom.setAtomTypeName(originalAtomTypeNames[i]);
+        }
     }
 
 	/**
