@@ -90,7 +90,6 @@ public class JumboCyclicVertexSearchTest {
                                 {55, 59}, {58, 60}, {56, 59}};
         CyclicVertexSearch search = new JumboCyclicVertexSearch(g);
         int[] colors = search.vertexColor();
-        System.out.println(Arrays.toString(colors));
     }
 
     @Test public void testIsolated() {
