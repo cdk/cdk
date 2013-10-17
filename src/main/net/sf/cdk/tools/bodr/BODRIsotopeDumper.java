@@ -27,8 +27,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.XMLIsotopeFactory;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -57,8 +57,8 @@ public class BODRIsotopeDumper {
 		bout.putInt(isotopes.length);
 		for (IIsotope isotope : isotopes) {
 			// chars a little more tricky
-			bout.putShort((short) (isotope.getAtomicNumber() - Short.MAX_VALUE));
-			bout.putShort((short) (isotope.getMassNumber() - Short.MAX_VALUE));
+			bout.put((byte)isotope.getAtomicNumber().intValue());
+			bout.putShort((short)isotope.getMassNumber().intValue());
 			bout.putDouble(isotope.getExactMass());
 			if (isotope.getNaturalAbundance() == 0.0) {
 				bout.put((byte) 0);
@@ -68,9 +68,11 @@ public class BODRIsotopeDumper {
 			}
 		}
 		bout.limit(bout.position()).position(0);
-        FileChannel fc = new FileOutputStream(path).getChannel();
+		FileOutputStream out = new FileOutputStream(path);
+        FileChannel fc = out.getChannel();
         fc.write(bout);
         fc.close();
+        out.close();
 	}
 
 }

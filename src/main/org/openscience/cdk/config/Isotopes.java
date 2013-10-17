@@ -57,15 +57,16 @@ public class Isotopes extends IsotopeFactory {
 		String configFile = "org/openscience/cdk/config/data/isotopes.dat";
 		isotopes = new HashMap<String, List<IIsotope>>();
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+        int streamSize = ins.available();
 		ReadableByteChannel fcIn = Channels.newChannel(ins);
-		ByteBuffer bin = ByteBuffer.allocate(50000); // file is < 50kB
-		int ret = fcIn.read(bin);
+		ByteBuffer bin = ByteBuffer.allocate(streamSize);
+		fcIn.read(bin);
 		fcIn.close(); ins.close();
 		bin.position(0);
         int isotopeCount = bin.getInt();
         for (int i = 0; i < isotopeCount; i++) {
-            int atomicNum    = bin.getShort() + Short.MAX_VALUE;
-            int massNum      = bin.getShort() + Short.MAX_VALUE;
+            int atomicNum    = (int)bin.get();
+            int massNum      = (int)bin.getShort();
             double exactMass = bin.getDouble();
             double natAbund  = bin.get() == 1 ? bin.getDouble() : 0.0;
             IIsotope isotope = new BODRIsotope(
