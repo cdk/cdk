@@ -151,8 +151,9 @@ public class Isotopes extends IsotopeFactory {
      * @param massNumber the mass number
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotope")
+    @TestMethod("testGetIsotope,testGetIsotope_NonElement")
     public IIsotope getIsotope(String symbol, int massNumber) {
+        if (isotopes.get(symbol) == null) return null;
         for (IIsotope isotope : isotopes.get(symbol)) {
             if (isotope.getSymbol().equals(symbol) && isotope.getMassNumber() == massNumber) {
                 return isotope;
@@ -169,8 +170,9 @@ public class Isotopes extends IsotopeFactory {
      * @param tolerance allowed difference from provided exact mass
      * @return the corresponding isotope
      */
-    @TestMethod("testGetIsotopeFromExactMass")
+    @TestMethod("testGetIsotopeFromExactMass,testGetIsotopeFromExactMass_NonElement")
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
+        if (isotopes.get(symbol) == null) return null;
         IIsotope ret     = null;
         double   minDiff = Double.MAX_VALUE;
         for (IIsotope isotope : isotopes.get(symbol)) {
