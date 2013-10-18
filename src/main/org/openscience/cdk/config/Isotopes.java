@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -44,10 +45,18 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.module  core 
  * @cdk.githash
  */
+@TestClass("org.openscience.cdk.config.IsotopesTest")
 public class Isotopes extends IsotopeFactory {
 
 	private static Isotopes myself = null;
 
+	/**
+	 * Returns a singleton instance of this class.
+	 *
+	 * @return the singleton
+	 * @throws IOException when reading of the data file did not work
+	 */
+	@TestMethod("testGetInstance_IChemObjectBuilder")
 	public static Isotopes getInstance() throws IOException {
 		if (myself == null) myself = new Isotopes();
 		return myself;
