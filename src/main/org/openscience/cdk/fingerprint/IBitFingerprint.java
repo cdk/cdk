@@ -35,13 +35,15 @@ import java.util.BitSet;
 public interface IBitFingerprint extends Serializable {
 
 	/**
-	 * @return the number of bits set to true in the fingerprint.
+	 * Returns the number of bits set to true in the fingerprint.
+	 * 
+	 * @return the number of true bits.
 	 */
 	public int cardinality();
 	
 	/**
-	 * Returns the number of bits of this fingerprint.
-	 *
+	 * Returns the size of the fingerprint, i.e., the number of hash bins.
+	 * 
 	 * @return the size of the fingerprint.
 	 */
 	public long size();
@@ -110,6 +112,8 @@ public interface IBitFingerprint extends Serializable {
 
 	
     /**
+     * Returns a listing of the bits in the fingerprint that are set to true.
+     * 
      * @return listing of all bits that are set
      */
     public int[] getSetbits();

@@ -25,7 +25,10 @@ package org.openscience.cdk.fingerprint;
 import java.io.Serializable;
 
 /**
- * Interface for count fingerprint representations.
+ * Interface for count fingerprint representations. The fingerprint is 
+ * regarded as a list of hashes and a list of counts where the the list of
+ * counts keeps track of how many times the corresponding hash is found in
+ * the fingerprint. So index refers to position in the list of 
  * 
  * @author jonalv
  * @cdk.module     core
@@ -58,6 +61,8 @@ public interface ICountFingerprint extends Serializable {
 	public int getCount(int index);
 	
 	/**
+	 * Returns the hash corresponding to the given index in the fingerprint.
+	 * 
 	 * @param index the index of the bin to return the hash for.
 	 * @return the hash for the bin with the given index.
 	 */
