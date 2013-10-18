@@ -72,9 +72,9 @@ public abstract class ElectronDonation {
     /**
      * A very simple aromaticity model which only allows atoms adjacent to
      * cyclic pi bonds. Lone pairs are not consider and as such molecules like
-     * furan and pyrrole are not considered aromatic. The model is useful for
-     * storing aromaticity in MDL and Mol2 file formats where aromatic systems
-     * involving a lone pair can not be properly stored.
+     * furan and pyrrole are non-aromatic. The model is useful for storing
+     * aromaticity in MDL and Mol2 file formats where aromatic systems involving
+     * a lone pair can not be properly represented.
      *
      * @return electron donation model to use for aromaticity perception
      */

@@ -167,6 +167,18 @@ public class PiBondModelTest {
         test(smiles("O=C1NC=CC=C1"),
              -1, -1, -1, 1, 1, 1, 1);
     }
+        
+    // ensures atoms next to 2 cyclic pi bonds aren't allowed
+    @Test public void cyclodecahexaene() throws Exception {
+        test(smiles("C1=CC=C=CC=C=CC=C1"),
+             1, 1, 1, -1, 1, 1, -1, 1, 1, 1);    
+    }
+    
+    // similar to cyclodecahexaene but 5 pi bonds instead of 6
+    @Test public void cyclodecapentaene() throws Exception {
+        test(smiles("C1=CC=CC=CC=CC=C1"),
+             1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    }
 
     static IAtomContainer smiles(String smi) throws Exception {
         return new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles(smi);

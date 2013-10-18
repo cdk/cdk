@@ -37,8 +37,8 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 /**
  * A simple aromatic model which only allows cyclic pi-bonds to contribute to an
  * aromatic system. Lone pairs are not considered and as such molecules like
- * furan and pyrrole are not considered aromatic. This model is suitable for
- * storing aromaticity in the MDL/Mol2 file formats.
+ * furan and pyrrole are non-aromatic. This model is suitable for storing
+ * aromaticity in the MDL/Mol2 file formats.
  *
  * @author John May
  * @cdk.module standard
@@ -52,17 +52,25 @@ final class PiBondModel extends ElectronDonation {
         
         int   n         = container.getAtomCount();
         int[] electrons = new int[n];
+        int[] piBonds   = new int[n];
         
-        Arrays.fill(electrons, -1);
-        
+        // count number of cyclic pi bonds
         for (IBond bond : container.bonds()) {
             int u = container.getAtomNumber(bond.getAtom(0));
             int v = container.getAtomNumber(bond.getAtom(1));
         
-            if (bond.getOrder() == DOUBLE && ringSearch.cyclic(u, v))
-                electrons[u] = electrons[v] = 1;
+            if (bond.getOrder() == DOUBLE && ringSearch.cyclic(u, v)) {
+                piBonds[u]++;
+                piBonds[v]++;
+            }
         }
         
+        // any atom which is adjacent to one (and only one) cyclic
+        // pi bond contributes 1 electron
+        for (int i = 0; i < n; i++) {
+            electrons[i] = piBonds[i] == 1 ? 1 : -1;
+        }
+                
         return electrons;
     }
 }
