@@ -201,6 +201,7 @@ public class Isotopes extends IsotopeFactory {
      */
     @TestMethod("testGetMajorIsotope_int")
     public IIsotope getMajorIsotope(int atomicNumber) {
+    	if (isotopes.get(PeriodicTable.getSymbol(atomicNumber)) == null) return null;
         IIsotope major = null;
         for (IIsotope isotope : isotopes.get(PeriodicTable.getSymbol(atomicNumber))) {
             if (isotope.getAtomicNumber() == atomicNumber) {
