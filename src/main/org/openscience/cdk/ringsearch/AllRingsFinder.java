@@ -41,6 +41,8 @@ import org.openscience.cdk.interfaces.IRingSet;
 import java.util.Arrays;
 import java.util.Map;
 
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+
 
 /**
  * Compute the set of all rings in a molecule. This set includes <i>every</i>
@@ -133,8 +135,8 @@ public final class AllRingsFinder {
                                  int maxRingSize) throws CDKException {
 
         final int m = container.getBondCount();
-        final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
-        final int[][] graph = toGraph(container, edges);
+        final EdgeToBondMap edges = EdgeToBondMap.withSpaceFor(container);
+        final int[][]       graph = GraphUtil.toAdjList(container, edges);
 
         RingSearch rs = new RingSearch(container, graph);
 
@@ -202,8 +204,8 @@ public final class AllRingsFinder {
                                                                       CDKException {
 
         final int m = atomContainer.getBondCount();
-        final Map<Edge, IBond> edges = Maps.newHashMapWithExpectedSize(m);
-        final int[][] graph = toGraph(atomContainer, edges);
+        final EdgeToBondMap edges = EdgeToBondMap.withSpaceFor(atomContainer);
+        final int[][]       graph = GraphUtil.toAdjList(atomContainer, edges);
 
         AllCycles ac = new AllCycles(graph,
                                      maxRingSize,
@@ -277,7 +279,7 @@ public final class AllRingsFinder {
      * @return a new ring
      */
     private IRing toRing(IAtomContainer container,
-                         Map<Edge, IBond> edges,
+                         EdgeToBondMap edges,
                          int[] cycle) {
         IRing ring = container.getBuilder().newInstance(IRing.class, 0);
 
@@ -288,7 +290,7 @@ public final class AllRingsFinder {
 
         for (int i = 0; i < len; i++) {
             atoms[i] = container.getAtom(cycle[i]);
-            bonds[i] = edges.get(new Edge(cycle[i], cycle[i + 1]));
+            bonds[i] = edges.get(cycle[i], cycle[i + 1]);
             atoms[i].setFlag(CDKConstants.ISINRING, true);
         }
 
@@ -309,7 +311,7 @@ public final class AllRingsFinder {
      * @return a new ring
      */
     private IRing toRing(IAtomContainer container,
-                         Map<Edge, IBond> edges,
+                         EdgeToBondMap edges,
                          int[] cycle,
                          int[] mapping) {
         IRing ring = container.getBuilder().newInstance(IRing.class, 0);
@@ -321,8 +323,8 @@ public final class AllRingsFinder {
 
         for (int i = 0; i < len; i++) {
             atoms[i] = container.getAtom(mapping[cycle[i]]);
-            bonds[i] = edges.get(new Edge(mapping[cycle[i]],
-                                          mapping[cycle[i + 1]]));
+            bonds[i] = edges.get(mapping[cycle[i]],
+                                 mapping[cycle[i + 1]]);
             atoms[i].setFlag(CDKConstants.ISINRING, true);
         }
 
@@ -330,90 +332,6 @@ public final class AllRingsFinder {
         ring.setBonds(bonds);
 
         return ring;
-    }
-
-    /**
-     * Convert the container to an int[][] adjacency list. The bonds of each
-     * edge ar indexed in the {@literal edges} map.
-     *
-     * @param container molecule
-     * @param edges     map of edges to bonds
-     * @return adjacency list representation
-     */
-    private int[][] toGraph(IAtomContainer container, Map<Edge, IBond> edges) {
-
-        if (container == null)
-            throw new NullPointerException("atom container was null");
-
-        int n = container.getAtomCount();
-
-        int[][] graph = new int[n][4];
-        int[] degree = new int[n];
-
-        for (IBond bond : container.bonds()) {
-
-            int v = container.getAtomNumber(bond.getAtom(0));
-            int w = container.getAtomNumber(bond.getAtom(1));
-
-            edges.put(new Edge(v, w), bond);
-
-            if (v < 0 || w < 0)
-                throw new IllegalArgumentException("bond at index " + container
-                        .getBondNumber(bond)
-                                                           + " contained an atom not pressent in molecule");
-
-            graph[v][degree[v]++] = w;
-            graph[w][degree[w]++] = v;
-
-            // if the vertex degree of v or w reaches capacity, double the size
-            if (degree[v] == graph[v].length)
-                graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
-            if (degree[w] == graph[w].length)
-                graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
-        }
-
-        for (int v = 0; v < n; v++) {
-            graph[v] = Arrays.copyOf(graph[v], degree[v]);
-        }
-
-        return graph;
-    }
-
-    /**
-     * Simple class to allow undirected indexing of edges. One day... should
-     * part of public api - but that day is not now.
-     */
-    private final class Edge {
-
-        /** Endpoints. */
-        private final int u, v;
-
-        /**
-         * Create a new edge from two endpoints.
-         *
-         * @param u an endpoint
-         * @param v another endpoint
-         */
-        private Edge(int u, int v) {
-            this.u = u;
-            this.v = v;
-        }
-
-        /** @inheritDoc */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Edge that = (Edge) o;
-            return (this.u == that.u && this.v == that.v) ||
-                    (this.u == that.v && this.v == that.u);
-        }
-
-        /** @inheritDoc */
-        @Override
-        public int hashCode() {
-            return u ^ v;
-        }
     }
 
     /**
