@@ -92,6 +92,15 @@ public class CyclesTest {
         checkSize(Cycles.vertexShort(makeGappedCyclophaneLike()), 7);
     }
     
+    @Test public void cdkAromaticSet() throws Exception {
+        checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl()), 2);
+        checkSize(Cycles.cdkAromaticSet().find(makeBicycloRings()), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeNaphthalene()), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeAnthracene()), 6);
+        checkSize(Cycles.cdkAromaticSet().find(makeCyclophaneLike()), 8);
+        checkSize(Cycles.cdkAromaticSet().find(makeGappedCyclophaneLike()), 8);
+    }
+    
     @Test public void pathsAreCopy() throws Exception {
         Cycles cs = Cycles.all(makeAnthracene());
         int[][] org = cs.paths();

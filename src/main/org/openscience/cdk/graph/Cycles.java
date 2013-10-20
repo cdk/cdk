@@ -351,6 +351,41 @@ public final class Cycles {
     }
 
     /**
+     * Create a cycle finder which will compute a set of cycles traditionally
+     * used by the CDK to test for aromaticity. This set of cycles is the
+     * MCB/SSSR and {@link #all} cycles for fused systems with 3 or less rings.
+     * This allows on to test aromaticity of envelope rings in compounds such as
+     * azulene without generating an huge number of cycles for large fused
+     * systems (e.g. fullerenes). The use case was that computation of all
+     * cycles previously took a long time and ring systems with more than 2
+     * rings were too difficult. However it is now more efficient to simply
+     * check all cycles/rings without using the MCB/SSSR. This computation will
+     * fail for complex fused systems but the failure is fast and one can easily
+     * 'fall back' to a smaller set of cycles after catching the exception.
+     *
+     * <blockquote>
+     * <pre>
+     * CycleFinder cf = Cycles.cdkAromaticSet();
+     * for (IAtomContainer m : ms) {
+     *     try {
+     *         Cycles   cycles = cf.find(m);
+     *         IRingSet rings  = cycles.toRingSet();
+     *     } catch (Intractable e) {
+     *         // ignore error - edge short cycles do not check tractability
+     *     }
+     * }
+     * </pre>
+     * </blockquote>
+     *
+     * @return finder for cdk aromatic cycles
+     * @see #edgeShort(org.openscience.cdk.interfaces.IAtomContainer)
+     */
+    @TestMethod("cdkAromaticSet")
+    public static CycleFinder cdkAromaticSet() {
+        return CycleComputation.CDK_AROMATIC;
+    }
+
+    /**
      * Find all simple cycles in a molecule. The threshold values can not be
      * tuned and is set at a value which will complete in reasonable time for
      * most molecules. To change the threshold values please use the stand-alone
@@ -609,6 +644,23 @@ public final class Cycles {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
                 return new EdgeShortCycles(ic).paths();
             }
+        },
+        CDK_AROMATIC {
+            /** {@inheritDoc} */
+            @Override int[][] apply(int[][] graph) throws Intractable {
+                
+                InitialCycles     ic  = InitialCycles.ofBiconnectedComponent(graph);
+                MinimumCycleBasis mcb = new MinimumCycleBasis(ic);
+                
+                // As per the old aromaticity detector if the MCB/SSSR is made 
+                // of 2 or 3 rings we check all rings for aromaticity - otherwise
+                // we just check the MCB/SSSR
+                if (mcb.size() > 3) {
+                    return mcb.paths();
+                } else { 
+                    return ALL.apply(graph);
+                }
+            }    
         };
 
         /**
