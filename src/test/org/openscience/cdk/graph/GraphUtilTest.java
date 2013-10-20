@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.*;
 
 /**
@@ -163,6 +164,42 @@ public class GraphUtilTest {
         assertArrayEquals(new int[]{1}, adjacent[4]);
 
 
+    }
+    
+    @Test
+    public void testToAdjList_withMap() throws Exception {
+
+        IAtomContainer container = simple();
+
+        GraphUtil.EdgeToBondMap map = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        int[][] adjacent = GraphUtil.toAdjList(container,
+                                               map);
+
+        assertThat("adjacency list should have 5 vertices",
+                   adjacent.length, is(5));
+
+        assertThat("vertex 'a' should have degree 1",
+                   adjacent[0].length, is(1));
+        assertThat("vertex 'b' should have degree 3",
+                   adjacent[1].length, is(3));
+        assertThat("vertex 'c' should have degree 2",
+                   adjacent[2].length, is(2));
+        assertThat("vertex 'd' should have degree 1",
+                   adjacent[3].length, is(1));
+        assertThat("vertex 'e' should have degree 1",
+                   adjacent[4].length, is(1));
+
+        assertArrayEquals(new int[]{1}, adjacent[0]);
+        assertArrayEquals(new int[]{0, 2, 4}, adjacent[1]);
+        assertArrayEquals(new int[]{1, 3}, adjacent[2]);
+        assertArrayEquals(new int[]{2}, adjacent[3]);
+        assertArrayEquals(new int[]{1}, adjacent[4]);
+        
+        assertNotNull(map.get(0, 1));
+        assertNotNull(map.get(1, 2));
+
+        assertThat(map.get(0, 1), is(sameInstance(map.get(1, 0))));
+        assertThat(map.get(1, 2), is(sameInstance(map.get(2, 1))));
     }
 
     @Test
