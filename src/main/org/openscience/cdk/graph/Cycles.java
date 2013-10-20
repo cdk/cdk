@@ -41,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+
 /**
  * A utility class for storing and computing the cycles of a chemical graph.
  * Utilities are also provided for converting the cycles to {@link IRing}s. A
@@ -94,6 +96,9 @@ public final class Cycles {
 
     /** The input container - allows us to create 'Ring' objects. */
     private final IAtomContainer container;
+    
+    /** Mapping for quick lookup of bond mapping. */
+    private final EdgeToBondMap bondMap;
 
     /**
      * Internal constructor - may change in future but currently just takes the
@@ -103,9 +108,11 @@ public final class Cycles {
      * @param container the input container
      */
     private Cycles(int[][] paths,
-                   IAtomContainer container) {
-        this.paths = paths;
+                   IAtomContainer container,
+                   EdgeToBondMap bondMap) {
+        this.paths     = paths;
         this.container = container;
+        this.bondMap   = bondMap;
     }
 
     /**
@@ -134,18 +141,7 @@ public final class Cycles {
      */
     @TestMethod("toRingSet")
     public IRingSet toRingSet() {
-
-        HashMap<InitialCycles.Edge, IBond> map = Maps.newHashMapWithExpectedSize(container.getBondCount());
-
-        // index bonds by their endpoints
-        for (IBond bond : container.bonds()) {
-            // XXX: currently linear search
-            int u = container.getAtomNumber(bond.getAtom(0));
-            int v = container.getAtomNumber(bond.getAtom(1));
-            map.put(new InitialCycles.Edge(u, v), bond);
-        }
-
-        return toRingSet(container, paths, map);
+        return toRingSet(container, paths, bondMap);
     }
 
     /**
@@ -628,7 +624,8 @@ public final class Cycles {
         /** {@inheritDoc} */
         @Override public Cycles find(IAtomContainer molecule) throws Intractable {
 
-            int[][] graph = GraphUtil.toAdjList(molecule);
+            EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(molecule);
+            int[][] graph = GraphUtil.toAdjList(molecule, bondMap);
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
             List<int[]> walks = new ArrayList<int[]>(6);
@@ -651,7 +648,8 @@ public final class Cycles {
             }
 
             return new Cycles(walks.toArray(new int[walks.size()][0]),
-                              molecule);
+                              molecule,
+                              bondMap);
         }
     }
 
@@ -674,13 +672,13 @@ public final class Cycles {
      *
      * @param container molecule
      * @param cycles    a cycle of the chemical graph
-     * @param edgeMap   mapping of the edges (int,int) to the bonds of the
+     * @param bondMap   mapping of the edges (int,int) to the bonds of the
      *                  container
      * @return the ring set
      */
     private static IRingSet toRingSet(IAtomContainer container,
                                       int[][] cycles,
-                                      Map<InitialCycles.Edge, IBond> edgeMap) {
+                                      EdgeToBondMap bondMap) {
 
         // note currently no way to say the size of the RingSet
         // even through we know it
@@ -688,7 +686,7 @@ public final class Cycles {
         IRingSet rings = builder.newInstance(IRingSet.class);
 
         for (int[] cycle : cycles) {
-            rings.addAtomContainer(toRing(container, cycle, edgeMap));
+            rings.addAtomContainer(toRing(container, cycle, bondMap));
         }
 
         return rings;
@@ -700,13 +698,13 @@ public final class Cycles {
      *
      * @param container molecule
      * @param cycle     a cycle of the chemical graph
-     * @param edgeMap   mapping of the edges (int,int) to the bonds of the
+     * @param bondMap   mapping of the edges (int,int) to the bonds of the
      *                  container
      * @return the ring for the specified cycle
      */
     private static IRing toRing(IAtomContainer container,
                                 int[] cycle,
-                                Map<InitialCycles.Edge, IBond> edgeMap) {
+                                EdgeToBondMap bondMap) {
 
         IAtom[] atoms = new IAtom[cycle.length - 1];
         IBond[] bonds = new IBond[cycle.length - 1];
@@ -715,7 +713,7 @@ public final class Cycles {
             int v = cycle[i];
             int u = cycle[i - 1];
             atoms[i - 1] = container.getAtom(u);
-            bonds[i - 1] = edgeMap.get(new InitialCycles.Edge(u, v));
+            bonds[i - 1] = bondMap.get(u, v);
         }
 
         IChemObjectBuilder builder = container.getBuilder();
