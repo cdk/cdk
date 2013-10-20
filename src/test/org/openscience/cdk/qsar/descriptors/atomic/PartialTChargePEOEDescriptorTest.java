@@ -37,6 +37,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -75,6 +76,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
         molecule.addAtom(builder.newInstance(IAtom.class,"C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
         
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 		
@@ -96,6 +98,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("F-C=C");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -122,6 +125,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(0, 2, IBond.Order.SINGLE);
 		
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 		
@@ -157,6 +161,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		 molecule.addBond(5, 6, IBond.Order.DOUBLE);
 		 molecule.addBond(6, 1, IBond.Order.SINGLE);
 
+		 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 		
@@ -185,6 +190,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(2, 3, IBond.Order.SINGLE);
 		
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 				
@@ -217,6 +223,7 @@ public class PartialTChargePEOEDescriptorTest extends AtomicDescriptorTest {
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		addExplicitHydrogens(molecule);
 		lpcheck.saturate(molecule);
 		

@@ -29,6 +29,7 @@ import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -69,6 +70,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testIPDescriptor1() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("CCCCl");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -86,6 +88,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testIPDescriptor2() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("CC(CC)Cl"); // not in db
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -104,6 +107,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testNotDB() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("C=CCCl"); // not in db
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -121,7 +125,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testIPDescriptor_1() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("C-Cl");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -138,7 +142,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testIPDescriptor_2() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("C-C-Br");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -155,6 +159,7 @@ public class IPAtomicHOSEDescriptorTest extends AtomicDescriptorTest {
     public void testIPDescriptor_3() throws Exception{
         
 		IAtomContainer mol = sp.parseSmiles("C-C-C-I");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		

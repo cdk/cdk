@@ -295,9 +295,9 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	{
         IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("CC(=O)O");
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -330,6 +330,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
     	mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);  
     	
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -351,9 +352,9 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     @Test public void test1_fluorobutadienene() throws Exception
 	{
         IAtomContainer mol = (new SmilesParser(builder)).parseSmiles("FC=CC=C");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -375,6 +376,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	{
         IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("FC#CF");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -418,9 +420,9 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(7, 8, Order.SINGLE);
     	
+    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -475,6 +477,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 	{
         IAtomContainer mol = null;
     	mol = (new SmilesParser(builder)).parseSmiles("C=C=CC#N");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	CDKHueckelAromaticityDetector.detectAromaticity(mol);

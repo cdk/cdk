@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -57,6 +58,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
         
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CF"); 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -78,6 +80,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCl");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		for (int i = 0 ; i < 2 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getBond(i),mol).getValue()).doubleValue();
@@ -92,6 +95,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCBr");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
@@ -107,6 +111,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
@@ -120,6 +125,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCOCC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 8 ; i++){
@@ -135,6 +141,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("NCCO");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 5 ; i++){
@@ -150,6 +157,7 @@ public class BondSigmaElectronegativityDescriptorTest extends BondDescriptorTest
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCS");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 4 ; i++){

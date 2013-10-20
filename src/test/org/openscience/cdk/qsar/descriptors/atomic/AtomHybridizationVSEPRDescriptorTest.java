@@ -38,6 +38,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**
@@ -254,6 +255,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("F-C=C");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		assertAtomTypesPerceived(mol);
         addExplicitHydrogens(mol);
 		
@@ -282,6 +284,7 @@ public class AtomHybridizationVSEPRDescriptorTest extends AtomicDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("[F+]=C-[C-]");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		assertAtomTypesPerceived(mol);
 		addImplicitHydrogens(mol);
 		

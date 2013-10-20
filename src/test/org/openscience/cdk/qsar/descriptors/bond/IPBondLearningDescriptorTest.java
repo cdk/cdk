@@ -66,7 +66,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCC=CCCCC");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -81,7 +81,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CC1CCC=C1");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -96,7 +96,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCCCC");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -112,9 +112,8 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCCCC");
-
-		addExplicitHydrogens(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
         double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
@@ -131,7 +130,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCCCCC");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -148,7 +147,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C#CCC");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -164,7 +163,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C(#CC(C)(C)C)C(C)(C)C");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -181,7 +180,6 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C(C=CC)C");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		
@@ -202,7 +200,7 @@ public class IPBondLearningDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CC=C");
-
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
 		

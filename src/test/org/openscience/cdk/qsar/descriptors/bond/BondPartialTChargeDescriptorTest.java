@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.LonePairElectronChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all QSAR tests.
@@ -60,6 +61,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CF"); 
         
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addExplicitHydrogens(mol);
         
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -79,6 +81,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCBr");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -96,6 +99,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
 		
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C(C)(C)CCI");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		double result= ((DoubleResult)descriptor.calculate(mol.getBond(0),mol).getValue()).doubleValue();
 		Assert.assertEquals(testResult,result,0.001);
@@ -108,6 +112,7 @@ public class BondPartialTChargeDescriptorTest extends BondDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=CCS");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		for (int i = 0 ; i < 9 ; i++){

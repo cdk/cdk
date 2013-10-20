@@ -32,7 +32,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -76,6 +75,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("FC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -98,12 +98,13 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	 */
 	@Test
     public void testPiElectronegativityDescriptor_Methyl_Chloride() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={4.7054,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={4.7054,0.0,0.0,0.0,0.0};/* from Petra onlimoleculene: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("ClC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -126,12 +127,13 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 	 */
 	@Test
     public void testPiElectronegativityDescriptor_Methyl_Iodide() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={4.1951,0.0,0.0,0.0,0.0};/* from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
+		double [] testResult={4.1951,0.0,0.0,0.0,0.0};/* from Petra onlimoleculene: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml*/
 		IAtomicDescriptor descriptor = new PiElectronegativityDescriptor();
 		Integer[] params = new Integer[1];
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("IC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -160,6 +162,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("BrC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -188,6 +191,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("OC");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -216,6 +220,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
         
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=O");
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 		lpcheck.saturate(mol);
@@ -245,6 +250,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -273,6 +279,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("F-C=C");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -300,6 +307,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C(=O)O");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -327,6 +335,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("C=C-O-C");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -354,6 +363,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("F[C+][C-]");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -381,6 +391,7 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles("CCOCCCO");
 
+		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		addExplicitHydrogens(mol);
 		
 		LonePairElectronChecker lpcheck = new LonePairElectronChecker();
@@ -414,8 +425,8 @@ public class PiElectronegativityDescriptorTest extends AtomicDescriptorTest {
 		molA.addAtom(builder.newInstance(IAtom.class,"Cl"));
 		molA.addBond(2, 3, IBond.Order.SINGLE);
 		
-		addExplicitHydrogens(molA);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molA);
+		addExplicitHydrogens(molA);
 		lpcheck.saturate(molA);
 		
         double resultA= ((DoubleResult)descriptor.calculate(molA.getAtom(3),molA).getValue()).doubleValue();
