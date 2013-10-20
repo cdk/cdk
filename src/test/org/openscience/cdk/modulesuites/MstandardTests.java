@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
+import org.openscience.cdk.aromaticity.AromaticityTest;
 import org.openscience.cdk.aromaticity.AtomTypeModelTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.aromaticity.DaylightModelTest;
@@ -221,6 +222,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     AtomTypeModelTest.class,
     ExocyclicAtomTypeModelTest.class,
     PiBondModelTest.class,
-    DaylightModelTest.class
+    DaylightModelTest.class,
+    AromaticityTest.class    
 })
 public class MstandardTests {}
