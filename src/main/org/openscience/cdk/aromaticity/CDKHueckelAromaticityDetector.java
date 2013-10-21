@@ -22,7 +22,9 @@
  */
 package org.openscience.cdk.aromaticity;
 
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -79,9 +81,13 @@ public class CDKHueckelAromaticityDetector {
 			return false;
 		}
 		// disregard all atoms we know that cannot be aromatic anyway
+        Set<IAtom> disregard = new HashSet<IAtom>();
         for (IAtom atom : ringSystems.atoms())
             if (!atomIsPotentiallyAromatic(atom))
-                ringSystems.removeAtomAndConnectedElectronContainers(atom);
+                disregard.add(atom);
+        
+        for (IAtom atom : disregard)
+            ringSystems.removeAtomAndConnectedElectronContainers(atom);
 
         // FIXME: should not really mark them here
 		Iterator<IAtom> atoms = ringSystems.atoms().iterator();

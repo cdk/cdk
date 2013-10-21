@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -51,6 +52,8 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
+
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author steinbeck
@@ -972,6 +975,73 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
                 Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
             }
         }
+    }
+
+    /**
+     * Due to using iterators some Sp3 atoms in the oxaspirodeadiene example
+     * would not be removed and the molcule would incorrectly be found to be
+     * aromatic.
+     * 
+     * @cdk.bug 1313
+     */
+    @Test public void ensureAtomsRemoved() throws Exception {
+        IAtomContainer mol = oxaspirodeadiene();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
+    }
+    
+    
+    /**
+     * 8-oxaspiro[4.5]deca-6,9-diene
+     * C1CCC2(C1)C=COC=C2
+     * @cdk.inchi InChI=1/C9H12O/c1-2-4-9(3-1)5-7-10-8-6-9/h5-8H,1-4H2
+     */
+    static IAtomContainer oxaspirodeadiene() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a1);
+        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a2);
+        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a3);
+        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a4);
+        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a5);
+        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a6);
+        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a7);
+        IAtom a8 = builder.newInstance(IAtom.class,"O");
+        mol.addAtom(a8);
+        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a9);
+        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        mol.addAtom(a10);
+        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        mol.addBond(b1);
+        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        mol.addBond(b2);
+        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        mol.addBond(b3);
+        IBond b4 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        mol.addBond(b4);
+        IBond b5 = builder.newInstance(IBond.class,a1, a5, IBond.Order.SINGLE);
+        mol.addBond(b5);
+        IBond b6 = builder.newInstance(IBond.class,a4, a6, IBond.Order.SINGLE);
+        mol.addBond(b6);
+        IBond b7 = builder.newInstance(IBond.class,a6, a7, IBond.Order.DOUBLE);
+        mol.addBond(b7);
+        IBond b8 = builder.newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
+        mol.addBond(b8);
+        IBond b9 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        mol.addBond(b9);
+        IBond b10 = builder.newInstance(IBond.class,a9, a10, IBond.Order.DOUBLE);
+        mol.addBond(b10);
+        IBond b11 = builder.newInstance(IBond.class,a4, a10, IBond.Order.SINGLE);
+        mol.addBond(b11);
+        return mol;
     }
 
 }
