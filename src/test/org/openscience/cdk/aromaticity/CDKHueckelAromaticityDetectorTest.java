@@ -47,6 +47,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -54,6 +55,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author steinbeck
@@ -989,7 +991,29 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         assertFalse(CDKHueckelAromaticityDetector.detectAromaticity(mol));
     }
-    
+
+
+    /**
+     * Ensures atoms/bonds are marked as cyclic before being removed. Otherwise
+     * this means changing an atom outside of an aromatic system can alter
+     * perception (not good). It results in finding an aromatic ring in
+     * 'OC1=C2C=CC=CC2=CNC1=C' but not in 'OS1(=O)=C2C=CC=CC2=CNC1=C'. Whether 
+     * a pi bond is exocyclic should be invariant to the connected atom. 
+     * 
+     * @cdk.bug 1313
+     */
+    @Test public void markCyclicBefore() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        
+        IAtomContainer mol1 = sp.parseSmiles("OC1=C2C=CC=CC2=CNC1=C");
+        IAtomContainer mol2 = sp.parseSmiles("OS1(=O)=C2C=CC=CC2=CNC1=C");
+        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+        
+        assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol1));
+        assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol2));
+    }
     
     /**
      * 8-oxaspiro[4.5]deca-6,9-diene

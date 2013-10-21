@@ -80,7 +80,14 @@ public class CDKHueckelAromaticityDetector {
 			// If there are no rings, then there cannot be any aromaticity
 			return false;
 		}
-		// disregard all atoms we know that cannot be aromatic anyway
+
+        // FIXME: should not really mark them here
+        Iterator<IAtom> atoms = ringSystems.atoms().iterator();
+        while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISINRING, true);
+        Iterator<IBond> bonds = ringSystems.bonds().iterator();
+        while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);
+
+        // disregard all atoms we know that cannot be aromatic anyway
         Set<IAtom> disregard = new HashSet<IAtom>();
         for (IAtom atom : ringSystems.atoms())
             if (!atomIsPotentiallyAromatic(atom))
@@ -88,12 +95,7 @@ public class CDKHueckelAromaticityDetector {
         
         for (IAtom atom : disregard)
             ringSystems.removeAtomAndConnectedElectronContainers(atom);
-
-        // FIXME: should not really mark them here
-		Iterator<IAtom> atoms = ringSystems.atoms().iterator();
-		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISINRING, true);
-		Iterator<IBond> bonds = ringSystems.bonds().iterator();
-		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);		
+                
 		
 		boolean foundSomeAromaticity = false;
 		Iterator<IAtomContainer> isolatedRingSystems =
