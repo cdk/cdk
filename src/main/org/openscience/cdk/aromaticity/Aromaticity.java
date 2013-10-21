@@ -43,27 +43,32 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
  * A configurable model to perceive aromatic systems. Aromaticity is useful as
- * both a chemical property indicating stronger stabilisation and a way to treat
- * different resonance forms as equivalent. The later has implications in
- * similarity, depiction and storage. Several simplified computation models have
- * evolved to fit-these use cases. General the models loosely follow <a
- * href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a> for
- * determining aromatic systems. Except for checking that atoms are Sp2
- * hybridised - planarity is not generally considered. As such, non-planar
- * molecules like cyclodeca-1,3,5,7,9-pentaene will be incorrectly identified as
- * aromatic. <p/>
- * Although there is no correct model there are models which are
- * better suited for a specific use. Although some models get more complicated
- * (e.g. considering tautomers) two reasons for differences are: 
+ * both a chemical property indicating stronger stabilisation and as a way to
+ * treat different resonance forms as equivalent. Each has its own implications
+ * the first in physicochemical attributes and the second in similarity,
+ * depiction and storage. 
+ * <p/>
+ * To address the resonance forms, several simplified (sometimes conflicting)
+ * models have arisen. Generally the models <b>loosely</b> follow
+ * <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a>
+ * for determining aromaticity. A common omission being that planarity is not 
+ * tested and chemical compounds which are non-planar can be perceived
+ * as aromatic. An example of one such compound is, cyclodeca-1,3,5,7,9-pentaene.
+ * <p/> 
+ * Although there is not a single universally accepted model there are models
+ * which may better suited for a specific use (<a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>).
+ * The different models are often ill-defined or unpublished but it is important
+ * to acknowledge that there are differences (see. <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>).
+ * <p/>
+ * Although models may get more complicated (e.g. considering tautomers) 
+ * normally the reasons for differences are: 
  * <ul> 
  *     <li>the atoms allowed and how many electrons each contributes</li>
- *     <li>which rings/cycles are tested</li>
+ *     <li>the rings/cycles are tested</li>
  * </ul>
  * <p/>
- * This implementation allows configuration of these properties via an 
- * {@link ElectronDonation} model and {@link CycleFinder}. The 
- * {@link ElectronDonation} models may have prerequisites which should be set
- * before invoking.
+ * This implementation allows configuration of these via an {@link 
+ * ElectronDonation} model and {@link CycleFinder}.
  *
  * <blockquote><pre>
  * // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
@@ -82,6 +87,8 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @cdk.module standard
  * @see <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's
  *      rule</a>
+ * @see <a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>     
+ * @see <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>     
  */
 @TestClass("org.openscience.cdk.aromaticity.AromaticityTest")
 public final class Aromaticity {
@@ -105,13 +112,12 @@ public final class Aromaticity {
      * several {@link ElectronDonation} models and {@link
      * org.openscience.cdk.graph.Cycles} available. A good choice for the cycles
      * is to use {@link org.openscience.cdk.graph.Cycles#all()} falling back to
-     * {@link org.openscience.cdk.graph.Cycles#mcb()}. Using all cycles is very
-     * fast but may produce an exponential number of cycles. As such it is not
-     * feasible for complex fused systems in which case an exception is thrown.
+     * {@link org.openscience.cdk.graph.Cycles#relevant()} on failure. Finding all cycles is very
+     * fast but may produce an exponential number of cycles. It is therefore not
+     * feasible for complex fused systems and an exception is thrown.
      * In such cases the aromaticity can either be skipped or a simpler
-     * polynomial cycle set {@link org.openscience.cdk.graph.Cycles#mcb()}
+     * polynomial cycle set {@link org.openscience.cdk.graph.Cycles#relevant()}
      * used.
-     *
      *
      * <blockquote><pre>
      *
