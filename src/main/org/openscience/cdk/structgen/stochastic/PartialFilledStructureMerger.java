@@ -32,6 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.SaturationChecker;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
@@ -83,7 +84,7 @@ public class PartialFilledStructureMerger {
 			do{
 				bondFormed=false;
 				for(IAtomContainer ac : atomContainers.atomContainers()){
-					for(IAtom atom : ac.atoms()){
+					for(IAtom atom : AtomContainerManipulator.getAtomArray(ac)){
 						if (!satCheck.isSaturated(atom, ac))
 						{
 							IAtom partner = getAnotherUnsaturatedNode(atom, atomContainers);

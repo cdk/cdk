@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.templates.AminoAcids;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.Map;
 
@@ -149,8 +150,8 @@ public class ProteinBuilderTool {
     }
 
     private static BioPolymer addAminoAcid(BioPolymer protein, AminoAcid aaToAdd, Strand strand) {
-        for (IAtom atom : aaToAdd.atoms())  protein.addAtom(atom, aaToAdd, strand);
-        for (IBond bond : aaToAdd.bonds()) protein.addBond(bond);
+        for (IAtom atom : AtomContainerManipulator.getAtomArray(aaToAdd)) protein.addAtom(atom, aaToAdd, strand);
+        for (IBond bond : AtomContainerManipulator.getBondArray(aaToAdd)) protein.addBond(bond);
         return protein;
     }
 }

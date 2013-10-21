@@ -1013,9 +1013,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     private void fixHydrogenIsotopes(IAtomContainer molecule, IsotopeFactory isotopeFactory) {
-		Iterator<IAtom> atoms = molecule.atoms().iterator();
-		while (atoms.hasNext()) {
-			IAtom atom = atoms.next();
+		for (IAtom atom : AtomContainerManipulator.getAtomArray(molecule)) {
 			if (atom instanceof IPseudoAtom) {
 				IPseudoAtom pseudo = (IPseudoAtom) atom;
                 if ("D".equals(pseudo.getLabel())) {
