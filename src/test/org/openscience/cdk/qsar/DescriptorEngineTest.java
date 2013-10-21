@@ -129,27 +129,6 @@ public class DescriptorEngineTest extends CDKTestCase {
         Assert.assertEquals(5, availClasses.length);
     }
 
-    /**
-     * @cdk.bug 1965254
-     * @throws Exception
-     */
-    @Test
-    public void testjunk() throws Exception {
-
-        SmilesParser sp = new
-                SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer molecule = sp.parseSmiles("COC1=CC2=C(C=C1)NC3=C2CCNC3");
-
-        TemplateHandler3D template = TemplateHandler3D.getInstance();
-        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(template, "mm2");
-        molecule = mb3d.generate3DCoordinates(molecule, true);
-        DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
-                                                       DefaultChemObjectBuilder.getInstance());
-
-        engine.process(molecule);
-
-    }
-
     @Test
     public void testLoadingOfAtomPairDescriptors() {
     	DescriptorEngine engine = new DescriptorEngine(IAtomicDescriptor.class,
