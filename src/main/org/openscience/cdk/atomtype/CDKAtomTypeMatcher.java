@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.atomtype;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -875,14 +876,20 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                     IAtomType type = getAtomType("N.thioamide");
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 }
-                int explicitHydrogens = countExplicitHydrogens(atom, atomContainer);
-                int connectedHeavyAtoms = atomContainer.getConnectedBondsCount(atom) - explicitHydrogens;
-                if (connectedHeavyAtoms == 2) {
-                	List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
-                    if (bonds.get(0).getFlag(CDKConstants.ISAROMATIC) &&
-                            bonds.get(1).getFlag(CDKConstants.ISAROMATIC)) {
-                        Integer hCount = atom.getImplicitHydrogenCount();
-                        if (hCount == CDKConstants.UNSET || hCount == 0) {
+                
+                List<IBond> bonds = atomContainer.getConnectedBondsList(atom); 
+                List<IBond> heavy = heavyBonds(bonds);
+                
+                int expHCount = heavy.size() - bonds.size();
+                
+                if (heavy.size() == 2) {
+                	
+                    if (heavy.get(0).getFlag(CDKConstants.ISAROMATIC) &&
+                            heavy.get(1).getFlag(CDKConstants.ISAROMATIC)) {
+                        
+                        int hCount = atom.getImplicitHydrogenCount() != null ? atom.getImplicitHydrogenCount() + expHCount
+                                                                             : expHCount;
+                        if (hCount == 0) {
                             if (atomContainer.getMaximumBondOrder(atom) == CDKConstants.BONDORDER_SINGLE &&
                                     isSingleHeteroAtom(atom, atomContainer)) {
                                 IAtomType type = getAtomType("N.planar3");
@@ -904,17 +911,17 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
                 		IAtomType type = getAtomType("N.sp3");
                 		if (isAcceptable(atom, atomContainer, type)) return type;
                 	}
-                } else if (connectedHeavyAtoms == 3) {
+                } else if (heavy.size() == 3) {
                 	if (bothNeighborsAreSp2(atom, atomContainer) && isRingAtom(atom, atomContainer)) {
                 		IAtomType type = getAtomType("N.planar3");
                 		if (isAcceptable(atom, atomContainer, type)) return type;
                 	}
                 	IAtomType type = getAtomType("N.sp3");
                 	if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (connectedHeavyAtoms == 1) {
+                } else if (heavy.size() == 1) {
                     IAtomType type = getAtomType("N.sp3");
                     if (isAcceptable(atom, atomContainer, type)) return type;
-                } else if (connectedHeavyAtoms == 0) {
+                } else if (heavy.size() == 0) {
                     IAtomType type = getAtomType("N.sp3");
                     if (isAcceptable(atom, atomContainer, type)) return type;
                 }
@@ -1020,6 +1027,22 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             }
         }
     	return count;
+    }
+
+    /**
+     * Filter a bond list keeping only bonds between heavy atoms. 
+     * 
+     * @param bonds a list of bond
+     * @return the bond list only with heavy bonds
+     */
+    private List<IBond> heavyBonds(final List<IBond> bonds) {
+        final List<IBond> heavy = new ArrayList<IBond>(bonds.size());
+        for (final IBond bond : bonds) {
+            if (!(bond.getAtom(0).getSymbol().equals("H") && bond.getAtom(1).getSymbol().equals("H"))) {
+                heavy.add(bond);
+            }
+        }
+    	return heavy;
     }
     
     private IAtomType perceiveIron(IAtomContainer atomContainer, IAtom atom) throws CDKException {
