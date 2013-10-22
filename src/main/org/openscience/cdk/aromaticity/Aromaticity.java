@@ -68,12 +68,16 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * </ul>
  * <p/>
  * This implementation allows configuration of these via an {@link 
- * ElectronDonation} model and {@link CycleFinder}.
+ * ElectronDonation} model and {@link CycleFinder}. To obtain an instance
+ * of the electron donation model use one of the factory methods, 
+ * {@link ElectronDonation#cdk()}, {@link ElectronDonation#cdkAllowingExocyclic()},
+ * {@link ElectronDonation#daylight()} or {@link ElectronDonation#piBonds()}.
  *
  * <blockquote><pre>
  * // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
- * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAtomTypes(false),
- *                                           Cycles.cdkAromaticSet());
+ * ElectronDonation model       = ElectronDonation.cdk();
+ * CycleFinder      cycles      = Cycles.cdkAromaticSet();
+ * Aromaticity      aromaticity = new Aromaticity(model, cycles);
  *
  * // apply our configured model to each molecule, the CDK model
  * // requires that atom types are perceived
@@ -122,11 +126,11 @@ public final class Aromaticity {
      * <blockquote><pre>
      *
      * // mimics the CDKHuckelAromaticityDetector
-     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAtomTypes(false),
+     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
      *                                           Cycles.cdkAromaticSet());
      *
      * // mimics the DoubleBondAcceptingAromaticityDetector
-     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAtomTypes(true),
+     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(),
      *                                           Cycles.cdkAromaticSet());
      *
      * // a good model for writing SMILES
@@ -155,7 +159,7 @@ public final class Aromaticity {
      * aromatic.
      *
      * <blockquote><pre>{@code
-     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAtomTypes(true),
+     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
      *                                           Cycles.all());
      * IAtomContainer container = ...;
      * try {
@@ -207,7 +211,7 @@ public final class Aromaticity {
      * flags. <p/>
      *
      * <blockquote><pre>
-     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdkAtomTypes(true),
+     * Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
      *                                           Cycles.all());
      * IAtomContainer container = ...;
      * try {
