@@ -29,13 +29,31 @@ import org.openscience.cdk.ringsearch.RingSearch;
 
 /**
  * Defines an electron donation model for perceiving aromatic systems. The model
- * defines which atoms are allowed and how many electron it contributes.
- * Currently the available models are.
+ * defines which atoms are allowed and how many electron it contributes. There 
+ * are currently several models available.
  *
- * <ul> <li>CDK Atom Type - uses the information form the preset CDK atom types
- * to determine how many electrons each atom should contribute. The model can
- * either allow or exclude contributions from exocyclic pi bonds {@see
- * #cdkAtomTypes}. </li> </ul>
+ * <ul> 
+ *     <li>{@link #cdk()}/{@link #cdkAllowingExocyclic()} - uses the information
+ *     form the preset CDK atom types to determine how many electrons each atom 
+ *     should contribute. The model can either allow or exclude contributions
+ *     from exocyclic pi bonds. This model requires that atom types have be
+ *     perceived.
+ * </li>
+ *     <li>
+ *      {@link #piBonds()} - a simple model only allowing cyclic pi bonds to
+ *      contribute. This model only requires that bond orders are set.    
+ *     </li>
+ *     <li>
+ *      {@link #daylight()} - a model similar to that used by Daylight for SMILES.
+ *      This model does not require atom types to be defined but every atom should
+ *      have it's hydrogen count set.
+ *     </li>
+ * </ul>
+ * <p/>
+ * To obtain an instance of the model simply invoke the named method.
+ * <blockquote><pre>
+ * ElectronDonation model = ElectronDonation.cdk();     
+ * </pre></blockquote>
  *
  * @author John May
  * @cdk.module standard
@@ -53,7 +71,7 @@ public abstract class ElectronDonation {
      * @return
      */
     abstract int[] contribution(IAtomContainer container, RingSearch ringSearch);
-
+                 
     /**
      * Use the preset CDK atom types to determine the electron contribution of
      * atoms. If an atom type has not been perceived or hybridisation is unset a
@@ -70,16 +88,38 @@ public abstract class ElectronDonation {
      * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
      * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
      * <p/>
-     * The {@code exocyclic} attribute determines whether non-cyclic 'sprouting'
-     * pi bonds are allowed to contribute. Unlike other modes
-     * contribution from exocyclic pi bonds is always '1'.
-     *
-     * @param exocyclic allow exocyclic (sprouting) pi bonds to contribute
+     * Exocyclic pi bonds are not allowed to contribute.
+     * 
      * @return electron donation model to use for aromaticity perception
      * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
      */
-    public static ElectronDonation cdkAtomTypes(boolean exocyclic) {
-        return new AtomTypeModel(exocyclic);
+    public static ElectronDonation cdk() {
+        return new AtomTypeModel(false);
+    }
+    
+    /**
+     * Use the preset CDK atom types to determine the electron contribution of
+     * atoms. If an atom type has not been perceived or hybridisation is unset a
+     * runtime exception is thrown. <p/> The model accepts cyclic atoms which
+     * are {@link org.openscience.cdk.interfaces.IAtom.Hybridization#SP2} or
+     * {@link org.openscience.cdk.interfaces.IAtom.Hybridization#PLANAR3}
+     * hybridised. The {@link org.openscience.cdk.CDKConstants#PI_BOND_COUNT} and
+     * {@link org.openscience.cdk.CDKConstants#LONE_PAIR_COUNT} to determine how
+     * many electrons an atom type can contribute. Generally these values are 
+     * not automatically configured and so several atom types are cached
+     * for lookup: <ul> <li>N.planar3: 2 electrons </li>
+     * <li>N.minus.planar3: 2 electrons </li> <li>N.amide: 2 electrons </li>
+     * <li>S.2: 2 electrons </li> <li>S.planar3: 2 electrons </li>
+     * <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
+     * <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
+     * <p/>
+     * Exocyclic pi bonds are not allowed to contribute.
+     * 
+     * @return electron donation model to use for aromaticity perception
+     * @see org.openscience.cdk.interfaces.IAtom#getAtomTypeName()
+     */
+    public static ElectronDonation cdkAllowingExocyclic() {
+        return new AtomTypeModel(true);
     }
 
     /**

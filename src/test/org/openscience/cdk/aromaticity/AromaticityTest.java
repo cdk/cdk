@@ -21,9 +21,9 @@ import static org.junit.Assert.assertTrue;
  */
 public class AromaticityTest {
 
-    private final Aromaticity cdk      = new Aromaticity(ElectronDonation.cdkAtomTypes(false),
+    private final Aromaticity cdk      = new Aromaticity(ElectronDonation.cdk(),
                                                          Cycles.all());
-    private final Aromaticity cdkDb    = new Aromaticity(ElectronDonation.cdkAtomTypes(true),
+    private final Aromaticity cdkExo   = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(),
                                                          Cycles.all());
     private final Aromaticity daylight = new Aromaticity(ElectronDonation.daylight(),
                                                          Cycles.all());
@@ -45,7 +45,7 @@ public class AromaticityTest {
     @Test public void quinone() throws Exception {
         assertThat(cdk.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(),
                    is(0));
-        assertThat(cdkDb.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(),
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(),
                    is(6));
         assertThat(daylight.findBonds(smiles("O=C1C=CC(=O)C=C1")).size(),
                    is(0));
@@ -62,7 +62,7 @@ public class AromaticityTest {
     @Test public void oxypyridinide() throws Exception {
         assertThat(cdk.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
                    is(0));
-        assertThat(cdkDb.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
                    is(0));
         assertThat(daylight.findBonds(smiles("O=C1C=C[N-]C=C1")).size(),
                    is(6));
@@ -72,7 +72,7 @@ public class AromaticityTest {
     @Test public void pyridinone() throws Exception {
         assertThat(cdk.findBonds(type(smiles("O=C1NC=CC=C1"))).size(),
                    is(0));
-        assertThat(cdkDb.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
                    is(0));
         assertThat(daylight.findBonds(smiles("O=C1NC=CC=C1")).size(),
                    is(6));

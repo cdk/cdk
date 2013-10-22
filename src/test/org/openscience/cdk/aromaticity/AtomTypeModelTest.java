@@ -45,7 +45,7 @@ import static org.junit.Assert.assertThat;
  */
 public class AtomTypeModelTest {
 
-    private static ElectronDonation model = ElectronDonation.cdkAtomTypes(false);
+    private static ElectronDonation model = ElectronDonation.cdk();
 
     @Test public void bezene() throws Exception {
         test(TestMoleculeFactory.makeBenzene(),
