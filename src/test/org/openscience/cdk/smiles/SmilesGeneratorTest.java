@@ -1151,6 +1151,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(benzene);
         String smileswitharomaticity = sg.createSMILES(benzene);
         Assert.assertEquals("c1ccccc1", smileswitharomaticity);

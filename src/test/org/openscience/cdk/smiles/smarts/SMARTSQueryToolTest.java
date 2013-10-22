@@ -40,6 +40,7 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * JUnit test routines for the SMARTS substructure search.
@@ -178,11 +179,11 @@ public class SMARTSQueryToolTest extends CDKTestCase {
 
         IAtomContainer indole = MoleculeFactory.makeIndole();
         addImplicitHydrogens(indole);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(indole);
         SmilesGenerator generator = new SmilesGenerator();        
         String indoleSmiles = generator.createSMILES(indole);
-
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
         indole = smilesParser.parseSmiles(indoleSmiles);
 
         SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
