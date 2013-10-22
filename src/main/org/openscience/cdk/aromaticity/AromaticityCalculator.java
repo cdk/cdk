@@ -44,7 +44,9 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.created    2002-03-14
  *
  * @cdk.keyword aromaticity detector
+ * @deprecated use {@link Aromaticity}
  */
+@Deprecated
 @TestClass("org.openscience.cdk.aromaticity.AromaticityCalculatorTest")
 public class AromaticityCalculator
 {

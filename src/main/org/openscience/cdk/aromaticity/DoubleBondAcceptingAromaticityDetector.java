@@ -56,7 +56,9 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * 
  * @see org.openscience.cdk.CDKConstants
  * @see CDKHueckelAromaticityDetector
+ * @deprecated use {@link Aromaticity} with the {@link org.openscience.cdk.aromaticity.ElectronDonation#cdkAllowingExocyclic()} model
  */
+@Deprecated
 @TestClass("org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest")
 public class DoubleBondAcceptingAromaticityDetector {
 
