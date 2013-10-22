@@ -46,7 +46,7 @@ public class PiBondModelTest {
 
     private static ElectronDonation model = ElectronDonation.piBonds();
 
-    @Test public void bezene() throws Exception {
+    @Test public void benzene() throws Exception {
         test(TestMoleculeFactory.makeBenzene(),
              1, 1, 1, 1, 1, 1);
     }

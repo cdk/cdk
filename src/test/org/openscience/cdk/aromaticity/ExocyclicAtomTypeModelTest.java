@@ -47,7 +47,7 @@ public class ExocyclicAtomTypeModelTest {
 
     private static ElectronDonation model = ElectronDonation.cdkAllowingExocyclic();
 
-    @Test public void bezene() throws Exception {
+    @Test public void benzene() throws Exception {
         test(TestMoleculeFactory.makeBenzene(),
              1, 1, 1, 1, 1, 1);
     }

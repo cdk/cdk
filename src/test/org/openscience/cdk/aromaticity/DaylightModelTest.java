@@ -47,7 +47,7 @@ public class DaylightModelTest {
 
     private static ElectronDonation model = ElectronDonation.daylight();
 
-    @Test public void bezene() throws Exception {
+    @Test public void benzene() throws Exception {
         test(addHydrogens(TestMoleculeFactory.makeBenzene()),
              1, 1, 1, 1, 1, 1);
     }

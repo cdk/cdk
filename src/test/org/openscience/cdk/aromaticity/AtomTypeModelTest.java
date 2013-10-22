@@ -47,7 +47,7 @@ public class AtomTypeModelTest {
 
     private static ElectronDonation model = ElectronDonation.cdk();
 
-    @Test public void bezene() throws Exception {
+    @Test public void benzene() throws Exception {
         test(TestMoleculeFactory.makeBenzene(),
              1, 1, 1, 1, 1, 1);
     }
