@@ -394,12 +394,6 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	        		if (isAcceptable(atom, atomContainer, type)) return type;
 	        	}
 	        }
-	    } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
-	        IAtomType type = getAtomType("C.sp2");
-	        if (isAcceptable(atom, atomContainer, type)) return type;
-	    } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
-	        IAtomType type = getAtomType("C.sp2");
-	        if (isAcceptable(atom, atomContainer, type)) return type;
 	    } else if (isCharged(atom)) {
 	        if (atom.getFormalCharge() == 1) {
 	            if (atomContainer.getConnectedBondsCount(atom) == 0) {
@@ -439,7 +433,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
 	            }
 	        }
 	        return null;
-	    } else if (atomContainer.getConnectedBondsCount(atom) > 4) {
+	    } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+            IAtomType type = getAtomType("C.sp2");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        } else if (hasOneOrMoreSingleOrDoubleBonds(atomContainer, atom)) {
+            IAtomType type = getAtomType("C.sp2");
+            if (isAcceptable(atom, atomContainer, type)) return type;
+        }  else if (atomContainer.getConnectedBondsCount(atom) > 4) {
 	        // FIXME: I don't perceive carbons with more than 4 connections yet
 	        return null;
 	    } else { // OK, use bond order info
