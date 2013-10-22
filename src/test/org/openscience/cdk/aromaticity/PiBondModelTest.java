@@ -1,5 +1,5 @@
 /*
- * Copyright (c) -1013 European Bioinformatics Institute (EMBL-EBI)
+ * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
  *  
  * Contact: cdk-devel@lists.sourceforge.net
