@@ -70,23 +70,6 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         Assert.assertNotNull(matcher);
     }
 
-    @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
-        IMolecule mol = new Molecule();
-        IAtom atom = new Atom("C");
-        final IAtomType.Hybridization thisHybridization = IAtomType.Hybridization.SP3;
-        atom.setHybridization(thisHybridization);
-        mol.addAtom(atom);
-
-        // just check consistency; other methods do perception testing
-        StructGenMatcher matcher = new StructGenMatcher();
-        IAtomType[] types = matcher.findMatchingAtomType(mol);
-        for (int i=0; i<types.length; i++) {
-            IAtomType type = matcher.findMatchingAtomType(mol, mol.getAtom(i));
-            Assert.assertNotNull(type);
-            Assert.assertEquals(type.getAtomTypeName(), types[i].getAtomTypeName());
-        }
-    }
-
     @Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
         IMolecule mol = DefaultChemObjectBuilder.getInstance().newInstance(IMolecule.class);
         IAtom atom = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
