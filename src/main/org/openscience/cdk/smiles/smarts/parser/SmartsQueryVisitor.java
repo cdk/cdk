@@ -24,11 +24,6 @@ package org.openscience.cdk.smiles.smarts.parser;
 * @cdk.module smarts 
 */
 
-/** 
-*
-* @cdk.module smarts 
-*/
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,6 +143,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 									recursiveRingAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
 								ringBond = new AromaticQueryBond(builder);
 							} else {
+                                query.setFlag(CDKConstants.ISINRING, true);
 								ringBond = new RingBond(builder);
 							}
 						} else {
@@ -175,6 +171,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 									ringAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
 								ringBond = new AromaticQueryBond(builder);
 							} else {
+                                query.setFlag(CDKConstants.ISINRING, true);
 								ringBond = new RingBond(builder);
 							}
 						} else {
@@ -363,6 +360,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			bond = new AromaticQueryBond(builder);
 			break;
 		case SMARTSParserConstants.R_BOND:
+            query.setFlag(CDKConstants.ISINRING, true);
 			bond = new RingBond(builder);
 			break;
 		case SMARTSParserConstants.UP_S_BOND:
@@ -468,6 +466,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTRingConnectivity node, Object data) {
+        query.setFlag(CDKConstants.ISINRING, true);
 		return new TotalRingConnectionAtom(node.getNumOfConnection(), builder);
 	}
 
@@ -484,10 +483,12 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTRingMembership node, Object data) {
+        query.setFlag(CDKConstants.ISINRING, true);
 		return new RingMembershipAtom(node.getNumOfMembership(), builder);
 	}
 
 	public Object visit(ASTSmallestRingSize node, Object data) {
+        query.setFlag(CDKConstants.ISINRING, true);
 		return new SmallestRingAtom(node.getSize(), builder);
 	}
 
