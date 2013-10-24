@@ -22,7 +22,6 @@ package org.openscience.cdk.smiles.smarts;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
@@ -348,8 +346,8 @@ public class SMARTSQueryTool {
                 }
             }
         } else {
-            List bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(this.atomContainer, query);
-            matchingAtoms = getAtomMappings(bondMapping, this.atomContainer);
+            List<List<RMap>> bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(this.atomContainer, query);
+            matchingAtoms = matchedAtoms(bondMapping, this.atomContainer);
         }
 
         return matchingAtoms.size() != 0;
@@ -488,19 +486,18 @@ public class SMARTSQueryTool {
     }
 
 
-    private List<List<Integer>> getAtomMappings(List bondMapping, IAtomContainer atomContainer) {
+    private List<List<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
+        
         List<List<Integer>> atomMapping = new ArrayList<List<Integer>>();
-
         // loop over each mapping
-        for (Object aBondMapping : bondMapping) {
-            List list = (List) aBondMapping;
-
+        for (List<RMap> mapping : bondMapping) {
+            
             List<Integer> tmp = new ArrayList<Integer>();
             IAtom atom1 = null;
             IAtom atom2 = null;
             // loop over this mapping
-            for (Object aList : list) {
-                RMap map = (RMap) aList;
+            for (RMap map : mapping) {
+                
                 int bondID = map.getId1();
 
                 // get the atoms in this bond
@@ -517,7 +514,7 @@ public class SMARTSQueryTool {
             if (tmp.size() == query.getAtomCount()) atomMapping.add(tmp);
 
             // If there is only one bond, check if it matches both ways.
-            if (list.size() == 1 && atom1.getAtomicNumber() == atom2.getAtomicNumber()) {
+            if (mapping.size() == 1 && atom1.getAtomicNumber().equals(atom2.getAtomicNumber())) {
                 List<Integer> tmp2 = new ArrayList<Integer>();
                 tmp2.add(tmp.get(0));
                 tmp2.add(tmp.get(1));
