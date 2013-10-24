@@ -43,6 +43,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -424,128 +425,13 @@ public class SMARTSQueryTool {
      *                      to a timeout in the ring finding code.
      */
     private void initializeMolecule() throws CDKException {
-        // Code copied from
-        // org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptor;
-        Map<String, Integer> valencesTable = new HashMap<String, Integer>();
-        valencesTable.put("H", 1);
-        valencesTable.put("Li", 1);
-        valencesTable.put("Be", 2);
-        valencesTable.put("B", 3);
-        valencesTable.put("C", 4);
-        valencesTable.put("N", 5);
-        valencesTable.put("O", 6);
-        valencesTable.put("F", 7);
-        valencesTable.put("Na", 1);
-        valencesTable.put("Mg", 2);
-        valencesTable.put("Al", 3);
-        valencesTable.put("Si", 4);
-        valencesTable.put("P", 5);
-        valencesTable.put("S", 6);
-        valencesTable.put("Cl", 7);
-        valencesTable.put("K", 1);
-        valencesTable.put("Ca", 2);
-        valencesTable.put("Ga", 3);
-        valencesTable.put("Ge", 4);
-        valencesTable.put("As", 5);
-        valencesTable.put("Se", 6);
-        valencesTable.put("Br", 7);
-        valencesTable.put("Rb", 1);
-        valencesTable.put("Sr", 2);
-        valencesTable.put("In", 3);
-        valencesTable.put("Sn", 4);
-        valencesTable.put("Sb", 5);
-        valencesTable.put("Te", 6);
-        valencesTable.put("I", 7);
-        valencesTable.put("Cs", 1);
-        valencesTable.put("Ba", 2);
-        valencesTable.put("Tl", 3);
-        valencesTable.put("Pb", 4);
-        valencesTable.put("Bi", 5);
-        valencesTable.put("Po", 6);
-        valencesTable.put("At", 7);
-        valencesTable.put("Fr", 1);
-        valencesTable.put("Ra", 2);
-        valencesTable.put("Cu", 2);
-        valencesTable.put("Mn", 2);
-        valencesTable.put("Co", 2);
 
-        // do all ring perception
-        AllRingsFinder arf = new AllRingsFinder();
-        IRingSet allRings;
-        try {
-            allRings = arf.findAllRings(atomContainer);
-        } catch (CDKException e) {
-            logger.debug(e.toString());
-            throw new CDKException(e.toString(), e);
-        }
-
-        // set short cycle information
-        IRingSet sssr = ringSet.ringSet(atomContainer);
-
-        for (IAtom atom : atomContainer.atoms()) {
-
-            // add a property to each ring atom that will be an array of
-            // Integers, indicating what size ring the given atom belongs to
-            // Add SSSR ring counts
-            if (allRings.contains(atom)) { // it's in a ring
-                atom.setFlag(CDKConstants.ISINRING, true);
-                // lets find which ring sets it is a part of
-                List<Integer> ringsizes = new ArrayList<Integer>();
-                IRingSet currentRings = allRings.getRings(atom);
-                int min = 0;
-                for (int i = 0; i < currentRings.getAtomContainerCount(); i++) {
-                    int size = currentRings.getAtomContainer(i).getAtomCount();
-                    if (min > size) min = size;
-                    ringsizes.add(size);
-                }
-                atom.setProperty(CDKConstants.RING_SIZES, ringsizes);
-                atom.setProperty(CDKConstants.SMALLEST_RINGS, sssr.getRings(atom));
-            } else {
-                atom.setFlag(CDKConstants.ISINRING, false);
-            }
-
-            // determine how many rings bonds each atom is a part of
-            int hCount;
-            if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) hCount = 0;
-            else hCount = atom.getImplicitHydrogenCount();
-
-            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-            int total = hCount + connectedAtoms.size();
-            for (IAtom connectedAtom : connectedAtoms) {
-                if (connectedAtom.getSymbol().equals("H")) {
-                    hCount++;
-                }
-            }
-            atom.setProperty(CDKConstants.TOTAL_CONNECTIONS, total);
-            atom.setProperty(CDKConstants.TOTAL_H_COUNT, hCount);
-
-            if (valencesTable.get(atom.getSymbol()) != null) {
-                int formalCharge = atom.getFormalCharge() == CDKConstants.UNSET ? 0 : atom.getFormalCharge();
-                atom.setValency(valencesTable.get(atom.getSymbol()) - formalCharge);
-            }
-        }
-
-        for (IBond bond : atomContainer.bonds()) {
-            if (allRings.getRings(bond).getAtomContainerCount() > 0) {
-                bond.setFlag(CDKConstants.ISINRING, true);
-            }
-        }
-
-        for (IAtom atom : atomContainer.atoms()) {
-            List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
-
-            int counter = 0;
-            IAtom any;
-            for (IAtom connectedAtom : connectedAtoms) {
-                any = connectedAtom;
-                if (any.getFlag(CDKConstants.ISINRING)) {
-                    counter++;
-                }
-            }
-            atom.setProperty(CDKConstants.RING_CONNECTIONS, counter);
-        }
-
-        // check for atomaticity
+        // initialise required invariants - the query has ISINRING set if
+        // the query contains ring queries [R?] [r?] [x?] etc.
+        SmartsMatchers.prepare(atomContainer,
+                               query.getFlag(CDKConstants.ISINRING));
+        
+        // check for aromaticity
         try {
             if (perceiveAtomType) {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
