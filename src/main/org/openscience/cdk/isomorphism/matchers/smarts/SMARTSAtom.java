@@ -37,6 +37,21 @@ public abstract class SMARTSAtom extends QueryAtom implements
         super(builder);
     }
 
+    /**
+     * Access the atom invariants for this atom. If the invariants have not
+     * been set an exception is thrown.
+     * 
+     * @param atom the atom to obtain the invariants of
+     * @return the atom invariants for the atom
+     * @throws NullPointerException thrown if the invariants were not set 
+     */
+    final SMARTSAtomInvariants invariants(final IAtom atom) {
+        final SMARTSAtomInvariants inv = atom.getProperty(SMARTSAtomInvariants.KEY);
+        if (inv == null)
+            throw new NullPointerException("Missing SMARTSAtomInvariants - please compute these values before matching.");
+        return inv;
+    }
+
     public boolean matches(IAtom atom) {
         return false;
     }
