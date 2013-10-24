@@ -1,63 +1,65 @@
-/* $Revision$ $Author$ $Date$ 
+/*  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All I ask is that proper credit is given for my work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * (or see http://www.gnu.org/copyleft/lesser.html)
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
+
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This smarts atom matches any atom with the smallest SSSR size being a 
- * certain value.
+ * Match an atom in a specific size ring. The ring size is specified by {@code
+ * r<NUMBER>} in a SMARTS pattern. This term is non-portable, depending on the
+ * set of rings chosen and which ring sizes are used. The default implementation
+ * (Daylight) only stores the smallest ring each atom belongs to whilst other
+ * implementations may store multiple values. A more portable term is the
+ * ring connectivity which is specified as {@code x<NUMBER>}.
  *
- * @cdk.module  smarts
- * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.module smarts
+ * @cdk.keyword SMARTS
  */
-public class SmallestRingAtom extends SMARTSAtom {
-	private static final long serialVersionUID = 8201040824866400163L;
-	/**
-	 * The size of the smallest SSSR
-	 */
-	private int smallestRingSize;
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.SmallestRingAtomTest")
+public final class SmallestRingAtom extends SMARTSAtom {
 
-	public SmallestRingAtom(int size, IChemObjectBuilder builder) {
+    /** Ring size to check. */
+    private int ringSize;
+
+    /**
+     * Creates a matcher for specified ring size.
+     *
+     * @param ringSize size of the ring to check.
+     */
+    public SmallestRingAtom(int ringSize, IChemObjectBuilder builder) {
         super(builder);
-		this.smallestRingSize = size;
-	}
+        this.ringSize = ringSize;
+    }
 
-	public boolean matches(IAtom atom) {
-		if (atom.getFlag(CDKConstants.ISINRING)) {
-			List<Integer> rings = (List<Integer>) atom
-					.getProperty(CDKConstants.RING_SIZES);
-			if (rings == null || rings.size() == 0) {
-				return false;
-			}
-			Collections.sort(rings);
-			if ((rings.get(0)).intValue() == smallestRingSize) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /** @inheritDoc */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return invariants(atom).ringSize().contains(ringSize);
+    }
 }

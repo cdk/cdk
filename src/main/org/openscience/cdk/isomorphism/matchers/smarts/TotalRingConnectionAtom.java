@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+/*  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -29,56 +23,41 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * This matcher checks the number of ring connections of the checked Atom with
- * other Atom's. This cannot be matched with a unpreprocessed Atom!
- * 
- * @cdk.module  smarts
+ * other Atom's. This cannot be matched without prepossessing Atom - {@link
+ * SMARTSAtomInvariants}. The ring connectivity is encoded in smarts using
+ * {@code x<NUMBER>}.
+ *
+ * @cdk.module smarts
  * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.keyword SMARTS
  */
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtomTest")
+public final class TotalRingConnectionAtom extends SMARTSAtom {
 
-public class TotalRingConnectionAtom extends SMARTSAtom {
-	/**
-	 * Creates a new instance
-	 *
-	 * @param ringConn number of ring connections
-	 */
-	public TotalRingConnectionAtom(int ringConn, IChemObjectBuilder builder) {
+    /** Number of rings. */
+    private final int ringConnectivity;
+
+    /**
+     * Create a matcher for the number of rings an atom belongs to.
+     *
+     * @param ringConnectivity number of ring bonds this atom is adjacent to
+     */
+    public TotalRingConnectionAtom(int ringConnectivity, IChemObjectBuilder builder) {
         super(builder);
-		this.setProperty(CDKConstants.RING_CONNECTIONS, ringConn);
-	}
+        this.ringConnectivity = ringConnectivity;
+    }
 
-	/**
-	 * Returns the ring connection of an atom
-	 * 
-	 * @param atom
-	 * @return
-	 */
-	private int getRC(IAtom atom) {
-		if (atom.getFlag(CDKConstants.ISINRING))
-			return ((Integer) atom.getProperty(CDKConstants.RING_CONNECTIONS))
-					.intValue();
-		else
-			return 0;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		return getRC(atom) != 0 && getRC(atom) == getRC(this);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.PseudoAtom#toString()
-	 */
-	public String toString() {
-		return ("TotalRingConnectionAtom(" + getRC(this) + ")");
-	}
-
+    /** @inheritDoc */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return invariants(atom).ringConnectivity() == ringConnectivity;
+    }
 }

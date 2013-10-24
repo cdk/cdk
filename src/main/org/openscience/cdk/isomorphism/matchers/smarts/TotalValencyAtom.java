@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,37 +18,43 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matcher checks the total valency of the Atom.
- * This cannot be matched with a unpreprocessed Atom!
- *
+ * This matcher checks the valence of the Atom. The valence is the number of 
+ * bonds formed by an atom (including bonds to implicit hydrogens).
+ * 
  * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS 
  */
-public class TotalValencyAtom extends SMARTSAtom {
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom")
+public final class TotalValencyAtom extends SMARTSAtom {
 
-    private static final long serialVersionUID = -8067867220731999668L;
-    
-    public TotalValencyAtom(int valency, IChemObjectBuilder builder) {
+    /**
+     * The valence to match.
+     */
+    private final int valence;
+
+    /**
+     * Match the valence of atom.
+     * @param valence valence value
+     * @param builder chem object builder (required for ChemObject.getBuilder)
+     */
+    public TotalValencyAtom(int valence, IChemObjectBuilder builder) {
         super(builder);
-        setValency(valency);
-    }
-    
-   public boolean matches(IAtom atom) {
-	   return (atom.getValency()!=0 && atom.getValency() == this.getValency());
+        this.valence = valence;
     }
 
-    public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("TotalValency(");
-        s.append(this.hashCode() + ", ");
-		s.append("V:" + getValency());
-        s.append(")");
-		return s.toString();
+    /**
+     * @inheritDoc
+     */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return invariants(atom).valence() == valence;
     }
 }
 

@@ -1,9 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *               2013       European Bioinformatics Institute
+  *                         John May
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -23,42 +20,44 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matcher checks the formal charge of the Atom. This cannot be matched
- * with a unpreprocessed Atom!
+ * SMARTS query atom for matching the total hydrogen count. This count is 
+ * specified in SMARTS using {@code H<NUMBER>}.
  * 
  * @cdk.module  smarts
- * @cdk.githash
  * @cdk.keyword SMARTS 
  */
-public class TotalHCountAtom extends SMARTSAtom {
+public final class TotalHCountAtom extends SMARTSAtom {
 
-	private static final long serialVersionUID = -3532280322660394553L;
+    /** The total hydrogen count to match. */
+    private final int totalHCount;
 
-	public TotalHCountAtom(int hCount, IChemObjectBuilder builder) {
+    public TotalHCountAtom(int totalHCount, IChemObjectBuilder builder) {
         super(builder);
-		setProperty(CDKConstants.TOTAL_H_COUNT, hCount);
-	}
+        this.totalHCount = totalHCount;
+    }
 
-	public int getHC(IAtom atom) {
-		return (Integer)atom.getProperty(CDKConstants.TOTAL_H_COUNT);
-	}
+    /**
+     * Check if the total hydrogen count of the {@code atom} is equal to the
+     * query.
+     *
+     * @param atom the atom to match
+     * @return the hydrogen count matches
+     */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(final IAtom atom) {
+        return invariants(atom).totalHydrogenCount() == totalHCount;
+    }
 
-	public boolean matches(IAtom atom) {
-		return getHC(atom) == getHC(this);
-	}
-	
-
-	public String toString() {
-		StringBuffer s = new StringBuffer();
-		s.append("TotalHCountAtom(");
-		s.append(this.hashCode() + ", ");
-		s.append("HC:" + getHC(this));
-		s.append(")");
-		return s.toString();
-	}
+    /** @inheritDoc */
+    @Override
+    @TestMethod("testToString")
+    public String toString() {
+        return "H" + totalHCount;
+    }
 }

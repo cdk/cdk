@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2002-2006  The Chemistry Development Kit (CDK) project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -30,42 +24,36 @@
 
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This matches an atom using total number of connections.
- * 
- * @cdk.module  smarts
+ * This matches an atom using total number of connections - referred to in
+ * SMARTS as the connectivity. The connectivity is specified using the {@code
+ * X<number>} pattern.
+ *
+ * @cdk.module smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public class TotalConnectionAtom extends SMARTSAtom {
-	private static final long serialVersionUID = 2714616726873309671L;
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtomTest")
+public final class TotalConnectionAtom extends SMARTSAtom {
 
-	/**
-	 * Creates a new instance.
-	 */
-	public TotalConnectionAtom(int count, IChemObjectBuilder builder) {
+    /** Total number of connections from an atom including H count. */
+    private final int connectivity;
+
+    /** Creates a new instance. */
+    public TotalConnectionAtom(int connectivity, IChemObjectBuilder builder) {
         super(builder);
-		this.setProperty(CDKConstants.TOTAL_CONNECTIONS, count);
-	}
-	
-	/**
-	 * This returns the total connection of an atom.
-	 */
-	public int getTC(IAtom atom) {
-		if (atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) != null)
-			return (Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS);
-		else
-			return 0;
-	}
+        this.connectivity = connectivity;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		return (getTC(atom) != 0 && getTC(atom) == getTC(this));
-	}
+    /** @inheritDoc */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return invariants(atom).connectivity() == connectivity;
+    }
 }

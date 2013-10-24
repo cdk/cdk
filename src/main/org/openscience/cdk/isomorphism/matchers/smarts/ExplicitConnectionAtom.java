@@ -1,7 +1,7 @@
-/* $Revision$ $Author$ $Date$ 
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- *
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *               2013       European Bioinformatics Institute
+ *                          John May
+ *                          
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -19,64 +19,37 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This smarts atom matches any atom with a certain number of explicit
- * connections.
+ * Match an atom with the defined degree. The degree is also referred to as the
+ * explicit connectivity and is encoded in smarts using {@code D<NUMBER>}. 
  *
- * @cdk.module  smarts
- * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.module smarts
+ * @cdk.keyword SMARTS
  */
-public class ExplicitConnectionAtom extends SMARTSAtom {
-	private static final long serialVersionUID = 7453671653627040279L;
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.ExplicitConnectionAtomTest")
+public final class ExplicitConnectionAtom extends SMARTSAtom {
 
-	/**
-	 * Number of explicit connections.
-	 */
-	private int numOfConnection;
-
-	/**
-	 * Creates a new instance.
-	 */
-	public ExplicitConnectionAtom(IChemObjectBuilder builder) {
-		super(builder);
-	}
-
-	/**
-	 * Creates a new instance.
-	 */
-	public ExplicitConnectionAtom(int connection, IChemObjectBuilder builder) {
-		super(builder);
-		this.numOfConnection = connection;
-	}
-
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-    public boolean matches(IAtom atom) {
-        int conn = (Integer) atom.getProperty(CDKConstants.TOTAL_CONNECTIONS) -
-                (Integer) atom.getProperty(CDKConstants.TOTAL_H_COUNT);
-        
-        return numOfConnection == conn;
-    }
+    /** Number of explicit connections. */
+    private int degree;
 
     /**
-	 * Returns number of explicit connections.
-	 */
-	public int getNumOfConnection() {
-		return numOfConnection;
-	}
+     * Create a query atom for matching the degree of an atom. The degree is the
+     * number connected atoms.
+     */
+    public ExplicitConnectionAtom(int degree, IChemObjectBuilder builder) {
+        super(builder);
+        this.degree = degree;
+    }
 
-	/**
-	 * Sets number of explicit connections.
-	 * 
-	 * @param numOfConnection
-	 */
-	public void setNumOfConnection(int numOfConnection) {
-		this.numOfConnection = numOfConnection;
-	}
+    /** @inheritDoc */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return invariants(atom).degree() == degree;
+    }
 }

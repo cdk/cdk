@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$ 
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,23 +17,29 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.interfaces.IRingSet;
 
 /**
- * This query atom matches any atom with a certain number of SSSR. 
+ * This query is found in a specified number of ring. The ring membership is
+ * specified with the SMARTS {@code R<NUMBER>}. The membership depends on the
+ * ring set used and as such is not a portable term. If the Smallest Set of 
+ * Smallest Rings (SSSR) is used then changing the order of atoms
+ * <i>may</i> change which atoms match in a pattern.
  *
- * @cdk.module  smarts
- * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.module smarts
+ * @cdk.keyword SMARTS
  */
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.RingMembershipAtomTest")
 public class RingMembershipAtom extends SMARTSAtom {
-	private static final long serialVersionUID = -7963168231557641862L;
 
-    /** Number of rings to which this atom belongs, if < 0 check any ring membership. */
-	private int numSSSR;
+    /**
+     * Number of rings to which this atom belongs, if < 0 check any ring
+     * membership.
+     */
+    private int ringNumber;
 
     /**
      * Ring membership query atom. Check if the an atom belongs to <i>num</i> of
@@ -46,22 +50,16 @@ public class RingMembershipAtom extends SMARTSAtom {
      *
      * @param num number of rings which this atom belongs to, < 0 any ring.
      */
-	public RingMembershipAtom(int num, IChemObjectBuilder builder) {
+    public RingMembershipAtom(int num, IChemObjectBuilder builder) {
         super(builder);
-		this.numSSSR = num;
-	}
+        this.ringNumber = num;
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		if (atom.getFlag(CDKConstants.ISINRING)) {
-			IRingSet ringSet = (IRingSet)atom.getProperty(CDKConstants.SMALLEST_RINGS);
-            // < 0 means any ring, as you can see below R0 is valid
-			return numSSSR < 0 || ringSet.getAtomContainerCount() == numSSSR;
-		} else {
-            if (numSSSR == 0) return true;
-        }
-		return false;
-	}
+    /** @inheritDoc */
+    @Override
+    @TestMethod("matches")
+    public boolean matches(IAtom atom) {
+        return ringNumber < 0 ? invariants(atom).ringNumber() > 0
+                              : ringNumber == invariants(atom).ringNumber();
+    }
 }
