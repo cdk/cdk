@@ -25,12 +25,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -166,6 +168,9 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(b9);
         IBond b10 = mol.getBuilder().newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
         mol.addBond(b10);
+        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);        
+        addImplicitHydrogens(mol);
 
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
@@ -176,7 +181,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
      * @cdk.inchi InChI=1S/C6H12O10S/c7-2(1-16-17(13,14)15)3(8)4(9)5(10)6(11)12/h2-5,7-10H,1H2,(H,11,12)(H,13,14,15)/t2-,3-,4+,5-/m1/s1
      */
     @Test
-    public void testCID() {
+    public void testCID() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom a1 = mol.getBuilder().newInstance(IAtom.class,"S");
         a1.setFormalCharge(0);
@@ -350,7 +355,8 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(b27);
         IBond b28 = mol.getBuilder().newInstance(IBond.class,a16, a23, IBond.Order.SINGLE);
         mol.addBond(b28);
-
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        addImplicitHydrogens(mol);
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(2, result.intValue());

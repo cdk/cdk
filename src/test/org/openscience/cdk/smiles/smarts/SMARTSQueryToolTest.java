@@ -198,6 +198,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         IAtomContainer methane =
              SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom carbon = methane.getBuilder().newInstance(IAtom.class,Elements.CARBON);
+        carbon.setImplicitHydrogenCount(4);
         methane.addAtom(carbon);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());

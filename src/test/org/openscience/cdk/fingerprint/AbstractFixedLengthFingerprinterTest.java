@@ -144,6 +144,8 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
         CDKHueckelAromaticityDetector.detectAromaticity(structure1);
         CDKHueckelAromaticityDetector.detectAromaticity(structure2);
+        setNullHCountToZero(structure1);
+        setNullHCountToZero(structure2);
         
         // hydrogens loaded from MDL mol files if non-query. Structure 2 has
         // query aromatic bonds and the hydrogen counts are not assigned - ensure
@@ -287,6 +289,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IBond b20 = builder.newInstance(IBond.class, a19, a4, IBond.Order.SINGLE);
         b20.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b20);
+        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -352,6 +355,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         mol.addBond(b10);
         IBond b11 = builder.newInstance(IBond.class, a10, a1, IBond.Order.SINGLE);
         mol.addBond(b11);
+        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -407,6 +411,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IBond b8 = builder.newInstance(IBond.class,a8, a4, IBond.Order.SINGLE);
         b8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b8);
+        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -522,7 +527,24 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         mol.addBond(b20);
         IBond b21 = builder.newInstance(IBond.class,a20, a18, IBond.Order.DOUBLE);
         mol.addBond(b21);
+        setNullHCountToZero(mol);
         return mol;
+    }
+
+    /**
+     * Set all null hydrogen counts to 0. Generally hydrogen counts are present
+     * and if not we add them. However the molecule being tested can't include 
+     * hydrogen counts as then fingerprints don't line up (substructure filtering).
+     * The previous behaviour of the SMARTS matching was to treat null hydrogens
+     * as 0 - the new behaviour is to complain about it.
+     * 
+     * @param mol molecule to zero out hydrogen counts 
+     */
+    static void setNullHCountToZero(IAtomContainer mol) {
+        for (IAtom a : mol.atoms()) {
+            if (a.getImplicitHydrogenCount() == null)
+                a.setImplicitHydrogenCount(0);
+        }
     }
     
 }

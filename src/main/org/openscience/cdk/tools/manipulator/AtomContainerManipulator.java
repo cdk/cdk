@@ -373,16 +373,16 @@ public class AtomContainerManipulator {
 
                         IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class, "H");
                         hydrogen.setAtomTypeName("H");
+                        hydrogen.setImplicitHydrogenCount(0);
                         hydrogens.add(hydrogen);
                         newBonds.add(atom.getBuilder().newInstance(IBond.class,
                                 atom, hydrogen, CDKConstants.BONDORDER_SINGLE
                         ));
                     }
-                    atomIndex.add(atomContainer.getAtomNumber(atom));
+                    atom.setImplicitHydrogenCount(0);
                 }
             }
         }
-        for (Integer index : atomIndex) atomContainer.getAtom(index).setImplicitHydrogenCount(0);
         for (IAtom atom : hydrogens) atomContainer.addAtom(atom);
         for (IBond bond : newBonds) atomContainer.addBond(bond);
     }

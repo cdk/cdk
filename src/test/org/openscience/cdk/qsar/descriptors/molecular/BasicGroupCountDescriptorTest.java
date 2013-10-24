@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-qsarmolecular
@@ -97,6 +98,9 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         IBond b7 = builder.newInstance(IBond.class,a4, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        addImplicitHydrogens(mol);
+        
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         // two SMARTS matches
