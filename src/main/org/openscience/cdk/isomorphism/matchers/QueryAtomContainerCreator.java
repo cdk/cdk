@@ -21,13 +21,12 @@ package org.openscience.cdk.isomorphism.matchers;
 import java.util.Iterator;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBond;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.AromaticQueryBond;
+
 
 /**
  *@cdk.module   isomorphism
@@ -57,7 +56,6 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE,
                                       container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -118,7 +116,6 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE,
                                       container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -143,7 +140,6 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE,
                                       container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -182,7 +178,6 @@ public class QueryAtomContainerCreator {
             if (aromaticity && bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                         (IQueryAtom) queryContainer.getAtom(index2),
-                        IBond.Order.SINGLE,
                         container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -220,10 +215,9 @@ public class QueryAtomContainerCreator {
         	IBond bond = bonds.next();
             int index1 = container.getAtomNumber(bond.getAtom(0));
             int index2 = container.getAtomNumber(bond.getAtom(1));
-            queryContainer.addBond(new AnyOrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
-                    (IQueryAtom) queryContainer.getAtom(index2),
-                    bond.getOrder(),
-                    container.getBuilder()));
+            queryContainer.addBond(new AnyOrderBond(queryContainer.getAtom(index1),
+                                                    queryContainer.getAtom(index2),
+                                                    container.getBuilder()));
         }
         return queryContainer;
     }
@@ -255,7 +249,6 @@ public class QueryAtomContainerCreator {
             if (bond.getFlag(CDKConstants.ISAROMATIC)) {
                 queryContainer.addBond(new AromaticQueryBond((IQueryAtom) queryContainer.getAtom(index1),
                                       (IQueryAtom) queryContainer.getAtom(index2),
-                                      IBond.Order.SINGLE,
                                       container.getBuilder()));
             } else {
                 queryContainer.addBond(new OrderQueryBond((IQueryAtom) queryContainer.getAtom(index1),
@@ -265,6 +258,62 @@ public class QueryAtomContainerCreator {
             }
         }
         return queryContainer;
+    }
+
+    /** Match any atom. */
+    private static final class AnyAtom extends QueryAtom {
+
+        private AnyAtom(IChemObjectBuilder builder) {
+            super(builder);
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IAtom atom) {
+            return true;
+        }
+    }
+
+    /** Match any aromatic atom. */
+    private static final class AromaticAtom extends QueryAtom {
+
+        private AromaticAtom(IChemObjectBuilder builder) {
+            super(builder);
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IAtom atom) {
+            return atom.getFlag(CDKConstants.ISAROMATIC);
+        }
+    }
+
+    /** Match any bond which doesn't have a null or unset bond order. */
+    private static final class AnyOrderBond extends QueryBond {
+
+        private AnyOrderBond(IAtom either,
+                             IAtom other,
+                             IChemObjectBuilder builder) {
+            super(either, other, Order.UNSET, builder);
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IBond bond) {
+            return bond != null && bond.getOrder() != Order.UNSET;
+        }
+    }
+
+    /** Match any aromatic bond. */
+    private static final class AromaticQueryBond extends QueryBond {
+
+        private AromaticQueryBond(IAtom either,
+                                  IAtom other,
+                                  IChemObjectBuilder builder) {
+            super(either, other, Order.UNSET, builder);
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IBond bond) {
+            return bond.getFlag(CDKConstants.ISAROMATIC);
+        }
     }
 }
 
