@@ -31,7 +31,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  */
 public class AromaticSymbolAtom extends SMARTSAtom {
-	private static final long serialVersionUID = -2887357588636946195L;
 
 	public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
 		super(builder);
@@ -40,12 +39,7 @@ public class AromaticSymbolAtom extends SMARTSAtom {
 	}
 	
 	public boolean matches(IAtom atom) {
-		if (atom.getSymbol().equals(this.getSymbol()) &&
-				atom.getFlag(CDKConstants.ISAROMATIC)) {
-			return true;
-		} else {
-			return false;
-		}
+		return atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
 	}
 	
 	public String toString() {

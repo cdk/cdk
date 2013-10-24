@@ -29,6 +29,7 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import com.google.common.base.Preconditions;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
@@ -41,7 +42,6 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.keyword SMARTS
  */
 public class AtomicNumberAtom extends SMARTSAtom {
-    private static final long serialVersionUID = 4811205092161793129L;
 
     /**
      * Creates a new instance.
@@ -56,8 +56,9 @@ public class AtomicNumberAtom extends SMARTSAtom {
     /* (non-Javadoc)
     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
     */
+    @Override
     public boolean matches(IAtom atom) {
-        Integer atNum = PeriodicTable.getAtomicNumber(atom.getSymbol());
-        return atNum != null && atNum.intValue() == getAtomicNumber().intValue();
+        return Preconditions.checkNotNull(atom.getAtomicNumber(),
+                                          "Atomic number is not set.").equals(this.getAtomicNumber());
     }
 }
