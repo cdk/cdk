@@ -32,7 +32,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryBond;
 /**
  * Abstract smarts bond.
  *
- * @cdk.module  isomorphism
+ * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

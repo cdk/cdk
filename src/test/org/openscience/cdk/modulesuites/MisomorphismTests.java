@@ -25,7 +25,6 @@ import org.openscience.cdk.coverage.IsomorphismCoverageTest;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreatorTest;
 import org.openscience.cdk.isomorphism.matchers.RGroupListTest;
 import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
-import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBondTest;
 
 /**
  * TestSuite that runs all the tests for the CDK core module.
@@ -37,7 +36,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBondTest;
     IsomorphismCoverageTest.class,
     RGroupListTest.class,
     SymbolSetQueryAtomTest.class,
-    QueryAtomContainerCreatorTest.class,
-    AnyOrderQueryBondTest.class
+    QueryAtomContainerCreatorTest.class
 })
 public class MisomorphismTests {}

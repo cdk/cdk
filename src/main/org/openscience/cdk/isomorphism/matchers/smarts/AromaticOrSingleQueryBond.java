@@ -31,7 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * This matches an aromatic or a single bond, used when no bond is specified between an atom
  *
- * @cdk.module  isomorphism
+ * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

@@ -30,7 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 /**
  * This matches a bond of any order
  * 
- * @cdk.module  isomorphism
+ * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */

@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * This matcher any Atom.
  *
- * @cdk.module  isomorphism
+ * @cdk.module  smarts
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
