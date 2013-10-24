@@ -50,6 +50,14 @@ public final class ExplicitConnectionAtom extends SMARTSAtom {
     @Override
     @TestMethod("matches")
     public boolean matches(IAtom atom) {
-        return invariants(atom).degree() == degree;
+        // XXX: this is incorrect but bug 824 expects this behaviour. The reason
+        //      Daylight matches is because the explicit hydrogens are
+        //      suppressed by default turning on explicit hydrogens in depict
+        //      match shows correct functionality. Discussion needed to revert
+        //      but because other invariants aren't adjusted (implicit h) we
+        //      can't really do this and the correct option is to enable/disable
+        //      hydrogen suppression (removal of explicit H atoms) as a prepossessing
+        //      step
+        return invariants(atom).connectivity() - invariants(atom).totalHydrogenCount() == degree;
     }
 }

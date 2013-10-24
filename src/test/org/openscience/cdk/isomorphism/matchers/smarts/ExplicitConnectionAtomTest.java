@@ -47,8 +47,8 @@ public class ExplicitConnectionAtomTest {
                                                                                              0,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,
+                                                                                             0,  // <- degree not used due to old CDK bug
                                                                                              2,
-                                                                                             0,
                                                                                              0));
         assertTrue(matcher.matches(atom));
     }
