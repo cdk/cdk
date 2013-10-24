@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.FixBondOrdersTool;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -146,6 +147,10 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         CDKHueckelAromaticityDetector.detectAromaticity(structure2);
         setNullHCountToZero(structure1);
         setNullHCountToZero(structure2);
+
+        FixBondOrdersTool fbot = new FixBondOrdersTool();
+        structure1 = fbot.kekuliseAromaticRings(structure1);
+        structure1 = fbot.kekuliseAromaticRings(structure2);
         
         // hydrogens loaded from MDL mol files if non-query. Structure 2 has
         // query aromatic bonds and the hydrogen counts are not assigned - ensure
