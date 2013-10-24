@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTRingIdentifier extends SimpleNode {
+class ASTRingIdentifier extends SimpleNode {
 
 	/**
 	 * The ring identifier.

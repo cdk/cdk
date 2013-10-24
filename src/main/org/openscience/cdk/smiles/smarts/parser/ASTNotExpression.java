@@ -29,7 +29,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTNotExpression extends SimpleNode {
+class ASTNotExpression extends SimpleNode {
     /**
      * Whether it's not.
      */

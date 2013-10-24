@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public class ASTAtomicMass extends SimpleNode {
+ class ASTAtomicMass extends SimpleNode {
 	/**
 	 * The atomic mass value
 	 */

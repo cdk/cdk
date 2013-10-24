@@ -29,8 +29,8 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest;
 import org.openscience.cdk.smiles.smarts.parser.ParserTest;
 import org.openscience.cdk.smiles.smarts.parser.RecursiveTest;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest;
-import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsDumpVisitorTest;
-import org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitorTest;
+import org.openscience.cdk.smiles.smarts.parser.SmartsDumpVisitorTest;
+import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitorTest;
 
 /**
  * TestSuite that runs all the sample tests for experimental classes.

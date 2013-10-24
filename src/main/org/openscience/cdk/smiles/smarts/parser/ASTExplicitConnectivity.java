@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTExplicitConnectivity extends SimpleNode {
+class ASTExplicitConnectivity extends SimpleNode {
     /**
      * Number of explicit connections.
      */

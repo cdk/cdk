@@ -29,7 +29,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTImplicitHighAndExpression extends SimpleNode {
+class ASTImplicitHighAndExpression extends SimpleNode {
 
     /**
      * Creates a new instance.

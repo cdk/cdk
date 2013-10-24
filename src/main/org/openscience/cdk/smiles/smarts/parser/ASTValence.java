@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTValence extends SimpleNode {
+class ASTValence extends SimpleNode {
     /**
      * Valence order.
      */

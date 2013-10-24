@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTTotalConnectivity extends SimpleNode {
+class ASTTotalConnectivity extends SimpleNode {
     /**
      * Number of total connections.
      */

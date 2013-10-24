@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTAtomicNumber extends SimpleNode {
+class ASTAtomicNumber extends SimpleNode {
     /**
      * The atomic number
      */

@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTSimpleBond extends SimpleNode {
+class ASTSimpleBond extends SimpleNode {
 	/**
 	 * Type of bond.
 	 */

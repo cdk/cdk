@@ -17,7 +17,17 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
-package org.openscience.cdk.smiles.smarts.parser.visitor;
+package org.openscience.cdk.smiles.smarts.parser;
+
+/** 
+*
+* @cdk.module smarts 
+*/
+
+/** 
+*
+* @cdk.module smarts 
+*/
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,48 +74,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAliphatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAnyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAromatic;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicMass;
-import org.openscience.cdk.smiles.smarts.parser.ASTAtomicNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTCharge;
-import org.openscience.cdk.smiles.smarts.parser.ASTChirality;
-import org.openscience.cdk.smiles.smarts.parser.ASTElement;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTExplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTGroup;
-import org.openscience.cdk.smiles.smarts.parser.ASTHybrdizationNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTImplicitHighAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTLowAndExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTNonCHHeavyAtom;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTNotExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTOrExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTPeriodicGroupNumber;
-import org.openscience.cdk.smiles.smarts.parser.ASTReaction;
-import org.openscience.cdk.smiles.smarts.parser.ASTRecursiveSmartsExpression;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingIdentifier;
-import org.openscience.cdk.smiles.smarts.parser.ASTRingMembership;
-import org.openscience.cdk.smiles.smarts.parser.ASTSimpleBond;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmallestRingSize;
-import org.openscience.cdk.smiles.smarts.parser.ASTSmarts;
-import org.openscience.cdk.smiles.smarts.parser.ASTStart;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalConnectivity;
-import org.openscience.cdk.smiles.smarts.parser.ASTTotalHCount;
-import org.openscience.cdk.smiles.smarts.parser.ASTValence;
-import org.openscience.cdk.smiles.smarts.parser.Node;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserConstants;
-import org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor;
-import org.openscience.cdk.smiles.smarts.parser.SimpleNode;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 

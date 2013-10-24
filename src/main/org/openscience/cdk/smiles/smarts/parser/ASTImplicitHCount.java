@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTImplicitHCount extends SimpleNode {
+class ASTImplicitHCount extends SimpleNode {
     /**
      * Value of implicit H count.
      */

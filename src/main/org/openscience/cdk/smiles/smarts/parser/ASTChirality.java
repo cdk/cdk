@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public class ASTChirality extends SimpleNode {
+class ASTChirality extends SimpleNode {
 	private boolean unspecified = false;
 	private boolean clockwise = true;
 	private int degree = -1;

@@ -88,8 +88,8 @@ public class SMARTSParser {
         try {
             SMARTSParser parser = new SMARTSParser(reader);
             ASTStart start = parser.Start();
-            org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor visitor 
-            	= new org.openscience.cdk.smiles.smarts.parser.visitor.SmartsQueryVisitor(builder);
+            org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitor visitor 
+            	= new org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitor(builder);
             container = (QueryAtomContainer)start.jjtAccept(visitor, null);
         } catch (ParseException exception) {
             throw new IllegalArgumentException("The string " + smarts + " is not a valid" +

@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTGroup extends SimpleNode {
+class ASTGroup extends SimpleNode {
 	/**
 	 * Creates a new instance
 	 *

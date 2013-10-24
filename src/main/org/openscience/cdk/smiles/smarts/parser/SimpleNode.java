@@ -31,7 +31,7 @@ import java.lang.reflect.Constructor;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class SimpleNode implements Node, Cloneable {
+class SimpleNode implements Node, Cloneable {
 	protected Node parent;
 
 	protected Node[] children;

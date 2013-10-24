@@ -15,7 +15,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTPeriodicGroupNumber extends SimpleNode {
+class ASTPeriodicGroupNumber extends SimpleNode {
 
     /**
      * The periodic table group number.

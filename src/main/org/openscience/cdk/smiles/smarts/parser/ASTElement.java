@@ -30,7 +30,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public class ASTElement extends SimpleNode {
+class ASTElement extends SimpleNode {
     /**
      * The element symbol.
      */

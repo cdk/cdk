@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTSmallestRingSize extends SimpleNode {
+class ASTSmallestRingSize extends SimpleNode {
     /**
      * The smallest SSSR size.
      */

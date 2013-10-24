@@ -15,7 +15,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS AST
  */
 
-public class ASTNonCHHeavyAtom extends SimpleNode {
+class ASTNonCHHeavyAtom extends SimpleNode {
   public ASTNonCHHeavyAtom(int id) {
     super(id);
   }

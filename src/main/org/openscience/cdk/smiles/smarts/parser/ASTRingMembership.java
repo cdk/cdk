@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS AST
  */
-public class ASTRingMembership extends SimpleNode {
+class ASTRingMembership extends SimpleNode {
     /**
      * Number of SSSR rings this atom is in.
      */

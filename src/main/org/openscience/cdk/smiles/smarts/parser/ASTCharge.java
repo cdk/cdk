@@ -28,7 +28,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public class ASTCharge extends SimpleNode {
+class ASTCharge extends SimpleNode {
     /**
      * The value of the charge.
      */
