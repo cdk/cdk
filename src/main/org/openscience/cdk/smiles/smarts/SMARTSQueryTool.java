@@ -21,10 +21,14 @@
 package org.openscience.cdk.smiles.smarts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -172,7 +176,7 @@ public class SMARTSQueryTool {
 
     private final IChemObjectBuilder builder;
 
-    private List<List<Integer>> matchingAtoms = null;
+    private List<Set<Integer>> matchingAtoms = null;
 
     // a simplistic cache to store parsed SMARTS queries
     private int MAX_ENTRIES = 20;
@@ -337,10 +341,10 @@ public class SMARTSQueryTool {
             // lets get the query atom
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
-            matchingAtoms = new ArrayList<List<Integer>>();
+            matchingAtoms = new ArrayList<Set<Integer>>();
             for (IAtom atom : this.atomContainer.atoms()) {
                 if (queryAtom.matches(atom)) {
-                    List<Integer> tmp = new ArrayList<Integer>();
+                    Set<Integer> tmp = new HashSet<Integer>();
                     tmp.add(this.atomContainer.getAtomNumber(atom));
                     matchingAtoms.add(tmp);
                 }
@@ -373,9 +377,9 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testQueryTool")
     public List<List<Integer>> getMatchingAtoms() {
-        return matchingAtoms;
+        return copyOf(matchingAtoms);
     }
-
+    
     /**
      * Get the atoms in the target molecule that match the query pattern. <p/> Since there may be multiple matches, the
      * return value is a List of List objects. Each List object contains the unique set of indices of the atoms in the
@@ -385,33 +389,22 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testUniqueQueries")
     public List<List<Integer>> getUniqueMatchingAtoms() {
-        List<List<Integer>> ret = new ArrayList<List<Integer>>();
-        for (List<Integer> atomMapping : matchingAtoms) {
-            Collections.sort(atomMapping);
+        return copyOf(new HashSet<Collection<Integer>>(matchingAtoms));        
+    }
 
-            // see if this sequence of atom indices is present
-            // in the return container
-            boolean present = false;
-            for (List<Integer> r : ret) {
-                if (r.size() != atomMapping.size()) continue;
-                Collections.sort(r);
-                boolean matches = true;
-                for (int i = 0; i < atomMapping.size(); i++) {
-                    int index1 = atomMapping.get(i);
-                    int index2 = r.get(i);
-                    if (index1 != index2) {
-                        matches = false;
-                        break;
-                    }
-                }
-                if (matches) {
-                    present = true;
-                    break;
-                }
-            }
-            if (!present) ret.add(atomMapping);
+    /**
+     * Copy the matched atoms to a List or Lists. Allows us to keep our matching
+     * without others changing it.
+     * 
+     * @param org original matching
+     * @return matching which is the list or lists
+     */
+    private List<List<Integer>> copyOf(Collection<? extends Collection<Integer>> org) {
+        List<List<Integer>> cpy = new ArrayList<List<Integer>>();
+        for (Collection<Integer> matched : org) {
+            cpy.add(new ArrayList<Integer>(matched));
         }
-        return ret;
+        return cpy;
     }
 
     /**
@@ -486,13 +479,13 @@ public class SMARTSQueryTool {
     }
 
 
-    private List<List<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
+    private List<Set<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
         
-        List<List<Integer>> atomMapping = new ArrayList<List<Integer>>();
+        List<Set<Integer>> atomMapping = new ArrayList<Set<Integer>>();
         // loop over each mapping
         for (List<RMap> mapping : bondMapping) {
-            
-            List<Integer> tmp = new ArrayList<Integer>();
+
+            Set<Integer> tmp = new TreeSet<Integer>();
             IAtom atom1 = null;
             IAtom atom2 = null;
             // loop over this mapping
@@ -515,13 +508,9 @@ public class SMARTSQueryTool {
 
             // If there is only one bond, check if it matches both ways.
             if (mapping.size() == 1 && atom1.getAtomicNumber().equals(atom2.getAtomicNumber())) {
-                List<Integer> tmp2 = new ArrayList<Integer>();
-                tmp2.add(tmp.get(0));
-                tmp2.add(tmp.get(1));
-                atomMapping.add(tmp2);
+                atomMapping.add(new TreeSet<Integer>(tmp));
             }
         }
-
 
         return atomMapping;
     }
