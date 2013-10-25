@@ -476,6 +476,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     }
 
+    @Ignore("This feature was removed - essential rings aren't useful really")
     @Test
     public void testPropertyR2_essentialRings() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
@@ -485,6 +486,8 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(2, results[1]);
     }
 
+    @Ignore("This feature is pending but will be the combinded in an 'OpenSMARTS'" +
+                    " configuration which uses the relevant rings.")
     @Test
     public void testPropertyR2_relevantRings() throws Exception {
         SMARTSQueryTool sqt = smarts("[R2]");
