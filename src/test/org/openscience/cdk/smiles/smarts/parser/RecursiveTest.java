@@ -290,7 +290,6 @@ public class RecursiveTest extends CDKTestCase {
     @Test public void testRecursiveSmarts26() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
         IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S", true);
-        sqt.preserveAtomType();
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -311,7 +310,6 @@ public class RecursiveTest extends CDKTestCase {
     @Test public void testRecursiveSmarts27() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
         IAtomContainer  smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C", true);
-        sqt.preserveAtomType();
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -320,7 +318,6 @@ public class RecursiveTest extends CDKTestCase {
     @Test public void testRecursive28() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
         IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1", true);
-        sqt.preserveAtomType();
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -337,7 +334,6 @@ public class RecursiveTest extends CDKTestCase {
     @Test public void testRecursive29() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
         IAtomContainer  smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C", true);
-        sqt.preserveAtomType();
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -383,11 +379,6 @@ public class RecursiveTest extends CDKTestCase {
         // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
         // perception
         SmilesParser    sp  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-
-        // don't reconfigure the input - take it exactly as it is and test only
-        // that
-        sqt.preserveAtomType();
-        sp.setPreservingAromaticity(true);
 
         int nmatch = 0;
         int nmol = 0;
