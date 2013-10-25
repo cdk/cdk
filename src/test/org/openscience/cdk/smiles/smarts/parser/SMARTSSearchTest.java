@@ -32,9 +32,12 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.DefaultChemObjectReader;
@@ -1218,14 +1221,17 @@ public class SMARTSSearchTest extends CDKTestCase {
      *  aromaticity from the SMILES we can match correctly.  */
     @Test public void testLogicalOrLowAnd6() throws Exception {
         SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
-        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24", true);
+        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
     	int[] results = match(sqt, smi);
     	Assert.assertEquals(1, results[0]);
     }
 
     @Test public void testLogicalOrLowAnd6_cdkAromaticity() throws Exception {
         SMARTSQueryTool sqt = smarts("[#7,C;+0,+1]");
-        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24", false);
+        IAtomContainer  smi = smiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
+                                           Cycles.cdkAromaticSet()));
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] results = match(sqt, smi);
         Assert.assertEquals(8, results[0]);
     }
