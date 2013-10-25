@@ -30,11 +30,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.google.common.base.Preconditions;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -54,6 +58,8 @@ import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * This class provides a easy to use wrapper around SMARTS matching functionality. <p/> User code that wants to do
@@ -173,6 +179,22 @@ public class SMARTSQueryTool {
 
     private List<Set<Integer>> matchingAtoms = null;
 
+    /**
+     * Aromaticity perception - dealing with SMARTS we should use the Daylight
+     * model. This can be set to a different model using {@link #setAromaticity(Aromaticity)}.
+     */
+    private Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
+                                                      Cycles.allOrVertexShort());
+
+    /**
+     * Logical flag indicates whether the aromaticity model should be skipped.
+     * Generally this should be left as false to ensure the structures being 
+     * matched are all treated the same. The flag can however be turned off if
+     * the molecules being tests are known to all have the same aromaticity 
+     * model.
+     */
+    private boolean skipAromaticity = false;
+
     // a simplistic cache to store parsed SMARTS queries
     private int MAX_ENTRIES = 20;
     Map<String, QueryAtomContainer> cache = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1, .75F, true) {
@@ -245,12 +267,31 @@ public class SMARTSQueryTool {
     }
 
     /**
-     * Set the aromaticity perception to use.
+     * Set the aromaticity perception to use. Different aromaticity models
+     * may required certain attributes to be set (e.g. atom typing). These 
+     * will not be automatically configured and should be preset before matching.
      *
+     * <blockquote><pre>
+     * SMARTSQueryTool sqt = new SMARTSQueryTool(...);
+     * sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
+     *                                    Cycles.cdkAromaticSet));
+     * for (IAtomContainer molecule : molecules) {
+     * 
+     *     // CDK Aromatic model needs atom types
+     *     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+     *     
+     *     sqt.matches(molecule);     
+     * }                                   
+     * </pre></blockquote>
+     * 
      * @param aromaticity the new aromaticity perception
+     * @see ElectronDonation
+     * @see Cycles
      */
+    @TestMethod("setAromaticity,nullAromaticity")
     public void setAromaticity(Aromaticity aromaticity) {
-        this.aromaticity = aromaticity;
+        this.aromaticity = checkNotNull(aromaticity,
+                                        "aromaticity was not provided");
     }
 
     /**
@@ -317,7 +358,8 @@ public class SMARTSQueryTool {
 
         if (this.atomContainer == atomContainer) {
             if (forceInitialization) initializeMolecule();
-        } else {
+        }
+        else {
             this.atomContainer = atomContainer;
             initializeMolecule();
         }
@@ -338,7 +380,8 @@ public class SMARTSQueryTool {
                     matchingAtoms.add(tmp);
                 }
             }
-        } else {
+        }
+        else {
             List<List<RMap>> bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(this.atomContainer, query);
             matchingAtoms = matchedAtoms(bondMapping, this.atomContainer);
         }
@@ -368,7 +411,7 @@ public class SMARTSQueryTool {
     public List<List<Integer>> getMatchingAtoms() {
         return copyOf(matchingAtoms);
     }
-    
+
     /**
      * Get the atoms in the target molecule that match the query pattern. <p/> Since there may be multiple matches, the
      * return value is a List of List objects. Each List object contains the unique set of indices of the atoms in the
@@ -378,13 +421,13 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testUniqueQueries")
     public List<List<Integer>> getUniqueMatchingAtoms() {
-        return copyOf(new HashSet<Collection<Integer>>(matchingAtoms));        
+        return copyOf(new HashSet<Collection<Integer>>(matchingAtoms));
     }
 
     /**
      * Copy the matched atoms to a List or Lists. Allows us to keep our matching
      * without others changing it.
-     * 
+     *
      * @param org original matching
      * @return matching which is the list or lists
      */
@@ -411,11 +454,12 @@ public class SMARTSQueryTool {
         SmartsMatchers.prepare(atomContainer,
                                query.getFlag(CDKConstants.ISINRING));
         
-        // check for aromaticity
+        // providing skip aromaticity has not be set apply the desired 
+        // aromaticity model
         try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
-                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
-           
+             if (!skipAromaticity) {
+                 aromaticity.apply(atomContainer);
+             }
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString(), e);
