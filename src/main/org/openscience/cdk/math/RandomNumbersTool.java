@@ -142,7 +142,26 @@ public class RandomNumbersTool extends Random {
      */
     @TestMethod("testRandomLong_long_long")
     public static long randomLong(long lo, long hi) {
-        return (Math.abs(random.nextLong()) % (hi - lo + 1)) + lo;
+        return nextLong(random, hi - lo + 1L) + lo;
+    }
+
+    /**
+     * Access the next long random number between 0 and n.
+     *
+     * @param rng random number generator
+     * @param n   max value
+     * @return a long random number between 0 and n
+     * @see http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range
+     */
+    private static long nextLong(Random rng, long n) {
+        if (n <= 0)
+            throw new IllegalArgumentException("n must be greater than 0");
+        long bits, val;
+        do {
+            bits = (rng.nextLong() << 1) >>> 1;
+            val = bits % n;
+        } while (bits - val + (n - 1) < 0L);
+        return val;
     }
 
     /**
