@@ -135,7 +135,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
         float dev = (float) 1.0;
         float epsilon = 0.01f;
 
-        int ntry = 10000000;
+        int ntry = 100000;
         float[] values = new float[ntry];
         for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.gaussianFloat(dev);
 
@@ -154,7 +154,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
     @Test public void testGaussianDouble() {
         double dev = 2.0;
         double epsilon = 0.01;
-        int ntry = 10000000;
+        int ntry = 100000;
         double[] values = new double[ntry];
         for (int i = 0; i < ntry; i++) values[i] = RandomNumbersTool.gaussianDouble(dev);
 
