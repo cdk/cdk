@@ -74,6 +74,13 @@ public class SMARTSSearchTest extends CDKTestCase {
                                                         InvalidSmilesException {
         return smiles(smiles, false);
     }
+    
+    static IAtomContainer smilesAtomTyped(String smiles) throws
+                                                         CDKException {
+        IAtomContainer molecule = smiles(smiles, false);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        return molecule;
+    }
 
     static IAtomContainer smiles(String smiles,
                                          boolean perserveAromaticity) throws
@@ -1535,23 +1542,28 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testHybridizationNumber() throws Exception {
-        int[] results = match("[^1]", "CCN");
+        int[] results = match(smarts("[^1]"),
+                              smilesAtomTyped("CCN"));
         Assert.assertEquals(0, results[0]);
         Assert.assertEquals(0, results[1]);
 
-        results = match("[^1]", "N#N");
+        results = match(smarts("[^1]"),
+                        smilesAtomTyped("N#N"));
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(2, results[1]);
 
-        results = match("[^1&N]", "CC#C");
+        results = match(smarts("[^1&N]"),
+                        smilesAtomTyped("CC#C"));
         Assert.assertEquals(0, results[0]);
         Assert.assertEquals(0, results[1]);
 
-        results = match("[^1&N]", "CC#N");
+        results = match(smarts("[^1&N]"),
+                        smilesAtomTyped("CC#N"));
         Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
 
-        results = match("[^1&N,^2&C]", "CC(=O)CC(=O)CC#N");
+        results = match(smarts("[^1&N,^2&C]"),
+                        smilesAtomTyped("CC(=O)CC(=O)CC#N"));
         Assert.assertEquals(3, results[0]);
         Assert.assertEquals(3, results[1]);
 
