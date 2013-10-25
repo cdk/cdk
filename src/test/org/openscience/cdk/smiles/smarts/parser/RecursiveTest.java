@@ -289,7 +289,7 @@ public class RecursiveTest extends CDKTestCase {
 
     @Test public void testRecursiveSmarts26() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S", true);
+        IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -309,7 +309,7 @@ public class RecursiveTest extends CDKTestCase {
 
     @Test public void testRecursiveSmarts27() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C", true);
+        IAtomContainer  smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -317,7 +317,7 @@ public class RecursiveTest extends CDKTestCase {
 
     @Test public void testRecursive28() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1", true);
+        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
@@ -333,7 +333,7 @@ public class RecursiveTest extends CDKTestCase {
 
     @Test public void testRecursive29() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C", true);
+        IAtomContainer  smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
