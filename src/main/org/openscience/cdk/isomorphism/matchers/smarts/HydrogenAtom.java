@@ -68,7 +68,7 @@ public class HydrogenAtom extends SMARTSAtom {
 		}
 		
 		// hydrogens connected to other than one other atom, e.g., bridging hydrogens
-		if (atom.getFormalNeighbourCount() > 1) {
+		if (invariants(atom).degree() > 1) {
 			return true;
 		}
 		
