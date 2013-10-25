@@ -386,6 +386,34 @@ public final class Cycles {
     }
 
     /**
+     * Find all cycles in a fused system or if there were too many cycles
+     * fallback and use the shortest cycles through each vertex. Typically the
+     * types of molecules which the vertex short cycles are provided for are
+     * fullerenes. This cycle finder is well suited to aromaticity. 
+     * 
+     * <blockquote>
+     * <pre>
+     * CycleFinder cf = Cycles.allOrVertexShort();
+     * for (IAtomContainer m : ms) {
+     *     try {
+     *         Cycles   cycles = cf.find(m);
+     *         IRingSet rings  = cycles.toRingSet();
+     *     } catch (Intractable e) {
+     *         // ignore error - edge short cycles do not check tractability
+     *     }
+     * }
+     * </pre>
+     * </blockquote>
+     * 
+     * @return a cycle finder which computes all cycles if possible or provides
+     *         the vertex short cycles
+     */
+    @TestMethod("allOrVertexShort")
+    public static CycleFinder allOrVertexShort() {
+        return CycleComputation.ALL_OR_VERTEX_SHORT;    
+    }
+
+    /**
      * Find all simple cycles in a molecule. The threshold values can not be
      * tuned and is set at a value which will complete in reasonable time for
      * most molecules. To change the threshold values please use the stand-alone
@@ -661,6 +689,16 @@ public final class Cycles {
                     return ALL.apply(graph);
                 }
             }    
+        },
+        ALL_OR_VERTEX_SHORT {
+            /** {@inheritDoc} */
+            @Override int[][] apply(int[][] graph) throws Intractable {
+                final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99  
+                AllCycles ac = new AllCycles(graph, graph.length, threshold);
+                
+                return ac.completed() ? ac.paths() 
+                                      : VERTEX_SHORT.apply(graph);
+            }
         };
 
         /**

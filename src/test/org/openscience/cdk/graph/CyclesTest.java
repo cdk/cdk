@@ -1,11 +1,15 @@
 package org.openscience.cdk.graph;
 
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -99,6 +103,16 @@ public class CyclesTest {
         checkSize(Cycles.cdkAromaticSet().find(makeAnthracene()), 6);
         checkSize(Cycles.cdkAromaticSet().find(makeCyclophaneLike()), 8);
         checkSize(Cycles.cdkAromaticSet().find(makeGappedCyclophaneLike()), 8);
+    }  
+    
+    @Test public void allOrVertexShort() throws Exception {
+        checkSize(Cycles.allOrVertexShort().find(makeBiphenyl()), 2);
+        checkSize(Cycles.allOrVertexShort().find(makeBicycloRings()), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeNaphthalene()), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeAnthracene()), 6);
+        checkSize(Cycles.allOrVertexShort().find(makeCyclophaneLike()), 135);
+        checkSize(Cycles.allOrVertexShort().find(makeGappedCyclophaneLike()), 135);
+        checkSize(Cycles.allOrVertexShort().find(fullerene()), 120);
     }
     
     @Test public void pathsAreCopy() throws Exception {
@@ -145,6 +159,17 @@ public class CyclesTest {
         assertThat(r2.getBond(3), is(biphenyl.getBond(10)));
         assertThat(r2.getBond(4), is(biphenyl.getBond(11)));
         assertThat(r2.getBond(5), is(biphenyl.getBond(12)));
+    }
+    
+    // load a boron fullerene
+    private IAtomContainer fullerene() throws Exception {
+        String path = "/data/mdl/boronBuckyBall.mol";
+        MDLV2000Reader mdl = new MDLV2000Reader(getClass().getResourceAsStream(path));
+        try {
+            return mdl.read(new AtomContainer());   
+        } finally {
+            mdl.close();
+        }
     }
 
     static void checkSize(Cycles cs, int nCycles) {
