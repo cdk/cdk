@@ -240,12 +240,8 @@ final class SMARTSAtomInvariants {
 
         int nAtoms = container.getAtomCount();
 
-        int[] valence = new int[nAtoms];
-        int[] totalHCount = new int[nAtoms];
         int[] ringNumber = new int[nAtoms];
-        int[] ringSize = new int[nAtoms];
-        int[] ringConnections = new int[nAtoms];
-        int[] degree = new int[nAtoms];
+        int[] ringSize   = new int[nAtoms];
 
         Arrays.fill(ringSize, nAtoms + 1);
 
@@ -270,50 +266,42 @@ final class SMARTSAtomInvariants {
             int implHCount = checkNotNull(atom.getImplicitHydrogenCount(),
                                           "Implicit hydrogen count was not set.");
 
-            totalHCount[v] += implHCount;
-            valence[v] += implHCount;
+            int totalHCount     = implHCount;
+            int valence         = implHCount;
+            int degree          = 0;
+            int ringConnections = 0;
 
-
-            // increment any atoms adjacent to an explicit hydrogen
-            if (atom.getAtomicNumber() == 1) {
-                for (int w : graph[v]) {
-                    totalHCount[w] += 1;
-                }
-            }
 
             // traverse bonds 
             for (int w : graph[v]) {
-                if (w > v) {
-                    IBond bond = bondMap.get(v, w);
-                    IBond.Order order = bond.getOrder();
+                IBond bond = bondMap.get(v, w);
+                IBond.Order order = bond.getOrder();
 
-                    if (order == null || order == IBond.Order.UNSET)
-                        throw new NullPointerException("Bond order was not set.");
+                if (order == null || order == IBond.Order.UNSET)
+                    throw new NullPointerException("Bond order was not set.");
 
-                    valence[v] += order.numeric();
-                    valence[w] += order.numeric();
+                valence += order.numeric();
 
-                    degree[v]++;
-                    degree[w]++;
+                degree++;
 
-                    if (bond.getFlag(CDKConstants.ISINRING)) {
-                        ringConnections[v]++;
-                        ringConnections[w]++;
-                    }
+                if (bond.getFlag(CDKConstants.ISINRING)) {
+                    ringConnections++;
                 }
-            }
-        }
 
-        for (int v = 0; v < nAtoms; v++) {
-            IAtom atom = container.getAtom(v);
-            SMARTSAtomInvariants inv = new SMARTSAtomInvariants(valence[v],
+                if (container.getAtom(w).getAtomicNumber() == 1) {
+                    totalHCount++;
+                }
+
+            }
+
+            SMARTSAtomInvariants inv = new SMARTSAtomInvariants(valence,
                                                                 ringNumber[v],
                                                                 ringSize[v] <= nAtoms ? Collections.singleton(ringSize[v])
                                                                                       : Collections.<Integer>emptySet(),
-                                                                ringConnections[v],
-                                                                degree[v],
-                                                                degree[v] + atom.getImplicitHydrogenCount(),
-                                                                totalHCount[v]);
+                                                                ringConnections,
+                                                                degree,
+                                                                degree + implHCount,
+                                                                totalHCount);
 
             // if there was no properties a default size LinkedHashMap is created
             // automatically
