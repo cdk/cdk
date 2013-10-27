@@ -452,7 +452,7 @@ public class SMARTSQueryTool {
         // initialise required invariants - the query has ISINRING set if
         // the query contains ring queries [R?] [r?] [x?] etc.
         SmartsMatchers.prepare(atomContainer,
-                               query.getFlag(CDKConstants.ISINRING));
+                               true);
         
         // providing skip aromaticity has not be set apply the desired 
         // aromaticity model
