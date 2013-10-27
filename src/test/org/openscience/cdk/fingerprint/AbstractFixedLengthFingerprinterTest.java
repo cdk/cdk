@@ -63,8 +63,14 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     @Test public void testBug706786() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
         // included. generally MACCS and ESTATE can't be used for substructure filter
+        // check those subclasses which check the bits are set
         IAtomContainer superStructure = bug706786_1();
         IAtomContainer subStructure   = bug706786_2();
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
@@ -94,7 +100,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superstructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(substructure);
         CDKHueckelAromaticityDetector.detectAromaticity(superstructure);
-        CDKHueckelAromaticityDetector.detectAromaticity(substructure);
+        CDKHueckelAromaticityDetector.detectAromaticity(substructure);        
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
@@ -113,6 +119,11 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         // included. generally PubCheMFingerprint can't be used for substructure filter
         IAtomContainer superStructure = bug934819_2();
         IAtomContainer subStructure   = bug934819_1();
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
@@ -145,8 +156,8 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
         CDKHueckelAromaticityDetector.detectAromaticity(structure1);
         CDKHueckelAromaticityDetector.detectAromaticity(structure2);
-        setNullHCountToZero(structure1);
-        setNullHCountToZero(structure2);
+        addImplicitHydrogens(structure1);
+        addImplicitHydrogens(structure2);
 
         FixBondOrdersTool fbot = new FixBondOrdersTool();
         structure1 = fbot.kekuliseAromaticRings(structure1);
@@ -294,7 +305,6 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IBond b20 = builder.newInstance(IBond.class, a19, a4, IBond.Order.SINGLE);
         b20.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b20);
-        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -360,7 +370,6 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         mol.addBond(b10);
         IBond b11 = builder.newInstance(IBond.class, a10, a1, IBond.Order.SINGLE);
         mol.addBond(b11);
-        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -416,7 +425,6 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IBond b8 = builder.newInstance(IBond.class,a8, a4, IBond.Order.SINGLE);
         b8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b8);
-        setNullHCountToZero(mol);
         return mol;
     }
 
@@ -532,25 +540,14 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         mol.addBond(b20);
         IBond b21 = builder.newInstance(IBond.class,a20, a18, IBond.Order.DOUBLE);
         mol.addBond(b21);
-        setNullHCountToZero(mol);
         return mol;
     }
-
-    /**
-     * Set all null hydrogen counts to 0. Generally hydrogen counts are present
-     * and if not we add them. However the molecule being tested can't include 
-     * hydrogen counts as then fingerprints don't line up (substructure filtering).
-     * The previous behaviour of the SMARTS matching was to treat null hydrogens
-     * as 0 - the new behaviour is to complain about it.
-     * 
-     * @param mol molecule to zero out hydrogen counts 
-     */
-    static void setNullHCountToZero(IAtomContainer mol) {
-        for (IAtom a : mol.atoms()) {
-            if (a.getImplicitHydrogenCount() == null)
-                a.setImplicitHydrogenCount(0);
-        }
-    }
     
+    static BitSet asBitSet(int ... xs) {
+        BitSet bs = new BitSet();
+        for (int x : xs)
+            bs.set(x);
+        return bs;
+    }
 }
 

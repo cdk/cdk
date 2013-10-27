@@ -46,6 +46,10 @@ import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertThat;
+
 /**
  * @cdk.module test-fingerprint
  */
@@ -311,6 +315,51 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
         Assert.assertEquals(bs1, fb1);
         Assert.assertEquals(bs2, fb2);
+    }
+
+    /**
+     * Using PubChem/CACTVS Substr keys, these molecules are not considered
+     * substructures and should only be used for similarity. This is because the
+     * PubChem fragments match hydrogen counts. In this case the {@code 599}
+     * bit ({@code [#1]-C-C=C-[#1]}) is found in the substructure but not the
+     * superstructure.
+     */
+    @Test
+    public void testBug934819() throws Exception {
+
+        IAtomContainer subStructure = bug934819_1();
+        IAtomContainer superStructure = bug934819_2();
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
+
+        IFingerprinter fpr = new PubchemFingerprinter(SilentChemObjectBuilder.getInstance());
+        IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
+        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+
+        Assert.assertThat(superBits.asBitSet(),
+                          is(asBitSet(9, 10, 14, 18, 19, 33, 143, 146, 255, 256,
+                                      283, 284, 285, 293, 301, 332, 344, 349, 351,
+                                      353, 355, 368, 370, 371, 376, 383, 384, 395,
+                                      401, 412, 416, 421, 423, 434, 441, 446, 449,
+                                      454, 455, 464, 470, 471, 480, 489, 490, 500,
+                                      502, 507, 513, 514, 516, 520, 524, 531, 532,
+                                      545, 546, 549, 552, 556, 558, 564, 570, 586,
+                                      592, 599, 600, 607, 633, 658, 665)));
+        Assert.assertThat(subBits.asBitSet(),
+                          is(asBitSet(9, 10, 11, 14, 18, 19, 33, 34, 143, 146, 150,
+                                      153, 255, 256, 257, 258, 283, 284, 285, 293,
+                                      301, 332, 344, 349, 351, 353, 355, 368, 370,
+                                      371, 374, 376, 383, 384, 395, 401, 412, 416,
+                                      417, 421, 423, 427, 434, 441, 446, 449, 454,
+                                      455, 460, 464, 470, 471, 479, 480, 489, 490,
+                                      500, 502, 507, 513, 514, 516, 520, 524, 531,
+                                      532, 545, 546, 549, 552, 556, 558, 564, 570,
+                                      578, 582, 584, 586, 592, 595, 600, 603, 607,
+                                      608, 633, 634, 640, 658, 660, 664, 665, 668,
+                                      677, 678, 683)));
     }
 
 }

@@ -36,6 +36,9 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * @cdk.module test-fingerprint
  */
@@ -114,6 +117,32 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
         Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
         Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs3));
+    }
+
+    /**
+     * Using MACCS keys, these molecules are not considered substructures
+     * and should only be used for similarity. This is because the MACCS
+     * fragments match hydrogen counts.
+     */
+    @Test
+    public void testBug706786() throws Exception {
+
+        IAtomContainer superStructure = bug706786_1();
+        IAtomContainer subStructure   = bug706786_2();
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
+
+        IFingerprinter fpr = new MACCSFingerprinter();
+        IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
+        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+
+        assertThat(superBits.asBitSet(),
+                   is(asBitSet(53, 65, 71, 73, 88, 97, 111, 112, 125, 130, 138, 139, 140, 143, 144, 145, 148, 151, 153, 156, 158, 159, 161, 162, 163)));
+        assertThat(subBits.asBitSet(),
+                   is(asBitSet(97, 108, 112, 117, 125, 131, 143, 144, 146, 151, 152, 154, 156, 161, 162, 163)));
     }
 
 }

@@ -28,10 +28,18 @@ import java.util.BitSet;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 /**
  * @cdk.module test-fingerprint
  */
@@ -65,4 +73,29 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
         Assert.assertTrue(FingerprinterTool.isSubset(bs2.asBitSet(), bs1.asBitSet()));
     }
 
+    /**
+     * Using EState keys, these molecules are not considered substructures
+     * and should only be used for similarity. This is because the EState
+     * fragments match hydrogen counts.
+     */
+    @Test
+    public void testBug706786() throws Exception {
+
+        IAtomContainer superStructure = bug706786_1();
+        IAtomContainer subStructure   = bug706786_2();
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
+
+        IFingerprinter fpr = new EStateFingerprinter();
+        IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
+        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+
+        assertThat(superBits.asBitSet(),
+                   is(asBitSet(6, 11, 12, 15, 16, 18, 33, 34, 35)));
+        assertThat(subBits.asBitSet(),
+                   is(asBitSet(8, 11, 16, 35)));
+    }
 }
