@@ -491,7 +491,7 @@
 	      adding cdk.module tags and changing access modes
 	  -->
          <replace dir="${src}/main/org/openscience/cdk/smiles/smarts/parser" 
-	          excludes="AST*.java,SMARTSParser.jjt,SMARTSParser.jj,*Node.java,Smarts*Visitor.java"
+	          excludes="AST*.java,SMARTSParser.jjt,SMARTSParser.jj,*Node.java,SmartsQueryVisitor.java,Smarts2MQLVisitor.java,SmartsDumpVisitor.java"
                   token="package org.openscience.cdk.smiles.smarts.parser;" summary="true" >
                   <replacevalue>package org.openscience.cdk.smiles.smarts.parser;
 
