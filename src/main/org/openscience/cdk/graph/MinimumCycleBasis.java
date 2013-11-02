@@ -102,6 +102,21 @@ public final class MinimumCycleBasis {
      */
     @TestMethod("noInitialCycles")
     MinimumCycleBasis(final InitialCycles initial) {
+        this(initial, false);
+    }
+
+    /**
+     * Generate the minimum cycle basis from a precomputed set of initial
+     * cycles. This constructor allows on to specify that the graph is
+     * connected which allows an optimisation to be used.
+     *
+     * @param initial set of initial cycles.
+     * @param connected the graph is known to be connected                
+     *                
+     * @throws NullPointerException null InitialCycles provided
+     */
+    @TestMethod("noInitialCycles")
+    MinimumCycleBasis(final InitialCycles initial, boolean connected) {
 
         checkNotNull(initial, "No InitialCycles provided");
 
@@ -109,9 +124,14 @@ public final class MinimumCycleBasis {
         this.basis = new GreedyBasis(initial.numberOfCycles(),
                                      initial.numberOfEdges());
 
+        // a undirected unweighted connected graph there are |E| - (|V| + 1)
+        // cycles in the minimum basis
+        int lim = connected ? initial.numberOfEdges() - graph.length + 1
+                            : Integer.MAX_VALUE;
+        
         // processing by size add cycles which are independent of smaller cycles
         for (final Cycle cycle : initial.cycles()) {
-            if (basis.isIndependent(cycle))
+            if (basis.size() < lim && basis.isIndependent(cycle))
                 basis.add(cycle);
         }
     }

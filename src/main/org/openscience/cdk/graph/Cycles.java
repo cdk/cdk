@@ -622,7 +622,7 @@ public final class Cycles {
             /** {@inheritDoc} */
             @Override int[][] apply(int[][] graph) {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
-                return new MinimumCycleBasis(ic).paths();
+                return new MinimumCycleBasis(ic, true).paths();
             }
         },
         ESSENTIAL {
@@ -656,7 +656,7 @@ public final class Cycles {
             /** {@inheritDoc} */
             @Override int[][] apply(int[][] graph) throws Intractable {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
-                return new TripletShortCycles(new MinimumCycleBasis(ic), false).paths();
+                return new TripletShortCycles(new MinimumCycleBasis(ic, true), false).paths();
             }
         },
         VERTEX_SHORT {
@@ -678,7 +678,7 @@ public final class Cycles {
             @Override int[][] apply(int[][] graph) throws Intractable {
                 
                 InitialCycles     ic  = InitialCycles.ofBiconnectedComponent(graph);
-                MinimumCycleBasis mcb = new MinimumCycleBasis(ic);
+                MinimumCycleBasis mcb = new MinimumCycleBasis(ic, true);
                 
                 // As per the old aromaticity detector if the MCB/SSSR is made 
                 // of 2 or 3 rings we check all rings for aromaticity - otherwise
