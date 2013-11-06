@@ -676,6 +676,7 @@
                     <includesfile name="${metainf}/qm.libdepends"/>
                     <includesfile name="${metainf}/iordf.libdepends"/>
                     <includesfile name="${metainf}/signature.libdepends"/>
+                    <includesfile name="${metainf}/smiles.libdepends"/>
                 </fileset>
                 <fileset dir="${dist}/jar">
                     <include name="cdk-annotation.jar"/>
