@@ -173,6 +173,17 @@
       <bibtex:pages>309-314</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+    
+  <bibtex:entry id="Cordella04">
+    <bibtex:article>
+      <bibtex:author>Cordella Luigi P and Foggia Pasquale and Carlo Sansone and Vento Mario </bibtex:author>
+      <bibtex:title>A (Sub)Graph Isomorphism Algorithm for Matching Large Graphs</bibtex:title>
+      <bibtex:journal>IEEE TRANSACTIONS ON PATTERN ANALYSIS AND MACHINE INTELLIGENCE</bibtex:journal>
+      <bibtex:year>2004</bibtex:year>
+      <bibtex:volume>26</bibtex:volume>
+      <bibtex:pages>10</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
   
   <bibtex:entry id="CHE03">
     <bibtex:article>
