@@ -22,6 +22,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.IsomorphismCoverageTest;
+import org.openscience.cdk.isomorphism.AtomMatcherTest;
+import org.openscience.cdk.isomorphism.BondMatcherTest;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreatorTest;
 import org.openscience.cdk.isomorphism.matchers.RGroupListTest;
 import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
@@ -37,5 +39,10 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     RGroupListTest.class,
     SymbolSetQueryAtomTest.class,
     QueryAtomContainerCreatorTest.class
+    QueryAtomContainerCreatorTest.class,
+    AnyOrderQueryBondTest.class,
+
+    AtomMatcherTest.class,
+    BondMatcherTest.class
 })
 public class MisomorphismTests {}
