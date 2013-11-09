@@ -25,6 +25,8 @@ import org.openscience.cdk.coverage.IsomorphismCoverageTest;
 import org.openscience.cdk.isomorphism.AbstractVFStateTest;
 import org.openscience.cdk.isomorphism.AtomMatcherTest;
 import org.openscience.cdk.isomorphism.BondMatcherTest;
+import org.openscience.cdk.isomorphism.CompatibilityMatrixTest;
+import org.openscience.cdk.isomorphism.UllmannStateTest;
 import org.openscience.cdk.isomorphism.VFStateTest;
 import org.openscience.cdk.isomorphism.VFSubStateTest;
 import org.openscience.cdk.isomorphism.VentoFoggiaTest;
@@ -51,6 +53,8 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     AbstractVFStateTest.class,
     VFSubStateTest.class,
     VFStateTest.class,
-    VentoFoggiaTest.class
+    VentoFoggiaTest.class,
+    UllmannStateTest.class,
+    CompatibilityMatrixTest.class
 })
 public class MisomorphismTests {}

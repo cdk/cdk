@@ -1266,6 +1266,18 @@ Method </bibtex:title>
   	</bibtex:article>
   </bibtex:entry>
 
+    <bibtex:entry id="Ullmann76">
+        <bibtex:article>
+            <bibtex:author>Ullmann J R</bibtex:author>
+            <bibtex:title>An Algorithm for Subgraph Isomorphism</bibtex:title>
+            <bibtex:year>1976</bibtex:year>
+            <bibtex:url>http://www.engr.uconn.edu/~vkk06001/GraphIsomorphism/Papers/Ullman_Algorithm.pdf</bibtex:url>
+            <bibtex:journal>Journal of the Association for Computing Machinery</bibtex:journal>
+            <bibtex:volume>23</bibtex:volume>
+            <bibtex:number>1</bibtex:number>
+        </bibtex:article>
+    </bibtex:entry>  
+    
   <bibtex:entry id="Vismara97">
     <bibtex:article>
       <bibtex:author>Vismara, Philippe</bibtex:author>
