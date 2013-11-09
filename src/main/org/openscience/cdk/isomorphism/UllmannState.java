@@ -100,7 +100,7 @@ final class UllmannState extends State {
         matrix = new CompatibilityMatrix(g1.length, g2.length);
         for (int i = 0; i < g1.length; i++) {
             for (int j = 0; j < g2.length; j++) {
-                if (g1[i].length <= g2[i].length
+                if (g1[i].length <= g2[j].length
                         && atomMatcher.matches(container1.getAtom(i),
                                                container2.getAtom(j))) {
                     matrix.set(i, j);
