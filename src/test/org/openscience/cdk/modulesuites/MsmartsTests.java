@@ -33,6 +33,10 @@ import org.openscience.cdk.isomorphism.matchers.smarts.SmallestRingAtomTest;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtomTest;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtomTest;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtomTest;
+
+import org.openscience.cdk.isomorphism.UllmannSubstructureTest;
+import org.openscience.cdk.isomorphism.VFSubstructureTest;
+
 import org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest;
 import org.openscience.cdk.smiles.smarts.parser.ParserTest;
 import org.openscience.cdk.smiles.smarts.parser.RecursiveTest;
@@ -63,5 +67,9 @@ import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitorTest;
     TotalHCountAtomTest.class,
     ExplicitConnectionAtomTest.class,
     TotalValencyAtomTest.class
+
+    // need these here to avoid circular dependencies
+    VFSubstructureTest.class,
+    UllmannSubstructureTest.class
 })
 public class MsmartsTests {}
