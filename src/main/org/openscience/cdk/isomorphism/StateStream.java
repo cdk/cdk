@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.isomorphism;
 
+import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Iterator;
@@ -37,6 +38,7 @@ import java.util.Iterator;
  * @author John May
  * @cdk.module isomorphism
  */
+@TestClass("org.openscience.cdk.isomorphism.StateStreamTest")
 final class StateStream implements Iterator<int[]> {
 
     /** A mapping state. */
