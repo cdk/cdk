@@ -80,6 +80,185 @@ public abstract class SubstructureTest {
         assertMatch(smi("C1CC1.C1CC1"), smi("C1CC1.C1CC1"), 72);
     }
 
+    @Test public void tetrahedral_match() throws Exception {
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(N)(O)CC"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(O)(CC)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(CC)(N)(O)"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](C)(O)(N)CC"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](C)(CC)(O)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](C)(N)(CC)(O)"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](N)(O)(C)CC"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](N)(CC)(O)C"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](N)(C)(CC)O"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](N)(C)(O)CC"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](N)(O)(CC)C"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](N)(CC)(C)O"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](O)(CC)(C)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](O)(N)(CC)C"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](O)(C)(N)(CC)"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](O)(C)(CC)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](O)(CC)(N)C"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](O)(N)(C)(CC)"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](CC)(C)(O)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](CC)(N)(C)O"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](CC)(O)(N)C"));
+
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](CC)(O)(C)N"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](CC)(C)(N)O"));
+        assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](CC)(N)(O)C"));
+    }
+
+    @Test public void tetrahedral_mismatch() throws Exception {
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(N)(O)CC"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(O)(CC)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(CC)(N)(O)"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](C)(O)(N)CC"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](C)(CC)(O)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](C)(N)(CC)(O)"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](N)(O)(C)CC"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](N)(CC)(O)C"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](N)(C)(CC)O"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](N)(C)(O)CC"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](N)(O)(CC)C"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](N)(CC)(C)O"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](O)(CC)(C)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](O)(N)(CC)C"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](O)(C)(N)(CC)"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](O)(C)(CC)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](O)(CC)(N)C"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](O)(N)(C)(CC)"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](CC)(C)(O)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](CC)(N)(C)O"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](CC)(O)(N)C"));
+
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](CC)(O)(C)N"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](CC)(C)(N)O"));
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](CC)(N)(O)C"));
+    }
+
+    @Test public void tetrahedral_match_implicit_h() throws Exception {
+        assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@H](C)(N)(O)"));
+        assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@]([H])(C)(N)(O)"));
+        assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@@](C)([H])(N)(O)"));
+    }
+
+    @Test public void tetrahedral_mismatch_implicit_h() throws Exception {
+        assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@@H](C)(N)(O)"));
+        assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@@]([H])(C)(N)(O)"));
+        assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@](C)([H])(N)(O)"));
+    }
+
+    @Test public void tetrahedral_match_sulfoxide() throws Exception {
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](=O)(C)CC"));
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](C)(CC)(=O)"));
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](CC)(=O)C"));
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@@](C)(=O)CC"));
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@@](=O)(CC)C"));
+        assertMatch(smi("[S@](=O)(C)CC"), smi("[S@@](CC)(C)=O"));
+    }
+
+    @Test public void tetrahedral_mismatch_sulfoxide() throws Exception {
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](=O)(C)CC"));
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](C)(CC)(=O)"));
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](CC)(=O)C"));
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@@](C)(=O)CC"));
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@@](=O)(CC)C"));
+        assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@@](CC)(C)=O"));
+    }
+
+    @Test public void tetrahedral_missing_in_query() throws Exception {
+        assertMatch(smi("C(C)(N)(O)CC"), smi("[C@@](C)(N)(O)CC"));
+    }
+
+    @Test public void tetrahedral_missing_in_target() throws Exception {
+        assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("C(C)(N)(O)CC"));
+    }
+
+    @Test public void tetrahedral_count() throws Exception {
+        // we can map any witch way 4 neighbours but 2 configuration so (4!/2) = 12
+        assertMatch(smi("[C@](C)(C)(C)C"), smi("[C@](C)(CC)(CCC)CCCC"), 12);
+        assertMatch(smi("[C@@](C)(C)(C)C"), smi("[C@](C)(CC)(CCC)CCCC"), 12);
+        assertMatch(smi("[C@](C)(C)(C)C"), smi("[C@@](C)(CC)(CCC)CCCC"), 12);
+        assertMatch(smi("[C@@](C)(C)(C)C"), smi("[C@@](C)(CC)(CCC)CCCC"), 12);
+    }
+
+    @Test public void geometric_trans_match() throws Exception {
+        assertMatch(smi("F/C=C/F"), smi("F/C=C/F"));
+        assertMatch(smi("F/C=C/F"), smi("F\\C=C\\F"));
+        // shouldn't mater which substituents are used
+        assertMatch(smi("F/C=C/F"), smi("F/C(/[H])=C/F"));
+        assertMatch(smi("F/C=C/F"), smi("FC(/[H])=C/F"));
+        assertMatch(smi("F/C=C/F"), smi("F/C=C([H])/F"));
+        assertMatch(smi("F/C=C/F"), smi("F/C=C(\\[H])F"));
+        assertMatch(smi("F/C=C/F"), smi("FC(/[H])=C(\\[H])F"));
+        // or the order is different
+        assertMatch(smi("F/C=C/F"), smi("C(\\F)=C/F"));
+        assertMatch(smi("F/C=C/F"), smi("C(/F)=C\\F"));
+    }
+
+    @Test public void geometric_cis_match() throws Exception {
+        assertMatch(smi("F/C=C\\F"), smi("F/C=C\\F"));
+        assertMatch(smi("F/C=C\\F"), smi("F\\C=C/F"));
+        assertMatch(smi("F\\C=C/F"), smi("F/C=C\\F"));
+        assertMatch(smi("F\\C=C/F"), smi("F\\C=C/F"));
+        // shouldn't mater which substituents are used
+        assertMatch(smi("F/C=C\\F"), smi("F/C(/[H])=C\\F"));
+        assertMatch(smi("F/C=C\\F"), smi("FC(/[H])=C\\F"));
+        assertMatch(smi("F/C=C\\F"), smi("F/C=C([H])\\F"));
+        assertMatch(smi("F/C=C\\F"), smi("F/C=C(/[H])F"));
+        assertMatch(smi("F/C=C\\F"), smi("FC(/[H])=C(/[H])F"));
+        // or the order is different
+        assertMatch(smi("F/C=C\\F"), smi("C(\\F)=C\\F"));
+        assertMatch(smi("F/C=C\\F"), smi("C(/F)=C/F"));
+    }
+
+    @Test public void geometric_trans_mismatch() throws Exception {
+        assertMismatch(smi("F/C=C/F"), smi("F/C=C\\F"));
+        assertMismatch(smi("F/C=C/F"), smi("F\\C=C/F"));
+        assertMismatch(smi("F\\C=C\\F"), smi("F/C=C\\F"));
+        assertMismatch(smi("F\\C=C\\F"), smi("F\\C=C/F"));
+    }
+
+    @Test public void geometric_cis_mismatch() throws Exception {
+        assertMismatch(smi("F/C=C\\F"), smi("F/C=C/F"));
+        assertMismatch(smi("F/C=C\\F"), smi("F\\C=C\\F"));
+        assertMismatch(smi("F\\C=C/F"), smi("F/C=C/F"));
+        assertMismatch(smi("F\\C=C/F"), smi("F\\C=C\\F"));
+    }
+    
+    @Test public void geometric_missing_in_query() throws Exception {
+        assertMatch(smi("FC=CF"), smi("F/C=C/F"));
+        assertMatch(smi("FC=CF"), smi("F\\C=C\\F"));
+        assertMatch(smi("FC=CF"), smi("F\\C=C/F"));
+        assertMatch(smi("FC=CF"), smi("F/C=C\\F"));
+    }
+    
+    @Test public void geometric_missing_in_target() throws Exception {
+        assertMismatch(smi("F/C=C/F"), smi("FC=CF"));
+        assertMismatch(smi("F/C=C\\F"), smi("FC=CF"));
+        assertMismatch(smi("F\\C=C/F"), smi("FC=CF"));
+        assertMismatch(smi("F\\C=C\\F"), smi("FC=CF"));
+    }
+
+    @Test public void geometric_count() throws Exception {
+        assertMatch(smi("C/C=C/C"), smi("CC(/CC)=C(/CC)C"), 4);
+        assertMatch(smi("C/C=C\\C"), smi("CC(/CC)=C(/CC)C"), 4);
+        assertMatch(smi("C\\C=C\\C"), smi("CC(/CC)=C(/CC)C"), 4);
+        assertMatch(smi("C\\C=C/C"), smi("CC(/CC)=C(/CC)C"), 4);
+    }
+
     @Test public void cubane_automorphisms() throws Exception {
         assertMatch(smi("C12C3C4C1C1C2C3C41"),
                     smi("C12C3C4C1C1C2C3C41"),

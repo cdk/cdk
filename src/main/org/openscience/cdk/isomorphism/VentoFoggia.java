@@ -125,11 +125,12 @@ public final class VentoFoggia extends Pattern {
     @Override public Iterable<int[]> matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
         int[][] g2 = GraphUtil.toAdjList(target, bonds2);
-        return new VFIterable(query, target,
-                              g1, g2,
-                              bonds1, bonds2,
-                              atomMatcher, bondMatcher,
-                              subgraph);
+        return Iterables.filter(new VFIterable(query, target,
+                                               g1, g2,
+                                               bonds1, bonds2,
+                                               atomMatcher, bondMatcher,
+                                               subgraph),
+                                new StereoMatchPredicate(query, target));
     }
 
     /**
