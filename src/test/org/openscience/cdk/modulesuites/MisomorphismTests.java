@@ -27,6 +27,7 @@ import org.openscience.cdk.isomorphism.AtomMatcherTest;
 import org.openscience.cdk.isomorphism.BondMatcherTest;
 import org.openscience.cdk.isomorphism.CompatibilityMatrixTest;
 import org.openscience.cdk.isomorphism.StateStreamTest;
+import org.openscience.cdk.isomorphism.StereoMatchPredicateTest;
 import org.openscience.cdk.isomorphism.UllmannStateTest;
 import org.openscience.cdk.isomorphism.UllmannTest;
 import org.openscience.cdk.isomorphism.VFStateTest;
@@ -59,6 +60,7 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     UllmannStateTest.class,
     CompatibilityMatrixTest.class,
     StateStreamTest.class,
-    UllmannTest.class
+    UllmannTest.class,
+    StereoMatchPredicateTest.class
 })
 public class MisomorphismTests {}
