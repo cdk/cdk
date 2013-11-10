@@ -185,6 +185,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private int scaleX(double xCoord) {
         return (int) (xCoord*transform.getScaleX());
     }
+
+    private int scaleY(double yCoord) {
+        return (int) (yCoord*-transform.getScaleY());
+    }
     
     private int transformX(double xCoord) {
         return (int) transform( xCoord, 1 )[0];
@@ -373,14 +377,19 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
     
     private void visit(RectangleElement rectangle) {
-        int[] point1 = this.transformPoint(rectangle.xCoord, rectangle.yCoord);
-        int[] point2 = this.transformPoint(
-                rectangle.xCoord + rectangle.width, rectangle.yCoord + rectangle.height);
         this.graphics.setColor(rectangle.color);
+        int width  = scaleX(rectangle.width);
+        int height = scaleY(rectangle.height);
         if (rectangle.filled) {
-            this.graphics.fillRect(point1[0], point1[1], point2[0] - point1[0], point2[1] - point1[1]);
+            this.graphics.fillRect(transformX(rectangle.xCoord),
+                                   transformY(rectangle.yCoord) - height,
+                                   width,
+                                   height);
         } else {
-            this.graphics.drawRect(point1[0], point1[1], point2[0] - point1[0], point2[1] - point1[1]);
+            this.graphics.drawRect(transformX(rectangle.xCoord),
+                                   transformY(rectangle.yCoord) - height,
+                                   width,
+                                   height);
         }
     }
     
