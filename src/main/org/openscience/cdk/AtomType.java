@@ -1,9 +1,8 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- *
- *  Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+/* 
+ *  Copyright (C) 2001-2013  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                           John May <jwmay@users.sourceforge.net>
+ *                           Egon Willighagen <egonw@users.sourceforge.net>
+ *                           Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

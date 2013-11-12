@@ -1,10 +1,8 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- *
+/* 
+ * Copyright (C) 1997-2012  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                          Egon Willighagen <egonw@users.sourceforge.net>
+ *                          Rajarshi Guha <rajarshi@users.sf.net>
+ * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
