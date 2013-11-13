@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -234,19 +235,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return The ChemFile that was read from the MDL file.
      */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-        IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
+        
+        IChemSequence sequence = chemFile.getBuilder().newInstance(IChemSequence.class);
 
-        IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-        IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
-        if (m != null && m instanceof IAtomContainer) {
-            setOfMolecules.addAtomContainer(m);
-        }
-        chemModel.setMoleculeSet(setOfMolecules);
-        chemSequence.addChemModel(chemModel);
-
-        setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
-        chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
+        sequence.addChemModel(newModel(m));
+        
         String str;
         try {
             String line;
@@ -259,14 +253,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
 
                     if (m != null && m instanceof IAtomContainer) {
-                        setOfMolecules.addAtomContainer(m);
-
-                        chemModel.setMoleculeSet(setOfMolecules);
-                        chemSequence.addChemModel(chemModel);
-
-                        setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
-                        chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-
+                        sequence.addChemModel(newModel(m));
                     }
                 }
                 else {
@@ -358,10 +345,30 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             throw new CDKException(error, exc);
         }
 
-        chemFile.addChemSequence(chemSequence);
+        chemFile.addChemSequence(sequence);
         return chemFile;
     }
 
+    /**
+     * Create a new chem model for a single {@link IAtomContainer}.
+     * 
+     * @param container the container to create the model for
+     * @return a new {@link IChemModel}
+     */
+    private static IChemModel newModel(final IAtomContainer container) {
+        
+        if (container == null)
+            throw new NullPointerException("cannot create chem model for a null container");
+        
+        final IChemObjectBuilder builder    = container.getBuilder();
+        final IChemModel         model      = builder.newInstance(IChemModel.class);
+        final IAtomContainerSet  containers = builder.newInstance(IAtomContainerSet.class);
+        
+        containers.addAtomContainer(container);
+        model.setMoleculeSet(containers);
+        
+        return model;
+    }
 
     /**
      * Read an IAtomContainer from a file in MDL sd format
