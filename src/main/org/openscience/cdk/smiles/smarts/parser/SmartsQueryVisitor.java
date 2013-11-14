@@ -520,41 +520,28 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTLowAndExpression node, Object data) {
-		Object left = node.jjtGetChild(0).jjtAccept(this, data);
-		if (node.jjtGetNumChildren() == 1) {
-			return left;
-		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
-		atom.setOperator("and");
-		atom.setLeft((IQueryAtom) left);
-		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
-				data);
-		atom.setRight(right);
-		return atom;
+        Object left = node.jjtGetChild(0).jjtAccept(this, data);
+        if (node.jjtGetNumChildren() == 1) {
+            return left;
+        }
+        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+        return LogicalOperatorAtom.and((IQueryAtom) left, right);
 	}
 
 	public Object visit(ASTOrExpression node, Object data) {
-		Object left = node.jjtGetChild(0).jjtAccept(this, data);
-		if (node.jjtGetNumChildren() == 1) {
-			return left;
-		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
-		atom.setOperator("or");
-		atom.setLeft((IQueryAtom) left);
-		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
-				data);
-		atom.setRight(right);
-		return atom;
+        Object left = node.jjtGetChild(0).jjtAccept(this, data);
+        if (node.jjtGetNumChildren() == 1) {
+            return left;
+        }
+        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+        return LogicalOperatorAtom.or((IQueryAtom) left, right);
 	}
 
 	public Object visit(ASTNotExpression node, Object data) {
 		Object left = node.jjtGetChild(0).jjtAccept(this, data);
 		if (node.getType() == SMARTSParserConstants.NOT) {
-		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
-		atom.setOperator("not");
-		atom.setLeft((IQueryAtom) left);
-		return atom;
-	}
+		    return LogicalOperatorAtom.not((IQueryAtom) left);
+	    }
 		return left;
 	}
 
@@ -563,13 +550,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
-		atom.setOperator("and");
-		atom.setLeft((IQueryAtom) left);
-		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
-				data);
-		atom.setRight(right);
-		return atom;
+        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+		return LogicalOperatorAtom.and((IQueryAtom) left, right);
 	}
 
 	public Object visit(ASTImplicitHighAndExpression node, Object data) {
@@ -577,13 +559,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		if (node.jjtGetNumChildren() == 1) {
 			return left;
 		}
-		LogicalOperatorAtom atom = new LogicalOperatorAtom(builder);
-		atom.setOperator("and");
-		atom.setLeft((IQueryAtom) left);
-		IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this,
-				data);
-		atom.setRight(right);
-		return atom;
+        IQueryAtom right = (IQueryAtom) node.jjtGetChild(1).jjtAccept(this, data);
+        return LogicalOperatorAtom.and((IQueryAtom) left, right);
 	}
 
 	public Object visit(ASTExplicitAtom node, Object data) {

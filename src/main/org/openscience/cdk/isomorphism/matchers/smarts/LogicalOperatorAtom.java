@@ -20,6 +20,7 @@
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
@@ -30,8 +31,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS 
  */
-public class LogicalOperatorAtom extends SMARTSAtom {
-	private static final long serialVersionUID = -5752396252307536738L;
+public final class LogicalOperatorAtom extends SMARTSAtom {
 
 	/**
 	 * Left child
@@ -51,27 +51,33 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     public LogicalOperatorAtom(IChemObjectBuilder builder){
         super(builder);
     }
-
+    
+    @Deprecated
     public IQueryAtom getLeft() {
         return left;
     }
-
+    
+    @Deprecated
     public String getOperator() {
         return operator;
     }
-
+    
+    @Deprecated
     public IQueryAtom getRight() {
         return right;
     }
-
+    
+    @Deprecated
     public void setLeft(IQueryAtom left) {
         this.left = left;
     }
-
+    
+    @Deprecated
     public void setOperator(String name) {
         this.operator = name;
     }
-
+    
+    @Deprecated
     public void setRight(IQueryAtom right) {
         this.right = right;
     }
@@ -79,6 +85,7 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     /* (non-Javadoc)
      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
      */
+    @Deprecated
     public boolean matches(IAtom atom) {
     	boolean val = false;
     	boolean matchesLeft = left.matches(atom);
@@ -103,6 +110,7 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     /* (non-Javadoc)
      * @see org.openscience.cdk.ChemObject#getFlag(int)
      */
+    @Deprecated
     public boolean getFlag(int flagType) {
     	boolean val = false;
     	boolean leftFlag = left.getFlag(flagType);
@@ -179,16 +187,6 @@ public class LogicalOperatorAtom extends SMARTSAtom {
         @Override public boolean matches(IAtom atom) {
             return left.matches(atom) && right.matches(atom);
         }
-
-        /** @inheritDoc */
-        @Override public IQueryAtom prepare(IAtomContainer target) {
-            IQueryAtom preparedLeft = left.prepare(target);
-            IQueryAtom preparedRight = right.prepare(target);
-            // only make a new conjunction if either branch changed
-            if (preparedLeft != left || preparedRight != right)
-                return new Conjunction(getBuilder(), preparedLeft, preparedRight);
-            return this;
-        }
     }
 
     /** Defines a disjunction (or) between two query atoms. */
@@ -214,16 +212,6 @@ public class LogicalOperatorAtom extends SMARTSAtom {
         @Override public boolean matches(IAtom atom) {
             return left.matches(atom) || right.matches(atom);
         }
-
-        /** @inheritDoc */
-        @Override public SMARTSAtom prepare(IAtomContainer target) {
-            IQueryAtom preparedLeft = left.prepare(target);
-            IQueryAtom preparedRight = right.prepare(target);
-            // only make a new conjunction if either branch changed
-            if (preparedLeft != left || preparedRight != right)
-                return new Disjunction(getBuilder(), preparedLeft, preparedRight);
-            return this;
-        }
     }
 
     /** Defines a negation (not) of a query atom. */
@@ -246,14 +234,6 @@ public class LogicalOperatorAtom extends SMARTSAtom {
         /** @inheritDoc */
         @Override public boolean matches(IAtom atom) {
             return !expression.matches(atom);
-        }
-
-        /** @inheritDoc */
-        @Override public SMARTSAtom prepare(IAtomContainer target) {
-            IQueryAtom prepared = expression.prepare(target);
-            if (prepared != expression)
-                return new Negation(getBuilder(), prepared);
-            return this;
         }
     }
 }
