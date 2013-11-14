@@ -123,4 +123,137 @@ public class LogicalOperatorAtom extends SMARTSAtom {
     	}
     	return val;
     }
+
+    /**
+     * Conjunction the provided expressions.
+     *
+     * @param left expression
+     * @param right expression
+     * @return conjunction of the left and right expressions
+     */
+    public static SMARTSAtom and(IQueryAtom left, IQueryAtom right) {
+        return new Conjunction(left.getBuilder(), left, right);
+    }
+
+    /**
+     * Disjunction the provided expressions.
+     *
+     * @param left expression
+     * @param right expression
+     * @return disjunction of the left and right expressions
+     */
+    public static SMARTSAtom or(IQueryAtom left, IQueryAtom right) {
+        return new Disjunction(left.getBuilder(), left, right);
+    }
+
+    /**
+     * Negate the provided expression.
+     * 
+     * @param expr expression to negate
+     * @return a SMARTS atom which is the negation of the expression
+     */
+    public static SMARTSAtom not(IQueryAtom expr) {
+        return new Negation(expr.getBuilder(), expr);
+    }
+
+    /** Defines a conjunction (AND) between two query atoms. */
+    private static class Conjunction extends SMARTSAtom {
+
+        /** left and right of the operator. */
+        private IQueryAtom left, right;
+
+        /**
+         * Create a disjunction of {@code left} or {@code right}.
+         *
+         * @param builder chem object builder
+         * @param left    the expression to negate
+         * @param right   the expression to negate
+         */
+        private Conjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right) {
+            super(builder);
+            this.left = left;
+            this.right = right;
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IAtom atom) {
+            return left.matches(atom) && right.matches(atom);
+        }
+
+        /** @inheritDoc */
+        @Override public IQueryAtom prepare(IAtomContainer target) {
+            IQueryAtom preparedLeft = left.prepare(target);
+            IQueryAtom preparedRight = right.prepare(target);
+            // only make a new conjunction if either branch changed
+            if (preparedLeft != left || preparedRight != right)
+                return new Conjunction(getBuilder(), preparedLeft, preparedRight);
+            return this;
+        }
+    }
+
+    /** Defines a disjunction (or) between two query atoms. */
+    private static class Disjunction extends SMARTSAtom {
+
+        /** left and right of the operator. */
+        private IQueryAtom left, right;
+
+        /**
+         * Create a disjunction of {@code left} or {@code right}.
+         *
+         * @param builder chem object builder
+         * @param left    the expression to negate
+         * @param right   the expression to negate
+         */
+        private Disjunction(IChemObjectBuilder builder, IQueryAtom left, IQueryAtom right) {
+            super(builder);
+            this.left = left;
+            this.right = right;
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IAtom atom) {
+            return left.matches(atom) || right.matches(atom);
+        }
+
+        /** @inheritDoc */
+        @Override public SMARTSAtom prepare(IAtomContainer target) {
+            IQueryAtom preparedLeft = left.prepare(target);
+            IQueryAtom preparedRight = right.prepare(target);
+            // only make a new conjunction if either branch changed
+            if (preparedLeft != left || preparedRight != right)
+                return new Disjunction(getBuilder(), preparedLeft, preparedRight);
+            return this;
+        }
+    }
+
+    /** Defines a negation (not) of a query atom. */
+    private static class Negation extends SMARTSAtom {
+
+        /** Expression to negate. */
+        private IQueryAtom expression;
+
+        /**
+         * Create a negation of {@code expression}.
+         *
+         * @param builder    chem object builder
+         * @param expression the expression to negate
+         */
+        private Negation(IChemObjectBuilder builder, IQueryAtom expression) {
+            super(builder);
+            this.expression = expression;
+        }
+
+        /** @inheritDoc */
+        @Override public boolean matches(IAtom atom) {
+            return !expression.matches(atom);
+        }
+
+        /** @inheritDoc */
+        @Override public SMARTSAtom prepare(IAtomContainer target) {
+            IQueryAtom prepared = expression.prepare(target);
+            if (prepared != expression)
+                return new Negation(getBuilder(), prepared);
+            return this;
+        }
+    }
 }
