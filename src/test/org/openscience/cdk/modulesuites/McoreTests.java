@@ -46,6 +46,7 @@ import org.openscience.cdk.exception.NoSuchAtomExceptionTest;
 import org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest;
 import org.openscience.cdk.graph.AllPairsShortestPathsTest;
 import org.openscience.cdk.graph.BitMatrixTest;
+import org.openscience.cdk.graph.ConnectedComponentsTest;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.CyclesTest;
 import org.openscience.cdk.graph.EssentialCyclesTest;
@@ -124,6 +125,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
     AllPairsShortestPathsTest.class,
     ShortestPathsTest.class,
     DynamicFactoryTest.class,
+    ConnectedComponentsTest.class,
 
     // ring search (more in test-standard)
     RegularCyclicVertexSearchTest.class,
