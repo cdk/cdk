@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.Collections;
@@ -44,7 +45,8 @@ public class RingMembershipAtomTest {
     public void matches() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(0,
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
+                                                                                             0,
                                                                                              2,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,
@@ -58,7 +60,8 @@ public class RingMembershipAtomTest {
     public void mismatches() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(0,
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
+                                                                                             0,
                                                                                              1,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,
@@ -72,7 +75,8 @@ public class RingMembershipAtomTest {
     public void none() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(0, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(0,
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
+                                                                                             0,
                                                                                              0,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,
@@ -86,7 +90,8 @@ public class RingMembershipAtomTest {
     public void any() throws Exception {
         RingMembershipAtom matcher = new RingMembershipAtom(-1, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(0,
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
+                                                                                             0,
                                                                                              5,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,

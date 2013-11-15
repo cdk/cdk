@@ -41,6 +41,9 @@ final class SMARTSAtomInvariants {
     /** Property key to index the class by. */
     static String KEY = "SMARTS.INVARIANTS";
 
+    /** the molecule which this atom belongs. */
+    private final IAtomContainer target;
+    
     /** Total number of bonds formed - also refereed to as bond order sum. */
     private final int valence;
 
@@ -74,13 +77,15 @@ final class SMARTSAtomInvariants {
      *                           count)
      * @param totalHydrogenCount the total number of hydrogens
      */
-    SMARTSAtomInvariants(int valence,
+    SMARTSAtomInvariants(IAtomContainer target,
+                         int valence,
                          int ringNumber,
                          Set<Integer> ringSize,
                          int ringConnectivity,
                          int degree,
                          int connectivity,
                          int totalHydrogenCount) {
+        this.target = target;
         this.valence = valence;
         this.ringNumber = ringNumber;
         this.ringSize = ringSize;
@@ -89,6 +94,10 @@ final class SMARTSAtomInvariants {
         this.ringConnectivity = ringConnectivity;
         this.degree = degree;
     }
+    
+    @TestMethod("target") IAtomContainer target() {
+        return target;
+    } 
 
     /**
      * Access the valence of this atom. The valence is matched by the {@code
@@ -294,7 +303,8 @@ final class SMARTSAtomInvariants {
 
             }
 
-            SMARTSAtomInvariants inv = new SMARTSAtomInvariants(valence,
+            SMARTSAtomInvariants inv = new SMARTSAtomInvariants(container,
+                                                                valence,
                                                                 ringNumber[v],
                                                                 ringSize[v] <= nAtoms ? Collections.singleton(ringSize[v])
                                                                                       : Collections.<Integer>emptySet(),

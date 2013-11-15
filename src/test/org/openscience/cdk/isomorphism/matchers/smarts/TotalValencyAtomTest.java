@@ -26,6 +26,7 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 import java.util.Collections;
@@ -44,7 +45,8 @@ public class TotalValencyAtomTest {
     public void matches() throws Exception {
         TotalValencyAtom matcher = new TotalValencyAtom(4, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(4,
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
+                                                                                             4,
                                                                                              0,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,

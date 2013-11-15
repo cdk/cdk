@@ -21,6 +21,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class DaylightSMARTSAtomInvariantsTest {
 
+    @Test public void target() throws Exception {
+        IAtomContainer container = sp.parseSmiles("CCC");
+        SMARTSAtomInvariants.configureDaylightWithRingInfo(container);
+        for (IAtom atom : container.atoms()) {
+            assertThat(((SMARTSAtomInvariants)atom.getProperty(SMARTSAtomInvariants.KEY)).target(),
+                       is(container));
+        }
+    }
+    
     @Test public void valence() throws Exception {
         assertThat(invariantOfFirstAtom("C").valence(), is(4));
         assertThat(invariantOfFirstAtom("N").valence(), is(3));
