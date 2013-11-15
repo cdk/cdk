@@ -23,21 +23,13 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
-import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-
-import java.util.BitSet;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * This matches recursive smarts atoms.
@@ -47,17 +39,11 @@ import java.util.List;
  * @cdk.keyword SMARTS
  */
 public final class RecursiveSmartsAtom extends SMARTSAtom {
-    
-    private final static ILoggingTool   logger           =        LoggingToolFactory.createLoggingTool(RecursiveSmartsAtom.class);
+
+    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RecursiveSmartsAtom.class);
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */
-    private final IQueryAtomContainer recursiveQuery;
-
-    /**
-     * BitSet that records which atom in the target molecule matches the recursive
-     * smarts
-     */
-    private BitSet bitSet = null;
+    private final IQueryAtomContainer query;
 
     /**
      * Creates a new instance
@@ -66,125 +52,30 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
      */
     public RecursiveSmartsAtom(IQueryAtomContainer query) {
         super(query.getBuilder());
-        this.recursiveQuery = query;
+        this.query = query;
     }
 
     /* (non-Javadoc)
      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
-        if (recursiveQuery.getAtomCount() == 1) { // only one atom. Then just match that atom
-            return ((IQueryAtom) recursiveQuery.getAtom(0)).matches(atom);
-        }
         
+        if (!((IQueryAtom) query.getAtom(0)).matches(atom))
+            return false;
+        
+        if (query.getAtomCount() == 1)
+            return true;
+
         IAtomContainer target = invariants(atom).target();
 
-        // Check wither atomContainer has been set
-        if (target == null) {
-            logger.error("In RecursiveSmartsAtom, atomContainer can't be null! You must set it before matching");
-            return false;
+        // recursive queries are not currently cached - they also be faster
+        // by specifying the initial mapping of (0->0) and
+        for (int[] mapping : VentoFoggia.findSubstructure(query)
+                                        .matchAll(target)) {
+            if (target.getAtom(mapping[0]) == atom) 
+                return true;
         }
-
-        // initialize bitsets
-        if (bitSet == null) {
-            try {
-                initilizeBitSets(target);
-            } catch (CDKException cex) {
-                logger.error("Error found when matching recursive smarts: " + cex.getMessage());
-                return false;
-            }
-        }
-        int atomNumber = target.getAtomNumber(atom);
-        return bitSet.get(atomNumber);
-    }
-
-    /**
-     * This method calculates all possible matches of this recursive smarts to
-     * the AtomContainer. It set the index of the first atom of each match in
-     * the bitset to be true.
-     *
-     * @throws CDKException
-     */
-    private void initilizeBitSets(IAtomContainer atomContainer) throws CDKException {
-        List<List<RMap>> bondMappings = null;
-        bondMappings = new UniversalIsomorphismTester().getSubgraphMaps(atomContainer, recursiveQuery);
-
-        bitSet = new BitSet(atomContainer.getAtomCount());
-
-        for (List<RMap> bondMapping : bondMappings) {
-            Collections.sort(bondMapping, new Comparator<RMap>() {
-                public int compare(RMap r1, RMap r2) {
-                    if (r1.getId2() > r2.getId2()) return 1;
-                    else if (r1.getId2() == r2.getId2()) return 0;
-                    else return -1;
-                }
-            });
-            RMap rmap0 = bondMapping.get(0);
-            IBond bond0 = atomContainer.getBond(rmap0.getId1());
-            IAtom atom0 = bond0.getAtom(0);
-            IAtom atom1 = bond0.getAtom(1);
-            IBond qbond0 = recursiveQuery.getBond(rmap0.getId2());
-            IQueryAtom qatom0 = (IQueryAtom) qbond0.getAtom(0);
-            IQueryAtom qatom1 = (IQueryAtom) qbond0.getAtom(1);
-
-            if ((qatom0.matches(atom0) && qatom1.matches(atom1))
-                    && (qatom0.matches(atom1) && qatom1.matches(atom0))) { // they match each other no matter what order
-                if (bondMapping.size() > 1) { // look for the second bond
-                    IBond bond1 = atomContainer.getBond(bondMapping.get(1).getId1());
-                    IBond qbond1 = recursiveQuery.getBond(bondMapping.get(1).getId2());
-                    if (recursiveQuery.getAtomNumber(qatom0) == 0) {
-                        if (qbond1.contains(qatom0) && bond1.contains(atom0)) { // atom0 <-> qatom0
-                            bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                        }
-                        else if (qbond1.contains(qatom0) && bond1.contains(atom1)) { // atom1 <-> qatom0
-                            bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                        }
-                        else if (!qbond1.contains(qatom0) && bond1.contains(atom0)) { // ! (qatom0 <-> atom0)
-                            bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                        }
-                        else { // (!qbond1.contains(qatom0) && bond1.contains(atom1) // ! (qatom0 <-> atom1 ) 
-                            bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                        }
-                    }
-                    else {
-                        if (qbond1.contains(qatom1) && bond1.contains(atom0)) {
-                            bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                        }
-                        else if (qbond1.contains(qatom1) && bond1.contains(atom1)) {
-                            bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                        }
-                        else if (!qbond1.contains(qatom1) && bond1.contains(atom1)) {
-                            bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                        }
-                        else {
-                            bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                        }
-                    }
-                }
-                else {
-                    // both matches
-                    bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                    bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                }
-            }
-            else {
-                if (recursiveQuery.getAtomNumber(qatom0) == 0) { // starts from qatom1
-                    if (qatom0.matches(atom0) && qatom1.matches(atom1)) {
-                        bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                    }
-                    else {
-                        bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                    }
-                }
-                else { // qatom1 is the first atom
-                    if (qatom0.matches(atom1) && qatom1.matches(atom0)) {
-                        bitSet.set(atomContainer.getAtomNumber(atom0), true);
-                    }
-                    else {
-                        bitSet.set(atomContainer.getAtomNumber(atom1), true);
-                    }
-                }
-            }
-        }
+        
+        return false;
     }
 }
