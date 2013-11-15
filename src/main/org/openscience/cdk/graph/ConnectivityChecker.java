@@ -21,13 +21,17 @@
  */
 package org.openscience.cdk.graph;
 
+import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -66,24 +70,8 @@ public class ConnectivityChecker
         // partitioning needed
         if (atomContainer.getAtomCount() < 2) return true;
 
-		IAtomContainer newContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-		IAtomContainer molecule = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-		List<IAtom> sphere = new ArrayList<IAtom>();
-        for (IAtom atom : atomContainer.atoms()) {
-            atom.setFlag(CDKConstants.VISITED, false);
-            newContainer.addAtom(atom);
-        }
-
-        for (IBond bond : atomContainer.bonds()) {
-			bond.setFlag(CDKConstants.VISITED, false);
-			newContainer.addBond(bond);
-		}
-        
-        IAtom atom = newContainer.getAtom(0);
-		sphere.add(atom);
-		atom.setFlag(CDKConstants.VISITED, true);
-		PathTools.breadthFirstSearch(newContainer, sphere, molecule);
-        return molecule.getAtomCount() == atomContainer.getAtomCount();
+		ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(atomContainer));
+        return cc.nComponents() == 1;
     }
 	
 
@@ -91,43 +79,51 @@ public class ConnectivityChecker
 	/**
 	 * Partitions the atoms in an AtomContainer into covalently connected components.
 	 *
-	 * @param   atomContainer  The AtomContainer to be partitioned into connected components, i.e. molecules
+	 * @param   container  The AtomContainer to be partitioned into connected components, i.e. molecules
 	 * @return                 A MoleculeSet.
      *
      * @cdk.dictref   blue-obelisk:graphPartitioning
 	 */
     @TestMethod("testPartitionIntoMolecules_IAtomContainer,testPartitionIntoMoleculesKeepsAtomIDs,testPartitionIntoMolecules_IsConnected_Consistency")
-    public static IAtomContainerSet partitionIntoMolecules(IAtomContainer atomContainer) {
-		IAtomContainer newContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-		IAtomContainer molecule;
-		IAtomContainerSet molecules = atomContainer.getBuilder().newInstance(IAtomContainerSet.class);
-		List<IAtom> sphere = new ArrayList<IAtom>();
+    public static IAtomContainerSet partitionIntoMolecules(IAtomContainer container) {
 
-        for (IAtom atom : atomContainer.atoms()) {
-            atom.setFlag(CDKConstants.VISITED, false);
-            newContainer.addAtom(atom);
+        ConnectedComponents        cc            = new ConnectedComponents(GraphUtil.toAdjList(container));
+        int[]                      components    = cc.components();
+        IAtomContainer[]           containers    = new IAtomContainer[cc.nComponents() + 1];
+        Map<IAtom,IAtomContainer>  componentsMap = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        
+        for (int i = 1; i < containers.length; i++)
+            containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
+        
+		IAtomContainerSet containerSet = container.getBuilder().newInstance(IAtomContainerSet.class);
+
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            componentsMap.put(container.getAtom(i), containers[components[i]]);
+            containers[components[i]].addAtom(container.getAtom(i));
         }
+        
+        for (IBond bond : container.bonds())
+            componentsMap.get(bond.getAtom(0)).addBond(bond);
 
-        for (IBond bond : atomContainer.bonds()) {
-            bond.setFlag(CDKConstants.VISITED, false);
-            newContainer.addBond(bond);
+        for (ISingleElectron electron : container.singleElectrons())
+            componentsMap.get(electron.getAtom()).addSingleElectron(electron);
+
+        for (ILonePair lonePair : container.lonePairs())
+            componentsMap.get(lonePair.getAtom()).addLonePair(lonePair);
+        
+        for (IStereoElement stereo : container.stereoElements()) {
+            if (stereo instanceof ITetrahedralChirality) {
+                componentsMap.get(((ITetrahedralChirality) stereo).getChiralAtom()).addStereoElement(stereo);
+            } else if (stereo instanceof IDoubleBondStereochemistry) {
+                componentsMap.get(((IDoubleBondStereochemistry) stereo).getStereoBond().getAtom(0)).addStereoElement(stereo);
+            } else {
+                System.err.println("New stereoelement is not currently paritioned with ConnectivityChecker:" + stereo.getClass());
+            }
         }
-
-        for (IElectronContainer eContainer : atomContainer.electronContainers()) {
-            eContainer.setFlag(CDKConstants.VISITED, false);
-            newContainer.addElectronContainer(eContainer);
-        }
-
-        while(newContainer.getAtomCount() > 0) {
-			IAtom atom = newContainer.getAtom(0);
-			molecule = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-			sphere.clear();
-			sphere.add(atom);
-			atom.setFlag(CDKConstants.VISITED, true);
-			PathTools.breadthFirstSearch(newContainer, sphere, molecule);
-			molecules.addAtomContainer(molecule);
-			newContainer.remove(molecule);
-		}
-		return molecules;
+        
+        for (int i = 1; i < containers.length; i++)
+            containerSet.addAtomContainer(containers[i]);
+        
+		return containerSet;
 	}
 }
