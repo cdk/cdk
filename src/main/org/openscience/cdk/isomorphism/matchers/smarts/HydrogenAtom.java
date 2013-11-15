@@ -29,71 +29,64 @@ import java.util.List;
 /**
  * This matches Hydrogen atoms.
  *
- * @cdk.module  smarts
+ * @cdk.module smarts
  * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.keyword SMARTS
  */
 public class HydrogenAtom extends SMARTSAtom {
-	/**
-	 * Local copy of IAtomContainer. 
-	 */
-	private IAtomContainer atomContainer;
+    /** Local copy of IAtomContainer. */
+    private IAtomContainer atomContainer;
 
-	/**
-	 * Creates a new instance.
-	 *
-	 */
-	public HydrogenAtom(IChemObjectBuilder builder) {
-		super(builder);
-	}
+    /** Creates a new instance. */
+    public HydrogenAtom(IChemObjectBuilder builder) {
+        super(builder);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		if (!atom.getSymbol().equals("H")) {
-			return false;
-		}
-		
-		if (atom.getFormalCharge() == 1) { // proton matches
-			return true;
-		}
-		
-		// hydrogens connected to other hydrogens, e.g., molecular hydrogen
-		List<IAtom> list = atomContainer.getConnectedAtomsList(atom);
-		for (IAtom connAtom: list) {
-			if (connAtom.getSymbol().equals("H")) {
-				return true;
-			}
-		}
-		
-		// hydrogens connected to other than one other atom, e.g., bridging hydrogens
-		if (invariants(atom).degree() > 1) {
-			return true;
-		}
-		
-		//isotopic hydrogen specifications, e.g. deuterium [2H] or tritium etc
+    /* (non-Javadoc)
+     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
+        if (!atom.getSymbol().equals("H")) {
+            return false;
+        }
+
+        if (atom.getFormalCharge() == 1) { // proton matches
+            return true;
+        }
+
+        // hydrogens connected to other hydrogens, e.g., molecular hydrogen
+        List<IAtom> list = atomContainer.getConnectedAtomsList(atom);
+        for (IAtom connAtom : list) {
+            if (connAtom.getSymbol().equals("H")) {
+                return true;
+            }
+        }
+
+        // hydrogens connected to other than one other atom, e.g., bridging hydrogens
+        if (invariants(atom).degree() > 1) {
+            return true;
+        }
+
+        //isotopic hydrogen specifications, e.g. deuterium [2H] or tritium etc
         if (atom.getMassNumber() != null) {
-            if (getMassNumber().intValue() == atom.getMassNumber().intValue()) return true;
-        } else {
+            if (getMassNumber().intValue() == atom.getMassNumber().intValue())
+                return true;
+        }
+        else {
             // target atom is [H], so make sure query atom has mass number = 1
             if (getMassNumber() == 1) return true;
         }
-		
-		return false;
-	}
 
-	/**
-	 * Returns local copy of IAtomContainer.
-	 */
-	public IAtomContainer getAtomContainer() {
-		return atomContainer;
-	}
+        return false;
+    }
 
-	/**
-	 * Sets IAtomContainer.
-	 */
-	public void setAtomContainer(IAtomContainer atomContainer) {
-		this.atomContainer = atomContainer;
-	}	
+    /** Returns local copy of IAtomContainer. */
+    public IAtomContainer getAtomContainer() {
+        return atomContainer;
+    }
+
+    /** Sets IAtomContainer. */
+    public void setAtomContainer(IAtomContainer atomContainer) {
+        this.atomContainer = atomContainer;
+    }
 }
