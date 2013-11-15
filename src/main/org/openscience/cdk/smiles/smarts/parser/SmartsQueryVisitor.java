@@ -74,6 +74,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
+import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -98,15 +99,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	// current atoms with a ring identifier 
 	private RingIdentifierAtom[] ringAtoms;
-	// current atoms in recursive smarts with a ring identifier
-	private RingIdentifierAtom[] recursiveRingAtoms;
+	
 	// query 
 	private IQueryAtomContainer query;
-	// Whether is parsing a recursive smarts
-	private boolean isParsingRS;
-	// Recursive smarts query
-	private IQueryAtomContainer rsQuery;
-
+	
     private final IChemObjectBuilder builder;
 
     public SmartsQueryVisitor(IChemObjectBuilder builder){
@@ -136,34 +132,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			// if there is already a RingIdentifierAtom, create a bond between 
 			// them and add the bond to the query
 			int ringId = ringIdentifier.getRingId();
-			if (isParsingRS) {
-				if (recursiveRingAtoms[ringId] == null) {
-					recursiveRingAtoms[ringId] = ringIdAtom;
-				} else {
-					IQueryBond ringBond;
-					// first check if the two bonds ma
-					if (recursiveRingAtoms[ringId].getRingBond() == null) {
-						if (ringIdAtom.getRingBond() == null) {
-							if (atom instanceof AromaticSymbolAtom && 
-									recursiveRingAtoms[ringId].getAtom() instanceof AromaticSymbolAtom) {
-								ringBond = new AromaticQueryBond(builder);
-							} else {
-								ringBond = new RingBond(builder);
-							}
-						} else {
-							ringBond = ringIdAtom.getRingBond();
-						}
-					} else {
-						// Here I assume the bond are always same. This should be checked by the parser already
-						ringBond = recursiveRingAtoms[ringId].getRingBond();
-					}
-					((IBond)ringBond).setAtoms(new IAtom[] { recursiveRingAtoms[ringId].getAtom(), atom });
-					rsQuery.addBond((IBond)ringBond);
-				}
-				
-				// update the recursiveRingAtom reference
-				recursiveRingAtoms[ringId] = ringIdAtom;				
-			} else {
+			
 				if (ringAtoms[ringId] == null) {
 					ringAtoms[ringId] = ringIdAtom;
 				} else {
@@ -190,7 +159,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 				
 				// update the ringAtom reference
 				ringAtoms[ringId] = ringIdAtom;
-			}
+			
 		}
 		return atom;
 	}
@@ -240,12 +209,10 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			} else {
 				bond.setAtoms(new IAtom[] {(SMARTSAtom)((Object[])data)[0], atom});
 			}
-			if (isParsingRS) rsQuery.addBond(bond);
-			else query.addBond(bond);
+			query.addBond(bond);
 			bond = null;
 		}
-		if (isParsingRS) rsQuery.addAtom(atom);
-		else query.addAtom(atom);
+		query.addAtom(atom);
 		
 		for (int i = 1; i < node.jjtGetNumChildren(); i++) {
 			Node child = node.jjtGetChild(i);
@@ -257,13 +224,8 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                     bond = new AromaticOrSingleQueryBond(builder);
 				}
 				bond.setAtoms(new IAtom[] {atom, newAtom});
-				if (isParsingRS) {
-					rsQuery.addBond(bond);
-					rsQuery.addAtom(newAtom);
-				} else {
-					query.addBond(bond);
-					query.addAtom(newAtom);
-				}
+				query.addBond(bond);
+				query.addAtom(newAtom);
 				
 				atom = newAtom;
 				bond = null;
@@ -273,7 +235,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			}
 		}
 
-		return isParsingRS ? rsQuery: query;
+		return query;
 	}
 
 	public Object visit(ASTNotBond node, Object data) {
@@ -409,13 +371,11 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 	}
 
 	public Object visit(ASTRecursiveSmartsExpression node, Object data) {
-		rsQuery = new QueryAtomContainer(builder);
-		recursiveRingAtoms = new RingIdentifierAtom[10];
-		isParsingRS = true;
-		node.jjtGetChild(0).jjtAccept(this, null);
-		isParsingRS = false;
-
-        return new RecursiveSmartsAtom(rsQuery);
+        SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
+        recursiveVisitor.query = new QueryAtomContainer(builder);
+        recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
+        node.jjtGetChild(0).jjtAccept(recursiveVisitor, null);
+        return new RecursiveSmartsAtom(recursiveVisitor.query);
 	}
 
 	public ASTStart getRoot(Node node) {

@@ -112,7 +112,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         }
     }
 
-    private int[] match(String smarts, String smiles) throws Exception {
+    static int[] match(String smarts, String smiles) throws Exception {
         return match(smarts(smarts), smiles(smiles));
     }
 

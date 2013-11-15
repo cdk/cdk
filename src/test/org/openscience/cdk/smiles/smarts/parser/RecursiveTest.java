@@ -43,6 +43,8 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smarts;
 import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
 
@@ -358,6 +360,13 @@ public class RecursiveTest extends CDKTestCase {
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
+    }
+    
+    @Test public void nestedRecursion() throws Exception {
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"),
+                   is(new int[]{2, 2}));
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCN"),
+                   is(new int[]{1, 1}));
     }
 
     @Test public void testRecursive29_cdkAromaticModel() throws Exception {
