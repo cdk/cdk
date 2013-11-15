@@ -34,9 +34,7 @@ import java.util.List;
  * @cdk.keyword SMARTS
  */
 public class HydrogenAtom extends SMARTSAtom {
-    /** Local copy of IAtomContainer. */
-    private IAtomContainer atomContainer;
-
+    
     /** Creates a new instance. */
     public HydrogenAtom(IChemObjectBuilder builder) {
         super(builder);
@@ -55,7 +53,7 @@ public class HydrogenAtom extends SMARTSAtom {
         }
 
         // hydrogens connected to other hydrogens, e.g., molecular hydrogen
-        List<IAtom> list = atomContainer.getConnectedAtomsList(atom);
+        List<IAtom> list = invariants(atom).target().getConnectedAtomsList(atom);
         for (IAtom connAtom : list) {
             if (connAtom.getSymbol().equals("H")) {
                 return true;
@@ -78,15 +76,5 @@ public class HydrogenAtom extends SMARTSAtom {
         }
 
         return false;
-    }
-
-    /** Returns local copy of IAtomContainer. */
-    public IAtomContainer getAtomContainer() {
-        return atomContainer;
-    }
-
-    /** Sets IAtomContainer. */
-    public void setAtomContainer(IAtomContainer atomContainer) {
-        this.atomContainer = atomContainer;
     }
 }

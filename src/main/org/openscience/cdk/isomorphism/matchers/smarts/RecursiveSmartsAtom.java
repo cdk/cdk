@@ -49,15 +49,9 @@ import java.util.List;
 public final class RecursiveSmartsAtom extends SMARTSAtom {
     
     private final static ILoggingTool   logger           =        LoggingToolFactory.createLoggingTool(RecursiveSmartsAtom.class);
-    
-    /**
-     * AtomContainer of the target molecule to which this recursive smarts query
-     * trying to match
-     */
-    private              IAtomContainer atomContainer    = null;
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */
-    private IQueryAtomContainer recursiveQuery = null;
+    private final IQueryAtomContainer recursiveQuery;
 
     /**
      * BitSet that records which atom in the target molecule matches the recursive
@@ -82,9 +76,11 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
         if (recursiveQuery.getAtomCount() == 1) { // only one atom. Then just match that atom
             return ((IQueryAtom) recursiveQuery.getAtom(0)).matches(atom);
         }
+        
+        IAtomContainer target = invariants(atom).target();
 
         // Check wither atomContainer has been set
-        if (atomContainer == null) {
+        if (target == null) {
             logger.error("In RecursiveSmartsAtom, atomContainer can't be null! You must set it before matching");
             return false;
         }
@@ -92,13 +88,13 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
         // initialize bitsets
         if (bitSet == null) {
             try {
-                initilizeBitSets();
+                initilizeBitSets(target);
             } catch (CDKException cex) {
                 logger.error("Error found when matching recursive smarts: " + cex.getMessage());
                 return false;
             }
         }
-        int atomNumber = atomContainer.getAtomNumber(atom);
+        int atomNumber = target.getAtomNumber(atom);
         return bitSet.get(atomNumber);
     }
 
@@ -109,7 +105,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
      *
      * @throws CDKException
      */
-    private void initilizeBitSets() throws CDKException {
+    private void initilizeBitSets(IAtomContainer atomContainer) throws CDKException {
         List<List<RMap>> bondMappings = null;
         bondMappings = new UniversalIsomorphismTester().getSubgraphMaps(atomContainer, recursiveQuery);
 
@@ -190,22 +186,5 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
                 }
             }
         }
-    }
-
-    public IQueryAtomContainer getRecursiveQuery() {
-        return recursiveQuery;
-    }
-
-    public void setRecursiveQuery(IQueryAtomContainer query) {
-        this.recursiveQuery = query;
-    }
-
-    public IAtomContainer getAtomContainer() {
-        return atomContainer;
-    }
-
-    public void setAtomContainer(IAtomContainer atomContainer) {
-        this.atomContainer = atomContainer;
-        this.bitSet = null; // new atom container, reset matching bitset.
     }
 }

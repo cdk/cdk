@@ -364,9 +364,6 @@ public class SMARTSQueryTool {
             initializeMolecule();
         }
 
-        // First calculate the recursive smarts
-        initializeRecursiveSmarts(this.atomContainer);
-
         // lets see if we have a single atom query
         if (query.getAtomCount() == 1) {
             // lets get the query atom
@@ -466,41 +463,6 @@ public class SMARTSQueryTool {
         }
     }
 
-    /**
-     * Initializes recursive smarts atoms in the query.
-     * <p/>
-     * We loop over the SMARTS atoms in the query and associate the target molecule with each of the SMARTS atoms that
-     * need it
-     *
-     * @param atomContainer molecule to initialise
-     * @throws CDKException
-     */
-    private void initializeRecursiveSmarts(IAtomContainer atomContainer) throws CDKException {
-        for (IAtom atom : query.atoms()) {
-            initializeRecursiveSmartsAtom(atom, atomContainer);
-        }
-    }
-
-    /**
-     * Recursively initializes recursive smarts atoms
-     *
-     * @param atom the atom to initialise
-     * @param atomContainer the container of the atom to initialise
-     * @throws CDKException
-     */
-    private void initializeRecursiveSmartsAtom(IAtom atom, IAtomContainer atomContainer) throws CDKException {
-        if (atom instanceof LogicalOperatorAtom) {
-            initializeRecursiveSmartsAtom(((LogicalOperatorAtom) atom).getLeft(), atomContainer);
-            if (((LogicalOperatorAtom) atom).getRight() != null) {
-                initializeRecursiveSmartsAtom(((LogicalOperatorAtom) atom).getRight(), atomContainer);
-            }
-        } else if (atom instanceof RecursiveSmartsAtom) {
-            ((RecursiveSmartsAtom) atom).setAtomContainer(atomContainer);
-        } else if (atom instanceof HydrogenAtom) {
-            ((HydrogenAtom) atom).setAtomContainer(atomContainer);
-        }
-    }
-
     private void initializeQuery() throws CDKException {
         matchingAtoms = null;
         query = cache.get(smarts);
@@ -509,7 +471,6 @@ public class SMARTSQueryTool {
             cache.put(smarts, query);
         }
     }
-
 
     private List<Set<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
         
