@@ -47,10 +47,8 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     IsomorphismCoverageTest.class,
     RGroupListTest.class,
     SymbolSetQueryAtomTest.class,
-    QueryAtomContainerCreatorTest.class
     QueryAtomContainerCreatorTest.class,
-    AnyOrderQueryBondTest.class,
-
+    
     AtomMatcherTest.class,
     BondMatcherTest.class,
     AbstractVFStateTest.class,

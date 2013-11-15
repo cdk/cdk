@@ -66,7 +66,7 @@ import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitorTest;
     TotalRingConnectionAtomTest.class,
     TotalHCountAtomTest.class,
     ExplicitConnectionAtomTest.class,
-    TotalValencyAtomTest.class
+    TotalValencyAtomTest.class,
 
     // need these here to avoid circular dependencies
     VFSubstructureTest.class,
