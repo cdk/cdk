@@ -20,7 +20,9 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents a sub structure expression in smarts
+ * An AST node. It represents a sub structure expression in smarts. The 
+ * 'componentId' indicates whether the component level grouping should be
+ * applied and which component this expression belongs.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
@@ -30,6 +32,9 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 class ASTSmarts extends SimpleNode {
 
+    /** Component level grouping. */
+    private int componentId;
+    
     /**
      * Creates a new instance.
      */
@@ -42,6 +47,26 @@ class ASTSmarts extends SimpleNode {
      */
     public ASTSmarts(SMARTSParser p, int id) {
         super(p, id);
+    }
+
+    /**
+     * Get the component id of this SMARTS expression. The default component is
+     * '0' which means 'ungrouped'.
+     * 
+     * @return the component id
+     */
+    public int componentId() {
+        return componentId;
+    }
+    
+    /**
+     * Indicate that component-level grouping should applied and this expression
+     * belongs to the specified component.
+     * 
+     * @param id the component id
+     */
+    public void setComponentId(int id) {
+        componentId = id;
     }
 
     /* (non-Javadoc)

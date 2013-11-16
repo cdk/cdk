@@ -78,6 +78,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword substructure search
  */
 public class SMARTSParser {
+
+    private int componentId = 0;
+
 	/**
 	 * This method parses a Smarts String and returns an instance of 
 	 * <code>QueryAtomContainer</code>
@@ -353,11 +356,43 @@ void ReactionExpression() #Reaction : {}
     ">>" GroupExpression()
 }
 
-void GroupExpression() #Group : { ASTSmarts smarts; }
+void GroupExpression() #Group : {}
 {
-    [<L_PAREN>] SmartsExpression() [<R_PAREN>] 
+    (
+        <L_PAREN> 
+        SmartsExpression()
+        {
+            ((ASTSmarts) jjtree.peekNode()).setComponentId(++componentId);
+        }
+        ( "." 
+          SmartsExpression()
+          {
+              // same component grouping
+              ((ASTSmarts) jjtree.peekNode()).setComponentId(componentId);
+          }
+          )* 
+        <R_PAREN>
+        |
+        SmartsExpression()
+    )
     ( "." 
-    	[<L_PAREN>] SmartsExpression() [<R_PAREN>] 
+    	(
+    	    <L_PAREN> 
+                    SmartsExpression()
+                    {
+                        ((ASTSmarts) jjtree.peekNode()).setComponentId(++componentId);
+                    }
+                    ( "." 
+                      SmartsExpression()
+                      {
+                          // same component grouping
+                          ((ASTSmarts) jjtree.peekNode()).setComponentId(componentId);
+                      }
+                      )* 
+            <R_PAREN>
+            |
+            SmartsExpression()
+        )
     )*
 }    
 
