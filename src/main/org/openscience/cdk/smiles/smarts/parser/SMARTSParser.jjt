@@ -110,7 +110,7 @@ TOKEN_MGR_DECLS : {
     // Required by SetState
     void backup(int n) { input_stream.backup(n); } 
 
-} 
+}
 
 <*> TOKEN:
 {
@@ -398,7 +398,8 @@ void GroupExpression() #Group : {}
 
 void SmartsExpression() #Smarts : 
 {
-	ASTAtom atom; 
+	ASTAtom atom;
+	int ringIdToken;
 }
 {
 	atom = AtomExpression() 
@@ -406,7 +407,12 @@ void SmartsExpression() #Smarts :
 	  (
 	  	( LowAndBond() )? 
 	  	( 
-	  		<DIGIT>
+	  		(<DIGIT> 
+	  		{ ringIdToken = token.image.charAt(0) - '0'; } 
+	  		| ("%" <DIGIT> 
+	  		{ ringIdToken = 10 * (token.image.charAt(0) - '0'); }
+	  		       <DIGIT> 
+	  		{ ringIdToken += token.image.charAt(0) - '0'; })) 
 	  		{
 	  			ASTLowAndBond bond = null;
 				ASTRingIdentifier ringId = new ASTRingIdentifier(JJTRINGIDENTIFIER);
@@ -414,10 +420,10 @@ void SmartsExpression() #Smarts :
 					bond = (ASTLowAndBond)jjtree.popNode(); // pop the bond
 					ringId.jjtAddChild(bond, 0);
 				}
-				ringId.setRingId(Integer.parseInt(token.image));
+				ringId.setRingId(ringIdToken);
 				atom.jjtAddChild(ringId, atom.jjtGetNumChildren());
-	  		} 
-	  		| 
+	  		}	
+	  		|
 	  		atom = AtomExpression()
 	  	)
 	  ) 

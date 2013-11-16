@@ -30,6 +30,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 */
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openscience.cdk.CDKConstants;
@@ -37,6 +38,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
@@ -133,6 +135,10 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 			// them and add the bond to the query
 			int ringId = ringIdentifier.getRingId();
 			
+            // ring digit > 9 - expand capacity
+            if (ringId >= ringAtoms.length)
+                ringAtoms = Arrays.copyOf(ringAtoms, 100);    
+                
 				if (ringAtoms[ringId] == null) {
 					ringAtoms[ringId] = ringIdAtom;
 				} else {
@@ -182,17 +188,43 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 		return node.jjtGetChild(0).jjtAccept(this, data);
 	}
 
-	// TODO: No SmartsGroup API
 	public Object visit(ASTGroup node, Object data) {
-		List<IAtomContainer> atomContainers = new ArrayList<IAtomContainer>();
+		IAtomContainer fullQuery = new QueryAtomContainer(builder);
+        
+        // keeps track of component grouping
+        int[] components = new int[0];
+        int   maxId      = 0;
+        
 		for (int i = 0; i < node.jjtGetNumChildren(); i++) {
+            ASTSmarts smarts = (ASTSmarts) node.jjtGetChild(i);
 			ringAtoms = new RingIdentifierAtom[10];
-			query = new QueryAtomContainer(builder);
-			node.jjtGetChild(i).jjtAccept(this, null);
-			atomContainers.add(query);
+            query     = new QueryAtomContainer(builder);
+            
+            smarts.jjtAccept(this, null);
+            
+            // update component info
+            if (smarts.componentId() > 0) {
+                components = Arrays.copyOf(components,
+                                           1 + fullQuery.getAtomCount() + query.getAtomCount());
+                int id = smarts.componentId();
+                Arrays.fill(components,
+                            fullQuery.getAtomCount(),
+                            components.length,
+                            id);
+                if (id > maxId)
+                    maxId = id;
+            }
+            
+            fullQuery.add(query);
 		}
-		logger.info("Only return the first smarts. Group not supported.");
-		return atomContainers.get(0); 
+        
+        // only store if there was a component grouping
+        if (maxId > 0) {
+            components[components.length - 1] = maxId; // we left space to store how many groups there were
+            fullQuery.setProperty(ComponentGrouping.KEY, components);
+        }
+            
+        return fullQuery; 
 	}
 	
 	public Object visit(ASTSmarts node, Object data) {

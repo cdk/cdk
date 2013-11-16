@@ -1277,6 +1277,24 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(0, results[1]);
     }
 
+    @Test public void testRing_large() throws Exception {
+        int[] results = match("C%10CCCCC%10", "C1CCCCC1O");
+        Assert.assertEquals(12, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    @Test public void testRing_large2() throws Exception {
+        int[] results = match("C%99CCCCC%99", "C1CCCCC1O");
+        Assert.assertEquals(12, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
+    @Test public void testRing_large3() throws Exception {
+        int[] results = match("C%991CCCCC%99CCCC1", "C12CCCCC2CCCC1");
+        Assert.assertEquals(4, results[0]);
+        Assert.assertEquals(1, results[1]);
+    }
+
     @Test public void testRing6() throws Exception {
         int[] results = match("C1CCCCC1", "CCCCCC");
         Assert.assertEquals(0, results[0]);
@@ -1775,7 +1793,28 @@ public class SMARTSSearchTest extends CDKTestCase {
         
     @Test public void cyclopropane() throws Exception {
         assertThat(match("**(*)*", "C1CC1"),
-                   is(new int[]{0, 0}));        
+                   is(new int[]{0, 0}));
+    }
+    
+    @Test public void componentGrouping1() throws Exception {
+        assertThat(match("[#8].[#8]", "O"),     is(new int[]{0, 0}));
+        assertThat(match("[#8].[#8]", "O=O"),   is(new int[]{2, 1}));
+        assertThat(match("[#8].[#8]", "OCCO"),  is(new int[]{2, 1}));
+        assertThat(match("[#8].[#8]", "O.CCO"), is(new int[]{2, 1}));
+    }
+
+    @Test public void componentGrouping2() throws Exception {
+        assertThat(match("([#8].[#8])", "O"),     is(new int[]{0, 0}));
+        assertThat(match("([#8].[#8])", "O=O"),   is(new int[]{2, 1}));
+        assertThat(match("([#8].[#8])", "OCCO"),  is(new int[]{2, 1}));
+        assertThat(match("([#8].[#8])", "O.CCO"), is(new int[]{0, 0}));
+    }
+
+    @Test public void componentGrouping3() throws Exception {
+        assertThat(match("([#8]).([#8])", "O"),     is(new int[]{0, 0}));
+        assertThat(match("([#8]).([#8])", "O=O"),   is(new int[]{0, 0}));
+        assertThat(match("([#8]).([#8])", "OCCO"),  is(new int[]{0, 0}));
+        assertThat(match("([#8]).([#8])", "O.CCO"), is(new int[]{2, 1}));
     }
 }
 
