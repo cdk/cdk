@@ -20,22 +20,13 @@
  */
 package org.openscience.cdk.smiles.smarts;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.google.common.base.Preconditions;
-import org.openscience.cdk.CDKConstants;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Sets;
+import com.google.common.primitives.Ints;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
@@ -44,12 +35,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.ComponentGrouping;
+import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
-import org.openscience.cdk.isomorphism.matchers.smarts.HydrogenAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.LogicalOperatorAtom;
-import org.openscience.cdk.isomorphism.matchers.smarts.RecursiveSmartsAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.isomorphism.mcss.RMap;
 import org.openscience.cdk.ringsearch.SSSRFinder;
@@ -57,7 +46,17 @@ import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -124,8 +123,9 @@ public class SMARTSQueryTool {
     private static ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
     private String smarts;
-    private IAtomContainer atomContainer = null;
-    private QueryAtomContainer query = null;
+    private IAtomContainer     atomContainer = null;
+    private QueryAtomContainer query         = null;
+    private List<int[]> mappings;
 
     /**
      * Defines which set of rings to define rings in the target.
@@ -176,8 +176,6 @@ public class SMARTSQueryTool {
     private RingSet ringSet = RingSet.EssentialRings;
 
     private final IChemObjectBuilder builder;
-
-    private List<Set<Integer>> matchingAtoms = null;
 
     /**
      * Aromaticity perception - dealing with SMARTS we should use the Daylight
@@ -369,21 +367,21 @@ public class SMARTSQueryTool {
             // lets get the query atom
             IQueryAtom queryAtom = (IQueryAtom) query.getAtom(0);
 
-            matchingAtoms = new ArrayList<Set<Integer>>();
-            for (IAtom atom : this.atomContainer.atoms()) {
-                if (queryAtom.matches(atom)) {
-                    Set<Integer> tmp = new HashSet<Integer>();
-                    tmp.add(this.atomContainer.getAtomNumber(atom));
-                    matchingAtoms.add(tmp);
+            mappings = new ArrayList<int[]>();
+            for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+                if (queryAtom.matches(atomContainer.getAtom(i))) {
+                    mappings.add(new int[]{i});
                 }
             }
         }
         else {
-            List<List<RMap>> bondMapping = new UniversalIsomorphismTester().getSubgraphMaps(this.atomContainer, query);
-            matchingAtoms = matchedAtoms(bondMapping, this.atomContainer);
+            mappings = FluentIterable.from(VentoFoggia.findSubstructure(query)
+                                                      .matchAll(atomContainer))
+                                     .filter(new ComponentGrouping(query, atomContainer))
+                                     .toList();
         }
 
-        return matchingAtoms.size() != 0;
+        return !mappings.isEmpty();
     }
 
     /**
@@ -394,7 +392,7 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testQueryTool")
     public int countMatches() {
-        return matchingAtoms.size();
+        return mappings.size();
     }
 
     /**
@@ -406,7 +404,10 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testQueryTool")
     public List<List<Integer>> getMatchingAtoms() {
-        return copyOf(matchingAtoms);
+        List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
+        for (int[] mapping : mappings)
+            matched.add(Ints.asList(mapping));
+         return matched;
     }
 
     /**
@@ -418,22 +419,16 @@ public class SMARTSQueryTool {
      */
     @TestMethod("testUniqueQueries")
     public List<List<Integer>> getUniqueMatchingAtoms() {
-        return copyOf(new HashSet<Collection<Integer>>(matchingAtoms));
-    }
-
-    /**
-     * Copy the matched atoms to a List or Lists. Allows us to keep our matching
-     * without others changing it.
-     *
-     * @param org original matching
-     * @return matching which is the list or lists
-     */
-    private List<List<Integer>> copyOf(Collection<? extends Collection<Integer>> org) {
-        List<List<Integer>> cpy = new ArrayList<List<Integer>>();
-        for (Collection<Integer> matched : org) {
-            cpy.add(new ArrayList<Integer>(matched));
+        List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
+        Set<BitSet> atomSets = Sets.newHashSetWithExpectedSize(mappings.size());
+        for (int[] mapping : mappings) {
+            BitSet atomSet = new BitSet();
+            for (int x : mapping)
+                atomSet.set(x);
+            if (atomSets.add(atomSet))
+                matched.add(Ints.asList(mapping));
         }
-        return cpy;
+        return matched;
     }
 
     /**
@@ -464,7 +459,7 @@ public class SMARTSQueryTool {
     }
 
     private void initializeQuery() throws CDKException {
-        matchingAtoms = null;
+        mappings = null;
         query = cache.get(smarts);
         if (query == null) {
             query = SMARTSParser.parse(smarts, builder);

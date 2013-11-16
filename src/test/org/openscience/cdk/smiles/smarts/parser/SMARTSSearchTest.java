@@ -1674,7 +1674,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(0, results[1]);
 
         results = match("c-C", "CCc1ccccc1");
-        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(1, results[0]);
         Assert.assertEquals(1, results[1]);
     }
 
