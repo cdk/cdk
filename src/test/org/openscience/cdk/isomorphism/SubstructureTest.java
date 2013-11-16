@@ -79,6 +79,14 @@ public abstract class SubstructureTest {
     @Test public void disconnected() throws Exception {
         assertMatch(smi("C1CC1.C1CC1"), smi("C1CC1.C1CC1"), 72);
     }
+                                                      
+    // original VF algorithm can't find both of these
+    @Test public void disconnected2() throws Exception {
+        assertMatch(smi("O.O"), smi("OO"), 2);
+        assertMatch(smi("O.O"), smi("OCO"), 2);
+        assertMatch(smi("O.O"), smi("OCCO"), 2);
+        assertMatch(smi("O.O"), smi("OCCCO"), 2);
+    }
 
     @Test public void tetrahedral_match() throws Exception {
         assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(N)(O)CC"));

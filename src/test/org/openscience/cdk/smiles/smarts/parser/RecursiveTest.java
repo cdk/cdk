@@ -429,4 +429,13 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(0, nmatch);
     }
 
+    /**
+     * @cdk.bug 1312
+     */
+    @Test public void recursiveComponentGrouping() throws Exception {
+        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"),
+                   is(new int[]{1, 1}));
+        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"),
+                   is(new int[]{0, 0}));
+    }
 }

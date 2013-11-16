@@ -112,9 +112,8 @@ abstract class AbstractVFState extends State {
     @Override final int nextM(int m) {
         if (size == 0)
             return m + 1;
-        for (int i = m + 1; i < g2.length; i++)
-            if (m2[i] == UNMAPPED && t2[i] > 0)
-                return i;
+        // FIXME: explore all t2[m..mMax] first and then explore unmapped 
+        //        without restarting. 
         for (int i = m + 1; i < g2.length; i++)
             if (m2[i] == UNMAPPED)
                 return i;

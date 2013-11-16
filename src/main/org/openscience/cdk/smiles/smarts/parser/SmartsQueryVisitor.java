@@ -406,9 +406,9 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
         SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
         recursiveVisitor.query = new QueryAtomContainer(builder);
         recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
-        node.jjtGetChild(0).jjtAccept(recursiveVisitor, null);
-        return new RecursiveSmartsAtom(recursiveVisitor.query);
-	}
+        return new RecursiveSmartsAtom((IQueryAtomContainer) node.jjtGetChild(0).jjtAccept(recursiveVisitor,
+                                                                                           null));
+    }
 
 	public ASTStart getRoot(Node node) {
 		if (node instanceof ASTStart) {

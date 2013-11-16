@@ -581,7 +581,7 @@ void NotExpression() #NotExpression :
 void RecursiveSmartsExpression() #RecursiveSmartsExpression : {}
 {
     <DOLLAR> <L_PAREN> {token_source.SwitchTo(SMARTSParserConstants.DEFAULT); }
-    SmartsExpression() <R_PAREN> {token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION); }
+    GroupExpression() <R_PAREN> {token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION); }
 }
 
 void PrimitiveAtomExpression() : {}
