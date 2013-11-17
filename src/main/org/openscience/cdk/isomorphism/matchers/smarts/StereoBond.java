@@ -19,12 +19,12 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This query bond matches bonds with specific stereo type. It is not 
- * implemented.
+ * This query bond indicates a particular geometric stereo configuration.
  *
  * @cdk.module  smarts
  * @cdk.githash
@@ -32,21 +32,36 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class StereoBond extends SMARTSBond {
 
-	private static final long serialVersionUID = 3529688197057645996L;
-
-    public StereoBond(IChemObjectBuilder builder){
+    private final boolean unspecified;
+    private final Direction direction;
+    
+    public enum Direction {UP, DOWN}
+    
+    public StereoBond(IChemObjectBuilder builder,
+                      Direction          direction,
+                      boolean            unspecified){
         super(builder);
+        this.unspecified = unspecified;
+        this.direction  = direction;
     }
 
 	public boolean matches(IBond bond) {
-        if (this.getOrder() != bond.getOrder()) {
-            // bond orders not match
-            return false;
-        } 
-        if (this.getStereo() != bond.getStereo()) {
-        	// bond stereo not match
-        	return false;
-        }
-        return true;
+        return Order.SINGLE.equals(bond.getOrder());
+    }
+    
+    public boolean unspecified() {
+        return unspecified;
+    }
+    
+    public Direction direction(IAtom atom) {
+        if (atom == getAtom(0))
+            return direction;
+        else if (atom == getAtom(1))
+            return inv(direction);
+        throw new IllegalArgumentException("atom is not a memeber of this bond");
+    }
+    
+    private Direction inv(Direction direction) {
+        return direction == Direction.UP ? Direction.DOWN : Direction.UP;
     }
 }

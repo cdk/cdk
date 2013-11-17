@@ -430,40 +430,16 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 bond = new RingBond(builder);
                 break;
             case SMARTSParserConstants.UP_S_BOND:
-                bond = new StereoBond(builder);
-                bond.setOrder(IBond.Order.SINGLE);
-                bond.setStereo(IBond.Stereo.UP);
+                bond = new StereoBond(builder, StereoBond.Direction.UP, false);
                 break;
             case SMARTSParserConstants.DN_S_BOND:
-                bond = new StereoBond(builder);
-                bond.setOrder(IBond.Order.SINGLE);
-                bond.setStereo(IBond.Stereo.DOWN);
+                bond = new StereoBond(builder, StereoBond.Direction.DOWN, false);
                 break;
             case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-                LogicalOperatorBond logical = new LogicalOperatorBond(builder);
-                logical.setOperator("or");
-                StereoBond bond1 = new StereoBond(builder);
-                bond1.setOrder(IBond.Order.SINGLE);
-                bond1.setStereo(IBond.Stereo.UP);
-                logical.setLeft(bond1);
-                StereoBond bond2 = new StereoBond(builder);
-                bond2.setOrder(IBond.Order.SINGLE);
-                bond2.setStereo((IBond.Stereo) CDKConstants.UNSET);
-                logical.setRight(bond2);
-                bond = logical;
+                bond = new StereoBond(builder, StereoBond.Direction.UP, true);
                 break;
             case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-                logical = new LogicalOperatorBond(builder);
-                logical.setOperator("or");
-                bond1 = new StereoBond(builder);
-                bond1.setOrder(IBond.Order.SINGLE);
-                bond1.setStereo(IBond.Stereo.DOWN);
-                logical.setLeft(bond1);
-                bond2 = new StereoBond(builder);
-                bond2.setOrder(IBond.Order.SINGLE);
-                bond2.setStereo((IBond.Stereo) CDKConstants.UNSET);
-                logical.setRight(bond2);
-                bond = logical;
+                bond = new StereoBond(builder, StereoBond.Direction.DOWN, true);
                 break;
             default:
                 logger.error("Un parsed bond: " + node.toString());
