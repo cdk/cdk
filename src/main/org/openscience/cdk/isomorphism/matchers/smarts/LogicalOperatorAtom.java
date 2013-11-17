@@ -24,6 +24,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 /**
  * This class matches a logical operator that connects two query atoms
  *
@@ -187,6 +190,33 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
         @Override public boolean matches(IAtom atom) {
             return left.matches(atom) && right.matches(atom);
         }
+
+        /**
+         * @inheritDoc
+         */
+        @Override public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
+            
+            // determine the causalities of either side and then work out if it
+            // was a contradiction or if the match was valid
+            EnumSet<Chirality> leftChiralities  = EnumSet.noneOf(Chirality.class);
+            EnumSet<Chirality> rightChiralities = EnumSet.noneOf(Chirality.class);
+            
+            ((SMARTSAtom) left).chirality(target, leftChiralities);
+            ((SMARTSAtom) right).chirality(target, rightChiralities);
+            
+            // contradictions => None
+            if (leftChiralities.contains(Chirality.Clockwise) && rightChiralities.contains(Chirality.Anticlockwise))
+                chiralities.add(Chirality.None);
+            if (leftChiralities.contains(Chirality.Anticlockwise) && rightChiralities.contains(Chirality.Clockwise))
+                chiralities.add(Chirality.None);
+            
+            chiralities.addAll(leftChiralities);
+            chiralities.addAll(rightChiralities);
+
+            if (leftChiralities.contains(Chirality.Clockwise) || leftChiralities.contains(Chirality.Anticlockwise)
+                    || rightChiralities.contains(Chirality.Clockwise) || rightChiralities.contains(Chirality.Anticlockwise))
+                chiralities.remove(Chirality.Any);
+        }
     }
 
     /** Defines a disjunction (or) between two query atoms. */
@@ -212,6 +242,17 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
         @Override public boolean matches(IAtom atom) {
             return left.matches(atom) || right.matches(atom);
         }
+
+        /**
+         * @inheritDoc
+         */
+        @Override public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
+            // 'or' the sides of what matched
+            if (left.matches(target))
+                ((SMARTSAtom) left).chirality(target, chiralities);
+            if (right.matches(target))
+                ((SMARTSAtom) right).chirality(target, chiralities);
+        }
     }
 
     /** Defines a negation (not) of a query atom. */
@@ -234,6 +275,10 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
         /** @inheritDoc */
         @Override public boolean matches(IAtom atom) {
             return !expression.matches(atom);
+        }
+
+        @Override public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
+            chiralities.clear(); // not sure what logic to apply here?
         }
     }
 }

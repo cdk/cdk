@@ -23,6 +23,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
+import java.util.EnumSet;
+
 /**
  * Abstract smarts atom.
  * 
@@ -54,5 +56,33 @@ public abstract class SMARTSAtom extends QueryAtom implements
 
     public boolean matches(IAtom atom) {
         return false;
+    }
+
+    /**
+     * Determine the chirality required by this query atom. The chirality
+     * specification depends on what atoms matched and as such must be
+     * done after the matching is complete and the mapped atom (target) is known.
+     * 
+     * @param target      the atom which was matched
+     * @param chiralities the chiralites to test
+     */
+    public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
+        chiralities.add(Chirality.Any);     
+    }
+
+    /**
+     * The type of chirality to match.
+     */
+    public enum Chirality {
+        /** match clockwise winding. */
+        Clockwise,
+        /** match anticlockwise winding. */
+        Anticlockwise,
+        /** match unspecified winding. */
+        Unspecified,
+        /** match anything. */
+        Any,
+        /** match nothing - indicates a contradiction. */
+        None
     }
 }

@@ -26,6 +26,8 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
+import java.util.EnumSet;
+
 /**
  * This matches an atom with chirality property. It is not implemented yet. 
  * It'll match any atom right now.  
@@ -83,7 +85,19 @@ public class ChiralityAtom extends SMARTSAtom {
     }
 
     public boolean matches(IAtom atom) {
-    	// TODO: Chirality matching logic
+    	// match testing is done after the match is complete
         return true;
+    }
+
+    /**
+     * Sets the chirality required by this query atom. 
+     * 
+     * @param target      the atom which was matched
+     * @param chiralities the chiralites to test
+     */
+    @Override public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
+        if (unspecified)
+            chiralities.add(Chirality.Unspecified);
+        chiralities.add(clockwise ? Chirality.Clockwise : Chirality.Anticlockwise);
     }
 }
