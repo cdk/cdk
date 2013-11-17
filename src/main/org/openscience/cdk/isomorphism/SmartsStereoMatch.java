@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
+import org.openscience.cdk.isomorphism.matchers.smarts.StereoBond;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -116,7 +117,8 @@ final class SmartsStereoMatch implements Predicate<int[]> {
                         return false;
                     break;
                 case Geometric:
-                    // not yet supported
+                    if (!checkGeometric(u, otherIndex(u), mapping))
+                        return false;
                     break;
             }
         }
@@ -186,6 +188,72 @@ final class SmartsStereoMatch implements Predicate<int[]> {
         for (int i = 0; i < us.length; i++)
             us[i] = mapping[us[i]];
         return us;
+    }
+
+    /**
+     * Verify the geometric stereochemistry (cis/trans) of the double bond
+     * {@code u1=u2} is preserved in the target when the {@code mapping} is
+     * used.
+     *
+     * @param u1      one index of the double bond
+     * @param u2      other index of the double bond
+     * @param mapping mapping of vertices
+     * @return the geometric configuration is preserved
+     */
+    private boolean checkGeometric(int u1, int u2, int[] mapping) {
+
+        int v1 = mapping[u1];
+        int v2 = mapping[u2];
+
+        IDoubleBondStereochemistry queryElement = (IDoubleBondStereochemistry) queryElements[u1];
+        IBond[] queryBonds = queryElement.getBonds();
+        
+        boolean unspecified = ((StereoBond)queryBonds[0]).unspecified() 
+                              || ((StereoBond)queryBonds[1]).unspecified();
+
+        if (unspecified && (targetTypes[v1] == null || targetTypes[v2] == null))
+            return true;
+        
+        // no configuration in target
+        if (targetTypes[v1] != Type.Geometric || targetTypes[v2] != Type.Geometric)
+            return false;
+        
+
+        IDoubleBondStereochemistry targetElement = (IDoubleBondStereochemistry) targetElements[v1];
+
+        // bond is undirected so we need to ensure v1 is the first atom in the bond
+        // we also need to to swap the substituents later
+        boolean swap = false;
+        if (targetElement.getStereoBond().getAtom(0) != target.getAtom(v1)) {
+            int tmp = v1;
+            v1 = v2;
+            v2 = tmp;
+            swap = true;
+        }
+
+        
+        IBond[] targetBonds = targetElement.getBonds();
+
+        int p = parity(queryElement.getStereo());
+        int q = parity(targetElement.getStereo());
+
+        int uLeft = queryMap.get(queryBonds[0].getConnectedAtom(query.getAtom(u1)));
+        int uRight = queryMap.get(queryBonds[1].getConnectedAtom(query.getAtom(u2)));
+
+        int vLeft = targetMap.get(targetBonds[0].getConnectedAtom(target.getAtom(v1)));
+        int vRight = targetMap.get(targetBonds[1].getConnectedAtom(target.getAtom(v2)));
+
+        if (swap) {
+            int tmp = vLeft;
+            vLeft = vRight;
+            vRight = tmp;
+        }
+        if (mapping[uLeft] != vLeft)
+            p *= -1;
+        if (mapping[uRight] != vRight)
+            p *= -1;
+
+        return p == q;
     }
 
     /**
