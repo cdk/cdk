@@ -778,13 +778,9 @@ void RingIdentifier() #RingIdentifier: {}
 void Chirality() #Chirality : 
 { StringBuffer digits = new StringBuffer(); }
 {
-    LOOKAHEAD(2)
-    "@" { jjtThis.setClockwise(true); } | "@@" { jjtThis.setClockwise(false); }
-    ( 
-    	( <DIGIT> { digits.append(token.image); } )+
-    	{
-    		jjtThis.setDegree( Integer.parseInt(digits.toString()) );
-    	}
+    "@" { jjtThis.setClockwise(false); }
+    (
+        "@" { jjtThis.setClockwise(true); }
     )? 
     ( 
     	<Q_MARK> { jjtThis.setUnspecified(true); }

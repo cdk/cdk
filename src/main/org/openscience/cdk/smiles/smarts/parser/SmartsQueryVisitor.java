@@ -577,7 +577,6 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
     public Object visit(ASTChirality node, Object data) {
         ChiralityAtom atom = new ChiralityAtom(builder);
-        atom.setDegree(node.getDegree());
         atom.setClockwise(node.isClockwise());
         atom.setUnspecified(node.isUnspecified());
         tetrahedral.set(query.getAtomCount());
