@@ -91,6 +91,9 @@ public final class Ullmann extends Pattern {
     /** The bond matcher to determine atom feasibility. */
     private final BondMatcher bondMatcher;
 
+    /** Is the query matching query atoms/bonds etc? */
+    private final boolean queryMatching;
+
     /**
      * Non-public constructor for-now the atom/bond semantics are fixed.
      *
@@ -106,6 +109,7 @@ public final class Ullmann extends Pattern {
         this.bondMatcher = bondMatcher;
         this.bonds1 = EdgeToBondMap.withSpaceFor(query);
         this.g1 = GraphUtil.toAdjList(query, bonds1);
+        this.queryMatching = query instanceof IQueryAtomContainer;
     }
 
     @TestMethod("benzeneSubsearch,napthaleneSubsearch")
@@ -117,11 +121,15 @@ public final class Ullmann extends Pattern {
     @Override public Iterable<int[]> matchAll(IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
         int[][] g2 = GraphUtil.toAdjList(target, bonds2);
-        return Iterables.filter(new UllmannIterable(query, target,
-                                                    g1, g2,
-                                                    bonds1, bonds2,
-                                                    atomMatcher, bondMatcher),
-                                new StereoMatchPredicate(query, target));
+        Iterable<int[]> iterable = new UllmannIterable(query, target,
+                                                       g1, g2,
+                                                       bonds1, bonds2,
+                                                       atomMatcher, bondMatcher);
+        // do match stereo query chem objects
+        if (!queryMatching)
+            return Iterables.filter(iterable,
+                                    new StereoMatch(query, target));
+        return iterable;        
     }
 
     /**

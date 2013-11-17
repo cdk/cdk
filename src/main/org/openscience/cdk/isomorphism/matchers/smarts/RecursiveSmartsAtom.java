@@ -23,11 +23,13 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.isomorphism.ComponentGrouping;
+import org.openscience.cdk.isomorphism.SmartsStereoMatch;
 import org.openscience.cdk.isomorphism.Ullmann;
 import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -74,9 +76,10 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
 
         // recursive queries are not currently cached - they also be faster
         // by specifying the initial mapping of (0->0) and
-        for (int[] mapping : Iterables.filter(Ullmann.findSubstructure(query)
-                                                     .matchAll(target),
-                                              new ComponentGrouping(query, target))) {
+        for (int[] mapping : FluentIterable.from(Ullmann.findSubstructure(query)
+                                                          .matchAll(target))
+                                           .filter(new SmartsStereoMatch(query, target))
+                                           .filter(new SmartsStereoMatch(query, target))) {
             if (target.getAtom(mapping[0]) == atom) 
                 return true;
         }

@@ -50,13 +50,16 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 import static org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom.Chirality.*;
 
 /**
- * Filters SMARTS matches for those that have valid stereochemistry configuration.
+ * Filters SMARTS matches for those that have valid stereochemistry
+ * configuration.
+ * 
+ * Note: This class is internal and will be private in future.
  *
  * @author John May
  * @cdk.module smarts
  */
 @TestClass("org.openscience.cdk.isomorphism.SmartsStereoMatchTest")
-final class SmartsStereoMatch implements Predicate<int[]> {
+public final class SmartsStereoMatch implements Predicate<int[]> {
 
     /** Query and target contains. */
     private final IAtomContainer query, target;
@@ -80,7 +83,7 @@ final class SmartsStereoMatch implements Predicate<int[]> {
      * @param query query container
      * @param target target container
      */
-    SmartsStereoMatch(IAtomContainer query, IAtomContainer target) {
+    public SmartsStereoMatch(IAtomContainer query, IAtomContainer target) {
         
         if (!(query instanceof IQueryAtomContainer))
             throw new IllegalArgumentException("match predicate is for SMARTS only");

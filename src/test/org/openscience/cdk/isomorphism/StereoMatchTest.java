@@ -44,7 +44,7 @@ import static org.junit.Assert.assertTrue;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class StereoMatchPredicateTest {
+public class StereoMatchTest {
 
     /* target does not have an element */
     @Test public void tetrahedral_missingInTarget() {
@@ -58,7 +58,7 @@ public class StereoMatchPredicateTest {
                                                                 query.getAtom(4)
                                                         },
                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3, 4}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
     /* Query does not have an element but the target does - the query
@@ -74,7 +74,7 @@ public class StereoMatchPredicateTest {
                                                                  target.getAtom(4)
                                                          },
                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3, 4}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
     @Test public void tetrahedral_match() {
@@ -96,7 +96,7 @@ public class StereoMatchPredicateTest {
                                                                  target.getAtom(4)
                                                          },
                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3, 4}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
     @Test public void tetrahedral_mismatch() {
@@ -118,7 +118,7 @@ public class StereoMatchPredicateTest {
                                                                  target.getAtom(4)
                                                          },
                                                          ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3, 4}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
     /* Map to different atom order which means the clockwise and anticlockwise match */
@@ -141,7 +141,7 @@ public class StereoMatchPredicateTest {
                                                                  target.getAtom(4)
                                                          },
                                                          ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 3, 2, 4}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
     /* These don't match because we don't map the atoms in order. */
@@ -164,7 +164,7 @@ public class StereoMatchPredicateTest {
                                                                  target.getAtom(4)
                                                          },
                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 3, 2, 4}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
     @Test public void geometric_match_together() {
@@ -176,7 +176,7 @@ public class StereoMatchPredicateTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
                                                               new IBond[]{target.getBond(1), target.getBond(2)},
                                                               IDoubleBondStereochemistry.Conformation.TOGETHER));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     @Test public void geometric_match_opposite() {
@@ -188,7 +188,7 @@ public class StereoMatchPredicateTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
                                                               new IBond[]{target.getBond(1), target.getBond(2)},
                                                               IDoubleBondStereochemistry.Conformation.OPPOSITE));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     @Test public void geometric_mismatch_together() {
@@ -200,7 +200,7 @@ public class StereoMatchPredicateTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
                                                               new IBond[]{target.getBond(1), target.getBond(2)},
                                                               IDoubleBondStereochemistry.Conformation.OPPOSITE));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     @Test public void geometric_mismatch_opposite() {
@@ -212,7 +212,7 @@ public class StereoMatchPredicateTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
                                                               new IBond[]{target.getBond(1), target.getBond(2)},
                                                               IDoubleBondStereochemistry.Conformation.TOGETHER));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     @Test public void geometric_missingInQuery() {
@@ -221,7 +221,7 @@ public class StereoMatchPredicateTest {
         target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
                                                               new IBond[]{target.getBond(1), target.getBond(2)},
                                                               IDoubleBondStereochemistry.Conformation.TOGETHER));
-        assertTrue(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     @Test public void geometric_missingInTarget() {
@@ -230,7 +230,7 @@ public class StereoMatchPredicateTest {
         query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
                                                              new IBond[]{query.getBond(1), query.getBond(2)},
                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
-        assertFalse(new StereoMatchPredicate(query, target).apply(new int[]{0, 1, 2, 3}));
+        assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
     static IAtomContainer dimethylpropane() {

@@ -93,6 +93,9 @@ public final class VentoFoggia extends Pattern {
 
     /** Search for a subgraph. */
     private final boolean subgraph;
+    
+    /** Is the query matching query atoms/bonds etc? */
+    private final boolean queryMatching;
 
     /**
      * Non-public constructor for-now the atom/bond semantics are fixed.
@@ -112,6 +115,7 @@ public final class VentoFoggia extends Pattern {
         this.bonds1 = EdgeToBondMap.withSpaceFor(query);
         this.g1 = GraphUtil.toAdjList(query, bonds1);
         this.subgraph = substructure;
+        this.queryMatching = query instanceof IQueryAtomContainer;
     }
 
     /** @inheritDoc */
@@ -125,12 +129,16 @@ public final class VentoFoggia extends Pattern {
     @Override public Iterable<int[]> matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
         int[][] g2 = GraphUtil.toAdjList(target, bonds2);
-        return Iterables.filter(new VFIterable(query, target,
-                                               g1, g2,
-                                               bonds1, bonds2,
-                                               atomMatcher, bondMatcher,
-                                               subgraph),
-                                new StereoMatchPredicate(query, target));
+        Iterable<int[]> iterable = new VFIterable(query, target,
+                                                  g1, g2,
+                                                  bonds1, bonds2,
+                                                  atomMatcher, bondMatcher,
+                                                  subgraph);
+        // do match stereo query chem objects
+        if (!queryMatching)
+            return Iterables.filter(iterable,
+                                    new StereoMatch(query, target));
+        return iterable;
     }
 
     /**

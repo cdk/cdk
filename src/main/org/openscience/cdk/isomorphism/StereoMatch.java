@@ -49,7 +49,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * implements the Guava predicate and can be used easily filter the mappings.
  *
  * <blockquote><pre>{@code
- * Predicate<int[]> f              = new StereoMatchPredicate(query, target);
+ * Predicate<int[]> f              = new StereoMatch(query, target);
  * Iterable<int[]>  mappings       = ...; // from subgraph isomorphism etc.
  * Iterable<int[]>  stereoMappings = Iterables.filter(mappings, f);
  * }</pre></blockquote>
@@ -58,7 +58,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
  * @cdk.module isomorphism
  */
 @TestClass("org.openscience.cdk.isomorphism.StereoMatchPredicateTest")
-final class StereoMatchPredicate implements Predicate<int[]> {
+final class StereoMatch implements Predicate<int[]> {
 
     /** Query and target contains. */
     private final IAtomContainer query, target;
@@ -82,7 +82,7 @@ final class StereoMatchPredicate implements Predicate<int[]> {
      * @param query query container
      * @param target target container
      */
-    StereoMatchPredicate(IAtomContainer query, IAtomContainer target) {
+    StereoMatch(IAtomContainer query, IAtomContainer target) {
         this.query  = query;
         this.target = target;
         this.queryMap  = indexAtoms(query);
