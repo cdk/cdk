@@ -21,11 +21,13 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.isomorphism.ComponentGrouping;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
@@ -65,6 +67,7 @@ import org.openscience.cdk.isomorphism.matchers.smarts.TotalConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalHCountAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalRingConnectionAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.TotalValencyAtom;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -73,8 +76,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 
 /**
  * An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
@@ -117,6 +124,17 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
      * Lookup of atom indices.
      */
     private BitSet tetrahedral = new BitSet();
+
+    /**
+     * Stores the directional '/' or '\' bonds. Speeds up looking for double
+     * bond configurations.
+     */
+    private List<IBond> stereoBonds = new ArrayList<IBond>();
+
+    /**
+     * Stores the double bonds in the query. 
+     */
+    private List<IBond> doubleBonds = new ArrayList<IBond>();
 
     public SmartsQueryVisitor(IChemObjectBuilder builder) {
         this.builder = builder;
@@ -264,8 +282,38 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                                                                     ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
             }
         }
-
+        
+        // for each double bond, find the stereo bonds. currently doesn't
+        // handle logical bonds i.e. C/C-,=C/C
+        for (IBond bond : doubleBonds) {
+            IAtom left  = bond.getAtom(0);    
+            IAtom right = bond.getAtom(1);
+            StereoBond leftBond  = findStereoBond(left); 
+            StereoBond rightBond = findStereoBond(right);
+            if (leftBond == null || rightBond == null)
+                continue;
+            Conformation conformation = leftBond.direction(left) == rightBond.direction(right)
+                                        ? Conformation.TOGETHER
+                                        : Conformation.OPPOSITE;
+            fullQuery.addStereoElement(new DoubleBondStereochemistry(bond,
+                                                                     new IBond[]{leftBond, rightBond},
+                                                                     conformation));
+        }
+        
         return fullQuery;
+    }
+
+    /**
+     * Locate a stereo bond adjacent to the {@code atom}.
+     * 
+     * @param atom an atom
+     * @return a stereo bond or null if non found 
+     */
+    private StereoBond findStereoBond(IAtom atom) {
+        for (IBond bond : stereoBonds)
+            if (bond.contains(atom))
+                return (StereoBond) bond;
+        return null;
     }
 
     public Object visit(ASTSmarts node, Object data) {
@@ -416,6 +464,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 break;
             case SMARTSParserConstants.D_BOND:
                 bond = new OrderQueryBond(IBond.Order.DOUBLE, builder);
+                doubleBonds.add(bond);
                 break;
             case SMARTSParserConstants.T_BOND:
                 bond = new OrderQueryBond(IBond.Order.TRIPLE, builder);
@@ -431,15 +480,19 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 break;
             case SMARTSParserConstants.UP_S_BOND:
                 bond = new StereoBond(builder, StereoBond.Direction.UP, false);
+                stereoBonds.add(bond);
                 break;
             case SMARTSParserConstants.DN_S_BOND:
                 bond = new StereoBond(builder, StereoBond.Direction.DOWN, false);
+                stereoBonds.add(bond);
                 break;
             case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
                 bond = new StereoBond(builder, StereoBond.Direction.UP, true);
+                stereoBonds.add(bond);
                 break;
             case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
                 bond = new StereoBond(builder, StereoBond.Direction.DOWN, true);
+                stereoBonds.add(bond);
                 break;
             default:
                 logger.error("Un parsed bond: " + node.toString());
