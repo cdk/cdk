@@ -79,7 +79,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
         for (int[] mapping : FluentIterable.from(Ullmann.findSubstructure(query)
                                                           .matchAll(target))
                                            .filter(new SmartsStereoMatch(query, target))
-                                           .filter(new SmartsStereoMatch(query, target))) {
+                                           .filter(new ComponentGrouping(query, target))) {
             if (target.getAtom(mapping[0]) == atom) 
                 return true;
         }
