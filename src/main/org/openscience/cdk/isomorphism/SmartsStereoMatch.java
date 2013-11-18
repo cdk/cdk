@@ -45,9 +45,7 @@ import java.util.Map;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
-import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
-import static org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom.Chirality.*;
 
 /**
  * Filters SMARTS matches for those that have valid stereochemistry
@@ -136,43 +134,32 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
      * @param mapping mapping of vertices
      * @return the tetrahedral configuration is preserved
      */
-    private boolean checkTetrahedral(int u, int[] mapping) {
+    private boolean checkTetrahedral(int u, int[] mapping) {             
         
-        ITetrahedralChirality queryElement = (ITetrahedralChirality) queryElements[u];
         int v = mapping[u];
-        
-        SMARTSAtom queryAtom = (SMARTSAtom) query.getAtom(u);
-        EnumSet<SMARTSAtom.Chirality> chiralities = EnumSet.noneOf(SMARTSAtom.Chirality.class);
-        queryAtom.chirality(target.getAtom(v), chiralities);
-        
-        if (chiralities.contains(None))
-            return false; // contradiction e.g. [@&@@]
-        if (chiralities.contains(Any))
-            return true;
-        if (chiralities.contains(Clockwise) && chiralities.contains(Anticlockwise) && targetTypes[v] != null)
-            return true;
-        if (chiralities.contains(Unspecified) && targetTypes[v] == null)
-            return true;
-        if (targetTypes[v] != Type.Tetrahedral)
-            return false;
 
+        ITetrahedralChirality queryElement  = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
-
-        // access neighbors of each element, then map the query to the target
-        int[] us = neighbors(queryElement, queryMap);
-        int[] vs = neighbors(targetElement, targetMap);
-        us = map(u, v, us, mapping);
-
-        int p = permutationParity(us);
-        int q = permutationParity(vs) * parity(targetElement.getStereo());
-
-        if (chiralities.contains(Clockwise)) {
-            return (p * parity(Stereo.CLOCKWISE)) == q;
-        } else if (chiralities.contains(Anticlockwise)) {
-            return (p * parity(Stereo.ANTI_CLOCKWISE)) == q;
-        }
         
-        return false; // hmm?
+        SMARTSAtom queryAtom  = (SMARTSAtom) query.getAtom(u);
+        IAtom      targetAtom = target.getAtom(v);
+        
+        int[] us = neighbors(queryElement, queryMap);
+        us = map(u, v, us, mapping);
+        int p = permutationParity(us);
+
+        // check if unspecified was allowed
+        if (targetTypes[v] == null)
+            return queryAtom.chiralityMatches(targetAtom, 0, p);
+        
+        // target was non-tetrahedral 
+        if (targetTypes[v] != Type.Tetrahedral)
+            return false;       
+
+        int[] vs = neighbors(targetElement, targetMap);
+        int   q  = permutationParity(vs) * parity(targetElement.getStereo());
+        
+        return queryAtom.chiralityMatches(targetAtom, q, p); 
     }
 
     /**

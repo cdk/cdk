@@ -89,15 +89,9 @@ public class ChiralityAtom extends SMARTSAtom {
         return true;
     }
 
-    /**
-     * Sets the chirality required by this query atom. 
-     * 
-     * @param target      the atom which was matched
-     * @param chiralities the chiralites to test
-     */
-    @Override public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
-        if (unspecified)
-            chiralities.add(Chirality.Unspecified);
-        chiralities.add(clockwise ? Chirality.Clockwise : Chirality.Anticlockwise);
+    /** @inheritDoc */
+    @Override public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
+        int qParity = permParity * (clockwise ? 1 : -1);
+        return unspecified && tParity == 0 || qParity == tParity;
     }
 }

@@ -23,29 +23,27 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtom;
 
-import java.util.EnumSet;
-
 /**
  * Abstract smarts atom.
- * 
- * @cdk.module  smarts
+ *
+ * @cdk.module smarts
  * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.keyword SMARTS
  */
 public abstract class SMARTSAtom extends QueryAtom implements
-        IQueryAtom {
+                                                   IQueryAtom {
 
     public SMARTSAtom(IChemObjectBuilder builder) {
         super(builder);
     }
 
     /**
-     * Access the atom invariants for this atom. If the invariants have not
-     * been set an exception is thrown.
-     * 
+     * Access the atom invariants for this atom. If the invariants have not been
+     * set an exception is thrown.
+     *
      * @param atom the atom to obtain the invariants of
      * @return the atom invariants for the atom
-     * @throws NullPointerException thrown if the invariants were not set 
+     * @throws NullPointerException thrown if the invariants were not set
      */
     final SMARTSAtomInvariants invariants(final IAtom atom) {
         final SMARTSAtomInvariants inv = atom.getProperty(SMARTSAtomInvariants.KEY);
@@ -59,30 +57,21 @@ public abstract class SMARTSAtom extends QueryAtom implements
     }
 
     /**
-     * Determine the chirality required by this query atom. The chirality
-     * specification depends on what atoms matched and as such must be
-     * done after the matching is complete and the mapped atom (target) is known.
-     * 
-     * @param target      the atom which was matched
-     * @param chiralities the chiralites to test
+     * Check if the atom-based chirality of the target matches. This check is
+     * done post-matching and should only be checked on atoms which are know to
+     * have already been matched ({@link #matches(IAtom)}.
+     *
+     * Currently the only atom-based chirality allowed is tetrahedral stereo-
+     * chemistry. The
+     *
+     * @param target     the matched target (required to verify 'OR'
+     *                   conditions)
+     * @param tParity    the parity (winding) of the target centre,
+     *                   0=unspecified, 1=clockwise and -1=anticlockwise
+     * @param permParity permutation parity of the query neighbors (will be
+     *                   multiplied by the query parity)
      */
-    public void chirality(IAtom target, EnumSet<Chirality> chiralities) {
-        chiralities.add(Chirality.Any);     
-    }
-
-    /**
-     * The type of chirality to match.
-     */
-    public enum Chirality {
-        /** match clockwise winding. */
-        Clockwise,
-        /** match anticlockwise winding. */
-        Anticlockwise,
-        /** match unspecified winding. */
-        Unspecified,
-        /** match anything. */
-        Any,
-        /** match nothing - indicates a contradiction. */
-        None
+    public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
+        return true; // no specification => chirality matches
     }
 }
