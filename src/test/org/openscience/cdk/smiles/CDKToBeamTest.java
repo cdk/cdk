@@ -500,6 +500,39 @@ public class CDKToBeamTest {
         assertThat(Functions.collapse(g).toSmiles(),
                    is("CC[C@](C)(O)[H]"));
     }
+
+    /**
+     * This is a mock test where we don't want aromatic bonds to have a
+     * configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
+     * example would be porphyrins. 
+     *
+     * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
+     */
+    @Test public void z_1_2_difluoroethene_aromatic() throws Exception {
+
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("F"));
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("F"));
+        ac.addBond(0, 1, SINGLE);
+        ac.addBond(1, 2, DOUBLE);
+        ac.addBond(2, 3, SINGLE);
+
+        ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
+        
+        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1),
+                                                          new IBond[]{
+                                                                  ac.getBond(0),
+                                                                  ac.getBond(2)
+                                                          },
+                                                          TOGETHER));
+        Graph g = convert(ac);
+        assertThat(g.toSmiles(),
+                   is("[F]-[CH]:[CH]-[F]"));
+        assertThat(Functions.collapse(g).toSmiles(),
+                   is("F[CH]:[CH]F"));
+    }
     
     static Graph convert(IAtomContainer ac) throws Exception {
         return convert(ac, false, true);

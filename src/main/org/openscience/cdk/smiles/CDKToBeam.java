@@ -267,6 +267,10 @@ final class CDKToBeam {
 
         IBond   db = dbs.getStereoBond();
         IBond[] bs = dbs.getBonds();
+        
+        // don't try to set a configuration on aromatic bonds
+        if (db.getFlag(CDKConstants.ISAROMATIC))
+            return;
 
         int u = indices.get(db.getAtom(0));
         int v = indices.get(db.getAtom(1));
