@@ -321,6 +321,14 @@ public class CDKToBeamTest {
                    is("c1[nH]cnc1"));
     }
 
+    @Test public void imidazole_ignoreAromatic() throws Exception {
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true, false);
+        assertThat(g.toSmiles(),
+                   is("[CH]=1-[NH]-[CH]=[N]-[CH]1"));
+        assertThat(Functions.collapse(g).toSmiles(),
+                   is("C=1NC=NC1"));
+    }
+
     @Test public void C13_isomeric() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("C");
@@ -539,14 +547,21 @@ public class CDKToBeamTest {
     }
 
     static Graph convert(IAtomContainer ac,
-                                 boolean aromatic,
-                                 boolean isomeric) throws
+                         boolean perceiveAromaticity,
+                         boolean isomeric) throws Exception {
+        return convert(ac, perceiveAromaticity, isomeric, true);
+    }
+
+    static Graph convert(IAtomContainer ac,
+                                 boolean perceiveAromaticity,
+                                 boolean isomeric,
+                                 boolean aromatic) throws
                                                    Exception {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
                         .addImplicitHydrogens(ac);
-        if (aromatic)
+        if (perceiveAromaticity)
             CDKHueckelAromaticityDetector.detectAromaticity(ac);
-        return new CDKToBeam(isomeric).toBeamGraph(ac);
+        return new CDKToBeam(isomeric, aromatic).toBeamGraph(ac);
     }
 }

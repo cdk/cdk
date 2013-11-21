@@ -91,15 +91,30 @@ final class CDKToBeam {
      * Isomeric SMILES.
      */
     private final boolean isomeric;
+    
+    /** Use aromatic flags. */
+    private final boolean aromatic;    
 
-    /** Create a isomeric converter. */
+    /** Create a isomeric and aromatic converter. */
     CDKToBeam() {
-        this(true);
+        this(true, true);
     }
 
-    /** Create a converter specifying whether to be isomeric or not. */
+    /** Create a aromatic converter specifying whether to be isomeric or not. */
     CDKToBeam(boolean isomeric) {
+        this(isomeric, true);
+    }
+
+    /**
+     * Create a convert which will optionally convert isomeric and aromatic
+     * information from CDK data model.
+     *
+     * @param isomeric convert isomeric information
+     * @param aromatic convert aromatic information
+     */
+    CDKToBeam(boolean isomeric, boolean aromatic) {
         this.isomeric = isomeric;
+        this.aromatic = aromatic;
     }
 
     /**
@@ -154,7 +169,7 @@ final class CDKToBeam {
      */
     @TestMethod("aliphaticAtom,aromaticAtom") Atom toBeamAtom(final IAtom a) {
 
-        final boolean aromatic = a.getFlag(CDKConstants.ISAROMATIC);
+        final boolean aromatic = this.aromatic && a.getFlag(CDKConstants.ISAROMATIC);
         final Integer charge   = a.getFormalCharge();
         final String  symbol   = checkNotNull(a.getSymbol(),
                                               "An atom had an undefined symbol");
@@ -234,7 +249,7 @@ final class CDKToBeam {
      */
     private Bond toBeamEdgeLabel(IBond b) {
 
-        if (b.getFlag(CDKConstants.ISAROMATIC))
+        if (this.aromatic && b.getFlag(CDKConstants.ISAROMATIC))
             return Bond.AROMATIC;
 
         IBond.Order order = checkNotNull(b.getOrder(),
@@ -269,7 +284,7 @@ final class CDKToBeam {
         IBond[] bs = dbs.getBonds();
         
         // don't try to set a configuration on aromatic bonds
-        if (db.getFlag(CDKConstants.ISAROMATIC))
+        if (this.aromatic && db.getFlag(CDKConstants.ISAROMATIC))
             return;
 
         int u = indices.get(db.getAtom(0));
