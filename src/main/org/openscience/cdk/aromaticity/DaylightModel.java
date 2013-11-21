@@ -170,7 +170,7 @@ final class DaylightModel extends ElectronDonation {
 
             // a anion with a lone pair contributes 2 electrons - simplification
             // here is we count the number free valence electrons
-            else if (charge <= 0) {
+            else if (charge <= 0 && charge > -3) {
                 int v = valence(element, charge);
                 if (v - bondOrderSum[i] >= 2)
                     electrons[i] = 2;
