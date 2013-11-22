@@ -60,6 +60,86 @@ public class InChINumbersTools {
     }
 
     /**
+     * Obtain the InChI numbers for the input container to be used to order
+     * atoms in Universal SMILES. The numbers are obtained using the
+     * fixedH and RecMet options of the InChI. All non-bridged hydrogens
+     * are labelled as 0.
+     * 
+     * @param container the structure to obtain the numbers of
+     * @return the atom numbers
+     * @throws CDKException
+     */
+    @TestMethod("testGlycine_uSmiles")
+    public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
+        String aux     = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);        
+        long[] numbers = new long[container.getAtomCount()];
+        return parseUSmilesNumbers(aux, numbers);
+    }
+
+    /**
+     * Parse the InChI canonical atom numbers (from the AuxInfo) to use in
+     * Universal SMILES. 
+     * 
+     * The parsing follows: "Rule A: The correspondence between the input atom
+     * order and the InChI canonical labels should be obtained from the
+     * reconnected metal layer (/R:) in preference to the initial layer, and
+     * then from the fixed hydrogen labels (/F:) in preference to the standard
+     * labels (/N:)." 
+     * 
+     * @param aux     inchi AuxInfo
+     * @param numbers array to fill with the numbers (indexed by atom)           
+     * @return the numbers string to use
+     */
+    @TestMethod("parseStandard,parseRecMet,parseFixedH")
+    static long[] parseUSmilesNumbers(String aux, long[] numbers) {
+        int index;
+        
+        int label = 1;
+        
+        if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers
+            String[] baseNumbers = aux.substring(index + 8, aux.indexOf('/', index + 8)).split(";");
+            for (String component : baseNumbers) {
+                for (String number : component.split(",")) {
+                    numbers[Integer.parseInt(number)- 1 ] = label++;
+                }
+            }
+        } else if ((index = aux.indexOf("/N:")) >= 0) { // standard numbers
+            
+            // read the standard numbers first (need to reference back for some structures)
+            String[] baseNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
+            
+            if ((index = aux.indexOf("/F:")) >= 0) {
+                String[] fixedHNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
+                for (int i = 0; i < fixedHNumbers.length; i++) {
+
+                    String component = fixedHNumbers[i];
+
+                    // m, 2m, 3m ... need to lookup number in the base numbering
+                    if (component.charAt(component.length() - 1) == 'm') {
+                        int n = component.length() > 1 ? Integer.parseInt(component.substring(0, component.length()-1))
+                                                       : 1;
+                        for (int j = 0; j < n; j++)
+                            for (String number : baseNumbers[i + j].split(","))
+                                numbers[Integer.parseInt(number) - 1] = label++;
+                    }
+                    else {
+                        for (String number : component.split(",")) 
+                            numbers[Integer.parseInt(number) - 1] = label++;
+                    }
+                }
+            } else {
+                for (String component : baseNumbers)
+                    for (String number : component.split(","))
+                        numbers[Integer.parseInt(number)- 1 ] = label++;
+            }
+        } else {
+            throw new IllegalArgumentException("AuxInfo did not contain extractable base numbers (/N: or /R:).");
+        }
+
+        return numbers;
+    }
+    
+    /**
      * Obtain the InChI auxiliary info for the provided structure using 
      * using the specified InChI options.
      *
