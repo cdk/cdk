@@ -45,22 +45,18 @@ public class InChINumbersTools {
      * @throws CDKException   When the InChI could not be generated
      */
     @TestMethod("testSimpleNumbering,testHydrogens,testGlycine")
-    public static long[] getNumbers(IAtomContainer atomContainer)
-    throws CDKException {
+    public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
         long[] atomNumbers = new long[atomContainer.getAtomCount()];
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
         InChIGenerator gen = factory.getInChIGenerator(atomContainer);
-        if (gen.getReturnStatus() != INCHI_RET.OKAY)
-            throw new CDKException("Could not generate InChI.");
+        if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
+            throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
         String aux = gen.getAuxInfo();
         aux = aux.substring(aux.indexOf("/N:") + 3);
         String numberStringAux = aux.substring(0, aux.indexOf("/"));
-        String[] numberStrings = numberStringAux.split("\\,");
-        int i = 0;
-        for (String numberString : numberStrings) {
-            i++;
-            atomNumbers[Integer.valueOf(numberString)-1] = i;
-        }
+        int i = 1;
+        for (String numberString : numberStringAux.split("\\,"))
+            atomNumbers[Integer.valueOf(numberString)-1] = i++;
         return atomNumbers;
     }
 
