@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import net.sf.jniinchi.INCHI_OPTION;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -29,13 +30,14 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.smiles.SmilesParser;
 
-/**
- * @cdk.module test-inchi
- */
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+/** @cdk.module test-inchi */
 public class InChINumbersToolsTest extends CDKTestCase {
 
     @Test
-    public void testSimpleNumbering() throws CDKException{
+    public void testSimpleNumbering() throws CDKException {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
@@ -45,9 +47,9 @@ public class InChINumbersToolsTest extends CDKTestCase {
         Assert.assertEquals(2, numbers[0]);
         Assert.assertEquals(1, numbers[1]);
     }
-	
+
     @Test
-    public void testHydrogens() throws CDKException{
+    public void testHydrogens() throws CDKException {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("H"));
         container.addAtom(new Atom("C"));
@@ -78,5 +80,20 @@ public class InChINumbersToolsTest extends CDKTestCase {
         Assert.assertEquals(4, numbers[2]);
         Assert.assertEquals(5, numbers[3]);
         Assert.assertEquals(3, numbers[4]);
+    }
+
+    @Test
+    public void fixedH() throws Exception {
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer atomContainer = parser.parseSmiles("N1C=NC2=CC=CC=C12");
+        String auxInfo = InChINumbersTools.auxInfo(atomContainer, INCHI_OPTION.FixedH);
+        String expected = "AuxInfo=1/1/" +
+                "N:6,7,5,8,2,4,9,3,1/" +
+                "E:(1,2)(3,4)(6,7)(8,9)/" +
+                "F:7,6,8,5,2,9,4,1,3/" +
+                "rA:9NCNCCCCCC/" +
+                "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" +
+                "rC:;;;;;;;;;";
+        assertThat(auxInfo, is(expected));
     }
 }

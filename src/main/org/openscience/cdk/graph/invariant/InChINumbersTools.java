@@ -18,6 +18,7 @@
  */
 package org.openscience.cdk.graph.invariant;
 
+import net.sf.jniinchi.INCHI_OPTION;
 import net.sf.jniinchi.INCHI_RET;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -26,6 +27,8 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.inchi.InChIGenerator;
 import org.openscience.cdk.inchi.InChIGeneratorFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
+
+import java.util.Arrays;
 
 /**
  * Tool for calculating atom numbers using the InChI algorithm.
@@ -46,18 +49,32 @@ public class InChINumbersTools {
      */
     @TestMethod("testSimpleNumbering,testHydrogens,testGlycine")
     public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
-        long[] atomNumbers = new long[atomContainer.getAtomCount()];
-        InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
-        InChIGenerator gen = factory.getInChIGenerator(atomContainer);
-        if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
-            throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
-        String aux = gen.getAuxInfo();
+        String aux =  auxInfo(atomContainer);
         aux = aux.substring(aux.indexOf("/N:") + 3);
         String numberStringAux = aux.substring(0, aux.indexOf("/"));
-        int i = 1;
+        int i = 1; 
+        long[] numbers = new long[atomContainer.getAtomCount()];
         for (String numberString : numberStringAux.split("\\,"))
-            atomNumbers[Integer.valueOf(numberString)-1] = i++;
-        return atomNumbers;
+            numbers[Integer.valueOf(numberString)-1] = i++;
+        return numbers;        
+    }
+
+    /**
+     * Obtain the InChI auxiliary info for the provided structure using 
+     * using the specified InChI options.
+     *
+     * @param  container the structure to obtain the numbers of
+     * @return auxiliary info
+     * @throws CDKException the inchi could not be generated
+     */
+    @TestMethod("fixedH")
+    static String auxInfo(IAtomContainer container, INCHI_OPTION... options) throws CDKException {
+        long[] atomNumbers = new long[container.getAtomCount()];
+        InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+        InChIGenerator gen = factory.getInChIGenerator(container, Arrays.asList(options));
+        if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
+            throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
+        return gen.getAuxInfo();
     }
 
 }
