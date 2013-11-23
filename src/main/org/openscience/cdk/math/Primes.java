@@ -40,6 +40,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.keyword prime numbers
  */
 @TestClass("org.openscience.cdk.math.PrimesTest")
+@Deprecated
 public class Primes {
 
 

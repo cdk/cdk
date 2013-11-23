@@ -54,8 +54,10 @@ import java.util.List;
  * @cdk.created  2002-02-26
  *
  * @cdk.keyword canonicalization
+ * @deprecated this labeller uses slow data structures and has been replaced - {@link Canon}
  */
 @TestClass("org.openscience.cdk.graph.invariant.CanonicalLabelerTest")
+@Deprecated
 public class CanonicalLabeler {
 
   public CanonicalLabeler() {
