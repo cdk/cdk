@@ -27,16 +27,183 @@ package org.openscience.cdk.graph.invariant;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import java.util.Arrays;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * An implementation of a canon algorithm {@cdk.cite WEI89}. 
+ * An implementation based on the canon algorithm {@cdk.cite WEI89}. The 
+ * algorithm uses an initial set of of invariants which are assigned a rank.
+ * Equivalent ranks are then shattered using an unambiguous function (in this
+ * case, the product of primes of adjacent ranks). Once no more equivalent ranks
+ * can be shattered ties are artificially broken and rank shattering continues.
+ * Unlike the original description rank stability is not maintained reducing
+ * the number of values to rank at each stage to only those which are equivalent.
+ * <p/>    
+ * 
+ * The initial set of invariants is basic and are - <i> 
+ * "sufficient for the purpose of obtaining unique notation for simple SMILES,
+ *  but it is not necessarily a “complete” set. No “perfect” set of invariants
+ *  is known that will distinguish all possible graph asymmetries. However, 
+ *  for any given set of structures, a set of invariants can be devised to 
+ *  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
+ *  producer should not be considered a complete canonical labelledr but in
+ *  practice performs well. For a more accurate and computationally expensive
+ *  labelling, please using the {@link InChINumbersTools}.
+ *  
+ * <blockquote><pre>
+ * IAtomContainer m = ...;
+ * int[][]        g = GraphUtil.toAdjList(m);
+ * 
+ * // obtain canon labelling
+ * long[] labels = Canon.label(m, g);
+ * 
+ * // obtain symmetry classes
+ * long[] labels = Canon.symmetry(m, g);
+ * </pre></blockquote>
  * 
  * @author John May
  * @cdk.module standard 
  */
 public final class Canon {
 
+    /**
+     * Graph, adjacency list representation.
+     */
+    private final int[][] g;
+
+    /**
+     * Storage of canon labelling and symmetry classes.
+     */
+    private final long[] labelling, symmetry;
+
+    /**
+     * Create a canon labelling for the graph (g) with the specified
+     * invariants.
+     *
+     * @param g         a graph (adjacency list representation)
+     * @param partition an initial partition of the vertices
+     */
+    private Canon(int[][] g, long[] partition) {
+        this.g = g;
+        labelling = partition.clone();
+        symmetry  = refine(labelling);
+    }
+
+    /**
+     * Compute the canonical labels for the provided structure. The labelling
+     * does not consider isomer information or stereochemistry. The current 
+     * implementation does not fully distinguish all structure topologies
+     * but in practise performs well in the majority of cases. A complete 
+     * canonical labelling can be obtained using the {@link InChINumbersTools}
+     * but is computationally much more expensive.
+     *
+     * @param container structure
+     * @param g         adjacency list graph representation
+     * @return the canonical labelling
+     * @see EquivalentClassPartitioner
+     * @see InChINumbersTools
+     */
+    public static long[] label(IAtomContainer container, int[][] g) {
+        return new Canon(g, basicInvariants(container, g)).labelling;
+    }
+
+    /**
+     * Compute the symmetry classes for the provided structure. There are known
+     * examples where symmetry is incorrectly found. The {@link
+     * EquivalentClassPartitioner} gives more accurate symmetry perception but
+     * this method is very quick and in practise successfully portions the 
+     * majority of chemical structures.
+     *
+     * @param container structure
+     * @param g         adjacency list graph representation
+     * @return symmetry classes
+     * @see EquivalentClassPartitioner
+     */
+    public static long[] symmetry(IAtomContainer container, int[][] g) {
+        return new Canon(g, basicInvariants(container, g)).symmetry;
+    }
+
+    /**
+     * Internal - refine invariants to a canonical labelling and
+     * symmetry classes. 
+     * 
+     * @param invariants the invariants to refine (canonical labelling gets
+     *                   written here)
+     * @return the symmetry classes
+     */
+    private long[] refine(long[] invariants) {
+        
+        int ord = g.length;
+        
+        InvariantRanker ranker = new InvariantRanker(ord);
+        
+        // current/next vertices, these only hold the vertices which are
+        // equivalent
+        int[] currVs = new int[ord];
+        int[] nextVs = new int[ord];
+        
+        // fill with identity (also set number of non-unique)
+        int nnu = ord;
+        for (int i = 0; i < ord; i++)
+            currVs[i] = i;
+        
+        long[] prev = invariants;  
+        long[] curr = Arrays.copyOf(prev, ord); 
+        
+        // number of ranks
+        int n = 0, m = 0;
+        
+        // storage of symetry classes
+        long[] symmetry = null; 
+
+        while (n < ord) {
+            
+            // refine the initial invariants using product of primes from
+            // adjacent ranks
+            while ((n = ranker.rank(currVs, nextVs, nnu, curr, prev)) > m && n < ord) {
+                nnu = 0;
+                for (int i = 0; i < ord && nextVs[i] >= 0; i++) {
+                    int v         = nextVs[i];
+                    currVs[nnu++] = v;
+                    curr[v]       = primeProduct(g[v], prev);
+                }
+                m = n;
+            }
+            
+            if (symmetry == null)
+                symmetry = Arrays.copyOf(prev, ord);
+            
+            if (n == ord)
+                return symmetry;
+
+            nnu = 0;
+            currVs[nnu++] = nextVs[0]; // lowest-rank equivalent vertex
+            for (int i = 1; i < ord && nextVs[i] >= 0; i++) {
+                int v         = nextVs[i];
+                currVs[nnu++] = v;
+                curr[v]       = 2 * (1 + curr[v]);
+            }
+        }
+
+        return symmetry;
+    }
+
+    /**
+     * Compute the prime product of the values (ranks) for the given
+     * adjacent neighbors (ws).
+     * 
+     * @param ws    indices (adjacent neighbors)
+     * @param ranks invariant ranks
+     * @return the prime product
+     */
+    private long primeProduct(int[] ws, long[] ranks) {
+        long prod = 1;
+        for (int w : ws)
+            prod *= PRIMES[(int) ranks[w]];
+        return prod;
+    }
+    
     /**
      * Generate the initial invariants for each atom in the {@code container}.
      * The labels use the invariants described in {@cdk.cite WEI89}. <p/> 
@@ -65,7 +232,7 @@ public final class Canon {
      * @throws NullPointerException an atom had unset atomic number, hydrogen
      *                              count or formal charge
      */
-    static long[] basicInvariants(IAtomContainer container,
+    public static long[] basicInvariants(IAtomContainer container,
                                   int[][] graph) {
 
         long[] labels = new long[graph.length];
