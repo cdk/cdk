@@ -24,11 +24,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -347,9 +349,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         bounds.setRect(xy[0] - (w/2),
                        xy[1] - (h/2),
                        w, h);
+        
+        double padding = h / 4;
+        Shape  shape   = new RoundRectangle2D.Double(bounds.getX() - (padding / 2),
+                                                     bounds.getY() - (padding / 2),
+                                                     bounds.getWidth() + padding,
+                                                     bounds.getHeight() + padding,
+                                                     padding,
+                                                     padding);
 
         this.graphics.setColor(getBackgroundColor());
-        this.graphics.fill(bounds);
+        this.graphics.fill(shape);
         this.graphics.setColor(atomSymbol.color);
         this.graphics.drawString(atomSymbol.text,
                                  (int) (bounds.getX() - xOffset),
