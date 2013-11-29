@@ -22,6 +22,7 @@ package org.openscience.cdk.renderer.visitor;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
@@ -58,6 +59,10 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
         double[] dest = new double[2];
         this.transform.transform(src, 0, dest, 0, 1);
         return new int[] { (int) dest[0], (int) dest[1] };
+    }
+
+    public void transformPoint(double[] xy) {
+        this.transform.transform(xy, 0, xy, 0, 1);
     }
 
 	/**
@@ -110,6 +115,21 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
         int baseY = (int) (point[1] + 
                 (fontMetrics.getAscent() - stringBounds.getHeight() / 2));
         return new Point(baseX, baseY);
+    }
+
+    /**
+     * Obtain the exact bounding box of the {@code text} in the provided
+     * graphics environment.
+     * 
+     * @param text the text to obtain the bounds of
+     * @param g2   the graphic environment
+     * @return bounds of the text
+     * @see TextLayout
+     */
+    protected Rectangle2D getTextBounds(String text, Graphics2D g2) {
+        return new TextLayout(text,
+                              g2.getFont(),
+                              g2.getFontRenderContext()).getBounds();
     }
 
 	/**

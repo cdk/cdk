@@ -331,15 +331,29 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     
     private void visit(AtomSymbolElement atomSymbol) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point = 
-            super.getTextBasePoint(
-                    atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
-        Rectangle2D textBounds = 
-            this.getTextBounds(atomSymbol.text, atomSymbol.xCoord, atomSymbol.yCoord, graphics);
+
+        double[] xy = {atomSymbol.xCoord, atomSymbol.yCoord};
+
+        this.transformPoint(xy);
+        
+        Rectangle2D bounds = getTextBounds(atomSymbol.text, graphics);
+
+        double w = bounds.getWidth();
+        double h = bounds.getHeight();
+        
+        double xOffset = bounds.getX();
+        double yOffset = bounds.getY() + bounds.getHeight();
+        
+        bounds.setRect(xy[0] - (w/2),
+                       xy[1] - (h/2),
+                       w, h);
+
         this.graphics.setColor(getBackgroundColor());
-        this.graphics.fill(textBounds);
+        this.graphics.fill(bounds);
         this.graphics.setColor(atomSymbol.color);
-        this.graphics.drawString(atomSymbol.text, point.x, point.y);
+        this.graphics.drawString(atomSymbol.text,
+                                 (int) (bounds.getX() - xOffset),
+                                 (int) (bounds.getY() + h - yOffset));
         
         int offset = 10;    // XXX
         String chargeString;
@@ -358,14 +372,14 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             return;
         }
        
-        int xCoord = (int) textBounds.getCenterX();
-        int yCoord = (int) textBounds.getCenterY();
+        int xCoord = (int) bounds.getCenterX();
+        int yCoord = (int) bounds.getCenterY();
         if (atomSymbol.alignment == 1) {           // RIGHT
             this.graphics.drawString(
-                    chargeString, xCoord + offset, (int)textBounds.getMinY());
+                    chargeString, xCoord + offset, (int)bounds.getMinY());
         } else if (atomSymbol.alignment == -1) {   // LEFT
             this.graphics.drawString(
-                    chargeString, xCoord - offset, (int)textBounds.getMinY());
+                    chargeString, xCoord - offset, (int)bounds.getMinY());
         } else if (atomSymbol.alignment == 2) {    // TOP
             this.graphics.drawString(
                     chargeString, xCoord, yCoord - offset);
