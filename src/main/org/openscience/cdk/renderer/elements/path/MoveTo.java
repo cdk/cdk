@@ -40,7 +40,7 @@ import org.openscience.cdk.annotations.TestMethod;
 public class MoveTo extends PathElement {
 
     /** The point to move to.*/
-    public final Point2d point;
+    public final double[] coords;
 
     /**
      * Make a move to path element.
@@ -49,14 +49,41 @@ public class MoveTo extends PathElement {
      */
     @TestMethod("testConstructor")
     public MoveTo(Point2d point) {
-        super( Type.MoveTo );
-        this.point = point;
+        this(point.x, point.y);
+    }
+
+    /**
+     * Make a move to path element.
+     *
+     * @param coords the x,y coordinates in index 0,1
+     */
+    public MoveTo(double[] coords) {
+        super(Type.MoveTo);
+        this.coords = new double[2];
+        this.coords[0] = coords[0];
+        this.coords[1] = coords[1];
+    }
+
+    /**
+     * Make a move to path element.
+     *
+     * @param x x coord
+     * @param y y coord
+     */
+    public MoveTo(double x, double y) {
+        this(new double[]{x, y});
     }
 
     /** {@inheritDoc} **/
     @Override
     @TestMethod("testPoints")
     public float[] points() {
-        return new float[]{ (float) point.x, (float) point.y};
+        return new float[]{ (float) coords[0], (float) coords[1]};
+    }
+
+    /** @inheritDoc */
+    @Override public void points(double[] coords) {
+        coords[0] = this.coords[0];
+        coords[1] = this.coords[1];
     }
 }

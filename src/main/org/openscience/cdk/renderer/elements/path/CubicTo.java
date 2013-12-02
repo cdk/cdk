@@ -37,14 +37,8 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.renderer.elements.path.CubicToTest")
 public class CubicTo extends PathElement {
 
-    /** first control point in the cubic. */
-    public final Point2d cp1;
-    
-    /** second control point in the cubic. */
-    public final Point2d cp2;
-    
-    /** end point of the cubic. */
-    public final Point2d ep;
+    /** Coordinates of control point 1, control point 2 and end point. */
+    public final double[] coords;
 
     /**
      * Make a cubic curve path element.
@@ -55,21 +49,59 @@ public class CubicTo extends PathElement {
      */
     @TestMethod("testConstructor")
     public CubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
-        super( Type.CubicTo );
-        this.cp1 = cp1;
-        this.cp2 = cp2;
-        this.ep = ep;
+        this(cp1.x, cp1.y, cp2.x, cp2.y, ep.x, ep.y);
+    }
+
+    /**
+     * Make a cubic curve path element.
+     *
+     * @param coords [0,1] : control point 1, [2,3] : control point 2, [4,5] end
+     *               point
+     */
+    public CubicTo(double[] coords) {
+        super(Type.CubicTo);
+        this.coords = new double[6];
+        this.coords[0] = coords[0];
+        this.coords[1] = coords[1];
+        this.coords[2] = coords[2];
+        this.coords[3] = coords[3];
+        this.coords[4] = coords[4];
+        this.coords[5] = coords[5];
+    }
+
+    /**
+     * Make a cubic curve path element.
+     *
+     * @param cp1x first control point in the cubic x coord
+     * @param cp1y first control point in the cubic y coord
+     * @param cp2x second control point in the cubic x coord
+     * @param cp2y second control point in the cubic y coord
+     * @param epx end point of the cubic x coord 
+     * @param epy end point of the cubic y coord 
+     */
+    public CubicTo(double cp1x, double cp1y, double cp2x, double cp2y, double epx, double epy) {
+        this(new double[]{cp1x, cp1y, cp2x, cp2y, epx, epy});
     }
 
     /** {@inheritDoc} **/
     @Override
     @TestMethod("testPoints")
     public float[] points() {
-     return new float[] { (float) cp1.x,
-                          (float) cp1.y,
-                          (float) cp2.x,
-                          (float) cp2.y,
-                          (float) ep.x,
-                          (float) ep.y};
+     return new float[] { (float) coords[0],
+                          (float) coords[1],
+                          (float) coords[2],
+                          (float) coords[3],
+                          (float) coords[4],
+                          (float) coords[5]};
+    }
+
+    /** @inheritDoc */
+    @Override public void points(double[] coords) {
+        coords[0] = this.coords[0];
+        coords[1] = this.coords[1];
+        coords[2] = this.coords[2];
+        coords[3] = this.coords[3];
+        coords[4] = this.coords[4];
+        coords[5] = this.coords[5];
     }
 }

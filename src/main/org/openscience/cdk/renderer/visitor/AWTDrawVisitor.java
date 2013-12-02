@@ -470,14 +470,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                 return path.winding;
             }
 
-            public int currentSegment( double[] coords ) {
-                float[] src = new float[6];
-                int type = currentSegment( src );
-                double[] srcD = coords;
-                for(int i=0;i<src.length;i++){
-                    srcD[i] = (double) src[i];
-                }
-                return type;
+            public int currentSegment(double[] coords) {
+                path.elements.get(index).points(coords);
+                transform.transform(coords, 0, coords, 0, 3);
+                return type(path.elements.get(index).type);
             }
 
             public int currentSegment( float[] coords ) {

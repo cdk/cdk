@@ -44,4 +44,9 @@ public class Close extends PathElement {
     public float[] points() {
         return new float[0];
     }
+
+    /** @inheritDoc */
+    @Override public void points(double[] coords) {
+        // N/A    
+    }
 }

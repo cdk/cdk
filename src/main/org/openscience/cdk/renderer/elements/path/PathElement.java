@@ -56,5 +56,14 @@ public abstract class PathElement {
      * 
      * @return a list of points
      */
+    @Deprecated
     public abstract float[] points();
+
+    /**
+     * Load the provided array with the specified coordinates of this path
+     * element.
+     * 
+     * @param coords coordinates (length = 6)
+     */
+    public abstract void points(double[] coords);
 }
