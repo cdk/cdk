@@ -29,6 +29,7 @@ import java.awt.Stroke;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -437,10 +438,18 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     }
     
     private void visit(GeneralPath path) {
-        this.graphics.setColor( path.color );
-        java.awt.geom.GeneralPath generalPath = new java.awt.geom.GeneralPath();
-        generalPath.append( getPathIterator( path, transform) , false );
-        this.graphics.draw( generalPath );
+        this.graphics.setColor(path.color);
+        Path2D cpy = new Path2D.Double();
+        cpy.append(getPathIterator(path, transform), false);
+        
+        if (path.fill) {
+            this.graphics.fill(cpy);
+        } else {
+            Stroke stroke = this.graphics.getStroke();
+            this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            this.graphics.draw(cpy);
+            this.graphics.setStroke(stroke);
+        }
     }
 
     private static PathIterator getPathIterator(final GeneralPath path,final AffineTransform transform) {
