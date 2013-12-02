@@ -124,6 +124,21 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
             return Color.WHITE;
         }
     }
+
+    /**
+     * The length on the screen of a typical bond.
+     */
+    public static class BondLength extends
+                                   AbstractGeneratorParameter<Double> {
+        /** Returns the default value.
+         * @return 40.0 */
+        public Double getDefault() {
+            return 40.0;
+        }
+    }
+    private IGeneratorParameter<Double> bondLength = new BondLength();
+
+
     private IGeneratorParameter<Color> backgroundColor = new BackgroundColor();
 
     /**
@@ -232,6 +247,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
                         fontName,
                         zoomFactor,
                         scale,
+                        bondLength,
                         fitToScreen,
                         showMoleculeTitle,
                         showTooltip,
