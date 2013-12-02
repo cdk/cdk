@@ -28,6 +28,7 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Line2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -158,12 +159,16 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             strokeMap.put(width, stroke);
         }
         
-        this.graphics.setColor(line.color);
-        int[] startPoint = this.transformPoint(line.firstPointX, line.firstPointY);
-        int[] endPoint = this.transformPoint(line.secondPointX, line.secondPointY);
-        this.graphics.drawLine(startPoint[0], startPoint[1], endPoint[0], endPoint[1]);
+        double[] coordinates = new double[]{
+                line.firstPointX, line.firstPointY,
+                line.secondPointX, line.secondPointY
+        };
         
-        this.graphics.setStroke(savedStroke);
+        graphics.setColor(line.color);
+        transform.transform(coordinates, 0, coordinates, 0, 2);
+        graphics.draw(new Line2D.Double(coordinates[0], coordinates[1],
+                                        coordinates[2], coordinates[3]));
+        graphics.setStroke(savedStroke);
     }
 
     private void visit(OvalElement oval) {
