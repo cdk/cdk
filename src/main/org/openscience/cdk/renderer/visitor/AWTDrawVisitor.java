@@ -149,14 +149,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         Stroke savedStroke = this.graphics.getStroke();
         
         // scale the stroke by zoom + scale (both included in the AffineTransform) 
-        int width = (int) (line.width * transform.getScaleX());
-        if (width < 1) width = 1;
-        if (strokeMap.containsKey(width)) {
-            this.graphics.setStroke(strokeMap.get(width));
+        float width = (float) (line.width * transform.getScaleX());
+        if (width < 1.5f) width = 1.5f;
+
+        int key   = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
+        
+        if (strokeMap.containsKey(key)) {
+            this.graphics.setStroke(strokeMap.get(key));
         } else {
             BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.CAP_ROUND);
             this.graphics.setStroke(stroke);
-            strokeMap.put(width, stroke);
+            strokeMap.put(key, stroke);
         }
         
         double[] coordinates = new double[]{
