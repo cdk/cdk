@@ -193,14 +193,15 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
     public void paint(IAtomContainer atomContainer,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
-        // the bounds of the model
-        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
-
-        this.setupTransformToFit(bounds, modelBounds,
-                GeometryTools.getBondLengthAverage(atomContainer), resetCenter);
-
+        rendererModel.getParameter(Scale.class)
+                     .setValue(calculateScaleForBondLength(GeometryTools.getBondLengthAverage(atomContainer)));
+        
         // the diagram to draw
         IRenderingElement diagram = generateDiagram(atomContainer);
+
+        // the bounds of the model
+        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
+        setupTransformToFit(bounds, modelBounds, resetCenter);
 
         this.paint(drawVisitor, diagram);
     }

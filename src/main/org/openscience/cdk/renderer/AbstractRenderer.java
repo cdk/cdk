@@ -448,6 +448,45 @@ public abstract class AbstractRenderer<T extends IChemObject> {
 
     /**
      * Sets the transformation needed to draw the model on the canvas when
+     * the diagram needs to fit the screen. 
+     *
+     * @param screenBounds
+     *            the bounding box of the draw area
+     * @param modelBounds
+     *            the bounding box of the model
+     * @param reset
+     *            if true, model center will be set to the modelBounds center
+     *            and the scale will be re-calculated
+     */
+    void setupTransformToFit(Rectangle2D screenBounds,
+                             Rectangle2D modelBounds,
+                             boolean reset) {
+        
+        double scale = rendererModel.getParameter(Scale.class).getValue();
+
+        if (screenBounds == null) return;
+
+        setDrawCenter(screenBounds.getCenterX(), screenBounds.getCenterY());
+
+        double drawWidth = screenBounds.getWidth();
+        double drawHeight = screenBounds.getHeight();
+
+        double diagramWidth = modelBounds.getWidth() * scale;
+        double diagramHeight = modelBounds.getHeight() * scale;
+
+        setZoomToFit(drawWidth, drawHeight, diagramWidth, diagramHeight);
+
+        // this controls whether editing a molecule causes it to re-center
+        // with each change or not
+        if (reset || rendererModel.getParameter(FitToScreen.class).getValue()) {
+            setModelCenter(modelBounds.getCenterX(), modelBounds.getCenterY());
+        }
+
+        setup();
+    }
+
+    /**
+     * Sets the transformation needed to draw the model on the canvas when
      * the diagram needs to fit the screen.
      *
      * @param screenBounds
