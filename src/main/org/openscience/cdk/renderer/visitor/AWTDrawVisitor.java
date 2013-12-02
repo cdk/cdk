@@ -148,8 +148,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private void visit(LineElement line) {
         Stroke savedStroke = this.graphics.getStroke();
         
-        int width = (int) (line.width * this.rendererModel.getParameter(
-            	Scale.class).getValue());
+        // scale the stroke by zoom + scale (both included in the AffineTransform) 
+        int width = (int) (line.width * transform.getScaleX());
         if (width < 1) width = 1;
         if (strokeMap.containsKey(width)) {
             this.graphics.setStroke(strokeMap.get(width));
