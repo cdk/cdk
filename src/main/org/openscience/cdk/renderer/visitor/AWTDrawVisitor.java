@@ -154,7 +154,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         if (strokeMap.containsKey(width)) {
             this.graphics.setStroke(strokeMap.get(width));
         } else {
-            BasicStroke stroke = new BasicStroke(width);
+            BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.CAP_ROUND);
             this.graphics.setStroke(stroke);
             strokeMap.put(width, stroke);
         }
