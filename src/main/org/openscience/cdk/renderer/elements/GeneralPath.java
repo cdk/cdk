@@ -24,6 +24,7 @@
 package org.openscience.cdk.renderer.elements;
 
 import java.awt.Color;
+import java.awt.geom.PathIterator;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -46,22 +47,36 @@ public class GeneralPath implements IRenderingElement{
     /** The elements in the path. */
     public final List<PathElement> elements;
 
+    /** Winding rule for determining path interior. */
+    public final int winding;
+
+    /**
+     * @see PathIterator#WIND_EVEN_ODD
+     */
+    public static final int WIND_EVEN_ODD = 0;
+
+    /**
+     * @see PathIterator#WIND_NON_ZERO
+     */
+    public static final int WIND_NON_ZERO = 1;
+
     /**
      * Make a path from a list of path elements.
-     * 
+     *
      * @param elements the elements that make up the path
      * @param color the color of the path
      */
     @TestMethod("testConstructor")
     public GeneralPath(List<PathElement> elements, Color color) {
         this.elements = elements;
-        this.color = color;
+        this.color    = color;
+        this.winding  = WIND_EVEN_ODD;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
-    public void accept( IRenderingVisitor v ) {
-        v.visit( this );
+    public void accept(IRenderingVisitor v) {
+        v.visit(this);
     }
 
 }

@@ -467,8 +467,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             }
 
             public int getWindingRule() {
-
-                return WIND_EVEN_ODD;
+                return path.winding;
             }
 
             public int currentSegment( double[] coords ) {
