@@ -199,8 +199,13 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         // the diagram to draw
         IRenderingElement diagram = generateDiagram(atomContainer);
 
-        // the bounds of the model
-        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
+        // the bounds of the model from 'Bounds' elements
+        Rectangle2D modelBounds = getBounds(diagram);
+        
+        // no bounding elements, use the atom coordinates
+        if (modelBounds == null) 
+            modelBounds = BoundsCalculator.calculateBounds(atomContainer);
+        
         setupTransformToFit(bounds, modelBounds, resetCenter);
 
         this.paint(drawVisitor, diagram);

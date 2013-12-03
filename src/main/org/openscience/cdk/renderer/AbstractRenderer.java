@@ -24,11 +24,14 @@ import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
@@ -530,4 +533,52 @@ public abstract class AbstractRenderer<T extends IChemObject> {
         setup();
     }
 
+    /**
+     * Given a rendering element, traverse the elements compute required bounds
+     * to full display all elements. The method searches for {@link Bounds}
+     * elements which act to specify the required bounds when adjunct labels
+     * are considered.
+     * 
+     * @param element a rendering element
+     * @return the bounds required (null if unspecified)
+     */
+    public Rectangle2D getBounds(IRenderingElement element) {
+        
+        if (element == null)
+            return null;
+        
+        double minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
+        double maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
+        
+        if (element instanceof ElementGroup) {
+            for (IRenderingElement child : (ElementGroup) element) {
+                Rectangle2D bounds = getBounds(child);
+                if (bounds == null)
+                    continue;
+                if (bounds.getMinX() < minX)
+                    minX = bounds.getMinX();
+                if (bounds.getMinY() < minY)
+                    minY = bounds.getMinY();
+                if (bounds.getMaxX() > maxX)
+                    maxX = bounds.getMaxX();
+                if (bounds.getMaxY() > maxY)
+                    maxY = bounds.getMaxY();
+            }
+        } else if (element.getClass().equals(Bounds.class)) {
+            Bounds bounds = (Bounds) element;
+            if (bounds.minX < minX)
+                minX = bounds.minX;
+            if (bounds.minY < minY)
+                minY = bounds.minY;
+            if (bounds.maxX > maxX)
+                maxX = bounds.maxX;
+            if (bounds.maxY > maxY)
+                maxY = bounds.maxY;
+        }
+        
+        if (minX == Integer.MAX_VALUE)
+            return null;
+        
+        return new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
+    }
 }
