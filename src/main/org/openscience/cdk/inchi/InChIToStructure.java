@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.inchi;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import net.sf.jniinchi.JniInchiWrapper;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,6 +93,9 @@ protected JniInchiInputInchi input;
     protected JniInchiOutputStructure output;
     
     protected IAtomContainer molecule;
+    
+    // magic number - indicates isotope mass is relative
+    private static final int ISOTOPIC_SHIFT_FLAG = 10000;
     
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
@@ -163,23 +168,34 @@ protected JniInchiInputInchi input;
             inchiCdkAtomMap.put(iAt, cAt);
             
             cAt.setID("a" + i);
-            cAt.setSymbol(iAt.getElementType());
+            cAt.setSymbol(iAt.getElementType());                
             cAt.setAtomicNumber(PeriodicTable.getAtomicNumber(cAt.getSymbol()));
             
-            // Ignore coordinates - all zero
-
-            int charge = iAt.getCharge();
-            if (charge != 0) {
-                cAt.setFormalCharge(charge);
-            }
+            // Ignore coordinates - all zero - unless aux info was given... but
+            // the CDK doesn't have an API to provide that
+           
+            // InChI does not have unset properties so we set charge, 
+            // hydrogen count (implicit) and isotopic mass
+            cAt.setFormalCharge(iAt.getCharge());
+            cAt.setImplicitHydrogenCount(iAt.getImplicitH());
             
-            // hydrogenCount contains number of implict hydrogens, not
-            // total number
-            // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
-            int numH = iAt.getImplicitH();
-            if (numH != 0) {
-                cAt.setImplicitHydrogenCount(numH);
-            }
+            int isotopicMass = iAt.getIsotopicMass();
+            
+            if (isotopicMass != 0) {
+                if (ISOTOPIC_SHIFT_FLAG == (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
+                    try {
+                        int massNumber = Isotopes.getInstance()
+                                           .getMajorIsotope(cAt.getAtomicNumber())
+                                           .getMassNumber();
+                        cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
+                    } catch (IOException e) {
+                        throw new CDKException("Could not load Isotopes data", e);
+                    }
+                }
+                else {
+                    cAt.setMassNumber(isotopicMass);     
+                }
+            } 
             
             molecule.addAtom(cAt);
         }

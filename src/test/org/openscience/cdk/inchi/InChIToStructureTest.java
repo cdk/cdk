@@ -31,6 +31,9 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -158,5 +161,28 @@ public class InChIToStructureTest extends CDKTestCase {
 		// OK, this is not typical use, but maybe the above generate method should be private
 		Assert.assertTrue(container instanceof AtomContainer);
 	}
+    
+    @Test public void atomicOxygen() throws CDKException {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1S/O", DefaultChemObjectBuilder.getInstance()
+        );
+        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
+        Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(0));
+    }  
+    
+    @Test public void heavyOxygenWater() throws CDKException {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1S/H2O/h1H2/i1+2", DefaultChemObjectBuilder.getInstance()
+        );
+        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
+        Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(2));
+        Assert.assertThat(container.getAtom(0).getMassNumber(), is(18));
+    }
 
 }
