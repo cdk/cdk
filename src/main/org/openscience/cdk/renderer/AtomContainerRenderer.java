@@ -38,6 +38,8 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ZoomFactor;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
+import static java.lang.Math.min;
+
 /**
  * A general renderer for {@link IAtomContainer}s. The chem object
  * is converted into a 'diagram' made up of {@link IRenderingElement}s. It takes
@@ -181,6 +183,34 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         return this.convertToDiagramBounds(modelBounds);
     }
 
+
+    /**
+     * Determine an estimated bond length for disconnected structures. The
+     * distance between all atoms is measured and then the minimum distance is
+     * divided by 1.5. This length is required for scaling renderings.
+     *
+     * @param container a chemical structure with no bonds at at least 2 atoms
+     * @return the estimated bond length
+     * @throws IllegalArgumentException the structure had a bond or less than
+     *                                  two atoms
+     */
+    private static double estimatedBondLength(IAtomContainer container) {
+       
+        if (container.getBondCount() > 0)
+            throw new IllegalArgumentException("structure has at least one bond - disconnected scaling not need");
+        if (container.getAtomCount() < 2)
+            throw new IllegalArgumentException("structure must have at least two atoms");
+
+        int    nAtoms      = container.getAtomCount();
+        double minDistance = Integer.MAX_VALUE;
+        
+        for (int i = 0; i < nAtoms; i++)
+            for (int j = i + 1; j < nAtoms; j++)
+                minDistance = min(container.getAtom(i).getPoint2d().distance(container.getAtom(j).getPoint2d()), minDistance);
+
+        return minDistance / 1.5; // non-bonded, if they were they would be closer
+    }
+
     /**
      * Paint a molecule (an IAtomContainer).
      *
@@ -193,8 +223,13 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
     public void paint(IAtomContainer atomContainer,
             IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
-        rendererModel.getParameter(Scale.class)
-                     .setValue(calculateScaleForBondLength(GeometryTools.getBondLengthAverage(atomContainer)));
+        if (atomContainer.getBondCount() > 0 || atomContainer.getAtomCount() == 1) {
+            rendererModel.getParameter(Scale.class)
+                         .setValue(calculateScaleForBondLength(GeometryTools.getBondLengthAverage(atomContainer)));
+        } else if (atomContainer.getAtomCount() > 1) {                                                     
+            rendererModel.getParameter(Scale.class)
+                         .setValue(calculateScaleForBondLength(estimatedBondLength(atomContainer)));
+        }
         
         // the diagram to draw
         IRenderingElement diagram = generateDiagram(atomContainer);
