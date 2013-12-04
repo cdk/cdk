@@ -30,7 +30,7 @@ import org.openscience.cdk.renderer.BoundsCalculator;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ArrowElement;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
-import org.openscience.cdk.renderer.generators.BasicBondGenerator.BondLength;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 
 /**
