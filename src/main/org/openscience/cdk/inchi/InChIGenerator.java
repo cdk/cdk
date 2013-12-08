@@ -267,12 +267,10 @@ public class InChIGenerator {
             // total number
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
             Integer implicitH = atom.getImplicitHydrogenCount();
-            if (implicitH == CDKConstants.UNSET) implicitH = 0;
-
-            if (implicitH != 0) {
-                iatom.setImplicitH(implicitH);
-            }
-
+            
+            // set implicit hydrogen count, -1 tells the inchi to determine it 
+            iatom.setImplicitH(implicitH != null ? implicitH : -1);
+            
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
             if (count == 0) {

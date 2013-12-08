@@ -360,6 +360,16 @@ public class InChIGeneratorTest extends CDKTestCase {
             genD.getInchi()
         );
     }
+    
+    // ensure only 
+    @Test public void zeroHydrogenCount() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("O"));
+        ac.getAtom(0).setImplicitHydrogenCount(0);
+        InChIGenerator gen = getFactory().getInChIGenerator(ac);
+        Assert.assertEquals(INCHI_RET.OKAY, gen.getReturnStatus());
+        Assert.assertEquals("InChI=1S/O", gen.getInchi());    
+    }
 
     /**
      * Tests element name is correctly passed to InChI.
