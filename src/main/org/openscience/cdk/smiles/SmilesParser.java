@@ -167,8 +167,7 @@ public final class SmilesParser {
             // if a kekule structure could not be assigned.
             return beamToCDK.toAtomContainer(kekulise ? g.kekule() : g);
         } catch (IOException e) {
-            throw new InvalidSmilesException("Could not parse " + smiles + ":",
-                                             e);
+            throw new InvalidSmilesException("could not parse '" + smiles + "', " + e.getMessage());
         }
     }
 
