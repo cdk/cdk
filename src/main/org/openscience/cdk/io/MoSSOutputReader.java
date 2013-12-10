@@ -173,7 +173,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
      */
     private IAtomContainerSet readAtomContainerSet(IAtomContainerSet molSet) throws IOException {
         SmilesParser parser = new SmilesParser(molSet.getBuilder());
-        parser.setPreservingAromaticity(true);
+        parser.kekulise(false);
         String line = input.readLine();
         line = input.readLine(); // skip the first line
         while (line != null) {

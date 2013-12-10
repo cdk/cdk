@@ -136,7 +136,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
                 "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
         String smilesQ = "OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(O)=O";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.setPreservingAromaticity(true);
+        smilesParser.kekulise(false);
         IAtomContainer moleculeQ = smilesParser.parseSmiles(smilesQ);
 
         IAtomContainer moleculeT = smilesParser.parseSmiles(smilesT);

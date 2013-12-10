@@ -1965,7 +1965,7 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // The CDK aromaticity model does not recognise 'se' but we can still
         // parse it from the SMILES
-        p.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer mol = p.parseSmiles("c1cc2cccnc2[se]1");
         for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
@@ -2394,7 +2394,7 @@ public class SmilesParserTest extends CDKTestCase {
 
     @Test public void testPreserveAromaticity() throws InvalidSmilesException{
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer molecule = sp.parseSmiles("Oc1ccc(Cl)c2C(=O)c3c(sc4nccn34)C(=O)c12");
         Assert.assertEquals(14, countAromaticAtoms(molecule));
         Assert.assertEquals(15, countAromaticBonds(molecule));
@@ -2429,7 +2429,7 @@ public class SmilesParserTest extends CDKTestCase {
 
     @Test public void testPreserveAromaticityAndPerceiveAtomTypes() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         atomtype(molecule);
         Assert.assertNotNull(molecule.getAtom(0).getAtomTypeName());
@@ -2532,7 +2532,7 @@ public class SmilesParserTest extends CDKTestCase {
 
     static IAtomContainer loadExact(String smi) throws InvalidSmilesException {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        parser.setPreservingAromaticity(true);
+        sp.kekulise(false);
         return parser.parseSmiles(smi);
     }
 

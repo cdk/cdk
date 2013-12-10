@@ -126,7 +126,7 @@ public class SMSDTest {
         try {
             System.out.println("searchMCS");
             SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-            sp.setPreservingAromaticity(true);
+            sp.kekulise(false);
             IAtomContainer target = null;
             target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
@@ -217,7 +217,7 @@ public class SMSDTest {
     public void testGetAllAtomMapping() throws CDKException {
         System.out.println("getAllAtomMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
@@ -249,7 +249,7 @@ public class SMSDTest {
     public void testGetAllMapping() throws CDKException {
         System.out.println("getAllMapping");
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);

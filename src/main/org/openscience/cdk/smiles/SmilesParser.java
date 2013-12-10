@@ -39,25 +39,52 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**
- * Parses a SMILES {@cdk.cite SMILESTUT} string and an AtomContainer. The full
- * SSMILES subset {@cdk.cite SSMILESTUT} and the '%' tag for more than 10 rings
- * at a time are supported. An example:
- * <pre>
+ * Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
+ *
+ * <b>Example usage</b><p/>
+ *
+ * <blockquote><pre>
  * try {
- *   SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
- *   IMolecule m = sp.parseSmiles("c1ccccc1");
- * } catch (InvalidSmilesException ise) {
+ *     SmilesParser   sp  = new SmilesParser(SilentChemObjectBuilder.getInstance());
+ *     IAtomContainer m   = sp.parseSmiles("c1ccccc1");
+ * } catch (InvalidSmilesException e) {
+ *     System.err.println(e.getMessage());
  * }
  * </pre>
+ * </blockquote><p/>
  *
- * <p>This parser does not parse stereochemical information, but the following
- * features are supported: reaction smiles, partitioned structures, charged
- * atoms, implicit hydrogen count, '*' and isotope information.
+ * <b>Reading Aromatic SMILES</b><p/>
  *
- * <p>See {@cdk.cite WEI88} for further information.
+ * Aromatic SMILES are automatically kekulised producing a structure with
+ * assigned bond orders. The aromatic specification on the atoms is maintained
+ * from the SMILES even if the structures are not considered aromatic. For
+ * example 'c1ccc1' will correctly have two pi bonds assigned but the
+ * atoms/bonds will still be flagged as aromatic. Recomputing or clearing the
+ * aromaticty will remove these erroneous flags. If a kekulé structure could not
+ * be assigned this is considered an error. The most common example is the
+ * omission of hydrogens on aromatic nitrogens (aromatic pyrrole is specified as
+ * '[nH]1cccc1' not 'n1cccc1'). These structures can not be corrected without
+ * modifying their formula. If there are multiple locations a hydrogen could be
+ * placed the returned structure would differ depending on the atom input order.
+ * If you wish to skip the kekulistation (not recommended) then it can be
+ * disabled with {@link #kekulise}. SMILES can be verified for validity with the
+ * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.<p/>
+ *
+ * <b>Unsupported Features</b><p/>
+ *
+ * The following features are not supported by this parser. <ul> <li>variable
+ * order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
+ * The predefined order required by this parser follows the <a
+ * href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification
+ * of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</li>
+ * <li>atom class indication - <i>this information is loaded but not annotated
+ * on the structure</i> </li> <li>extended tetrahedral stereochemistry
+ * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
+ * <li>octahedral stereochemistry</li> </il>
  *
  * @author Christoph Steinbeck
  * @author Egon Willighagen
+ * @author John May
  * @cdk.module smiles
  * @cdk.githash
  * @cdk.created 2002-04-29
@@ -68,8 +95,6 @@ import java.util.StringTokenizer;
  */
 @TestClass("org.openscience.cdk.smiles.SmilesParserTest")
 public final class SmilesParser {
-
-    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SmilesParser.class);
 
     /**
      * The builder determines which CDK domain objects to create.
@@ -150,11 +175,10 @@ public final class SmilesParser {
 
 
     /**
-     * Parses a SMILES string and returns a Molecule object.
+     * Parses a SMILES string and returns a structure ({@link IAtomContainer}).
      *
      * @param smiles A SMILES string
-     * @return A Molecule representing the constitution given in the SMILES
-     *         string
+     * @return A structure representing the provided SMILES
      * @throws InvalidSmilesException thrown when the SMILES string is invalid
      */
     @TestMethod("testAromaticSmiles,testSFBug1296113")
@@ -178,7 +202,9 @@ public final class SmilesParser {
      *
      * @param preservingAromaticity boolean to indicate if aromaticity is to be
      *                              preserved.
+     * @see #kekulise                              
      */
+    @Deprecated
     public void setPreservingAromaticity(boolean preservingAromaticity) {
         this.kekulise = !preservingAromaticity;
     }
@@ -189,8 +215,21 @@ public final class SmilesParser {
      *
      * @return true or false indicating if aromaticity is preserved.
      */
+    @Deprecated
     public boolean isPreservingAromaticity() {
         return !kekulise;
+    }
+
+    /**
+     * Indicated whether structures should be automatically kekulised if they 
+     * are provided as aromatic. Kekulisation is on by default but can be
+     * turned off if it is believed the structures can be handled without
+     * assigned bond orders (not recommended). 
+     * 
+     * @param kekulise should structures be kekulised
+     */
+    public void kekulise(boolean kekulise) {
+        this.kekulise = kekulise;
     }
 }
 

@@ -90,7 +90,7 @@ public class SMARTSSearchTest extends CDKTestCase {
                                                                       InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder
                                                    .getInstance());
-        sp.setPreservingAromaticity(perserveAromaticity);
+        sp.kekulise(!perserveAromaticity);
         return sp.parseSmiles(smiles);
     }
 
@@ -154,7 +154,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         QueryAtomContainer query = SMARTSParser.parse("c:c", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query c:c: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         IAtomContainer atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
         Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
 
@@ -257,7 +257,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         QueryAtomContainer query = SMARTSParser.parse("aaa", DefaultChemObjectBuilder.getInstance());
         logger.debug("Query CaC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        sp.setPreservingAromaticity(true);
+        sp.kekulise(false);
         
         IAtomContainer atomContainer = sp.parseSmiles("CCC");
         Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));

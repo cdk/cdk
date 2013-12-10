@@ -73,7 +73,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	public void testPyrrole() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.setPreservingAromaticity(true);
+        smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
@@ -95,7 +95,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
 	public void testPyrrole_Silent() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        smilesParser.setPreservingAromaticity(true);
+        smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
@@ -163,7 +163,7 @@ public class DeduceBondSystemToolTest extends CDKTestCase {
     public void testPyrrole_CustomRingFinder() throws Exception {
         String smiles = "c2ccc3n([H])c1ccccc1c3(c2)";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        smilesParser.setPreservingAromaticity(true);
+        smilesParser.kekulise(false);
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         
