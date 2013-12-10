@@ -157,6 +157,12 @@ public class InChINumbersToolsTest extends CDKTestCase {
                    is(new long[]{3, 2, 1}));
     }
     
+    @Test public void unlabelledHydrogens() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("[H]C([H])([H])[H]");
+        assertThat(InChINumbersTools.getUSmilesNumbers(container),
+                   is(new long[]{2, 1, 2, 2, 2}));   
+    }
+    
     static IAtomContainer mock(int nAtoms) {
         IAtomContainer container = Mockito.mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(nAtoms);

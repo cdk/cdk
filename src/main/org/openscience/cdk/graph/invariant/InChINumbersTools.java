@@ -92,6 +92,11 @@ public class InChINumbersTools {
      * charged oxygen atom, start instead at any carbonyl oxygen attached to the
      * same neighbour." <p/>
      * 
+     * All unlabelled atoms (e.g. hydrogens) are assigned the same label which
+     * is different but larger then all other labels. The hydrogen
+     * labelling then needs to be adjusted externally as universal SMILES 
+     * suggests hydrogens should be visited first.
+     * 
      * @param aux       inchi AuxInfo
      * @param container the structure to obtain the numbering of           
      * @return the numbers string to use
@@ -102,8 +107,8 @@ public class InChINumbersTools {
         int index;
         long[] numbers = new long[container.getAtomCount()];
         int[]  first   = null;
-        int label = 1;
-        
+        int    label   = 1;
+                
         if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers
             String[] baseNumbers = aux.substring(index + 8, aux.indexOf('/', index + 8)).split(";");
             first = new int[baseNumbers.length];
@@ -176,6 +181,11 @@ public class InChINumbersTools {
                 }
             }
         }
+        
+        // assign unlabelled atoms
+        for (int i = 0; i < numbers.length; i++)
+            if (numbers[i] == 0)
+                numbers[i] = label;
 
         return numbers;
     }
