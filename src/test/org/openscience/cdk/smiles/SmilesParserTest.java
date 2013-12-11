@@ -1965,7 +1965,7 @@ public class SmilesParserTest extends CDKTestCase {
         SmilesParser p = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // The CDK aromaticity model does not recognise 'se' but we can still
         // parse it from the SMILES
-        sp.kekulise(false);
+        p.kekulise(false);
         IAtomContainer mol = p.parseSmiles("c1cc2cccnc2[se]1");
         for (IAtom atom : mol.atoms()) {
             assertTrue(atom.getFlag(CDKConstants.ISAROMATIC));
@@ -2532,7 +2532,7 @@ public class SmilesParserTest extends CDKTestCase {
 
     static IAtomContainer loadExact(String smi) throws InvalidSmilesException {
         SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        sp.kekulise(false);
+        parser.kekulise(false);
         return parser.parseSmiles(smi);
     }
 
