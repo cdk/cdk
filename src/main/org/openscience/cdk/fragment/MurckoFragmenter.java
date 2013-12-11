@@ -173,6 +173,7 @@ public class MurckoFragmenter implements IFragmenter {
 
         // need to keep the side chains somewhere
         IAtomContainer clone = removeSideChains(atomContainer);
+        clone.setStereoElements(new ArrayList<IStereoElement>());
 
         IAtomContainer currentFramework; // needed for recursion
         try {

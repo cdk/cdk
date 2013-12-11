@@ -21,17 +21,12 @@
  */
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Maps;
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Tool class for checking whether the (sub)structure in an
@@ -90,7 +85,7 @@ public class ConnectivityChecker
         ConnectedComponents        cc            = new ConnectedComponents(GraphUtil.toAdjList(container));
         int[]                      components    = cc.components();
         IAtomContainer[]           containers    = new IAtomContainer[cc.nComponents() + 1];
-        Map<IAtom,IAtomContainer>  componentsMap = Maps.newHashMapWithExpectedSize(container.getAtomCount());
+        Map<IAtom,IAtomContainer>  componentsMap = new HashMap<IAtom, IAtomContainer>(2 * container.getAtomCount());
         
         for (int i = 1; i < containers.length; i++)
             containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
@@ -113,9 +108,13 @@ public class ConnectivityChecker
         
         for (IStereoElement stereo : container.stereoElements()) {
             if (stereo instanceof ITetrahedralChirality) {
-                componentsMap.get(((ITetrahedralChirality) stereo).getChiralAtom()).addStereoElement(stereo);
+                IAtom a = ((ITetrahedralChirality) stereo).getChiralAtom();
+                if (componentsMap.containsKey(a))
+                    componentsMap.get(a).addStereoElement(stereo);
             } else if (stereo instanceof IDoubleBondStereochemistry) {
-                componentsMap.get(((IDoubleBondStereochemistry) stereo).getStereoBond().getAtom(0)).addStereoElement(stereo);
+                IBond bond = ((IDoubleBondStereochemistry) stereo).getStereoBond();
+                if (componentsMap.containsKey(bond.getAtom(0)) && componentsMap.containsKey(bond.getAtom(1)))
+                    componentsMap.get(bond.getAtom(0)).addStereoElement(stereo);
             } else {
                 System.err.println("New stereoelement is not currently paritioned with ConnectivityChecker:" + stereo.getClass());
             }
