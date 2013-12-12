@@ -76,6 +76,9 @@ public final class Canon {
      * Storage of canon labelling and symmetry classes.
      */
     private final long[] labelling, symmetry;
+    
+    /** Only compute the symmetry classes. */
+    private boolean symOnly = false;
 
     /**
      * Create a canon labelling for the graph (g) with the specified
@@ -84,7 +87,7 @@ public final class Canon {
      * @param g         a graph (adjacency list representation)
      * @param partition an initial partition of the vertices
      */
-    private Canon(int[][] g, long[] partition) {
+    private Canon(int[][] g, long[] partition, boolean symOnly) {
         this.g = g;
         labelling = partition.clone();
         symmetry  = refine(labelling);
@@ -105,7 +108,7 @@ public final class Canon {
      * @see InChINumbersTools
      */
     public static long[] label(IAtomContainer container, int[][] g) {
-        return new Canon(g, basicInvariants(container, g)).labelling;
+        return new Canon(g, basicInvariants(container, g), false).labelling;
     }
 
     /**
@@ -121,7 +124,7 @@ public final class Canon {
      * @see EquivalentClassPartitioner
      */
     public static long[] symmetry(IAtomContainer container, int[][] g) {
-        return new Canon(g, basicInvariants(container, g)).symmetry;
+        return new Canon(g, basicInvariants(container, g), true).symmetry;
     }
 
     /**
@@ -174,7 +177,7 @@ public final class Canon {
             if (symmetry == null)
                 symmetry = Arrays.copyOf(prev, ord);
             
-            if (n == ord)
+            if (symOnly || n == ord)
                 return symmetry;
 
             nnu = 0;
