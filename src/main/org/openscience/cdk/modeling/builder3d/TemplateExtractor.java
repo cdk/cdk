@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
@@ -52,6 +53,7 @@ import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -235,7 +237,13 @@ public class TemplateExtractor {
 						(ac.getAtom(j)).setSymbol("C");
 					}
 
-					key = smilesGenerator.createSMILES(builder.newInstance(IAtomContainer.class,ac));
+                    try {
+					    key = smilesGenerator.createSMILES(builder.newInstance(IAtomContainer.class,ac));
+                    } catch (CDKException e) {
+                        LoggingToolFactory.createLoggingTool(getClass()).error(e);
+                        return;
+                    }
+                    
 					// System.out.println("OrgKey:"+key+" For
 					// Molecule:"+counter);
 					if (hashRingSystems.containsKey(key)) {

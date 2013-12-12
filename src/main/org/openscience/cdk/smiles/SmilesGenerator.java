@@ -112,7 +112,7 @@ public final class SmilesGenerator {
      * @return the SMILES string
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
-    public synchronized String createSMILES(IAtomContainer molecule) {
+    public synchronized String createSMILES(IAtomContainer molecule) throws CDKException {
         Graph g = converter.toBeamGraph(molecule);
 
         // collapse() removes redundant hydrogen labels

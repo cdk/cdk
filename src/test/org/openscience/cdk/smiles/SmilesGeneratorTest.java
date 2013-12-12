@@ -99,7 +99,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testEthylPropylPhenantren()
+	@Test public void testEthylPropylPhenantren() throws Exception
 	{
 	    IAtomContainer mol1 = TestMoleculeFactory.makeEthylPropylPhenantren();
         SmilesGenerator sg = new SmilesGenerator();
@@ -114,7 +114,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	/**
 	 *  A unit test for JUnit
 	 */
-	@Test public void testPropylCycloPropane()
+	@Test public void testPropylCycloPropane() throws Exception
 	{
 	    IAtomContainer mol1 = TestMoleculeFactory.makePropylCycloPropane();
         SmilesGenerator sg = new SmilesGenerator();
@@ -495,7 +495,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	/**
 	 * @cdk.bug 791091
 	 */
-	@Test public void testBug791091()
+	@Test public void testBug791091() throws Exception
 	{
         String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
@@ -518,7 +518,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	/**
 	 * @cdk.bug 590236
 	 */
-	@Test public void testBug590236()
+	@Test public void testBug590236() throws Exception
 	{
 		String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
@@ -1056,7 +1056,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2596061
      */
     @Test
-    public void testRoundTripPseudoAtom() throws InvalidSmilesException {
+    public void testRoundTripPseudoAtom() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "[12*H2-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
@@ -1070,7 +1070,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
      * @cdk.bug 2781199
      */
     @Test
-    public void testBug2781199() throws InvalidSmilesException {
+    public void testBug2781199() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "n1ncn(c1)CC";
         IAtomContainer mol = sp.parseSmiles(smiles);

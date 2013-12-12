@@ -31,6 +31,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -126,7 +127,7 @@ final class CDKToBeam {
      * @return the Beam ChemicalGraph for additional manipulation
      */
     @TestMethod("adenine,benzene,imidazole")
-    Graph toBeamGraph(IAtomContainer ac) {
+    Graph toBeamGraph(IAtomContainer ac) throws CDKException {
 
         int order = ac.getAtomCount();
 
@@ -227,7 +228,7 @@ final class CDKToBeam {
      * @throws NullPointerException     the bond order was undefined
      */
     @TestMethod("singleBond,doubleBond,tripleBond")
-    Edge toBeamEdge(IBond b, Map<IAtom, Integer> indices) {
+    Edge toBeamEdge(IBond b, Map<IAtom, Integer> indices) throws CDKException {
 
         checkArgument(b.getAtomCount() == 2,
                       "Invalid number of atoms on bond");
@@ -247,13 +248,15 @@ final class CDKToBeam {
      *                                  not-aromatic
      * @throws IllegalArgumentException the bond order could not be converted
      */
-    private Bond toBeamEdgeLabel(IBond b) {
+    private Bond toBeamEdgeLabel(IBond b) throws CDKException {
 
         if (this.aromatic && b.getFlag(CDKConstants.ISAROMATIC))
             return Bond.AROMATIC;
 
-        IBond.Order order = checkNotNull(b.getOrder(),
-                                         "A bond had undefined order");
+        if (b.getOrder() == null)
+            throw new CDKException("A bond had undefined order, possible query bond?");
+        
+        IBond.Order order = b.getOrder();
 
         switch (order) {
             case SINGLE:
@@ -265,7 +268,7 @@ final class CDKToBeam {
             case QUADRUPLE:
                 return Bond.QUADRUPLE;
             default:
-                throw new IllegalArgumentException("Unsupported bond order: " + order);
+                throw new CDKException("Unsupported bond order: " + order);
         }
     }
 
