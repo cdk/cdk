@@ -48,7 +48,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
+
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 
 /**
  * <p>This class generates a CDK IAtomContainer from an InChI string.  It places 
@@ -286,6 +289,46 @@ protected JniInchiInputInchi input;
                                                                                  new IAtom[]{at0, at1, at2, at3},
                                                                                  stereo);
                 molecule.addStereoElement(tetrahedralChirality);
+            } else if (stereo0d.getStereoType() == INCHI_STEREOTYPE.DOUBLEBOND) {
+                JniInchiAtom[] neighbors = stereo0d.getNeighbors();
+
+                // from JNI InChI doc
+                //                            neighbor[4]  : {#X,#A,#B,#Y} in this order
+                // X                          central_atom : NO_ATOM
+                //  \            X        Y   type         : INCHI_StereoType_DoubleBond
+                //   A == B       \      /
+                //         \       A == B
+                //          Y
+                IAtom x = inchiCdkAtomMap.get(neighbors[0]);
+                IAtom a = inchiCdkAtomMap.get(neighbors[1]);
+                IAtom b = inchiCdkAtomMap.get(neighbors[2]);
+                IAtom y = inchiCdkAtomMap.get(neighbors[3]);
+                
+                // XXX: AtomContainer is doing slow lookup
+                IBond stereoBond = molecule.getBond(a, b);
+                stereoBond.setAtoms(new IAtom[]{a, b}); // ensure a is first atom
+
+                Conformation conformation = null;
+                
+                switch (stereo0d.getParity()) {
+                    case ODD:
+                        conformation = Conformation.TOGETHER;
+                        break;
+                    case EVEN:
+                        conformation = Conformation.OPPOSITE;
+                        break;
+                }
+                
+                // unspecified not stored
+                if (conformation == null)
+                    continue;
+
+                molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond,
+                                                                        new IBond[]{
+                                                                                molecule.getBond(x, a),
+                                                                                molecule.getBond(b, y)
+                                                                        },
+                                                                        conformation));
             } else {
                 // TODO - other types of atom parity - double bond, etc
             }

@@ -28,13 +28,19 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * TestCase for the {@link InChIToStructure} class.
@@ -89,10 +95,10 @@ public class InChIToStructureTest extends CDKTestCase {
 		assertNotNull(container);
 		Assert.assertEquals(3, container.getAtomCount());
 		Assert.assertEquals(2, container.getBondCount());
-		Assert.assertTrue(
-			container.getBond(0).getOrder() == Order.DOUBLE ||
-			container.getBond(1).getOrder() == Order.DOUBLE
-		);
+		assertTrue(
+                container.getBond(0).getOrder() == Order.DOUBLE ||
+                        container.getBond(1).getOrder() == Order.DOUBLE
+                  );
 	}
 
 	@Test
@@ -159,7 +165,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		IAtomContainer container = parser.getAtomContainer();
 		// test if the created IAtomContainer is done with the Silent module...
 		// OK, this is not typical use, but maybe the above generate method should be private
-		Assert.assertTrue(container instanceof AtomContainer);
+		assertTrue(container instanceof AtomContainer);
 	}
     
     @Test public void atomicOxygen() throws CDKException {
@@ -184,5 +190,34 @@ public class InChIToStructureTest extends CDKTestCase {
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(2));
         Assert.assertThat(container.getAtom(0).getMassNumber(), is(18));
     }
-
+    
+    @Test public void e_bute_2_ene() throws Exception {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+", DefaultChemObjectBuilder.getInstance()
+        );
+        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
+        assertThat(((IDoubleBondStereochemistry)se).getStereo(), 
+                   is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
+    }
+    
+    @Test public void z_bute_2_ene() throws Exception {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-", DefaultChemObjectBuilder.getInstance()
+        );
+        parser.generateAtomContainerFromInchi(SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = parser.getAtomContainer();
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
+        assertThat(((IDoubleBondStereochemistry)se).getStereo(), 
+                   is(IDoubleBondStereochemistry.Conformation.TOGETHER));
+    }
 }
