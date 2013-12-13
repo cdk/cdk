@@ -95,6 +95,7 @@ import org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasisTest;
 import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest;
 import org.openscience.cdk.smiles.InvPairTest;
+import org.openscience.cdk.stereo.StereoElementFactoryTest;
 import org.openscience.cdk.stereo.StereoToolTest;
 import org.openscience.cdk.stereo.StereocentersTest;
 import org.openscience.cdk.tools.ElementComparatorTest;
@@ -206,6 +207,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     LonePairElectronCheckerTest.class ,
     StereoToolTest.class,
     StereocentersTest.class,
+    StereoElementFactoryTest.class,
     VABCVolumeTest.class,
     AtomContainerAtomPermutorTest.class,
     AtomContainerBondPermutorTest.class,
