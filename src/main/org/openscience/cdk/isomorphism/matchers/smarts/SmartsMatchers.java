@@ -43,7 +43,7 @@ public final class SmartsMatchers {
      * Prepares a target molecule for matching with SMARTS.
      * 
      * @param container the container to initialise 
-     * @param ringQuery whether the container contains ring queries
+     * @param ringQuery whether the smarts will check ring size queries
      */
     @Deprecated
     public static void prepare(IAtomContainer container, boolean ringQuery) {

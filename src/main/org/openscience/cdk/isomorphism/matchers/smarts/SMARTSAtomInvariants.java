@@ -32,6 +32,7 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -211,7 +212,8 @@ final class SMARTSAtomInvariants {
      * Computes {@link SMARTSAtomInvariants} and stores on the {@link #KEY} or
      * each {@link IAtom} in the {@code container}. The {@link
      * CDKConstants#ISINRING} is also set for each bond. This configuration does
-     * not include ring information and values are left as unset.
+     * not include ring information and values are left as unset. 
+     * Ring membership is still configured but not ring size.
      *
      * <blockquote><pre>
      *     IAtomContainer container = ...;
@@ -289,6 +291,12 @@ final class SMARTSAtomInvariants {
                     ringNumber[v]++;
                     bondMap.get(cycle[i], cycle[i - 1]).setFlag(CDKConstants.ISINRING, true);
                 }
+            }
+        } else {
+            // ring membership is super cheap
+            for (IBond bond : new RingSearch(container, graph).ringFragments()
+                                                              .bonds()) {
+                bond.setFlag(CDKConstants.ISINRING, true);
             }
         }
 
