@@ -42,9 +42,13 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.isomorphism.Pattern;
+import org.openscience.cdk.isomorphism.Ullmann;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -78,21 +82,32 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.fingerprint.MACCSFingerprinterTest")
 public class MACCSFingerprinter implements IFingerprinter {
     private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
-    
+            LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
+
+    private static final String KEY_DEFINITIONS = "data/maccs.txt";
+
     private volatile MaccsKey[] keys = null;
 
     @TestMethod("testFingerprint")
     public MACCSFingerprinter() {
-        
+    }
+
+    public MACCSFingerprinter(IChemObjectBuilder builder) {
+        try {
+            readKeyDef(builder);
+        } catch (IOException e) {
+            logger.debug(e);
+        } catch (CDKException e) {
+            logger.debug(e);
+        }
     }
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
-    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
-                  throws CDKException {
-        
-        MaccsKey[] keys = keys();
+    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer)
+            throws CDKException {
+
+        MaccsKey[] keys = keys(atomContainer.getBuilder());
 
         int bitsetLength = keys.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
@@ -108,7 +123,7 @@ public class MACCSFingerprinter implements IFingerprinter {
             if (status) {
                 if (count == 0) fingerPrint.set(i, true);
                 else {
-                   List<List<Integer>> matches = sqt.getUniqueMatchingAtoms();
+                    List<List<Integer>> matches = sqt.getUniqueMatchingAtoms();
                     if (matches.size() > count) fingerPrint.set(i, true);
                 }
             }
@@ -139,9 +154,9 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
         // bit 166 (*).(*)
-        IAtomContainerSet part 
-            = ConnectivityChecker.partitionIntoMolecules(atomContainer);
-        if (part.getAtomContainerCount() > 1)  fingerPrint.set(165,true);
+        IAtomContainerSet part
+                = ConnectivityChecker.partitionIntoMolecules(atomContainer);
+        if (part.getAtomContainerCount() > 1) fingerPrint.set(165, true);
 
 
         return new BitSetFingerprint(fingerPrint);
@@ -161,22 +176,22 @@ public class MACCSFingerprinter implements IFingerprinter {
         else return 0;
     }
 
-    private MaccsKey[] readKeyDef() throws IOException, CDKException {
-        List<MaccsKey> keys = new ArrayList<MaccsKey>();
-        String filename = "org/openscience/cdk/fingerprint/data/maccs.txt";
-        InputStream ins 
-            = this.getClass().getClassLoader().getResourceAsStream(filename);
-        BufferedReader reader 
-            = new BufferedReader(new InputStreamReader(ins));
-
-        for (int i = 0; i < 32; i++) reader.readLine();
+    private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
+        
+        List<MaccsKey> keys   = new ArrayList<MaccsKey>(166);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(KEY_DEFINITIONS)));
 
         // now process the keys
         String line;
         while ((line = reader.readLine()) != null) {
-            String data = line.trim().split("\\|")[0];
-            String[] toks = data.trim().split("\\s");
-            keys.add(new MaccsKey(toks[1], Integer.parseInt(toks[2])));
+            if (line.charAt(0) == '#')
+                continue;
+            String   data = line.substring(0, line.indexOf('|')).trim();
+            String[] toks = data.split("\\s");
+
+            keys.add(new MaccsKey(toks[1],
+                                  createPattern(toks[1], builder),
+                                  Integer.parseInt(toks[2])));
         }
         if (keys.size() != 166) 
             throw new CDKException("Found " + keys.size() 
@@ -187,10 +202,12 @@ public class MACCSFingerprinter implements IFingerprinter {
     private class MaccsKey {
         private String smarts;
         private int count;
+        private Pattern pattern;
 
-        private MaccsKey(String smarts, int count) {
-            this.smarts = smarts;
-            this.count = count;
+        private MaccsKey(String smarts, Pattern pattern, int count) {
+            this.smarts  = smarts;
+            this.pattern = pattern;
+            this.count   = count;
         }
 
         public String getSmarts() {
@@ -218,14 +235,14 @@ public class MACCSFingerprinter implements IFingerprinter {
      * @return array of MACCS keys.
      * @throws CDKException maccs keys could not be loaded
      */
-    private MaccsKey[] keys() throws CDKException {
+    private MaccsKey[] keys(final IChemObjectBuilder builder) throws CDKException {
         MaccsKey[] result = keys;
         if (result == null) {
             synchronized (lock) {
                 result = keys;
                 if (result == null) {
                     try {
-                        keys = result = readKeyDef();
+                        keys = result = readKeyDef(builder);
                     } catch (IOException e) {
                         throw new CDKException("could not read MACCS definitions", e);
                     }
@@ -233,5 +250,19 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
         return result;
+    }
+
+    /**
+     * Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern
+     * is not created.
+     * 
+     * @param smarts  a smarts pattern
+     * @param builder chem object builder
+     * @return the pattern to match
+     */
+    private Pattern createPattern(String smarts, IChemObjectBuilder builder) {
+        if (smarts.equals("?"))
+            return null;
+        return Ullmann.findSubstructure(SMARTSParser.parse(smarts, builder));
     }
 }
