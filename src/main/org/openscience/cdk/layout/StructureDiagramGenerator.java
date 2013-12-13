@@ -460,9 +460,8 @@ public class StructureDiagramGenerator
 
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
-        NonplanarBonds.assign(molecule); 
+        NonplanarBonds.assign(molecule);
         
-		new OverlapResolver().resolveOverlap(molecule, sssr);
 	}
 
 

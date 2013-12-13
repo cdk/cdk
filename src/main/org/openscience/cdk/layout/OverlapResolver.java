@@ -54,7 +54,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword 2D-coordinates
  * @cdk.module  sdg
  * @cdk.githash
+ * @deprecated does not resolve overlaps correctly
  */
+@Deprecated
 public class OverlapResolver
 {
 
