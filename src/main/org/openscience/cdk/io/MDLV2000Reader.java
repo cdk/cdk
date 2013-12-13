@@ -367,7 +367,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
         
         // flags for determining stereo config
-        boolean has2D = false, has3D = true, isQuery = false;
+        boolean has2D = false, has3D = true;
         
         logger.debug("Reading new molecule");
 	    IAtomContainer outputContainer=null;
@@ -492,19 +492,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class,element));
                 } else if ("A".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
-                    isQuery = true;
                 } else if ("Q".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
-                    isQuery = true;
                 } else if ("*".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
-                    isQuery = true;
                 } else if ("LP".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
-                    isQuery = true;
                 } else if ("L".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
-                    isQuery = true;
                 } else if ( element.equals("R") || 
                            (element.length() > 0 && element.charAt(0) == 'R')){
                  	  logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
@@ -528,7 +523,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     else {
                         atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
                     }
-                    isQuery = true;
                 } else {
                     handleError(
                             "Invalid element type. Must be an existing " +
@@ -751,7 +745,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	newBond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
-                    isQuery = true; // aromatic is a query bond in MDL!
                 }
                 else {
                     queryBondCount++;
@@ -768,7 +761,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     ((CTFileQueryBond)newBond).setType(queryBondType);
                     newBond.setStereo(stereo);
-                    isQuery = true;
                 }
                 bondList.add((newBond));
                 
@@ -986,9 +978,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 		    }
 
             // note: apply the valence model last so that all fixes (i.e. hydrogen
-            // isotopes) are in place
-            for (int i = 0; i < atoms; i++) {
-                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i]);
+            // isotopes) are in place we need to use a offset as this atoms
+            // could be added to a molecule which already had atoms present
+            int offset = outputContainer.getAtomCount() - atoms;
+            for (int i = offset; i < outputContainer.getAtomCount(); i++) {
+                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i - offset]);
             }
 
 		} catch (CDKException exception) {
@@ -1012,10 +1006,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         // TODO: around. making these classes not have unset, atomic number,
         // TODO: hydrogen count and bond order would allow us to automatically
         // TODO: add stereo.
-        if (!isQuery && addStereoElements.isSet() && has2D) {
+        
+        // sanity check that we have a decent molecule, query bonds mean we 
+        // don't have a hydrogen count for atoms
+        for (IAtom a : outputContainer.atoms())
+            if (a.getImplicitHydrogenCount() == null)
+                return outputContainer;
+        
+        if (addStereoElements.isSet() && has2D) {
             outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
                                                                   .createAll());     
-        } else if (!isQuery && addStereoElements.isSet() && has3D) {
+        } else if (addStereoElements.isSet() && has3D) {
             outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
                                                                   .createAll());
         }
