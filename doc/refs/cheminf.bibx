@@ -1290,4 +1290,31 @@ Method </bibtex:title>
       <bibtex:number>1</bibtex:number>
     </bibtex:article>
   </bibtex:entry>
+
+    <bibtex:entry id="InChITechManual">
+        <bibtex:manual>
+            <bibtex:title>IUPAC International Chemical Identifier (InChI), InChI
+                version 1, software version 1.04 (2011), Technical Manual
+            </bibtex:title>
+            <bibtex:author>Stein, Stephen and Heller, Stephen and Tchekhovskoi,
+                Dmitrii and Pletnev, Igor
+            </bibtex:author>
+            <bibtex:year>2011</bibtex:year>
+            <bibtex:url>
+                http://www.inchi-trust.org/fileadmin/user_upload/software/inchi-v1.04/InChI_TechMan.pdf
+            </bibtex:url>
+        </bibtex:manual>
+    </bibtex:entry>
+
+    <bibtex:entry id="Razinger93">
+        <bibtex:article>
+            <bibtex:title>Stereoisomer Generation in Computer-Enhanced Structure Elucidation</bibtex:title>
+            <bibtex:author>Razinger, Marko and Balasubramaniam, Krishnan and Perdih, Marko and Munk, Morton</bibtex:author>
+            <bibtex:year>1993</bibtex:year>
+            <bibtex:journal>J. Chem. Inf. Comput. Sci</bibtex:journal>
+            <bibtex:volume>33</bibtex:volume>
+            <bibtex:pages>812-825</bibtex:pages>
+        </bibtex:article>
+    </bibtex:entry>
+    
 </bibtex:file>
