@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -173,7 +174,7 @@ public class CDKToBeamTest {
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = CDKException.class)
     public void unsetBondOrder() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
@@ -185,7 +186,7 @@ public class CDKToBeamTest {
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected = NullPointerException.class)
+    @Test(expected = CDKException.class)
     public void undefBondOrder() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
