@@ -49,7 +49,7 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
         Assert.assertNotNull("No test file has been set!", testFile);
 
         boolean read = false;
-        for (IChemObject object : acceptableChemObjects) {
+        for (IChemObject object : acceptableChemObjects()) {
             if (chemObjectIO.accepts(object.getClass())) {
                 InputStream ins = SimpleChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
                 chemObjectIO.setReader(ins);

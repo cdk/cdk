@@ -105,10 +105,19 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
         Assert.assertTrue("At least one of the following IChemObect's should be accepted: IChemFile, IChemModel, IAtomContainer, IReaction", oneAccepted);
     }
 
+    /** static objects, shared between tests - difficult to locate bugs. */
+    @Deprecated
     protected static IChemObject[] acceptableChemObjects = {
         new ChemFile(), new ChemModel(), new AtomContainer(),
         new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())
     };
+    
+    protected static IChemObject[] acceptableChemObjects() {
+        return new IChemObject[]{
+                new ChemFile(), new ChemModel(), new AtomContainer(),
+                new Reaction(), new RGroupQuery(DefaultChemObjectBuilder.getInstance())
+        };
+    }
 
     @Test public void testAcceptsAtLeastOneChemObject() {
         boolean oneAccepted = false;
