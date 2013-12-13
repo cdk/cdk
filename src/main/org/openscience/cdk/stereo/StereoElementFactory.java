@@ -110,14 +110,19 @@ public abstract class StereoElementFactory {
                 case Tricoordinate:
                     for (int w : graph[v]) {
                         if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
-                            if (centers.isStereocenter(w))
-                                elements.add(createGeometric(v, w));
+                            if (centers.isStereocenter(w)) {
+                                IStereoElement element = createGeometric(v, w);
+                                if (element != null) 
+                                    elements.add(element);
+                            }
                             break;
                         }
                     }
                     break;
                 case Tetracoordinate:
-                    elements.add(createTetrahedral(v));
+                    IStereoElement element = createTetrahedral(v);
+                    if (element != null)
+                        elements.add(element);
                     break;
             }
         }
