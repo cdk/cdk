@@ -79,25 +79,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class MACCSFingerprinter implements IFingerprinter {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MACCSFingerprinter.class);
-    private MaccsKey[] keys = null;
+    
+    private volatile MaccsKey[] keys = null;
 
     @TestMethod("testFingerprint")
     public MACCSFingerprinter() {
-        try {
-            keys = readKeyDef();
-        } catch (IOException e) {
-            logger.debug(e);
-        } catch (CDKException e) {
-            logger.debug(e);
-        }
+        
     }
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) 
                   throws CDKException {
-        if (keys == null) 
-            throw new CDKException("Could not setup key definitions");
+        
+        MaccsKey[] keys = keys();
 
         int bitsetLength = keys.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
@@ -214,5 +209,29 @@ public class MACCSFingerprinter implements IFingerprinter {
 			throws CDKException {
 		throw new UnsupportedOperationException();
 	}
+    
+    private final Object lock = new Object();
 
+    /**
+     * Access MACCS keys definitions.
+     * 
+     * @return array of MACCS keys.
+     * @throws CDKException maccs keys could not be loaded
+     */
+    private MaccsKey[] keys() throws CDKException {
+        MaccsKey[] result = keys;
+        if (result == null) {
+            synchronized (lock) {
+                result = keys;
+                if (result == null) {
+                    try {
+                        keys = result = readKeyDef();
+                    } catch (IOException e) {
+                        throw new CDKException("could not read MACCS definitions", e);
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
