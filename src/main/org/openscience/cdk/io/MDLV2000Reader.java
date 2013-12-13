@@ -31,7 +31,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -64,6 +63,7 @@ import org.openscience.cdk.io.setting.BooleanIOSetting;
 import org.openscience.cdk.io.setting.IOSetting;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
+import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -106,47 +106,50 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     BufferedReader input = null;
     private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
+            LoggingToolFactory.createLoggingTool(MDLV2000Reader.class);
 
     private BooleanIOSetting forceReadAs3DCoords;
     private BooleanIOSetting interpretHydrogenIsotopes;
+    private BooleanIOSetting addStereoElements;
 
     //Keep track of atoms and the lines they were on in the atom block.
     private List<IAtom> atomsByLinePosition;
     // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
-    
+
     public MDLV2000Reader() {
         this(new StringReader(""));
     }
-    
-	/**
-	 *  Constructs a new MDLReader that can read Molecule from a given InputStream.
-	 *
-	 *@param  in  The InputStream to read from
-	 */
-	public MDLV2000Reader(InputStream in) {
-		this(new InputStreamReader(in));
-	}
-	public MDLV2000Reader(InputStream in, Mode mode) {
-		this(new InputStreamReader(in), mode);
-	}
 
-	/**
-	 *  Constructs a new MDLReader that can read Molecule from a given Reader.
-	 *
-	 *@param  in  The Reader to read from
-	 */
-	public MDLV2000Reader(Reader in) {
+    /**
+     *  Constructs a new MDLReader that can read Molecule from a given InputStream.
+     *
+     *@param  in  The InputStream to read from
+     */
+    public MDLV2000Reader(InputStream in) {
+        this(new InputStreamReader(in));
+    }
+
+    public MDLV2000Reader(InputStream in, Mode mode) {
+        this(new InputStreamReader(in), mode);
+    }
+
+    /**
+     *  Constructs a new MDLReader that can read Molecule from a given Reader.
+     *
+     *@param  in  The Reader to read from
+     */
+    public MDLV2000Reader(Reader in) {
         this(in, Mode.RELAXED);
-	}
-	public MDLV2000Reader(Reader in, Mode mode) {
+    }
+
+    public MDLV2000Reader(Reader in, Mode mode) {
         input = new BufferedReader(in);
         initIOSettings();
         super.mode = mode;
-	}
+    }
 
-	@TestMethod("testGetFormat")
+    @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLV2000Format.getInstance();
     }
@@ -154,8 +157,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
-        } else {
+            this.input = (BufferedReader) input;
+        }
+        else {
             this.input = new BufferedReader(input);
         }
     }
@@ -165,43 +169,46 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
-		if (IAtomContainer.class.equals(classObject)) return true;
-		if (IChemFile.class.equals(classObject)) return true;
-		if (IChemModel.class.equals(classObject)) return true;
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+            if (IChemModel.class.equals(interfaces[i])) return true;
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        }
+        if (IAtomContainer.class.equals(classObject)) return true;
+        if (IChemFile.class.equals(classObject)) return true;
+        if (IChemModel.class.equals(classObject)) return true;
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	/**
-	 *  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
-	 *  this (from file, database, internet etc). If the specific implementation
-	 *  does not support a specific IChemObject it will throw an Exception.
-	 *
-	 *@param  object                              The object that subclasses
-	 *      IChemObject
-	 *@return                                     The IChemObject read
-	 *@exception  CDKException
-	 */
+    /**
+     *  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
+     *  this (from file, database, internet etc). If the specific implementation
+     *  does not support a specific IChemObject it will throw an Exception.
+     *
+     *@param  object                              The object that subclasses
+     *      IChemObject
+     *@return The IChemObject read
+     *@exception CDKException
+     */
     public <T extends IChemObject> T read(T object) throws CDKException {
-		if (object instanceof IChemFile) {
-			return (T)readChemFile((IChemFile)object);
-        } else if (object instanceof IChemModel) {
-            return (T)readChemModel((IChemModel)object);
-		} else if (object instanceof IAtomContainer) {
-			return (T)readAtomContainer((IAtomContainer)object);
-		} else {
-			throw new CDKException("Only supported are ChemFile and Molecule.");
-		}
-	}
+        if (object instanceof IChemFile) {
+            return (T) readChemFile((IChemFile) object);
+        }
+        else if (object instanceof IChemModel) {
+            return (T) readChemModel((IChemModel) object);
+        }
+        else if (object instanceof IAtomContainer) {
+            return (T) readAtomContainer((IAtomContainer) object);
+        }
+        else {
+            throw new CDKException("Only supported are ChemFile and Molecule.");
+        }
+    }
 
     private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
         IAtomContainerSet setOfMolecules = chemModel.getMoleculeSet();
@@ -209,33 +216,33 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             setOfMolecules = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         }
         IAtomContainer m = readAtomContainer(chemModel.getBuilder().newInstance(IAtomContainer.class));
-		if (m != null && m instanceof IAtomContainer) {
-			setOfMolecules.addAtomContainer((IAtomContainer)m);
-		}
+        if (m != null && m instanceof IAtomContainer) {
+            setOfMolecules.addAtomContainer((IAtomContainer) m);
+        }
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;
     }
 
-	/**
-	 * Read a ChemFile from a file in MDL SDF format.
-	 *
-	 * @return    The ChemFile that was read from the MDL file.
-	 */
+    /**
+     * Read a ChemFile from a file in MDL SDF format.
+     *
+     * @return The ChemFile that was read from the MDL file.
+     */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
-        
+
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-		IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
-		IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
-		if (m != null && m instanceof IAtomContainer ) {
-			setOfMolecules.addAtomContainer((IAtomContainer)m);
-		}
+        IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
+        IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
+        if (m != null && m instanceof IAtomContainer) {
+            setOfMolecules.addAtomContainer((IAtomContainer) m);
+        }
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
-        
+
         setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-		String str;
+        String str;
         try {
             String line;
             while ((line = input.readLine()) != null) {
@@ -358,6 +365,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 	 *@return    The Molecule that was read from the MDL file.
 	 */
 	private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
+        
+        // flags for determining stereo config
+        boolean has2D = false, has3D = true, isQuery = false;
+        
         logger.debug("Reading new molecule");
 	    IAtomContainer outputContainer=null;
         int linecount = 0;
@@ -481,14 +492,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class,element));
                 } else if ("A".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    isQuery = true;
                 } else if ("Q".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    isQuery = true;
                 } else if ("*".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    isQuery = true;
                 } else if ("LP".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    isQuery = true;
                 } else if ("L".equals(element)) {
                 	atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
+                    isQuery = true;
                 } else if ( element.equals("R") || 
                            (element.length() > 0 && element.charAt(0) == 'R')){
                  	  logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
@@ -512,6 +528,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     else {
                         atom = molecule.getBuilder().newInstance(IPseudoAtom.class,element);
                     }
+                    isQuery = true;
                 } else {
                     handleError(
                             "Invalid element type. Must be an existing " +
@@ -637,6 +654,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             // convert to 2D, if totalZ == 0
             if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
+                has3D = false;
                 logger.info("All coordinates are 0.0");
                 if(atomList.size()==1) {
                     atomList.get(0).setPoint2d(new Point2d(x,y));              
@@ -645,14 +663,24 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         atomToUpdate.setPoint3d(null);
                     }
                 }
-            } else if (totalZ == 0.0 && !forceReadAs3DCoords.isSet()) {
-                logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                for (IAtom atomToUpdate : atomList) {
-                    Point3d p3d = atomToUpdate.getPoint3d();
-                    if (p3d != null) {
-                        atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
-                        atomToUpdate.setPoint3d(null);
+            } else if (totalZ == 0.0) {                          
+               
+                if (!forceReadAs3DCoords.isSet()) {
+                    logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
+                    for (IAtom atomToUpdate : atomList) {
+                        Point3d p3d = atomToUpdate.getPoint3d();
+                        if (p3d != null) {
+                            atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
+                            atomToUpdate.setPoint3d(null);
+                        }
                     }
+                    has2D = true;
+                    has3D = false;
+                } else {
+                    // we do have 2D but they're stored as 3D and so not very
+                    // useful for stereo perception (E/Z would still be okay)
+                    has2D = false; 
+                    has3D = false;    
                 }
             }
             
@@ -723,6 +751,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 	newBond.setFlag(CDKConstants.ISAROMATIC, true);
                     a1.setFlag(CDKConstants.ISAROMATIC, true);
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
+                    isQuery = true; // aromatic is a query bond in MDL!
                 }
                 else {
                     queryBondCount++;
@@ -739,6 +768,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     ((CTFileQueryBond)newBond).setType(queryBondType);
                     newBond.setStereo(stereo);
+                    isQuery = true;
                 }
                 bondList.add((newBond));
                 
@@ -977,6 +1007,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 exception
             );
 		}
+        
+        // TODO: query bonds and atoms with unset values leave nulls hanging 
+        // TODO: around. making these classes not have unset, atomic number,
+        // TODO: hydrogen count and bond order would allow us to automatically
+        // TODO: add stereo.
+        if (!isQuery && addStereoElements.isSet() && has2D) {
+            outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
+                                                                  .createAll());     
+        } else if (!isQuery && addStereoElements.isSet() && has3D) {
+            outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
+                                                                  .createAll());
+        }
+        
 		return  outputContainer;
 	}
 
@@ -1045,6 +1088,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         interpretHydrogenIsotopes = addSetting(new BooleanIOSetting("InterpretHydrogenIsotopes", IOSetting.Importance.LOW,
           "Should D and T be interpreted as hydrogen isotopes?",
           "true"));
+        addStereoElements = addSetting(new BooleanIOSetting("AddStereoElements", IOSetting.Importance.LOW,
+                                                            "Assign stereo configurations to stereocenters utilising 2D/3D coordinates.",
+                                                            "true"));
     }
     
     public void customizeJob() {
