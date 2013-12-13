@@ -4,3 +4,4 @@ log4j*.jar
 jgrapht-0.6.0.jar
 beam-core-0.3-SNAPSHOT.jar
 beam-func-0.3-SNAPSHOT.jar
+guava-14.0.1.jar
