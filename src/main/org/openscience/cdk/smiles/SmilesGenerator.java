@@ -173,18 +173,76 @@ public final class SmilesGenerator {
      *
      * @param molecule The molecule to evaluate
      * @return the SMILES string
+     * @throws CDKException SMILES could not be created
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
     public String create(IAtomContainer molecule) throws CDKException {
+        return create(molecule, new int[molecule.getAtomCount()]);
+    }
+
+    /**
+     * Create a SMILES string and obtain the order which the atoms were 
+     * written. The output order allows one to arrange auxiliary atom data in the
+     * order that a SMILES string will be read. A simple example is seen below
+     * where 2D coordinates are stored with a SMILES string. In reality a more
+     * compact binary encoding would be used instead of printing the coordinates
+     * as a string.
+     * 
+     * <blockquote><pre>
+     * IAtomContainer  mol = ...;
+     * SmilesGenerator sg  = SmilesGenerator.generic();
+     * 
+     * int   n     = mol.getAtomCount();
+     * int[] order = new int[];
+     *
+     * // the order array is filled up as the SMILES is generated
+     * String smi = sg.create(mol, order);
+     * 
+     * // load the coordinates array such that they are in the order the atoms
+     * // are read when parsing the SMILES
+     * Point2d[] coords = new Point2d[mol.getAtomCount()];
+     * for (int i = 0; i < coords.length; i++)
+     *     coords[order[i]] = container.getAtom(i).getPoint2d();
+     * 
+     * // SMILES string suffixed by the coordinates
+     * String smi2d = smi + " " + Arrays.toString(coords);
+     * 
+     * </pre></blockquote>
+     * 
+     * @param molecule the molecule to write
+     * @param order    array to store the output order of atoms
+     * @return the SMILES string
+     * @throws CDKException SMILES could not be created
+     */
+    public String create(IAtomContainer molecule, int[] order) throws CDKException {
+        
+        if (order.length != molecule.getAtomCount())
+            throw new IllegalArgumentException("the array for storing output order should be" +
+                                                       "the same length as the number of atoms");
+        
         Graph g = converter.toBeamGraph(molecule);
         
         // apply the CANON labelling
         if (canonical) {
-            g = Functions.canonicalize(g, labels(molecule));
+            
+            // determine the output order
+            int[] labels = labels(molecule);
+            
+            g = g.permute(labels);
+            
+            String smiles = g.toSmiles(order);
+            
+            // the SMILES has been generated on a reordered molecule, transform
+            // the ordering
+            int[] canorder = new int[order.length];
+            for (int i = 0; i < labels.length; i++)
+                canorder[i] = order[labels[i]];
+            System.arraycopy(canorder, 0, order, 0, order.length);
+            
+            return smiles;
+        } else {
+            return g.toSmiles(order);
         }
-
-        // collapse() removes redundant hydrogen labels
-        return g.toSmiles();
     }
 
     /**
@@ -241,11 +299,12 @@ public final class SmilesGenerator {
      * @return the permutation
      * @see Canon
      */
-    private final long[] labels(final IAtomContainer molecule) {
+    private final int[] labels(final IAtomContainer molecule) {
         long[] labels = Canon.label(molecule, GraphUtil.toAdjList(molecule));
+        int[]  cpy    = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
-            labels[i] -= 1;              
-        return labels;
+            cpy[i] = (int) labels[i] - 1;              
+        return cpy;
     }
 
 }

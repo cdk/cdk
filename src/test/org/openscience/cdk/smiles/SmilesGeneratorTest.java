@@ -25,6 +25,7 @@ package org.openscience.cdk.smiles;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -68,9 +69,11 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
+import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -1154,6 +1157,66 @@ public class SmilesGeneratorTest extends CDKTestCase {
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(benzene);
         String smileswitharomaticity = sg.create(benzene);
         Assert.assertEquals("c1ccccc1", smileswitharomaticity);
+    }
+    
+    @Test public void outputOrder() throws Exception {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                        .addImplicitHydrogens(adenine);
+        
+        SmilesGenerator sg = SmilesGenerator.generic();
+        int[] order = new int[adenine.getAtomCount()];
+        
+        String   smi = sg.create(adenine, order);
+        String[] at  = new String[adenine.getAtomCount()];
+        
+        for (int i = 0; i < at.length; i++) {
+            at[order[i]] = adenine.getAtom(i).getAtomTypeName();
+        }
+        
+        // read in the SMILES
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer adenine2 = sp.parseSmiles(smi);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine2);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                        .addImplicitHydrogens(adenine2);
+        
+        // check atom types
+        for (int i = 0; i < adenine2.getAtomCount(); i++) {
+            assertThat(at[i],
+                       is(adenine2.getAtom(i).getAtomTypeName()));
+        }
+    }
+
+    @Test public void outputCanOrder() throws Exception {
+        IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                        .addImplicitHydrogens(adenine);
+
+        SmilesGenerator sg = SmilesGenerator.unique();
+        int[] order = new int[adenine.getAtomCount()];
+
+        String   smi = sg.create(adenine, order);
+        String[] at  = new String[adenine.getAtomCount()];
+
+        for (int i = 0; i < at.length; i++) {
+            at[order[i]] = adenine.getAtom(i).getAtomTypeName();
+        }
+
+        // read in the SMILES
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer adenine2 = sp.parseSmiles(smi);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(adenine2);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
+                        .addImplicitHydrogens(adenine2);
+
+        // check atom types
+        for (int i = 0; i < adenine2.getAtomCount(); i++) {
+            assertThat(at[i],
+                       is(adenine2.getAtom(i).getAtomTypeName()));
+        }
     }
     
     static ITetrahedralChirality anticlockwise(IAtomContainer container, 
