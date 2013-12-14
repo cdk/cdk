@@ -282,16 +282,12 @@ public class CDKToBeamTest {
     @Test public void adeneine() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeAdenine());
         assertThat(g.toSmiles(),
-                   is("[C]-1-2=[C](-[N]=[CH]-[N]=[C]1-[NH2])-[NH]-[CH]=[N]2"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("C12=C(N=CN=C1N)NC=N2"));
     }
 
     @Test public void benzene_kekule() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeBenzene());
         assertThat(g.toSmiles(),
-                   is("[CH]=1-[CH]=[CH]-[CH]=[CH]-[CH]1"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("C=1C=CC=CC1"));
     }
 
@@ -299,8 +295,6 @@ public class CDKToBeamTest {
         IAtomContainer ac = TestMoleculeFactory.makeBenzene();
         Graph g = convert(ac, true, true);
         assertThat(g.toSmiles(),
-                   is("[cH]:1:[cH]:[cH]:[cH]:[cH]:[cH]1"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("c1ccccc1"));
     }
 
@@ -308,8 +302,6 @@ public class CDKToBeamTest {
         Graph g = convert(TestMoleculeFactory
                                           .makeImidazole(), false, true);
         assertThat(g.toSmiles(),
-                   is("[CH]=1-[NH]-[CH]=[N]-[CH]1"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("C=1NC=NC1"));
     }
 
@@ -317,16 +309,12 @@ public class CDKToBeamTest {
         Graph g = convert(TestMoleculeFactory
                                           .makeImidazole(), true, true);
         assertThat(g.toSmiles(),
-                   is("[cH]:1:[nH]:[cH]:[n]:[cH]1"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("c1[nH]cnc1"));
     }
 
     @Test public void imidazole_ignoreAromatic() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true, false);
         assertThat(g.toSmiles(),
-                   is("[CH]=1-[NH]-[CH]=[N]-[CH]1"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("C=1NC=NC1"));
     }
 
@@ -347,7 +335,7 @@ public class CDKToBeamTest {
         ac.addAtom(a);
         Graph g = convert(ac, false, false); // non-isomeric
         assertThat(g.atom(0).isotope(), is(-1));
-        assertThat(g.toSmiles(), is("[CH4]"));
+        assertThat(g.toSmiles(), is("C"));
     }
 
     @Test public void azanium() throws Exception {
@@ -404,8 +392,6 @@ public class CDKToBeamTest {
                                                           OPPOSITE));
         Graph g = convert(ac);
         assertThat(g.toSmiles(),
-                   is("[F]/[CH]=[CH]/[F]"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("F/C=C/F"));
     }
 
@@ -433,8 +419,6 @@ public class CDKToBeamTest {
                                                           TOGETHER));
         Graph g = convert(ac);
         assertThat(g.toSmiles(),
-                   is("[F]/[CH]=[CH]\\[F]"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("F/C=C\\F"));
     }
 
@@ -469,8 +453,6 @@ public class CDKToBeamTest {
 
         Graph g = convert(ac);
         assertThat(g.toSmiles(),
-                   is("[CH3]-[CH2]-[C@@](-[CH3])(-[OH])-[H]"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("CC[C@@](C)(O)[H]"));
     }
 
@@ -505,8 +487,6 @@ public class CDKToBeamTest {
 
         Graph g = convert(ac);
         assertThat(g.toSmiles(),
-                   is("[CH3]-[CH2]-[C@](-[CH3])(-[OH])-[H]"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("CC[C@](C)(O)[H]"));
     }
 
@@ -538,8 +518,6 @@ public class CDKToBeamTest {
                                                           TOGETHER));
         Graph g = convert(ac);
         assertThat(g.toSmiles(),
-                   is("[F]-[CH]:[CH]-[F]"));
-        assertThat(Functions.collapse(g).toSmiles(),
                    is("F[CH]:[CH]F"));
     }
     
