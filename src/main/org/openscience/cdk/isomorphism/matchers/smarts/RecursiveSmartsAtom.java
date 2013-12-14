@@ -23,6 +23,9 @@
  */
 package org.openscience.cdk.isomorphism.matchers.smarts;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Iterables;
 import org.openscience.cdk.graph.GraphUtil;
@@ -37,6 +40,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.util.BitSet;
+
 /**
  * This matches recursive smarts atoms.
  *
@@ -50,15 +55,33 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
 
     /** The IQueryAtomContainer created by parsing the recursive smarts */
     private final IQueryAtomContainer query;
+    
+    /** Query cache. */
+    private final LoadingCache<IAtomContainer, BitSet> cache;
 
     /**
      * Creates a new instance
      *
      * @param query
      */
-    public RecursiveSmartsAtom(IQueryAtomContainer query) {
+    public RecursiveSmartsAtom(final IQueryAtomContainer query) {
         super(query.getBuilder());
         this.query = query;
+        this.cache = CacheBuilder.newBuilder()
+                                 .maximumSize(42)
+                                 .weakKeys() 
+                                 .build(new CacheLoader<IAtomContainer, BitSet>() {
+                                     @Override public BitSet load(IAtomContainer target) throws Exception {
+                                         BitSet hits = new BitSet();
+                                         for (int[] mapping : FluentIterable.from(Ullmann.findSubstructure(query)
+                                                                                         .matchAll(target))
+                                                                            .filter(new SmartsStereoMatch(query, target))
+                                                                            .filter(new ComponentGrouping(query, target))) {
+                                             hits.set(mapping[0]);
+                                         }
+                                         return hits;
+                                     }
+                                 });
     }
 
     /* (non-Javadoc)
@@ -74,16 +97,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
 
         IAtomContainer target = invariants(atom).target();
 
-        // recursive queries are not currently cached - they also be faster
-        // by specifying the initial mapping of (0->0) and
-        for (int[] mapping : FluentIterable.from(Ullmann.findSubstructure(query)
-                                                          .matchAll(target))
-                                           .filter(new SmartsStereoMatch(query, target))
-                                           .filter(new ComponentGrouping(query, target))) {
-            if (target.getAtom(mapping[0]) == atom) 
-                return true;
-        }
-        
-        return false;
+        return cache.getUnchecked(target)
+                    .get(target.getAtomNumber(atom));
     }
 }
