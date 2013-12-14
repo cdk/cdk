@@ -128,7 +128,9 @@
 98 [!#6;!#1]1~*~*~*~*~*~1 0 |QAAAAA@1
 99 [#6]=[#6] 0 |C=C
 100 *~[CH2]~[#7] 0 |ACH2N
-101 [$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1)] 0 |8M Ring or larger. This only handles up to ring sizes of 14
+# bit 101 requires finding a ring > 8 atoms/bonds, this is inefficient to match using SMARTS
+# 101 [$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1),$([R]@1@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]@[R]1)] 0 |8M Ring or larger. This only handles up to ring sizes of 14
+101 ? 0 | 8 member ring
 102 [!#6;!#1]~[#8] 0 |QO
 103 Cl 0 |CL
 104 [!#6;!#1;!H0]~*~[CH2]~* 0 |QHACH2A

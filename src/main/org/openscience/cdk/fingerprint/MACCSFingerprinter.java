@@ -116,8 +116,7 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
-    public IBitFingerprint getBitFingerprint(IAtomContainer container)
-            throws CDKException {
+    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
 
         MaccsKey[] keys = keys(container.getBuilder());
         BitSet     fp   = new BitSet(keys.length);
@@ -144,30 +143,33 @@ public class MACCSFingerprinter implements IFingerprinter {
         // (bits 1,44,125,166) so let try and do those features by hand
 
         // bit 125 aromatic ring count > 1
+        // bit 101 a ring with more than 8 members
         AllRingsFinder ringFinder = new AllRingsFinder();
-        IRingSet rings = ringFinder.findAllRings(container);
+        IRingSet       rings      = ringFinder.findAllRings(container);
         int ringCount = 0;
         for (int i = 0; i < rings.getAtomContainerCount(); i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
             boolean allAromatic = true;
-            Iterator<IBond> bonds = ring.bonds().iterator();
-            while (bonds.hasNext()) {
-                IBond bond = bonds.next();
-                if (!bond.getFlag(CDKConstants.ISAROMATIC)) {
-                    allAromatic = false;
-                    break;
+            if (ringCount < 2) { // already found enough aromatic rings
+                for (IBond bond : ring.bonds()) {
+                    if (!bond.getFlag(CDKConstants.ISAROMATIC)) {
+                        allAromatic = false;
+                        break;
+                    }
                 }
             }
             if (allAromatic) ringCount++;
-            if (ringCount > 1) {
-                fp.set(124, true);
-                break;
-            }
+            if (ringCount > 1)
+                fp.set(124);
+            if (ring.getAtomCount() >= 8)
+                fp.set(100);
         }
-        // bit 166 (*).(*)
+        
+        // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
+        // count the number of component
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
         if (cc.nComponents() > 1) 
-            fp.set(165, true);
+            fp.set(165);
 
 
         return new BitSetFingerprint(fp);
