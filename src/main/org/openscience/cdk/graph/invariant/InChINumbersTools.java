@@ -233,8 +233,8 @@ public class InChINumbersTools {
      */
     @TestMethod("fixedH")
     static String auxInfo(IAtomContainer container, INCHI_OPTION... options) throws CDKException {
-        long[] atomNumbers = new long[container.getAtomCount()];
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+        factory.setIgnoreAromaticBonds(true);
         InChIGenerator gen = factory.getInChIGenerator(container, Arrays.asList(options));
         if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
             throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
