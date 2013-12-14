@@ -228,7 +228,8 @@ public final class SmilesGenerator {
             // determine the output order
             int[] labels = labels(molecule);
             
-            g = g.permute(labels);
+            g = g.permute(labels)
+                 .resonate();
             
             String smiles = g.toSmiles(order);
             
