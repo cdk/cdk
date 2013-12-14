@@ -36,6 +36,8 @@ import java.util.Vector;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.graph.invariant.CanonicalLabeler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,14 +78,14 @@ import uk.ac.ebi.beam.Graph;
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public final class SmilesGenerator {
 
-    private final boolean   isomeric;
+    private final boolean   isomeric, canonical, aromatic;
     private final CDKToBeam converter;
 
     /**
      *  Create the SMILES generator.
      */
     public SmilesGenerator() {
-        this(false);
+        this(false, false, false);
     }
 
     /**
@@ -92,17 +94,61 @@ public final class SmilesGenerator {
      * @param isomeric include isotope and stereo configurations in produced
      *                 SMILES
      */
-    private SmilesGenerator(boolean isomeric) {
+    private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic) {
         this.isomeric  = isomeric;
-        this.converter = new CDKToBeam(isomeric);
+        this.canonical = canonical;    
+        this.aromatic  = aromatic;
+        this.converter = new CDKToBeam(isomeric, aromatic);
     }
 
     /**
-     * Convenience method for creating an isomeric generator.
+     * The generator should write aromatic (lower-case) SMILES. This option is
+     * not recommended as different parsers can interpret where bonds should be
+     * placed. 
+     * 
+     * <blockquote><pre>
+     * IAtomContainer  container = ...;
+     * SmilesGenerator smilesGen = SmilesGenerator.unique()
+     *                                            .aromatic();
+     * smilesGen.createSMILES(container);                                            
+     * </pre></blockquote>
+     * 
+     * @return a generator for aromatic SMILES 
+     */
+    SmilesGenerator aromatic() {
+        return new SmilesGenerator(isomeric, canonical, true);
+    } 
+
+    /**
+     * Create a generator for arbitrary SMILES. Arbitrary SMILES are 
+     * non-canonical and useful for storing information when it is not used
+     * as an index (i.e. unique keys).
+     * 
+     * @return a new arbitrary SMILES generator
+     */
+    public static SmilesGenerator arbitary() {
+        return new SmilesGenerator(false, false, false);
+    }
+    
+    /**
+     * Convenience method for creating an isomeric generator. Isomeric SMILES
+     * are non-unique but contain isotope numbers (e.g. {@code [13C]}) and 
+     * stereo-chemistry.
+     * 
      * @return a new isomeric SMILES generator
      */
-    public static SmilesGenerator isomericGenerator() {
-        return new SmilesGenerator(true);
+    public static SmilesGenerator isomeric() {
+        return new SmilesGenerator(true, false, false);
+    }
+
+    /**
+     * Create a unique SMILES generator. Unique SMILES use a fast canonisation
+     * algorithm but does not encode isotope or stereo-chemistry.
+     * 
+     * @return a new unique SMILES generator
+     */
+    public static SmilesGenerator unique() {
+        return new SmilesGenerator(false, true, false);
     }
 
     /**
@@ -114,12 +160,11 @@ public final class SmilesGenerator {
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
     public synchronized String createSMILES(IAtomContainer molecule) throws CDKException {
         Graph g = converter.toBeamGraph(molecule);
-
-        // collapse() removes redundant hydrogen labels
-        g = Functions.collapse(g);
         
         // apply the CANON labelling
-        g = Functions.canonicalize(g, labels(molecule));
+        if (canonical) {
+            g = Functions.canonicalize(g, labels(molecule));
+        }
 
         // collapse() removes redundant hydrogen labels
         return g.toSmiles();
@@ -177,24 +222,12 @@ public final class SmilesGenerator {
      * 
      * @param molecule the molecule to 
      * @return the permutation
+     * @see Canon
      */
     private final long[] labels(final IAtomContainer molecule) {
-        CanonicalLabeler canon = new CanonicalLabeler();
-        canon.canonLabel(molecule);
-        long[] labels = new long[molecule.getAtomCount()];
-        for (int i = 0; i < labels.length; i++) {
-            
-            IAtom atom  = molecule.getAtom(i);
-            Long  label = atom.getProperty(InvPair.CANONICAL_LABEL);
-                                                                     
-            // clean up the maps on each atom if there are no more properties
-            atom.removeProperty(InvPair.CANONICAL_LABEL);
-            if (atom.getProperties().isEmpty())
-                atom.setProperties(null);
-            
-            // note - permutations start at '0' labels start at '1'
-            labels[i] = label - 1;              
-        }
+        long[] labels = Canon.label(molecule, GraphUtil.toAdjList(molecule));
+        for (int i = 0; i < labels.length; i++)
+            labels[i] -= 1;              
         return labels;
     }
 
