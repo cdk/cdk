@@ -71,7 +71,8 @@ public final class SmilesGenerator {
     private final CDKToBeam converter;
 
     /**
-     *  Create the SMILES generator.
+     * Create the generic SMILES generator.
+     * @see #generic() 
      */
     public SmilesGenerator() {
         this(false, false, false);
@@ -109,13 +110,14 @@ public final class SmilesGenerator {
     } 
 
     /**
-     * Create a generator for arbitrary SMILES. Arbitrary SMILES are 
+     * Create a generator for generic SMILES. Generic SMILES are 
      * non-canonical and useful for storing information when it is not used
-     * as an index (i.e. unique keys).
+     * as an index (i.e. unique keys). The generated SMILES is dependant on
+     * the input order of the atoms.
      * 
      * @return a new arbitrary SMILES generator
      */
-    public static SmilesGenerator arbitary() {
+    public static SmilesGenerator generic() {
         return new SmilesGenerator(false, false, false);
     }
     
