@@ -32,8 +32,11 @@ import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
-import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
  * isotope and formal charge information of the atoms. In addition to this it
@@ -140,6 +143,18 @@ public final class SmilesGenerator {
      */
     public static SmilesGenerator unique() {
         return new SmilesGenerator(false, true, false);
+    } 
+    
+    /**
+     * Create a absolute SMILES generator. Unique SMILES uses the InChI to
+     * canonise SMILES and encodes isotope or stereo-chemistry. The InChI
+     * module is not a dependency of the SMILES module but should be present
+     * on the classpath when generation absolute SMILES.
+     * 
+     * @return a new absolute SMILES generator
+     */
+    public static SmilesGenerator absolute() {
+        return new SmilesGenerator(true, true, false);
     }
 
     /**
@@ -294,18 +309,54 @@ public final class SmilesGenerator {
 
     /**
      * Given a molecule (possibly disconnected) compute the labels which
-     * would order the atoms by increasing canonical labelling.
+     * would order the atoms by increasing canonical labelling. If the SMILES
+     * are isomeric (i.e. stereo and isotope specific) the InChI numbers are 
+     * used. These numbers are loaded via reflection and the 'cdk-inchi' module
+     * should be present on the classpath.
      * 
      * @param molecule the molecule to 
      * @return the permutation
      * @see Canon
      */
-    private final int[] labels(final IAtomContainer molecule) {
-        long[] labels = Canon.label(molecule, GraphUtil.toAdjList(molecule));
+    private int[] labels(final IAtomContainer molecule) throws CDKException {
+        long[] labels = isomeric ? inchiNumbers(molecule) 
+                                 : Canon.label(molecule, GraphUtil.toAdjList(molecule));
         int[]  cpy    = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;              
         return cpy;
+    }
+
+    /**
+     * Obtain the InChI numbering for canonising SMILES. The cdk-smiles module
+     * does not and should not depend on cdk-inchi and so the numbers are loaded
+     * via reflection. If the class cannot be found on the classpath an 
+     * exception is thrown.
+     * 
+     * @param container a structure
+     * @return the inchi numbers
+     * @throws CDKException the inchi numbers could not be obtained
+     */
+    private long[] inchiNumbers(IAtomContainer container) throws CDKException {
+        // TODO: create an interface so we don't have to dynamically load the 
+        // class each time
+        String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
+        String mname = "getUSmilesNumbers";
+        try {
+            Class  c      = Class.forName(cname);
+            Method method = c.getDeclaredMethod("getUSmilesNumbers", IAtomContainer.class);
+            return (long[]) method.invoke(c, container);
+        } catch (ClassNotFoundException e) {
+            throw new CDKException("The cdk-inchi module is not loaded," +
+                                           " this module is need when gernating absolute SMILES.");
+        } catch (NoSuchMethodException e) {
+            throw new CDKException("The method " + mname + " was not found", e);
+        } catch (InvocationTargetException e) {
+            throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(),
+                                   e);
+        } catch (IllegalAccessException e) {
+            throw new CDKException("Could not access method to obtain InChI numbers.");
+        }
     }
 
 }
