@@ -185,7 +185,7 @@ public class InChINumbersTools {
         // assign unlabelled atoms
         for (int i = 0; i < numbers.length; i++)
             if (numbers[i] == 0)
-                numbers[i] = label;
+                numbers[i] = label++;
 
         return numbers;
     }

@@ -32,6 +32,7 @@ import org.openscience.cdk.graph.invariant.Canon;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
+import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
 
 import java.lang.reflect.InvocationTargetException;
@@ -245,6 +246,17 @@ public final class SmilesGenerator {
             
             g = g.permute(labels)
                  .resonate();
+
+            if (isomeric) {
+                
+                // visit double bonds first, prefer C1=CC=C1 to C=1C=CC1
+                // visit hydrogens first
+                g.sort(new Graph.VisitHighOrderFirst())
+                 .sort(new Graph.VisitHydrogenFirst());
+
+                // canonical double-bond stereo, could be C/C=C/C or C\C=C\C
+                g = Functions.normaliseDirectionalLabels(g);
+            }
             
             String smiles = g.toSmiles(order);
             

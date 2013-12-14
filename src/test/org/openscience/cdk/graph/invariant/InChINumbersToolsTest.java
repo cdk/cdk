@@ -160,7 +160,7 @@ public class InChINumbersToolsTest extends CDKTestCase {
     @Test public void unlabelledHydrogens() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("[H]C([H])([H])[H]");
         assertThat(InChINumbersTools.getUSmilesNumbers(container),
-                   is(new long[]{2, 1, 2, 2, 2}));   
+                   is(new long[]{2, 1, 3, 4, 5}));   
     }
     
     static IAtomContainer mock(int nAtoms) {
