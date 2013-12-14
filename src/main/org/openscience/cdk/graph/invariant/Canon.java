@@ -26,6 +26,7 @@ package org.openscience.cdk.graph.invariant;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 import java.util.Arrays;
 
@@ -244,18 +245,14 @@ public final class Canon {
             IAtom atom = container.getAtom(v);
             
             int deg  = graph[v].length;
-            int impH = checkNotNull(atom.getImplicitHydrogenCount(),
-                                    "an atom had unset implicit hydrogen count");
+            int impH = implH(atom);
             int expH = 0;
-            int elem = checkNotNull(atom.getAtomicNumber(),
-                                    "an atom had unset atomic number");
-            int chg  = checkNotNull(atom.getFormalCharge(),
-                                    "an atom had unset formal charge");
+            int elem = atomicNumber(atom);
+            int chg  = charge(atom);
 
             // count non-suppressed (explicit) hydrogens
             for (int w : graph[v])
-                if (checkNotNull(container.getAtom(w).getAtomicNumber(),
-                                 "an atom had unset atomic number") == 1)
+                if (atomicNumber(atom) == 1)
                     expH++;
 
             long label = 0; // connectivity (first in)
@@ -274,6 +271,54 @@ public final class Canon {
             labels[v] = label;
         }
         return labels;
+    }
+
+    /**
+     * Access atomic number of atom defaulting to 0 for pseudo atoms.
+     *
+     * @param atom an atom
+     * @return the atomic number
+     * @throws NullPointerException the atom was non-pseudo at did not have an
+     *                              atomic number
+     */
+    private static int atomicNumber(IAtom atom) {
+        Integer elem = atom.getAtomicNumber();
+        if (elem != null)
+            return elem;
+        if (atom instanceof IPseudoAtom)
+            return 0;
+        throw new NullPointerException("a non-psuedo atom had unset atomic number");
+    }
+
+    /**
+     * Access implicit hydrogen count of the atom defaulting to 0 for pseudo
+     * atoms.
+     *
+     * @param atom an atom
+     * @return the implicit hydrogen count
+     * @throws NullPointerException the atom was non-pseudo at did not have an
+     *                              implicit hydrogen count
+     */
+    private static int implH(IAtom atom) {
+        Integer h = atom.getImplicitHydrogenCount();
+        if (h != null)
+            return h;
+        if (atom instanceof IPseudoAtom)
+            return 0;
+        throw new NullPointerException("a non-psuedo atom had unset hydrogen count");
+    }
+
+    /**
+     * Access formal charge of an atom defaulting to 0 if undefined.
+     *
+     * @param atom an atom
+     * @return the formal charge
+     */
+    private static int charge(IAtom atom) {
+        Integer charge = atom.getFormalCharge();
+        if (charge != null)
+            return charge;
+        return 0;
     }
 
     /** The first 2229 primes. */
