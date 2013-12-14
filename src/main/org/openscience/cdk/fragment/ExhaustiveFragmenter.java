@@ -83,7 +83,8 @@ public class ExhaustiveFragmenter implements IFragmenter {
     public ExhaustiveFragmenter(int minFragSize) {
         this.minFragSize = minFragSize;
         fragMap = new HashMap<String, IAtomContainer>();
-        smilesGenerator = new SmilesGenerator();
+        smilesGenerator = SmilesGenerator.unique()
+                                         .aromatic();
     }
 
     /**

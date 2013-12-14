@@ -19,6 +19,7 @@
  */
 package org.openscience.cdk.fragment;
 
+import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -34,6 +35,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -130,13 +132,13 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals(7, frameworks.length);
 
         List<String> trueFrameworks = new ArrayList<String>();
-        trueFrameworks.add("c1ccc(cc1)C2(CCCC2)CC3C=CC=C3");
-        trueFrameworks.add("c1ccc(cc1)CCC2CCC(c3ccccc3)(CC4C=CC=C4)C2");
-        trueFrameworks.add("C=1C=CC(C1)CC2CCCC2");
-        trueFrameworks.add("c1ccc(cc1)CCC2CCCC2");
-        trueFrameworks.add("c1ccc(cc1)C2CCCC2");
-        trueFrameworks.add("c1ccc(cc1)CCC2CCC(CC3C=CC=C3)C2");
-        trueFrameworks.add("c1ccc(cc1)CCC2CCC(c3ccccc3)C2");
+        trueFrameworks.add("C(C1C=CC=C1)C2CCCC2");
+        trueFrameworks.add("C1(c2ccccc2)(CCC(C1)CCc3ccccc3)CC4C=CC=C4");
+        trueFrameworks.add("c1(C2(CC3C=CC=C3)CCCC2)ccccc1");
+        trueFrameworks.add("c1(C2CCCC2)ccccc1");
+        trueFrameworks.add("c1(CCC2CC(CC3C=CC=C3)CC2)ccccc1");
+        trueFrameworks.add("c1(CCC2CC(c3ccccc3)CC2)ccccc1");
+        trueFrameworks.add("c1(CCC2CCCC2)ccccc1");
         for (String s : frameworks) {
             Assert.assertTrue(s + " is not a valid framework", trueFrameworks.contains(s));
         }
@@ -162,8 +164,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals(3, frameworks.length);
         List<String> trueFrameworks = new ArrayList<String>();
         trueFrameworks.add("n1coc(c1)c2ccccc2");
-        trueFrameworks.add("n1cocc1c2ccccc2");     
-        trueFrameworks.add("n1coc(c1c2ccccc2)c3ccccc3");
+        trueFrameworks.add("n1coc(c1c2ccccc2)c3ccccc3");     
+        trueFrameworks.add("n1cocc1c2ccccc2");
         for (String s : frameworks) {
             Assert.assertTrue(s + " is not a valid framework", trueFrameworks.contains(s));
         }
@@ -216,7 +218,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         String[] frameworks = fragmenter.getFrameworks();
         Assert.assertEquals(1, frameworks.length);
-        Assert.assertEquals("c1ccc(cc1)CCC(CC2CC2)C3C=CC=C3", frameworks[0]);
+        Assert.assertEquals("c1(CCC(CC2CC2)C3C=CC=C3)ccccc1", frameworks[0]);
     }
 
     /**
@@ -235,7 +237,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals(f.length, fc.length);
         Assert.assertEquals("n1ccccc1Cc2ccccc2", f[0]);
 
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = SmilesGenerator.unique()
+                                            .aromatic();
         for (int i = 0; i < f.length; i++) {
             DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
             String newsmiles = sg.createSMILES(fc[i]);
@@ -248,7 +251,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
      */
     @Test
     public void testPirenperone_Bug3088164() throws Exception {
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = SmilesGenerator.unique()
+                                            .aromatic();
 
         IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -273,7 +277,8 @@ public class MurckoFragmenterTest extends CDKTestCase {
      */
     @Test
     public void testIsomoltane_Bug3088164() throws Exception {
-        SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = SmilesGenerator.unique()
+                                            .aromatic();
 
         IAtomContainer mol = smilesParser.parseSmiles("CC(C)NCC(O)COC1=C(C=CC=C1)N1C=CC=C1");
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
@@ -284,7 +289,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
-        Assert.assertEquals("c1ccc(cc1)-n2cccc2", f[0]);
+        Assert.assertEquals("c1(-n2cccc2)ccccc1", f[0]);
 
         for (int i = 0; i < f.length; i++) {
             DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);

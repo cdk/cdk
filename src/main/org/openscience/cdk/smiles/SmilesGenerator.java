@@ -115,7 +115,7 @@ public final class SmilesGenerator {
      * 
      * @return a generator for aromatic SMILES 
      */
-    SmilesGenerator aromatic() {
+    public SmilesGenerator aromatic() {
         return new SmilesGenerator(isomeric, canonical, true);
     } 
 

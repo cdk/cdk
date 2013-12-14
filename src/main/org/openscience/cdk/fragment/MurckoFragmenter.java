@@ -134,7 +134,8 @@ public class MurckoFragmenter implements IFragmenter {
                     .molecular();
         else this.generator = generator;
 
-        smigen = new SmilesGenerator();
+        smigen = SmilesGenerator.unique()
+                                .aromatic();
     }
 
     /**
