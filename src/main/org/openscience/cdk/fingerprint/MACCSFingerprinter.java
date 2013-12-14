@@ -34,6 +34,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -46,6 +47,10 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.Ullmann;
+import org.openscience.cdk.isomorphism.UniqueAtomMatches;
+import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
+import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
@@ -88,13 +93,15 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     private volatile MaccsKey[] keys = null;
 
+    public long[] t = new long[166];
+    
     @TestMethod("testFingerprint")
     public MACCSFingerprinter() {
     }
 
     public MACCSFingerprinter(IChemObjectBuilder builder) {
         try {
-            readKeyDef(builder);
+            keys = readKeyDef(builder);
         } catch (IOException e) {
             logger.debug(e);
         } catch (CDKException e) {
@@ -104,29 +111,28 @@ public class MACCSFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint,testfp2")
-    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer)
+    public IBitFingerprint getBitFingerprint(IAtomContainer container)
             throws CDKException {
 
-        MaccsKey[] keys = keys(atomContainer.getBuilder());
+        MaccsKey[] keys = keys(container.getBuilder());
+        BitSet     fp   = new BitSet(keys.length);
 
-        int bitsetLength = keys.length;
-        BitSet fingerPrint = new BitSet(bitsetLength);
-
-        SMARTSQueryTool sqt = new SMARTSQueryTool("C", atomContainer.getBuilder());
+        // init SMARTS invariants (connectivity, degree, etc)
+        SmartsMatchers.prepare(container, false);
+        
         for (int i = 0; i < keys.length; i++) {
-            String smarts = keys[i].getSmarts();
-            if (smarts.equals("?")) continue;
-            int count = keys[i].getCount();
+            Pattern pattern = keys[i].pattern;
+            if (pattern == null)
+                continue;
 
-            sqt.setSmarts(smarts);
-            boolean status = sqt.matches(atomContainer);
-            if (status) {
-                if (count == 0) fingerPrint.set(i, true);
-                else {
-                    List<List<Integer>> matches = sqt.getUniqueMatchingAtoms();
-                    if (matches.size() > count) fingerPrint.set(i, true);
-                }
-            }
+            // count unique hits (limiting to the number we need)
+            int found = FluentIterable.from(pattern.matchAll(container))
+                                      .filter(new UniqueAtomMatches(keys[i].count + 1))
+                                      .limit(keys[i].count + 1)
+                                      .size();
+            
+            if (keys[i].count == found - 1)
+                fp.set(i);
         }
 
         // at this point we have skipped the entries whose pattern is "?"
@@ -134,7 +140,7 @@ public class MACCSFingerprinter implements IFingerprinter {
 
         // bit 125 aromatic ring count > 1
         AllRingsFinder ringFinder = new AllRingsFinder();
-        IRingSet rings = ringFinder.findAllRings(atomContainer);
+        IRingSet rings = ringFinder.findAllRings(container);
         int ringCount = 0;
         for (int i = 0; i < rings.getAtomContainerCount(); i++) {
             IAtomContainer ring = rings.getAtomContainer(i);
@@ -149,17 +155,17 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
             if (allAromatic) ringCount++;
             if (ringCount > 1) {
-                fingerPrint.set(124, true);
+                fp.set(124, true);
                 break;
             }
         }
         // bit 166 (*).(*)
         IAtomContainerSet part
-                = ConnectivityChecker.partitionIntoMolecules(atomContainer);
-        if (part.getAtomContainerCount() > 1) fingerPrint.set(165, true);
+                = ConnectivityChecker.partitionIntoMolecules(container);
+        if (part.getAtomContainerCount() > 1) fp.set(165, true);
 
 
-        return new BitSetFingerprint(fingerPrint);
+        return new BitSetFingerprint(fp);
     }
 
     /** {@inheritDoc} */
@@ -173,11 +179,10 @@ public class MACCSFingerprinter implements IFingerprinter {
     public int getSize() {
         if (keys != null)
             return keys.length;
-        else return 0;
+        else return 0; // throw exception when keys aren't loaded?
     }
 
     private MaccsKey[] readKeyDef(final IChemObjectBuilder builder) throws IOException, CDKException {
-        
         List<MaccsKey> keys   = new ArrayList<MaccsKey>(166);
         BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(KEY_DEFINITIONS)));
 
@@ -196,7 +201,7 @@ public class MACCSFingerprinter implements IFingerprinter {
         if (keys.size() != 166) 
             throw new CDKException("Found " + keys.size() 
                                    + " keys during setup. Should be 166");
-        return keys.toArray(new MaccsKey[]{});
+        return keys.toArray(new MaccsKey[166]);
     }
 
     private class MaccsKey {

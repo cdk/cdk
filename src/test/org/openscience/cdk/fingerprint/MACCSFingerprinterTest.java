@@ -53,7 +53,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
     @Test
     public void getsize() throws Exception {
-        IFingerprinter printer = new MACCSFingerprinter();
+        IFingerprinter printer = new MACCSFingerprinter(SilentChemObjectBuilder.getInstance());
         Assert.assertEquals(166, printer.getSize());
     }
 
