@@ -38,8 +38,13 @@ import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.ConnectedComponents;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
@@ -160,9 +165,9 @@ public class MACCSFingerprinter implements IFingerprinter {
             }
         }
         // bit 166 (*).(*)
-        IAtomContainerSet part
-                = ConnectivityChecker.partitionIntoMolecules(container);
-        if (part.getAtomContainerCount() > 1) fp.set(165, true);
+        ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
+        if (cc.nComponents() > 1) 
+            fp.set(165, true);
 
 
         return new BitSetFingerprint(fp);
