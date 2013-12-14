@@ -37,7 +37,6 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,7 +75,7 @@ public class FragmentUtilsTest extends CDKTestCase {
         SmilesGenerator sg = new SmilesGenerator();
         Set<String> uniqueFrags = new HashSet<String>();
         for (IAtomContainer frag : frags) {
-            uniqueFrags.add(sg.createSMILES(frag));
+            uniqueFrags.add(sg.create(frag));
         }
         Assert.assertEquals(2, uniqueFrags.size());
         // You can put the fragments back together with a ring closure and dot

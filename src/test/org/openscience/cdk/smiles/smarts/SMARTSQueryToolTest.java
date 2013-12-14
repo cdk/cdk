@@ -40,7 +40,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -187,7 +186,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(indole);
         SmilesGenerator generator = new SmilesGenerator();        
-        String indoleSmiles = generator.createSMILES(indole);
+        String indoleSmiles = generator.create(indole);
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
         indole = smilesParser.parseSmiles(indoleSmiles);
 

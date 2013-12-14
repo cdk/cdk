@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,7 +34,6 @@ import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -241,7 +239,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
                                             .aromatic();
         for (int i = 0; i < f.length; i++) {
             DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
-            String newsmiles = sg.createSMILES(fc[i]);
+            String newsmiles = sg.create(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
     }
@@ -267,7 +265,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);
 
         for (int i = 0; i < f.length; i++) {
-            String newsmiles = sg.createSMILES(fc[i]);
+            String newsmiles = sg.create(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
     }
@@ -293,7 +291,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
 
         for (int i = 0; i < f.length; i++) {
             DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
-            String newsmiles = sg.createSMILES(fc[i]);
+            String newsmiles = sg.create(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
     }

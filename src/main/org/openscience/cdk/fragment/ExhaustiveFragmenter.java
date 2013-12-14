@@ -125,7 +125,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
                 CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(partContainer);
-                tmpSmiles = smilesGenerator.createSMILES(partContainer);
+                tmpSmiles = smilesGenerator.create(partContainer);
                 if (partContainer.getAtomCount() >= minFragSize &&
                         !fragMap.containsKey(tmpSmiles)) {
                     fragments.add(partContainer);
@@ -148,7 +148,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
                 CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(frag);
-                tmpSmiles = smilesGenerator.createSMILES(frag);
+                tmpSmiles = smilesGenerator.create(frag);
                 if (frag.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     tmp.add(frag);
                     fragMap.put(tmpSmiles, frag);

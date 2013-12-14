@@ -337,7 +337,7 @@ public class MurckoFragmenter implements IFragmenter {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
                 CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
                 DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol);
-                smis.add(smigen.createSMILES(mol));
+                smis.add(smigen.create(mol));
             } catch (CDKException e) {
                 LoggingToolFactory.createLoggingTool(getClass()).error(e);
             }

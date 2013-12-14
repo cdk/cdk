@@ -31,7 +31,6 @@ package org.openscience.cdk.io;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -184,7 +183,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         sg.setUseAromaticityFlag(useAromaticityFlag.isSet());
         String smiles = "";
         try {
-            smiles = sg.createSMILES(molecule);
+            smiles = sg.create(molecule);
             logger.debug("Generated SMILES: " + smiles);
             writer.write(smiles);
             writer.newLine();

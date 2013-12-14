@@ -53,7 +53,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
@@ -151,7 +150,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
          SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("Propane " + oldSmiles);
 
 
@@ -200,7 +199,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("Hexane " + oldSmiles);
 
         return result;
@@ -251,7 +250,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("Benzene " + oldSmiles);
 
         return result;
@@ -325,7 +324,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("Naphthalene " + oldSmiles);
 
         return result;
@@ -845,7 +844,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("SimpleImine " + oldSmiles);
 
         return result;
@@ -869,7 +868,7 @@ public class Molecules {
         CDKHueckelAromaticityDetector.detectAromaticity(result);
 
         SmilesGenerator sg = new SmilesGenerator();
-        String oldSmiles = sg.createSMILES(result);
+        String oldSmiles = sg.create(result);
         System.out.println("SimpleAmine " + oldSmiles);
 
         return result;

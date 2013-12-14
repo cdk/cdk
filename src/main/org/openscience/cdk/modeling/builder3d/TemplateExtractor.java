@@ -27,7 +27,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +37,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
-import org.openscience.cdk.fingerprint.Fingerprinter;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -238,7 +236,7 @@ public class TemplateExtractor {
 					}
 
                     try {
-					    key = smilesGenerator.createSMILES(builder.newInstance(IAtomContainer.class,ac));
+					    key = smilesGenerator.create(builder.newInstance(IAtomContainer.class, ac));
                     } catch (CDKException e) {
                         LoggingToolFactory.createLoggingTool(getClass()).error(e);
                         return;
@@ -344,7 +342,7 @@ public class TemplateExtractor {
 			// Molecule(m)));
 			try {
 
-				data.add((String) smiles.createSMILES(builder.newInstance(IAtomContainer.class,m)));
+				data.add((String) smiles.create(builder.newInstance(IAtomContainer.class, m)));
 			} catch (Exception exc1) {
 				System.out.println("Could not create smile due to: "
 						+ exc1.getMessage());

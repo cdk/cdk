@@ -30,7 +30,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
 
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -80,7 +79,7 @@ public class LingoFingerprinter implements IFingerprinter {
     @TestMethod("testFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(atomContainer);
-        String smiles = refactorSmiles(gen.createSMILES(atomContainer));
+        String smiles = refactorSmiles(gen.create(atomContainer));
         Map<String, Integer> map = new HashMap<String,Integer>();
         for (int i = 0; i < smiles.length()-q+1; i++) {
           String subsmi = smiles.substring(i, i+q);

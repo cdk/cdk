@@ -24,22 +24,11 @@
  */
 package org.openscience.cdk.smiles;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.Vector;
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.graph.invariant.Canon;
-import org.openscience.cdk.graph.invariant.CanonicalLabeler;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IReaction;
@@ -152,13 +141,39 @@ public final class SmilesGenerator {
     }
 
     /**
+     * Create a SMILES string for the provided molecule.
+     * 
+     * @param molecule the molecule to create the SMILES of
+     * @return a SMILES string
+     * @throws CDKException SMILES could not be generated
+     * @deprecated use #create
+     */
+    @Deprecated
+    public String createSMILES(IAtomContainer molecule) throws CDKException {
+        return create(molecule);    
+    }
+
+    /**
+     * Create a SMILES string for the provided reaction.
+     *
+     * @param reaction the reaction to create the SMILES of
+     * @return a reaction SMILES string
+     * @throws CDKException SMILES could not be generated
+     * @deprecated use #createReactionSMILES
+     */
+    @Deprecated
+    public String createSMILES(IReaction reaction) throws CDKException {
+        return createReactionSMILES(reaction);
+    }
+    
+    /**
      * Generate SMILES for the provided {@code molecule}.
      *
      * @param molecule The molecule to evaluate
      * @return the SMILES string
      */
     @TestMethod("testCisResorcinol,testEthylPropylPhenantren,testAlanin")
-    public synchronized String createSMILES(IAtomContainer molecule) throws CDKException {
+    public String create(IAtomContainer molecule) throws CDKException {
         Graph g = converter.toBeamGraph(molecule);
         
         // apply the CANON labelling
@@ -177,11 +192,11 @@ public final class SmilesGenerator {
      * @return the SMILES representation of the reaction
      * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
      */
-    public synchronized String createSMILES(IReaction reaction) throws CDKException {
+    public String createReactionSMILES(IReaction reaction) throws CDKException {
         StringBuffer reactionSMILES = new StringBuffer();
         IAtomContainerSet reactants = reaction.getReactants();
         for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
-            reactionSMILES.append(createSMILES(reactants.getAtomContainer(i)));
+            reactionSMILES.append(create(reactants.getAtomContainer(i)));
             if (i + 1 < reactants.getAtomContainerCount()) {
                 reactionSMILES.append('.');
             }
@@ -189,7 +204,7 @@ public final class SmilesGenerator {
         reactionSMILES.append('>');
         IAtomContainerSet agents = reaction.getAgents();
         for (int i = 0; i < agents.getAtomContainerCount(); i++) {
-            reactionSMILES.append(createSMILES(agents.getAtomContainer(i)));
+            reactionSMILES.append(create(agents.getAtomContainer(i)));
             if (i + 1 < agents.getAtomContainerCount()) {
                 reactionSMILES.append('.');
             }
@@ -197,7 +212,7 @@ public final class SmilesGenerator {
         reactionSMILES.append('>');
         IAtomContainerSet products = reaction.getProducts();
         for (int i = 0; i < products.getAtomContainerCount(); i++) {
-            reactionSMILES.append(createSMILES(products.getAtomContainer(i)));
+            reactionSMILES.append(create(products.getAtomContainer(i)));
             if (i + 1 < products.getAtomContainerCount()) {
                 reactionSMILES.append('.');
             }
