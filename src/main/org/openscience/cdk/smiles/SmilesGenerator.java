@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IReaction;
 import uk.ac.ebi.beam.Functions;
 import uk.ac.ebi.beam.Graph;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -231,45 +232,51 @@ public final class SmilesGenerator {
      * @throws CDKException SMILES could not be created
      */
     public String create(IAtomContainer molecule, int[] order) throws CDKException {
-        
-        if (order.length != molecule.getAtomCount())
-            throw new IllegalArgumentException("the array for storing output order should be" +
-                                                       "the same length as the number of atoms");
-        
-        Graph g = converter.toBeamGraph(molecule);
-        
-        // apply the CANON labelling
-        if (canonical) {
-            
-            // determine the output order
-            int[] labels = labels(molecule);
-            
-            g = g.permute(labels)
-                 .resonate();
 
-            if (isomeric) {
-                
-                // visit double bonds first, prefer C1=CC=C1 to C=1C=CC1
-                // visit hydrogens first
-                g.sort(new Graph.VisitHighOrderFirst())
-                 .sort(new Graph.VisitHydrogenFirst());
+        try {
+            if (order.length != molecule.getAtomCount())
+                throw new IllegalArgumentException("the array for storing output order should be" +
+                                                           "the same length as the number of atoms");
 
-                // canonical double-bond stereo, could be C/C=C/C or C\C=C\C
-                g = Functions.normaliseDirectionalLabels(g);
+            Graph g = converter.toBeamGraph(molecule);
+
+
+            // apply the canonical labelling
+            if (canonical) {
+
+                // determine the output order
+                int[] labels = labels(molecule);
+
+                g = g.permute(labels)
+                     .resonate();
+
+                if (isomeric) {
+                    // canonical double-bond stereo, output be C/C=C/C or C\C=C\C
+                    // and we need to normalise to one
+                    g = Functions.normaliseDirectionalLabels(g);
+
+                    // visit double bonds first, prefer C1=CC=C1 to C=1C=CC1
+                    // visit hydrogens first
+                    g.sort(new Graph.VisitHighOrderFirst())
+                     .sort(new Graph.VisitHydrogenFirst());
+                }
+
+                String smiles = g.toSmiles(order);
+
+                // the SMILES has been generated on a reordered molecule, transform
+                // the ordering
+                int[] canorder = new int[order.length];
+                for (int i = 0; i < labels.length; i++)
+                    canorder[i] = order[labels[i]];
+                System.arraycopy(canorder, 0, order, 0, order.length);
+
+                return smiles;
             }
-            
-            String smiles = g.toSmiles(order);
-            
-            // the SMILES has been generated on a reordered molecule, transform
-            // the ordering
-            int[] canorder = new int[order.length];
-            for (int i = 0; i < labels.length; i++)
-                canorder[i] = order[labels[i]];
-            System.arraycopy(canorder, 0, order, 0, order.length);
-            
-            return smiles;
-        } else {
-            return g.toSmiles(order);
+            else {
+                return g.toSmiles(order);
+            }
+        } catch (IOException e) {
+            throw new CDKException(e.getMessage());
         }
     }
 
