@@ -299,10 +299,11 @@ public class HyperconjugationReactionTest extends ReactionProcessTest {
         Assert.assertEquals(3, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
+        // if these assertions fail the atom order may have changed 
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product1.getAtom(1));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
-        Assert.assertEquals(mappedProductA1, product1.getAtom(4));
+        Assert.assertEquals(mappedProductA1, product1.getAtom(2));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(6));
         Assert.assertEquals(mappedProductA1, product2.getAtom(0)); 
 	}
