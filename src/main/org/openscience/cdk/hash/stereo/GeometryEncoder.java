@@ -116,11 +116,11 @@ final class GeometryEncoder implements StereoEncoder {
             // configure anticlockwise/clockwise
             if (q > 0) {
                 for (int i : centres) {
-                    next[i] *= ANTICLOCKWISE;
+                    next[i] = current[i] * ANTICLOCKWISE;
                 }
             } else if (q < 0) {
                 for (int i : centres) {
-                    next[i] *= CLOCKWISE;
+                    next[i] = current[i] * CLOCKWISE;
                 }
             }
 
