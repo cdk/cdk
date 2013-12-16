@@ -234,8 +234,10 @@ public class InChINumbersTools {
     @TestMethod("fixedH")
     static String auxInfo(IAtomContainer container, INCHI_OPTION... options) throws CDKException {
         InChIGeneratorFactory factory = InChIGeneratorFactory.getInstance();
+        boolean org = factory.getIgnoreAromaticBonds();
         factory.setIgnoreAromaticBonds(true);
         InChIGenerator gen = factory.getInChIGenerator(container, Arrays.asList(options));
+        factory.setIgnoreAromaticBonds(org); // an option on the singleton so we should reset for others
         if (gen.getReturnStatus() != INCHI_RET.OKAY && gen.getReturnStatus() != INCHI_RET.WARNING)
             throw new CDKException("Could not generate InChI Numbers: " + gen.getMessage());
         return gen.getAuxInfo();
