@@ -185,7 +185,7 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         addImplicitHydrogens(indole);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(indole);
-        SmilesGenerator generator = new SmilesGenerator();        
+        SmilesGenerator generator = new SmilesGenerator().aromatic();        
         String indoleSmiles = generator.create(indole);
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
         indole = smilesParser.parseSmiles(indoleSmiles);
