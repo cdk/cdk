@@ -168,8 +168,14 @@ public final class SmilesGenerator {
      * @deprecated use #create
      */
     @Deprecated
-    public String createSMILES(IAtomContainer molecule) throws CDKException {
-        return create(molecule);    
+    public String createSMILES(IAtomContainer molecule) {
+        try {
+            return create(molecule);
+        } catch (CDKException e) {
+            throw new IllegalArgumentException("SMILES could not be generated, please use the new API method 'create()'" +
+                                                       "to catch the checked exception",
+                                               e);
+        }
     }
 
     /**
@@ -181,8 +187,14 @@ public final class SmilesGenerator {
      * @deprecated use #createReactionSMILES
      */
     @Deprecated
-    public String createSMILES(IReaction reaction) throws CDKException {
-        return createReactionSMILES(reaction);
+    public String createSMILES(IReaction reaction){
+        try {
+            return createReactionSMILES(reaction);
+        } catch (CDKException e) {
+            throw new IllegalArgumentException("SMILES could not be generated, please use the new API method 'create()'" +
+                                                       "to catch the checked exception",
+                                               e);
+        }
     }
     
     /**
