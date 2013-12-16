@@ -180,7 +180,8 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      */
     public void writeAtomContainer(IAtomContainer molecule) {
         SmilesGenerator sg = new SmilesGenerator();
-        sg.setUseAromaticityFlag(useAromaticityFlag.isSet());
+        if (useAromaticityFlag.isSet())
+            sg = sg.aromatic();
         String smiles = "";
         try {
             smiles = sg.create(molecule);
