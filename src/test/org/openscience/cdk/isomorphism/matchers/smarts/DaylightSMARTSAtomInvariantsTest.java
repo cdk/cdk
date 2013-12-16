@@ -178,7 +178,6 @@ public class DaylightSMARTSAtomInvariantsTest {
             SMARTSAtomInvariants inv = atom.getProperty(SMARTSAtomInvariants.KEY);
             assertTrue(inv.ringSize().isEmpty());
             assertThat(inv.ringNumber(), is(0));
-            assertThat(inv.ringConnectivity(), is(0));
         }
     }
 

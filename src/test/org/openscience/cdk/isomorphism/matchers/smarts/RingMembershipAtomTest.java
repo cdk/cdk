@@ -94,7 +94,7 @@ public class RingMembershipAtomTest {
                                                                                              0,
                                                                                              5,
                                                                                              Collections.<Integer>emptySet(),
-                                                                                             0,
+                                                                                             2,
                                                                                              0,
                                                                                              0,
                                                                                              0));
