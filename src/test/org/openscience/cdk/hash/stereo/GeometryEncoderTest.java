@@ -62,11 +62,13 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(1,
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[3];
         long[] result = new long[3];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -85,7 +87,9 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[3];
         long[] result = new long[3];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
@@ -108,7 +112,9 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[3];
         long[] result = new long[3];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
@@ -131,7 +137,9 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[6];
         long[] result = new long[6];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
@@ -154,7 +162,9 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[3];
         long[] result = new long[3];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
@@ -177,11 +187,13 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[3];
         long[] result = new long[3];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1}));
@@ -201,11 +213,13 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[6];
         long[] result = new long[6];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1, 15521419, 1 ,1}));
@@ -223,12 +237,14 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[6];
         long[] result = new long[6];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned true. the permutation was okay, but no geometry, this
         // will never change
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check no values modified
         assertThat(result, is(new long[]{1, 1, 1, 1, 1 ,1}));
@@ -244,11 +260,13 @@ public class GeometryEncoderTest {
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
                                                     permutation,
                                                     geometric);
+        long[] prev   = new long[6];
         long[] result = new long[6];
+        Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
 
         // check returned false, the permutation changes for each cycle
-        assertFalse(encoder.encode(new long[0], result));
+        assertFalse(encoder.encode(prev, result));
 
         // check no values modified
         assertThat(result, is(new long[]{1, 1, 1, 1, 1 ,1}));
