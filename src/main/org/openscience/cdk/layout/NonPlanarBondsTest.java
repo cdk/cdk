@@ -42,7 +42,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author John May
  * @cdk.module test-sdg
  */
-public class NonPlanaBondsTest {
+public class NonPlanarBondsTest {
 
     // [C@H](C)(N)O
     @Test public void clockwise_implH_1() {
