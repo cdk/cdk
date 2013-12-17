@@ -140,9 +140,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
 
         assertThat(superBits.asBitSet(),
-                   is(asBitSet(53, 65, 71, 73, 88, 97, 111, 112, 125, 130, 138, 139, 140, 143, 144, 145, 148, 151, 153, 156, 158, 159, 161, 162, 163)));
+                   is(asBitSet(53, 56, 65, 71, 73, 88, 97, 100, 104, 111, 112, 126, 130, 136, 138, 139, 140, 142, 143, 144, 145, 148, 149, 151, 153, 156, 158, 159, 162, 163, 164)));
         assertThat(subBits.asBitSet(),
-                   is(asBitSet(97, 108, 112, 117, 125, 131, 143, 144, 146, 151, 152, 154, 156, 161, 162, 163)));
+                   is(asBitSet(56, 97, 100, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 162, 163, 164)));
     }
 
 }
