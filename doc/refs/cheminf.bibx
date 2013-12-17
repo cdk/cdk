@@ -1315,6 +1315,17 @@ Method </bibtex:title>
             <bibtex:volume>33</bibtex:volume>
             <bibtex:pages>812-825</bibtex:pages>
         </bibtex:article>
+    </bibtex:entry>  
+    
+    <bibtex:entry id="OBoyle12">
+        <bibtex:article>
+            <bibtex:title>Towards a Universal SMILES representation - A standard method to generate canonical SMILES based on the InChI</bibtex:title>
+            <bibtex:author>O’Boyle, Noel</bibtex:author>
+            <bibtex:year>2012</bibtex:year>
+            <bibtex:journal>Journal of Cheminformatics</bibtex:journal>
+            <bibtex:volume>4</bibtex:volume>
+            <bibtex:number>22</bibtex:number>
+        </bibtex:article>
     </bibtex:entry>
     
 </bibtex:file>

@@ -64,9 +64,9 @@ public class InChINumbersTools {
 
     /**
      * Obtain the InChI numbers for the input container to be used to order
-     * atoms in Universal SMILES. The numbers are obtained using the
-     * fixedH and RecMet options of the InChI. All non-bridged hydrogens
-     * are labelled as 0.
+     * atoms in Universal SMILES {@cdk.cite OBoyle12}. The numbers are obtained 
+     * using the fixedH and RecMet options of the InChI. All non-bridged
+     * hydrogens are labelled as 0.
      * 
      * @param container the structure to obtain the numbers of
      * @return the atom numbers
