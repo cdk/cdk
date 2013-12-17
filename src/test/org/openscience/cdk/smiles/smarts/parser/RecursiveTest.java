@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -396,6 +397,14 @@ public class RecursiveTest extends CDKTestCase {
         while (reader.hasNext()) {
             IAtomContainer container = (IAtomContainer) reader.next();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            
+            // skip un-typed atoms, they can't be run through the CDK aromatic
+            // model
+            for (IAtom atom : container.atoms()) {
+                if (atom.getAtomTypeName() == null)
+                    Assert.fail("a atom could not be typed by the CDKAtomTypeMatcher");
+            }
+            
             if (sqt.matches(container)) {
                 nmatch++;
             }
