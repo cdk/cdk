@@ -161,7 +161,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
 
         FixBondOrdersTool fbot = new FixBondOrdersTool();
         structure1 = fbot.kekuliseAromaticRings(structure1);
-        structure1 = fbot.kekuliseAromaticRings(structure2);
+        structure2 = fbot.kekuliseAromaticRings(structure2);
         
         // hydrogens loaded from MDL mol files if non-query. Structure 2 has
         // query aromatic bonds and the hydrogen counts are not assigned - ensure
