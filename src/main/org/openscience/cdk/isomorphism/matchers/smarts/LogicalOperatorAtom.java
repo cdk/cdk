@@ -26,7 +26,8 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import java.util.EnumSet;
 
 /**
- * This class matches a logical operator that connects two query atoms
+ * This class matches a logical operator that connects two query atoms. Logical
+ * matchers are created with, {@link #and}, {@link #not} and {@link #or}.
  *
  * @cdk.module  smarts
  * @cdk.githash
@@ -72,7 +73,12 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     public void setLeft(IQueryAtom left) {
         this.left = left;
     }
-    
+
+    /**
+     * 
+     * @deprecated use static utility methods to create logical atom matcher,
+     * {@link #and}, {@link #or} or {@link #not}.
+     */
     @Deprecated
     public void setOperator(String name) {
         this.operator = name;
