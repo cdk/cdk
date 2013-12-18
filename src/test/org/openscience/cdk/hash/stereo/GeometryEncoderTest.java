@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -56,7 +57,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(-1);
+        when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(1,
@@ -81,7 +82,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(-1);
+        when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
@@ -93,7 +94,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -106,7 +107,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(+1);
+        when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(-1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
@@ -118,7 +119,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1}));
@@ -131,7 +132,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(-1);
+        when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
@@ -143,7 +144,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15543053, 1, 15543053, 1, 1}));
@@ -156,7 +157,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(+1);
+        when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
@@ -168,7 +169,7 @@ public class GeometryEncoderTest {
         Arrays.fill(result, 1);
 
         // check returned true
-        assertTrue(encoder.encode(new long[0], result));
+        assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
         assertThat(result, is(new long[]{1, 15521419, 1}));
@@ -181,7 +182,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(-1);
+        when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(-1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1},
@@ -207,7 +208,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(+1);
+        when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
@@ -231,7 +232,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(+1);
+        when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(0);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
@@ -254,7 +255,7 @@ public class GeometryEncoderTest {
         PermutationParity permutation = mock(PermutationParity.class);
         GeometricParity   geometric   = mock(GeometricParity.class);
 
-        when(permutation.parity(new long[0])).thenReturn(0);
+        when(permutation.parity(any(long[].class))).thenReturn(0);
         when(geometric.parity()).thenReturn(+1);
 
         StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
