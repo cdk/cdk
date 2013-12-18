@@ -27,6 +27,7 @@ import org.openscience.cdk.graph.invariant.InChINumbersToolsTest;
 import org.openscience.cdk.inchi.InChIGeneratorFactoryTest;
 import org.openscience.cdk.inchi.InChIGeneratorTest;
 import org.openscience.cdk.inchi.InChIToStructureTest;
+import org.openscience.cdk.smiles.AbsoluteSMILESTest;
 
 /**
  * TestSuite that runs all the sample tests for the CDK module inchi.
@@ -39,6 +40,7 @@ import org.openscience.cdk.inchi.InChIToStructureTest;
     InChIGeneratorTest.class,
     InChIToStructureTest.class,
     InChINumbersToolsTest.class,
-    InChIGeneratorFactoryTest.class
+    InChIGeneratorFactoryTest.class,
+    AbsoluteSMILESTest.class
 })
 public class MinchiTests {}

@@ -263,6 +263,10 @@ public final class SmilesGenerator {
                      .resonate();
 
                 if (isomeric) {
+
+                    // FIXME: required to ensure canonical double bond labelling
+                    g.sort(new Graph.VisitHighOrderFirst());
+                    
                     // canonical double-bond stereo, output be C/C=C/C or C\C=C\C
                     // and we need to normalise to one
                     g = Functions.normaliseDirectionalLabels(g);
