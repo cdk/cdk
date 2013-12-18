@@ -451,7 +451,7 @@ public class RGraph
      *  defined by the user.
      * @param  c1  constraint in the graph G1
      * @param  c2  constraint in the graph G2
-     * @return     
+     * @return the new extension set     
      */
     private BitSet buildB(BitSet c1, BitSet c2)
     {

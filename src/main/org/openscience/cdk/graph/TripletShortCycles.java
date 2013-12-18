@@ -94,7 +94,7 @@ import java.util.TreeSet;
  * each triple (-u-v-w-) to the basis. The number of cycles generated may be
  * larger however it is now possible to ensure that if <i>H</i> is a subgraph of
  * <i>G</i> then ESSSR of <i>H</i> will be a subset of the ESSSR or <i>G</i>.
- * Alternatively one may consider using the {@see RelevantCycles} which is the
+ * Alternatively one may consider using the {@link RelevantCycles} which is the
  * the smallest set of short cycles which is <i>uniquely</i> defined for a
  * graph. <p/>
  *

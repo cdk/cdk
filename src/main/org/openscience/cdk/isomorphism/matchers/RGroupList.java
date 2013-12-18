@@ -235,7 +235,7 @@ public class RGroupList {
      * Helper method for regular expression matching.
      * @param regExp regular expression String
      * @param userInput user's input
-     * @return
+     * @return the regular expression matched the user input
      */
     private static boolean match(String regExp, String userInput) {
         Pattern pattern = Pattern.compile(regExp);

@@ -164,7 +164,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *
      *@param  container  The {@link IAtomContainer} for which the descriptor is to be calculated
      *@return The sum of atomic polarizabilities
-     * {@link XMLIsotopeFactory}
+     * {@link org.openscience.cdk.config.XMLIsotopeFactory}
      */
     @TestMethod("testCalculate_IAtomContainer,testAPolDescriptorTest")
     public DescriptorValue calculate(IAtomContainer container) {

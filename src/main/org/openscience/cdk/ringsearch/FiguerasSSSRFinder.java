@@ -350,7 +350,7 @@ public class FiguerasSSSRFinder {
 	 *
 	 * @param   list1   The first vector
 	 * @param   list2   The second vector
-	 * @return     
+	 * @return the intersection of the two list    
 	 */
 	private  List getIntersection(List<IAtom> list1, List<IAtom> list2) {
 		List is = new ArrayList<IAtom>();
@@ -365,7 +365,7 @@ public class FiguerasSSSRFinder {
 	 *
 	 * @param   list1  The first vector
 	 * @param   list2  The second vector
-	 * @return     
+	 * @return the union of the two list    
 	 */
 	private  List<IAtom> getUnion(List<IAtom> list1, List<IAtom> list2){
 	    // FIXME: the JavaDoc does not describe what happens: that vec1 gets to be the union!

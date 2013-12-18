@@ -47,7 +47,7 @@ public interface IDifferenceList extends IDifference {
 	/**
 	 * Adds multiple {@link IDifference}s as child to this tree.
 	 *
-	 * @param childDiff a {@link List} of {@link IDifference}s to add to this {@link IDifference}
+	 * @param children a {@link List} of {@link IDifference}s to add to this {@link IDifference}
 	 */
     public void addChildren(List<IDifference> children);
 

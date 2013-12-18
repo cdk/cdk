@@ -867,7 +867,7 @@ public class AtomPlacer
      *@param  ac  The atomcontainer to be processed
      *@param  superAC  The superAtomContainer from which the former has been derived
      *
-     *@return 
+     *@return sum of degrees
      */
     int getDegreeSum(IAtomContainer ac, IAtomContainer superAC)
     {

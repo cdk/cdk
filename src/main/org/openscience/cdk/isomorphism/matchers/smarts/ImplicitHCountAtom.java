@@ -51,8 +51,8 @@ public class ImplicitHCountAtom extends SMARTSAtom {
     /**
      * Returns the implicit hydrogen count of an atom
      * 
-     * @param atom
-     * @return
+     * @param atom an atom
+     * @return obtain the implicit hydrogen count, 0 if null 
      */
     private int getIMPH(IAtom atom){
         if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) return 0;

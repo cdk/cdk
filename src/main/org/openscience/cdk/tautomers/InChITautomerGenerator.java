@@ -655,9 +655,9 @@ public class InChITautomerGenerator {
 
     /**
      * Sums the number of bonds (counting order) an atom is hooked up with.
-     * @param atom
-     * @param container
-     * @return
+     * @param atom an atom in the container
+     * @param container the container
+     * @return valence (bond order sum) of the atom 
      */
     private int getConnectivity(IAtom atom, IAtomContainer container) {
         int connectivity = 0;

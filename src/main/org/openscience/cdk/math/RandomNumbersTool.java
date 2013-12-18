@@ -151,7 +151,7 @@ public class RandomNumbersTool extends Random {
      * @param rng random number generator
      * @param n   max value
      * @return a long random number between 0 and n
-     * @see http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range
+     * @see <a href="http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range">Random Long Number in range, Stack Overflow</a>
      */
     private static long nextLong(Random rng, long n) {
         if (n <= 0)

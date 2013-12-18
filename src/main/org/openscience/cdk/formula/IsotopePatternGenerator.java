@@ -126,7 +126,7 @@ public class IsotopePatternGenerator{
 	 * less than setup parameter minAbundance, and remove duplicated masses.
 	 * 
 	 * @param elementSymbol  The chemical element symbol
-	 * @return               
+	 * @return the calculation was successful               
 	 */
 	private boolean calculateAbundanceAndMass(String elementSymbol) {
 

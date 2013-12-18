@@ -109,8 +109,8 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     /**
      * @inheritDoc
      * 
-     * @param e
-     * @return
+     * @param e the exception
+     * @return a dummy value
      */
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         return new DescriptorValue(getSpecification(), getParameterNames(),

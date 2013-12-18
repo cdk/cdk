@@ -97,7 +97,7 @@ public abstract class RandomAccessReader
      *
      * @param file file the file object containg the molecules to be indexed
      * @param builder builder a chem object builder
-     * @param listener
+     * @param listener listen for read event 
      * @throws IOException if there is an error during reading
      */
     public RandomAccessReader(File file,IChemObjectBuilder builder,IReaderListener listener) throws IOException {        
@@ -157,9 +157,9 @@ public abstract class RandomAccessReader
         return new String(b,0,length);
     }
     /**
-     * The reader is already set to read the record buffer, 
-     * @return
-     * @throws CDKException
+     * The reader is already set to read the record buffer. 
+     * @return the read IChemObject
+     * @throws CDKException an error occurred whilst reading the file
      */
     protected IChemObject processContent() throws CDKException {
         return chemObjectReader.read(builder.newInstance(IChemFile.class));

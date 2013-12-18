@@ -185,7 +185,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      * Determine the ring set for this atom container. 
      * 
      * @param atomContainer the atom container to find rings in.
-     * @return
+     * @return the rings of the molecule
      */
     protected IRingSet getRingSet(IAtomContainer atomContainer) {
 
