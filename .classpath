@@ -34,7 +34,7 @@
 	<classpathentry kind="lib" path="develjar/asm-3.2.jar"/>
 	<classpathentry kind="lib" path="develjar/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="develjar/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="jar/beam-core-0.3-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="jar/beam-func-0.3-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="jar/beam-core-0.4.jar"/>
+	<classpathentry kind="lib" path="jar/beam-func-0.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
