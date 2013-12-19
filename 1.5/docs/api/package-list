@@ -90,7 +90,6 @@ org.openscience.cdk.similarity
 org.openscience.cdk.smiles
 org.openscience.cdk.smiles.smarts
 org.openscience.cdk.smiles.smarts.parser
-org.openscience.cdk.smiles.smarts.parser.visitor
 org.openscience.cdk.smsd
 org.openscience.cdk.smsd.algorithm.matchers
 org.openscience.cdk.smsd.algorithm.mcgregor
