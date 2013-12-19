@@ -25,7 +25,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SdgCoverageTest;
 import org.openscience.cdk.layout.AtomPlacerTest;
+import org.openscience.cdk.layout.CorrectGeometricConfigurationTest;
 import org.openscience.cdk.layout.HydrogenPlacerTest;
+import org.openscience.cdk.layout.NonPlanarBondsTest;
 import org.openscience.cdk.layout.OverlapResolverTest;
 import org.openscience.cdk.layout.StructureDiagramGeneratorTest;
 import org.openscience.cdk.layout.TemplateHandlerTest;
@@ -42,6 +44,8 @@ import org.openscience.cdk.layout.TemplateHandlerTest;
     HydrogenPlacerTest.class,
     OverlapResolverTest.class,
     TemplateHandlerTest.class,
-    AtomPlacerTest.class
+    AtomPlacerTest.class,
+    NonPlanarBondsTest.class,
+    CorrectGeometricConfigurationTest.class
 })
 public class MsdgTests {}
