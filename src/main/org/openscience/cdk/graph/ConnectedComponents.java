@@ -18,6 +18,7 @@ import java.util.Arrays;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.graph.ConnectedComponentsTest")
 public final class ConnectedComponents {

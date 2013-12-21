@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author John May
  * @cdk.module renderbasic
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.BoundingBoxTest")
 public final class Bounds implements IRenderingElement {

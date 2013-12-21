@@ -57,6 +57,7 @@ import org.openscience.cdk.ringsearch.RingSearch;
  *
  * @author John May
  * @cdk.module standard
+ * @cdk.githash
  */
 public abstract class ElectronDonation {
 

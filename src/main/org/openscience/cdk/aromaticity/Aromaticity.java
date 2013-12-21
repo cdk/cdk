@@ -89,6 +89,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * @author John May
  * @cdk.module standard
+ * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's
  *      rule</a>
  * @see <a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>     

@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * 
  * @author John May
  * @cdk.module smarts
+ * @cdk.githash
  */
 public final class SmartsMatchers {
 

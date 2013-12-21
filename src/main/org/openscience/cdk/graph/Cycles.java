@@ -87,6 +87,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.graph.CyclesTest")
 public final class Cycles {

@@ -29,7 +29,8 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * specified in SMARTS using {@code H<NUMBER>}.
  * 
  * @cdk.module  smarts
- * @cdk.keyword SMARTS 
+ * @cdk.keyword SMARTS
+ * @cdk.githash
  */
 public final class TotalHCountAtom extends SMARTSAtom {
 

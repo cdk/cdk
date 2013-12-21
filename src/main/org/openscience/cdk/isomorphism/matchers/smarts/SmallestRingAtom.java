@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module smarts
  * @cdk.keyword SMARTS
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.isomorphism.matchers.smarts.SmallestRingAtomTest")
 public final class SmallestRingAtom extends SMARTSAtom {

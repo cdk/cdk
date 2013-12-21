@@ -65,6 +65,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 
  * @author John May
  * @cdk.module standard 
+ * @cdk.githash
  */
 public final class Canon {
 

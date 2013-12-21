@@ -35,6 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  * @author John May
  * @cdk.module core
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.exception.IntractableTest")
 public final class Intractable extends CDKException {

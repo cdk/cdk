@@ -109,6 +109,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * @author John May
  * @cdk.module standard
+ * @cdk.githash
  */
 public final class Stereocenters {
 

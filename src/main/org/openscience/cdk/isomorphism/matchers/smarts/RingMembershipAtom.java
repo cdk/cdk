@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  *
  * @cdk.module smarts
  * @cdk.keyword SMARTS
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.isomorphism.matchers.smarts.RingMembershipAtomTest")
 public class RingMembershipAtom extends SMARTSAtom {
