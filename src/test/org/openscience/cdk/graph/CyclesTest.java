@@ -115,6 +115,25 @@ public class CyclesTest {
         checkSize(Cycles.allOrVertexShort().find(fullerene()), 120);
     }
     
+    @Test public void cdkAromaticSet_withGraph() throws Exception {
+        checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
+        checkSize(Cycles.cdkAromaticSet().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 6);
+        checkSize(Cycles.cdkAromaticSet().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike())), 8);
+        checkSize(Cycles.cdkAromaticSet().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike())), 8);
+    }  
+    
+    @Test public void allOrVertexShort_withGraph() throws Exception {
+        checkSize(Cycles.allOrVertexShort().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
+        checkSize(Cycles.allOrVertexShort().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 6);
+        checkSize(Cycles.allOrVertexShort().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike())), 135);
+        checkSize(Cycles.allOrVertexShort().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike())), 135);
+        checkSize(Cycles.allOrVertexShort().find(fullerene(), GraphUtil.toAdjList(fullerene())), 120);
+    }
+    
     @Test public void pathsAreCopy() throws Exception {
         Cycles cs = Cycles.all(makeAnthracene());
         int[][] org = cs.paths();
