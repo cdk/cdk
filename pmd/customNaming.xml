@@ -8,6 +8,7 @@
   <rule ref="rulesets/java/naming.xml">
     <exclude name="LongVariable"/>
     <exclude name="BooleanGetMethodName"/>
+    <exclude name="AbstractNaming"/>
   </rule>
 
   <rule name="CDK_LongVariable"
