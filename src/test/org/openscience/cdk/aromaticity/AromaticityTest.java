@@ -101,6 +101,11 @@ public class AromaticityTest {
         assertThat(daylight.findBonds(smiles("O=C1NC=CC=C1")).size(),
                    is(6));
     }
+    
+    @Test public void subset() throws Exception {
+        assertThat(daylight.findBonds(smiles("[O-][Cu++]123([O-])CN4C=NC5=C4C(N=CN5)=[O+]1.O=S(=O)([OH+]2)[OH+]3")).size(),
+                   is(5));
+    }
 
     @Test public void clearFlags_cyclobutadiene() throws Exception {
         IAtomContainer cyclobutadiene = smiles("c1ccc1");
@@ -149,15 +154,9 @@ public class AromaticityTest {
 
     @Test public void electronSum() throws Exception {
         assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0},
-                                           new int[]{1, 1, 1, 1}),
+                                           new int[]{1, 1, 1, 1},
+                                           new int[]{0, 1, 2, 3}),
                    is(4));
-    }
-
-    // make sure negative values are checked
-    @Test public void electronSum_negative() throws Exception {
-        assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0},
-                                           new int[]{1, 1, -1, 1}),
-                   is(0));
     }
 
     static IAtomContainer smiles(String smi) throws Exception {

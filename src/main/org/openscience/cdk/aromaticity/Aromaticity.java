@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -189,12 +190,19 @@ public final class Aromaticity {
 
         final Set<IBond> bonds = Sets.newHashSetWithExpectedSize(molecule.getBondCount());
 
+        // obtain the subset of electron contributions which are >= 0 (i.e. 
+        // allowed to be aromatic) - we then find the cycles in this subgraph
+        // and 'lift' the indices back to the original graph using the subset
+        // as a lookup
+        final int[]   subset   = subset(electrons);
+        final int[][] subgraph = GraphUtil.subgraph(graph, subset);
+        
         // for each cycle if the electron sum is valid add the bonds of the 
         // cycle to the set or aromatic bonds
-        for (final int[] cycle : cycles.find(molecule, graph).paths()) {
-            if (checkElectronSum(cycle, electrons)) {
+        for (final int[] cycle : cycles.find(molecule, subgraph).paths()) {
+            if (checkElectronSum(cycle, electrons, subset)) {
                 for (int i = 1; i < cycle.length; i++) {
-                    bonds.add(bondMap.get(cycle[i], cycle[i-1]));
+                    bonds.add(bondMap.get(subset[cycle[i]], subset[cycle[i-1]]));
                 }
             }
         }
@@ -261,8 +269,8 @@ public final class Aromaticity {
      * @param contributions π-electron contribution from each atom
      * @return the number of electrons indicate they could delocalise
      */
-    private static boolean checkElectronSum(final int[] cycle, final int[] contributions) {
-        return validSum(electronSum(cycle, contributions));
+    private static boolean checkElectronSum(final int[] cycle, final int[] contributions, final int[] subset) {
+        return validSum(electronSum(cycle, contributions, subset));
     }
 
     /**
@@ -277,13 +285,10 @@ public final class Aromaticity {
      * @return the total sum of π-electrons contributed by the {@code cycle}
      */
     @TestMethod("electronSum,electronSum_negative")
-    static int electronSum(final int[] cycle, final int[] contributions) {
+    static int electronSum(final int[] cycle, final int[] contributions, final int[] subset) {
         int sum = 0;
-        for (int i = 1; i < cycle.length; i++) {
-            if (contributions[cycle[i]] < 0)
-                return 0;
-            sum += contributions[cycle[i]];
-        }
+        for (int i = 1; i < cycle.length; i++)
+            sum += contributions[subset[cycle[i]]];
         return sum;
     }
 
@@ -298,5 +303,23 @@ public final class Aromaticity {
     @TestMethod("validSum")
     static boolean validSum(final int sum) {
         return (sum - 2) % 4 == 0;
+    }
+
+    /**
+     * Obtain a subset of the vertices which can contribute {@code electrons}
+     * and are allowed to be involved in an aromatic system.
+     *
+     * @param electrons electron contribution
+     * @return vertices which can be involved in an aromatic system 
+     */
+    private static int[] subset(final int[] electrons) {
+        int[] vs = new int[electrons.length];
+        int   n  = 0;
+        
+        for (int i = 0; i < electrons.length; i++)
+            if (electrons[i] >= 0)
+                vs[n++] = i;
+        
+        return Arrays.copyOf(vs, n);
     }
 }
