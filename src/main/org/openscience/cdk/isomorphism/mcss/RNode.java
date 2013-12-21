@@ -56,7 +56,7 @@ public class RNode
 
 
 	/**
-	 *  Constructor for the RNode object
+	 *  Constructor for the RNode object.
 	 *
 	 *@param  id1  number of the bond in the graphe 1
 	 *@param  id2  number of the bond in the graphe 2
@@ -70,7 +70,7 @@ public class RNode
 
 
 	/**
-	 *  Sets the rMap attribute of the RNode object
+	 *  Sets the rMap attribute of the RNode object.
 	 *
 	 *@param  rMap  The new rMap value
 	 */
@@ -81,7 +81,7 @@ public class RNode
 
 
 	/**
-	 *  Sets the extension attribute of the RNode object
+	 *  Sets the extension attribute of the RNode object.
 	 *
 	 *@param  extension  The new extension value
 	 */
@@ -92,7 +92,7 @@ public class RNode
 
 
 	/**
-	 *  Sets the forbidden attribute of the RNode object
+	 *  Sets the forbidden attribute of the RNode object.
 	 *
 	 *@param  forbidden  The new forbidden value
 	 */
@@ -103,7 +103,7 @@ public class RNode
 
 
 	/**
-	 *  Gets the rMap attribute of the RNode object
+	 *  Gets the rMap attribute of the RNode object.
 	 *
 	 *@return    The rMap value
 	 */
@@ -114,7 +114,7 @@ public class RNode
 
 
 	/**
-	 *  Gets the extension attribute of the RNode object
+	 *  Gets the extension attribute of the RNode object.
 	 *
 	 *@return    The extension value
 	 */
@@ -125,7 +125,7 @@ public class RNode
 
 
 	/**
-	 *  Gets the forbidden attribute of the RNode object
+	 *  Gets the forbidden attribute of the RNode object.
 	 *
 	 *@return    The forbidden value
 	 */
@@ -137,7 +137,7 @@ public class RNode
 
 
 	/**
-	 *  Returns a string representation of the RNode
+	 *  Returns a string representation of the RNode.
 	 *
 	 *@return    the string representation of the RNode
 	 */

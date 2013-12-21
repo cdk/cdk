@@ -50,13 +50,13 @@ public class AtomTypeCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Constructor for the AtomTypeCharges object
+	 *  Constructor for the AtomTypeCharges object.
 	 */
 	AtomTypeCharges() { }
 
 
 	/**
-	 *  Sets initial charges for atom types
+	 *  Sets initial charges for atom types.
 	 * +1 for cationic atom types
 	 * -1 for anionic atom types
 	 * carboxylic oxygen -0.5
@@ -90,7 +90,7 @@ public class AtomTypeCharges implements IChargeCalculator {
 	}
 	
 	/**
-	 *  Sets the initialCharges attribute of the AtomTypeCharges object
+	 *  Sets the initialCharges attribute of the AtomTypeCharges object.
 	 *
 	 *@param  ac                AtomContainer
 	 *@return                   AtomContainer with (new) partial charges

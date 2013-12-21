@@ -67,13 +67,13 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Constructor for the AtomTetrahedralLigandPlacer3D object
+	 *  Constructor for the AtomTetrahedralLigandPlacer3D object.
 	 */
 	AtomTetrahedralLigandPlacer3D() { }
 
 
 	/**
-	 *  Constructor for the setParameterSet object
+	 *  Constructor for the setParameterSet object.
 	 *
 	 *@param  moleculeParameter  Description of the Parameter
 	 */
@@ -679,7 +679,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Rotates a vector around an axis
+	 *  Rotates a vector around an axis.
 	 *
 	 *@param  vector  vector to be rotated around axis
 	 *@param  axis    axis of rotation
@@ -719,7 +719,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Gets the angleKey attribute of the AtomPlacer3D object
+	 *  Gets the angleKey attribute of the AtomPlacer3D object.
 	 *
 	 *@param  id1            Description of the Parameter
 	 *@param  id2            Description of the Parameter
@@ -794,7 +794,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Gets the spatproduct of three vectors
+	 *  Gets the spatproduct of three vectors.
 	 *
 	 *@param  a  vector a
 	 *@param  b  vector b
@@ -807,7 +807,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Calculates the torsionAngle of a-b-c-d 
+	 *  Calculates the torsionAngle of a-b-c-d.
 	 *
 	 *@param  a  Point3d
 	 *@param  b  Point3d
@@ -838,7 +838,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Gets all placed neighbouring atoms of a atom
+	 *  Gets all placed neighbouring atoms of a atom.
 	 *
 	 *@param  atom  central atom (Atom)
 	 *@param  ac    the molecul
@@ -862,7 +862,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 	/**
 	 *  Gets the unsetAtomsInAtomContainer attribute of the
-	 *  AtomTetrahedralLigandPlacer3D object
+	 *  AtomTetrahedralLigandPlacer3D object.
 	 *
 	 *@param  atom  Description of the Parameter
 	 *@param  ac    Description of the Parameter
@@ -894,7 +894,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 	/**
 	 *  Returns a placed neighbouring atom of a central atom atomA, which is not
-	 *  atomB
+	 *  atomB.
 	 *
 	 *@param  atomA  central atom (Atom)
 	 *@param  atomB  atom connected to atomA (Atom)

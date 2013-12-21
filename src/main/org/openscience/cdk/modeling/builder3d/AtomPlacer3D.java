@@ -322,7 +322,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the distanceValue attribute of the parameter set
+	 *  Gets the distanceValue attribute of the parameter set.
 	 *
 	 * @param  id1            atom1 id
 	 * @param  id2            atom2 id
@@ -346,7 +346,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the angleKey attribute of the AtomPlacer3D object
+	 *  Gets the angleKey attribute of the AtomPlacer3D object.
 	 *
 	 * @param  id1            Description of the Parameter
 	 * @param  id2            Description of the Parameter
@@ -377,7 +377,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule
+	 *  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule.
 	 *
 	 * @return    The nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour value
 	 * author:    steinbeck,cho
@@ -401,7 +401,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule
+	 *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule.
 	 *
 	 * @return    The nextUnplacedHeavyAtomWithUnplacedAliphaticNeigbor
 	 * author: steinbeck,cho
@@ -427,7 +427,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the nextPlacedHeavyAtomWithUnplacedRingNeighbour attribute of the AtomPlacer3D object
+	 *  Gets the nextPlacedHeavyAtomWithUnplacedRingNeighbour attribute of the AtomPlacer3D object.
 	 *
 	 * @return    The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
 	 */
@@ -453,7 +453,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the farthestAtom attribute of the AtomPlacer3D object
+	 *  Gets the farthestAtom attribute of the AtomPlacer3D object.
 	 *
 	 * @param  refAtomPoint  Description of the Parameter
 	 * @param  ac            Description of the Parameter
@@ -474,7 +474,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object
+	 *  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
 	 *
 	 * @param  atom  Description of the Parameter
 	 * @return       The unplacedRingHeavyAtom value
@@ -492,7 +492,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  Calculates the geometric center of all placed atoms in the atomcontainer
+	 *  Calculates the geometric center of all placed atoms in the atomcontainer.
 	 *
 	 * @return    Point3d the geometric center
 	 */
@@ -503,7 +503,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Returns a placed atom connected to a given atom
+	 *  Returns a placed atom connected to a given atom.
 	 *
 	 * @param  atom  The Atom whose placed bonding partners are to be returned
 	 * @return       a placed heavy atom connected to a given atom
@@ -522,7 +522,7 @@ public class AtomPlacer3D {
 
 
 	/**
-	 *  Gets the first placed Heavy Atom around atomA which is not atomB
+	 *  Gets the first placed Heavy Atom around atomA which is not atomB.
 	 *
 	 * @param  atomA  Description of the Parameter
 	 * @param  atomB  Description of the Parameter
@@ -577,7 +577,7 @@ public class AtomPlacer3D {
 	}
 	
 	/**
-	 *  Gets the allPlacedAtoms attribute of the AtomPlacer3D object
+	 *  Gets the allPlacedAtoms attribute of the AtomPlacer3D object.
 	 *
 	 * @return    The allPlacedAtoms value
 	 */
@@ -592,7 +592,7 @@ public class AtomPlacer3D {
 	}
 
 	/**
-	 *  True is all the atoms in the given AtomContainer have been placed
+	 *  True is all the atoms in the given AtomContainer have been placed.
 	 *
 	 * @param  ac  The AtomContainer to be searched
 	 * @return     True is all the atoms in the given AtomContainer have been placed

@@ -17,7 +17,7 @@ import org.openscience.cdk.annotations.TestMethod;
 public class IsotopePatternManipulator {
 
 	/**
-	 * Return the isotope pattern normalized to the highest abundance
+	 * Return the isotope pattern normalized to the highest abundance.
 	 * 
 	 * @param isotopeP  The IsotopePattern object to normalize
 	 * @return          The IsotopePattern normalized

@@ -187,7 +187,7 @@ public class CMLReader extends DefaultChemObjectReader {
 	}
 
 	/**
-     * Read a IChemObject from input
+     * Read a IChemObject from input.
      *
      * @return the content in a ChemFile object
      */

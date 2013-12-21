@@ -70,7 +70,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
     private static final String[] descriptorNames = {"peoeB"};
 	 /**
-     *  Constructor for the BondPartialSigmaChargeDescriptor object
+     *  Constructor for the BondPartialSigmaChargeDescriptor object.
      */
     public BondPartialSigmaChargeDescriptor() {  
         peoe = new GasteigerMarsiliPartialCharges();
@@ -79,7 +79,7 @@ public class BondPartialSigmaChargeDescriptor extends AbstractBondDescriptor {
 
     /**
      *  Gets the specification attribute of the BondPartialSigmaChargeDescriptor
-     *  object
+     *  object.
      *
      *@return    The specification value
      */

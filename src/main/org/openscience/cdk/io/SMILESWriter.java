@@ -120,7 +120,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
     /**
-     * Flushes the output and closes this object
+     * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
     public void close() throws IOException {
@@ -158,7 +158,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * Writes a list of molecules to an OutputStream
+	 * Writes a list of molecules to an OutputStream.
 	 *
 	 * @param   som  MoleculeSet that is written to an OutputStream
 	 */

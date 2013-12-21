@@ -109,7 +109,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     }
     
     /**
-     * Flushes the output and closes this object
+     * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
     public void close() throws IOException {

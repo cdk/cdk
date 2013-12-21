@@ -58,7 +58,7 @@ public class Polarizability {
         LoggingToolFactory.createLoggingTool(Polarizability.class);
 
     /**
-     * Constructor for the Polarizability object
+     * Constructor for the Polarizability object.
      */
     public Polarizability() {
     }
@@ -81,7 +81,7 @@ public class Polarizability {
     }
 
     /**
-     *  Gets the polarizabilitiyFactorForAtom
+     *  Gets the polarizabilitiyFactorForAtom.
      *
      *@param  atomContainer    AtomContainer
      *@param  atom  atom for which the factor should become known
@@ -96,7 +96,7 @@ public class Polarizability {
 
 
     /**
-     *  calculates the mean molecular polarizability as described in paper of Kang and Jhorn
+     *  calculates the mean molecular polarizability as described in paper of Kang and Jhorn.
      *
      *@param  atomContainer  AtomContainer
      *@return     polarizabilitiy
@@ -114,7 +114,7 @@ public class Polarizability {
 
 
     /**
-     *  calculate effective atom polarizability
+     *  calculate effective atom polarizability.
      *
      * @param  atomContainer                     IAtomContainer
      * @param  atom                   atom for which effective atom polarizability should be calculated
@@ -157,7 +157,7 @@ public class Polarizability {
     }
 
     /**
-     * calculate effective atom polarizability
+     * calculate effective atom polarizability.
      *
      * @param atomContainer         IAtomContainer
      * @param atom                  atom for which effective atom polarizability should be calculated     
@@ -203,7 +203,7 @@ public class Polarizability {
 
 
     /**
-     *  calculate bond polarizability
+     *  calculate bond polarizability.
      *
      *@param  atomContainer    AtomContainer
      *@param  bond  Bond bond for which the polarizabilitiy should be calculated
@@ -223,7 +223,7 @@ public class Polarizability {
 
 
     /**
-     *  Method which assigns the polarizabilitiyFactors
+     *  Method which assigns the polarizabilitiyFactors.
      *
      *@param  atomContainer    AtomContainer
      *@param  atom  Atom
@@ -303,7 +303,7 @@ public class Polarizability {
 
 
     /**
-     *  Gets the numberOfHydrogen attribute of the Polarizability object
+     *  Gets the numberOfHydrogen attribute of the Polarizability object.
      *
      *@param  atomContainer    Description of the Parameter
      *@param  atom  Description of the Parameter

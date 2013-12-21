@@ -183,7 +183,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	}
 
 	/**
-	 * Finish up parsing of elements in mdmolecule
+	 * Finish up parsing of elements in mdmolecule.
 	 */
 	public void endElement(CMLStack xpath, String uri, String name, String raw) {
 		if (name.equals("molecule")){

@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- *  A set of utilities which did not really fit into any other category
+ *  A set of utilities which did not really fit into any other category.
  *
  * @author     steinbeck
  * @cdk.githash
@@ -40,7 +40,8 @@ public class SwissArmyKnife {
 	// minimum details
 
 	/**
-	 *  Returns a string reporting the time passed between startTime and endTime, both given in milliseconds, in hours, minutes, seconds and milliseconds
+	 *  Returns a string reporting the time passed between startTime and endTime,
+	 *  both given in milliseconds, in hours, minutes, seconds and milliseconds.
 	 *
 	 * @param  startTime  The start time in milliseconds
 	 * @param  endTime    The end time in milliseconds
@@ -82,7 +83,7 @@ public class SwissArmyKnife {
 
 
 	/**
-	 *  Returns a string representation of a 2D int matrix for printing or listing to the console
+	 *  Returns a string representation of a 2D int matrix for printing or listing to the console.
 	 *
 	 * @param  contab  The 2D int matrix for which a string representation is to be generatred
 	 */
@@ -100,7 +101,7 @@ public class SwissArmyKnife {
 
 
 	/**
-	 *  Calculates the faculty for a given integer
+	 *  Calculates the faculty for a given integer.
 	 *
 	 * @param  i  The int value for which the faculty is to be returned
 	 * @return    The faculty of i

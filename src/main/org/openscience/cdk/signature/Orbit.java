@@ -84,7 +84,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     }
     
     /**
-     * Sorts the atom indices in this orbit
+     * Sorts the atom indices in this orbit.
      */
     @TestMethod("sortTest")
     public void sort() {

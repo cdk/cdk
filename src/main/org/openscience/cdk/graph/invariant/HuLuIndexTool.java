@@ -235,7 +235,7 @@ public class HuLuIndexTool
         return atomLayers;
     }
 
-    /** Lists a 2D double matrix to the System console */
+    /** Lists a 2D double matrix to the System console. */
     public static void displayMatrix(double[][] matrix){
         String line;
         for (int f = 0; f < matrix.length; f++)
@@ -249,7 +249,7 @@ public class HuLuIndexTool
         }
     }
 
-    /** Lists a 2D int matrix to the System console */
+    /** Lists a 2D int matrix to the System console. */
     public static void displayMatrix(int[][] matrix){
         String line;
         for (int f = 0; f < matrix.length; f++)
@@ -263,7 +263,7 @@ public class HuLuIndexTool
         }
     }
 
-    /** Lists a 1D array to the System console */
+    /** Lists a 1D array to the System console. */
     public static void displayArray(int[] array){
         String line  = "";
         for (int f = 0; f < array.length; f++)
@@ -273,7 +273,7 @@ public class HuLuIndexTool
         logger.debug(line);
     }
 
-    /** Lists a 1D array to the System console */
+    /** Lists a 1D array to the System console. */
     public static void displayArray(double[] array){
         String line  = "";
         for (int f = 0; f < array.length; f++)

@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
 /**
- * This matches a bond of any order
+ * This matches a bond of any order.
  * 
  * @cdk.module  smarts
  * @cdk.githash
@@ -43,7 +43,7 @@ public class AnyOrderQueryBond extends SMARTSBond {
     }
 
     /**
-     * Creates a new instance
+     * Creates a new instance.
      *
      * @param atom1
      * @param atom2

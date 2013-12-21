@@ -735,7 +735,7 @@ public class AtomContainer extends ChemObject
 	}
 
 	/**
-	 *  Returns the number of the single electrons in this container,
+	 *  Returns the number of the single electrons in this container.
 	 *
 	 *@return       The number of SingleElectron objects of this AtomContainer
 	 */

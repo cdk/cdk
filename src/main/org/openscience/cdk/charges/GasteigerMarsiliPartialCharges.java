@@ -61,13 +61,13 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
 
     /**
-     *  Constructor for the GasteigerMarsiliPartialCharges object
+     *  Constructor for the GasteigerMarsiliPartialCharges object.
      */
     public GasteigerMarsiliPartialCharges() { }
 
 
     /**
-    *  Sets chi_cat value for hydrogen, because H poses a special problem due to lack of possible second ionisation
+    *  Sets chi_cat value for hydrogen, because H poses a special problem due to lack of possible second ionisation.
      *
      *@param  chiCat  The new DEOC_HYDROGEN value
      */
@@ -79,7 +79,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
     /**
      *  Sets the maxGasteigerDamp attribute of the GasteigerMarsiliPartialCharges
-     *  object
+     *  object.
      *
      *@param  damp  The new maxGasteigerDamp value
      */
@@ -91,7 +91,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
     /**
      *  Sets the maxGasteigerIters attribute of the GasteigerMarsiliPartialCharges
-     *  object
+     *  object.
      *
      *@param  iters  The new maxGasteigerIters value
      */
@@ -101,7 +101,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
     }
 
     /**
-     *  Gets chi_cat value for hydrogen, because H poses a special problem due to lack of possible second ionisation
+     *  Gets chi_cat value for hydrogen, because H poses a special problem due to lack of possible second ionisation.
       *
       * @return  The new DEOC_HYDROGEN value
       */
@@ -113,7 +113,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
      /**
       *  Gets the maxGasteigerDamp attribute of the GasteigerMarsiliPartialCharges
-      *  object
+      *  object.
       *
       * @return  The new maxGasteigerDamp value
       */
@@ -125,7 +125,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
      /**
       *  Gets the maxGasteigerIters attribute of the GasteigerMarsiliPartialCharges
-      *  object
+      *  object.
       *
       * @return  The new maxGasteigerIters value
       */
@@ -135,7 +135,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
      }
 
     /**
-     *  Main method which assigns Gasteiger Marisili partial sigma charges
+     *  Main method which assigns Gasteiger Marisili partial sigma charges.
      *
      *@param  ac             AtomContainer
      *@param setCharge   	 The Charge
@@ -230,7 +230,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
     /**
      *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
-     *  object
+     *  object.
      *
      *@return STEP_SIZE
      */
@@ -240,7 +240,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
     }
     /**
      *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
-     *  object
+     *  object.
      *
      * @param step size of the step
      */
@@ -251,7 +251,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
 
 
     /**
-     *  Method which stores and assigns the factors a,b,c and CHI+
+     *  Method which stores and assigns the factors a,b,c and CHI+.
      *
      *@param  ac  AtomContainer
      *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer

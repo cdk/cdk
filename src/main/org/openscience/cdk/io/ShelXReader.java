@@ -129,7 +129,7 @@ public class ShelXReader extends DefaultChemObjectReader {
 	}
 
     /**
-     * Read a ChemFile from input
+     * Read a ChemFile from input.
      *
      * @return the content in a ChemFile object
      */

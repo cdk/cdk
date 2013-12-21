@@ -42,7 +42,7 @@ public class RMap {
 
 
   /**
-   *  Constructor for the RMap
+   *  Constructor for the RMap.
    *
    * @param  id1  number of the edge (bond) in the graphe 1
    * @param  id2  number of the edge (bond) in the graphe 2
@@ -54,7 +54,7 @@ public class RMap {
 
 
   /**
-   *  Sets the id1 attribute of the RMap object
+   *  Sets the id1 attribute of the RMap object.
    *
    * @param  id1  The new id1 value
    */
@@ -64,7 +64,7 @@ public class RMap {
 
 
   /**
-   *  Sets the id2 attribute of the RMap object
+   *  Sets the id2 attribute of the RMap object.
    *
    * @param  id2  The new id2 value
    */
@@ -74,7 +74,7 @@ public class RMap {
 
 
   /**
-   *  Gets the id1 attribute of the RMap object
+   *  Gets the id1 attribute of the RMap object.
    *
    * @return    The id1 value
    */
@@ -84,7 +84,7 @@ public class RMap {
 
 
   /**
-   *  Gets the id2 attribute of the RMap object
+   *  Gets the id2 attribute of the RMap object.
    *
    * @return    The id2 value
    */

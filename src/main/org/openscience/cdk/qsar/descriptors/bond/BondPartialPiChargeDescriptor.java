@@ -82,7 +82,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
     private static final String[] descriptorNames = {"pepeB"};
     /**
-     *  Constructor for the BondPartialPiChargeDescriptor object
+     *  Constructor for the BondPartialPiChargeDescriptor object.
      */
     public BondPartialPiChargeDescriptor() {  
     	pepe = new GasteigerPEPEPartialCharges();
@@ -91,7 +91,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 
     /**
      *  Gets the specification attribute of the BondPartialPiChargeDescriptor
-     *  object
+     *  object.
      *
      *@return    The specification value
      */

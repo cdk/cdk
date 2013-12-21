@@ -24,7 +24,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
- * This smarts atom matches aliphatic atom with element symbol specified
+ * This smarts atom matches aliphatic atom with element symbol specified.
  *
  * @cdk.module  smarts
  * @cdk.githash
@@ -33,7 +33,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class AliphaticSymbolAtom extends SMARTSAtom {
 	
 	/**
-	 * Creates a new instance
+	 * Creates a new instance.
 	 *
 	 * @param symbol the atom symbol
 	 */

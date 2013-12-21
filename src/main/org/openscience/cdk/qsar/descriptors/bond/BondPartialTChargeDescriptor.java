@@ -90,7 +90,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
     private static final String[] descriptorNames = {"pCB"};
     
     /**
-     *  Constructor for the BondPartialTChargeDescriptor object
+     *  Constructor for the BondPartialTChargeDescriptor object.
      */
     public BondPartialTChargeDescriptor() {  
         peoe = new GasteigerMarsiliPartialCharges();
@@ -99,7 +99,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 
     /**
      *  Gets the specification attribute of the BondPartialTChargeDescriptor
-     *  object
+     *  object.
      *
      *@return    The specification value
      */

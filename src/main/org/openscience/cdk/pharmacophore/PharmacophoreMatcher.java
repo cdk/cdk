@@ -358,7 +358,7 @@ public class PharmacophoreMatcher {
     }
 
     /**
-     * Get the query pharmacophore
+     * Get the query pharmacophore.
      *
      * @return The query
      */
@@ -368,7 +368,7 @@ public class PharmacophoreMatcher {
     }
 
     /**
-     * Set a pharmacophore query
+     * Set a pharmacophore query.
      *
      * @param query The query
      */

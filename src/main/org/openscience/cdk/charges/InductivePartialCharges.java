@@ -66,7 +66,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Constructor for the InductivePartialCharges object
+	 *  Constructor for the InductivePartialCharges object.
 	 *
 	 *@exception  IOException             Description of the Exception
 	 *@exception  ClassNotFoundException  Description of the Exception
@@ -85,7 +85,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Main method, set charge as atom properties
+	 *  Main method, set charge as atom properties.
 	 *
 	 *@param  ac             AtomContainer
 	 *@return                AtomContainer
@@ -141,7 +141,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 	/**
 	 *  Gets the paulingElectronegativities attribute of the
-	 *  InductivePartialCharges object
+	 *  InductivePartialCharges object.
 	 *
 	 *@param  ac             AtomContainer
 	 *@param  modified       if true, some values are modified by following the reference
@@ -209,7 +209,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 	
 	/**
-	 *  Gets the atomicSoftnessCore attribute of the InductivePartialCharges object
+	 *  Gets the atomicSoftnessCore attribute of the InductivePartialCharges object.
 	 *
 	 *@param  ac                AtomContainer
 	 *@param  atomPosition      position of target atom
@@ -281,7 +281,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 	// this method returns the partial charge increment for a given atom
 	/**
 	 *  Gets the atomicChargeIncrement attribute of the InductivePartialCharges
-	 *  object
+	 *  object.
 	 *
 	 *@param  ac                AtomContainer
 	 *@param  atomPosition      position of target atom
@@ -345,7 +345,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 
 	/**
-	 *  Gets the covalentRadius attribute of the InductivePartialCharges object
+	 *  Gets the covalentRadius attribute of the InductivePartialCharges object.
 	 *
 	 *@param  symbol        symbol of the atom
 	 *@param  maxBondOrder  its max bond order

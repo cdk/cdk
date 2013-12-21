@@ -62,13 +62,13 @@ public class EquivalentClassPartitioner {
             .createLoggingTool(EquivalentClassPartitioner.class);
 
     /**
-     * Constructor for the TopologicalEquivalentClass object
+     * Constructor for the TopologicalEquivalentClass object.
      */
     public EquivalentClassPartitioner() {
     }
 
     /**
-     * Constructor for the TopologicalEquivalentClass object
+     * Constructor for the TopologicalEquivalentClass object.
      */
     public EquivalentClassPartitioner(IAtomContainer atomContainer) {
         adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
@@ -100,7 +100,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Get the topological equivalent class of the molecule
+     * Get the topological equivalent class of the molecule.
      * 
      * @param atomContainer
      *            atoms and bonds of the molecule
@@ -118,7 +118,7 @@ public class EquivalentClassPartitioner {
     /**
      * Prepare the node identifier. The purpose of this is to increase the
      * differentiatation of the nodes. Detailed information please see the
-     * corresponding literature
+     * corresponding literature.
      * 
      * @param atomContainer
      *            atoms and bonds of the molecule
@@ -332,7 +332,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Build node Matrix
+     * Build node Matrix.
      * 
      * @param nodeSequence an array contains node number for each atom
      * @return node Matrix
@@ -354,7 +354,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Build trial node Matrix
+     * Build trial node Matrix.
      * 
      * @param weight an array contains the weight of atom
      * @return trial node matrix.
@@ -376,7 +376,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Build bond matrix
+     * Build bond matrix.
      * 
      * @return bond matrix.
      */
@@ -406,7 +406,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Build weight array for the given node matrix and bond matrix
+     * Build weight array for the given node matrix and bond matrix.
      * 
      * @param nodeMatrix array contains node information
      * @param bondMatrix array contains bond information
@@ -426,7 +426,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Get different number of the given number
+     * Get different number of the given number.
      * 
      * @param weight array contains weight of the nodes
      * @return number of different weight
@@ -455,7 +455,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Get the final equivalent class
+     * Get the final equivalent class.
      * 
      * @param weight array contains weight of the nodes
      * @return an array contains the automorphism partition
@@ -499,7 +499,7 @@ public class EquivalentClassPartitioner {
     }
 
     /**
-     * Find the topological equivalent class for the given weight
+     * Find the topological equivalent class for the given weight.
      * 
      * @param weight array contains weight of the nodes
      * @return an array contains the automorphism partition

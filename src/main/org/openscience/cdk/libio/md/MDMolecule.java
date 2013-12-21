@@ -64,7 +64,7 @@ public class MDMolecule extends AtomContainer {
 	}
 
 	/**
-	 * Add a Residue to the MDMolecule if not already present
+	 * Add a Residue to the MDMolecule if not already present.
 	 * @param residue Residue to add
 	 */
 	public void addResidue(Residue residue){
@@ -89,7 +89,7 @@ public class MDMolecule extends AtomContainer {
 	}
 
 	/**
-	 * Add a ChargeGroup to the MDMolecule if not already present
+	 * Add a ChargeGroup to the MDMolecule if not already present.
 	 * 
 	 * @param chargeGroup {@link ChargeGroup} to add
 	 */

@@ -45,7 +45,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.math.FortranFormatTest")
 public class FortranFormat {
     /**
-     * Converts a string of digits to an double
+     * Converts a string of digits to an double.
      *
      * @param s a string denoting a double
      */

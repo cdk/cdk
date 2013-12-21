@@ -93,12 +93,12 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	    LoggingToolFactory.createLoggingTool(GasteigerPEPEPartialCharges.class);
 	
 	/**
-	 *  Constructor for the GasteigerPEPEPartialCharges object
+	 *  Constructor for the GasteigerPEPEPartialCharges object.
 	 */
 	public GasteigerPEPEPartialCharges() { }
 	/**
 	 *  Sets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
-	 *  object
+	 *  object.
 	 *
 	 *@param  iters  The new maxGasteigerIters value
 	 */
@@ -107,7 +107,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		MX_ITERATIONS = iters;
 	}
 	/**
-	 *  Sets the maximum resonance structures to be searched
+	 *  Sets the maximum resonance structures to be searched.
 	 *
 	 *@param  numbReson  The number of resonance Structures to be searched
 	 */
@@ -117,7 +117,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	}
     /**
 	 *  Gets the maxGasteigerIters attribute of the GasteigerPEPEPartialCharges
-	 *  object
+	 *  object.
 	 *
 	 *@return  The new maxGasteigerIters value
 	 */
@@ -126,7 +126,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		return MX_ITERATIONS;
 	}
 	/**
-	 *  Gets the maximum resonance structures to be searched
+	 *  Gets the maximum resonance structures to be searched.
 	 *
      * @return the maximum numebr of resonance structures that will be returned
      */
@@ -592,7 +592,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 
 
 	/**
-	 * get the topological weight factor for each atomContainer
+	 * get the topological weight factor for each atomContainer.
 	 * 
 	 * @param atomContainer  The IAtomContainer to study.
 	 * @param ac             The IAtomContainer to study.
@@ -650,7 +650,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	
 	/**
 	 *  Get the StepSize attribute of the GasteigerMarsiliPartialCharges
-	 *  object
+	 *  object.
 	 *
 	 *@return STEP_SIZE
 	 */
@@ -660,7 +660,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 	}
     /**
      *  Set the StepSize attribute of the GasteigerMarsiliPartialCharges
-     *  object
+     *  object.
      *
      *@param step
      */
@@ -669,7 +669,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         STEP_SIZE = step;
     }
 	/**
-	 * Method which stores and assigns the factors a,b,c and CHI+
+	 * Method which stores and assigns the factors a,b,c and CHI+.
 	 *
 	 * @return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
@@ -760,7 +760,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		return gasteigerFactors;
 	}
 	/**
-	 *  Method which stores and assigns the factors a,b,c and CHI+
+	 *  Method which stores and assigns the factors a,b,c and CHI+.
 	 *
 	 *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
 	 */
@@ -863,7 +863,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 		return gasteigerFactors;
 	}
 	/**
-     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule
+     * clean the flags CDKConstants.REACTIVE_CENTER from the molecule.
      * 
 	 * @param ac
 	 */

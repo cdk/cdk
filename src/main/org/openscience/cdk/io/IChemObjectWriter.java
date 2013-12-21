@@ -48,7 +48,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 public interface IChemObjectWriter extends IChemObjectIO {
 
     /**
-     * Writes the content of "object" to output
+     * Writes the content of "object" to output.
      *
      * @param  object    the object of which the content is outputed
      *

@@ -56,7 +56,7 @@ public class IntegerArrayResult extends IntegerArrayResultType {
     }
 
     /**
-     * The first int is at index = 0;
+     * The first int is at index = 0.
      */
     @TestMethod("testGet_int")
     public int get(int index) {

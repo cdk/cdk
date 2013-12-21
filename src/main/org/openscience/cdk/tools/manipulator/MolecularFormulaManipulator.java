@@ -995,7 +995,7 @@ public class MolecularFormulaManipulator {
 	}
 
 	/**
-	 * Returns a set of nodes excluding all the hydrogens
+	 * Returns a set of nodes excluding all the hydrogens.
 	 * 
 	 * @param   formula The IMolecularFormula
 	 * @return          The heavyElements value into a List

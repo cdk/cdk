@@ -160,7 +160,7 @@ public class TemplateHandler3D {
     }
     
 	/**
-	 * Returns the largest (number of atoms) ring set in a molecule
+	 * Returns the largest (number of atoms) ring set in a molecule.
 	 *
 	 *@param  ringSystems  RingSystems of a molecule 
 	 *@return              The largestRingSet 
@@ -255,7 +255,7 @@ public class TemplateHandler3D {
     }
 
     /**
-     * Gets the templateCount attribute of the TemplateHandler object
+     * Gets the templateCount attribute of the TemplateHandler object.
      *
      * @return The templateCount value
      */
@@ -265,7 +265,7 @@ public class TemplateHandler3D {
 
 
     /**
-     *  Gets the templateAt attribute of the TemplateHandler object
+     *  Gets the templateAt attribute of the TemplateHandler object.
      *
      *@param  position  Description of the Parameter
      *@return The templateAt value

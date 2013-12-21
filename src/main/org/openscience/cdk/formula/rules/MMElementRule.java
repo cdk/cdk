@@ -80,7 +80,7 @@ public class MMElementRule implements IRule{
 	    LoggingToolFactory.createLoggingTool(MMElementRule.class);
 
 	/** A enumeration of the possible mass range
-	 * according the rules */
+	 * according the rules. */
 	public static enum RangeMass {
 		/** IMolecularFormula from a metabolite with a mass lower than 500 Da. */
 		Minus500,
@@ -93,7 +93,7 @@ public class MMElementRule implements IRule{
 	}
 
     /** A enumeration of the possible databases
-	 * according the rules */
+	 * according the rules. */
 	public static enum Database {
 		/** Wiley mass spectral database. */
 		WILEY,

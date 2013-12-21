@@ -107,7 +107,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Sets the reader attribute of the Gaussian98Reader object
+     * Sets the reader attribute of the Gaussian98Reader object.
      *
      * @param input The new reader value
      * @throws CDKException Description of the Exception

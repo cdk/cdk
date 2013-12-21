@@ -52,21 +52,21 @@ import org.xmlcml.cml.element.CMLScalar;
 public class MDMoleculeCustomizer implements ICMLCustomizer {
 
     /**
-     * No customization for bonds
+     * No customization for bonds.
      */
 	public void customize(IBond bond, Object nodeToAdd) throws Exception {
 		// nothing to do
 	}
 	
 	/**
-	 * Customize Atom
+	 * Customize Atom.
 	 */
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
     	// nothing to do
     }
     
 	/**
-	 * Customize Molecule
+	 * Customize Molecule.
 	 */
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
     	if (!(nodeToAdd instanceof CMLMolecule))

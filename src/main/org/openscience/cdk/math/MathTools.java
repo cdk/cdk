@@ -68,7 +68,7 @@ public class MathTools {
 	}
 	
 	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints
+	 * Analog of Math.max that returns the largest int value in an array of ints.
 	 **/
     @TestMethod("testMax_arrayint")
     public static int max(int[] values)
@@ -83,7 +83,7 @@ public class MathTools {
 	}
 
 	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints
+	 * Analog of Math.max that returns the largest int value in an array of ints.
 	 **/
     @TestMethod("testMin_arrayint")
     public static int min(int[] values)

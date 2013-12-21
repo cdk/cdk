@@ -145,7 +145,7 @@ public class GeometryTools {
 
 	/**
 	 *  Scales a molecule such that it fills a given percentage of a given
-	 *  dimension
+	 *  dimension.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon     The molecule to be scaled
@@ -180,7 +180,7 @@ public class GeometryTools {
 
 
 	/**
-	 *  Centers the molecule in the given area
+	 *  Centers the molecule in the given area.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  molecule to be centered
@@ -214,7 +214,7 @@ public class GeometryTools {
 
 
 	/**
-	 *  Rotates a molecule around a given center by a given angle
+	 *  Rotates a molecule around a given center by a given angle.
 	 *
 	 *@param  atomCon  The molecule to be rotated
 	 *@param  center   A point giving the rotation center
@@ -301,7 +301,7 @@ public class GeometryTools {
 
 
 	/**
-	 *  Returns the java.awt.Dimension of a molecule
+	 *  Returns the java.awt.Dimension of a molecule.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atomCon  of which the dimension should be returned
@@ -398,7 +398,7 @@ public class GeometryTools {
 
 
 	/**
-	 *  Calculates the center of the given atoms and returns it as a Point2d
+	 *  Calculates the center of the given atoms and returns it as a Point2d.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atoms  The vector of the given atoms
@@ -420,7 +420,7 @@ public class GeometryTools {
 
 	
 	/**
-	 *  Calculates the center of the given atoms and returns it as a Point2d
+	 *  Calculates the center of the given atoms and returns it as a Point2d.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  atoms  The Iterator of the given atoms
@@ -599,7 +599,7 @@ public class GeometryTools {
 
 
 	/**
-	 *  Gets the angle attribute of the GeometryTools class
+	 *  Gets the angle attribute of the GeometryTools class.
 	 *
 	 *@param  xDiff  Description of the Parameter
 	 *@param  yDiff  Description of the Parameter
@@ -873,7 +873,7 @@ public class GeometryTools {
 
 	/**
 	 *  Sorts a Vector of atoms such that the 2D distances of the atom locations
-	 *  from a given point are smallest for the first atoms in the vector
+	 *  from a given point are smallest for the first atoms in the vector.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
 	 *
 	 *@param  point  The point from which the distances to the atoms are measured

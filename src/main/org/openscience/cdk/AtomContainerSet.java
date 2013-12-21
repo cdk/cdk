@@ -389,7 +389,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 
     /**
-     * Sort the AtomContainers and multipliers using a provided Comparator
+     * Sort the AtomContainers and multipliers using a provided Comparator.
      * @param comparator defines the sorting method
      */
     @TestMethod("testSortAtomContainers_Comparator_Null,testSort_Coefficients,testSort_BrokenComparator,testSort_empty")

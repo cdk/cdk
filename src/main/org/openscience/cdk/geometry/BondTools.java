@@ -108,7 +108,7 @@ public class BondTools {
 
   /**
    *  Says if an atom is on the left side of a another atom seen from a certain
-   *  atom or not
+   *  atom or not.
    *
    * @param  whereIs   The atom the position of which is returned
    * @param  viewFrom  The atom from which to look
@@ -556,7 +556,7 @@ public class BondTools {
 
 
 	/**
-	 *  Calls giveAngleBothMethods with bool = true
+	 *  Calls giveAngleBothMethods with bool = true.
 	 *
 	 *@param  from  the atom to view from
 	 *@param  to1   first direction to look in
@@ -571,7 +571,7 @@ public class BondTools {
 
 
 	/**
-	 *  Calls giveAngleBothMethods with bool = false
+	 *  Calls giveAngleBothMethods with bool = false.
 	 *
 	 *@param  from  the atom to view from
 	 *@param  to1   first direction to look in

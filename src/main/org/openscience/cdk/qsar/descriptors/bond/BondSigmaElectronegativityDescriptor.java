@@ -74,7 +74,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
 
     private static final String[] descriptorNames = {"elecSigB"};
     /**
-     *  Constructor for the BondSigmaElectronegativityDescriptor object
+     *  Constructor for the BondSigmaElectronegativityDescriptor object.
      */
     public BondSigmaElectronegativityDescriptor() { 
     	electronegativity = new Electronegativity();
@@ -83,7 +83,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
 
     /**
      *  Gets the specification attribute of the BondSigmaElectronegativityDescriptor
-     *  object
+     *  object.
      *
      *@return    The specification value
      */

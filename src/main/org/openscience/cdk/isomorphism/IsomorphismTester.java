@@ -82,7 +82,7 @@ public class IsomorphismTester implements java.io.Serializable
 
 	/**
 	 *  Checks whether a given molecule is isomorphic with the one
-	 *  that has been assigned to this IsomorphismTester at contruction time
+	 *  that has been assigned to this IsomorphismTester at contruction time.
 	 *
 	 * @param  mol1                     A first molecule to check against the second one
 	 * @param  mol2                     A second molecule to check against the first
@@ -97,7 +97,7 @@ public class IsomorphismTester implements java.io.Serializable
 
 	/**
 	 *  Checks whether a given molecule is isomorphic with the one 
-	 *  that has been assigned to this IsomorphismTester at contruction time
+	 *  that has been assigned to this IsomorphismTester at contruction time.
 	 *
 	 * @param  mol2                     A molecule to check 
 	 * @return                          True, if the two molecules are isomorphic 

@@ -175,7 +175,7 @@ public class GIMatrix {
     public double[][] getArrayValue() { return array; } // method getArrayValue()
     
     /**
-     * Resets the value of the matrix to the given array of double numbers
+     * Resets the value of the matrix to the given array of double numbers.
      * @param array an array of double objects (first index is the line, second is the column)
      * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
      */
@@ -209,7 +209,7 @@ public class GIMatrix {
     } // method setValueAt(int,int,double)
 
     /**
-     * Returns the line-matrix at the given line index
+     * Returns the line-matrix at the given line index.
      * @param i the line number
      * @return the specified line as a Matrix object
      * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
@@ -223,7 +223,7 @@ public class GIMatrix {
     } // method getLine(int)
 
     /**
-     * Returns the column-matrix at the given line index
+     * Returns the column-matrix at the given line index.
      * @param j the column number
      * @return the specified column as a Matrix object
      * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
