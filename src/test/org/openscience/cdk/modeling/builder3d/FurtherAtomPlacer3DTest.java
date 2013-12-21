@@ -293,7 +293,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		IAtomContainer molecule = parser.parseSmiles(smiles);
 		Assert.assertNotNull(molecule);
 		ForceFieldConfigurator ffc= new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", DefaultChemObjectBuilder.getInstance());
 		AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
 		atomPlacer3d.initilize(ffc.getParameterSet());
 		ffc.assignAtomTyps(molecule);
@@ -317,7 +317,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		IAtomContainer molecule = parser.parseSmiles(smiles);
 		Assert.assertNotNull(molecule);
 		ForceFieldConfigurator ffc= new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", DefaultChemObjectBuilder.getInstance());
 		AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
 		atomPlacer3d.initilize(ffc.getParameterSet());
 		ffc.assignAtomTyps(molecule);
@@ -343,7 +343,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
 		IAtomContainer molecule = parser.parseSmiles(smiles);
 		Assert.assertNotNull(molecule);
 		ForceFieldConfigurator ffc= new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", DefaultChemObjectBuilder.getInstance());
 		AtomPlacer3D atomPlacer3d= new AtomPlacer3D();
 		atomPlacer3d.initilize(ffc.getParameterSet());
 		ffc.assignAtomTyps(molecule);
@@ -378,7 +378,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
         IAtomContainer m     = sp.parseSmiles(input);
 
         ForceFieldConfigurator ffc= new ForceFieldConfigurator();
-        ffc.setForceFieldConfigurator("mmff92");
+        ffc.setForceFieldConfigurator("mmff92", DefaultChemObjectBuilder.getInstance());
         ffc.assignAtomTyps(m);
 
         AtomPlacer3D ap3d = new AtomPlacer3D();

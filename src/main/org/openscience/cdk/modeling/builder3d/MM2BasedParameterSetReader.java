@@ -1,9 +1,5 @@
-/*  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+/*  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+ *                     2013  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -40,8 +36,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.openscience.cdk.AtomType;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -266,7 +260,7 @@ public class MM2BasedParameterSetReader {
 	 *
 	 * @exception  Exception  Description of the Exception
 	 */
-	private void setAtomTypes() throws Exception {
+	private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
 		String name = "";
 		String rootType = "";
 		int an = 0;
@@ -294,7 +288,7 @@ public class MM2BasedParameterSetReader {
 					"Malformed Number");
 		}
 
-		IAtomType atomType = new AtomType(name, rootType);
+		IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
 		atomType.setAtomicNumber(an);
 		atomType.setExactMass(mass);
 		atomType.setMassNumber(massNumber(an, mass));
@@ -810,7 +804,7 @@ public class MM2BasedParameterSetReader {
 	 *
 	 * @exception  Exception  Description of the Exception
 	 */
-	public void readParameterSets() throws Exception {
+	public void readParameterSets(IChemObjectBuilder builder) throws Exception {
 		//vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
 		//strbond,opbend,torsion,torsion4,charge,dipole,
 		//dipole3,piatom,pibond,dipole3
@@ -840,7 +834,7 @@ public class MM2BasedParameterSetReader {
 					a[0]++;
 				} else if (s.startsWith("atom") & nt <= 8) {
 					a[0]++;
-					setAtomTypes();
+					setAtomTypes(builder);
 				} else if (s.startsWith("vdw ") & nt <= 5) {
 					setvdWaals();
 					a[1]++;
@@ -909,7 +903,6 @@ public class MM2BasedParameterSetReader {
      */
     private Integer massNumber(int atomicNumber, double exactMass) throws IOException {
         String symbol = PeriodicTable.getSymbol(atomicNumber);
-        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IIsotope isotope = Isotopes.getInstance()
                                          .getIsotope(symbol,
                                                      exactMass,

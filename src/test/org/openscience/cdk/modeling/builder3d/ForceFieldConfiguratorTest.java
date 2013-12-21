@@ -66,7 +66,7 @@ public class ForceFieldConfiguratorTest  {
 	@Test
 	public void testSetForceFieldConfigurator_String() throws CDKException {
 		String forceFieldName = "mmff94";
-		forceFieldConfigurator.setForceFieldConfigurator(forceFieldName);
+		forceFieldConfigurator.setForceFieldConfigurator(forceFieldName, DefaultChemObjectBuilder.getInstance());
 		List<IAtomType> mmff94AtomTypes = forceFieldConfigurator.getAtomTypes();
 		assertNotNull(mmff94AtomTypes);
 		IAtomType atomtype0 = mmff94AtomTypes.get(0);
@@ -75,7 +75,7 @@ public class ForceFieldConfiguratorTest  {
 		assertEquals("Csp2", atomtype1.getAtomTypeName());
 		
 		forceFieldName = "mm2";
-		forceFieldConfigurator.setForceFieldConfigurator(forceFieldName);
+		forceFieldConfigurator.setForceFieldConfigurator(forceFieldName, DefaultChemObjectBuilder.getInstance());
 		List<IAtomType> mm2AtomTypes = forceFieldConfigurator.getAtomTypes();
 		assertNotNull(mm2AtomTypes);
 		IAtomType atomtype2 = mm2AtomTypes.get(2);
@@ -87,7 +87,7 @@ public class ForceFieldConfiguratorTest  {
 	
 	@Test
 	public void testSetMM2Parameters() throws CDKException {
-		forceFieldConfigurator.setMM2Parameters();
+		forceFieldConfigurator.setMM2Parameters(DefaultChemObjectBuilder.getInstance());
 		assertNotNull(forceFieldConfigurator.getParameterSet());
 		List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
 		IAtomType atomtype1 = atomtypeList.get(1);
@@ -98,7 +98,7 @@ public class ForceFieldConfiguratorTest  {
 	
 	@Test
 	public void testSetMMFF94Parameters() throws Exception {
-		forceFieldConfigurator.setMMFF94Parameters();
+		forceFieldConfigurator.setMMFF94Parameters(DefaultChemObjectBuilder.getInstance());
 		assertNotNull(forceFieldConfigurator.getParameterSet());
 		List<IAtomType> atomtypeList = forceFieldConfigurator.getAtomTypes();
 		IAtomType atomtype4 = atomtypeList.get(4);
@@ -130,7 +130,7 @@ public class ForceFieldConfiguratorTest  {
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer hu = parser.parseSmiles(husmi);
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", builder);
 		IAtom N1= hu.getAtom(0);
 		IAtom N2 = hu.getAtom(3);
 		ffc.configureAtom(N1, 
@@ -151,7 +151,7 @@ public class ForceFieldConfiguratorTest  {
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer pa = parser.parseSmiles(pasmi);
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", builder);
 		IAtom amideN = pa.getAtom(0);
 		ffc.configureMMFF94BasedAtom(amideN, 
 				new HOSECodeGenerator().getHOSECode(pa, amideN, 3), 
@@ -170,7 +170,7 @@ public class ForceFieldConfiguratorTest  {
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer urea = parser.parseSmiles(usmi);
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", builder);
 		IAtom amideN = urea.getAtom(0);
 		ffc.configureMMFF94BasedAtom(amideN, 
 				new HOSECodeGenerator().getHOSECode(urea, amideN, 3), 
@@ -199,7 +199,7 @@ public class ForceFieldConfiguratorTest  {
 		for(int i=0; i<molecule.getAtomCount(); i++) {
 			assertEquals(originalAtomTypes[i],molecule.getAtom(i).getAtomTypeName());	
 		     }
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");	
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);	
 		IRingSet moleculeRingSet = forceFieldConfigurator.assignAtomTyps(molecule);
 		//no rings
 		assertEquals(0, moleculeRingSet.getAtomContainerCount());
@@ -221,7 +221,7 @@ public class ForceFieldConfiguratorTest  {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer bugmol = parser.parseSmiles(smiles);
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
 		IAtom amideN = bugmol.getAtom(11);
 		forceFieldConfigurator.configureMMFF94BasedAtom(amideN, 
 				new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3), 
@@ -239,7 +239,7 @@ public class ForceFieldConfiguratorTest  {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer bugmol = parser.parseSmiles(smiles);
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
 		IAtom amideN = bugmol.getAtom(2);
 		forceFieldConfigurator.configureMMFF94BasedAtom(amideN, 
 				new HOSECodeGenerator().getHOSECode(bugmol, amideN, 3), 
@@ -259,7 +259,7 @@ public class ForceFieldConfiguratorTest  {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer bugmol = parser.parseSmiles(smiles);
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
 		IAtom sulphur = bugmol.getAtom(1);
 		HOSECodeGenerator hscodegen = new HOSECodeGenerator();
 		forceFieldConfigurator.configureAtom(sulphur, 
@@ -276,7 +276,7 @@ public class ForceFieldConfiguratorTest  {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer bugmol = parser.parseSmiles(smiles);
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
 		IAtom nitrogen1 = bugmol.getAtom(1);
 		IAtom nitrogen2 = bugmol.getAtom(4);
 		IAtom nitrogen3 = bugmol.getAtom(6);
@@ -301,7 +301,7 @@ public class ForceFieldConfiguratorTest  {
 		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser parser = new SmilesParser(builder);
 		IAtomContainer bugmol = parser.parseSmiles(smiles);
-		forceFieldConfigurator.setForceFieldConfigurator("mmff94");
+		forceFieldConfigurator.setForceFieldConfigurator("mmff94", builder);
 		IAtom nitrogen1 = bugmol.getAtom(2);
 		HOSECodeGenerator hscodegen = new HOSECodeGenerator();
 		forceFieldConfigurator.configureAtom(nitrogen1, 

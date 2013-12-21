@@ -35,13 +35,11 @@ import javax.vecmath.Point3d;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -81,7 +79,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 	 //  A unit test for JUnit with methylenfluoride\
     @Test
     public void testModelBuilder3D_CF() throws Exception {
-		ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
 		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
 		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
@@ -103,7 +101,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_CccccC() throws Exception {
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="CccccC";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles(smile);
@@ -120,7 +118,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_c1ccccc1C0() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String smile="c1ccccc1C=O";
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	IAtomContainer mol = sp.parseSmiles(smile);
@@ -136,7 +134,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_Konstanz() throws Exception {
         Assume.assumeTrue(runSlowTests());
     	
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles(smile);
@@ -152,7 +150,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
         Assume.assumeTrue(runSlowTests());
     	
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles(smile);
@@ -168,7 +166,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String smile="C1CCCCCCC1CC";
     	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
     	IAtomContainer mol = sp.parseSmiles(smile);
@@ -189,7 +187,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
         Assume.assumeTrue(runSlowTests());
     	
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="CCCCCCCCCC";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = sp.parseSmiles(smile);
@@ -211,7 +209,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_232() throws Exception{
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String filename = "data/mdl/allmol232.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -237,7 +235,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     public void testModelBuilder3D_231() throws Exception{
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String filename = "data/mdl/allmol231.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -259,7 +257,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     public void testModelBuilder3D_keepChemObjectIDs() throws Exception {
-    	ModelBuilder3D mb3d = ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 
     	IAtomContainer methanol = new AtomContainer();
     	IChemObjectBuilder builder = methanol.getBuilder();
@@ -341,7 +339,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		// Test for the method Model3DBuildersWithMM2ForceField
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		for (int i = 0; i < inputList.size(); i++) {
             // shallow copy
 			IAtomContainer mol = builder.newInstance(IAtomContainer.class, inputList.get(i));
@@ -364,7 +362,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 	 */
     @Test
     public void testModelBuilder3D_bug_1241421() throws Exception{
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String filename = "data/mdl/bug1241421.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -377,7 +375,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
     @Test
     public void testModelBuilder3D_reserpine() throws Exception{
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance();
+    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
     	String filename = "data/mdl/reserpine.mol";
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -399,8 +397,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer nonBranchedAlkane = parser.parseSmiles(smiles1);
         IAtomContainer branchedAlkane    = parser.parseSmiles(smiles2);
-        ModelBuilder3D.getInstance().generate3DCoordinates(nonBranchedAlkane, false);
-        ModelBuilder3D.getInstance().generate3DCoordinates(branchedAlkane, false);
+        ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance()).generate3DCoordinates(nonBranchedAlkane, false);
+        ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance()).generate3DCoordinates(branchedAlkane, false);
     }
 
 }

@@ -40,6 +40,7 @@ import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.layout.AtomPlacer;
 import org.openscience.cdk.ringsearch.RingPartitioner;
@@ -92,19 +93,19 @@ public class ModelBuilder3D {
 	 * @param  templateHandler  templateHandler Object
 	 * @param  ffname           name of force field
 	 */
-	private ModelBuilder3D(TemplateHandler3D templateHandler, String ffname) throws CDKException {
+	private ModelBuilder3D(TemplateHandler3D templateHandler, String ffname, IChemObjectBuilder builder) throws CDKException {
 		setTemplateHandler(templateHandler);
-		setForceField(ffname);
+		setForceField(ffname, builder);
 	}
 
-	public static ModelBuilder3D getInstance(TemplateHandler3D templateHandler, String ffname) throws CDKException {
+	public static ModelBuilder3D getInstance(TemplateHandler3D templateHandler, String ffname, IChemObjectBuilder chemObjectBuilder) throws CDKException {
 		if (ffname == null || ffname.length() == 0) throw new CDKException("The given ffname is null or empty!");
 		if (templateHandler == null) throw new CDKException("The given template handler is null!");
 		
 		String builderCode = templateHandler.getClass().getName()+ "#" + ffname;
 		if (!memyselfandi.containsKey(builderCode)) {
 			ModelBuilder3D builder = new ModelBuilder3D(
-				templateHandler, ffname
+				templateHandler, ffname, chemObjectBuilder
 			);
 			memyselfandi.put(builderCode, builder);
 			return builder;
@@ -112,8 +113,8 @@ public class ModelBuilder3D {
 		return memyselfandi.get(builderCode);
 	}
 
-	public static ModelBuilder3D getInstance() throws CDKException {
-		return getInstance(TemplateHandler3D.getInstance(), "mm2");
+	public static ModelBuilder3D getInstance(IChemObjectBuilder builder) throws CDKException {
+		return getInstance(TemplateHandler3D.getInstance(), "mm2", builder);
 	}
 
 	/**
@@ -131,13 +132,13 @@ public class ModelBuilder3D {
 	 *
 	 * @param  ffname  forceField name
 	 */
-	private void setForceField(String ffname) throws CDKException {
+	private void setForceField(String ffname, IChemObjectBuilder builder) throws CDKException {
 		if (ffname == null) {
 			ffname = "mm2";
 		}
 		try {
 			forceFieldName = ffname;
-			ffc.setForceFieldConfigurator(ffname);
+			ffc.setForceFieldConfigurator(ffname, builder);
 			parameterSet = ffc.getParameterSet();
 		} catch (CDKException ex1) {
 			logger.error("Problem with ForceField configuration due to>" + ex1.getMessage());

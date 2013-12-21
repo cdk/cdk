@@ -41,6 +41,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
@@ -127,7 +128,7 @@ public class ForceFieldConfigurator {
 	 * @param  ffname  name of the force field data file
 	 */
     @TestMethod("testSetForceFieldConfigurator")
-	public void setForceFieldConfigurator(String ffname) throws CDKException {
+	public void setForceFieldConfigurator(String ffname, IChemObjectBuilder builder) throws CDKException {
 		ffname=ffname.toLowerCase();
 		boolean check=false;
 		
@@ -145,7 +146,7 @@ public class ForceFieldConfigurator {
 				mm2.setInputStream(ins);
 				//logger.debug("ForceFieldConfigurator: mm2 set input stream ... READY");
 				try{
-					this.setMM2Parameters();
+					this.setMM2Parameters(builder);
 				}catch (Exception ex1){
 					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);	
 				}
@@ -158,7 +159,7 @@ public class ForceFieldConfigurator {
 				
 				mmff94.setInputStream(ins);
 				try{
-					this.setMMFF94Parameters();
+					this.setMMFF94Parameters(builder);
 				}catch (Exception ex2){
 					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString(), ex2);	
 				}
@@ -190,11 +191,11 @@ public class ForceFieldConfigurator {
 	 *  Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field
 	 */
 	@TestMethod("testSetMM2Parameters")
-	public void setMM2Parameters() throws CDKException{
+	public void setMM2Parameters(IChemObjectBuilder builder) throws CDKException{
 		try{
             if(mm2 == null)
                 mm2 = new MM2BasedParameterSetReader();
-			mm2.readParameterSets();
+			mm2.readParameterSets(builder);
 		}catch(Exception ex1){
 			throw new CDKException("Problem within readParameterSets due to:"+ex1.toString(), ex1);
 		}
@@ -202,10 +203,10 @@ public class ForceFieldConfigurator {
 		atomTypes = mm2.getAtomTypes();
   }
 	@TestMethod("testSetMMFF94Parameters")
-	public void setMMFF94Parameters() throws Exception{
+	public void setMMFF94Parameters(IChemObjectBuilder builder) throws Exception{
         if(mmff94 == null)
             mmff94 = new MMFF94BasedParameterSetReader();
-		mmff94.readParameterSets();
+		mmff94.readParameterSets(builder);
 		parameterSet = mmff94.getParamterSet();
 		atomTypes = mmff94.getAtomTypes();
 	}

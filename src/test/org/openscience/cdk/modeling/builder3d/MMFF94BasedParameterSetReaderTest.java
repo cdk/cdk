@@ -23,6 +23,7 @@
 package org.openscience.cdk.modeling.builder3d;
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Hashtable;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.junit.Test;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomType;
 
 /**
@@ -44,7 +46,7 @@ public class MMFF94BasedParameterSetReaderTest {
 	
 	@Test public void testreadParameterSets() throws Exception {
 		MMFF94BasedParameterSetReader mmff94bpsr = new MMFF94BasedParameterSetReader(); 
-		mmff94bpsr.readParameterSets();
+		mmff94bpsr.readParameterSets(DefaultChemObjectBuilder.getInstance());
 		Map<String, Object> parameterSet = new Hashtable<String, Object>();
 		parameterSet = mmff94bpsr.getParamterSet();
 		

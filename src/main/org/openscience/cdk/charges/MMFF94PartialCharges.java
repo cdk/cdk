@@ -72,7 +72,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 	 */
 	public IAtomContainer assignMMFF94PartialCharges(IAtomContainer ac) throws Exception {
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mmff94");
+		ffc.setForceFieldConfigurator("mmff94", ac.getBuilder());
 		ffc.assignAtomTyps(ac);
 		Map<String,Object> parameterSet = ffc.getParameterSet();
 		// for this calculation,

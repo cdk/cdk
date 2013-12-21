@@ -96,7 +96,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
 	    IAtomContainer ac = MoleculeFactory.makeBicycloRings();
 		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
 		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mm2");
+		ffc.setForceFieldConfigurator("mm2", ac.getBuilder());
 		IRingSet ringSetMolecule = ffc.assignAtomTyps(ac);
 		List<IRingSet> ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);

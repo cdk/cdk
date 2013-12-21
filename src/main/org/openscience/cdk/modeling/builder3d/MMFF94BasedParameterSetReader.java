@@ -39,9 +39,9 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import org.openscience.cdk.AtomType;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -177,7 +177,7 @@ public class MMFF94BasedParameterSetReader {
 	 *
 	 * @exception  Exception  Description of the Exception
 	 */
-	private void setAtomTypes() throws Exception {
+	private void setAtomTypes(IChemObjectBuilder builder) throws Exception {
 		String name = "";
 		String rootType = "";
 		//int an = 0;
@@ -207,7 +207,7 @@ public class MMFF94BasedParameterSetReader {
 					"Malformed Number");
 		}
 		
-		AtomType atomType = new AtomType(name, rootType);
+		IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
 		atomType.setAtomicNumber(atomNr);
 		atomType.setExactMass(mass);
 		atomType.setMassNumber(massNumber(atomNr, mass));
@@ -450,7 +450,7 @@ public class MMFF94BasedParameterSetReader {
 	 *
 	 * @exception  Exception  Description of the Exception
 	 */
-	public void readParameterSets() throws Exception {
+	public void readParameterSets(IChemObjectBuilder builder) throws Exception {
 		//vdW,bond,angle,strbond,opbend,torsion,data
 		//logger.debug("------ Read MMFF94 ParameterSets ------");
 
@@ -498,7 +498,7 @@ public class MMFF94BasedParameterSetReader {
 				st = new StringTokenizer(s,"\t; ");
 				int nt = st.countTokens();
 				if (s.startsWith("atom") & nt <= 8) {
-					setAtomTypes();
+					setAtomTypes(builder);
 					a[0]++;
 				} else if (s.startsWith("bond") & nt == 9) {
 					setBond();

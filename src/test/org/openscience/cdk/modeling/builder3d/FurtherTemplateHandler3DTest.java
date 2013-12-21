@@ -71,7 +71,7 @@ public class FurtherTemplateHandler3DTest {
 		SmilesParser smiparser = new SmilesParser(builder);
 		IAtomContainer molecule = smiparser.parseSmiles(cyclicMolSmi);
 		ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
-		forcefconf.setForceFieldConfigurator("mmff94");
+		forcefconf.setForceFieldConfigurator("mmff94", builder);
 		IRingSet rings = forcefconf.assignAtomTyps(molecule);
 		List<IRingSet> ringSystems = RingPartitioner.partitionRings(rings);
 		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
@@ -91,7 +91,7 @@ public class FurtherTemplateHandler3DTest {
 		SmilesParser smiparser = new SmilesParser(builder);
 		IAtomContainer molecule = smiparser.parseSmiles(cyclicMolSmi);
 		ForceFieldConfigurator forcefconf = new ForceFieldConfigurator();
-		forcefconf.setForceFieldConfigurator("mmff94");
+		forcefconf.setForceFieldConfigurator("mmff94", builder);
 		IRingSet rings = forcefconf.assignAtomTyps(molecule);
 		List<IRingSet> ringSystems = RingPartitioner.partitionRings(rings);
 		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
