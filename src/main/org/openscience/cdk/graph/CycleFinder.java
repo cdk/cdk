@@ -45,6 +45,21 @@ public interface CycleFinder {
      * @param molecule a molecule, can be disconnected.
      * @throws Intractable thrown if problem could not be solved within some
      *                     predefined bounds.
+     * @return an instance for querying the cycles (rings) in the molecule                    
      */
     Cycles find(IAtomContainer molecule) throws Intractable;
+
+    /**
+     * Find the cycles of the provided molecule when an adjacent relation
+     * (graph) is already available. The graph can be obtained through {@link
+     * GraphUtil#toAdjList(IAtomContainer)}, for convenience {@link
+     * #find(IAtomContainer)} will automatically create the graph.
+     *
+     * @param molecule input structure
+     * @param graph adjacency list representation for fast traversal
+     * @return an instance for querying the cycles (rings) in the molecule  
+     * @throws Intractable thrown if problem could not be solved within some
+     *                     predefined bounds.
+     */
+    Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable;
 }

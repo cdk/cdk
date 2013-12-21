@@ -742,6 +742,35 @@ public final class Cycles {
                               molecule,
                               bondMap);
         }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+            
+            RingSearch ringSearch = new RingSearch(molecule, graph);
+
+            List<int[]> walks = new ArrayList<int[]>(6);
+
+            // all isolated cycles are relevant - all we need to do is walk around
+            // the vertices in the subset 'isolated' 
+            for (int[] isolated : ringSearch.isolated()) {
+                walks.add(GraphUtil.cycle(graph, isolated));
+            }
+
+            // each biconnected component which isn't an isolated cycle is processed
+            // separately as a subgraph.
+            for (int[] fused : ringSearch.fused()) {
+
+                // make a subgraph and 'apply' the cycle computation - the walk 
+                // (path) is then lifted to the original graph            
+                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused))) {
+                    walks.add(lift(cycle, fused));
+                }
+            }
+
+            return new Cycles(walks.toArray(new int[walks.size()][0]),
+                              molecule,
+                              null);
+        }
     }
 
     /**
@@ -804,7 +833,7 @@ public final class Cycles {
             int v = cycle[i];
             int u = cycle[i - 1];
             atoms[i - 1] = container.getAtom(u);
-            bonds[i - 1] = bondMap.get(u, v);
+            bonds[i - 1] = getBond(container, bondMap, u, v);
         }
 
         IChemObjectBuilder builder = container.getBuilder();
@@ -814,5 +843,25 @@ public final class Cycles {
         ring.setBonds(bonds);
 
         return builder.newInstance(IRing.class, ring);
+    }
+
+    /**
+     * Obtain the bond between the atoms at index 'u' and 'v'. If the 'bondMap'
+     * is non-null it is used for direct lookup otherwise the slower linear
+     * lookup in 'container' is used.
+     * 
+     * @param container a structure
+     * @param bondMap optimised map of atom indices to bond instances
+     * @param u an atom index
+     * @param v an atom index (connected to u)
+     * @return the bond between u and v
+     */
+    private static IBond getBond(IAtomContainer container,
+                                 EdgeToBondMap bondMap,
+                                 int u, int v) {
+        if (bondMap != null)
+            return bondMap.get(u, v);
+        return container.getBond(container.getAtom(u),
+                                 container.getAtom(v));
     }
 }
