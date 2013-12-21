@@ -171,19 +171,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testAccepts")
+    @SuppressWarnings("unchecked")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i = 0; i < interfaces.length; i++) {
-            if (IChemFile.class.equals(interfaces[i])) return true;
-            if (IChemModel.class.equals(interfaces[i])) return true;
-            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        for (Class<?> anInterface : interfaces) {
+            if (IChemFile.class.equals(anInterface)) return true;
+            if (IChemModel.class.equals(anInterface)) return true;
+            if (IAtomContainer.class.equals(anInterface)) return true;
         }
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
         Class superClass = classObject.getSuperclass();
-        if (superClass != null) return this.accepts(superClass);
-        return false;
+        return superClass != null && this.accepts(superClass);
     }
 
     /**
@@ -196,6 +196,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return The IChemObject read
      * @throws CDKException
      */
+    @SuppressWarnings("unchecked")
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             return (T) readChemFile((IChemFile) object);
@@ -217,8 +218,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             setOfMolecules = chemModel.getBuilder().newInstance(IAtomContainerSet.class);
         }
         IAtomContainer m = readAtomContainer(chemModel.getBuilder().newInstance(IAtomContainer.class));
-        if (m != null && m instanceof IAtomContainer) {
-            setOfMolecules.addAtomContainer((IAtomContainer) m);
+        if (m != null) {
+            setOfMolecules.addAtomContainer(m);
         }
         chemModel.setMoleculeSet(setOfMolecules);
         return chemModel;
@@ -236,7 +237,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
         if (m != null && m instanceof IAtomContainer) {
-            setOfMolecules.addAtomContainer((IAtomContainer) m);
+            setOfMolecules.addAtomContainer(m);
         }
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
@@ -250,12 +251,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 logger.debug("line: ", line);
                 // apparently, this is a SDF file, continue with 
                 // reading mol files
-                str = new String(line);
+                str = line;
                 if (str.equals("$$$$")) {
                     m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
 
                     if (m != null && m instanceof IAtomContainer) {
-                        setOfMolecules.addAtomContainer((IAtomContainer) m);
+                        setOfMolecules.addAtomContainer(m);
 
                         chemModel.setMoleculeSet(setOfMolecules);
                         chemSequence.addChemModel(chemModel);
@@ -272,7 +273,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         String fieldName = null;
                         if (str.startsWith("> ")) {
                             // ok, should extract the field name
-                            str.substring(2); // String content = 
                             int index = str.indexOf("<");
                             if (index != -1) {
                                 int index2 = str.substring(index).indexOf(">");
@@ -289,7 +289,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         }
                         StringBuilder data = new StringBuilder();
                         int dataLineCount = 0;
-                        boolean lineIsContinued = false;
+                        boolean lineIsContinued;
                         while ((line = input.readLine()) != null) {
 
                             if (line.equals(" ") && dataLineCount == 0) {
@@ -373,18 +373,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         logger.debug("Reading new molecule");
         IAtomContainer outputContainer = null;
         int linecount = 0;
-        int atoms = 0;
-        int bonds = 0;
-        int atom1 = 0;
-        int atom2 = 0;
-        int order = 0;
+        int atoms;
+        int bonds;
+        int atom1;
+        int atom2;
+        int order;
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         int RGroupCounter = 1;
-        int Rnumber = 0;
-        String[] rGroup = null;
-        double x = 0.0;
-        double y = 0.0;
-        double z = 0.0;
+        int Rnumber;
+        String[] rGroup;
+        double x = 0d;
+        double y = 0d;
+        double z;
         double totalX = 0.0;
         double totalY = 0.0;
         double totalZ = 0.0;
@@ -520,7 +520,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
                     //check if the element is R
                     rGroup = element.split("^R");
-                    atom = null;
                     if (rGroup.length > 1) {
                         try {
                             Rnumber = Integer.valueOf(rGroup[(rGroup.length - 1)]);
@@ -760,7 +759,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // interpret CTfile's special bond orders
                 IAtom a1 = atomList.get(atom1 - 1);
                 IAtom a2 = atomList.get(atom2 - 1);
-                IBond newBond = null;
+                IBond newBond;
                 if (order >= 1 && order <= 3) {
                     IBond.Order cdkOrder = IBond.Order.SINGLE;
                     if (order == 2) cdkOrder = IBond.Order.DOUBLE;
@@ -875,8 +874,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     String[] aliasArray = line.split("\\\\");
                     // name of the alias atom like R1 or R2 etc. 
                     String alias = "";
-                    for (int i = 0; i < aliasArray.length; i++) {
-                        alias += aliasArray[i];
+                    for (String anAliasArray : aliasArray) {
+                        alias += anAliasArray;
                     }
                     IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber);
 
@@ -896,8 +895,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     outputContainer.addAtom(newPseudoAtom);
                     List<IBond> bondsOfAliasAtom = outputContainer.getConnectedBondsList(aliasAtom);
 
-                    for (int i = 0; i < bondsOfAliasAtom.size(); i++) {
-                        IBond bondOfAliasAtom = bondsOfAliasAtom.get(i);
+                    for (IBond bondOfAliasAtom : bondsOfAliasAtom) {
                         IAtom connectedToAliasAtom = bondOfAliasAtom.getConnectedAtom(aliasAtom);
                         IBond newBond = bondOfAliasAtom.getBuilder().newInstance(IBond.class);
                         newBond.setAtoms(new IAtom[]{connectedToAliasAtom, newPseudoAtom});
@@ -1165,13 +1163,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     private String removeNonDigits(String input) {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char inputChar = input.charAt(i);
             if (Character.isDigit(inputChar))
-                buffer.append(inputChar);
+                sb.append(inputChar);
         }
-        return buffer.toString();
+        return sb.toString();
     }
 }
 
