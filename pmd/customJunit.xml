@@ -7,6 +7,7 @@
 
   <rule ref="rulesets/java/junit.xml">
     <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+    <exclude name="JUnitTestContainsTooManyAsserts"/> <!-- fails if more than 1 assert -->
   </rule>
   
   <!-- to JUnit4 migration tested in migration*.xml -->
