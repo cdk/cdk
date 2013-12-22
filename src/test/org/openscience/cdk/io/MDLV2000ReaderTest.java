@@ -24,6 +24,7 @@
  *  */
 package org.openscience.cdk.io;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -37,6 +38,7 @@ import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -64,6 +66,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 
 /**
@@ -1188,5 +1192,91 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertNotNull(molecule);
         assertFalse(molecule.stereoElements().iterator().hasNext());
     }
+    
+    
+    @Test public void dataHeader_1() {
+        assertThat(MDLV2000Reader.dataHeader("> 29 <DENSITY> "),
+                   is("DENSITY"));
+    }
 
+    @Test public void dataHeader_2() {
+        assertThat(MDLV2000Reader.dataHeader("> <MELTING.POINT> "),
+                   is("MELTING.POINT"));
+    }
+    
+    @Test public void dataHeader_3() {
+        assertThat(MDLV2000Reader.dataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"),
+                   is("BOILING.POINT"));
+    }
+    
+    @Test public void readNonStructuralData() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append("> 29 <DENSITY>").append('\n');
+        sb.append("0.9132 - 20.0").append('\n');
+        sb.append('\n');
+        sb.append("> 29 <BOILING.POINT>").append('\n');
+        sb.append("63.0 (737 MM)").append('\n');
+        sb.append("79.0 (42 MM)").append('\n');
+        sb.append('\n');
+        sb.append("> 29 <ALTERNATE.NAMES>").append('\n');
+        sb.append("SYLVAN").append('\n');
+        sb.append('\n');
+        sb.append("> 29 <DATE>").append('\n');
+        sb.append("09-23-1980").append('\n');
+        sb.append('\n');
+        sb.append("> 29 <CRC.NUMBER>").append('\n');
+        sb.append("F-0213").append('\n');
+        sb.append('\n');
+        
+        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        IAtomContainer mock  = mock(IAtomContainer.class);
+        
+        MDLV2000Reader.readNonStructuralData(input, mock);
+        
+        verify(mock).setProperty("DENSITY", "0.9132 - 20.0");
+        verify(mock).setProperty("BOILING.POINT", "63.0 (737 MM)\n79.0 (42 MM)");
+        verify(mock).setProperty("ALTERNATE.NAMES", "SYLVAN");
+        verify(mock).setProperty("DATE", "09-23-1980");
+        verify(mock).setProperty("CRC.NUMBER", "F-0213");
+    }
+
+    @Test public void readNonStructuralData_emtpy() throws Exception {
+        // a single space is read as a property
+        StringBuilder sb = new StringBuilder();
+        sb.append("> <ONE_SPACE>").append('\n');
+        sb.append(" ").append('\n');
+        sb.append('\n');
+        // empty entries are read as non-null - so m.getProperty() does not
+        // return null
+        sb.append("> <EMTPY_LINES>").append('\n');
+        sb.append('\n');
+        sb.append('\n');
+        sb.append('\n');
+        
+        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        IAtomContainer mock  = mock(IAtomContainer.class);
+
+        MDLV2000Reader.readNonStructuralData(input, mock);
+
+        verify(mock).setProperty("ONE_SPACE", " ");
+        verify(mock).setProperty("EMTPY_LINES", "");
+    }
+
+    @Test public void readNonStructuralData_wrap() throws Exception {
+        StringBuilder sb = new StringBuilder();
+        sb.append("> <LONG_PROPERTY>").append('\n');
+        sb.append("This is a long property which should be wrapped when stored as field in an SDF D");
+        sb.append('\n');
+        sb.append("ata entry");
+        sb.append('\n');
+        
+        BufferedReader input = new BufferedReader(new StringReader(sb.toString()));
+        IAtomContainer mock  = mock(IAtomContainer.class);
+
+        MDLV2000Reader.readNonStructuralData(input, mock);
+
+        verify(mock).setProperty("LONG_PROPERTY",
+                                 "This is a long property which should be wrapped when stored as field in an SDF Data entry");
+        
+    }    
 }

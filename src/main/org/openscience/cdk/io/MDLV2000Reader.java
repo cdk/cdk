@@ -117,6 +117,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
 
+    /** Delimits Structure-Data (SD) Files. */
+    private static final String RECORD_DELIMITER = "$$$$";
+
     public MDLV2000Reader() {
         this(new StringReader(""));
     }
@@ -1170,6 +1173,116 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 sb.append(inputChar);
         }
         return sb.toString();
+    }
+
+    /**
+     * Read non-structural data from input and store as properties the provided
+     * 'container'. Non-structural data appears in a structure data file (SDF)
+     * after an Molfile and before the record deliminator ('$$$$'). The data
+     * consists of one or more Data Header and Data blocks, an example is seen
+     * below.
+     * 
+     * <pre>{@code
+     * > 29 <DENSITY> 
+     * 0.9132 - 20.0
+     * 
+     * > 29 <BOILING.POINT> 
+     * 63.0 (737 MM) 
+     * 79.0 (42 MM)
+     * 
+     * > 29 <ALTERNATE.NAMES> 
+     * SYLVAN
+     * 
+     * > 29 <DATE> 
+     * 09-23-1980
+     * 
+     * > 29 <CRC.NUMBER> 
+     * F-0213
+     * 
+     * }</pre>
+     * 
+     *
+     * @param input     input source
+     * @param container the container
+     * @throws IOException an error occur whilst reading the input
+     */
+    @TestMethod("readNonStructuralData")
+    static void readNonStructuralData(final BufferedReader input,
+                                      final IAtomContainer container) throws IOException {
+
+        final String newline = System.getProperty("line.separator");
+
+        String line, header = null;
+        boolean wrap = false;
+
+        final StringBuilder data = new StringBuilder(80);
+
+        while (!endOfRecord(line = input.readLine())) {
+
+            final String newHeader = dataHeader(line);
+
+            if (newHeader != null) {
+
+                if (header != null)
+                    container.setProperty(header, data.toString());
+
+                header = newHeader;
+                wrap = false;
+                data.setLength(0);
+
+            }
+            else {
+
+                if (!line.equals(" "))
+                    line = line.trim();
+
+                if (line.isEmpty())
+                    continue;
+
+                if (!wrap && data.length() > 0)
+                    data.append(newline);
+                data.append(line);
+
+                wrap = line.length() == 80;
+            }
+        }
+
+        if (header != null)
+            container.setProperty(header, data.toString());
+    }
+
+    /**
+     * Obtain the field name from a potential SD data header. If the header
+     * does not contain a field name, then null is returned. The method does
+     * not currently return field numbers (e.g. DT&lt;n&gt;).
+     * 
+     * @param line an input line
+     * @return the field name
+     */
+    @TestMethod("dataHeader_1")
+    static String dataHeader(final String line) {
+        if (line.length() > 2 
+                && line.charAt(0) != '>'
+                && line.charAt(1) != ' ')
+            return null;
+        int i = line.indexOf('<', 2);
+        if (i < 0)
+            return null;
+        int j = line.indexOf('>', i);
+        if (j < 0)
+            return null;
+        return line.substring(i + 1, j);
+    }
+
+    /**
+     * Is the line the end of a record. A line is the end of a record if it
+     * is 'null' or is the SDF deliminator, '$$$$'. 
+     * 
+     * @param line a line from the input 
+     * @return the line indicates the end of a record was reached
+     */
+    private static boolean endOfRecord(final String line) {
+        return line == null || line.equals(RECORD_DELIMITER);
     }
 }
 
