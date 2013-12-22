@@ -236,101 +236,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         
-        IChemSequence sequence = chemFile.getBuilder().newInstance(IChemSequence.class);
+        IChemObjectBuilder builder  = chemFile.getBuilder();
+        IChemSequence      sequence = builder.newInstance(IChemSequence.class);
 
-        IAtomContainer m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
-        sequence.addChemModel(newModel(m));
-        
-        String str;
         try {
-            String line;
-            while ((line = input.readLine()) != null) {
-                logger.debug("line: ", line);
-                // apparently, this is a SDF file, continue with 
-                // reading mol files
-                str = line;
-                if (str.equals("$$$$")) {
-                    m = readAtomContainer(chemFile.getBuilder().newInstance(IAtomContainer.class));
-
-                    if (m != null && m instanceof IAtomContainer) {
-                        sequence.addChemModel(newModel(m));
-                    }
-                }
-                else {
-                    // here the stuff between 'M  END' and '$$$$'
-                    if (m != null) {
-                        // ok, the first lines should start with '>'
-                        String fieldName = null;
-                        if (str.startsWith("> ")) {
-                            // ok, should extract the field name
-                            int index = str.indexOf("<");
-                            if (index != -1) {
-                                int index2 = str.substring(index).indexOf(">");
-                                if (index2 != -1) {
-                                    fieldName = str.substring(
-                                            index + 1,
-                                            index + index2
-                                                             );
-                                }
-                            }
-                        }
-                        if (line == null) {
-                            throw new CDKException("Expecting data line here, but found null!");
-                        }
-                        StringBuilder data = new StringBuilder();
-                        int dataLineCount = 0;
-                        boolean lineIsContinued;
-                        while ((line = input.readLine()) != null) {
-
-                            if (line.equals(" ") && dataLineCount == 0) {
-                                // apparently a file can have a field whose value is a single space. Moronic
-                                // we check for it *before* trimming it. ideally we should check for any length
-                                // of whitespace
-
-                                // In adition some SD files have the blank line after the value line contain
-                                // a space, rather than being a true blank line. So we only store a blank value
-                                // line if it's the first line after the key line
-                                data.append(line);
-                                lineIsContinued = false;
-                                dataLineCount++;
-                                if (!lineIsContinued && dataLineCount > 1)
-                                    data.append(System.getProperty("line.separator"));
-                                continue;
-                            }
-
-                            line = line.trim();
-                            if (line.length() == 0) break;
-
-                            if (line.equals("$$$$")) {
-                                logger.error("Expecting data line here, but found end of molecule: ", line);
-                                break;
-                            }
-                            logger.debug("data line: ", line);
-                            lineIsContinued = false; // reset property
-                            dataLineCount++;
-
-                            // preserve newlines, unless the line is exactly 80 chars;
-                            // in that case it is assumed to continue on the next line.
-                            // See MDL documentation.
-                            if (!lineIsContinued && dataLineCount > 1)
-                                data.append(System.getProperty("line.separator"));
-
-                            // add the data line
-                            data.append(line);
-
-                            // check if the line will be continued on the next line
-                            if (line.length() == 80) lineIsContinued = true;
-                        }
-
-                        if (fieldName != null) {
-                            logger.info("fieldName, data: ", fieldName, ", ", data);
-                            m.setProperty(fieldName, data.toString());
-                        }
-                    }
-                }
+            IAtomContainer m;
+            while ((m = readAtomContainer(builder.newInstance(IAtomContainer.class))) != null) {
+                readNonStructuralData(input, m);
+                sequence.addChemModel(newModel(m));
             }
-        } catch (CDKException cdkexc) {
-            throw cdkexc;
+        } catch (CDKException e) {
+            throw e;
         } catch (Exception exception) {
             String error = "Error while parsing SDF";
             logger.error(error);
@@ -1240,7 +1156,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             else {
 
-                if (!line.equals(" "))
+                if (data.length() > 0 || !line.equals(" "))
                     line = line.trim();
 
                 if (line.isEmpty())
