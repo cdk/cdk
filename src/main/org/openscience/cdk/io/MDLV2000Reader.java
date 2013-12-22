@@ -306,17 +306,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         int RGroupCounter = 1;
         int Rnumber;
-        String[] rGroup;
-        double x = 0d;
-        double y = 0d;
-        double z;
-        double totalX = 0.0;
-        double totalY = 0.0;
-        double totalZ = 0.0;
         String title = null;
         String remark = null;
-        //int[][] conMat = new int[0][0];
-        //String help;
         IAtom atom;
         String line = "";
         //A map to keep track of R# atoms so that RGP line can be parsed
@@ -395,214 +386,31 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             atomsByLinePosition = new ArrayList<IAtom>();
             atomsByLinePosition.add(null); // 0 is not a valid position
             int atomBlockLineNumber = 0;
+
+            boolean hasX = false, hasY = false, hasZ = false;
+            
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine();
                 linecount++;
                 atomBlockLineNumber++;
-                Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
-                if (trailingSpaceMatcher.find()) {
-                    handleError("Trailing space found",
-                                linecount,
-                                trailingSpaceMatcher.start(), trailingSpaceMatcher.end());
-                    line = trailingSpaceMatcher.replaceAll("");
-                }
-                x = Double.parseDouble(line.substring(0, 10).trim());
-                y = Double.parseDouble(line.substring(10, 20).trim());
-                z = Double.parseDouble(line.substring(20, 30).trim());
-                // *all* values should be zero, not just the sum
-                totalX += Math.abs(x);
-                totalY += Math.abs(y);
-                totalZ += Math.abs(z);
-                logger.debug("Coordinates: " + x + "; " + y + "; " + z);
-                String element = line.substring(31, Math.min(line.length(), 34)).trim();
-                if (line.length() < 34) {
-                    handleError("Element atom type does not follow V2000 format type should of length three" +
-                                        " and padded with space if required",
-                                linecount, 31, 34);
-                }
-
-                logger.debug("Atom type: ", element);
-                if (isotopeFactory.isElement(element)) {
-                    atom = isotopeFactory.configure(molecule.getBuilder().newInstance(IAtom.class, element));
-                }
-                else if ("A".equals(element)) {
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                }
-                else if ("Q".equals(element)) {
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                }
-                else if ("*".equals(element)) {
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                }
-                else if ("LP".equals(element)) {
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                }
-                else if ("L".equals(element)) {
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                }
-                else if (element.equals("R") ||
-                        (element.length() > 0 && element.charAt(0) == 'R')) {
-                    logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
-                    //check if the element is R
-                    rGroup = element.split("^R");
-                    if (rGroup.length > 1) {
-                        try {
-                            Rnumber = Integer.valueOf(rGroup[(rGroup.length - 1)]);
-                            RGroupCounter = Rnumber;
-                            element = "R" + Rnumber;
-                            atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-
-                        } catch (Exception ex) {
-                            // This happens for atoms labeled "R#".
-                            // The Rnumber may be set later on, using RGP line
-                            atom = molecule.getBuilder().newInstance(IPseudoAtom.class, "R");
-                            rAtoms.put(atomBlockLineNumber, (IPseudoAtom) atom);
-                        }
-                    }
-                    else {
-                        atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                    }
-                }
-                else {
-                    handleError(
-                            "Invalid element type. Must be an existing " +
-                                    "element, or one in: A, Q, L, LP, *.",
-                            linecount, 32, 35
-                               );
-                    atom = molecule.getBuilder().newInstance(IPseudoAtom.class, element);
-                    atom.setSymbol(element);
-                }
-
-                // store as 3D for now, convert to 2D (if totalZ == 0.0) later
-                atom.setPoint3d(new Point3d(x, y, z));
-
-                // parse further fields
-                if (line.length() >= 36) {
-                    String massDiffString = line.substring(34, 36).trim();
-                    logger.debug("Mass difference: ", massDiffString);
-                    if (!(atom instanceof IPseudoAtom)) {
-                        try {
-                            int massDiff = Integer.parseInt(massDiffString);
-                            if (massDiff != 0) {
-                                IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
-                                atom.setMassNumber(major.getMassNumber() + massDiff);
-                            }
-                        } catch (Exception exception) {
-                            handleError(
-                                    "Could not parse mass difference field.",
-                                    linecount, 35, 37,
-                                    exception
-                                       );
-                        }
-                    }
-                    else {
-                        logger.error("Cannot set mass difference for a non-element!");
-                    }
-                }
-                else {
-                    handleError("Mass difference is missing", linecount, 34, 36);
-                }
-
-
-                // set the stereo partiy
-                Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;
-                atom.setStereoParity(parity);
-
-                if (line.length() >= 51) {
-                    String valenceString = removeNonDigits(line.substring(48, 51));
-                    logger.debug("Valence: ", valenceString);
-                    if (!(atom instanceof IPseudoAtom)) {
-                        try {
-                            int valence = Integer.parseInt(valenceString);
-                            if (valence != 0) {
-                                //15 is defined as 0 in mol files
-                                if (valence == 15)
-                                    atom.setValency(0);
-                                else
-                                    atom.setValency(valence);
-                            }
-                        } catch (Exception exception) {
-                            handleError(
-                                    "Could not parse valence information field",
-                                    linecount, 49, 52,
-                                    exception
-                                       );
-                        }
-                    }
-                    else {
-                        logger.error("Cannot set valence information for a non-element!");
-                    }
-                }
-
-                if (line.length() >= 39) {
-                    String chargeCodeString = line.substring(36, 39).trim();
-                    logger.debug("Atom charge code: ", chargeCodeString);
-                    int chargeCode = Integer.parseInt(chargeCodeString);
-                    if (chargeCode == 0) {
-                        // uncharged species
-                    }
-                    else if (chargeCode == 1) {
-                        atom.setFormalCharge(+3);
-                    }
-                    else if (chargeCode == 2) {
-                        atom.setFormalCharge(+2);
-                    }
-                    else if (chargeCode == 3) {
-                        atom.setFormalCharge(+1);
-                    }
-                    else if (chargeCode == 4) {
-                    }
-                    else if (chargeCode == 5) {
-                        atom.setFormalCharge(-1);
-                    }
-                    else if (chargeCode == 6) {
-                        atom.setFormalCharge(-2);
-                    }
-                    else if (chargeCode == 7) {
-                        atom.setFormalCharge(-3);
-                    }
-                }
-                else {
-                    handleError("Atom charge is missing", linecount, 36, 39);
-                }
-
-                try {
-                    // read the mmm field as position 61-63
-                    String reactionAtomIDString = line.substring(60, 63).trim();
-                    logger.debug("Parsing mapping id: ", reactionAtomIDString);
-                    try {
-                        int reactionAtomID = Integer.parseInt(reactionAtomIDString);
-                        if (reactionAtomID != 0) {
-                            atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, reactionAtomID);
-                        }
-                    } catch (Exception exception) {
-                        logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
-                        logger.debug(exception);
-                    }
-                } catch (Exception exception) {
-                    // older mol files don't have all these fields...
-                    logger.warn("A few fields are missing. Older MDL MOL file?");
-                }
-
-                //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
-                if (line.length() >= 78) {
-                    double shift = Double.parseDouble(line.substring(69, 80).trim());
-                    atom.setProperty("first shift", shift);
-                }
-                if (line.length() >= 87) {
-                    double shift = Double.parseDouble(line.substring(79, 87).trim());
-                    atom.setProperty("second shift", shift);
-                }
+                
+                atom = readAtomRelaxed(line, molecule.getBuilder(), linecount, atomBlockLineNumber, rAtoms);
+                
                 atomList.add(atom);
                 atomsByLinePosition.add(atom);
-            }
 
+                Point3d p = atom.getPoint3d();
+                hasX = hasX || p.x != 0d;
+                hasY = hasY || p.y != 0d;
+                hasZ = hasZ || p.z != 0d;
+            }
+            
             // convert to 2D, if totalZ == 0
-            if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
+            if (!hasX && !hasY && !hasZ) {
                 has3D = false;
                 logger.info("All coordinates are 0.0");
                 if (atomList.size() == 1) {
-                    atomList.get(0).setPoint2d(new Point2d(x, y));
+                    atomList.get(0).setPoint2d(new Point2d(0, 0));
                 }
                 else {
                     for (IAtom atomToUpdate : atomList) {
@@ -610,7 +418,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                 }
             }
-            else if (totalZ == 0.0) {
+            else if (!hasZ) {
 
                 if (!forceReadAs3DCoords.isSet()) {
                     logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
@@ -1099,6 +907,220 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
         return sb.toString();
     }
+
+
+    /**
+     * Reads an atom from the input allowing for non-standard formatting (i.e
+     * truncated lines) and chemical shifts.
+     *
+     * @param line      input line
+     * @param builder   chem object builder
+     * @param linecount the current line count
+     * @param index     the atom index
+     * @param rAtoms    map of R# atoms
+     * @return an atom to add to a container
+     * @throws CDKException a CDK error occurred
+     * @throws IOException  the isotopes file could not be read
+     */
+    private IAtom readAtomRelaxed(String line,
+                                  IChemObjectBuilder builder,
+                                  int linecount,
+                                  int index,
+                                  Map<Integer, IPseudoAtom> rAtoms) throws CDKException, IOException {
+        IAtom atom;        
+        Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
+        if (trailingSpaceMatcher.find()) {
+            handleError("Trailing space found",
+                        linecount,
+                        trailingSpaceMatcher.start(), trailingSpaceMatcher.end());
+            line = trailingSpaceMatcher.replaceAll("");
+        }
+        double x = Double.parseDouble(line.substring(0, 10).trim());
+        double y = Double.parseDouble(line.substring(10, 20).trim());
+        double z = Double.parseDouble(line.substring(20, 30).trim());
+        
+        
+        String element = line.substring(31, Math.min(line.length(), 34)).trim();
+        if (line.length() < 34) {
+            handleError("Element atom type does not follow V2000 format type should of length three" +
+                                " and padded with space if required",
+                        linecount, 31, 34);
+        }
+
+        logger.debug("Atom type: ", element);
+        IsotopeFactory isotopeFactory = Isotopes.getInstance();
+        if (isotopeFactory.isElement(element)) {
+            atom = isotopeFactory.configure(builder.newInstance(IAtom.class, element));
+        }
+        else if ("A".equals(element)) {
+            atom = builder.newInstance(IPseudoAtom.class, element);
+        }
+        else if ("Q".equals(element)) {
+            atom = builder.newInstance(IPseudoAtom.class, element);
+        }
+        else if ("*".equals(element)) {
+            atom = builder.newInstance(IPseudoAtom.class, element);
+        }
+        else if ("LP".equals(element)) {
+            atom = builder.newInstance(IPseudoAtom.class, element);
+        }
+        else if ("L".equals(element)) {
+            atom = builder.newInstance(IPseudoAtom.class, element);
+        }
+        else if (element.equals("R") ||
+                (element.length() > 0 && element.charAt(0) == 'R')) {
+            logger.debug("Atom ", element, " is not an regular element. Creating a PseudoAtom.");
+            //check if the element is R
+            String[] rGroup = element.split("^R");
+            if (rGroup.length > 1) {
+                try {
+                    element = "R" + Integer.valueOf(rGroup[(rGroup.length - 1)]);
+                    atom = builder.newInstance(IPseudoAtom.class, element);
+
+                } catch (Exception ex) {
+                    // This happens for atoms labeled "R#".
+                    // The Rnumber may be set later on, using RGP line
+                    atom = builder.newInstance(IPseudoAtom.class, "R");
+                    rAtoms.put(index, (IPseudoAtom) atom);
+                }
+            }
+            else {
+                atom = builder.newInstance(IPseudoAtom.class, element);
+            }
+        }
+        else {
+            handleError(
+                    "Invalid element type. Must be an existing " +
+                            "element, or one in: A, Q, L, LP, *.",
+                    linecount, 32, 35
+                       );
+            atom = builder.newInstance(IPseudoAtom.class, element);
+            atom.setSymbol(element);
+        }
+
+        // store as 3D for now, convert to 2D (if totalZ == 0.0) later
+        atom.setPoint3d(new Point3d(x, y, z));
+
+        // parse further fields
+        if (line.length() >= 36) {
+            String massDiffString = line.substring(34, 36).trim();
+            logger.debug("Mass difference: ", massDiffString);
+            if (!(atom instanceof IPseudoAtom)) {
+                try {
+                    int massDiff = Integer.parseInt(massDiffString);
+                    if (massDiff != 0) {
+                        IIsotope major = Isotopes.getInstance().getMajorIsotope(element);
+                        atom.setMassNumber(major.getMassNumber() + massDiff);
+                    }
+                } catch (Exception exception) {
+                    handleError(
+                            "Could not parse mass difference field.",
+                            linecount, 35, 37,
+                            exception
+                               );
+                }
+            }
+            else {
+                logger.error("Cannot set mass difference for a non-element!");
+            }
+        }
+        else {
+            handleError("Mass difference is missing", linecount, 34, 36);
+        }
+
+
+        // set the stereo partiy
+        Integer parity = line.length() > 41 ? Character.digit(line.charAt(41), 10) : 0;
+        atom.setStereoParity(parity);
+
+        if (line.length() >= 51) {
+            String valenceString = removeNonDigits(line.substring(48, 51));
+            logger.debug("Valence: ", valenceString);
+            if (!(atom instanceof IPseudoAtom)) {
+                try {
+                    int valence = Integer.parseInt(valenceString);
+                    if (valence != 0) {
+                        //15 is defined as 0 in mol files
+                        if (valence == 15)
+                            atom.setValency(0);
+                        else
+                            atom.setValency(valence);
+                    }
+                } catch (Exception exception) {
+                    handleError(
+                            "Could not parse valence information field",
+                            linecount, 49, 52,
+                            exception
+                               );
+                }
+            }
+            else {
+                logger.error("Cannot set valence information for a non-element!");
+            }
+        }
+
+        if (line.length() >= 39) {
+            String chargeCodeString = line.substring(36, 39).trim();
+            logger.debug("Atom charge code: ", chargeCodeString);
+            int chargeCode = Integer.parseInt(chargeCodeString);
+            if (chargeCode == 0) {
+                // uncharged species
+            }
+            else if (chargeCode == 1) {
+                atom.setFormalCharge(+3);
+            }
+            else if (chargeCode == 2) {
+                atom.setFormalCharge(+2);
+            }
+            else if (chargeCode == 3) {
+                atom.setFormalCharge(+1);
+            }
+            else if (chargeCode == 4) {
+            }
+            else if (chargeCode == 5) {
+                atom.setFormalCharge(-1);
+            }
+            else if (chargeCode == 6) {
+                atom.setFormalCharge(-2);
+            }
+            else if (chargeCode == 7) {
+                atom.setFormalCharge(-3);
+            }
+        }
+        else {
+            handleError("Atom charge is missing", linecount, 36, 39);
+        }
+
+        try {
+            // read the mmm field as position 61-63
+            String reactionAtomIDString = line.substring(60, 63).trim();
+            logger.debug("Parsing mapping id: ", reactionAtomIDString);
+            try {
+                int reactionAtomID = Integer.parseInt(reactionAtomIDString);
+                if (reactionAtomID != 0) {
+                    atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, reactionAtomID);
+                }
+            } catch (Exception exception) {
+                logger.error("Mapping number ", reactionAtomIDString, " is not an integer.");
+                logger.debug(exception);
+            }
+        } catch (Exception exception) {
+            // older mol files don't have all these fields...
+            logger.warn("A few fields are missing. Older MDL MOL file?");
+        }
+
+        //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
+        if (line.length() >= 78) {
+            double shift = Double.parseDouble(line.substring(69, 80).trim());
+            atom.setProperty("first shift", shift);
+        }
+        if (line.length() >= 87) {
+            double shift = Double.parseDouble(line.substring(79, 87).trim());
+            atom.setProperty("second shift", shift);
+        }
+        
+        return atom;
+    }    
 
     /**
      * Read non-structural data from input and store as properties the provided
