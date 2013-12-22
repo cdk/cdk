@@ -308,9 +308,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         String remark = null;
         IAtom atom;
         String line = "";
-        //A map to keep track of R# atoms so that RGP line can be parsed
-        Map<Integer, IPseudoAtom> rAtoms = new HashMap<Integer, IPseudoAtom>();
-
+        
         try {
             IsotopeFactory isotopeFactory = Isotopes.getInstance();
 
@@ -392,7 +390,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 linecount++;
                 atomBlockLineNumber++;
                 
-                atom = readAtomRelaxed(line, molecule.getBuilder(), linecount, atomBlockLineNumber, rAtoms);
+                atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
                 
                 atomList.add(atom);
                 atomsByLinePosition.add(atom);
@@ -741,7 +739,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     while (st.hasMoreTokens()) {
                         Integer position = new Integer(st.nextToken());
                         int rNumber = new Integer(st.nextToken());
-                        IPseudoAtom pseudoAtom = rAtoms.get(position);
+                        // the container may have already had atoms before the new atoms were read
+                        int index   = outputContainer.getAtomCount() - atoms + position - 1;
+                        IPseudoAtom pseudoAtom = (IPseudoAtom) outputContainer.getAtom(index);
                         if (pseudoAtom != null) {
                             pseudoAtom.setLabel("R" + rNumber);
                         }
@@ -912,17 +912,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param line      input line
      * @param builder   chem object builder
      * @param linecount the current line count
-     * @param index     the atom index
-     * @param rAtoms    map of R# atoms
      * @return an atom to add to a container
      * @throws CDKException a CDK error occurred
      * @throws IOException  the isotopes file could not be read
      */
     private IAtom readAtomRelaxed(String line,
                                   IChemObjectBuilder builder,
-                                  int linecount,
-                                  int index,
-                                  Map<Integer, IPseudoAtom> rAtoms) throws CDKException, IOException {
+                                  int linecount) throws CDKException, IOException {
         IAtom atom;        
         Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
         if (trailingSpaceMatcher.find()) {
@@ -977,7 +973,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     // This happens for atoms labeled "R#".
                     // The Rnumber may be set later on, using RGP line
                     atom = builder.newInstance(IPseudoAtom.class, "R");
-                    rAtoms.put(index, (IPseudoAtom) atom);
                 }
             }
             else {
