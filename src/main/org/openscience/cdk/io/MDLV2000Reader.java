@@ -242,7 +242,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         try {
             IAtomContainer m;
             while ((m = readAtomContainer(builder.newInstance(IAtomContainer.class))) != null) {
-                readNonStructuralData(input, m);
                 sequence.addChemModel(newModel(m));
             }
         } catch (CDKException e) {
@@ -954,6 +953,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.warn("Skipping line in property block: ", line);
                 }
             }
+
+            // read potential SD file data between M  END and $$$$
+            readNonStructuralData(input, outputContainer);
 
             if (interpretHydrogenIsotopes.isSet()) {
                 fixHydrogenIsotopes(molecule, isotopeFactory);
