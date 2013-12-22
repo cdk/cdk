@@ -60,6 +60,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
@@ -1290,5 +1291,16 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = reader.read(new ChemFile());
         reader.close();
         assertThat(ChemFileManipulator.getAllAtomContainers(chemFile).size(), is(2));
+    }
+    
+    @Test public void testAliasAfterRgroup() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/r-group-with-alias.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer container = reader.read(new AtomContainer());
+        reader.close();
+        assertThat(container.getAtom(6), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom)container.getAtom(6)).getLabel(), is("R6"));
+        assertThat(container.getAtom(7), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom)container.getAtom(7)).getLabel(), is("Protein"));
     }
 }

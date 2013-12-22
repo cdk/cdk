@@ -304,8 +304,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         int atom2;
         int order;
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
-        int RGroupCounter = 1;
-        int Rnumber;
         String title = null;
         String remark = null;
         IAtom atom;
@@ -601,7 +599,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     // Reads the pseudo atom property from the mol file
 
                     // The atom number of the to replaced atom
-                    int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", "")) - RGroupCounter;
+                    int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", ""));
                     line = input.readLine();
                     linecount++;
                     String[] aliasArray = line.split("\\\\");
@@ -610,7 +608,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     for (String anAliasArray : aliasArray) {
                         alias += anAliasArray;
                     }
-                    IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber);
+                    IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber - 1);
 
                     // skip if already a pseudoatom
                     if (aliasAtom instanceof IPseudoAtom) {
@@ -637,8 +635,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         outputContainer.removeBond(aliasAtom, connectedToAliasAtom);
                     }
                     outputContainer.removeAtom(aliasAtom);
-                    RGroupCounter++;
-
                 }
                 else if (line.startsWith("M  ISO")) {
                     try {
@@ -744,10 +740,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     //Process the R group numbers as defined in RGP line.
                     while (st.hasMoreTokens()) {
                         Integer position = new Integer(st.nextToken());
-                        Rnumber = new Integer(st.nextToken());
+                        int rNumber = new Integer(st.nextToken());
                         IPseudoAtom pseudoAtom = rAtoms.get(position);
                         if (pseudoAtom != null) {
-                            pseudoAtom.setLabel("R" + Rnumber);
+                            pseudoAtom.setLabel("R" + rNumber);
                         }
                     }
                 }
