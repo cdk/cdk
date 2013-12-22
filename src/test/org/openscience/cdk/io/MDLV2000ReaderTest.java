@@ -1278,5 +1278,17 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         verify(mock).setProperty("LONG_PROPERTY",
                                  "This is a long property which should be wrapped when stored as field in an SDF Data entry");
         
-    }    
+    }   
+    
+    /**
+     * Ensure having a property with 2 new line lines will still allow 2 entries
+     * to be read - a bug from the mailing list.
+     */
+    @Test public void testMultipleNewlinesInSDFProperty() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/multiplenewline-property.sdf");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IChemFile chemFile = reader.read(new ChemFile());
+        reader.close();
+        assertThat(ChemFileManipulator.getAllAtomContainers(chemFile).size(), is(2));
+    }
 }
