@@ -258,7 +258,6 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
             MDLV2000Reader reader = new MDLV2000Reader(new StringReader(rootStr), ISimpleChemObjectReader.Mode.STRICT);
             IAtomContainer root = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
             rGroupQuery.setRootStructure(root);
-            List<IAtom> atomsByLinePosition = reader.getAtomsByLinePosition();
 
             //Atom attachment order: parse AAL lines first
             strTk = new StringTokenizer(rootStr, eol);
@@ -269,12 +268,12 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     stAAL.nextToken();
                     stAAL.nextToken();
                     int pos = new Integer(stAAL.nextToken());
-                    IAtom rGroup = atomsByLinePosition.get(pos);
+                    IAtom rGroup = root.getAtom(pos - 1);
                     stAAL.nextToken();
                     Map<Integer, IBond> bondMap = new HashMap<Integer, IBond>();
                     while (stAAL.hasMoreTokens()) {
                         pos = new Integer(stAAL.nextToken());
-                        IAtom partner = atomsByLinePosition.get(pos);
+                        IAtom partner = root.getAtom(pos - 1);
                         IBond bond = root.getBond(rGroup, partner);
                         int order = new Integer(stAAL.nextToken());
                         bondMap.put(order, bond);
@@ -297,7 +296,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                         //Order reflects the order of atoms in the Atom Block
                         int order = 0;
                         Map<Integer, IBond> bondMap = new HashMap<Integer, IBond>();
-                        for (IAtom atom2 : atomsByLinePosition) {
+                        for (IAtom atom2 : root.atoms()) {
                             if (!atom.equals(atom2)) {
                                 for (IBond bond : root.bonds()) {
                                     if (bond.contains(atom) && bond.contains(atom2)) {
@@ -380,7 +379,6 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                     reader = new MDLV2000Reader
                         (new StringReader(groupStr), ISimpleChemObjectReader.Mode.STRICT);
                     IAtomContainer group = reader.read(defaultChemObjectBuilder.newInstance(IAtomContainer.class));
-                    atomsByLinePosition = reader.getAtomsByLinePosition();
                     RGroup rGroup = new RGroup();
                     rGroup.setGroup(group);
 
@@ -396,7 +394,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                             while (stAPO.hasMoreTokens())  {
                                 int pos = new Integer(stAPO.nextToken());
                                 int apo = new Integer(stAPO.nextToken());
-                                IAtom at = atomsByLinePosition.get(pos);
+                                IAtom at = group.getAtom(pos - 1);
                                 switch (apo)  {
                                     case 1: 
                                         rGroup.setFirstAttachmentPoint(at);

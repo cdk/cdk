@@ -615,24 +615,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
 
                     IAtom newPseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class, alias);
-                    if (aliasAtom.getPoint2d() != null) {
+                    if (aliasAtom.getPoint2d() != null)
                         newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
-                    }
-                    if (aliasAtom.getPoint3d() != null) {
+                    if (aliasAtom.getPoint3d() != null)
                         newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
-                    }
-                    outputContainer.addAtom(newPseudoAtom);
-                    List<IBond> bondsOfAliasAtom = outputContainer.getConnectedBondsList(aliasAtom);
-
-                    for (IBond bondOfAliasAtom : bondsOfAliasAtom) {
-                        IAtom connectedToAliasAtom = bondOfAliasAtom.getConnectedAtom(aliasAtom);
-                        IBond newBond = bondOfAliasAtom.getBuilder().newInstance(IBond.class);
-                        newBond.setAtoms(new IAtom[]{connectedToAliasAtom, newPseudoAtom});
-                        newBond.setOrder(bondOfAliasAtom.getOrder());
-                        outputContainer.addBond(newBond);
-                        outputContainer.removeBond(aliasAtom, connectedToAliasAtom);
-                    }
-                    outputContainer.removeAtom(aliasAtom);
+                    AtomContainerManipulator.replaceAtomByAtom(outputContainer, aliasAtom, newPseudoAtom);
                 }
                 else if (line.startsWith("M  ISO")) {
                     try {
