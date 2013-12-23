@@ -314,7 +314,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         String title = null;
         String remark = null;
-        IAtom atom;
         String line = "";
         
         try {
@@ -375,12 +374,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             nAtoms = Integer.parseInt(line.substring(0, 3).trim());
-            List<IAtom> atoms = new ArrayList<IAtom>();
-
+            
             logger.debug("Atomcount: " + nAtoms);
             nBonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + nBonds);
-            List<IBond> bonds = new ArrayList<IBond>();
+
+            final IAtom[] atoms = new IAtom[nAtoms];
+            final IBond[] bonds = new IBond[nBonds];
 
             // used for applying the MDL valence model
             int[] explicitValence = new int[nAtoms];
@@ -394,9 +394,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
                 
-                atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
+                final IAtom atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
                 
-                atoms.add(atom);
+                atoms[i] = atom;
 
                 Point3d p = atom.getPoint3d();
                 hasX = hasX || p.x != 0d;
@@ -408,8 +408,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (!hasX && !hasY && !hasZ) {
                 has3D = false;
                 logger.info("All coordinates are 0.0");
-                if (atoms.size() == 1) {
-                    atoms.get(0).setPoint2d(new Point2d(0, 0));
+                if (nAtoms == 1) {
+                    atoms[0].setPoint2d(new Point2d(0, 0));
                 }
                 else {
                     for (IAtom atomToUpdate : atoms) {
@@ -442,7 +442,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // read BOND block
             logger.info("Reading bond block");
             int queryBondCount = 0;
-            for (int f = 0; f < nBonds; f++) {
+            for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
                 linecount++;
                 atom1 = Integer.parseInt(line.substring(0, 3).trim());
@@ -489,8 +489,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
                 }
                 // interpret CTfile's special bond orders
-                IAtom a1 = atoms.get(atom1 - 1);
-                IAtom a2 = atoms.get(atom2 - 1);
+                IAtom a1 = atoms[atom1 - 1];
+                IAtom a2 = atoms[atom2 - 1];
                 IBond newBond;
                 if (order >= 1 && order <= 3) {
                     IBond.Order cdkOrder = IBond.Order.SINGLE;
@@ -541,7 +541,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     ((CTFileQueryBond) newBond).setType(queryBondType);
                     newBond.setStereo(stereo);
                 }
-                bonds.add((newBond));
+                bonds[i] = newBond;
 
                 // add the bond order to the explicit valence for each atom
                 if (newBond.getOrder() != null && newBond.getOrder() != IBond.Order.UNSET) {
@@ -562,12 +562,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             outputContainer.setProperty(CDKConstants.TITLE, title);
             outputContainer.setProperty(CDKConstants.REMARK, remark);
-            for (IAtom at : atoms) {
-                outputContainer.addAtom(at);
-            }
-            for (IBond bnd : bonds) {
-                outputContainer.addBond(bnd);
-            }
+            outputContainer.setAtoms(atoms);
+            outputContainer.setBonds(bonds);
 
             // read PROPERTY block
             logger.info("Reading property block");
