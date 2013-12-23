@@ -306,8 +306,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         logger.debug("Reading new molecule");
         IAtomContainer outputContainer = null;
         int linecount = 0;
-        int atoms;
-        int bonds;
+        int nAtoms;
+        int nBonds;
         int atom1;
         int atom2;
         int order;
@@ -374,23 +374,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 handleError("This file must be read with the MDLReader.");
             }
 
-            atoms = Integer.parseInt(line.substring(0, 3).trim());
+            nAtoms = Integer.parseInt(line.substring(0, 3).trim());
             List<IAtom> atomList = new ArrayList<IAtom>();
 
-            logger.debug("Atomcount: " + atoms);
-            bonds = Integer.parseInt(line.substring(3, 6).trim());
-            logger.debug("Bondcount: " + bonds);
+            logger.debug("Atomcount: " + nAtoms);
+            nBonds = Integer.parseInt(line.substring(3, 6).trim());
+            logger.debug("Bondcount: " + nBonds);
             List<IBond> bondList = new ArrayList<IBond>();
 
             // used for applying the MDL valence model
-            int[] explicitValence = new int[atoms];
+            int[] explicitValence = new int[nAtoms];
 
             // read ATOM block
             logger.info("Reading atom block");
 
             boolean hasX = false, hasY = false, hasZ = false;
             
-            for (int f = 0; f < atoms; f++) {
+            for (int f = 0; f < nAtoms; f++) {
                 line = input.readLine();
                 linecount++;
                 
@@ -442,7 +442,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // read BOND block
             logger.info("Reading bond block");
             int queryBondCount = 0;
-            for (int f = 0; f < bonds; f++) {
+            for (int f = 0; f < nBonds; f++) {
                 line = input.readLine();
                 linecount++;
                 atom1 = Integer.parseInt(line.substring(0, 3).trim());
@@ -730,7 +730,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                         Integer position = new Integer(st.nextToken());
                         int rNumber = new Integer(st.nextToken());
                         // the container may have already had atoms before the new atoms were read
-                        int index   = outputContainer.getAtomCount() - atoms + position - 1;
+                        int index   = outputContainer.getAtomCount() - nAtoms + position - 1;
                         IPseudoAtom pseudoAtom = (IPseudoAtom) outputContainer.getAtom(index);
                         if (pseudoAtom != null) {
                             pseudoAtom.setLabel("R" + rNumber);
@@ -758,7 +758,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // note: apply the valence model last so that all fixes (i.e. hydrogen
             // isotopes) are in place we need to use a offset as this atoms
             // could be added to a molecule which already had atoms present
-            int offset = outputContainer.getAtomCount() - atoms;
+            int offset = outputContainer.getAtomCount() - nAtoms;
             for (int i = offset; i < outputContainer.getAtomCount(); i++) {
                 applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i - offset]);
             }
