@@ -51,6 +51,7 @@ import org.openscience.cdk.stereo.StereoElementFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
@@ -878,6 +879,166 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         return sb.toString();
     }
 
+    /**
+     * Create an atom for the provided symbol. If the atom symbol is a periodic
+     * element a new 'Atom' is created otherwise if the symbol is an allowed
+     * query atom ('R', 'Q', 'A', '*', 'L', 'LP') a new 'PseudoAtom' is created.
+     * If the symbol is invalid an exception is thrown.
+     *
+     * @param symbol  input symbol
+     * @param builder chem object builder
+     * @return a new atom
+     * @throws CDKException the symbol is not allowed
+     */
+    private static IAtom createAtom(final String symbol,
+                                    final IChemObjectBuilder builder) throws CDKException {
+        if (isElement(symbol)) {
+            return builder.newInstance(IAtom.class, symbol);
+        }
+        else if (isPseudoElement(symbol)) {
+            IAtom atom = builder.newInstance(IPseudoAtom.class, symbol);
+            atom.setAtomicNumber(0); // avoid nulls elsewhere
+            return atom;
+        }
+        throw new CDKException("invalid element symbol: " + symbol);
+    }
+
+    /**
+     * Is the symbol a periodic element.
+     * @param symbol a symbol from the input
+     * @return the symbol is a pseudo atom
+     */
+    private static boolean isElement(final String symbol) {
+        // XXX: PeriodicTable is slow - switch without file IO would be optimal
+        return PeriodicTable.getAtomicNumber(symbol) != null;
+    }
+
+    /**
+     * Is the atom symbol a non-periodic element (i.e. pseudo). Valid pseudo
+     * atoms are 'R', 'R#', 'R1-99', 'A', 'Q', '*', 'L' and 'LP'.
+     * 
+     * @param symbol a symbol from the input
+     * @return the symbol is a valid psuedo element
+     */
+    static boolean isPseudoElement(final String symbol) {
+        if (symbol.length() == 0)
+            return false;
+        switch (symbol.charAt(0)) {
+            
+            case 'R': // R groups: R, 'R#' and 'R<n>' where n=1-99
+                // R#
+                if (symbol.length() == 1 || symbol.length() == 2 && symbol.charAt(1) == '#')
+                    return true;
+                // The specification doesn't mention numbers (which would be specified
+                // using the RGP property but they're easy to check)
+                // R1, R2 ... R9
+                if (symbol.length() == 2 && symbol.charAt(1) >= '1' && symbol.charAt(1) <= '9')
+                    return true;
+                // R10, R11 ... R99
+                return symbol.length() == 3 && symbol.charAt(1) >= '1' && symbol.charAt(1) <= '9'
+                        && symbol.charAt(2) >= '0' && symbol.charAt(2) <= '9'; 
+            
+            // TODO: create QueryAtoms? 
+            case 'A': // any atom except Hydrogen
+            case 'Q': // any atom except Hydrogen and Carbon
+            case '*': // unspecified end group
+                return symbol.length() == 1;
+            
+            case 'L': // atom list (L) or lone pair (LP)
+                return symbol.length() == 1 || (symbol.length() == 2 && symbol.charAt(1) == 'P');
+        }
+        return false;
+    }
+
+    /**
+     * Read a coordinate from an MDL input. The MDL V2000 input coordinate has
+     * 10 characters, 4 significant figures and is prefixed with whitespace for
+     * padding: 'xxxxx.xxxx'. Knowing the format allows us to use an optimised
+     * parser which does not consider exponents etc.
+     *
+     * @param line   input line
+     * @param offset first character of the coordinate
+     * @return the specified value
+     * @throws CDKException the coordinates specification was not valid
+     */
+    static double readMDLCoordinate(final String line, int offset) throws CDKException {
+        // to be valid the decimal should be at the fifth index (4 sig fig)
+        if (line.charAt(offset + 5) != '.')
+            throw new CDKException("invalid coordinate specification");
+        
+        int start = offset;
+        while (line.charAt(start) == ' ')
+            start++;
+        
+        int sign = sign(line.charAt(start));
+        if (sign < 0)
+            start++;
+        
+        int integral = readUInt(line, start, (offset + 5) - start);
+        int fraction = readUInt(line, offset + 6, 4);
+                
+        return sign * (integral * 10000l + fraction) / 10000d;
+    }
+
+    /**
+     * Convert the a character (from an MDL V2000 input) to a charge value:
+     * 1 = +1, 2 = +2, 3 = +3, 4 = doublet radical, 5 = -1, 6 = -2, 7 = -3.
+     * 
+     * @param c a character
+     * @return formal charge 
+     */
+    private static int toCharge(final char c) {
+        switch (c) {
+            case '1': return +1;
+            case '2': return +2;
+            case '3': return +3;
+            case '4': return 0; // doublet radical - superseded by M  RAD
+            case '5': return -1;
+            case '6': return -2;
+            case '7': return -3;
+        }
+        return 0;
+    }
+
+    /**
+     * Obtain the sign of the character, -1 if the character is '-', +1
+     * otherwise.
+     *
+     * @param c a character
+     * @return the sign
+     */
+    private static int sign(final char c) {
+        return c == '-' ? -1 : +1;
+    }
+    
+    /**
+     * Convert a character (ASCII code points) to an integer. If the character
+     * was not a digit (i.e. space) the value defaults to 0.
+     *
+     * @param c a character
+     * @return the numerical value
+     */
+    private static int toInt(final char c) {
+        // Character.getNumericalValue allows all of unicode which we don't want
+        // or need it - imagine an MDL file with roman numerals!
+        return c >= '0' && c <= '9' ? c - '0' : 0;
+    }
+
+    /**
+     * Read an unsigned int value from the given index with the expected number
+     * of digits.
+     *
+     * @param line   input line
+     * @param index  start index
+     * @param digits number of digits (max)
+     * @return an unsigned int
+     */
+    private static int readUInt(final String line, int index, int digits) {
+        int result = 0;
+        while (digits-- > 0)
+            result = (result * 10) + toInt(line.charAt(index++));
+        return result;
+    }
 
     /**
      * Reads an atom from the input allowing for non-standard formatting (i.e
