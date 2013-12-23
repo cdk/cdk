@@ -54,10 +54,15 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 		setChemObjectIO(new RGroupQueryWriter());
 	}
 
-	@Test
+    @Test
+    @Override
+    public void testAcceptsAtLeastOneChemObjectClass() {
+        new RGroupQueryWriter().accepts(RGroupQuery.class);
+    }
+
+    @Test
 	public void testRgroupQueryFile_1() throws Exception { 
 		String rgFile =recreate("data/mdl/rgfile.1.mol"); 
-		//System.out.println(rgFile);
 
 		Assert.assertEquals("AAL lines", 0, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
@@ -69,7 +74,6 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	@Test
 	public void testRgroupQueryFile_2() throws Exception { 
 		String rgFile =recreate("data/mdl/rgfile.2.mol"); 
-		//System.out.println(rgFile);
 
 		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
@@ -111,7 +115,6 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	@Test
 	public void testRgroupQueryFile_6() throws Exception { 
 		String rgFile =recreate("data/mdl/rgfile.6.mol");
-		System.out.println(rgFile);
 		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
 		Assert.assertEquals("APO lines", 1, countSubstring("APO",rgFile));
@@ -121,7 +124,6 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	@Test
 	public void testRgroupQueryFile_7() throws Exception { 
 		String rgFile =recreate("data/mdl/rgfile.7.mol");
-		System.out.println(rgFile);
 		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
 		Assert.assertEquals("APO lines", 2, countSubstring("APO",rgFile));
 		Assert.assertTrue (rgFile.contains("M  RGP  3   4  32   6  32   7  32"));

@@ -43,6 +43,7 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -71,6 +72,13 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
     }
 
+    @Test 
+    @Override 
+    public void testAcceptsAtLeastOneChemObjectClass() {
+        RGroupQueryReader reader = new RGroupQueryReader();
+        Assert.assertTrue(reader.accepts(RGroupQuery.class));
+    }
+
     public void testAcceptsAtLeastOneDebugObject() {
     }
 
@@ -87,7 +95,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
     public void testRGFileFormat() throws Exception {
        String filename = "data/mdl/rgfile.1.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IChemFormat format = new FormatFactory().guessFormat(ins);
+        IChemFormat format = new FormatFactory().guessFormat(new BufferedInputStream(ins));
         Assert.assertEquals(format.getClass(),RGroupQueryFormat.class);
     }
 

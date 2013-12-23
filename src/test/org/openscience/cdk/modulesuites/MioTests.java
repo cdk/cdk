@@ -48,6 +48,8 @@ import org.openscience.cdk.io.Mol2WriterTest;
 import org.openscience.cdk.io.Mopac7ReaderTest;
 import org.openscience.cdk.io.PCCompoundASNReaderTest;
 import org.openscience.cdk.io.PMPReaderTest;
+import org.openscience.cdk.io.RGroupQueryReaderTest;
+import org.openscience.cdk.io.RGroupQueryWriterTest;
 import org.openscience.cdk.io.ReaderFactoryTest;
 import org.openscience.cdk.io.SDFReaderTest;
 import org.openscience.cdk.io.SDFWriterTest;
@@ -94,6 +96,8 @@ import org.openscience.cdk.io.program.Mopac7WriterTest;
     Mopac7WriterTest.class,
     PCCompoundASNReaderTest.class,
     PMPReaderTest.class,
+    RGroupQueryReaderTest.class,
+    RGroupQueryWriterTest.class,
     ShelXReaderTest.class,
     XYZReaderTest.class,
     XYZWriterTest.class,
