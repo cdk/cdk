@@ -61,9 +61,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,8 +111,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private BooleanIOSetting interpretHydrogenIsotopes;
     private BooleanIOSetting addStereoElements;
 
-    //Keep track of atoms and the lines they were on in the atom block.
-    private List<IAtom> atomsByLinePosition;
     // Pattern to remove trailing space (String.trim() will remove leading space, which we don't want)
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
 
@@ -379,21 +375,16 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // read ATOM block
             logger.info("Reading atom block");
-            atomsByLinePosition = new ArrayList<IAtom>();
-            atomsByLinePosition.add(null); // 0 is not a valid position
-            int atomBlockLineNumber = 0;
 
             boolean hasX = false, hasY = false, hasZ = false;
             
             for (int f = 0; f < atoms; f++) {
                 line = input.readLine();
                 linecount++;
-                atomBlockLineNumber++;
                 
                 atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
                 
                 atomList.add(atom);
-                atomsByLinePosition.add(atom);
 
                 Point3d p = atom.getPoint3d();
                 hasX = hasX || p.x != 0d;
@@ -875,10 +866,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         for (IOSetting setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
-    }
-
-    public List<IAtom> getAtomsByLinePosition() {
-        return atomsByLinePosition;
     }
 
     private String removeNonDigits(String input) {
