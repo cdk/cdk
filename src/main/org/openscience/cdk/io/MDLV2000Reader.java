@@ -375,12 +375,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             nAtoms = Integer.parseInt(line.substring(0, 3).trim());
-            List<IAtom> atomList = new ArrayList<IAtom>();
+            List<IAtom> atoms = new ArrayList<IAtom>();
 
             logger.debug("Atomcount: " + nAtoms);
             nBonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + nBonds);
-            List<IBond> bondList = new ArrayList<IBond>();
+            List<IBond> bonds = new ArrayList<IBond>();
 
             // used for applying the MDL valence model
             int[] explicitValence = new int[nAtoms];
@@ -390,13 +390,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             boolean hasX = false, hasY = false, hasZ = false;
             
-            for (int f = 0; f < nAtoms; f++) {
+            for (int i = 0; i < nAtoms; i++) {
                 line = input.readLine();
                 linecount++;
                 
                 atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
                 
-                atomList.add(atom);
+                atoms.add(atom);
 
                 Point3d p = atom.getPoint3d();
                 hasX = hasX || p.x != 0d;
@@ -408,11 +408,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             if (!hasX && !hasY && !hasZ) {
                 has3D = false;
                 logger.info("All coordinates are 0.0");
-                if (atomList.size() == 1) {
-                    atomList.get(0).setPoint2d(new Point2d(0, 0));
+                if (atoms.size() == 1) {
+                    atoms.get(0).setPoint2d(new Point2d(0, 0));
                 }
                 else {
-                    for (IAtom atomToUpdate : atomList) {
+                    for (IAtom atomToUpdate : atoms) {
                         atomToUpdate.setPoint3d(null);
                     }
                 }
@@ -421,7 +421,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
                 if (!forceReadAs3DCoords.isSet()) {
                     logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
-                    for (IAtom atomToUpdate : atomList) {
+                    for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {
                             atomToUpdate.setPoint2d(new Point2d(p3d.x, p3d.y));
@@ -489,8 +489,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
                 }
                 // interpret CTfile's special bond orders
-                IAtom a1 = atomList.get(atom1 - 1);
-                IAtom a2 = atomList.get(atom2 - 1);
+                IAtom a1 = atoms.get(atom1 - 1);
+                IAtom a2 = atoms.get(atom2 - 1);
                 IBond newBond;
                 if (order >= 1 && order <= 3) {
                     IBond.Order cdkOrder = IBond.Order.SINGLE;
@@ -541,7 +541,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     ((CTFileQueryBond) newBond).setType(queryBondType);
                     newBond.setStereo(stereo);
                 }
-                bondList.add((newBond));
+                bonds.add((newBond));
 
                 // add the bond order to the explicit valence for each atom
                 if (newBond.getOrder() != null && newBond.getOrder() != IBond.Order.UNSET) {
@@ -562,10 +562,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             outputContainer.setProperty(CDKConstants.TITLE, title);
             outputContainer.setProperty(CDKConstants.REMARK, remark);
-            for (IAtom at : atomList) {
+            for (IAtom at : atoms) {
                 outputContainer.addAtom(at);
             }
-            for (IBond bnd : bondList) {
+            for (IBond bnd : bonds) {
                 outputContainer.addBond(bnd);
             }
 
