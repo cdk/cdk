@@ -23,6 +23,7 @@
  */
 package org.openscience.cdk.io;
 
+import com.google.common.collect.ImmutableSet;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -61,8 +62,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,6 +117,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     /** Delimits Structure-Data (SD) Files. */
     private static final String RECORD_DELIMITER = "$$$$";
+
+    /** Valid pseudo labels. */
+    private static final Set<String> PSUEDO_LABELS = ImmutableSet.<String>builder()
+                                                                 .add("*")
+                                                                 .add("A")
+                                                                 .add("Q")
+                                                                 .add("L")
+                                                                 .add("LP")
+                                                                 .add("R")  // XXX: not in spec
+                                                                 .add("R#")
+                                                                 .build();
 
     public MDLV2000Reader() {
         this(new StringReader(""));
@@ -880,6 +891,112 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
+     * Parse an atom line from the atom block using the format: {@code
+     * xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee}
+     * where: <ul> <li>x: x coordinate</li> <li>y: y coordinate</li> <li>z: z
+     * coordinate</li> <li>a: atom symbol</li> <li>d: mass difference</li>
+     * <li>c: charge</li> <li>s: stereo parity</li> <li>h: hydrogen count + 1
+     * (not read - query)</li> <li>b: stereo care (not read - query)</li> <li>v:
+     * valence</li> <li>H: H0 designator (not read - query)</li> <li>r: not
+     * used</li> <li>i: not used</li> <li>m: atom reaction mapping</li> <li>n:
+     * inversion/retention flag</li> <li>e: exact change flag</li> </ul>
+     *
+     * The parsing is strict and does not allow extra columns (i.e. NMR shifts)
+     * malformed input.
+     *
+     * @param line    input line
+     * @param builder chem object builder to create the atom
+     * @param lineNum the line number - for printing error messages 
+     * @return a new atom instance
+     */
+    IAtom readAtomFast(String             line,
+                       IChemObjectBuilder builder,
+                       int                lineNum) throws CDKException, IOException {
+
+        // The line may be truncated and it's checked in reverse at the specified
+        // lengths:
+        //          1         2         3         4         5         6
+        // 123456789012345678901234567890123456789012345678901234567890123456789
+        //                                  | |  |  |  |  |  |  |  |  |  |  |  | 
+        // xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee
+
+        String symbol;
+        double x, y, z;
+        int massDiff = 0, charge = 0, parity = 0, valence = 0, mapping = 0;
+        
+        int length = length(line);
+        if (length > 69) // excess data we should check all fields 
+            length = 69;
+        
+        // given the length we jump to the position and parse all fields
+        // that could be present (note - fall through switch)
+        switch (length) {
+            case 69: // eee: exact charge flag [reaction, query]  
+            case 66: // nnn: inversion / retention [reaction]
+            case 63: // mmm: atom-atom mapping [reaction]
+                mapping = readUInt(line, 60, 3);
+            case 60: // iii: not used
+            case 57: // rrr: not used
+            case 54: // HHH: H0 designation [redundant] 
+            case 51: // vvv: valence
+                valence = readUInt(line, 49, 2);
+            case 48: // bbb: stereo care [query]       
+            case 45: // hhh: hydrogen count + 1 [query] 
+            case 42: // sss: stereo parity
+                parity = toInt(line.charAt(41));
+            case 39: // ccc: charge
+                charge = toCharge(line.charAt(38));
+            case 36: // dd: mass difference
+                massDiff = sign(line.charAt(34)) * toInt(line.charAt(35));
+            case 34: // x y z and aaa: atom coordinates and symbol 
+            case 33: // symbol is left aligned  
+            case 32:   
+                x      = readMDLCoordinate(line, 0);
+                y      = readMDLCoordinate(line, 10);
+                z      = readMDLCoordinate(line, 20);
+                symbol = line.substring(31, 34).trim().intern();
+                break;
+             default:
+                 throw new CDKException("invalid line length, " + length + ": " + line);
+        }
+
+        IAtom atom = createAtom(symbol, builder);
+
+        atom.setPoint3d(new Point3d(x, y, z));
+        atom.setFormalCharge(charge);
+        atom.setStereoParity(parity);
+
+        // if there was a mass difference, set the mass number
+        if (massDiff != 0 && atom.getAtomicNumber() > 0)
+            atom.setMassNumber(Isotopes.getInstance()
+                                       .getMajorIsotope(atom.getAtomicNumber())
+                                       .getMassNumber()
+                                       + massDiff);
+        
+        if (valence > 0 && valence < 16)
+            atom.setValency(valence == 15 ? 0 : valence);
+
+        if (mapping != 0)
+            atom.setProperty(CDKConstants.ATOM_ATOM_MAPPING, mapping);
+
+        return atom;
+    }
+
+    /**
+     * Determine the length of the line excluding trailing whitespace.
+     * 
+     * @param str a string
+     * @return the length when trailing white space is removed
+     */
+    static int length(final String str) {
+        int i = str.length() - 1;
+        while (i >= 0 && str.charAt(i) == ' ') {
+            i--;
+        }
+        return i + 1;
+    }
+
+    /**
      * Create an atom for the provided symbol. If the atom symbol is a periodic
      * element a new 'Atom' is created otherwise if the symbol is an allowed
      * query atom ('R', 'Q', 'A', '*', 'L', 'LP') a new 'PseudoAtom' is created.
@@ -890,64 +1007,49 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return a new atom
      * @throws CDKException the symbol is not allowed
      */
-    private static IAtom createAtom(final String symbol,
-                                    final IChemObjectBuilder builder) throws CDKException {
-        if (isElement(symbol)) {
+    private IAtom createAtom(String symbol,
+                             IChemObjectBuilder builder) throws CDKException {
+        if (isPeriodicElement(symbol))
             return builder.newInstance(IAtom.class, symbol);
-        }
-        else if (isPseudoElement(symbol)) {
-            IAtom atom = builder.newInstance(IPseudoAtom.class, symbol);
-            atom.setAtomicNumber(0); // avoid nulls elsewhere
-            return atom;
-        }
-        throw new CDKException("invalid element symbol: " + symbol);
+        
+        // when strict only accept labels from the specification
+        if (mode == Mode.STRICT && !isPseudoElement(symbol))
+            throw new CDKException("invald symbol: " + symbol);        
+        
+        // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
+        // 'R' is a better label than 'R#' if now RGP is specified
+        if (symbol.equals("R#"))
+            symbol = "R";
+        
+        IAtom atom = builder.newInstance(IPseudoAtom.class, symbol);
+        atom.setSymbol(symbol);
+        atom.setAtomicNumber(0); // avoid NPE downstream
+        
+        return atom;
     }
 
     /**
      * Is the symbol a periodic element.
+     * 
      * @param symbol a symbol from the input
      * @return the symbol is a pseudo atom
      */
-    private static boolean isElement(final String symbol) {
+    private static boolean isPeriodicElement(final String symbol) {
         // XXX: PeriodicTable is slow - switch without file IO would be optimal
-        return PeriodicTable.getAtomicNumber(symbol) != null;
+        Integer elem = PeriodicTable.getAtomicNumber(symbol);
+        return elem != null && elem > 0;
     }
 
     /**
      * Is the atom symbol a non-periodic element (i.e. pseudo). Valid pseudo
-     * atoms are 'R', 'R#', 'R1-99', 'A', 'Q', '*', 'L' and 'LP'.
+     * atoms are 'R#', 'A', 'Q', '*', 'L' and 'LP'. We also accept 'R' but this
+     * is not listed in the specification.
      * 
      * @param symbol a symbol from the input
-     * @return the symbol is a valid psuedo element
+     * @return the symbol is a valid pseudo element
      */
     static boolean isPseudoElement(final String symbol) {
-        if (symbol.length() == 0)
-            return false;
-        switch (symbol.charAt(0)) {
-            
-            case 'R': // R groups: R, 'R#' and 'R<n>' where n=1-99
-                // R#
-                if (symbol.length() == 1 || symbol.length() == 2 && symbol.charAt(1) == '#')
-                    return true;
-                // The specification doesn't mention numbers (which would be specified
-                // using the RGP property but they're easy to check)
-                // R1, R2 ... R9
-                if (symbol.length() == 2 && symbol.charAt(1) >= '1' && symbol.charAt(1) <= '9')
-                    return true;
-                // R10, R11 ... R99
-                return symbol.length() == 3 && symbol.charAt(1) >= '1' && symbol.charAt(1) <= '9'
-                        && symbol.charAt(2) >= '0' && symbol.charAt(2) <= '9'; 
-            
-            // TODO: create QueryAtoms? 
-            case 'A': // any atom except Hydrogen
-            case 'Q': // any atom except Hydrogen and Carbon
-            case '*': // unspecified end group
-                return symbol.length() == 1;
-            
-            case 'L': // atom list (L) or lone pair (LP)
-                return symbol.length() == 1 || (symbol.length() == 2 && symbol.charAt(1) == 'P');
-        }
-        return false;
+        return PSUEDO_LABELS.contains(symbol);
     }
 
     /**
@@ -989,9 +1091,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private static int toCharge(final char c) {
         switch (c) {
-            case '1': return +1;
+            case '1': return +3;
             case '2': return +2;
-            case '3': return +3;
+            case '3': return +1;
             case '4': return 0; // doublet radical - superseded by M  RAD
             case '5': return -1;
             case '6': return -2;
