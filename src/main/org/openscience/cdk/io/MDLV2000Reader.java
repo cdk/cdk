@@ -394,7 +394,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
                 
-                final IAtom atom = readAtomRelaxed(line, molecule.getBuilder(), linecount);
+                final IAtom atom = readAtomSlow(line, molecule.getBuilder(), linecount);
                 
                 atoms[i] = atom;
 
@@ -1151,9 +1151,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException a CDK error occurred
      * @throws IOException  the isotopes file could not be read
      */
-    private IAtom readAtomRelaxed(String line,
-                                  IChemObjectBuilder builder,
-                                  int linecount) throws CDKException, IOException {
+    private IAtom readAtomSlow(String line,
+                               IChemObjectBuilder builder,
+                               int linecount) throws CDKException, IOException {
         IAtom atom;        
         Matcher trailingSpaceMatcher = TRAILING_SPACE.matcher(line);
         if (trailingSpaceMatcher.find()) {
