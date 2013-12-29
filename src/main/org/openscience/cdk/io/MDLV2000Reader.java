@@ -457,8 +457,19 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             outputContainer.setProperty(CDKConstants.TITLE, title);
             outputContainer.setProperty(CDKConstants.REMARK, remark);
-            outputContainer.setAtoms(atoms);
-            outputContainer.setBonds(bonds);
+            
+            // if the container is empty we can simply set the atoms/bonds 
+            // otherwise we add them to the end
+            if (outputContainer.isEmpty()) {
+                outputContainer.setAtoms(atoms);
+                outputContainer.setBonds(bonds);
+            }
+            else {
+                for (IAtom atom : atoms)
+                    outputContainer.addAtom(atom);
+                for (IBond bond : bonds)
+                    outputContainer.addBond(bond);
+            }
 
             // read PROPERTY block
             logger.info("Reading property block");
