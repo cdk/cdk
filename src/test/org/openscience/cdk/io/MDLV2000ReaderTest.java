@@ -922,7 +922,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                     if (bond instanceof CTFileQueryBond) {
                         queryBondCount++;
                         assertTrue(((CTFileQueryBond) bond).getType() == CTFileQueryBond.Type.ANY);
-                        Assert.assertEquals(bond.getOrder(), null);
+                        Assert.assertEquals(IBond.Order.UNSET, bond.getOrder());
                     }
                 }
             }
@@ -945,7 +945,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
             if (bond instanceof CTFileQueryBond) {
                 queryBondCount++;
                 assertTrue(((CTFileQueryBond) bond).getType() == CTFileQueryBond.Type.SINGLE_OR_AROMATIC);
-                Assert.assertEquals(bond.getOrder(), null);
+                Assert.assertEquals(IBond.Order.UNSET, bond.getOrder());
             }
         }
         assertTrue("Expecting six 'query' bond types", queryBondCount == 6);

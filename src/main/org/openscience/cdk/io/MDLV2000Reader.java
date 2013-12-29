@@ -518,11 +518,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     a2.setFlag(CDKConstants.ISAROMATIC, true);
                 }
                 else {
-                    queryBondCount++;
                     newBond = new CTFileQueryBond(molecule.getBuilder());
                     IAtom[] bondAtoms = {a1, a2};
                     newBond.setAtoms(bondAtoms);
-                    newBond.setOrder(null);
+                    newBond.setOrder(IBond.Order.UNSET);
                     CTFileQueryBond.Type queryBondType = null;
                     switch (order) {
                         case 5:
@@ -541,6 +540,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     ((CTFileQueryBond) newBond).setType(queryBondType);
                     newBond.setStereo(stereo);
                 }
+                
                 bonds[i] = newBond;
 
                 // add the bond order to the explicit valence for each atom
@@ -549,6 +549,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     explicitValence[atom2 - 1] += newBond.getOrder().numeric();
                 }
                 else {
+                    if (!newBond.getFlag(CDKConstants.ISAROMATIC))
+                        queryBondCount++;
                     explicitValence[atom1 - 1] = Integer.MIN_VALUE;
                     explicitValence[atom2 - 1] = Integer.MIN_VALUE;
                 }
