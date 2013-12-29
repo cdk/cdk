@@ -205,7 +205,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
-        Assert.assertEquals(IBond.Stereo.UP_OR_DOWN,mol.getBond(11).getStereo());
+        Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(11).getStereo());
     }
 
     
