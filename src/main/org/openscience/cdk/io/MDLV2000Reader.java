@@ -309,10 +309,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         int linecount = 0;
         int nAtoms;
         int nBonds;
-        int atom1;
-        int atom2;
-        int order;
-        IBond.Stereo stereo = (IBond.Stereo) CDKConstants.UNSET;
         String title = null;
         String remark = null;
         String line = "";
@@ -447,34 +443,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
                 
-                IBond newBond = readBondSlow(line, molecule.getBuilder(), atoms, linecount);
+                bonds[i] = readBondSlow(line, molecule.getBuilder(), atoms, explicitValence, linecount);
                 
-                bonds[i] = newBond;
-                
-                // FIXME: set explicit valence in readBond method
-                atom1 = -1; atom2 = -1;
-                for (int idx = 0; idx < atoms.length; idx++) {
-                    if (atom1 >= 0 && atom2 >= 0)
-                        break;
-                    if (atom1 < 0 && atoms[idx] == newBond.getAtom(0)) {
-                        atom1 = idx + 1;
-                    }
-                    if (atom2 < 0 && atoms[idx] == newBond.getAtom(1)) {
-                        atom2 = idx + 1;
-                    }
-                }
-
                 // add the bond order to the explicit valence for each atom
-                if (newBond.getOrder() != null && newBond.getOrder() != IBond.Order.UNSET) {
-                    explicitValence[atom1 - 1] += newBond.getOrder().numeric();
-                    explicitValence[atom2 - 1] += newBond.getOrder().numeric();
-                }
-                else {
-                    if (!newBond.getFlag(CDKConstants.ISAROMATIC))
-                        queryBondCount++;
-                    explicitValence[atom1 - 1] = Integer.MIN_VALUE;
-                    explicitValence[atom2 - 1] = Integer.MIN_VALUE;
-                }
+                if (bonds[i].getOrder() == IBond.Order.UNSET && !bonds[i].getFlag(CDKConstants.ISAROMATIC))
+                    queryBondCount++;
             }
 
             if (queryBondCount == 0)
@@ -1270,19 +1243,22 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
-     * Read a bond line from an MDL V2000 molfile bond block (slow).
+     * Read a bond line from an MDL V2000 molfile bond block (slow). The 
+     * explicit valence is also modified.
      *
      * @param line      the input from the bond block
      * @param builder   chem object builder
      * @param atoms     array of atoms
+     * @param explicitValence stores the explicit valence of each atom (bond order sum)                 
      * @param linecount the current line count
      * @return a new bond
      * @throws CDKException the bond line could not be parsed
      */
-    private IBond readBondSlow(String line,
+    private IBond readBondSlow(String             line,
                                IChemObjectBuilder builder,
-                               IAtom[] atoms,
-                               int linecount) throws CDKException {
+                               IAtom[]            atoms,
+                               int[]              explicitValence,
+                               int                linecount) throws CDKException {
         int atom1 = Integer.parseInt(line.substring(0, 3).trim());
         int atom2 = Integer.parseInt(line.substring(3, 6).trim());
         int order = Integer.parseInt(line.substring(6, 9).trim());
@@ -1341,6 +1317,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             else {
                 newBond = builder.newInstance(IBond.class, a1, a2, cdkOrder);
             }
+            explicitValence[atom1 - 1] += cdkOrder.numeric();
+            explicitValence[atom2 - 1] += cdkOrder.numeric();
         }
         else if (order == 4) {
             // aromatic bond                	
@@ -1355,6 +1333,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             newBond.setFlag(CDKConstants.ISAROMATIC, true);
             a1.setFlag(CDKConstants.ISAROMATIC, true);
             a2.setFlag(CDKConstants.ISAROMATIC, true);
+            explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         }
         else {
             newBond = new CTFileQueryBond(builder);
@@ -1378,6 +1357,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             ((CTFileQueryBond) newBond).setType(queryBondType);
             newBond.setStereo(stereo);
+            explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         }
         return newBond;
     }
