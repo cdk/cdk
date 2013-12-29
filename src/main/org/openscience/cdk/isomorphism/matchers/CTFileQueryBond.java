@@ -23,6 +23,7 @@
 package org.openscience.cdk.isomorphism.matchers;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -81,4 +82,47 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
         return false;
     }
 
+    /**
+     * Create a CTFileQueryBond of the specified type (from the MDL spec). The
+     * bond copies the atoms and sets the type using the value 'type', 5 = single
+     * or double, 8 = any, etc.
+     * 
+     * @param bond an existing bond
+     * @param type the specified type
+     * @return a new CTFileQueryBond
+     */
+    public static CTFileQueryBond ofType(IBond bond, int type) {
+        CTFileQueryBond queryBond = new CTFileQueryBond(bond.getBuilder());
+        queryBond.setOrder(Order.UNSET);
+        queryBond.setAtoms(new IAtom[]{bond.getAtom(0), bond.getAtom(1)});
+        switch (type) {
+            case 1:
+                queryBond.setType(Type.SINGLE);
+                break;
+            case 2:
+                queryBond.setType(Type.DOUBLE);
+                break;
+            case 3:
+                queryBond.setType(Type.TRIPLE);
+                break;
+            case 4:
+                queryBond.setType(Type.AROMATIC);
+                break;
+            case 5:
+                queryBond.setType(Type.SINGLE_OR_DOUBLE);
+                break;
+            case 6:
+                queryBond.setType(Type.SINGLE_OR_AROMATIC);
+                break;
+            case 7:
+                queryBond.setType(Type.DOUBLE_OR_AROMATIC);
+                break;
+            case 8:
+                queryBond.setType(Type.ANY);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown bond type: " + type);
+        }
+        return queryBond;
+    }
 }
