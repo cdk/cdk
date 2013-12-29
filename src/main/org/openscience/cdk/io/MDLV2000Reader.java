@@ -445,8 +445,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
                 bonds[i]      = readBondSlow(line, molecule.getBuilder(), atoms, explicitValence, linecount);
                 hasQueryBonds = hasQueryBonds
-                        || bonds[i].getOrder() == IBond.Order.UNSET
-                        && !bonds[i].getFlag(CDKConstants.ISAROMATIC);
+                        || (bonds[i].getOrder() == IBond.Order.UNSET
+                            && !bonds[i].getFlag(CDKConstants.ISAROMATIC));
             }
 
             if (!hasQueryBonds)
