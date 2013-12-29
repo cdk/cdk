@@ -438,24 +438,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
             // read BOND block
             logger.info("Reading bond block");
-            int queryBondCount = 0;
+            boolean hasQueryBonds = false;
             for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
                 linecount++;
-                
-                bonds[i] = readBondSlow(line, molecule.getBuilder(), atoms, explicitValence, linecount);
-                
-                // add the bond order to the explicit valence for each atom
-                if (bonds[i].getOrder() == IBond.Order.UNSET && !bonds[i].getFlag(CDKConstants.ISAROMATIC))
-                    queryBondCount++;
+
+                bonds[i]      = readBondSlow(line, molecule.getBuilder(), atoms, explicitValence, linecount);
+                hasQueryBonds = hasQueryBonds
+                        || bonds[i].getOrder() == IBond.Order.UNSET
+                        && !bonds[i].getFlag(CDKConstants.ISAROMATIC);
             }
 
-            if (queryBondCount == 0)
-                outputContainer = molecule;
-            else {
+            if (!hasQueryBonds)
+                outputContainer = molecule;    
+            else
                 outputContainer = new QueryAtomContainer(molecule.getBuilder());
-            }
-
+                
+            
             outputContainer.setProperty(CDKConstants.TITLE, title);
             outputContainer.setProperty(CDKConstants.REMARK, remark);
             outputContainer.setAtoms(atoms);
