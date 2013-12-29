@@ -62,6 +62,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -445,103 +446,23 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
                 linecount++;
-                atom1 = Integer.parseInt(line.substring(0, 3).trim());
-                atom2 = Integer.parseInt(line.substring(3, 6).trim());
-                order = Integer.parseInt(line.substring(6, 9).trim());
-                if (line.length() >= 12) {
-                    int mdlStereo = line.length() > 12
-                                    ? Integer.parseInt(line.substring(9, 12).trim())
-                                    : Integer.parseInt(line.substring(9).trim());
-                    if (mdlStereo == 1) {
-                        // MDL up bond
-                        stereo = IBond.Stereo.UP;
-                    }
-                    else if (mdlStereo == 6) {
-                        // MDL down bond
-                        stereo = IBond.Stereo.DOWN;
-                    }
-                    else if (mdlStereo == 0) {
-                        if (order == 2) {
-                            // double bond stereo defined by coordinates
-                            stereo = IBond.Stereo.E_Z_BY_COORDINATES;
-                        }
-                        else {
-                            // bond has no stereochemistry
-                            stereo = IBond.Stereo.NONE;
-                        }
-                    }
-                    else if (mdlStereo == 3 && order == 2) {
-                        // unknown E/Z stereochemistry
-                        stereo = IBond.Stereo.E_OR_Z;
-                    }
-                    else if (mdlStereo == 4) {
-                        //MDL bond undefined
-                        stereo = IBond.Stereo.UP_OR_DOWN;
-                    }
-                }
-                else {
-                    handleError(
-                            "Missing expected stereo field at line: ",
-                            linecount, 10, 12
-                               );
-                }
-                if (logger.isDebugEnabled()) {
-                    logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
-                }
-                // interpret CTfile's special bond orders
-                IAtom a1 = atoms[atom1 - 1];
-                IAtom a2 = atoms[atom2 - 1];
-                IBond newBond;
-                if (order >= 1 && order <= 3) {
-                    IBond.Order cdkOrder = IBond.Order.SINGLE;
-                    if (order == 2) cdkOrder = IBond.Order.DOUBLE;
-                    if (order == 3) cdkOrder = IBond.Order.TRIPLE;
-                    if (stereo != null) {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, cdkOrder, stereo);
-                    }
-                    else {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, cdkOrder);
-                    }
-                }
-                else if (order == 4) {
-                    // aromatic bond                	
-                    if (stereo != null) {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.UNSET, stereo);
-                    }
-                    else {
-                        newBond = molecule.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.UNSET);
-                    }
-                    // mark both atoms and the bond as aromatic and raise the SINGLE_OR_DOUBLE-flag
-                    newBond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
-                    newBond.setFlag(CDKConstants.ISAROMATIC, true);
-                    a1.setFlag(CDKConstants.ISAROMATIC, true);
-                    a2.setFlag(CDKConstants.ISAROMATIC, true);
-                }
-                else {
-                    newBond = new CTFileQueryBond(molecule.getBuilder());
-                    IAtom[] bondAtoms = {a1, a2};
-                    newBond.setAtoms(bondAtoms);
-                    newBond.setOrder(IBond.Order.UNSET);
-                    CTFileQueryBond.Type queryBondType = null;
-                    switch (order) {
-                        case 5:
-                            queryBondType = CTFileQueryBond.Type.SINGLE_OR_DOUBLE;
-                            break;
-                        case 6:
-                            queryBondType = CTFileQueryBond.Type.SINGLE_OR_AROMATIC;
-                            break;
-                        case 7:
-                            queryBondType = CTFileQueryBond.Type.DOUBLE_OR_AROMATIC;
-                            break;
-                        case 8:
-                            queryBondType = CTFileQueryBond.Type.ANY;
-                            break;
-                    }
-                    ((CTFileQueryBond) newBond).setType(queryBondType);
-                    newBond.setStereo(stereo);
-                }
+                
+                IBond newBond = readBondSlow(line, molecule.getBuilder(), atoms, linecount);
                 
                 bonds[i] = newBond;
+                
+                // FIXME: set explicit valence in readBond method
+                atom1 = -1; atom2 = -1;
+                for (int idx = 0; idx < atoms.length; idx++) {
+                    if (atom1 >= 0 && atom2 >= 0)
+                        break;
+                    if (atom1 < 0 && atoms[idx] == newBond.getAtom(0)) {
+                        atom1 = idx + 1;
+                    }
+                    if (atom2 < 0 && atoms[idx] == newBond.getAtom(1)) {
+                        atom2 = idx + 1;
+                    }
+                }
 
                 // add the bond order to the explicit valence for each atom
                 if (newBond.getOrder() != null && newBond.getOrder() != IBond.Order.UNSET) {
@@ -1346,7 +1267,121 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         }
         
         return atom;
-    }    
+    }
+
+    /**
+     * Read a bond line from an MDL V2000 molfile bond block (slow).
+     *
+     * @param line      the input from the bond block
+     * @param builder   chem object builder
+     * @param atoms     array of atoms
+     * @param linecount the current line count
+     * @return a new bond
+     * @throws CDKException the bond line could not be parsed
+     */
+    private IBond readBondSlow(String line,
+                               IChemObjectBuilder builder,
+                               IAtom[] atoms,
+                               int linecount) throws CDKException {
+        int atom1 = Integer.parseInt(line.substring(0, 3).trim());
+        int atom2 = Integer.parseInt(line.substring(3, 6).trim());
+        int order = Integer.parseInt(line.substring(6, 9).trim());
+        IBond.Stereo stereo = null;
+        if (line.length() >= 12) {
+            int mdlStereo = line.length() > 12
+                            ? Integer.parseInt(line.substring(9, 12).trim())
+                            : Integer.parseInt(line.substring(9).trim());
+            if (mdlStereo == 1) {
+                // MDL up bond
+                stereo = IBond.Stereo.UP;
+            }
+            else if (mdlStereo == 6) {
+                // MDL down bond
+                stereo = IBond.Stereo.DOWN;
+            }
+            else if (mdlStereo == 0) {
+                if (order == 2) {
+                    // double bond stereo defined by coordinates
+                    stereo = IBond.Stereo.E_Z_BY_COORDINATES;
+                }
+                else {
+                    // bond has no stereochemistry
+                    stereo = IBond.Stereo.NONE;
+                }
+            }
+            else if (mdlStereo == 3 && order == 2) {
+                // unknown E/Z stereochemistry
+                stereo = IBond.Stereo.E_OR_Z;
+            }
+            else if (mdlStereo == 4) {
+                //MDL bond undefined
+                stereo = IBond.Stereo.UP_OR_DOWN;
+            }
+        }
+        else {
+            handleError(
+                    "Missing expected stereo field at line: ",
+                    linecount, 10, 12
+                       );
+        }
+        if (logger.isDebugEnabled()) {
+            logger.debug("Bond: " + atom1 + " - " + atom2 + "; order " + order);
+        }
+        // interpret CTfile's special bond orders
+        IAtom a1 = atoms[atom1 - 1];
+        IAtom a2 = atoms[atom2 - 1];
+        IBond newBond;
+        if (order >= 1 && order <= 3) {
+            IBond.Order cdkOrder = IBond.Order.SINGLE;
+            if (order == 2) cdkOrder = IBond.Order.DOUBLE;
+            if (order == 3) cdkOrder = IBond.Order.TRIPLE;
+            if (stereo != null) {
+                newBond = builder.newInstance(IBond.class, a1, a2, cdkOrder, stereo);
+            }
+            else {
+                newBond = builder.newInstance(IBond.class, a1, a2, cdkOrder);
+            }
+        }
+        else if (order == 4) {
+            // aromatic bond                	
+            if (stereo != null) {
+                newBond = builder.newInstance(IBond.class, a1, a2, IBond.Order.UNSET, stereo);
+            }
+            else {
+                newBond = builder.newInstance(IBond.class, a1, a2, IBond.Order.UNSET);
+            }
+            // mark both atoms and the bond as aromatic and raise the SINGLE_OR_DOUBLE-flag
+            newBond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+            newBond.setFlag(CDKConstants.ISAROMATIC, true);
+            a1.setFlag(CDKConstants.ISAROMATIC, true);
+            a2.setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        else {
+            newBond = new CTFileQueryBond(builder);
+            IAtom[] bondAtoms = {a1, a2};
+            newBond.setAtoms(bondAtoms);
+            newBond.setOrder(IBond.Order.UNSET);
+            CTFileQueryBond.Type queryBondType = null;
+            switch (order) {
+                case 5:
+                    queryBondType = CTFileQueryBond.Type.SINGLE_OR_DOUBLE;
+                    break;
+                case 6:
+                    queryBondType = CTFileQueryBond.Type.SINGLE_OR_AROMATIC;
+                    break;
+                case 7:
+                    queryBondType = CTFileQueryBond.Type.DOUBLE_OR_AROMATIC;
+                    break;
+                case 8:
+                    queryBondType = CTFileQueryBond.Type.ANY;
+                    break;
+            }
+            ((CTFileQueryBond) newBond).setType(queryBondType);
+            newBond.setStereo(stereo);
+        }
+        return newBond;
+    }
+    
 
     /**
      * Read non-structural data from input and store as properties the provided
