@@ -625,6 +625,14 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(11).getStereo());
     }
+    
+    @Test public void testUndefinedStereo2() throws Exception {
+        String filename = "data/mdl/a-pinene-with-undefined-stereo.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        Assert.assertEquals(IBond.Stereo.UP_OR_DOWN, mol.getBond(1).getStereo());
+    }
 
     /**
      * Tests that the '0' read from the bond block for bond stereo
