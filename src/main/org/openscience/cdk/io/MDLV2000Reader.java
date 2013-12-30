@@ -63,6 +63,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
@@ -1615,5 +1617,172 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     private static boolean endOfRecord(final String line) {
         return line == null || line.equals(RECORD_DELIMITER);
     }
+
+    /**
+     * Enumeration of property keys that can be specified in the V2000 property
+     * block.
+     */
+    enum PropertyKey {
+
+        /** Atom Alias. */
+        ATOM_ALIAS,
+
+        /** Atom Value. */
+        ATOM_VALUE,
+
+        /** Group Abbreviation. */
+        GROUP_ABBREVIATION,
+
+        /** Skip lines. */
+        SKIP,
+
+        /** Charge [Generic]. */
+        M_CHG,
+
+        /** Radical [Generic]. */
+        M_RAD,
+
+        /** Isotope [Generic]. */
+        M_ISO,
+
+        /** Ring Bond Count [Query]. */
+        M_RBC,
+
+        /** Substitution Count [Query]. */
+        M_SUB,
+
+        /** Unsaturated Atom [Query]. */
+        M_UNS,
+
+        /** Link Atom [Query]. */
+        M_LIN,
+
+        /** Atom List [Query]. */
+        M_ALS,
+
+        /** Attachment Point [Rgroup]. */
+        M_APO,
+
+        /** Atom Attachment Order [Rgroup]. */
+        M_AAL,
+
+        /** Rgroup Label Location [Rgroup]. */
+        M_RGP,
+
+        /** Rgroup Logic, Unsatisfied Sites, Range of Occurrence [Rgroup]. */
+        M_LOG,
+
+        /** Sgroup Type [Sgroup]. */
+        M_STY,
+
+        /** Sgroup Subtype [Sgroup]. */
+        M_SST,
+
+        /** Sgroup Labels [Sgroup]. */
+        M_SLB,
+        
+        /** Sgroup Connectivity [Sgroup]. */
+        M_SCN,
+        
+        /** Sgroup Expansion [Sgroup]. */
+        M_SDS,
+        
+        /** Sgroup Atom List [Sgroup]. */
+        M_SAL,
+        
+        /** Sgroup Bond List [Sgroup]. */
+        M_SBL,
+        
+        /** Multiple Group Parent Atom List [Sgroup]. */
+        M_SPA,
+        
+        /** Sgroup Subscript [Sgroup]. */
+        M_SMT,
+        
+        /** Sgroup Correspondence [Sgroup]. */
+        M_CRS,
+        
+        /** Sgroup Display Information [Sgroup]. */
+        M_SDI,
+        
+        /** Superatom Bond and Vector Information [Sgroup]. */
+        M_SBV,
+        
+        /** Data Sgroup Field Description [Sgroup]. */
+        M_SDT,
+        
+        /** Data Sgroup Display Information [Sgroup]. */
+        M_SDD,
+
+        /** Data Sgroup Data. */
+        M_SCD,
+        
+        /** Data Sgroup Data. */
+        M_SED,
+        
+        /** Sgroup Hierarchy Information. */
+        M_SPL,
+
+        /** Sgroup Component Numbers. */
+        M_SNC,
+
+        /** 3D Feature Properties. */
+        M_$3D,
+
+        /** End of Block. */
+        M_END,
+
+        /** Non-property header. */
+        UNKNOWN;
+
+        /** Index of 'M XXX' properties for quick lookup. */
+        private static final Map<String, PropertyKey> mSuffix = new HashMap<String, PropertyKey>(60);
+
+        static {
+            for (PropertyKey p : values()) {
+                if (p.name().charAt(0) == 'M')
+                    mSuffix.put(p.name().substring(2, 5), p);
+            }
+        }
+
+        /**
+         * Determine the property key of the provided line. 
+         *
+         * @param line an property line
+         * @return the key (defaults to {@link #UNKNOWN})
+         */
+        static PropertyKey of(final String line) {
+            if (line.length() < 5)
+                return UNKNOWN;
+            switch (line.charAt(0)) {
+                case 'A':
+                    if (line.charAt(1) == ' ' && line.charAt(2) == ' ')
+                        return ATOM_ALIAS;
+                    return UNKNOWN;
+                case 'G':
+                    if (line.charAt(1) == ' ' && line.charAt(2) == ' ')
+                        return GROUP_ABBREVIATION;
+                    return UNKNOWN;
+                case 'S':
+                    if (line.charAt(1) == ' ' && line.charAt(2) == ' ')
+                        return SKIP;
+                    return UNKNOWN;
+                case 'V':
+                    if (line.charAt(1) == ' ' && line.charAt(2) == ' ')
+                        return ATOM_VALUE;
+                    return UNKNOWN;
+                case 'M':
+                    if (line.charAt(1) != ' ' || line.charAt(2) != ' ')
+                        return UNKNOWN;
+                    PropertyKey property = mSuffix.get(line.substring(3, 6));
+                    if (property != null)
+                        return property;
+                    return UNKNOWN;
+            }
+            return UNKNOWN;
+        }
+
+    }
+
 }
 
