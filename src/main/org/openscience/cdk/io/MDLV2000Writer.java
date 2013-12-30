@@ -138,9 +138,31 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 		 *
 		 * @return the number of single electrons
 		 */
-		public int getSingleElectrons() {
+		public int getSingleElectrons() {  
 			return singleElectrons;
 		}
+
+        /**
+         * Create a SPIN_MULTIPLICITY instance for the specified value.
+         * 
+         * @param value input value (in the property block)
+         * @return instance
+         * @throws CDKException unknown spin multiplicity value
+         */
+        public static SPIN_MULTIPLICITY ofValue(int value) throws CDKException {
+            switch (value) {
+                case 0:
+                    return NONE;
+                case 1:
+                    return DOUBLET;
+                case 2:
+                    return SINGLET;
+                case 3:
+                    return TRIPLET;
+                default:
+                    throw new CDKException("unknown spin multiplicity: " + value);
+            }
+        } 
 	}
 
 	// number of entries on line; value = 1 to 8
