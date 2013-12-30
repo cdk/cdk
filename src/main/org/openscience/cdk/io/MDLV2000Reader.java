@@ -474,183 +474,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             // read PROPERTY block
-            logger.info("Reading property block");
-            while (true) {
-                line = input.readLine();
-                linecount++;
-                if (line == null) {
-                    handleError(
-                            "The expected property block is missing!",
-                            linecount, 0, 0
-                               );
-                }
-                if (line.startsWith("M  END")) break;
-
-                boolean lineRead = false;
-                if (line.startsWith("M  CHG")) {
-                    // FIXME: if this is encountered for the first time, all
-                    // atom charges should be set to zero first!
-                    int infoCount = Integer.parseInt(line.substring(6, 9).trim());
-                    StringTokenizer st = new StringTokenizer(line.substring(9));
-                    for (int i = 1; i <= infoCount; i++) {
-                        String token = st.nextToken();
-                        int atomNumber = Integer.parseInt(token.trim());
-                        token = st.nextToken();
-                        int charge = Integer.parseInt(token.trim());
-                        outputContainer.getAtom(atomNumber - 1).setFormalCharge(charge);
-                    }
-                }
-                else if (line.matches("A\\s{1,4}\\d+")) {
-                    // Reads the pseudo atom property from the mol file
-
-                    // The atom number of the to replaced atom
-                    int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", ""));
-                    line = input.readLine();
-                    linecount++;
-                    String[] aliasArray = line.split("\\\\");
-                    // name of the alias atom like R1 or R2 etc. 
-                    String alias = "";
-                    for (String anAliasArray : aliasArray) {
-                        alias += anAliasArray;
-                    }
-                    IAtom aliasAtom = outputContainer.getAtom(aliasAtomNumber - 1);
-
-                    // skip if already a pseudoatom
-                    if (aliasAtom instanceof IPseudoAtom) {
-                        ((IPseudoAtom) aliasAtom).setLabel(alias);
-                        continue;
-                    }
-
-                    IAtom newPseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class, alias);
-                    if (aliasAtom.getPoint2d() != null)
-                        newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
-                    if (aliasAtom.getPoint3d() != null)
-                        newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
-                    AtomContainerManipulator.replaceAtomByAtom(outputContainer, aliasAtom, newPseudoAtom);
-                }
-                else if (line.startsWith("M  ISO")) {
-                    try {
-                        String countString = line.substring(6, 10).trim();
-                        int infoCount = Integer.parseInt(countString);
-                        StringTokenizer st = new StringTokenizer(line.substring(10));
-                        for (int i = 1; i <= infoCount; i++) {
-                            int atomNumber = Integer.parseInt(st.nextToken().trim());
-                            int absMass = Integer.parseInt(st.nextToken().trim());
-                            if (absMass != 0) {
-                                IAtom isotope = outputContainer.getAtom(atomNumber - 1);
-                                isotope.setMassNumber(absMass);
-                            }
-                        }
-                    } catch (NumberFormatException exception) {
-                        String error = "Error (" + exception.getMessage() + ") while parsing line "
-                                + linecount + ": " + line + " in property block.";
-                        logger.error(error);
-                        handleError(
-                                "NumberFormatException in isotope information.",
-                                linecount, 7, 11,
-                                exception
-                                   );
-                    }
-                }
-                else if (line.startsWith("M  RAD")) {
-                    try {
-                        String countString = line.substring(6, 9).trim();
-                        int infoCount = Integer.parseInt(countString);
-                        StringTokenizer st = new StringTokenizer(line.substring(9));
-                        for (int i = 1; i <= infoCount; i++) {
-                            int atomNumber = Integer.parseInt(st.nextToken().trim());
-                            int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
-                            MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.NONE;
-                            if (spinMultiplicity > 0) {
-                                IAtom radical = outputContainer.getAtom(atomNumber - 1);
-                                switch (spinMultiplicity) {
-                                    case 1:
-                                        spin = MDLV2000Writer.SPIN_MULTIPLICITY.DOUBLET;
-                                        break;
-                                    case 2:
-                                        spin = MDLV2000Writer.SPIN_MULTIPLICITY.SINGLET;
-                                        break;
-                                    case 3:
-                                        spin = MDLV2000Writer.SPIN_MULTIPLICITY.TRIPLET;
-                                        break;
-                                    default:
-                                        logger.debug("Invalid spin multiplicity found: " + spinMultiplicity);
-                                        break;
-                                }
-                                for (int j = 0; j < spin.getSingleElectrons(); j++) {
-                                    outputContainer.addSingleElectron(
-                                            molecule.getBuilder().newInstance(ISingleElectron.class, radical));
-                                }
-                            }
-                        }
-                    } catch (NumberFormatException exception) {
-                        String error = "Error (" + exception.getMessage() + ") while parsing line "
-                                + linecount + ": " + line + " in property block.";
-                        logger.error(error);
-                        handleError(
-                                "NumberFormatException in radical information",
-                                linecount, 7, 10,
-                                exception
-                                   );
-                    }
-                }
-                else if (line.startsWith("G  ")) {
-                    try {
-                        String atomNumberString = line.substring(3, 6).trim();
-                        int atomNumber = Integer.parseInt(atomNumberString);
-                        //String whatIsThisString = line.substring(6,9).trim();
-
-                        String atomName = input.readLine();
-
-                        // convert Atom into a PseudoAtom
-                        IAtom prevAtom = outputContainer.getAtom(atomNumber - 1);
-                        IPseudoAtom pseudoAtom = molecule.getBuilder().newInstance(IPseudoAtom.class, atomName);
-                        if (prevAtom.getPoint2d() != null) {
-                            pseudoAtom.setPoint2d(prevAtom.getPoint2d());
-                        }
-                        if (prevAtom.getPoint3d() != null) {
-                            pseudoAtom.setPoint3d(prevAtom.getPoint3d());
-                        }
-                        AtomContainerManipulator.replaceAtomByAtom(molecule, prevAtom, pseudoAtom);
-                    } catch (NumberFormatException exception) {
-                        String error = "Error (" + exception.toString() + ") while parsing line "
-                                + linecount + ": " + line + " in property block.";
-                        logger.error(error);
-                        handleError(
-                                "NumberFormatException in group information",
-                                linecount, 4, 7,
-                                exception
-                                   );
-                    }
-                }
-                else if (line.startsWith("M  RGP")) {
-                    StringTokenizer st = new StringTokenizer(line);
-                    //Ignore first 3 tokens (overhead).
-                    st.nextToken();
-                    st.nextToken();
-                    st.nextToken();
-                    //Process the R group numbers as defined in RGP line.
-                    while (st.hasMoreTokens()) {
-                        Integer position = new Integer(st.nextToken());
-                        int rNumber = new Integer(st.nextToken());
-                        // the container may have already had atoms before the new atoms were read
-                        int index   = outputContainer.getAtomCount() - nAtoms + position - 1;
-                        IPseudoAtom pseudoAtom = (IPseudoAtom) outputContainer.getAtom(index);
-                        if (pseudoAtom != null) {
-                            pseudoAtom.setLabel("R" + rNumber);
-                        }
-                    }
-                }
-                if (line.startsWith("V  ")) {
-                    Integer atomNumber = new Integer(line.substring(3, 6).trim());
-                    IAtom atomWithComment = outputContainer.getAtom(atomNumber - 1);
-                    atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
-                }
-
-                if (!lineRead) {
-                    logger.warn("Skipping line in property block: ", line);
-                }
-            }
+            readPropertiesSlow(input, outputContainer, nAtoms, linecount);
 
             // read potential SD file data between M  END and $$$$
             readNonStructuralData(input, outputContainer);
@@ -1505,6 +1329,198 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             explicitValence[atom1 - 1] = explicitValence[atom2 - 1] = Integer.MIN_VALUE;
         }
         return newBond;
+    }
+
+    /**
+     * Read the properties from the V2000 block (slow).
+     * 
+     * @param input     input source 
+     * @param container the container with the atoms / bonds loaded
+     * @param nAtoms    the number of atoms in the atom block
+     * @param linecount the line count
+     * @throws IOException internal low-level error
+     * @throws CDKException the properties block could not be parsed
+     */
+    private void readPropertiesSlow(BufferedReader input, IAtomContainer container, int nAtoms, int linecount)
+            throws IOException, CDKException {
+        logger.info("Reading property block");
+        String line;
+        while (true) {
+            line = input.readLine();
+            linecount++;
+            if (line == null) {
+                handleError(
+                        "The expected property block is missing!",
+                        linecount, 0, 0
+                           );
+            }
+            if (line.startsWith("M  END")) break;
+
+            boolean lineRead = false;
+            if (line.startsWith("M  CHG")) {
+                // FIXME: if this is encountered for the first time, all
+                // atom charges should be set to zero first!
+                int infoCount = Integer.parseInt(line.substring(6, 9).trim());
+                StringTokenizer st = new StringTokenizer(line.substring(9));
+                for (int i = 1; i <= infoCount; i++) {
+                    String token = st.nextToken();
+                    int atomNumber = Integer.parseInt(token.trim());
+                    token = st.nextToken();
+                    int charge = Integer.parseInt(token.trim());
+                    container.getAtom(atomNumber - 1).setFormalCharge(charge);
+                }
+            }
+            else if (line.matches("A\\s{1,4}\\d+")) {
+                // Reads the pseudo atom property from the mol file
+
+                // The atom number of the to replaced atom
+                int aliasAtomNumber = Integer.parseInt(line.replaceFirst("A\\s{1,4}", ""));
+                line = input.readLine();
+                linecount++;
+                String[] aliasArray = line.split("\\\\");
+                // name of the alias atom like R1 or R2 etc. 
+                String alias = "";
+                for (String anAliasArray : aliasArray) {
+                    alias += anAliasArray;
+                }
+                IAtom aliasAtom = container.getAtom(aliasAtomNumber - 1);
+
+                // skip if already a pseudoatom
+                if (aliasAtom instanceof IPseudoAtom) {
+                    ((IPseudoAtom) aliasAtom).setLabel(alias);
+                    continue;
+                }
+
+                IAtom newPseudoAtom = container.getBuilder().newInstance(IPseudoAtom.class, alias);
+                if (aliasAtom.getPoint2d() != null)
+                    newPseudoAtom.setPoint2d(aliasAtom.getPoint2d());
+                if (aliasAtom.getPoint3d() != null)
+                    newPseudoAtom.setPoint3d(aliasAtom.getPoint3d());
+                AtomContainerManipulator.replaceAtomByAtom(container, aliasAtom, newPseudoAtom);
+            }
+            else if (line.startsWith("M  ISO")) {
+                try {
+                    String countString = line.substring(6, 10).trim();
+                    int infoCount = Integer.parseInt(countString);
+                    StringTokenizer st = new StringTokenizer(line.substring(10));
+                    for (int i = 1; i <= infoCount; i++) {
+                        int atomNumber = Integer.parseInt(st.nextToken().trim());
+                        int absMass = Integer.parseInt(st.nextToken().trim());
+                        if (absMass != 0) {
+                            IAtom isotope = container.getAtom(atomNumber - 1);
+                            isotope.setMassNumber(absMass);
+                        }
+                    }
+                } catch (NumberFormatException exception) {
+                    String error = "Error (" + exception.getMessage() + ") while parsing line "
+                            + linecount + ": " + line + " in property block.";
+                    logger.error(error);
+                    handleError(
+                            "NumberFormatException in isotope information.",
+                            linecount, 7, 11,
+                            exception
+                               );
+                }
+            }
+            else if (line.startsWith("M  RAD")) {
+                try {
+                    String countString = line.substring(6, 9).trim();
+                    int infoCount = Integer.parseInt(countString);
+                    StringTokenizer st = new StringTokenizer(line.substring(9));
+                    for (int i = 1; i <= infoCount; i++) {
+                        int atomNumber = Integer.parseInt(st.nextToken().trim());
+                        int spinMultiplicity = Integer.parseInt(st.nextToken().trim());
+                        MDLV2000Writer.SPIN_MULTIPLICITY spin = MDLV2000Writer.SPIN_MULTIPLICITY.NONE;
+                        if (spinMultiplicity > 0) {
+                            IAtom radical = container.getAtom(atomNumber - 1);
+                            switch (spinMultiplicity) {
+                                case 1:
+                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.DOUBLET;
+                                    break;
+                                case 2:
+                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.SINGLET;
+                                    break;
+                                case 3:
+                                    spin = MDLV2000Writer.SPIN_MULTIPLICITY.TRIPLET;
+                                    break;
+                                default:
+                                    logger.debug("Invalid spin multiplicity found: " + spinMultiplicity);
+                                    break;
+                            }
+                            for (int j = 0; j < spin.getSingleElectrons(); j++) {
+                                container.addSingleElectron(
+                                        container.getBuilder().newInstance(ISingleElectron.class, radical));
+                            }
+                        }
+                    }
+                } catch (NumberFormatException exception) {
+                    String error = "Error (" + exception.getMessage() + ") while parsing line "
+                            + linecount + ": " + line + " in property block.";
+                    logger.error(error);
+                    handleError(
+                            "NumberFormatException in radical information",
+                            linecount, 7, 10,
+                            exception
+                               );
+                }
+            }
+            else if (line.startsWith("G  ")) {
+                try {
+                    String atomNumberString = line.substring(3, 6).trim();
+                    int atomNumber = Integer.parseInt(atomNumberString);
+                    //String whatIsThisString = line.substring(6,9).trim();
+
+                    String atomName = input.readLine();
+
+                    // convert Atom into a PseudoAtom
+                    IAtom prevAtom = container.getAtom(atomNumber - 1);
+                    IPseudoAtom pseudoAtom = container.getBuilder().newInstance(IPseudoAtom.class, atomName);
+                    if (prevAtom.getPoint2d() != null) {
+                        pseudoAtom.setPoint2d(prevAtom.getPoint2d());
+                    }
+                    if (prevAtom.getPoint3d() != null) {
+                        pseudoAtom.setPoint3d(prevAtom.getPoint3d());
+                    }
+                    AtomContainerManipulator.replaceAtomByAtom(container, prevAtom, pseudoAtom);
+                } catch (NumberFormatException exception) {
+                    String error = "Error (" + exception.toString() + ") while parsing line "
+                            + linecount + ": " + line + " in property block.";
+                    logger.error(error);
+                    handleError(
+                            "NumberFormatException in group information",
+                            linecount, 4, 7,
+                            exception
+                               );
+                }
+            }
+            else if (line.startsWith("M  RGP")) {
+                StringTokenizer st = new StringTokenizer(line);
+                //Ignore first 3 tokens (overhead).
+                st.nextToken();
+                st.nextToken();
+                st.nextToken();
+                //Process the R group numbers as defined in RGP line.
+                while (st.hasMoreTokens()) {
+                    Integer position = new Integer(st.nextToken());
+                    int rNumber = new Integer(st.nextToken());
+                    // the container may have already had atoms before the new atoms were read
+                    int index   = container.getAtomCount() - nAtoms + position - 1;
+                    IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(index);
+                    if (pseudoAtom != null) {
+                        pseudoAtom.setLabel("R" + rNumber);
+                    }
+                }
+            }
+            if (line.startsWith("V  ")) {
+                Integer atomNumber = new Integer(line.substring(3, 6).trim());
+                IAtom atomWithComment = container.getAtom(atomNumber - 1);
+                atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
+            }
+
+            if (!lineRead) {
+                logger.warn("Skipping line in property block: ", line);
+            }
+        }
     }
     
 
