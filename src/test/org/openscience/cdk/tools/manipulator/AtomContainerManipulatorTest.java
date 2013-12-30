@@ -805,6 +805,42 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getAtom(1));
     }
+    
+    @Test
+    public void testReplaceAtom_lonePair() {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        atom1.setCharge(1.0);
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addLonePair(1);
+
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Br");
+
+        AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
+        Assert.assertEquals(atom3, container.getLonePair(0).getAtom());
+    }
+    
+    @Test
+    public void testReplaceAtom_singleElectron() {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        atom1.setCharge(1.0);
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"N");
+
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addBond(new Bond(atom1, atom2, CDKConstants.BONDORDER_SINGLE));
+        container.addSingleElectron(1);
+
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Br");
+
+        AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
+        Assert.assertEquals(atom3, container.getSingleElectron(0).getAtom());
+    }
 
     @Test public void testGetHeavyAtoms_IAtomContainer() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();

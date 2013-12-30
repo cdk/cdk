@@ -49,6 +49,7 @@ import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.interfaces.IPseudoAtom;
+import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
@@ -135,6 +136,7 @@ public class AtomContainerManipulator {
                         for (int j = 0; j < bond.getAtomCount(); j++) {
                             if (atom.equals(bond.getAtom(j))) {
                                 bond.setAtom(newAtom, j);
+                                break;
                             }
                         }
                     }
@@ -142,6 +144,11 @@ public class AtomContainerManipulator {
                     ILonePair lonePair = (ILonePair) eContainer;
                     if (atom.equals(lonePair.getAtom())) {
                         lonePair.setAtom(newAtom);
+                    }
+                } else if (eContainer instanceof ISingleElectron) {
+                    ISingleElectron singleElectron = (ISingleElectron) eContainer;
+                    if (atom.equals(singleElectron.getAtom())) {
+                        singleElectron.setAtom(newAtom);
                     }
                 }
             }
