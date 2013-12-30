@@ -885,6 +885,139 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
+     * Read a bond from a line in the MDL bond block. The bond block is 
+     * formatted as follows, {@code 111222tttsssxxxrrrccc}, where:
+     * <ul>
+     *     <li>111: first atom number</li>
+     *     <li>222: second atom number</li>
+     *     <li>ttt: bond type</li>
+     *     <li>xxx: bond stereo</li>
+     *     <li>rrr: bond topology</li>
+     *     <li>ccc: reaction center</li>
+     * </ul>
+     * 
+     * @param line            the input line
+     * @param builder         builder to create objects with
+     * @param atoms           atoms read from the atom block
+     * @param explicitValence array to fill with explicit valence
+     * @param lineNum         the input line number           
+     * @return a new bond
+     * @throws CDKException thrown if the input was malformed or didn't make 
+     *                      sense
+     */
+    IBond readBondFast(String             line,
+                       IChemObjectBuilder builder,
+                       IAtom[]            atoms,
+                       int[]              explicitValence,
+                       int                lineNum) throws CDKException {
+
+        // The line may be truncated and it's checked in reverse at the specified
+        // lengths. Absolutely required is atom indices, bond type and stereo.
+        //          1         2 
+        // 123456789012345678901
+        //            |  |  |  |  
+        // 111222tttsssxxxrrrccc
+        
+        int length = length(line);
+        if (length > 21)
+            length = 21;
+        
+        int u, v, type, stereo = 0;
+        
+        switch (length) {
+            case 21: // ccc: reaction centre status
+            case 18: // rrr: bond topology
+            case 15: // xxx: not used
+            case 12: // sss: stereo
+                stereo = readUInt(line, 9, 3);
+            case 9:  // 111222ttt: atoms, type and stereo
+                u      = readUInt(line, 0, 3) - 1;
+                v      = readUInt(line, 3, 3) - 1;
+                type   = readUInt(line, 6, 3);
+                break;
+            default:
+                throw new CDKException("invalid line length: " + length + " " + line);
+        }
+        
+        IBond bond = builder.newInstance(IBond.class, atoms[u], atoms[v]);
+        
+        switch (type) {
+            case 1: // single
+                bond.setOrder(IBond.Order.SINGLE);
+                bond.setStereo(toStereo(stereo, type));
+                break;
+            case 2: // double
+                bond.setOrder(IBond.Order.DOUBLE);
+                bond.setStereo(toStereo(stereo, type));
+                break;
+            case 3: // triple
+                bond.setOrder(IBond.Order.TRIPLE);
+                break;
+            case 4: // aromatic
+                bond.setOrder(IBond.Order.UNSET);
+                bond.setFlag(CDKConstants.ISAROMATIC, true);
+                bond.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
+                atoms[u].setFlag(CDKConstants.ISAROMATIC, true);
+                atoms[v].setFlag(CDKConstants.ISAROMATIC, true);
+                break;
+            case 5: // single or double
+            case 6: // single or aromatic
+            case 7: // double or aromatic
+            case 8: // any
+                bond = CTFileQueryBond.ofType(bond, type);
+                break;
+            default:
+                throw new CDKException("unrecognised bond type: " + type + ", " + line);
+        }
+        
+        if (type < 4) {
+            explicitValence[u] += type;
+            explicitValence[v] += type; 
+        } else {
+            explicitValence[u] = explicitValence[v] = Integer.MIN_VALUE;    
+        }
+        
+        return bond;
+    }
+
+    /**
+     * Convert an MDL V2000 stereo value to the CDK {@link IBond.Stereo}. The
+     * method should only be invoked for single/double bonds. If strict mode is
+     * enabled irrational bond stereo/types cause errors (e.g. up double bond).
+     *
+     * @param stereo stereo value
+     * @param type   bond type
+     * @return bond stereo
+     * @throws CDKException the stereo value was invalid (strict mode).
+     */
+    private IBond.Stereo toStereo(final int stereo, final int type) throws CDKException {
+        switch (stereo) {
+            case 0:
+                return type == 2 ? IBond.Stereo.E_Z_BY_COORDINATES 
+                                 : IBond.Stereo.NONE;
+            case 1:
+                if (mode == Mode.STRICT && type == 2)
+                    throw new CDKException("stereo flag was 'up' but bond order was 2");
+                return IBond.Stereo.UP;
+            case 3:
+                if (mode == Mode.STRICT && type == 1)
+                    throw new CDKException("stereo flag was 'cis/trans' but bond order was 1");
+                return IBond.Stereo.E_OR_Z;
+            case 4:
+                if (mode == Mode.STRICT && type == 2)
+                    throw new CDKException("stereo flag was 'up/down' but bond order was 2");
+                return IBond.Stereo.UP_OR_DOWN;
+            case 6:
+                if (mode == Mode.STRICT && type == 2)
+                    throw new CDKException("stereo flag was 'down' but bond order was 2");
+                return IBond.Stereo.DOWN;
+        }
+        if (mode == Mode.STRICT)
+            throw new CDKException("unknown bond stereo type: " + stereo);
+        return IBond.Stereo.NONE;
+    }
+
+    /**
      * Determine the length of the line excluding trailing whitespace.
      * 
      * @param str a string
