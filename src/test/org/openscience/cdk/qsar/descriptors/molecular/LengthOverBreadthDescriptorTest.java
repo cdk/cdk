@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
+import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -38,6 +39,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
+        Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
@@ -52,6 +54,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(1);
+        Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
@@ -67,6 +70,8 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
+        
+        Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 
@@ -81,6 +86,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(3);
+        Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();
 

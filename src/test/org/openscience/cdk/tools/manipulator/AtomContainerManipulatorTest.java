@@ -919,6 +919,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
+        
+        Isotopes.getInstance().configureAtoms(ac);
 
         for (IAtom atom : ac.atoms()) {
             Assert.assertNotNull(atom.getExactMass());
