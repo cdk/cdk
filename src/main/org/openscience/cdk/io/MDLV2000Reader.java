@@ -662,12 +662,12 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             case 69: // eee: exact charge flag [reaction, query]  
             case 66: // nnn: inversion / retention [reaction]
             case 63: // mmm: atom-atom mapping [reaction]
-                mapping = readUInt(line, 60, 3);
+                mapping = readMolfileInt(line, 60);
             case 60: // iii: not used
             case 57: // rrr: not used
             case 54: // HHH: H0 designation [redundant] 
             case 51: // vvv: valence
-                valence = readUInt(line, 49, 2);
+                valence = readMolfileInt(line, 49);
             case 48: // bbb: stereo care [query]       
             case 45: // hhh: hydrogen count + 1 [query] 
             case 42: // sss: stereo parity
@@ -757,9 +757,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             case 12: // sss: stereo
                 stereo = readUInt(line, 9, 3);
             case 9:  // 111222ttt: atoms, type and stereo
-                u      = readUInt(line, 0, 3) - 1;
-                v      = readUInt(line, 3, 3) - 1;
-                type   = readUInt(line, 6, 3);
+                u      = readMolfileInt(line, 0) - 1;
+                v      = readMolfileInt(line, 3) - 1;
+                type   = readMolfileInt(line, 6);
                 break;
             default:
                 throw new CDKException("invalid line length: " + length + " " + line);
@@ -1001,6 +1001,94 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         while (digits-- > 0)
             result = (result * 10) + toInt(line.charAt(index++));
         return result;
+    }
+
+    /**
+     * Optimised method for reading a integer from 3 characters in a string at a
+     * specified index. MDL V2000 Molfile make heavy use of the 3 character ints
+     * in the atom/bond and property blocks. The integer may be signed and
+     * pre/post padded with white space.
+     *
+     * @param line  input
+     * @param index start index
+     * @return the value specified in the string
+     */
+    private static int readMolfileInt(final String line, final int index) {
+        int sign = 1;
+        int result = 0;
+        char c;
+        switch ((c = line.charAt(index))) {
+            case ' ':
+                break;
+            case '-':
+                sign = -1;
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                result = (c - '0');
+                break;
+            default:
+                return 0;
+        }
+        switch ((c = line.charAt(index + 1))) {
+            case ' ':
+                if (result > 0)
+                    return sign * result;
+                break;
+            case '-':
+                if (result > 0)
+                    return sign * result;
+                sign = -1;
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                result = (result * 10) + (c - '0');
+                break;
+            default:
+                return sign * result;
+        }
+        switch ((c = line.charAt(index + 2))) {
+            case ' ':
+                if (result > 0)
+                    return sign * result;
+                break;
+            case '-':
+                if (result > 0)
+                    return sign * result;
+                sign = -1;
+                break;
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                result = (result * 10) + (c - '0');
+                break;
+            default:
+                return sign * result;
+        }
+        return sign * result;
     }
 
     /**
