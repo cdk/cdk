@@ -1311,4 +1311,25 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(container.getAtom(7), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom)container.getAtom(7)).getLabel(), is("Protein"));
     }
+    
+    @Test public void v2000Version() throws Exception {
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 V2000"),
+                   is(MDLV2000Reader.CTabVersion.V2000));
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999 v2000"),
+                   is(MDLV2000Reader.CTabVersion.V2000));
+    }
+    
+    @Test public void v3000Version() throws Exception {
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 V3000"),
+                   is(MDLV2000Reader.CTabVersion.V3000));
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  0  0  0  0  0  0            999 v3000"),
+                   is(MDLV2000Reader.CTabVersion.V3000));
+    }
+    
+    @Test public void unspecVersion() throws Exception {
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999"),
+                   is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
+        assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999      "),
+                   is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
+    }
 }

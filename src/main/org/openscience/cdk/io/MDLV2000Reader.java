@@ -365,12 +365,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
+            final CTabVersion version = CTabVersion.ofHeader(line);
+            
             // check the CT block version
-            if (line.contains("V3000") || line.contains("v3000")) {
+            if (version == CTabVersion.V3000) {
                 handleError("This file must be read with the MDLV3000Reader.");
+                // even if relaxed we can't read V3000 using the V2000 parser
+                throw new CDKException("This file must be read with the MDLV3000Reader.");
             }
-            else if (!line.contains("V2000") && !line.contains("v2000")) {
+            else if (version == CTabVersion.UNSPECIFIED) {
                 handleError("This file must be read with the MDLReader.");
+                // okay to read in relaxed mode
             }
 
             nAtoms = Integer.parseInt(line.substring(0, 3).trim());
@@ -2056,5 +2061,38 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
 
     }
 
+    /**
+     * Defines the version of the CTab.
+     */
+    enum CTabVersion {
+        V2000,
+        V3000,
+        UNSPECIFIED;
+
+        /**
+         * Given a CTab header, what version was specified. The version
+         * is identifier in the by the presence of 'V[2|3]000'. If not
+         * version tag is present the version is unspecified.
+         * 
+         * <pre>  5  5  0  0  0  0            999 V2000</prev>
+         * <pre>  0  0  0  0  0  0            999 V3000</prev>
+         * 
+         * @param header input line (non-null) 
+         * @return the CTab version
+         */
+        static CTabVersion ofHeader(String header) {
+            if (header.length() < 39)
+                return UNSPECIFIED;
+            char c = header.charAt(34);
+            if (c != 'v' && c != 'V')
+                return UNSPECIFIED;
+            if (header.charAt(35) == '2') // could check for '000'
+                return V2000;
+            if (header.charAt(35) == '3') // could check for '000'
+                return V3000;
+            return UNSPECIFIED;
+        }
+    }
+    
 }
 
