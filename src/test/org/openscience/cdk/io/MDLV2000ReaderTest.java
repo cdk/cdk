@@ -423,7 +423,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer mol = reader.read(new AtomContainer());
         IAtom atom = mol.getAtom(0);
         assertTrue(atom instanceof IPseudoAtom);
-        Assert.assertEquals("R1", ((IPseudoAtom)atom).getLabel());
+        Assert.assertEquals("R\\1", ((IPseudoAtom)atom).getLabel());
     }
 
     /**
