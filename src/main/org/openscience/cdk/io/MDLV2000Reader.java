@@ -667,7 +667,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             case 57: // rrr: not used
             case 54: // HHH: H0 designation [redundant] 
             case 51: // vvv: valence
-                valence = readMolfileInt(line, 49);
+                valence = readMolfileInt(line, 48);
             case 48: // bbb: stereo care [query]       
             case 45: // hhh: hydrogen count + 1 [query] 
             case 42: // sss: stereo parity
