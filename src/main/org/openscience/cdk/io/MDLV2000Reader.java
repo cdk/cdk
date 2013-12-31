@@ -304,21 +304,15 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
 
-        // flags for determining stereo config
-        boolean has2D = false, has3D = true;
-
         logger.debug("Reading new molecule");
         IAtomContainer outputContainer = null;
         int linecount = 0;
-        int nAtoms;
-        int nBonds;
         String title = null;
         String remark = null;
         String line = "";
         
         try {
-            IsotopeFactory isotopeFactory = Isotopes.getInstance();
-
+            
             logger.info("Reading header");
             line = input.readLine();
             linecount++;
@@ -378,10 +372,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 // okay to read in relaxed mode
             }
 
-            nAtoms = Integer.parseInt(line.substring(0, 3).trim());
-            
+            int nAtoms = readMolfileInt(line, 0);
+            int nBonds = readMolfileInt(line, 3);
+
             logger.debug("Atomcount: " + nAtoms);
-            nBonds = Integer.parseInt(line.substring(3, 6).trim());
             logger.debug("Bondcount: " + nBonds);
 
             final IAtom[] atoms = new IAtom[nAtoms];
@@ -411,7 +405,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             // convert to 2D, if totalZ == 0
             if (!hasX && !hasY && !hasZ) {
-                has3D = false;
                 logger.info("All coordinates are 0.0");
                 if (nAtoms == 1) {
                     atoms[0].setPoint2d(new Point2d(0, 0));
@@ -433,14 +426,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                             atomToUpdate.setPoint3d(null);
                         }
                     }
-                    has2D = true;
-                    has3D = false;
-                }
-                else {
-                    // we do have 2D but they're stored as 3D and so not very
-                    // useful for stereo perception (E/Z would still be okay)
-                    has2D = false;
-                    has3D = false;
                 }
             }
 
@@ -486,7 +471,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             readNonStructuralData(input, outputContainer);
 
             if (interpretHydrogenIsotopes.isSet()) {
-                fixHydrogenIsotopes(molecule, isotopeFactory);
+                fixHydrogenIsotopes(molecule, Isotopes.getInstance());
             }
 
             // note: apply the valence model last so that all fixes (i.e. hydrogen
@@ -494,7 +479,25 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // could be added to a molecule which already had atoms present
             int offset = outputContainer.getAtomCount() - nAtoms;
             for (int i = offset; i < outputContainer.getAtomCount(); i++) {
-                applyMDLValenceModel(outputContainer.getAtom(i), explicitValence[i - offset]);
+                int valence = explicitValence[i - offset];
+                if (valence < 0) {
+                    hasQueryBonds = true; // also counts aromatic bond as query
+                } else {
+                    applyMDLValenceModel(outputContainer.getAtom(i), valence);
+                }
+            }
+
+            // sanity check that we have a decent molecule, query bonds mean we 
+            // don't have a hydrogen count for atoms and stereo perception isn't
+            // currently possible
+            if (!hasQueryBonds && addStereoElements.isSet() && hasX && hasY) {
+                if (hasZ) { // has 3D coordinates
+                    outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
+                                                                          .createAll());    
+                } else if (!forceReadAs3DCoords.isSet()) { // has 2D coordinates (set as 2D coordinates) 
+                   outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
+                                                                         .createAll());
+                }
             }
 
         } catch (CDKException exception) {
@@ -513,27 +516,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     exception
                        );
         }
-
-        // TODO: query bonds and atoms with unset values leave nulls hanging 
-        // TODO: around. making these classes not have unset, atomic number,
-        // TODO: hydrogen count and bond order would allow us to automatically
-        // TODO: add stereo.
-
-        // sanity check that we have a decent molecule, query bonds mean we 
-        // don't have a hydrogen count for atoms
-        for (IAtom a : outputContainer.atoms())
-            if (a.getImplicitHydrogenCount() == null)
-                return outputContainer;
-
-        if (addStereoElements.isSet() && has2D) {
-            outputContainer.setStereoElements(StereoElementFactory.using2DCoordinates(outputContainer)
-                                                                  .createAll());
-        }
-        else if (addStereoElements.isSet() && has3D) {
-            outputContainer.setStereoElements(StereoElementFactory.using3DCoordinates(outputContainer)
-                                                                  .createAll());
-        }
-
+        
         return outputContainer;
     }
 
@@ -547,17 +530,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param explicitValence the explicit valence (bond order sum)
      */
     private void applyMDLValenceModel(IAtom atom, int explicitValence) {
-
-        if (explicitValence < 0)
-            return;
-
         if (atom.getValency() != null) {
             atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
         }
         else {
             Integer element = atom.getAtomicNumber();
             if (element == null)
-                return;
+                element = 0;
 
             Integer charge = atom.getFormalCharge();
             if (charge == null)
