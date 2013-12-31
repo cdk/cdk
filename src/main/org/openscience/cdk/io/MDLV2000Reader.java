@@ -62,13 +62,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.openscience.cdk.io.MDLV2000Writer.SPIN_MULTIPLICITY;
 
 /**
  * Reads content from MDL molfiles and SD files. It can read a {@link
@@ -807,6 +808,150 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     }
 
     /**
+     * Reads the property block from the {@code input} setting the values in the
+     * container. 
+     *
+     * @param input     input resource
+     * @param container the structure with atoms / bonds present
+     * @param nAtoms    the number of atoms in the atoms block
+     * @throws IOException low-level IO error
+     */
+    void readPropertiesFast(final BufferedReader input,
+                            final IAtomContainer container,
+                            final int nAtoms) throws IOException, CDKException {
+        String line;
+
+        // first atom index in this Molfile, the container may have
+        // already had atoms present before reading the file
+        int offset = container.getAtomCount() - nAtoms;
+        
+        while ((line = input.readLine()) != null) {
+                                        
+            int index, count;
+            int length = line.length();
+            final PropertyKey key = PropertyKey.of(line);
+            switch (key) {
+                
+                // A  aaa
+                // x...
+                //
+                // atom alias is stored as label on a pseudo atom
+                case ATOM_ALIAS:
+                    index = readMolfileInt(line, 3) - 1;
+                    final String label = input.readLine();
+                    if (label == null)
+                        return;
+                    label(container, offset + index, label);
+                    break;
+
+                // V  aaa v...
+                //
+                // an atom value is stored as comment on an atom
+                case ATOM_VALUE:
+                                 index   = readMolfileInt(line, 3) - 1;
+                    final String comment = line.substring(7);
+                    container.getAtom(offset + index)
+                             .setProperty(CDKConstants.COMMENT,
+                                          comment);
+                    break;
+                
+                // G  aaappp
+                // x...
+                // 
+                // Abbreviation is required for compatibility with previous versions of MDL ISIS/Desktop which 
+                // allowed abbreviations with only one attachment. The attachment is denoted by two atom
+                // numbers, aaa and ppp. All of the atoms on the aaa side of the bond formed by aaa-ppp are
+                // abbreviated. The coordinates of the abbreviation are the coordinates of aaa. The text of the
+                // abbreviation is on the following line (x...). In current versions of ISIS, abbreviations can have any
+                // number of attachments and are written out using the Sgroup appendixes. However, any ISIS
+                // abbreviations that do have one attachment are also written out in the old style, again for
+                // compatibility with older ISIS versions, but this behavior might not be supported in future
+                // versions.
+                case GROUP_ABBREVIATION:
+                    // not supported, existing parsing doesn't do what is 
+                    // mentioned in the specification above
+                    final int    from  = readMolfileInt(line, 3) - 1;
+                    final int    to    = readMolfileInt(line, 6) - 1;
+                    final String group = input.readLine();
+                    if (group == null)
+                        return;
+                    break;
+                
+                // M  CHGnn8 aaa vvv ...
+                // 
+                // vvv: -15 to +15. Default of 0 = uncharged atom. When present, this property supersedes 
+                //      all charge and radical values in the atom block, forcing a 0 charge on all atoms not
+                //      listed in an M CHG or M RAD line.
+                case M_CHG:
+                    count = readUInt(line, 6, 3);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                            index  = readMolfileInt(line, st) - 1;
+                        int charge = readMolfileInt(line, st + 4);
+                        container.getAtom(offset + index)
+                                 .setFormalCharge(charge);
+                    }
+                    break;
+                
+                // M  ISOnn8 aaa vvv ...
+                // 
+                // vvv: Absolute mass of the atom isotope as a positive integer. When present, this property 
+                //      supersedes all isotope values in the atom block. Default (no entry) means natural
+                //      abundance. The difference between this absolute mass value and the natural
+                //      abundance value specified in the PTABLE.DAT file must be within the range of -18
+                //      to +12.
+                case M_ISO:
+                    count = readUInt(line, 6, 3);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                            index = readMolfileInt(line, st) - 1;
+                        int mass  = readMolfileInt(line, st + 4);
+                        container.getAtom(offset + index)
+                                 .setMassNumber(mass);
+                    }
+                    break;
+                
+                // M  RADnn8 aaa vvv ...
+                // 
+                // vvv: Default of 0 = no radical, 1 = singlet (:), 2 = doublet ( . or ^), 3 = triplet (^^). When 
+                //      present, this property supersedes all charge and radical values in the atom block,
+                //      forcing a 0 (zero) charge and radical on all atoms not listed in an M CHG or
+                //      M RAD line.
+                case M_RAD:
+                    count = readUInt(line, 6, 3);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                            index = readMolfileInt(line, st) - 1;
+                        int value  = readMolfileInt(line, st + 4);
+                        SPIN_MULTIPLICITY multiplicity = SPIN_MULTIPLICITY.ofValue(value);
+                        
+                        for (int e = 0; e < multiplicity.getSingleElectrons(); e++)
+                            container.addSingleElectron(offset + index);
+                    }
+                    break;
+                
+                // M  RGPnn8 aaa rrr ...
+                // 
+                // rrr: Rgroup number, value from 1 to 32 *, labels position of Rgroup on root.
+                //
+                // see also, RGroupQueryReader
+                case M_RGP:
+                    count = readUInt(line, 6, 3);
+                    for (int i = 0, st = 10; i < count && st + 7 <= length; i++, st += 8) {
+                            index  = readMolfileInt(line, st) - 1;
+                        int number = readMolfileInt(line, st + 4);
+                        label(container, offset + index, "R" + number);
+                    }
+                    break;
+                
+                // M  END
+                // 
+                // This entry goes at the end of the properties block and is required for molfiles which contain a 
+                // version stamp in the counts line.
+                case M_END:
+                    return;
+            }
+        }
+    }
+
+    /**
      * Convert an MDL V2000 stereo value to the CDK {@link IBond.Stereo}. The
      * method should only be invoked for single/double bonds. If strict mode is
      * enabled irrational bond stereo/types cause errors (e.g. up double bond).
@@ -1089,6 +1234,35 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 return sign * result;
         }
         return sign * result;
+    }
+
+    /**
+     * Labels the atom at the specified index with the provide label. If the 
+     * atom was not already a pseudo atom then the original atom is replaced.
+     * 
+     * @param container structure
+     * @param index     atom index to replace
+     * @param label     the label for the atom
+     * @see IPseudoAtom#setLabel(String)                   
+     */
+    static void label(final IAtomContainer container, final int index, final String label) {
+        final IAtom       atom       = container.getAtom(index);
+        final IPseudoAtom pseudoAtom = atom instanceof IPseudoAtom ? (IPseudoAtom) atom 
+                                                                   : container.getBuilder().newInstance(IPseudoAtom.class);
+        if (atom == pseudoAtom) {
+            pseudoAtom.setLabel(label);
+        } else {
+            pseudoAtom.setSymbol(label);
+            pseudoAtom.setAtomicNumber(0);
+            pseudoAtom.setPoint2d(atom.getPoint2d());
+            pseudoAtom.setPoint3d(atom.getPoint3d());
+            pseudoAtom.setMassNumber(atom.getMassNumber());
+            pseudoAtom.setFormalCharge(atom.getFormalCharge());
+            pseudoAtom.setValency(atom.getValency());
+            pseudoAtom.setLabel(label);
+            // XXX: would be faster to track all replacements and do it all in one
+            AtomContainerManipulator.replaceAtomByAtom(container, atom, pseudoAtom);
+        }
     }
 
     /**

@@ -29,16 +29,25 @@ import org.mockito.Mockito;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.matchers.CTFileQueryBond;
+import org.openscience.cdk.silent.Atom;
+import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
 
 /**
  * @author John May
@@ -88,6 +97,72 @@ public class MDLV2000PropertiesBlockTest {
     @Test public void skip() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("S  SKP  5"),
                    is(MDLV2000Reader.PropertyKey.SKIP));
+    }
+    
+    @Test public void anion() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("M  CHG  1   1  -1", mock);
+        verify(mock.getAtom(0)).setFormalCharge(-1);
+    }
+
+    @Test public void cation() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("M  CHG  1   1   1", mock);
+        verify(mock.getAtom(0)).setFormalCharge(+1);
+    }
+    
+    @Test public void multipleCharges() throws Exception {
+        IAtomContainer mock = mock(6);
+        read("M  CHG  2   2   1   5  -2", mock);
+        verify(mock.getAtom(1)).setFormalCharge(+1);        
+        verify(mock.getAtom(4)).setFormalCharge(-2);        
+    }
+
+    @Test public void multipleChargesTruncated() throws Exception {
+        IAtomContainer mock = mock(6);
+        read("M  CHG  2   2  -3", mock);
+        verify(mock.getAtom(1)).setFormalCharge(-3);
+    }
+    
+    @Test public void c13() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("M  ISO  1   1  13", mock);
+        verify(mock.getAtom(0)).setMassNumber(13);    
+    }
+
+    @Test public void c13n14() throws Exception {
+        IAtomContainer mock = mock(4);
+        read("M  ISO  2   1  13   3  14", mock);
+        verify(mock.getAtom(0)).setMassNumber(13);
+        verify(mock.getAtom(2)).setMassNumber(14);
+    }
+    
+    @Test public void atomValue() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("V    1 A Comment", mock);
+        verify(mock.getAtom(0)).setProperty(CDKConstants.COMMENT,
+                                            "A Comment");
+    }
+
+    @Test public void atomAlias() throws Exception {
+        IAtomContainer mock = mock(4);
+        read("A    4\n" +
+             "Gly", mock);
+        assertThat(mock.getAtom(3), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom) mock.getAtom(3)).getLabel(), is("Gly"));
+    }
+    
+    static IAtomContainer mock(int n) {
+        IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
+        for (int i = 0; i < n; i++)
+            mock.addAtom(Mockito.mock(IAtom.class));
+        return mock;
+    }
+    
+    void read(String input, IAtomContainer container) throws IOException, CDKException {
+        reader.readPropertiesFast(new BufferedReader(new StringReader(input)),
+                                  container,
+                                  container.getAtomCount());
     }
    
 }
