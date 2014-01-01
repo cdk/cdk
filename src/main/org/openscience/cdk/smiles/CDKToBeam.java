@@ -54,6 +54,7 @@ import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
@@ -210,9 +211,10 @@ final class CDKToBeam {
             }
         }
 
-        // could also add atom class from property (overhead of ChemObject
-        // HashMap) or perhaps passed atom classes as an array of 'int[]'.
-        // ab.atomClass(a.getProperty("smi:AtomClass")); ?
+        Integer atomClass = a.getProperty(ATOM_ATOM_MAPPING);
+        if (atomClass != null) {
+            ab.atomClass(atomClass);    
+        }
 
         return ab.build();
     }

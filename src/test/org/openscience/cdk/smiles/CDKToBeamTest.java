@@ -521,6 +521,23 @@ public class CDKToBeamTest {
                    is("F[CH]:[CH]F"));
     }
     
+    @Test public void writeAtomClass() throws Exception {
+        IAtomContainer ac = new AtomContainer();
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("O"));
+        ac.addBond(0, 1, SINGLE);
+        ac.addBond(1, 2, SINGLE);
+        ac.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
+                                  3);
+        ac.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
+                                  1);
+        ac.getAtom(2).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
+                                  2);
+        assertThat(convert(ac).toSmiles(),
+                   is("[CH3:3][CH2:1][OH:2]"));
+    }
+    
     static Graph convert(IAtomContainer ac) throws Exception {
         return convert(ac, false, true);
     }

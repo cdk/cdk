@@ -82,6 +82,24 @@ import java.util.StringTokenizer;
  * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
  * <li>octahedral stereochemistry</li> </il>
  *
+ * <b>Atom Class</b><p/>
+ * 
+ * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+ * property.
+ * 
+ * <blockquote><pre>
+ * 
+ * SmilesParser   sp  = new SmilesParser(SilentChemObjectBuilder.getInstance());
+ * IAtomContainer m   = sp.parseSmiles("c1[cH:5]cccc1");
+ * Integer        c1  = m.getAtom(1)
+ *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // 5
+ * Integer        c2  = m.getAtom(2)
+ *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // null
+ * 
+ * </pre>
+ * </blockquote><p/>
+ * 
+ * 
  * @author Christoph Steinbeck
  * @author Egon Willighagen
  * @author John May

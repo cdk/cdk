@@ -24,6 +24,7 @@
 
 package org.openscience.cdk.smiles;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -43,6 +44,7 @@ import uk.ac.ebi.beam.Element;
 
 import java.util.Arrays;
 
+import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
@@ -303,10 +305,8 @@ final class BeamToCDK {
         if (beamAtom.aromatic())
             cdkAtom.setFlag(ISAROMATIC, true);
 
-        // don't load for now - serious speed hit due to creating hashmap for
-        // each atom
-        // if (beamAtom.atomClass() != 0)
-        //      cdkAtom.setProperty("smi:atomClass", beamAtom.atomClass());
+        if (beamAtom.atomClass() > 0)
+            cdkAtom.setProperty(ATOM_ATOM_MAPPING, beamAtom.atomClass());
 
         return cdkAtom;
     }

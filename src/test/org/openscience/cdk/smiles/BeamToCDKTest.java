@@ -25,6 +25,7 @@
 package org.openscience.cdk.smiles;
 
 import com.google.common.collect.FluentIterable;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
@@ -36,6 +37,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.xmlcml.euclid.Int;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Graph;
@@ -48,10 +50,12 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
 
 /**
@@ -545,6 +549,12 @@ public class BeamToCDKTest {
         // the two 'F' are together but we use a H so they are 'opposite'
         assertThat(dbs.getStereo(),
                    is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
+    }
+    
+    @Test public void readAtomClass() throws Exception {
+        IAtomContainer ac = convert("CC[C:2]C");
+        assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
+        assertThat(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING, Integer.class), is(2));
     }
 
     IAtomContainer convert(String smi) throws IOException {
