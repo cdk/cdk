@@ -304,7 +304,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private IAtomContainer readAtomContainer(IAtomContainer molecule) throws CDKException {
 
-        logger.debug("Reading new molecule");
         IAtomContainer outputContainer = null;
         int linecount = 0;
         String title = null;
@@ -313,16 +312,13 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         
         try {
             
-            logger.info("Reading header");
             line = input.readLine();
             linecount++;
             if (line == null) {
                 return null;
             }
-            logger.debug("Line " + linecount + ": " + line);
 
             if (line.startsWith("$$$$")) {
-                logger.debug("File is empty, returning empty molecule");
                 return molecule;
             }
             if (line.length() > 0) {
@@ -330,18 +326,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             line = input.readLine();
             linecount++;
-            logger.debug("Line " + linecount + ": " + line);
             line = input.readLine();
             linecount++;
-            logger.debug("Line " + linecount + ": " + line);
             if (line.length() > 0) {
                 remark = line;
             }
 
-            logger.info("Reading rest of file");
             line = input.readLine();
             linecount++;
-            logger.debug("Line " + linecount + ": " + line);
 
             // if the line is empty we hav a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
@@ -375,17 +367,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             int nAtoms = readMolfileInt(line, 0);
             int nBonds = readMolfileInt(line, 3);
 
-            logger.debug("Atomcount: " + nAtoms);
-            logger.debug("Bondcount: " + nBonds);
-
             final IAtom[] atoms = new IAtom[nAtoms];
             final IBond[] bonds = new IBond[nBonds];
 
             // used for applying the MDL valence model
             int[] explicitValence = new int[nAtoms];
-
-            // read ATOM block
-            logger.info("Reading atom block");
 
             boolean hasX = false, hasY = false, hasZ = false;
             
@@ -405,7 +391,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             
             // convert to 2D, if totalZ == 0
             if (!hasX && !hasY && !hasZ) {
-                logger.info("All coordinates are 0.0");
                 if (nAtoms == 1) {
                     atoms[0].setPoint2d(new Point2d(0, 0));
                 }
@@ -418,7 +403,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             else if (!hasZ) {
 
                 if (!forceReadAs3DCoords.isSet()) {
-                    logger.info("Total 3D Z is 0.0, interpreting it as a 2D structure");
                     for (IAtom atomToUpdate : atoms) {
                         Point3d p3d = atomToUpdate.getPoint3d();
                         if (p3d != null) {
@@ -429,8 +413,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
 
-            // read BOND block
-            logger.info("Reading bond block");
             boolean hasQueryBonds = false;
             for (int i = 0; i < nBonds; i++) {
                 line = input.readLine();
@@ -503,13 +485,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         } catch (CDKException exception) {
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
-            logger.debug(exception);
             throw exception;
         } catch (Exception exception) {
             exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
             logger.error(error);
-            logger.debug(exception);
             handleError(
                     "Error while parsing line: " + line,
                     linecount, 0, 0,
