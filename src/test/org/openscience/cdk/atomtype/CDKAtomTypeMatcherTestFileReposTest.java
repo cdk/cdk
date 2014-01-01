@@ -168,7 +168,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
     		"isopropylacetate.mol",
     		"l-ala.mol",
     		"methylbenzol.mol",
-    		"molV3000.mol",
+    		// "molV3000.mol", // can't be read with MDLV2000Reader!
     		"murckoTest10.mol",
     		"murckoTest11.mol",
     		"murckoTest1.mol",
