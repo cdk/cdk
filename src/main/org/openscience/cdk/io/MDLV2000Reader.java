@@ -214,14 +214,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     @SuppressWarnings("unchecked")
     public <T extends IChemObject> T read(T object) throws CDKException {
-        if (object instanceof IChemFile) {
+        if (object instanceof IAtomContainer) {
+            return (T) readAtomContainer((IAtomContainer) object);
+        } 
+        else if (object instanceof IChemFile) {
             return (T) readChemFile((IChemFile) object);
         }
         else if (object instanceof IChemModel) {
             return (T) readChemModel((IChemModel) object);
-        }
-        else if (object instanceof IAtomContainer) {
-            return (T) readAtomContainer((IAtomContainer) object);
         }
         else {
             throw new CDKException("Only supported are ChemFile and Molecule.");
