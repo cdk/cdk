@@ -393,7 +393,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
                 
-                final IAtom atom = readAtomSlow(line, molecule.getBuilder(), linecount);
+                final IAtom atom = readAtomFast(line, molecule.getBuilder(), linecount);
                 
                 atoms[i] = atom;
 
@@ -436,7 +436,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 line = input.readLine();
                 linecount++;
 
-                bonds[i]      = readBondSlow(line, molecule.getBuilder(), atoms, explicitValence, linecount);
+                bonds[i]      = readBondFast(line, molecule.getBuilder(), atoms, explicitValence, linecount);
                 hasQueryBonds = hasQueryBonds
                         || (bonds[i].getOrder() == IBond.Order.UNSET
                             && !bonds[i].getFlag(CDKConstants.ISAROMATIC));
@@ -465,7 +465,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
 
             // read PROPERTY block
-            readPropertiesSlow(input, outputContainer, nAtoms, linecount);
+            readPropertiesFast(input, outputContainer, nAtoms);
 
             // read potential SD file data between M  END and $$$$
             readNonStructuralData(input, outputContainer);
