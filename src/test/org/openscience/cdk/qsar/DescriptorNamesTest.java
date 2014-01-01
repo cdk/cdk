@@ -70,7 +70,7 @@ public class DescriptorNamesTest extends CDKTestCase {
         List<String> descNames = new ArrayList<String>();
         for (IImplementationSpecification spec : specs) {
             DescriptorValue value = (DescriptorValue) ac.getProperty(spec);
-            if (value == null) continue;
+            if (value == null) Assert.fail(spec.getImplementationTitle() + " was not calculated.");
             ncalc++;
             String[] names = value.getNames();
             descNames.addAll(Arrays.asList(names));
