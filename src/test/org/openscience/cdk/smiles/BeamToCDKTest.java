@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.xmlcml.euclid.Int;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Graph;
