@@ -40,34 +40,138 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Generates SMILES strings {@cdk.cite WEI88, WEI89}. It takes into account the
- * isotope and formal charge information of the atoms. In addition to this it
- * takes stereochemistry in account for both Bond's and Atom's. Via the flag 
- * useAromaticity it can be set if only SP2-hybridized atoms shall be set to 
- * lower case (default) or atoms, which are SP2 or aromatic.
+ * Generate a SMILES {@cdk.cite WEI88, WEI89} string for a provided structure.
+ * The generator can produce several <i>flavour</i> of SMILES. 
+ * <p/>
+ * <ul>
+ *     <li>generic - non-canonical SMILES string, different atom ordering
+ *         produces different SMILES. No isotope or stereochemistry encoded.
+ *         </li>
+ *     <li>unique - canonical SMILES string, different atom ordering
+ *         produces the same* SMILES. No isotope or stereochemistry encoded.
+ *         </li>
+ *     <li>isomeric - non-canonical SMILES string, different atom ordering
+ *         produces different SMILES. Isotope and stereochemistry is encoded.
+ *         </li>
+ *     <li>absolute - canonical SMILES string, different atom ordering
+ *         produces the same SMILES. Isotope and stereochemistry is encoded.</li>
+ * </ul>
+ * 
+ * <p/>
+ * A generator instance is created using one of the static methods, the SMILES
+ * are then created by invoking {@link #create(IAtomContainer)}.
+ * <blockquote><pre>
+ * IAtomContainer  ethanol = ...;
+ * SmilesGenerator sg      = SmilesGenerator.generic();
+ * String          smi     = sg.create(ethanol); // CCO or OCC 
+ * 
+ * SmilesGenerator sg      = SmilesGenerator.unique();
+ * String          smi     = sg.create(ethanol); // only CCO 
+ * </pre></blockquote>
+ * 
+ * <p/>
+ * 
+ * The isomeric and absolute generator encode tetrahedral and double bond
+ * stereochemistry using {@link org.openscience.cdk.interfaces.IStereoElement}s
+ * provided on the {@link IAtomContainer}. If stereochemistry is not being
+ * written it may need to be determined from 2D/3D coordinates using
+ * {@link org.openscience.cdk.stereo.StereoElementFactory}. 
+ * 
+ * <p/>
+ * 
+ * By default the generator will not write aromatic SMILES. Kekulé SMILES are
+ * generally preferred for compatibility and aromaticity can easily be
+ * reperceived. Modifying a generator to produce {@link #aromatic()} SMILES
+ * will use the {@link org.openscience.cdk.CDKConstants#ISAROMATIC} flags.
+ * These flags can be set manually or with the
+ * {@link org.openscience.cdk.aromaticity.Aromaticity} utility.
+ * <blockquote><pre>
+ * IAtomContainer  benzene = ...;
+ * 
+ * // with no flags set the output is always kekule
+ * SmilesGenerator sg      = SmilesGenerator.generic();
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
  *
- * <p>Some example code:
- * <pre>
- * IMolecule benzene; // single/aromatic bonds between 6 carbons
- * SmilesGenerator sg = new SmilesGenerator();
- * String smiles = sg.createSMILES(benzene); // C1CCCCC1
- * sg.setUseAromaticityFlag(true);
- * smiles = sg.createSMILES(benzene); // c1ccccc1
- * IMolecule benzene2; // one of the two kekule structures with explicit double bond orders
- * String smiles2 = sg.createSMILES(benzene2); // C1=CC=CC=C1
- * </pre>
- * <b>Note</b>Due to the way the initial atom labeling is constructed, ensure
- * that the input molecule is appropriately configured.
- * In absence of such configuration it is possible that different forms
- * of the same molecule will not result in the same canonical SMILES.
+ * SmilesGenerator sg      = SmilesGenerator.generic()
+ *                                          .aromatic();
+ * String          smi     = sg.create(ethanol); // C1=CC=CC=C1 
+ * 
+ * for (IAtom a : benzene.atoms())
+ *     a.setFlag(CDKConstants.ISAROMATIC, true);
+ * for (IBond b : benzene.bond())
+ *     b.setFlag(CDKConstants.ISAROMATIC, true);
+ * 
+ * // with flags set, the aromatic generator encodes this information
+ * SmilesGenerator sg      = SmilesGenerator.generic();
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
  *
+ * SmilesGenerator sg      = SmilesGenerator.generic()
+ *                                          .aromatic();
+ * String          smi     = sg.create(ethanol); // c1ccccc1
+ * </pre></blockquote>
+ * <p/>
+ * By default atom classes are not written. Atom classes can be written but
+ * creating a generator {@link #withAtomClasses()}.
+ * 
+ * <blockquote><pre>
+ * IAtomContainer  benzene = ...;
+ * 
+ * // see CDKConstants for property key
+ * benzene.getAtom(3)
+ *        .setProperty(ATOM_ATOM_MAPPING, 42);
+ *
+ * SmilesGenerator sg      = SmilesGenerator.generic();
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
+ *
+ * SmilesGenerator sg      = SmilesGenerator.generic()
+ *                                          .withAtomClasses();
+ * String          smi     = sg.create(ethanol); // C1=CC=[CH:42]C=C1 
+ * </pre></blockquote>
+ * <p/>
+ * 
+ * Auxiliary data can be stored with SMILES by knowing the output order of
+ * atoms. The following example demonstrates the storage of 2D coordinates.
+ * 
+ * <blockquote><pre>
+ * IAtomContainer  mol = ...;
+ * SmilesGenerator sg  = SmilesGenerator.generic();
+ *
+ * int   n     = mol.getAtomCount();
+ * int[] order = new int[n];
+ *
+ * // the order array is filled up as the SMILES is generated
+ * String smi = sg.create(mol, order);
+ *
+ * // load the coordinates array such that they are in the order the atoms
+ * // are read when parsing the SMILES
+ * Point2d[] coords = new Point2d[mol.getAtomCount()];
+ * for (int i = 0; i < coords.length; i++)
+ *     coords[order[i]] = container.getAtom(i).getPoint2d();
+ *
+ * // SMILES string suffixed by the coordinates
+ * String smi2d = smi + " " + Arrays.toString(coords);
+ *
+ * </pre></blockquote>
+ * 
+ * * the unique SMILES generation uses a fast equitable labelling procedure 
+ *   and as such there are some structures which may not be unique. The number
+ *   of such structures is generally minimal. 
+ *   
  * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)
- * @cdk.created    2002-02-26
+ * @author         John May
  * @cdk.keyword    SMILES, generator
  * @cdk.module     smiles
  * @cdk.githash
  * @cdk.bug        1793446
+ * 
+ * @see org.openscience.cdk.aromaticity.Aromaticity
+ * @see org.openscience.cdk.stereo.Stereocenters
+ * @see org.openscience.cdk.stereo.StereoElementFactory
+ * @see org.openscience.cdk.interfaces.ITetrahedralChirality
+ * @see org.openscience.cdk.interfaces.IDoubleBondStereochemistry
+ * @see org.openscience.cdk.CDKConstants
+ * @see SmilesParser
  */
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public final class SmilesGenerator {
@@ -241,7 +345,7 @@ public final class SmilesGenerator {
      * SmilesGenerator sg  = SmilesGenerator.generic();
      * 
      * int   n     = mol.getAtomCount();
-     * int[] order = new int[];
+     * int[] order = new int[n];
      *
      * // the order array is filled up as the SMILES is generated
      * String smi = sg.create(mol, order);
