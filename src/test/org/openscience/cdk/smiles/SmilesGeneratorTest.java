@@ -59,6 +59,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
@@ -1218,6 +1219,16 @@ public class SmilesGeneratorTest extends CDKTestCase {
             assertThat(at[i],
                        is(adenine2.getAtom(i).getAtomTypeName()));
         }
+    }
+    
+    @Test public void atomClasses() throws Exception {
+        IChemObjectBuilder bldr    = SilentChemObjectBuilder.getInstance();
+        IAtomContainer     ethanol = new SmilesParser(bldr).parseSmiles("C[CH2:6]O");
+        assertThat(SmilesGenerator.generic()
+                                  .create(ethanol), is("CCO"));
+        assertThat(SmilesGenerator.generic()
+                                  .withAtomClasses()
+                                  .create(ethanol), is("C[CH2:6]O"));
     }
     
     static ITetrahedralChirality anticlockwise(IAtomContainer container, 

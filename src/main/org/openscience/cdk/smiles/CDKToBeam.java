@@ -95,7 +95,10 @@ final class CDKToBeam {
     private final boolean isomeric;
     
     /** Use aromatic flags. */
-    private final boolean aromatic;    
+    private final boolean aromatic;
+    
+    /** Set atom class data. */
+    private final boolean atomClasses;
 
     /** Create a isomeric and aromatic converter. */
     CDKToBeam() {
@@ -115,8 +118,13 @@ final class CDKToBeam {
      * @param aromatic convert aromatic information
      */
     CDKToBeam(boolean isomeric, boolean aromatic) {
-        this.isomeric = isomeric;
-        this.aromatic = aromatic;
+        this(isomeric, aromatic, true);
+    }
+
+    CDKToBeam(boolean isomeric, boolean aromatic, boolean atomClasses) {
+        this.isomeric    = isomeric;
+        this.aromatic    = aromatic;
+        this.atomClasses = atomClasses;
     }
 
     /**
@@ -212,7 +220,7 @@ final class CDKToBeam {
         }
 
         Integer atomClass = a.getProperty(ATOM_ATOM_MAPPING);
-        if (atomClass != null) {
+        if (atomClasses && atomClass != null) {
             ab.atomClass(atomClass);    
         }
 

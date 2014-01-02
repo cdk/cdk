@@ -72,7 +72,7 @@ import java.lang.reflect.Method;
 @TestClass("org.openscience.cdk.smiles.SmilesGeneratorTest")
 public final class SmilesGenerator {
 
-    private final boolean   isomeric, canonical, aromatic;
+    private final boolean   isomeric, canonical, aromatic, classes;
     private final CDKToBeam converter;
 
     /**
@@ -80,7 +80,7 @@ public final class SmilesGenerator {
      * @see #generic() 
      */
     public SmilesGenerator() {
-        this(false, false, false);
+        this(false, false, false, false);
     }
 
     /**
@@ -89,11 +89,12 @@ public final class SmilesGenerator {
      * @param isomeric include isotope and stereo configurations in produced
      *                 SMILES
      */
-    private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic) {
+    private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic, boolean classes) {
         this.isomeric  = isomeric;
         this.canonical = canonical;    
         this.aromatic  = aromatic;
-        this.converter = new CDKToBeam(isomeric, aromatic);
+        this.classes   = classes;
+        this.converter = new CDKToBeam(isomeric, aromatic, classes);
     }
 
     /**
@@ -111,8 +112,26 @@ public final class SmilesGenerator {
      * @return a generator for aromatic SMILES 
      */
     public SmilesGenerator aromatic() {
-        return new SmilesGenerator(isomeric, canonical, true);
-    } 
+        return new SmilesGenerator(isomeric, canonical, true, classes);
+    }
+
+    /**
+     * Specifies that the generator should write atom classes in SMILES. Atom
+     * classes are provided by the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+     * property. This method returns a new SmilesGenerator to use.
+     *
+     * <blockquote><pre>
+     * IAtomContainer  container = ...;
+     * SmilesGenerator smilesGen = SmilesGenerator.unique()
+     *                                            .atomClasses();
+     * smilesGen.createSMILES(container); // C[CH2:4]O second atom has class = 4                                            
+     * </pre></blockquote>
+     *
+     * @return a generator for SMILES with atom classes 
+     */
+    public SmilesGenerator withAtomClasses() {
+        return new SmilesGenerator(isomeric, canonical, aromatic, true);
+    }
 
     /**
      * Create a generator for generic SMILES. Generic SMILES are 
@@ -123,7 +142,7 @@ public final class SmilesGenerator {
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
-        return new SmilesGenerator(false, false, false);
+        return new SmilesGenerator(false, false, false, false);
     }
     
     /**
@@ -134,7 +153,7 @@ public final class SmilesGenerator {
      * @return a new isomeric SMILES generator
      */
     public static SmilesGenerator isomeric() {
-        return new SmilesGenerator(true, false, false);
+        return new SmilesGenerator(true, false, false, false);
     }
 
     /**
@@ -144,7 +163,7 @@ public final class SmilesGenerator {
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
-        return new SmilesGenerator(false, true, false);
+        return new SmilesGenerator(false, true, false, false);
     } 
     
     /**
@@ -156,7 +175,7 @@ public final class SmilesGenerator {
      * @return a new absolute SMILES generator
      */
     public static SmilesGenerator absolute() {
-        return new SmilesGenerator(true, true, false);
+        return new SmilesGenerator(true, true, false, false);
     }
 
     /**
