@@ -209,6 +209,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	 */
 	public <T> T getProperty(Object description)
 	{
+        if (properties == null)
+            return null;
         // can't check the type
         @SuppressWarnings("unchecked")
         T value = (T) lazyProperties().get(description);
