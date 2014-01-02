@@ -60,7 +60,7 @@ import java.util.Map;
  * IAtomContainer            m   = ...; // input molecule
  * Map<IChemObject, Integer> ids = new HashMap<>();
  * 
- * // set atom/bond ids, atoms with no idea will not be highlighted, numbering
+ * // set atom/bond ids, atoms with no id will not be highlighted, numbering
  * // starts at 0
  * ids.put(m.getAtom(0), 0);
  * ids.put(m.getAtom(1), 0);
@@ -74,7 +74,7 @@ import java.util.Map;
  * ids.put(m.getBond(4), 2);
  * 
  * // attach ids to the structure
- * m.putProperty(HighlightGenerator.ID_MAP, ids);
+ * m.setProperty(HighlightGenerator.ID_MAP, ids);
  * 
  * // draw 
  * renderer.paint(m, new AWTDrawVisitor(g2), bounds, true);
