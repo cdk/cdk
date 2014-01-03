@@ -188,7 +188,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
                         sb.append('0');
                     else {
                         Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                        if (atnum != null) sb.append((char) atnum.intValue());
+                        if (atnum > 0) sb.append((char) atnum.intValue());
                         else sb.append('0');
                     }
 
