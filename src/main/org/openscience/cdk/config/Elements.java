@@ -196,6 +196,12 @@ public enum Elements {
             symbolMap.put(e.name().toLowerCase(Locale.ENGLISH),
                           e);
         }
+        
+        symbolMap.put("uuq", Flerovium);
+        symbolMap.put("uuh", Livermorium);
+        symbolMap.put("ununquadium", Flerovium);
+        symbolMap.put("ununhexium", Livermorium);
+        
     }
 
     /**
