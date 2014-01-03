@@ -37,7 +37,7 @@ import org.openscience.cdk.interfaces.IElement;
  * be used than by only {@link Elements}.
  * 
  * @author      egonw
- * @cdk.module  standard 
+ * @cdk.module  core 
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.NaturalElementTest")

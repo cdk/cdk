@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * version 3.
  * 
  * @author      egonw
- * @cdk.module  standard 
+ * @cdk.module  core 
  * @cdk.githash
  */
 public class Elements {
