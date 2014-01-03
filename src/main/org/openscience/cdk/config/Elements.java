@@ -345,7 +345,7 @@ public enum Elements {
      * @param number atomic number
      * @return an element, or {@link #Unknown}
      */
-    static Elements ofNumber(final int number) {
+    public static Elements ofNumber(final int number) {
         if (number < 0 || number > 118)
             return Unknown;
         return numberMap[number];
@@ -367,7 +367,7 @@ public enum Elements {
      * @param str input string
      * @return an element, or {@link #Unknown}
      */
-    static Elements ofString(final String str) {
+    public static Elements ofString(final String str) {
         Elements e = symbolMap.get(str.toLowerCase(Locale.ENGLISH));
         if (e == null)
             return Unknown;
