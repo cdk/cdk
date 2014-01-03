@@ -41,10 +41,10 @@ import org.openscience.cdk.interfaces.IElement;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.config.NaturalElementTest")
-public final class NaturalElement implements IElement {
+final class NaturalElement implements IElement {
 	
-	private String element;
-	private Integer atomicNumber;
+	private final String element;
+	private final Integer atomicNumber;
 
 	@TestMethod("testSymbol,testMassNumber")
 	protected NaturalElement(String element, Integer atomicNumber) {
