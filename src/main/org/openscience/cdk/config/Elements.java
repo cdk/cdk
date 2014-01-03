@@ -368,6 +368,8 @@ public enum Elements {
      * @return an element, or {@link #Unknown}
      */
     public static Elements ofString(final String str) {
+        if (str == null)
+            return Unknown;
         Elements e = symbolMap.get(str.toLowerCase(Locale.ENGLISH));
         if (e == null)
             return Unknown;
