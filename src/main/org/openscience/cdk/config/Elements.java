@@ -50,8 +50,8 @@ public enum Elements {
          Fluorine(  9, "F",   2, 17, 0.71, 1.50, 3.98), 
              Neon( 10, "Ne",  2, 18, 0.69, 1.54, null), 
            Sodium( 11, "Na",  3,  1, 1.54, 2.40, 0.93), 
-        Magnesium( 12, "Mg",  3,  2, 1.30, 2.20, 1.31), 
-         Aluminum( 13, "Al",  3, 13, 1.18, 2.10, 1.61), 
+        Magnesium( 12, "Mg",  3,  2, 1.30, 2.20, 1.31),
+        Aluminium( 13, "Al",  3, 13, 1.18, 2.10, 1.61), 
           Silicon( 14, "Si",  3, 14, 1.11, 2.10, 1.90), 
        Phosphorus( 15, "P",   3, 15, 1.06, 1.95, 2.19), 
            Sulfur( 16, "S",   3, 16, 1.02, 1.80, 2.58), 
@@ -93,7 +93,7 @@ public enum Elements {
         Tellurium( 52, "Te",  5, 16, 1.35, 2.10, 2.10), 
            Iodine( 53, "I",   5, 17, 1.33, 2.10, 2.66), 
             Xenon( 54, "Xe",  5, 18, 1.30, 2.16, 2.60), 
-           Cesium( 55, "Cs",  6,  1, 2.25, 3.00, 0.79), 
+          Caesium( 55, "Cs",  6,  1, 2.25, 3.00, 0.79), 
            Barium( 56, "Ba",  6,  2, 1.98, 2.70, 0.89), 
         Lanthanum( 57, "La",  6,  3, 1.69, 2.50, 1.10), 
            Cerium( 58, "Ce",  6,  0, null, 2.48, 1.12), 
@@ -149,12 +149,14 @@ public enum Elements {
           Hassium(108, "Hs",  7,  8, null, null, null), 
        Meitnerium(109, "Mt",  7,  9, null, null, null), 
      Darmstadtium(110, "Ds",  7, 10, null, null, null), 
-      Roentgenium(111, "Rg",  7, 11, null, null, null), 
-         Ununbium(112, "Uub", 7, 12, null, null, null), 
+      Roentgenium(111, "Rg",  7, 11, null, null, null),
+      Copernicium(112, "Cn",  7, 12, null, null, null), 
         Ununtrium(113, "Uut", 0,  0, null, null, null), 
         Flerovium(114, "Fl",  0,  0, null, null, null), 
       Ununpentium(115, "Uup", 0,  0, null, null, null), 
-      Livermorium(116, "Lv",  0,  0, null, null, null);
+      Livermorium(116, "Lv",  0,  0, null, null, null),
+      Ununseptium(117, "Uus", 0,  0, null, null, null),
+       Ununoctium(118, "Uuo", 0,  0, null, null, null);
 
     /**
      * Atomic number, periodic table period and group.
@@ -180,7 +182,7 @@ public enum Elements {
     /**
      * Lookup elements by atomic number.
      */
-    static final Elements[] numberMap = new Elements[117];
+    static final Elements[] numberMap = new Elements[119];
 
     /**
      * Lookup elements by symbol / name.
@@ -196,11 +198,21 @@ public enum Elements {
             symbolMap.put(e.name().toLowerCase(Locale.ENGLISH),
                           e);
         }
-        
-        symbolMap.put("uuq", Flerovium);
-        symbolMap.put("uuh", Livermorium);
+
+        // recently named elements
+        symbolMap.put("uub", Copernicium); // 2009
+        symbolMap.put("ununbium", Copernicium);
+
+        symbolMap.put("uuq", Flerovium); // 2012
         symbolMap.put("ununquadium", Flerovium);
+
+        symbolMap.put("uuh", Livermorium); // 2012
         symbolMap.put("ununhexium", Livermorium);
+        
+        // alternative spellings
+        symbolMap.put("sulphur", Sulfur);
+        symbolMap.put("cesium", Caesium);
+        symbolMap.put("aluminum", Aluminium);
         
     }
 
@@ -334,7 +346,7 @@ public enum Elements {
      * @return an element, or {@link #Unknown}
      */
     static Elements ofNumber(final int number) {
-        if (number < 0 || number > 116)
+        if (number < 0 || number > 118)
             return Unknown;
         return numberMap[number];
     }
@@ -375,7 +387,7 @@ public enum Elements {
     public final static IElement NEON          = Neon.toIElement();
     public final static IElement SODIUM        = Sodium.toIElement();
     public final static IElement MAGNESIUM     = Magnesium.toIElement();
-    public final static IElement ALUMINIUM     = Aluminum.toIElement();
+    public final static IElement ALUMINIUM     = Aluminium.toIElement();
     public final static IElement SILICON       = Silicon.toIElement();
     public final static IElement PHOSPHORUS    = Phosphorus.toIElement();
     public final static IElement SULFUR        = Sulfur.toIElement();
@@ -417,7 +429,7 @@ public enum Elements {
     public final static IElement TELLURIUM     = Tellurium.toIElement();
     public final static IElement IODINE        = Iodine.toIElement();
     public final static IElement XENON         = Xenon.toIElement();
-    public final static IElement CAESIUM       = Cesium.toIElement();
+    public final static IElement CAESIUM       = Caesium.toIElement();
     public final static IElement BARIUM        = Barium.toIElement();
     public final static IElement LANTHANUM     = Lanthanum.toIElement();
     public final static IElement CERIUM        = Cerium.toIElement();
@@ -474,7 +486,7 @@ public enum Elements {
     public final static IElement MEITNERIUM    = Meitnerium.toIElement();
     public final static IElement DARMSTADTIUM  = Darmstadtium.toIElement();
     public final static IElement ROENTGENIUM   = Roentgenium.toIElement();
-    public final static IElement UNUNBIUM      = Ununbium.toIElement();
+    public final static IElement UNUNBIUM      = Copernicium.toIElement();
     public final static IElement UNUNTRIUM     = Ununtrium.toIElement();
     public final static IElement UNUNQUADIUM   = Flerovium.toIElement();
     public final static IElement FLEROVIUM     = Flerovium.toIElement();
