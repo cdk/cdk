@@ -25,28 +25,26 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 
-import static org.openscience.cdk.config.Elements.*;
-
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.Map;
 import java.util.Set;
 
+import static org.openscience.cdk.config.Elements.*;
+
 /**
- * Represents elements of the Periodic Table.
- * <p/>
- * Though individual elements can be obtained from instances
- * of {@link org.openscience.cdk.tools.periodictable.PeriodicTableElement}, this utility
- * class is useful when one wants generic properties of elements such
- * as atomic number, VdW radius etc.
+ * Represents elements of the Periodic Table. <p/> This utility class was 
+ * previously useful when one wants generic properties of elements such as 
+ * atomic number, VdW radius etc. The new approach to this is to use the
+ * {@link Elements} enumeration.
  *
- * @author      Rajarshi Guha
+ * @author Rajarshi Guha
  * @cdk.created 2008-06-12
  * @cdk.keyword element
  * @cdk.keyword periodic table
- * @cdk.keyword radius, vanderwaals 
+ * @cdk.keyword radius, vanderwaals
  * @cdk.keyword electronegativity
- * @cdk.module  core
+ * @cdk.module core
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.tools.periodictable.PeriodicTableTest")
@@ -54,7 +52,7 @@ public final class PeriodicTable {
 
     /** CAS ID Mapping. */
     private static volatile Map<Elements, String> ids;
-    
+
     /** A lock used for locking CAD ID initialisation. */
     private final static Object lock = new Object();
 
@@ -107,6 +105,7 @@ public final class PeriodicTable {
 
     /**
      * Get the group of the element.
+     *
      * @param symbol the symbol of the element
      * @return the group
      */
@@ -185,7 +184,8 @@ public final class PeriodicTable {
     }
 
     /**
-     * Return the number of elements currently considered in the periodic table.
+     * Return the number of elements currently considered in the periodic
+     * table.
      *
      * @return the number of elements in the periodic table
      */
@@ -195,23 +195,23 @@ public final class PeriodicTable {
     }
 
     /**
-     * Enumeration of chemical series and the elements which are members of 
-     * each serie.
+     * Enumeration of chemical series and the elements which are members of each
+     * serie.
      */
     private enum Series {
-        NonMetals(Sulfur, Selenium, Oxygen, Carbon, Phosphorus, Hydrogen, 
+        NonMetals(Sulfur, Selenium, Oxygen, Carbon, Phosphorus, Hydrogen,
                   Nitrogen),
         NobleGasses(Helium, Krypton, Xenon, Argon, Radon, Neon),
         AlkaliMetals(Sodium, Rubidium, Potassium, Caesium, Francium,
                      Lithium),
         AlkaliEarthMetals(Strontium, Radium, Calcium, Magnesium, Barium,
                           Beryllium),
-        Metalloids(Silicon, Arsenic, Tellurium, Germanium, Antimony, Polonium, 
+        Metalloids(Silicon, Arsenic, Tellurium, Germanium, Antimony, Polonium,
                    Boron),
         Halogens(Fluorine, Iodine, Chlorine, Astatine, Bromine),
         Metals(Gallium, Indium, Aluminium, Thallium, Tin, Lead, Bismuth),
         TransitionMetals(Seaborgium, Hafnium, Roentgenium, Iridium, Nickel,
-                         Meitnerium, Yttrium, Copper, Rutherfordium, Tungsten, 
+                         Meitnerium, Yttrium, Copper, Rutherfordium, Tungsten,
                          Copernicium, Rhodium, Cobalt, Zinc, Platinum, Gold,
                          Cadmium, Manganese, Darmstadtium, Dubnium, Palladium,
                          Vanadium, Titanium, Tantalum, Chromium, Molybdenum,
@@ -219,7 +219,7 @@ public final class PeriodicTable {
                          Niobium, Scandium, Technetium, Hassium, Mercury,
                          Iron, Silver),
         Lanthanides(Terbium, Samarium, Lutetium, Neodymium, Cerium, Europium,
-                    Gadolinium, Thulium, Lanthanum, Erbium, Promethium, 
+                    Gadolinium, Thulium, Lanthanum, Erbium, Promethium,
                     Holmium, Praseodymium, Dysprosium, Ytterbium),
         Actinides(Fermium, Protactinium, Plutonium, Thorium, Lawrencium,
                   Einsteinium, Nobelium, Actinium, Americium, Curium,
@@ -241,7 +241,7 @@ public final class PeriodicTable {
      * in each phase.
      */
     private enum Phase {
-        
+
         Solid(Sulfur, Hafnium, Terbium, Calcium, Gadolinium,
               Nickel, Cerium, Germanium, Phosphorus, Copper,
               Polonium, Lead, Gold, Iodine, Cadmium, Ytterbium,
@@ -257,13 +257,13 @@ public final class PeriodicTable {
               Europium, Neodymium, Zirconium, Radium, Thulium,
               Sodium, Scandium, Tellurium, Indium, Beryllium,
               Aluminium, Strontium, Tin, Magnesium),
-        
+
         Liquid(Bromine, Mercury),
-        
+
         Gas(Fluorine, Oxygen, Xenon, Argon, Chlorine, Helium,
             Krypton, Hydrogen, Radon, Nitrogen, Neon),
-        
-        Synthetic(Fermium, Seaborgium, Plutonium, Roentgenium, Lawrencium, 
+
+        Synthetic(Fermium, Seaborgium, Plutonium, Roentgenium, Lawrencium,
                   Meitnerium, Einsteinium, Nobelium, Actinium, Rutherfordium,
                   Americium, Curium, Bohrium, Berkelium, Promethium, Copernicium,
                   Technetium, Hassium, Californium, Mendelevium, Neptunium,
@@ -274,7 +274,7 @@ public final class PeriodicTable {
         Phase(Elements first, Elements... rest) {
             this.elements = EnumSet.of(first, rest);
         }
-        
+
         boolean contains(Elements e) {
             return elements.contains(e);
         }
@@ -298,9 +298,7 @@ public final class PeriodicTable {
         return result;
     }
 
-    /**
-     * Obtain the CAS ID Mapping. 
-     */
+    /** Obtain the CAS ID Mapping. */
     private static Map<Elements, String> initCasIds() {
         Map<Elements, String> ids = new EnumMap<Elements, String>(Elements.class);
         ids.put(Unknown, "");
