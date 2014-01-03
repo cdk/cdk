@@ -28,6 +28,8 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
+import static org.hamcrest.CoreMatchers.is;
+
 /**
  * Checks the functionality of {@link DebugElement}.
  *
@@ -63,7 +65,8 @@ public class DebugElementTest extends AbstractElementTest {
         IElement e = new DebugElement("X");
         Assert.assertEquals("X", e.getSymbol());
         // and it should not throw exceptions
-        Assert.assertNull(e.getAtomicNumber());
+        Assert.assertNotNull(e.getAtomicNumber());
+        Assert.assertThat(e.getAtomicNumber(), is(0));
     }
 
     @Test public void testDebugElement_String_int() {
