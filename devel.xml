@@ -24,6 +24,7 @@
         <property name="jgraphtjar" value="jgrapht-0.6.0.jar" />
         <property name="junitjar" value="junit-4.10.jar" />
         <property name="xercesjar" value="xercesImpl-2.9.0.jar" />
+        <property name="cdk-build-utils" value="develjar/cdk-build-utils-1.0.jar" />
 
         <property environment="env" />
 
@@ -86,10 +87,7 @@
     <target name="checkCopyright" id="checkCopyright" depends="check, customize">
         <echo>Checking copyright info...</echo>
         <mkdir dir="${build}" />
-        <javac includes="net/sf/cdk/tools/copyright/CheckCopyrightStatements.java"
-            srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
-            debug="${debug}" deprecation="${deprecation}"/>
-        <java classpath="${build}" classname="net.sf.cdk.tools.copyright.CheckCopyrightStatements">
+        <java classpath="${build}:${cdk-build-utils}" classname="net.sf.cdk.tools.copyright.CheckCopyrightStatements">
               <arg value="${src}/META-INF"/>
               <arg value="${src}/main"/>
               <arg value="${build}"/>
