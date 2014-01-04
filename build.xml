@@ -47,6 +47,7 @@
         <property name="log4jjar" value="log4j.jar" />
         <property name="jgraphtjar" value="jgrapht-0.6.0.jar" />
         <property name="junitjar" value="junit-4.11.jar" />
+        <property name="cdk-build-utils" value="cdk-build-utils-1.0.jar" />
 
         <property environment="env" />
 
@@ -266,15 +267,12 @@
         <target name="runDoclet" id="runDoclet" depends="check, customize">
             <echo>Not skipping doclet run...</echo>
             <mkdir dir="${build}" />
-        	<javac includes="net/sf/cdk/tools/MakeJavafilesFiles.java"
-        	    srcdir="${src}/main/" destdir="${build}" optimize="${optimization}"
-        	    debug="${debug}" deprecation="${deprecation}" source="${compile.target.version}" target="${compile.target.version}"/>
-        	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
+        	<java classpath="${devellib}/${cdk-build-utils}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
                   <arg value="${src}/META-INF"/>
                   <arg value="${src}/main"/>
                   <arg value="${build}"/>
         	</java>
-        	<java classpath="${build}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
+        	<java classpath="${devellib}/${cdk-build-utils}" classname="net.sf.cdk.tools.MakeJavafilesFiles">
                   <arg value="${src}/META-INF"/>
                   <arg value="${src}/test"/>
                   <arg value="${build}"/>
