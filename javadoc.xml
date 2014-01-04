@@ -33,7 +33,7 @@
         </fileset>
     </path>
 
-    <target name="html" depends="compileTaglets">
+    <target name="html">
         <mkdir dir="${javadoc.dir}" />
 
         <!-- Call javacc target in build.xml to re-generate the source code -->
@@ -120,7 +120,7 @@
       javacchome="jar"/>
   </target>
 
-  <target name="ojdcheck" depends="compileDocTests">
+  <target name="ojdcheck">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="cip"/></antcall>
@@ -197,7 +197,7 @@
         	</classpath>
 
             <doclet name="com.github.ojdcheck.OpenJavaDocCheck"
-                    path="develjar/ojdcheck.jar:src/main">
+                    path="develjar/ojdcheck.jar:src/main::${cdk-build-utils}">
               <param name="-xhtml"/>
               <param name="-file"
                     value="reports/ojdcheck/${module}.html"/>
@@ -209,30 +209,6 @@
             </sourcepath>
         </javadoc>
     </target>
-
-  <target name="compileTaglets" id="compileTaglets">
-    <javac srcdir="src/main" destdir="${build}"
-           includes="net/sf/cdk/tools/**/*Taglet.java" debug="on" optimize="off">
-      <classpath>
-          <fileset dir="jar/">
-              <include name="xom-1.1.jar" />
-          </fileset>
-      </classpath>
-    </javac>
-  </target>
-
-  <target name="compileDocTests" id="compileDocTests">
-    <javac srcdir="src/main" destdir="src/main"
-           includes="net/sf/cdk/tools/checkdoctest/*Test.java"
-           debug="on" optimize="off">
-      <classpath>
-        <fileset dir="develjar/">
-          <include name="ojdcheck.jar" />
-          <include name="com-sun-*.jar" />
-        </fileset>
-      </classpath>
-    </javac>
-  </target>
 </project>
 
 
