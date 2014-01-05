@@ -580,25 +580,25 @@ public class AtomContainerManipulator {
      * Produces a new AtomContainer without explicit Hs but with H count from one with Hs.
      * The new molecule is a deep copy.
      *
-     * @param atomContainer The AtomContainer from which to remove the hydrogens
+     * @param org The AtomContainer from which to remove the hydrogens
      * @return              The molecule without Hs.
      * @cdk.keyword         hydrogens, removal
      */
     @TestMethod("testRemoveHydrogens_IAtomContainer")
-    public static IAtomContainer removeHydrogens(IAtomContainer atomContainer)
+    public static IAtomContainer removeHydrogens(IAtomContainer org)
     {
         Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
         List<IAtom> hydrogens = new ArrayList<IAtom>();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
-        IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
-        int count = atomContainer.getAtomCount();
+        IAtomContainer cpy = org.getBuilder().newInstance(IAtomContainer.class);
+        int count = org.getAtomCount();
         for (int i = 0;
                 i < count;
                 i++)
         {
             // Clone/remove this atom?
-            IAtom atom = atomContainer.getAtom(i);
+            IAtom atom = org.getAtom(i);
             if (!atom.getSymbol().equals("H"))
             {
                 IAtom clonedAtom = null;
@@ -607,7 +607,7 @@ public class AtomContainerManipulator {
 				} catch (CloneNotSupportedException e) {
 					throw new InternalError("an IAtom could not be cloned");
 				}
-                mol.addAtom(clonedAtom);
+                cpy.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
             }
             else
@@ -617,13 +617,13 @@ public class AtomContainerManipulator {
         }
 
         // Clone bonds except those involving removed atoms.
-        count = atomContainer.getBondCount();
+        count = org.getBondCount();
         for (int i = 0;
                 i < count;
                 i++)
         {
             // Check bond.
-            final IBond bond = atomContainer.getBond(i);
+            final IBond bond = org.getBond(i);
             boolean removedBond = false;
             final int length = bond.getAtomCount();
             for (int k = 0;
@@ -643,21 +643,21 @@ public class AtomContainerManipulator {
             {
                 IBond clone = null;
 				try {
-					clone = (IBond) atomContainer.getBond(i).clone();
+					clone = (IBond) org.getBond(i).clone();
 				} catch (CloneNotSupportedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 assert clone != null;
                 clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
-                mol.addBond(clone);
+                cpy.addBond(clone);
             }
         }
 
         // Recompute hydrogen counts of neighbours of removed Hydrogens.
         for (IAtom hydrogen : hydrogens) {
             // Process neighbours.
-            for (IAtom iAtom : atomContainer.getConnectedAtomsList(hydrogen)) {
+            for (IAtom iAtom : org.getConnectedAtomsList(hydrogen)) {
                 final IAtom neighbor = map.get(iAtom);
                 if (neighbor == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
                 // XXX: null implicit hydrogen count might not be 0
@@ -666,16 +666,16 @@ public class AtomContainerManipulator {
             }
         }
 
-        for (IAtom atom : mol.atoms()) {
+        for (IAtom atom : cpy.atoms()) {
             if (atom.getImplicitHydrogenCount() == null)
                 atom.setImplicitHydrogenCount(0);
         }
         
         // XXX: properties are not cloned
-        mol.setProperties(atomContainer.getProperties());
-        mol.setFlags(atomContainer.getFlags());
+        cpy.setProperties(org.getProperties());
+        cpy.setFlags(org.getFlags());
 
-        return mol;
+        return cpy;
     }
 
 	/**
