@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -371,6 +372,9 @@ public class AtomContainerManipulator {
         List<IAtom> hydrogens = new ArrayList<IAtom>();
         List<IBond> newBonds = new ArrayList<IBond>();
         List<Integer> atomIndex = new ArrayList<Integer>();
+        
+        // store a single explicit hydrogen of each original neighbor
+        Map<IAtom,IAtom> hNeighbor = Maps.newHashMapWithExpectedSize(atomContainer.getAtomCount());
 
         for (IAtom atom : atomContainer.atoms()) {
             if (!atom.getSymbol().equals("H")) {
@@ -385,6 +389,10 @@ public class AtomContainerManipulator {
                         newBonds.add(atom.getBuilder().newInstance(IBond.class,
                                 atom, hydrogen, CDKConstants.BONDORDER_SINGLE
                         ));
+                        
+                        if (hNeighbor.get(atom) == null)
+                            hNeighbor.put(atom, hydrogen);
+
                     }
                     atom.setImplicitHydrogenCount(0);
                 }
@@ -392,6 +400,30 @@ public class AtomContainerManipulator {
         }
         for (IAtom atom : hydrogens) atomContainer.addAtom(atom);
         for (IBond bond : newBonds) atomContainer.addBond(bond);
+        
+        // update tetrahedral elements with an implicit part
+        for (IStereoElement se : atomContainer.stereoElements()) {
+            if (se instanceof ITetrahedralChirality) {
+                ITetrahedralChirality tc = (ITetrahedralChirality) se;
+                
+                IAtom   focus     = tc.getChiralAtom();
+                IAtom[] neighbors = tc.getLigands();
+                IAtom   hydrogen  = hNeighbor.get(focus);
+                
+                // in sulfoxide - the implicit part of the tetrahedral centre
+                // is a lone pair
+                if (hydrogen == null)
+                    continue;
+                
+                for (int i = 0; i < tc.getLigands().length; i++) {
+                    if (neighbors[i] == focus) {
+                        neighbors[i] = hydrogen;
+                        break;        
+                    }
+                }
+            }
+        }
+        
     }
 
     /**

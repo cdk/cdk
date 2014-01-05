@@ -58,6 +58,7 @@ import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.MoleculeFactory;
@@ -1019,7 +1020,25 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         bosum = AtomContainerManipulator.getBondOrderSum(mol, mol.getAtom(2));
         Assert.assertEquals(1.0, bosum, 0.001);
 
-    }          
+    }
+    
+    @Test public void convertExplicitHydrogen_chiralCarbon() throws Exception {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer m      = smipar.parseSmiles("C[C@H](CC)O");
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
+        
+        assertThat(SmilesGenerator.isomeric().create(m), is("C([C@](C(C([H])([H])[H])([H])[H])(O[H])[H])([H])([H])[H]"));
+    }
+    
+    @Test public void convertExplicitHydrogen_sulfoxide() throws Exception {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer m      = smipar.parseSmiles("[S@](=O)(C)CC");
+
+        AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
+        
+        assertThat(SmilesGenerator.isomeric().create(m), is("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]"));
+    }
 }
 
 
