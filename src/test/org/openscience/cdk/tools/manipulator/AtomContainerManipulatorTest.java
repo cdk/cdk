@@ -1039,6 +1039,59 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         
         assertThat(SmilesGenerator.isomeric().create(m), is("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]"));
     }
+    
+    @Test public void removeHydrogens_chiralCarbon1() throws Exception {
+        assertRemoveH("C[C@@](CC)([H])O", "C[C@H](CC)O");
+    }
+    
+    @Test public void removeHydrogens_chiralCarbon2() throws Exception {
+        assertRemoveH("C[C@@]([H])(CC)O", "C[C@@H](CC)O");
+    }
+    
+    @Test public void removeHydrogens_chiralCarbon3() throws Exception {
+        assertRemoveH("C[C@@](CC)(O)[H]", "C[C@@H](CC)O");
+    }
+
+    @Test public void removeHydrogens_chiralCarbon4() throws Exception {
+        assertRemoveH("[H][C@@](C)(CC)O", "[C@@H](C)(CC)O");
+    }
+
+    @Test public void removeHydrogens_db_trans1() throws Exception {
+        assertRemoveH("C/C([H])=C([H])/C", "C/C=C/C");
+        assertRemoveH("C\\C([H])=C([H])\\C", "C/C=C/C");
+    }
+
+    @Test public void removeHydrogens_db_cis1() throws Exception {
+        assertRemoveH("C/C([H])=C([H])\\C", "C/C=C\\C");
+        assertRemoveH("C\\C([H])=C([H])/C", "C/C=C\\C");
+    }
+
+    @Test public void removeHydrogens_db_trans2() throws Exception {
+        assertRemoveH("CC(/[H])=C([H])/C", "C/C=C/C");
+    }
+
+    @Test public void removeHydrogens_db_cis2() throws Exception {
+        assertRemoveH("CC(\\[H])=C([H])/C", "C/C=C\\C");
+    }
+
+    @Test public void removeHydrogens_db_trans3() throws Exception {
+        assertRemoveH("CC(/[H])=C(\\[H])C", "C/C=C/C");
+    }
+
+    @Test public void removeHydrogens_db_cis3() throws Exception {
+        assertRemoveH("CC(\\[H])=C(\\[H])C", "C/C=C\\C");
+    }
+    
+    // util for testing hydrogen removal using SMILES
+    static void assertRemoveH(String smiIn, String smiExp) throws Exception {
+        SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer m      = smipar.parseSmiles(smiIn);
+
+        String         smiAct = SmilesGenerator.isomeric()
+                                               .create(AtomContainerManipulator.removeHydrogens(m));
+        
+        assertThat(smiAct, is(smiExp));    
+    }
 }
 
 

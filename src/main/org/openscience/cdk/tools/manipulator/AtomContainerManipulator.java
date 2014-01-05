@@ -23,13 +23,16 @@
 package org.openscience.cdk.tools.manipulator;
 
 import static org.openscience.cdk.CDKConstants.SINGLE_OR_DOUBLE;
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
@@ -45,6 +48,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IElectronContainer;
 import org.openscience.cdk.interfaces.IElement;
 import org.openscience.cdk.interfaces.ILonePair;
@@ -54,6 +58,8 @@ import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 /**
  * Class with convenience methods that provide methods to manipulate
@@ -577,18 +583,19 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Produces a new AtomContainer without explicit Hs but with H count from one with Hs.
-     * The new molecule is a deep copy.
+     * Create an copy of the {@code org} structure with explicit hydrogens
+     * removed. Stereochemistry is updated but up and down bonds in a depiction
+     * may need to be recalculated (see. StructureDiagramGenerator).
      *
      * @param org The AtomContainer from which to remove the hydrogens
-     * @return              The molecule without Hs.
-     * @cdk.keyword         hydrogens, removal
+     * @return The molecule without hydrogens.
+     * @cdk.keyword hydrogens, removal, suppress
      */
     @TestMethod("testRemoveHydrogens_IAtomContainer")
     public static IAtomContainer removeHydrogens(IAtomContainer org)
     {
         Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
-        List<IAtom> hydrogens = new ArrayList<IAtom>();  // lists removed Hs.
+        Set<IAtom> hydrogens = new HashSet<IAtom>();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
         IAtomContainer cpy = org.getBuilder().newInstance(IAtomContainer.class);
@@ -674,8 +681,82 @@ public class AtomContainerManipulator {
         // XXX: properties are not cloned
         cpy.setProperties(org.getProperties());
         cpy.setFlags(org.getFlags());
+        
+        for (IStereoElement se : org.stereoElements()) {
+            if (se instanceof ITetrahedralChirality) {
+                ITetrahedralChirality tc = (ITetrahedralChirality) se;
+                IAtom   focus     = map.get(tc.getChiralAtom());
+                IAtom[] neighbors = Arrays.copyOf(tc.getLigands(), 4);
+                for (int i = 0; i < neighbors.length; i++) {
+                    neighbors[i] = hydrogens.contains(neighbors[i]) ? focus 
+                                                                    : map.get(neighbors[i]);
+                }
+                cpy.addStereoElement(new TetrahedralChirality(focus,
+                                                              neighbors,
+                                                              tc.getStereo()));
+            } else if (se instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry) se;
+                Conformation conformation = db.getStereo();
+                
+                IBond orgStereo = db.getStereoBond();
+                IBond orgLeft   = db.getBonds()[0];
+                IBond orgRight  = db.getBonds()[1];
+                
+                // we use the following variable names to refer to the
+                // double bond atoms and substituents
+                // x       y
+                //  \     /
+                //   u = v 
+                
+                IAtom u = orgStereo.getAtom(0);
+                IAtom v = orgStereo.getAtom(1);
+                IAtom x = orgLeft.getConnectedAtom(u);
+                IAtom y = orgRight.getConnectedAtom(v);
+                
+                if (hydrogens.contains(x)) {
+                    conformation = conformation.invert();
+                    x = findOther(org, u, v, x);
+                }
 
+                if (hydrogens.contains(y)) {
+                    conformation = conformation.invert();
+                    y = findOther(org, v, u, y);
+                }
+                
+                // no other atoms connected, invalid double-bond configuration?
+                if (x == null || y == null)
+                    continue;
+
+                // XXX: slow operations but works for now
+                IBond cpyStereo = cpy.getBond(map.get(u), map.get(v));
+                IBond cpyLeft   = cpy.getBond(map.get(u), map.get(x));
+                IBond cpyRight  = cpy.getBond(map.get(v), map.get(y));
+                
+                cpy.addStereoElement(new DoubleBondStereochemistry(cpyStereo,
+                                                                   new IBond[]{cpyLeft, cpyRight},
+                                                                   conformation));
+            }
+        }
+        
         return cpy;
+    }
+
+    /**
+     * Finds an neighbor connected to 'atom' which is not 'exclude1' 
+     * or 'exclude2'. If no neighbor exists - null is returned.
+     * 
+     * @param container structure
+     * @param atom      atom to find a neighbor of
+     * @param exclude1  the neighbor should not be this atom
+     * @param exclude2  the neighbor should also not be this atom  
+     * @return a neighbor of 'atom', null if not found
+     */
+    private static IAtom findOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2) {
+        for (IAtom neighbor : container.getConnectedAtomsList(atom)) {
+            if (neighbor != exclude1 && neighbor != exclude2)
+                return neighbor;
+        }
+        return null;
     }
 
 	/**

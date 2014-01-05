@@ -44,7 +44,23 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
      */
     public enum Conformation {
         TOGETHER,  //  as in Z-but-2-ene
-        OPPOSITE   //  as in E-but-2-ene
+        OPPOSITE;  //  as in E-but-2-ene
+
+        /**
+         * Invert this conformation, inv(together) = opposite, inv(opposite)
+         * = together.
+         * 
+         * @return the inverse conformation
+         */
+        public Conformation invert() {
+            switch (this) {
+                case TOGETHER:
+                    return OPPOSITE;
+                case OPPOSITE:
+                    return TOGETHER;
+            }
+            return this;
+        }
     }
 
     /**
