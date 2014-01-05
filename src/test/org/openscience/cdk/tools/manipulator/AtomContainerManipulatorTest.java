@@ -996,6 +996,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
      * removal of hydrogen should simply return an empty IAtomContainer, not
      * throw an NullPointerException.
      * 
+     * - note now molecular hydrogen is preserved to avoid information loss. 
+     * 
      * @cdk.bug 2366528
      */
     @Test public void testRemoveHydrogensFromMolecularHydrogen() {
@@ -1006,7 +1008,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(2, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
-        Assert.assertEquals(0, ac.getAtomCount());
+        Assert.assertEquals(2, ac.getAtomCount());
     }
 
     @Test
@@ -1080,6 +1082,21 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test public void removeHydrogens_db_cis3() throws Exception {
         assertRemoveH("CC(\\[H])=C(\\[H])C", "C/C=C\\C");
+    }
+    
+    // hydrogen isotopes should not be removed
+    @Test public void removeHydrogens_isotopes() throws Exception {
+        assertRemoveH("C([H])([2H])([3H])[H]", "C([2H])[3H]");
+    }
+
+    // hydrogens with charge should not be removed 
+    @Test public void removeHydrogens_ions() throws Exception {
+        assertRemoveH("C([H])([H+])([H-])[H]", "C([H+])[H-]");
+    }
+
+    @Test public void removeHydrogens_molecularH() throws Exception {
+        assertRemoveH("[H][H]", "[H][H]");
+        assertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
     }
     
     // util for testing hydrogen removal using SMILES

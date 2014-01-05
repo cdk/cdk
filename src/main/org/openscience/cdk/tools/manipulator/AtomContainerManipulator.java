@@ -606,7 +606,11 @@ public class AtomContainerManipulator {
         {
             // Clone/remove this atom?
             IAtom atom = org.getAtom(i);
-            if (!atom.getSymbol().equals("H"))
+            if (suppressibleHydrogen(org, atom))
+            {
+                hydrogens.add(atom);   // maintain list of removed H.
+            }
+            else
             {
                 IAtom clonedAtom = null;
 				try {
@@ -616,10 +620,6 @@ public class AtomContainerManipulator {
 				}
                 cpy.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
-            }
-            else
-            {
-                hydrogens.add(atom);   // maintain list of removed H.
             }
         }
 
@@ -739,6 +739,38 @@ public class AtomContainerManipulator {
         }
         
         return cpy;
+    }
+
+    /**
+     * Is the {@code atom} a suppressible hydrogen and can be represented as
+     * implicit. A hydrogen is suppressible if it is not an ion, not the major
+     * isotope (i.e. it is a deuterium or tritium atom) and is not molecular
+     * hydrogen.
+     *
+     * @param container the structure
+     * @param atom      an atom in the structure
+     * @return the atom is a hydrogen and it can be suppressed (implicit)
+     */
+    private static boolean suppressibleHydrogen(final IAtomContainer container, final IAtom atom) {
+        // is the atom a hydrogen
+        if (!"H".equals(atom.getSymbol()))
+            return false;
+        // is the hydrogen an ion?
+        if (atom.getFormalCharge() != null && atom.getFormalCharge() != 0)
+            return false;
+        // is the hydrogen deuterium / tritium?
+        if (atom.getMassNumber() != null && atom.getMassNumber() != 1)
+            return false;
+        // molecule hydrogen with implicit H?
+        if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() != 0)
+            return false;
+        // molecule hydrogen
+        List<IAtom> neighbors = container.getConnectedAtomsList(atom);
+        if (neighbors.size() == 1 && neighbors.get(0).getSymbol().equals("H"))
+            return false;
+        // what about bridging hydrogens?
+        // hydrogens with atom-atom mapping?
+        return true;
     }
 
     /**
