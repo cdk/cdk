@@ -577,7 +577,7 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+     * Produces a new AtomContainer without explicit Hs but with H count from one with Hs.
      * The new molecule is a deep copy.
      *
      * @param atomContainer The AtomContainer from which to remove the hydrogens
@@ -588,7 +588,7 @@ public class AtomContainerManipulator {
     public static IAtomContainer removeHydrogens(IAtomContainer atomContainer)
     {
         Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
+        List<IAtom> hydrogens = new ArrayList<IAtom>();  // lists removed Hs.
 
         // Clone atoms except those to be removed.
         IAtomContainer mol = atomContainer.getBuilder().newInstance(IAtomContainer.class);
@@ -605,15 +605,14 @@ public class AtomContainerManipulator {
 				try {
 					clonedAtom = (IAtom) atom.clone();
 				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new InternalError("an IAtom could not be cloned");
 				}
                 mol.addAtom(clonedAtom);
                 map.put(atom, clonedAtom);
             }
             else
             {
-                remove.add(atom);   // maintain list of removed H.
+                hydrogens.add(atom);   // maintain list of removed H.
             }
         }
 
@@ -631,7 +630,7 @@ public class AtomContainerManipulator {
                     k < length;
                     k++)
             {
-                if (remove.contains(bond.getAtom(k)))
+                if (hydrogens.contains(bond.getAtom(k)))
                 {
                     removedBond = true;
                     break;
@@ -650,31 +649,33 @@ public class AtomContainerManipulator {
 					e.printStackTrace();
 				}
                 assert clone != null;
-                clone.setAtoms(new IAtom[]{(IAtom) map.get(bond.getAtom(0)), (IAtom) map.get(bond.getAtom(1))});
+                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
                 mol.addBond(clone);
             }
         }
 
         // Recompute hydrogen counts of neighbours of removed Hydrogens.
-        for (IAtom aRemove : remove) {
+        for (IAtom hydrogen : hydrogens) {
             // Process neighbours.
-            for (IAtom iAtom : atomContainer.getConnectedAtomsList(aRemove)) {
-                final IAtom neighb = map.get(iAtom);
-                if (neighb == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
-                neighb.setImplicitHydrogenCount(
-                        (neighb.getImplicitHydrogenCount() == null ? 0 : neighb.getImplicitHydrogenCount())
-                                + 1
-                );
+            for (IAtom iAtom : atomContainer.getConnectedAtomsList(hydrogen)) {
+                final IAtom neighbor = map.get(iAtom);
+                if (neighbor == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
+                // XXX: null implicit hydrogen count might not be 0
+                int hCount = (neighbor.getImplicitHydrogenCount() == null ? 0 : neighbor.getImplicitHydrogenCount());
+                neighbor.setImplicitHydrogenCount(hCount + 1);
             }
         }
-        for(IAtom atom : mol.atoms()){
-            if(atom.getImplicitHydrogenCount()==null)
+
+        for (IAtom atom : mol.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null)
                 atom.setImplicitHydrogenCount(0);
         }
+        
+        // XXX: properties are not cloned
         mol.setProperties(atomContainer.getProperties());
         mol.setFlags(atomContainer.getFlags());
 
-        return (mol);
+        return mol;
     }
 
 	/**
