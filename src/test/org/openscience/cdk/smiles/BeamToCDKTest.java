@@ -419,8 +419,17 @@ public class BeamToCDKTest {
         assertThat(ses.length, is(2));
         assertThat(ses[0], is(instanceOf(ITetrahedralChirality.class)));
         assertThat(ses[1], is(instanceOf(ITetrahedralChirality.class)));
-
+        
         ITetrahedralChirality tc1 = (ITetrahedralChirality) ses[0];
+        ITetrahedralChirality tc2 = (ITetrahedralChirality) ses[1];
+        
+        // we want the second atom stereo as tc1
+        if (ac.getAtomNumber(tc1.getChiralAtom()) > ac.getAtomNumber(tc2.getChiralAtom())) {
+            ITetrahedralChirality swap = tc1;
+            tc1 = tc2;
+            tc2 = swap;
+        }
+        
         assertThat(tc1.getChiralAtom(), is(ac.getAtom(1)));
         assertThat(tc1.getLigands(), is(new IAtom[]{
                 ac.getAtom(0),
@@ -436,7 +445,7 @@ public class BeamToCDKTest {
         // we order the atoms by their index the tetrahedral configuration goes
         // from clockwise in the SMILES to anti-clockwise ('@'). Writing out the
         // SMILES again one can see it will flip back clockwise ('@@').
-        ITetrahedralChirality tc2 = (ITetrahedralChirality) ses[1];
+        
         assertThat(tc2.getChiralAtom(), is(ac.getAtom(6)));
         assertThat(tc2.getLigands(), is(new IAtom[]{
                 ac.getAtom(1),
