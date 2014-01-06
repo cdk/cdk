@@ -27,6 +27,7 @@ package org.openscience.cdk;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IFragmentAtom;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
@@ -91,5 +92,11 @@ public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 		buffer.append('}');
 		return buffer.toString();
 	}
-	
+
+    @Override public IFragmentAtom clone() throws CloneNotSupportedException {
+        IFragmentAtom cpy = (IFragmentAtom) super.clone();
+        cpy.setFragment(fragment.clone());
+        cpy.setExpanded(isExpanded);
+        return cpy;
+    }
 }

@@ -159,8 +159,8 @@ public class PseudoAtom extends Atom
         return description.toString();
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public IPseudoAtom clone() throws CloneNotSupportedException {
+        return (IPseudoAtom) super.clone();
     }
 }
 

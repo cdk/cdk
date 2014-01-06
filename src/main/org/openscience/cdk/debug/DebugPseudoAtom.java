@@ -423,7 +423,7 @@ public class DebugPseudoAtom extends PseudoAtom
 	}
 
     /** {@inheritDoc} */ @Override
-    public Object clone() throws CloneNotSupportedException {
+    public IPseudoAtom clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -431,7 +431,7 @@ public class DebugPseudoAtom extends PseudoAtom
         	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
         	logger.debug(exception);
         }
-        return clone;
+        return (IPseudoAtom) clone;
 	}
 
     /** {@inheritDoc} */ @Override
