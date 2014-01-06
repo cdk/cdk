@@ -642,6 +642,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
    }
 
     @Override public IAtom clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+        // XXX: clone always dodgy
+        return (IAtom) super.clone();
     }
 }
