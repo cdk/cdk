@@ -285,7 +285,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		mol1 = AtomContainerManipulator.removeHydrogens(mol1);
 		smiles1 = sg.create(mol1);
 		Assert.assertNotNull(smiles1);
-		Assert.assertEquals("OC1CCCCC1O", smiles1);
+		Assert.assertEquals("O[C@H]1CCCC[C@H]1O", smiles1);
 	}
 
 
