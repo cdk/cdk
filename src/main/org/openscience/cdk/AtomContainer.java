@@ -1014,6 +1014,10 @@ public class AtomContainer extends ChemObject
 				addSingleElectron(atomContainer.getSingleElectron(f));
 			}
 		}
+        
+        for (IStereoElement se : atomContainer.stereoElements())
+            stereoElements.add(se);
+        
 		notifyChanged();
 	}
 
