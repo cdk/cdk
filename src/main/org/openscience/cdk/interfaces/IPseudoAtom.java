@@ -57,6 +57,11 @@ public interface IPseudoAtom extends IAtom {
      */
     public void setLabel(String label);
 
+    /**
+     * @inheritDoc
+     */
+    public IPseudoAtom clone() throws CloneNotSupportedException;
+
 }
 
 

@@ -400,7 +400,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @return  The cloned object   
          */
-        public Object clone() throws CloneNotSupportedException {
+        public IAtom clone() throws CloneNotSupportedException {
             Object clone = super.clone();
             if (point2d != null) {
                 ((Atom)clone).setPoint2d(new Point2d(point2d.x, point2d.y));
@@ -411,7 +411,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
             if (fractionalPoint3d != null) {
                 ((Atom)clone).setFractionalPoint3d(new Point3d(fractionalPoint3d.x, fractionalPoint3d.y, fractionalPoint3d.z));
             }
-            return clone;
+            return (IAtom) clone;
         }
         
 }

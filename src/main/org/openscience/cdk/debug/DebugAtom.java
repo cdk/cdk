@@ -421,7 +421,7 @@ public class DebugAtom extends Atom implements IAtom {
 	}
 
     /** {@inheritDoc} */ @Override
-	public Object clone() throws CloneNotSupportedException {
+	public IAtom clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -429,7 +429,7 @@ public class DebugAtom extends Atom implements IAtom {
         	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
         	logger.debug(exception);
         }
-        return clone;
+        return (IAtom) clone;
 	}
 
     /** {@inheritDoc} */ @Override

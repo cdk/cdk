@@ -60,4 +60,8 @@ public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
 		s.append(")");
 		return s.toString();
     }
+
+    @Override public IAtom clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
 }

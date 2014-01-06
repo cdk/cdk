@@ -23,6 +23,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import org.openscience.cdk.CDKConstants;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -640,4 +641,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
        return this.electronValency;
    }
 
+    @Override public IAtom clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
 }

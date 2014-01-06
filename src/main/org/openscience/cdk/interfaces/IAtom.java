@@ -141,6 +141,11 @@ public interface IAtom extends IAtomType {
 	 * @see       #setStereoParity
 	 */
 	public Integer getStereoParity();
+
+    /**
+     * @inheritDoc
+     */
+    public IAtom clone() throws CloneNotSupportedException;
 	
 }
 

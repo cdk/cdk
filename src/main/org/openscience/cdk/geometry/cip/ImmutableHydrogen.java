@@ -51,7 +51,7 @@ class ImmutableHydrogen implements IAtom {
 
     /** {@inheritDoc} */
     @TestMethod("testClone")
-    public Object clone() {
+    public IAtom clone() {
         return this;
     }
     
