@@ -4,3 +4,4 @@ log4j*.jar
 vecmath*.jar
 beam-core-0.4.jar
 beam-func-0.4.jar
+guava-14.0.1.jar
