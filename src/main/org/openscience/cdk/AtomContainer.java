@@ -25,6 +25,7 @@ package org.openscience.cdk;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -212,17 +213,13 @@ public class AtomContainer extends ChemObject
      */
     @Override
     public void setStereoElements(List<IStereoElement> elements) {
-        this.stereoElements.clear();
+        this.stereoElements = new HashSet<IStereoElement>();
         this.stereoElements.addAll(elements);
     }
 
     /** {@inheritDoc} */
     public Iterable<IStereoElement> stereoElements() {
-        return new Iterable<IStereoElement>() {
-            public Iterator<IStereoElement> iterator() {
-                return stereoElements.iterator();
-            }
-        };
+        return Collections.unmodifiableSet(stereoElements);
     }
 	/**
 	 *  Sets the array of atoms of this AtomContainer.
