@@ -465,7 +465,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      *
      * @return The cloned object
      */
-    public Object clone() throws CloneNotSupportedException {
+    public IBond clone() throws CloneNotSupportedException {
         Bond clone = (Bond) super.clone();
         // clone all the Atoms
         if (atoms != null) {

@@ -255,5 +255,8 @@ public interface IBond extends IElectronContainer {
 	 * @return       True, if the bonds share an atom, otherwise false
 	 */
 	public boolean isConnectedTo(IBond bond);
+
+    /** @inheritDoc */
+    public IBond clone() throws CloneNotSupportedException;
 }
 

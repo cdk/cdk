@@ -183,7 +183,7 @@ public class DebugBond extends Bond
 	}
 
     /** {@inheritDoc} */ @Override
-    public Object clone() throws CloneNotSupportedException {
+    public IBond clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
         	clone = super.clone();
@@ -191,7 +191,7 @@ public class DebugBond extends Bond
         	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
         	logger.debug(exception);
         }
-        return clone;
+        return (IBond) clone;
 	}
 
     /** {@inheritDoc} */ @Override

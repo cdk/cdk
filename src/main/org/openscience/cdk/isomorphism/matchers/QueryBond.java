@@ -428,7 +428,7 @@ public abstract class QueryBond extends QueryChemObject implements IQueryBond{
      *
      * @return The cloned object
      */
-    public Object clone() throws CloneNotSupportedException {
+    public IQueryBond clone() throws CloneNotSupportedException {
         QueryBond clone = (QueryBond) super.clone();
         // clone all the Atoms
         if (atoms != null) {
