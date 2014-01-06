@@ -381,7 +381,7 @@ public class TemplateExtractor {
 	public List<IBitFingerprint> makeFingerprintsFromSdf(boolean anyAtom, boolean anyAtomAnyBond,
 	        Map<String,Integer> timings, BufferedReader fin, int limit) throws Exception {
 		AllRingsFinder allRingsFinder = new AllRingsFinder();
-		allRingsFinder.setTimeout(10000); // 10 seconds
+		
 
 		IFingerprinter fingerPrinter = new HybridizationFingerprinter(
 		    HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH
