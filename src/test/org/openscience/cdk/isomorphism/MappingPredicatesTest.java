@@ -24,14 +24,22 @@
 
 package org.openscience.cdk.isomorphism;
 
+import com.google.common.collect.Iterables;
 import org.junit.Test;
+import org.openscience.cdk.graph.GraphUtil;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  * @author John May
- * @cdk.module test-isomorphism
+ * @cdk.module test-smarts
  */
 public class MappingPredicatesTest {
 
@@ -42,4 +50,31 @@ public class MappingPredicatesTest {
         assertFalse(uam.apply(new int[]{4, 3, 2, 1}));
         assertFalse(uam.apply(new int[]{1, 5, 2, 3}));
     }
+
+    @Test public void uniqueBonds() throws Exception {
+        
+        IAtomContainer query  = smi("C1CCC1");
+        IAtomContainer target = smi("C12C3C1C23");
+        
+        Iterable<int[]> mappings = VentoFoggia.findSubstructure(query)
+                                              .matchAll(target);
+        
+        // using unique atoms we may think we only found 1 mapping
+        assertThat(Iterables.size(Iterables.filter(mappings,
+                                                   new UniqueAtomMatches())),
+                   is(1));
+
+        // when in fact we found 4 different mappings
+        assertThat(Iterables.size(Iterables.filter(mappings,
+                                                   new UniqueBondMatches(GraphUtil.toAdjList(query)))),
+                   is(3));
+    }
+    
+    IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    SmilesParser       smipar = new SmilesParser(bldr);
+
+    IAtomContainer smi(String smi) throws Exception {
+        return smipar.parseSmiles(smi);
+    }
+
 }

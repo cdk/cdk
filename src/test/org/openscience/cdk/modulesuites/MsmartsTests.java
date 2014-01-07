@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.coverage.SmartsCoverageTest;
+import org.openscience.cdk.isomorphism.MappingPredicatesTest;
 import org.openscience.cdk.isomorphism.SMARTSTest;
 import org.openscience.cdk.isomorphism.matchers.smarts.AnyOrderQueryBondTest;
 import org.openscience.cdk.isomorphism.matchers.smarts.DaylightSMARTSAtomInvariantsTest;
@@ -70,6 +71,7 @@ import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitorTest;
 
     // need these here to avoid circular dependencies
     VFSubstructureTest.class,
-    UllmannSubstructureTest.class
+    UllmannSubstructureTest.class,
+    MappingPredicatesTest.class
 })
 public class MsmartsTests {}
