@@ -253,7 +253,7 @@ public final class Canon {
 
             // count non-suppressed (explicit) hydrogens
             for (int w : graph[v])
-                if (atomicNumber(atom) == 1)
+                if (atomicNumber(container.getAtom(w)) == 1)
                     expH++;
 
             long label = 0; // connectivity (first in)
