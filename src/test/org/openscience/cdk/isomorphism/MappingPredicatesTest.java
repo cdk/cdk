@@ -33,9 +33,9 @@ import static org.junit.Assert.assertTrue;
  * @author John May
  * @cdk.module test-isomorphism
  */
-public class UniqueAtomMatchesTest {
+public class MappingPredicatesTest {
 
-    @Test public void testApply() throws Exception {
+    @Test public void uniqueAtoms() throws Exception {
         UniqueAtomMatches uam = new UniqueAtomMatches();
         assertTrue(uam.apply(new int[]{1, 2, 3, 4}));
         assertTrue(uam.apply(new int[]{1, 2, 3, 5}));
