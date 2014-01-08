@@ -84,20 +84,22 @@ public abstract class Pattern {
      * }
      * </pre></blockquote>
      *
-     * Using Guava we can easily search and manipulate the mapped states. Here's
-     * an example of finding the first 5 mappings and creating an array. If the
-     * mapper is lazy other states are simply not explored.
+     * Using the fluent interface (see {@link Mappings}) we can search and
+     * manipulate the mappings. Here's an example of finding the first 5
+     * mappings and creating an array. If the mapper is lazy other states are
+     * simply not explored.
      *
      * <blockquote><pre>
-     * // find only the first 5 mappings
+     * // find only the first 5 mappings and store them in an array
      * Pattern pattern  = ...;
-     * int[][] mappings = FluentIterable.from(pattern.matchAll(target))
-     *                                  .limit(5)
-     *                                  .toArray(int[].class);
+     * int[][] mappings = pattern.matchAll(target)
+     *                           .limit(5)
+     *                           .toArray();
      * </pre></blockquote>
      *
      * @param target the container to search for the pattern in
      * @return the mapping from the pattern to the target
+     * @see Mappings
      */
-    public abstract Iterable<int[]> matchAll(IAtomContainer target);
+    public abstract Mappings matchAll(IAtomContainer target);
 }

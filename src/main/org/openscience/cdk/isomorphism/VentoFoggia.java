@@ -126,7 +126,7 @@ public final class VentoFoggia extends Pattern {
 
     /** @inheritDoc */
     @TestMethod("benzeneIdentical,benzeneSubsearch")
-    @Override public Iterable<int[]> matchAll(final IAtomContainer target) {
+    @Override public Mappings matchAll(final IAtomContainer target) {
         EdgeToBondMap bonds2 = EdgeToBondMap.withSpaceFor(target);
         int[][] g2 = GraphUtil.toAdjList(target, bonds2);
         Iterable<int[]> iterable = new VFIterable(query, target,
@@ -136,9 +136,9 @@ public final class VentoFoggia extends Pattern {
                                                   subgraph);
         // do match stereo query chem objects
         if (!queryMatching)
-            return Iterables.filter(iterable,
-                                    new StereoMatch(query, target));
-        return iterable;
+            iterable = Iterables.filter(iterable,
+                                        new StereoMatch(query, target));
+        return new Mappings(query, target, iterable);
     }
 
     /**
