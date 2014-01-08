@@ -61,7 +61,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
      *
      * @param expectedHits expected number of unique matches
      */
-    public UniqueBondMatches(int[][] g, int expectedHits) {
+    private UniqueBondMatches(int[][] g, int expectedHits) {
         this.unique = Sets.newHashSetWithExpectedSize(expectedHits);
         this.g = g;
     }
