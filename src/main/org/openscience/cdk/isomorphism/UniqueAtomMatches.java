@@ -48,7 +48,7 @@ import java.util.Set;
  * @cdk.module isomorphism
  */
 @TestClass("org.openscience.cdk.isomorphism.MappingPredicatesTest")
-public final class UniqueAtomMatches implements Predicate<int[]> {
+final class UniqueAtomMatches implements Predicate<int[]> {
 
     /** Which mappings have we seen already. */
     private final Set<BitSet> unique;
@@ -59,7 +59,7 @@ public final class UniqueAtomMatches implements Predicate<int[]> {
      *
      * @param expectedHits expected number of unique matches
      */
-    public UniqueAtomMatches(int expectedHits) {
+    private UniqueAtomMatches(int expectedHits) {
         this.unique = Sets.newHashSetWithExpectedSize(expectedHits);
     }
 

@@ -32,7 +32,6 @@ import java.util.BitSet;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.collect.FluentIterable;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -45,7 +44,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.isomorphism.Pattern;
 import org.openscience.cdk.isomorphism.Ullmann;
-import org.openscience.cdk.isomorphism.UniqueAtomMatches;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
@@ -117,13 +115,11 @@ public class MACCSFingerprinter implements IFingerprinter {
             if (pattern == null)
                 continue;
 
-            // count unique hits (limiting to the number we need)
-            int found = FluentIterable.from(pattern.matchAll(container))
-                                      .filter(new UniqueAtomMatches(keys[i].count + 1))
-                                      .limit(keys[i].count + 1)
-                                      .size();
-            
-            if (keys[i].count == found - 1)
+            // check if there are at least 'count' unique hits, key.count = 0
+            // means find at least one match hence we add 1 to out limit
+            if (pattern.matchAll(container)
+                       .uniqueAtoms()
+                       .atLeast(keys[i].count + 1))
                 fp.set(i);
         }
 
