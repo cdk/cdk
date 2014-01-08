@@ -56,7 +56,8 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than
- * test if it {@link #matches}.
+ * test if it {@link #matches}. These methods automatically verify 
+ * stereochemistry.
  *
  * <blockquote><pre>
  * IAtomContainer query   = ...;
@@ -121,7 +122,7 @@ public final class VentoFoggia extends Pattern {
     /** @inheritDoc */
     @TestMethod("benzeneIdentical,benzeneSubsearch")
     @Override public int[] match(IAtomContainer target) {
-        return Iterables.getFirst(matchAll(target), new int[0]);
+        return matchAll(target).stereochemistry().first();
     }
 
     /** @inheritDoc */
@@ -134,10 +135,6 @@ public final class VentoFoggia extends Pattern {
                                                   bonds1, bonds2,
                                                   atomMatcher, bondMatcher,
                                                   subgraph);
-        // do match stereo query chem objects
-        if (!queryMatching)
-            iterable = Iterables.filter(iterable,
-                                        new StereoMatch(query, target));
         return new Mappings(query, target, iterable);
     }
 

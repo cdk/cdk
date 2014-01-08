@@ -56,7 +56,8 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than
- * test if it {@link #matches} first.
+ * test if it {@link #matches} first. These methods automatically verify 
+ * stereochemistry.
  *
  * <blockquote><pre>
  * IAtomContainer query   = ...;
@@ -114,7 +115,7 @@ public final class Ullmann extends Pattern {
 
     @TestMethod("benzeneSubsearch,napthaleneSubsearch")
     @Override public int[] match(IAtomContainer target) {
-        return Iterables.getFirst(matchAll(target), new int[0]);
+        return matchAll(target).stereochemistry().first();
     }
 
     @TestMethod("benzeneSubsearch,napthaleneSubsearch")
@@ -124,11 +125,7 @@ public final class Ullmann extends Pattern {
         Iterable<int[]> iterable = new UllmannIterable(query, target,
                                                        g1, g2,
                                                        bonds1, bonds2,
-                                                       atomMatcher, bondMatcher);
-        // do match stereo query chem objects
-        if (!queryMatching)
-            iterable = Iterables.filter(iterable,
-                                        new StereoMatch(query, target));
+                                                       atomMatcher, bondMatcher);    
         return new Mappings(query, target, iterable);       
     }
 

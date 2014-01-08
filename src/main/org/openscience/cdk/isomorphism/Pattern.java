@@ -36,7 +36,8 @@ public abstract class Pattern {
 
     /**
      * Find a matching of this pattern in the {@code target}. If no such order
-     * exist an empty mapping is returned.
+     * exist an empty mapping is returned. Depending on the implementation
+     * stereochemistry may be checked (recommended).
      *
      * <blockquote><pre>
      * Pattern        pattern = ...; // create pattern
@@ -55,6 +56,8 @@ public abstract class Pattern {
 
     /**
      * Determine if there is a mapping of this pattern in the {@code target}.
+     * Depending on the implementation stereochemistry may be checked
+     * (recommended).
      *
      * <blockquote><pre>
      * Pattern        pattern = ...; // create pattern
@@ -73,7 +76,9 @@ public abstract class Pattern {
     }
 
     /**
-     * Find all mappings of this pattern in the {@code target}.
+     * Find all mappings of this pattern in the {@code target}. Stereochemistry
+     * should not be checked to allow filtering with {@link
+     * Mappings#stereochemistry()}.
      *
      * <blockquote><pre>
      * Pattern        pattern = ...; // create pattern

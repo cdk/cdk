@@ -326,7 +326,7 @@ public abstract class SubstructureTest {
                            + " should match "
                            + target.getProperty(TITLE)
                            + " " + count + " times",
-                   Iterables.size(create(query).matchAll(target)),
+                   create(query).matchAll(target).stereochemistry().count(),
                    is(count));
     }
 

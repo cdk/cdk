@@ -32,6 +32,7 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -256,6 +257,9 @@ public final class Mappings implements Iterable<int[]> {
      * @return fluent-api instance
      */
     public Mappings stereochemistry() {
+        // query structures currently have special requirements (i.e. SMARTS)
+        if (query instanceof IQueryAtomContainer)
+            return this;
         return filter(new StereoMatch(query, target));
     }
 
@@ -386,6 +390,16 @@ public final class Mappings implements Iterable<int[]> {
      */
     public boolean atLeast(int n) {
         return limit(n).count() == n;
+    }
+
+    /**
+     * Obtain the first match - if there is no first match an empty array is
+     * returned.
+     * 
+     * @return first match
+     */
+    public int[] first() {
+        return Iterables.getFirst(iterable, new int[0]);
     }
 
     /**
