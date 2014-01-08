@@ -81,7 +81,7 @@ public abstract class Pattern {
      * Mappings#stereochemistry()}.
      *
      * <blockquote><pre>
-     * Pattern        pattern = ...; // create pattern
+     * Pattern pattern = Pattern.findSubstructure(query);
      * for (IAtomContainer m : ms) {
      *     for (int[] mapping : pattern.matchAll(m)) {
      *         // found mapping
@@ -96,7 +96,7 @@ public abstract class Pattern {
      *
      * <blockquote><pre>
      * // find only the first 5 mappings and store them in an array
-     * Pattern pattern  = ...;
+     * Pattern pattern  = Pattern.findSubstructure(query);
      * int[][] mappings = pattern.matchAll(target)
      *                           .limit(5)
      *                           .toArray();
@@ -107,4 +107,31 @@ public abstract class Pattern {
      * @see Mappings
      */
     public abstract Mappings matchAll(IAtomContainer target);
+
+
+    /**
+     * Create a pattern which can be used to find molecules which contain the
+     * {@code query} structure. The default structure search implementation is
+     * {@link VentoFoggia}.
+     *
+     * @param query the substructure to find
+     * @return a pattern for finding the {@code query}
+     * @see VentoFoggia
+     */
+    public static Pattern findSubstructure(IAtomContainer query) {
+        return VentoFoggia.findSubstructure(query);
+    }
+
+    /**
+     * Create a pattern which can be used to find molecules which are the same
+     * as the {@code query} structure. The default structure search 
+     * implementation is {@link VentoFoggia}.
+     *
+     * @param query the substructure to find
+     * @return a pattern for finding the {@code query}
+     * @see VentoFoggia
+     */
+    public static Pattern findIdentical(IAtomContainer query) {
+        return VentoFoggia.findSubstructure(query);
+    }
 }
