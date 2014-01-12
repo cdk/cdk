@@ -45,7 +45,23 @@ public interface ITetrahedralChirality extends IStereoElement {
      */
     public enum Stereo {
         CLOCKWISE,
-        ANTI_CLOCKWISE
+        ANTI_CLOCKWISE;
+
+        /**
+         * Invert this conformation, inv(clockwise) = anti_clockwise,
+         * inv(anti_clockwise) = clockwise.
+         *
+         * @return the inverse conformation
+         */
+        public Stereo invert() {
+            switch (this) {
+                case CLOCKWISE:
+                    return ANTI_CLOCKWISE;
+                case ANTI_CLOCKWISE:
+                    return CLOCKWISE;
+            }
+            return this;
+        }
     }
 
     /**
