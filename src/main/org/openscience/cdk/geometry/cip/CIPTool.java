@@ -244,8 +244,8 @@ public class CIPTool {
     }
 
     /**
-     * Obtain the permutation parity (-1,0,+1) to put the ligands in sorted 
-     * order (lowest first). A parity of 0 indicates two or more ligands were
+     * Obtain the permutation parity (-1,0,+1) to put the ligands in descending 
+     * order (highest first). A parity of 0 indicates two or more ligands were
      * equivalent.
      * 
      * @param ligands the ligands to sort
@@ -261,7 +261,7 @@ public class CIPTool {
             ILigand ligand = ligands[j];
             int i   = j - 1;
             int cmp = 0;
-            while ((i >= 0) && (cmp = cipRule.compare(ligand, ligands[i])) < 0) {
+            while ((i >= 0) && (cmp = cipRule.compare(ligand, ligands[i])) > 0) {
                 ligands[i + 1] = ligands[i--];
                 swaps++;
             }
