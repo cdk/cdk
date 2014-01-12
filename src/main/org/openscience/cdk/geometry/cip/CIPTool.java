@@ -32,6 +32,7 @@ import org.openscience.cdk.geometry.cip.rules.CIPLigandRule;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
@@ -110,20 +111,27 @@ public class CIPTool {
      * @return A {@link CIP_CHIRALITY} value.
      */
     @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")
-    public static CIP_CHIRALITY getCIPChirality(
-            IAtomContainer container, ITetrahedralChirality stereoCenter) {
+    public static CIP_CHIRALITY getCIPChirality(IAtomContainer container,
+                                                ITetrahedralChirality stereoCenter) {
         
-        LigancyFourChirality cipLigancy = new LigancyFourChirality(container, stereoCenter);
-        ILigand[] ligands = order(cipLigancy.getLigands());
-        LigancyFourChirality rsChirality = cipLigancy.project(ligands);
+        // the LigancyFourChirality is kind of redundant but we keep for an
+        // easy way to get the ILigands array
+        LigancyFourChirality tmp    = new LigancyFourChirality(container, stereoCenter);
+        Stereo               stereo = stereoCenter.getStereo();
 
-        boolean allAreDifferent = checkIfAllLigandsAreDifferent(ligands);
-        if (!allAreDifferent) return CIP_CHIRALITY.NONE;
+        int parity = permParity(tmp.getLigands());
 
-        if (rsChirality.getStereo() == Stereo.CLOCKWISE)
+        if (parity == 0)
+            return CIP_CHIRALITY.NONE;
+        if (parity < 0)
+            stereo = stereo.invert();
+        
+        if (stereo == Stereo.CLOCKWISE)
             return CIP_CHIRALITY.R;
-
-        return CIP_CHIRALITY.S;
+        if (stereo == Stereo.ANTI_CLOCKWISE)
+            return CIP_CHIRALITY.S;
+        
+        return CIP_CHIRALITY.NONE;
     }
 
     /**
@@ -155,6 +163,37 @@ public class CIPTool {
 
         Arrays.sort(newLigands, cipRule);
         return newLigands;
+    }
+
+    /**
+     * Obtain the permutation parity (-1,0,+1) to put the ligands in sorted 
+     * order (lowest first). A parity of 0 indicates two or more ligands were
+     * equivalent.
+     * 
+     * @param ligands the ligands to sort
+     * @return parity, odd (-1), even (+1) or none (0)
+     */
+    private static int permParity(final ILigand[] ligands) {
+
+        // count the number of swaps made by insertion sort - if duplicates
+        // are fount the parity is 0
+        int swaps = 0;
+
+        for (int j = 1, hi = ligands.length; j < hi; j++) {
+            ILigand ligand = ligands[j];
+            int i   = j - 1;
+            int cmp = 0;
+            while ((i >= 0) && (cmp = cipRule.compare(ligand, ligands[i])) < 0) {
+                ligands[i + 1] = ligands[i--];
+                swaps++;
+            }
+            if (cmp == 0) // identical entries
+                return 0;
+            ligands[i + 1] = ligand;
+        }
+        
+        // odd (-1) or even (+1)
+        return (swaps & 0x1) == 0x1 ? -1 : +1;
     }
 
     /**
