@@ -32,7 +32,7 @@ import java.util.Arrays;
 /**
  * A state for the Vento-Foggia (VF) algorithm. The state allows adding and
  * removing of mappings as well as generating the new candidate mappings {@link
- * #nextN(int)} and {@link #nextM(int)}. The feasibility check is left for
+ * #nextN(int)} and {@link #nextM(int, int)}. The feasibility check is left for
  * subclasses to implement.
  *
  * @author John May
@@ -112,10 +112,10 @@ abstract class AbstractVFState extends State {
     @Override final int nextM(int n, int m) {
         if (size == 0)
             return m + 1;
-        // FIXME: explore all t2[m..mMax] first and then explore unmapped 
-        //        without restarting. 
+        // if the query vertex 'n' is in the terminal set (t1) then the
+        // target vertex must be in the terminal set (t2)
         for (int i = m + 1; i < g2.length; i++)
-            if (m2[i] == UNMAPPED)
+            if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0))
                 return i;
         return mMax();
     }

@@ -80,8 +80,9 @@ public class AbstractVFStateTest {
         state.size = 2;
         state.m2[0] = 1;
         state.m2[1] = 0;
+        state.t1[1] = 1; // query vertex is in terminal set 
         state.t2[4] = 1; // <- first terminal (not kept returned for now - allow disconnected)
-        assertThat(state.nextM(0, -1), is(2));
+        assertThat(state.nextM(1, -1), is(4));
     }
 
     // no terminal mappings, select the first unmapped    
