@@ -124,6 +124,12 @@ public class CDKConstants {
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
+    
+    /**
+     * Property key to store the CIP descriptor label for an atom / bond. The
+     * label is a string.
+     */
+    public final static String CIP_DESCRIPTOR = "cip.label";
 
 
     /* **************************************

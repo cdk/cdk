@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.cip.rules.CIPLigandRule;
@@ -33,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
@@ -100,6 +102,33 @@ public class CIPTool {
             return CIP_CHIRALITY.R;
 
         return CIP_CHIRALITY.S;
+    }
+
+    /**
+     * Convenience method for labelling all stereo elements. The {@link
+     * CIP_CHIRALITY} is determined for each element and stored as as {@link
+     * String} on the {@link CDKConstants#CIP_DESCRIPTOR} property key.
+     * Atoms/bonds that are not stereocenters have no label assigned and the
+     * property will be null.
+     *
+     * @param container structure to label
+     */
+    @TestMethod("label")
+    public static void label(IAtomContainer container) {
+
+        for (IStereoElement stereoElement : container.stereoElements()) {
+            if (stereoElement instanceof ITetrahedralChirality) {
+                ITetrahedralChirality tc = (ITetrahedralChirality) stereoElement;
+                tc.getChiralAtom().setProperty(CDKConstants.CIP_DESCRIPTOR,
+                                               getCIPChirality(container, tc).toString());
+            }
+            else if (stereoElement instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) stereoElement;
+                dbs.getStereoBond().setProperty(CDKConstants.CIP_DESCRIPTOR,
+                                                getCIPChirality(container, dbs).toString());
+            }
+        }
+        
     }
 
     /**

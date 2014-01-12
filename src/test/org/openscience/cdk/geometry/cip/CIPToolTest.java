@@ -28,11 +28,13 @@ import java.util.List;
 
 import javax.vecmath.Point3d;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -187,6 +189,22 @@ public class CIPToolTest extends CDKTestCase {
                                         IDoubleBondStereochemistry.Conformation.OPPOSITE
                                 ));
         assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
+    }
+    
+    @Test public void label() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
+                .parseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
+        CIPTool.label(container);
+        assertThat(container.getAtom(3).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                   CoreMatchers.is("R"));
+        assertThat(container.getAtom(10).getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                   CoreMatchers.is("S"));
+        assertThat(container.getBond(container.getAtom(1), container.getAtom(2))
+                            .getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                   CoreMatchers.is("E"));
+        assertThat(container.getBond(container.getAtom(5), container.getAtom(7))
+                            .getProperty(CDKConstants.CIP_DESCRIPTOR, String.class),
+                   CoreMatchers.is("Z"));
     }
 
     
