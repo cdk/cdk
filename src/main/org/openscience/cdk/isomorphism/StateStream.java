@@ -61,7 +61,7 @@ final class StateStream implements Iterator<int[]> {
     StateStream(final State state) {
         this.state = state;
         this.stack = new CandidateStack(state.nMax());
-        this.next = findNext(); // first-mapping
+        this.next  = state.nMax() == 0 ? null : findNext(); // first-mapping
     }
 
     /** @inheritDoc */
