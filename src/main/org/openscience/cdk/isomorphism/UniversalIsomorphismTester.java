@@ -489,11 +489,36 @@ public class UniversalIsomorphismTester {
 
 	  // conversions of RGraph's internal solutions to G1/G2 mappings
       for (BitSet set : solutionList) {
-          rMapsList.add(rGraph.bitSetToRMap(set));
+          List<RMap> rmap = rGraph.bitSetToRMap(set);
+          if (checkQueryAtoms(rmap, g1, g2))
+              rMapsList.add(rmap);
       }
 
 	  return rMapsList;
   }
+
+    /**
+     * Checks that {@link IQueryAtom}'s correctly match consistently.
+     * 
+     * @param bondmap bond mapping
+     * @param g1 target graph
+     * @param g2 query graph
+     * @return the atom matches are consistent
+     */
+  private boolean checkQueryAtoms(List<RMap> bondmap, IAtomContainer g1, IAtomContainer g2) {
+      if (!(g2 instanceof IQueryAtomContainer))
+          return true;
+      List<RMap> atommap = makeAtomsMapOfBondsMap(bondmap, g1, g2);
+      for (RMap rmap : atommap) {
+          IAtom a1 = g1.getAtom(rmap.getId1());
+          IAtom a2 = g2.getAtom(rmap.getId2());
+          if (a2 instanceof IQueryAtom) {
+              if (!((IQueryAtom) a2).matches(a1))
+                  return false;
+          }
+      }
+      return true;
+  } 
 
   //////////////////////////////////////
   //    Manipulation tools
