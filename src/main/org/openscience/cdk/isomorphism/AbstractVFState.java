@@ -109,7 +109,7 @@ abstract class AbstractVFState extends State {
      * @return the next value of m
      */
     @TestMethod("nextMAt0,nextMTerminal,nextMNonTerminal")
-    @Override final int nextM(int m) {
+    @Override final int nextM(int n, int m) {
         if (size == 0)
             return m + 1;
         // FIXME: explore all t2[m..mMax] first and then explore unmapped 

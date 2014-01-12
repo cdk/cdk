@@ -68,10 +68,10 @@ public class AbstractVFStateTest {
     // size = 0, always the next vertex
     @Test public void nextMAt0() {
         AbstractVFState state = create(5, 10);
-        assertThat(state.nextM(-1), is(0));
-        assertThat(state.nextM(0), is(1));
-        assertThat(state.nextM(1), is(2));
-        assertThat(state.nextM(2), is(3));
+        assertThat(state.nextM(0, -1), is(0));
+        assertThat(state.nextM(0, 0), is(1));
+        assertThat(state.nextM(0, 1), is(2));
+        assertThat(state.nextM(0, 2), is(3));
     }
 
     // size > 0, select the first unmapped terminal vertex
@@ -81,7 +81,7 @@ public class AbstractVFStateTest {
         state.m2[0] = 1;
         state.m2[1] = 0;
         state.t2[4] = 1; // <- first terminal (not kept returned for now - allow disconnected)
-        assertThat(state.nextM(-1), is(2));
+        assertThat(state.nextM(0, -1), is(2));
     }
 
     // no terminal mappings, select the first unmapped    
@@ -90,7 +90,7 @@ public class AbstractVFStateTest {
         state.size = 2;
         state.m2[0] = 1;
         state.m2[1] = 0;
-        assertThat(state.nextM(-1), is(2));
+        assertThat(state.nextM(0, -1), is(2));
     }
 
     @Test public void addNonFeasible() {

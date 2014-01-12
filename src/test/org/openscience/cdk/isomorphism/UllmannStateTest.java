@@ -56,11 +56,11 @@ public class UllmannStateTest {
     public void testNextM() throws Exception {
         UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
                                                         BondMatcher.forAny());
-        assertThat(state.nextM(-1), is(0));
-        assertThat(state.nextM(0),  is(1));
-        assertThat(state.nextM(1),  is(2));
+        assertThat(state.nextM(0, -1), is(0));
+        assertThat(state.nextM(0, 0),  is(1));
+        assertThat(state.nextM(0, 1),  is(2));
         state.m2[1] = 0; // 1 has been mapped and should be skipped over 
-        assertThat(state.nextM(0),  is(2));
+        assertThat(state.nextM(0, 0),  is(2));
     }
 
     @Test

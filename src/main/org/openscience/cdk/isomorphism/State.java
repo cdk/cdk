@@ -51,10 +51,11 @@ abstract class State {
      * Given the previous candidate generate the next target candidate. The
      * first candidate passed is always -1.
      *
+     * @param n the current n vertex
      * @param m the previous candidate
      * @return next candidate
      */
-    abstract int nextM(int m);
+    abstract int nextM(int n, int m);
 
     /**
      * The max query candidate (number of vertices in the query).

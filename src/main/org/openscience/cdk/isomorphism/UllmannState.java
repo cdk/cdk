@@ -115,7 +115,7 @@ final class UllmannState extends State {
     }
 
     /** @inheritDoc */
-    @Override int nextM(int m) {
+    @Override int nextM(int n, int m) {
         for (int i = m + 1; i < g2.length; i++)
             if (m2[i] == UNMAPPED)
                 return i;

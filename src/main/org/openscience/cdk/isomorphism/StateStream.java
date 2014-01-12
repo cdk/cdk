@@ -110,7 +110,7 @@ final class StateStream implements Iterator<int[]> {
                          m = stack.popM());
 
 
-        while ((m = state.nextM(m)) < state.mMax()) {
+        while ((m = state.nextM(n, m)) < state.mMax()) {
             if (state.add(n, m)) {
                 stack.push(n, m);
                 n = state.nextN(-1);
