@@ -35,6 +35,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.cip.CIPTool.CIP_CHIRALITY;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -42,6 +43,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.CMLReader;
@@ -49,9 +51,13 @@ import org.openscience.cdk.silent.ChemFile;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.StereoTool;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-cip
@@ -152,6 +158,39 @@ public class CIPToolTest extends CDKTestCase {
         CIP_CHIRALITY rsChirality = CIPTool.getCIPChirality(molecule, chirality);
         Assert.assertEquals(CIP_CHIRALITY.S, rsChirality);
     }
+
+    @Test public void testGetCIPChirality_DoubleBond_Together() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
+                .parseSmiles("CCC(C)=C(C)CC");
+        CIP_CHIRALITY label = CIPTool.getCIPChirality(container,
+                                new DoubleBondStereochemistry(
+                                        container.getBond(container.getAtom(2), container.getAtom(4)),
+                                        new IBond[]{
+                                                container.getBond(container.getAtom(2), container.getAtom(3)),
+                                                container.getBond(container.getAtom(4), container.getAtom(5))
+                                        },
+                                        IDoubleBondStereochemistry.Conformation.TOGETHER
+                                ));
+        assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
+    }
+    
+    @Test public void testGetCIPChirality_DoubleBond_Opposite() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
+                .parseSmiles("CCC(C)=C(C)CC");
+        CIP_CHIRALITY label = CIPTool.getCIPChirality(container,
+                                new DoubleBondStereochemistry(
+                                        container.getBond(container.getAtom(2), container.getAtom(4)),
+                                        new IBond[]{
+                                                container.getBond(container.getAtom(2), container.getAtom(3)),
+                                                container.getBond(container.getAtom(4), container.getAtom(6))
+                                        },
+                                        IDoubleBondStereochemistry.Conformation.OPPOSITE
+                                ));
+        assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
+    }
+
+    
+
     @Test
     public void testDefineLigancyFourChirality() {
         LigancyFourChirality chirality = CIPTool.defineLigancyFourChirality(

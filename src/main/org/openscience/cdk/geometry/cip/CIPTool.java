@@ -38,6 +38,8 @@ import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.stereo.StereoTool;
 
+import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
+
 /**
  * Tool to help determine the R,S and stereochemistry definitions of a subset of the
  * CIP rules {@cdk.cite Cahn1966}. The used set up sub rules are specified in the
@@ -75,7 +77,7 @@ public class CIPTool {
      * @author egonw
      */
     public enum CIP_CHIRALITY {
-        R, S, NONE
+        R, S, E, Z, NONE
     }
 
     /**
@@ -132,6 +134,82 @@ public class CIPTool {
             return CIP_CHIRALITY.S;
         
         return CIP_CHIRALITY.NONE;
+    }
+    
+    @TestMethod("testGetCIPChirality_DoubleBond_Together,testGetCIPChirality_DoubleBond_Opposite")
+    public static CIP_CHIRALITY getCIPChirality(IAtomContainer             container,
+                                                IDoubleBondStereochemistry stereoCenter) {
+        
+        IBond stereoBond = stereoCenter.getStereoBond();
+        IBond leftBond   = stereoCenter.getBonds()[0];
+        IBond rightBond  = stereoCenter.getBonds()[1];
+        
+        // the following variables are usd to label the atoms - makes things
+        // a little more concise
+        //
+        // x       y       x
+        //  \     /         \
+        //   u = v    or     u = v
+        //                        \
+        //                         y
+        //
+        IAtom u = stereoBond.getAtom(0);
+        IAtom v = stereoBond.getAtom(1);
+        IAtom x = leftBond.getConnectedAtom(u);
+        IAtom y = rightBond.getConnectedAtom(v);
+        
+        Conformation conformation = stereoCenter.getStereo();
+        
+        ILigand[] leftLigands  = getLigands(u, container, v);
+        ILigand[] rightLigands = getLigands(v, container, u);
+        
+        if (leftLigands.length > 2 || rightLigands.length > 2)
+            return CIP_CHIRALITY.NONE;
+        
+        // invert if x/y aren't in the first position
+        if (leftLigands[0].getLigandAtom() != x)
+            conformation = conformation.invert();
+        if (rightLigands[0].getLigandAtom() != y)
+            conformation = conformation.invert();
+        
+        int p = permParity(leftLigands) * permParity(rightLigands);
+        
+        if (p == 0)
+            return CIP_CHIRALITY.NONE;
+        
+        if (p < 0)
+            conformation = conformation.invert();
+        
+        if (conformation == Conformation.TOGETHER)
+            return CIP_CHIRALITY.Z;
+        if (conformation == Conformation.OPPOSITE)
+            return CIP_CHIRALITY.E;
+        
+        return CIP_CHIRALITY.NONE;
+    }
+
+    /**
+     * Obtain the ligands connected to the 'atom' excluding 'exclude'. This is
+     * mainly meant as util for double-bond labelling.
+     *
+     * @param atom      an atom
+     * @param container a structure to which 'atom' belongs
+     * @param exclude   exclude this atom - can not be null
+     * @return the ligands
+     */
+    private static ILigand[] getLigands(IAtom atom, IAtomContainer container, IAtom exclude) {
+        
+        List<IAtom> neighbors = container.getConnectedAtomsList(atom);
+        
+        ILigand[] ligands = new ILigand[neighbors.size() - 1];
+        
+        int i = 0;
+        for (IAtom neighbor : neighbors) {
+            if (neighbor != exclude)
+                ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
+        }
+        
+        return ligands;
     }
 
     /**
