@@ -29,7 +29,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 
 import java.util.Arrays;
+import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 
 /**
@@ -87,8 +89,8 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
         fragmenter.generateFragments(mol);
         String[] frags = fragmenter.getFragments();
         Assert.assertNotNull(frags);
-        Assert.assertThat(frags, is(new String[]{"c1ccccc1",
-                                                 "c1(C)ccccc1"}));
+        Assert.assertThat(frags, is(new String[]{"c1ccc(cc1)C",
+                                                 "c1ccccc1"}));
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(2, fragmenter.getFragmentsAsContainers().length);
 
@@ -111,21 +113,16 @@ public class ExhaustiveFragmenterTest extends CDKTestCase {
     public void testEF7() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1(c2ccccc2)(CC(CC1)CCc1ccccc1)CC1C=CC=C1");
         fragmenter.generateFragments(mol);
-        String[] frags = fragmenter.getFragments();
+        List<String> frags = Arrays.asList(fragmenter.getFragments());
         Assert.assertNotNull(frags);
-        Assert.assertEquals(25,frags.length);
+        Assert.assertEquals(25,frags.size());
 
         Assert.assertNotNull(fragmenter.getFragmentsAsContainers());
         Assert.assertEquals(25, fragmenter.getFragmentsAsContainers().length);
 
-        int n = 0;
-        for (String s : frags) {
-            if (s.equals("c1ccccc1")) {
-                n++;
-            } else if (s.equals("c1(C2(CCC(CC)C2)CC3C=CC=C3)ccccc1")) n++;
-            else if (s.equals("c1(C2(C)CC(C)CC2)ccccc1")) n++;
-        }
-        Assert.assertEquals(3, n);
+        Assert.assertThat(frags, hasItems("c1ccccc1",
+                                          "c1ccc(cc1)C2(CCC(CC)C2)CC3C=CC=C3",
+                                          "c1ccc(cc1)C2(C)CCC(C)C2"));
     }
 
     @Test
