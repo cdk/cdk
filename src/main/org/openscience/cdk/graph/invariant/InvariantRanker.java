@@ -76,63 +76,52 @@ final class InvariantRanker {
 
         // with the values sorted we now partition the values in to those
         // which are unique and aren't unique.
-        
+
         // we use the aux array memory but to make it easier to read we alias
         // nu: number unique, nnu: number non-unique
-        int[] unique = aux, nonunique = nextEq;
-        int   nu     = 0,   nnu       = 0;
-        
-        int u  = currEq[0];
-        unique[nu++] = u;
-        for (int i = 1; i < n; i++) {
-            int v = currEq[i];
-            if (curr[v] == curr[u] && prev[v] == prev[u]) {
-                if (nnu == 0 || nonunique[nnu - 1] != u) {
-                    nonunique[nnu++] = u;
-                    nu--; // next unique will overwrite
-                }
-                nonunique[nnu++] = v;
-            } else {
-                unique[nu++] = v;
-            }
-            u = v;
-        }
-
-        // mark so the invoker knows to stop early
-        if (nnu != nonunique.length)
-            nonunique[nnu] = -1; 
+        int nEquivalent = 0;
 
         // values are partitioned we now need to assign the new ranks. unique 
         // values are assigned first then the non-unique ranks. we know which
         // rank to start at by seeing how many have already been assigned. this
         // is given by (|V| - |current non unique|).
-        int rank = 1 + curr.length - n;
-        
-        // assign new unique class ranks
-        for (int i = 0; i < nu; i++)
-            prev[unique[i]] = rank++;
-        
-        if (nnu == 0)
-            return rank - 1;
-        
-        // assign the new non-unique class ranks, before we assign the new rank
-        // we store the old rank so we can compare with the previous value. we
-        // again can do this is the auxiliary array but we alias again
-        int[] oldRank = aux;
-        
-        u           = nextEq[0];
-        oldRank[u]  = (int) prev[u];
-        prev[u] = rank;
-        for (int i = 1; i < nnu; i++) {
-            int v = nextEq[i];
-            if (curr[v] != curr[u] || prev[v] != oldRank[u])
-                rank++;
-            oldRank[v] = (int) prev[v];
-            prev[v]    = rank;
+        int nRanks = 1 + curr.length - n;
+
+        int[] tmp = aux;
+
+        int  u         = currEq[0];
+        int  labelTick = tmp[u] = (int) prev[u];
+        long label     = labelTick;
+
+        for (int i = 1; i < n; i++) {
+            int v = currEq[i];
+
+            if (prev[v] != tmp[u])
+                labelTick = (int) prev[v];
+            else
+                labelTick++;
+
+            if (curr[v] != curr[u] || prev[v] != tmp[u]) {
+                tmp[v] = (int) prev[v];
+                prev[v] = labelTick;
+                label   = labelTick;
+                nRanks++;
+            }
+            else {
+                if (nEquivalent == 0 || nextEq[nEquivalent - 1] != u)
+                    nextEq[nEquivalent++] = u;
+                nextEq[nEquivalent++] = v;
+                tmp[v] = (int) prev[v];
+                prev[v] = label;
+            }
+
             u = v;
         }
-        
-        return rank;
+
+        if (nEquivalent < nextEq.length)
+            nextEq[nEquivalent] = -1;
+
+        return nRanks;
     }
 
     /**

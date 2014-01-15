@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 
 import java.util.Arrays;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * An implementation based on the canon algorithm {@cdk.cite WEI89}. The 
  * algorithm uses an initial set of of invariants which are assigned a rank.
@@ -90,9 +88,10 @@ public final class Canon {
      * @param partition an initial partition of the vertices
      */
     private Canon(int[][] g, long[] partition, boolean symOnly) {
-        this.g = g;
-        labelling = partition.clone();
-        symmetry  = refine(labelling);
+        this.g       = g;
+        this.symOnly = symOnly;
+        labelling    = partition.clone();
+        symmetry     = refine(labelling);
     }
 
     /**
@@ -152,14 +151,18 @@ public final class Canon {
         int nnu = ord;
         for (int i = 0; i < ord; i++)
             currVs[i] = i;
+
+        long[] prev = invariants;
+        long[] curr = Arrays.copyOf(invariants, ord);
         
-        long[] prev = invariants;  
-        long[] curr = Arrays.copyOf(prev, ord); 
-        
+        // initially all labels are 1, the input invariants are then used to 
+        // refine this coarse partition
+        Arrays.fill(prev, 1L);
+
         // number of ranks
         int n = 0, m = 0;
         
-        // storage of symetry classes
+        // storage of symmetry classes
         long[] symmetry = null; 
 
         while (n < ord) {
@@ -178,21 +181,25 @@ public final class Canon {
             
             if (symmetry == null)
                 symmetry = Arrays.copyOf(prev, ord);
-            
+
+            // partition is discrete or only symmetry classes are needed
             if (symOnly || n == ord)
                 return symmetry;
 
-            nnu = 0;
-            currVs[nnu++] = nextVs[0]; // lowest-rank equivalent vertex
-            for (int i = 1; i < ord && nextVs[i] >= 0; i++) {
-                int v         = nextVs[i];
-                currVs[nnu++] = v;
-                curr[v]       = 2 * (1 + curr[v]);
-            }
+            // artificially split the lowest cell, we perturb the value
+            // of all vertices with equivalent rank to the lowest non-unique
+            // vertex
+            int lo = nextVs[0];
+            for (int i = 1; i < ord && nextVs[i] >= 0 && prev[nextVs[i]] == prev[lo]; i++)
+                prev[nextVs[i]]++;
+            
+            // could also swap but this is cleaner
+            System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
         return symmetry;
     }
+    
 
     /**
      * Compute the prime product of the values (ranks) for the given
