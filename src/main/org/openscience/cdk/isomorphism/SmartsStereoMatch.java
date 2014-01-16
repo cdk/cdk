@@ -212,6 +212,12 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
 
         IDoubleBondStereochemistry targetElement = (IDoubleBondStereochemistry) targetElements[v1];
 
+        // although the atoms were mapped and 'v1' and 'v2' are bond in double-bond
+        // elements they are not in the same element 
+        if (targetElement.getStereoBond().getAtom(0) != target.getAtom(v1)
+                || targetElement.getStereoBond().getAtom(1) != target.getAtom(v2))
+            return false;
+
         // bond is undirected so we need to ensure v1 is the first atom in the bond
         // we also need to to swap the substituents later
         boolean swap = false;
