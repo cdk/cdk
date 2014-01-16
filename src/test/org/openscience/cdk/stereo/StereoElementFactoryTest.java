@@ -24,17 +24,26 @@
 
 package org.openscience.cdk.stereo;
 
+import com.google.common.collect.Iterables;
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -60,7 +69,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
         
         assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
@@ -77,7 +86,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.SINGLE);
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(1));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(1), null);
         
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
@@ -95,7 +104,7 @@ public class StereoElementFactoryTest {
 
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
         
         assertNull(element);
     } 
@@ -111,7 +120,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 3, IBond.Order.SINGLE, IBond.Stereo.UP_OR_DOWN);
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
         
         assertNull(element);
     }   
@@ -127,7 +136,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 3, IBond.Order.SINGLE);
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
         
         assertNull(element);
     }   
@@ -144,7 +153,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
@@ -161,7 +170,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
@@ -178,7 +187,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
@@ -195,7 +204,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
@@ -214,7 +223,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
@@ -233,7 +242,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
         StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
@@ -251,7 +260,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 4, IBond.Order.SINGLE);
 
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNull(element);        
     }
 
@@ -270,7 +279,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
@@ -290,7 +299,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
-        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0));
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
@@ -306,7 +315,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
 
         StereoElementFactory       factory = StereoElementFactory.using3DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
@@ -323,10 +332,72 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
 
         StereoElementFactory       factory = StereoElementFactory.using3DCoordinates(m);
-        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0));
+        IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
+    }
+    
+    @Test public void inverse_style_downbond() {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(atom("O", 1, -0.46d, 1.98d));
+        m.addAtom(atom("C", 1, -1.28d, 1.96d));
+        m.addAtom(atom("C", 2, -1.71d, 2.67d));
+        m.addAtom(atom("C", 3, -1.68d, 1.24d));
+        m.addAtom(atom("C", 3, -2.53d, 2.66d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
+        m.addBond(1, 2, IBond.Order.SINGLE);
+        m.addBond(1, 3, IBond.Order.SINGLE);
+        m.addBond(2, 4, IBond.Order.SINGLE);
+        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
+        assertNotNull(element);
+        assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));    
+    }
+    
+    
+    // this example mocks a case where the down bond is inverse but is shared
+    // between two stereo-centres - we can't create an element for atom 1 as
+    // this bond is used to specify atom '2'
+    @Test public void inverse_style_downbond_ambiguous() throws CDKException {
+        IAtomContainer m = new AtomContainer(6, 4, 0, 0);
+        m.addAtom(atom("O", 1, -0.46d, 1.98d));
+        m.addAtom(atom("C", 1, -1.28d, 1.96d));
+        m.addAtom(atom("C", 1, -1.71d, 2.67d));
+        m.addAtom(atom("C", 3, -1.68d, 1.24d));
+        m.addAtom(atom("C", 3, -2.53d, 2.66d));
+        m.addAtom(atom("O", 1, -1.31d, 3.39d));
+        m.addBond(1, 0, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.SINGLE, IBond.Stereo.DOWN_INVERTED);
+        m.addBond(1, 3, IBond.Order.SINGLE);
+        m.addBond(2, 4, IBond.Order.SINGLE);
+        m.addBond(2, 5, IBond.Order.SINGLE);
+
+        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
+        assertNull(element);
+    }
+
+    /**
+     * MetaCyc CPD-7272 D-dopachrome
+     * http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272
+     * @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
+     */
+    @Test public void inverse_style_downbond_dopachrome() throws Exception {
+        MDLV2000Reader mdl = null;
+        try {
+            mdl = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/CPD-7272.mol"));
+            IAtomContainer ac = mdl.read(new AtomContainer());
+            
+            // MDL reader currently adds stereo automatically
+            IStereoElement[] ses = Iterables.toArray(ac.stereoElements(), IStereoElement.class);
+            
+            assertThat(ses.length, is(1));
+            assertNotNull(ses[0]);            
+        } finally {
+            if (mdl != null)
+                mdl.close();
+        }
     }
 
     static IAtom atom(String symbol, int h, double x, double y) {

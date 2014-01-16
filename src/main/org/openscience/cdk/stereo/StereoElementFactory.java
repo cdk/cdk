@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
+import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
+import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN_INVERTED;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
@@ -47,6 +49,10 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * for this functionality use {@link Stereocenters}. The factory will not create
  * stereo elements if there is missing information (wedge/hatch bonds, undefined
  * coordinates) or the layout indicates unspecified configuration.
+ * 
+ * Stereocenters specified with inverse down (hatch) bond style are created if
+ * the configuration is unambiguous and the bond does not connect to another
+ * stereocenter.
  * 
  * <blockquote><pre>
  * IAtomContainer       container = ...;
@@ -324,11 +330,35 @@ public abstract class StereoElementFactory {
                 return null;
 
             // TODO: verify valid wedge/hatch configurations using similar procedure
-            // to NonPlanarBonds in the cdk-sdg package
-
-            // no up/down bonds present?
-            if (!nonplanar)
-                return null;
+            // to NonPlanarBonds in the cdk-sdg package.
+            
+            // no up/down bonds present - check for inverted down/hatch
+            if (!nonplanar) {
+                int[] ws = graph[v];
+                for (int i = 0; i < ws.length; i++) {
+                    int w = ws[i];
+                    IBond bond = bondMap.get(v, w);
+                    
+                    // we have already previously checked whether 'v' is at the
+                    // 'point' and so these must be inverse (fat-end @
+                    // stereocenter) ala Daylight
+                    if (bond.getStereo() == DOWN || bond.getStereo() == DOWN_INVERTED) {
+                       
+                       // we stick to the 'point' end convention but can 
+                       // interpret if the bond isn't connected to another
+                       // stereocenter - otherwise it's ambiguous!
+                       if (stereocenters.isStereocenter(w))
+                            continue;
+                        
+                        elevation[i] = -1;
+                        nonplanar = true;
+                    }
+                }
+                
+                // still no bonds to use
+                if (!nonplanar)
+                    return null;
+            }
 
             int parity = parity(neighbors, elevation);
 
