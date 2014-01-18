@@ -38,6 +38,14 @@ import java.util.Map;
 public interface IStereoElement extends ICDKObject {
 
     /**
+     * Does the stereo element contain the provided atom.
+     * 
+     * @param atom an atom to test membership
+     * @return whether the atom is present 
+     */
+    boolean contains(final IAtom atom);
+    
+    /**
      * Map the atoms/bonds in this instance to a new stereo element using the
      * provided atom/bond mapping. This allows the stereo element to be transferred
      * between a cloned or aligned (i.e. isomorphic) chemical graph.
@@ -52,7 +60,7 @@ public interface IStereoElement extends ICDKObject {
      * @return a new stereo element in the same configuration but with atoms/bonds
      *         replaced with their mapped equivalence.
      */
-    public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
+    IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
 }
 

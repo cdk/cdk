@@ -115,6 +115,19 @@ public class TetrahedralChirality implements ITetrahedralChirality {
     /**
      * @inheritDoc
      */
+    @TestMethod("contains")
+    @Override public boolean contains(IAtom atom) {
+        if (chiralAtom.equals(atom))
+            return true;
+        for (IAtom ligand : ligandAtoms)
+            if (ligand.equals(atom)) 
+                return true;
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
     @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
     @Override
     public ITetrahedralChirality map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {

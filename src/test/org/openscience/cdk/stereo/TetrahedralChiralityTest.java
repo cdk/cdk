@@ -43,6 +43,8 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-core
@@ -260,6 +262,30 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         Assert.assertNull(mapped.getLigands()[3]);
         Assert.assertNotNull(mapped.getStereo());
 
+    }
+    
+    @Test public void contains() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom o2 = builder.newInstance(IAtom.class, "O");
+        IAtom n3 = builder.newInstance(IAtom.class, "N");
+        IAtom c4 = builder.newInstance(IAtom.class, "C");
+        IAtom h5 = builder.newInstance(IAtom.class, "H");
+
+        // new stereo element
+        ITetrahedralChirality element = new TetrahedralChirality(c1,
+                                                                  new IAtom[]{o2,n3,c4,h5},
+                                                                  Stereo.CLOCKWISE);
+        
+        assertTrue(element.contains(c1));
+        assertTrue(element.contains(o2));
+        assertTrue(element.contains(n3));
+        assertTrue(element.contains(c4));
+        assertTrue(element.contains(h5));
+        
+        assertFalse(element.contains(builder.newInstance(IAtom.class)));
+        assertFalse(element.contains(null));
     }
 
 

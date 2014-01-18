@@ -44,6 +44,8 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @cdk.module test-core
@@ -137,6 +139,32 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         for (int i=0; i<ligands.length; i++) {
             Assert.assertEquals(ligands[i], stereo.getBonds()[i]);
         }
+    }
+    
+    @Test public void contains() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+
+        IAtom c1 = builder.newInstance(IAtom.class, "C");
+        IAtom c2 = builder.newInstance(IAtom.class, "C");
+        IAtom o3 = builder.newInstance(IAtom.class, "O");
+        IAtom o4 = builder.newInstance(IAtom.class, "O");
+
+        IBond c1c2 = builder.newInstance(IBond.class, c1, c2, Order.DOUBLE);
+        IBond c1o3 = builder.newInstance(IBond.class, c1, o3, Order.SINGLE);
+        IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
+
+        // new stereo element
+        DoubleBondStereochemistry element = new DoubleBondStereochemistry(c1c2,
+                                                                          new IBond[]{c1o3, c2o4},
+                                                                          Conformation.OPPOSITE);
+
+        assertTrue(element.contains(c1));
+        assertTrue(element.contains(c2));
+        assertTrue(element.contains(o3));
+        assertTrue(element.contains(o4));
+        
+        assertFalse(element.contains(builder.newInstance(IAtom.class)));
+        assertFalse(element.contains(null));
     }
 
     @Test public void testMap_Map_Map() throws CloneNotSupportedException {
@@ -269,7 +297,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
             );
         String stringRepr = stereo.toString();
         Assert.assertNotSame(0, stringRepr.length());
-        Assert.assertFalse(stringRepr.contains("\n"));
+        assertFalse(stringRepr.contains("\n"));
     }
 }
 

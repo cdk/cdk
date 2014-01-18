@@ -101,6 +101,16 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 		return this.stereo;
 	}
 
+    /**
+     * @inheritDoc
+     */
+    @TestMethod("contains")
+    @Override public boolean contains(IAtom atom) {
+        return stereoBond.contains(atom) 
+                || ligandBonds[0].contains(atom) 
+                || ligandBonds[1].contains(atom);
+    }
+
     @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
     @Override
     public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
