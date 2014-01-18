@@ -804,155 +804,12 @@ public class AtomContainerManipulator {
      * @param org The AtomContainer from which to remove the hydrogens
      * @return The molecule without hydrogens.
      * @cdk.keyword hydrogens, removal, suppress
+     * @see #copyAndSuppressedHydrogens 
      */
     @TestMethod("testRemoveHydrogens_IAtomContainer")
     public static IAtomContainer removeHydrogens(IAtomContainer org)
     {
-        Map<IAtom, IAtom> map = new HashMap<IAtom,IAtom>();        // maps original atoms to clones.
-        Set<IAtom> hydrogens = new HashSet<IAtom>();  // lists removed Hs.
-
-        // Clone atoms except those to be removed.
-        IAtomContainer cpy = org.getBuilder().newInstance(IAtomContainer.class);
-        int count = org.getAtomCount();
-        for (int i = 0;
-                i < count;
-                i++)
-        {
-            // Clone/remove this atom?
-            IAtom atom = org.getAtom(i);
-            if (suppressibleHydrogen(org, atom))
-            {
-                hydrogens.add(atom);   // maintain list of removed H.
-            }
-            else
-            {
-                IAtom clonedAtom = null;
-				try {
-					clonedAtom = (IAtom) atom.clone();
-				} catch (CloneNotSupportedException e) {
-					throw new InternalError("an IAtom could not be cloned");
-				}
-                cpy.addAtom(clonedAtom);
-                map.put(atom, clonedAtom);
-            }
-        }
-
-        // Clone bonds except those involving removed atoms.
-        count = org.getBondCount();
-        for (int i = 0;
-                i < count;
-                i++)
-        {
-            // Check bond.
-            final IBond bond = org.getBond(i);
-            boolean removedBond = false;
-            final int length = bond.getAtomCount();
-            for (int k = 0;
-                    k < length;
-                    k++)
-            {
-                if (hydrogens.contains(bond.getAtom(k)))
-                {
-                    removedBond = true;
-                    break;
-                }
-            }
-
-            // Clone/remove this bond?
-            if (!removedBond)
-                // if (!remove.contains(atoms[0]) && !remove.contains(atoms[1]))
-            {
-                IBond clone = null;
-				try {
-					clone = (IBond) org.getBond(i).clone();
-				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-                assert clone != null;
-                clone.setAtoms(new IAtom[]{map.get(bond.getAtom(0)), map.get(bond.getAtom(1))});
-                cpy.addBond(clone);
-            }
-        }
-
-        // Recompute hydrogen counts of neighbours of removed Hydrogens.
-        for (IAtom hydrogen : hydrogens) {
-            // Process neighbours.
-            for (IAtom iAtom : org.getConnectedAtomsList(hydrogen)) {
-                final IAtom neighbor = map.get(iAtom);
-                if (neighbor == null) continue; // since for the case of H2, neight H has a heavy atom neighbor
-                // XXX: null implicit hydrogen count might not be 0
-                int hCount = (neighbor.getImplicitHydrogenCount() == null ? 0 : neighbor.getImplicitHydrogenCount());
-                neighbor.setImplicitHydrogenCount(hCount + 1);
-            }
-        }
-
-        for (IAtom atom : cpy.atoms()) {
-            if (atom.getImplicitHydrogenCount() == null)
-                atom.setImplicitHydrogenCount(0);
-        }
-        
-        // XXX: properties are not cloned
-        cpy.setProperties(org.getProperties());
-        cpy.setFlags(org.getFlags());
-        
-        for (IStereoElement se : org.stereoElements()) {
-            if (se instanceof ITetrahedralChirality) {
-                ITetrahedralChirality tc = (ITetrahedralChirality) se;
-                IAtom   focus     = map.get(tc.getChiralAtom());
-                IAtom[] neighbors = Arrays.copyOf(tc.getLigands(), 4);
-                for (int i = 0; i < neighbors.length; i++) {
-                    neighbors[i] = hydrogens.contains(neighbors[i]) ? focus 
-                                                                    : map.get(neighbors[i]);
-                }
-                cpy.addStereoElement(new TetrahedralChirality(focus,
-                                                              neighbors,
-                                                              tc.getStereo()));
-            } else if (se instanceof IDoubleBondStereochemistry) {
-                IDoubleBondStereochemistry db = (IDoubleBondStereochemistry) se;
-                Conformation conformation = db.getStereo();
-                
-                IBond orgStereo = db.getStereoBond();
-                IBond orgLeft   = db.getBonds()[0];
-                IBond orgRight  = db.getBonds()[1];
-                
-                // we use the following variable names to refer to the
-                // double bond atoms and substituents
-                // x       y
-                //  \     /
-                //   u = v 
-                
-                IAtom u = orgStereo.getAtom(0);
-                IAtom v = orgStereo.getAtom(1);
-                IAtom x = orgLeft.getConnectedAtom(u);
-                IAtom y = orgRight.getConnectedAtom(v);
-                
-                if (hydrogens.contains(x)) {
-                    conformation = conformation.invert();
-                    x = findOther(org, u, v, x);
-                }
-
-                if (hydrogens.contains(y)) {
-                    conformation = conformation.invert();
-                    y = findOther(org, v, u, y);
-                }
-                
-                // no other atoms connected, invalid double-bond configuration?
-                if (x == null || y == null)
-                    continue;
-
-                // XXX: slow operations but works for now
-                IBond cpyStereo = cpy.getBond(map.get(u), map.get(v));
-                IBond cpyLeft   = cpy.getBond(map.get(u), map.get(x));
-                IBond cpyRight  = cpy.getBond(map.get(v), map.get(y));
-                
-                cpy.addStereoElement(new DoubleBondStereochemistry(cpyStereo,
-                                                                   new IBond[]{cpyLeft, cpyRight},
-                                                                   conformation));
-            }
-        }
-        
-        return cpy;
+        return copyAndSuppressedHydrogens(org);
     }
 
     /**
@@ -986,7 +843,14 @@ public class AtomContainerManipulator {
         // hydrogens with atom-atom mapping?
         return true;
     }
-    
+
+    /**
+     * Increment the implicit hydrogen count of the provided atom. If the atom
+     * was a non-pseudo atom and had an unset hydrogen count an exception is
+     * thrown.
+     * 
+     * @param atom an atom to increment the hydrogen count of
+     */
     private static void incrementImplHydrogenCount(final IAtom atom) {
         Integer hCount = atom.getImplicitHydrogenCount();
         
@@ -1058,25 +922,12 @@ public class AtomContainerManipulator {
 	 *
 	 * @return         The mol without Hs.
 	 * @cdk.keyword    hydrogens, removal
+     * @deprecated {@link #suppressHydrogens} will now not removed bridging hydrogens by default 
 	 */
     @TestMethod("testRemoveHydrogensPreserveMultiplyBonded")
+    @Deprecated
 	public static IAtomContainer removeHydrogensPreserveMultiplyBonded(IAtomContainer ac) {
-		List<IAtom> h = new ArrayList<IAtom>();
-		// H list.
-		List<IAtom> multi_h = new ArrayList<IAtom>();
-		// multiply bonded H
-
-		// Find multiply bonded H.
-		int count = ac.getBondCount();
-		for (int i = 0; i < count; i++) {
-            for (IAtom atom : ac.getBond(i).atoms()) {
-                if (atom.getSymbol().equals("H")) {
-                    (h.contains(atom) ? multi_h : h).add(atom);
-                }
-            }
-		}
-
-		return removeHydrogens(ac, multi_h);
+		return copyAndSuppressedHydrogens(ac);
 	}
 
 	/**
@@ -1086,7 +937,10 @@ public class AtomContainerManipulator {
 	 * @param  preserve  a list of H atoms to preserve.
 	 * @return           The mol without Hs.
 	 * @cdk.keyword      hydrogens, removal
-	 */
+     * @deprecated not used by the internal API {@link #suppressHydrogens} will
+     *             now only suppress hydrogens that can be represent as a h count
+     */
+    @Deprecated
 	private static IAtomContainer removeHydrogens(IAtomContainer ac, List<IAtom> preserve) {
 		Map<IAtom,IAtom> map = new HashMap<IAtom,IAtom>();
 		// maps original atoms to clones.
