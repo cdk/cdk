@@ -209,6 +209,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
+        for (IAtom atom : mol.atoms())
+            atom.setImplicitHydrogenCount(0);        
         mol.setFlag(CDKConstants.ISAROMATIC,true);
         
         Assert.assertEquals(6, mol.getAtomCount());
@@ -487,6 +489,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
     	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
+        for (IAtom atom : borane.atoms())
+            atom.setImplicitHydrogenCount(0);
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);
 
         // Should be two disconnected Bs with H-count == 4
@@ -882,7 +886,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     	borane.addBond(4,5,CDKConstants.BONDORDER_SINGLE); // REALLY 3-CENTER-2-ELECTRON
     	borane.addBond(5,6,CDKConstants.BONDORDER_SINGLE);
     	borane.addBond(5,7,CDKConstants.BONDORDER_SINGLE);
-        IAtomContainer ac = AtomContainerManipulator.removeHydrogensPreserveMultiplyBonded(borane);
+        for (IAtom atom : borane.atoms())
+            atom.setImplicitHydrogenCount(0);
+        IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);
 
         // Should be two connected Bs with H-count == 2 and two explicit Hs.
         Assert.assertEquals("incorrect atom count", 4, ac.getAtomCount());
