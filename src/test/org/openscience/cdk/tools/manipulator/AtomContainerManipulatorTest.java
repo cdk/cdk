@@ -467,8 +467,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     /**
-     * Test removeHydrogens for B2H6, which contains two multiply bonded H.
-     *
+     * Test removeHydrogens for B2H6, which contains two multiply bonded H. 
+     * The old behaviour would removed these but now the bridged hydrogens are
+     * kept.
      */
     @Test public void testRemoveHydrogensBorane() throws Exception
     {
@@ -493,11 +494,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             atom.setImplicitHydrogenCount(0);
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(borane);
 
-        // Should be two disconnected Bs with H-count == 4
-        Assert.assertEquals("incorrect atom count", 2, ac.getAtomCount());
-        Assert.assertEquals("incorrect bond count", 0, ac.getBondCount());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(0).getImplicitHydrogenCount().intValue());
-        Assert.assertEquals("incorrect hydrogen count", 4, ac.getAtom(1).getImplicitHydrogenCount().intValue());
+        // bridged hydrogens are now kept
+        Assert.assertEquals("incorrect atom count", 4, ac.getAtomCount());
+        Assert.assertEquals("incorrect bond count", 4, ac.getBondCount());
+        for (IAtom atom : ac.atoms()) {
+            if (atom.getAtomicNumber() == 1)
+                continue;
+            Assert.assertEquals("incorrect hydrogen count", 2, atom.getImplicitHydrogenCount().intValue());
+        }
     }
     /**
      * Test total formal charge.
