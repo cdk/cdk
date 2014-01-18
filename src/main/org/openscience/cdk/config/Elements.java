@@ -30,7 +30,8 @@ import java.util.Map;
 
 /**
  * Enumeration of chemical elements. Data is taken from the Blue Obelisk Data
- * Repository, version 3.
+ * Repository, version 3. This enumeration is auto-generated with utilities 
+ * found in the 'cdk-build-utils' project.
  * 
  * @author      egonw
  * @author      john may
@@ -376,6 +377,7 @@ public enum Elements {
         return e;
     }
 
+    /** These instances are for backards compatability. */          
     public final static IElement DUMMY         = Unknown.toIElement();
     public final static IElement HYDROGEN      = Hydrogen.toIElement();
     public final static IElement HELIUM        = Helium.toIElement();
