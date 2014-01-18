@@ -311,6 +311,13 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         
+        mol.getAtom(0).setImplicitHydrogenCount(0);
+        mol.getAtom(1).setImplicitHydrogenCount(0);
+        mol.getAtom(2).setImplicitHydrogenCount(0);
+        mol.getAtom(3).setImplicitHydrogenCount(0);
+        mol.getAtom(4).setImplicitHydrogenCount(0);
+        mol.getAtom(5).setImplicitHydrogenCount(0);
+        
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(4, ac.getAtomCount());
