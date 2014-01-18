@@ -536,13 +536,16 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public void removeElectronContainer(IElectronContainer electronContainer);
 
-	
-	/**
-	 *  Removes the given atom and all connected electronContainers from the
-	 *  AtomContainer.
-	 *
-	 *@param  atom  The atom to be removed
-	 */
+
+    /**
+     * Removes the given atom and all connected electronContainers from the
+     * AtomContainer. The method will also remove any {@link IStereoElement}
+     * that the atom is contained in. If you are removing hydrogens one of the
+     * utility methods (e.g. AtomContainerManipulator.removeHydrogens(IAtomContainer))
+     * is preferable.
+     *
+     * @param atom the atom to be removed
+     */
 	public void removeAtomAndConnectedElectronContainers(IAtom atom);
 
 	/**

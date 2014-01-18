@@ -703,6 +703,39 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(2, acetone.getBondCount());
         Assert.assertEquals(0, acetone.getLonePairCount());
     }
+    
+    
+    @Test public void testRemoveAtomAndConnectedElectronContainers_stereoElement() {
+        
+        // acetone molecule
+    	IAtomContainer acetone = (IAtomContainer)newChemObject();
+        
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        acetone.addAtom(c1);
+        acetone.addAtom(c2);
+        acetone.addAtom(c3);
+        acetone.addAtom(o);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        acetone.addBond(b1);
+        acetone.addBond(b2);
+        acetone.addBond(b3);
+
+        acetone.addStereoElement(new TetrahedralChirality(c1,
+                                                          new IAtom[]{ c2, o, c3, c1},
+                                                          ITetrahedralChirality.Stereo.CLOCKWISE));
+        
+        // remove the oxygen
+        acetone.removeAtomAndConnectedElectronContainers(o);
+        Assert.assertEquals(3, acetone.getAtomCount());
+        Assert.assertEquals(2, acetone.getBondCount());
+        Assert.assertEquals(0, acetone.getLonePairCount());
+        Assert.assertFalse(acetone.stereoElements().iterator().hasNext());
+    }
 
     @Test public void testGetAtomCount() {
         // acetone molecule

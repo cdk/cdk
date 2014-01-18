@@ -1267,12 +1267,7 @@ public class AtomContainer extends ChemObject
         if (electronContainer instanceof ISingleElectron) removeSingleElectron((ISingleElectron) electronContainer);
 	}
 
-	/**
-	 *  Removes the given atom and all connected electronContainers from the
-	 *  AtomContainer.
-	 *
-	 *@param  atom  The atom to be removed
-	 */
+    /** @inheritDoc */
 	public void removeAtomAndConnectedElectronContainers(IAtom atom)
 	{
 		int position = getAtomNumber(atom);
@@ -1299,7 +1294,13 @@ public class AtomContainer extends ChemObject
 					--i;
 				}
 			}
-			removeAtom(position);
+            List<IStereoElement> atomElements = new ArrayList<IStereoElement>(3);
+            for (IStereoElement element : stereoElements) {
+                if (element.contains(atom))
+                    atomElements.add(element);
+            }
+            stereoElements.removeAll(atomElements);
+            removeAtom(position);
 		}
 	}
 
