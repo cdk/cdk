@@ -49,8 +49,8 @@ public class TotalConnectionAtomTest {
                                                                                              0,
                                                                                              Collections.<Integer>emptySet(),
                                                                                              0,
-                                                                                             2,
                                                                                              0,
+                                                                                             2,
                                                                                              0));
         assertTrue(matcher.matches(atom));
     }
