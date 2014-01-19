@@ -24,12 +24,17 @@
 package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.BitSet;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-fingerprint
@@ -45,7 +50,27 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
         SubstructureFingerprinter fp = new SubstructureFingerprinter();
         Assert.assertEquals(307, fp.getSize());
     }
+
+    @Test public void testBug706786() throws Exception {
+
+        IAtomContainer superStructure = bug706786_1();
+        IAtomContainer subStructure   = bug706786_2();
+
+        addImplicitHydrogens(superStructure);
+        addImplicitHydrogens(subStructure);
+
+        IFingerprinter fpr = getBitFingerprinter();
+        IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
+        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+
+        assertThat(superBits.asBitSet(),
+                   is(asBitSet(0, 11, 13, 17, 40, 48, 136, 273, 274, 278, 286, 294, 299, 301, 304, 306)));
+        assertThat(subBits.asBitSet(),
+                   is(asBitSet(1, 17, 273, 274, 278, 294, 306)));
+    }
+
     
+
     @Test public void testUserFunctionalGroups() throws Exception {
         String[] smarts = {"c1ccccc1", "[CX4H3][#6]", "[CX2]#[CX2]"};
         IFingerprinter printer = new SubstructureFingerprinter(smarts);
@@ -91,7 +116,7 @@ public class SubstructureFingerprinterTest extends AbstractFixedLengthFingerprin
      * match benzaldehyde twice. So according to the
      * supplied definition this answer is actually correct.
      */
-    @Test
+    @Ignore("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
     public void testVinylogousEster() throws Exception {
         String benzaldehyde = "c1ccccc1C=O";
         IFingerprinter fprinter = new SubstructureFingerprinter();
