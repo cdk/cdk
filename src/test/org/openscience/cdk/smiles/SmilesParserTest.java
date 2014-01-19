@@ -2255,8 +2255,8 @@ public class SmilesParserTest extends CDKTestCase {
     @Test public void testNeighboringChirality() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         final IAtomContainer mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
-        List<IStereoElement> stereoElements = FluentIterable.from(mol.stereoElements())
-                                                            .toList();
+        List<IStereoElement> stereoElements = new ArrayList<IStereoElement>(FluentIterable.from(mol.stereoElements())
+                                                                                          .toList());
         
         Collections.sort(stereoElements, new Comparator<IStereoElement>() {
             @Override public int compare(IStereoElement o1, IStereoElement o2) {
