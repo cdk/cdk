@@ -20,11 +20,17 @@
  */
 package org.openscience.cdk.smiles;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Iterables;
+import com.google.common.primitives.Ints;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Ignore;
@@ -2248,11 +2254,20 @@ public class SmilesParserTest extends CDKTestCase {
 
     @Test public void testNeighboringChirality() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        IAtomContainer mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
-        Iterator<IStereoElement> stereoElements = mol.stereoElements().iterator();
+        final IAtomContainer mol = sp.parseSmiles("C[C@H](O)[C@H](O)C");
+        List<IStereoElement> stereoElements = FluentIterable.from(mol.stereoElements())
+                                                            .toList();
+        
+        Collections.sort(stereoElements, new Comparator<IStereoElement>() {
+            @Override public int compare(IStereoElement o1, IStereoElement o2) {
+                return Ints.compare(mol.getAtomNumber(((ITetrahedralChirality)o1).getChiralAtom()),
+                                    mol.getAtomNumber(((ITetrahedralChirality)o2).getChiralAtom()));
+            }
+        });
+        
         // first chiral center
-        assertTrue(stereoElements.hasNext());
-        IStereoElement stereoElement = stereoElements.next();
+        assertThat(stereoElements.size(), is(2));
+        IStereoElement stereoElement = stereoElements.get(0);
         Assert.assertNotNull(stereoElement);
         assertTrue(stereoElement instanceof ITetrahedralChirality);
         ITetrahedralChirality l4Chiral = (ITetrahedralChirality)stereoElement;
@@ -2265,8 +2280,7 @@ public class SmilesParserTest extends CDKTestCase {
         Assert.assertEquals(mol.getAtom(3), ligands[3]);
         Assert.assertEquals(Stereo.ANTI_CLOCKWISE, l4Chiral.getStereo());
         // second chiral center
-        assertTrue(stereoElements.hasNext());
-        stereoElement = stereoElements.next();
+        stereoElement = stereoElements.get(1);
         Assert.assertNotNull(stereoElement);
         assertTrue(stereoElement instanceof ITetrahedralChirality);
         l4Chiral = (ITetrahedralChirality)stereoElement;
