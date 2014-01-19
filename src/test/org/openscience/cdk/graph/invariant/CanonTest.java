@@ -45,13 +45,13 @@ public class CanonTest {
     @Test public void phenol_symmetry() throws Exception {
         IAtomContainer m = smi("OC1=CC=CC=C1");
         long[] symmetry = Canon.symmetry(m, GraphUtil.toAdjList(m));
-        assertThat(symmetry, is(new long[]{1, 2, 4, 5, 3, 5, 4}));
+        assertThat(symmetry, is(new long[]{1, 7, 5, 3, 2, 3, 5}));
     }
 
     @Test public void phenol_labelling() throws Exception {
         IAtomContainer m = smi("OC1=CC=CC=C1");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
-        assertThat(labels, is(new long[]{1, 2, 4, 6, 3, 7, 5}));
+        assertThat(labels, is(new long[]{1, 7, 5, 3, 2, 4, 6}));
     }
 
     /**
@@ -65,7 +65,7 @@ public class CanonTest {
     @Test public void lenthionine_symmetry() throws Exception {
         IAtomContainer m = smi("C1SSCSSS1");
         long[] labels = Canon.symmetry(m, GraphUtil.toAdjList(m));
-        assertThat(labels, is(new long[]{4, 3, 3, 4, 2, 1, 2}));
+        assertThat(labels, is(new long[]{6, 4, 4, 6, 2, 1, 2}));
     }
 
     @Test public void testBasicInvariants_ethanol() throws Exception {

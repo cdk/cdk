@@ -45,7 +45,7 @@ public class InvariantRankerTest {
     @Test public void rank() {
 
         InvariantRanker ranker = new InvariantRanker(6);
-        long[] prev = new long[]{50, 100, 25, 100, 50, 90};
+        long[] prev = new long[]{1,  1,   1,  1,   1,  1};
         long[] curr = new long[]{50, 100, 25, 100, 50, 90};
 
         // no we leave extra space
@@ -57,7 +57,7 @@ public class InvariantRankerTest {
         assertThat(ranks, is(4));
 
         // assigned ranks (note: unique assigned first)
-        assertThat(prev, is(new long[]{3, 4, 1, 4, 3, 2}));
+        assertThat(prev, is(new long[]{2, 5, 1, 5, 2, 4}));
 
         // remaining non-unique vertices
         assertThat(ws, is(new int[]{0, 4, 1, 3, -1, 0}));
@@ -66,7 +66,7 @@ public class InvariantRankerTest {
     @Test public void rank_all_equiv() {
         
         InvariantRanker ranker = new InvariantRanker(6);
-        long[] prev = new long[]{42, 42, 42, 42, 42, 42};
+        long[] prev = new long[]{1,  1,  1,  1,  1,  1};
         long[] curr = new long[]{42, 42, 42, 42, 42, 42};
 
         // no we leave extra space
@@ -87,7 +87,7 @@ public class InvariantRankerTest {
     @Test public void rank_all_unique() {
         
         InvariantRanker ranker = new InvariantRanker(7);
-        long[] prev = new long[]{7, 3, 1, 0, 91, 32, 67};
+        long[] prev = new long[]{1, 1, 1, 1, 1,  1,  1};
         long[] curr = new long[]{7, 3, 1, 0, 91, 32, 67};
 
         // no we leave extra space
