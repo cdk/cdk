@@ -81,6 +81,7 @@ public class CDKRoundTripTest extends CDKTestCase {
         Assert.assertEquals("Found non-zero diff: " + difference, 0, difference.length());
     }
     
+    @Ignore("exact mass not currently supported in CML implmenetation")
     @Test public void testIIsotope_ExactMass() throws Exception {
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         IAtom atom = builder.newInstance(IAtom.class,"C");
