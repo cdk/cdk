@@ -455,9 +455,9 @@ public class ReactionStructuresTest extends CDKTestCase {
         expected1.addAtom(builder.newInstance(IAtom.class,"H"));
         expected1.addAtom(builder.newInstance(IAtom.class,"H"));
         expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+        expected1.addBond(0, 2, IBond.Order.SINGLE);
         expected1.addBond(0, 3, IBond.Order.SINGLE);
         expected1.addBond(0, 4, IBond.Order.SINGLE);
-        expected1.addBond(0, 5, IBond.Order.SINGLE);
         
         String[] expectedTypes = {
     			"C.sp3","O.sp3.radical", "H", "H", "H"
@@ -726,6 +726,8 @@ public class ReactionStructuresTest extends CDKTestCase {
 		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
+		expected1.addAtom(builder.newInstance(IAtom.class,"H"));
 		expected1.addBond(1, 7, IBond.Order.SINGLE);
 		expected1.addBond(1, 8, IBond.Order.SINGLE);
 		expected1.addBond(2, 9, IBond.Order.SINGLE);
@@ -740,7 +742,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		expected1.addBond(6, 18, IBond.Order.SINGLE);
 		
         String[] expectedTypes = {
-    		"R","C.sp3","C.sp3","C.sp2","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H"
+    		"R","C.sp3","C.sp3","C.sp2","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H","H","H"
     	};
     		Assert.assertEquals(expectedTypes.length, expected1.getAtomCount());
     		for (int i=0; i<expectedTypes.length; i++) {
