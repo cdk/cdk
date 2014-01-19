@@ -27,6 +27,7 @@ package org.openscience.cdk.silent;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.AbstractMappingTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -55,6 +56,17 @@ public class MappingTest extends AbstractMappingTest {
     }
 
     // Overwrite default methods: no notifications are expected!
+                
+    @Test public void testNotifyChanged_SetFlag() {
+        ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
+    }
+
+    /**
+     * @cdk.bug 2992921
+     */
+    @Test public void testNotifyChanged_SetFlags() {
+        ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
+    }
     
     @Test public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
