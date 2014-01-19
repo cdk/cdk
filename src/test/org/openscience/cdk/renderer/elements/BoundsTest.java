@@ -47,6 +47,6 @@ public class BoundsTest extends AbstractElementTest {
     }
 
     @Test public void testHeight() throws Exception {
-        assertThat(new Bounds(2, 2, 7, 6).width(), is(closeTo(4d, 0.1)));
+        assertThat(new Bounds(2, 2, 7, 6).height(), is(closeTo(4d, 0.1)));
     }
 }
