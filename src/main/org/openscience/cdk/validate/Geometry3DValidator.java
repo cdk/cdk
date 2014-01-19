@@ -44,7 +44,7 @@ public class Geometry3DValidator extends AbstractValidator {
     	// only consider two atom bonds
     	if (subject.getAtomCount() == 2) {
     		double distance = subject.getAtom(0).getPoint3d().distance(
-    			subject.getAtom(2).getPoint3d()
+    			subject.getAtom(1).getPoint3d()
     		);
     		if (distance > 3.0) { // should really depend on the elements
     			ValidationTest badBondLengthError = new ValidationTest(subject,
