@@ -96,11 +96,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-        for (Class anInterface : interfaces) {
-            if (IChemFile.class.equals(anInterface)) return true;
-        }
-		return false;
+        return IChemFile.class.isAssignableFrom(classObject);
 	}
 
   /**

@@ -41,6 +41,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
@@ -127,11 +128,7 @@ public class VASPReader extends DefaultChemObjectReader {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-		return false;
+		return IChemFile.class.isAssignableFrom(classObject);
 	}
 
 	public <T extends IChemObject> T read(T object) throws CDKException {
