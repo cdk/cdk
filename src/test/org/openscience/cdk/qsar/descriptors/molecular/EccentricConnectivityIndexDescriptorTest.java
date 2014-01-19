@@ -58,6 +58,8 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(0);
+        
+        addImplicitHydrogens(ac);
 
         IntegerResult retval = (IntegerResult) descriptor.calculate(ac).getValue();
         //logger.debug(retval.intValue());
