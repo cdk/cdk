@@ -32,7 +32,7 @@ import static org.mockito.Mockito.mock;
 /**
  * @cdk.module test
  */
-public class AbstractFingerprinterTest extends CDKTestCase {
+public abstract class AbstractFingerprinterTest extends CDKTestCase {
 
     public IFingerprinter getBitFingerprinter() {
         throw new IllegalAccessError("This method should be overwritten " +
