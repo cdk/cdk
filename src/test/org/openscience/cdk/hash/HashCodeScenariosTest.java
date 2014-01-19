@@ -66,7 +66,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @author John May
  * @cdk.module test-hash
  */
-public class HashCodeScenarios {
+public class HashCodeScenariosTest {
 
     /**
      * Two molecules with identical Racid identification numbers, these hash

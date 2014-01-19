@@ -30,7 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
-import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -43,7 +42,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * See. {@link org.openscience.cdk.hash.HashCodeScenarios} for test which show
+ * See. {@link org.openscience.cdk.hash.HashCodeScenariosTest} for test which show
  * example usage.
  *
  * @author John May

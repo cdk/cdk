@@ -24,16 +24,12 @@
 
 package org.openscience.cdk.hash.stereo;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomType;
-import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
-import javax.vecmath.Point2d;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,14 +38,13 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
 
 /**
- * See {@link org.openscience.cdk.hash.HashCodeScenarios} for examples.
+ * See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
  * @author John May
  * @cdk.module test-hash
- * @see org.openscience.cdk.hash.HashCodeScenarios
+ * @see org.openscience.cdk.hash.HashCodeScenariosTest
  */
 public class TetrahedralElementEncoderFactoryTest {
 

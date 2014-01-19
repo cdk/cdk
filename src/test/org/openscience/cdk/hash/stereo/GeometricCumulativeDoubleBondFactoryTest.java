@@ -27,10 +27,6 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
-import org.openscience.cdk.hash.stereo.GeometricCumulativeDoubleBondFactory;
-import org.openscience.cdk.hash.stereo.MultiStereoEncoder;
-import org.openscience.cdk.hash.stereo.StereoEncoder;
-import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -46,7 +42,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Some isolated test of the cumulative encoder factory, check out {@link
- * org.openscience.cdk.hash.HashCodeScenarios} for actual examples encoding
+ * org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
  * allene and cumulene.
  *
  * @author John May

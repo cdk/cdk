@@ -25,7 +25,7 @@ import org.openscience.cdk.coverage.HashCoverageTest;
 import org.openscience.cdk.hash.AbstractHashGeneratorTest;
 import org.openscience.cdk.hash.BasicAtomHashGeneratorTest;
 import org.openscience.cdk.hash.BasicMoleculeHashGeneratorTest;
-import org.openscience.cdk.hash.HashCodeScenarios;
+import org.openscience.cdk.hash.HashCodeScenariosTest;
 import org.openscience.cdk.hash.HashGeneratorMakerTest;
 import org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest;
 import org.openscience.cdk.hash.SuppressedAtomHashGeneratorTest;
@@ -74,7 +74,7 @@ import org.openscience.cdk.hash.stereo.Tetrahedral3DParityTest;
         GeometricCumulativeDoubleBondFactoryTest.class,
         PerturbedAtomHashGeneratorTest.class,
         MinimumEquivalentCyclicSetTest.class,
-        HashCodeScenarios.class
+        HashCodeScenariosTest.class
 })
 public class MhashTests {
 }
