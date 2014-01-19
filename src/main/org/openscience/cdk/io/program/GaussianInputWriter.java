@@ -120,9 +120,8 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		if (IAtomContainer.class.isInstance(classObject)) return true;
-		return false;
-	}
+        return IAtomContainer.class.isAssignableFrom(classObject);
+    }
 
 	@TestMethod("testWrite")
     public void write(IChemObject object) throws CDKException {
