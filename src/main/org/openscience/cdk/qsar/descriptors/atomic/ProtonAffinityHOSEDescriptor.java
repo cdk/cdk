@@ -129,18 +129,29 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
 
-        if (!isCachedAtomContainer(container)) {
-            try {
-                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-                LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-                lpcheck.saturate(container);
-            } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                        new DoubleResult(Double.NaN), descriptorNames, null);
-            }
-
+        
+        try {
+            int i = container.getAtomNumber(atom);
+            if (i < 0)
+                throw new CDKException("atom was not a memeber of the provided container");
+            
+            // don't modify the original
+            container = container.clone();
+            atom      = container.getAtom(i);
+            
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+            LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+            lpcheck.saturate(container);
+        } catch (CDKException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                                       new DoubleResult(Double.NaN), descriptorNames, null);
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+                                       new DoubleResult(Double.NaN), descriptorNames, null);
         }
-		value = db.extractAffinity(container, atom);
+
+
+        value = db.extractAffinity(container, atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value), descriptorNames);
 		
