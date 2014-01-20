@@ -394,15 +394,17 @@ public class RecursiveTest extends CDKTestCase {
                                            Cycles.cdkAromaticSet()));
         int nmatch = 0;
         int nmol = 0;
+        READ:
         while (reader.hasNext()) {
-            IAtomContainer container = (IAtomContainer) reader.next();
+            IAtomContainer container = reader.next();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             
             // skip un-typed atoms, they can't be run through the CDK aromatic
             // model
             for (IAtom atom : container.atoms()) {
-                if (atom.getAtomTypeName() == null)
-                    Assert.fail("a atom could not be typed by the CDKAtomTypeMatcher");
+                if (atom.getAtomTypeName() == null) {
+                    continue READ;
+                }
             }
             
             if (sqt.matches(container)) {
@@ -411,7 +413,7 @@ public class RecursiveTest extends CDKTestCase {
             nmol++;
         }
         reader.close();
-        Assert.assertEquals(141, nmol);
+        Assert.assertEquals(137, nmol);
         Assert.assertEquals(4, nmatch);
     }
 
