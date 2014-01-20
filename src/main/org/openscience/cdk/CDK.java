@@ -52,6 +52,10 @@ public class CDK {
         Properties props = new Properties();
         try {
             InputStream stream = CDK.class.getClassLoader().getResourceAsStream(propsFilename);
+            if (stream == null) {
+                // load from JAR (as packaged with maven)
+                return CDK.class.getPackage().getImplementationVersion();
+            }
             props.load(stream);
             return props.getProperty("version");
         } catch (Exception exception) {
