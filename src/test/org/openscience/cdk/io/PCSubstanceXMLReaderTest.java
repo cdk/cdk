@@ -44,7 +44,7 @@ public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
         LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
 
     @BeforeClass public static void setup() throws Exception {
-        setSimpleChemObjectReader(new Mol2Reader(), "data/asn/pubchem/sid577309.xml");
+        setSimpleChemObjectReader(new PCSubstanceXMLReader(), "data/asn/pubchem/sid577309.xml");
     }
 
     @Test public void testAccepts() throws Exception {
