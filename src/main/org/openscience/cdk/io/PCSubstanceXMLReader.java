@@ -107,11 +107,7 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
 
 	@TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
-		return false;
+		return IAtomContainer.class.isAssignableFrom(classObject);
 	}
 
 	public <T extends IChemObject> T read(T object) throws CDKException {
