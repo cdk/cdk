@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.reaction.type.AdductionSodiumLPReactionTest;
@@ -702,7 +703,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 	 */
 	@Test public void testM23() throws Exception {
 		IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
-		expected1.addAtom(builder.newInstance(IAtom.class,"R"));
+		expected1.addAtom(builder.newInstance(IPseudoAtom.class,"R"));
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addBond(0, 1, IBond.Order.SINGLE);
 		expected1.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -742,7 +743,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		expected1.addBond(6, 18, IBond.Order.SINGLE);
 		
         String[] expectedTypes = {
-    		"R","C.sp3","C.sp3","C.sp2","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H","H","H"
+    		"X","C.sp3","C.sp3","C.sp2","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H","H","H"
     	};
     		Assert.assertEquals(expectedTypes.length, expected1.getAtomCount());
     		for (int i=0; i<expectedTypes.length; i++) {
