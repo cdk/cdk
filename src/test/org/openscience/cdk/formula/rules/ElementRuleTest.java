@@ -70,7 +70,18 @@ public class ElementRuleTest extends FormulaRuleTest {
 		
 		IRule rule  = new ElementRule();
 		Object[] objects = rule.getParameters();
-		Assert.assertEquals(1, objects.length);
+        
+        // MolecularFormulaRange needs a build to create isotopes
+        Assert.assertEquals(1, objects.length);
+        Assert.assertNull(objects[0]);
+        
+        // when we do a validation...
+        rule.validate(new MolecularFormula());
+        
+        // a default option is created 
+        objects = rule.getParameters();
+        Assert.assertEquals(1, objects.length);
+        Assert.assertNull(objects[0]);		
 		
 		MolecularFormulaRange mfRange = (MolecularFormulaRange) objects[0];
 		Assert.assertEquals(93, mfRange.getIsotopeCount());
