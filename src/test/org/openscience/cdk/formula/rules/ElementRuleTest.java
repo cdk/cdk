@@ -81,7 +81,7 @@ public class ElementRuleTest extends FormulaRuleTest {
         // a default option is created 
         objects = rule.getParameters();
         Assert.assertEquals(1, objects.length);
-        Assert.assertNull(objects[0]);		
+        Assert.assertNotNull(objects[0]);		
 		
 		MolecularFormulaRange mfRange = (MolecularFormulaRange) objects[0];
 		Assert.assertEquals(93, mfRange.getIsotopeCount());
