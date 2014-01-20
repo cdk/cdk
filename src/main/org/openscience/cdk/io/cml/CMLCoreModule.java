@@ -733,14 +733,14 @@ public class CMLCoreModule implements ICMLModule {
         } else if ("molecule".equals(name)) {
             storeData();
 //            cdo.endObject("Molecule");
-            if (currentMolecule instanceof IAtomContainer) {
-                logger.debug("Adding molecule to set");
-                currentMoleculeSet.addAtomContainer(currentMolecule);
-                logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
-            } else if (currentMolecule instanceof ICrystal) {
+            if (currentMolecule instanceof ICrystal) {
                 logger.debug("Adding crystal to chemModel");
                 currentChemModel.setCrystal((ICrystal)currentMolecule);
                 currentChemSequence.addChemModel(currentChemModel);
+            } else if (currentMolecule instanceof IAtomContainer) {
+                logger.debug("Adding molecule to set");
+                currentMoleculeSet.addAtomContainer(currentMolecule);
+                logger.debug("#mols in set: " + currentMoleculeSet.getAtomContainerCount());
             }
         } else if ("crystal".equals(name)) {
             if (crystalScalar > 0) {
