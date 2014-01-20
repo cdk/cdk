@@ -96,7 +96,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 				IAtom nextAtom = molecule.getAtom(i);
 				IAtomType perceivedType = matcher.findMatchingAtomType(molecule, nextAtom); 
 				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
+					"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
 					perceivedType
 				);
 				Assert.assertEquals(
@@ -129,7 +129,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 			IAtom nextAtom = expected1.getAtom(i);
 			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
 			Assert.assertNotNull(
-				"Missing atom type for: " + nextAtom, 
+				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
 				perceivedType
 			);
 			Assert.assertEquals(
@@ -167,7 +167,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 			IAtom nextAtom = expected1.getAtom(i);
 			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
 			Assert.assertNotNull(
-				"Missing atom type for: " + nextAtom, 
+				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
 				perceivedType
 			);
 			Assert.assertEquals(
@@ -201,7 +201,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+    				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -248,7 +248,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+    				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -290,7 +290,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+    				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -330,7 +330,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+    				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],  
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -365,7 +365,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+    				"Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -402,7 +402,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -431,7 +431,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -468,7 +468,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -506,7 +506,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -548,7 +548,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -586,7 +586,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -615,7 +615,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -644,7 +644,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -686,7 +686,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -750,7 +750,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -795,8 +795,8 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
-    				perceivedType
+                        "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],
+                        perceivedType
     			);
     			Assert.assertEquals(
     				"Incorrect atom type perceived for: " + nextAtom,
@@ -834,7 +834,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i],
     				perceivedType
     			);
     			Assert.assertEquals(
@@ -883,7 +883,7 @@ public class ReactionStructuresTest extends CDKTestCase {
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
     			System.out.println(nextAtom);
     			Assert.assertNotNull(
-    				"Missing atom type for: " + nextAtom, 
+                    "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
     			System.out.println(perceivedType.getAtomTypeName());
