@@ -874,7 +874,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		
 
         String[] expectedTypes = {
-        		"F.plus","C.sp2","C.minus.planar","C.sp2","C.sp2","C.sp2","C.sp2","H","H","H","H","H"
+        		"F.plus.sp2","C.sp2","C.minus.planar","C.sp2","C.sp2","C.sp2","C.sp2","H","H","H","H","H"
         	    
     	};
     		Assert.assertEquals(expectedTypes.length, expected1.getAtomCount());
