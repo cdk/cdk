@@ -67,7 +67,7 @@ public class JmolTest extends CDKTestCase {
      * <ul><li> &lt;crystal></li></ul>
      */
     @Test public void testEstron() throws Exception {
-        String filename = "data/cmltest/estron.cml";
+        String filename = "data/cml/estron.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -101,7 +101,7 @@ public class JmolTest extends CDKTestCase {
      * - Jmol Animation
      */
     @Test public void testAnimation() throws Exception {
-        String filename = "data/cmltest/SN1_reaction.cml";
+        String filename = "data/cml/SN1_reaction.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -131,7 +131,7 @@ public class JmolTest extends CDKTestCase {
      * No special CML code, just regression test for Jmol releases
      */
     @Test public void testMethanolTwo() throws Exception {
-        String filename = "data/cmltest/methanol2.cml";
+        String filename = "data/cml/methanol2.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
@@ -160,7 +160,7 @@ public class JmolTest extends CDKTestCase {
      * No special CML code, just regression test for Jmol releases
      */
     @Test public void testMethanolOne() throws Exception {
-        String filename = "data/cmltest/methanol1.cml";
+        String filename = "data/cml/methanol1.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
