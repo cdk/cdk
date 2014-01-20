@@ -32,6 +32,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestSuite that runs all tests.
@@ -65,9 +66,11 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles(smiles);
-        lpcheck.saturate(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         addExplicitHydrogens(molecule);
         CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        lpcheck.saturate(molecule);
+        
 
         
         List<Double> carbonIPs = new ArrayList<Double>();
