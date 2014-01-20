@@ -881,12 +881,12 @@ public class ReactionStructuresTest extends CDKTestCase {
     		for (int i=0; i<expectedTypes.length; i++) {
     			IAtom nextAtom = expected1.getAtom(i);
     			IAtomType perceivedType = matcher.findMatchingAtomType(expected1, nextAtom); 
-    			System.out.println(nextAtom);
+    			
     			Assert.assertNotNull(
                     "Missing atom type for: " + nextAtom + " " + i + " expected: " + expectedTypes[i], 
     				perceivedType
     			);
-    			System.out.println(perceivedType.getAtomTypeName());
+    			
     			Assert.assertEquals(
     				"Incorrect atom type perceived for: " + nextAtom,
     				expectedTypes[i], perceivedType.getAtomTypeName()
@@ -894,7 +894,6 @@ public class ReactionStructuresTest extends CDKTestCase {
     			nextAtom.setHybridization(null);
     			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(expected1);
     			IAtomType type = matcher.findMatchingAtomType(expected1, nextAtom);
-    			System.out.println(type.getAtomTypeName());
     			Assert.assertNotNull(type);
     		}
 	}
