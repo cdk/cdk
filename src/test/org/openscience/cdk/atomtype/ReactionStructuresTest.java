@@ -743,7 +743,7 @@ public class ReactionStructuresTest extends CDKTestCase {
 		expected1.addBond(6, 18, IBond.Order.SINGLE);
 		
         String[] expectedTypes = {
-    		"X","C.sp3","C.sp3","C.sp2","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H","H","H"
+    		"X","C.sp3","C.sp3","C.plus.planar","C.sp3","C.sp3","C.sp3","H","H","H","H","H","H","H","H","H","H","H","H"
     	};
     		Assert.assertEquals(expectedTypes.length, expected1.getAtomCount());
     		for (int i=0; i<expectedTypes.length; i++) {
