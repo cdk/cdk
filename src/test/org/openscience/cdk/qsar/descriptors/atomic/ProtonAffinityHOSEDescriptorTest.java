@@ -31,6 +31,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.qsar.IAtomicDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
@@ -88,12 +89,11 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     	mol.addBond(5, 0, IBond.Order.SINGLE);
     	mol.addAtom(builder.newInstance(IAtom.class,"Cl"));
     	mol.addBond(0, 6, IBond.Order.SINGLE);
-    	
+
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHueckelAromaticityDetector.detectAromaticity(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
-
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
     	
     	double result= ((DoubleResult)descriptor.calculate(mol.getAtom(6),mol).getValue()).doubleValue();
         double resultAccordingNIST = 753.1; 
