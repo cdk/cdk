@@ -21,7 +21,9 @@
 package org.openscience.cdk.atomtype;
 
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -43,6 +45,7 @@ import java.util.Map;
  *
  * @cdk.module test-structgen
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
     private final static String ATOMTYPE_LIST = "structgen_atomtypes.owl";
@@ -775,8 +778,12 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
      * The test seems to be run by JUnit in order in which they found
      * in the source. Ugly, but @AfterClass does not work because that
      * methods does cannot assert anything.
+     * 
+     * ...not anymore. Bad idea to do have such a test in the first place 
+     * but we can hack it by sorting by test name (see fix method order
+     * annotation).
      */
-    @Test public void countTestedAtomTypes() {
+    @Test public void utestCountTestedAtomTypes() {
     	AtomTypeFactory factory = AtomTypeFactory.getInstance(
     		"org/openscience/cdk/config/data/structgen_atomtypes.xml",
             SilentChemObjectBuilder.getInstance()
