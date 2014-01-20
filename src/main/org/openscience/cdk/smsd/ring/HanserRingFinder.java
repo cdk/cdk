@@ -94,6 +94,8 @@ public class HanserRingFinder implements RingFinder {
      * @see org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
      */
     public Collection<List<IAtom>> findRings(IAtomContainer molecule) {
+        if (molecule == null)
+            return null;
         rings.clear();
         PathGraph graph = new PathGraph(molecule);
 
