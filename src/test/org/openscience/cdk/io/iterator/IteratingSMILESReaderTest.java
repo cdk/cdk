@@ -27,7 +27,6 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
-import com.google.common.collect.Iterables;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
@@ -209,6 +208,30 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         assertThat(m2.getAtomCount(), is(0));
         assertThat(m2.getProperty(CDKConstants.TITLE, String.class),
                    CoreMatchers.is("empty2"));
+        assertFalse(smis.hasNext());
+    }
+    
+    @Test public void problemSmiles() {
+
+        Reader reader = new StringReader(" okay\nn1cccc1 bad\n okay");
+        IteratingSMILESReader smis = new IteratingSMILESReader(reader,
+                                                               SilentChemObjectBuilder.getInstance());
+        assertTrue(smis.hasNext());
+        IAtomContainer m1 = smis.next();
+        assertThat(m1.getAtomCount(), is(0));
+        assertThat(m1.getProperty(CDKConstants.TITLE, String.class),
+                   CoreMatchers.is("okay"));
+        assertTrue(smis.hasNext());
+        IAtomContainer m2 = smis.next();
+        assertThat(m2.getAtomCount(), is(0));
+        assertThat(m2.getProperty(CDKConstants.TITLE, String.class),
+                   CoreMatchers.is("bad"));
+        assertThat(m2.getProperty(IteratingSMILESReader.BAD_SMILES_INPUT, String.class),
+                   CoreMatchers.is("n1cccc1 bad"));
+        IAtomContainer m3 = smis.next();
+        assertThat(m3.getAtomCount(), is(0));
+        assertThat(m3.getProperty(CDKConstants.TITLE, String.class),
+                   CoreMatchers.is("okay"));
         assertFalse(smis.hasNext());
     }
 }
