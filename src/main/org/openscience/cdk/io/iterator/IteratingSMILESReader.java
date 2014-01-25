@@ -209,7 +209,8 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     public void close() throws IOException {
-        input.close();
+        if (input != null)
+            input.close();
     }
 
     @TestMethod("testRemove")
