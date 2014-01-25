@@ -66,7 +66,6 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     private BufferedReader input;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IteratingSMILESReader.class);
-    private String currentLine;
     private SmilesParser sp = null;
     
     private boolean nextAvailableIsKnown;
@@ -119,37 +118,25 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
             
             // now try to parse the next Molecule
             try {
-                if (input.ready()) {
-                    currentLine = input.readLine().trim();
-                    logger.debug("Line: ", currentLine);
 
-                    int indexSpace = currentLine.indexOf(" ");
-                    if (indexSpace == -1) indexSpace = currentLine.indexOf("\t");
-
-                    String SMILES = currentLine;
-                    String name = null;
-
-                    if (indexSpace != -1) {
-                        logger.debug("Space found at index: ", indexSpace);
-                        SMILES = currentLine.substring(0,indexSpace);
-                        name = currentLine.substring(indexSpace+1);
-                        name = name.trim();
-                        logger.debug("Line contains SMILES and name: ", SMILES,
-                                     " + " , name);
-                    }
+                final String line = input.readLine();
                 
-                    nextMolecule = sp.parseSmiles(SMILES);
-                    if (name != null) {
-                        nextMolecule.setProperty(CDKConstants.TITLE, name);
-                    }
-                    if (nextMolecule.getAtomCount() > 0) {
-                        hasNext = true;
-                    } else {
-                        hasNext = false;
-                    }
-                } else {
+                if (line == null)
+                    return false;
+                
+                final String suffix = suffix(line);
+
+                nextMolecule = sp.parseSmiles(line);
+                if (suffix != null) {
+                    nextMolecule.setProperty(CDKConstants.TITLE, suffix);
+                }
+                if (nextMolecule.getAtomCount() > 0) {
+                    hasNext = true;
+                }
+                else {
                     hasNext = false;
                 }
+                
             } catch (Exception exception) {
                 logger.error("Error while reading next molecule: ", exception.getMessage());
                 logger.debug(exception);
@@ -159,6 +146,22 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
             nextAvailableIsKnown = true;
         }
         return hasNext;
+    }
+
+    /**
+     * Obtain the suffix after a line containing SMILES. The suffix follows
+     * any ' ' or '\t' termination characters.
+     * 
+     * @param line input line
+     * @return the suffix - or an empty line
+     */
+    private String suffix(final String line) {
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == ' ' || c == '\t')
+                return line.substring(i + 1);
+        }
+        return "";
     }
 
     /**
