@@ -124,18 +124,11 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
                 if (line == null)
                     return false;
                 
+                hasNext = true;
                 final String suffix = suffix(line);
 
                 nextMolecule = sp.parseSmiles(line);
-                if (suffix != null) {
-                    nextMolecule.setProperty(CDKConstants.TITLE, suffix);
-                }
-                if (nextMolecule.getAtomCount() > 0) {
-                    hasNext = true;
-                }
-                else {
-                    hasNext = false;
-                }
+                nextMolecule.setProperty(CDKConstants.TITLE, suffix);
                 
             } catch (Exception exception) {
                 logger.error("Error while reading next molecule: ", exception.getMessage());

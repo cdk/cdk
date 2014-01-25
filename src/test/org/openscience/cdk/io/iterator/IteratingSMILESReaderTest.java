@@ -27,6 +27,8 @@
  *  */
 package org.openscience.cdk.io.iterator;
 
+import com.google.common.collect.Iterables;
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -35,10 +37,18 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.SMILESFormat;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * TestCase for the reading SMILES mol files using one test file.
@@ -64,7 +74,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -86,7 +96,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -126,7 +136,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
         while (reader.hasNext()) {
             Object object = reader.next();
             Assert.assertNotNull(object);
-            Assert.assertTrue(object instanceof IAtomContainer);
+            assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
 
@@ -142,7 +152,7 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
             ins, DefaultChemObjectBuilder.getInstance()
         );
         IResourceFormat format = reader.getFormat();
-        Assert.assertTrue(format instanceof SMILESFormat);
+        assertTrue(format instanceof SMILESFormat);
     }
 
     @Test
@@ -183,5 +193,22 @@ public class IteratingSMILESReaderTest extends CDKTestCase {
                 break;
         }
         reader.remove();
+    }
+    
+    @Test public void empty() {
+        Reader reader = new StringReader(" empty1\n empty2");
+        IteratingSMILESReader smis = new IteratingSMILESReader(reader,
+                                                               SilentChemObjectBuilder.getInstance());
+        assertTrue(smis.hasNext());
+        IAtomContainer m1 = smis.next();
+        assertThat(m1.getAtomCount(), is(0));
+        assertThat(m1.getProperty(CDKConstants.TITLE, String.class),
+                   CoreMatchers.is("empty1"));
+        assertTrue(smis.hasNext());
+        IAtomContainer m2 = smis.next();
+        assertThat(m2.getAtomCount(), is(0));
+        assertThat(m2.getProperty(CDKConstants.TITLE, String.class),
+                   CoreMatchers.is("empty2"));
+        assertFalse(smis.hasNext());
     }
 }
