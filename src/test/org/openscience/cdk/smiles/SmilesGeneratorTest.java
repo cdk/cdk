@@ -547,7 +547,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator().aromatic();
-        sg.setUseAromaticityFlag(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
@@ -574,7 +573,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		String smiles = "";
 		IAtomContainer molecule = new AtomContainer();
         SmilesGenerator sg = new SmilesGenerator();
-        sg.setUseAromaticityFlag(true);
 		Atom sp2CarbonWithOneHydrogen = new Atom("C");
 		sp2CarbonWithOneHydrogen.setHybridization(IAtomType.Hybridization.SP2);
 		sp2CarbonWithOneHydrogen.setImplicitHydrogenCount(1);
@@ -921,7 +919,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol1));
 	    
 	    SmilesGenerator sg = new SmilesGenerator().aromatic();
-        sg.setUseAromaticityFlag(true);
         
 	    String mol1SMILES = sg.create(mol1);
 	    Assert.assertTrue(mol1SMILES.contains("nH"));
@@ -979,7 +976,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
-        smilesGenerator.setUseAromaticityFlag(true);        
         String smiles = smilesGenerator.create(mol);
         Assert.assertTrue( smiles.indexOf("[nH]") >= 0);
     }
@@ -990,7 +986,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);        
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
-        smilesGenerator.setUseAromaticityFlag(true);
         String smiles = smilesGenerator.create(mol);
         Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
     }
@@ -1005,7 +1000,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         addImplicitHydrogens(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
-        smilesGenerator.setUseAromaticityFlag(true);
         String smiles = smilesGenerator.create(mol);
         Assert.assertFalse(smiles.contains("[[nH]-]"));
     }
@@ -1021,7 +1015,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         CDKHueckelAromaticityDetector.detectAromaticity(mol);        
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
-        smilesGenerator.setUseAromaticityFlag(true);
         String smiles = smilesGenerator.create(mol);
         Assert.assertTrue(smiles.contains("[n-]"));
     }
@@ -1040,7 +1033,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
                 DefaultChemObjectBuilder.getInstance());
         IAtomContainer cdkMol = smilesParser.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = new SmilesGenerator();
-        smilesGenerator.setUseAromaticityFlag(true);    
         String genSmiles = smilesGenerator.create(cdkMol);
 
         // check that we have the appropriate ring closure symbols
@@ -1065,7 +1057,6 @@ public class SmilesGeneratorTest extends CDKTestCase {
         String smiles = "[12*H2-]";
         IAtomContainer mol = sp.parseSmiles(smiles);
         SmilesGenerator smilesGenerator = SmilesGenerator.isomeric();
-        smilesGenerator.setUseAromaticityFlag(true);
         String genSmiles = smilesGenerator.create(mol);
         Assert.assertEquals(smiles, genSmiles);
     }
@@ -1078,8 +1069,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         String smiles = "n1ncn(c1)CC";
         IAtomContainer mol = sp.parseSmiles(smiles);
-        SmilesGenerator smilesGenerator = new SmilesGenerator();
-        smilesGenerator.setUseAromaticityFlag(true);
+        SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String genSmiles = smilesGenerator.create(mol);
         Assert.assertTrue("Generated SMILES should not have explicit H: "+genSmiles, genSmiles.indexOf("H") == -1);
     }

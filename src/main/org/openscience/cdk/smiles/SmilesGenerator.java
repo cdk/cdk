@@ -459,10 +459,13 @@ public final class SmilesGenerator {
      *
      * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
      * true=SP2 or aromaticity trigger lower case
+     * @deprecated since 1.5.6, use {@link #aromatic} - invoking this method
+     *             does nothing                           
      */
     @TestMethod("testSFBug956923")
+    @Deprecated
     public void setUseAromaticityFlag(boolean useAromaticityFlag) {
-        // ignore for now
+    
     }
 
     /**
