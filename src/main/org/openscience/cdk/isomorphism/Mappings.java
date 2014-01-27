@@ -28,6 +28,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Iterators;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;
@@ -280,7 +281,15 @@ public final class Mappings implements Iterable<int[]> {
      */
     @TestMethod("uniqueAtoms")
     public Mappings uniqueAtoms() {
-        return filter(new UniqueAtomMatches());
+        // we need the unique predicate to be reset for each new iterator - 
+        // otherwise multiple iterations are always filtered (seen before) 
+        return new Mappings(query, target,
+                            new Iterable<int[]>() {
+                                @Override public Iterator<int[]> iterator() {
+                                    return Iterators.filter(iterable.iterator(),
+                                                            new UniqueAtomMatches());
+                                }
+                            });
     }
 
     /**
@@ -292,7 +301,16 @@ public final class Mappings implements Iterable<int[]> {
      */
     @TestMethod("uniqueBonds")
     public Mappings uniqueBonds() {
-        return filter(new UniqueBondMatches(GraphUtil.toAdjList(query)));
+        // we need the unique predicate to be reset for each new iterator - 
+        // otherwise multiple iterations are always filtered (seen before)
+        final int[][] g = GraphUtil.toAdjList(query);
+        return new Mappings(query, target,
+                            new Iterable<int[]>() {
+                                @Override public Iterator<int[]> iterator() {
+                                    return Iterators.filter(iterable.iterator(),
+                                                            new UniqueBondMatches(g));
+                                }
+                            });
     }
 
     /**

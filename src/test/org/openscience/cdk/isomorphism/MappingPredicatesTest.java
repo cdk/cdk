@@ -70,6 +70,24 @@ public class MappingPredicatesTest {
                    is(3));
     }
     
+    @Test public void uniqueAtoms_multipleIterations() throws Exception {
+        IAtomContainer ethane  = smi("CC");
+        IAtomContainer ethanol = smi("CCO");
+        Mappings mappings = Pattern.findSubstructure(ethane)
+                                   .matchAll(ethanol);
+        assertThat(mappings.countUnique(), is(1));
+        assertThat(mappings.countUnique(), is(1)); // re-iteration
+    }
+    
+    @Test public void uniqueBonds_multipleIterations() throws Exception {
+        IAtomContainer ethane  = smi("CC");
+        IAtomContainer ethanol = smi("CCO");
+        Mappings mappings = Pattern.findSubstructure(ethane)
+                                   .matchAll(ethanol);
+        assertThat(mappings.uniqueBonds().count(), is(1));
+        assertThat(mappings.uniqueBonds().count(), is(1)); // re-iteration
+    }
+    
     IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
     SmilesParser       smipar = new SmilesParser(bldr);
 
