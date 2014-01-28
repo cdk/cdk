@@ -46,7 +46,6 @@ public final class SmartsMatchers {
      * @param container the container to initialise 
      * @param ringQuery whether the smarts will check ring size queries
      */
-    @Deprecated
     public static void prepare(IAtomContainer container, boolean ringQuery) {
         if (ringQuery) {
             SMARTSAtomInvariants.configureDaylightWithRingInfo(container);
