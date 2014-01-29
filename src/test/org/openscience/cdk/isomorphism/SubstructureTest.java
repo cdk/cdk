@@ -308,6 +308,17 @@ public abstract class SubstructureTest {
                     smi("CCC(Br)(CC)C(=O)NC(=O)NC(C)=O"),
                     2);
     }
+    
+    @Test public void upgradeHydrogen() throws Exception {
+        assertMatch(smi("CC[C@@H](C)O"),
+                    smi("CC[C@](C)([H])O"),
+                    1);
+    }
+
+    @Test public void erm() throws Exception {
+        assertMismatch(smi("CC[C@@H](C)O"),
+                      smi("CC[C@](C)(N)O"));
+    }
 
     // doesn't matter if the match takes place but it should not cause and error
     // if the query is larger than the target

@@ -145,6 +145,9 @@ final class StereoMatch implements Predicate<int[]> {
         int[] us = neighbors(queryElement, queryMap);
         int[] vs = neighbors(targetElement, targetMap);
         us = map(u, v, us, mapping);
+        
+        if (us == null)
+            return false;
 
         int p = permutationParity(us) * parity(queryElement.getStereo());
         int q = permutationParity(vs) * parity(targetElement.getStereo());
@@ -170,7 +173,13 @@ final class StereoMatch implements Predicate<int[]> {
         // such that the central atom, u, mapps to the hydrogen
         if (query.getAtom(u).getImplicitHydrogenCount() == 1
                 && target.getAtom(v).getImplicitHydrogenCount() == 0) {
-            mapping[u] = targetMap.get(findHydrogen(((ITetrahedralChirality) targetElements[v]).getLigands()));
+            IAtom explicitHydrogen = findHydrogen(((ITetrahedralChirality) targetElements[v]).getLigands());
+            // the substructure had a hydrogen but the superstructure did not
+            // the matching is not possible - if we allowed the mapping then
+            // we would have different results for implicit/explicit hydrogens
+            if (explicitHydrogen == null)
+                return null;
+            mapping[u] = targetMap.get(explicitHydrogen);
         }
 
         for (int i = 0; i < us.length; i++)
@@ -270,7 +279,7 @@ final class StereoMatch implements Predicate<int[]> {
             if (Integer.valueOf(1).equals(a.getAtomicNumber()))
                 return a;
         }
-        throw new InternalError("no hydrogen found in neighbor list, null atomic numbers?");
+        return null;
     }
 
     /**
