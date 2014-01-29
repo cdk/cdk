@@ -511,7 +511,10 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      */
     private void applyMDLValenceModel(IAtom atom, int explicitValence) {
         if (atom.getValency() != null) {
-            atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+            if (atom.getValency() >= explicitValence)
+                atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+            else
+                atom.setImplicitHydrogenCount(0);
         }
         else {
             Integer element = atom.getAtomicNumber();
@@ -523,8 +526,14 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 charge = 0;
 
             int implicitValence = MDLValence.implicitValence(element, charge, explicitValence);
-            atom.setValency(implicitValence);
-            atom.setImplicitHydrogenCount(implicitValence - explicitValence);
+            if (implicitValence < explicitValence) {
+                atom.setValency(explicitValence);
+                atom.setImplicitHydrogenCount(0);
+            }
+            else {
+                atom.setValency(implicitValence);
+                atom.setImplicitHydrogenCount(implicitValence - explicitValence);
+            }
         }
     }
 

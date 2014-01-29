@@ -34,11 +34,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -63,6 +61,8 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -1331,5 +1331,21 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                    is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
         assertThat(MDLV2000Reader.CTabVersion.ofHeader("  5  5  0  0  0  0            999      "),
                    is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
+    }
+
+    /**
+     * @cdk.bug 1326
+     */
+    @Test public void nonNegativeHydrogenCount() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/ChEBI_30668.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer container = reader.read(new AtomContainer());
+        reader.close();
+        for (IAtom atom : container.atoms()) {
+            assertThat(atom.getImplicitHydrogenCount(),
+                       is(greaterThanOrEqualTo(0)));
+            assertThat(atom.getValency(),
+                       is(notNullValue()));
+        }
     }
 }
