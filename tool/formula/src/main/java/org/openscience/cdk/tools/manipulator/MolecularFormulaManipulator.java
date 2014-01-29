@@ -95,6 +95,14 @@ public class MolecularFormulaManipulator {
 		return count;
 	}
 
+    	public static int getElementCount(IMolecularFormula formula, IIsotope isotope) {
+            return getElementCount(formula, formula.getBuilder().newInstance(IElement.class, isotope));
+	}
+    
+        public static int getElementCount(IMolecularFormula formula, String symbol) {
+            return getElementCount(formula, formula.getBuilder().newInstance(IIsotope.class, symbol));
+	}
+
 	/**
 	 * Get a list of IIsotope from a given IElement which is contained
 	 * molecular. The search is based only on the IElement.
