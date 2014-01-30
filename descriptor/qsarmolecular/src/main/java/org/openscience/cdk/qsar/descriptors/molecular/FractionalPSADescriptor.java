@@ -159,11 +159,6 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
             return getDummyDescriptorValue(exception);
         }
         
-        if (false)
-        {
-        	System.out.println("TPSA="+polar+" WEIGHT="+weight+" EFFIC="+polar/weight);
-        }
-        
         return new DescriptorValue
         (
             getSpecification(),

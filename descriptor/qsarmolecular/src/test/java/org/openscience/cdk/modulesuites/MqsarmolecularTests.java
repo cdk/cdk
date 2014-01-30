@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.modulesuites;
 
-//import org.apache.commons.math3.fraction.Fraction;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
