@@ -94,7 +94,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings",
             this.getClass().getName(),
             "$Id$",
-            "Collaborative Drug Discovery, Inc."
+            "The Chemistry Development Kit"
 		);
     }
     
