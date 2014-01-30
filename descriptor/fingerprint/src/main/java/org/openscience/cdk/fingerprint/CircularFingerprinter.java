@@ -38,8 +38,7 @@ import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
-
-import sun.org.mozilla.javascript.internal.json.JsonParser;
+import org.openscience.cdk.annotations.*;
 
 import java.lang.*;
 import java.util.*;
@@ -80,7 +79,14 @@ import javax.vecmath.*;
  *  	Green, Kahn, Savoy, Sprague, Teig: Chemical Function Queries for 3D Database Search
  *		Journal of Chemical Information and Computer Science, v.34, pp.1297-1308 (1994)
  *  
+ * @author         egonw
+ * @cdk.created    2014-01-01
+ * @cdk.keyword    fingerprint
+ * @cdk.keyword    similarity
+ * @cdk.module     standard
+ * @cdk.githash
  */
+@TestClass("org.openscience.cdk.fingerprint.CircularFingerprinterTest")
 public class CircularFingerprinter implements IFingerprinter 
 {	
 	// ------------ constants ------------
@@ -220,12 +226,14 @@ public class CircularFingerprinter implements IFingerprinter
 	public FP getFP(int N) {return fplist.get(N);}
 	
 	/**
-	 * Calculates the circular fingerprint for the given IAtomContainer, and folds the result into a single bitset.
+	 * Calculates the circular fingerprint for the given IAtomContainer, and <b>folds</b> the result into a single bitset
+	 * (see getSize()).
 	 * 
-	 * @param  container IAtomContainer for which the fingerprint should be calculated.
-	 * @return           the fingerprint
+	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
+	 * @return the fingerprint
 	 */
-	public BitSet getFingerprint(IAtomContainer mol) throws CDKException
+	@TestMethod("testGetBitFingerprint")
+	public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException
 	{
 		calculate(mol);
 		final int FOLDING_SIZE=1024;
@@ -236,8 +244,60 @@ public class CircularFingerprinter implements IFingerprinter
 			long b=i>=0 ? i : ((i&0x7FFFFFFF)|(1L<<31));
 			bits.set((int)(b%FOLDING_SIZE));
 		}
-		return bits;
+		return new BitSetFingerprint(bits);
 	}
+
+	/**
+	 * Calculates the circular fingerprint for the given IAtomContainer, and returns a datastructure that enumerates all
+	 * of the fingerprints, and their counts (i.e. does <b>not</b> fold them into a bitmask).
+	 * 
+	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
+	 * @return the count fingerprint
+	 */
+	@TestMethod("testGetCountFingerprint")
+	public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException
+	{
+		calculate(mol);
+		
+		// extract a convenient {hash:count} datastructure
+		final HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
+		for (FP fp : fplist)
+		{
+			if (map.containsKey(fp.hashCode)) 
+				map.put(fp.hashCode,map.get(fp.hashCode)+1);
+			else
+				map.put(fp.hashCode,1);
+		}
+		final int sz=map.size();
+		final int[] hash=new int[sz],count=new int[sz];
+		int n=0;
+		for (int h : map.keySet())
+		{
+			hash[n]=h;
+			count[n++]=map.get(h);
+		}
+		
+		// implement a custom instance that provides a window directly into the summary content
+		return new ICountFingerprint()
+		{
+        	public long size() {return 4294967296l;}
+        	public int numOfPopulatedbins() {return sz;}
+        	public int getCount(int index) {return count[index];}
+        	public int getHash(int index) {return hash[index];}
+        	public void merge(ICountFingerprint fp) {}
+        	public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
+            public boolean hasHash(int hash) {return map.containsKey(hash);}
+            public int getCountForHash(int hash) {return map.containsKey(hash) ? map.get(hash) : 0;}
+		};
+	}
+    
+	/**
+     * Invalid: it is not appropriate to convert the integer hash codes into strings.
+     */
+    public Map<String,Integer> getRawFingerprint(IAtomContainer mol) throws CDKException
+    {
+    	throw new UnsupportedOperationException();
+    }
 	
 	/**
 	 * Returns the extent of the folded fingerprints.
@@ -287,12 +347,6 @@ public class CircularFingerprinter implements IFingerprinter
 		int degree=(atno>0 && atno<ELEMENT_BONDING.length ? ELEMENT_BONDING[atno] : 0)-nhydr;
 		int chg=atom.getFormalCharge();
 		int inring=ringBlock[aidx]>0 ? 1 : 0;
-		
-		if (false)
-		{
-			wr("ATOM "+(aidx+1)+" ("+atom.getSymbol()+") /"+mol.getAtomCount()+": nheavy="+nheavy+" degree="+degree+" atno="+atno+
-			   " chg="+chg+" nhydr="+nhydr+" inring="+inring);
-		}
 		
 		crc.reset();
 		crc.update((nheavy<<4)|degree);
@@ -1125,7 +1179,7 @@ public class CircularFingerprinter implements IFingerprinter
 		return -1;
 	}
 		
-	// !! tmp debug: remove
+	/* for debugging convenience: revive if necessary
 	private void wr(String str) {System.out.println(str);}
 	private String arrayStr(int[] val)
 	{
@@ -1150,7 +1204,7 @@ public class CircularFingerprinter implements IFingerprinter
 		String str="";
 		for (int n=0;n<val.length;n++) str+=val[n] ? "1" : "0";
 		return "{"+str+"}";
-	}
+	}*/
 }
 
 

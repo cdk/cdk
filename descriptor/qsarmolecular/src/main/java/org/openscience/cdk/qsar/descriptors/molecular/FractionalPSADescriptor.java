@@ -32,16 +32,21 @@
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.*;
+import org.openscience.cdk.atomtype.*;
+import org.openscience.cdk.config.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.volume.VABCVolume;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.*;
 import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
+import org.openscience.cdk.tools.*;
+import org.openscience.cdk.tools.manipulator.*;
+import org.openscience.cdk.annotations.*;
 
 /**
- * Fraction of the surface area that is polar, based on topological determination. This is equivalent
- * to {@link VABCDescriptor} / {@link TPSADescriptor}.
+ * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is 
+ * to {@link TPSADescriptor} / <b>molecular weight</b>, in units of square Angstroms per Dalton.
+ *
+ * Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
  *
  * @cdk.module qsarmolecular
  * @cdk.githash
@@ -51,20 +56,20 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
  * @cdk.keyword volume
  * @cdk.keyword descriptor
  */
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptorTest")
 public class FractionalPSADescriptor implements IMolecularDescriptor 
 {
-	private static boolean kicked=false; // need to work around an init issue
-
 	public FractionalPSADescriptor()
 	{
 	}
 	
+    @TestMethod("nop")
     public void initialise(IChemObjectBuilder builder) {}
-
 
     /**
      * {@inheritDoc}
      */
+    @TestMethod("nop")
     public DescriptorSpecification getSpecification() 
     {
         return new DescriptorSpecification(
@@ -76,6 +81,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
     }
 
     /** {@inheritDoc} */
+    @TestMethod("nop")
     public void setParameters(Object[] params) throws CDKException 
     {
         if (params.length!=0) 
@@ -85,16 +91,19 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
     }
 
     /** {@inheritDoc} */
+    @TestMethod("nop")
     public Object[] getParameters()
     {
         return new Object[0];
     }
 
+    @TestMethod("nop")
     public String[] getDescriptorNames() 
     {
-        return new String[]{"FractionalPSA"};
+        return new String[]{"tpsaEfficiency"};
     }
 
+    @TestMethod("nop")
     private DescriptorValue getDummyDescriptorValue(Exception e)
     {
         return new DescriptorValue
@@ -109,41 +118,50 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
     }
 
     /**
-     * Calculates the descriptor value: topological polar surface area divided by topological surface area.
+     * Calculates the topological polar surface area and expresses it as a ratio to molecule size.
      * 
      * @param atomContainer The {@link IAtomContainer} whose volume is to be calculated
-     * @return A double containing the fraction
+     * @return descriptor(s) retaining to polar surface area
      */
+    @TestMethod("testDescriptors")
     public DescriptorValue calculate(IAtomContainer mol)
-    {        
-        // hackaround: need to fire up a dummy SMARTS match otherwise the VABC code will bug out with a null pointer;
-        // note: the VABCDescriptor class also suffers from the same problem, if it is invoked before the SMARTS system
-        // is bootstrapped
-        /*if (!kicked)
-        {
-        	try
-        	{
-            	SMARTSQueryTool tool=new SMARTSQueryTool("[CC]");
-	            if (tool.matches(atomContainer)) {}
-	        	kicked=true;
-        	}
-        	catch (Exception ex) {}
-        }*/
-        
-        double polar=0,volume=0;
+    {
+    	try {mol=mol.clone();} catch (CloneNotSupportedException ex) {}
+        double polar=0,weight=0;
         try 
         {
+        	// type & assign implicit hydrogens
+        	IChemObjectBuilder builder=mol.getBuilder();
+        	CDKAtomTypeMatcher matcher=CDKAtomTypeMatcher.getInstance(builder);
+		   	for (IAtom atom : mol.atoms())
+		   	{
+            	IAtomType type=matcher.findMatchingAtomType(mol, atom);
+            	AtomTypeManipulator.configure(atom,type);
+			}
+			CDKHydrogenAdder adder=CDKHydrogenAdder.getInstance(builder);
+			adder.addImplicitHydrogens(mol);
+           	
         	// polar surface area: chain it off the TPSADescriptor
         	TPSADescriptor tpsa=new TPSADescriptor();
         	DescriptorValue value=tpsa.calculate(mol);
         	polar=((DoubleResult)value.getValue()).doubleValue();
         	
-        	// regular surface area: request it directly
-            volume=VABCVolume.calculate(mol);
+        	//  molecular weight
+            for (IAtom atom : mol.atoms())
+            {
+                weight+=Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getExactMass();
+                Integer hcount=atom.getImplicitHydrogenCount();
+                if (hcount!=CDKConstants.UNSET) weight+=hcount*1.00782504;
+            }
         }
-        catch (CDKException exception) 
+        catch (Exception exception) 
         {
             return getDummyDescriptorValue(exception);
+        }
+        
+        if (false)
+        {
+        	System.out.println("TPSA="+polar+" WEIGHT="+weight+" EFFIC="+polar/weight);
         }
         
         return new DescriptorValue
@@ -151,24 +169,27 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
             getSpecification(),
             getParameterNames(),
             getParameters(),
-            new DoubleResult(polar/volume),
+            new DoubleResult(weight==0 ? 0 : polar/weight),
             getDescriptorNames()
         );
     }
 
     /** {@inheritDoc} */
+    @TestMethod("nop")
     public IDescriptorResult getDescriptorResultType()
     {
         return new DoubleResultType();
     }
 
     /** {@inheritDoc} */
+    @TestMethod("nop")
     public String[] getParameterNames() 
     {
         return new String[0];
     }
 
     /** {@inheritDoc} */
+    @TestMethod("nop")
     public Object getParameterType(String name) 
     {
         return null;

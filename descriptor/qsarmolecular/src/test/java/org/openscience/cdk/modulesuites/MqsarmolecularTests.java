@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.modulesuites;
 
-import org.apache.commons.math3.fraction.Fraction;
+//import org.apache.commons.math3.fraction.Fraction;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
@@ -49,7 +49,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.ChiPathClusterDescriptorTe
 import org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest;
@@ -67,7 +67,7 @@ import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorT
 import org.openscience.cdk.qsar.descriptors.molecular.PetitjeanShapeIndexDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.RuleOfFiveDescriptorTest;
-import org.openscience.cdk.qsar.descriptors.molecular.SmallRingDescriptor;
+import org.openscience.cdk.qsar.descriptors.molecular.SmallRingDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.TPSADescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest;
 import org.openscience.cdk.qsar.descriptors.molecular.WHIMDescriptorTest;
@@ -94,8 +94,8 @@ import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
     DescriptorNamesTest.class,
 
 //      from cdk.test.qsar.molecular
-	SmallRingDescriptor.class,
-	FractionalPSADescriptor.class,
+	SmallRingDescriptorTest.class,
+	FractionalPSADescriptorTest.class,
     AcidicGroupCountDescriptorTest.class,
     ALOGPDescriptorTest.class,
     APolDescriptorTest.class,

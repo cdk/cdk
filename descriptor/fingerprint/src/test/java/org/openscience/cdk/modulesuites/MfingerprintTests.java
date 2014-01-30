@@ -31,7 +31,7 @@ import org.openscience.cdk.fingerprint.MACCSFingerprinterTest;
 import org.openscience.cdk.fingerprint.PubchemFingerprinterTest;
 import org.openscience.cdk.fingerprint.ShortestPathFingerprinterTest;
 import org.openscience.cdk.fingerprint.ShortestPathWalkerTest;
-import org.openscience.cdk.fingerprint.CircularFingerprinterTest;;
+import org.openscience.cdk.fingerprint.CircularFingerprinterTest;
 import org.openscience.cdk.similarity.DistanceMomentTest;
 import org.openscience.cdk.similarity.LingoSimilarityTest;
 import org.openscience.cdk.similarity.TanimotoTest;
@@ -43,7 +43,7 @@ import org.openscience.cdk.similarity.TanimotoTest;
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
-	CircularFignerprinterTest.class,
+	CircularFingerprinterTest.class,
     FingerprintCoverageTest.class,
     ExtendedFingerprinterTest.class,
     MACCSFingerprinterTest.class,

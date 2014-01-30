@@ -34,8 +34,10 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.*;
 import org.openscience.cdk.qsar.*;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.annotations.*;
 
 import java.util.*;
@@ -54,7 +56,7 @@ import java.util.*;
  * @cdk.keyword descriptor
 */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.SmallRingDescriptorTest")
-public class SmallRingDescriptor //extends AbstractMolecularDescriptor implements IMolecularDescriptor
+public class SmallRingDescriptor implements IMolecularDescriptor
 {
     private static final String[] names=
     {
@@ -78,11 +80,13 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
     {
     }
     
+    @TestMethod("nop")
     public void initialise(IChemObjectBuilder builder) {}
     
     /**
      * Fetch descriptor specification.
      */
+    @TestMethod("nop")
     public DescriptorSpecification getSpecification() 
     {
         return new DescriptorSpecification
@@ -97,21 +101,25 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
     /**
      * Set parameters: ignored, there are none.
      */
+    @TestMethod("nop")
     public void setParameters(Object[] params) throws CDKException {}
     
     /**
      * Get parameters: returns empty array, there are none.
      */
+    @TestMethod("nop")
     public Object[] getParameters() {return new Object[0];}
 
 	/**
 	 * Returns the names of the descriptors made available by this class.
 	 */
+    @TestMethod("nop")
     public String[] getDescriptorNames() {return names;}
     
     /**
      * Returns a placeholder with the descriptor size and type.
      */
+    @TestMethod("nop")
     public IDescriptorResult getDescriptorResultType() 
     {
     	return new IntegerArrayResult(names.length);
@@ -120,11 +128,13 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
 	/**
 	 * Get parameters: empty, there are none.
 	 */    
+    @TestMethod("nop")
     public String[] getParameterNames() {return new String[0];}
     
     /**
      * Parameter types: there aren't any.
      */
+    @TestMethod("nop")
     public Object getParameterType(String name) {return true;}
 
     /**
@@ -134,10 +144,12 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
      * @param mol the atoms and bonds that make up the molecular object
      * @return the various ring-based descriptors generated
      */
+    @TestMethod("testDescriptors")
     public DescriptorValue calculate(IAtomContainer mol)
     {
     	this.mol=mol;
-    	excavateMolecule();
+    	try {excavateMolecule();}
+    	catch (CDKException ex) {}
 
 		int nSmallRings=smallRings.length;
 		int nAromRings=0;
@@ -181,7 +193,7 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
     }
     
 	// analyze the molecule graph, and build up the desired properties
-	private void excavateMolecule()
+	private void excavateMolecule() throws CDKException
 	{
 		final int na=mol.getAtomCount(),nb=mol.getBondCount();
 		
@@ -225,11 +237,6 @@ public class SmallRingDescriptor //extends AbstractMolecularDescriptor implement
 			for (int i=0;i<bondAdj[n].length;i++) hy-=bondOrder[bondAdj[n][i]];
         	implicitH[n]=Math.max(0,hy);
         }
-
-/* !! switchover... foo
-Aromaticity aromaticity = new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet());
-*/
 
 		markRingBlocks();
 		
