@@ -416,10 +416,38 @@ public final class Cycles {
      * 
      * @return a cycle finder which computes all cycles if possible or provides
      *         the vertex short cycles
+     * @deprecated use {@link #or} to define a custom fall-back        
      */
+    @Deprecated
     @TestMethod("allOrVertexShort")
     public static CycleFinder allOrVertexShort() {
-        return CycleComputation.ALL_OR_VERTEX_SHORT;    
+        return or(all(), vertexShort());    
+    }
+
+    /**
+     * Use an auxiliary cycle finder if the primary method was intractable.
+     * 
+     * <blockquote><pre>
+     * // all cycles or all cycles size <= 6 
+     * CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(6));
+     * </pre></blockquote>
+     * 
+     * It is possible to nest multiple levels.
+     * 
+     * <blockquote><pre>
+     * // all cycles or relevant or essential  
+     * CycleFinder cf = Cycles.or(Cycles.all(),
+     *                            Cycles.or(Cycles.relevant(),
+     *                                      Cycles.essential())); 
+     * </pre></blockquote>
+     *
+     * @param primary   primary cycle finding method
+     * @param auxiliary auxiliary cycle finding method if the primary failed
+     * @return a new cycle finder
+     */
+    @TestMethod("or")
+    public static CycleFinder or(CycleFinder primary, CycleFinder auxiliary) {
+        return new Fallback(primary, auxiliary);
     }
 
     /**
@@ -950,6 +978,41 @@ public final class Cycles {
                                               " computation was aborted. Please us AllCycles/AllRingsFinder with" +
                                               " and specify a larger threshold or an alternative cycle set.");
             return allCycles.paths();
+        }
+    }
+
+    /**
+     * Find cycles using a primary cycle finder, if the computation was
+     * intractable fallback to an auxiliary cycle finder.
+     */
+    private static final class Fallback implements CycleFinder {
+
+        private CycleFinder primary, auxiliary;
+
+        /**
+         * Create a fallback for two cycle finders.
+         *
+         * @param primary   the primary cycle finder
+         * @param auxiliary the auxiliary cycle finder
+         */
+        private Fallback(CycleFinder primary, CycleFinder auxiliary) {
+            this.primary = primary;
+            this.auxiliary = auxiliary;
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule) throws Intractable {
+            return find(molecule, GraphUtil.toAdjList(molecule));
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+            try {
+                return primary.find(molecule, graph);
+            } catch (Intractable e) {
+                // auxiliary may still thrown an exception
+                return auxiliary.find(molecule, graph);
+            }
         }
     }
 }

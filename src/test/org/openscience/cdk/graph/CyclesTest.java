@@ -187,6 +187,11 @@ public class CyclesTest {
         assertThat(r2.getBond(5), is(biphenyl.getBond(12)));
     }
     
+    @Test public void or() throws Exception {
+        CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(3));
+        checkSize(cf.find(fullerene()), 120);
+    }
+    
     // load a boron fullerene
     private IAtomContainer fullerene() throws Exception {
         String path = "/data/mdl/boronBuckyBall.mol";
