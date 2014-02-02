@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.graph;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.Intractable;
@@ -37,9 +36,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingSearch;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
@@ -178,6 +175,17 @@ public final class Cycles {
     @TestMethod("all")
     public static CycleFinder all() {
         return CycleComputation.ALL;
+    }
+
+    /**
+     * All cycles of smaller than or equal to the specified length.
+     *
+     * @param length maximum size or cycle to find
+     * @return cycle finder
+     */
+    @TestMethod("allUpToLength")
+    public static CycleFinder all(int length) {
+        return new AllUpToLength(length);
     }
 
     /**
@@ -447,6 +455,19 @@ public final class Cycles {
     @TestMethod("all")
     public static Cycles all(IAtomContainer container) throws Intractable {
         return all().find(container);
+    }
+
+    /**
+     * All cycles of smaller than or equal to the specified length.
+     *
+     * @param container input container
+     * @param length    maximum size or cycle to find
+     * @return all cycles
+     * @throws Intractable computation was not feasible
+     */
+    @TestMethod("allUpToLength")
+    public static Cycles all(IAtomContainer container, int length) throws Intractable {
+        return all(length).find(container);
     }
 
     /**
@@ -864,5 +885,71 @@ public final class Cycles {
             return bondMap.get(u, v);
         return container.getBond(container.getAtom(u),
                                  container.getAtom(v));
+    }
+
+    /**
+     * All cycles smaller than or equal to a specified length.
+     */
+    private static final class AllUpToLength implements CycleFinder {
+        
+        private final int length;
+        
+        // see. AllRingsFinder.Threshold.Pubchem_99
+        private final int threshold = 684; 
+
+        private AllUpToLength(int length) {
+            this.length = length;
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule) throws Intractable {
+            return find(molecule, GraphUtil.toAdjList(molecule));
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+            RingSearch ringSearch = new RingSearch(molecule, graph);
+
+            List<int[]> walks = new ArrayList<int[]>(6);
+
+            // all isolated cycles are relevant - all we need to do is walk around
+            // the vertices in the subset 'isolated' 
+            for (int[] isolated : ringSearch.isolated()) {
+                walks.add(GraphUtil.cycle(graph, isolated));
+            }
+
+            // each biconnected component which isn't an isolated cycle is processed
+            // separately as a subgraph.
+            for (int[] fused : ringSearch.fused()) {
+
+                // make a subgraph and 'apply' the cycle computation - the walk 
+                // (path) is then lifted to the original graph            
+                for (int[] cycle : findInFused(GraphUtil.subgraph(graph, fused))) {
+                    walks.add(lift(cycle, fused));
+                }
+            }
+
+            return new Cycles(walks.toArray(new int[walks.size()][0]),
+                              molecule,
+                              null);
+        }
+
+        /**
+         * Find rings in a biconnected component.
+         *  
+         * @param g adjacency list
+         * @return 
+         * @throws Intractable computation was not feasible
+         */
+        private int[][] findInFused(int[][] g) throws Intractable {
+            AllCycles allCycles = new AllCycles(g,
+                                                Math.min(g.length, length),
+                                                threshold);
+            if (!allCycles.completed())
+                throw new Intractable("A large number of cycles were being generated and the" +
+                                              " computation was aborted. Please us AllCycles/AllRingsFinder with" +
+                                              " and specify a larger threshold or an alternative cycle set.");
+            return allCycles.paths();
+        }
     }
 }

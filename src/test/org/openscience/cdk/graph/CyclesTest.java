@@ -134,6 +134,13 @@ public class CyclesTest {
         checkSize(Cycles.allOrVertexShort().find(fullerene(), GraphUtil.toAdjList(fullerene())), 120);
     }
     
+    @Test public void allUpToLength() throws Exception {
+        checkSize(Cycles.all(6).find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
+        checkSize(Cycles.all(6).find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
+        checkSize(Cycles.all(6).find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 2);
+        checkSize(Cycles.all(6).find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 3);    
+    }
+    
     @Test public void pathsAreCopy() throws Exception {
         Cycles cs = Cycles.all(makeAnthracene());
         int[][] org = cs.paths();
