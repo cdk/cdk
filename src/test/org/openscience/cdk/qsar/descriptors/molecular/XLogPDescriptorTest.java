@@ -28,10 +28,15 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.aromaticity.Aromaticity;
+import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.smiles.SmilesParser;
+
+import static org.hamcrest.Matchers.closeTo;
 
 /**
  * TestSuite that runs XlogP tests.
@@ -266,6 +271,38 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         addExplicitHydrogens(mol);
         //logger.debug("no1822:"+((DoubleResult)descriptor.calculate(mol).getValue()).doubleValue()+"\n");
         Assert.assertEquals(2.36, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
+    }
+
+    @Test public void testAromaticBenzene() throws java.lang.Exception {
+        Object[] params = { false, true };
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
+        Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(), Cycles.all());
+        aromaticity.apply(mol);
+        assertAtomTypesPerceived(mol);
+        addExplicitHydrogens(mol);
+        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
+    }
+
+    @Test public void testNonAromaticBenzene() throws java.lang.Exception {
+        Object[] params = { false, true };
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
+        assertAtomTypesPerceived(mol);
+        addExplicitHydrogens(mol);
+        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.08, 0.01));
+    }
+
+    @Test public void testPerceivedAromaticBenzene() throws java.lang.Exception {
+        Object[] params = { true, true };
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
+        assertAtomTypesPerceived(mol);
+        addExplicitHydrogens(mol);
+        Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
     }
 }
 
