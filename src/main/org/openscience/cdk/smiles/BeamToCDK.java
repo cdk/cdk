@@ -322,9 +322,14 @@ final class BeamToCDK {
     IAtom newCDKAtom(Atom atom) {
         Element element = atom.element();
         boolean unknown = element == Element.Unknown;
-        return unknown ? builder.newInstance(IPseudoAtom.class,
-                                             element.symbol())
-                       : createAtom(element);
+        if (unknown) {
+            IPseudoAtom pseudoAtom = builder.newInstance(IPseudoAtom.class,
+                                                         element.symbol());
+            pseudoAtom.setSymbol(element.symbol());
+            pseudoAtom.setLabel(atom.label());
+            return pseudoAtom;
+        }
+        return createAtom(element);
     }
 
     /**

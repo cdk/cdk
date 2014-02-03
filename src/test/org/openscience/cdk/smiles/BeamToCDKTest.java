@@ -564,6 +564,37 @@ public class BeamToCDKTest {
         assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
         assertThat(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING, Integer.class), is(2));
     }
+    
+    @Test public void erroneousLabels_tRNA() throws Exception {
+        IAtomContainer ac = convert("[tRNA]CC");
+        assertThat(ac.getAtom(0).getSymbol(), is("*"));
+        assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("tRNA"));
+    }
+    
+    // believe it or not there are cases of this in the wild -checkout some
+    // acyl-carrier-protein SMILES in MetaCyc
+    @Test public void erroneousLabels_nested() throws Exception {
+        IAtomContainer ac = convert("[now-[this]-is-mean]CC");
+        assertThat(ac.getAtom(0).getSymbol(), is("*"));
+        assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
+        assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("now-[this]-is-mean"));
+    }
+
+    @Test(expected = IOException.class)
+    public void erroneousLabels_bad1() throws Exception {
+        convert("[this]-is-not-okay]CC");
+    }
+    
+    @Test(expected = IOException.class)
+    public void erroneousLabels_bad2() throws Exception {
+        convert("[this-[is-not-okay]CC");
+    }
+    
+    @Test(expected = IOException.class)
+    public void erroneousLabels_bad3() throws Exception {
+        convert("[this-[is]-not]-okay]CC");
+    }
 
     IAtomContainer convert(String smi) throws IOException {
         BeamToCDK g2c = new BeamToCDK(SilentChemObjectBuilder.getInstance());
