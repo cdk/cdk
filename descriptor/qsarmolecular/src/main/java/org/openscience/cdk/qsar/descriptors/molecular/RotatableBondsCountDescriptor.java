@@ -60,6 +60,11 @@ import java.util.List;
  *     <td>false</td>
  *     <td>True if terminal bonds are included</td>
  *   </tr>
+ *   <tr>
+ *     <td>excludeAmides</td>
+ *     <td>false</td>
+ *     <td>True if amide C-N bonds should be excluded</td>
+ *   </tr>
  * </table>
  *
  * Returns a single value named <i>nRotB</i>
@@ -77,6 +82,7 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest")
 public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 	private boolean includeTerminals = false;
+    private boolean excludeAmides = false;
 
 
 	/**
@@ -108,14 +114,15 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 	 */
 	@TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-		if (params.length != 1) {
-			throw new CDKException("RotatableBondsCount expects one parameter");
+		if (params.length != 2) {
+			throw new CDKException("RotatableBondsCount expects two parameters");
 		}
-		if (!(params[0] instanceof Boolean)) {
-			throw new CDKException("The parameter must be of type Boolean");
+		if (!(params[0] instanceof Boolean) || !(params[1] instanceof Boolean)) {
+			throw new CDKException("The parameters must be of type Boolean");
 		}
 		// ok, all should be fine
 		includeTerminals = (Boolean) params[0];
+        excludeAmides = (Boolean) params[1];
 	}
 
 
@@ -127,8 +134,9 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 	@TestMethod("testGetParameters")
     public Object[] getParameters() {
 		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[1];
+		Object[] params = new Object[2];
 		params[0] = includeTerminals;
+        params[1] = excludeAmides;
 		return params;
 	}
 
@@ -170,6 +178,11 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) && 
 					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
 					if (!bond.getFlag(CDKConstants.ISINRING)) {
+
+                        if (excludeAmides && (isAmide(atom0, atom1, ac) || isAmide(atom1, atom0, ac))) {
+                            continue;
+                        }
+
                         // if there are explicit H's we should ignore those bonds
                         degree0 = ac.getConnectedBondsCount(atom0) - getConnectedHCount(ac, atom0);
 						degree1 = ac.getConnectedBondsCount(atom1) - getConnectedHCount(ac, atom1);
@@ -188,6 +201,31 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
                 new IntegerResult(rotatableBondsCount), getDescriptorNames());
 
 	}
+
+    /**
+     * Checks whether both atoms are involved in an amide C-N bond: *N(*)C(*)=O.
+     *
+     * Only the most common constitution is considered. Tautomeric, O\C(*)=N\*,
+     * and charged forms, [O-]\C(*)=N\*, are ignored.
+     *
+     * @param atom0 the first bonding partner
+     * @param atom1 the second bonding partner
+     * @param ac the parent container
+     *
+     * @return if both partners are involved in an amide C-N bond
+     */
+    private boolean isAmide(IAtom atom0, IAtom atom1, IAtomContainer ac) {
+
+        if (atom0.getSymbol().equals("C") && atom1.getSymbol().equals("N")) {
+            for (IAtom neighbor : ac.getConnectedAtomsList(atom0)) {
+                if (neighbor.getSymbol().equals("O") &&
+                        ac.getBond(atom0, neighbor).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private int getConnectedHCount(IAtomContainer atomContainer, IAtom atom) {
         List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
@@ -221,8 +259,9 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
      */
     @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
-        String[] params = new String[1];
+        String[] params = new String[2];
         params[0] = "includeTerminals";
+        params[1] = "excludeAmides";
         return params;
     }
 

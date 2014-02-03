@@ -178,8 +178,12 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
             mw.setParameters(mwparams);
             double mwvalue = ((DoubleResult) mw.calculate(mol).getValue()).doubleValue();
 
+            // exclude (heavy atom) terminal bonds
+            // exclude amide C-N bonds because of their high rotational barrier
+            // see Veber, D.F. et al., 2002, 45(12), pp.2615–23.
             IMolecularDescriptor rotata = new RotatableBondsCountDescriptor();
-            rotata.setParameters(hBondparams);
+            Object[] rotatableBondsParams = { false, true };
+            rotata.setParameters(rotatableBondsParams);
             int rotatablebonds = ((IntegerResult) rotata.calculate(mol).getValue()).intValue();
 
             if (xlogPvalue > 5.0) {

@@ -32,6 +32,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import static org.hamcrest.Matchers.is;
+
 /**
  * TestSuite that runs all QSAR tests.
  *
@@ -56,6 +58,24 @@ public class RuleOfFiveDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("CCCC(OCC)OCC(c1cccc2ccccc12)C4CCC(CCCO)C(CC3CNCNC3)C4"); // 
         addExplicitHydrogens(mol);
         Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test public void testRuleOfFiveRotatableBonds() throws java.lang.Exception {
+        Object[] params = { true };
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCCC1=CC(NC(=O)CC)=CC(CCC)=C1"); // nRot = 10 (excl. amide C-N bond)
+        addExplicitHydrogens(mol);
+        Assert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(0));
+    }
+
+    @Test public void testRuleOfFiveRotatableBondsViolated() throws java.lang.Exception {
+        Object[] params = { true };
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCCCC1=CC(CCC)=CC(NC(=O)CC)=C1"); // nRot = 11 (excl. amide C-N bond)
+        addExplicitHydrogens(mol);
+        Assert.assertThat(((IntegerResult) descriptor.calculate(mol).getValue()).intValue(), is(1));
     }
 }
 
