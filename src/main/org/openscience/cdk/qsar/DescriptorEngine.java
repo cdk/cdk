@@ -698,7 +698,6 @@ public class DescriptorEngine {
                                                                     InstantiationException {
         for(Constructor constructor : c.getConstructors()){
             Class<?>[] params = constructor.getParameterTypes();
-            System.out.println(c.getSimpleName() + Arrays.toString(params));
             if(params.length == 0){
                 return (IDescriptor) constructor.newInstance();
             } else if(params.length == 1
