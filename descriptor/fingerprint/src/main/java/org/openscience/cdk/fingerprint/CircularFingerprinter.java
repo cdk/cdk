@@ -129,7 +129,6 @@ public class CircularFingerprinter implements IFingerprinter
 	private int[][] atomGroup;
 	private CRC32 crc=new CRC32(); // recycled for each CRC calculation
 	private ArrayList<FP> fplist=new ArrayList<FP>();
-	private int fingerprint=0; // final 32-bit fingerprint built from constituents
 	
 	// summary information about the molecule, for quick access
 	private boolean[] amask; // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
@@ -176,6 +175,7 @@ public class CircularFingerprinter implements IFingerprinter
 	public void calculate(IAtomContainer mol) throws CDKException
 	{
 		this.mol=mol;
+		fplist.clear();
 		atomClass=classType<=CLASS_ECFP6 ? ATOMCLASS_ECFP : ATOMCLASS_FCFP;
 		
 		excavateMolecule();
