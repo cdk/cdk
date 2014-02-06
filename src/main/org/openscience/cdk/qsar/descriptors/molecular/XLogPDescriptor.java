@@ -945,6 +945,12 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         atom3.setSymbol("O");
         SymbolQueryAtom atom4=new SymbolQueryAtom(atomContainer.getBuilder());
         atom4.setSymbol("O");
+
+        orthopair.addAtom(atom1);
+        orthopair.addAtom(atom2);
+        orthopair.addAtom(atom3);
+        orthopair.addAtom(atom4);
+
         orthopair.addBond(new AromaticQueryBond(atom1,atom2,IBond.Order.SINGLE, atomContainer.getBuilder()));
         orthopair.addBond(new OrderQueryBond(atom1,atom3,IBond.Order.SINGLE, atomContainer.getBuilder()));
         orthopair.addBond(new OrderQueryBond(atom2,atom4,IBond.Order.SINGLE, atomContainer.getBuilder()));
