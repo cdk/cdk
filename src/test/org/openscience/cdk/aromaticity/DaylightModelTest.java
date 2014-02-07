@@ -181,6 +181,21 @@ public class DaylightModelTest {
              -1, 0, 1, 1, 2, 1, 1);
     }
 
+    @Test public void abnormalValence_carbon() throws Exception {
+        test(smiles("[C]1[C][C][C][C]1"),
+             -1, -1, -1, -1, -1);
+    }
+
+    @Test public void abnormalValence_nitrogen() throws Exception {
+        test(smiles("[N]1[N][N][N][N]1"),
+             -1, -1, -1, -1, -1);
+    }
+
+    @Test public void abnormalValence_phosphorus() throws Exception {
+        test(smiles("[P]1[P][P][P][P]1"),
+             -1, -1, -1, -1, -1);
+    }
+
     static IAtomContainer addHydrogens(IAtomContainer container) throws CDKException {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         CDKHydrogenAdder.getInstance(container.getBuilder()).addImplicitHydrogens(container);

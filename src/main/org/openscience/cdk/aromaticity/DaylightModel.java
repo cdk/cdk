@@ -169,10 +169,13 @@ final class DaylightModel extends ElectronDonation {
             }
 
             // a anion with a lone pair contributes 2 electrons - simplification
-            // here is we count the number free valence electrons
+            // here is we count the number free valence electrons but also
+            // check if the bonded valence is okay (i.e. not a radical)
             else if (charge <= 0 && charge > -3) {
-                int v = valence(element, charge);
-                if (v - bondOrderSum[i] >= 2)
+                int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
+                if (!normal(element, charge, bondedValence))
+                    electrons[i] = -1;
+                else if (valence(element, charge) - bondOrderSum[i] >= 2)
                     electrons[i] = 2;
                 else
                     electrons[i] = -1;
@@ -255,6 +258,39 @@ final class DaylightModel extends ElectronDonation {
                 return true;
         }
         return false;
+    }
+
+    /**
+     * The element (with only sigma bonds) has normal valence for the specified
+     * charge.
+     *
+     * @param element atomic number
+     * @param charge  formal charge
+     * @param valence bonded electrons
+     * @return acceptable for this model
+     */
+    private static boolean normal(int element, int charge, int valence) {
+        switch (element) {
+            case CARBON:
+                if (charge == -1 || charge == +1)
+                    return valence == 3;
+                return charge == 0 && valence == 4;
+            case NITROGEN:
+            case PHOSPHORUS:
+            case ARSENIC:
+                if (charge == -1)
+                    return valence == 2;
+                if (charge == +1)
+                    return valence == 4;
+                return charge == 0 && valence == 3;
+            case OXYGEN:
+            case SULPHUR:
+            case SELENIUM:
+                if (charge == +1)
+                    return valence == 3;
+                return charge == 0 && valence == 2;
+        }
+        return false;    
     }
 
     /**
