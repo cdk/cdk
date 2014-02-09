@@ -70,7 +70,7 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest
     public void testDescriptors() throws Exception
     {
     	String fnmol="data/cdd/pyridineacid.mol";
-    	MDLReader mdl=new MDLReader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
+    	MDLV2000Reader mdl=new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
 		AtomContainer mol=new AtomContainer();
 		mdl.read(mol);
 		mdl.close();

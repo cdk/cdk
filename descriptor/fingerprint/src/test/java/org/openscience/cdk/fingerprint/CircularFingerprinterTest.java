@@ -39,9 +39,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.io.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.iupac.parser.MoleculeBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
@@ -174,7 +172,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 			if (molBytes==null) break;
 			
     		AtomContainer mol=new AtomContainer();
-    		MDLReader mdl=new MDLReader(new ByteArrayInputStream(molBytes));
+    		MDLV2000Reader mdl=new MDLV2000Reader(new ByteArrayInputStream(molBytes));
     		mdl.read(mol);
     		mdl.close();
     		

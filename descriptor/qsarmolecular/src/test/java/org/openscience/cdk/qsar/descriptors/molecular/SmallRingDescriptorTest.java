@@ -37,8 +37,7 @@ import org.openscience.cdk.*;
 import org.openscience.cdk.qsar.*;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.io.MDLReader;
-import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.io.*;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.*;
 import org.openscience.cdk.annotations.*;
@@ -117,7 +116,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
 			if (molBytes==null) break;
 			
     		AtomContainer mol=new AtomContainer();
-    		MDLReader mdl=new MDLReader(new ByteArrayInputStream(molBytes));
+    		MDLV2000Reader mdl=new MDLV2000Reader(new ByteArrayInputStream(molBytes));
     		mdl.read(mol);
     		mdl.close();
 

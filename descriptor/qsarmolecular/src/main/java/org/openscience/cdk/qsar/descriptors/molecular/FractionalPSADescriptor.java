@@ -154,7 +154,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
                 if (hcount!=CDKConstants.UNSET) weight+=hcount*1.00782504;
             }
         }
-        catch (Exception exception) 
+        catch (Exception exception)
         {
             return getDummyDescriptorValue(exception);
         }
