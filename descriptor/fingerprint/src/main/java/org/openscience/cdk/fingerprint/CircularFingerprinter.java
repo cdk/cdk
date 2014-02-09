@@ -46,40 +46,42 @@ import java.util.zip.CRC32;
 import javax.vecmath.*;
  
 /**
- * 
- *	Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6 
- *  fingerprints, which are partially described by:
+ *  <ul>
+ *	<li>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6 
+ *  fingerprints, which are partially described by:</li>
  *
  *		Rogers &amp; Hahn, J. Chem. Inf. Model., 50, 742–754 (2010)
- *		http://pubs.acs.org/doi/abs/10.1021/ci100050t
+ *		<a href="http://pubs.acs.org/doi/abs/10.1021/ci100050t">http://pubs.acs.org/doi/abs/10.1021/ci100050t</a>
  *
- *  While the literature describes the method in detail, it does not disclose either the hashing technique for converting
+ *  <li>While the literature describes the method in detail, it does not disclose either the hashing technique for converting
  *  lists of integers into 32-bit codes, nor does it describe the scheme used to classify the atom types for creating
  *  the FCFP-class of descriptors. For this reason, the fingerprints that are created are not binary compatible with
- *  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.
+ *  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.</li>
  *  
- *  The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
+ *  <li>The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
  *  are no more than a hundred or so unique bit hashcodes per molecule. These identifers can be folded into a smaller
- *  array of bits, such that they can be represented as a single long binary number, which is often more convenient.
+ *  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</li>
  *
- *	The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
- *	formula/parameters as used by PNG files, and described in: http://www.w3.org/TR/PNG/#D-CRCAppendix
+ *	<li>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
+ *	formula/parameters as used by PNG files, and described in:</li>
+ *		
+ *		<a href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</a>
  *
- *	Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
- *	suppressed or not.
+ *	<li>Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
+ *	suppressed or not.</li>
  *
- *  Implementation note: many of the algorithms involved in the generation of fingerprints (e.g. aromaticity, atom
+ *  <li>Implementation note: many of the algorithms involved in the generation of fingerprints (e.g. aromaticity, atom
  *  typing) have been coded up explicitly for use by this class, rather than making use of comparable functionality
  *  elsewhere in the CDK. This is to ensure that the CDK implementation of the algorithm is strictly equal to other
  *  implementations: dependencies on CDK functionality that could be modified or improved in the future would break
- *  binary compatibility with formerly identical implementations on other platforms.
+ *  binary compatibility with formerly identical implementations on other platforms.</li>
  *  
- *  For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described in:
+ *  <li>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described in:</li>
  *  
  *  	Green, Kahn, Savoy, Sprague, Teig: Chemical Function Queries for 3D Database Search
  *		Journal of Chemical Information and Computer Science, v.34, pp.1297-1308 (1994)
  *  
- * @author         egonw
+ * @author         am.clark
  * @cdk.created    2014-01-01
  * @cdk.keyword    fingerprint
  * @cdk.keyword    similarity
@@ -163,6 +165,8 @@ public class CircularFingerprinter implements IFingerprinter
 	 * Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
 	 * for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
 	 * path diameter, and may be 0, 2, 4 or 6.
+	 * 
+	 * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
 	 */
 	public CircularFingerprinter(int classType)
 	{
@@ -171,6 +175,8 @@ public class CircularFingerprinter implements IFingerprinter
 	
 	/**
 	 * Calculates the fingerprints for the given IAtomContainer, and stores them for subsequent retrieval.
+	 * 
+	 * @param mol chemical structure; all nodes should be known legitimate elements
 	 */
 	public void calculate(IAtomContainer mol) throws CDKException
 	{
@@ -217,11 +223,16 @@ public class CircularFingerprinter implements IFingerprinter
 	
 	/**
 	 * Returns the number of fingerprints generated.
+	 * 
+	 * @return total number of unique fingerprint hashes generated
 	 * */
 	public int getFPCount() {return fplist.size();}
 	
 	/**
 	 * Returns the requested fingerprint.
+	 * 
+	 * @param N index of fingerprint (0-based)
+	 * @return instance of a fingerprint hash
 	 * */
 	public FP getFP(int N) {return fplist.get(N);}
 	
