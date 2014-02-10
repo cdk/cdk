@@ -94,7 +94,7 @@ public final class ShortestPaths {
     private final boolean[] precedes;
 
 
-    private final int start;
+    private final int start, limit;
     private final IAtomContainer container;
 
     /**
@@ -139,13 +139,29 @@ public final class ShortestPaths {
      * @param start     the start atom index of the shortest paths
      * @param ordering  vertex ordering for preceding path (null = don't use)
      */
-    ShortestPaths(int[][] adjacent, IAtomContainer container, int start,
-                  int[] ordering) {
+    ShortestPaths(int[][] adjacent, IAtomContainer container, int start, int[] ordering) {
+        this(adjacent, container, start, container.getAtomCount(), ordering);
+    }
+
+    /**
+     * Create a new shortest paths search for the given graph from the {@literal
+     * start} vertex. The ordering for use by {@link #isPrecedingPathTo(int)}
+     * can also be specified.
+     *
+     * @param adjacent  adjacency list representation - built from {@link
+     *                  GraphUtil#toAdjList(IAtomContainer)}
+     * @param container container used to access atoms and their indices
+     * @param start     the start atom index of the shortest paths
+     * @param limit     the maximum length path to find
+     * @param ordering  vertex ordering for preceding path (null = don't use)
+     */
+    ShortestPaths(int[][] adjacent, IAtomContainer container, int start, int limit, int[] ordering) {
 
         int n = adjacent.length;
 
         this.container = container;
         this.start = start;
+        this.limit = limit;
 
         this.distTo = new int[n];
         this.routeTo = new Route[n];
@@ -194,6 +210,9 @@ public final class ShortestPaths {
             int dist = distTo[v] + 1;
             for (int w : adjacent[v]) {
 
+                if (dist > limit)
+                    continue;
+                
                 // distance is less then the current closest distance
                 if (dist < distTo[w]) {
                     distTo[w]   = dist;

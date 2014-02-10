@@ -1128,6 +1128,19 @@ public class ShortestPathsTest {
         assertThat(paths.distanceTo(5), is(1));
 
     }
+    
+    @Test public void testDistanceTo_Int_Benzene_limited() {
+        IAtomContainer benzene = MoleculeFactory.makeBenzene();
+
+        ShortestPaths paths = new ShortestPaths(GraphUtil.toAdjList(benzene), benzene, 0, 2, null);
+
+        assertThat(paths.distanceTo(0), is(0));
+        assertThat(paths.distanceTo(1), is(1));
+        assertThat(paths.distanceTo(2), is(2));
+        assertThat(paths.distanceTo(3), is(Integer.MAX_VALUE)); // dist > 2 (our limit)
+        assertThat(paths.distanceTo(4), is(2));
+        assertThat(paths.distanceTo(5), is(1));    
+    }
 
     @Test
     public void testDistanceTo_Atom_Spiroundecane() {
