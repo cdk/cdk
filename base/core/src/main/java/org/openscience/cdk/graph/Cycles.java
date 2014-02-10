@@ -178,8 +178,10 @@ public final class Cycles {
     }
 
     /**
-     * All cycles of smaller than or equal to the specified length.
-     *
+     * All cycles of smaller than or equal to the specified length. If a length
+     * is also provided to {@link CycleFinder#find(IAtomContainer, int)} the 
+     * minimum of the two limits is used.
+     * 
      * @param length maximum size or cycle to find
      * @return cycle finder
      */
