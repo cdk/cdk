@@ -76,6 +76,9 @@ final class InitialCycles {
 
     /** Number of vertices which have degree 2. */
     private int nDeg2Vertices;
+    
+    /** Limit the size of cycles discovered. */
+    private final int limit;
 
     /**
      * Is the graph known to be a biconnected component. This allows a small
@@ -90,7 +93,18 @@ final class InitialCycles {
      * @throws NullPointerException the graph was null
      */
     InitialCycles(final int[][] graph) {
-        this(graph, false);
+        this(graph, graph.length, false);
+    }
+
+    /**
+     * Create a set of initial cycles for the provided graph.
+     *
+     * @param graph input graph
+     * @param limit the maximum size of cycle found             
+     * @throws NullPointerException the graph was null
+     */
+    InitialCycles(final int[][] graph, int limit) {
+        this(graph, limit, false);
     }
     
     /**
@@ -101,11 +115,12 @@ final class InitialCycles {
      * @param biconnected the graph is known to be biconnected             
      * @throws NullPointerException the graph was null
      */
-    private InitialCycles(final int[][] graph, boolean biconnected) {
+    private InitialCycles(final int[][] graph, final int limit, boolean biconnected) {
         this.graph = checkNotNull(graph, "no graph provided");
 
         // ordering ensures the number of initial cycles is polynomial
         this.biconnected = biconnected;
+        this.limit       = limit;
         this.ordering    = ordering(graph);
 
         // index the edges to allow us to jump between edge and path representation
@@ -259,7 +274,7 @@ final class InitialCycles {
         for (int i = first; i < n; i++) {
             final int r = vertices[i];
 
-            ShortestPaths pathsFromR = new ShortestPaths(graph, null, r, ordering);
+            ShortestPaths pathsFromR = new ShortestPaths(graph, null, r, limit / 2, ordering);
 
             // we only check the vertices which belong to the set Vr. this
             // set is vertices reachable from 'r' by only travelling though
@@ -359,7 +374,8 @@ final class InitialCycles {
      * @param cycle the cycle to add
      */
     private void add(Cycle cycle) {
-        cycles.put(cycle.length(), cycle);
+        if (cycle.length() <= limit)
+            cycles.put(cycle.length(), cycle);
     }
 
     /**
@@ -461,7 +477,20 @@ final class InitialCycles {
      */
     @TestMethod("bioconnected_simpleCycle")
     static InitialCycles ofBiconnectedComponent(int[][] graph) {
-        return new InitialCycles(graph, true);
+        return ofBiconnectedComponent(graph, graph.length);
+    }
+    
+    /**
+     * Compute the initial cycles of a biconnected graph.
+     *
+     * @param graph the biconnected graph
+     * @param limit maximum size of the cycle to find             
+     * @return computed initial cycles
+     * @throws NullPointerException the graph was null
+     */
+    @TestMethod("bioconnected_simpleCycle_limit_5")
+    static InitialCycles ofBiconnectedComponent(int[][] graph, int limit) {
+        return new InitialCycles(graph, limit, true);
     }
 
     /**
