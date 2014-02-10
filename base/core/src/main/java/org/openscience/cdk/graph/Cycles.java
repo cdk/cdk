@@ -105,7 +105,7 @@ public final class Cycles {
      * @param paths     the cycle paths (closed vertex walks)
      * @param container the input container
      */
-    public Cycles(int[][] paths,
+    private Cycles(int[][] paths,
                    IAtomContainer container,
                    EdgeToBondMap bondMap) {
         this.paths     = paths;
