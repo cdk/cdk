@@ -140,7 +140,7 @@ public final class ShortestPaths {
      * @param ordering  vertex ordering for preceding path (null = don't use)
      */
     ShortestPaths(int[][] adjacent, IAtomContainer container, int start, int[] ordering) {
-        this(adjacent, container, start, container.getAtomCount(), ordering);
+        this(adjacent, container, start, adjacent.length, ordering);
     }
 
     /**
