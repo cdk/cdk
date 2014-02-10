@@ -105,7 +105,7 @@ public final class Cycles {
      * @param paths     the cycle paths (closed vertex walks)
      * @param container the input container
      */
-    private Cycles(int[][] paths,
+    public Cycles(int[][] paths,
                    IAtomContainer container,
                    EdgeToBondMap bondMap) {
         this.paths     = paths;
@@ -495,7 +495,7 @@ public final class Cycles {
      */
     @TestMethod("allUpToLength")
     public static Cycles all(IAtomContainer container, int length) throws Intractable {
-        return all(length).find(container, container.getAtomCount());
+        return all().find(container, length);
     }
 
     /**
@@ -685,31 +685,31 @@ public final class Cycles {
     private static enum CycleComputation implements CycleFinder {
         MCB {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 return new MinimumCycleBasis(ic, true).paths();
             }
         },
         ESSENTIAL {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 RelevantCycles rc = new RelevantCycles(ic);
                 return new EssentialCycles(rc, ic).paths();
             }
         },
         RELEVANT {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 return new RelevantCycles(ic).paths();
             }
         },
         ALL {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
                 final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99  
-                AllCycles ac = new AllCycles(graph, graph.length, threshold);
+                AllCycles ac = new AllCycles(graph, length, threshold);
                 if (!ac.completed())
                     throw new Intractable("A large number of cycles were being generated and the" +
                                                   " computation was aborted. Please use AllCycles/AllRingsFinder with" +
@@ -720,30 +720,30 @@ public final class Cycles {
         },
         TRIPLET_SHORT {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 return new TripletShortCycles(new MinimumCycleBasis(ic, true), false).paths();
             }
         },
         VERTEX_SHORT {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 return new VertexShortCycles(ic).paths();
             }
         },
         EDGE_SHORT {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
-                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph);
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
+                InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 return new EdgeShortCycles(ic).paths();
             }
         },
         CDK_AROMATIC {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
                 
-                InitialCycles     ic  = InitialCycles.ofBiconnectedComponent(graph);
+                InitialCycles     ic  = InitialCycles.ofBiconnectedComponent(graph, length);
                 MinimumCycleBasis mcb = new MinimumCycleBasis(ic, true);
                 
                 // As per the old aromaticity detector if the MCB/SSSR is made 
@@ -752,18 +752,18 @@ public final class Cycles {
                 if (mcb.size() > 3) {
                     return mcb.paths();
                 } else { 
-                    return ALL.apply(graph);
+                    return ALL.apply(graph, length);
                 }
             }    
         },
         ALL_OR_VERTEX_SHORT {
             /** {@inheritDoc} */
-            @Override int[][] apply(int[][] graph) throws Intractable {
+            @Override int[][] apply(int[][] graph, int length) throws Intractable {
                 final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99  
                 AllCycles ac = new AllCycles(graph, graph.length, threshold);
                 
                 return ac.completed() ? ac.paths() 
-                                      : VERTEX_SHORT.apply(graph);
+                                      : VERTEX_SHORT.apply(graph, length);
             }
         };
 
@@ -775,7 +775,7 @@ public final class Cycles {
          * @return the cycles of the graph
          * @throws Intractable the computation reached a set limit
          */
-        abstract int[][] apply(int[][] graph) throws Intractable;
+        abstract int[][] apply(int[][] graph, int length) throws Intractable;
 
         /** @inheritDoc */
         @Override public Cycles find(IAtomContainer molecule) throws Intractable {
@@ -794,7 +794,8 @@ public final class Cycles {
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated' 
             for (int[] isolated : ringSearch.isolated()) {
-                walks.add(GraphUtil.cycle(graph, isolated));
+                if (isolated.length <= length)
+                    walks.add(GraphUtil.cycle(graph, isolated));
             }
 
             // each biconnected component which isn't an isolated cycle is processed
@@ -803,7 +804,7 @@ public final class Cycles {
 
                 // make a subgraph and 'apply' the cycle computation - the walk 
                 // (path) is then lifted to the original graph            
-                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused))) {
+                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
             }
@@ -832,7 +833,7 @@ public final class Cycles {
 
                 // make a subgraph and 'apply' the cycle computation - the walk 
                 // (path) is then lifted to the original graph            
-                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused))) {
+                for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
             }
@@ -939,14 +940,14 @@ public final class Cycles {
      * All cycles smaller than or equal to a specified length.
      */
     private static final class AllUpToLength implements CycleFinder {
-        
-        private final int length;
-        
+
+        private final int predefinedLength;
+
         // see. AllRingsFinder.Threshold.Pubchem_99
-        private final int threshold = 684; 
+        private final int threshold = 684;
 
         private AllUpToLength(int length) {
-            this.length = length;
+            this.predefinedLength = length;
         }
 
         /** @inheritDoc */
@@ -963,12 +964,16 @@ public final class Cycles {
         @Override public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
+            if (this.predefinedLength < length)
+                length = this.predefinedLength;
+
             List<int[]> walks = new ArrayList<int[]>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
             // the vertices in the subset 'isolated' 
             for (int[] isolated : ringSearch.isolated()) {
-                walks.add(GraphUtil.cycle(graph, isolated));
+                if (isolated.length <= length)
+                    walks.add(GraphUtil.cycle(graph, isolated));
             }
 
             // each biconnected component which isn't an isolated cycle is processed
@@ -977,7 +982,7 @@ public final class Cycles {
 
                 // make a subgraph and 'apply' the cycle computation - the walk 
                 // (path) is then lifted to the original graph            
-                for (int[] cycle : findInFused(GraphUtil.subgraph(graph, fused))) {
+                for (int[] cycle : findInFused(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
             }
@@ -989,12 +994,12 @@ public final class Cycles {
 
         /**
          * Find rings in a biconnected component.
-         *  
+         *
          * @param g adjacency list
-         * @return 
+         * @return
          * @throws Intractable computation was not feasible
          */
-        private int[][] findInFused(int[][] g) throws Intractable {
+        private int[][] findInFused(int[][] g, int length) throws Intractable {
             AllCycles allCycles = new AllCycles(g,
                                                 Math.min(g.length, length),
                                                 threshold);
