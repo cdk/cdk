@@ -199,7 +199,7 @@ public final class Aromaticity {
         
         // for each cycle if the electron sum is valid add the bonds of the 
         // cycle to the set or aromatic bonds
-        for (final int[] cycle : cycles.find(molecule, subgraph).paths()) {
+        for (final int[] cycle : cycles.find(molecule, subgraph, subgraph.length).paths()) {
             if (checkElectronSum(cycle, electrons, subset)) {
                 for (int i = 1; i < cycle.length; i++) {
                     bonds.add(bondMap.get(subset[cycle[i]], subset[cycle[i-1]]));

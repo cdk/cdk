@@ -116,29 +116,29 @@ public class CyclesTest {
     }
     
     @Test public void cdkAromaticSet_withGraph() throws Exception {
-        checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
-        checkSize(Cycles.cdkAromaticSet().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
-        checkSize(Cycles.cdkAromaticSet().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 3);
-        checkSize(Cycles.cdkAromaticSet().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 6);
-        checkSize(Cycles.cdkAromaticSet().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike())), 8);
-        checkSize(Cycles.cdkAromaticSet().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike())), 8);
+        checkSize(Cycles.cdkAromaticSet().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE), 2);
+        checkSize(Cycles.cdkAromaticSet().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings()), Integer.MAX_VALUE), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene()), Integer.MAX_VALUE), 3);
+        checkSize(Cycles.cdkAromaticSet().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene()), Integer.MAX_VALUE), 6);
+        checkSize(Cycles.cdkAromaticSet().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike()), Integer.MAX_VALUE), 8);
+        checkSize(Cycles.cdkAromaticSet().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike()), Integer.MAX_VALUE), 8);
     }  
     
     @Test public void allOrVertexShort_withGraph() throws Exception {
-        checkSize(Cycles.allOrVertexShort().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
-        checkSize(Cycles.allOrVertexShort().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
-        checkSize(Cycles.allOrVertexShort().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 3);
-        checkSize(Cycles.allOrVertexShort().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 6);
-        checkSize(Cycles.allOrVertexShort().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike())), 135);
-        checkSize(Cycles.allOrVertexShort().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike())), 135);
-        checkSize(Cycles.allOrVertexShort().find(fullerene(), GraphUtil.toAdjList(fullerene())), 120);
+        checkSize(Cycles.allOrVertexShort().find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE), 2);
+        checkSize(Cycles.allOrVertexShort().find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings()), Integer.MAX_VALUE), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene()), Integer.MAX_VALUE), 3);
+        checkSize(Cycles.allOrVertexShort().find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene()), Integer.MAX_VALUE), 6);
+        checkSize(Cycles.allOrVertexShort().find(makeCyclophaneLike(), GraphUtil.toAdjList(makeCyclophaneLike()), Integer.MAX_VALUE), 135);
+        checkSize(Cycles.allOrVertexShort().find(makeGappedCyclophaneLike(), GraphUtil.toAdjList(makeGappedCyclophaneLike()), Integer.MAX_VALUE), 135);
+        checkSize(Cycles.allOrVertexShort().find(fullerene(), GraphUtil.toAdjList(fullerene()), Integer.MAX_VALUE), 120);
     }
     
     @Test public void allUpToLength() throws Exception {
-        checkSize(Cycles.all(6).find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl())), 2);
-        checkSize(Cycles.all(6).find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings())), 3);
-        checkSize(Cycles.all(6).find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene())), 2);
-        checkSize(Cycles.all(6).find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene())), 3);    
+        checkSize(Cycles.all(6).find(makeBiphenyl(), GraphUtil.toAdjList(makeBiphenyl()), Integer.MAX_VALUE), 2);
+        checkSize(Cycles.all(6).find(makeBicycloRings(), GraphUtil.toAdjList(makeBicycloRings()), Integer.MAX_VALUE), 3);
+        checkSize(Cycles.all(6).find(makeNaphthalene(), GraphUtil.toAdjList(makeNaphthalene()), Integer.MAX_VALUE), 2);
+        checkSize(Cycles.all(6).find(makeAnthracene(), GraphUtil.toAdjList(makeAnthracene()), Integer.MAX_VALUE), 3);    
     }
     
     @Test public void pathsAreCopy() throws Exception {
@@ -189,7 +189,8 @@ public class CyclesTest {
     
     @Test public void or() throws Exception {
         CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(3));
-        checkSize(cf.find(fullerene()), 120);
+        IAtomContainer fullerene = fullerene();
+        checkSize(cf.find(fullerene, fullerene.getAtomCount()), 120);
     }
     
     // load a boron fullerene

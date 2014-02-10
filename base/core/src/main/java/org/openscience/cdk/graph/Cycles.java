@@ -482,7 +482,7 @@ public final class Cycles {
      */
     @TestMethod("all")
     public static Cycles all(IAtomContainer container) throws Intractable {
-        return all().find(container);
+        return all().find(container, container.getAtomCount());
     }
 
     /**
@@ -495,7 +495,7 @@ public final class Cycles {
      */
     @TestMethod("allUpToLength")
     public static Cycles all(IAtomContainer container, int length) throws Intractable {
-        return all(length).find(container);
+        return all(length).find(container, container.getAtomCount());
     }
 
     /**
@@ -658,8 +658,23 @@ public final class Cycles {
      * @return the cycles of the molecule
      */
     private static Cycles _invoke(CycleFinder finder, IAtomContainer container) {
+        return _invoke(finder, container, container.getAtomCount());
+    }
+
+    /**
+     * Internal method to wrap cycle computations which <i>should</i> be
+     * tractable. That is they currently won't throw the exception - if the
+     * method does throw an exception an internal error is triggered as a sanity
+     * check.
+     *
+     * @param finder    the cycle finding method
+     * @param container the molecule to find the cycles of
+     * @param length    maximum size or cycle to find                  
+     * @return the cycles of the molecule
+     */
+    private static Cycles _invoke(CycleFinder finder, IAtomContainer container, int length) {
         try {
-            return finder.find(container);
+            return finder.find(container, length);
         } catch (Intractable e) {
             throw new RuntimeException("Cycle computation should not be intractable: ",
                                        e);
@@ -762,8 +777,13 @@ public final class Cycles {
          */
         abstract int[][] apply(int[][] graph) throws Intractable;
 
-        /** {@inheritDoc} */
+        /** @inheritDoc */
         @Override public Cycles find(IAtomContainer molecule) throws Intractable {
+            return find(molecule, molecule.getAtomCount());
+        }
+
+        /** {@inheritDoc} */
+        @Override public Cycles find(IAtomContainer molecule, int length) throws Intractable {
 
             EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(molecule);
             int[][] graph = GraphUtil.toAdjList(molecule, bondMap);
@@ -794,7 +814,7 @@ public final class Cycles {
         }
 
         /** @inheritDoc */
-        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
@@ -931,11 +951,16 @@ public final class Cycles {
 
         /** @inheritDoc */
         @Override public Cycles find(IAtomContainer molecule) throws Intractable {
-            return find(molecule, GraphUtil.toAdjList(molecule));
+            return find(molecule, molecule.getAtomCount());
         }
 
         /** @inheritDoc */
-        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+        @Override public Cycles find(IAtomContainer molecule, int length) throws Intractable {
+            return find(molecule, GraphUtil.toAdjList(molecule), length);
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             RingSearch ringSearch = new RingSearch(molecule, graph);
 
             List<int[]> walks = new ArrayList<int[]>(6);
@@ -1002,16 +1027,21 @@ public final class Cycles {
 
         /** @inheritDoc */
         @Override public Cycles find(IAtomContainer molecule) throws Intractable {
-            return find(molecule, GraphUtil.toAdjList(molecule));
+            return find(molecule, molecule.getAtomCount());
         }
 
         /** @inheritDoc */
-        @Override public Cycles find(IAtomContainer molecule, int[][] graph) throws Intractable {
+        @Override public Cycles find(IAtomContainer molecule, int length) throws Intractable {
+            return find(molecule, GraphUtil.toAdjList(molecule), length);
+        }
+
+        /** @inheritDoc */
+        @Override public Cycles find(IAtomContainer molecule, int[][] graph, int length) throws Intractable {
             try {
-                return primary.find(molecule, graph);
+                return primary.find(molecule, graph, length);
             } catch (Intractable e) {
                 // auxiliary may still thrown an exception
-                return auxiliary.find(molecule, graph);
+                return auxiliary.find(molecule, graph, length);
             }
         }
     }
