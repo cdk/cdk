@@ -191,6 +191,11 @@ public class CyclesTest {
         CycleFinder cf = Cycles.or(Cycles.all(), Cycles.all(3));
         IAtomContainer fullerene = fullerene();
         checkSize(cf.find(fullerene, fullerene.getAtomCount()), 120);
+    } 
+    
+    @Test public void unchorded() throws Exception {
+        IAtomContainer container = TestMoleculeFactory.makeAnthracene();
+        checkSize(Cycles.unchorded(Cycles.all()).find(container), 3);
     }
     
     // load a boron fullerene
