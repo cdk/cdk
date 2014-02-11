@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -126,12 +127,20 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
 	 */
 	@TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-		int magnitude = AtomContainerManipulator.getHeavyAtoms(atomContainer).size();
-		double vadjMa = 0;
-		if (magnitude > 0) {
-			vadjMa += (Math.log(magnitude) / Math.log(2)) + 1;
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
+
+
+        int n = 0; // count all heavy atom - heavy atom bonds
+        for (IBond bond : atomContainer.bonds()) {
+            if (bond.getAtom(0).getAtomicNumber() != 1 && bond.getAtom(1).getAtomicNumber() != 1) {
+                n++;
+            }
+        }
+
+        double vadjMa = 0;
+        if (n > 0) {
+            vadjMa += (Math.log(n) / Math.log(2)) + 1;
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(vadjMa), getDescriptorNames());
 	}
 
