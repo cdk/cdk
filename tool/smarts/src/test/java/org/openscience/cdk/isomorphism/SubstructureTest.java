@@ -331,6 +331,11 @@ public abstract class SubstructureTest {
         assertMismatch(smi(""),
                        smi("[H][H]"));
     }
+    
+    @Test public void emptyTarget() throws Exception {
+        assertMismatch(smi("[H][H]"),
+                       smi(""));
+    }
 
     void assertMatch(IAtomContainer query, IAtomContainer target, int count) {
         assertThat(query.getProperty(TITLE)
