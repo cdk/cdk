@@ -109,7 +109,32 @@ public final class Canon {
      * @see InChINumbersTools
      */
     public static long[] label(IAtomContainer container, int[][] g) {
-        return new Canon(g, basicInvariants(container, g), false).labelling;
+        return label(container, g, basicInvariants(container, g));
+    }
+    
+    /**
+     * Compute the canonical labels for the provided structure. The labelling
+     * does not consider isomer information or stereochemistry. This method
+     * allows provision of a custom array of initial invariants.
+     * 
+     * <p/>
+     * The current 
+     * implementation does not fully distinguish all structure topologies
+     * but in practise performs well in the majority of cases. A complete 
+     * canonical labelling can be obtained using the {@link InChINumbersTools}
+     * but is computationally much more expensive.
+     *
+     * @param container  structure
+     * @param g          adjacency list graph representation
+     * @param invariants intial invariants
+     * @return the canonical labelling
+     * @see EquivalentClassPartitioner
+     * @see InChINumbersTools
+     */
+    public static long[] label(IAtomContainer container, int[][] g, long[] invariants) {
+        if (invariants.length != g.length)
+            throw new IllegalArgumentException("number of invariants != number of atoms");
+        return new Canon(g, invariants, false).labelling;
     }
 
     /**
