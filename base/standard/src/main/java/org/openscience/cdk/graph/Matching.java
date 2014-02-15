@@ -28,6 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.Arrays;
+import java.util.BitSet;
 
 /**
  * A matching is an independent edge set of a graph. This is a set of edges that
@@ -118,6 +119,115 @@ public final class Matching {
      */
     @TestMethod("nop") public boolean unmatched(final int v) {
         return match[v] == Nil || match[match[v]] != v;
+    }
+
+    /**
+     * Attempt to augment the matching such that it is perfect over the subset
+     * of vertices in the provided graph.
+     *
+     * @param graph  adjacency list representation of graph
+     * @param subset subset of vertices
+     * @return the matching was perfect
+     * @throws IllegalArgumentException the graph was a diffeent size to the
+     *                                  matching capacity
+     */
+    @TestMethod("fulvelene2")
+    public boolean perfect(int[][] graph, BitSet subset) {
+        
+        if (graph.length != match.length || subset.cardinality() > graph.length)
+            throw new IllegalArgumentException("graph and matching had different capacity");
+        
+        // and odd set can never provide a perfect matching
+        if ((subset.cardinality() & 0x1) == 0x1) 
+            return false;
+        
+        // arbitary matching was perfect
+        if (arbitaryMatching(graph, subset))
+            return true;
+        
+        EdmondsMaximumMatching.maxamise(this, graph, subset);
+        
+        // the matching is imperfect if any vertex was 
+        for (int v = subset.nextSetBit(0); v >= 0; v = subset.nextSetBit(v + 1))
+            if (unmatched(v))
+                return false;
+        
+        return true;
+    }
+
+    /**
+     * Assign an abirary matching that covers the subset of vertices.
+     *
+     * @param graph  adjacency list representation of graph
+     * @param subset subset of vertices in the graph
+     * @return the matching was perfect
+     */
+    @TestMethod("perfectArbitaryMatching,imperfectArbitaryMatching")
+    boolean arbitaryMatching(final int[][] graph, final BitSet subset) {
+
+        final BitSet unmatched = new BitSet();
+
+        // indiciates the deg of each vertex in unmatched subset
+        final int[] deg  = new int[graph.length];
+        
+        // queue/stack of vertices with deg1 vertices 
+        final int[] deg1 = new int[graph.length];
+        int nd1 = 0, nMatched = 0;
+        
+        for (int v = subset.nextSetBit(0); v >= 0; v = subset.nextSetBit(v + 1)) {
+            if (matched(v)) {
+                assert subset.get(other(v));
+                nMatched++;
+                continue;
+            }
+            unmatched.set(v);
+            for (int w : graph[v])
+                if (subset.get(w) && unmatched(w))
+                    deg[v]++;
+            if (deg[v] == 1)
+                deg1[nd1++] = v;
+        }
+        
+        while (!unmatched.isEmpty()) {
+            
+            int v = -1;
+
+            // attempt to select a vertex with degree = 1 (in matched set)
+            while (nd1 > 0) {
+                v = deg1[--nd1];
+                if (unmatched.get(v))
+                    break;
+            }
+
+            // no unmatched degree 1 vertex, select the first unmatched
+            if (v < 0 || unmatched.get(v))
+                v = unmatched.nextSetBit(0);
+            
+            unmatched.clear(v);
+            
+            // find a unmatched edge and match it, adjacent degrees are updated
+            for (final int w : graph[v]) {
+                if (unmatched.get(w)) {
+                    match(v, w);
+                    nMatched += 2;
+                    unmatched.clear(w);
+                    // upate neighbors of w and v (if needed)
+                    for (final int u : graph[w])
+                        if (--deg[u] == 1 && unmatched.get(u))
+                            deg1[nd1++] = u;
+
+                    // if deg == 1, w is the only neighbor
+                    if (deg[v] > 1) {
+                        for (final int u : graph[v])
+                            if (--deg[u] == 1 && unmatched.get(u))
+                                deg1[nd1++] = u;
+                    }
+                    break;
+                }
+            }
+        }
+        
+        return nMatched == subset.cardinality();
     }
 
     /**

@@ -26,6 +26,11 @@ package org.openscience.cdk.graph;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.smiles.SmilesParser;
+
+import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,6 +42,9 @@ import static org.junit.Assert.assertTrue;
  * @cdk.module test-standard
  */
 public class MatchingTest {
+
+    private IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
+    private SmilesParser       smipar = new SmilesParser(bldr);
 
     @Ignore("no operation performed")
     public void nop() {
@@ -83,6 +91,56 @@ public class MatchingTest {
         matching.unmatch(4); // also unmatches 2
         assertFalse(matching.matched(4));
         assertFalse(matching.matched(2));
+    }
+
+    @Test public void perfectArbitaryMatching() {
+        Matching matching = Matching.withCapacity(4);
+        BitSet subset = new BitSet();
+        subset.flip(0, 4);
+        assertTrue(matching.arbitaryMatching(new int[][]{
+                {1},
+                {0, 2},
+                {1, 3},
+                {2}
+        }, subset));
+    }
+    
+    @Test public void imperfectArbitaryMatching() {
+        Matching matching = Matching.withCapacity(5);
+        BitSet subset = new BitSet();
+        subset.flip(0, 5);
+        assertFalse(matching.arbitaryMatching(new int[][]{
+                {1},
+                {0, 2},
+                {1, 3},
+                {2, 4},
+                {3}
+        }, subset));
+    }
+
+    @Test public void fulvelene1() throws Exception {
+        int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
+        Matching m = Matching.withCapacity(graph.length);
+        BitSet   subset = new BitSet();
+        subset.flip(0, graph.length);
+        // arbitary matching will assign a perfect matching here
+        assertTrue(m.arbitaryMatching(graph, subset));
+    }
+
+    @Test public void fulvelene2() throws Exception {
+        int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
+        Matching m = Matching.withCapacity(graph.length);
+        BitSet   subset = new BitSet();
+        subset.flip(0, graph.length);
+
+        // induced match - can't be perfected without removing this match
+        m.match(1, 2); 
+        
+        // arbitary matching will not be able assign a perfect matching
+        assertFalse(m.arbitaryMatching(graph, subset));
+        
+        // but perfect() will
+        assertTrue(m.perfect(graph, subset));
     }
 
     @Test public void string() {
