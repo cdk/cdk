@@ -29,7 +29,6 @@ import org.openscience.cdk.group.AtomPermutationTests;
 import org.openscience.cdk.group.BondDiscretePartitionRefinerTest;
 import org.openscience.cdk.group.BondEquitablePartitionRefinerTest;
 import org.openscience.cdk.group.BondGroupTests;
-import org.openscience.cdk.group.DisjointSetForestTest;
 import org.openscience.cdk.group.PartitionTest;
 import org.openscience.cdk.group.PermutationGroupTest;
 import org.openscience.cdk.group.PermutationTest;
@@ -49,7 +48,6 @@ import org.openscience.cdk.group.PermutationTest;
         BondDiscretePartitionRefinerTest.class,
         BondEquitablePartitionRefinerTest.class,
         BondGroupTests.class,
-        DisjointSetForestTest.class,
         PartitionTest.class,
         PermutationTest.class,
         PermutationGroupTest.class

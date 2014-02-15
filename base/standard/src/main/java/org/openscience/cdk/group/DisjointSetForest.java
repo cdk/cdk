@@ -33,7 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * code due to Derrick Stolee.
  * 
  * @author maclean
- * @cdk.module group
+ * @cdk.module standard
  * @cdk.keyword union-find
  */
 @TestClass("DisjointSetForestTest")

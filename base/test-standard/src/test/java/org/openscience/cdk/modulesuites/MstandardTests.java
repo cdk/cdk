@@ -57,6 +57,7 @@ import org.openscience.cdk.graph.matrix.ConnectionMatrixTest;
 import org.openscience.cdk.graph.rebond.BsptTest;
 import org.openscience.cdk.graph.rebond.PointTest;
 import org.openscience.cdk.graph.rebond.RebondToolTest;
+import org.openscience.cdk.group.DisjointSetForestTest;
 import org.openscience.cdk.isomorphism.IsomorphismTesterTest;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTesterTest;
 import org.openscience.cdk.isomorphism.mcss.RGraphTest;
@@ -227,6 +228,8 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     ExocyclicAtomTypeModelTest.class,
     PiBondModelTest.class,
     DaylightModelTest.class,
-    AromaticityTest.class    
+    AromaticityTest.class,
+
+    DisjointSetForestTest.class
 })
 public class MstandardTests {}

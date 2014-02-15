@@ -30,7 +30,7 @@ import org.junit.Test;
 
 /**
  * @author maclean
- * @cdk.module test-group
+ * @cdk.module test-standard
  */
 public class DisjointSetForestTest {
     
