@@ -1328,4 +1328,15 @@ Method </bibtex:title>
         </bibtex:article>
     </bibtex:entry>
     
+    <bibtex:entry id="Edmonds65">
+        <bibtex:article>
+            <bibtex:title>Paths, trees and flowers</bibtex:title>
+            <bibtex:author>Edmonds, Jack</bibtex:author>
+            <bibtex:year>1965</bibtex:year>
+            <bibtex:journal>Canad. J. Math.</bibtex:journal>
+            <bibtex:volume>17</bibtex:volume>
+            <bibtex:number>449-467</bibtex:number>
+        </bibtex:article>
+    </bibtex:entry>
+    
 </bibtex:file>
