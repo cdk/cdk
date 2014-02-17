@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <artifactId>cdk</artifactId>
+        <groupId>org.openscience.cdk</groupId>
+        <version>1.5.5-SNAPSHOT</version>
+    </parent>
+    <modules>
+        <module>builder3d</module>
+        <module>builder3dtools</module>
+        <module>charges</module>
+        <module>forcefield</module>
+        <module>formula</module>
+        <module>fragment</module>
+        <module>group</module>
+        <module>hash</module>
+        <module>pcore</module>
+        <module>sdg</module>
+        <module>smarts</module>
+        <module>smsd</module>
+        <module>structgen</module>
+        <module>tautomer</module>
+    </modules>
+    <packaging>pom</packaging>
+    <artifactId>cdk-tool</artifactId>
+
+</project>

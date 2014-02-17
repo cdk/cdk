@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <parent>
+        <artifactId>cdk</artifactId>
+        <groupId>org.openscience.cdk</groupId>
+        <version>1.5.5-SNAPSHOT</version>
+    </parent>
+    <modules>
+        <module>interfaces</module>
+        <module>atomtype</module>
+        <module>core</module>
+        <module>standard</module>
+        <module>valencycheck</module>
+        <module>test-interfaces</module>
+        <module>test-atomtype</module>
+        <module>test-core</module>
+        <module>test-standard</module>
+        <module>test-valencycheck</module>
+        <module>annotation</module>
+        <module>data</module>
+        <module>silent</module>
+        <module>datadebug</module>
+        <module>isomorphism</module>
+        <module>dict</module>
+        <module>reaction</module>
+        <module>test</module>
+        <module>testdata</module>
+    </modules>
+    <packaging>pom</packaging>
+    <artifactId>cdk-base</artifactId>
+
+</project>

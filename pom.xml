@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>org.openscience.cdk</groupId>
+    <artifactId>cdk</artifactId>
+    <version>1.5.5-SNAPSHOT</version>
+    <packaging>pom</packaging>    
+    
+    <url>http://sourceforge.net/projects/cdk/</url>
+
+    <modules>
+        <module>base</module>
+        <module>descriptor</module>
+        <module>display</module>
+        <module>misc</module>
+        <module>storage</module>
+        <module>tool</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <licenses>
+        <license>
+            <name>GNU LGPL 2.1 or later</name>
+            <url>http://www.gnu.org/licenses/lgpl.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <!-- TODO possibly split into developers/contributors-->
+    <developers>
+        <developer>
+            <name>Sam Adams</name>
+        </developer>
+        <developer>
+            <name>Jonathan Alvarsson</name>
+        </developer>
+        <developer>
+            <name>Rich Apodaca</name>
+        </developer>
+        <developer>
+            <name>Saravanaraj N Ayyampalayam</name>
+        </developer>
+        <developer>
+            <name>Ulrich Bauer</name>
+        </developer>
+        <developer>
+            <name>Stephan Beisken</name>
+        </developer>
+        <developer>
+            <name>Arvid Berg</name>
+        </developer>
+        <developer>
+            <name>Ed Cannon</name>
+        </developer>
+        <developer>
+            <name>Fabian Dortu</name>
+        </developer>
+        <developer>
+            <name>Martin Eklund</name>
+        </developer>
+        <developer>
+            <name>Matteo Floris</name>
+        </developer>
+        <developer>
+            <name>Dan Gezelter</name>
+        </developer>
+        <developer>
+            <name>Uli Fechner</name>
+        </developer>
+        <developer>
+            <name>Thorsten Flügel</name>
+        </developer>
+        <developer>
+            <name>Nimish Gopal</name>
+        </developer>
+        <developer>
+            <name>Rajarshi Guha</name>
+        </developer>
+        <developer>
+            <name>Yonquan Han</name>
+        </developer>
+        <developer>
+            <name>Thierry Hanser</name>
+        </developer>
+        <developer>
+            <name>Kai Hartmann</name>
+        </developer>
+        <developer>
+            <name>Tobias Helmus</name>
+        </developer>
+        <developer>
+            <name>Christian Hoppe</name>
+        </developer>
+        <developer>
+            <name>Oliver Horlacher</name>
+        </developer>
+        <developer>
+            <name>Miguel Howard</name>
+        </developer>
+        <developer>
+            <name>Nina Jeliazkova</name>
+        </developer>
+        <developer>
+            <name>Geert Josten</name>
+        </developer>
+        <developer>
+            <name>Dmitry Katsubo</name>
+        </developer>
+        <developer>
+            <name>Jules Kerssemakers</name>
+        </developer>
+        <developer>
+            <name>Anatoli Krassavine</name>
+        </developer>
+        <developer>
+            <name>Stefan Kuhn</name>
+        </developer>
+        <developer>
+            <name>Uli Köhler</name>
+        </developer>
+        <developer>
+            <name>Violeta Labarta</name>
+        </developer>
+        <developer>
+            <name>Jonty Lawson</name>
+        </developer>
+        <developer>
+            <name>Kevin Lawson</name>
+        </developer>
+        <developer>
+            <name>Daniel Leidert</name>
+        </developer>
+        <developer>
+            <name>Edgar Luttmann</name>
+        </developer>
+        <developer>
+            <name>Todd Martin</name>
+        </developer>
+        <developer>
+            <name>John May</name>
+        </developer>
+        <developer>
+            <name>Nathanaël Mazuir</name>
+        </developer>
+        <developer>
+            <name>Stephan Michels</name>
+        </developer>
+        <developer>
+            <name>Scooter Morris</name>
+        </developer>
+        <developer>
+            <name>Peter Murray-Rust</name>
+        </developer>
+        <developer>
+            <name>Carl Mäsak</name>
+        </developer>
+        <developer>
+            <name>Irilenia Nobeli</name>
+        </developer>
+        <developer>
+            <name>Peter Odéus</name>
+        </developer>
+        <developer>
+            <name>Niels Out</name>
+        </developer>
+        <developer>
+            <name>Jerome Pansanel</name>
+        </developer>
+        <developer>
+            <name>Julio Peironcely</name>
+        </developer>
+        <developer>
+            <name>Tomáš Pluskal</name>
+        </developer>
+        <developer>
+            <name>Chris Pudney</name>
+        </developer>
+        <developer>
+            <name>Syed Asad Rahman</name>
+        </developer>
+        <developer>
+            <name>Jonathan Rienstra-Kiracofe</name>
+        </developer>
+        <developer>
+            <name>Mark Rijnbeek</name>
+        </developer>
+        <developer>
+            <name>David Robinson</name>
+        </developer>
+        <developer>
+            <name>Miguel Rojas Cherto</name>
+        </developer>
+        <developer>
+            <name>Bhupinder Sandhu</name>
+        </developer>
+        <developer>
+            <name>Jean-Sebastien Senecal</name>
+        </developer>
+        <developer>
+            <name>Onkar Shinde</name>
+        </developer>
+        <developer>
+            <name>Sulev Sild</name>
+        </developer>
+        <developer>
+            <name>Bradley Smith</name>
+        </developer>
+        <developer>
+            <name>Ola Spjuth</name>
+        </developer>
+        <developer>
+            <name>Christoph Steinbeck</name>
+        </developer>
+        <developer>
+            <name>Ralf Stephan</name>
+        </developer>
+        <developer>
+            <name>Daniel Szisz</name>
+        </developer>
+        <developer>
+            <name>Aleksey Tarkhov</name>
+        </developer>
+        <developer>
+            <name>Stephan Tomkinson</name>
+        </developer>
+        <developer>
+            <name>Gilleain Torrance</name>
+        </developer>
+        <developer>
+            <name>Andreas Truszkowski</name>
+        </developer>
+        <developer>
+            <name>Paul Turner</name>
+        </developer>
+        <developer>
+            <name>Joerg Wegner</name>
+        </developer>
+        <developer>
+            <name>Yap Chun Wei</name>
+        </developer>
+        <developer>
+            <name>Stephane Werner</name>
+        </developer>
+        <developer>
+            <name>Egon Willighagen</name>            
+        </developer>
+        <developer>
+            <name>Lars Willighagen</name>
+        </developer>
+        <developer>
+            <name>Yong Zhang </name>
+        </developer>
+        <developer>
+            <name>Daniel Zaharevitz</name>
+        </developer>
+    </developers>
+
+    <repositories>        
+        <repository>
+            <id>ebi-repo</id>
+            <name>EBI Maven Repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>ebi-repo-snapshots</id>
+            <name>EBI Maven Snapshots Repository</name>
+            <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:7200</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>            
+            <id>jni-inchi</id>
+            <name>JNI-InChI Maven Repository</name>
+            <url>http://jni-inchi.sourceforge.net/m2repo</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+
+        <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.2</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <excludes>
+                        <!-- not a test class -->
+                        <exclude>**/TestMoleculeFactory.java</exclude>
+                        <!-- missing functionality -->
+                        <exclude>**/cdk/limitations/**</exclude>
+                        
+                        <!-- coverage tests need updating -->
+                        <exclude>**/*CoverageTest.java</exclude>
+                        <!-- module suites not needed -->
+                        <exclude>**/modulesuites/M*Tests.java</exclude>
+                        <!-- format tests do not work (cyclic dependency) -->
+                        <exclude>**/io/formats/*FormatTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>    
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <archive>                   
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>                            
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>                
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <taglets>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKCiteTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKBugTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKDictRefTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKGitTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKInChITaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKIOOptionsTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKModuleTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKThreadSafeTaglet</tagletClass></taglet>
+                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet</tagletClass></taglet>
+                    </taglets>
+                    <tagletArtifact>
+                        <groupId>org.openscience.cdk</groupId>
+                        <artifactId>cdk-build-utils</artifactId>
+                        <version>1.0</version>
+                    </tagletArtifact>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>aggregate</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                        <phase>site</phase>
+                        <configuration>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <linkXref>true</linkXref>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
