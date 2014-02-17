@@ -26,47 +26,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>jgrapht</groupId>
-            <artifactId>jgrapht</artifactId>
-            <version>0.6.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>java3d</groupId>
             <artifactId>vecmath</artifactId>
             <version>1.5.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-annotation</artifactId>
-            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

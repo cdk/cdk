@@ -29,14 +29,6 @@
             <artifactId>guava</artifactId>
         </dependency>
         <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-annotation</artifactId>
             <version>${project.parent.version}</version>

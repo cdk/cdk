@@ -15,52 +15,8 @@
     <name>cdk-reaction</name>
     <dependencies>
         <dependency>
-            <groupId>jgrapht</groupId>
-            <artifactId>jgrapht</artifactId>
-            <version>0.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>java3d</groupId>
-            <artifactId>vecmath</artifactId>
-            <version>1.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>xom</groupId>
-            <artifactId>xom</artifactId>
-            <version>1.2.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>Jama</groupId>
-            <artifactId>Jama</artifactId>
-            <version>1.0.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -81,16 +37,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-standard</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-libiocml</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-valencycheck</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

@@ -26,19 +26,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <artifactId>hamcrest-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -54,42 +43,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.xml-cml</groupId>
-            <artifactId>cmlxom</artifactId>
-            <version>3.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>xom</groupId>
-            <artifactId>xom</artifactId>
-            <version>1.2.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
-            <version>3.1.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>uk.ac.ebi.beam</groupId>
-            <artifactId>beam-func</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-annotation</artifactId>
-            <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

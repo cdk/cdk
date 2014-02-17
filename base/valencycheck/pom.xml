@@ -15,15 +15,6 @@
     <name>cdk-valencycheck</name>
     <dependencies>
         <dependency>
-            <groupId>java3d</groupId>
-            <artifactId>vecmath</artifactId>
-            <version>1.5.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-interfaces</artifactId>
             <version>${project.parent.version}</version>
