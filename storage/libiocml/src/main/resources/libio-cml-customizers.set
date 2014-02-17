@@ -1,0 +1,3 @@
+org.openscience.cdk.libio.cml.MDMoleculeCustomizer
+org.openscience.cdk.libio.cml.PDBAtomCustomizer
+org.openscience.cdk.libio.cml.QSARCustomizer
