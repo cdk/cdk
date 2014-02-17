@@ -97,7 +97,6 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#longestAliphaticChain",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

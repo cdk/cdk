@@ -63,7 +63,6 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
             "http://www.blueobelisk.org/ontologies/" +
             "chemoinformatics-algorithms/#mannholdLogP",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit"
         );
     }

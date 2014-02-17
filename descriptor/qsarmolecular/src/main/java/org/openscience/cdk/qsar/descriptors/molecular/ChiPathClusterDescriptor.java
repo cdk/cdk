@@ -97,7 +97,6 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPathCluster",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

@@ -70,7 +70,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

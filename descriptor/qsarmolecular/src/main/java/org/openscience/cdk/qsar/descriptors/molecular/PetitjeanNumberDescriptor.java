@@ -91,7 +91,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

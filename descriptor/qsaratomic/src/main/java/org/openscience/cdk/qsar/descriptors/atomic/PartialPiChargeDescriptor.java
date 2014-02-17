@@ -99,7 +99,6 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialPiCharge",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

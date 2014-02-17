@@ -103,7 +103,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

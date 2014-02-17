@@ -112,7 +112,6 @@ public class AtomHybridizationVSEPRDescriptor extends AbstractAtomicDescriptor i
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridizationVSEPR",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

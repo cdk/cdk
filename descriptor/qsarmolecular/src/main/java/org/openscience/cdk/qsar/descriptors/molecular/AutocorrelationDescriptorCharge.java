@@ -149,7 +149,6 @@ public class AutocorrelationDescriptorCharge extends AbstractMolecularDescriptor
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationCharge",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

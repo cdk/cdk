@@ -76,7 +76,6 @@ public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implem
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomHybridization",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

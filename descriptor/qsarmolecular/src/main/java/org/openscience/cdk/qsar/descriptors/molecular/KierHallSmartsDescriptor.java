@@ -342,7 +342,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

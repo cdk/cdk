@@ -78,7 +78,6 @@ public class ProtonTotalPartialChargeDescriptor extends AbstractAtomicDescriptor
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#protonPartialCharge",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

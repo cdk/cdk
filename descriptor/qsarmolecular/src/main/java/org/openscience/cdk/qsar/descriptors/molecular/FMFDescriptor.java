@@ -130,7 +130,6 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

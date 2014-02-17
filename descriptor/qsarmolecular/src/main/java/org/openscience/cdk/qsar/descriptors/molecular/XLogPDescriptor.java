@@ -140,7 +140,6 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#xlogP",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

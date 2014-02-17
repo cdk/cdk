@@ -100,7 +100,6 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

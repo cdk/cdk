@@ -105,7 +105,6 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

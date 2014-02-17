@@ -229,7 +229,6 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#WHIM",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

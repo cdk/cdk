@@ -83,7 +83,6 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#acidicGroupCount",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit"
         );
     }

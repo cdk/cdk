@@ -89,7 +89,6 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

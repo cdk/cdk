@@ -86,7 +86,6 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialSigmaCharge",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

@@ -126,7 +126,6 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

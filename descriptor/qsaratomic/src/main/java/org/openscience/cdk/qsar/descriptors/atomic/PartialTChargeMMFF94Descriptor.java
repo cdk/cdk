@@ -85,7 +85,6 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

@@ -107,7 +107,6 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

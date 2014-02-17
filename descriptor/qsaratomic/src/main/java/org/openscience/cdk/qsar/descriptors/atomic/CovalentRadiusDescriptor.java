@@ -102,7 +102,6 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

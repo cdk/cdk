@@ -95,7 +95,6 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aromaticAtomsCount",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

@@ -100,7 +100,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

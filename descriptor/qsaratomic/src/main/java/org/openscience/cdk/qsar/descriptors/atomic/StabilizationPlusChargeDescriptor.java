@@ -91,7 +91,6 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

@@ -79,7 +79,6 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit"
         );
     }

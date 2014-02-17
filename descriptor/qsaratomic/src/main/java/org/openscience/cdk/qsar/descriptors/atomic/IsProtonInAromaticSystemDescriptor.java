@@ -86,8 +86,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem",
 		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
+		    "The Chemistry Development Kit");
 	}
 
 

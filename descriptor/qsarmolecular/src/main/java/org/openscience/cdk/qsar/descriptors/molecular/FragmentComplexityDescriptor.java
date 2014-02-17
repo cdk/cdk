@@ -76,7 +76,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

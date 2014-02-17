@@ -148,7 +148,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

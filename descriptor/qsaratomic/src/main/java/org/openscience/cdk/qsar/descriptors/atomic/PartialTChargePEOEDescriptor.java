@@ -108,7 +108,6 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

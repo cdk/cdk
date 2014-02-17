@@ -99,7 +99,6 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

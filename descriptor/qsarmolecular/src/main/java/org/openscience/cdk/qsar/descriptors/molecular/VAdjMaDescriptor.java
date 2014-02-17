@@ -84,8 +84,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
 		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
+		    "The Chemistry Development Kit");
 	}
 
 

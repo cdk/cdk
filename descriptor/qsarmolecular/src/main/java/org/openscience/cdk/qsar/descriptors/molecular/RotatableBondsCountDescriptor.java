@@ -96,8 +96,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
 		    this.getClass().getName(),
-		    "$Id$",
-            "The Chemistry Development Kit");
+		    "The Chemistry Development Kit");
 	}
 
 

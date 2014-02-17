@@ -89,7 +89,6 @@ public class KappaShapeIndicesDescriptor extends AbstractMolecularDescriptor imp
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierValues",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

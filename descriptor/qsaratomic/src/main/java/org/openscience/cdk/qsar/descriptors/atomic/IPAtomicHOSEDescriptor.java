@@ -98,7 +98,6 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
     /**

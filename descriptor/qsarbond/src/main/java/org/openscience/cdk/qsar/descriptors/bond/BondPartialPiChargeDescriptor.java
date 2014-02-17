@@ -100,7 +100,6 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondPartialPiCharge",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

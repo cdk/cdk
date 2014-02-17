@@ -97,7 +97,6 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

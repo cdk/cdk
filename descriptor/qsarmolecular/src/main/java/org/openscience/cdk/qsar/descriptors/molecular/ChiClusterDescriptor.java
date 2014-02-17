@@ -98,7 +98,6 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

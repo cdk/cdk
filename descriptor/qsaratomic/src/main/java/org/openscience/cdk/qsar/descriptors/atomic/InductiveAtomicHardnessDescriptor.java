@@ -123,7 +123,6 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicHardness",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

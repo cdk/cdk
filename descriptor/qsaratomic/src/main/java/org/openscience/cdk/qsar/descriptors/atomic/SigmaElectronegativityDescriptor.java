@@ -87,7 +87,6 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#sigmaElectronegativity",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

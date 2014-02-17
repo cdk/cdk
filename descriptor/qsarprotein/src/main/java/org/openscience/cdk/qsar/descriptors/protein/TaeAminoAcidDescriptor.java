@@ -217,7 +217,6 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

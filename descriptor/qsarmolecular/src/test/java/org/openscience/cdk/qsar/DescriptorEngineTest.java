@@ -91,7 +91,6 @@ public class DescriptorEngineTest extends CDKTestCase {
         DescriptorSpecification specRef = new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
 
         Assert.assertEquals("molecularDescriptor", engine.getDictionaryType(className));
@@ -107,7 +106,6 @@ public class DescriptorEngineTest extends CDKTestCase {
         DescriptorSpecification specRef = new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#tpsa",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
 
         String[] dictClass = engine.getDictionaryClass(className);

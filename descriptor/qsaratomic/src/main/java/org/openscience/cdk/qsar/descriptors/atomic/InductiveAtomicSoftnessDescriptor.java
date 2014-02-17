@@ -124,7 +124,6 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
 		return new DescriptorSpecification(
 				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomicSoftness",
 				this.getClass().getName(),
-				"$Id$",
 				"The Chemistry Development Kit");
 	}
 

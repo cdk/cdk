@@ -92,7 +92,6 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

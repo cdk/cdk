@@ -67,7 +67,6 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

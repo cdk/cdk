@@ -109,7 +109,6 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

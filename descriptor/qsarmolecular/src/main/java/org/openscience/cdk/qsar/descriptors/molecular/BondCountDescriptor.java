@@ -90,7 +90,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

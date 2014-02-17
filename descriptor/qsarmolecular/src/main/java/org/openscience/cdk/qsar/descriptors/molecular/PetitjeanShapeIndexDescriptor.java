@@ -85,7 +85,6 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

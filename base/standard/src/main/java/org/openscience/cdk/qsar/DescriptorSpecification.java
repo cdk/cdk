@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar;
 
 import java.io.Serializable;
 
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.IImplementationSpecification;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -50,7 +51,7 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
      *
      * @param specificationReference Reference to a formal definition in a
      *          dictionary (e.g. in STMML format) of the descriptor, preferably 
-     *          refering to the original article. The format of the content is
+     *          referring to the original article. The format of the content is
      *          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
      * @param implementationTitle Title for the implementation of the descriptor
      *          for which the algorithm is given by the specification.
@@ -71,6 +72,29 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
         this.implementationIdentifier = implementationIdentifier;
         this.implementationVendor = implementationVendor;
     }
+
+    /**
+     * Container for specifying the type of descriptor. The specificationIdentifier is
+     * defined by the CDK version.
+     *
+     * @param specificationReference Reference to a formal definition in a
+     *          dictionary (e.g. in STMML format) of the descriptor, preferably 
+     *          referring to the original article. The format of the content is
+     *          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
+     * @param implementationTitle Title for the implementation of the descriptor
+     *          for which the algorithm is given by the specification.
+     * @param implementationVendor Name of the organisation/person/program/whatever 
+     *          who wrote/packaged the implementation.
+     */
+    public DescriptorSpecification(
+            String specificationReference,
+            String implementationTitle,
+            String implementationVendor) {
+            this.specificationReference = specificationReference;
+            this.implementationTitle = implementationTitle;
+            this.implementationIdentifier = CDK.getVersion();
+            this.implementationVendor = implementationVendor;
+        }
 
     @TestMethod("testGetSpecificationReference")
     public String getSpecificationReference() {

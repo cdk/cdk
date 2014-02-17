@@ -96,7 +96,6 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

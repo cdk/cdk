@@ -64,7 +64,6 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomValence",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

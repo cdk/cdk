@@ -97,7 +97,6 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit");
     }
 

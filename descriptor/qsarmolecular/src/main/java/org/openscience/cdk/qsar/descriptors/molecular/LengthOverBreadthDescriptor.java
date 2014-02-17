@@ -88,7 +88,6 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

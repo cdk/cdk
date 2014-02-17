@@ -82,7 +82,6 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

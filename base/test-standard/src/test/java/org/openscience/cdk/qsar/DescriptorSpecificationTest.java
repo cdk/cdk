@@ -23,6 +23,7 @@ package org.openscience.cdk.qsar;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.CDK;
 import org.openscience.cdk.CDKTestCase;
 
 /**
@@ -45,6 +46,15 @@ public class DescriptorSpecificationTest extends CDKTestCase {
             DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
 		);
 		Assert.assertNotNull(spec);
+	}
+
+    @Test
+    public void testDescriptorSpecification_String_String_String() {
+		DescriptorSpecification spec = new DescriptorSpecification(
+            DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_VENDOR
+		);
+		Assert.assertNotNull(spec);
+		Assert.assertEquals(CDK.getVersion(), spec.getImplementationIdentifier());
 	}
 
     @Test

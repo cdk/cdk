@@ -119,7 +119,6 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }    
 

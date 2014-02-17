@@ -105,7 +105,6 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestChain",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 

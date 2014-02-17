@@ -93,7 +93,6 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes",
                 this.getClass().getName(),
-                "$Id$",
                 "The Chemistry Development Kit");
     }
 
