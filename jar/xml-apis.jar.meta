@@ -1,9 +1,0 @@
-[xml-apis.jar]
-Library=XML APIs
-Version=1.3.02
-#Copyright=
-License=Apache License, 2.0
-LicenseURL=http://xml.apache.org/commons/licenses.html
-Download=http://apache.mirror.rbftpnetworks.com/xml/commons/
-SourceCode=http://apache.mirror.rbftpnetworks.com/xml/commons/
-Homepage=http://xml.apache.org/commons/index.html

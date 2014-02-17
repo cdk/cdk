@@ -1,9 +1,0 @@
-[log4j.jar]
-Library=Apache Log4J
-Version=1.2.15
-Copyright=2007 The Apache Software Foundation
-License=Apache License, Version 2.0
-LicenseURL=http://logging.apache.org/log4j/1.2/license.html
-Download=http://logging.apache.org/log4j/1.2/download.html
-SourceCode=http://logging.apache.org/log4j/1.2/download.html
-Homepage=http://logging.apache.org/log4j/1.2/index.html

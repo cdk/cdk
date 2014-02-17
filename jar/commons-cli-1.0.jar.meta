@@ -1,9 +1,0 @@
-[commons-cli-1.0.jar]
-Library=Apache Commons - CLI
-Version=1.0
-Copyright=2001-2002 The Apache Software Foundation
-License=Apache License Version 2.0
-LicenseURL=http://commons.apache.org/license.html
-Download=http://archive.apache.org/dist/commons/cli/old/v1.0/
-SourceCode=http://archive.apache.org/dist/commons/cli/old/v1.0/
-Homepage=http://commons.apache.org/cli/

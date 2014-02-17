@@ -1,9 +1,0 @@
-[antlr.jar]
-Library=ANTLR
-Version=2.4.0
-Copyright=(c) 2003-2008, Terence Parr
-License=BSD
-LicenseURL=http://www.antlr.org/license.html
-Download=http://www.antlr2.org/download.html
-SourceCode=http://www.antlr2.org/download.html
-Homepage=http://www.antlr.org

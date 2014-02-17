@@ -1,9 +1,0 @@
-[xercesImpl-2.9.0.jar]
-Library=Apache Xerces
-Version=2.9.0
-#Copyright=
-License=Apache License, 2.0
-LicenseURL=http://xerces.apache.org/xerces2-j/
-Download=http://xerces.apache.org/xerces2-j/download.cgi
-SourceCode=http://xerces.apache.org/xerces2-j/download.cgi
-Homepage=http://xerces.apache.org/xerces2-j/
