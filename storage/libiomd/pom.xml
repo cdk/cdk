@@ -12,6 +12,7 @@
 
     <artifactId>cdk-libiomd</artifactId>
     
+    <name>cdk-libiomd</name>
     <dependencies>
         <dependency>
             <groupId>org.xml-cml</groupId>

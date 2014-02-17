@@ -12,6 +12,7 @@
 
     <artifactId>cdk-pdbcml</artifactId>
     
+    <name>cdk-pdbcml</name>
     <dependencies>
         <dependency>
             <groupId>xom</groupId>

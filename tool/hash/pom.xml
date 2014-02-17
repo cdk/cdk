@@ -12,6 +12,7 @@
 
     <artifactId>cdk-hash</artifactId>
     
+    <name>cdk-hash</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

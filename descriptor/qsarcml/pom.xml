@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsarcml</artifactId>
     
+    <name>cdk-qsarcml</name>
     <dependencies>
         <dependency>
             <groupId>xom</groupId>

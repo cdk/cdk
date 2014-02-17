@@ -12,6 +12,7 @@
 
     <artifactId>cdk-standard</artifactId>
     
+    <name>cdk-standard</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

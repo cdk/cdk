@@ -12,6 +12,7 @@
 
     <artifactId>cdk-tautomer</artifactId>
     
+    <name>cdk-tautomer</name>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

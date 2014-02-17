@@ -12,6 +12,7 @@
 
     <artifactId>cdk-dict</artifactId>
     
+    <name>cdk-dict</name>
     <dependencies>
         <dependency>
             <groupId>xom</groupId>

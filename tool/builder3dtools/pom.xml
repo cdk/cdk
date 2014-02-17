@@ -12,6 +12,7 @@
 
     <artifactId>cdk-builder3dtools</artifactId>
     
+    <name>cdk-builder3dtools</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

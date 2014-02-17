@@ -12,6 +12,7 @@
 
     <artifactId>cdk-structgen</artifactId>
     
+    <name>cdk-structgen</name>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

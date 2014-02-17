@@ -12,6 +12,7 @@
 
     <artifactId>cdk-iordf</artifactId>
     
+    <name>cdk-iordf</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

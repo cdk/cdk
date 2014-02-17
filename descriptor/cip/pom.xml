@@ -12,6 +12,7 @@
 
     <artifactId>cdk-cip</artifactId>
     
+    <name>cdk-cip</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

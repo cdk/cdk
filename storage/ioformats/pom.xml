@@ -12,6 +12,7 @@
 
     <artifactId>cdk-ioformats</artifactId>
     
+    <name>cdk-ioformats</name>
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>

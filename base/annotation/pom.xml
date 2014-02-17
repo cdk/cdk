@@ -12,6 +12,7 @@
 
     <artifactId>cdk-annotation</artifactId>
     
+    <name>cdk-annotation</name>
     <dependencies>
     </dependencies>
 

@@ -9,6 +9,7 @@
         <groupId>org.openscience.cdk</groupId>
         <version>1.5.5-SNAPSHOT</version>
     </parent>
+    <name>cdk-tool</name>
     <modules>
         <module>builder3d</module>
         <module>builder3dtools</module>

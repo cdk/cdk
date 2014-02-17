@@ -12,6 +12,7 @@
 
     <artifactId>cdk-silent</artifactId>
     
+    <name>cdk-silent</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

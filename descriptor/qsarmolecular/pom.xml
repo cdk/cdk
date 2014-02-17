@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsarmolecular</artifactId>
     
+    <name>cdk-qsarmolecular</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-interfaces</artifactId>
     
+    <name>cdk-interfaces</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

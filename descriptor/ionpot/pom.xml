@@ -12,6 +12,7 @@
 
     <artifactId>cdk-ionpot</artifactId>
     
+    <name>cdk-ionpot</name>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsaratomic</artifactId>
     
+    <name>cdk-qsaratomic</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

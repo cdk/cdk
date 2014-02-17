@@ -12,6 +12,7 @@
 
     <artifactId>cdk-fragment</artifactId>
     
+    <name>cdk-fragment</name>
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>

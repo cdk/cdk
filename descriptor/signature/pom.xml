@@ -12,6 +12,7 @@
 
     <artifactId>cdk-signature</artifactId>
     
+    <name>cdk-signature</name>
     <dependencies>
         <dependency>
             <groupId>signatures</groupId>

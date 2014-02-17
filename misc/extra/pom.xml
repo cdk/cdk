@@ -91,6 +91,7 @@
     </dependencies>
 
 
+    <name>cdk-extra</name>
     <build>
       <plugins>
         <plugin>

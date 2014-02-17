@@ -12,6 +12,7 @@
 
     <artifactId>cdk-smiles</artifactId>
     
+    <name>cdk-smiles</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

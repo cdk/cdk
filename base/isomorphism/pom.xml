@@ -12,6 +12,7 @@
 
     <artifactId>cdk-isomorphism</artifactId>
     
+    <name>cdk-isomorphism</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

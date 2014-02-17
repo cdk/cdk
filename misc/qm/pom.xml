@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qm</artifactId>
     
+    <name>cdk-qm</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

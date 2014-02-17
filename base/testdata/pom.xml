@@ -12,6 +12,7 @@
 
     <artifactId>cdk-testdata</artifactId>
     
+    <name>cdk-testdata</name>
     <dependencies>
     </dependencies>
 

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-control</artifactId>
     
+    <name>cdk-control</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

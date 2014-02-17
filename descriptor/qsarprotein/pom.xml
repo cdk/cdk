@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsarprotein</artifactId>
     
+    <name>cdk-qsarprotein</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

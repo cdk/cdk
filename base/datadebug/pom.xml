@@ -12,6 +12,7 @@
 
     <artifactId>cdk-datadebug</artifactId>
     
+    <name>cdk-datadebug</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

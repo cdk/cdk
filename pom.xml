@@ -6,6 +6,7 @@
     
     <groupId>org.openscience.cdk</groupId>
     <artifactId>cdk</artifactId>
+    <name>cdk</name>
     <version>1.5.5-SNAPSHOT</version>
     <packaging>pom</packaging>    
     
@@ -287,6 +288,18 @@
                 <updatePolicy>interval:7200</updatePolicy>
             </snapshots>
         </repository>
+        <repository>
+            <id>ebi-repo-3rd</id>
+            <name>EBI Maven Snapshots Repository</name>
+            <url>http://www.ebi.ac.uk/~maven/m2repo</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>        
+        
         <repository>            
             <id>jni-inchi</id>
             <name>JNI-InChI Maven Repository</name>

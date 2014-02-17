@@ -12,6 +12,7 @@
 
     <artifactId>cdk-smsd</artifactId>
     
+    <name>cdk-smsd</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

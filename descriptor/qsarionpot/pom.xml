@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsarionpot</artifactId>
     
+    <name>cdk-qsarionpot</name>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-renderbasic</artifactId>
     
+    <name>cdk-renderbasic</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

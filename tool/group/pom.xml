@@ -12,6 +12,7 @@
 
     <artifactId>cdk-group</artifactId>
     
+    <name>cdk-group</name>
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>

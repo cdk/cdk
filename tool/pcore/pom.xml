@@ -12,6 +12,7 @@
 
     <artifactId>cdk-pcore</artifactId>
     
+    <name>cdk-pcore</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

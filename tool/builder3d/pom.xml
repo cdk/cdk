@@ -12,6 +12,7 @@
 
     <artifactId>cdk-builder3d</artifactId>
     
+    <name>cdk-builder3d</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

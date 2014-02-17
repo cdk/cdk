@@ -12,6 +12,7 @@
 
     <artifactId>cdk-log4j</artifactId>
     
+    <name>cdk-log4j</name>
     <dependencies>
         <dependency>
             <groupId>log4j</groupId>

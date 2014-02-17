@@ -12,6 +12,7 @@
 
     <artifactId>cdk-formula</artifactId>
     
+    <name>cdk-formula</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

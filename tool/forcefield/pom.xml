@@ -12,6 +12,7 @@
 
     <artifactId>cdk-forcefield</artifactId>
     
+    <name>cdk-forcefield</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

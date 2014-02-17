@@ -12,6 +12,7 @@
 
     <artifactId>cdk-reaction</artifactId>
     
+    <name>cdk-reaction</name>
     <dependencies>
         <dependency>
             <groupId>jgrapht</groupId>

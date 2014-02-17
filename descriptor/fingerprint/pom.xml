@@ -12,6 +12,7 @@
 
     <artifactId>cdk-fingerprint</artifactId>
     
+    <name>cdk-fingerprint</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

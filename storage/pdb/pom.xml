@@ -12,6 +12,7 @@
 
     <artifactId>cdk-pdb</artifactId>
     
+    <name>cdk-pdb</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

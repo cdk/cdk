@@ -12,6 +12,7 @@
 
     <artifactId>cdk-data</artifactId>
     
+    <name>cdk-data</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

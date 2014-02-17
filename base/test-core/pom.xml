@@ -12,6 +12,7 @@
 
     <artifactId>cdk-test-core</artifactId>
     
+    <name>cdk-test-core</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-libiocml</artifactId>
     
+    <name>cdk-libiocml</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsar</artifactId>
     
+    <name>cdk-qsar</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

@@ -12,6 +12,7 @@
 
     <artifactId>cdk-atomtype</artifactId>
     
+    <name>cdk-atomtype</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

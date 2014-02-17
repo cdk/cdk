@@ -12,6 +12,7 @@
 
     <artifactId>cdk-test-valencycheck</artifactId>
     
+    <name>cdk-test-valencycheck</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>

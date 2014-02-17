@@ -140,6 +140,7 @@
     </dependencies>
 
 
+    <name>cdk-smarts</name>
     <build>
       <plugins>
         <plugin>

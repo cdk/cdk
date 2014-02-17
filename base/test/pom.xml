@@ -12,6 +12,7 @@
 
     <artifactId>cdk-test</artifactId>
     
+    <name>cdk-test</name>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>

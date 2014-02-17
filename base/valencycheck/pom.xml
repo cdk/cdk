@@ -12,6 +12,7 @@
 
     <artifactId>cdk-valencycheck</artifactId>
     
+    <name>cdk-valencycheck</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

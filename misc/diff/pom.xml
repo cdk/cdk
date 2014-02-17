@@ -12,6 +12,7 @@
 
     <artifactId>cdk-diff</artifactId>
     
+    <name>cdk-diff</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>

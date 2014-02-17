@@ -12,6 +12,7 @@
 
     <artifactId>cdk-qsarbond</artifactId>
     
+    <name>cdk-qsarbond</name>
     <dependencies>
         <dependency>
             <groupId>Jama</groupId>

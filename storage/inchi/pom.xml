@@ -12,6 +12,7 @@
 
     <artifactId>cdk-inchi</artifactId>
     
+    <name>cdk-inchi</name>
     <dependencies>
         <dependency>
             <groupId>java3d</groupId>
