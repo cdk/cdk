@@ -25,90 +25,66 @@ CDK library.
 
 2. Compiling
 
-Compiling and jar-ing the software is done with Jakarta's 
-Ant (http://jakarta.apache.org/ant/) 1.7.1 or better and Java 1.6.0 or better:
+Compiling the library is performed with Apache Maven and requires Java 1.6.0 or later:
 
-cdk/$ ls build.xml
-build.xml
-cdk/$ ant
+cdk/$ ls pom.xml
+pom.xml
+cdk/$ mvn compile
 
-"ant -p" gives a list of possible compilation targets. The default target is 'dist-all', which
-creates a number of .jar files in the 'dist' directory corresponding to subsets of the CDK
-functionality. For convenience, one large .jar file containing everything can be created using the
-target 'dist-large' (using the command "ant dist-large"). This is also created in dist/jar and is
-typically named something like 'cdk-1.4.11.jar'.
+This will produce a 'jar' file for each module located in each modules 'target/' directory.
 
 2.1 Creating the JavaDoc documentation for the API
 
 The JavaDoc documentation for the API describes all of the CDK classes in detail. It functions as
 the user manual for the CDK, although you should also look at the list of examples and tutorials
-below. This documentation is created by 'ant' from the Java source code for the CDK as follows:
+below. 
+This documentation is created by 'mvn' from the Java source code for the CDK as follows:
 
-cdk/$ ls javadoc.xml
-javadoc.xml
-cdk/$ ant -buildfile javadoc.xml html
+cdk/$ ls pom.xml
+pom.xml
+cdk/$ mvn javadoc:aggregate
 
-The documenation is created as a series of .html pages in doc/api. If you use firefox, you can read
+The documenation is created as a series of .html pages in target/site/apidocs. If you use firefox, you can read
 the documentation using the following command:
 
-cdk/$ firefox doc/api/index.html
+cdk/$ firefox target/site/apidocs/index.html
 
 3. Running tests
 
 IMPORTANT: this requires the Git version of the sources, because the test files are not included in
 the source code distribution.
 
-After you compiled the code, you can do "ant test-all" to run the test suite of non-interactive, automated
-tests. You might need to copy an appropriate junit.jar into your $ANT_HOME/lib
-directory or somewhere else in your classpath.
-Upon "ant dist-all test-dist-all test-all", you should see something like:
+After you compiled the code, you can do "mvn test" to run the test suite of non-interactive, automated
+tests.
+Upon "mvn test", you should see something like:
 
 test:
 Running org.openscience.cdk.test.CDKTests
 Tests run: 1065, Failures: 7, Errors: 1, Time elapsed: 27,55 sec
 
 As you can see, the vast majority of tests ran successfully, but that there
-are failures and errors. The $CDK_HOME/reports/results.txt file contains
-information about the outcome of the tests.
+are failures and errors. 
 
-There are also run interactive tests, like the Controller2DTest. In order to try them, you can edit the "run"
-target in the build.xml file to look like this:
+You can run the tests for an individual module by changing to the module directory:
 
-	<target name="run" depends="dist">
-		<java classname="org.openscience.cdk.test.ControllerTest" fork="yes">
-			<arg value=""/>
-			<classpath>
-				<pathelement location="${dist}/jar/cdk.jar"/>
-				<pathelement path="${java.class.path}"/>
-				<pathelement location="."/>
-				<fileset dir="jar">
-				<include name="*.jar"/>
-				</fileset>
-			</classpath>
-		</java>  
-	</target>
+cdk/$ cd descriptor/fingerprint
+cdk/descriptor/fingerprint/$ mvn test
 
-Then, a "ant run" should give you a window where you can add bonds to a given structure.
-Currently, there are more than 15000 test, of which a large part tests the data, datadebug and 
-silent classes.
-
-You can run the tests for an individual module with (for the core module):
-
-cdk/$ ant -Dmodule=core compile-module jarTestdata test-module
+TA more detail tutorial on building the project in IDE is avaialble on the wiki:
+https://github.com/cdk/cdk/wiki/Building-CDK
 
 4. Using CDK
 
 CDK is a class library intended to be used by other programs. It will not run 
 as a stand-alone program, although it contains some GUI- and command
-line applications. In order to use the CDK in your program, you need to build
-the distribution jars by running "ant dist-all". They will end up in
-$CDK_HOME/dist/jar. Copy all cdk-*.jars as well as all jars from $CDK_HOME/jar
-to the lib directory of the project for which you intend to have CDK support and
-use them as you would use any other third party jar.
+line applications. If your project is also using maven you can install the 
+library in your local repository (~/.m2/repository) as follows:
 
-Alternatively, run "ant dist-large" to create a jar cdk-svn-YYYYMMDD.jar in
-$CDK_HOME/dist/jar. This large jar contains all the CDK code and all third
-party libraries that code depends on. 
+cdk/$ mvn install -Dmaven.test.failure.ignore=true
+
+If you are not using maven, you can build an aggregated jar file as follows.
+
+Todo - JM Feb 2014
 
 5. Examples and tutorials
 
@@ -119,6 +95,7 @@ examples and tutorials:
 * http://rguha.net/code/java/
 * http://www.redbrick.dcu.ie/~noel/CDKJython.html
 
-And for updates on CDK use cases:
+To keep up with the latest news on CDK development and usage
 
-* https://plus.google.com/103703750118158205464/posts
+* Google Plus - https://plus.google.com/103703750118158205464/posts
+* Mailing Lists - https://sourceforge.net/p/cdk/mailman/
