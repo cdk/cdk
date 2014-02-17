@@ -26,12 +26,10 @@
         <dependency>
             <groupId>uk.ac.ebi.beam</groupId>
             <artifactId>beam-core</artifactId>
-            <version>0.5</version>
         </dependency>
         <dependency>
             <groupId>uk.ac.ebi.beam</groupId>
             <artifactId>beam-func</artifactId>
-            <version>0.5</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
