@@ -326,7 +326,12 @@
                 <groupId>uk.ac.ebi.beam</groupId>
                 <artifactId>beam-func</artifactId>
                 <version>0.5</version>
-            </dependency>        
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>14.0.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
