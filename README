@@ -70,7 +70,7 @@ You can run the tests for an individual module by changing to the module directo
 cdk/$ cd descriptor/fingerprint
 cdk/descriptor/fingerprint/$ mvn test
 
-More detail tutorial on building the project in IDE is avaialble on the wiki:
+Tutorials on building the project in integrated development enviroments (IDEs) are avaialble on the wiki:
 https://github.com/cdk/cdk/wiki/Building-CDK
 
 4. Using CDK
