@@ -34,12 +34,7 @@
             <artifactId>hamcrest-all</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
+            <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-annotation</artifactId>
             <version>${project.parent.version}</version>
@@ -59,7 +54,7 @@
             <artifactId>cdk-test</artifactId>
             <version>${project.parent.version}</version>
             <type>test-jar</type>
-            <scope>test</scope>            
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -72,22 +67,10 @@
             <artifactId>cdk-io</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-ioformats</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
+        </dependency>         
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>cdk-standard</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cdk-atomtype</artifactId>
             <version>${project.parent.version}</version>
             <scope>test</scope>
         </dependency>
