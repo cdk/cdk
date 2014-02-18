@@ -32,7 +32,7 @@ import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
-import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
@@ -215,7 +215,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
     @Test
     public void testAzulene() throws Exception {
 
-        IAtomContainer mol = MoleculeFactory.makeAzulene();
+        IAtomContainer mol = TestMoleculeFactory.makeAzulene();
         Assert.assertNotNull("Created molecule was null", mol);
         AtomContainerPrinter.print(mol);
 
@@ -240,7 +240,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
      */
     @Test
     public void testPyrimidine() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makePyrimidine();
+        IAtomContainer mol = TestMoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertNotNull("Created molecule was null", mol);
@@ -262,7 +262,7 @@ public class BondDiscretePartitionRefinerTest extends CDKTestCase {
      */
     @Test
     public void testBiphenyl() throws Exception {
-        IAtomContainer mol = MoleculeFactory.makeBiphenyl();
+        IAtomContainer mol = TestMoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         CDKHueckelAromaticityDetector.detectAromaticity(mol);
         Assert.assertNotNull("Created molecule was null", mol);
