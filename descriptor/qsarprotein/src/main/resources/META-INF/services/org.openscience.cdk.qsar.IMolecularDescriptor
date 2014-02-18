@@ -1,0 +1,3 @@
+org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptor
+org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor
+

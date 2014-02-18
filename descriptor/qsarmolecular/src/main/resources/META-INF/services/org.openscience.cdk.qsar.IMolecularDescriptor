@@ -49,15 +49,3 @@ org.openscience.cdk.qsar.descriptors.molecular.AromaticAtomsCountDescriptor
 org.openscience.cdk.qsar.descriptors.molecular.APolDescriptor
 org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor
 org.openscience.cdk.qsar.descriptors.molecular.AcidicGroupCountDescriptor
-
-# Protein molecular QSAR descriptor cannot be loaded with qsarmolecular
-# as it is in qsarprotein and the build system cannot handle multiple datafiles
-# of the same name
-#org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptor
-#org.openscience.cdk.qsar.descriptors.molecular.AminoAcidCountDescriptor
-
-# Ionization potential molecular QSAR descriptor cannot be loaded with qsarmolecular
-# as it is in qsarionpot and the build system cannot handle multiple datafiles
-# of the same name
-#org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescriptor
-
