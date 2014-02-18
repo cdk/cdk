@@ -74,7 +74,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure2a() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-2a.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2a.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -96,7 +96,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure2b() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-2b.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2b.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -117,7 +117,7 @@ public class HashCodeScenariosTest {
      * codes should be different.
      */
     @Test public void figure2c() {
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-2c.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-2c.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -140,7 +140,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure3() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-3.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-3.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -163,7 +163,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure7() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-7.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-7.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -185,7 +185,7 @@ public class HashCodeScenariosTest {
      * hash code identifies that the two molecules are the same.
      */
     @Test public void figure10() {
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-10.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-10.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -209,7 +209,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure11() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-11.sdf", 1);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-11.sdf", 1);
 
         IAtomContainer molecule = mols.get(0);
 
@@ -235,7 +235,7 @@ public class HashCodeScenariosTest {
      * configuration  and (S)- configuration values are invariant
      */
     @Test public void figure12() {
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-12.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-12.sdf", 2);
 
         MoleculeHashGenerator stereo = new HashGeneratorMaker().elemental()
                                                                .depth(1)
@@ -271,7 +271,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure13a() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-13a.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-13a.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -294,7 +294,7 @@ public class HashCodeScenariosTest {
      * codes.
      */
     @Test public void figure13b() {
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-13b.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-13b.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -316,7 +316,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure14() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-14.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-14.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -339,7 +339,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure15() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-15.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-15.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -372,7 +372,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure16a() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-16a.sdf", 2);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-16a.sdf", 2);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -425,7 +425,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void figure16b() {
 
-        List<IAtomContainer> mols = sdf("/data/hash/ihlenfeldt93-figure-16b.sdf", 4);
+        List<IAtomContainer> mols = sdf("ihlenfeldt93-figure-16b.sdf", 4);
 
         IAtomContainer a = mols.get(0);
         IAtomContainer b = mols.get(1);
@@ -461,7 +461,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void aminotetracosanone() {
 
-        List<IAtomContainer> aminotetracosanones = sdf("/data/hash/aminotetracosanones.sdf", 2);
+        List<IAtomContainer> aminotetracosanones = sdf("aminotetracosanones.sdf", 2);
 
         IAtomContainer a = aminotetracosanones.get(0);
         IAtomContainer b = aminotetracosanones.get(1);
@@ -493,7 +493,7 @@ public class HashCodeScenariosTest {
      */
     @Test public void inositols() {
 
-        List<IAtomContainer> inositols = sdf("/data/hash/inositols.sdf", 9);
+        List<IAtomContainer> inositols = sdf("inositols.sdf", 9);
 
         // non-stereo non-perturbed hash generator
         MoleculeHashGenerator basic = new HashGeneratorMaker().elemental()
@@ -545,7 +545,7 @@ public class HashCodeScenariosTest {
 
     @Test public void allenesWithImplicitHydrogens() {
 
-        List<IAtomContainer> allenes = sdf("/data/hash/allene-implicit-h.sdf", 2);
+        List<IAtomContainer> allenes = sdf("allene-implicit-h.sdf", 2);
 
         IAtomContainer mAllene = allenes.get(0);
         IAtomContainer pAllene = allenes.get(1);
@@ -586,7 +586,7 @@ public class HashCodeScenariosTest {
 
     @Test public void allenesWithExplicitHydrogens() {
 
-        List<IAtomContainer> allenes = sdf("/data/hash/allene-explicit-h.sdf", 2);
+        List<IAtomContainer> allenes = sdf("allene-explicit-h.sdf", 2);
 
         IAtomContainer mAllene = allenes.get(0);
         IAtomContainer pAllene = allenes.get(1);
@@ -627,8 +627,8 @@ public class HashCodeScenariosTest {
 
     @Test public void allenes2Dand3D() {
 
-        List<IAtomContainer> allenes2D = sdf("/data/hash/allene-explicit-h.sdf", 2);
-        List<IAtomContainer> allenes3D = sdf("/data/hash/allene-explicit-3d-h.sdf", 2);
+        List<IAtomContainer> allenes2D = sdf("allene-explicit-h.sdf", 2);
+        List<IAtomContainer> allenes3D = sdf("allene-explicit-3d-h.sdf", 2);
 
         IAtomContainer mAllene2D = allenes2D.get(0);
         IAtomContainer mAllene3D = allenes3D.get(0);
@@ -665,8 +665,8 @@ public class HashCodeScenariosTest {
     }
 
     @Test public void allenesWithUnspecifiedConfiguration() {
-        List<IAtomContainer> allenes = sdf("/data/hash/allene-implicit-h.sdf", 2);
-        List<IAtomContainer> unspecified = sdf("/data/hash/allene-unspecified.sdf", 2);
+        List<IAtomContainer> allenes = sdf("allene-implicit-h.sdf", 2);
+        List<IAtomContainer> unspecified = sdf("allene-unspecified.sdf", 2);
 
         IAtomContainer mAllene = allenes.get(0);
         IAtomContainer pAllene = allenes.get(1);
@@ -702,7 +702,7 @@ public class HashCodeScenariosTest {
 
     @Test public void cumulenes() {
 
-        List<IAtomContainer> cumulenes = sdf("/data/hash/cumulenes.sdf", 2);
+        List<IAtomContainer> cumulenes = sdf("cumulenes.sdf", 2);
 
         IAtomContainer eCumulene = cumulenes.get(0);
         IAtomContainer zCumulene = cumulenes.get(1);
@@ -725,8 +725,8 @@ public class HashCodeScenariosTest {
 
     @Test public void suppressedHydrogens() {
         
-        List<IAtomContainer> implicits = sdf("/data/hash/butan-2-ols.sdf", 2);
-        List<IAtomContainer> explicits = sdf("/data/hash/butan-2-ols-explicit-hydrogens.sdf", 2);
+        List<IAtomContainer> implicits = sdf("butan-2-ols.sdf", 2);
+        List<IAtomContainer> explicits = sdf("butan-2-ols-explicit-hydrogens.sdf", 2);
 
         IAtomContainer implicit = implicits.get(0);
         IAtomContainer explicit = explicits.get(0);
@@ -750,8 +750,8 @@ public class HashCodeScenariosTest {
 
     @Test public void suppressedHydrogens_chiral() {
 
-        List<IAtomContainer> implicits = sdf("/data/hash/butan-2-ols.sdf", 2);
-        List<IAtomContainer> explicits = sdf("/data/hash/butan-2-ols-explicit-hydrogens.sdf", 2);
+        List<IAtomContainer> implicits = sdf("butan-2-ols.sdf", 2);
+        List<IAtomContainer> explicits = sdf("butan-2-ols-explicit-hydrogens.sdf", 2);
 
         IAtomContainer implicit = implicits.get(0);
         IAtomContainer explicit = explicits.get(0);
@@ -789,8 +789,8 @@ public class HashCodeScenariosTest {
     
     @Test public void inositols_suppressedHydrogens() {
 
-        List<IAtomContainer> implicits = sdf("/data/hash/inositols.sdf", 9);
-        List<IAtomContainer> explicits = sdf("/data/hash/inositols-explicit-hydrogens.sdf", 9);
+        List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
+        List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
 
         assertThat("different number of implicit and explicit structures",
                    implicits.size(), is(explicits.size()));
@@ -826,8 +826,8 @@ public class HashCodeScenariosTest {
 
     @Test public void inositols_suppressedHydrogens_chiral() {
 
-        List<IAtomContainer> implicits = sdf("/data/hash/inositols.sdf", 9);
-        List<IAtomContainer> explicits = sdf("/data/hash/inositols-explicit-hydrogens.sdf", 9);
+        List<IAtomContainer> implicits = sdf("inositols.sdf", 9);
+        List<IAtomContainer> explicits = sdf("inositols-explicit-hydrogens.sdf", 9);
 
         assertThat("different number of implicit and explicit structures",
                    implicits.size(), is(explicits.size()));
@@ -868,8 +868,8 @@ public class HashCodeScenariosTest {
     
     @Test public void suppressedHydrogens_dicholorethenes() {
         
-        List<IAtomContainer> implicits = sdf("/data/hash/dichloroethenes.sdf", 2);
-        List<IAtomContainer> explicits = sdf("/data/hash/dichloroethenes-explicit-hydrogens.sdf", 2);
+        List<IAtomContainer> implicits = sdf("dichloroethenes.sdf", 2);
+        List<IAtomContainer> explicits = sdf("dichloroethenes-explicit-hydrogens.sdf", 2);
 
         assertThat("different number of implicit and explicit structures",
                    implicits.size(), is(explicits.size()));
@@ -910,8 +910,8 @@ public class HashCodeScenariosTest {
 
     @Test public void suppressedHydrogens_allenes() {
 
-        List<IAtomContainer> implicits = sdf("/data/hash/allene-implicit-h.sdf", 2);
-        List<IAtomContainer> explicits = sdf("/data/hash/allene-explicit-h.sdf", 2);
+        List<IAtomContainer> implicits = sdf("allene-implicit-h.sdf", 2);
+        List<IAtomContainer> explicits = sdf("allene-explicit-h.sdf", 2);
 
         assertThat("different number of implicit and explicit structures",
                    implicits.size(), is(explicits.size()));
@@ -1003,7 +1003,7 @@ public class HashCodeScenariosTest {
         assertThat(sConfiguration, is(not(achiral)));       
         
         // load the ones with 2D coordinates to check we match them
-        List<IAtomContainer> butan2ols = sdf("/data/hash/butan-2-ols.sdf", 2);
+        List<IAtomContainer> butan2ols = sdf("butan-2-ols.sdf", 2);
                 
         // first is 'R'
         assertThat(rConfiguration, is(generator.generate(butan2ols.get(0))));
@@ -1080,7 +1080,7 @@ public class HashCodeScenariosTest {
         long zConfiguration = generator.generate(dichloroethene);
 
         // (E) and (Z) 2D geometry
-        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes.sdf", 2);
+        List<IAtomContainer> dichloroethenes2D = sdf("dichloroethenes.sdf", 2);
 
         assertThat(eConfiguration, is(generator.generate(dichloroethenes2D.get(0))));
         assertThat(zConfiguration, is(generator.generate(dichloroethenes2D.get(1))));
@@ -1186,7 +1186,7 @@ public class HashCodeScenariosTest {
         zConfigurations.add(generator.generate(dichloroethene));
 
         // (E) and (Z) using 2D geometry (explicit hydrogens)
-        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes-explicit-hydrogens.sdf", 2);
+        List<IAtomContainer> dichloroethenes2D = sdf("dichloroethenes-explicit-hydrogens.sdf", 2);
 
         
         assertThat(eConfigurations.size(),
@@ -1301,7 +1301,7 @@ public class HashCodeScenariosTest {
         zConfigurations.add(generator.generate(dichloroethene));
 
         // (E) and (Z) using 2D geometry (implicit hydrogens)
-        List<IAtomContainer> dichloroethenes2D = sdf("/data/hash/dichloroethenes.sdf", 2);
+        List<IAtomContainer> dichloroethenes2D = sdf("dichloroethenes.sdf", 2);
 
 
         assertThat(eConfigurations.size(),
