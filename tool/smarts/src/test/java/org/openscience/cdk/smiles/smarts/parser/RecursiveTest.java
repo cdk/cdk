@@ -383,8 +383,8 @@ public class RecursiveTest extends CDKTestCase {
 
 
     @Test public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
-        String filename = "data/smiles/drugs.smi";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "drugs.smi";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         IteratingSMILESReader reader = new IteratingSMILESReader(
             ins, DefaultChemObjectBuilder.getInstance()
         );
@@ -418,8 +418,8 @@ public class RecursiveTest extends CDKTestCase {
     }
 
     @Test public void testBasicAmineOnDrugs() throws Exception {
-        String filename = "data/smiles/drugs.smi";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "drugs.smi";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
 

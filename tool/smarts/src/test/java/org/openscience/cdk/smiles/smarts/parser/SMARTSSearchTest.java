@@ -117,8 +117,8 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     @Test public void testMoleculeFromSDF() throws CDKException {
-        String filename = "data/mdl/cnssmarts.sdf";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        String filename = "cnssmarts.sdf";
+        InputStream ins = this.getClass().getResourceAsStream(filename);
         DefaultChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content;
         content = (ChemFile) reader.read((ChemObject) new ChemFile());
