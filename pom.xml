@@ -13,6 +13,7 @@
     <url>http://sourceforge.net/projects/cdk/</url>
 
     <modules>
+        <module>bundle</module>
         <module>base</module>
         <module>descriptor</module>
         <module>display</module>

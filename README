@@ -82,9 +82,20 @@ library in your local repository (~/.m2/repository) as follows:
 
 cdk/$ mvn install -Dmaven.test.failure.ignore=true
 
-If you are not using maven, you can build an aggregated jar file as follows.
+A large bundled jar with all dependencies can also be built. If you have locally
+made modifications to the source code you will need to install these to your
+local repository. The jar will in the target directory of the 'bundle' module.
 
-Todo - JM Feb 2014
+cdk/$ mvn install -DskipTests=true
+cdk/$ ls bundle/target/cdk-{version}.jar
+
+If you have not made any changes you need only package the bundle module. The other
+modules will be automatically downloaded.
+
+cdk/$ cd bundle
+cdk/$ mvn package
+cdk/$ ls target/cdk-{version}.jar
+
 
 5. Examples and tutorials
 
