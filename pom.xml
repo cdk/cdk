@@ -35,6 +35,21 @@
         </license>
     </licenses>
 
+    <!-- define the cdk.repo.url and cdk.repo.snapshots.url properties in 
+         ~/.m2/settings.xml -->
+    <distributionManagement>
+        <repository>
+            <id>cdk-repo</id>
+            <name>CDK Repository</name>
+            <url>${cdk.repo.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>cdk-repo</id>
+            <name>CDK Snapshot Repository</name>
+            <url>${cdk.repo.snapshots.url}</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <!-- TODO possibly split into developers/contributors-->
     <developers>
         <developer>
@@ -357,15 +372,6 @@
     </dependencyManagement>
 
     <build>
-
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>2.2</version>
-            </extension>
-        </extensions>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
