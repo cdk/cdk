@@ -108,9 +108,9 @@ cdk/$ mvn package
 cdk/$ ls target/cdk-{version}.jar
 ```
 
-## Maven Artifacts
+## Maven Artefacts
 
-The Maven artifacts are currently deployed to the European Bioinformatics Institute (EMBL-EBI) remote repositories. To use the repositories from a maven project add the following configuration to you `pom.xml`.
+The Maven artefacts are currently deployed to the European Bioinformatics Institute (EMBL-EBI) remote repositories. To use the repositories from a maven project add the following configuration to you `pom.xml`.
 
 ```xml
 <repositories>
