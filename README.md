@@ -1,9 +1,9 @@
-CDK - The Chemical Development Kit
+# The Chemical Development Kit (CDK)
  
 Copyright 1997-2014 The CDK Development Team
 License: LGPL v2, see doc/lgpl.license
 
-1. Introduction
+## Introduction
 
 You are currently reading the README file for the Chemistry Development Project (CDK).
 This project is hosted under http://cdk.sourceforge.net/
@@ -23,7 +23,7 @@ Please refer to other projects like the JChemPaint project (http://jchempaint.gi
 or the Jmol project (http://www.jmol.org/) for programs that actually take advantage of the 
 CDK library.
 
-2. Compiling
+## Compiling
 
 Compiling the library is performed with Apache Maven and requires Java 1.6.0 or later:
 
@@ -33,7 +33,7 @@ cdk/$ mvn compile
 
 This will produce a 'jar' file for each module located in each modules 'target/' directory.
 
-2.1 Creating the JavaDoc documentation for the API
+## Creating the JavaDoc documentation for the API
 
 The JavaDoc documentation for the API describes all of the CDK classes in detail. It functions as
 the user manual for the CDK, although you should also look at the list of examples and tutorials
@@ -49,7 +49,7 @@ the documentation using the following command:
 
 cdk/$ firefox target/site/apidocs/index.html
 
-3. Running tests
+## Running tests
 
 IMPORTANT: this requires the Git version of the sources, because the test files are not included in
 the source code distribution.
@@ -73,7 +73,7 @@ cdk/descriptor/fingerprint/$ mvn test
 Tutorials on building the project in integrated development enviroments (IDEs) are avaialble on the wiki:
 https://github.com/cdk/cdk/wiki/Building-CDK
 
-4. Using CDK
+## Using CDK
 
 CDK is a class library intended to be used by other programs. It will not run 
 as a stand-alone program, although it contains some GUI- and command
@@ -97,7 +97,7 @@ cdk/$ mvn package
 cdk/$ ls target/cdk-{version}.jar
 
 
-5. Examples and tutorials
+## Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
 examples and tutorials:
