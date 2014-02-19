@@ -27,9 +27,11 @@ CDK library.
 
 Compiling the library is performed with Apache Maven and requires Java 1.6.0 or later:
 
+```bash
 cdk/$ ls pom.xml
-pom.xml
+cdk/$ pom.xml
 cdk/$ mvn compile
+```
 
 This will produce a 'jar' file for each module located in each modules 'target/' directory.
 
@@ -40,14 +42,18 @@ the user manual for the CDK, although you should also look at the list of exampl
 below. 
 This documentation is created by 'mvn' from the Java source code for the CDK as follows:
 
+```bash
 cdk/$ ls pom.xml
 pom.xml
 cdk/$ mvn javadoc:aggregate
+```
 
 The documenation is created as a series of .html pages in target/site/apidocs. If you use firefox, you can read
 the documentation using the following command:
 
+```bash
 cdk/$ firefox target/site/apidocs/index.html
+```
 
 ## Running tests
 
@@ -67,8 +73,10 @@ are failures and errors.
 
 You can run the tests for an individual module by changing to the module directory:
 
+```bash
 cdk/$ cd descriptor/fingerprint
 cdk/descriptor/fingerprint/$ mvn test
+```
 
 Tutorials on building the project in integrated development enviroments (IDEs) are avaialble on the wiki:
 https://github.com/cdk/cdk/wiki/Building-CDK
@@ -80,7 +88,9 @@ as a stand-alone program, although it contains some GUI- and command
 line applications. If your project is also using maven you can install the 
 library in your local repository (~/.m2/repository) as follows:
 
+```bash
 cdk/$ mvn install -Dmaven.test.failure.ignore=true
+```
 
 A large bundled jar with all dependencies can also be built. If you have locally
 made modifications to the source code you will need to install these to your
@@ -92,10 +102,11 @@ cdk/$ ls bundle/target/cdk-{version}.jar
 If you have not made any changes you need only package the bundle module. The other
 modules will be automatically downloaded.
 
+```bash
 cdk/$ cd bundle
 cdk/$ mvn package
 cdk/$ ls target/cdk-{version}.jar
-
+```
 
 ## Examples and tutorials
 
