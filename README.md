@@ -108,6 +108,35 @@ cdk/$ mvn package
 cdk/$ ls target/cdk-{version}.jar
 ```
 
+## Maven Artifacts
+
+The Maven artifacts are currently deployed to the European Bioinformatics Institute (EMBL-EBI) remote repositories. To use the repositories from a maven project add the following configuration to you `pom.xml`.
+
+```xml
+<repositories>
+  <repository>
+    <id>ebi-repo</id>
+    <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
+  </repository>
+  <repository>
+    <id>ebi-repo-snapshots</id>
+    <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
+  </repository>
+</repositories>
+```
+
+You can then use a cdk module by specifying a dependency in the `pom.xml`. Any additional requirements of the module will also be included. The `RELEASE` specifies the latest released version whilst `LATEST` will provide the latest development build (snapshot). You may also specify a specific version.
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.openscience.cdk</groupId>
+    <artifactId>cdk-fingerprint</artifactId>
+    <version>RELEASE</version>
+  </dependency>
+</dependencies>
+```
+
 ## Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
