@@ -75,7 +75,6 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit"
         );
     }

@@ -93,9 +93,8 @@ public class SmallRingDescriptor implements IMolecularDescriptor
         (
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings",
             this.getClass().getName(),
-            "$Id$",
             "The Chemistry Development Kit"
-		);
+	);
     }
     
     /**
