@@ -620,7 +620,7 @@ public class StructureDiagramGenerator
 				try
 				{
 					logger.debug("Start at atom no. " + (molecule.getAtomNumber(atom) + 1));
-					logger.debug(atomPlacer.listNumbers(molecule, longestUnplacedChain));
+					logger.debug(AtomPlacer.listNumbers(molecule, longestUnplacedChain));
 				} catch (Exception exc) {
 					logger.debug(exc);
 				}

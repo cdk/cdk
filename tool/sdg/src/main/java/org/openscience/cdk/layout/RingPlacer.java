@@ -352,7 +352,7 @@ public class RingPlacer
 		}
 			try
 			{
-				logger.debug("placeBridgedRing->atomsToPlace: " + atomPlacer.listNumbers(molecule, atomsToDraw));
+				logger.debug("placeBridgedRing->atomsToPlace: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
 				logger.debug("placeBridgedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
 				logger.debug("placeBridgedRing->startAngle: " + Math.toDegrees(startAngle));
 				logger.debug("placeBridgedRing->addAngle: " + Math.toDegrees(addAngle));		
@@ -545,7 +545,7 @@ public class RingPlacer
 				logger.debug("placeFusedRing->startAngle: " + Math.toDegrees(startAngle));
 				logger.debug("placeFusedRing->addAngle: " + Math.toDegrees(addAngle));		
 				logger.debug("placeFusedRing->startAtom is: " + (molecule.getAtomNumber(startAtom) + 1));
-				logger.debug("AtomsToDraw: " + atomPlacer.listNumbers(molecule, atomsToDraw));
+				logger.debug("AtomsToDraw: " + AtomPlacer.listNumbers(molecule, atomsToDraw));
 			}
 			catch(Exception exc)
 			{

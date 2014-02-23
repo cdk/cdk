@@ -553,7 +553,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
      *      the Exception
      */
-    public IAtomContainer getInitialLongestChain(IAtomContainer molecule) throws CDKException
+    static public IAtomContainer getInitialLongestChain(IAtomContainer molecule) throws CDKException
     {
         logger.debug("Start of getInitialLongestChain()");
         double[][] conMat = ConnectionMatrix.getMatrix(molecule);
@@ -610,7 +610,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public IAtomContainer getLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom) throws CDKException
+    static public IAtomContainer getLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom) throws CDKException
     {
         logger.debug("Start of getLongestUnplacedChain.");
         //ConnectivityChecker cc = new ConnectivityChecker();
@@ -665,7 +665,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public  void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes) throws CDKException
+    static public  void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes) throws CDKException
     {
         IAtom atom = null;
         IAtom nextAtom = null;
@@ -758,7 +758,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    public  String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException
+    static public  String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException
     {
         String s = "Numbers: ";
         for (int f = 0; f < ac.getAtomCount(); f++)
@@ -781,7 +781,7 @@ public class AtomPlacer
      *      atoms in an AtomContainer
      *@exception  java.lang.Exception  Description of the Exception
      */
-    public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception
+    static public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception
     {
         String s = "Numbers: ";
         for (int f = 0; f < ac.size(); f++)
@@ -798,7 +798,7 @@ public class AtomPlacer
      *@param  ac  The AtomContainer to be searched
      *@return     True is all the atoms in the given AtomContainer have been placed
      */
-    public  boolean allPlaced(IAtomContainer ac)
+    static public  boolean allPlaced(IAtomContainer ac)
     {
         for (int f = 0; f < ac.getAtomCount(); f++)
         {
@@ -816,7 +816,7 @@ public class AtomPlacer
      *
      *@param  ac  The AtomContainer whose atoms are to be marked
      */
-    public  void markNotPlaced(IAtomContainer ac)
+    static public  void markNotPlaced(IAtomContainer ac)
     {
         for (int f = 0; f < ac.getAtomCount(); f++)
         {
@@ -832,7 +832,7 @@ public class AtomPlacer
      *@param  ac  The AtomContainer whose atoms are to be marked
      */
 
-    public  void markPlaced(IAtomContainer ac)
+    static public  void markPlaced(IAtomContainer ac)
     {
         for (int f = 0; f < ac.getAtomCount(); f++)
         {
@@ -847,7 +847,7 @@ public class AtomPlacer
      *@param  ac  The AtomContainer to be searched for placed atoms
      *@return     An AtomContainer containing all the placed atoms
      */
-    public IAtomContainer getPlacedAtoms(IAtomContainer ac)
+    static public IAtomContainer getPlacedAtoms(IAtomContainer ac)
     {
         IAtomContainer ret = ac.getBuilder().newInstance(IAtomContainer.class);
         for (int f = 0; f < ac.getAtomCount(); f++)
@@ -869,7 +869,7 @@ public class AtomPlacer
      *
      *@return sum of degrees
      */
-    int getDegreeSum(IAtomContainer ac, IAtomContainer superAC)
+    static int getDegreeSum(IAtomContainer ac, IAtomContainer superAC)
     {
     	int degreeSum = 0;
         //String path = "DegreeSum for Path: ";
@@ -889,7 +889,7 @@ public class AtomPlacer
      *
      *@param  ac  The atomcontainer for which weights are to be calculated
      */
-    void calculateWeights(IAtomContainer ac)
+    static void calculateWeights(IAtomContainer ac)
     {
         int[] weights = getWeightNumbers(ac);
         for (int f = 0; f < ac.getAtomCount(); f++)
@@ -905,7 +905,7 @@ public class AtomPlacer
      *@param  atomContainer  The atomContainer to analyse.
      *@return                The morgan numbers value.
      */
-    int[] getWeightNumbers(IAtomContainer atomContainer)
+    static int[] getWeightNumbers(IAtomContainer atomContainer)
     {
         int[] morganMatrix;
         int[] tempMorganMatrix;
@@ -938,7 +938,7 @@ public class AtomPlacer
         return tempMorganMatrix;
     }
 
-    public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
+    static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
     {
         int sum = 0;
         java.util.List bonds = molecule.getConnectedBondsList(atom);
