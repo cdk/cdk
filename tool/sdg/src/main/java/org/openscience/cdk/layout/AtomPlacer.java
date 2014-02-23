@@ -695,12 +695,9 @@ public class AtomPlacer
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
                         pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class,pathes[atomNr]);
                         logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
-                        logger.debug("Old path " + (atomNr + 1) + " looks like: " + listNumbers(molecule, pathes[atomNr]));
-                        logger.debug("Copied path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
                         pathes[nextAtomNr].addAtom(nextAtom);
                         logger.debug("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
                         pathes[nextAtomNr].addBond(curBond);
-                        logger.debug("New path " + (nextAtomNr + 1) + " looks like: " + listNumbers(molecule, pathes[nextAtomNr]));
                         if (ac.getConnectedBondsCount(nextAtom) > 1)
                         {
                             newSphere.add(nextAtom);
