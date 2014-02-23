@@ -215,7 +215,7 @@ public class InChIGenerator {
         Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
-        	IAtom atom = atoms.next();
+            IAtom atom = atoms.next();
 
             // Get coordinates
             // Use 3d if possible, otherwise 2d or none
@@ -267,10 +267,10 @@ public class InChIGenerator {
             // total number
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
             Integer implicitH = atom.getImplicitHydrogenCount();
-            
-            // set implicit hydrogen count, -1 tells the inchi to determine it 
+
+            // set implicit hydrogen count, -1 tells the inchi to determine it
             iatom.setImplicitH(implicitH != null ? implicitH : -1);
-            
+
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
             if (count == 0) {
@@ -299,7 +299,7 @@ public class InChIGenerator {
             INCHI_BOND_TYPE order;
             IBond.Order bo = bond.getOrder();
             if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
-            	order = INCHI_BOND_TYPE.ALTERN;
+                order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == CDKConstants.BONDORDER_SINGLE) {
                 order = INCHI_BOND_TYPE.SINGLE;
             } else if (bo == CDKConstants.BONDORDER_DOUBLE) {
@@ -358,12 +358,12 @@ public class InChIGenerator {
 
         // Process tetrahedral stereo elements
         for (IStereoElement stereoElem : atomContainer.stereoElements()) {
-        	if (stereoElem instanceof ITetrahedralChirality) {
-        		ITetrahedralChirality chirality = (ITetrahedralChirality)stereoElem;
-        		IAtom[] surroundingAtoms = chirality.getLigands();
-        		Stereo stereoType = chirality.getStereo();
+            if (stereoElem instanceof ITetrahedralChirality) {
+                ITetrahedralChirality chirality = (ITetrahedralChirality)stereoElem;
+                IAtom[] surroundingAtoms = chirality.getLigands();
+                Stereo stereoType = chirality.getStereo();
 
-        		JniInchiAtom atC = (JniInchiAtom) atomMap.get(chirality.getChiralAtom());
+                JniInchiAtom atC = (JniInchiAtom) atomMap.get(chirality.getChiralAtom());
                 JniInchiAtom at0 = (JniInchiAtom) atomMap.get(surroundingAtoms[0]);
                 JniInchiAtom at1 = (JniInchiAtom) atomMap.get(surroundingAtoms[1]);
                 JniInchiAtom at2 = (JniInchiAtom) atomMap.get(surroundingAtoms[2]);
@@ -377,42 +377,42 @@ public class InChIGenerator {
                     throw new CDKException("Unknown tetrahedral chirality");
                 }
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(atC, at0, at1, at2, at3,
-                        INCHI_STEREOTYPE.TETRAHEDRAL, p);
+                JniInchiStereo0D jniStereo =
+                    new JniInchiStereo0D(atC, at0, at1, at2, at3, INCHI_STEREOTYPE.TETRAHEDRAL, p);
                 input.addStereo0D(jniStereo);
-        	} else if (stereoElem instanceof IDoubleBondStereochemistry) {
-        		IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry)stereoElem;
-        		IBond[] surroundingBonds = dbStereo.getBonds();
-        		if (surroundingBonds[0] == null || surroundingBonds[1] == null)
-        			throw new CDKException("Cannot generate an InChI with incomplete double bond info");
-        		org.openscience.cdk.interfaces.IDoubleBondStereochemistry.
-        		    Conformation stereoType = dbStereo.getStereo();
+            } else if (stereoElem instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry)stereoElem;
+                IBond[] surroundingBonds = dbStereo.getBonds();
+                if (surroundingBonds[0] == null || surroundingBonds[1] == null)
+                    throw new CDKException("Cannot generate an InChI with incomplete double bond info");
+                org.openscience.cdk.interfaces.IDoubleBondStereochemistry.
+                    Conformation stereoType = dbStereo.getStereo();
 
-        		IBond stereoBond = dbStereo.getStereoBond();
+                IBond stereoBond = dbStereo.getStereoBond();
                 JniInchiAtom at0 = null;
                 JniInchiAtom at1 = null;
                 JniInchiAtom at2 = null;
                 JniInchiAtom at3 = null;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
-        		if (stereoBond.contains(surroundingBonds[0].getAtom(0))) {
-        			// first atom is A
+                if (stereoBond.contains(surroundingBonds[0].getAtom(0))) {
+                    // first atom is A
                     at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
                     at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
-        		} else {
-        			// first atom is X
+                } else {
+                    // first atom is X
                     at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
                     at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
-        		}
-        		if (stereoBond.contains(surroundingBonds[1].getAtom(0))) {
-        			// first atom is B
+                }
+                if (stereoBond.contains(surroundingBonds[1].getAtom(0))) {
+                    // first atom is B
                     at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
-        		} else {
-        			// first atom is Y
+                } else {
+                    // first atom is Y
                     at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
-        		}
+                }
                 INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
                     p = INCHI_PARITY.ODD;
@@ -422,11 +422,10 @@ public class InChIGenerator {
                     throw new CDKException("Unknown double bond stereochemistry");
                 }
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(
-                	null, at0, at1, at2, at3, INCHI_STEREOTYPE.DOUBLEBOND, p
-                );
+                JniInchiStereo0D jniStereo =
+                    new JniInchiStereo0D(null, at0, at1, at2, at3, INCHI_STEREOTYPE.DOUBLEBOND, p);
                 input.addStereo0D(jniStereo);
-        	}
+            }
         }
 
         try {
