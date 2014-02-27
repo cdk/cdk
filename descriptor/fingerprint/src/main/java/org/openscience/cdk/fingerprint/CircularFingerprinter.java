@@ -956,7 +956,7 @@ public class CircularFingerprinter implements IFingerprinter
 		}
 		
 		// calculate each remaining property
-		for (int n=0;n<na;n++)
+		for (int n=0;n<na;n++) if (amask[n])
 		{
     		maskDon[n]=determineDonor(n);
     		maskAcc[n]=determineAcceptor(n);
@@ -1070,7 +1070,6 @@ public class CircularFingerprinter implements IFingerprinter
     		for (int n=0;n<atomAdj[aidx].length;n++) if (mol.getAtom(atomAdj[aidx][n]).getFormalCharge()<0) return false;
     		return true;
     	}
-    
     	final String el=atom.getSymbol();
 
     	if (el.equals("N"))
@@ -1084,7 +1083,7 @@ public class CircularFingerprinter implements IFingerprinter
     		// have to be without double bonds, i.e. R-N=C(R)NR2 or R-N=C(NR2)NR2 (R=not hydrogen)
     		if (hasDouble[aidx] && hcount[aidx]==0)
     		{
-    			int other=0;
+    			int other=-1;
     			for (int n=0;n<atomAdj[aidx].length;n++) if (bondOrderBioType(bondAdj[aidx][n])==2) {other=atomAdj[aidx][n]; break;}
     			if (other>=0)
     			{
