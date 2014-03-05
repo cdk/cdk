@@ -265,8 +265,7 @@ final class DaylightModel extends ElectronDonation {
     }
 
     /**
-     * The element (with only sigma bonds) has normal valence for the specified
-     * charge.
+     * The element has normal valence for the specified charge.
      *
      * @param element atomic number
      * @param charge  formal charge
@@ -286,7 +285,8 @@ final class DaylightModel extends ElectronDonation {
                     return valence == 2;
                 if (charge == +1)
                     return valence == 4;
-                return charge == 0 && valence == 3;
+                return charge == 0 
+                        && (valence == 3 || (valence == 5 && element == NITROGEN));
             case OXYGEN:
             case SULPHUR:
             case SELENIUM:
