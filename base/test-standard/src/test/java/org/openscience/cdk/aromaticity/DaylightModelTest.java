@@ -196,6 +196,17 @@ public class DaylightModelTest {
              -1, -1, -1, -1, -1);
     }
 
+    /**
+     * A 3 valent nitrogen cation should be aromatic, otherwise when we make it
+     * lower case we can not convert it back.
+     *
+     * @cdk.bug 1332
+     */
+    @Test public void abnormalValence_nitrogenCation() throws Exception {
+        test(smiles("C1=CC(=C([N+]=C1)N)[N+](=O)[O-]"),
+             1, 1, 1, 1, -1, 1, -1, -1, -1, -1);    
+    }
+
     static IAtomContainer addHydrogens(IAtomContainer container) throws CDKException {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         CDKHydrogenAdder.getInstance(container.getBuilder()).addImplicitHydrogens(container);
