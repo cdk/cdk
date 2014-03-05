@@ -144,10 +144,17 @@ final class DaylightModel extends ElectronDonation {
             int element = element(container.getAtom(i));
             int charge  = charge(container.getAtom(i));
 
+            // abnormal valence, usally indicated a radical. these cause problems
+            // with kekulisations
+            int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
+            if (!normal(element, charge, bondedValence)) {
+                electrons[i] = -1;
+            }
+
             // non-aromatic element, acyclic atoms, atoms with more than three
             // neighbors and atoms with more than 1 cyclic pi bond are not
             // considered
-            if (!aromaticElement(element) || !ringSearch.cyclic(i) || degree[i] > 3 || nCyclicPiBonds[i] > 1) {
+            else if (!aromaticElement(element) || !ringSearch.cyclic(i) || degree[i] > 3 || nCyclicPiBonds[i] > 1) {
                 electrons[i] = -1;
             }
             
@@ -172,10 +179,7 @@ final class DaylightModel extends ElectronDonation {
             // here is we count the number free valence electrons but also
             // check if the bonded valence is okay (i.e. not a radical)
             else if (charge <= 0 && charge > -3) {
-                int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
-                if (!normal(element, charge, bondedValence))
-                    electrons[i] = -1;
-                else if (valence(element, charge) - bondOrderSum[i] >= 2)
+                if (valence(element, charge) - bondOrderSum[i] >= 2)
                     electrons[i] = 2;
                 else
                     electrons[i] = -1;
