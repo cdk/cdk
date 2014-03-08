@@ -1,6 +1,7 @@
 # The Chemical Development Kit (CDK)
  
 Copyright 1997-2014 The CDK Development Team
+
 License: LGPL v2, see doc/lgpl.license
 
 ## Introduction
@@ -117,15 +118,21 @@ The Maven artefacts are currently deployed to the European Bioinformatics Instit
   <repository>
     <id>ebi-repo</id>
     <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo/</url>
+    <snapshots>
+      <enabled>false</enabled>
+    </snapshots>
   </repository>
   <repository>
     <id>ebi-repo-snapshots</id>
     <url>http://www.ebi.ac.uk/intact/maven/nexus/content/repositories/ebi-repo-snapshots/</url>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
   </repository>
 </repositories>
 ```
 
-You can then use a cdk module by specifying a dependency in the `pom.xml`. Any additional requirements of the module will also be included. The `RELEASE` specifies the latest released version whilst `LATEST` will provide the latest development build (snapshot). You may also specify a specific version.
+You can then use a cdk module by specifying a dependency in the `pom.xml`. Any additional requirements of the module will also be included. The `RELEASE` specifies the latest released version whilst `LATEST` will provide the latest development build (snapshot). You may also specify a specific version. The `RELEASE` tag will not work if the snapshots repo has releases turned on. 
 
 ```xml
 <dependencies>
