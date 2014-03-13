@@ -74,7 +74,7 @@ public class InChIGeneratorFactory {
     /**
      * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
      */
-    private boolean ignoreAromaticBonds = false;
+    private boolean ignoreAromaticBonds = true;
 
     /**
      * <p>Constructor for InChIGeneratorFactory. Ensures that native code
@@ -119,7 +119,12 @@ public class InChIGeneratorFactory {
      * http://www.inchi-trust.org/fileadmin/user_upload/html/inchifaq/inchi-faq.html#16.3
      *
      * @param ignore if aromatic bonds should be treated as bonds of type single and double
+     * @deprecated "the use of aromatic bonds is strongly discouraged" - InChI
+     *             FAQ, the InChI will fail for many compounds if ignore 
+     *             aromatic bonds is not enabled and the compound have aromatic
+     *             flags.
      */
+    @Deprecated
     @TestMethod("testInChIGenerator_AromaticBonds")
     public void setIgnoreAromaticBonds(boolean ignore) {
         ignoreAromaticBonds = ignore;
@@ -130,6 +135,7 @@ public class InChIGeneratorFactory {
      *
      * @return if aromatic bonds are treated as bonds of type single and double
      */
+    @Deprecated
     @TestMethod("testInChIGenerator_AromaticBonds")
     public boolean getIgnoreAromaticBonds() {
         return ignoreAromaticBonds;
