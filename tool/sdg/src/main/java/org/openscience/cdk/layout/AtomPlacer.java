@@ -38,6 +38,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.geometry.GeometryTools;
@@ -364,10 +365,12 @@ public class AtomPlacer
         IAtom atom = null;
         Point2d atomPoint = null;
         IAtom nextAtom = null;
+        IBond prevBond = null, currBond = null;
         for (int f = 0; f < atomContainer.getAtomCount() - 1; f++)
         {
             atom = atomContainer.getAtom(f);
             nextAtom = atomContainer.getAtom(f + 1);
+            currBond = atomContainer.getBond(atom, nextAtom);
             atomPoint = new Point2d(atom.getPoint2d());
             bondVector.normalize();
             bondVector.scale(bondLength);
@@ -375,6 +378,28 @@ public class AtomPlacer
             nextAtom.setPoint2d(atomPoint);
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
             boolean trans=false;
+
+            // quick fix to handle geometry of cumulated, CC=C=CC, ideally it
+            // would be useful to know the geometries
+            if (prevBond != null
+                    && IBond.Order.DOUBLE.equals(prevBond.getOrder())
+                    && IBond.Order.DOUBLE.equals(currBond.getOrder())) {
+                
+                int atomicNumber = atom.getAtomicNumber();
+                int charge       = atom.getFormalCharge();
+
+                if (charge == 0
+                        && (Elements.Carbon.number() == atomicNumber
+                        || Elements.Germanium.number() == atomicNumber
+                        || Elements.Silicon.number() == atomicNumber)) {
+                    
+                    // double length of the last bond to determing next placement
+                    Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
+                    p.interpolate(atom.getPoint2d(), 2);
+                    nextAtom.setPoint2d(p);
+                }
+            }
+            
             if(GeometryTools.has2DCoordinates(atomContainer)){
                 try{
                     if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
@@ -387,6 +412,8 @@ public class AtomPlacer
             }else{
                 bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),true);
             }
+            
+            prevBond = currBond;
         }
 
         // BUGFIX part 2 - restore hydrogen counts
