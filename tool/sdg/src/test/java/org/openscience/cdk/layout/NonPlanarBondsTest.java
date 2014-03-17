@@ -25,12 +25,14 @@
 package org.openscience.cdk.layout;
 
 import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import javax.vecmath.Point2d;
@@ -260,6 +262,59 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
         assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
+    }
+    
+    @Test public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 0, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("H", 0, 0.92d, 0.74d));
+        m.addAtom(atom("H", 0, -1.53d, 2.21d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2),
+                                                   new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                               m.getAtom(4), m.getAtom(5)},
+                                                   ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(),
+                   is(IBond.Stereo.DOWN));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
+                   is(IBond.Stereo.UP));
+    }
+    
+    
+    @Test public void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 0, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("H", 0, 0.92d, 0.74d));
+        m.addAtom(atom("H", 0, -1.53d, 2.21d));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2),
+                                                   new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                               m.getAtom(4), m.getAtom(5)},
+                                                   ITetrahedralChirality.Stereo.CLOCKWISE));
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(),
+                   is(IBond.Stereo.UP));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
+                   is(IBond.Stereo.DOWN));
     }
     
     static IAtom atom(String symbol, int hCount, double x, double y) {

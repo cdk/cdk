@@ -34,11 +34,15 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.ringsearch.RingSearch;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import javax.vecmath.Point2d;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.DOWN;
@@ -167,6 +171,95 @@ final class NonplanarBonds {
         // label a bond on each element
         for (int i = 0; i < n; i++)
             label(elements[foci[i]]);
+        
+        for (IStereoElement se : container.stereoElements()) {
+            if (se instanceof ExtendedTetrahedral)
+                label((ExtendedTetrahedral) se);
+        }
+    }
+
+    /**
+     * Assign non-planar labels (wedge/hatch) to the bonds of extended 
+     * tetrahedral elements to correctly represent its stereochemistry.
+     *
+     * @param element a extended tetrahedral element
+     */
+    private void label(final ExtendedTetrahedral element) {
+        
+        final IAtom   focus = element.focus();
+        final IAtom[] atoms = element.peripherals();
+        final IBond[] bonds = new IBond[4];
+
+        int p = parity(element.winding());
+        
+        List<IBond> focusBonds = container.getConnectedBondsList(focus);
+        
+        if (focusBonds.size() != 2) {
+            LoggingToolFactory.createLoggingTool(getClass())
+                              .warn("Non-cumulated carbon presented as the focus of extended tetrahedral stereo configuration");
+            return;
+        }
+        
+        IAtom[] terminals = element.findTerminalAtoms(container);
+        
+        IAtom left  = terminals[0];
+        IAtom right = terminals[1];
+
+        // some bonds may be null if, this happens when an implicit atom
+        // is present and one or more 'atoms' is a terminal atom
+        bonds[0] = container.getBond(left, atoms[0]);
+        bonds[1] = container.getBond(left, atoms[1]);
+        bonds[2] = container.getBond(right, atoms[2]);
+        bonds[3] = container.getBond(right, atoms[3]);
+        
+        // find the clockwise ordering (in the plane of the page) by sorting by
+        // polar corodinates
+        int[] rank = new int[4];
+        for (int i = 0; i < 4; i++)
+            rank[i] = i;
+        p *= sortClockwise(rank, focus, atoms, 4);
+
+        // assign all up/down labels to an auxiliary array
+        IBond.Stereo[] labels = new IBond.Stereo[4];
+        for (int i = 0; i < 4; i++) {
+            int v = rank[i];
+            p *= -1;
+            labels[v] = p > 0 ? UP : DOWN;
+        }
+
+        int[] priority = new int[]{5, 5, 5, 5};
+        
+        // set the label for the highest priority and available bonds on one side
+        // of the cumulated system, setting both sides doesn't make sense
+        int i = 0;
+        for (int v : priority(atomToIndex.get(focus), atoms, 4)) {
+            IBond bond = bonds[v];
+            if (bond.getStereo() == NONE && bond.getOrder() == SINGLE)
+                priority[v] = i++;
+        }
+        
+        // we now check which side was more favourable and assign two labels
+        // to that side only
+        if (priority[0] + priority[1] < priority[2] + priority[3]) {            
+            if (priority[0] < 5) { 
+                bonds[0].setAtoms(new IAtom[]{left, atoms[0]});
+                bonds[0].setStereo(labels[0]);
+            }
+            if (priority[1] < 5) {
+                bonds[1].setAtoms(new IAtom[]{left, atoms[1]});
+                bonds[1].setStereo(labels[1]);
+            }
+        } else {
+            if (priority[2] < 5) {
+                bonds[2].setAtoms(new IAtom[]{right, atoms[2]});
+                bonds[2].setStereo(labels[2]);
+            }
+            if (priority[3] < 5) {
+                bonds[3].setAtoms(new IAtom[]{right, atoms[3]});
+                bonds[3].setStereo(labels[3]);
+            }
+        }
+
     }
 
     /**
@@ -182,7 +275,7 @@ final class NonplanarBonds {
         final IAtom[] atoms = element.getLigands();
         final IBond[] bonds = new IBond[4];
 
-        int p = parity(element);
+        int p = parity(element.getStereo());
         int n = 0;
 
         // unspecified centre, no need to assign labels
@@ -267,11 +360,11 @@ final class NonplanarBonds {
      * Obtain the parity (winding) of a tetrahedral element. The parity is -1
      * for clockwise (odd), +1 for anticlockwise (even) and 0 for unspecified.
      *
-     * @param element tetrahedral element
+     * @param stereo configuration
      * @return the parity
      */
-    private int parity(ITetrahedralChirality element) {
-        switch (element.getStereo()) {
+    private int parity(ITetrahedralChirality.Stereo stereo) {
+        switch (stereo) {
             case CLOCKWISE:
                 return -1;
             case ANTI_CLOCKWISE:
