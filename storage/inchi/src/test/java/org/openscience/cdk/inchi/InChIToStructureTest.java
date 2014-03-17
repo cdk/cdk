@@ -30,8 +30,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.Iterator;
 
@@ -219,5 +221,57 @@ public class InChIToStructureTest extends CDKTestCase {
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
         assertThat(((IDoubleBondStereochemistry)se).getStereo(), 
                    is(IDoubleBondStereochemistry.Conformation.TOGETHER));
+    }
+
+    /**
+     * (R)-penta-2,3-diene
+     */
+    @Test public void r_penta_2_3_diene() throws Exception {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1",
+                SilentChemObjectBuilder.getInstance()
+        );
+        IAtomContainer container = parser.getAtomContainer();
+
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
+        ExtendedTetrahedral element = (ExtendedTetrahedral) se;
+        assertThat(element.peripherals(), is(new IAtom[]{
+                container.getAtom(5),
+                container.getAtom(0),
+                container.getAtom(1),
+                container.getAtom(6)
+        }));
+        assertThat(element.focus(), is(container.getAtom(4)));
+        assertThat(element.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+    }
+
+    /**
+     * (S)-penta-2,3-diene
+     */
+    @Test public void s_penta_2_3_diene() throws Exception {
+        InChIToStructure parser = new InChIToStructure(
+                "InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1",
+                SilentChemObjectBuilder.getInstance()
+        );
+        IAtomContainer container = parser.getAtomContainer();
+
+        Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
+        Iterator<IStereoElement> ses = container.stereoElements().iterator();
+        assertTrue(ses.hasNext());
+        IStereoElement se = ses.next();
+        assertThat(se, is(instanceOf(ExtendedTetrahedral.class)));
+        ExtendedTetrahedral element = (ExtendedTetrahedral) se;
+        assertThat(element.peripherals(), is(new IAtom[]{
+                container.getAtom(5),
+                container.getAtom(0),
+                container.getAtom(1),
+                container.getAtom(6)
+        }));
+        assertThat(element.focus(), is(container.getAtom(4)));
+        assertThat(element.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 }

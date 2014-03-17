@@ -28,19 +28,28 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.IBond.Order;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
 import java.io.IOException;
+import java.util.Collections;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.openscience.cdk.interfaces.IBond.Stereo.E_OR_Z;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * TestCase for the InChIGenerator.
@@ -746,6 +755,205 @@ public class InChIGeneratorTest extends CDKTestCase {
                                 generator.getInchi());
         } finally {
             reader.close();
+        }
+    }
+   
+    @Test public void r_penta_2_3_diene_impl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        
+        int[][] atoms = new int[][]{
+                {0, 1, 3, 4},         
+                {1, 0, 3, 4},         
+                {1, 0, 4, 3},
+                {0, 1, 4, 3},
+                {4, 3, 1, 0},
+                {4, 3, 0, 1},
+                {3, 4, 0, 1},
+                {3, 4, 1, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+
+            InChIGenerator generator = getFactory().getInChIGenerator(m);
+            assertThat(generator.getInchi(),
+                       is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1"));
+
+        }
+    }
+
+    @Test public void s_penta_2_3_diene_impl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+
+        int[][] atoms = new int[][]{
+                {0, 1, 3, 4},
+                {1, 0, 3, 4},
+                {1, 0, 4, 3},
+                {0, 1, 4, 3},
+                {4, 3, 1, 0},
+                {4, 3, 0, 1},
+                {3, 4, 0, 1},
+                {3, 4, 1, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+            
+            InChIGenerator generator = getFactory().getInChIGenerator(m);
+            assertThat(generator.getInchi(),
+                       is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1"));
+
+        }
+    }
+
+    @Test public void r_penta_2_3_diene_expl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("H"));
+        m.addAtom(new Atom("H"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 5, IBond.Order.SINGLE);
+        m.addBond(3, 6, IBond.Order.SINGLE);
+
+        int[][] atoms = new int[][]{
+                {0, 5, 6, 4},
+                {5, 0, 6, 4},
+                {5, 0, 4, 6},
+                {0, 5, 4, 6},
+                {4, 6, 5, 0},
+                {4, 6, 0, 5},
+                {6, 4, 0, 5},
+                {6, 4, 5, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+
+            InChIGenerator generator = getFactory().getInChIGenerator(m);
+            assertThat(generator.getInchi(),
+                       is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1"));
+
+        }
+    }
+
+    @Test public void s_penta_2_3_diene_expl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("H"));
+        m.addAtom(new Atom("H"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 5, IBond.Order.SINGLE);
+        m.addBond(3, 6, IBond.Order.SINGLE);
+
+        int[][] atoms = new int[][]{
+                {0, 5, 6, 4},
+                {5, 0, 6, 4},
+                {5, 0, 4, 6},
+                {0, 5, 4, 6},
+                {4, 6, 5, 0},
+                {4, 6, 0, 5},
+                {6, 4, 0, 5},
+                {6, 4, 5, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+
+            InChIGenerator generator = getFactory().getInChIGenerator(m);
+            assertThat(generator.getInchi(),
+                       is("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1"));
+
         }
     }
 }

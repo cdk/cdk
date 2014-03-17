@@ -20,6 +20,7 @@
  */
 package org.openscience.cdk.inchi;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -58,6 +59,7 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 /**
  * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -426,7 +428,91 @@ public class InChIGenerator {
                 	null, at0, at1, at2, at3, INCHI_STEREOTYPE.DOUBLEBOND, p
                 );
                 input.addStereo0D(jniStereo);
-        	}
+        	} else if (stereoElem instanceof ExtendedTetrahedral) {
+                
+                
+                ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) stereoElem;
+                Stereo              winding             = extendedTetrahedral.winding();
+                
+                // The periphals (p<i>) and terminals (t<i>) are refering to
+                // the following atoms. The focus (f) is also shown.
+                //                
+                //   p0          p2
+                //    \          /
+                //     t0 = f = t1
+                //    /         \
+                //   p1         p3
+                IAtom[] terminals   = extendedTetrahedral.findTerminalAtoms(atomContainer);
+                IAtom[] peripherals = extendedTetrahedral.peripherals();
+                
+                // InChI API is particualar about the input, each terminal atom 
+                // needs to be present in the list of neighbors and they must
+                // be at index 1 and 2 (i.e. in the middle). This is true even
+                // of explict atoms. For the implicit atoms, the terminals may
+                // be in the peripherals allready and so we correct the winding
+                // and reposition as needed.
+                
+                List<IBond> t0Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[0]));
+                List<IBond> t1Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[1]));
+                
+                // first if there are two explicit atoms we need to replace one
+                // with the terminal atom - the configuration does not change
+                if (t0Bonds.size() == 2) {
+                    IAtom replace = t0Bonds.remove(0).getConnectedAtom(terminals[0]);
+                    for (int i = 0; i < peripherals.length; i++)
+                        if (replace == peripherals[i])
+                            peripherals[i] = terminals[0];
+                }
+
+                if (t1Bonds.size() == 2) {
+                    IAtom replace = t1Bonds.remove(0).getConnectedAtom(terminals[1]);
+                    for (int i = 0; i < peripherals.length; i++)
+                        if (replace == peripherals[i])
+                            peripherals[i] = terminals[1];
+                }
+                
+                // the neighbor attached to each terminal atom that we will 
+                // define the configuration of
+                IAtom t0Neighbor = t0Bonds.get(0).getConnectedAtom(terminals[0]);
+                IAtom t1Neighbor = t1Bonds.get(0).getConnectedAtom(terminals[1]);
+                
+                // we now need to move all the atoms into the correct positions
+                // everytime we exchange atoms the configuration inverts
+                for (int i = 0; i < peripherals.length; i++) {
+                    if (i != 0 && t0Neighbor == peripherals[i]) {
+                        swap(peripherals, i, 0);
+                        winding = winding.invert();
+                    }
+                    else if (i != 1 && terminals[0] == peripherals[i]) {
+                        swap(peripherals, i, 1);
+                        winding = winding.invert();
+                    }
+                    else if (i != 2 && terminals[1] == peripherals[i]) {
+                        swap(peripherals, i, 2);
+                        winding = winding.invert();
+                    }
+                    else if (i != 3 && t1Neighbor == peripherals[i]) {
+                        swap(peripherals, i, 3);
+                        winding = winding.invert();
+                    }
+                }
+                
+                INCHI_PARITY parity = INCHI_PARITY.UNKNOWN;
+                if (winding == Stereo.ANTI_CLOCKWISE)
+                    parity = INCHI_PARITY.ODD;
+                else if (winding == Stereo.CLOCKWISE)
+                    parity = INCHI_PARITY.EVEN;
+                else
+                    throw new CDKException("Unknown extended tetrahedral chirality");
+                
+                JniInchiStereo0D jniStereo = new JniInchiStereo0D(atomMap.get(extendedTetrahedral.focus()),
+                                                                  atomMap.get(peripherals[0]),
+                                                                  atomMap.get(peripherals[1]),
+                                                                  atomMap.get(peripherals[2]),
+                                                                  atomMap.get(peripherals[3]),
+                                                                  INCHI_STEREOTYPE.ALLENE, parity);
+                input.addStereo0D(jniStereo);
+            }
         }
 
         try {
@@ -435,7 +521,21 @@ public class InChIGenerator {
             throw new CDKException("Failed to generate InChI: " + jie.getMessage(), jie);
         }
     }
-
+    
+    private static List<IBond> onlySingleBonded(List<IBond> bonds) {
+        List<IBond> filtered = new ArrayList<IBond>();
+        for (IBond bond : bonds) {
+            if (bond.getOrder() == IBond.Order.SINGLE)
+                filtered.add(bond);
+        }
+        return filtered;
+    }
+    
+    private static void swap(Object[] objs, int i, int j) {
+        final Object tmp = objs[i];
+        objs[i] = objs[j];
+        objs[j] = tmp;    
+    }
 
     /**
      * Gets return status from InChI process.  OKAY and WARNING indicate

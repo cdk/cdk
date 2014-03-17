@@ -47,8 +47,10 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
@@ -260,17 +262,18 @@ protected JniInchiInputInchi input;
         
         for (int i = 0; i < output.getNumStereo0D(); i ++) {
             JniInchiStereo0D stereo0d = output.getStereo0D(i);
-            if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL) {
-                JniInchiAtom central = stereo0d.getCentralAtom();
+            if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL ||
+                    stereo0d.getStereoType() == INCHI_STEREOTYPE.ALLENE) {
+                JniInchiAtom   central    = stereo0d.getCentralAtom();
                 JniInchiAtom[] neighbours = stereo0d.getNeighbors();
                 
-                IAtom atC = (IAtom) inchiCdkAtomMap.get(central);
-                IAtom at0 = (IAtom) inchiCdkAtomMap.get(neighbours[0]);
-                IAtom at1 = (IAtom) inchiCdkAtomMap.get(neighbours[1]);
-                IAtom at2 = (IAtom) inchiCdkAtomMap.get(neighbours[2]);
-                IAtom at3 = (IAtom) inchiCdkAtomMap.get(neighbours[3]);
-                
-                
+                IAtom focus = inchiCdkAtomMap.get(central);
+                IAtom[] neighbors = new IAtom[]{
+                        inchiCdkAtomMap.get(neighbours[0]),
+                        inchiCdkAtomMap.get(neighbours[1]),
+                        inchiCdkAtomMap.get(neighbours[2]),
+                        inchiCdkAtomMap.get(neighbours[3])
+                };
                 ITetrahedralChirality.Stereo stereo;
                 
                 // as per JNI InChI doc even is clockwise and odd is
@@ -284,11 +287,56 @@ protected JniInchiInputInchi input;
                     continue;
                 }
                 
-                ITetrahedralChirality tetrahedralChirality = builder.newInstance(ITetrahedralChirality.class,
-                                                                                 atC,
-                                                                                 new IAtom[]{at0, at1, at2, at3},
-                                                                                 stereo);
-                molecule.addStereoElement(tetrahedralChirality);
+                IStereoElement stereoElement = null;
+
+                if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL) {
+                    stereoElement = builder.newInstance(ITetrahedralChirality.class,
+                                                        focus,
+                                                        neighbors,
+                                                        stereo);
+                } else if (stereo0d.getStereoType() == INCHI_STEREOTYPE.ALLENE) {
+
+                    // The periphals (p<i>) and terminals (t<i>) are refering to
+                    // the following atoms. The focus (f) is also shown.
+                    //                
+                    //   p0          p2
+                    //    \          /
+                    //     t0 = f = t1
+                    //    /         \
+                    //   p1         p3
+                    IAtom[] peripherals = neighbors;                    
+                    IAtom[] terminals   = ExtendedTetrahedral.findTerminalAtoms(molecule, focus);
+                    
+                    // InChI always provides the terminal atoms t0 and t1 as
+                    // periphals, here we find where they are and then add in
+                    // the other explicit atom. As the InChI create hydrogens
+                    // for stereo elements, there will always we an explicit 
+                    // atom that can be found - it may be optionally suppressed
+                    // later.
+                    
+                    // not much documentation on this (at all) but they appear
+                    // to always be the middle two atoms (index 1, 2) we therefore
+                    // test these first - but handle the other indices just in
+                    // case
+                    for (IAtom terminal : terminals) {
+                        if (peripherals[1] == terminal) {
+                            peripherals[1] = findOtherSinglyBonded(molecule, terminal, peripherals[0]);
+                        } else if (peripherals[2] == terminal) {
+                            peripherals[2] = findOtherSinglyBonded(molecule, terminal, peripherals[3]);
+                        } else if (peripherals[0] == terminal) {
+                            peripherals[0] = findOtherSinglyBonded(molecule, terminal, peripherals[1]);
+                        } else if (peripherals[3] == terminal) {
+                            peripherals[3] = findOtherSinglyBonded(molecule, terminal, peripherals[2]);
+                        }
+                    }
+                    
+                    stereoElement = new ExtendedTetrahedral(focus,
+                                                            peripherals,
+                                                            stereo);
+                }
+                
+                assert stereoElement != null;
+                molecule.addStereoElement(stereoElement);
             } else if (stereo0d.getStereoType() == INCHI_STEREOTYPE.DOUBLEBOND) {
                 JniInchiAtom[] neighbors = stereo0d.getNeighbors();
 
@@ -333,6 +381,24 @@ protected JniInchiInputInchi input;
                 // TODO - other types of atom parity - double bond, etc
             }
         }
+    }
+
+    /**
+     * Finds a neighbor attached to 'atom' that is singley bonded and isn't
+     * 'exclude'. If no such atom exists, the 'atom' is returned.
+     *  
+     * @param container a molecule container
+     * @param atom      the atom to find the neighbor or
+     * @param exclude   don't find this atom
+     * @return the other atom (or 'atom')
+     */
+    private static IAtom findOtherSinglyBonded(IAtomContainer container, IAtom atom, IAtom exclude) {
+        for (final IBond bond : container.getConnectedBondsList(atom)) {
+            if (!IBond.Order.SINGLE.equals(bond.getOrder()) || bond.contains(exclude))
+                continue;
+            return bond.getConnectedAtom(atom); 
+        }
+        return atom;
     }
     
     /**
