@@ -35,6 +35,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
@@ -228,6 +229,32 @@ public abstract class StereoElementFactory {
      * @return a new stereo element
      */
     abstract IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters);
+
+    /**
+     * Create an extended tetrahedral element for the atom at index {@code v}. 
+     * If an extended  tetrahedral element could not be created then null is 
+     * returned. An element can not be created if, one or more atoms was 
+     * missing coordinates, the atom has an unspecified (wavy) bond, the atom
+     * is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not 
+     * check if tetrahedral chirality is supported - for this functionality 
+     * use {@link * Stereocenters}.
+     *
+     * <blockquote><pre>
+     * StereoElementFactory  factory   = ...; // 2D/3D
+     * IAtomContainer        container = ...; // container
+     *
+     * for (int v = 0; v < container.getAtomCount(); v++) {
+     *     // ... verify v is a stereo atom ...
+     *     ExtendedTetrahedral element = factory.createExtendedTetrahedral(v);
+     *     if (element != null)
+     *         container.addStereoElement(element);
+     * }
+     * </pre></blockquote>
+     *
+     * @param v atom index (vertex)
+     * @return a new stereo element
+     */
+    abstract ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters);
 
     /**
      * Create a stereo element factory for creating stereo elements using 2D
@@ -428,6 +455,73 @@ public abstract class StereoElementFactory {
                                                              bondMap.get(v, vs[0])
                                                  },
                                                  conformation);
+        }
+
+        /** @inheritDoc */
+        @Override ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters) {
+
+            IAtom focus = container.getAtom(v);
+
+            if (hasUnspecifiedParity(focus))
+                return null;
+
+            IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
+            
+            int t0 = container.getAtomNumber(terminals[0]);
+            int t1 = container.getAtomNumber(terminals[1]);
+            
+            // check the focus is cumulated
+            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
+                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE)
+                return null;
+            
+            IAtom[] neighbors = new IAtom[4];
+            int[]   elevation = new int[4];
+            
+            neighbors[1] = terminals[0];
+            neighbors[3] = terminals[1];
+
+            int n = 0;
+            for (int w : graph[t0]) {
+                IBond bond = bondMap.get(t0, w);
+                if (w == v)
+                    continue;
+                if (bond.getOrder() != IBond.Order.SINGLE)
+                    return null;
+                if (isUnspecified(bond))
+                    return null;
+                neighbors[n] = container.getAtom(w);
+                elevation[n] = elevationOf(terminals[0], bond);
+                n++;
+            }
+            n = 2;
+            for (int w : graph[t1]) {
+                IBond bond = bondMap.get(t1, w);
+                if (w == v)
+                    continue;
+                if (bond.getOrder() != IBond.Order.SINGLE)
+                    return null;
+                if (isUnspecified(bond))
+                    return null;
+                neighbors[n] = container.getAtom(w);
+                elevation[n] = elevationOf(terminals[1], bond);
+                n++;
+            }
+
+            if (elevation[0] != 0 || elevation[1] != 0) {
+                if (elevation[2] != 0 || elevation[3] != 0)
+                    return null;
+            } else {
+                if (elevation[2] == 0 && elevation[3] == 0)
+                    return null; // undefined configuration
+            }
+
+            int parity = parity(neighbors, elevation);
+
+            Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE
+                                        : Stereo.CLOCKWISE;
+
+            return new ExtendedTetrahedral(focus, neighbors, winding);
         }
 
         /**
@@ -659,6 +753,50 @@ public abstract class StereoElementFactory {
                                                          bondMap.get(v, w),
                                                  },
                                                  conformation);
+        }
+
+        /** @inheritDoc */
+        ExtendedTetrahedral createExtendedTetrahedral(int v, Stereocenters stereocenters) {
+
+            IAtom focus = container.getAtom(v);
+
+            if (hasUnspecifiedParity(focus))
+                return null;
+            
+            IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
+            IAtom[] neighbors = new IAtom[4];
+
+            int t0 = container.getAtomNumber(terminals[0]);
+            int t1 = container.getAtomNumber(terminals[1]);
+
+            // check the focus is cumulated
+            if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
+                    || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE)
+                return null;
+
+            
+            neighbors[1] = terminals[0];
+            neighbors[3] = terminals[1];
+
+            int n = 0;
+            for (int w : graph[t0]) {
+                if (bondMap.get(t0, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
+                neighbors[n++] = container.getAtom(w);
+            }
+            n = 2;
+            for (int w : graph[t1]) {
+                if (bondMap.get(t1, w).getOrder() != IBond.Order.SINGLE)
+                    continue;
+                neighbors[n++] = container.getAtom(w);
+            }
+
+            int parity = parity(neighbors);
+
+            Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE
+                                        : Stereo.CLOCKWISE;
+
+            return new ExtendedTetrahedral(focus, neighbors, winding);
         }
 
         /** 3x3 determinant helper for a constant third column */

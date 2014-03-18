@@ -399,6 +399,164 @@ public class StereoElementFactoryTest {
                 mdl.close();
         }
     }
+    
+    @Test public void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 0, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("H", 0, 0.92d, 0.74d));
+        m.addAtom(atom("H", 0, -1.53d, 2.21d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
+    
+    @Test public void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 0, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("H", 0, 0.92d, 0.74d));
+        m.addAtom(atom("H", 0, -1.53d, 2.21d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
+
+    @Test public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 1, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 1, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1),
+                                                    m.getAtom(4), m.getAtom(3)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
+    
+    @Test public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 1, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 1, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1),
+                                                    m.getAtom(4), m.getAtom(3)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
+
+    @Test public void createExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 0, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("H", 0, 0.92d, 0.74d));
+        m.addAtom(atom("H", 0, -1.53d, 2.21d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertNull(et);
+    }
+
+
+    @Test public void createExtendedTetrahedralFrom3DCoordinates_cw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, 0.1925, -2.7911, 1.8739));
+        m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
+        m.addAtom(atom("C", 0, 0.2349, -1.2464, 0.0943));
+        m.addAtom(atom("C", 0, 0.9377, -0.4327, -0.5715));
+        m.addAtom(atom("C", 3, 1.0851, 0.9388, -0.1444));
+        m.addAtom(atom("H", 0, 1.3810, -0.7495, -1.4012));
+        m.addAtom(atom("H", 0, -1.4096, -2.1383, 0.6392));
+        m.addBond(1, 0, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
+    
+    @Test public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, 1.3810, -0.7495, -1.4012));
+        m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
+        m.addAtom(atom("C", 0, 0.2349, -1.2464, 0.0943));
+        m.addAtom(atom("C", 0, 0.9377, -0.4327, -0.5715));
+        m.addAtom(atom("C", 3, 1.0851, 0.9388, -0.1444));
+        m.addAtom(atom("H", 0, 0.1925, -2.7911, 1.8739));
+        m.addAtom(atom("H", 0, -1.4096, -2.1383, 0.6392));
+        m.addBond(1, 0, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 6, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+
+        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m)
+                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
+                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.focus(), is(m.getAtom(2)));
+    }
 
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
