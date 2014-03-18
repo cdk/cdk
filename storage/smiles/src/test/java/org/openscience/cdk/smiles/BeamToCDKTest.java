@@ -27,6 +27,7 @@ package org.openscience.cdk.smiles;
 import com.google.common.collect.FluentIterable;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
+import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -36,7 +37,9 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
+import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
 import uk.ac.ebi.beam.Graph;
@@ -44,6 +47,8 @@ import uk.ac.ebi.beam.Element;
 import uk.ac.ebi.beam.Functions;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -56,6 +61,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
 /**
  * @author John May
@@ -594,6 +600,40 @@ public class BeamToCDKTest {
     @Test(expected = IOException.class)
     public void erroneousLabels_bad3() throws Exception {
         convert("[this-[is]-not]-okay]CC");
+    }
+    
+    @Test public void extendedTetrahedral_ccw() throws Exception {
+        IAtomContainer ac = convert("CC=[C@]=CC");
+        Iterator<IStereoElement> elements = ac.stereoElements().iterator();
+        assertTrue(elements.hasNext());
+        IStereoElement element = elements.next();
+        assertThat(element, is(instanceOf(ExtendedTetrahedral.class)));
+        ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
+        assertThat(extendedTetrahedral.winding(), is(ANTI_CLOCKWISE));
+        assertThat(extendedTetrahedral.focus(), is(ac.getAtom(2)));
+        assertThat(extendedTetrahedral.peripherals(), is(new IAtom[]{
+                ac.getAtom(0),
+                ac.getAtom(1),
+                ac.getAtom(3),
+                ac.getAtom(4)
+        }));
+    }
+    
+    @Test public void extendedTetrahedral_cw() throws Exception {
+        IAtomContainer ac = convert("CC=[C@@]=CC");
+        Iterator<IStereoElement> elements = ac.stereoElements().iterator();
+        assertTrue(elements.hasNext());
+        IStereoElement element = elements.next();
+        assertThat(element, is(instanceOf(ExtendedTetrahedral.class)));
+        ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) element;
+        assertThat(extendedTetrahedral.winding(), is(CLOCKWISE));
+        assertThat(extendedTetrahedral.focus(), is(ac.getAtom(2)));
+        assertThat(extendedTetrahedral.peripherals(), is(new IAtom[]{
+                ac.getAtom(0),
+                ac.getAtom(1),
+                ac.getAtom(3),
+                ac.getAtom(4)
+        }));
     }
 
     IAtomContainer convert(String smi) throws IOException {

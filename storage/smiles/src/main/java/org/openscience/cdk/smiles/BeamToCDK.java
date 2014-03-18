@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Atom;
@@ -43,11 +44,13 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import static uk.ac.ebi.beam.Configuration.Type.ExtendedTetrahedral;
 import static uk.ac.ebi.beam.Configuration.Type.Tetrahedral;
 
 /**
@@ -136,9 +139,13 @@ final class BeamToCDK {
 
                 IStereoElement se = newTetrahedral(u, g.neighbors(u), atoms, c);
 
-                // currently null if implicit H or lone pair
                 if (se != null)
                     ac.addStereoElement(se);
+            } else if (c.type() == ExtendedTetrahedral) {
+                IStereoElement se = newExtendedTetrahedral(u, g, atoms);
+
+                if (se != null)
+                    ac.addStereoElement(se);   
             }
         }
 
@@ -259,6 +266,37 @@ final class BeamToCDK {
                                                 atoms[vs[3]]
                                         },
                                         stereo);
+    }
+    
+    private IStereoElement newExtendedTetrahedral(int u, Graph g, IAtom[] atoms) {
+        
+        int[] terminals = g.neighbors(u);
+        int[] xs        = new int[]{-1, terminals[0], -1, terminals[1]};
+
+        int n = 0;
+        for (Edge e : g.edges(terminals[0])) {
+            if (e.bond().order() == 1)
+                xs[n++] = e.other(terminals[0]);
+        }
+        n = 2;
+        for (Edge e : g.edges(terminals[1])) {
+            if (e.bond().order() == 1)
+                xs[n++] = e.other(terminals[1]);
+        }
+
+        Arrays.sort(xs);
+
+        Stereo stereo = g.configurationOf(u).shorthand() == Configuration.CLOCKWISE ? Stereo.CLOCKWISE
+                                                                                    : Stereo.ANTI_CLOCKWISE;
+        
+        return new org.openscience.cdk.stereo.ExtendedTetrahedral(atoms[u],
+                                                                  new IAtom[]{
+                                                                          atoms[xs[0]],
+                                                                          atoms[xs[1]],
+                                                                          atoms[xs[2]],
+                                                                          atoms[xs[3]]
+                                                                  },
+                                                                  stereo);
     }
 
     /**

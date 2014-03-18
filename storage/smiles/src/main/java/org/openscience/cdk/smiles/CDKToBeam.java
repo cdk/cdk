@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import uk.ac.ebi.beam.Atom;
 import uk.ac.ebi.beam.AtomBuilder;
 import uk.ac.ebi.beam.Bond;
@@ -159,6 +160,8 @@ final class CDKToBeam {
                     addTetrahedralConfiguration((ITetrahedralChirality) se, gb, indices);
                 } else if (se instanceof IDoubleBondStereochemistry) {
                     addGeometricConfiguration((IDoubleBondStereochemistry) se, gb, indices);
+                } else if (se instanceof ExtendedTetrahedral) {
+                    addExtendedTetrahedralConfiguration((ExtendedTetrahedral) se, gb, indices);
                 }
             }
         }
@@ -340,6 +343,35 @@ final class CDKToBeam {
           .neighbors(vs[1], vs[2], vs[3])
           .winding(tc.getStereo() == CLOCKWISE ? Configuration.CLOCKWISE
                                                : Configuration.ANTI_CLOCKWISE)
+          .build();
+    }
+    
+    /**
+     * Add extended tetrahedral stereo configuration to the Beam GraphBuilder.
+     *
+     * @param et      stereo element specifying tetrahedral configuration
+     * @param gb      the current graph builder
+     * @param indices atom indices
+     */
+    private void addExtendedTetrahedralConfiguration(ExtendedTetrahedral et,
+                                                     GraphBuilder gb,
+                                                     Map<IAtom, Integer> indices) {
+
+        IAtom[] ligands = et.peripherals();
+
+        int u    = indices.get(et.focus());
+        int vs[] = new int[]{
+                indices.get(ligands[0]),
+                indices.get(ligands[1]),
+                indices.get(ligands[2]),
+                indices.get(ligands[3])
+        };
+
+        gb.extendedTetrahedral(u)
+          .lookingFrom(vs[0])
+          .neighbors(vs[1], vs[2], vs[3])
+          .winding(et.winding() == CLOCKWISE ? Configuration.CLOCKWISE
+                                             : Configuration.ANTI_CLOCKWISE)
           .build();
     }
 }

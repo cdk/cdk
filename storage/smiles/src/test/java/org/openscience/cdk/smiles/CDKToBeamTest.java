@@ -31,20 +31,25 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.Bond;
 import org.openscience.cdk.silent.PseudoAtom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
+import uk.ac.ebi.beam.Configuration;
 import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Element;
 import uk.ac.ebi.beam.Functions;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -57,6 +62,7 @@ import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
+import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.ANTI_CLOCKWISE;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
@@ -521,6 +527,10 @@ public class CDKToBeamTest {
                    is("F[CH]:[CH]F"));
     }
     
+    @Test public void propadiene() throws Exception {
+            
+    }
+    
     @Test public void writeAtomClass() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
@@ -536,6 +546,152 @@ public class CDKToBeamTest {
                                   2);
         assertThat(convert(ac).toSmiles(),
                    is("[CH3:3][CH2:1][OH:2]"));
+    }
+
+    @Test public void r_penta_2_3_diene_impl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+
+        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                         new IAtom[]{m.getAtom(0), m.getAtom(1),
+                                                                     m.getAtom(3), m.getAtom(4)},
+                                                         ANTI_CLOCKWISE);
+        m.setStereoElements(Collections.singletonList(element));
+
+        assertThat(convert(m).toSmiles(),
+                   is("CC=[C@]=CC"));
+    }
+    
+    @Test public void s_penta_2_3_diene_impl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+
+        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                         new IAtom[]{m.getAtom(0), m.getAtom(1),
+                                                                     m.getAtom(3), m.getAtom(4)},
+                                                         CLOCKWISE);
+        m.setStereoElements(Collections.singletonList(element));
+
+        assertThat(convert(m).toSmiles(),
+                   is("CC=[C@@]=CC"));
+    }
+
+    @Test public void r_penta_2_3_diene_expl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("H"));
+        m.addAtom(new Atom("H"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 5, IBond.Order.SINGLE);
+        m.addBond(3, 6, IBond.Order.SINGLE);
+
+        int[][] atoms = new int[][]{
+                {0, 5, 6, 4},
+                {5, 0, 6, 4},
+                {5, 0, 4, 6},
+                {0, 5, 4, 6},
+                {4, 6, 5, 0},
+                {4, 6, 0, 5},
+                {6, 4, 0, 5},
+                {6, 4, 5, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+
+            assertThat(convert(m).toSmiles(),
+                       is("CC(=[C@]=C(C)[H])[H]"));
+
+        }
+    }
+
+    @Test public void s_penta_2_3_diene_expl_h() throws Exception {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("C"));
+        m.addAtom(new Atom("H"));
+        m.addAtom(new Atom("H"));
+        m.addBond(0, 1, IBond.Order.SINGLE);
+        m.addBond(1, 2, IBond.Order.DOUBLE);
+        m.addBond(2, 3, IBond.Order.DOUBLE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(1, 5, IBond.Order.SINGLE);
+        m.addBond(3, 6, IBond.Order.SINGLE);
+
+        int[][] atoms = new int[][]{
+                {0, 5, 6, 4},
+                {5, 0, 6, 4},
+                {5, 0, 4, 6},
+                {0, 5, 4, 6},
+                {4, 6, 5, 0},
+                {4, 6, 0, 5},
+                {6, 4, 0, 5},
+                {6, 4, 5, 0},
+        };
+        Stereo[] stereos = new Stereo[]{
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE
+        };
+
+        for (int i = 0; i < atoms.length; i++) {
+
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
+                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
+                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
+                                                             stereos[i]);
+            m.setStereoElements(Collections.singletonList(element));
+
+            assertThat(convert(m).toSmiles(),
+                       is("CC(=[C@@]=C(C)[H])[H]"));
+
+        }
     }
     
     static Graph convert(IAtomContainer ac) throws Exception {
