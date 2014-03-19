@@ -279,16 +279,35 @@ public final class Stereocenters {
 
             // check the type of stereo chemistry supported
             switch (supportedType(i, v, h, x)) {
-
+                case Bicoordinate:
+                    stereocenters[i] = Stereocenter.Potential;
+                    elements[i]      = new Bicoordinate(i, g[i]);
+                    nElements++;
+                    int u = g[i][0];
+                    int w = g[i][1];
+                    if (tricoordinate[u]) {
+                        stereocenters[u] = Stereocenter.Potential;
+                        elements[u] = new Tricoordinate(u, i, g[u]);    
+                    }
+                    if (tricoordinate[w]) {
+                        stereocenters[w] = Stereocenter.Potential;
+                        elements[w] = new Tricoordinate(w, i, g[w]);
+                    }
+                    break; 
                 case Tricoordinate:
 
-                    int u = i;
-                    int w = piNeighbor;
+                    u = i;
+                    w = piNeighbor;
 
                     tricoordinate[u] = true;
 
-                    if (!tricoordinate[w])
+                    if (!tricoordinate[w]) {
+                        if (elements[w] != null && elements[w].type == Type.Bicoordinate) {
+                            stereocenters[u] = Stereocenter.Potential;
+                            elements[u]      = new Tricoordinate(u, w, g[u]);    
+                        }
                         continue;
+                    }
 
                     // TODO: we reject all cyclic double bonds but could 
                     // TODO: allow flexible rings (> 7 atoms)
@@ -310,6 +329,20 @@ public final class Stereocenters {
 
                 default:
                     stereocenters[i] = Stereocenter.Non;
+            }
+        }
+        
+        // link up tetracoordinate atoms accross cumulate systems
+        for (int v = 0; v < g.length; v++) {
+            if (elements[v] != null && elements[v].type == Type.Bicoordinate) {
+                int u = elements[v].neighbors[0];
+                int w = elements[v].neighbors[1];
+                if (elements[u] != null && elements[w] != null 
+                        && elements[u].type == Type.Tricoordinate 
+                        && elements[w].type == Type.Tricoordinate) {
+                    ((Tricoordinate) elements[u]).other = w;     
+                    ((Tricoordinate) elements[w]).other = u;
+                }
             }
         }
 
@@ -490,6 +523,8 @@ public final class Stereocenters {
             case 6: // carbon
                 if (v != 4 || q != 0)
                     return Type.None;
+                if (x == 2)
+                    return Type.Bicoordinate;
                 if (x == 3)
                     return Type.Tricoordinate;
                 if (x == 4)
@@ -753,6 +788,15 @@ public final class Stereocenters {
         int   focus;
         int[] neighbors;
         Type  type;
+    }
+
+    /** Represents a tetrahedral stereocenter with 2 neighbors. */
+    private static final class Bicoordinate extends StereoElement {
+        Bicoordinate(int v, int[] neighbors) {
+            this.focus = v;
+            this.type = Type.Bicoordinate;
+            this.neighbors = Arrays.copyOf(neighbors, neighbors.length);
+        }
     }
 
     /** Represents a tetrahedral stereocenter with 3 or 4 neighbors. */

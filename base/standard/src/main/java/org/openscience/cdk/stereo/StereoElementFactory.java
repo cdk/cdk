@@ -112,10 +112,22 @@ public abstract class StereoElementFactory {
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
         for (int v = 0; v < graph.length; v++) {
-            if (!centers.isStereocenter(v))
-                continue;
             switch (centers.elementType(v)) {
+                case Bicoordinate:
+                    int t0 = graph[v][0];
+                    int t1 = graph[v][1];
+                    if (centers.elementType(t0) == Stereocenters.Type.Tricoordinate
+                            && centers.elementType(t1) == Stereocenters.Type.Tricoordinate) {
+                        if (centers.isStereocenter(t0) && centers.isStereocenter(t1)) {
+                            IStereoElement element = createExtendedTetrahedral(v, centers);
+                            if (element != null)
+                                elements.add(element);
+                        }
+                    }
+                    break;
                 case Tricoordinate:
+                    if (!centers.isStereocenter(v))
+                        continue;
                     for (int w : graph[v]) {
                         if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
                             if (centers.isStereocenter(w)) {
@@ -128,6 +140,8 @@ public abstract class StereoElementFactory {
                     }
                     break;
                 case Tetracoordinate:
+                    if (!centers.isStereocenter(v))
+                        continue;
                     IStereoElement element = createTetrahedral(v, centers);
                     if (element != null)
                         elements.add(element);

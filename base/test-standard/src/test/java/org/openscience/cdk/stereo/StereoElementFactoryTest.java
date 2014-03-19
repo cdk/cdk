@@ -45,10 +45,13 @@ import javax.vecmath.Point3d;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.OPPOSITE;
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER;
 
@@ -556,6 +559,39 @@ public class StereoElementFactoryTest {
         assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
                                                     m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
+    }
+    
+    @Test public void createExtendedTetrahedral() throws CDKException {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 1, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 1, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.setStereoElements(StereoElementFactory.using2DCoordinates(m).createAll());
+        assertTrue(m.stereoElements().iterator().hasNext());
+        assertThat(m.stereoElements().iterator().next(), is(instanceOf(ExtendedTetrahedral.class)));
+    }
+
+    @Test public void doNotCreateNonStereogenicExtendedTetrahedral() throws CDKException {
+        IAtomContainer m = new AtomContainer(7, 6, 0, 0);
+        m.addAtom(atom("C", 3, -1.56d, 0.78d));
+        m.addAtom(atom("C", 1, -1.13d, 1.49d));
+        m.addAtom(atom("C", 0, -0.31d, 1.47d));
+        m.addAtom(atom("C", 0, 0.52d, 1.46d));
+        m.addAtom(atom("C", 3, 0.94d, 2.17d));
+        m.addAtom(atom("C", 3, 0.92d, 0.74d));
+        m.addBond(1, 0, IBond.Order.SINGLE, IBond.Stereo.UP);
+        m.addBond(1, 2, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
+        m.addBond(3, 4, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+        m.setStereoElements(StereoElementFactory.using2DCoordinates(m).createAll());
+        assertFalse(m.stereoElements().iterator().hasNext());
     }
 
     static IAtom atom(String symbol, int h, double x, double y) {
