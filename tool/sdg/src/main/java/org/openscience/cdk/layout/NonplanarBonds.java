@@ -497,6 +497,8 @@ final class NonplanarBonds {
 
         if (a.x - center.x >= 0 && b.x - center.x < 0)
             return true;
+        if (a.x - center.x < 0 && b.x - center.x >= 0)
+            return false;
         if (a.x - center.x == 0 && b.x - center.x == 0) {
             if (a.y - center.y >= 0 || b.y - center.y >= 0)
                 return a.y > b.y;

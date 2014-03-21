@@ -317,6 +317,35 @@ public class NonPlanarBondsTest {
                    is(IBond.Stereo.DOWN));
     }
     
+    @Test public void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
+        IAtomContainer m = new AtomContainer(8, 7, 0, 0);
+        m.addAtom(atom("C", 0, 4.50d, -14.84d));
+        m.addAtom(atom("C", 3, 4.51d, -13.30d));
+        m.addAtom(atom("C", 2, 4.93d, -14.13d));
+        m.addAtom(atom("C", 2, 3.68d, -14.81d));
+        m.addAtom(atom("O", 0, 4.05d, -15.54d));
+        m.addAtom(atom("O", 1, 3.23d, -15.50d));
+        m.addAtom(atom("C", 3, 5.32d, -14.86d));
+        m.addAtom(atom("C", 3, 4.45d, -16.27d));
+        m.addBond(0, 2, IBond.Order.SINGLE);
+        m.addBond(2, 1, IBond.Order.SINGLE);
+        m.addBond(0, 4, IBond.Order.SINGLE);
+        m.addBond(3, 5, IBond.Order.SINGLE);
+        m.addBond(0, 6, IBond.Order.SINGLE);
+        m.addBond(7, 4, IBond.Order.SINGLE);
+        m.addBond(0, 3, IBond.Order.SINGLE);
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
+                                                    new IAtom[]{
+                                                            m.getAtom(2),
+                                                            m.getAtom(4),
+                                                            m.getAtom(6),
+                                                            m.getAtom(3),
+                                                    },
+                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        NonplanarBonds.assign(m);
+        assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
+    }
+    
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
