@@ -638,7 +638,7 @@ public class CDKToBeamTest {
             m.setStereoElements(Collections.singletonList(element));
 
             assertThat(convert(m).toSmiles(),
-                       is("CC(=[C@]=C(C)[H])[H]"));
+                       is("CC(=[C@@]=C(C)[H])[H]"));
 
         }
     }
@@ -689,7 +689,7 @@ public class CDKToBeamTest {
             m.setStereoElements(Collections.singletonList(element));
 
             assertThat(convert(m).toSmiles(),
-                       is("CC(=[C@@]=C(C)[H])[H]"));
+                       is("CC(=[C@]=C(C)[H])[H]"));
 
         }
     }
