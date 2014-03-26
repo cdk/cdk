@@ -142,8 +142,6 @@ public abstract class StereoElementFactory {
                     }
                     break;
                 case Tetracoordinate:
-                    if (!centers.isStereocenter(v))
-                        continue;
                     IStereoElement element = createTetrahedral(v, centers);
                     if (element != null)
                         elements.add(element);
@@ -728,6 +726,9 @@ public abstract class StereoElementFactory {
         /** @inheritDoc */
         @Override ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters) {
 
+            if (!stereocenters.isStereocenter(v))
+                return null;
+            
             IAtom focus = container.getAtom(v);
             
             if (hasUnspecifiedParity(focus))
