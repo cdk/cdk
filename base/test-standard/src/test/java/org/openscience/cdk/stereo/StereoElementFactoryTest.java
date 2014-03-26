@@ -594,6 +594,38 @@ public class StereoElementFactoryTest {
         assertFalse(m.stereoElements().iterator().hasNext());
     }
 
+    /**
+     * The embedding of 3D depictions may cause bonds of abnormal length 
+     * (e.g. CHEBI:7621). The parity computation should consider this, here
+     * we check we get the correct (anti-clockwise) configuration.
+     */
+    @Test public void differentBondLengthsDoNotAffectWinding() {
+        IAtomContainer m = new AtomContainer(5, 4, 0, 0);
+        m.addAtom(atom("O", 1, 14.50d, -8.72d));
+        m.addAtom(atom("N", 2, 14.50d, -11.15d));
+        m.addAtom(atom("C", 0, 15.28d, -7.81d));
+        m.addAtom(atom("C", 3, 12.91d, -7.81d));
+        m.addAtom(atom("H", 0, 16.00d, -7.39d));
+        m.addBond(2, 0, IBond.Order.SINGLE);
+        m.addBond(2, 1, IBond.Order.SINGLE);
+        m.addBond(3, 2, IBond.Order.SINGLE);
+        m.addBond(2, 4, IBond.Order.SINGLE, IBond.Stereo.DOWN);
+        
+        StereoElementFactory  sef     = StereoElementFactory.using2DCoordinates(m);
+        ITetrahedralChirality element = sef.createTetrahedral(2, Stereocenters.of(m));
+
+        assertThat(element.getChiralAtom(), is(m.getAtom(2)));
+        
+        IAtom[] ligands = element.getLigands();
+        assertThat(ligands[0], is(m.getAtom(0)));
+        assertThat(ligands[1], is(m.getAtom(1)));
+        assertThat(ligands[2], is(m.getAtom(3)));
+        assertThat(ligands[3], is(m.getAtom(4)));
+
+        assertThat(element.getStereo(),
+                   is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+    }
+    
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);

@@ -34,6 +34,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector2d;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -401,7 +403,7 @@ public abstract class StereoElementFactory {
                     return null;
             }
 
-            int parity = parity(neighbors, elevation);
+            int parity = parity(focus, neighbors, elevation);
 
             if (parity == 0)
                 return null;
@@ -530,7 +532,7 @@ public abstract class StereoElementFactory {
                     return null; // undefined configuration
             }
 
-            int parity = parity(neighbors, elevation);
+            int parity = parity(focus, neighbors, elevation);
 
             Stereo winding = parity > 0 ? Stereo.ANTI_CLOCKWISE
                                         : Stereo.CLOCKWISE;
@@ -590,7 +592,7 @@ public abstract class StereoElementFactory {
          * @param elevations the elevations of each atom
          * @return the parity (winding)
          */
-        private int parity(IAtom[] atoms, int[] elevations) {
+        private int parity(IAtom focus, IAtom[] atoms, int[] elevations) {
 
             if (atoms.length != 4)
                 throw new IllegalArgumentException("incorrect number of atoms");
@@ -600,8 +602,39 @@ public abstract class StereoElementFactory {
                 coordinates[i] = atoms[i].getPoint2d();
                 if (coordinates[i] == null)
                     return 0;
+                coordinates[i] = toUnitVector(focus.getPoint2d(), atoms[i].getPoint2d());
             }
 
+            double det = parity(coordinates, elevations);
+
+            return (int) Math.signum(det);
+        }
+
+        /**
+         * Obtain the unit vector between two points.
+         *
+         * @param from the base of the vector
+         * @param to   the point of the vector
+         * @return the unit vector
+         */
+        private Point2d toUnitVector(Point2d from, Point2d to) {
+            if (from == to)
+                return new Point2d(0, 0);
+            Vector2d v2d = new Vector2d(to.x - from.x,
+                                        to.y - from.y);
+            v2d.normalize();
+            return new Point2d(v2d);
+        }
+
+        /**
+         * Compute the signed volume of the tetrahedron from the planar points
+         * and elevations.
+         *
+         * @param coordinates locations in the plane
+         * @param elevations  elevations above/below the plane
+         * @return the determinant (signed volume of tetrahedron)
+         */
+        private double parity(final Point2d[] coordinates, final int[] elevations) {
             double x1 = coordinates[0].x;
             double x2 = coordinates[1].x;
             double x3 = coordinates[2].x;
@@ -612,12 +645,10 @@ public abstract class StereoElementFactory {
             double y3 = coordinates[2].y;
             double y4 = coordinates[3].y;
 
-            double det = (elevations[0] * det(x2, y2, x3, y3, x4, y4)) -
+            return (elevations[0] * det(x2, y2, x3, y3, x4, y4)) -
                     (elevations[1] * det(x1, y1, x3, y3, x4, y4)) +
                     (elevations[2] * det(x1, y1, x2, y2, x4, y4)) -
                     (elevations[3] * det(x1, y1, x2, y2, x3, y3));
-
-            return (int) Math.signum(det);
         }
 
         /** 3x3 determinant helper for a constant third column */
