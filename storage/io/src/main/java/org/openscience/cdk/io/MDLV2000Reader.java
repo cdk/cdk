@@ -465,7 +465,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 if (valence < 0) {
                     hasQueryBonds = true; // also counts aromatic bond as query
                 } else {
-                    applyMDLValenceModel(outputContainer.getAtom(i), valence);
+                    applyMDLValenceModel(outputContainer.getAtom(i),
+                                         valence,
+                                         outputContainer.getConnectedSingleElectronsCount(outputContainer.getAtom(i)));
                 }
             }
 
@@ -509,10 +511,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @param atom            the atom to apply the model to
      * @param explicitValence the explicit valence (bond order sum)
      */
-    private void applyMDLValenceModel(IAtom atom, int explicitValence) {
+    private void applyMDLValenceModel(IAtom atom, int explicitValence, int unpaired) {
+        
         if (atom.getValency() != null) {
             if (atom.getValency() >= explicitValence)
-                atom.setImplicitHydrogenCount(atom.getValency() - explicitValence);
+                atom.setImplicitHydrogenCount(atom.getValency() - explicitValence - unpaired);
             else
                 atom.setImplicitHydrogenCount(0);
         }
@@ -532,7 +535,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             }
             else {
                 atom.setValency(implicitValence);
-                atom.setImplicitHydrogenCount(implicitValence - explicitValence);
+                atom.setImplicitHydrogenCount(implicitValence - explicitValence - unpaired);
             }
         }
     }

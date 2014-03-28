@@ -1333,6 +1333,13 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                    is(MDLV2000Reader.CTabVersion.UNSPECIFIED));
     }
 
+    @Test public void radicalsReflectedInHydrogenCount() throws Exception {
+        MDLV2000Reader r = new MDLV2000Reader(getClass().getResourceAsStream("structure-with-radical.mol"));
+        IAtomContainer m = r.read(new AtomContainer());
+        assertThat(m.getAtom(0).getAtomicNumber(), is(8));
+        assertThat(m.getAtom(0).getImplicitHydrogenCount(), is(0));
+    }
+    
     /**
      * @cdk.bug 1326
      */
