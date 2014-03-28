@@ -112,7 +112,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 		NONE(0, 0),
 		SINGLET(2, 1),
 		DOUBLET(1, 2),
-		TRIPLET(3, 3);
+		TRIPLET(3, 2);
 
 		// the radical SDF value
 		private final int value;

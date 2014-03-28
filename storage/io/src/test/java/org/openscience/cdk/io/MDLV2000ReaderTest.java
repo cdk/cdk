@@ -1083,7 +1083,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
 		molecule = reader.read(molecule);
 		reader.close();
 
-		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(3));
+		assertThat(molecule.getConnectedSingleElectronsCount(molecule.getAtom(1)), is(2));
 	}
 
 	@Test
