@@ -152,7 +152,7 @@ public class IsotopePatternRuleTest extends FormulaRuleTest {
 		params[1] = 0.001;
 		rule.setParameters(params);
 
-		Assert.assertEquals(0.94930, rule.validate(formula),0.001);
+		Assert.assertEquals(0.9433, rule.validate(formula),0.001);
 	}
 	
 }
