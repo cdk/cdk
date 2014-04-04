@@ -1797,8 +1797,6 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     static void readNonStructuralData(final BufferedReader input,
                                       final IAtomContainer container) throws IOException {
 
-        final String newline = System.getProperty("line.separator");
-
         String line, header = null;
         boolean wrap = false;
 
@@ -1827,7 +1825,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     continue;
 
                 if (!wrap && data.length() > 0)
-                    data.append(newline);
+                    data.append('\n');
                 data.append(line);
 
                 wrap = line.length() == 80;
