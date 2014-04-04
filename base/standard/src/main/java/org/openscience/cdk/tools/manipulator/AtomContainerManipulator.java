@@ -204,27 +204,36 @@ public class AtomContainerManipulator {
     }
 
     /**
-     * Returns the molecular mass of the IAtomContainer. For the calculation it uses the
-     * masses of the isotope mixture using natural abundances.
+     * Returns the molecular mass of the IAtomContainer. For the calculation it
+     * uses the masses of the isotope mixture using natural abundances.
      *
-     * @param       atomContainer
+     * @param atomContainer
      * @cdk.keyword mass, molecular
      */
     @TestMethod("testGetNaturalExactMass_IAtomContainer")
-    public static double getNaturalExactMass(IAtomContainer atomContainer) {
-		 double mass = 0.0;
-		 IsotopeFactory factory;
-		 try {
-			 factory = Isotopes.getInstance();
-		 } catch (IOException e) {
-			 throw new RuntimeException("Could not instantiate the IsotopeFactory.");
-		 }
-        for (IAtom atom : atomContainer.atoms()) {
-            IElement isotopesElement = atom.getBuilder().newInstance(IElement.class,atom.getSymbol());
-            mass += factory.getNaturalMass(isotopesElement);
+    public static double getNaturalExactMass(IAtomContainer atomContainer) {           
+        try {
+            Isotopes isotopes      = Isotopes.getInstance();
+            double   hydgrogenMass = isotopes.getNaturalMass(Elements.HYDROGEN);
+
+            double mass = 0.0;
+            for (final IAtom atom : atomContainer.atoms()) {
+
+                if (atom.getAtomicNumber() == null)
+                    throw new IllegalArgumentException("an atom had with unknown (null) atomic number");
+                if (atom.getImplicitHydrogenCount() == null)
+                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
+                
+                mass += isotopes.getNaturalMass(Elements.ofNumber(atom.getAtomicNumber()).toIElement());
+                mass += hydgrogenMass * atom.getImplicitHydrogenCount();
+            }
+            return mass;
+            
+        } catch (IOException e) {
+            throw new RuntimeException("Isotopes definitions could not be loaded", e);
         }
-		 return mass;
     }
+    
     /**
      * Get the summed natural abundance of all atoms in an AtomContainer
      *

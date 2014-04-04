@@ -530,16 +530,35 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(46.96885268,totalExactMass,0.000001);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getNaturalExactMassNeedsHydrogens() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+        AtomContainerManipulator.getNaturalExactMass(mol);    
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void getNaturalExactMassNeedsAtomicNumber() {
+        IAtomContainer mol = new AtomContainer();
+        mol.addAtom(new Atom("C"));
+        mol.getAtom(0).setAtomicNumber(null);
+        AtomContainerManipulator.getNaturalExactMass(mol);
+    }
     
     @Test public void testGetNaturalExactMass_IAtomContainer() throws Exception {
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance(); 
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("Cl"));
+        
+        mol.getAtom(0).setImplicitHydrogenCount(4);
+        mol.getAtom(1).setImplicitHydrogenCount(1);
     	
         double expectedMass = 0.0;
         expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"C"));
         expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"Cl"));
+        expectedMass += 5 * Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"H"));
         
     	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 
