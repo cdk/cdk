@@ -252,11 +252,25 @@ public class AtomContainerManipulator {
      */
     @TestMethod("testGetTotalNaturalAbundance_IAtomContainer")
     public static double getTotalNaturalAbundance(IAtomContainer atomContainer) {
-        double abundance =  1.0;
-        for (IAtom iAtom : atomContainer.atoms()) abundance = abundance * iAtom.getNaturalAbundance();
-
-
-        return abundance/Math.pow(100,atomContainer.getAtomCount());
+        try {
+            Isotopes isotopes = Isotopes.getInstance();
+            double abundance  = 1.0;
+            double hAbundance = isotopes.getMajorIsotope(1).getNaturalAbundance();
+            
+            int nImplH = 0;
+            
+            for (IAtom atom : atomContainer.atoms()) {
+                if (atom.getImplicitHydrogenCount() == null)
+                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
+                abundance *= atom.getNaturalAbundance();
+                for (int h = 0; h < atom.getImplicitHydrogenCount(); h++)
+                    abundance *= hAbundance;
+                nImplH += atom.getImplicitHydrogenCount();
+            }
+            return abundance / Math.pow(100, nImplH + atomContainer.getAtomCount());
+        } catch (IOException e) {
+            throw new RuntimeException("Isotopes definitions could not be loaded", e);
+        }
     }
 
     /**
