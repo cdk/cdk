@@ -528,7 +528,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(1).setExactMass(34.96885268);
         double totalExactMass = AtomContainerManipulator.getTotalExactMass(mol);
 
-        Assert.assertEquals(46.96885268,totalExactMass,0.000001);
+        Assert.assertEquals(49.992327775,totalExactMass,0.000001);
     }
 
     @Test(expected = IllegalArgumentException.class)

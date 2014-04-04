@@ -196,11 +196,21 @@ public class AtomContainerManipulator {
      */
     @TestMethod("testGetTotalExactMass_IAtomContainer")
     public static double getTotalExactMass(IAtomContainer atomContainer) {
-        double mass = 0.0;
-        for (IAtom atom : atomContainer.atoms()) {
-            mass += atom.getExactMass();
+        try {
+            
+            Isotopes isotopes = Isotopes.getInstance();
+            double mass = 0.0;
+            double hExactMass = isotopes.getMajorIsotope(1).getExactMass();
+            for (IAtom atom : atomContainer.atoms()) {
+                if (atom.getImplicitHydrogenCount() == null)
+                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");                
+                mass += atom.getExactMass();
+                mass += atom.getImplicitHydrogenCount() * hExactMass; 
+            }
+            return mass;
+        } catch (IOException e) {
+            throw new RuntimeException("Isotopes definitions could not be loaded", e);
         }
-        return mass;
     }
 
     /**
