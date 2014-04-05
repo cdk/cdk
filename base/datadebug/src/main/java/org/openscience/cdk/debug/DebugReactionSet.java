@@ -23,7 +23,6 @@ package org.openscience.cdk.debug;
 import java.util.Map;
 
 import org.openscience.cdk.ReactionSet;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
@@ -127,9 +126,9 @@ public class DebugReactionSet extends ReactionSet
 	}
 
     /** {@inheritDoc} */ @Override
-    public void setProperties(Map<Object,Object> properties) {
+    public void addProperties(Map<Object, Object> properties) {
 		logger.debug("Setting properties: ", properties);
-		super.setProperties(properties);
+		super.addProperties(properties);
 	}
 
     /** {@inheritDoc} */ @Override

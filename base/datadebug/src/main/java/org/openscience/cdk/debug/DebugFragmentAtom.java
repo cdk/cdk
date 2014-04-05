@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IFragmentAtom;
-import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
@@ -415,9 +414,9 @@ public class DebugFragmentAtom extends FragmentAtom {
 	}
 
     /** {@inheritDoc} */ @Override
-    public void setProperties(Map<Object,Object> properties) {
+    public void addProperties(Map<Object, Object> properties) {
 		logger.debug("Setting properties: ", properties);
-		super.setProperties(properties);
+		super.addProperties(properties);
 	}
 
     /** {@inheritDoc} */ @Override

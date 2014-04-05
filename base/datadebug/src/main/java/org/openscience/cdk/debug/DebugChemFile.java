@@ -129,9 +129,9 @@ public class DebugChemFile extends ChemFile
 	}
 
     /** {@inheritDoc} */ @Override
-    public void setProperties(Map<Object,Object> properties) {
+    public void addProperties(Map<Object, Object> properties) {
 		logger.debug("Setting properties: ", properties);
-		super.setProperties(properties);
+		super.addProperties(properties);
 	}
 
     /** {@inheritDoc} */ @Override
