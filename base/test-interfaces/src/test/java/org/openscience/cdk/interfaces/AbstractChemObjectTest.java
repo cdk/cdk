@@ -51,6 +51,16 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
 
     @Test public void testSetProperties_Map() {
         IChemObject chemObject = newChemObject();
+        chemObject.setProperty("remove", "me");
+        Map<Object,Object> props = new Hashtable<Object,Object>();
+        props.put("keep", "me");
+        chemObject.setProperties(props);
+        Assert.assertEquals("me", chemObject.getProperty("keep"));
+        Assert.assertNull(chemObject.getProperty("remove"));
+    }
+    
+    @Test public void testAddProperties_Map() {
+        IChemObject chemObject = newChemObject();
         Map<Object,Object> props = new Hashtable<Object,Object>();
         String cDescription = new String("description");
         String cProperty = new String("property");
