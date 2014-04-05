@@ -146,10 +146,17 @@ public class DebugChemObject extends ChemObject
 		return super.getFlag(flag_type);
 	}
 
+    /** @inheritDoc */
+    public void setProperties(Map<Object, Object> properties)
+    {
+        logger.debug("Setting properties: ", properties);
+        super.setProperties(properties);
+    }
+    
     /** {@inheritDoc} */ @Override
-    public void setProperties(Map<Object,Object> properties) {
-		logger.debug("Setting properties: ", properties);
-		super.setProperties(properties);
+    public void addProperties(Map<Object, Object> properties) {
+		logger.debug("Adding properties: ", properties);
+		super.addProperties(properties);
 	}
 
     /** {@inheritDoc} */ @Override

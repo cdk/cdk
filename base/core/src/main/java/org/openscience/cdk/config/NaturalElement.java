@@ -75,6 +75,7 @@ final class NaturalElement implements IElement {
 	@Override public void setFlag(int flag_type, boolean flag_value) {}
 	@Override public boolean getFlag(int flag_type) { return false; }
 	@Override public void setProperties(Map<Object, Object> properties) {}
+	@Override public void addProperties(Map<Object, Object> properties) {}
 	@Override public void setFlags(boolean[] flagsNew) {}
 	@Override public boolean[] getFlags() { return new boolean[CDKConstants.MAX_FLAG_INDEX + 1]; }
 	@Override public IChemObjectBuilder getBuilder() { return null; }

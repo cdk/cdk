@@ -550,11 +550,20 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param properties The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
     public void setProperties(Map<Object, Object> properties) {}
+    
+    /**
+     * This field is not used by this immutable hydrogen.
+     * Any setting will have no effect what so ever.
+     * 
+     * @param properties The value will be disregarded.
+     */
+    @TestMethod("testSetIsSilent")
+    public void addProperties(Map<Object, Object> properties) {}
 
     /**
      * This field is not used by this immutable hydrogen.

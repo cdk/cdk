@@ -180,7 +180,7 @@ public interface IChemObject extends ICDKObject {
      * @param <T>         generic type (of provided class)
      * @return the value stored for the specified description.
      * @see #getProperty(Object)
-     * @see #setProperties(java.util.Map)
+     * @see #addProperties(java.util.Map)
      */
     public <T> T getProperty(Object description, Class<T> c);
 
@@ -188,7 +188,7 @@ public interface IChemObject extends ICDKObject {
 	 *  Returns a Map with the IChemObject's properties.
 	 *
 	 *@return    The object's properties as an Map
-	 *@see       #setProperties
+	 *@see       #addProperties
 	 */
 	public Map<Object,Object> getProperties();
 
@@ -246,13 +246,22 @@ public interface IChemObject extends ICDKObject {
 	 */
 	public boolean getFlag(int mask);
 
+    /**
+     * Set the properties of this object to the provided map (shallow copy). Any
+     * existing properties are removed.
+     *
+     * @param properties map key-value pairs
+     */
+    public void setProperties(Map<Object,Object> properties);
+    
 	/**
-	 * Sets the properties of this object.
+	 * Add properties to this object, duplicate keys will replace any existing
+     * value.
 	 *
 	 * @param  properties  a Map specifying the property values
 	 * @see                #getProperties
 	 */
-	public void setProperties(Map<Object,Object> properties);
+	public void addProperties(Map<Object, Object> properties);
     
 	/**
 	 * Sets the whole set of flags. This set will iteratively invoke

@@ -138,6 +138,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.setFlags(null);
         hydrogen.setFlag(CDKConstants.ISINRING, true);
         hydrogen.setID("Me");
+        hydrogen.addProperties(new Properties());
         hydrogen.setProperties(new Properties());
         hydrogen.setProperty(new String(), new String());
         hydrogen.removeProperty(new String());

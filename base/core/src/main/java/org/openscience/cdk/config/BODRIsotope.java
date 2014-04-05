@@ -82,6 +82,7 @@ final class BODRIsotope implements IIsotope {
 	@Override @TestMethod("untested") public void setFlag(int flag_type, boolean flag_value) {}
 	@Override @TestMethod("untested") public boolean getFlag(int flag_type) { return false; }
 	@Override @TestMethod("untested") public void setProperties(Map<Object, Object> properties) {}
+	@Override @TestMethod("untested") public void addProperties(Map<Object, Object> properties) {}
 	@Override @TestMethod("untested") public void setFlags(boolean[] flagsNew) {}
 	@Override @TestMethod("untested") public boolean[] getFlags() { return new boolean[CDKConstants.MAX_FLAG_INDEX + 1]; }
 	@Override @TestMethod("untested") public IChemObjectBuilder getBuilder() { return null; }

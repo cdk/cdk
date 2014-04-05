@@ -268,7 +268,7 @@ public class QueryChemObject implements IChemObject {
      *  Returns a Map with the IChemObject's properties.
      *
      *@return    The object's properties as an Hashtable
-     *@see       #setProperties
+     *@see       #addProperties
      */
     public Map<Object,Object> getProperties()
     {
@@ -319,20 +319,24 @@ public class QueryChemObject implements IChemObject {
         return (flags & mask) != 0;
     }
 
+    /** @inheritDoc */
+    public void setProperties(Map<Object, Object> properties)
+    {
+        this.properties = null;
+        if (properties != null)
+            addProperties(properties);
+    }
+
     /**
      *  Sets the properties of this object.
      *
      *@param  properties  a Hashtable specifying the property values
      *@see                #getProperties
      */
-    public void setProperties(Map<Object,Object> properties)
+    public void addProperties(Map<Object, Object> properties)
     {
-        Iterator<Object> keys = properties.keySet().iterator();
-        while (keys.hasNext())
-        {
-            Object key = keys.next();
-            lazyProperties().put(key, properties.get(key));
-        }
+        if (properties == null) return;
+        lazyProperties().putAll(properties);
         notifyChanged();
     }
 
