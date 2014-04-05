@@ -609,7 +609,7 @@ public class AtomContainerManipulator {
             if(atom.getImplicitHydrogenCount()==null)
                 atom.setImplicitHydrogenCount(0);
         }
-        cpy.setProperties(org.getProperties());
+        cpy.addProperties(org.getProperties());
         cpy.setFlags(org.getFlags());
 
         return (cpy);

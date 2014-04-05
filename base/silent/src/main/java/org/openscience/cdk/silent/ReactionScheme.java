@@ -132,7 +132,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
                 Object value = properties.get(key);
                 clonedHashtable.put(key, value);
             }
-            clone.setProperties(clonedHashtable);
+            clone.addProperties(clonedHashtable);
         }
 		
 		return clone;

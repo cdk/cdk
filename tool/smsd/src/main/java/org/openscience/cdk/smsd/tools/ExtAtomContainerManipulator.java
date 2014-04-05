@@ -109,7 +109,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         for (int index = 0; index < container.getSingleElectronCount(); index++) {
             newAtomContainer.addSingleElectron(index);
         }
-        newAtomContainer.setProperties(container.getProperties());
+        newAtomContainer.addProperties(container.getProperties());
         newAtomContainer.setFlags(container.getFlags());
         newAtomContainer.setID(container.getID());
         newAtomContainer.notifyChanged();
@@ -275,7 +275,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             }
             mol.setFlags(atomContainer.getFlags());
         }
-        mol.setProperties(atomContainer.getProperties());
+        mol.addProperties(atomContainer.getProperties());
         if (atomContainer.getID() != null) {
             mol.setID(atomContainer.getID());
         }
@@ -299,7 +299,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
         } else if (atomContainer.atoms().iterator().next().getSymbol().equalsIgnoreCase("H")) {
             System.err.println("WARNING: single hydrogen atom removal not supported!");
         }
-        mol.setProperties(atomContainer.getProperties());
+        mol.addProperties(atomContainer.getProperties());
         mol.setFlags(atomContainer.getFlags());
         if (atomContainer.getID() != null) {
             mol.setID(atomContainer.getID());
@@ -415,7 +415,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
                 }
             }
         }
-        mol.setProperties(atomContainer.getProperties());
+        mol.addProperties(atomContainer.getProperties());
         mol.setFlags(atomContainer.getFlags());
         if (atomContainer.getID() != null) {
             mol.setID(atomContainer.getID());
