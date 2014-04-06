@@ -118,8 +118,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	private AtomTypeFactory cdkAtomTypeFactory;
 	
-	private static final String hetDictionaryPath = 
-	    "org/openscience/cdk/config/data/type_map.txt";
+	private static final String hetDictionaryPath = "type_map.txt";
 	
 	/**
 	 *
@@ -726,8 +725,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	
 	private void readHetDictionary() {
 	    try {
-	        InputStream ins = 
-	            getClass().getClassLoader().getResourceAsStream(hetDictionaryPath);
+	        InputStream ins = getClass().getResourceAsStream(hetDictionaryPath);
 	        BufferedReader bufferedReader = 
 	            new BufferedReader(new InputStreamReader(ins));
 	        hetDictionary = new HashMap<String, String>();
