@@ -428,6 +428,15 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9</version>
                 <configuration>
+                    <tags>
+                        <!--cdk.depends and cdk.builddepends no longer used-->
+                        <tag><name>cdk.set</name><placement>a</placement><head>Belongs to the set:</head></tag>
+                        <tag><name>cdk.keyword</name><placement>a</placement><head>Keywords:</head></tag>
+                        <tag><name>cdk.created</name><placement>a</placement><head>Created on:</head></tag>
+                        <tag><name>cdk.require</name><placement>a</placement><head>Requires:</head></tag>
+                        <tag><name>cdk.todo</name><placement>a</placement><head>To do:</head></tag>
+                        <tag><name>cdk.license</name><placement>a</placement><head>License:</head></tag>
+                    </tags>
                     <taglets>
                         <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKCiteTaglet</tagletClass></taglet>
                         <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKBugTaglet</tagletClass></taglet>
