@@ -1,0 +1,34 @@
+<root>
+	<replace-set>
+		<replace>O=N=O</replace>
+		<replacement>[O-][N+]=O</replacement>
+	</replace-set>
+
+	<replace-set>
+		<replace>N=N#N</replace>
+		<replacement>N=[N+]=[N-]</replacement>
+	</replace-set>
+
+	<replace-set>
+		<replace>N#N=C</replace>
+		<replacement>[N-]=[N+]=C</replacement>
+	</replace-set>
+	
+	<replace-set>
+		<replace>C#N=O</replace>
+		<replacement>C#[N+][O-]</replacement>
+	</replace-set>	
+
+	<replace-set>
+		<replace>C=N=O</replace>
+		<replacement>C=[N+][O-]</replacement>
+	</replace-set>	
+
+	<replace-set>
+		<replace>N=N=O</replace>
+		<replacement>N=[N+][O-]</replacement>
+	</replace-set>	
+
+
+</root>
+
