@@ -37,11 +37,14 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
 import org.openscience.cdk.iupac.parser.MoleculeBuilder;
+import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -50,6 +53,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import java.io.*;
 import java.util.*;
 import java.util.zip.*;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @cdk.module test-standard
@@ -264,5 +271,38 @@ public class CircularFingerprinterTest extends CDKTestCase
 		for (int n=0;n<fp.atoms.length;n++) str+=(n>0 ? "," : "")+fp.atoms[n];
 		return str+"}";
 	}
+    
+    @Test public void protonsDontCauseNPE() throws Exception {
+        IAtomContainer proton = new AtomContainer(1, 0, 0, 0);
+        proton.addAtom(atom("H", +1, 0));
+        CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
+        assertThat(circ.getBitFingerprint(proton).cardinality(), is(0));
+    }
+    
+    @Test public void iminesDetectionDoesntCauseNPE() throws Exception {
+        IAtomContainer pyrazole = new AtomContainer(6, 6, 0, 0);
+        pyrazole.addAtom(atom("H", 0, 0));
+        pyrazole.addAtom(atom("N", 0, 0));
+        pyrazole.addAtom(atom("C", 0, 1));
+        pyrazole.addAtom(atom("C", 0, 1));
+        pyrazole.addAtom(atom("C", 0, 1));
+        pyrazole.addAtom(atom("N", 0, 0));
+        pyrazole.addBond(0, 1, IBond.Order.SINGLE);
+        pyrazole.addBond(1, 2, IBond.Order.SINGLE);
+        pyrazole.addBond(2, 3, IBond.Order.DOUBLE);
+        pyrazole.addBond(3, 4, IBond.Order.SINGLE);
+        pyrazole.addBond(4, 5, IBond.Order.DOUBLE);
+        pyrazole.addBond(1, 5, IBond.Order.SINGLE);
+        CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
+        assertNotNull(circ.getBitFingerprint(pyrazole));
+    }
+    
+    static IAtom atom(String symbol, int q, int h) {
+        IAtom a = new Atom(symbol);
+        a.setFormalCharge(q);
+        a.setImplicitHydrogenCount(h);
+        return a;
+    }
+    
 }
 
