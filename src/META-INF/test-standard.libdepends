@@ -1,9 +1,0 @@
-log4j*.jar
-jgrapht-0.6.0.jar
-vecmath*.jar
-cmlxom-2.5-b1.jar
-xom*.jar
-commons-math*.jar
-guava-14.0.1.jar
-beam-core-0.5.jar
-beam-func-0.5.jar
