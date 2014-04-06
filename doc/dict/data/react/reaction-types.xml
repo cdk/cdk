@@ -1,0 +1,375 @@
+<dictionary
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core cmlAll.xsd
+                      http://www.w3.org/1998/Math/MathML      mathml2/mathml2.xsd
+                      http://bibtexml.sf.net/                 bibtexml.xsd"
+  
+  xmlns="http://www.xml-cml.org/schema/cml2/core"
+  xmlns:bibtex="http://bibtexml.sf.net/"
+  xmlns:cvs="https://www.cvshome.org/"
+  xmlns:dc="http://dublincore.org/"
+  
+  xmlns:reaction-types="http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict"
+  xmlns:reaction-types-metadata="http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionMetadata"
+  id="reaction-types" title="REACTION.sf.net Reaction Dictionary">
+
+  <annotation>
+    <documentation>
+      <metadata name="cvs:revision" content="$Revision: 0.1 $"/>
+      <metadata name="cvs:last-change-by" content="$Author: mrc $"/>
+      <metadata name="cvs:date" content="$Date: 2006/05/08 11:04:44 $"/>
+      <metadata name="cvs:id" content="$Id: reaction-types.xml,v 1.34 2006/05/08 11:04:44 mrc Exp $"/>
+    </documentation>
+    <appinfo>
+      <contributor id="mrc">Miguel Rojas</contributor>
+    </appinfo>
+    <documentation title="bibliography">
+      <bibtex:file>
+        <bibtex:entry id="MCLAFFERTY">
+          <bibtex:incollection>
+            <bibtex:author>Fred W. McLafferty, Franti&#353;ek Turecek</bibtex:author>
+            <bibtex:title>Interpretation of Mass Spectra</bibtex:title>
+            <bibtex:publisher>University Science Books</bibtex:publisher>
+            <bibtex:year>1993</bibtex:year>
+          </bibtex:incollection>
+        </bibtex:entry>
+        <bibtex:entry id="MATHML">
+          <bibtex:misc>
+            <bibtex:title>W3C Math Home</bibtex:title>
+            <bibtex:url>http://www.w3.org/Math/</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+        <bibtex:entry id="Mozilla">
+          <bibtex:misc>
+            <bibtex:title>Mozilla - Home of the FireFox browser</bibtex:title>
+            <bibtex:url>http://www.mozilla.org/</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+        <bibtex:entry id="CDK">
+          <bibtex:misc>
+            <bibtex:title>Cdk Home</bibtex:title>
+            <bibtex:url>http://almost.cubic.uni-koeln.de/cdk/</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+        <bibtex:entry id="JCP">
+          <bibtex:misc>
+            <bibtex:title>JChemPaint Home</bibtex:title>
+            <bibtex:url>http://almost.cubic.uni-koeln.de/cdk/jcp</bibtex:url>
+          </bibtex:misc>
+        </bibtex:entry>
+      </bibtex:file>
+    </documentation>
+  </annotation>
+
+  <description>
+    This dictionary describes reactions used in cdk <bibtex:cite ref="CDK"/>.
+  </description>
+
+  <entry id="electronImpactNBE" term="Electron Impact for Non-Bondind Electron Lost">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates an Electron Impact for Non-Bondind Electron Lost 
+        which is contained in an molecule. It is described by McLafferty et al. <bibtex:cite ref="MCLAFFERTY"/>.
+    </definition>
+    <description>
+      	This reaction could be represented as [&#196;] => [A+&#183;]. Due to 
+      	the impact an electron of the heteroatom are put out. 
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:electronImpact"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/ElectronImpactNBE.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="electronImpactPBD" term="Electron Impact for pi-Bond Dissociation">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates an Electron Impact for pi-Bond Dissociation 
+        which is contained in an molecule.
+    </definition>
+    <description>
+      	This reaction could be represented as A=B => [A+]-[B&#183;] + [A&#183;]-[B+]. Due to 
+      	the impact an electron of the doble bond are put out.  It is described by McLafferty et al. <bibtex:cite ref="MCLAFFERTY"/>.
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:electronImpact"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/ElectronImpactPBD.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="breakingBond" term="Breaking a Bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being broken to generate charges.
+    </definition>
+    <description>
+      	<p>This reaction have two directions for breaking a bond in a polar manner, each bond 
+      	is investigated twice:</p>
+      	<p>A=B => [A+]-[B-].</p> 
+      	<p>A=B => [A-]-[B+].</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/BreakingBond.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="displacementChargeFromAcceptor" term="Displacement of Charge from an Acceptor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being displaced to generate charges. 
+        IReactionProcess which participate in resonance.
+    </definition>
+    <description>
+      	<p>This reaction could be represented as X=A => [X-]-[A+]. X represents an acceptor atomType.</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/displacementChargeFromAcceptor.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+  <entry id="displacementChargeDonorAcceptor" term="Displacement of Charge from a Donor">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-06-16"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction act on bonds that are being displaced to generate charges. 
+        IReactionProcess which participate in resonance.
+    </definition>
+    <description>
+      	<p>This reaction could be represented as X-A=B => [X+]=A-[B-]. X represents 
+      	a donor atomType which contains lone pair electrons</p>  
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:displacement"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/displacementChargeFromAcceptor.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  
+  <entry id="RearrangementAnion1Reaction" term="Rearrangement of negative charge from Zwitterion structure">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge when structure is a Zwitterion 
+        (compound with acidic and basic groups in the same molecule).
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#8254;]-[B+] => A=B.
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementAnion1Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementAnion2Reaction" term="Rearrangement of negative charge through double bond in resonance">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge through double bond which is en position beta.
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#8254;]-B=C => A=B-[C&#8254;].
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementAnion2Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementAnion3Reaction" term="Rearrangement of negative charge through double bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge through double bond.
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#8254;]=B; => A=B.
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementAnion3Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementCation1Reaction" term="Rearrangement of positive charge through lone pair electrons">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge through lone pair electrons.
+    </definition>
+    <description>
+      	This reaction could be represented as [&#196;]-[B+] => [A+]=B.
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementCation1Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementCation2Reaction" term="Rearrangement of positive charge through double bond in resonance">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge through double bond which is en position beta.
+    </definition>
+    <description>
+      	This reaction could be represented as [A+]-B=C => A=B-[C+].
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementCation2Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementCation3Reaction" term="Rearrangement of positive charge through double bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of charge through double bond.
+    </definition>
+    <description>
+      	This reaction could be represented as [A+]=B; => &#196;-[B+].
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementCation3Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementRadical1Reaction" term="Rearrangement of positive single through lone pair electrons">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of a single electron through lone pair electrons.
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#183;]-B| => A=B&#183;.
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementRadical1Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementRadical2Reaction" term="Rearrangement of single electron through double bond in resonance">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of a single electron through double bond which is en position beta.
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#183;]-B=C => A=B-[C&#183;].
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementRadical2Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+  
+  <entry id="RearrangementRadical3Reaction" term="Rearrangement of single electron through double bond">
+    <annotation>
+      <documentation>
+        <metadata name="dc:contributor" content="mrc"/>
+        <metadata name="dc:date" content="2006-05-08"/>
+      </documentation>
+    </annotation>
+    <definition>
+        This reaction generates a rearrangement of a single electron through double bond.
+    </definition>
+    <description>
+      	This reaction could be represented as [A&#183;]=B; => &#196;-[B&#183;].
+    </description>
+    <metadataList dictRef="reaction-types-metadata:reactionClassification">
+      <metadata dictRef="reaction-types-metadata:reactionClass" content="reaction-types-metadata:rearrangementCharge"/>
+    </metadataList>
+    <exemplesReaction>
+      <imagedata dictRef="reactions-metadata:CML" content="examples/RearrangementRadical3Reaction.cml"/>
+    </exemplesReaction>
+  </entry>
+    
+
+</dictionary>
