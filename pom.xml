@@ -49,6 +49,10 @@
             <url>${cdk.repo.snapshots.url}</url>
         </snapshotRepository>
     </distributionManagement>
+    
+    <prerequisites>
+        <maven>3.0</maven>
+    </prerequisites>
 
     <!-- TODO possibly split into developers/contributors-->
     <developers>
