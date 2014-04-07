@@ -771,9 +771,9 @@ public class ReactionStructuresTest extends CDKTestCase {
         IAtomContainer expected1 = builder.newInstance(IAtomContainer.class);
         expected1.addAtom(builder.newInstance(IAtom.class,"C"));
         expected1.addAtom(builder.newInstance(IAtom.class,"N"));
-		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(0)));
-        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
 		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(1)));
+        expected1.addAtom(builder.newInstance(IAtom.class,"C"));
+		expected1.addSingleElectron(builder.newInstance(ISingleElectron.class,expected1.getAtom(2)));
         expected1.addBond(0, 1, IBond.Order.SINGLE);
         expected1.addBond(1, 2, IBond.Order.SINGLE);
         expected1.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -788,7 +788,7 @@ public class ReactionStructuresTest extends CDKTestCase {
         expected1.addBond(2, 7, IBond.Order.SINGLE);
 		
         String[] expectedTypes = {
-    		"C.sp3","N.radical.planar","C.radical.planar","H","H","H","H","H"
+    		"C.sp3","N.sp3.radical","C.radical.planar","H","H","H","H","H"
     	};
     		Assert.assertEquals(expectedTypes.length, expected1.getAtomCount());
     		for (int i=0; i<expectedTypes.length; i++) {
