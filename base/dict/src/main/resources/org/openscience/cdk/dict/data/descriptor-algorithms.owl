@@ -177,6 +177,10 @@
         <rdfs:label>Federico Marighetti</rdfs:label>
     </Contributor>
 
+    <Contributor rdf:ID="ac">
+        <rdfs:label>Alex Clark</rdfs:label>
+    </Contributor>
+
     <!-- the facts: Categories -->
 
     <Category rdf:ID="descriptorCategories">
@@ -2591,6 +2595,30 @@
             Describes the volume of a molecule.
         </definition>
         <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+    
+    <Descriptor rdf:ID="smallRings">
+        <rdfs:label>Small Ring Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#ac"/>
+        <dc:date>2014-01-19</dc:date>
+        <definition rdf:parseType='Literal'>
+        An enumeration of all the small rings (sizes 3 to 9) in a molecule, which can be obtained quickly and deterministically.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#molecularDescriptor"/>
+    </Descriptor>
+    
+    <Descriptor rdf:ID="fractionalPSA">
+        <rdfs:label>Fractional PSA Descriptor</rdfs:label>
+        <dc:contributor rdf:resource="#ac"/>
+        <dc:date>2014-01-19</dc:date>
+        <definition rdf:parseType='Literal'>
+        Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is 
+         to TPSADescriptor/ molecular weight, in units of square Angstroms per Dalton.
+        </definition>
+        <isClassifiedAs rdf:resource="#topologicalDescriptor"/>
+        <isClassifiedAs rdf:resource="#electronicDescriptor"/>
         <isClassifiedAs rdf:resource="#molecularDescriptor"/>
     </Descriptor>
 
