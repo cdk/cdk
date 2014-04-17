@@ -48,6 +48,12 @@
             <name>CDK Snapshot Repository</name>
             <url>${cdk.repo.snapshots.url}</url>
         </snapshotRepository>
+        <!-- site is staged and then copied to a sub-folder of gh-pages, no
+             url is provided but the field is needed to stage the site. -->
+        <site>
+            <id>cdk.github.com</id>
+            <url>http://cdk.github.io/cdk/</url>
+        </site>
     </distributionManagement>
     
     <prerequisites>
@@ -498,9 +504,17 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9</version>
-                <configuration>
-                    <aggregate>false</aggregate>
-                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <configuration>
+                            <aggregate>false</aggregate>
+                        </configuration>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
