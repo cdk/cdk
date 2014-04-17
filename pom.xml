@@ -54,235 +54,246 @@
         <maven>3.0</maven>
     </prerequisites>
 
-    <!-- TODO possibly split into developers/contributors-->
+    <!-- developer = commit access -->
     <developers>
         <developer>
-            <name>Sam Adams</name>
+            <name>Christoph Steinbeck</name>
         </developer>
         <developer>
-            <name>Jonathan Alvarsson</name>
-        </developer>
-        <developer>
-            <name>Rich Apodaca</name>
-        </developer>
-        <developer>
-            <name>Saravanaraj N Ayyampalayam</name>
-        </developer>
-        <developer>
-            <name>Ulrich Bauer</name>
-        </developer>
-        <developer>
-            <name>Stephan Beisken</name>
-        </developer>
-        <developer>
-            <name>Arvid Berg</name>
-        </developer>
-        <developer>
-            <name>Ed Cannon</name>
-        </developer>
-        <developer>
-            <name>Fabian Dortu</name>
-        </developer>
-        <developer>
-            <name>Martin Eklund</name>
-        </developer>
-        <developer>
-            <name>Matteo Floris</name>
-        </developer>
-        <developer>
-            <name>Dan Gezelter</name>
-        </developer>
-        <developer>
-            <name>Uli Fechner</name>
-        </developer>
-        <developer>
-            <name>Thorsten Flügel</name>
-        </developer>
-        <developer>
-            <name>Nimish Gopal</name>
+            <name>Egon Willighagen</name>
         </developer>
         <developer>
             <name>Rajarshi Guha</name>
         </developer>
         <developer>
-            <name>Yonquan Han</name>
-        </developer>
-        <developer>
-            <name>Thierry Hanser</name>
-        </developer>
-        <developer>
-            <name>Kai Hartmann</name>
-        </developer>
-        <developer>
-            <name>Tobias Helmus</name>
-        </developer>
-        <developer>
-            <name>Christian Hoppe</name>
-        </developer>
-        <developer>
-            <name>Oliver Horlacher</name>
-        </developer>
-        <developer>
-            <name>Miguel Howard</name>
-        </developer>
-        <developer>
-            <name>Nina Jeliazkova</name>
-        </developer>
-        <developer>
-            <name>Geert Josten</name>
-        </developer>
-        <developer>
-            <name>Dmitry Katsubo</name>
-        </developer>
-        <developer>
-            <name>Jules Kerssemakers</name>
-        </developer>
-        <developer>
-            <name>Anatoli Krassavine</name>
-        </developer>
-        <developer>
-            <name>Stefan Kuhn</name>
-        </developer>
-        <developer>
-            <name>Uli Köhler</name>
-        </developer>
-        <developer>
-            <name>Violeta Labarta</name>
-        </developer>
-        <developer>
-            <name>Jonty Lawson</name>
-        </developer>
-        <developer>
-            <name>Kevin Lawson</name>
-        </developer>
-        <developer>
-            <name>Daniel Leidert</name>
-        </developer>
-        <developer>
-            <name>Edgar Luttmann</name>
-        </developer>
-        <developer>
-            <name>Todd Martin</name>
-        </developer>
-        <developer>
-            <name>John May</name>
-        </developer>
-        <developer>
-            <name>Nathanaël Mazuir</name>
-        </developer>
-        <developer>
-            <name>Stephan Michels</name>
-        </developer>
-        <developer>
-            <name>Scooter Morris</name>
-        </developer>
-        <developer>
-            <name>Peter Murray-Rust</name>
-        </developer>
-        <developer>
-            <name>Carl Mäsak</name>
-        </developer>
-        <developer>
-            <name>Irilenia Nobeli</name>
-        </developer>
-        <developer>
-            <name>Peter Odéus</name>
-        </developer>
-        <developer>
-            <name>Niels Out</name>
-        </developer>
-        <developer>
-            <name>Jerome Pansanel</name>
-        </developer>
-        <developer>
-            <name>Julio Peironcely</name>
-        </developer>
-        <developer>
-            <name>Tomáš Pluskal</name>
-        </developer>
-        <developer>
-            <name>Chris Pudney</name>
-        </developer>
-        <developer>
-            <name>Syed Asad Rahman</name>
-        </developer>
-        <developer>
-            <name>Jonathan Rienstra-Kiracofe</name>
-        </developer>
-        <developer>
-            <name>Mark Rijnbeek</name>
-        </developer>
-        <developer>
-            <name>David Robinson</name>
-        </developer>
-        <developer>
             <name>Miguel Rojas Cherto</name>
         </developer>
         <developer>
-            <name>Bhupinder Sandhu</name>
-        </developer>
-        <developer>
-            <name>Jean-Sebastien Senecal</name>
-        </developer>
-        <developer>
-            <name>Onkar Shinde</name>
-        </developer>
-        <developer>
-            <name>Sulev Sild</name>
-        </developer>
-        <developer>
-            <name>Bradley Smith</name>
-        </developer>
-        <developer>
-            <name>Ola Spjuth</name>
-        </developer>
-        <developer>
-            <name>Christoph Steinbeck</name>
-        </developer>
-        <developer>
-            <name>Ralf Stephan</name>
-        </developer>
-        <developer>
-            <name>Daniel Szisz</name>
-        </developer>
-        <developer>
-            <name>Aleksey Tarkhov</name>
-        </developer>
-        <developer>
-            <name>Stephan Tomkinson</name>
-        </developer>
-        <developer>
-            <name>Gilleain Torrance</name>
-        </developer>
-        <developer>
-            <name>Andreas Truszkowski</name>
-        </developer>
-        <developer>
-            <name>Paul Turner</name>
-        </developer>
-        <developer>
-            <name>Joerg Wegner</name>
-        </developer>
-        <developer>
-            <name>Yap Chun Wei</name>
-        </developer>
-        <developer>
-            <name>Stephane Werner</name>
-        </developer>
-        <developer>
-            <name>Egon Willighagen</name>            
-        </developer>
-        <developer>
-            <name>Lars Willighagen</name>
-        </developer>
-        <developer>
-            <name>Yong Zhang </name>
-        </developer>
-        <developer>
-            <name>Daniel Zaharevitz</name>
+            <name>John May</name>
+            <url>http://www.github.com/johnmay/</url>
+            <organization>EMBL-EBI</organization>
+            <organizationUrl>http://ebi.ac.uk</organizationUrl>
+            <timezone>GMT</timezone>
         </developer>
     </developers>
 
+    <contributors>
+        <contributor>
+            <name>Sam Adams</name>
+        </contributor>
+        <contributor>
+            <name>Jonathan Alvarsson</name>
+        </contributor>
+        <contributor>
+            <name>Rich Apodaca</name>
+        </contributor>
+        <contributor>
+            <name>Saravanaraj N Ayyampalayam</name>
+        </contributor>
+        <contributor>
+            <name>Ulrich Bauer</name>
+        </contributor>
+        <contributor>
+            <name>Stephan Beisken</name>
+        </contributor>
+        <contributor>
+            <name>Arvid Berg</name>
+        </contributor>
+        <contributor>
+            <name>Ed Cannon</name>
+        </contributor>
+        <contributor>
+            <name>Fabian Dortu</name>
+        </contributor>
+        <contributor>
+            <name>Martin Eklund</name>
+        </contributor>
+        <contributor>
+            <name>Matteo Floris</name>
+        </contributor>
+        <contributor>
+            <name>Dan Gezelter</name>
+        </contributor>
+        <contributor>
+            <name>Uli Fechner</name>
+        </contributor>
+        <contributor>
+            <name>Thorsten Flügel</name>
+        </contributor>
+        <contributor>
+            <name>Nimish Gopal</name>
+        </contributor>
+        <contributor>
+            <name>Yonquan Han</name>
+        </contributor>
+        <contributor>
+            <name>Thierry Hanser</name>
+        </contributor>
+        <contributor>
+            <name>Kai Hartmann</name>
+        </contributor>
+        <contributor>
+            <name>Tobias Helmus</name>
+        </contributor>
+        <contributor>
+            <name>Christian Hoppe</name>
+        </contributor>
+        <contributor>
+            <name>Oliver Horlacher</name>
+        </contributor>
+        <contributor>
+            <name>Miguel Howard</name>
+        </contributor>
+        <contributor>
+            <name>Nina Jeliazkova</name>
+        </contributor>
+        <contributor>
+            <name>Geert Josten</name>
+        </contributor>
+        <contributor>
+            <name>Dmitry Katsubo</name>
+        </contributor>
+        <contributor>
+            <name>Jules Kerssemakers</name>
+        </contributor>
+        <contributor>
+            <name>Anatoli Krassavine</name>
+        </contributor>
+        <contributor>
+            <name>Stefan Kuhn</name>
+        </contributor>
+        <contributor>
+            <name>Uli Köhler</name>
+        </contributor>
+        <contributor>
+            <name>Violeta Labarta</name>
+        </contributor>
+        <contributor>
+            <name>Jonty Lawson</name>
+        </contributor>
+        <contributor>
+            <name>Kevin Lawson</name>
+        </contributor>
+        <contributor>
+            <name>Daniel Leidert</name>
+        </contributor>
+        <contributor>
+            <name>Edgar Luttmann</name>
+        </contributor>
+        <contributor>
+            <name>Todd Martin</name>
+        </contributor>
+        <contributor>
+            <name>Nathanaël Mazuir</name>
+        </contributor>
+        <contributor>
+            <name>Stephan Michels</name>
+        </contributor>
+        <contributor>
+            <name>Scooter Morris</name>
+        </contributor>
+        <contributor>
+            <name>Peter Murray-Rust</name>
+        </contributor>
+        <contributor>
+            <name>Carl Mäsak</name>
+        </contributor>
+        <contributor>
+            <name>Irilenia Nobeli</name>
+        </contributor>
+        <contributor>
+            <name>Peter Odéus</name>
+        </contributor>
+        <contributor>
+            <name>Niels Out</name>
+        </contributor>
+        <contributor>
+            <name>Jerome Pansanel</name>
+        </contributor>
+        <contributor>
+            <name>Julio Peironcely</name>
+        </contributor>
+        <contributor>
+            <name>Tomáš Pluskal</name>
+        </contributor>
+        <contributor>
+            <name>Chris Pudney</name>
+        </contributor>
+        <contributor>
+            <name>Syed Asad Rahman</name>
+        </contributor>
+        <contributor>
+            <name>Jonathan Rienstra-Kiracofe</name>
+        </contributor>
+        <contributor>
+            <name>Mark Rijnbeek</name>
+        </contributor>
+        <contributor>
+            <name>David Robinson</name>
+        </contributor>
+        <contributor>
+            <name>Bhupinder Sandhu</name>
+        </contributor>
+        <contributor>
+            <name>Jean-Sebastien Senecal</name>
+        </contributor>
+        <contributor>
+            <name>Onkar Shinde</name>
+        </contributor>
+        <contributor>
+            <name>Sulev Sild</name>
+        </contributor>
+        <contributor>
+            <name>Bradley Smith</name>
+        </contributor>
+        <contributor>
+            <name>Ola Spjuth</name>
+        </contributor>
+        <contributor>
+            <name>Christoph Steinbeck</name>
+        </contributor>
+        <contributor>
+            <name>Ralf Stephan</name>
+        </contributor>
+        <contributor>
+            <name>Daniel Szisz</name>
+        </contributor>
+        <contributor>
+            <name>Aleksey Tarkhov</name>
+        </contributor>
+        <contributor>
+            <name>Stephan Tomkinson</name>
+        </contributor>
+        <contributor>
+            <name>Gilleain Torrance</name>
+        </contributor>
+        <contributor>
+            <name>Andreas Truszkowski</name>
+        </contributor>
+        <contributor>
+            <name>Paul Turner</name>
+        </contributor>
+        <contributor>
+            <name>Joerg Wegner</name>
+        </contributor>
+        <contributor>
+            <name>Yap Chun Wei</name>
+        </contributor>
+        <contributor>
+            <name>Stephane Werner</name>
+        </contributor>
+        
+        <contributor>
+            <name>Lars Willighagen</name>
+        </contributor>
+        <contributor>
+            <name>Yong Zhang </name>
+        </contributor>
+        <contributor>
+            <name>Daniel Zaharevitz</name>
+        </contributor>
+    </contributors>
+    
     <repositories>        
         <repository>
             <id>ebi-repo</id>
@@ -479,7 +490,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.9</version>
                 <configuration>
-                    <aggregate>true</aggregate>
+                    <aggregate>false</aggregate>
                 </configuration>
             </plugin>
             <plugin>
