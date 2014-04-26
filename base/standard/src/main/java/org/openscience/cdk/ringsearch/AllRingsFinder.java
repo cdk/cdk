@@ -251,7 +251,7 @@ public final class AllRingsFinder {
     @TestMethod("testSetTimeout_long")
     @Deprecated
     public AllRingsFinder setTimeout(long timeout) {
-        System.err.println("AllRingsFinder.setTimeout() is not used, please" +
+        System.err.println("AllRingsFinder.setTimeout() is not used, please " +
                                    "use the new threshold values");
         return this;
     }
