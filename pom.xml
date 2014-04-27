@@ -7,7 +7,7 @@
     <groupId>org.openscience.cdk</groupId>
     <artifactId>cdk</artifactId>
     <name>cdk</name>
-    <version>1.5.6-SNAPSHOT</version>
+    <version>1.5.6</version>
     <packaging>pom</packaging>    
     
     <url>http://sourceforge.net/projects/cdk/</url>
