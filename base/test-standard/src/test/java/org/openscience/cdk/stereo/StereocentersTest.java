@@ -71,7 +71,7 @@ public class StereocentersTest {
         none("C(C)");
         none("C(C)(N)");
         none("C(=C)(C)N");
-        none("C(=C)=C");
+        bicoordinate("C(=C)=C");
         none("C(=C)(=C)(=C)=C"); // nb abnormal valence
         none("C#N");
     }
@@ -675,8 +675,8 @@ public class StereocentersTest {
         geometric("C(=CC)C");    
         geometric("[CH](=CC)C");    
         geometric("C([H])(=CC)C");    
-        none("[CH2](=CC)");    
-        none("C(=C)(=CC)");    
+        none("[CH2](=CC)");
+        bicoordinate("C(=C)(=CC)");    
         none("C(#CC)C");    
     }  
     
@@ -717,6 +717,12 @@ public class StereocentersTest {
     void geometric(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         test(sp.parseSmiles(smi), Stereocenters.Type.Tricoordinate, smi + " was not accepted");
+    }
+
+    // assert the first atom of the SMILES is accepted as a bicoordinate center
+    void bicoordinate(String smi) throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        test(sp.parseSmiles(smi), Stereocenters.Type.Bicoordinate, smi + " was not accepted");
     }
 
     // assert the first atom of the SMILES is non stereogenic
