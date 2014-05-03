@@ -36,6 +36,10 @@ public class CDKTest {
             "There was an error retrieving the CDK version.",
             "ERROR", CDK.getVersion()
         );
+        Assert.assertFalse(
+            "The CDK version in build.props is not properly overwritten by Maven.",
+            CDK.getVersion().contains("project.version")
+        ); // see for the expected behavior: http://stackoverflow.com/a/3697482/217943
     }
     
 }

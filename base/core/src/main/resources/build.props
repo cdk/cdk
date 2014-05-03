@@ -1,0 +1,2 @@
+# needed for CDK.getVersion() using the trick explained at http://stackoverflow.com/a/3697482/217943
+version=${project.version}
