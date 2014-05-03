@@ -338,6 +338,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
             // if the line is empty we hav a problem - either a malformed
             // molecule entry or just extra new lines at the end of the file
             if (line.length() == 0) {
+                handleError("Unexpected empty line", linecount, 0, 0);
                 // read till the next $$$$ or EOF
                 while (true) {
                     line = input.readLine();
@@ -662,10 +663,11 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 symbol = line.substring(31, 34).trim().intern();
                 break;
              default:
+                 handleError("invalid line length", lineNum, 0, 0);
                  throw new CDKException("invalid line length, " + length + ": " + line);
         }
 
-        IAtom atom = createAtom(symbol, builder);
+        IAtom atom = createAtom(symbol, builder, lineNum);
 
         atom.setPoint3d(new Point3d(x, y, z));
         atom.setFormalCharge(charge);
@@ -990,13 +992,17 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @throws CDKException the symbol is not allowed
      */
     private IAtom createAtom(String symbol,
-                             IChemObjectBuilder builder) throws CDKException {
+                             IChemObjectBuilder builder,
+                             int lineNum) throws CDKException {
         if (isPeriodicElement(symbol))
             return builder.newInstance(IAtom.class, symbol);
-        
-        // when strict only accept labels from the specification
-        if (mode == Mode.STRICT && !isPseudoElement(symbol))
-            throw new CDKException("invald symbol: " + symbol);        
+
+        if (!isPseudoElement(symbol)) {
+            handleError("invalid symbol: " + symbol, lineNum, 31, 34);
+            // when strict only accept labels from the specification
+            if (mode == Mode.STRICT)
+                throw new CDKException("invalid symbol: " + symbol);
+        }
         
         // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
         // 'R' is a better label than 'R#' if now RGP is specified
