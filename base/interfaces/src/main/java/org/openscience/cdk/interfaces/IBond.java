@@ -50,6 +50,8 @@ public interface IBond extends IElectronContainer {
 		DOUBLE(2),
 		TRIPLE(3),
 		QUADRUPLE(4),
+		QUINTUPLE(5),
+		SEXTUPLE(6),
 		UNSET(0);
 
         private final Integer bondedElectronPairs;
