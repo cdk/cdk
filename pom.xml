@@ -121,7 +121,13 @@
             <name>Martin Eklund</name>
         </contributor>
         <contributor>
+            <name>Luis de Figueiredo</name>
+        </contributor>
+        <contributor>
             <name>Matteo Floris</name>
+        </contributor>
+        <contributor>
+            <name>Sambit Gaan</name>
         </contributor>
         <contributor>
             <name>Dan Gezelter</name>
@@ -166,10 +172,16 @@
             <name>Geert Josten</name>
         </contributor>
         <contributor>
+            <name>Klas Jönsson</name>
+        </contributor>
+        <contributor>
             <name>Dmitry Katsubo</name>
         </contributor>
         <contributor>
             <name>Jules Kerssemakers</name>
+        </contributor>
+        <contributor>
+            <name>Joos Kiener</name>
         </contributor>
         <contributor>
             <name>Anatoli Krassavine</name>
@@ -227,6 +239,9 @@
         </contributor>
         <contributor>
             <name>Julio Peironcely</name>
+        </contributor>
+        <contributor>
+            <name>Diego Pedrosa</name>
         </contributor>
         <contributor>
             <name>Tomáš Pluskal</name>
