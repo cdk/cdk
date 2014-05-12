@@ -73,7 +73,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 */
 	@Test
     public void testPartialTotalChargeDescriptor_Methanol() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.28,-0.67,0.0,0.0,0.0,0.4};
+		double [] testResult={0.28,-0.68,0.0,0.0,0.0,0.4};
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
