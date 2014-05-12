@@ -95,7 +95,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 */
 	@Test
     public void testPartialTotalChargeDescriptor_Methylamine() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36};
+		double [] testResult={0.27,-0.99,0.0,0.0,0.0,0.36,0.36};
 		IAtomicDescriptor descriptor = new PartialTChargeMMFF94Descriptor();
         
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -107,7 +107,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 		mol.addBond(builder.newInstance(IBond.class,carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
 		addExplicitHydrogens(mol);
 
-		for (int i = 0 ; i < 6 ; i++){
+		for (int i = 0 ; i < 7 ; i++){
 			double result= ((DoubleResult)descriptor.calculate(mol.getAtom(i),mol).getValue()).doubleValue();
 			Assert.assertEquals(testResult[i],result,METHOD_ERROR);
 		}
