@@ -536,7 +536,9 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.0.1</version>
                 <configuration>
-                    <linkXref>true</linkXref>
+                    <rulesets>
+                        <ruleset>${project.basedir}/pmd/custom.xml</ruleset>
+                    </rulesets>
                 </configuration>
             </plugin>
         </plugins>
