@@ -82,6 +82,31 @@ public class CanonTest {
         assertThat(act, is(exp));
     }
 
+    @Test public void terminalExplicitHydrogensAreNotIncluded() throws Exception {
+        IAtomContainer m    = smi("C/C=C(/C)C[H]");
+        boolean[]      mask = Canon.terminalHydrogens(m, GraphUtil.toAdjList(m));
+        assertThat(mask, is(new boolean[]{false, false, false, false, false, true}));
+    }
+
+    @Test public void bridgingExplicitHydrogensAreIncluded() throws Exception {
+        IAtomContainer m    = smi("B1[H]B[H]1");
+        boolean[]      mask = Canon.terminalHydrogens(m, GraphUtil.toAdjList(m));
+        assertThat(mask, is(new boolean[]{false, false, false, false}));
+    }
+
+    @Test public void explicitHydrogensIonsAreIncluded() throws Exception {
+        IAtomContainer m    = smi("[H+]");
+        boolean[]      mask = Canon.terminalHydrogens(m, GraphUtil.toAdjList(m));
+        assertThat(mask, is(new boolean[]{false}));
+    }
+
+    @Test public void molecularHydrogensAreNotIncluded() throws Exception {
+        IAtomContainer m    = smi("[H][H]");
+        boolean[]      mask = Canon.terminalHydrogens(m, GraphUtil.toAdjList(m));
+        assertThat(mask, is(new boolean[]{true, true}));
+    }
+
+
     static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     static IAtomContainer smi(String smi) throws Exception {

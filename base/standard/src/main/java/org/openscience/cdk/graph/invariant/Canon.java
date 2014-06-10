@@ -354,6 +354,25 @@ public final class Canon {
         return 0;
     }
 
+    /**
+     * Locate explicit hydrogens that are attached to exactly one other atom.
+     *
+     * @param ac a structure
+     * @return binary set of terminal hydrogens
+     */
+    static boolean[] terminalHydrogens(final IAtomContainer ac, final int[][] g) {
+
+        final boolean[] hydrogens = new boolean[ac.getAtomCount()];
+
+        // we specifically don't check for null atomic number, this must be set.
+        // if not, something major is wrong
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            hydrogens[i] = ac.getAtom(i).getAtomicNumber() == 1 && g[i].length == 1;
+        }
+
+        return hydrogens;
+    }
+
     /** The first 2229 primes. */
     private static final int[] PRIMES = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
                                          79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163,
