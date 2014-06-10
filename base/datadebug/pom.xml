@@ -82,19 +82,26 @@
         </dependency>
     </dependencies>
 
-    <reporting>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>3.1</version>
                 <configuration>
                     <rulesets>
-                        <ruleset>${project.basedir}/pmd/custom-data.xml</ruleset>
+                        <ruleset>/pmd/custom-data.xml</ruleset>
                     </rulesets>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openscience.cdk</groupId>
+                        <artifactId>cdk-build-utils</artifactId>
+                        <version>1.0.1</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
-    </reporting>
+    </build>
 
 </project>
