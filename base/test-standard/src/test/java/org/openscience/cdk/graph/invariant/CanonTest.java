@@ -30,6 +30,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -107,6 +109,18 @@ public class CanonTest {
     }
 
 
+    @Test public void explicitHydrogensOfEthanolHaveSymmetry() throws Exception {
+        IAtomContainer m        = smi("C([H])([H])C([H])([H])O");
+        long[]         symmetry = Canon.symmetry(m, GraphUtil.toAdjList(m));
+        assertThat(symmetry, is(new long[]{6, 1, 1, 7, 3, 3, 5}));
+    }
+
+    @Test public void explicitHydrogensDoNotAffectHeavySymmetry() throws Exception {
+        IAtomContainer m        = smi("CC=C(C)C[H]");
+        long[]         symmetry = Canon.symmetry(m, GraphUtil.toAdjList(m));
+        assertThat(symmetry, is(new long[]{4, 2, 3, 5, 5, 1}));
+    }
+    
     static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     static IAtomContainer smi(String smi) throws Exception {

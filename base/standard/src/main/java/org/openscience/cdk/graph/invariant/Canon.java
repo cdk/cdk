@@ -85,13 +85,14 @@ public final class Canon {
      * invariants.
      *
      * @param g         a graph (adjacency list representation)
+     * @param hydrogens binary vector of terminal hydrogens                  
      * @param partition an initial partition of the vertices
      */
-    private Canon(int[][] g, long[] partition, boolean symOnly) {
+    private Canon(int[][] g, long[] partition, boolean[] hydrogens, boolean symOnly) {
         this.g       = g;
         this.symOnly = symOnly;
         labelling    = partition.clone();
-        symmetry     = refine(labelling);
+        symmetry     = refine(labelling, hydrogens);
     }
 
     /**
@@ -134,7 +135,10 @@ public final class Canon {
     public static long[] label(IAtomContainer container, int[][] g, long[] invariants) {
         if (invariants.length != g.length)
             throw new IllegalArgumentException("number of invariants != number of atoms");
-        return new Canon(g, invariants, false).labelling;
+        return new Canon(g,
+                         invariants,
+                         terminalHydrogens(container, g),
+                         false).labelling;
     }
 
     /**
@@ -150,7 +154,10 @@ public final class Canon {
      * @see EquivalentClassPartitioner
      */
     public static long[] symmetry(IAtomContainer container, int[][] g) {
-        return new Canon(g, basicInvariants(container, g), true).symmetry;
+        return new Canon(g,
+                         basicInvariants(container, g),
+                         terminalHydrogens(container, g),
+                         true).symmetry;
     }
 
     /**
@@ -159,9 +166,10 @@ public final class Canon {
      * 
      * @param invariants the invariants to refine (canonical labelling gets
      *                   written here)
+     * @param hydrogens  binary vector of terminal hydrogens                  
      * @return the symmetry classes
      */
-    private long[] refine(long[] invariants) {
+    private long[] refine(long[] invariants, boolean[] hydrogens) {
         
         int ord = g.length;
         
@@ -199,13 +207,22 @@ public final class Canon {
                 for (int i = 0; i < ord && nextVs[i] >= 0; i++) {
                     int v         = nextVs[i];
                     currVs[nnu++] = v;
-                    curr[v]       = primeProduct(g[v], prev);
+                    curr[v]       = hydrogens[v] ? prev[v] 
+                                                 : primeProduct(g[v], prev, hydrogens);
                 }
                 m = n;
             }
             
-            if (symmetry == null)
+            if (symmetry == null) {
+                for (int i = 0; i < g.length; i++) {
+                    if (hydrogens[i]) {
+                        curr[i]      = prev[g[i][0]];
+                        hydrogens[i] = false;
+                    }
+                }
+                n        = ranker.rank(currVs, nextVs, nnu, curr, prev);
                 symmetry = Arrays.copyOf(prev, ord);
+            }
 
             // partition is discrete or only symmetry classes are needed
             if (symOnly || n == ord)
@@ -234,10 +251,13 @@ public final class Canon {
      * @param ranks invariant ranks
      * @return the prime product
      */
-    private long primeProduct(int[] ws, long[] ranks) {
+    private long primeProduct(int[] ws, long[] ranks, boolean[] hydrogens) {
         long prod = 1;
-        for (int w : ws)
-            prod *= PRIMES[(int) ranks[w]];
+        for (int w : ws) {
+            if (!hydrogens[w]) {
+                prod *= PRIMES[(int) ranks[w]];
+            }
+        }
         return prod;
     }
     
