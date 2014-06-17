@@ -1355,4 +1355,20 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
                        is(notNullValue()));
         }
     }
+
+    /**
+     * @cdk.bug 1343
+     */
+    @Test public void nonNegativeHydrogenCountOnHydrogenRadical() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/mdl/ChEBI_29293.mol");
+        MDLV2000Reader reader = new MDLV2000Reader(in);
+        IAtomContainer container = reader.read(new AtomContainer());
+        reader.close();
+        assertThat(container.getAtom(0).getImplicitHydrogenCount(),
+                   is(0));
+        assertThat(container.getAtom(1).getImplicitHydrogenCount(),
+                   is(0));
+            
+        
+    }
 }
