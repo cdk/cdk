@@ -25,6 +25,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -369,6 +370,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 * A unit test for JUnit with Imidazolium
 	 */
 	@Test
+	@Ignore("Issue with Atom type assignment in MMFF94")
 	public void testPartialTotalChargeDescriptor_Imidazolium()
 			throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] expectedResult = { 0.2, 0.2, -0.7, 0.65, -0.7, 0.15, 0.15,
@@ -379,26 +381,27 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 	}
 
+
+	/**
+	 * A unit test for JUnit with 7-Aminoheptanoic acid
+	 */
 	// Cannot generate standard InChI for the zwitterionic form of
 	// 7-aminoheptanoic acid (as presented in paper)
 	// Paper also appears to have left out the values for the (alkyl chain) Cs
 	// and Hs
-	/*	*//**
-	 * A unit test for JUnit with 7-Aminoheptanoic acid
-	 */
-	/*
-	 * @Test public void testPartialTotalChargeDescriptor_7AminoheptanoicAcid()
-	 * throws ClassNotFoundException, CDKException, java.lang.Exception {
-	 * double[] expectedResult={0.0, 0.0, 0.0, 0.503, -0.853, 0.0, -0.106,
-	 * 0.906, -0.9, -0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.45, 0.45,
-	 * 0.45, 0.0, 0.0, 0.0, 0.0}; double[] actualResult =
-	 * AtomInChIToMMFF94PartialCharges
-	 * ("InChI=1S/C7H15NO2/c8-6-4-2-1-3-5-7(9)10/h1-6,8H2,(H,9,10)");
-	 * 
-	 * Assert.assertArrayEquals(expectedResult, actualResult, METHOD_ERROR);
-	 * 
-	 * }
-	 */
+	
+	@Test
+	@Ignore
+	public void testPartialTotalChargeDescriptor_7AminoheptanoicAcid()
+			throws ClassNotFoundException, CDKException, java.lang.Exception {
+		double[] expectedResult = { 0.0, 0.0, 0.0, 0.503, -0.853, 0.0, -0.106,
+				0.906, -0.9, -0.9, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.45, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0 };
+		double[] actualResult = AtomInChIToMMFF94PartialCharges("InChI=1S/C7H15NO2/c8-6-4-2-1-3-5-7(9)10/h1-6,8H2,(H,9,10)");
+		Assert.assertArrayEquals(expectedResult, actualResult, METHOD_ERROR);
+
+	}
+
 
 	/**
 	 * A unit test for JUnit with Ethoxyethane
