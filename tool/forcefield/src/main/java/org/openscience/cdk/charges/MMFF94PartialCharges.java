@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -55,13 +56,13 @@ import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
  */
 public class MMFF94PartialCharges implements IChargeCalculator {
 
-	
+	private final Logger LOG = Logger.getLogger(MMFF94PartialCharges.class);
+
 	/**
-	 *  Constructor for the MMFF94PartialCharges object
+	 * Constructor for the MMFF94PartialCharges object
 	 */
-	public MMFF94PartialCharges() { }
-	
-	
+	public MMFF94PartialCharges() {
+	}
 	
 	/**
 	 *  Main method which assigns MMFF94 partial charges
@@ -90,9 +91,10 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 		Object bondData = null;
 		Object dataNeigh = null;
 		Iterator<IAtom> atoms = ac.atoms().iterator();
+
 		while(atoms.hasNext()) {
-			//logger.debug("ATOM "+i+ " " +atoms[i].getSymbol());
 			thisAtom = atoms.next();
+			LOG.debug("ATOM " + thisAtom.getSymbol() + thisAtom.getAtomTypeName());
 			data = parameterSet.get("data"+thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtomsList(thisAtom);
 			formalCharge = thisAtom.getCharge();
@@ -102,6 +104,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 			sumOfBondIncrements = 0;
             for (IAtom neighboor : neighboors) {
                 IAtom neighbour = (IAtom) neighboor;
+                LOG.debug("neighbour " + neighbour.getAtomTypeName());
                 dataNeigh = parameterSet.get("data" + neighbour.getAtomTypeName());
                 if (parameterSet.containsKey("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName())) {
                     bondData = parameterSet.get("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName());
@@ -123,7 +126,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
             charge += sumOfFormalCharges * theta;
 			charge += sumOfBondIncrements;
 			thisAtom.setProperty("MMFF94charge", charge);
-			//logger.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
+			LOG.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
 		}
 		return ac;
 	}
