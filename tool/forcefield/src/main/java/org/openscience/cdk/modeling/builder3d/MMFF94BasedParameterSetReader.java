@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
+import org.apache.log4j.Logger;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -58,6 +59,8 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public class MMFF94BasedParameterSetReader {
 
+	private final Logger LOG = Logger.getLogger(MMFF94BasedParameterSetReader.class);
+	
 	private String configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
 	private InputStream ins = null;
 	private Map<String,Object> parameterSet;
@@ -147,7 +150,7 @@ public class MMFF94BasedParameterSetReader {
 			throw new IOException("Data: Malformed Number due to:"+nfe);
 		}
 		
-		//logger.debug("data : " + data);
+		LOG.debug("data : well,apol,Neff,sDA,fcadj,spbci,a,g " + data);
 		parameterSet.put(key, data);
 		
 		key="vdw"+sid;
@@ -157,7 +160,7 @@ public class MMFF94BasedParameterSetReader {
 			data.add(new Double(radius));
 
 		}catch (NumberFormatException nfe2) {
-//			logger.debug("vdwError: Malformed Number due to:"+nfe2);
+			LOG.debug("vdwError: Malformed Number due to:"+nfe2);
 		  }
 		parameterSet.put(key, data);
 
@@ -328,7 +331,7 @@ public class MMFF94BasedParameterSetReader {
 			throw new IOException("setStrBnd: Malformed Number due to:"+nfe);
 		}
 		key = "strbnd" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
-		//logger.debug("key =" + key);
+		LOG.debug("key =" + key);
 		parameterSet.put(key, data);
 	}
 	
@@ -359,7 +362,7 @@ public class MMFF94BasedParameterSetReader {
 			double va5 = new Double(value5).doubleValue();
 
 			key = "torsion" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3 + ";" + sid4;
-			//logger.debug("key = " + key);
+			LOG.debug("key = " + key);
 			if (parameterSet.containsKey(key)) {
 				data = (Vector) parameterSet.get(key);
 				data.add(new Double(va1));
@@ -367,7 +370,7 @@ public class MMFF94BasedParameterSetReader {
 				data.add(new Double(va3));
 				data.add(new Double(va4));
 				data.add(new Double(va5));
-				//logger.debug("data = " + data);
+				LOG.debug("data = " + data);
 			}
 			else{
 			    data = new Vector();
@@ -376,7 +379,7 @@ public class MMFF94BasedParameterSetReader {
 			    data.add(new Double(va3));
 			    data.add(new Double(va4));
 			    data.add(new Double(va5));
-				//logger.debug("data = " + data);
+				LOG.debug("data = " + data);
 			}
 
 			parameterSet.put(key, data);
@@ -422,7 +425,7 @@ public class MMFF94BasedParameterSetReader {
 	 * @exception  Exception  Description of the Exception
 	 */
 	private void setDefaultStrBnd() throws Exception {
-		//logger.debug("Sets the Default Stretch-Bend Parameters");
+		LOG.debug("Sets the Default Stretch-Bend Parameters");
 		List data = new Vector();
 		stDFSB.nextToken();
 		String sIR = stDFSB.nextToken();
@@ -452,7 +455,7 @@ public class MMFF94BasedParameterSetReader {
 	 */
 	public void readParameterSets(IChemObjectBuilder builder) throws Exception {
 		//vdW,bond,angle,strbond,opbend,torsion,data
-		//logger.debug("------ Read MMFF94 ParameterSets ------");
+		LOG.debug("------ Read MMFF94 ParameterSets ------");
 
 		if (ins == null) {
             ClassLoader loader = this.getClass().getClassLoader();
@@ -524,7 +527,7 @@ public class MMFF94BasedParameterSetReader {
 							}
 							stvdW = new StringTokenizer(svdW,"\t; ");
 							ntvdW = stvdW.countTokens();
-							//logger.debug("ntvdW : " + ntvdW);
+							LOG.debug("ntvdW : " + ntvdW);
 							if (svdW.startsWith("vdw") & ntvdW == 9) {
 								st.nextToken();
 								sid = st.nextToken();
@@ -547,23 +550,23 @@ public class MMFF94BasedParameterSetReader {
 		}
 
 		try {
-			//logger.debug("Parses the Default Stretch-Bend Parameters");
+			LOG.debug("Parses the Default Stretch-Bend Parameters");
 			while (true) {
 				sDFSB = rDFSB.readLine();
-				//logger.debug("sDFSB = " + sDFSB);
+				LOG.debug("sDFSB = " + sDFSB);
 				if (sDFSB == null) {
-					//logger.debug("sDFSB == null, break");
+					LOG.debug("sDFSB == null, break");
 					break;
 				}
 				stDFSB = new StringTokenizer(sDFSB,"\t; ");
 				ntDFSB = stDFSB.countTokens();
-				//logger.debug("ntDFSB : " + ntDFSB);
+				LOG.debug("ntDFSB : " + ntDFSB);
 				if (sDFSB.startsWith("DFSB") & ntDFSB == 6) {
 					setDefaultStrBnd();
 				}
 			}
 			insDFSB.close();
-			//logger.debug("insDFSB closed");
+			LOG.debug("insDFSB closed");
 		} catch (IOException e) {
 			throw new IOException("There was a problem parsing the Default Stretch-Bend Parameters (mmffdfsb.par)");
 		}

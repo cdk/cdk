@@ -96,6 +96,9 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 			thisAtom = atoms.next();
 			LOG.debug("Assigning MMFF94 Charge for atom " + thisAtom.getAtomTypeName());
 			data = parameterSet.get("data" + thisAtom.getAtomTypeName());
+			LOG.debug("Atom data:");
+			LOG.debug("WellD, Apol, Neff, DA, q, pbci, A_i, G_i");
+			LOG.debug(data);
 			neighboors = ac.getConnectedAtomsList(thisAtom);
 			LOG.debug("Atom has  " + neighboors.size() + " neighbour(s)");
 			formalCharge = thisAtom.getCharge();
