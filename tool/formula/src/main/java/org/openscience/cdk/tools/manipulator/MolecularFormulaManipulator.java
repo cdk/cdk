@@ -392,33 +392,34 @@ public class MolecularFormulaManipulator {
 	 */
 	@TestMethod("testGetHTML_IMolecularFormula_arrayString_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean chargeB, boolean isotopeB) {
-		String htmlString = "";
+		StringBuilder sb = new StringBuilder();
 		for (String orderElement : orderElements) {
 			IElement element = formula.getBuilder().newInstance(IElement.class,orderElement);
 			if (containsElement(formula, element)) {
 				if (!isotopeB) {
-					String eleToAdd = element.getSymbol() + "<sub>" + getElementCount(formula, element) + "</sub>";
-					htmlString += eleToAdd;
+					sb.append(element.getSymbol());
+                    sb.append("<sub>").append(getElementCount(formula, element)).append("</sub>");
 				} else {
 					for (IIsotope isotope : getIsotopes(formula, element)) {
-						String isoToAdd = "<sup>" + isotope.getMassNumber() + "</sup>"
-						+ isotope.getSymbol() + "<sub>" + formula.getIsotopeCount(isotope) + "</sub>";
-						htmlString += isoToAdd;
+                        sb.append("<sup>").append(isotope.getMassNumber()).append("</sup>");
+                        sb.append(isotope.getSymbol());
+                        sb.append("<sub>").append(formula.getIsotopeCount(isotope)).append("</sub>");
 					}
 				}
 			}
 		}
+        
 		if (chargeB) {
 			Integer charge = formula.getCharge();
 			if (charge == CDKConstants.UNSET || charge == 0) {
-				return htmlString;
+				return sb.toString();
 			} else if (charge < 0) {
-				return htmlString + "<sup>" + charge * -1 + "-" + "</sup>";
+				sb.append("<sup>").append(charge * -1).append("-").append("</sup>");
 			} else {
-				return htmlString + "<sup>" + charge +"+" + "</sup>";
+                sb.append("<sup>").append(charge * -1).append("+").append("</sup>");
 			}
 		}
-		return htmlString;
+		return sb.toString();
 	}
 
 	/**
