@@ -370,7 +370,8 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 	 * A unit test for JUnit with Imidazolium
 	 */
 	@Test
-	@Ignore("Issue with Atom type assignment in MMFF94")
+	@Ignore
+	//@Ignore("Issue with Atom type assignment in MMFF94:  Atom is unkown: Symbol:N does not MATCH AtomType. HoseCode:N-3+;CC(H,H,C,N/H&,H&/)")
 	public void testPartialTotalChargeDescriptor_Imidazolium()
 			throws ClassNotFoundException, CDKException, java.lang.Exception {
 		double[] expectedResult = { 0.2, 0.2, -0.7, 0.65, -0.7, 0.15, 0.15,
