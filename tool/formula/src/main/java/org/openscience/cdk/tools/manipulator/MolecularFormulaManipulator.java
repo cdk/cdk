@@ -398,12 +398,18 @@ public class MolecularFormulaManipulator {
 			if (containsElement(formula, element)) {
 				if (!isotopeB) {
 					sb.append(element.getSymbol());
-                    sb.append("<sub>").append(getElementCount(formula, element)).append("</sub>");
+                    int n = getElementCount(formula, element);
+                    if (n > 1) {
+                        sb.append("<sub>").append(n).append("</sub>");
+                    }
 				} else {
 					for (IIsotope isotope : getIsotopes(formula, element)) {
                         sb.append("<sup>").append(isotope.getMassNumber()).append("</sup>");
                         sb.append(isotope.getSymbol());
-                        sb.append("<sub>").append(formula.getIsotopeCount(isotope)).append("</sub>");
+                        int n = formula.getIsotopeCount(isotope);
+                        if (n > 1) {
+                            sb.append("<sub>").append(n).append("</sub>");
+                        }
 					}
 				}
 			}
@@ -416,7 +422,7 @@ public class MolecularFormulaManipulator {
 			} else if (charge < 0) {
 				sb.append("<sup>").append(charge * -1).append("-").append("</sup>");
 			} else {
-                sb.append("<sup>").append(charge * -1).append("+").append("</sup>");
+                sb.append("<sup>").append(charge).append("+").append("</sup>");
 			}
 		}
 		return sb.toString();

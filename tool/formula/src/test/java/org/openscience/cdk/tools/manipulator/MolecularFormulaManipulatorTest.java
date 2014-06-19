@@ -536,6 +536,16 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
     	
         Assert.assertEquals("C<sub>8</sub>H<sub>10</sub>Cl<sub>2</sub>O<sub>2</sub>", MolecularFormulaManipulator.getHTML(formula));
     }
+
+
+    @Test public void htmlFormulaDoesNotAddSubscriptForSingleElements() {
+        MolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class,"C"),1);
+        formula.addIsotope(builder.newInstance(IIsotope.class,"H"),4);
+        
+        Assert.assertEquals("CH<sub>4</sub>", MolecularFormulaManipulator.getHTML(formula));
+    }
+    
     @Test 
     public void testGetHTML_IMolecularFormula_boolean_boolean() {
     	MolecularFormula formula = new MolecularFormula();
