@@ -94,18 +94,21 @@ public class MMFF94PartialCharges implements IChargeCalculator {
 
 		while(atoms.hasNext()) {
 			thisAtom = atoms.next();
-			LOG.debug("ATOM " + thisAtom.getSymbol() + thisAtom.getAtomTypeName());
-			data = parameterSet.get("data"+thisAtom.getAtomTypeName());
+			LOG.debug("Assigning MMFF94 Charge for atom " + thisAtom.getAtomTypeName());
+			data = parameterSet.get("data" + thisAtom.getAtomTypeName());
 			neighboors = ac.getConnectedAtomsList(thisAtom);
+			LOG.debug("Atom has  " + neighboors.size() + " neighbour(s)");
 			formalCharge = thisAtom.getCharge();
+			LOG.debug("Atom's formal charge is  " + formalCharge);
 			theta = (Double)((List)data).get(5);
 			charge = formalCharge * (1 - (neighboors.size() * theta));
 			sumOfFormalCharges = 0;
 			sumOfBondIncrements = 0;
             for (IAtom neighboor : neighboors) {
                 IAtom neighbour = (IAtom) neighboor;
-                LOG.debug("neighbour " + neighbour.getAtomTypeName());
+                LOG.debug("  neighbour of " + thisAtom.getAtomTypeName() + " is " + neighbour.getAtomTypeName());
                 dataNeigh = parameterSet.get("data" + neighbour.getAtomTypeName());
+                LOG.debug("     dataNeigh is " + dataNeigh);
                 if (parameterSet.containsKey("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName())) {
                     bondData = parameterSet.get("bond" + thisAtom.getAtomTypeName() + ";" + neighbour.getAtomTypeName());
                     sumOfBondIncrements -= (Double) ((List)bondData).get(4);
@@ -126,7 +129,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
             charge += sumOfFormalCharges * theta;
 			charge += sumOfBondIncrements;
 			thisAtom.setProperty("MMFF94charge", charge);
-			LOG.debug( "CHARGE :"+thisAtom.getProperty("MMFF94charge") );
+			LOG.debug( "Final MMFF94charge on : " + thisAtom.getAtomTypeName() + " is "+ thisAtom.getProperty("MMFF94charge") + "\n" );
 		}
 		return ac;
 	}
