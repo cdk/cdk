@@ -54,6 +54,7 @@ public class CMLHandler extends DefaultHandler {
 
     private CMLStack xpath;
     private CMLStack conventionStack;
+    private CMLModuleStack moduleStack;
 
     /**
      * Constructor for the CMLHandler.
@@ -65,6 +66,7 @@ public class CMLHandler extends DefaultHandler {
         userConventions = new Hashtable<String,ICMLModule>();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
+        moduleStack = new CMLModuleStack();
     }
 
     public void registerConvention(String convention, ICMLModule conv) {
@@ -95,12 +97,14 @@ public class CMLHandler extends DefaultHandler {
         conv.endElement(xpath, uri, local, raw);
         xpath.pop();
         conventionStack.pop();
+        moduleStack.pop();
+        conv = moduleStack.current();
     }
 
     public void startDocument() {
         conv.startDocument();
         conventionStack.push("CML");
-
+        moduleStack.push(conv);
     }
 
     public void startElement(String uri, String local, String raw, Attributes atts) {
@@ -158,6 +162,7 @@ public class CMLHandler extends DefaultHandler {
                 conventionStack.push(conventionStack.current());
             }
         }
+        moduleStack.push(conv);
         if (debug) logger.debug("ConventionStack: ", conventionStack);
         conv.startElement(xpath, uri, local, raw, atts);
     }
