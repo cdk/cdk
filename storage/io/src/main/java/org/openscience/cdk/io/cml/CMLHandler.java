@@ -116,7 +116,8 @@ public class CMLHandler extends DefaultHandler {
             logger.info("Detected CRML module");
             conv = new CMLReactionModule(conv);
             conventionStack.push(conventionStack.current());
-        } else {
+        } else if (uri == null || uri.length() == 0 ||
+        		   uri.startsWith("http://www.xml-cml.org/")) {
             // assume CML Core
                 
             // Detect conventions
@@ -161,6 +162,9 @@ public class CMLHandler extends DefaultHandler {
                 // no convention set/reset: take convention of parent
                 conventionStack.push(conventionStack.current());
             }
+        } else {
+        	 conv = new OtherNamespace();
+        	 conventionStack.push("Other");
         }
         moduleStack.push(conv);
         if (debug) logger.debug("ConventionStack: ", conventionStack);
