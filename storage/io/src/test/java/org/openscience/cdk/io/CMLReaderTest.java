@@ -334,4 +334,17 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
         }
     }
     
+    @Test
+    public void testMixedNamespaces() throws Exception {
+        InputStream in = getClass().getResourceAsStream("/data/cml/US06358966-20020319-C00001-enr.cml");
+        CMLReader reader = new CMLReader(in);
+        try {
+            IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
+            Assert.assertEquals(34, ChemFileManipulator.getAtomCount(cfile));
+            Assert.assertEquals(39, ChemFileManipulator.getBondCount(cfile));
+        } finally {
+            reader.close();
+        }
+
+    }
 }
