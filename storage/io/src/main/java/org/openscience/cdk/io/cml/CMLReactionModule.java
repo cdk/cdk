@@ -151,6 +151,8 @@ public class CMLReactionModule extends CMLCoreModule {
         if ("reaction".equals(local)) {
 //            cdo.endObject("Reaction");
         	currentReactionSet.addReaction(currentReaction);
+        	currentChemModel.setReactionSet(currentReactionSet);
+            currentChemSequence.addChemModel(currentChemModel);
         } else if ("reactionList".equals(local)) {
 //            cdo.endObject("ReactionSet");
         	currentChemModel.setReactionSet(currentReactionSet);
