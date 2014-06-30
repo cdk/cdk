@@ -1153,7 +1153,7 @@ public class CMLCoreModule implements ICMLModule {
 //            cdo.setObjectProperty("Molecule", "inchi", inchi);
         	currentMolecule.setProperty(CDKConstants.INCHI, inchi);
         }
-        if (formula != null){
+        if (formula != null && formula.size() > 0){
         	currentMolecule.setProperty(CDKConstants.FORMULA, formula);
         }
         Iterator<String> customs=moleculeCustomProperty.iterator();
