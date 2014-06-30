@@ -87,7 +87,7 @@ public class CMLModuleStack {
     StringBuffer sb = new StringBuffer();
     sb.append("/");
     for (int i = 0; i < sp; ++i) {
-      sb.append(stack[i]);
+      sb.append(stack[i].getClass().getSimpleName());
       sb.append("/");
     }
     return sb.toString();
