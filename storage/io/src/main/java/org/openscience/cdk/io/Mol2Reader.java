@@ -38,6 +38,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.AtomTypeFactory;
+import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -324,6 +325,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                             AtomTypeManipulator.configure(atom, atomType);
                         }
 
+                        atom.setAtomicNumber(Elements.ofString(atom.getSymbol()).number());
                         atom.setID(nameStr);
                         atom.setAtomTypeName(atomTypeStr);
                         try {
