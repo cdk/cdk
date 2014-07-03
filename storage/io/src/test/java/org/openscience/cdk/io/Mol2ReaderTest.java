@@ -491,4 +491,18 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
         Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);        
     }
+    
+    // CL --> Cl, NA --> Na etc.. /cdk/bug/1346
+    @Test public void unrecognisedAtomTypes() throws Exception {
+        Mol2Reader mol2Reader = null; 
+        try {
+            mol2Reader = new Mol2Reader(getClass().getResourceAsStream("CLMW1.mol2"));
+            IAtomContainer container = mol2Reader.read(new AtomContainer());
+            for (IAtom atom : container.atoms())
+                Assert.assertNotNull(atom.getAtomicNumber());
+        }finally {
+            if (mol2Reader != null) 
+                mol2Reader.close();
+        }
+    }
 }

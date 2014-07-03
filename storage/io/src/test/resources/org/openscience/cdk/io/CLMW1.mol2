@@ -1,0 +1,17 @@
+@<TRIPOS>MOLECULE
+CLMW1
+    4     2    1     0    0
+SMALL
+USER_CHARGES
+@<TRIPOS>ATOM
+   1 O2      -2.4761     1.0479     4.4860 O.3      1  NAPW -0.8600
+   2 H3      -2.4125     1.8377     3.9121 H        1  NAPW  0.4300
+   3 H4      -1.6170     0.6691     4.1852 H        1  NAPW  0.4300
+   4 CL1     -0.0428     1.6251     2.5211 CL       1  NAPW -1.0000
+@<TRIPOS>BOND
+   1    1    2 1 
+   2    1    3 1 
+@<TRIPOS>SUBSTRUCTURE
+   1  NAPW    1
+@<TRIPOS>COMMENT
+COMMENT OH2 ... CL-

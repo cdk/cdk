@@ -127,6 +127,10 @@
     <atom elementType="S"/>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp2</scalar>
   </atomType>
+  <!-- S.1 not listed by Tripos but seen in MMFF 94 validate suite -->
+  <atomType id="S.1">
+    <atom elementType="S"/>
+  </atomType>
   <atomType id="S.O">
     <atom elementType="S"/>
   </atomType>

@@ -30,10 +30,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.vecmath.Point3d;
 
+import com.google.common.collect.ImmutableMap;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -75,6 +78,27 @@ public class Mol2Reader extends DefaultChemObjectReader {
     BufferedReader input = null;
     private static ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(Mol2Reader.class);
+
+    /**
+     * Dictionary of known atom type aliases. If the key is seen on input, it
+     * is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
+     */
+    private static final Map<String, String> ATOM_TYPE_ALIASES = ImmutableMap.<String, String>builder()
+                                                                            // previously produced by Open Babel
+                                                                            .put("S.o2", "S.O2")
+                                                                            .put("S.o", "S.O")
+                                                                            // seen in MMFF94 validation suite
+                                                                            .put("CL", "Cl")
+                                                                            .put("CU", "Cu")
+                                                                            .put("FE", "Fe")
+                                                                            .put("BR", "Br")
+                                                                            .put("NA", "Na")
+                                                                            .put("SI", "Si")
+                                                                            .put("CA", "Ca")
+                                                                            .put("ZN", "Zn")
+                                                                            .put("LI", "Li")
+                                                                            .put("MG", "Mg")
+                                                                            .build();
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -300,12 +324,10 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         String zStr = tokenizer.nextToken();
                         String atomTypeStr = tokenizer.nextToken();
 
-                        // fix OpenBabel atom type codes to SYBYL specification
-                        // this addresses wrong types that were output by OB (but is now fixed)
-                        // see https://sourceforge.net/tracker/index.php?func=detail&aid=1650239&group_id=40728&atid=428740
-                        if ("S.o2".equals(atomTypeStr)) atomTypeStr = "S.O2";
-                        if ("S.o".equals(atomTypeStr)) atomTypeStr = "S.O";
-
+                        // replace unrecognised atom type
+                        if (ATOM_TYPE_ALIASES.containsKey(atomTypeStr))
+                            atomTypeStr = ATOM_TYPE_ALIASES.get(atomTypeStr);
+                        
                         IAtom atom = molecule.getBuilder().newInstance(IAtom.class, "X");
                         IAtomType atomType;
                         try {
