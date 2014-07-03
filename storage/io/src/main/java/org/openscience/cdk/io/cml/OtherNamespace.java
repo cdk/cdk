@@ -30,7 +30,7 @@ import org.xml.sax.Attributes;
  * 
  * @author egonw
  */
-public class OtherNamespace implements ICMLModule {
+final class OtherNamespace implements ICMLModule {
 
 	/** {@inheritDoc} */
 	@Override

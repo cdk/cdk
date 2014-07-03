@@ -214,7 +214,7 @@ public class PDBConvention extends CMLCoreModule {
          
         } else if(name.equals("molecule")){
         	storeData();
-            if(xpath.sp == 1){
+            if(xpath.size() == 1){
 //	        	cdo.endObject("Molecule");
             	if (currentMolecule instanceof IAtomContainer) {
                     logger.debug("Adding molecule to set");

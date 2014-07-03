@@ -28,7 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 /**
- * Low weigth alternative to Sun's Stack class.
+ * Low weight alternative to Sun's Stack class.
  *
  * @cdk.module io
  * @cdk.githash
@@ -36,16 +36,16 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.keyword stack
  */
 @TestClass("org.openscience.cdk.io.cml.CMLStackTest")
-public class CMLStack {
+final class CMLStack {
 
-  String[] stack = new String[64];
-  int sp = 0;
+  private String[] stack = new String[64];
+  private int sp = 0;
 
   /**
    * Adds an entry to the stack.
    */
   @TestMethod("testPush_String")
-  public void push(String item) {
+  void push(String item) {
     if (sp == stack.length) {
       String[] temp = new String[2 * sp];
       System.arraycopy(stack, 0, temp, 0, sp);
@@ -54,7 +54,7 @@ public class CMLStack {
     stack[sp++] = item;
   }
   
-  public int length() {
+  int length() {
 	  return sp;
   }
 
@@ -64,7 +64,7 @@ public class CMLStack {
    * @see #current()
    */
   @TestMethod("testPop")
-  public String pop() {
+  String pop() {
     return stack[--sp];
   }
 
@@ -74,7 +74,7 @@ public class CMLStack {
    * @see #pop()
    */
   @TestMethod("testCurrent")
-  public String current() {
+  String current() {
     if (sp > 0) {
         return stack[sp-1];
     } else {
@@ -99,7 +99,7 @@ public class CMLStack {
    * Convenience method to check the last added elements. 
    */
   @TestMethod("testEndsWith_String")
-  public boolean endsWith(String lastElement) {
+  boolean endsWith(String lastElement) {
     return stack[sp-1].equals(lastElement);
   }
 
@@ -107,7 +107,7 @@ public class CMLStack {
    * Convenience method to check the last two added elements. 
    */
   @TestMethod("testEndsWith_String_String")
-  public boolean endsWith(String oneButLast, String lastElement) {
+  boolean endsWith(String oneButLast, String lastElement) {
 	    return endsWith(lastElement) && stack[sp-2].equals(oneButLast);
   }
 
@@ -115,7 +115,16 @@ public class CMLStack {
    * Convenience method to check the last three added elements. 
    */
   @TestMethod("testEndsWith_String_String_String")
-  public boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
+  boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
 	    return endsWith(oneButLast,lastElement) && stack[sp-3].equals(twoButLast);
   }
+
+  /**
+   * Current size of the stack.
+   * @return number of items
+   */
+  @TestMethod("testSize")
+  int size() {
+      return sp;
+  }   
 }
