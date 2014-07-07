@@ -25,7 +25,9 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -38,6 +40,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * @cdk.module test-structgen
  */
+@Category(SlowTest.class) // structgen is slow... a single method here currently takes ~6 seconds
 public class CrossoverMachineTest extends CDKTestCase {
     
 

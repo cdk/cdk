@@ -24,12 +24,15 @@ package org.openscience.cdk.smsd.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKTestCase;
+import org.openscience.cdk.SlowTest;
 
 /**
  * @author Asad
  * @cdk.module test-smsd
  */
+@Category(SlowTest.class) // test uses Thread.sleep...
 public class TimeManagerTest extends CDKTestCase {
 
     @Test
@@ -98,6 +101,7 @@ public class TimeManagerTest extends CDKTestCase {
         try {
             thisThread.sleep(timeMillis);
         } catch (Throwable t) {
+            
             throw new OutOfMemoryError("An Error has occured");
         }
         System.out.println("Ending......");

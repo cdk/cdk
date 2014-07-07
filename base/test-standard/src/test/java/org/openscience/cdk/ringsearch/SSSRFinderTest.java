@@ -28,10 +28,12 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -252,6 +254,7 @@ public class SSSRFinderTest extends CDKTestCase {
      * Method findRelevantRings() computes the rings (cycles) that are contained
      * in *some* SSSR (minimum cycle basis).
      */
+    @Category(SlowTest.class)
     @Test  public void testBuckyballRelevantRings() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetRelevant = new SSSRFinder(buckyball).findRelevantRings();
@@ -265,6 +268,7 @@ public class SSSRFinderTest extends CDKTestCase {
     /**
      * Method findSSSR() computes one (of possibly several) SSSRs.
      */
+    @Category(SlowTest.class)
     @Test  public void testBuckyballSSSR() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetSSSR = new SSSRFinder(buckyball).findSSSR();

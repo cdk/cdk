@@ -22,6 +22,8 @@ package org.openscience.cdk.math;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.math.RandomNumbersTool;
 import org.openscience.cdk.CDKTestCase;
 
@@ -118,6 +120,7 @@ public class RandomNumbersToolTest extends CDKTestCase {
                 random == 3 || random == 4 || random == 5);
     }
 
+    @Category(SlowTest.class)
     @Test public void testFlipCoin() {
         int ntry = 1000000;
         double p = 0.5;

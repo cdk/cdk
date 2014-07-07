@@ -26,9 +26,11 @@ import java.io.InputStreamReader;
 import com.google.common.io.CharStreams;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.aromaticity.ElectronDonation;
@@ -382,6 +384,7 @@ public class RecursiveTest extends CDKTestCase {
     }
 
 
+    @Category(SlowTest.class)
     @Test public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
@@ -417,6 +420,7 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(4, nmatch);
     }
 
+    @Category(SlowTest.class)
     @Test public void testBasicAmineOnDrugs() throws Exception {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);

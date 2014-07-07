@@ -32,9 +32,11 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -74,6 +76,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 	}
 
     @Test
+    @Category(SlowTest.class)
     public void testFingerprints() throws Exception 
     {
     	logger.info("CircularFingerprinter test: loading source materials");

@@ -39,9 +39,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -125,6 +127,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
      * 
      * @throws Exception if an error occurs
      */
+     @Category(SlowTest.class)
      @Test public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
     	

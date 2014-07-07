@@ -31,8 +31,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBioPolymer;
@@ -434,6 +436,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         testObjectCountsChemFile(chemFile, 1, 1, 1, 2804, 1, 325, 23);
     }
     
+    @Category(SlowTest.class)
     @Test public void test1CKV() throws Exception {
 	    String filename = "data/pdb/1CKV.pdb";
 	    IChemFile chemFile = getChemFile(filename);

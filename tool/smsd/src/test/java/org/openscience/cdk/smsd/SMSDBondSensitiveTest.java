@@ -25,7 +25,9 @@ package org.openscience.cdk.smsd;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
+import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -43,6 +45,7 @@ import org.openscience.cdk.smsd.tools.ExtAtomContainerManipulator;
  * @cdk.module test-smsd
  * @cdk.require java1.6+
  */
+@Category(SlowTest.class)
 public class SMSDBondSensitiveTest {
 
     private static IAtomContainer Napthalene;
