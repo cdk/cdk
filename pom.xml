@@ -463,6 +463,7 @@
                         <!-- format tests do not work (cyclic dependency) -->
                         <exclude>**/io/formats/*FormatTest.java</exclude>
                     </excludes>
+                    <excludedGroups>org.openscience.cdk.SlowTest</excludedGroups>
                 </configuration>
             </plugin>    
             <plugin>
