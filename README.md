@@ -134,7 +134,7 @@ The Maven artefacts are currently deployed to the European Bioinformatics Instit
 
 You can then use a cdk module by specifying a dependency in the `pom.xml`. Any additional requirements of the module will also be included. To include a dependency you specify a version.
 
-Using `RELEASE` specifies the latest released version. The CDK uses even minor versions for stable releases (1.0, 1.2, 1.4, ..) and odd minor numbers for developer releases (1.1, 1.3, 1.5, ..). The `RELEASE` version here refers to most recently deploy version which will normally be the developer. Snapshot builds are daily previews of the next release, for instance, `1.5.6-SNAPSHOT` is the preview of the `1.5.6` release. Generally, it is preferable to indicate a specific version requirement and only rely on snapshots when developing and a new feature is urgently required. [Ranges](http://stackoverflow.com/questions/30571/how-do-i-tell-maven-to-use-the-latest-version-of-a-dependency) can also be used.
+Using `RELEASE` specifies the latest released version. The CDK uses even minor versions for stable releases (1.0, 1.2, 1.4, ..) and odd minor numbers for developer releases (1.1, 1.3, 1.5, ..). The `RELEASE` version here refers to most recently deploy version which will normally be the developer. Snapshot builds are daily previews of the next release, for instance, `1.5.7-SNAPSHOT` is the preview of the `1.5.7` release. Generally, it is preferable to indicate a specific version requirement and only rely on snapshots when developing and a new feature is urgently required. [Ranges](http://stackoverflow.com/questions/30571/how-do-i-tell-maven-to-use-the-latest-version-of-a-dependency) can also be used.
 
 ```xml
 <dependencies>
