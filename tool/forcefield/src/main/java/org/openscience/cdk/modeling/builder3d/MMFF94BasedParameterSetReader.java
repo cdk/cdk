@@ -28,11 +28,12 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import org.apache.log4j.Logger;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 import java.awt.Color;
@@ -58,7 +59,7 @@ import java.util.Vector;
  */
 public class MMFF94BasedParameterSetReader {
 
-    private final Logger LOG = Logger.getLogger(MMFF94BasedParameterSetReader.class);
+    private final ILoggingTool LOG = LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
 
     private String      configFile = "org/openscience/cdk/modeling/forcefield/data/mmff94.prm";
     private InputStream ins        = null;

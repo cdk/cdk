@@ -21,11 +21,13 @@
  */
 package org.openscience.cdk.charges;
 
-import org.apache.log4j.Logger;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.modeling.builder3d.ForceFieldConfigurator;
+import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReader;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +57,7 @@ import java.util.Map;
  */
 public class MMFF94PartialCharges implements IChargeCalculator {
 
-    private final Logger LOG = Logger.getLogger(MMFF94PartialCharges.class);
+    private final ILoggingTool LOG = LoggingToolFactory.createLoggingTool(MMFF94BasedParameterSetReader.class);
 
     /**
      * Constructor for the MMFF94PartialCharges object
