@@ -114,8 +114,10 @@ public class CMLHandler extends DefaultHandler {
         if (local.startsWith("reaction")) {
             // e.g. reactionList, reaction -> CRML module
             logger.info("Detected CRML module");
-            conv = new CMLReactionModule(conv);
-            conventionStack.push(conventionStack.current());
+            if (!conventionStack.current().equals("CMLR")) {
+                conv = new CMLReactionModule(conv);
+            }
+            conventionStack.push("CMLR");
         } else if (uri == null || uri.length() == 0 ||
         		   uri.startsWith("http://www.xml-cml.org/")) {
             // assume CML Core
