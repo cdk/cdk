@@ -514,7 +514,7 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.1</version>
+                        <version>1.0.2</version>
                     </tagletArtifact>
                 </configuration>
                 <executions>
@@ -542,7 +542,23 @@
                     <dependency>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.1</version>
+                        <version>1.0.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>          
+            <plugin>
+                <groupId>com.googlecode.maven-java-formatter-plugin</groupId>
+                <artifactId>maven-java-formatter-plugin</artifactId>
+                <version>0.4</version>
+                <configuration>
+                    <configFile>cdk-formatting-conventions.xml</configFile>
+                    <lineEnding>LF</lineEnding>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.openscience.cdk</groupId>
+                        <artifactId>cdk-build-utils</artifactId>
+                        <version>1.0.2</version>
                     </dependency>
                 </dependencies>
             </plugin>
