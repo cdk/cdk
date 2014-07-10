@@ -152,11 +152,9 @@ public class CMLReactionModule extends CMLCoreModule {
 //            cdo.endObject("Reaction");
         	currentReactionSet.addReaction(currentReaction);
         	currentChemModel.setReactionSet(currentReactionSet);
-            currentChemSequence.addChemModel(currentChemModel);
         } else if ("reactionList".equals(local)) {
 //            cdo.endObject("ReactionSet");
         	currentChemModel.setReactionSet(currentReactionSet);
-            currentChemSequence.addChemModel(currentChemModel);
             /* FIXME: this should be when document is closed! */ 
         } else if ("reactant".equals(local)) {
 //            cdo.endObject("Reactant");
