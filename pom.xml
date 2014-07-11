@@ -447,27 +447,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
-                <configuration>
-                    <excludes>
-                        <!-- not a test class -->
-                        <exclude>**/TestMoleculeFactory.java</exclude>
-                        <!-- missing functionality -->
-                        <exclude>**/cdk/limitations/**</exclude>
-
-                        <!-- coverage tests need updating -->
-                        <exclude>**/*CoverageTest.java</exclude>
-                        <!-- module suites not needed -->
-                        <exclude>**/modulesuites/M*Tests.java</exclude>
-                        <!-- format tests do not work (cyclic dependency) -->
-                        <exclude>**/io/formats/*FormatTest.java</exclude>
-                    </excludes>
-                    <excludedGroups>org.openscience.cdk.SlowTest</excludedGroups>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.2</version>
                 <inherited>true</inherited>
@@ -627,4 +606,58 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <profiles>
+        <profile>
+            <id>base</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.16</version>
+                        <configuration>
+                            <excludes>
+                                <!-- not a test class -->
+                                <exclude>**/TestMoleculeFactory.java</exclude>
+                                <!-- missing functionality -->
+                                <exclude>**/cdk/limitations/**</exclude>
+
+                                <!-- coverage tests need updating -->
+                                <exclude>**/*CoverageTest.java</exclude>
+                                <!-- module suites not needed -->
+                                <exclude>**/modulesuites/M*Tests.java</exclude>
+                                <!-- format tests do not work (cyclic dependency) -->
+                                <exclude>**/io/formats/*FormatTest.java</exclude>
+                            </excludes>
+                            <excludedGroups>org.openscience.cdk.SlowTest</excludedGroups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>slow-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.16</version>
+                        <configuration>
+                            <excludes>
+                                <!-- not a test class -->
+                                <exclude>**/TestMoleculeFactory.java</exclude>
+                            </excludes>
+                            <groups>org.openscience.cdk.SlowTest</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
