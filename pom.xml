@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>org.openscience.cdk</groupId>
     <artifactId>cdk</artifactId>
     <name>cdk</name>
     <version>1.5.7-SNAPSHOT</version>
-    <packaging>pom</packaging>    
-    
+    <packaging>pom</packaging>
+
     <url>http://sourceforge.net/projects/cdk/</url>
 
     <modules>
@@ -55,7 +55,7 @@
             <url>http://cdk.github.io/cdk/</url>
         </site>
     </distributionManagement>
-    
+
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
@@ -312,19 +312,19 @@
         <contributor>
             <name>Stephane Werner</name>
         </contributor>
-        
+
         <contributor>
             <name>Lars Willighagen</name>
         </contributor>
         <contributor>
-            <name>Yong Zhang </name>
+            <name>Yong Zhang</name>
         </contributor>
         <contributor>
             <name>Daniel Zaharevitz</name>
         </contributor>
     </contributors>
-    
-    <repositories>        
+
+    <repositories>
         <repository>
             <id>ebi-repo</id>
             <name>EBI Maven Repository</name>
@@ -359,9 +359,9 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>        
-        
-        <repository>            
+        </repository>
+
+        <repository>
             <id>jni-inchi</id>
             <name>JNI-InChI Maven Repository</name>
             <url>http://jni-inchi.sourceforge.net/m2repo</url>
@@ -455,7 +455,7 @@
                         <exclude>**/TestMoleculeFactory.java</exclude>
                         <!-- missing functionality -->
                         <exclude>**/cdk/limitations/**</exclude>
-                        
+
                         <!-- coverage tests need updating -->
                         <exclude>**/*CoverageTest.java</exclude>
                         <!-- module suites not needed -->
@@ -465,14 +465,14 @@
                     </excludes>
                     <excludedGroups>org.openscience.cdk.SlowTest</excludedGroups>
                 </configuration>
-            </plugin>    
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>2.2</version>
                 <inherited>true</inherited>
                 <configuration>
-                    <archive>                   
+                    <archive>
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
@@ -481,11 +481,11 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <goals>                            
+                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                     </execution>
-                </executions>                
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -494,23 +494,65 @@
                 <configuration>
                     <tags>
                         <!--cdk.depends and cdk.builddepends no longer used-->
-                        <tag><name>cdk.set</name><placement>a</placement><head>Belongs to the set:</head></tag>
-                        <tag><name>cdk.keyword</name><placement>a</placement><head>Keywords:</head></tag>
-                        <tag><name>cdk.created</name><placement>a</placement><head>Created on:</head></tag>
-                        <tag><name>cdk.require</name><placement>a</placement><head>Requires:</head></tag>
-                        <tag><name>cdk.todo</name><placement>a</placement><head>To do:</head></tag>
-                        <tag><name>cdk.license</name><placement>a</placement><head>License:</head></tag>
+                        <tag>
+                            <name>cdk.set</name>
+                            <placement>a</placement>
+                            <head>Belongs to the set:</head>
+                        </tag>
+                        <tag>
+                            <name>cdk.keyword</name>
+                            <placement>a</placement>
+                            <head>Keywords:</head>
+                        </tag>
+                        <tag>
+                            <name>cdk.created</name>
+                            <placement>a</placement>
+                            <head>Created on:</head>
+                        </tag>
+                        <tag>
+                            <name>cdk.require</name>
+                            <placement>a</placement>
+                            <head>Requires:</head>
+                        </tag>
+                        <tag>
+                            <name>cdk.todo</name>
+                            <placement>a</placement>
+                            <head>To do:</head>
+                        </tag>
+                        <tag>
+                            <name>cdk.license</name>
+                            <placement>a</placement>
+                            <head>License:</head>
+                        </tag>
                     </tags>
                     <taglets>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKCiteTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKBugTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKDictRefTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKGitTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKInChITaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKIOOptionsTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKModuleTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKThreadSafeTaglet</tagletClass></taglet>
-                        <taglet><tagletClass>net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet</tagletClass></taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKCiteTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKBugTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKDictRefTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKGitTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKInChITaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKIOOptionsTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKModuleTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKThreadSafeTaglet</tagletClass>
+                        </taglet>
+                        <taglet>
+                            <tagletClass>net.sf.cdk.tools.doclets.CDKThreadNonSafeTaglet</tagletClass>
+                        </taglet>
                     </taglets>
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
