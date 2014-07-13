@@ -1,0 +1,6 @@
+This directory provides SMARTS patterns for MMFF symbolic atom types (MMFFSYMB.sma) and the mapping
+(mmff-symb-mapping.tsv) of these types to the CDK symbolic names (used in mmff94.prm).
+
+The symbolic types are listed in the supplementary material of:
+Halgren TA. Merck Molecular Force Field. I. Basis, Form, Scope, Parameterization, and Performance of
+MMFF94. J. Comput. Chem., 17, 490-519 (1996).
