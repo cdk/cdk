@@ -29,6 +29,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.CycleFinder;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -321,5 +322,19 @@ public final class Aromaticity {
                 vs[n++] = i;
         
         return Arrays.copyOf(vs, n);
+    }
+
+    /** Replicates CDKHueckelAromaticityDetector. */
+    private static final Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.cdk(),
+                                                                  Cycles.cdkAromaticSet());
+
+    /**
+     * Access an instance that replicates the previously utilised -
+     * CDKHueckelAromaticityDetector.
+     *
+     * @return aromaticity instance to use
+     */
+    public static Aromaticity cdkLegacy() {
+        return CDK_LEGACY;
     }
 }
