@@ -107,7 +107,7 @@ final class MmffAromaticTypeMapping {
 
     /**
      * From a provided set of cycles find the 5/6 member cycles that fit the MMFF aromaticity
-     * definition - {@link #isAromaticCycle(int[], int[], int[], boolean[])}. The cycles of size 6
+     * definition - {@link #isAromaticRing(int[], int[], int[], boolean[])}. The cycles of size 6
      * are listed first.
      *
      * @param cycles       initial set of cycles from
@@ -142,7 +142,7 @@ final class MmffAromaticTypeMapping {
                 // only check |C| >= 5 & |C| <= 6 
                 if (checked[i] || len < 5 || len > 6) continue;
 
-                if (isAromaticCycle(cycle, contribution, dbs, aromaticAtoms)) {
+                if (isAromaticRing(cycle, contribution, dbs, aromaticAtoms)) {
                     checked[i] = true;
                     found |= true;
                     for (int j = 0; j < len; j++) {
@@ -176,7 +176,7 @@ final class MmffAromaticTypeMapping {
      * @param aromatic     binary set of aromatic atoms
      * @return whether the ring is aromatic
      */
-    static boolean isAromaticCycle(int[] cycle, int[] contribution, int[] dbs, boolean[] aromatic) {
+    static boolean isAromaticRing(int[] cycle, int[] contribution, int[] dbs, boolean[] aromatic) {
 
         int len = cycle.length - 1;
         int sum = 0;

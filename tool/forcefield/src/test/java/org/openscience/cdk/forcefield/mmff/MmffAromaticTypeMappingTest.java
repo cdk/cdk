@@ -140,7 +140,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 3, 2, 5, 4};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticCycle(cycle, contr, dbs, arom));
+        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test public void pyrroleIsAromatic() {
@@ -148,7 +148,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{2, 1, 1, 1, 1};
         int[] dbs = new int[]{-1, 2, 1, 4, 3};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticCycle(cycle, contr, dbs, arom));
+        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test public void exocyclicDoubleBondsBreakAromaticity() {
@@ -156,7 +156,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertFalse(MmffAromaticTypeMapping.isAromaticCycle(cycle, contr, dbs, arom));
+        Assert.assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test public void delocalisedExocyclicDoubleBondsMaintainAromaticity() {
@@ -165,7 +165,7 @@ public class MmffAromaticTypeMappingTest {
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
         boolean[] arom = new boolean[contr.length];
         arom[2] = arom[3] = arom[6] = arom[7] = true; // adjacent ring is aromatic
-        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticCycle(cycle, contr, dbs, arom));
+        Assert.assertTrue(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test public void updateN2OXtoNPOX() {
