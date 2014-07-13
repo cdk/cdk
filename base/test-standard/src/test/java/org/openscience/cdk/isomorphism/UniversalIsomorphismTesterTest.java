@@ -42,7 +42,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -90,8 +90,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	    IAtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+		Aromaticity.cdkLegacy().apply(mol);
+		Aromaticity.cdkLegacy().apply(frag1);
 
 		if(standAlone) {
 			System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
@@ -143,8 +143,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	    IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+		Aromaticity.cdkLegacy().apply(mol);
+		Aromaticity.cdkLegacy().apply(frag1);
 
 		if(standAlone){
 			System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
@@ -159,8 +159,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 	    IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+		Aromaticity.cdkLegacy().apply(mol);
+		Aromaticity.cdkLegacy().apply(frag1);
 
 		if(standAlone) {
 			System.out.println("Pyrrole is a subgraph of Indole: " + uiTester.isSubgraph(mol, frag1));
@@ -187,8 +187,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		CDKHueckelAromaticityDetector.detectAromaticity(mol);
-		CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+		Aromaticity.cdkLegacy().apply(mol);
+		Aromaticity.cdkLegacy().apply(frag1);
 
 		List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol, frag1);
 		List<RMap> first = list.get(0);

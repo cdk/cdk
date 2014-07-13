@@ -23,7 +23,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -154,7 +154,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-                CDKHueckelAromaticityDetector.detectAromaticity(mol);
+                Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                         new IntegerResult((int) Double.NaN),

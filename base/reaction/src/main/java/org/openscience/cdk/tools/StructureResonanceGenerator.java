@@ -26,7 +26,7 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -430,7 +430,7 @@ public class StructureResonanceGenerator {
 			
 		if(lookingSymmetry){
 			try {
-				CDKHueckelAromaticityDetector.detectAromaticity(acClone);
+                Aromaticity.cdkLegacy().apply(acClone);
 			} catch (CDKException e) {
 				e.printStackTrace();
 			}
@@ -458,7 +458,7 @@ public class StructureResonanceGenerator {
 					}
 				}else{
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(acClone);
-					CDKHueckelAromaticityDetector.detectAromaticity(ss);
+                    Aromaticity.cdkLegacy().apply(ss);
 					if(new UniversalIsomorphismTester().isIsomorph(ss,qAC))
 						return true;
 				}

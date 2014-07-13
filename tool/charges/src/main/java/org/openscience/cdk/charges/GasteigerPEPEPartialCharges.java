@@ -31,7 +31,7 @@ import java.util.List;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -211,7 +211,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
 			ac = setFlags(container, ac, true);
 			
 			// Aromatic don't brake its double bond homolitically 
-			if(CDKHueckelAromaticityDetector.detectAromaticity(ac))
+			if(Aromaticity.cdkLegacy().apply(ac))
 				reactionList1.remove(reactionHCPB);
 			else
 				reactionList1.add(reactionHCPB);
@@ -637,8 +637,8 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         /*aromatic*/
         double fA = 1.0;
         try {
-			if(CDKHueckelAromaticityDetector.detectAromaticity(ac))
-				if(!CDKHueckelAromaticityDetector.detectAromaticity(atomContainer))
+			if(Aromaticity.cdkLegacy().apply(ac))
+				if(!Aromaticity.cdkLegacy().apply(atomContainer))
 						fA = 0.3;
 		} catch (CDKException e) {
 			e.printStackTrace();

@@ -23,7 +23,7 @@ package org.openscience.cdk.qsar.descriptors.atomic;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,7 +91,7 @@ public class ProtonAffinityHOSEDescriptorTest extends AtomicDescriptorTest {
     	mol.addBond(0, 6, IBond.Order.SINGLE);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 		addExplicitHydrogens(mol);
 		lpcheck.saturate(mol);
     	

@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -218,7 +218,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     public void markAromatic() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         AllRingsFinder arf = new AllRingsFinder();
         IRingSet ringSet = arf.findAllRings(mol);

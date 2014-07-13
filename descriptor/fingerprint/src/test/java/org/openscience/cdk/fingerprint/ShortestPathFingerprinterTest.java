@@ -32,7 +32,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
@@ -90,7 +90,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
@@ -155,7 +155,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();
@@ -169,7 +169,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
         fingerprint1 = fingerprint.getBitFingerprint(molecule).asBitSet();

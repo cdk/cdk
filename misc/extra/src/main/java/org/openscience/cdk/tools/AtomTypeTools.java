@@ -25,7 +25,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -91,7 +91,7 @@ public class AtomTypeTools {
 		
 		if (aromaticity){
 			try {
-				CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+                Aromaticity.cdkLegacy().apply(molecule);
 			} catch (Exception cdk1) {
 				//logger.debug("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());
 				logger.error("AROMATICITYError: Cannot determine aromaticity due to: " + cdk1.toString());

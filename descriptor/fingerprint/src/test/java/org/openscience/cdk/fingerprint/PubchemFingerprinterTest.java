@@ -37,7 +37,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -89,8 +89,8 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
 
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
@@ -113,9 +113,9 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol3);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
+        Aromaticity.cdkLegacy().apply(mol3);
 
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
@@ -138,7 +138,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
@@ -160,7 +160,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
@@ -182,7 +182,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
           CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
           adder.addImplicitHydrogens(mol);
           AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-          CDKHueckelAromaticityDetector.detectAromaticity(mol);
+          Aromaticity.cdkLegacy().apply(mol);
 
           IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
           BitSet fp = printer.getBitFingerprint(mol).asBitSet();
@@ -200,7 +200,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol.getBuilder());
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         PubchemFingerprinter printer = new PubchemFingerprinter(mol.getBuilder());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
@@ -248,7 +248,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         adder.addImplicitHydrogens(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         IFingerprinter printer = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
         BitSet fp = printer.getBitFingerprint(mol).asBitSet();
         BitSet ref = PubchemFingerprinter.decode("AAADcYBgAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAABAAAAGAAAAAAACACAEAAwAIAAAACAACBCAAACAAAgAAAIiAAAAIgIICKAERCAIAAggAAIiAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
@@ -272,11 +272,11 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());        
         adder.addImplicitHydrogens(mol1);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
 
         adder.addImplicitHydrogens(mol2);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol2);
 
 
         IFingerprinter fp = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());

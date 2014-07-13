@@ -28,7 +28,7 @@ package org.openscience.cdk.reaction.type;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -138,7 +138,7 @@ public class RadicalSiteRrGammaReaction extends ReactionEngine implements IReact
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
-		CDKHueckelAromaticityDetector.detectAromaticity(reactant);
+        Aromaticity.cdkLegacy().apply(reactant);
 		AllRingsFinder arf = new AllRingsFinder();
 		IRingSet ringSet = arf.findAllRings(reactant);
 		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {

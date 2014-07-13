@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
@@ -139,8 +139,8 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         addExplicitHydrogens(mol1);
         addExplicitHydrogens(mol2);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
         
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol1).getValue();
         DoubleArrayResult result2 = (DoubleArrayResult) descriptor.calculate(mol2).getValue();
@@ -172,7 +172,7 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
         Assert.assertNotNull(ac);
         addExplicitHydrogens(ac);
-        CDKHueckelAromaticityDetector.detectAromaticity(ac);
+        Aromaticity.cdkLegacy().apply(ac);
 
         Exception e = descriptor.calculate(ac).getException();
         Assert.assertNotNull(e);

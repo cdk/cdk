@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -107,7 +107,7 @@ public class VABCVolume {
         sum -= 5.92 * (molecule.getBondCount() + totalHCount);
 
         boolean[] originalFlags = molecule.getFlags();
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
         SSSRFinder ringFinder = new SSSRFinder(molecule);
         IRingSet ringSet = ringFinder.findSSSR();
         if (ringSet.getAtomContainerCount() > 0) {

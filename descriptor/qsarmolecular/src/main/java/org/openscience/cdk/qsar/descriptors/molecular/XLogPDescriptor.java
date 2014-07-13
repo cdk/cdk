@@ -24,7 +24,7 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -222,8 +222,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
         IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
-            try {                
-                CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            try {
+                Aromaticity.cdkLegacy().apply(ac);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

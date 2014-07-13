@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -231,7 +231,7 @@ public class SMSDBondSensitiveTest {
 //        IAtomContainer mol2 = Molecules.create4Toluene();
 //
 //        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-//        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+//        Aromaticity.cdkLegacy().apply(mol2);
 //
 //        boolean bondSensitive = true;
 //        boolean removeHydrogen = true;
@@ -265,8 +265,8 @@ public class SMSDBondSensitiveTest {
 
 //	Calling the main algorithm to perform MCS cearch
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
 
         boolean bondSensitive = true;
         boolean removeHydrogen = true;
@@ -314,8 +314,8 @@ public class SMSDBondSensitiveTest {
 
 //	Calling the main algorithm to perform MCS cearch
 
-        CDKHueckelAromaticityDetector.detectAromaticity(source);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
+        Aromaticity.cdkLegacy().apply(source);
+        Aromaticity.cdkLegacy().apply(target);
 
         boolean bondSensitive = true;
         boolean removeHydrogen = true;

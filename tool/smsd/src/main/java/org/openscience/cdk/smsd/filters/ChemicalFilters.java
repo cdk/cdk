@@ -42,7 +42,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
@@ -813,8 +813,8 @@ public class ChemicalFilters {
         boolean stereoMatchFlag = false;
         IAtomContainer reactant = rMol;
         IAtomContainer product = pMol;
-        CDKHueckelAromaticityDetector.detectAromaticity(reactant);
-        CDKHueckelAromaticityDetector.detectAromaticity(product);
+        Aromaticity.cdkLegacy().apply(reactant);
+        Aromaticity.cdkLegacy().apply(product);
 
         for (Integer Key : allStereoMCS.keySet()) {
             try {

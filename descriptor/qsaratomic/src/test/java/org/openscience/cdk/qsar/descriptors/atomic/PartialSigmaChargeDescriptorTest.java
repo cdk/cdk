@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -449,7 +449,7 @@ public class PartialSigmaChargeDescriptorTest extends AtomicDescriptorTest {
         sp.kekulise(false);
 		IAtomContainer mol = sp.parseSmiles("[H]c1[n-][c+]([H])c([H])c([H])c1([H])");        
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 		Integer[] object = {6};
 		descriptor.setParameters(object);
 		for (int i = 0 ; i < mol.getAtomCount() ; i++){

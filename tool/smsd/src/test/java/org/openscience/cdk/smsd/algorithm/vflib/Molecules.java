@@ -48,7 +48,7 @@ package org.openscience.cdk.smsd.algorithm.vflib;
  */
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -112,7 +112,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -147,7 +147,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
          SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
@@ -196,7 +196,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
@@ -247,7 +247,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
@@ -321,7 +321,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
@@ -337,7 +337,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
         return result;
     }
 
@@ -348,7 +348,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
         return result;
     }
 
@@ -359,7 +359,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
         return result;
     }
 
@@ -390,7 +390,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -471,7 +471,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -553,7 +553,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -604,7 +604,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -656,7 +656,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -704,7 +704,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
 
@@ -733,7 +733,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -763,7 +763,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         return result;
     }
@@ -841,7 +841,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
@@ -865,7 +865,7 @@ public class Molecules {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
         adder.addImplicitHydrogens(result);
-        CDKHueckelAromaticityDetector.detectAromaticity(result);
+        Aromaticity.cdkLegacy().apply(result);
 
         SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);

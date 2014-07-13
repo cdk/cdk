@@ -27,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -226,8 +226,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
-        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+        Aromaticity.cdkLegacy().apply(target);
+        Aromaticity.cdkLegacy().apply(queryac);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
@@ -269,8 +269,8 @@ public class SubStructureSearchAlgorithmsTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");        
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
-        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+        Aromaticity.cdkLegacy().apply(target);
+        Aromaticity.cdkLegacy().apply(queryac);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);

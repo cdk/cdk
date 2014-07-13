@@ -36,7 +36,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.ConformerContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -241,7 +241,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
@@ -271,7 +271,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
@@ -310,7 +310,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);
@@ -336,7 +336,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
         boolean status = matcher.matches(mol);

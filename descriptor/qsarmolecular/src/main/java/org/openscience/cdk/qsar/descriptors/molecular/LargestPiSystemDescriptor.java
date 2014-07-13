@@ -21,7 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -170,7 +170,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-                CDKHueckelAromaticityDetector.detectAromaticity(container);
+                Aromaticity.cdkLegacy().apply(container);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

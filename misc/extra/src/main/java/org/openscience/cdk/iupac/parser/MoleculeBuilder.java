@@ -31,7 +31,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.Ring;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -299,7 +299,7 @@ public class MoleculeBuilder
             try
             {
             	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
-                CDKHueckelAromaticityDetector.detectAromaticity(benzene);
+                Aromaticity.cdkLegacy().apply(benzene);
             }
             catch (Exception exc)
             {

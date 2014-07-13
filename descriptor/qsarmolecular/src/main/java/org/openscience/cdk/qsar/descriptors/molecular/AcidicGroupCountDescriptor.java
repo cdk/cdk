@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
@@ -130,9 +130,7 @@ public class AcidicGroupCountDescriptor extends AbstractMolecularDescriptor impl
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(
                     atomContainer
                 );
-                CDKHueckelAromaticityDetector.detectAromaticity(
-                    atomContainer
-                );
+                Aromaticity.cdkLegacy().apply(atomContainer);
             } catch (CDKException exception) {
                 return getDummyDescriptorValue(exception);
             }

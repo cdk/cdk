@@ -30,7 +30,7 @@ import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -96,7 +96,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         String smiles1 = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
         addExplicitHydrogens(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
@@ -127,8 +127,8 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
 
         addExplicitHydrogens(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);

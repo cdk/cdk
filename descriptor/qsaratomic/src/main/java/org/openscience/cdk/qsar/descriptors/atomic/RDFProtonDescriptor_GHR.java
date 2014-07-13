@@ -29,7 +29,7 @@ import javax.vecmath.Vector3d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
@@ -212,7 +212,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
-                CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
+                Aromaticity.cdkLegacy().apply(varAtomContainer);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

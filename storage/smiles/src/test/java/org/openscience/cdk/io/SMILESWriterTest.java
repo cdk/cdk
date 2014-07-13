@@ -30,7 +30,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.AtomContainerSet;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.listener.PropertiesListener;
 import org.openscience.cdk.templates.TestMoleculeFactory;
@@ -70,7 +70,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
-        CDKHueckelAromaticityDetector.detectAromaticity(benzene);        
+        Aromaticity.cdkLegacy().apply(benzene);        
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
         Properties prop = new Properties();
         prop.setProperty("UseAromaticity","true");

@@ -32,7 +32,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.graph.Cycles;
@@ -66,7 +66,7 @@ public class RecursiveTest extends CDKTestCase {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
-        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+        Aromaticity.cdkLegacy().apply(atomContainer);
         boolean status = sqt.matches(atomContainer);
         if (status) {
             nmatch = sqt.countMatches();

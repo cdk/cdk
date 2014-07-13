@@ -33,7 +33,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.ElectronDonation;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
@@ -1652,7 +1652,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         for (IBond bond : m.bonds())
             bond.setFlag(CDKConstants.ISAROMATIC, false);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
-        CDKHueckelAromaticityDetector.detectAromaticity(m);
+        Aromaticity.cdkLegacy().apply(m);
         
         results = match(smarts("c-c"), m);
         Assert.assertEquals(2, results[0]);

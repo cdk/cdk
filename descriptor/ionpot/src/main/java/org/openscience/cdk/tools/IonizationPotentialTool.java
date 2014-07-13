@@ -271,7 +271,7 @@ public class IonizationPotentialTool {
 		if(acR != null){
 			results[6] = acR.getAtomCount();
 			// numberAromaticAtoms
-//			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
+//			boolean isAromatic = Aromaticity.cdkLegacy().apply(container);
 			IRingSet ringSet = new SSSRFinder(container).findSSSR();
 			RingSetManipulator.markAromaticRings(ringSet);
 			int aromRingCount = 0;			
@@ -350,7 +350,7 @@ public class IonizationPotentialTool {
 			if(acR != null){
 				results[6] += acR.getAtomCount();
 				// numberAromaticAtoms
-	//			boolean isAromatic = CDKHueckelAromaticityDetector.detectAromaticity(container);
+	//			boolean isAromatic = Aromaticity.cdkLegacy().apply(container);
 	//			if(isAromatic)
 	//		        results[7] += 0.1;
 			}else{

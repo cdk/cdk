@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -79,7 +79,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/butadiene.cml";
         mol = readCMLMolecule(filename);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -108,7 +108,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/naphtalene.cml";
         mol = readCMLMolecule(filename);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -137,7 +137,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/toluene.cml";
         mol = readCMLMolecule(filename);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -168,7 +168,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -212,7 +212,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);    
         
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -253,7 +253,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);    
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -298,7 +298,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -333,7 +333,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
         
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -355,7 +355,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -379,7 +379,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -423,7 +423,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
     	
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -480,7 +480,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
         
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -506,7 +506,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		IAtomContainer mol = sp.parseSmiles("[H]C([H])=C([H])[C+]([H])[H]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
         
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         
@@ -531,7 +531,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 		IAtomContainer mol = sp.parseSmiles("C=C[C+]");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
-    	CDKHueckelAromaticityDetector.detectAromaticity(mol);
+    	Aromaticity.cdkLegacy().apply(mol);
         
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
         

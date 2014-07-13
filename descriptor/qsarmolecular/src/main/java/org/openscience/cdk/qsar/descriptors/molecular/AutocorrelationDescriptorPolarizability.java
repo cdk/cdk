@@ -23,7 +23,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.exception.CDKException;
@@ -113,7 +113,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
             return getDummyDescriptorValue(new CDKException("Could not percieve atom types: " + e.getMessage(), e));
         }
         try {
-            CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            Aromaticity.cdkLegacy().apply(molecule);
         } catch (CDKException e) {
            return getDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
         }

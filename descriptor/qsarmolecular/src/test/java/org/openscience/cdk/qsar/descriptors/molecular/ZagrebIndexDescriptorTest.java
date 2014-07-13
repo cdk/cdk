@@ -32,7 +32,7 @@ import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -70,7 +70,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
         addExplicitHydrogens(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         double value2D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 
@@ -81,7 +81,7 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         mol = (IAtomContainer) cList.get(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         
         double value3D = ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue();
 

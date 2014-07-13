@@ -36,7 +36,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.AtomContainerAtomPermutor;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -76,8 +76,8 @@ public class CDKMCSTest extends CDKTestCase {
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
         adder.addImplicitHydrogens(frag1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
         if (standAlone) {
             System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + CDKMCS.isSubgraph(mol, frag1, true));
@@ -130,8 +130,8 @@ public class CDKMCSTest extends CDKTestCase {
         IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
         if (standAlone) {
             System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + CDKMCS.isSubgraph(mol, frag1, true));
@@ -150,8 +150,8 @@ public class CDKMCSTest extends CDKTestCase {
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
         adder.addImplicitHydrogens(frag1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
         if (standAlone) {
             System.out.println("Pyrrole is a subgraph of Indole: " + CDKMCS.isSubgraph(mol, frag1, true));
@@ -183,8 +183,8 @@ public class CDKMCSTest extends CDKTestCase {
         adder.addImplicitHydrogens(mol);
         adder = CDKHydrogenAdder.getInstance(frag1.getBuilder());
         adder.addImplicitHydrogens(frag1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
         List<List<CDKRMap>> list = CDKMCS.getSubgraphAtomsMaps(mol, frag1, true);
         List<CDKRMap> first = list.get(0);
@@ -244,12 +244,12 @@ public class CDKMCSTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
         adder.addImplicitHydrogens(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol2);
 
         List<IAtomContainer> list = CDKMCS.getOverlaps(mol1, mol2, true);
         Assert.assertEquals(1, list.size());
@@ -281,12 +281,12 @@ public class CDKMCSTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
+        Aromaticity.cdkLegacy().apply(mol1);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         adder = CDKHydrogenAdder.getInstance(mol2.getBuilder());
         adder.addImplicitHydrogens(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
+        Aromaticity.cdkLegacy().apply(mol2);
 
 
         List<IAtomContainer> list1 = CDKMCS.getOverlaps(mol1, mol2, true);

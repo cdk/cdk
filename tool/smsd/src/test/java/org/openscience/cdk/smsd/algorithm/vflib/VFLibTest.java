@@ -33,7 +33,7 @@ import org.junit.Test;
 import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -69,13 +69,13 @@ public class VFLibTest extends CDKTestCase {
         Assert.assertEquals(6, hexane.getAtomCount());
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(hexane);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(hexane);
-        CDKHueckelAromaticityDetector.detectAromaticity(hexane);
+        Aromaticity.cdkLegacy().apply(hexane);
         hexaneQuery = new QueryCompiler(hexane, true).compile();
         Assert.assertEquals(6, hexaneQuery.countNodes());
         benzene = createBenzene();
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
         hexane = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(benzene);
-        CDKHueckelAromaticityDetector.detectAromaticity(benzene);
+        Aromaticity.cdkLegacy().apply(benzene);
         benzeneQuery = new QueryCompiler(benzene, true).compile();
     }
 

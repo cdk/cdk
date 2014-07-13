@@ -105,8 +105,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
  * <p/>
  * It's not entirely clear what the behavior of * should be with respect to hydrogens. it is possible that the code will
- * be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li> <li>The {@link
- * org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector} only considers single rings and two fused non-spiro
+ * be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li> <li>The 
+ * org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector only considers single rings and two fused non-spiro
  * rings. As a result, it does not properly detect aromaticity in polycyclic systems such as
  * <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper aromaticity
  * detection may not work correctly in such polycyclic systems</li> </ul>

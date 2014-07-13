@@ -39,7 +39,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -132,8 +132,8 @@ public class SMSDTest {
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
             IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
-            CDKHueckelAromaticityDetector.detectAromaticity(target);
-            CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+            Aromaticity.cdkLegacy().apply(target);
+            Aromaticity.cdkLegacy().apply(queryac);
             Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
             smsd1.init(queryac, target, true, true);
             smsd1.setChemFilters(true, true, true);
@@ -222,8 +222,8 @@ public class SMSDTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
-        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+        Aromaticity.cdkLegacy().apply(target);
+        Aromaticity.cdkLegacy().apply(queryac);
 
 
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
@@ -231,8 +231,8 @@ public class SMSDTest {
 
 //	Calling the main algorithm to perform MCS cearch
 
-        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
+        Aromaticity.cdkLegacy().apply(queryac);
+        Aromaticity.cdkLegacy().apply(target);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
@@ -254,8 +254,8 @@ public class SMSDTest {
         IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
-        CDKHueckelAromaticityDetector.detectAromaticity(queryac);
+        Aromaticity.cdkLegacy().apply(target);
+        Aromaticity.cdkLegacy().apply(queryac);
 
         Isomorphism smsd1 = new Isomorphism(Algorithm.DEFAULT, true);
         smsd1.init(queryac, target, true, true);
@@ -533,8 +533,8 @@ public class SMSDTest {
 
 //	Calling the main algorithm to perform MCS cearch
 
-        CDKHueckelAromaticityDetector.detectAromaticity(query);
-        CDKHueckelAromaticityDetector.detectAromaticity(target);
+        Aromaticity.cdkLegacy().apply(query);
+        Aromaticity.cdkLegacy().apply(target);
 
         Isomorphism smsd = new Isomorphism(Algorithm.SubStructure, true);
         smsd.init(query, target, false, true);

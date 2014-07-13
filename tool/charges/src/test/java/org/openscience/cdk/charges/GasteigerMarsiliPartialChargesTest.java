@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -237,7 +237,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
         Assert.assertNotNull(ac);
         addExplicitHydrogens(ac);
-        CDKHueckelAromaticityDetector.detectAromaticity(ac);
+        Aromaticity.cdkLegacy().apply(ac);
 
         addExplicitHydrogens(ac);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);

@@ -33,7 +33,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -96,7 +96,7 @@ public class MolHandler {
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);
                 // figure out which atoms are in aromatic rings:
-                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+                Aromaticity.cdkLegacy().apply(atomContainer);
                 BondTools.makeUpDownBonds(atomContainer);
             }
         } catch (IOException ex) {
@@ -147,7 +147,7 @@ public class MolHandler {
                 CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(atomContainer.getBuilder());
                 adder.addImplicitHydrogens(atomContainer);
                 // figure out which atoms are in aromatic rings:
-                CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+                Aromaticity.cdkLegacy().apply(atomContainer);
             } catch (CDKException ex) {
                 logger.error(ex);
             }

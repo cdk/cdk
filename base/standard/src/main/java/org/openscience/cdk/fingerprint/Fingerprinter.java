@@ -27,7 +27,7 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtom;
@@ -173,7 +173,7 @@ public class Fingerprinter implements IFingerprinter {
 		logger.debug("Starting Aromaticity Detection");
 		long before = System.currentTimeMillis();
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-		CDKHueckelAromaticityDetector.detectAromaticity(container);
+        Aromaticity.cdkLegacy().apply(container);
 		long after = System.currentTimeMillis();
 		logger.debug("time for aromaticity calculation: " 
 		             + (after - before) + " milliseconds");

@@ -89,7 +89,6 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.keyword lipophilicity
  * @cdk.keyword refractivity
  * @see org.openscience.cdk.tools.CDKHydrogenAdder
- * @see org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptorTest")
 public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {

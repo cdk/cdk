@@ -28,7 +28,7 @@ import java.util.BitSet;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -69,9 +69,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol3);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
+        Aromaticity.cdkLegacy().apply(mol3);
 
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();
@@ -103,9 +103,9 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol3);
 
-        CDKHueckelAromaticityDetector.detectAromaticity(mol1);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol2);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol3);
+        Aromaticity.cdkLegacy().apply(mol1);
+        Aromaticity.cdkLegacy().apply(mol2);
+        Aromaticity.cdkLegacy().apply(mol3);
 
         BitSet bs1 = printer.getBitFingerprint(mol1).asBitSet();
         BitSet bs2 = printer.getBitFingerprint(mol2).asBitSet();

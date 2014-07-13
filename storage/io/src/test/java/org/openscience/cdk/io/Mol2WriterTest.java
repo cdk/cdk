@@ -30,7 +30,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -89,7 +89,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     @Ignore("moved to SMILES2Mol2WriterTest")
     public void testWriter2() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
 
         StringWriter swriter = new StringWriter();
         Mol2Writer writer = new Mol2Writer(swriter);
@@ -108,7 +108,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
     @Ignore("moved to SMILES2Mol2WriterTest")
     public void testWriterForAmide() throws Exception {
         IAtomContainer molecule = mock(IAtomContainer.class);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
 
         StringWriter swriter = new StringWriter();
         Mol2Writer writer = new Mol2Writer(swriter);
@@ -140,7 +140,7 @@ public class Mol2WriterTest extends ChemObjectIOTest {
         IChemFile fileContents = (IChemFile) reader.read(new ChemFile());
         List<IAtomContainer> molecules = ChemFileManipulator.getAllAtomContainers(fileContents);
         IAtomContainer mol = molecules.get(0);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 
         StringWriter writer = new StringWriter();

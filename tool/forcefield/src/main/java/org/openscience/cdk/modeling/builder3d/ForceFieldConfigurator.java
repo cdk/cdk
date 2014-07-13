@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomTypeException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -265,7 +265,7 @@ public class ForceFieldConfigurator {
 		boolean isInHeteroRing = false;
 		try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-			CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+            Aromaticity.cdkLegacy().apply(molecule);
 		} catch (Exception cdk1) {
 			throw new CDKException(
                 "AROMATICITYError: Cannot determine aromaticity due to: " +

@@ -22,7 +22,7 @@ package org.openscience.cdk.qsar.descriptors.atompair;
 import java.util.List;
 
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
@@ -159,7 +159,7 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-                CDKHueckelAromaticityDetector.detectAromaticity(mol);
+                Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

@@ -28,7 +28,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
@@ -68,7 +68,7 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         IAtomContainer molecule = sp.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         addExplicitHydrogens(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
         lpcheck.saturate(molecule);
         
 

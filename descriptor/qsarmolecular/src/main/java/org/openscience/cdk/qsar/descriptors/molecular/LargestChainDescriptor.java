@@ -21,7 +21,7 @@ package org.openscience.cdk.qsar.descriptors.molecular;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.NoSuchAtomException;
 import org.openscience.cdk.graph.SpanningTree;
@@ -204,7 +204,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-                CDKHueckelAromaticityDetector.detectAromaticity(container);
+                Aromaticity.cdkLegacy().apply(container);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

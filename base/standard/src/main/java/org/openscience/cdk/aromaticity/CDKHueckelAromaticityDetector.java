@@ -51,7 +51,7 @@ import org.openscience.cdk.ringsearch.SSSRFinder;
  * <pre>
  * Molecule molecule = MoleculeFactory.makePyridineOxide();
  * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
- * CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+ * Aromaticity.cdkLegacy().apply(molecule);
  * </pre>
  * 
  * <p>Important to note is that this aromaticity detector does not allow aromatic

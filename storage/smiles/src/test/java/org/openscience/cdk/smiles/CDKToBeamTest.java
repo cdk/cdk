@@ -26,7 +26,7 @@ package org.openscience.cdk.smiles;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -714,7 +714,7 @@ public class CDKToBeamTest {
         CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
                         .addImplicitHydrogens(ac);
         if (perceiveAromaticity)
-            CDKHueckelAromaticityDetector.detectAromaticity(ac);
+            Aromaticity.cdkLegacy().apply(ac);
         return new CDKToBeam(isomeric, aromatic, atomClasses).toBeamGraph(ac);
     }
 }

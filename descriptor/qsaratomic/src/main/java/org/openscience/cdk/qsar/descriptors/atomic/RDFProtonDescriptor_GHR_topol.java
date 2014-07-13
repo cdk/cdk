@@ -30,7 +30,7 @@ import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.MoleculeGraphs;
@@ -212,7 +212,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(varAtomContainer);
-                CDKHueckelAromaticityDetector.detectAromaticity(varAtomContainer);
+                Aromaticity.cdkLegacy().apply(varAtomContainer);
             } catch (CDKException e) {
                 return getDummyDescriptorValue(e);
             }

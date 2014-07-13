@@ -47,7 +47,7 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SlowTest;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
@@ -565,7 +565,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		molecule.addBond(5, 0, IBond.Order.SINGLE);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        CDKHueckelAromaticityDetector.detectAromaticity(molecule);
+        Aromaticity.cdkLegacy().apply(molecule);
 		smiles = sg.create(molecule);
 		Assert.assertEquals("c1ccccc1", smiles);	
 	}
@@ -919,7 +919,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
 	    
 	    AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         addImplicitHydrogens(mol1);
-	    Assert.assertTrue(CDKHueckelAromaticityDetector.detectAromaticity(mol1));
+	    Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol1));
 	    
 	    SmilesGenerator sg = new SmilesGenerator().aromatic();
         
@@ -976,7 +976,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makeIndole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
@@ -987,7 +987,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);        
+        Aromaticity.cdkLegacy().apply(mol);        
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
         Assert.assertTrue(smiles.indexOf("[nH]") >= 0);
@@ -1000,7 +1000,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         IAtomContainer mol = TestMoleculeFactory.makePyrrole();
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         addImplicitHydrogens(mol);
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);
@@ -1015,7 +1015,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         mol.getAtom(1).setFormalCharge(-1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);        
+        Aromaticity.cdkLegacy().apply(mol);        
 
         SmilesGenerator smilesGenerator = new SmilesGenerator().aromatic();
         String smiles = smilesGenerator.create(mol);

@@ -30,7 +30,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -355,7 +355,7 @@ public class EStateAtomTypeMatcherTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         mol = sp.parseSmiles("C1=CC=CC=C1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
 
         matcher.setRingSet(getRings());

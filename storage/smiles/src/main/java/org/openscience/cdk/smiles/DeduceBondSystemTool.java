@@ -30,7 +30,7 @@ package org.openscience.cdk.smiles;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -667,7 +667,7 @@ public class DeduceBondSystemTool {
                 r.setFlag(CDKConstants.ISAROMATIC, false);
             }
             // now, detect aromaticity from cratch, and mark rings as aromatic too (if ...)
-            CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+            Aromaticity.cdkLegacy().apply(atomContainer);
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
             	IRing ring = (IRing) ringSet.getAtomContainer(i);
             	RingManipulator.markAromaticRings(ring);

@@ -27,7 +27,7 @@ import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.PseudoAtom;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -287,7 +287,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
         Assert.assertNotNull("Created molecule was null", mol);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
         char[] arrEquivalent = new char[mol.getAtomCount()];
@@ -315,7 +315,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
     public void testAlphaPinene() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
@@ -341,7 +341,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
     public void testPyrimidine() throws Exception {
         IAtomContainer mol = MoleculeFactory.makePyrimidine();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
@@ -366,7 +366,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
     public void testBiphenyl() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeBiphenyl();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);
@@ -393,7 +393,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
     public void testImidazole() throws Exception {
         IAtomContainer mol = MoleculeFactory.makeImidazole();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
         Assert.assertNotNull("Created molecule was null", mol);
         EquivalentClassPartitioner it = new EquivalentClassPartitioner(mol);
         int [] equivalentClass = it.getTopoEquivClassbyHuXu(mol);

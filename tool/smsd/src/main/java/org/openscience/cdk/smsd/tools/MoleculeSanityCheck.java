@@ -29,7 +29,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -111,9 +111,9 @@ public class MoleculeSanityCheck {
             // figure out which atoms are in aromatic rings:
             CDKHydrogenAdder cdk = CDKHydrogenAdder.getInstance(DefaultChemObjectBuilder.getInstance());
             ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-            cdk.addImplicitHydrogens(mol);            
+            cdk.addImplicitHydrogens(mol);
 
-            CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            Aromaticity.cdkLegacy().apply(mol);
             // figure out which rings are aromatic:
             RingSetManipulator.markAromaticRings(ringSet);
             // figure out which simple (non cycles) rings are aromatic:

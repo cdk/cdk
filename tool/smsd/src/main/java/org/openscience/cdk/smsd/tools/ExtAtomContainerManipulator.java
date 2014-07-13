@@ -36,7 +36,7 @@ import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -144,7 +144,7 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
 //            printAtoms(atomContainer);
             ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 //            printAtoms(atomContainer);
-            CDKHueckelAromaticityDetector.detectAromaticity(mol);
+            Aromaticity.cdkLegacy().apply(mol);
 //            printAtoms(atomContainer);
             // figure out which rings are aromatic:
             RingSetManipulator.markAromaticRings(ringSet);

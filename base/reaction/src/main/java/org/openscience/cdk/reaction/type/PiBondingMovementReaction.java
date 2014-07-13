@@ -141,7 +141,7 @@ public class PiBondingMovementReaction extends ReactionEngine implements IReacti
 			setActiveCenters(reactant);
 		
 //		if((Boolean)paramsMap.get("lookingSymmetry")){
-//			CDKHueckelAromaticityDetector.detectAromaticity(reactant);
+//			Aromaticity.cdkLegacy().apply(reactant);
 //		}
 		
 		AllRingsFinder arf = new AllRingsFinder();

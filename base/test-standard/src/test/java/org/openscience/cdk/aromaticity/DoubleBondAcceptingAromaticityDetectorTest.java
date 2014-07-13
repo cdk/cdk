@@ -935,7 +935,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzoquinone);
 
         Assert.assertFalse("Hueckel method detect aromaticity",
-                           CDKHueckelAromaticityDetector.detectAromaticity(benzoquinone));
+                           Aromaticity.cdkLegacy().apply(benzoquinone));
         Assert.assertTrue("DoubleBond Accepting AromaticityDetector method did not detect aromaticity",
                            DoubleBondAcceptingAromaticityDetector.detectAromaticity(benzoquinone));
 

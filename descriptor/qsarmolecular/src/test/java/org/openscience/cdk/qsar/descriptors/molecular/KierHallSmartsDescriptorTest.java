@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.IntegerArrayResult;
@@ -64,7 +64,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("CCO");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
@@ -79,7 +79,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("c1c(CN)cc(CCNC)cc1C(CO)CC(=O)CCOCCCO");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();
@@ -97,7 +97,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         IAtomContainer mol = sp.parseSmiles("C#CC(C)(C)C(C)(C)C#C");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        CDKHueckelAromaticityDetector.detectAromaticity(mol);
+        Aromaticity.cdkLegacy().apply(mol);
 
         DescriptorValue value = descriptor.calculate(mol);
         IntegerArrayResult result = (IntegerArrayResult) value.getValue();

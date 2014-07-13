@@ -29,7 +29,7 @@ import java.io.Serializable;
 import java.util.*;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.interfaces.*;
@@ -127,7 +127,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
         } catch (CloneNotSupportedException ex) {
             logger.error("Failed to clone the molecule:", ex);
         }
-        CDKHueckelAromaticityDetector.detectAromaticity(atomContainer);
+        Aromaticity.cdkLegacy().apply(atomContainer);
         BitSet bitSet = new BitSet(fingerprintLength);
         if (!ConnectivityChecker.isConnected(atomContainer)) {
             IAtomContainerSet partitionedMolecules = ConnectivityChecker.partitionIntoMolecules(atomContainer);
