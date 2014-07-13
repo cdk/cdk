@@ -20,6 +20,7 @@
         <module>misc</module>
         <module>storage</module>
         <module>tool</module>
+        <module>legacy</module>
     </modules>
 
     <properties>
