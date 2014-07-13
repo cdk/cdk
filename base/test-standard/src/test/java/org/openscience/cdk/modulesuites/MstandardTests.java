@@ -23,10 +23,8 @@ package org.openscience.cdk.modulesuites;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-import org.openscience.cdk.aromaticity.AromaticityCalculatorTest;
 import org.openscience.cdk.aromaticity.AromaticityTest;
 import org.openscience.cdk.aromaticity.AtomTypeModelTest;
-import org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetectorTest;
 import org.openscience.cdk.aromaticity.DaylightModelTest;
 import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetectorTest;
 import org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest;
@@ -129,7 +127,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     StandardCoverageTest.class,
-    AromaticityCalculatorTest.class,
     DictRefTest.class,
     CrystalGeometryToolsTest.class,
     GeometryToolsTest.class,
@@ -202,7 +199,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     InvPairTest.class,
     EStateAtomTypeMatcherTest.class,
     AtomContainerComparatorTest.class,
-    CDKHueckelAromaticityDetectorTest.class,
     DoubleBondAcceptingAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,

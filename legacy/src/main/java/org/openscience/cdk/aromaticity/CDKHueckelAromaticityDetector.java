@@ -1,30 +1,27 @@
-/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- *
+/*
+ * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
+ *   
  * Contact: cdk-devel@lists.sourceforge.net
+ *   
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above 
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public License
- * as published by the Free Software Foundation; either version 2.1
- * of the License, or (at your option) any later version.
- * All we ask is that proper credit is given for our work, which includes
- * - but is not limited to - adding the above copyright notice to the beginning
- * of your source code files, and to any copyright notice that you may distribute
- * with programs based on this work.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 package org.openscience.cdk.aromaticity;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
@@ -37,11 +34,15 @@ import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
+import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.SSSRFinder;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * This aromaticity detector detects the aromaticity based on the H&uuml;ckel

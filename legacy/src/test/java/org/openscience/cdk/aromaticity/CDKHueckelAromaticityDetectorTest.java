@@ -989,7 +989,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
     @Test public void ensureAtomsRemoved() throws Exception {
         IAtomContainer mol = oxaspirodeadiene();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-        assertFalse(Aromaticity.cdkLegacy().apply(mol));
+        Assert.assertFalse(Aromaticity.cdkLegacy().apply(mol));
     }
 
 
@@ -1011,8 +1011,8 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         
-        assertTrue(Aromaticity.cdkLegacy().apply(mol1));
-        assertTrue(Aromaticity.cdkLegacy().apply(mol2));
+        Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol1));
+        Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol2));
     }
     
     /**
