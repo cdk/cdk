@@ -27,7 +27,6 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -234,7 +233,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         SmilesGenerator sg = SmilesGenerator.unique()
                                             .aromatic();
         for (int i = 0; i < f.length; i++) {
-            DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
+            Aromaticity.cdkLegacy().apply(fc[i]);
             String newsmiles = sg.create(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }
@@ -286,7 +285,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
         Assert.assertEquals("c1ccc(cc1)-n2cccc2", f[0]);
 
         for (int i = 0; i < f.length; i++) {
-            DoubleBondAcceptingAromaticityDetector.detectAromaticity(fc[i]);
+            Aromaticity.cdkLegacy().apply(fc[i]);
             String newsmiles = sg.create(fc[i]);
             Assert.assertTrue(f[i] + " did not match the container, " + newsmiles, f[i].equals(newsmiles));
         }

@@ -48,7 +48,6 @@ import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.Reaction;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.aromaticity.Aromaticity;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.config.IsotopeFactory;
@@ -1149,7 +1148,7 @@ public class SmilesGeneratorTest extends CDKTestCase {
         addImplicitHydrogens(benzene);
         SmilesGenerator sg = new SmilesGenerator().aromatic();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
-        DoubleBondAcceptingAromaticityDetector.detectAromaticity(benzene);
+        Aromaticity.cdkLegacy().apply(benzene);
         String smileswitharomaticity = sg.create(benzene);
         Assert.assertEquals("c1ccccc1", smileswitharomaticity);
     }

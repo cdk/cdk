@@ -25,7 +25,7 @@ package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesGenerator;
@@ -78,7 +78,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     @TestMethod("testFingerprint")
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
-        DoubleBondAcceptingAromaticityDetector.detectAromaticity(atomContainer);
+        Aromaticity.cdkLegacy().apply(atomContainer);
         String smiles = refactorSmiles(gen.create(atomContainer));
         Map<String, Integer> map = new HashMap<String,Integer>();
         for (int i = 0; i < smiles.length()-q+1; i++) {

@@ -26,7 +26,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import org.openscience.cdk.aromaticity.AromaticityTest;
 import org.openscience.cdk.aromaticity.AtomTypeModelTest;
 import org.openscience.cdk.aromaticity.DaylightModelTest;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetectorTest;
 import org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest;
 import org.openscience.cdk.aromaticity.PiBondModelTest;
 import org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest;
@@ -199,7 +198,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     InvPairTest.class,
     EStateAtomTypeMatcherTest.class,
     AtomContainerComparatorTest.class,
-    DoubleBondAcceptingAromaticityDetectorTest.class,
     HOSECodeGeneratorTest.class,
     LonePairElectronCheckerTest.class ,
     StereoToolTest.class,

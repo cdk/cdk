@@ -26,7 +26,7 @@ package org.openscience.cdk.fragment;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
@@ -124,7 +124,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
             for (IAtomContainer partContainer : parts) {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
                 CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
-                DoubleBondAcceptingAromaticityDetector.detectAromaticity(partContainer);
+                Aromaticity.cdkLegacy().apply(partContainer);
                 tmpSmiles = smilesGenerator.create(partContainer);
                 if (partContainer.getAtomCount() >= minFragSize &&
                         !fragMap.containsKey(tmpSmiles)) {
@@ -147,7 +147,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
                 if (frag.getBondCount() < 3) continue;
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
                 CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
-                DoubleBondAcceptingAromaticityDetector.detectAromaticity(frag);
+                Aromaticity.cdkLegacy().apply(frag);
                 tmpSmiles = smilesGenerator.create(frag);
                 if (frag.getAtomCount() >= minFragSize && !fragMap.containsKey(tmpSmiles)) {
                     tmp.add(frag);

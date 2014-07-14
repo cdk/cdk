@@ -25,7 +25,7 @@ package org.openscience.cdk.fragment;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.aromaticity.DoubleBondAcceptingAromaticityDetector;
+import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.PathTools;
@@ -336,7 +336,7 @@ public class MurckoFragmenter implements IFragmenter {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
                 CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
-                DoubleBondAcceptingAromaticityDetector.detectAromaticity(mol);
+                Aromaticity.cdkLegacy().apply(mol);
                 smis.add(smigen.create(mol));
             } catch (CDKException e) {
                 LoggingToolFactory.createLoggingTool(getClass()).error(e);
