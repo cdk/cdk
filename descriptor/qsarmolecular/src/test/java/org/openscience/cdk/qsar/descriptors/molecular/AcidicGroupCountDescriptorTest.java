@@ -78,6 +78,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
             SilentChemObjectBuilder.getInstance()
         );
         IAtomContainer mol = sp.parseSmiles("O=P(=O)O");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
@@ -88,6 +89,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
             SilentChemObjectBuilder.getInstance()
         );
         IAtomContainer mol = sp.parseSmiles("[NH](S(=O)=O)C(F)(F)F");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());

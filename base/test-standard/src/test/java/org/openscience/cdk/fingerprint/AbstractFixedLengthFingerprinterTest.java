@@ -194,6 +194,9 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
+
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet bs1 = fingerprinter.getBitFingerprint(structure1).asBitSet();
         BitSet bs2 = fingerprinter.getBitFingerprint(structure2).asBitSet();

@@ -237,6 +237,7 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
 
         Assert.assertNotNull(ac);
         addExplicitHydrogens(ac);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
         Aromaticity.cdkLegacy().apply(ac);
 
         addExplicitHydrogens(ac);

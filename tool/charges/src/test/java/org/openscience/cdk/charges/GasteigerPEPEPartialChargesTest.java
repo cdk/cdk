@@ -96,6 +96,7 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         String smiles1 = "c1ccccc1";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         Aromaticity.cdkLegacy().apply(mol1);
         addExplicitHydrogens(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
@@ -126,7 +127,8 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = sp.parseSmiles(smiles1);
         IAtomContainer mol2 = sp.parseSmiles(smiles2);
-
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
 

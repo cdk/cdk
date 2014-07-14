@@ -66,6 +66,7 @@ public class RecursiveTest extends CDKTestCase {
         SMARTSQueryTool sqt = new SMARTSQueryTool(smarts, DefaultChemObjectBuilder.getInstance());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles(smiles);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
         Aromaticity.cdkLegacy().apply(atomContainer);
         boolean status = sqt.matches(atomContainer);
         if (status) {

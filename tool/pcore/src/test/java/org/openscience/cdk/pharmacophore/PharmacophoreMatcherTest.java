@@ -42,6 +42,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.io.iterator.IteratingMDLConformerReader;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-pcore
@@ -241,6 +242,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -271,6 +273,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -310,6 +313,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);
@@ -336,6 +340,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
         PharmacophoreMatcher matcher = new PharmacophoreMatcher(query);

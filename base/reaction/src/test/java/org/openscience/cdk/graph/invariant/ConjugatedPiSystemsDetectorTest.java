@@ -79,6 +79,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/butadiene.cml";
         mol = readCMLMolecule(filename);
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -108,6 +109,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/naphtalene.cml";
         mol = readCMLMolecule(filename);
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -137,6 +139,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         String filename = "data/cml/toluene.cml";
         mol = readCMLMolecule(filename);
 
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -168,6 +171,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -210,8 +214,9 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-        mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);    
+        mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
@@ -251,8 +256,9 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-        mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);    
-
+        
+        mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);

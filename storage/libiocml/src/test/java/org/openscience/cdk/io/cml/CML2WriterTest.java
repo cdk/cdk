@@ -63,6 +63,7 @@ import org.openscience.cdk.silent.Reaction;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * TestCase for the reading CML 2 files using a few test files
@@ -79,6 +80,7 @@ public class CML2WriterTest extends CDKTestCase {
     @Test public void testCMLWriterBenzene() throws Exception {
 		StringWriter writer = new StringWriter();
 		IAtomContainer molecule = TestMoleculeFactory.makeBenzene();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
         CMLWriter cmlWriter = new CMLWriter(writer);
         

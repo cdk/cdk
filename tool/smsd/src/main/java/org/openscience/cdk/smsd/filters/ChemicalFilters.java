@@ -55,6 +55,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 import org.openscience.cdk.smsd.ring.HanserRingFinder;
 import org.openscience.cdk.smsd.tools.BondEnergies;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
@@ -813,6 +814,8 @@ public class ChemicalFilters {
         boolean stereoMatchFlag = false;
         IAtomContainer reactant = rMol;
         IAtomContainer product = pMol;
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(product);
         Aromaticity.cdkLegacy().apply(reactant);
         Aromaticity.cdkLegacy().apply(product);
 

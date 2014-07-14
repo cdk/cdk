@@ -33,6 +33,7 @@ import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.fingerprint.LingoFingerprinter;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.MoleculeFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * @cdk.module test-fingerprint
@@ -45,6 +46,8 @@ public class LingoSimilarityTest extends CDKTestCase {
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
         addImplicitHydrogens(mol1);
         addImplicitHydrogens(mol2);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         LingoFingerprinter fingerprinter = new LingoFingerprinter();
         Map<String, Integer> bs1 = fingerprinter.getRawFingerprint(mol1);
         Map<String, Integer> bs2 = fingerprinter.getRawFingerprint(mol2);

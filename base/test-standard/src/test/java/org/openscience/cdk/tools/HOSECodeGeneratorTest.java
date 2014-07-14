@@ -451,6 +451,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 		  mol.addBond(b27);
 		  
 		  addImplicitHydrogens(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		Aromaticity.cdkLegacy().apply(mol);
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		String s = null;
@@ -518,6 +519,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 		};
 
 		molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		Aromaticity.cdkLegacy().apply(molecule);
 		hcg = new HOSECodeGenerator();
 		String s = null;
@@ -572,6 +574,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 		};
 
 		molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 		boolean isAromatic = Aromaticity.cdkLegacy().apply(molecule);
 		Assert.assertFalse(isAromatic);
 		molecule.getAtom(0).setFormalCharge(-1);
@@ -591,6 +594,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
 	
   	@Test public void testGetAtomsOfSphere() throws Exception {
   	  IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("CC=CBr");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
   		Aromaticity.cdkLegacy().apply(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
@@ -603,6 +607,7 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
   	
   	@Test public void testGetAtomsOfSphereWithHydr() throws Exception {
   	    IAtomContainer molecule = (new SmilesParser(DefaultChemObjectBuilder.getInstance())).parseSmiles("C([H])([H])([H])C([H])=C([H])Br");
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
   		Aromaticity.cdkLegacy().apply(molecule);
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
