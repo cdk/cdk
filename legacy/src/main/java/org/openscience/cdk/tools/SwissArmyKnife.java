@@ -34,6 +34,7 @@ import java.util.GregorianCalendar;
  * @cdk.githash
  * @cdk.created    2001-06-19
  */
+@Deprecated
 public class SwissArmyKnife {
 
 	public final static boolean debug = false;
