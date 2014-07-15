@@ -29,7 +29,9 @@ import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomType;
-import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-standard
@@ -77,7 +79,15 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         IAtomType atomType = null;
         AtomTypeManipulator.configure(atom, atomType);
     }
-	
+    
+    @Test public void unknownAtomTypeDoesNotModifyProperties() {
+        IAtom atom = new Atom(Elements.CARBON);
+        IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
+        atomType.setAtomTypeName("X");
+        AtomTypeManipulator.configure(atom, atomType);
+        assertThat(atom.getSymbol(), is("C"));
+        assertThat(atom.getAtomicNumber(), is(6));
+    }	
 }
 
 
