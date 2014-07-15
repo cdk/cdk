@@ -129,4 +129,16 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <configuration>
+                    <destFile>${project.basedir}/../core/target/jacoco.exec</destFile>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
