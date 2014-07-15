@@ -1264,7 +1264,6 @@ public class AtomContainerManipulator {
             atom.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, CDKConstants.UNSET);
             atom.setFlag(CDKConstants.ISAROMATIC, false);
             atom.setProperty("org.openscience.cdk.renderer.color", CDKConstants.UNSET);
-            atom.setAtomicNumber((Integer) CDKConstants.UNSET);
             atom.setExactMass((Double) CDKConstants.UNSET);
         }
     }

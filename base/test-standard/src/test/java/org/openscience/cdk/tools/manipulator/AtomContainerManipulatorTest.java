@@ -684,14 +684,12 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         for (IAtom atom : container.atoms()) {
             Assert.assertTrue(atom.getAtomTypeName() != CDKConstants.UNSET);
             Assert.assertTrue(atom.getHybridization() != CDKConstants.UNSET);
-            Assert.assertTrue(atom.getAtomicNumber() != CDKConstants.UNSET);
         }
 
         AtomContainerManipulator.clearAtomConfigurations(container);
         for (IAtom atom : container.atoms()) {
             Assert.assertTrue(atom.getAtomTypeName() == CDKConstants.UNSET);
             Assert.assertTrue(atom.getHybridization() == CDKConstants.UNSET);
-            Assert.assertTrue(atom.getAtomicNumber() == CDKConstants.UNSET);
         }
     }
 
