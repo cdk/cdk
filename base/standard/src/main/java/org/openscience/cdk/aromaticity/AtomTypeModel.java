@@ -110,8 +110,13 @@ final class AtomTypeModel extends ElectronDonation {
 
             checkNotNull(atom.getAtomTypeName(),
                          "atom has unset atom type");
+            
+            // atom has been assigned an atom type but we don't know the hybrid state,
+            // typically for atomtype 'X' (unknown)
+            if (hyb == null)
+                continue;
 
-            switch (checkNotNull(hyb, "atom has unset hybridisation")) {
+            switch (hyb) {
                 case SP2:
                 case PLANAR3:
                     electrons[i] = electronsForAtomType(atom);
