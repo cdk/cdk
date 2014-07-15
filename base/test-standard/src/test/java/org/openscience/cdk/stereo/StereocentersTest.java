@@ -71,7 +71,7 @@ public class StereocentersTest {
         none("C(C)");
         none("C(C)(N)");
         none("C(=C)(C)N");
-        bicoordinate("C(=C)=C");
+        bicoordinate("C(=CC)=CC");
         none("C(=C)(=C)(=C)=C"); // nb abnormal valence
         none("C#N");
     }
