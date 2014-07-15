@@ -44,6 +44,8 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 
+import static org.hamcrest.CoreMatchers.is;
+
 /**
  * This class tests the perception of Sybyl atom types, which uses
  * CDK atom type perception and mapping of CDK atom types to Sybyl
@@ -201,7 +203,9 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 	    mol.addAtom(atom);
 	    SybylAtomTypeMatcher matcher =
 	        SybylAtomTypeMatcher.getInstance(mol.getBuilder());
-	    Assert.assertNull(matcher.findMatchingAtomType(mol, atom));
+        IAtomType type = matcher.findMatchingAtomType(mol, atom); 
+	    Assert.assertNotNull(type);
+	    Assert.assertThat(type.getAtomTypeName(), is("X"));
 	}
 
 	@Test public void testAtomTyping2() throws Exception {

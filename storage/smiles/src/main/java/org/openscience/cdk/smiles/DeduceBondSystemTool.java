@@ -652,7 +652,7 @@ public class DeduceBondSystemTool {
             while (atoms.hasNext()) {
             	IAtom atom = atoms.next();
             	IAtomType matched = matcher.findMatchingAtomType(atomContainer, atom);
-            	if (matched == null) return false;
+            	if (matched == null || matched.getAtomTypeName().equals("X")) return false;
             }
 
         	IRingSet ringSet = recoverRingSystem(atomContainer);
