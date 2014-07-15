@@ -251,15 +251,23 @@ public class MurckoFragmenterTest extends CDKTestCase {
                                             .aromatic();
 
         IAtomContainer mol = smilesParser.parseSmiles("Fc1ccc(cc1)C(=O)C4CCN(CCC\\3=C(\\N=C2\\C=C/C=C\\N2C/3=O)C)CC4");
+        AtomContainerManipulator.clearAtomConfigurations(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
 
         String[] f = fragmenter.getFrameworks();
         IAtomContainer[] fc = fragmenter.getFrameworksAsContainers();
-
+        
         Assert.assertEquals(1, f.length);
         Assert.assertEquals(f.length, fc.length);
+
+        AtomContainerManipulator.clearAtomConfigurations(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
+        Aromaticity.cdkLegacy().apply(mol);
+                
         Assert.assertEquals("N=1C=C(CN2C=CC=CC12)CCN3CCC(Cc4ccccc4)CC3", f[0]);
 
         for (int i = 0; i < f.length; i++) {
@@ -320,7 +328,7 @@ public class MurckoFragmenterTest extends CDKTestCase {
     @Category(SlowTest.class)
     public void testMacrocycle() throws Exception {
         IAtomContainer mol = smilesParser.parseSmiles("C1=C(C=C(C(=C1O)O)O)C(=O)OC2=CC(=CC(=C2O)O)C(=O)OCC3C(C(C(C(O3)OC(=O)C4=CC(=C(C(=C4)OC(=O)C5=CC(=C(C(=C5)O)O)O)O)O)OC(=O)C6=CC(=C(C(=C6)OC(=O)C7=CC(=C(C(=C7)O)O)O)O)O)OC(=O)C8=CC(=C(C(=C8)OC(=O)C9=CC(=C(C(=C9)O)O)O)O)O)OC(=O)C1=CC(=C(C(=C1)OC(=O)C1=CC(=C(C(=C1)O)O)O)O)O");
-//        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
         MurckoFragmenter fragmenter = new MurckoFragmenter(true, 6);
         fragmenter.generateFragments(mol);
