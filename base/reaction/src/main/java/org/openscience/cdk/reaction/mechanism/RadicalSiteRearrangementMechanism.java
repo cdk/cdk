@@ -105,13 +105,13 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
 		atom2C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 		
 		reactantCloned.addSingleElectron(atom2C.getBuilder().newInstance(ISingleElectron.class, atom3C));
 		atom3C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 		
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);

@@ -107,12 +107,12 @@ public class TautomerizationMechanism implements IReactionMechanism{
     	atom1C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 
 		atom3C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 		
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);

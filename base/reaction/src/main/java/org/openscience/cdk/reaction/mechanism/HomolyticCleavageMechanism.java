@@ -102,12 +102,12 @@ public class HomolyticCleavageMechanism implements IReactionMechanism{
         // check if resulting atom type is reasonable
 		atom1C.setHybridization(null);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 		
         // check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
 		atom2C.setHybridization(null);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
-		if (type == null) return null;
+		if (type == null || type.getAtomTypeName().equals("X")) return null;
 		
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
