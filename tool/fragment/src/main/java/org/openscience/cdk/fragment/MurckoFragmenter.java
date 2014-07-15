@@ -334,6 +334,9 @@ public class MurckoFragmenter implements IFragmenter {
         List<String> smis = new ArrayList<String>();
         for (IAtomContainer mol : mols) {
             try {
+                AtomContainerManipulator.clearAtomConfigurations(mol);
+                for (IAtom atom : mol.atoms())
+                    atom.setImplicitHydrogenCount(null);
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
                 CDKHydrogenAdder.getInstance(mol.getBuilder()).addImplicitHydrogens(mol);
                 Aromaticity.cdkLegacy().apply(mol);

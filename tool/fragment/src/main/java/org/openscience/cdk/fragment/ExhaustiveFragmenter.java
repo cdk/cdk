@@ -122,6 +122,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
             List<IAtomContainer> parts = FragmentUtils.splitMolecule(atomContainer, bond);
             // make sure we don't add the same fragment twice
             for (IAtomContainer partContainer : parts) {
+                AtomContainerManipulator.clearAtomConfigurations(partContainer);
+                for (IAtom atom : partContainer.atoms())
+                    atom.setImplicitHydrogenCount(null);
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(partContainer);
                 CDKHydrogenAdder.getInstance(partContainer.getBuilder()).addImplicitHydrogens(partContainer);
                 Aromaticity.cdkLegacy().apply(partContainer);
@@ -145,6 +148,9 @@ public class ExhaustiveFragmenter implements IFragmenter {
 
             for (IAtomContainer frag : frags) {
                 if (frag.getBondCount() < 3) continue;
+                AtomContainerManipulator.clearAtomConfigurations(frag);
+                for (IAtom atom : frag.atoms())
+                    atom.setImplicitHydrogenCount(null);
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag);
                 CDKHydrogenAdder.getInstance(frag.getBuilder()).addImplicitHydrogens(frag);
                 Aromaticity.cdkLegacy().apply(frag);
