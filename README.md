@@ -146,6 +146,12 @@ Using `RELEASE` specifies the latest released version. The CDK uses even minor v
 </dependencies>
 ```
 
+A jar of the CDK source is deployed to the maven repos. However, you can also create or install a jar of the source locally with the following command:
+
+```
+mvn source:jar install
+```
+
 ## Examples and tutorials
 
 To get started using the CDK, you may be interested in the following websites which contain
