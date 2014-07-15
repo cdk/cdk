@@ -213,6 +213,13 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
             if (type == null) type = perceiveOrganometallicCenters(atomContainer, atom);
             if (type == null) type = perceiveNobelGases(atomContainer, atom);
         }
+        
+        // if no atom type can be assigned we set the atom type to 'X', this flags
+        // to other methods that atom typing was performed but did not yield a match
+        if (type == null) {
+            type = getAtomType("X");
+        }
+        
         return type;
     }
     
