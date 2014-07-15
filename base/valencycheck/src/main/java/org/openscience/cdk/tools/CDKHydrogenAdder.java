@@ -125,7 +125,8 @@ public class CDKHydrogenAdder {
 			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 		
 		if ("X".equals(atom.getAtomTypeName())) {
-			atom.setImplicitHydrogenCount(0);
+            if (atom.getImplicitHydrogenCount() == null)
+			    atom.setImplicitHydrogenCount(0);
 			return; 
 		}
 		
