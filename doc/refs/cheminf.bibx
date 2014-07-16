@@ -329,6 +329,17 @@
     </bibtex:article>
   </bibtex:entry>
 
+  <bibtex:entry id="Green1994">
+    <bibtex:article>
+      <bibtex:author>Green and Kahn and Savoy and Sprague and Teig</bibtex:author>
+      <bibtex:title>Chemical Function Queries for 3D Database Search</bibtex:title>
+      <bibtex:journal>Journal of Chemical Information and Computer Science</bibtex:journal>
+      <bibtex:year>1994</bibtex:year>
+      <bibtex:volume>34</bibtex:volume>
+      <bibtex:pages>1297-1308</bibtex:pages>
+    </bibtex:article>
+  </bibtex:entry>
+
   <bibtex:entry id="Saller85">
     <bibtex:phdthesis>
       <bibtex:author>Saller, H.</bibtex:author>
@@ -685,6 +696,17 @@ obtained by accurate mass spectrometry</bibtex:title>
       <bibtex:number>2</bibtex:number>
       <bibtex:pages>462-469</bibtex:pages>
       <bibtex:doi>10.1021/ci034244p</bibtex:doi>
+    </bibtex:article>
+  </bibtex:entry>
+
+  <bibtex:entry id="Rogers2010">
+    <bibtex:article>
+      <bibtex:author>Rogers and Hahn</bibtex:author>
+      <bibtex:journal>J. Chem. Inf. Mod.</bibtex:journal>
+      <bibtex:year>2010</bibtex:year>
+      <bibtex:volume>50</bibtex:volume>
+      <bibtex:pages>742-754</bibtex:pages>
+      <bibtex:doi>10.1021/ci100050t</bibtex:doi>
     </bibtex:article>
   </bibtex:entry>
 
