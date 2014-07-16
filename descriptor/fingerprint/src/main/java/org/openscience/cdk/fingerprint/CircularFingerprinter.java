@@ -46,7 +46,7 @@ import javax.vecmath.*;
  *  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.</p>
  *  
  *  <p>The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
- *  are no more than a hundred or so unique bit hashcodes per molecule. These identifers can be folded into a smaller
+ *  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
  *  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</p>
  *
  *	<p>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
@@ -159,7 +159,7 @@ public class CircularFingerprinter implements IFingerprinter
 	}
 	
 	/**
-	 * Calculates the fingerprints for the given IAtomContainer, and stores them for subsequent retrieval.
+	 * Calculates the fingerprints for the given {@link IAtomContainer}, and stores them for subsequent retrieval.
 	 * 
 	 * @param mol chemical structure; all nodes should be known legitimate elements
 	 */
@@ -222,7 +222,7 @@ public class CircularFingerprinter implements IFingerprinter
 	public FP getFP(int N) {return fplist.get(N);}
 	
 	/**
-	 * Calculates the circular fingerprint for the given IAtomContainer, and <b>folds</b> the result into a single bitset
+	 * Calculates the circular fingerprint for the given {@link IAtomContainer}, and <b>folds</b> the result into a single bitset
 	 * (see getSize()).
 	 * 
 	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
@@ -244,7 +244,7 @@ public class CircularFingerprinter implements IFingerprinter
 	}
 
 	/**
-	 * Calculates the circular fingerprint for the given IAtomContainer, and returns a datastructure that enumerates all
+	 * Calculates the circular fingerprint for the given {@link IAtomContainer}, and returns a datastructure that enumerates all
 	 * of the fingerprints, and their counts (i.e. does <b>not</b> fold them into a bitmask).
 	 * 
 	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
