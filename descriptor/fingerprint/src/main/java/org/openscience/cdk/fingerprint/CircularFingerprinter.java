@@ -28,16 +28,10 @@
  
 package org.openscience.cdk.fingerprint;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.tools.*;
-import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 import org.openscience.cdk.annotations.*;
 
-import java.lang.*;
 import java.util.*;
 import java.util.zip.CRC32;
 import javax.vecmath.*;
@@ -578,7 +572,7 @@ public class CircularFingerprinter implements IFingerprinter
     	boolean visited[]=new boolean[na];
     	for (int n=0;n<na;n++) visited[n]=!amask[n]; // skip hydrogens
 
-    	int path[]=new int[na+1],plen=0,numVisited=0;
+    	int path[]=new int[na+1],plen=0;
     	while (true)
     	{
     	    int last,current;
@@ -621,7 +615,6 @@ public class CircularFingerprinter implements IFingerprinter
     	    {
     	    	visited[current]=true;
         		path[plen++]=current;
-        		numVisited++;
 		    }
     	    else // otherwise, found nothing and must rewind the path
     	    {
@@ -827,7 +820,6 @@ public class CircularFingerprinter implements IFingerprinter
 		{
 			IAtom other=mol.getAtom(atomAdj[aidx][n]);
 			IBond bond=mol.getBond(bondAdj[aidx][n]);
-			int bfr=mol.getAtomNumber(bond.getAtom(0)),bto=mol.getAtomNumber(bond.getAtom(1));
 			Point3d o3d=other.getPoint3d();
 			Point2d o2d=other.getPoint2d();
 			if (o3d!=null)

@@ -30,22 +30,17 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.SlowTest;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.*;
-import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
-import org.openscience.cdk.iupac.parser.MoleculeBuilder;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
