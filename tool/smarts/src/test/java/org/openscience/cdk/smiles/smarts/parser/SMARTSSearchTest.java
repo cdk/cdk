@@ -703,7 +703,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     }
 
     /**
-     * @throws Exception
+     * With '*' matching 'H', this smarts matches twice 'OC' and 'O[H]'.
      * @cdk.bug 2489417
      */
     @Test
@@ -711,8 +711,8 @@ public class SMARTSSearchTest extends CDKTestCase {
         int[] results;
 
         results = match("[OD1H]-*", "CCO[H]");
-        Assert.assertEquals(1, results[0]);
-        Assert.assertEquals(1, results[1]);
+        Assert.assertEquals(2, results[0]);
+        Assert.assertEquals(2, results[1]);
 
    }
 
