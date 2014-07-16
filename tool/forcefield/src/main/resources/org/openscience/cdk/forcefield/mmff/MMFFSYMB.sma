@@ -98,7 +98,6 @@
 [OX2]-[CX3]=N OC=N
 [OX2]C OR
 [OX2](-*)-* -O-
-[OX2H]-* -O- '*' doesn't match 'H' in the CDK
 [OX2]=* O=+
 [OX1]=[SX2]=* O=S=
 [OX1]~S(~[OX1])(~[OX1])~[OX1] O4S
@@ -138,8 +137,6 @@
 [SX3](=[NX2]) >S=N
 [SX3](=[OX1]) S=O
 [SX2](-*)-* S
-[SX2H](-*) S
-[SX2H2] S
 [SX1]~[CX3]~[SX1] S2CM
 [SX1]=[CX3] S=C
 [SX1]=S=[OX1] SSMO
