@@ -50,37 +50,5 @@ public class WHIMDescriptorTest extends MolecularDescriptorTest {
     public void setUp() throws Exception {
     	setDescriptor(WHIMDescriptor.class);
     }
-
-    @Test
-    public void testWHIM() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        String filename = "data/hin/gravindex.hin";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        ISimpleChemObjectReader reader = new HINReader(ins);
-        ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = (IAtomContainer) cList.get(0);
-
-        Object[] params = new Object[1];
-        params[0] = new String("unity");
-        descriptor.setParameters(params);
-        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
-        //logger.debug("Num ret = "+retval.size());
-        for (int i = 0; i < retval.length(); i++) {
-            //logger.debug( retval.get(i) );
-        }
-
-        Assert.fail("This descriptor is not tested.");
-        /*
-        Assert.assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
-        Assert.assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
-        Assert.assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
-        Assert.assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
-        Assert.assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
-        Assert.assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
-        Assert.assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
-        Assert.assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
-        Assert.assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
-        */
-    }
 }
 
