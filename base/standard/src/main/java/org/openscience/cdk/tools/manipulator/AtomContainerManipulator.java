@@ -1207,10 +1207,8 @@ public class AtomContainerManipulator {
     public static void percieveAtomTypesAndConfigureAtoms(IAtomContainer container) throws CDKException {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
-            if (!(atom instanceof IPseudoAtom)) {
-                IAtomType matched = matcher.findMatchingAtomType(container, atom);
-                if (matched != null) AtomTypeManipulator.configure(atom, matched);
-            }
+            IAtomType matched = matcher.findMatchingAtomType(container, atom);
+            if (matched != null) AtomTypeManipulator.configure(atom, matched);            
         }
 	}
 
