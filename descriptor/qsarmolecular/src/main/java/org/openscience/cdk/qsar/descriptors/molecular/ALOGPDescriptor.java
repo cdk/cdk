@@ -19,8 +19,6 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import java.lang.reflect.Method;
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -403,23 +401,35 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
             alogpfrag[i] = 0;
             try {
-                // instead of calling hardcoded methods here, use retrospection
-                // and run all methods whos name start with 'calc' except for
-                // 'calculate'. Nice :)
-                Method[] methods = this.getClass().getDeclaredMethods();
-
-                if (fragment[i] instanceof String) {
-                    for (int j = 0; j <= methods.length - 1; j++) {
-                        Method method = methods[j];
-                        if (!method.getName().equals("calculate") && method.getName().startsWith("calc")) {
-
-                            Object[] objs = {i};
-                            //Object[] objs = { (int)(i) };
-                            method.invoke(this, objs);
-                        }
-                    }
+                if (fragment[i] != null) {
+                    calcGroup001_005(i);
+                    calcGroup002_006_007(i);
+                    calcGroup003_008_009_010(i);
+                    calcGroup004_011_to_014(i);
+                    calcGroup015(i);
+                    calcGroup016_018_036_037(i);
+                    calcGroup017_019_020_038_to_041(i);
+                    calcGroup021_to_023_040(i);
+                    calcGroup024_027_030_033_042(i);
+                    calcGroup025_026_028_029_031_032_034_035_043_044(i);
+                    calcGroup056_57(i);
+                    calcGroup058_61(i);
+                    calcGroup059_060_063(i);
+                    calcGroup066_to_079(i);
+                    calcGroup081_to_085(i);
+                    calcGroup086_to_090(i);
+                    calcGroup091_to_095(i);
+                    calcGroup096_to_100(i);
+                    calcGroup101_to_104(i);
+                    calcGroup106(i);
+                    calcGroup107(i);
+                    calcGroup108(i);
+                    calcGroup109(i);
+                    calcGroup110(i);
+                    calcGroup111(i);
+                    calcGroup116_117_120(i);
+                    calcGroup118_119(i);
                 }
-
             } catch (Exception e) {
                 throw new CDKException(e.toString(), e);
             }
