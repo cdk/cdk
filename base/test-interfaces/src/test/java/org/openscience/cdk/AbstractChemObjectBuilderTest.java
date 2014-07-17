@@ -60,6 +60,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
@@ -680,4 +681,12 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     		Assert.assertTrue("But got this message instead: " + message, message.contains("candidates are"));
     	}
     }
+
+    @Test
+    public void testSubstance() {
+        IChemObjectBuilder builder = rootObject.getBuilder();
+        ISubstance substance = builder.newInstance(ISubstance.class);
+        Assert.assertNotNull(substance);
+    }
+
 }

@@ -58,6 +58,7 @@ import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ISubstance;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
@@ -135,6 +136,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
         factory.register(IChemModel.class,           ChemModel.class);
         factory.register(IChemFile.class,            ChemFile.class);
         factory.register(IChemSequence.class,        ChemSequence.class);
+        factory.register(ISubstance.class,           Substance.class);
 
         // stereo components (requires some modification after instantiation)
         factory.register(ITetrahedralChirality.class,
