@@ -74,7 +74,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
 
         m = (IAminoAcid)newChemObject();
         IAtom cTerminus = m.getBuilder().newInstance(IAtom.class,"C");
-        m.addNTerminus(cTerminus);
+        m.addCTerminus(cTerminus);
         description = m.toString();
         for (int i=0; i< description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
@@ -97,7 +97,7 @@ public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
 
         aa = (IAminoAcid)newChemObject();
         IAtom cTerminus = aa.getBuilder().newInstance(IAtom.class,"C");
-        aa.addNTerminus(cTerminus);
+        aa.addCTerminus(cTerminus);
         clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);
         Assert.assertNotSame(aa, clone);
