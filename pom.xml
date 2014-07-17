@@ -538,7 +538,7 @@
                     <tagletArtifact>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2</version>
+                        <version>1.0.2.1</version>
                     </tagletArtifact>
                 </configuration>
                 <executions>
@@ -566,7 +566,7 @@
                     <dependency>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2</version>
+                        <version>1.0.2.1</version>
                     </dependency>
                 </dependencies>
             </plugin>          
@@ -582,7 +582,7 @@
                     <dependency>
                         <groupId>org.openscience.cdk</groupId>
                         <artifactId>cdk-build-utils</artifactId>
-                        <version>1.0.2</version>
+                        <version>1.0.2.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
