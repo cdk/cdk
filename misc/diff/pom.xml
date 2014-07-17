@@ -7,7 +7,7 @@
     <parent>
         <artifactId>cdk-misc</artifactId>
         <groupId>org.openscience.cdk</groupId>
-        <version>1.5.7-SNAPSHOT</version>
+        <version>1.5.7</version>
     </parent>
 
     <artifactId>cdk-diff</artifactId>

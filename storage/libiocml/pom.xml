@@ -7,7 +7,7 @@
     <parent>
         <artifactId>cdk-storage</artifactId>
         <groupId>org.openscience.cdk</groupId>
-        <version>1.5.7-SNAPSHOT</version>
+        <version>1.5.7</version>
     </parent>
 
     <artifactId>cdk-libiocml</artifactId>
