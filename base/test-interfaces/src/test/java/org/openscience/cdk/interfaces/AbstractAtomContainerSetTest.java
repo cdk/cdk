@@ -492,7 +492,7 @@ public abstract class AbstractAtomContainerSetTest extends AbstractChemObjectTes
         Assert.assertEquals(1.0, som.getMultiplier(newFirstAC), 0.00001);
     }
 
-    private class ChemObjectListenerImpl implements IChemObjectListener {
+    protected class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         
         private ChemObjectListenerImpl() {
