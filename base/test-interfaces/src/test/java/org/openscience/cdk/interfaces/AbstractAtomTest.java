@@ -226,6 +226,13 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         }
     }
 
+    @Test public void testToString_FractionalCoordinates() {
+        IAtom atom = (IAtom)newChemObject();
+        atom.setFractionalPoint3d(new Point3d(2, 3, 4));
+        String description = atom.toString();
+        Assert.assertTrue(description.contains("F3D"));
+    }
+
     /**
      * Checks that the default charge is set to NaN
      */

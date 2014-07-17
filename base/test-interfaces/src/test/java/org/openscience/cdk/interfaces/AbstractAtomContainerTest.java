@@ -800,6 +800,30 @@ public abstract class AbstractAtomContainerTest extends AbstractChemObjectTest {
         Assert.assertEquals(3, container.getBondCount());
     }
     
+    @Test public void testAdd_IAtomContainer_LonePairs() {
+        IAtomContainer mol = (IAtomContainer)newChemObject();
+        IAtom c1 = mol.getBuilder().newInstance(IAtom.class,"C");
+        mol.addAtom(c1);
+        mol.addLonePair(0);
+
+        IAtomContainer container = (IAtomContainer)newChemObject();
+        container.add(mol);
+        Assert.assertEquals(1, container.getAtomCount());
+        Assert.assertEquals(1, container.getLonePairCount());
+    }
+
+    @Test public void testAdd_IAtomContainer_SingleElectrons() {
+        IAtomContainer mol = (IAtomContainer)newChemObject();
+        IAtom c1 = mol.getBuilder().newInstance(IAtom.class,"C");
+        mol.addAtom(c1);
+        mol.addSingleElectron(0);
+
+        IAtomContainer container = (IAtomContainer)newChemObject();
+        container.add(mol);
+        Assert.assertEquals(1, container.getAtomCount());
+        Assert.assertEquals(1, container.getSingleElectronCount());
+    }
+
     @Test public void testRemove_IAtomContainer() throws Exception {
     	IAtomContainer acetone = (IAtomContainer)newChemObject();
         IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");

@@ -59,6 +59,14 @@ public class AssociationTest extends CDKTestCase {
         }
     }
 
+    @Test public void testToStringWithAtoms() {
+        Association association = new Association(
+            new Atom("C"), new Atom("C")
+        );
+        String description = association.toString();
+        Assert.assertTrue(description.contains(","));
+    }
+
     @Test public void testContains() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
