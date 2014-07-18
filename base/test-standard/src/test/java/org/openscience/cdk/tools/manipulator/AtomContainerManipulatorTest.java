@@ -692,6 +692,23 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             Assert.assertTrue(atom.getHybridization() == CDKConstants.UNSET);
         }
     }
+    
+    @Test public void atomicNumberIsNotCleared() throws Exception {
+        IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        IAtom atom2 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"O");
+        IAtom atom3 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
+        container.addAtom(atom1);
+        container.addAtom(atom2);
+        container.addAtom(atom3);
+        container.addBond(new Bond(atom1, atom2, IBond.Order.SINGLE));
+        container.addBond(new Bond(atom2, atom3, IBond.Order.SINGLE));
+
+        AtomContainerManipulator.clearAtomConfigurations(container);
+        for (IAtom atom : container.atoms()) {
+            Assert.assertNotNull(atom.getAtomicNumber());
+        }     
+    }
 
     @Test
     public void testGetMaxBondOrder() {
