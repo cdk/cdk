@@ -91,7 +91,7 @@ public class PartialTChargeMMFF94DescriptorTest extends AtomicDescriptorTest {
 
 			// System.out.println(atom.getAtomTypeName() + " " +
 			// atom.getProperty("MMFF94charge").toString());
-			testResult[i] = atom.getProperty("MMFF94charge");
+			testResult[i] = atom.getProperty("MMFF94charge", Double.class);
 			i++;
 
 		}
