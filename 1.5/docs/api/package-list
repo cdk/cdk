@@ -14,6 +14,7 @@ org.openscience.cdk.dict
 org.openscience.cdk.event
 org.openscience.cdk.exception
 org.openscience.cdk.fingerprint
+org.openscience.cdk.forcefield.mmff
 org.openscience.cdk.formula
 org.openscience.cdk.formula.rules
 org.openscience.cdk.fragment
