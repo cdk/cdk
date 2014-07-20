@@ -329,10 +329,36 @@ public final class Aromaticity {
                                                                   Cycles.cdkAromaticSet());
 
     /**
-     * Access an instance that replicates the previously utilised -
-     * CDKHueckelAromaticityDetector.
-     *
-     * @return aromaticity instance to use
+     * Access an aromaticity instance that replicates the previously utilised -
+     * CDKHueckelAromaticityDetector. It has the following configuration:
+     * 
+     * <pre>{@code
+     * new Aromaticity(ElectronDonation.cdk(),
+     *                 Cycles.cdkAromaticSet());
+     * }</pre>
+     * 
+     * <p>
+     * This model is not necessarily bad (or really considered legacy) but
+     * should <b>not</b> be considered a gold standard model that covers all
+     * possible cases. It was however the primary method used in previous 
+     * versions of the CDK (1.4).
+     * </p>
+     * 
+     * <p>
+     * This factory method is provided for convenience for
+     * those wishing to replicate aromaticity perception used in previous
+     * versions. The same electron donation model can be used to test
+     * aromaticity of more cycles. For instance, the following configuration
+     * will identify more bonds in a some structures as aromatic:
+     * </p>
+     * 
+     * <pre>{@code
+     * new Aromaticity(ElectronDonation.cdk(),
+     *                 Cycles.or(Cycles.all(), Cycles.relevant()));
+     * }</pre>
+     * 
+     * @return aromaticity instance that is configured to perform identically
+     *         to the primary aromaticity model in version 1.4. 
      */
     public static Aromaticity cdkLegacy() {
         return CDK_LEGACY;
