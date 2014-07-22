@@ -1431,7 +1431,7 @@ public class CMLCoreModule implements ICMLModule {
 
             if (hasHCounts) {
 //                cdo.setObjectProperty("Atom", "hydrogenCount", (String)hCounts.get(i));
-            	// FIXME: the hCount in CML is the total of implicit *and* explicit
+            	// convertCMLToCDKHydrogenCounts() is called to update hydrogen counts when molecule is stored
                 String hCount = hCounts.get(i);
                 if (hCount != null) {
                     currentAtom.setImplicitHydrogenCount(Integer.parseInt(hCount));
