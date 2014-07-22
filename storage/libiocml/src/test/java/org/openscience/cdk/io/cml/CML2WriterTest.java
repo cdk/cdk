@@ -27,13 +27,16 @@
  *  */
 package org.openscience.cdk.io.cml;
 
+import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
@@ -533,4 +536,10 @@ public class CML2WriterTest extends CDKTestCase {
 //        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"D") != -1);
 //        Assert.assertTrue(cmlContent.indexOf("<molecule id=\"E") != -1);
 //    }
+    
+    @Test public void writeIsClosed() throws IOException {
+        Writer mock = Mockito.mock(Writer.class);
+        new CMLWriter(mock).close();
+        Mockito.verify(mock).close();
+    }
 }

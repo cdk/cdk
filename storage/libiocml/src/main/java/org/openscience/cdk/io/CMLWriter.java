@@ -141,6 +141,10 @@ public class CMLWriter extends DefaultChemObjectWriter {
             public void write(int b) throws IOException {
                 writer.write(b);
             }
+
+            @Override public void close() throws IOException {
+                writer.close();
+            }
         };
 
         initIOSettings();
