@@ -48,10 +48,10 @@ import java.util.Set;
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 
 /**
- * Determine the MMFF symbolic atom types {@cdk.cite Halgren95a}. The
- * matcher uses SMARTS patterns to assign preliminary symbolic types. The types are then adjusted
- * considering aromaticity {@link MmffAromaticTypeMapping}. The assigned atom types validate
- * completely with the validation suite (http://server.ccl.net/cca/data/MMFF94/).
+ * Determine the MMFF symbolic atom types {@cdk.cite Halgren95a}. The matcher uses SMARTS patterns
+ * to assign preliminary symbolic types. The types are then adjusted considering aromaticity {@link
+ * MmffAromaticTypeMapping}. The assigned atom types validate completely with the validation suite
+ * (http://server.ccl.net/cca/data/MMFF94/).
  *
  * <pre>{@code
  * MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
@@ -87,8 +87,6 @@ final class MmffAtomTypeMatcher {
             this.hydrogenMap = loadHydrogenDefinitions(hdefIn);
         } catch (IOException e) {
             throw new InternalError("Atom type definitions for MMFF94 Atom Types could not be loaded: " + e.getMessage());
-        } catch (Exception e) {
-            throw new InternalError("Atom type definitions for MMFF94 Atom Types could not be loaded: " + e.getMessage());
         } finally {
             close(smaIn);
             close(hdefIn);
@@ -107,27 +105,9 @@ final class MmffAtomTypeMatcher {
         // value a s 'TYPE'.
         final String[] symbs = new String[container.getAtomCount()];
 
-        // preconditions, 
-        //  1. all hydrogens must be present as explicit nodes in the connection table. this requires
-        //     that each atom explicitly states it has exactly 0 hydrogens
-        //  2. the SMARTS treat all atoms as aliphatic and therefore no aromatic flags should be set,
-        //     we could remove this but ideally we don't want to modify the structure      
-        for (IAtom atom : container.atoms()) {
-            if (atom.getImplicitHydrogenCount() == null || atom.getImplicitHydrogenCount() != 0)
-                throw new IllegalArgumentException("Hydrogens should be unsuppressed (explicit)");
-            if (atom.getFlag(CDKConstants.ISAROMATIC))
-                throw new IllegalArgumentException("No aromatic flags should be set");
-        }
+        checkPreconditions(container);
 
-        // preliminary atom types, assigned using SMARTS
-        SmartsMatchers.prepare(container, true);
-        for (AtomTypePattern matcher : patterns) {
-            for (final int idx : matcher.matches(container)) {
-                if (symbs[idx] == null) {
-                    symbs[idx] = matcher.symb;
-                }
-            }
-        }
+        assignPreliminaryTypes(container, symbs);
 
         final EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(container);
         final int[][] graph = GraphUtil.toAdjList(container, bonds);
@@ -139,6 +119,22 @@ final class MmffAtomTypeMatcher {
         // special case, 'NCN+' matches entries that the validation suite say should
         // actually be 'NC=N'. We can achieve 100% compliance by checking if NCN+ is still 
         // next to CNN+ or CIM+ after aromatic types are assigned
+        fixNCNTypes(symbs, graph);
+
+        assignHydrogenTypes(container, symbs, graph);
+
+        return symbs;
+    }
+
+    /**
+     * Special case, 'NCN+' matches entries that the validation suite say should actually be 'NC=N'.
+     * We can achieve 100% compliance by checking if NCN+ is still next to CNN+ or CIM+ after
+     * aromatic types are assigned
+     *
+     * @param symbs symbolic types
+     * @param graph adjacency list graph
+     */
+    private void fixNCNTypes(String[] symbs, int[][] graph) {
         for (int v = 0; v < graph.length; v++) {
             if ("NCN+".equals(symbs[v])) {
                 boolean foundCNN = false;
@@ -150,16 +146,56 @@ final class MmffAtomTypeMatcher {
                 }
             }
         }
+    }
 
-        // hydrogen types, assigned based on the MMFFHDEF.PAR parent associations. 
+    /**
+     * preconditions, 1. all hydrogens must be present as explicit nodes in the connection table.
+     * this requires that each atom explicitly states it has exactly 0 hydrogens 2. the SMARTS treat
+     * all atoms as aliphatic and therefore no aromatic flags should be set, we could remove this
+     * but ideally we don't want to modify the structure
+     *
+     * @param container input structure representation
+     */
+    private void checkPreconditions(IAtomContainer container) {
+        for (IAtom atom : container.atoms()) {
+            if (atom.getImplicitHydrogenCount() == null || atom.getImplicitHydrogenCount() != 0)
+                throw new IllegalArgumentException("Hydrogens should be unsuppressed (explicit)");
+            if (atom.getFlag(CDKConstants.ISAROMATIC))
+                throw new IllegalArgumentException("No aromatic flags should be set");
+        }
+    }
+
+    /**
+     * Hydrogen types, assigned based on the MMFFHDEF.PAR parent associations.
+     *
+     * @param container input structure representation
+     * @param symbs     symbolic atom types
+     * @param graph     adjacency list graph
+     */
+    private void assignHydrogenTypes(IAtomContainer container, String[] symbs, int[][] graph) {
         for (int v = 0; v < graph.length; v++) {
             if (container.getAtom(v).getSymbol().equals("H") && graph[v].length == 1) {
                 int w = graph[v][0];
                 symbs[v] = this.hydrogenMap.get(symbs[w]);
             }
         }
+    }
 
-        return symbs;
+    /**
+     * Preliminary atom types are assigned using SMARTS definitions.
+     *
+     * @param container input structure representation
+     * @param symbs     symbolic atom types
+     */
+    private void assignPreliminaryTypes(IAtomContainer container, String[] symbs) {
+        SmartsMatchers.prepare(container, true);
+        for (AtomTypePattern matcher : patterns) {
+            for (final int idx : matcher.matches(container)) {
+                if (symbs[idx] == null) {
+                    symbs[idx] = matcher.symb;
+                }
+            }
+        }
     }
 
     /**
@@ -185,8 +221,8 @@ final class MmffAtomTypeMatcher {
                 IQueryAtomContainer container = SMARTSParser.parse(sma, null);
                 matchers.add(new AtomTypePattern(VentoFoggia.findSubstructure(container),
                                                  symb));
-            } catch (Exception e) {
-                throw new InternalError(line + " could not be loaded: " + e.getMessage());
+            } catch (IllegalArgumentException e) {
+                throw new IOException(line + " could not be loaded: " + e.getMessage());
             }
         }
 
@@ -207,7 +243,7 @@ final class MmffAtomTypeMatcher {
         final Map<String, String> hdefs = new HashMap<String, String>(200);
 
         BufferedReader br = new BufferedReader(new InputStreamReader(hdefIn));
-        String header = br.readLine();
+        br.readLine(); // header
         String line = null;
         while ((line = br.readLine()) != null) {
             String[] cols = line.split("\t");
@@ -216,7 +252,7 @@ final class MmffAtomTypeMatcher {
 
         // these associations list hydrogens that are not listed in MMFFSYMB.PAR but present in MMFFHDEF.PAR
         // N=O HNO, NO2 HNO2, F HX, I HX, ONO2 HON, BR HX, ON=O HON, CL HX, SNO HSNO, and OC=S HOCS
-        
+
         return hdefs;
     }
 
@@ -273,8 +309,8 @@ final class MmffAtomTypeMatcher {
          */
         private Set<Integer> matches(IAtomContainer container) {
             Set<Integer> matchedIdx = new HashSet<Integer>();
-            for (int[] m : pattern.matchAll(container)) {
-                matchedIdx.add(m[0]);
+            for (int[] mapping : pattern.matchAll(container)) {
+                matchedIdx.add(mapping[0]);
             }
             return matchedIdx;
         }
