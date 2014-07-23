@@ -33,6 +33,7 @@ import org.openscience.cdk.isomorphism.VentoFoggia;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
+import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -205,7 +206,7 @@ final class MmffAtomTypeMatcher {
      * @return array of patterns
      * @throws IOException
      */
-    private AtomTypePattern[] loadPatterns(InputStream smaIn) throws IOException {
+    static AtomTypePattern[] loadPatterns(InputStream smaIn) throws IOException {
 
         List<AtomTypePattern> matchers = new ArrayList<AtomTypePattern>();
 
@@ -222,6 +223,8 @@ final class MmffAtomTypeMatcher {
                 matchers.add(new AtomTypePattern(VentoFoggia.findSubstructure(container),
                                                  symb));
             } catch (IllegalArgumentException e) {
+                throw new IOException(line + " could not be loaded: " + e.getMessage());
+            } catch (TokenMgrError e) {
                 throw new IOException(line + " could not be loaded: " + e.getMessage());
             }
         }

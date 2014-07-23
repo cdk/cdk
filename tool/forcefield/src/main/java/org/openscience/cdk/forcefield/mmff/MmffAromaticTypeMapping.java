@@ -139,8 +139,7 @@ final class MmffAromaticTypeMapping {
                 int[] cycle = cycles[i];
                 int len = cycle.length - 1;
 
-                // only check |C| >= 5 & |C| <= 6 
-                if (checked[i] || len < 5 || len > 6) continue;
+                if (checked[i]) continue;
 
                 if (isAromaticRing(cycle, contribution, dbs, aromaticAtoms)) {
                     checked[i] = true;
@@ -252,8 +251,7 @@ final class MmffAromaticTypeMapping {
         final boolean imidazolium = NCN_PLUS.equals(hetro) || NGD_PLUS.equals(hetro);
         final boolean anion = "NM".equals(hetro);
 
-        if (hetroTypes.containsKey(hetro))
-            symbs[cycle[0]] = hetroTypes.get(hetro);
+        symbs[cycle[0]] = hetroTypes.get(hetro);
 
         symbs[cycle[1]] = getAlphaAromaticType(symbs[cycle[1]], imidazolium, anion);
         symbs[cycle[4]] = getAlphaAromaticType(symbs[cycle[4]], imidazolium, anion);
@@ -393,7 +391,7 @@ final class MmffAromaticTypeMapping {
      * @param graph     adjacency list graph representation of structure
      * @return closed walks (first = last vertex) of the cycles
      */
-    private static int[][] cyclesOfSizeFiveOrSix(IAtomContainer container, int[][] graph) {
+    static int[][] cyclesOfSizeFiveOrSix(IAtomContainer container, int[][] graph) {
         try {
             return Cycles.all(6).find(container, graph, 6).paths();
         } catch (Intractable intractable) {

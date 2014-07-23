@@ -26,12 +26,15 @@ package org.openscience.cdk.forcefield.mmff;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.openscience.cdk.interfaces.IAtomContainer;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class MmffAromaticTypeMappingTest {
@@ -88,7 +91,7 @@ public class MmffAromaticTypeMappingTest {
     @Test public void normaliseNoHetro() {
         int[] cycle = new int[]{3, 2, 1, 4, 5, 3};
         int[] contr = new int[]{1, 1, 1, 1, 1, 1};
-        Assert.assertFalse(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
+        assertFalse(MmffAromaticTypeMapping.normaliseCycle(cycle, contr));
     }
 
     @Test public void normaliseHetroAt3() {
@@ -156,7 +159,7 @@ public class MmffAromaticTypeMappingTest {
         int[] contr = new int[]{1, 1, 1, 1, 1, 1, 1, 1};
         int[] dbs = new int[]{1, 0, 6, 7, 5, 4};
         boolean[] arom = new boolean[contr.length];
-        Assert.assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
+        assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, arom));
     }
 
     @Test public void delocalisedExocyclicDoubleBondsMaintainAromaticity() {
@@ -248,5 +251,40 @@ public class MmffAromaticTypeMappingTest {
         Map<String, String> map = Collections.singletonMap("N=C", "N5A");
         assertThat(MmffAromaticTypeMapping.getAromaticType(map, 'A', "N=C", false, false),
                    is("N5A"));
+    }
+
+    @Test public void elementContributingOneElectronRejectWhenNoDoubleBond() throws Exception {
+        int[] cycle = new int[]{0, 1, 2, 3, 4, 5, 0};
+        int[] contr = new int[]{1, 1, 1, 1, 1, 1};
+        int[] dbs   = new int[]{1, 0, 3, -1, 5, 4};
+        assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, new boolean[contr.length]));
+    }
+    
+    @Test public void intractableNumberOfCycles() throws Exception {
+        
+        // to ensure intractable cycles are handled we create a complete graph
+        // where every vertex is attached to every other vertex. K8 is sufficient
+        // to trigger an abort when finding cycles
+        IAtomContainer container = Mockito.mock(IAtomContainer.class);
+        int[][] graphK8 = new int[8][7]; 
+        
+        for (int i = 0; i < graphK8.length; i++) {
+            int n = 0;
+            for (int j = 0; j < graphK8.length; j++) {
+                if (i == j) continue;
+                graphK8[i][n++] = j;
+            }
+        }
+        
+        assertThat(MmffAromaticTypeMapping.cyclesOfSizeFiveOrSix(container, graphK8).length,
+                   is(0));
+    }
+    
+    @Test public void contributionOfThreeValentCarbon() {
+        assertThat(MmffAromaticTypeMapping.contribution(6, 3, 3), is(-1));
+    }
+
+    @Test public void contributionOfFiveValentNitrogen() {
+        assertThat(MmffAromaticTypeMapping.contribution(7, 3, 5), is(-1));
     }
 }

@@ -33,6 +33,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.silent.AtomContainer;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 
 /**
@@ -372,6 +375,28 @@ public class MmffAtomTypeMatcherTest {
         Assert.assertArrayEquals(expected, actual);
     }
 
+    @Test(expected = IOException.class) 
+    public void invalidSmilesThrowsIOExceptionForTokenManagerError() throws IOException {
+        String row = "INVALID.SMILES X";
+        ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
+        try {
+            MmffAtomTypeMatcher.loadPatterns(in);
+        } finally {
+            in.close();
+        }
+    }
+    
+    @Test(expected = IOException.class) 
+    public void invalidSmilesThrowsIOExceptionForIllegalArgument() throws IOException {
+        String row = "23 X";
+        ByteArrayInputStream in = new ByteArrayInputStream(row.getBytes());
+        try {
+            MmffAtomTypeMatcher.loadPatterns(in);
+        } finally {
+            in.close();
+        }
+    }
+    
     static IAtom atom(String symb, int h) {
         IAtom atom = new org.openscience.cdk.silent.Atom(symb);
         atom.setImplicitHydrogenCount(h);
