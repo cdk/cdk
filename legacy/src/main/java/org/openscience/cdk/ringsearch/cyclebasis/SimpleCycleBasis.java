@@ -28,12 +28,10 @@
  */
 
 package org.openscience.cdk.ringsearch.cyclebasis;
-import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
-import org._3pq.jgrapht.graph.SimpleDirectedGraph;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
 import org.openscience.cdk.graph.BFSShortestPath;

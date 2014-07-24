@@ -33,10 +33,7 @@ import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.ringsearch.cyclebasis.CycleBasis;
 import org.openscience.cdk.CDKTestCase;
-
-import java.util.Arrays;
 
 /**
  * This class tests the CycleBasis class.

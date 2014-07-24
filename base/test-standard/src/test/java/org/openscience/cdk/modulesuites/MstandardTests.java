@@ -87,10 +87,6 @@ import org.openscience.cdk.ringsearch.RingSearchTest_Fused;
 import org.openscience.cdk.ringsearch.RingSearchTest_Hexaphenylene;
 import org.openscience.cdk.ringsearch.RingSearchTest_NonCyclic;
 import org.openscience.cdk.ringsearch.RingSearchTest_SpiroRings;
-import org.openscience.cdk.ringsearch.SSSRFinderTest;
-import org.openscience.cdk.ringsearch.cyclebasis.CycleBasisTest;
-import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleBasisTest;
-import org.openscience.cdk.ringsearch.cyclebasis.SimpleCycleTest;
 import org.openscience.cdk.smiles.InvPairTest;
 import org.openscience.cdk.stereo.StereoElementFactoryTest;
 import org.openscience.cdk.stereo.StereoToolTest;
@@ -138,9 +134,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     MathToolsTest.class,
     AllRingsFinderTest.class,
     RingPartitionerTest.class,
-    SimpleCycleTest.class,
-    SimpleCycleBasisTest.class,
-    CycleBasisTest.class,
     FormatStringBufferTest.class,
     IDCreatorTest.class,
     MoleculeSetManipulatorTest.class,
@@ -177,7 +170,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     PointTest.class,
     BiconnectivityInspectorTest.class,
     MorganNumbersToolsTest.class,
-    SSSRFinderTest.class,
     DoubleArrayResultTest.class,
     IntegerArrayResultTest.class,
     IntegerResultTest.class,
