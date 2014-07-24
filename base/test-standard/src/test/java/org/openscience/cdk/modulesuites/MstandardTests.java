@@ -43,7 +43,6 @@ import org.openscience.cdk.geometry.GeometryToolsTest;
 import org.openscience.cdk.geometry.volume.VABCVolumeTest;
 import org.openscience.cdk.graph.AtomContainerAtomPermutorTest;
 import org.openscience.cdk.graph.AtomContainerBondPermutorTest;
-import org.openscience.cdk.graph.BFSShortestPathTest;
 import org.openscience.cdk.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.graph.ConnectivityCheckerTest;
 import org.openscience.cdk.graph.MinimalPathIteratorTest;
@@ -163,7 +162,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     ReactionSetManipulatorTest.class,
     RingSizeComparatorTest.class,
     ElementComparatorTest.class,
-    BFSShortestPathTest.class,
     MoleculeGraphsTest.class,
     ConnectionMatrixTest.class,
     BsptTest.class,
