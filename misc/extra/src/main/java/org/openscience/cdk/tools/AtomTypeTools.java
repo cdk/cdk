@@ -27,11 +27,11 @@ package org.openscience.cdk.tools;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -86,7 +86,7 @@ public class AtomTypeTools {
 		logger.debug("assignAtomTypePropertiesToAtom Start ...");
 		String hoseCode = "";
 		IRingSet ringSetA = null;
-		IRingSet ringSetMolecule = new SSSRFinder(molecule).findSSSR();
+		IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
 		logger.debug(ringSetMolecule);
 		
 		if (aromaticity){

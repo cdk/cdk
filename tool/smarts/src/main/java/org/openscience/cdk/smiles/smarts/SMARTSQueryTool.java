@@ -43,7 +43,6 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.isomorphism.matchers.smarts.SmartsMatchers;
 import org.openscience.cdk.isomorphism.mcss.RMap;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.parser.SMARTSParser;
 import org.openscience.cdk.smiles.smarts.parser.TokenMgrError;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -141,7 +140,7 @@ public class SMARTSQueryTool {
          */
         SmallestSetOfSmallestRings {
             @Override IRingSet ringSet(IAtomContainer m) {
-                return new SSSRFinder(m).findSSSR();
+                return Cycles.sssr(m).toRingSet();
             }
         },
 
@@ -151,7 +150,7 @@ public class SMARTSQueryTool {
          */
         EssentialRings {
             @Override IRingSet ringSet(IAtomContainer m) {
-                return new SSSRFinder(m).findEssentialRings();
+                return Cycles.essential(m).toRingSet();
             }
         },
 
@@ -161,7 +160,7 @@ public class SMARTSQueryTool {
          */
         RelevantRings {
             @Override IRingSet ringSet(IAtomContainer m) {
-                return new SSSRFinder(m).findRelevantRings();
+                return Cycles.relevant(m).toRingSet();
             }
         };
 

@@ -31,6 +31,7 @@ import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.SpanningTree;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -39,7 +40,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * This aromaticity detector detects the aromaticity based on the H&uuml;ckel
@@ -88,7 +88,7 @@ public class DoubleBondAcceptingAromaticityDetector {
 		    ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers().iterator();
 		while (isolatedRingSystems.hasNext()) {
 			IAtomContainer isolatedSystem = isolatedRingSystems.next();
-			IRingSet singleRings = new SSSRFinder(isolatedSystem).findSSSR();
+			IRingSet singleRings = Cycles.sssr(isolatedSystem).toRingSet();
 			Iterator<IAtomContainer> singleRingsIterator = singleRings.atomContainers().iterator();
 			int maxRingSize = 20;
 			boolean allRingsAreAromatic = true;

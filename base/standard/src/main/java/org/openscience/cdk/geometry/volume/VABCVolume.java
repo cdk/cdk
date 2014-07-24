@@ -26,11 +26,11 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.config.AtomTypeFactory;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 
 /**
  * Calculates the Van der Waals volume using the method proposed
@@ -108,8 +108,7 @@ public class VABCVolume {
 
         boolean[] originalFlags = molecule.getFlags();
         Aromaticity.cdkLegacy().apply(molecule);
-        SSSRFinder ringFinder = new SSSRFinder(molecule);
-        IRingSet ringSet = ringFinder.findSSSR();
+        IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
         if (ringSet.getAtomContainerCount() > 0) {
             int aromRingCount = 0;
             int nonAromRingCount = 0;

@@ -32,8 +32,8 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -195,8 +195,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
         /*
          * Add ring information
          */
-        SSSRFinder finder = new SSSRFinder(container);
-        IRingSet sssr = finder.findEssentialRings();
+        IRingSet sssr = Cycles.essential(container).toRingSet();
         RingSetManipulator.sort(sssr);
         for (Iterator<IAtomContainer> it = sssr.atomContainers().iterator(); it.hasNext();) {
             IAtomContainer ring = it.next();

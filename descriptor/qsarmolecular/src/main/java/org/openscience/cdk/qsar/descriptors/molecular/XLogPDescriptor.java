@@ -27,6 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.graph.BFSShortestPath;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
@@ -42,7 +43,6 @@ import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
@@ -121,7 +121,6 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 
     private boolean checkAromaticity = false;
     private boolean salicylFlag=false;
-    private SSSRFinder ssrf=null;
     private static final String[] names = {"XLogP"};
 
     /**
@@ -219,7 +218,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             return getDummyDescriptorValue(e);
         }
 
-        IRingSet rs = (IRingSet) new SSSRFinder(ac).findSSSR();
+        IRingSet rs = Cycles.sssr(ac).toRingSet();
         IRingSet atomRingSet=null;
         if (checkAromaticity) {
             try {
@@ -249,11 +248,13 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             //logger.debug("atomRingSet.size "+atomRingSet.size());
             if (atomRingSet.getAtomContainerCount()>0){
                 if (atomRingSet.getAtomContainerCount()>1){
-                	Iterator containers = RingSetManipulator.getAllAtomContainers(atomRingSet).iterator();
+                	Iterator<IAtomContainer> containers = RingSetManipulator.getAllAtomContainers(atomRingSet).iterator();
                 	atomRingSet = rs.getBuilder().newInstance(IRingSet.class);
                 	while (containers.hasNext()) {
-                		ssrf = new SSSRFinder((IAtomContainer)containers.next());
-                		atomRingSet.add(ssrf.findEssentialRings());
+                        // XXX: we're already in the SSSR, but then get the esential cycles
+                        // of this atomRingSet... this code doesn't seem to make sense as 
+                        // essential cycles are a subset of SSSR and can be found directly
+                		atomRingSet.add(Cycles.essential(containers.next()).toRingSet()); 
                 	}
                     //logger.debug(" SSSRatomRingSet.size "+atomRingSet.size());
                 }

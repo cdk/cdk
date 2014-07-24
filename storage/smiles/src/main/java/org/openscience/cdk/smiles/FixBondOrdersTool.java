@@ -31,13 +31,13 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 
 /**
@@ -240,8 +240,7 @@ public class FixBondOrdersTool {
      */
     private IRingSet removeExtraRings(IAtomContainer m) throws Exception {
 
-        SSSRFinder arf = new SSSRFinder(m);
-        IRingSet rs = arf.findSSSR();
+        IRingSet rs = Cycles.sssr(m).toRingSet();
 
         //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
         Iterator<IAtomContainer> i = rs.atomContainers().iterator();

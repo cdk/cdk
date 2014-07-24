@@ -28,12 +28,12 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRingSet;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
@@ -166,8 +166,7 @@ public class PubchemFingerprinter implements IFingerprinter {
         IRingSet ringSet;
 
         public CountRings(IAtomContainer m) {
-            SSSRFinder finder = new SSSRFinder(m);
-            ringSet = finder.findSSSR();
+            ringSet = Cycles.sssr(m).toRingSet();
         }
 
         public int countAnyRing(int size) {

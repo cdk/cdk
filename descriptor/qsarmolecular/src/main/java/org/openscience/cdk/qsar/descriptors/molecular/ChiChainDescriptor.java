@@ -27,6 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.exception.InvalidSmilesException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
@@ -40,7 +41,6 @@ import org.openscience.cdk.qsar.IMolecularDescriptor;
 import org.openscience.cdk.qsar.result.DoubleArrayResult;
 import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -229,8 +229,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     private List order3(IAtomContainer container) {
         List<List<Integer>> ret = new ArrayList<List<Integer>>();
 
-        SSSRFinder sssrf = new SSSRFinder(container);
-        IRingSet rings = sssrf.findSSSR();
+        IRingSet rings = Cycles.sssr(container).toRingSet();
 
         int nring = rings.getAtomContainerCount();
         for (int i = 0; i < nring; i++) {

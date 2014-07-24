@@ -38,6 +38,7 @@ import org.openscience.cdk.fingerprint.HybridizationFingerprinter;
 import org.openscience.cdk.fingerprint.IFingerprinter;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
@@ -48,7 +49,6 @@ import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -150,7 +150,7 @@ public class TemplateExtractor {
 		while (imdl.hasNext()) {
 			m = (IAtomContainer) imdl.next();
 			System.out.println("Atoms:" + m.getAtomCount());
-			IRingSet ringSetM = new SSSRFinder(m).findSSSR();
+			IRingSet ringSetM = Cycles.sssr(m).toRingSet();
 			// som.addAtomContainer(m);
 			for (int i = 0; i < ringSetM.getAtomContainerCount(); i++) {
 				som.addAtomContainer(builder.newInstance(IAtomContainer.class, ringSetM.getAtomContainer(i)));
@@ -213,7 +213,7 @@ public class TemplateExtractor {
 			 * }catch(Exception ex1){ System.out.println("Could not find
 			 * aromaticity due to:"+ex1); }
 			 */
-			IRingSet ringSetM = new SSSRFinder(m).findSSSR();
+			IRingSet ringSetM = Cycles.sssr(m).toRingSet();
 
 			if (counterMolecules % 1000 == 0) {
 				System.out.println("Molecules:" + counterMolecules);

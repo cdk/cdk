@@ -27,10 +27,10 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 import java.util.List;
@@ -146,7 +146,7 @@ public class ExtendedFingerprinter implements IFingerprinter {
                 fingerprint.set(size-26+i); // 26 := RESERVED_BITS+1
         }
         if(ringSet==null){
-            ringSet=new SSSRFinder(container).findSSSR();
+            ringSet= Cycles.sssr(container).toRingSet();
             rslist=RingPartitioner.partitionRings(ringSet);
         }
         for(int i=0;i<7;i++){

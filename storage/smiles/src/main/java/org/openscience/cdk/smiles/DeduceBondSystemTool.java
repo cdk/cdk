@@ -33,6 +33,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,7 +43,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.AllRingsFinder;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.RingManipulator;
@@ -718,8 +718,7 @@ public class DeduceBondSystemTool {
     private IRingSet removeExtraRings(IAtomContainer m) {
 
         try {
-            SSSRFinder arf = new SSSRFinder(m);
-            IRingSet rs = arf.findSSSR();
+            IRingSet rs = Cycles.sssr(m).toRingSet();
 
             //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
 

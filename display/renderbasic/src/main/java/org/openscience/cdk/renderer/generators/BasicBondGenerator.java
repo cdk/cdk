@@ -32,6 +32,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -47,7 +48,6 @@ import org.openscience.cdk.renderer.elements.WedgeLineElement;
 import org.openscience.cdk.renderer.elements.WedgeLineElement.Direction;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter;
@@ -194,8 +194,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
             IAtomContainerSet molecules =
                 ConnectivityChecker.partitionIntoMolecules(atomContainer);
             for (IAtomContainer mol : molecules.atomContainers()) {
-                SSSRFinder sssrf = new SSSRFinder(mol);
-                ringSet.add(sssrf.findSSSR());
+                ringSet.add(Cycles.sssr(mol).toRingSet());
             }
 
             return ringSet;

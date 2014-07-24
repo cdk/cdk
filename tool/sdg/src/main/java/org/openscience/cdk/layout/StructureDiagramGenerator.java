@@ -35,6 +35,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.graph.ConnectivityChecker;
+import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -42,7 +43,6 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
-import org.openscience.cdk.ringsearch.SSSRFinder;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
@@ -344,9 +344,9 @@ public class StructureDiagramGenerator
 			/*
 			 *  Get the smallest set of smallest rings on this molecule
 			 */
-												SSSRFinder sssrf = new SSSRFinder(molecule);
+												
 
-			sssr = sssrf.findSSSR();
+			sssr = Cycles.sssr(molecule).toRingSet();
 			if (sssr.getAtomContainerCount() < 1)
 			{
 				return;
