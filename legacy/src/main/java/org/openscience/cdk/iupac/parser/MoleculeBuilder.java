@@ -525,7 +525,7 @@ public class MoleculeBuilder
      */
     protected IAtomContainer buildMolecule(int mainChain, List<AttachedGroup> attachedSubstituents
     , List<AttachedGroup> attachedGroups, boolean isMainCyclic, String name) throws
-    ParseException, CDKException
+                                                                             ParseException, CDKException
     {
         //Set up the molecle's name
         currentMolecule.setID(name);

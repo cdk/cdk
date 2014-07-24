@@ -38,6 +38,8 @@ import java.util.*;
  *
  * @cdk.keyword IUPAC name
  * @cdk.githash
+ * @deprecated The OPSIN (http://opsin.ch.cam.ac.uk/) tool offers a more comprehensive alternative
+ *             to this parsers functionality. 
  */
 public class NomParser {
     //private variables needed throughout the program
