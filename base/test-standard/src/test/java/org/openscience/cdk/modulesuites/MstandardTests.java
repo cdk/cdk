@@ -43,10 +43,7 @@ import org.openscience.cdk.geometry.GeometryToolsTest;
 import org.openscience.cdk.geometry.volume.VABCVolumeTest;
 import org.openscience.cdk.graph.AtomContainerAtomPermutorTest;
 import org.openscience.cdk.graph.AtomContainerBondPermutorTest;
-import org.openscience.cdk.graph.BiconnectivityInspectorTest;
 import org.openscience.cdk.graph.ConnectivityCheckerTest;
-import org.openscience.cdk.graph.MinimalPathIteratorTest;
-import org.openscience.cdk.graph.MoleculeGraphsTest;
 import org.openscience.cdk.graph.invariant.CanonicalLabelerTest;
 import org.openscience.cdk.graph.invariant.MorganNumbersToolsTest;
 import org.openscience.cdk.graph.matrix.ConnectionMatrixTest;
@@ -123,7 +120,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     DictRefTest.class,
     CrystalGeometryToolsTest.class,
     GeometryToolsTest.class,
-    MinimalPathIteratorTest.class,
     ConnectivityCheckerTest.class,
     UniversalIsomorphismTesterTest.class,
     IsomorphismTesterTest.class,
@@ -162,11 +158,9 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     ReactionSetManipulatorTest.class,
     RingSizeComparatorTest.class,
     ElementComparatorTest.class,
-    MoleculeGraphsTest.class,
     ConnectionMatrixTest.class,
     BsptTest.class,
     PointTest.class,
-    BiconnectivityInspectorTest.class,
     MorganNumbersToolsTest.class,
     DoubleArrayResultTest.class,
     IntegerArrayResultTest.class,
