@@ -80,17 +80,19 @@ public class StabilizationCharges {
     	if(resonanceS.getAtomContainerCount() < 2)// meaning it was not find any resonance structure
 			return 0.0;
 		
-		int positionStart = atomContainer.getAtomNumber(atom);
+		final int positionStart = atomContainer.getAtomNumber(atom);
 		
 		List<Double> result1 = new ArrayList<Double>();
     	List<Integer> distance1 = new ArrayList<Integer>();
     	
     	resonanceS.removeAtomContainer(0);// the first is the initial structure
     	for(Iterator<IAtomContainer> itA = resonanceS.atomContainers().iterator(); itA.hasNext();){
-			IAtomContainer resonance = itA.next();
-
+			final IAtomContainer resonance = itA.next();
+            
 			if(resonance.getAtomCount() < 2) // resonance with only one atom donnot have resonance
 				continue;
+            
+            final ShortestPaths shortestPaths = new ShortestPaths(resonance, resonance.getAtom(positionStart));
 			
 		    /*search positive charge*/
 			
@@ -105,7 +107,7 @@ public class StabilizationCharges {
 						 double result = electronegativity.calculatePiElectronegativity(resonance, atomP);
 					     result1.add(result);
 					        
-						 int dis = calculateBondsToAtom(resonance.getAtom(positionStart), atomP, resonance);
+						 int dis = shortestPaths.distanceTo(atomP);
 						 distance1.add(dis);
 					}
 				 
@@ -125,17 +127,5 @@ public class StabilizationCharges {
 	    	
     	return value;
     }
-	 /**
-     * Calculate the distance in bonds far from a atom.
-     * 
-     * @param startAtom       The atom as reference
-     * @param focusAtom       The atom as focus
-     * @param container       The IAtomContainer to study
-     * @return                The distance
-     */
-	 private int calculateBondsToAtom(IAtom startAtom, IAtom focusAtom, IAtomContainer container) {
-		 return new ShortestPaths(container, startAtom).distanceTo(focusAtom);
-	}
-
 }
 
