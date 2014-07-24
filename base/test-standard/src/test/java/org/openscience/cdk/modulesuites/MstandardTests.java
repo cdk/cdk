@@ -77,7 +77,6 @@ import org.openscience.cdk.qsar.result.IntegerArrayResultTypeTest;
 import org.openscience.cdk.qsar.result.IntegerResultTest;
 import org.openscience.cdk.qsar.result.IntegerResultTypeTest;
 import org.openscience.cdk.ringsearch.AllRingsFinderTest;
-import org.openscience.cdk.ringsearch.QueueTest;
 import org.openscience.cdk.ringsearch.RingPartitionerTest;
 import org.openscience.cdk.ringsearch.RingSearchTest_Benzene;
 import org.openscience.cdk.ringsearch.RingSearchTest_BenzylBenzene;
@@ -178,7 +177,6 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     PointTest.class,
     BiconnectivityInspectorTest.class,
     MorganNumbersToolsTest.class,
-    QueueTest.class,
     SSSRFinderTest.class,
     DoubleArrayResultTest.class,
     IntegerArrayResultTest.class,
