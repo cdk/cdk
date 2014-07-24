@@ -23,12 +23,10 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
-import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import static org.openscience.cdk.graph.BFSShortestPath.findPathBetween;
-import org.openscience.cdk.graph.MoleculeGraphs;
+import org.openscience.cdk.graph.ShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractAtomicDescriptor;
@@ -65,9 +63,6 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
-    java.util.List<Edge> mylist = null;
-    Object startVertex = null;
-    Object endVertex = null;
 
     /**
      *  Constructor for the BondsToAtomDescriptor object
@@ -135,17 +130,11 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
 
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(container);
-        int bondsToAtom;
-
+        
         IAtom focus = container.getAtom(focusPosition);
 
-        startVertex = atom;
-        endVertex = focus;
-
-        mylist = findPathBetween(mygraph, startVertex, endVertex);
-
-        bondsToAtom = mylist.size();
+        // could be cached
+        int bondsToAtom = new ShortestPaths(container, atom).distanceTo(focus);
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new IntegerResult(bondsToAtom),

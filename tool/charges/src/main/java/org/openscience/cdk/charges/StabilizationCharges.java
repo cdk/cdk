@@ -24,12 +24,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.graph.BFSShortestPath;
-import org.openscience.cdk.graph.MoleculeGraphs;
+import org.openscience.cdk.graph.ShortestPaths;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -108,7 +105,7 @@ public class StabilizationCharges {
 						 double result = electronegativity.calculatePiElectronegativity(resonance, atomP);
 					     result1.add(result);
 					        
-						 int dis = calculateBondsToAtom(resonance.getAtom(positionStart),atomP, resonance);
+						 int dis = calculateBondsToAtom(resonance.getAtom(positionStart), atomP, resonance);
 						 distance1.add(dis);
 					}
 				 
@@ -137,11 +134,7 @@ public class StabilizationCharges {
      * @return                The distance
      */
 	 private int calculateBondsToAtom(IAtom startAtom, IAtom focusAtom, IAtomContainer container) {
-		 SimpleGraph mygraph = MoleculeGraphs.getMoleculeGraph(container);
-	        
-		 List<Edge> mylist = BFSShortestPath.findPathBetween(mygraph,startAtom,focusAtom);
-	    
-		 return mylist.size();
+		 return new ShortestPaths(container, startAtom).distanceTo(focusAtom);
 	}
 
 }

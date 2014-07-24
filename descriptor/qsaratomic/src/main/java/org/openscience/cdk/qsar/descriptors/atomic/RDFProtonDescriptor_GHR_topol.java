@@ -26,14 +26,13 @@ import java.util.List;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org._3pq.jgrapht.Edge;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.MoleculeGraphs;
+import org.openscience.cdk.graph.ShortestPaths;
 import org.openscience.cdk.graph.invariant.ConjugatedPiSystemsDetector;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -387,20 +386,10 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 
 ///////////////////////THE SECOND CALCULATED DESCRIPTOR IS g(H)r TOPOLOGICAL WITH SUM OF BOND LENGTHS
 
-    distance = 0;
-	sum = 0;
-	smooth = -20;
-	position = 0;
-	atom2 = null;
-	org._3pq.jgrapht.Graph mygraph = MoleculeGraphs.getMoleculeGraph(mol);
+    smooth = -20;
 	IAtom startVertex = clonedAtom;
 	IAtom endVertex;
-	org._3pq.jgrapht.Edge edg;
-	List<Edge> mylist;
-	IAtom atomTarget;
-	IAtom atomSource;
 	Integer thisAtom;
-	partial = 0;
 	limitInf = 1.4;
 	limitSup = 4;
 	step = (limitSup - limitInf)/15;
@@ -408,21 +397,18 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 	if(atoms.size() > 0) {
 		//ArrayList gHr_topol_function = new ArrayList(15);
 		int counter = 0;
+        ShortestPaths shortestPaths = new ShortestPaths(mol, startVertex);
 		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
 			sum = 0;
 			for( int at = 0; at < atoms.size(); at++ ) {
-				partial = 0;
 				distance = 0;
 				thisAtom = atoms.get(at);
 				position = thisAtom;
 				endVertex = mol.getAtom(position);
 				atom2 = mol.getAtom(position);
-				mylist = org.openscience.cdk.graph.BFSShortestPath.findPathBetween(mygraph,startVertex,endVertex);
-				for (int u = 0; u < mylist.size(); u++) {
-					edg = mylist.get(u);
-					atomTarget = (IAtom)edg.getTarget();
-					atomSource = (IAtom)edg.getSource();
-					distance += calculateDistanceBetweenTwoAtoms(atomTarget, atomSource);
+				int[] path = shortestPaths.pathTo(endVertex);
+				for (int i = 1; i < path.length; i++) {
+					distance += calculateDistanceBetweenTwoAtoms(mol.getAtom(path[i-1]), mol.getAtom(path[i]));
 				}
 				partial = atom2.getCharge() * Math.exp( smooth * (Math.pow( (ghrt - distance) , 2)));
 				sum += partial;

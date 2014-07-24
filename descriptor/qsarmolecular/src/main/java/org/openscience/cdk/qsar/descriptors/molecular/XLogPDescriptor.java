@@ -20,15 +20,13 @@
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org._3pq.jgrapht.graph.SimpleGraph;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.graph.BFSShortestPath;
+import org.openscience.cdk.graph.AllPairsShortestPaths;
 import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.graph.MoleculeGraphs;
 import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.interfaces.IAtomType.Hybridization;
 import org.openscience.cdk.isomorphism.UniversalIsomorphismTester;
@@ -825,18 +823,16 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
             }
         }
         //logger.debug("XLOGP: Before Correction:"+xlogP);
-        List path=null;
-        SimpleGraph moleculeGraph=null;
         int [][] pairCheck=null;
 //		//logger.debug("Acceptors:"+hBondAcceptors.size()+" Donors:"+hBondDonors.size());
         if (hBondAcceptors.size()>0 && hBondDonors.size()>0){
-            moleculeGraph=MoleculeGraphs.getMoleculeGraph(ac);
             pairCheck=initializeHydrogenPairCheck(new int[atomCount][atomCount]);
         }
+        AllPairsShortestPaths apsp = new AllPairsShortestPaths(ac);
         for (int i=0; i<hBondAcceptors.size();i++){
             for (int j=0; j<hBondDonors.size();j++){
                 if (checkRingLink(rs,ac,ac.getAtom(hBondAcceptors.get(i))) || checkRingLink(rs,ac,ac.getAtom(hBondDonors.get(j).intValue()))){
-                    path=BFSShortestPath.findPathBetween(moleculeGraph,ac.getAtom(hBondAcceptors.get(i)), ac.getAtom((Integer) hBondDonors.get(j)));
+                    int dist = apsp.from(ac.getAtom(hBondAcceptors.get(i))).distanceTo(ac.getAtom(hBondDonors.get(j)));
 //					//logger.debug(" Acc:"+checkRingLink(rs,ac,atoms[((Integer)hBondAcceptors.get(i)).intValue()])
 //					+" S:"+atoms[((Integer)hBondAcceptors.get(i)).intValue()].getSymbol()
 //					+" Nr:"+((Integer)hBondAcceptors.get(i)).intValue()
@@ -845,14 +841,14 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 //					+" Nr:"+((Integer)hBondDonors.get(j)).intValue()
 //					+" i:"+i+" j:"+j+" path:"+path.size());
                     if (checkRingLink(rs,ac,ac.getAtom(hBondAcceptors.get(i))) && checkRingLink(rs,ac,ac.getAtom(hBondDonors.get(j).intValue()))){
-                        if (path.size()==3 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]==0){
+                        if (dist==3 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]==0){
                             xlogP += 0.429;
                             pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]=1;
                             pairCheck[hBondDonors.get(j)][hBondAcceptors.get(i)]=1;
                             //logger.debug("XLOGP: Internal HBonds 1-4	 0.429");
                         }
                     }else{
-                        if (path.size()==4 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]==0){
+                        if (dist==4 && pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]==0){
                             xlogP += 0.429;
                             pairCheck[hBondAcceptors.get(i)][hBondDonors.get(j)]=1;
                             pairCheck[hBondDonors.get(j)][hBondAcceptors.get(i)]=1;
