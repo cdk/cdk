@@ -209,9 +209,11 @@ public class CIFReader extends DefaultChemObjectReader {
                     line = input.readLine();
                     if (line.startsWith(";")) {
                         logger.debug("Skipping block content");
-                        line = input.readLine().trim();
+                        line = input.readLine();
+                        if (line != null) line = line.trim();
                         while (!line.equals(";")) { 
-                            line = input.readLine().trim();
+                            line = input.readLine();
+                            if (line != null) line = line.trim();
                             logger.debug("Skipping block line: " + line);
                         }
                         line = input.readLine();
@@ -282,7 +284,8 @@ public class CIFReader extends DefaultChemObjectReader {
     private void skipUntilEmptyOrCommentLine(String line) throws IOException {
         // skip everything until empty line, or comment line
         while (line != null && line.length() > 0 && line.charAt(0) != '#') {
-            line = input.readLine().trim();
+            line = input.readLine();
+            if (line != null) line = line.trim();
         }
     }
     
@@ -408,7 +411,8 @@ public class CIFReader extends DefaultChemObjectReader {
                 crystal.addAtom(atom);
                 
                 // look up next row
-                line = input.readLine().trim();
+                line = input.readLine();
+                if (line != null) line = line.trim();
             }
         }
     }

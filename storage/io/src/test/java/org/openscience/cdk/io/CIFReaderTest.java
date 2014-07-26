@@ -24,7 +24,24 @@
  */
 package org.openscience.cdk.io;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Test;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.geometry.CrystalGeometryTools;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemFile;
+import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemSequence;
+import org.openscience.cdk.interfaces.ICrystal;
+import org.openscience.cdk.silent.ChemFile;
+import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static org.hamcrest.CoreMatchers.is;
 
 /**
  * TestCase for the reading CIF files using a test file with the {@link CIFReader}.
@@ -37,4 +54,21 @@ public class CIFReaderTest extends ChemObjectIOTest {
         setChemObjectIO(new CIFReader());
     }
 
+    /**
+     * Ensure a CIF file from the crystallography open database can be read.
+     * Example input <a href="http://www.crystallography.net/1100784.cif">1100784</a>.
+     */
+    @Test public void cod1100784() throws IOException, CDKException {
+        InputStream in        = getClass().getResourceAsStream("1100784.cif");
+        CIFReader   cifReader = new CIFReader(in);
+//        try {
+            IChemFile chemFile = cifReader.read(new ChemFile());
+            Assert.assertThat(chemFile.getChemSequenceCount(), is(1));
+            Assert.assertThat(chemFile.getChemSequence(0).getChemModelCount(), is(1));
+            Assert.assertNotNull(chemFile.getChemSequence(0).getChemModel(0).getCrystal());
+//        } finally {
+            cifReader.close();    
+//        }
+    }
+    
 }
