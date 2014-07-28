@@ -214,6 +214,12 @@ public final class Canon {
             }
             
             if (symmetry == null) {
+                
+                // After symmetry classes have been found without hydrogens we add
+                // back in the hydrogens and assign ranks. We don't refine the
+                // partition until the next time round the while loop to avoid
+                // artificially splitting due to hydrogen representation, for example
+                // the two hydrogens are equivalent in this SMILES for ethane '[H]CC'
                 for (int i = 0; i < g.length; i++) {
                     if (hydrogens[i]) {
                         curr[i]      = prev[g[i][0]];
@@ -222,6 +228,14 @@ public final class Canon {
                 }
                 n        = ranker.rank(currVs, nextVs, nnu, curr, prev);
                 symmetry = Arrays.copyOf(prev, ord);
+
+                // Update the buffer of non-unique vertices as hydrogens next
+                // to discrete heavy atoms are also discrete (and removed from
+                // 'nextVs' during ranking.
+                nnu = 0;
+                for (int i = 0; i < ord && nextVs[i] >= 0; i++) {
+                    currVs[nnu++] = nextVs[i];
+                }
             }
 
             // partition is discrete or only symmetry classes are needed
