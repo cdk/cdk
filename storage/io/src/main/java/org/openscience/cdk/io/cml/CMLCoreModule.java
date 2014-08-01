@@ -37,6 +37,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
+import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
@@ -54,6 +55,8 @@ import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.interfaces.ISingleElectron;
 import org.openscience.cdk.interfaces.IStrand;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -116,11 +119,17 @@ public class CMLCoreModule implements ICMLModule {
     protected List<String> zfract;
     protected List<String> hCounts;
     protected List<String> atomParities;
+    protected List<String> parityARef1;
+    protected List<String> parityARef2;
+    protected List<String> parityARef3;
+    protected List<String> parityARef4;
     protected List<String> atomDictRefs;
     protected List<String> atomAromaticities;
     protected List<String> spinMultiplicities;
     protected List<String> occupancies;
     protected Map<Integer,List<String>> atomCustomProperty;
+    protected boolean parityAtomsGiven;
+    protected boolean parityGiven;
 
 
     protected int bondCounter;
@@ -201,6 +210,10 @@ public class CMLCoreModule implements ICMLModule {
             this.zfract = conv.zfract;
             this.hCounts = conv.hCounts;
             this.atomParities = conv.atomParities;
+            this.parityARef1 = conv.parityARef1;
+            this.parityARef2 = conv.parityARef2;
+            this.parityARef3 = conv.parityARef3;
+            this.parityARef4 = conv.parityARef4;
             this.atomDictRefs = conv.atomDictRefs;
             this.atomAromaticities = conv.atomAromaticities;
             this.spinMultiplicities = conv.spinMultiplicities;
@@ -275,6 +288,10 @@ public class CMLCoreModule implements ICMLModule {
         zfract = new ArrayList<String>();
         hCounts = new ArrayList<String>();
         atomParities = new ArrayList<String>();
+        parityARef1 = new ArrayList<String>();
+        parityARef2 = new ArrayList<String>();
+        parityARef3 = new ArrayList<String>();
+        parityARef4 = new ArrayList<String>();
         atomAromaticities = new ArrayList<String>();
         atomDictRefs = new ArrayList<String>();
         spinMultiplicities = new ArrayList<String>();
@@ -445,7 +462,7 @@ public class CMLCoreModule implements ICMLModule {
                     isotope.add(value);
                 }
                 else if (att.equals("dictRef")) {                	
-                    logger.debug("ocupaccy: "+value);
+                    logger.debug("occupancy: "+value);
                     atomDictRefs.add(value);
                 } 
                 else if (att.equals("spinMultiplicity")) {
@@ -458,6 +475,9 @@ public class CMLCoreModule implements ICMLModule {
                 else {
                     logger.warn("Unparsed attribute: " + att);
                 }
+
+                parityAtomsGiven = false;
+                parityGiven = false;
             }
         } else if ("atomArray".equals(name) &&
         		   !xpath.endsWith("formula", "atomArray")) {
@@ -491,6 +511,26 @@ public class CMLCoreModule implements ICMLModule {
                 if (!atomsCounted) {
                     atomCounter += count;
                     atomsCounted = true;
+                }
+            }
+        } else if ("atomParity".equals(name)) {
+            for (int i = 0; i < atts.getLength(); i++) {
+                String att = atts.getQName(i);
+                if (att.equals("atomRefs4") && !parityAtomsGiven) {
+                	//Expect exactly four references
+                    try {
+                        StringTokenizer st = new StringTokenizer(
+                            atts.getValue(i)
+                        );
+                        parityARef1.add((String) st.nextElement());
+                        parityARef2.add((String) st.nextElement());
+                        parityARef3.add((String) st.nextElement());
+                        parityARef4.add((String) st.nextElement());
+                        parityAtomsGiven = true;
+                    } catch (Exception e) {
+                        logger.error("Error in CML file: ", e.getMessage());
+                        logger.debug(e);
+                    }
                 }
             }
         } else if ("bond".equals(name)) {
@@ -651,7 +691,7 @@ public class CMLCoreModule implements ICMLModule {
         			}
         		currentMolecule = currentChemFile.getBuilder().newInstance(IAtomContainer.class);
         	}
-        }else if ("formula".equals(name)){
+        } else if ("formula".equals(name)){
         	formulaCounter++;
             for (int i = 0; i < atts.getLength(); i++) {
                 String att = atts.getQName(i);
@@ -706,6 +746,15 @@ public class CMLCoreModule implements ICMLModule {
                 /* while strictly undefined, assume zero 
                 formal charge when no number is given */
                 formalCharges.add("0");
+            }
+            if (!parityGiven) {
+            	atomParities.add("");
+            }
+            if (!parityAtomsGiven) {
+                parityARef1.add("");
+                parityARef2.add("");
+                parityARef3.add("");
+                parityARef4.add("");
             }
             /* It may happen that not all atoms have
             associated 2D or 3D coordinates. accept that */
@@ -833,6 +882,11 @@ public class CMLCoreModule implements ICMLModule {
             if(!currentChars.isEmpty() && !stereoGiven){
                 bondStereo.add(currentChars);
                 stereoGiven = Boolean.TRUE;
+            }
+        } else if ("atomParity".equals(name)){
+            if(!currentChars.isEmpty() && !parityGiven && parityAtomsGiven){
+                atomParities.add(currentChars);
+                parityGiven = Boolean.TRUE;
             }
         } else if ("float".equals(name)) {
             if (BUILTIN.equals("x3")) {
@@ -1201,6 +1255,7 @@ public class CMLCoreModule implements ICMLModule {
         boolean hasExactMasses = false;
         boolean hasDictRefs = false;
         boolean hasSpinMultiplicities = false;
+        boolean hasAtomParities = false;
         boolean hasOccupancies = false;
 
         if (elid.size() == atomCounter) {
@@ -1286,6 +1341,14 @@ public class CMLCoreModule implements ICMLModule {
         } else {
             logger.debug(
                     "No spinMultiplicity info: " + spinMultiplicities.size(),
+                    " != " + atomCounter);
+        }
+
+        if (atomParities.size() == atomCounter) {
+            hasAtomParities = true;
+        } else {
+            logger.debug(
+                    "No atomParity info: " + spinMultiplicities.size(),
                     " != " + atomCounter);
         }
 
@@ -1461,9 +1524,9 @@ public class CMLCoreModule implements ICMLModule {
 
             if (hasSpinMultiplicities && spinMultiplicities.get(i) != null) {
 //                cdo.setObjectProperty("Atom", "spinMultiplicity", (String)spinMultiplicities.get(i));
-            	int unpairedElectrons = Integer.parseInt((String)spinMultiplicities.get(i))-1;
-                for (int sm=0; sm<unpairedElectrons; sm++) {
-                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newInstance(ISingleElectron.class,currentAtom));
+            	int unpairedElectrons = Integer.parseInt((String)spinMultiplicities.get(i)) - 1;
+                for (int sm = 0; sm < unpairedElectrons; sm++) {
+                    currentMolecule.addSingleElectron(currentChemFile.getBuilder().newInstance(ISingleElectron.class, currentAtom));
                 }
             }
 
@@ -1499,6 +1562,21 @@ public class CMLCoreModule implements ICMLModule {
 
             currentMolecule.addAtom(currentAtom);
         }
+        
+        for (int i = 0; i < atomCounter; i++) {
+	        if (hasAtomParities && atomParities.get(i) != null) {
+	        	try {
+	        		int parity = (int) Math.round(Double.parseDouble(atomParities.get(i)));
+	            	//currentAtom.setStereoParity(parity);
+	            	currentMolecule.addStereoElement(new TetrahedralChirality(currentAtom, new IAtom[]{atomEnumeration.get(parityARef1.get(i)), atomEnumeration.get(parityARef2.get(i)), atomEnumeration.get(parityARef3.get(i)), atomEnumeration.get(parityARef4.get(i))}, (parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE)));
+	        	} catch (NumberFormatException e) {
+	        		 if (!e.getMessage().equals("empty String")) {
+	                 	logger.warn("Cannot interpret stereo information: " + atomParities.get(i));
+	        		 }
+	        	}
+	        }
+        }
+        
         if (elid.size() > 0) {
             // assume this is the current working list
             bondElid = elid;
