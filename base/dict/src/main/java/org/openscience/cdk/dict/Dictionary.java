@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -30,8 +25,9 @@ package org.openscience.cdk.dict;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -57,7 +53,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 @TestClass("org.openscience.cdk.dict.DictionaryTest")
 public class Dictionary {
 
-    private Hashtable<String, Entry> entries;
+    private Map<String, Entry> entries;
     private String ownNS = null;
     
     public Dictionary() {
@@ -111,10 +107,10 @@ public class Dictionary {
     public Entry[] getEntries() {
         int size = entries.size();
         Entry[] entryArray = new Entry[size];
-        Enumeration<Entry> elements = entries.elements();
+        Iterator<Entry> elements = entries.values().iterator();
         int counter = 0;
-        while (elements.hasMoreElements() && counter < size) {
-            entryArray[counter] = (Entry)elements.nextElement();
+        while (elements.hasNext() && counter < size) {
+            entryArray[counter] = (Entry)elements.next();
             counter++;
         }
         return entryArray;

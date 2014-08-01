@@ -19,7 +19,7 @@
  */
 package org.openscience.cdk.dict;
 
-import java.util.Enumeration;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -71,11 +71,11 @@ public class DictDBTest extends CDKTestCase {
 
     @Test public void testListDictionaries() {
     	DictionaryDatabase db = new DictionaryDatabase();
-    	Enumeration<String> dbs = db.listDictionaries();
+    	Iterator<String> dbs = db.listDictionaries();
     	Assert.assertNotNull(dbs);
-    	Assert.assertTrue(dbs.hasMoreElements());
-    	while (dbs.hasMoreElements()) {
-    		String dbName = dbs.nextElement();
+    	Assert.assertTrue(dbs.hasNext());
+    	while (dbs.hasNext()) {
+    		String dbName = dbs.next();
     		Assert.assertNotNull(dbName);
     		Assert.assertNotSame(0, dbName.length());
     	}
@@ -94,11 +94,11 @@ public class DictDBTest extends CDKTestCase {
 
     @Test public void testHasDictionary() {
     	DictionaryDatabase db = new DictionaryDatabase();
-    	Enumeration<String> dbs = db.listDictionaries();
+    	Iterator<String> dbs = db.listDictionaries();
     	Assert.assertNotNull(dbs);
-    	Assert.assertTrue(dbs.hasMoreElements());
-    	while (dbs.hasMoreElements()) {
-    		String dbName = dbs.nextElement();
+    	Assert.assertTrue(dbs.hasNext());
+    	while (dbs.hasNext()) {
+    		String dbName = dbs.next();
     		Assert.assertTrue(db.hasDictionary(dbName));
     	}
     }
