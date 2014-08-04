@@ -20,6 +20,7 @@
 package org.openscience.cdk.debug;
 
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.DynamicFactory;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
@@ -88,7 +89,8 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
-	private static IChemObjectBuilder instance = null;
+	private static volatile IChemObjectBuilder instance = null;
+    private static final Object lock = new Object();
     private final DynamicFactory factory = new DynamicFactory(200);
 	
 	private DebugChemObjectBuilder() {
@@ -185,10 +187,16 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
      * @return a DebugChemObjectBuilder instance
      */
     public static IChemObjectBuilder getInstance() {
-		if (instance == null) {
-			instance = new DebugChemObjectBuilder();
-		}
-		return instance;
+        IChemObjectBuilder result = instance;
+        if (result == null) {
+            result = instance;
+            synchronized (lock) {
+                if (result == null) {
+                    instance = result = new DebugChemObjectBuilder();
+                }
+            }
+        }
+        return result;
 	}
 
 
