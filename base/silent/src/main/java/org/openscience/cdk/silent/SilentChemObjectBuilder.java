@@ -84,7 +84,7 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 public class SilentChemObjectBuilder implements IChemObjectBuilder {
 
-	private static IChemObjectBuilder instance = null;
+	private static volatile IChemObjectBuilder instance = null;
 	private final DynamicFactory factory = new DynamicFactory(200);
 
 	private SilentChemObjectBuilder() {
@@ -179,7 +179,7 @@ public class SilentChemObjectBuilder implements IChemObjectBuilder {
      *
      * @return a SilentChemObjectBuilder instance
      */
-	public static IChemObjectBuilder getInstance() {
+	public synchronized static IChemObjectBuilder getInstance() {
 		if (instance == null) {
 			instance = new SilentChemObjectBuilder();
 		}
