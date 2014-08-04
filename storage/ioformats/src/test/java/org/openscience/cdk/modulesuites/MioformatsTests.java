@@ -78,6 +78,9 @@ import org.openscience.cdk.io.formats.MDLV2000FormatTest;
 import org.openscience.cdk.io.formats.MDLV3000FormatTest;
 import org.openscience.cdk.io.formats.MMODFormatTest;
 import org.openscience.cdk.io.formats.MOPAC2002FormatTest;
+import org.openscience.cdk.io.formats.MOPAC2007FormatTest;
+import org.openscience.cdk.io.formats.MOPAC2009FormatTest;
+import org.openscience.cdk.io.formats.MOPAC2012FormatTest;
 import org.openscience.cdk.io.formats.MOPAC7FormatTest;
 import org.openscience.cdk.io.formats.MOPAC93FormatTest;
 import org.openscience.cdk.io.formats.MOPAC97FormatTest;
@@ -183,6 +186,9 @@ import org.openscience.cdk.io.formats.ZindoFormatTest;
     MMODFormatTest.class,
     Mol2FormatTest.class,
     MOPAC2002FormatTest.class,
+    MOPAC2007FormatTest.class,
+    MOPAC2009FormatTest.class,
+    MOPAC2012FormatTest.class,
     MOPAC7FormatTest.class,
     MOPAC93FormatTest.class,
     MOPAC97FormatTest.class,
