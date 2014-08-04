@@ -1,9 +1,5 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/*
+ * Copyright (C) 2014  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -78,12 +74,9 @@ public class MOPAC2012Format extends SimpleChemFormatMatcher implements IChemFor
     public String getWriterClassName() { return null; }
 
     /** {@inheritDoc} */ @Override
-    @TestMethod("testMatches")
+    @TestMethod("matchesMopac2012")
     public boolean matches(int lineNumber, String line) {
-        if (line.indexOf("MOPAC2012") >= 0) {
-            return true;
-        }
-        return false;
+        return line.contains("MOPAC2012");
     }
 
     /** {@inheritDoc} */ @Override
