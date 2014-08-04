@@ -1,5 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
+/*
  * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@slists.sourceforge.net
@@ -24,6 +23,9 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @cdk.module test-ioformats
  */
@@ -32,5 +34,8 @@ public class MOPAC97FormatTest extends ChemFormatMatcherTest {
     public MOPAC97FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher)MOPAC97Format.getInstance());
     }
-    
+
+    @Test public void testMatchesMopac97() throws Exception {
+        Assert.assertTrue(((MOPAC97Format)MOPAC97Format.getInstance()).matches(0, "MOPAC  97.00"));
+    }
 }
