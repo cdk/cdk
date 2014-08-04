@@ -41,7 +41,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
      * 
      */
     private static final long serialVersionUID = 5175105019921245323L;
-    private int[] trueBits;
+    private volatile int[] trueBits;
 	
 	public IntArrayFingerprint(Map<String, Integer> rawFingerPrint) {
 		trueBits = new int[rawFingerPrint.size()];
