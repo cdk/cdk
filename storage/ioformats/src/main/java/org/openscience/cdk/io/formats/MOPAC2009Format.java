@@ -74,7 +74,7 @@ public class MOPAC2009Format extends SimpleChemFormatMatcher implements IChemFor
     public String getWriterClassName() { return null; }
 
     /** {@inheritDoc} */ @Override
-    @TestMethod("testMatches")
+    @TestMethod("matchesMopac2009")
     public boolean matches(int lineNumber, String line) {
         return line.contains("MOPAC2009");
     }

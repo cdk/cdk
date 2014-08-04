@@ -1,6 +1,5 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/*
+ * Copyright (C) 2014  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@slists.sourceforge.net
  * 
@@ -24,6 +23,9 @@
  */
 package org.openscience.cdk.io.formats;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * @cdk.module test-ioformats
  */
@@ -32,5 +34,8 @@ public class MOPAC2012FormatTest extends ChemFormatMatcherTest {
     public MOPAC2012FormatTest() {
         super.setChemFormatMatcher((IChemFormatMatcher)MOPAC2012Format.getInstance());
     }
-    
+
+    @Test public void matchesMopac2012() throws Exception {
+        Assert.assertTrue(((MOPAC2012Format)MOPAC2012Format.getInstance()).matches(0, "MOPAC2012"));
+    }
 }
