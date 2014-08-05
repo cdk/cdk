@@ -233,8 +233,8 @@ public class GasteigerMarsiliPartialChargesTest extends CDKTestCase {
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = reader.read(new ChemFile());
         reader.close();
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = (IAtomContainer) cList.get(0);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = cList.get(0);
 
         Assert.assertNotNull(ac);
         addExplicitHydrogens(ac);

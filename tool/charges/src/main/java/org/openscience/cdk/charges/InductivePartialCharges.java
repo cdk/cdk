@@ -19,6 +19,7 @@
 package org.openscience.cdk.charges;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
@@ -243,9 +244,9 @@ public class InductivePartialCharges implements IChargeCalculator {
 			);
 		}
 
-		java.util.Iterator atoms = ac.atoms().iterator();
+		Iterator<IAtom> atoms = ac.atoms().iterator();
 		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
+			IAtom atom = atoms.next();
 			if (!target.equals(atom)) {
 				symbol = atom.getSymbol();
 				partial = 0;

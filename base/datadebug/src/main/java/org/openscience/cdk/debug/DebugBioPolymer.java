@@ -243,7 +243,7 @@ public class DebugBioPolymer extends BioPolymer
 //	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedAtomsList(IAtom atom) {
+    public List<IAtom> getConnectedAtomsList(IAtom atom) {
 		logger.debug("Getting connecting atoms vector for atom: ", atom);
 		return super.getConnectedAtomsList(atom);
 	}
@@ -254,25 +254,25 @@ public class DebugBioPolymer extends BioPolymer
 //	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedBondsList(IAtom atom) {
+    public List<IBond> getConnectedBondsList(IAtom atom) {
 		logger.debug("Getting connected bonds vector for atom: ", atom);
 		return super.getConnectedBondsList(atom);
 	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedLonePairsList(IAtom atom) {
+    public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getConnectedLonePairsCount(atom));
 		return super.getConnectedLonePairsList(atom);
 	}
 	
     /** {@inheritDoc} */ @Override
-    public List getConnectedSingleElectronsList(IAtom atom) {
+    public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
 		logger.debug("Getting single electrons at atom: atom=" + atom, " single electrons=" + super.getConnectedSingleElectronsCount(atom));
 		return super.getConnectedSingleElectronsList(atom);
 	}
 	
     /** {@inheritDoc} */ @Override
-    public java.util.List getConnectedElectronContainersList(IAtom atom) {
+    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
 		return super.getConnectedElectronContainersList(atom);
 	}
@@ -649,7 +649,7 @@ public class DebugBioPolymer extends BioPolymer
 	}
 
     /** {@inheritDoc} */ @Override
-    public Collection getMonomerNames() {
+    public Collection<String> getMonomerNames() {
 		logger.debug("Getting monomer names");
 		return super.getMonomerNames();
 	}
@@ -691,7 +691,7 @@ public class DebugBioPolymer extends BioPolymer
 	}
 
     /** {@inheritDoc} */ @Override
-    public Collection getStrandNames() {
+    public Collection<String> getStrandNames() {
 		logger.debug("Getting strand names: ", super.getStrandNames());
 		return super.getStrandNames();
 	}
@@ -703,7 +703,7 @@ public class DebugBioPolymer extends BioPolymer
 	}
 
     /** {@inheritDoc} */ @Override
-    public Map getStrands() {
+    public Map<String, IStrand> getStrands() {
 		logger.debug("Getting strands: ", super.getStrands());
 		return super.getStrands();
 	}

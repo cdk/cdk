@@ -262,7 +262,7 @@ public class DebugAtomContainer extends AtomContainer
 //	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedAtomsList(IAtom atom) {
+    public List<IAtom> getConnectedAtomsList(IAtom atom) {
 		logger.debug("Getting connecting atoms list for atom: ", atom);
 		return super.getConnectedAtomsList(atom);
 	}
@@ -273,25 +273,25 @@ public class DebugAtomContainer extends AtomContainer
 //	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedBondsList(IAtom atom) {
+    public List<IBond> getConnectedBondsList(IAtom atom) {
 		logger.debug("Getting connected bonds list for atom: ", atom);
 		return super.getConnectedBondsList(atom);
 	}
 
     /** {@inheritDoc} */ @Override
-    public List getConnectedLonePairsList(IAtom atom) {
+    public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getConnectedLonePairsCount(atom));
 		return super.getConnectedLonePairsList(atom);
 	}
 	
     /** {@inheritDoc} */ @Override
-    public List getConnectedSingleElectronsList(IAtom atom) {
+    public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
 		logger.debug("Getting single electrons at atom: atom=" + atom, " single electrons=" + super.getConnectedSingleElectronsCount(atom));
 		return super.getConnectedSingleElectronsList(atom);
 	}
 	
     /** {@inheritDoc} */ @Override
-    public java.util.List getConnectedElectronContainersList(IAtom atom) {
+    public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
 		return super.getConnectedElectronContainersList(atom);
 	}

@@ -215,8 +215,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         reader.close();
-    	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IAtomContainer ac = new AtomContainer((IAtomContainer)containersList.get(0));
+    	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+    	IAtomContainer ac = new AtomContainer(containersList.get(0));
     	addExplicitHydrogens(ac);
     	ac = mb3d.generate3DCoordinates(ac, false);
     	Assert.assertNotNull(ac.getAtom(0).getPoint3d());
@@ -313,12 +313,12 @@ public class ModelBuilder3DTest extends CDKTestCase {
 			inputList.add(atomContainer[i]);
 		}
 		///////////////////////////////////////////////////////////////////////////////////////////
-		// Generate 2D coordinats for the input molecules with the Structure Diagram Generator
+		// Generate 2D coordinates for the input molecules with the Structure Diagram Generator
 
 		StructureDiagramGenerator str;
 		List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
-		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = (IAtomContainer) iter.next();
+		for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = iter.next();
 			str = new StructureDiagramGenerator();
 			str.setMolecule((IAtomContainer)molecules);
 			str.generateCoordinates();
@@ -327,12 +327,12 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		inputList = resultList;
 
 		/////////////////////////////////////////////////////////////////////////////////////////////
-		// Delete x and y coordinats
+		// Delete x and y coordinates
 
-		for (Iterator iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = (IAtomContainer) iter.next();
-			for (Iterator atom = molecules.atoms().iterator(); atom.hasNext();){
-				IAtom last = (IAtom) atom.next();
+		for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
+			IAtomContainer molecules = iter.next();
+			for (Iterator<IAtom> atom = molecules.atoms().iterator(); atom.hasNext();){
+				IAtom last = atom.next();
 				last.setPoint2d(null);
 			}
 		}
