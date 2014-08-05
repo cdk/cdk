@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  *   
  * Contact: cdk-devel@lists.sourceforge.net
  *   
