@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2006-2007  Kai Hartmann <kaihartmann@users.sf.net>
+/* Copyright (C) 2006-2007  Kai Hartmann <kaihartmann@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

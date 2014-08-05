@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
+/* Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
  *  Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
  *  Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *

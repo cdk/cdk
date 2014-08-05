@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (c) 2006-2008 Rational Discovery LLC, Greg Landrum, and Julie Penzotti
+/* Copyright (c) 2006-2008 Rational Discovery LLC, Greg Landrum, and Julie Penzotti
  *
  * All rights reserved.
  *

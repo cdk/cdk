@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  The Jmol Development Team
+/* Copyright (C) 2003-2007  The Jmol Development Team
  *                    2009  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net

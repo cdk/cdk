@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2007  Ola Spjuth <ola.spjuth@farmbio.uu.se>
+/* Copyright (C) 2007  Ola Spjuth <ola.spjuth@farmbio.uu.se>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2001-2007  Edgar Luttmann <edgar@uni-paderborn.de>
+/* Copyright (C) 2001-2007  Edgar Luttmann <edgar@uni-paderborn.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

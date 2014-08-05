@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2005-2007  The Jmol Development Team
+/* Copyright (C) 2005-2007  The Jmol Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

@@ -1,7 +1,5 @@
 
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
+/* Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
  *
  * Implemented by Alex M. Clark, produced by Collaborative Drug Discovery, Inc.
  * Made available to the CDK community under the terms of the GNU LGPL.

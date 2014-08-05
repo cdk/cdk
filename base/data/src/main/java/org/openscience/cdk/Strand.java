@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  Martin Eklund <martin.eklund@farmbio.uu.se>
+/* Copyright (C) 2004-2007  Martin Eklund <martin.eklund@farmbio.uu.se>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

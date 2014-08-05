@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  Miguel Howard <miguel@jmol.org>
+/* Copyright (C) 2003-2007  Miguel Howard <miguel@jmol.org>
  *
  * Contact: cdk-devel@lists.sf.net
  *

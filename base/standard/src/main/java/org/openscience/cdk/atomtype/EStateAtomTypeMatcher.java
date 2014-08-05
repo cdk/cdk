@@ -1,9 +1,4 @@
-/* $RCSfile: $
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency) <Martin.Todd@epamail.epa.gov>
+/* Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency) <Martin.Todd@epamail.epa.gov>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

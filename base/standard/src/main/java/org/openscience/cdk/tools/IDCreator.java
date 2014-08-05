@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
  *                    2008  Aleksey Tarkhov <bayern7105@yahoo.de>
  *
  * Contact: cdk-devel@lists.sourceforge.net

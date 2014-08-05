@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
+/* Copyright (C) 2002-2003  Bradley A. Smith <yeldar@home.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

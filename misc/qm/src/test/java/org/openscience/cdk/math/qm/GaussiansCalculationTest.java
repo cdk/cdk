@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+/* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

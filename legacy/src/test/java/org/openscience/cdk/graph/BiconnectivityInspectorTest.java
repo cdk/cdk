@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- * 
- * Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
+/* Copyright (C) 2004-2007  Ulrich Bauer <baueru@cs.tum.edu>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

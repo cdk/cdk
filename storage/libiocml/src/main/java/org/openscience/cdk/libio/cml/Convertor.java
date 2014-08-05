@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2005-2007  Stefan Kuhn <shk3@users.sf.net>
+/* Copyright (C) 2005-2007  Stefan Kuhn <shk3@users.sf.net>
  *                    2008  Aleksey Tarkhov <bayern7105@yahoo.de>
  *
  * Contact: jchempaint-devel@lists.sourceforge.net

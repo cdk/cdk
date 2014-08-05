@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
+/* Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

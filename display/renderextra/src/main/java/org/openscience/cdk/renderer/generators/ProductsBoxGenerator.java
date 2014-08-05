@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2009  Stefan Kuhn
+/* Copyright (C) 2009  Stefan Kuhn
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

@@ -1,6 +1,4 @@
-/*  $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
+/* Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
  *
  *  This code has been kindly provided by Stephane Werner
  *  and Thierry Hanser from IXELIS mail@ixelis.net

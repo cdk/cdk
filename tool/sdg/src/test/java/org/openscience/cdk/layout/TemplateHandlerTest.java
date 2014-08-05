@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2003-2007  Christoph Steinbeck
+/* Copyright (C) 2003-2007  Christoph Steinbeck
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

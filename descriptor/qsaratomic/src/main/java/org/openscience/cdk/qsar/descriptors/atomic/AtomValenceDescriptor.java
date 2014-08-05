@@ -1,6 +1,4 @@
-/*  $Revision$ $Author$ $Date$
- *
- *  Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
+/* Copyright (C) 2004-2007  Matteo Floris <mfe4@users.sf.net>
  *                     2008  Egon Willighagen <egonw@users.sf.net>
  *
  *  Contact: cdk-devel@lists.sourceforge.net

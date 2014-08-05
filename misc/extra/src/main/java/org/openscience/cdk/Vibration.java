@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2002-2007  Bradley A. Smith <yeldar@home.com>
+/* Copyright (C) 2002-2007  Bradley A. Smith <yeldar@home.com>
  *
  * Contact: jmol-developers@lists.sf.net
  *

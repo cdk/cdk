@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 1998-2007  Dan Gezelter
+/* Copyright (C) 1998-2007  Dan Gezelter
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

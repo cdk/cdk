@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2003-2007  The CDK Development Team
+/* Copyright (C) 2003-2007  The CDK Development Team
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
