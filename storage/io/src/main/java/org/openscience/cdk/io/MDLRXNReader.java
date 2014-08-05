@@ -219,16 +219,14 @@ public class MDLRXNReader extends DefaultChemObjectReader {
  		  if (r != null) {
  			setOfReactions.addReaction(r);
  	      }
- 		  
-         String str;
+
          try {
              String line;
              while ((line = input.readLine()) != null) {
                  logger.debug("line: ", line);
                  // apparently, this is a SDF file, continue with 
                  // reading mol files
-		 		str = new String(line);
-		 		if (str.equals("$$$$")) {
+                 if (line.equals("$$$$")) {
 		 		    r = readReaction(setOfReactions.getBuilder());
 		 		    
 		 		    if (r != null) {
@@ -239,14 +237,13 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 		 		    if (r != null) {
 			 			// ok, the first lines should start with '>'
 			 			String fieldName = null;
-			 			if (str.startsWith("> ")) {
+                        if (line.startsWith("> ")) {
 			 			    // ok, should extract the field name
-			 			    str.substring(2); // String content = 
-			 			    int index = str.indexOf("<");
+                            int index = line.indexOf("<");
 			 			    if (index != -1) {
-				 				int index2 = str.substring(index).indexOf(">");
+                                int index2 = line.substring(index).indexOf(">");
 				 				if (index2 != -1) {
-				 				    fieldName = str.substring(index+1,index+index2);
+                                    fieldName = line.substring(index+1,index+index2);
 				 				}
 			 			    }
 			 			    // end skip all other lines
