@@ -339,6 +339,7 @@ public class CIPToolTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile file = reader.read(new ChemFile());
+        reader.close();
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(file).get(0);
 
         for (IAtom atom : mol.atoms()) {

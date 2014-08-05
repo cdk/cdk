@@ -1069,11 +1069,12 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
      * @cdk.bug 3071473
      */
     @Test
-    public void testFromMol() throws CDKException {
+    public void testFromMol() throws Exception {
         String filename = "data/mdl/formulatest.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile chemFile = reader.read(new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         List<IAtomContainer> mols = ChemFileManipulator.getAllAtomContainers(chemFile);
         IAtomContainer mol = mols.get(0);

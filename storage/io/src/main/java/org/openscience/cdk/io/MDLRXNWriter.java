@@ -304,6 +304,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
                     throw new CDKException("Exception while creating MDLWriter: " + ex.getMessage(), ex);
                 }
                 mdlwriter.write(mol);
+                mdlwriter.close();
                 writer.write(sw.toString());
             }
         }

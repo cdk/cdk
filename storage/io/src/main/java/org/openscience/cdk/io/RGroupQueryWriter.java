@@ -123,6 +123,11 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 		StringWriter strWriter = new StringWriter();
 		MDLV2000Writer mdlWriter = new MDLV2000Writer(strWriter);
 		mdlWriter.write(atomContainer);
+        try {
+            mdlWriter.close();
+        } catch (IOException exception) {
+            // FIXME
+        }
 		String ctab =  strWriter.toString();
 		//strip of the individual header, as we have one super header instead.
 		for (int line=1; line <=3; line++ ){ 

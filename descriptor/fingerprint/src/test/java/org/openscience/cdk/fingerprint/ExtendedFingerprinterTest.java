@@ -341,7 +341,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 	/*
 	 * The power of the extended fingerprinter could not distinguish these before the change in r11932
 	 */
-	@Test public void testChebi() throws java.lang.Exception
+	@Test public void testChebi() throws Exception
 	{
 		IAtomContainer searchmol = null;
 		IAtomContainer findmol = null;
@@ -349,10 +349,12 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
 		searchmol = reader.read(new AtomContainer());
+        reader.close();
 		filename = "data/mdl/chebifind.mol";
 		ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		reader = new MDLV2000Reader(ins);
 		findmol = reader.read(new AtomContainer());
+        reader.close();
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		BitSet superBS = fingerprinter.getBitFingerprint(findmol).asBitSet();
 		BitSet subBS = fingerprinter.getBitFingerprint(searchmol).asBitSet();

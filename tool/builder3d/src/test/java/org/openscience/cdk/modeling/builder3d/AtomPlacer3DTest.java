@@ -77,6 +77,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
     	// TODO: shk3-cleanuptests: best to use the STRICT IO mode here
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
     	// TODO: shk3-cleanuptests: please make it a types list
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IAtomContainer ac = new AtomContainer((IAtomContainer)containersList.get(0));

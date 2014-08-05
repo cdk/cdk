@@ -56,6 +56,7 @@ public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
             Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
         }
+        reader.close();
 
         Assert.assertEquals(2, molCount);
     }

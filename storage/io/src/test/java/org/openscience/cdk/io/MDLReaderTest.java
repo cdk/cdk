@@ -99,6 +99,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
                 "  3  9  1  0  0  0\n";
         MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
@@ -125,6 +126,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(1, containersList.size());
@@ -141,6 +143,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
             "   -0.0073   -0.5272    0.9655 H   0  3  0  0  0\n";
     	MDLReader reader = new MDLReader(new StringReader(mdl), Mode.STRICT);
     	IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
     	Assert.assertNotNull(mol);
     	Assert.assertEquals(1, mol.getAtomCount());
     	Assert.assertEquals(0, mol.getBondCount());
@@ -157,6 +160,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(2, containersList.size());
@@ -177,6 +181,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
             .getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         List<IAtomContainer> containersList =
         	ChemFileManipulator.getAllAtomContainers(chemFile);
@@ -192,6 +197,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     	String emptyString = "";
     	MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
     	IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
     	Assert.assertNull(mol);
     }
     
@@ -202,6 +208,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(1).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(6).getStereo());
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(7).getStereo());
@@ -216,6 +223,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         MDLV2000Reader reader = new MDLV2000Reader(ins);
      
         IAtomContainer mol = reader.read(new AtomContainer()); 
+        reader.close();
         Assert.assertNotNull(mol);
         Assert.assertEquals(1, ((Integer)mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
         Assert.assertEquals(15, ((Integer)mol.getAtom(1).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());
@@ -223,12 +231,13 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test(expected=AssertionError.class)
-    public void testHas2DCoordinates_With000() throws CDKException {
+    public void testHas2DCoordinates_With000() throws Exception {
         String filenameMol = "data/mdl/with000coordinate.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filenameMol);
         IAtomContainer molOne=null;
         MDLReader reader = new MDLReader(ins, Mode.RELAXED);
         molOne = reader.read(new AtomContainer());
+        reader.close();
         Assert.assertNotNull(molOne.getAtom(0).getPoint2d());
     }
 
@@ -241,6 +250,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         MDLReader reader = new MDLReader(in);
         IAtomContainer molecule    = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
+        reader.close();
         Assert.assertEquals(9, molecule.getAtomCount());
     }
 }

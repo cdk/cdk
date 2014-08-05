@@ -155,6 +155,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         
         
@@ -183,6 +184,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IChemModel chemModel = (IChemModel)reader.read(new ChemModel());
+        reader.close();
         Assert.assertNotNull(chemModel);
         
         
@@ -210,6 +212,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IReactionSet reactionSet = (IReactionSet)reader.read(new ReactionSet());
+        reader.close();
         Assert.assertNotNull(reactionSet);
         
         
@@ -232,17 +235,19 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
     /**
      * This test checks of different numbering for the same mapping gives the same result. 
      */
-    @Test public void testAsadExamples() throws CDKException{
+    @Test public void testAsadExamples() throws Exception{
         String filename = "data/mdl/output.rxn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLRXNReader reader = new MDLRXNReader(ins);
         IReactionSet reactionSet = (IReactionSet)reader.read(new ReactionSet());
+        reader.close();
         filename = "data/mdl/output_Cleaned.rxn";
         logger.info("Testing: " + filename);
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLRXNReader(ins);
         IReactionSet reactionSet2 = (IReactionSet)reader.read(new ReactionSet());
+        reader.close();
         Assert.assertEquals(reactionSet.getReaction(0).getMappingCount(),reactionSet2.getReaction(0).getMappingCount());
         for(int i=0;i<reactionSet.getReaction(0).getMappingCount();i++){
             Assert.assertEquals(

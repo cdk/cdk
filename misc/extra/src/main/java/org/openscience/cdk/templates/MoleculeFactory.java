@@ -1312,7 +1312,7 @@ public class MoleculeFactory {
 			FileInputStream fis = new FileInputStream(inFile);
 			mr = new MDLReader(fis);
 			chemFile = (ChemFile)mr.read((ChemObject)new ChemFile());
-			fis.close();
+	        mr.close();
 			chemSequence = chemFile.getChemSequence(0);
 			chemModel = chemSequence.getChemModel(0);
 			setOfMolecules = chemModel.getMoleculeSet();

@@ -44,6 +44,7 @@ import org.openscience.cdk.stereo.DoubleBondStereochemistry;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -1352,6 +1353,11 @@ public class HashCodeScenariosTest {
             } catch (CDKException e) {
                 System.err.println(e.getMessage());
             }
+        }
+        try {
+            sdf.close();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
         }
 
         // help identify if the SDF reader messed up

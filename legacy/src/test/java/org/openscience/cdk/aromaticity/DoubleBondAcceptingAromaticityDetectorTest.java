@@ -416,6 +416,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
@@ -456,6 +457,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);
@@ -487,6 +489,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IAtomContainer molecule = (IAtomContainer) reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
+        reader.close();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         DoubleBondAcceptingAromaticityDetector.detectAromaticity(molecule);

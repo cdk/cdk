@@ -214,6 +214,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
     	List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IAtomContainer ac = new AtomContainer((IAtomContainer)containersList.get(0));
     	addExplicitHydrogens(ac);
@@ -240,6 +241,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
     	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IAtomContainer ac= new AtomContainer(containersList.get(0));
     	addExplicitHydrogens(ac);
@@ -367,6 +369,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
     	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IAtomContainer ac= new AtomContainer(containersList.get(0));
     	ac = mb3d.generate3DCoordinates(ac, false);
@@ -380,6 +383,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        reader.close();
     	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
     	IAtomContainer ac= new AtomContainer(containersList.get(0));
     	ac = mb3d.generate3DCoordinates(ac, false);

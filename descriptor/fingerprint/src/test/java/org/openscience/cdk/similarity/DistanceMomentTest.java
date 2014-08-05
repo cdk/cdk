@@ -27,6 +27,7 @@ public class DistanceMomentTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        reader.close();
         List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         return (IAtomContainer) containersList.get(0);
     }

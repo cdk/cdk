@@ -66,6 +66,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -80,6 +81,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -102,6 +104,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
           getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile fileContents = (IChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -125,6 +128,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -139,6 +143,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -153,6 +158,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -172,6 +178,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         ChemFile fileContents = (ChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         org.openscience.cdk.interfaces.IChemSequence sequence = fileContents.getChemSequence(0);
         Assert.assertNotNull(sequence);
@@ -201,6 +208,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
             getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
         IChemFile fileContents = (IChemFile)reader.read(new ChemFile());
+        reader.close();
         Assert.assertEquals(1, fileContents.getChemSequenceCount());
         IChemSequence sequence = fileContents.getChemSequence(0);
         IChemModel model = sequence.getChemModel(0);

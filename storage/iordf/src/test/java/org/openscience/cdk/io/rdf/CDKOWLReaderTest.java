@@ -59,6 +59,7 @@ public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
             new InputStreamReader(ins)
         );
         IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
 
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtomCount());

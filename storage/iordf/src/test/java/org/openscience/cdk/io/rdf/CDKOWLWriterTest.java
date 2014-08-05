@@ -53,6 +53,7 @@ public class CDKOWLWriterTest extends ChemObjectWriterTest {
         mol.addAtom(new Atom("C"));
         mol.addBond(0,1,IBond.Order.DOUBLE);
         writer.write(mol);
+        writer.close();
         String outputString = output.toString();
         Assert.assertTrue(outputString.contains(
             "http://cdk.sourceforge.net/model.owl#"
