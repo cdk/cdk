@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2006-2007  The Chemistry Development Kit Project
+/* Copyright (C) 2006-2007  The Chemistry Development Kit Project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

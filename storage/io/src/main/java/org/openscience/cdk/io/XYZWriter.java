@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2002  Bradley A. Smith <bradley@baysmith.com>
+/* Copyright (C) 2002  Bradley A. Smith <bradley@baysmith.com>
  *               2002  Miguel Howard
  *               2003-2007  Egon Willighagen <egonw@users.sf.net>
  * 

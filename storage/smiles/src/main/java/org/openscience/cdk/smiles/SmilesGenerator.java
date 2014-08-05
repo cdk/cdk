@@ -1,6 +1,4 @@
-/*  $Revision$ $Author$ $Date$
- *  
- *  Copyright (C) 2002-2007  Oliver Horlacher
+/* Copyright (C) 2002-2007  Oliver Horlacher
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

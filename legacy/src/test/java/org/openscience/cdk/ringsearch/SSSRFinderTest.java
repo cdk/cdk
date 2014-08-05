@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
  *               2009  Mark Rijnbeek <markr@ebi.ac.uk>
  * 
  * Contact: cdk-devel@lists.sourceforge.net

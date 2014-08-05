@@ -1,6 +1,4 @@
-/*  $Revision$ $Author$ $Date$    
- *
- *  Copyright (C) 1997-2007  The CDK project
+/* Copyright (C) 1997-2007  The CDK project
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *

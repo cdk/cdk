@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 2006-2007  Egon Willighagen <ewilligh@uni-koeln.de>
+/* Copyright (C) 2006-2007  Egon Willighagen <ewilligh@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

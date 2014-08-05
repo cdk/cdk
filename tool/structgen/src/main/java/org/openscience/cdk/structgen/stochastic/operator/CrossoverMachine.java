@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 2000-2009  Christoph Steinbeck, Stefan Kuhn<shk3@users.sf.net>
+/* Copyright (C) 2000-2009  Christoph Steinbeck, Stefan Kuhn<shk3@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
+/* Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

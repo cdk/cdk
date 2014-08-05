@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2001-2007  Bradley A. Smith <bradley@baysmith.com>
+/* Copyright (C) 2001-2007  Bradley A. Smith <bradley@baysmith.com>
  *               2003-2009  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net

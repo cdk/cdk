@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Rajarshi Guha <>
+/* Copyright (C) 2007  Rajarshi Guha <>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

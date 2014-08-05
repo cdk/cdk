@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$    
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2008  Gilleain Torrance <gilleain@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
