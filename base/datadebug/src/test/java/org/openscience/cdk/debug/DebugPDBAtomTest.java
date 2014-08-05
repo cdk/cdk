@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 1997-2007  miguel rojas <miguel.rojas@uni-koeln.de>
+/* Copyright (C) 1997-2007  miguel rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

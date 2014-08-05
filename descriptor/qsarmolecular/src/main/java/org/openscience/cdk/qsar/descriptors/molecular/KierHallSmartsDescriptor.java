@@ -1,10 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author$
- *  $Date$
- *  $Revision$
- *
- *  Copyright (C) 2008 Rajarshi Guha  <rajarshi@users.sourceforge.net>
+/* Copyright (C) 2008 Rajarshi Guha  <rajarshi@users.sourceforge.net>
  *
  *  Contact: rajarshi@users.sourceforge.net
  *

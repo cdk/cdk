@@ -1,10 +1,6 @@
-/* $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
+/* Copyright (C) 2002  Antti S. Brax
  *
  *  FormatStringBuffer: printf style output formatter for Java
- *  Copyright (C) 2002  Antti S. Brax  
  *  All rights reserved.
  *  
  *  Downloaded from: http://www.cs.helsinki.fi/u/abrax/HACK/JAVA/PRINTF.html

@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- *  Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
+/* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

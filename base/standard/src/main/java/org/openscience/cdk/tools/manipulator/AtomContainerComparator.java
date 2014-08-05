@@ -1,10 +1,4 @@
-/*
- * $RCSfile$
- * $Author$
- * $Date$
- * $Revision$
- *
- * Copyright (C) 2007  Andreas Schueller <archvile18@users.sf.net>
+/* Copyright (C) 2007  Andreas Schueller <archvile18@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

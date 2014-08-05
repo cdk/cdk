@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- *   Copyright (C) 2003  University of Manchester
+/* Copyright (C) 2003  University of Manchester
  *   Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) Project
  *
  *   This library is free software; you can redistribute it and/or
