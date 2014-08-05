@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+/* Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+ *                    2014  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,7 +22,6 @@ package org.openscience.cdk.geometry.alignment;
 
 import javax.vecmath.Point3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
@@ -185,7 +184,7 @@ public class KabschAlignment {
      *            so that the RMDS is minimzed to the coordinates of the first array
      * @throws CDKException if the number of Atom's are not the same in the two arrays
      */            
-    public KabschAlignment(Atom[] al1, Atom[] al2) throws CDKException {
+    public KabschAlignment(IAtom[] al1, IAtom[] al2) throws CDKException {
         if (al1.length != al2.length) {
             throw new CDKException("The Atom[]'s being aligned must have the same numebr of atoms");
         }
@@ -209,7 +208,7 @@ public class KabschAlignment {
      * @throws CDKException if the number of Atom's are not the same in the two arrays or
      *                         length of the weight vector is not the same as the Atom arrays
      */            
-    public KabschAlignment(Atom[] al1, Atom[] al2, double[] wts) throws CDKException {
+    public KabschAlignment(IAtom[] al1, IAtom[] al2, double[] wts) throws CDKException {
         if (al1.length != al2.length) {
             throw new CDKException("The Atom[]'s being aligned must have the same number of atoms");
         }
