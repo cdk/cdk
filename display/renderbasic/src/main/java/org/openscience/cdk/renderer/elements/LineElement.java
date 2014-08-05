@@ -1,7 +1,4 @@
-/* $Revision$ 
- * $Author$ 
- * $Date$ 
- * Copyright (C) 2008 Arvid Berg <goglepox@users.sf.net> 
+/* Copyright (C) 2008 Arvid Berg <goglepox@users.sf.net> 
  * Contact: cdk-devel@list.sourceforge.net 
  * This program
  * is free software; you can redistribute it and/or modify it under the terms of

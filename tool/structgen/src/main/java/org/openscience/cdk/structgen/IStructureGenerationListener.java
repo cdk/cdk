@@ -1,6 +1,4 @@
-/* $Revision: 7636 $ $Author: egonw $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $    
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

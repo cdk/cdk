@@ -1,6 +1,4 @@
-/* $Revision: 9167 $ $Author: rajarshi $ $Date: 2007-10-22 01:26:11 +0200 (Mon, 22 Oct 2007) $
- *
- * Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
+/* Copyright (C) 2008  Rajarshi Guha <rajarshi@users.sf.net>
  *               2011  Jonathan Alvarsson <jonalv@users.sf.net>
  *
  * Contact: cdk-devel@lists.sf.net

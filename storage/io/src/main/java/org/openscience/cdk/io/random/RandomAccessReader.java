@@ -1,6 +1,4 @@
-/* $Revision:$
- * 
- * Copyright (C) 2005-2008   Nina Jeliazkova <nina@acad.bg>
+/* Copyright (C) 2005-2008   Nina Jeliazkova <nina@acad.bg>
  *                    2009   Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net

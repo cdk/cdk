@@ -1,6 +1,4 @@
-/* $Revision: 11293 $ $Author: rajarshi $ $Date: 2008-06-06 22:46:01 +0200 (Fri, 06 Jun 2008) $
- * 
- * Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

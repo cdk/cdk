@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- *
- * Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
+/* Copyright (C) 2006-2007  Todd Martin (Environmental Protection Agency)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date: 2007-01-04 18:46:10 +0100 (gio, 04 gen 2007)$
- *  
- * Copyright (C) 2007  Federico
+/* Copyright (C) 2007  Federico
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

@@ -1,6 +1,4 @@
-/* $Revision: 10838 $ $Author: egonw $ $Date: 2008-05-05 23:03:59 +0200 (Mon, 05 May 2008) $
- *
- * Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

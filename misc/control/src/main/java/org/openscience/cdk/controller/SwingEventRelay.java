@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
+/* Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

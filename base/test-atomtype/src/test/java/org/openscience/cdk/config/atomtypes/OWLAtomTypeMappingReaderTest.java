@@ -1,6 +1,4 @@
-/* $Revision: 11549 $ $Author: egonw $ $Date: 2008-07-12 16:53:21 +0200 (Sat, 12 Jul 2008) $    
- * 
- * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  *                    2008  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net

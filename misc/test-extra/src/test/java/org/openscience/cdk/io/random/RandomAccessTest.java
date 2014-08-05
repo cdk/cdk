@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2005-2008  Nina Jeliazkova <nina@acad.bg>
+/* Copyright (C) 2005-2008  Nina Jeliazkova <nina@acad.bg>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 

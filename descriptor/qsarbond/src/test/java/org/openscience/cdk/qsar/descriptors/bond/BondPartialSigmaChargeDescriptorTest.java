@@ -1,6 +1,4 @@
-/* $Revision$ $Author$ $Date$
- * 
- * Copyright (C) 2004-2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
+/* Copyright (C) 2004-2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
  *                          Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
