@@ -67,7 +67,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
     
     IAtomContainer molecule = null;
-    Map atomIDs = null;
+    Map<String,IAtom> atomIDs = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -106,9 +106,9 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
@@ -145,7 +145,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IAtomContainer.class);
-        atomIDs = new HashMap();
+        atomIDs = new HashMap<String,IAtom>();
         
         String line = input.readLine();
         while (input.ready() && line != null) {

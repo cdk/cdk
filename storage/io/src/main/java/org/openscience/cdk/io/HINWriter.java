@@ -106,9 +106,9 @@ public class HINWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
-        Class[] interfaces = classObject.getInterfaces();
-        for (Class anInterface : interfaces) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
             if (IAtomContainer.class.equals(anInterface)) return true;
             if (IAtomContainerSet.class.equals(anInterface)) return true;
         }
@@ -162,11 +162,11 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer.newLine();
 
                 // Loop through the atoms and write them out:
-                java.util.Iterator atoms = mol.atoms().iterator();
+                Iterator<IAtom> atoms = mol.atoms().iterator();
                 
                 int i = 0;
                 while (atoms.hasNext()) {
-                	IAtom atom = (IAtom)atoms.next();
+                	IAtom atom = atoms.next();
                     String line = "atom ";
 
                     sym = atom.getSymbol();
@@ -181,9 +181,9 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                     String buf = "";
                     int ncon = 0;
-                    Iterator bonds = mol.bonds().iterator();
+                    Iterator<IBond> bonds = mol.bonds().iterator();
                     while (bonds.hasNext()) {
-                        IBond bond = (IBond)bonds.next();
+                        IBond bond = bonds.next();
                         if (bond.contains(atom)) {
                             // current atom is in the bond so lets get the connected atom
                             IAtom connectedAtom = bond.getConnectedAtom(atom);

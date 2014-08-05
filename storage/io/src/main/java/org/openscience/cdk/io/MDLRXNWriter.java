@@ -78,7 +78,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MDLRXNWriter.class);
     private int reactionNumber;
-    public Map rdFields=null;
+    public Map<String,Object> rdFields=null;
 
     
     /**
@@ -139,7 +139,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      *
      * @param  map The map to be used, map of String-String pairs
      */
-    public void setRdFields(Map map){
+    public void setRdFields(Map<String,Object> map){
       rdFields = map;
     }
     
@@ -152,11 +152,11 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
-        for (Class anInterface : interfaces) {
+		Class<?>[] interfaces = classObject.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
             if (IReaction.class.equals(anInterface)) return true;
             if (IReactionSet.class.equals(anInterface)) return true;
         }
@@ -251,8 +251,8 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
             
             //write sdfields, if any
             if(rdFields!=null){
-              Set set = rdFields.keySet();
-              Iterator iterator = set.iterator();
+              Set<String> set = rdFields.keySet();
+              Iterator<String> iterator = set.iterator();
               while (iterator.hasNext()) {
                 Object element = iterator.next();
                 writer.write("> <"+(String)element+">");

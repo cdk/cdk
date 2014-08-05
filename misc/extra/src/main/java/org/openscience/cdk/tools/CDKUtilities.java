@@ -66,7 +66,7 @@ public class CDKUtilities {
 			boolean nitro=false;
 			
 			if (a.getSymbol().equals("N")) {
-				List ca=m.getConnectedAtomsList(a);
+				List<IAtom> ca=m.getConnectedAtomsList(a);
 				
 				if (ca.size()==3) {					
 					

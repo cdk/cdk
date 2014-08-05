@@ -45,7 +45,7 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject>
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 	
-    public boolean accepts(Class objectClass) {
+    public boolean accepts(Class<? extends IChemObject> objectClass) {
         return false; // it's an iterator, idiot.
     }
     

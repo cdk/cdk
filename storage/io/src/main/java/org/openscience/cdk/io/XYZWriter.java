@@ -111,9 +111,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
     }
     
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		if (IAtomContainer.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
 		}

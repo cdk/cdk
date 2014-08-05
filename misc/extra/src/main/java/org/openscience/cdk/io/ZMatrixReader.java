@@ -33,6 +33,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.formats.ZMatrixFormat;
 
 import javax.vecmath.Point3d;
+
 import java.io.*;
 import java.util.StringTokenizer;
 
@@ -90,7 +91,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
         return IChemFile.class.isAssignableFrom(classObject);
 	}
 

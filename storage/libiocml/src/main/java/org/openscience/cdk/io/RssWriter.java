@@ -102,7 +102,7 @@ public class RssWriter extends DefaultChemObjectWriter {
     }
     
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		return true;
 	}
 

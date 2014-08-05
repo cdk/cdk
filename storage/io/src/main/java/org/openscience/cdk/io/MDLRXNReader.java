@@ -117,12 +117,12 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemModel.class.equals(interfaces[i])) return true;
 			if (IChemFile.class.equals(interfaces[i])) return true;
@@ -389,14 +389,14 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
         IAtomContainer reactingSide = builder.newInstance(IAtomContainer.class);
-        Iterator molecules = reaction.getReactants().atomContainers().iterator();
+        Iterator<IAtomContainer> molecules = reaction.getReactants().atomContainers().iterator();
         while (molecules.hasNext()) {
-            reactingSide.add((IAtomContainer)molecules.next());
+            reactingSide.add(molecules.next());
         }
         IAtomContainer producedSide = builder.newInstance(IAtomContainer.class);
         molecules = reaction.getProducts().atomContainers().iterator();
         while (molecules.hasNext()) {
-            producedSide.add((IAtomContainer)molecules.next());
+            producedSide.add(molecules.next());
         }
         
         // map the atoms

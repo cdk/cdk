@@ -104,10 +104,10 @@ public class MoleculeBuilder
         {
             AttachedGroup attachedGroup = groupsIterator.next();
             
-            Iterator locationsIterator = attachedGroup.getLocations().iterator();
+            Iterator<Token> locationsIterator = attachedGroup.getLocations().iterator();
             while (locationsIterator.hasNext())
             {
-                Token locationToken = (Token) locationsIterator.next();
+                Token locationToken = locationsIterator.next();
                 addFunGroup(attachedGroup.getName(), Integer.parseInt(locationToken.image) - 1);
             }
         }
@@ -485,10 +485,10 @@ public class MoleculeBuilder
         {
             AttachedGroup attachedSubstituent = substituentsIterator.next();
             
-            Iterator locationsIterator = attachedSubstituent.getLocations().iterator();
+            Iterator<Token> locationsIterator = attachedSubstituent.getLocations().iterator();
             while (locationsIterator.hasNext())
             {
-                Token locationToken = (Token) locationsIterator.next();
+                Token locationToken = locationsIterator.next();
                 
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
                 IAtom connectingAtom;

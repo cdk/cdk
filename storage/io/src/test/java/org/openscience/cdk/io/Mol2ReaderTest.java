@@ -467,15 +467,15 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         );
         r.close();
         Assert.assertNotNull(model);
-        List containers = ChemModelManipulator.getAllAtomContainers(model);
+        List<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model);
         Assert.assertEquals(1, containers.size());
-        IAtomContainer molecule = (IAtomContainer)containers.get(0);
+        IAtomContainer molecule = containers.get(0);
         Assert.assertNotNull(molecule);
         Assert.assertEquals(129, molecule.getAtomCount());
         Assert.assertEquals(135, molecule.getBondCount());
-        Iterator atoms = molecule.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
-        	IAtom atom = (IAtom)atoms.next();
+        	IAtom atom = atoms.next();
         	Assert.assertNotNull(atom.getAtomTypeName());
         }
     }

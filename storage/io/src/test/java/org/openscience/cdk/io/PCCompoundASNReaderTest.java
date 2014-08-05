@@ -59,10 +59,10 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundASNReader reader = new PCCompoundASNReader(ins);
         IChemFile cFile = (IChemFile)reader.read(new ChemFile());
-        List containers = ChemFileManipulator.getAllAtomContainers(cFile);
+        List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cFile);
         Assert.assertEquals(1, containers.size());
         Assert.assertTrue(containers.get(0) instanceof IAtomContainer);
-        IAtomContainer molecule = (IAtomContainer)containers.get(0);
+        IAtomContainer molecule = containers.get(0);
         Assert.assertNotNull(molecule);
 
         // check atom stuff

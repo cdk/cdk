@@ -119,8 +119,8 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         for (IAtom at : rGroupQuery.getAllRgroupQueryAtoms()) {
             if (at instanceof PseudoAtom) {
                 Assert.assertEquals(((PseudoAtom)at).getLabel(), "R1");
-                Map rootApo = rGroupQuery.getRootAttachmentPoints();
-                Map<Integer, IBond> apoBonds = (Map<Integer, IBond>)rootApo.get(at);
+                Map<IAtom, Map<Integer, IBond>> rootApo = rGroupQuery.getRootAttachmentPoints();
+                Map<Integer, IBond> apoBonds = rootApo.get(at);
                 Assert.assertEquals(apoBonds.size(), 1);
                 // Assert that the root attachment is the bond between R1 and P
                 for (IBond bond : rGroupQuery.getRootStructure().bonds()) {
@@ -200,8 +200,8 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                 case 1:
                     {
                         //Test: R1 has two attachment points, defined by AAL
-                        Map rootApo = rGroupQuery.getRootAttachmentPoints();
-                        Map<Integer, IBond> apoBonds = (Map<Integer, IBond>)rootApo.get(at);
+                        Map<IAtom, Map<Integer, IBond>> rootApo = rGroupQuery.getRootAttachmentPoints();
+                        Map<Integer, IBond> apoBonds = rootApo.get(at);
                         Assert.assertEquals(apoBonds.size(), 2);
                         Assert.assertEquals(apoBonds.get(1).getConnectedAtom(at).getSymbol(), "N");
                         Assert.assertTrue(apoBonds.get(2).getConnectedAtom(at).getSymbol().equals("C"));

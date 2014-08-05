@@ -78,7 +78,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		
 		IAtomContainer mol = MoleculeFactory.makeIndole();
 		IRingSet rs= Cycles.sssr(mol).toRingSet();
-		List rslist=RingPartitioner.partitionRings(rs);
+		List<IRingSet> rslist=RingPartitioner.partitionRings(rs);
 		BitSet bs = fingerprinter.getBitFingerprint(mol,rs, rslist).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
 		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();

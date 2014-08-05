@@ -95,9 +95,9 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 	 */
 	@SuppressWarnings("unchecked")
 	@TestMethod("testAccepts")
-	public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
-		for (Class anInterface : interfaces) {
+	public boolean accepts(Class<? extends IChemObject> classObject) {
+		Class<?>[] interfaces = classObject.getInterfaces();
+		for (Class<?> anInterface : interfaces) {
 			if (IRGroupQuery.class.equals(anInterface)) return true;
 		}
 		Class superClass = classObject.getSuperclass();

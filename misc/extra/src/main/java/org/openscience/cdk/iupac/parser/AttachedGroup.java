@@ -95,10 +95,10 @@ public class AttachedGroup {
     {
         String returnString = name + ": ";
         
-        Iterator locationsIterator = locations.iterator();
+        Iterator<Token> locationsIterator = locations.iterator();
         while (locationsIterator.hasNext())
         {
-            Token locationToken = (Token) locationsIterator.next();
+            Token locationToken = locationsIterator.next();
             returnString += locationToken.image + " ";
         }
         

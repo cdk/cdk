@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.silent.AtomContainer;
@@ -43,6 +44,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 import java.io.InputStream;
+import java.util.Iterator;
 
 /**
  * TestCase for the reading MDL RXN files using one test file.
@@ -137,7 +139,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 		reader2.close();
 
 		Assert.assertNotNull(reaction2);
-		java.util.Iterator maps = reaction2.mappings().iterator();
+		Iterator<IMapping> maps = reaction2.mappings().iterator();
 		maps.next();
 		Assert.assertTrue(maps.hasNext());
     }

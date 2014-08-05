@@ -104,7 +104,7 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		return IAtomContainer.class.isAssignableFrom(classObject);
 	}
 

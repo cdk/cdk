@@ -196,8 +196,8 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
-		Class[] interfaces = classObject.getInterfaces();
+    public boolean accepts(Class<? extends IChemObject> classObject) {
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (IAtom.class.equals(interfaces[i])) return true;
 			if (IBond.class.equals(interfaces[i])) return true;
