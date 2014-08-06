@@ -24,6 +24,18 @@
       <bibtex:url>http://www.openrasmol.org/doc/rasmol.html#cpkcolours</bibtex:url>
     </bibtex:misc>
   </bibtex:entry>
+  
+  <bibtex:entry id="Brecher08">
+      <bibtex:article>
+        <bibtex:author>Jonathan Brecher</bibtex:author>
+        <bibtex:title>Graphical representation standards for chemical structure diagrams (IUPAC Recommendations 2008)</bibtex:title>
+        <bibtex:journal>Pure Appl. Chem</bibtex:journal>
+        <bibtex:year>2008</bibtex:year>
+        <bibtex:volume>80</bibtex:volume>
+        <bibtex:number>2</bibtex:number>
+        <bibtex:pages>277–410</bibtex:pages>
+      </bibtex:article>
+    </bibtex:entry>
 
   <bibtex:entry id="BGdV04a">
     <bibtex:article>
