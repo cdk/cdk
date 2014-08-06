@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2008-05-26 02:06:36 +0200 (Mon, 26 May 2008) $
- * $Revision: 11161 $
- * 
- * Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

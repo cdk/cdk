@@ -1,6 +1,4 @@
-/* $Revision: 11004 $ $Author: miguelrojasch $ $Date: 2008-05-15 15:27:25 +0200 (Thu, 15 May 2008) $
- *
- * Copyright (C) 2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
+/* Copyright (C) 2008  Miguel Rojas <miguel.rojas@uni-koeln.de>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

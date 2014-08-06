@@ -1,6 +1,4 @@
-/*  $Revision: 12349 $ $Author: shk3 $ $Date: 2008-09-19 15:05:01 +0100 (Fri, 19 Sep 2008) $
- *
- *  Copyright (C) 1997-2007  Christian Hoppe <chhoppe@users.sf.net>
+/* Copyright (C) 1997-2007  Christian Hoppe <chhoppe@users.sf.net>
  *                     2006  Mario Baseda
  *
  *  Contact: cdk-devel@list.sourceforge.net

@@ -1,6 +1,4 @@
-/*  $Revision: 10199 $ $Author: rajarshi $ $Date: 2008-02-21 19:19:31 +0100 (Thu, 21 Feb 2008) $
- *
- *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
+/*  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

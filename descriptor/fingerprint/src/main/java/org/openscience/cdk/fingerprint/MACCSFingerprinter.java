@@ -1,6 +1,4 @@
-/* $Revision: 11674 $ $Author: rajarshi $ $Date: 2008-07-20 22:05:08 -0400 (Sun, 20 Jul 2008) $
- *
- * Copyright (C) 2008 Rajarshi Guha <rajarshi@users.sourceforge.net>
+/* Copyright (C) 2008 Rajarshi Guha <rajarshi@users.sourceforge.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

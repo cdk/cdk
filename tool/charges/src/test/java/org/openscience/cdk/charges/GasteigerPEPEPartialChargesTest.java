@@ -1,9 +1,4 @@
-/*
- *  $RCSfile$
- *  $Author: egonw $
- *  $Date: 2008-02-25 14:11:58 +0100 (Mon, 25 Feb 2008) $
- *  
- *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
+/* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

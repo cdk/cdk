@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author: miguelrojasch $
- * $Date: 2008-05-01 02:39:02 +0200 (Thu, 01 May 2008) $
- * $Revision: 10742 $
- * 
- *  Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
+/* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 

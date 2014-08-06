@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $    
- * $Date: 2006-04-12 09:16:35 +0000 (Wed, 12 Apr 2006) $    
- * $Revision: 5921 $
- * 
- * Copyright (C) 2008  Miguel Rojasch <miguelrojasch@users.sf.net>
+/* Copyright (C) 2008  Miguel Rojasch <miguelrojasch@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  * 

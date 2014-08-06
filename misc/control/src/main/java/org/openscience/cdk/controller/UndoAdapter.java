@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2008-09-10 08:13:15 +0200 (Wed, 10 Sep 2008) $
- * $Revision: 12257 $
- *
- * Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

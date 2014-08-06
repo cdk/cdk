@@ -1,6 +1,4 @@
-/* $Revision: 12144 $ $Author: egonw $ $Date: 2008-09-02 21:53:30 +0100 (Tue, 02 Sep 2008) $
- *
- *  Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+/* Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *

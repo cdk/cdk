@@ -37,8 +37,6 @@ import org.openscience.cdk.interfaces.IChemObject;
  *
  * @cdk.module io
  * @cdk.githash
- *
- * @version  $Date$
  */
 public interface IChemObjectWriter extends IChemObjectIO {
 

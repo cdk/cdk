@@ -1,9 +1,4 @@
-/* $RCSfile$
- * $Author: egonw $
- * $Date: 2008-02-25 08:11:58 -0500 (Mon, 25 Feb 2008) $
- * $Revision: 10234 $
- * 
- * Copyright (C) 2008 Rajarshi Guha
+/* Copyright (C) 2008 Rajarshi Guha
  * 
  * Contact: rajarshi@users.sourceforge.net
  * 
