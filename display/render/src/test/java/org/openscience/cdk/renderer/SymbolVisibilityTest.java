@@ -159,5 +159,27 @@ public class SymbolVisibilityTest {
         assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
                                                                    Arrays.asList(bond1, bond2)));
     }
+    
+    @Test public void carbonIsotope() {
+        IAtom a1 = new Atom("C");
+        IAtom a2 = new Atom("C");
+        IAtom a3 = new Atom("C");
+
+        a1.setPoint2d(new Point2d(0, 0));
+        a2.setPoint2d(new Point2d(0.5, -0.5));
+        a3.setPoint2d(new Point2d(0.5, 0.5));
+
+        IBond bond1 = new Bond(a1, a2);
+        IBond bond2 = new Bond(a1, a3);
+
+        a1.setMassNumber(13);
+        
+        a1.setImplicitHydrogenCount(2);
+        a2.setImplicitHydrogenCount(3);
+        a3.setImplicitHydrogenCount(3);
+
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
+                                                                   Arrays.asList(bond1, bond2)));    
+    } 
 
 }
