@@ -87,7 +87,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final SymbolVisibility visibility = SymbolVisibility.iupacRecommendations();
         final IAtomColorer coloring = new CDK2DAtomColors();
 
-        // the stroke with is based on the font
+        // the stroke width is based on the font
         final double stroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, scale);
@@ -159,9 +159,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             // aligned to the left, the first character 'e.g. Cl' is used.
             if (neighbors.size() == 1) {
                 if (hPosition == Left)
-                    symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
+                    symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
                 else
-                    symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
+                    symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
             }
 
             final Point2d p = atom.getPoint2d();
