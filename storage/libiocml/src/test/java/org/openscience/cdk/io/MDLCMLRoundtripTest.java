@@ -57,17 +57,21 @@ public class MDLCMLRoundtripTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
         //Write it as cml
 		StringWriter writer = new StringWriter();
         CMLWriter cmlWriter = new CMLWriter(writer);        
         cmlWriter.write(mol);
+        cmlWriter.close();
         //Read this again
         CMLReader cmlreader = new CMLReader(new ByteArrayInputStream(writer.toString().getBytes()));
         IChemFile file = (IChemFile)cmlreader.read(new org.openscience.cdk.ChemFile());
+        cmlreader.close();
         //And finally write as mol
         StringWriter writermdl = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writermdl);
         mdlWriter.write(file);
+        mdlWriter.close();
         String output = writermdl.toString();
         //if there would be 3 instances (as in the bug), the only instance wouldnt't be right at the end
         Assert.assertEquals(2992,output.indexOf("M  END"));

@@ -467,6 +467,7 @@ public class CML23FragmentsTest extends CDKTestCase {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
         chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        reader.close();
         return chemFile;
     }
 

@@ -179,6 +179,7 @@ public class AminoAcids {
                 }
                 counter++;
         	}
+            reader.close();
         } catch (Exception exception) {
         	logger.error("Failed reading file: ", exception.getMessage());
         	logger.debug(exception);

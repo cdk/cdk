@@ -682,6 +682,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         ChemFile chemFile = (ChemFile)reader.read((ChemFile)new ChemFile());
+        reader.close();
         Assert.assertNotNull(chemFile);
         IAtomContainer container = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
         for(int i=0;i<container.getAtomCount();i++){

@@ -68,6 +68,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV3000Reader reader = new MDLV3000Reader(ins);
         IAtomContainer m = reader.read(new AtomContainer());
+        reader.close();
         Assert.assertNotNull(m);
         Assert.assertEquals(31, m.getAtomCount());
         Assert.assertEquals(34, m.getBondCount());
@@ -84,6 +85,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
     	try {
     		reader.read(new AtomContainer());
+            reader.close();
     		Assert.fail("Should have received a CDK Exception");
     	} catch (CDKException cdkEx) {
     		Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
@@ -96,6 +98,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         MDLV3000Reader reader = new MDLV3000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
+        reader.close();
         Assert.assertTrue(molecule.getAtom(9) instanceof IPseudoAtom);
         Assert.assertEquals("Leu", molecule.getAtom(9).getSymbol());
         IPseudoAtom pa = (IPseudoAtom) molecule.getAtom(9);

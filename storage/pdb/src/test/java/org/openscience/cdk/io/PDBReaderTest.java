@@ -86,6 +86,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
         ChemObject object = new ChemFile();
         reader.read(object);
+        reader.close();
         stringReader.close();
         Assert.assertNotNull(object);
         int bondCount = ((IChemFile)object)

@@ -227,6 +227,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 );
                 IAtomContainer reactant = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
+                reader.close();
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -260,6 +261,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                   new StringReader(molFile.toString()));
                 IAtomContainer product = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
+                reader.close();
                   
                 // add product
                 reaction.addProduct(product);

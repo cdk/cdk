@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.pharmacophore;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -220,7 +219,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testCNSPcore() throws FileNotFoundException, CDKException {
+    public void testCNSPcore() throws CDKException, IOException {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins,
@@ -237,6 +236,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        reader.close();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -252,7 +252,7 @@ public class PharmacophoreMatcherTest {
     }
 
     @Test
-    public void testMatchingBonds() throws FileNotFoundException, CDKException {
+    public void testMatchingBonds() throws CDKException, IOException {
         String filename = "data/mdl/cnssmarts.sdf";
         InputStream ins = PharmacophoreMatcherTest.class.getClassLoader().getResourceAsStream(filename);
         IteratingSDFReader reader = new IteratingSDFReader(ins,
@@ -268,6 +268,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        reader.close();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -308,6 +309,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        reader.close();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -335,6 +337,7 @@ public class PharmacophoreMatcherTest {
 
         reader.hasNext();
         IAtomContainer mol = (IAtomContainer) reader.next();
+        reader.close();
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
 
@@ -435,6 +438,7 @@ public class PharmacophoreMatcherTest {
 
 
         mol = (IAtomContainer) reader.next();
+        reader.close();
         Assert.assertFalse(matcher.matches(mol));
     }
 }

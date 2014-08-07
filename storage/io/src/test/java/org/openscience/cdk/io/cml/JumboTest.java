@@ -63,6 +63,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        reader.close();
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
@@ -94,6 +95,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        reader.close();
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
@@ -126,6 +128,7 @@ public class JumboTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        reader.close();
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);

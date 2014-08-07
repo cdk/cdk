@@ -143,6 +143,7 @@ public class SSSRFinderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        reader.close();
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -161,6 +162,7 @@ public class SSSRFinderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         IAtomContainer molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        reader.close();
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -182,6 +184,7 @@ public class SSSRFinderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        reader.close();
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -201,6 +204,7 @@ public class SSSRFinderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        reader.close();
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -222,6 +226,7 @@ public class SSSRFinderTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer) reader.read((IChemObject) new AtomContainer());
+        reader.close();
         logger.debug("Testing " + filename);
 
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -298,13 +303,14 @@ public class SSSRFinderTest extends CDKTestCase {
      * Creates a bucky ball molecule.
      * @return bucky ball molecule
      */
-    private IAtomContainer createBuckyBall () throws CDKException {
+    private IAtomContainer createBuckyBall () throws Exception {
         IAtomContainer molecule = null;
         String filename = "data/mdl/buckyball.mol";
         InputStream ins =
             this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
         molecule = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
         Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount()==60 );
         Assert.assertTrue("Bond count is 90 ", molecule.getBondCount()==90 );
         return molecule;

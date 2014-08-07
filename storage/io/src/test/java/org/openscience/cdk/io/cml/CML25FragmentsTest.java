@@ -79,6 +79,7 @@ public class CML25FragmentsTest extends CDKTestCase {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
         chemFile = (IChemFile)reader.read(new ChemFile());
+        reader.close();
         return chemFile;
     }
 

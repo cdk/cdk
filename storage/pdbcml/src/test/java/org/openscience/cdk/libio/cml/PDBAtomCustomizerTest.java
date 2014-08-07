@@ -31,6 +31,7 @@ public class PDBAtomCustomizerTest {
         CMLWriter cmlWriter = new CMLWriter(writer);
         cmlWriter.registerCustomizer(new PDBAtomCustomizer());
         cmlWriter.write(molecule);
+        cmlWriter.close();
         String cmlContent = writer.toString();
         logger.debug("****************************** testPDBAtomCustomization()");
         logger.debug(cmlContent);

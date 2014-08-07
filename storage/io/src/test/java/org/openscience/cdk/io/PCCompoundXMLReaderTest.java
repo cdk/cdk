@@ -58,6 +58,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
         Assert.assertNotNull(molecule);
 
         // check atom stuff
@@ -85,6 +86,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
         IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
+        reader.close();
         Assert.assertNotNull(molecule);
 
         // check atom stuff

@@ -342,6 +342,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 IAtomContainer reactant = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class)
                 );
+                reader.close();
                   
                 // add reactant
                 reaction.addReactant(reactant);
@@ -373,6 +374,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 );
                 IAtomContainer product = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
+                reader.close();
                   
                 // add reactant
                 reaction.addProduct(product);

@@ -57,6 +57,7 @@ public class ShelXReaderTest extends SimpleChemObjectReaderTest {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ShelXReader reader = new ShelXReader(ins);
         Crystal crystal = (Crystal)reader.read(new Crystal());
+        reader.close();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(42, crystal.getAtomCount());
         double notional[] = CrystalGeometryTools.cartesianToNotional(
