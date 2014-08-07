@@ -128,11 +128,11 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
     
 	@TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
         if (IAtomContainer.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
+		Class<?>[] interfaces = classObject.getInterfaces();
 		for (int i=0; i<interfaces.length; i++) {
 			if (ICrystal.class.equals(interfaces[i])) return true;
 			if (IAtomContainer.class.equals(interfaces[i])) return true;
@@ -158,10 +158,10 @@ public class PDBWriter extends DefaultChemObjectWriter {
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                    	Iterator containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
+                    	Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
                     	while (containers.hasNext()) {
                             writeMolecule(model.getBuilder().newInstance(IAtomContainer.class,
-                             	(IAtomContainer)containers.next()
+                             	containers.next()
                             ));
                     	}
                     }
@@ -190,7 +190,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
-           Iterator atoms = molecule.atoms().iterator();
+           Iterator<IAtom> atoms = molecule.atoms().iterator();
            FormatStringBuffer fsb = new FormatStringBuffer("");
            String[] connectRecords = null;
            if (writeCONECTRecords.isSet()) {
@@ -202,7 +202,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                fsb.reset(SERIAL_FORMAT).format(atomNumber);
                buffer.append(fsb.toString());
                buffer.append(' ');
-               IAtom atom = (IAtom)atoms.next();
+               IAtom atom = atoms.next();
                String name;
                if (useElementSymbolAsAtomName.isSet()) {
                    name = atom.getSymbol();
@@ -316,9 +316,9 @@ public class PDBWriter extends DefaultChemObjectWriter {
            writer.newLine();
                                                                                                  
            // before saving the atoms, we need to create cartesian coordinates
-           Iterator atoms = crystal.atoms().iterator();
+           Iterator<IAtom> atoms = crystal.atoms().iterator();
            while (atoms.hasNext()) {
-            	IAtom atom = (IAtom)atoms.next();
+            	IAtom atom = atoms.next();
 //            	logger.debug("PDBWriter: atom -> " + atom);
             	// if it got 3D coordinates, use that. If not, try fractional coordinates
             	if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {

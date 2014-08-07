@@ -46,14 +46,14 @@ public class PDBStrand extends Strand {
 
 	private static final long serialVersionUID = 8278569309787734236L;
 
-	List sequentialListOfMonomers;
+	List<String> sequentialListOfMonomers;
 	
 	/**
 	 * Constructs a new Polymer to store the Monomers.
 	 */	
 	public PDBStrand() {
 		super();
-		sequentialListOfMonomers = new ArrayList();
+		sequentialListOfMonomers = new ArrayList<String>();
 	}
 	
 	/**
@@ -74,9 +74,9 @@ public class PDBStrand extends Strand {
 	 * 
 	 * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
 	 */
-	public Collection getMonomerNamesInSequentialOrder() {
+	public Collection<String> getMonomerNamesInSequentialOrder() {
 		// don't return the original
-		return new ArrayList(sequentialListOfMonomers);
+		return new ArrayList<String>(sequentialListOfMonomers);
 	}
 	
 	public String toString() {

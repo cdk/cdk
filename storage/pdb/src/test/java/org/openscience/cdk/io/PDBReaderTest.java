@@ -24,7 +24,8 @@ package org.openscience.cdk.io;
 
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.List;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -39,7 +40,6 @@ import org.openscience.cdk.interfaces.IBioPolymer;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMonomer;
 import org.openscience.cdk.protein.data.PDBAtom;
 import org.openscience.cdk.protein.data.PDBMonomer;
@@ -341,8 +341,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    	polymer.getStrand("A") instanceof PDBStrand
 	    );
 	    PDBStrand strandA=(PDBStrand)polymer.getStrand("A");
-	    List lst=(List)strandA.getMonomerNamesInSequentialOrder();
-	    String monomer1=(String)lst.get(0);
+	    Iterator<String> lst = strandA.getMonomerNamesInSequentialOrder().iterator();
+	    String monomer1 = lst.next();
 	    IMonomer mono1=strandA.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
 	    Assert.assertNotNull(mono1.getMonomerName());
@@ -353,7 +353,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    PDBMonomer pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals(pdbMonomer.getResSeq(), "1");
 
-	    String monomer2=(String)lst.get(1);
+	    String monomer2 = lst.next();
 	    IMonomer mono2=strandA.getMonomer(monomer2);
 	    Assert.assertTrue(
 		    	"Monomer is not a PDBMonomer",
@@ -498,13 +498,14 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    //i.e. their resSeq numbering follows that in the File
 
 	    //Strand A
-	    PDBStrand strandA=(PDBStrand)polymer.getStrand("A");
-	    List lst=(List)strandA.getMonomerNamesInSequentialOrder();
+	    PDBStrand strandA= (PDBStrand)polymer.getStrand("A");
+	    Collection<String> lst= strandA.getMonomerNamesInSequentialOrder();
 	    
 	    //Should be 57 monomers in strand A
 	    Assert.assertEquals(57, lst.size());
+	    Iterator<String> lstIter = lst.iterator();
 	    
-	    String monomer1=(String)lst.get(0);
+	    String monomer1 = lstIter.next();
 	    IMonomer mono1=strandA.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
 	    Assert.assertNotNull(mono1.getMonomerName());
@@ -516,13 +517,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    Assert.assertEquals("A", pdbMonomer.getChainID());
 	    Assert.assertEquals("8", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(1);
+	    monomer1 = lstIter.next();
 	    mono1=strandA.getMonomer(monomer1);
 	    pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals("A", pdbMonomer.getChainID());
 	    Assert.assertEquals("9", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(2);
+	    monomer1 = lstIter.next();
 	    mono1=strandA.getMonomer(monomer1);
 	    pdbMonomer =(PDBMonomer)mono1;
 	    Assert.assertEquals("A", pdbMonomer.getChainID());
@@ -530,12 +531,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
 	    //Strand B
 	    PDBStrand strandB=(PDBStrand)polymer.getStrand("B");
-	    lst=(List)strandB.getMonomerNamesInSequentialOrder();
+	    lst = strandB.getMonomerNamesInSequentialOrder();
 	    
 	    //Should be 57 monomers in strand B
 	    Assert.assertEquals(57, lst.size());
+	    lstIter = lst.iterator();
 	    
-	    monomer1=(String)lst.get(0);
+	    monomer1 = lstIter.next();
 	    mono1=strandB.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
 	    Assert.assertNotNull(mono1.getMonomerName());
@@ -547,13 +549,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    Assert.assertEquals("B", pdbMonomer.getChainID());
 	    Assert.assertEquals("8", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(1);
+	    monomer1 = lstIter.next();
 	    mono1=strandB.getMonomer(monomer1);
 	    pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals("B", pdbMonomer.getChainID());
 	    Assert.assertEquals("9", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(2);
+	    monomer1 = lstIter.next();
 	    mono1=strandB.getMonomer(monomer1);
 	    pdbMonomer =(PDBMonomer)mono1;
 	    Assert.assertEquals("B", pdbMonomer.getChainID());
@@ -562,12 +564,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 
 	    //Strand E
 	    PDBStrand strandE=(PDBStrand)polymer.getStrand("E");
-	    lst=(List)strandE.getMonomerNamesInSequentialOrder();
+	    lst = strandE.getMonomerNamesInSequentialOrder();
 	    
 	    //Should be 19 monomers in strand E
 	    Assert.assertEquals(19, lst.size());
+	    lstIter = lst.iterator();
 	    
-	    monomer1=(String)lst.get(0);
+	    monomer1 = lstIter.next();
 	    mono1=strandE.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
 	    Assert.assertNotNull(mono1.getMonomerName());
@@ -579,13 +582,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    Assert.assertEquals("E", pdbMonomer.getChainID());
 	    Assert.assertEquals("20", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(1);
+	    monomer1 = lstIter.next();
 	    mono1=strandE.getMonomer(monomer1);
 	    pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals("E", pdbMonomer.getChainID());
 	    Assert.assertEquals("21", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(2);
+	    monomer1 = lstIter.next();
 	    mono1=strandE.getMonomer(monomer1);
 	    pdbMonomer =(PDBMonomer)mono1;
 	    Assert.assertEquals("E", pdbMonomer.getChainID());
@@ -595,12 +598,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    
 	    //Chain D should be 1,2,3...19
 	    PDBStrand strandD=(PDBStrand)polymer.getStrand("D");
-	    lst=(List)strandD.getMonomerNamesInSequentialOrder();
+	    lst = strandD.getMonomerNamesInSequentialOrder();
 
 	    //Should be 19 monomers in strand D
 	    Assert.assertEquals(19, lst.size());
+	    lstIter = lst.iterator();
 	    
-	    monomer1=(String)lst.get(0);
+	    monomer1 = lstIter.next();
 	    mono1=strandD.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
 	    Assert.assertNotNull(mono1.getMonomerName());
@@ -612,13 +616,13 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    Assert.assertEquals("D", pdbMonomer.getChainID());
 	    Assert.assertEquals("1", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(1);
+	    monomer1 = lstIter.next();
 	    mono1=strandD.getMonomer(monomer1);
 	    pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals("D", pdbMonomer.getChainID());
 	    Assert.assertEquals("2", pdbMonomer.getResSeq());
 
-	    monomer1=(String)lst.get(2);
+	    monomer1 = lstIter.next();
 	    mono1=strandD.getMonomer(monomer1);
 	    pdbMonomer=(PDBMonomer)mono1;
 	    Assert.assertEquals("D", pdbMonomer.getChainID());
