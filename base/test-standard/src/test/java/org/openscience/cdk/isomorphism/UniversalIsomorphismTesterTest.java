@@ -25,7 +25,6 @@ package org.openscience.cdk.isomorphism;
 
 import java.io.InputStream;
 import java.util.BitSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -64,6 +63,7 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
 /**
  * @cdk.module test-standard
  * @cdk.require java1.4+
@@ -127,7 +127,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         query.addBond(b1);
         query.addBond(b2);
 
-        List list = uiTester.getSubgraphMaps(atomContainer, query);
+        List<List<RMap>> list = uiTester.getSubgraphMaps(atomContainer, query);
 
         Assert.assertTrue(list.isEmpty());
 	}
@@ -215,7 +215,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         IAtomContainer atomContainer = sp.parseSmiles("C1CCCCC1");
         query2 = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
 
-        List list = uiTester.getSubgraphMap(mol, query1);
+        List<RMap> list = uiTester.getSubgraphMap(mol, query1);
         Assert.assertEquals(11, list.size());
 
         list = uiTester.getSubgraphMap(mol, query2);
@@ -237,7 +237,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
 
-        List list = uiTester.getOverlaps(mol1, mol2);
+        List<IAtomContainer> list = uiTester.getOverlaps(mol1, mol2);
         Assert.assertEquals(1, list.size());
         Assert.assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
 
@@ -397,8 +397,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
         mol2 = new AtomContainer((AtomContainer)permutor.next());
 
-        List list1 = uiTester.getOverlaps(mol1, mol2);
-        List list2 = uiTester.getOverlaps(mol2, mol1);
+        List<IAtomContainer> list1 = uiTester.getOverlaps(mol1, mol2);
+        List<IAtomContainer> list2 = uiTester.getOverlaps(mol2, mol1);
         Assert.assertEquals(1, list1.size());
         Assert.assertEquals(1, list2.size());
         Assert.assertEquals(((AtomContainer)list1.get(0)).getAtomCount(),
@@ -568,7 +568,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
   				filename);
   		ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
    		ChemFile content = (ChemFile) reader.read(new ChemFile());
-   		List cList = ChemFileManipulator.getAllAtomContainers(content);
+   		List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
    		IAtomContainer[] molecules = new IAtomContainer[2];
    		for (int j = 0; j < 2; j++) {
    			IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);

@@ -597,10 +597,10 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
   		hcg.getSpheres(molecule, molecule.getAtom(0), 4, true);
-  		List atoms = hcg.getNodesInSphere(3);
+  		List<IAtom> atoms = hcg.getNodesInSphere(3);
 
   		Assert.assertEquals(1, atoms.size());
-  		Assert.assertEquals("Br", ((IAtom)atoms.get(0)).getSymbol());
+  		Assert.assertEquals("Br", atoms.get(0).getSymbol());
 	}
   	
   	@Test public void testGetAtomsOfSphereWithHydr() throws Exception {
@@ -610,12 +610,12 @@ public class HOSECodeGeneratorTest extends CDKTestCase {
   		HOSECodeGenerator hcg = new HOSECodeGenerator();
 
   		hcg.getSpheres(molecule, molecule.getAtom(0), 3, true);
-  		List atoms = hcg.getNodesInSphere(3);
+  		List<IAtom> atoms = hcg.getNodesInSphere(3);
 
   		Assert.assertEquals(2, atoms.size());
 
-  		Assert.assertEquals("H", ((IAtom)atoms.get(0)).getSymbol());
-  		Assert.assertEquals("Br", ((IAtom)atoms.get(1)).getSymbol());
+  		Assert.assertEquals("H", atoms.get(0).getSymbol());
+  		Assert.assertEquals("Br", atoms.get(1).getSymbol());
 	}
 
 }

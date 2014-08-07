@@ -110,11 +110,11 @@ public class SMILESReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testAccepts")
-    public boolean accepts(Class classObject) {
+    public boolean accepts(Class<? extends IChemObject> classObject) {
 		if (IAtomContainerSet.class.equals(classObject)) return true;
 		if (IChemFile.class.equals(classObject)) return true;
-		Class[] interfaces = classObject.getInterfaces();
-        for (Class anInterface : interfaces) {
+		Class<?>[] interfaces = classObject.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
             if (IAtomContainerSet.class.equals(anInterface)) return true;
         }

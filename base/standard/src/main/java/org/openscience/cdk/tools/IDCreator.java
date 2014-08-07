@@ -201,7 +201,7 @@ public abstract class IDCreator {
     	
 		// the tabu list for the container should force singularity
 		// within a container only!
-		List internalTabuList = AtomContainerManipulator.getAllIDs(container);
+		List<String> internalTabuList = AtomContainerManipulator.getAllIDs(container);
 		if (policy == OBJECT_UNIQUE_POLICY) {
 				// start atom and bond indices within a container set always from 1
 				ATOM_COUNT = 0;
@@ -210,17 +210,17 @@ public abstract class IDCreator {
 				internalTabuList = tabuList;
         }
         
-        Iterator atoms = container.atoms().iterator();
+        Iterator<IAtom> atoms = container.atoms().iterator();
         while(atoms.hasNext()) {
-        	IAtom atom = (IAtom)atoms.next();
+        	IAtom atom = atoms.next();
 			if (null == atom.getID()) {
 				ATOM_COUNT = setID(ATOM_PREFIX, ATOM_COUNT, atom, internalTabuList);
             }
         }
 
-        Iterator bonds = container.bonds().iterator();
+        Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {
-            IBond bond = (IBond) bonds.next();
+            IBond bond = bonds.next();
 			if (null == bond.getID()) {
 				BOND_COUNT = setID(BOND_PREFIX, BOND_COUNT, bond, internalTabuList);
             }
@@ -290,8 +290,8 @@ public abstract class IDCreator {
 			REACTIONSET_COUNT = setID(REACTIONSET_PREFIX, REACTIONSET_COUNT, reactionSet, tabuList);
         }
 
-		for (Iterator reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
-			createIDsForReaction((IReaction)reaction.next(), tabuList);
+		for (Iterator<IReaction> reaction = reactionSet.reactions().iterator(); reaction.hasNext();) {
+			createIDsForReaction(reaction.next(), tabuList);
         }
     }
     

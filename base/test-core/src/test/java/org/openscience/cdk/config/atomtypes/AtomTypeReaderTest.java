@@ -65,7 +65,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "</atomTypeList>")
         );
         Assert.assertNotNull(reader);
-        List types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
         Assert.assertNotNull(types);
         Assert.assertEquals(2, types.size());
     }
@@ -92,7 +92,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         Assert.assertNotNull(reader);
-        List types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
         Assert.assertNotNull(types);
         Assert.assertEquals(2, types.size());
     }
@@ -119,7 +119,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
           new StringReader(data)
       );
       Assert.assertNotNull(reader);
-      List types = reader.readAtomTypes(new ChemObject().getBuilder());
+      List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
       Assert.assertNotNull(types);
       Assert.assertEquals(1, types.size());
       
@@ -162,7 +162,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             new StringReader(data)
         );
         Assert.assertNotNull(reader);
-        List types = reader.readAtomTypes(new ChemObject().getBuilder());
+        List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
         Assert.assertNotNull(types);
         Assert.assertEquals(1, types.size());
         

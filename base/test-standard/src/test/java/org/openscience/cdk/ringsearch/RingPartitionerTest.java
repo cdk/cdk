@@ -64,7 +64,7 @@ public class RingPartitionerTest extends CDKTestCase
     public void testPartitionIntoRings() {
         IAtomContainer azulene = MoleculeFactory.makeAzulene();
         IRingSet ringSet = Cycles.sssr(azulene).toRingSet();
-        List list = RingPartitioner.partitionRings(ringSet);
+        List<IRingSet> list = RingPartitioner.partitionRings(ringSet);
         Assert.assertEquals(1, list.size());
 
         IAtomContainer biphenyl = MoleculeFactory.makeBiphenyl();

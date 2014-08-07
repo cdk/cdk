@@ -502,7 +502,7 @@ public final class SmilesGenerator {
         String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
         String mname = "getUSmilesNumbers";
         try {
-            Class  c      = Class.forName(cname);
+            Class<?>  c   = Class.forName(cname);
             Method method = c.getDeclaredMethod("getUSmilesNumbers", IAtomContainer.class);
             return (long[]) method.invoke(c, container);
         } catch (ClassNotFoundException e) {

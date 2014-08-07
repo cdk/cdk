@@ -48,8 +48,8 @@ public class DeAromatizationToolTest extends CDKTestCase {
     @Test
     public void testBezene() {
 		Ring benzene = new Ring(6, "C");
-		Iterator bonds = benzene.bonds().iterator();
-		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+		Iterator<IBond> bonds = benzene.bonds().iterator();
+		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(benzene);
 		Assert.assertTrue(success);
 		double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(benzene);
@@ -60,8 +60,8 @@ public class DeAromatizationToolTest extends CDKTestCase {
     public void testPyridine() {
 		Ring pyridine = new Ring(6, "C");
 		pyridine.getAtom(0).setSymbol("N");
-		Iterator bonds = pyridine.bonds().iterator();
-		while (bonds.hasNext()) ((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+		Iterator<IBond> bonds = pyridine.bonds().iterator();
+		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISAROMATIC, true);
 		boolean success = DeAromatizationTool.deAromatize(pyridine);
 		Assert.assertTrue(success);
 		double bondOrderSum = AtomContainerManipulator.getSingleBondEquivalentSum(pyridine);

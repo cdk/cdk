@@ -39,6 +39,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -109,13 +110,13 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
 	
 	@Test public void testGetAllAtomContainers_IChemSequence()
 	{
-		List list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
+		List<IAtomContainer> list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
 		Assert.assertEquals(4, list.size());
 	}
 	
 	@Test public void testGetAllChemObjects_IChemSequence()
 	{
-		List list = ChemSequenceManipulator.getAllChemObjects(chemSequence);
+		List<IChemObject> list = ChemSequenceManipulator.getAllChemObjects(chemSequence);
     	int molCount = 0;
     	int molSetCount = 0;
     	int reactionCount = 0;
@@ -144,9 +145,9 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
     public void testGetAllIDs_IChemSequence() {
         Assert.assertEquals(0, ChemSequenceManipulator.getAllIDs(chemSequence).size());
         IDCreator.createIDs(chemSequence);
-        List allIDs = ChemSequenceManipulator.getAllIDs(chemSequence);
+        List<String> allIDs = ChemSequenceManipulator.getAllIDs(chemSequence);
         Assert.assertEquals(18, ChemSequenceManipulator.getAllIDs(chemSequence).size());
-        Set uniq = new HashSet(allIDs);
+        Set<String> uniq = new HashSet<String>(allIDs);
         Assert.assertEquals(12, uniq.size());
     }
 	

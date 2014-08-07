@@ -18,6 +18,9 @@
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
@@ -162,12 +165,12 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
                 acold=clonedAtomContainer;
                 acSet = ConjugatedPiSystemsDetector.detect(mol);
             }
-            java.util.Iterator<IAtomContainer> detected = acSet.atomContainers().iterator();
-            java.util.List neighboors = mol.getConnectedAtomsList(clonedAtom);
-            for (Object neighboor : neighboors) {
+            Iterator<IAtomContainer> detected = acSet.atomContainers().iterator();
+            List<IAtom> neighboors = mol.getConnectedAtomsList(clonedAtom);
+            for (IAtom neighboor : neighboors) {
                 while (detected.hasNext()) {
-                    IAtomContainer detectedAC = (IAtomContainer) detected.next();
-                    if ((detectedAC != null) && (detectedAC.contains((IAtom) neighboor))) {
+                    IAtomContainer detectedAC = detected.next();
+                    if ((detectedAC != null) && (detectedAC.contains(neighboor))) {
                         isProtonInPiSystem = true;
                         break;
                     }

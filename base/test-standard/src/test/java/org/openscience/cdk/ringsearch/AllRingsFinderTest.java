@@ -275,9 +275,9 @@ public class AllRingsFinderTest extends CDKTestCase
         arf.findAllRings(molecule);
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
@@ -294,9 +294,9 @@ public class AllRingsFinderTest extends CDKTestCase
 
 
         int count = 0;
-        Iterator atoms = molecule.atoms().iterator();
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+            IAtom atom = atoms.next();
             if (atom.getFlag(CDKConstants.ISINRING)) count++;
         }
         Assert.assertEquals("All atoms in 1-ethyl-cyclopentane were not marked as being in a ring", 5, count);

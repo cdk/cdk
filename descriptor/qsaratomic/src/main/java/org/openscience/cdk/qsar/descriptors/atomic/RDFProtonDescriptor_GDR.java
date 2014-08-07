@@ -402,7 +402,6 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 		smooth = -1.15;
 		int goodPosition = 0;
 		IBond goodBond;
-		ArrayList gDr_function = new ArrayList(7);
 		int counter = 0;
 		for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 			sum = 0;

@@ -465,8 +465,8 @@ public class SmilesParserTest extends CDKTestCase {
     	String smiles = "n12:n:n:n:c:2:c:c:c:c:1";
     	IAtomContainer molecule = loadExact(smiles);
     	assertAtomTypesPerceived(molecule);
-        Iterator bonds = molecule.bonds().iterator();
-    	while (bonds.hasNext()) assertTrue(((IBond) bonds.next()).getFlag(CDKConstants.ISAROMATIC));
+        Iterator<IBond> bonds = molecule.bonds().iterator();
+    	while (bonds.hasNext()) assertTrue(bonds.next().getFlag(CDKConstants.ISAROMATIC));
     }
 
 	/**
@@ -956,10 +956,10 @@ public class SmilesParserTest extends CDKTestCase {
 		IAtomContainer mol = sp.parseSmiles(smiles);
 		Assert.assertEquals(5, mol.getAtomCount());
 		// each atom should have 1 implicit hydrogen, and two neighbors
-		java.util.Iterator atoms = mol.atoms().iterator();
+		Iterator<IAtom> atoms = mol.atoms().iterator();
 		while (atoms.hasNext())
 		{
-			IAtom atomi = (IAtom)atoms.next();
+			IAtom atomi = atoms.next();
 			Assert.assertEquals(1, atomi.getImplicitHydrogenCount().intValue());
 			Assert.assertEquals(2, mol.getConnectedAtomsCount(atomi));
 		}

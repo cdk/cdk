@@ -185,7 +185,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.UNSET);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         new CDKToBeam().toBeamEdge(b, mock);
@@ -197,7 +197,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, null);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         new CDKToBeam().toBeamEdge(b, mock);
@@ -224,7 +224,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
@@ -238,7 +238,7 @@ public class CDKToBeamTest {
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
         b.setFlag(CDKConstants.ISAROMATIC, true);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
@@ -251,7 +251,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.DOUBLE);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
@@ -264,7 +264,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.TRIPLE);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
@@ -277,7 +277,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.QUADRUPLE);
-        Map mock = mock(Map.class);
+        Map<IAtom,Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();

@@ -18,16 +18,14 @@
  */
 package org.openscience.cdk.qsar.descriptors;
 
+import java.lang.reflect.Constructor;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.IImplementationSpecification;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.IDescriptor;
-
-import java.lang.reflect.Constructor;
 
 /**
  * Tests for molecular descriptors.

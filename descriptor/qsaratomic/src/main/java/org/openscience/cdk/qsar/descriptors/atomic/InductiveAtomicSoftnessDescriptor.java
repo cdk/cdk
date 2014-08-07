@@ -20,6 +20,7 @@
 package org.openscience.cdk.qsar.descriptors.atomic;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.vecmath.Point3d;
 
@@ -174,7 +175,7 @@ public class InductiveAtomicSoftnessDescriptor extends AbstractAtomicDescriptor 
             }
 
 
-        java.util.Iterator allAtoms = ac.atoms().iterator();
+        Iterator<IAtom> allAtoms = ac.atoms().iterator();
         double atomicSoftness;
         double radiusTarget;
 

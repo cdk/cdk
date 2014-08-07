@@ -156,7 +156,7 @@ public class RingSetManipulatorTest extends CDKTestCase {
     	IRingSet rs = builder.newInstance(IRingSet.class);
     	rs.addAtomContainer(builder.newInstance(IRing.class));
     	rs.addAtomContainer(builder.newInstance(IRing.class));
-    	List list = RingSetManipulator.getAllAtomContainers(rs);
+    	List<IAtomContainer> list = RingSetManipulator.getAllAtomContainers(rs);
     	Assert.assertEquals(2, list.size());
     }
     

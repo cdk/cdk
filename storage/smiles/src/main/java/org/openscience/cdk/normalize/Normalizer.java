@@ -88,21 +88,21 @@ public class Normalizer {
           replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
         }
         IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
-        List l = null;
+        List<RMap> l = null;
         UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
-          List l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
-          Iterator bondit = l.iterator();
+          List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
+          Iterator<RMap> bondit = l.iterator();
           while (bondit.hasNext()) {
-            RMap rmap = (RMap) bondit.next();
+            RMap rmap = bondit.next();
             IBond acbond = ac.getBond(rmap.getId1());
             IBond replacebond = replacementStructure.getBond(rmap.getId2());
             acbond.setOrder(replacebond.getOrder());
             change=true;
           }
-          Iterator atomit = l2.iterator();
+          Iterator<RMap> atomit = l2.iterator();
           while (atomit.hasNext()) {
-            RMap rmap = (RMap) atomit.next();
+            RMap rmap = atomit.next();
             IAtom acatom = ac.getAtom(rmap.getId1());
             IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
             acatom.setFormalCharge(replaceatom.getFormalCharge());

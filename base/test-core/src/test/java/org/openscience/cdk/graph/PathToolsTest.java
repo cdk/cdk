@@ -96,7 +96,7 @@ public class PathToolsTest extends CDKTestCase {
         IAtomContainer atomContainer = null;
         IAtom start = null;
         IAtom end = null;
-        List path = null;
+        List<IAtom> path = null;
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         atomContainer = sp.parseSmiles("CCCC");
         start = atomContainer.getAtom(0);
@@ -125,17 +125,17 @@ public class PathToolsTest extends CDKTestCase {
     	IAtomContainer testMolecule = new AtomContainer();
     	reader.read(testMolecule);
 
-    	ArrayList<IAtom> path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule, 
+    	List<IAtom> path = PathTools.getShortestPath(testMolecule, 
     		testMolecule.getAtom(0), testMolecule.getAtom(9)
     	);
     	Assert.assertEquals(10, path.size());
 
-    	path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule, 
+    	path = PathTools.getShortestPath(testMolecule, 
     		testMolecule.getAtom(1), testMolecule.getAtom(9)
     	);
     	Assert.assertEquals(9, path.size());
 
-    	path = (ArrayList<IAtom>)PathTools.getShortestPath(testMolecule,
+    	path = PathTools.getShortestPath(testMolecule,
     		testMolecule.getAtom(9), testMolecule.getAtom(0)
     	);
     	Assert.assertEquals(10, path.size());
@@ -145,7 +145,7 @@ public class PathToolsTest extends CDKTestCase {
     public void testGetPathsOfLength_IAtomContainer_IAtom_int() throws Exception {
         IAtomContainer atomContainer = null;
         IAtom start = null;
-        List paths = null;
+        List<List<IAtom>> paths = null;
         atomContainer = sp.parseSmiles("c1cc2ccccc2cc1");
         start = atomContainer.getAtom(0);
         paths = PathTools.getPathsOfLength(atomContainer, start, 1);
@@ -163,13 +163,13 @@ public class PathToolsTest extends CDKTestCase {
 
         IAtom start = atomContainer.getAtom(0);
         IAtom end = atomContainer.getAtom(2);
-        List paths = PathTools.getAllPaths(atomContainer, start, end);
+        List<List<IAtom>> paths = PathTools.getAllPaths(atomContainer, start, end);
 
         Assert.assertEquals(3, paths.size());
 
-        List path1 = (List) paths.get(0);
-        List path2 = (List) paths.get(1);
-        List path3 = (List) paths.get(2);
+        List<IAtom> path1 = paths.get(0);
+        List<IAtom> path2 = paths.get(1);
+        List<IAtom> path3 = paths.get(2);
 
         Assert.assertEquals(start, path1.get(0));
         Assert.assertEquals(atomContainer.getAtom(1), path1.get(1));
@@ -385,7 +385,7 @@ public class PathToolsTest extends CDKTestCase {
     @Test(expected = CDKException.class)
     public void testGetLimitedPathsOfLengthUpto_Exception() throws CDKException {
         IAtomContainer container = sp.parseSmiles("[B]1234[B]567[B]89%10[B]%11%12%13[B]%14%15%16[B]11([B]%17%18%19[B]%20%21%22[B]22%23[B]%24%25%26[B]%27%28%29[B]55([B]%30%31%32[B]88%33[B]%34%35%36[B]%37%38%39[B]%11%11([B]%40%41%42[B]%14%14%43[B]%44%45%46[B]%17%17([B]%47%48%49[B]%50%51%52[B]%20%20([B]%53%54%55[B]%24%24([B]%56%57%58[B]%27%27%59[B]%60%61%62[B]%30%30([B]%63%64%65[B]%34%34([B]%66%67%68[B]%37%37%69[B]%70%71%72[B]%40%40([B]%73%74%75[B]%44%44([B]%47%47%76[B]%77%78%79[B]%80%81%82[B]%50%50([B]%53%53%83[B]%84%85%86[B]%56%56([B]%87%88%89[B]%60%60([B]%63%63%90[B]%91%92%93[B]%66%66([B]%94%95%96[B]%70%70([B]%73%73%97[B]%77%77([B]%98%99%100[B]%80%80%101[B]%84%84([B]%87%87%102[B]%91%91([B]%94%98([B]%95%70%73%77%99)[B]%100%80%84%87%91)[B]%88%60%63%92%102)[B]%81%50%53%85%101)[B]%74%44%47%78%97)[B]%67%37%71%66%96)[B]%64%34%68%90%93)[B]%57%27%61%56%89)[B]%54%24%58%83%86)[B]%48%51%76%79%82)[B]%41%14%45%40%75)[B]%38%11%42%69%72)[B]%318%35%30%65)[B]%285%32%59%62)[B]%212%25%20%55)[B]%18%22%17%49%52)[B]%151%19%43%46)[B]9%12%33%36%39)[B]36%23%26%29)[B]47%10%13%16");
-        List<List<IAtom>> paths = PathTools.getLimitedPathsOfLengthUpto(container, container.getAtom(0), 8, 150);
+        PathTools.getLimitedPathsOfLengthUpto(container, container.getAtom(0), 8, 150);
     }
 }
 

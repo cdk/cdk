@@ -34,6 +34,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 
@@ -143,13 +144,13 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 		mol2.setID("mol");
 		atomInMol2.setID("atom");
 		bondInMol1.setID("bond");
-		List list = AtomContainerSetManipulator.getAllIDs(som);
+		List<String> list = AtomContainerSetManipulator.getAllIDs(som);
 		Assert.assertEquals(4, list.size());
 	}
 	
 	@Test public void testGetAllAtomContainers_IAtomContainerSet()
 	{
-		List list = AtomContainerSetManipulator.getAllAtomContainers(som);
+		List<IAtomContainer> list = AtomContainerSetManipulator.getAllAtomContainers(som);
 		Assert.assertEquals(2, list.size());
 	}
 	
@@ -178,7 +179,7 @@ public class AtomContainerSetManipulatorTest extends CDKTestCase {
 	
 	@Test public void testGetAllChemObjects_IAtomContainerSet()
 	{
-		List list = AtomContainerSetManipulator.getAllChemObjects(som);
+		List<IChemObject> list = AtomContainerSetManipulator.getAllChemObjects(som);
 		Assert.assertEquals(3, list.size()); // only AtomContainerSets and AtomContainers at the moment (see source code comment)
 	}
 	

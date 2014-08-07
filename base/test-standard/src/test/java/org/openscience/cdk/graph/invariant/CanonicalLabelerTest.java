@@ -83,9 +83,9 @@ public class CanonicalLabelerTest extends CDKTestCase {
 
         
 		labeler.canonLabel(molecule);
-		Iterator atoms = molecule.atoms().iterator();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
+			IAtom atom = atoms.next();
 			Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
 		}
         
@@ -107,9 +107,9 @@ public class CanonicalLabelerTest extends CDKTestCase {
     public void testSomeMoleculeWithDifferentStartingOrder() throws Exception {
         IAtomContainer molecule = parser.parseSmiles("O=C(C)CBr");
 		labeler.canonLabel(molecule);
-		Iterator atoms = molecule.atoms().iterator();
+		Iterator<IAtom> atoms = molecule.atoms().iterator();
 		while (atoms.hasNext()) {
-			IAtom atom = (IAtom)atoms.next();
+			IAtom atom = atoms.next();
 			Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
 		}        
 		Assert.assertEquals(1, ((Long)molecule.getAtom(0).getProperty(InvPair.CANONICAL_LABEL)).intValue());

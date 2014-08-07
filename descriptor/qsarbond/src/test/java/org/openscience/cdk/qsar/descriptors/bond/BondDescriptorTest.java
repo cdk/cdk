@@ -27,7 +27,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.IBondDescriptor;
 import org.openscience.cdk.qsar.descriptors.DescriptorTest;
@@ -38,13 +37,13 @@ import org.openscience.cdk.tools.diff.BondDiff;
  *
  * @cdk.module test-qsarbond
  */
-public abstract class BondDescriptorTest extends DescriptorTest {
+public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor> {
 	
 	protected IBondDescriptor descriptor;
 
 	public BondDescriptorTest() {}
 
-    public void setDescriptor(Class descriptorClass) throws Exception {
+    public void setDescriptor(Class<? extends IBondDescriptor> descriptorClass) throws Exception {
 		if (descriptor == null) {
 			Object descriptor = descriptorClass.newInstance();
 			if (!(descriptor instanceof IBondDescriptor)) {

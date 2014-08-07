@@ -44,6 +44,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IChemSequence;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
@@ -118,7 +119,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
         MDLReader reader = new MDLReader(ins, Mode.STRICT);
         ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
         Assert.assertNotNull(chemFile);
-        List containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
         Assert.assertEquals(2, containersList.size());
     }
 
@@ -126,9 +127,9 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     public void testGetAllIDs_IChemFile() {
     	Assert.assertEquals(0, ChemFileManipulator.getAllIDs(chemFile).size());
     	IDCreator.createIDs(chemFile);
-    	List allIDs = ChemFileManipulator.getAllIDs(chemFile);
+    	List<String> allIDs = ChemFileManipulator.getAllIDs(chemFile);
     	Assert.assertEquals(19, ChemFileManipulator.getAllIDs(chemFile).size());
-    	Set uniq = new HashSet(allIDs);
+    	Set<String> uniq = new HashSet<String>(allIDs);
     	Assert.assertEquals(13, uniq.size());
     }
 
@@ -149,7 +150,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     @Test
     public void testGetAllChemObjects_IChemFile()
     {
-    	List list = ChemFileManipulator.getAllChemObjects(chemFile);
+    	List<IChemObject> list = ChemFileManipulator.getAllChemObjects(chemFile);
     	Assert.assertEquals(8, list.size()); // not the file itself
     	int atomCount = 0;
     	int bondCount = 0;
@@ -159,7 +160,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     	int reactionSetCount = 0;
     	int chemModelCount = 0;
     	int chemSequenceCount = 0;
-    	for (Iterator iter = list.iterator(); iter.hasNext();) {
+    	for (Iterator<IChemObject> iter = list.iterator(); iter.hasNext();) {
     		Object o = iter.next();
     		if (o instanceof IAtom) ++atomCount;
     		if (o instanceof IBond) ++bondCount;
@@ -184,14 +185,14 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     @Test
     public void testGetAllChemModels_IChemFile()
     {
-    	List list = ChemFileManipulator.getAllChemModels(chemFile);
+    	List<IChemModel> list = ChemFileManipulator.getAllChemModels(chemFile);
     	Assert.assertEquals(1, list.size());
     }
     
     @Test
     public void testGetAllReactions_IChemFile()
     {
-    	List list = ChemFileManipulator.getAllReactions(chemFile);
+    	List<IReaction> list = ChemFileManipulator.getAllReactions(chemFile);
     	Assert.assertEquals(1, list.size());
     }
 

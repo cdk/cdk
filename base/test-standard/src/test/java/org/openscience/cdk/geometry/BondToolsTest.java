@@ -104,9 +104,9 @@ public class BondToolsTest extends CDKTestCase {
 		);
 		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
 		IAtomContainer mol=chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-		Iterator atoms = mol.atoms().iterator();
+		Iterator<IAtom> atoms = mol.atoms().iterator();
 		while (atoms.hasNext()) {
-			atf.configure((IAtom)atoms.next());
+			atf.configure(atoms.next());
 		}
 		Assert.assertTrue(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(1),1));
 		Assert.assertFalse(BondTools.closeEnoughToBond(mol.getAtom(0),mol.getAtom(8),1));

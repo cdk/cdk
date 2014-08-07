@@ -178,8 +178,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = (IAtomContainer) cList.get(0);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = cList.get(0);
 
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }
@@ -192,8 +192,8 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
         ChemFile content = (ChemFile) reader.read((ChemObject) new ChemFile());
-        List cList = ChemFileManipulator.getAllAtomContainers(content);
-        IAtomContainer ac = (IAtomContainer) cList.get(0);
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer ac = cList.get(0);
 
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }

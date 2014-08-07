@@ -40,6 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
@@ -241,7 +242,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     
     @Test public void testGetAllChemObjects_IChemModel()
     {
-    	List list = ChemModelManipulator.getAllChemObjects(chemModel);
+    	List<IChemObject> list = ChemModelManipulator.getAllChemObjects(chemModel);
     	Assert.assertEquals(5, list.size());
     	//int atomCount = 0; // not traversed
     	//int bondCount = 0; // not traversed
@@ -285,7 +286,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     public void testGetAllIDs_IChemModel() {
     	Assert.assertEquals(0, ChemModelManipulator.getAllIDs(chemModel).size());
     	IDCreator.createIDs(chemModel);
-    	List allIDs = ChemModelManipulator.getAllIDs(chemModel);
+    	List<String> allIDs = ChemModelManipulator.getAllIDs(chemModel);
     	Assert.assertEquals(16, ChemModelManipulator.getAllIDs(chemModel).size());
     	Set<String> uniq = new HashSet<String>(allIDs);
     	Assert.assertEquals(10, uniq.size());
