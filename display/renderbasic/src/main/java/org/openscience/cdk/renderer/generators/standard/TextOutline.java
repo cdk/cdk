@@ -95,6 +95,14 @@ final class TextOutline {
         this.outline = outline;
         this.transform = transform;
     }
+    
+    /**
+     * The text which the outline displays.
+     * @return the text
+     */
+    String text() {
+        return text;
+    }
 
     /**
      * Access the transformed outline of the text.

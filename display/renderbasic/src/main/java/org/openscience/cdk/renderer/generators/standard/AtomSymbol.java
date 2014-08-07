@@ -28,6 +28,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -125,6 +126,23 @@ final class AtomSymbol {
         }
     }
 
+    /**
+     * Access the element outline.
+     * @return immutable element outline
+     */
+    TextOutline elementOutline() {
+        return element;
+    }
+
+    /**
+     * Access the adjunct outlines.
+     * 
+     * @return immutable adjunct outlines
+     */
+    List<TextOutline> adjunctOutlines() {
+        return Collections.unmodifiableList(adjuncts);
+    }
+    
     /**
      * Access the Java 2D shape text outlines that display the atom symbol.
      * 
