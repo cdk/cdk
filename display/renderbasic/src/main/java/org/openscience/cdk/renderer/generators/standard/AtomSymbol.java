@@ -87,10 +87,10 @@ final class AtomSymbol {
     /**
      * Internal constructor provides the attributes.
      * 
-     * @param element
-     * @param adjuncts
-     * @param alignment
-     * @param hull
+     * @param element the element label
+     * @param adjuncts the adjunct labels
+     * @param alignment left, center, or right alignment
+     * @param hull convex hull
      */
     private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, SymbolAlignment alignment, ConvexHull hull) {
         this.element = element;
