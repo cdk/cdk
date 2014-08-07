@@ -31,10 +31,12 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
+import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,6 +53,70 @@ import java.util.Map;
  */
 final class StandardBondGenerator {
 
+    private final IAtomContainer container;
+    private final AtomSymbol[]   symbols;
+    private final RendererModel  parameters;
+
+    // indexes of atoms and rings
+    private final Map<IAtom, Integer> atomIndexMap = new HashMap<IAtom, Integer>();
+    private final Map<IBond, IAtomContainer> ringMap;
+
+    // parameters
+    private final double stroke;
+    private final double separation;
+    private final double backOff;
+    private final double wedgeWidth;
+    private final double hatchSections;
+    private final Color  foreground;
+
+    /**
+     * Create a new standard bond generator for the provided structure (container) with the laid out
+     * atom symbols. The parameters of the bond generation are also provided and the scaled 'stroke'
+     * width which is used to scale all other parameters.
+     *
+     * @param container  structure representation
+     * @param symbols    generated atom symbols
+     * @param parameters rendering options
+     * @param stroke     scaled stroke width
+     */
+    private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke) {
+        this.container = container;
+        this.symbols = symbols;
+        this.parameters = parameters;
+
+        // index atoms and rings
+        for (int i = 0; i < container.getAtomCount(); i++)
+            atomIndexMap.put(container.getAtom(i), i);
+        ringMap = ringPreferenceMap(container);
+
+        // set parameters (TODO need parameters from RendererModel)
+        this.stroke = stroke;
+        this.separation = 5 * stroke;
+        this.backOff = 2 * stroke;
+        this.wedgeWidth = 7 * stroke;
+        this.hatchSections = 16;
+        this.foreground = Color.BLACK;
+    }
+
+    /**
+     * Generates bond elements for the provided structure (container) with the laid out atom
+     * symbols. The parameters of the bond generation are also provided and the scaled 'stroke'
+     * width which is used to scale all other parameters.
+     *
+     * @param container  structure representation
+     * @param symbols    generated atom symbols
+     * @param parameters rendering options
+     * @param stroke     scaled stroke width
+     */
+    static IRenderingElement[] generateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke) {
+        StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, stroke);
+        IRenderingElement[] elements = new IRenderingElement[container.getBondCount()];
+        for (int i = 0; i < container.getBondCount(); i++) {
+            elements[i] = bondGenerator.generate(container.getBond(i));
+        }
+        return elements;
+    }
+
     /**
      * Generate a rendering element for a given bond.
      *
@@ -58,10 +124,72 @@ final class StandardBondGenerator {
      * @return rendering element
      */
     IRenderingElement generate(IBond bond) {
-        // TODO
+        final IAtom atom1 = bond.getAtom(0);
+        final IAtom atom2 = bond.getAtom(1);
+
+        final IBond.Order order = bond.getOrder();
+        final IBond.Stereo stereo = bond.getStereo();
+
+        if (order == null)
+            return generateDashedBond(atom1, atom2);
+
+        switch (order) {
+            case SINGLE:
+                return generateSingleBond(atom1, atom2, stereo);
+            case DOUBLE:
+                return generateDoubleBond(bond);
+            case TRIPLE:
+                return generateTripleBond(atom1, atom2);
+        }
+
+        // bond order > 3 not supported
+        return generateDashedBond(atom1, atom2);
+    }
+
+    private IRenderingElement generateSingleBond(IAtom atom1, IAtom atom2, IBond.Stereo stereo) {
         return new ElementGroup();
     }
 
+    IRenderingElement generatePlainSingleBond(IAtom from, IAtom to) {
+        return new ElementGroup();
+    }
+
+    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
+        return new ElementGroup();
+    }
+
+    IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
+        return new ElementGroup();
+    }
+
+    IRenderingElement generateWavyBond(IAtom from, IAtom to) {
+        return new ElementGroup();
+    }
+
+    private IRenderingElement generateDoubleBond(IBond bond) {
+        return new ElementGroup();
+    }
+
+    // GR-1.10 Sidedness of double bonds
+    private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
+        return new ElementGroup();
+    }
+
+    private IRenderingElement generateCenteredDoubleBond(IAtom atom1, IAtom atom2, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
+        return new ElementGroup();
+    }
+
+    private IRenderingElement generateCrossedDoubleBond(IAtom atom1, IAtom atom2) {
+        return new ElementGroup();
+    }
+
+    private IRenderingElement generateTripleBond(IAtom atom1, IAtom atom2) {
+        return new ElementGroup();
+    }
+
+    IRenderingElement generateDashedBond(IAtom atom1, IAtom atom2) {
+        return new ElementGroup();
+    }
 
     /**
      * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
@@ -107,11 +235,11 @@ final class StandardBondGenerator {
                 PREFERENCE_INDEX[size] = preference++;
             }
         }
-        
+
         /**
          * Create a new comparator.
          */
-        RingBondOffsetComparator() {            
+        RingBondOffsetComparator() {
         }
 
         /**
@@ -184,7 +312,7 @@ final class StandardBondGenerator {
          */
         static int[] countLightElements(IAtomContainer container) {
             // count elements up to Argon (number=18)
-            int[] freq = new int[19]; 
+            int[] freq = new int[19];
             for (IAtom atom : container.atoms()) {
                 freq[atom.getAtomicNumber()]++;
             }

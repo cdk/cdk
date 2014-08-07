@@ -51,15 +51,13 @@ import java.util.List;
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
 
 /**
- * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of
- * a structure diagram. These are generated together allowing the bonds to drawn
- * cleanly without overlap. <p/>
- * 
- * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to
- * be independent of the system used to view the diagram (primarily important for vector graphic 
- * depictions). The font used to generate the diagram must be provided to the constructor.
- * <p/>
- * 
+ * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
+ * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. <p/>
+ *
+ * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
+ * independent of the system used to view the diagram (primarily important for vector graphic
+ * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
+ *
  * @author John May
  */
 public final class StandardGenerator implements IGenerator<IAtomContainer> {
@@ -89,17 +87,22 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final SymbolVisibility visibility = SymbolVisibility.iupacRecommendations();
         final IAtomColorer coloring = new CDK2DAtomColors();
 
-        // foreground / bond color is defined by the color carbon
-        final Color foreground = coloring.getAtomColor(container.getBuilder().newInstance(IAtom.class, "C"));
+        // the stroke with is based on the font
+        final double stroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, scale);
+        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke);
 
-        // TODO draw bonds
-
-        ElementGroup elements = new ElementGroup();
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
                                                     container.getAtom(0).getPoint2d().y,
                                                     0, 0);
+        
+        ElementGroup elements = new ElementGroup();
+
+        // bond elements can simply be added to the element group
+        for (IRenderingElement bondElement : bondElements) {
+            elements.add(bondElement);
+        }
 
         // convert the atom symbols to IRenderingElements
         for (int i = 0; i < container.getAtomCount(); i++) {
