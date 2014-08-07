@@ -1,0 +1,432 @@
+/*
+ * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
+ *                    John May <jwmay@users.sf.net>
+ *   
+ * Contact: cdk-devel@lists.sourceforge.net
+ *   
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or (at
+ * your option) any later version. All we ask is that proper credit is given
+ * for our work, which includes - but is not limited to - adding the above 
+ * copyright notice to the beginning of your source code files, and to any
+ * copyright notice that you may distribute with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+package org.openscience.cdk.renderer.generators.standard;
+
+import org.openscience.cdk.config.Elements;
+import org.openscience.cdk.config.Isotopes;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IIsotope;
+import org.openscience.cdk.interfaces.IPseudoAtom;
+
+import java.awt.Font;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Above;
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
+import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Right;
+
+/**
+ * Generates {@link AtomSymbol} instances with positioned adjuncts.
+ *
+ * <p/> Note the generator is purposefully not an {@link org.openscience.cdk.renderer.generators.IGenerator}
+ * and is intended as part be called from the StandardGenerator.
+ *
+ * @author John May
+ */
+final class StandardAtomGenerator {
+
+    /** Default options for spacing and sizing adjuncts, could be configruable parameters. */
+    private final static double DEFAULT_ADJUNCT_SPACING_RATIO = 0.15d;
+    private final static double DEFAULT_SUBSCRIPT_SIZE        = 0.6d;
+
+    
+    /**
+     * The font used in the symbol.
+     */
+    private final Font font;
+
+    /**
+     * Relative size of the adjunct sub/super script labels (0-1).
+     */
+    private final double scriptSize;
+
+    /**
+     * The absolute distance to 'pad' adjunct positioning with.
+     */
+    private final double padding;
+
+    /**
+     * Text outline is immutable so we can create a hydrogen are reuse it.
+     */
+    private final TextOutline defaultHydrogenLabel;
+
+    /**
+     * Create a standard atom generator using the specified font.
+     *
+     * @param font the symbol font
+     */
+    StandardAtomGenerator(Font font) {
+        this(font, DEFAULT_ADJUNCT_SPACING_RATIO, DEFAULT_SUBSCRIPT_SIZE);
+    }
+
+    /**
+     * Internal constructor with required attributes.
+     *
+     * @param font           the font to depict symbols with
+     * @param adjunctSpacing the spacing between adjuncts and the element symbol as fraction of 'H'
+     *                       width
+     * @param scriptSize     the size of
+     */
+    private StandardAtomGenerator(Font font, double adjunctSpacing, double scriptSize) {
+        this.font = font;
+        this.scriptSize = scriptSize;
+        this.defaultHydrogenLabel = new TextOutline("H", font);
+        this.padding = adjunctSpacing * defaultHydrogenLabel.getBounds().getWidth();
+    }
+
+    /**
+     * Generate the displayed atom symbol for an atom in given structure with the specified hydrogen
+     * position.
+     *
+     * @param container structure to which the atom belongs
+     * @param atom      the atom to generate the symbol for
+     * @param position  the hydrogen position
+     * @return atom symbol
+     */
+    AtomSymbol generateSymbol(IAtomContainer container, IAtom atom, HydrogenPosition position) {
+        if (atom instanceof IPseudoAtom) {
+            return generatePseudoSymbol(accessPseudoLabel((IPseudoAtom) atom, "?"));
+        }
+        else {
+            int number = unboxSafely(atom.getAtomicNumber(),
+                                     Elements.ofString(atom.getSymbol()).number());
+
+            if (number == 0)
+                return generatePseudoSymbol("?");
+
+            // unset the mass if it's the major isotope (could be an option)
+            Integer mass = atom.getMassNumber();
+            if (mass != null && isMajorIsotope(number, mass)) {
+                mass = null;
+            }
+
+            return generatePeriodicSymbol(number,
+                                          unboxSafely(atom.getImplicitHydrogenCount(), 0),
+                                          unboxSafely(mass, -1),
+                                          unboxSafely(atom.getFormalCharge(), 0),
+                                          container.getConnectedSingleElectronsCount(atom),
+                                          position);
+        }
+    }
+
+    /**
+     * Generates an atom symbol for a pseudo atom.
+     *
+     * @return the atom symbol
+     */
+    AtomSymbol generatePseudoSymbol(String label) {
+        if (label.matches("R\\d+")) {
+            return generateNumberedRgroupSymbol(Integer.parseInt(label.substring(1)));
+        }
+        else {
+            return new AtomSymbol(new TextOutline(label, font),
+                                  Collections.<TextOutline>emptyList());
+        }
+    }
+
+    /**
+     * Generates an atom symbol for a numbered Rgroup. The Rgroup number is subscript to the 'R'.
+     *
+     * @param number Rgroup number
+     * @return the atom symbol
+     */
+    AtomSymbol generateNumberedRgroupSymbol(int number) {
+
+        TextOutline rLabel = new TextOutline("R", font);
+        TextOutline numberLabel = new TextOutline(Integer.toString(number), font).resize(scriptSize, scriptSize);
+
+        numberLabel = positionSubscript(rLabel, numberLabel);
+
+        return new AtomSymbol(rLabel,
+                              Arrays.asList(numberLabel));
+    }
+
+    /**
+     * Generate an atom symbol for a periodic element with the specified number of hydrogens, ionic
+     * charge, mass,
+     *
+     * @param number    atomic number
+     * @param hydrogens labelled hydrogen count
+     * @param mass      atomic mass
+     * @param charge    ionic formal charge
+     * @param unpaired  number of unpaired electrons
+     * @param position  placement of hydrogen
+     * @return laid out atom symbol
+     */
+    AtomSymbol generatePeriodicSymbol(final int number,
+                                      final int hydrogens,
+                                      final int mass,
+                                      final int charge,
+                                      final int unpaired,
+                                      HydrogenPosition position) {
+
+
+        TextOutline element = new TextOutline(Elements.ofNumber(number).symbol(), font);
+        TextOutline hydrogenAdjunct = defaultHydrogenLabel;
+
+        // the hydrogen count, charge, and mass adjuncts are script size
+        TextOutline hydrogenCount = new TextOutline(Integer.toString(hydrogens), font).resize(scriptSize,
+                                                                                              scriptSize);
+        TextOutline chargeAdjunct = new TextOutline(chargeAdjunctText(charge, unpaired), font).resize(scriptSize,
+                                                                                                      scriptSize);
+        TextOutline massAdjunct = new TextOutline(Integer.toString(mass), font).resize(scriptSize,
+                                                                                       scriptSize);
+
+        // position each adjunct relative to the element label and each other
+        hydrogenAdjunct = positionHydrogenLabel(position, element, hydrogenAdjunct);
+        hydrogenCount = positionSubscript(hydrogenAdjunct, hydrogenCount);
+        chargeAdjunct = positionChargeLabel(hydrogens, position, chargeAdjunct, element, hydrogenAdjunct);
+        massAdjunct = positionMassLabel(massAdjunct, element);
+
+        // when the hydrogen label is positioned to the left we may need to nudge it
+        // over to account for the hydrogen count and/or the mass adjunct colliding
+        // with the element label        
+        if (position == Left) {
+            final double nudgeX = hydrogenXDodge(hydrogens, mass, element, hydrogenAdjunct, hydrogenCount, massAdjunct);
+            hydrogenAdjunct = hydrogenAdjunct.translate(nudgeX, 0);
+            hydrogenCount = hydrogenCount.translate(nudgeX, 0);
+        }
+
+        final List<TextOutline> adjuncts = new ArrayList<TextOutline>(4);
+
+        if (hydrogens > 0)
+            adjuncts.add(hydrogenAdjunct);
+        if (hydrogens > 1)
+            adjuncts.add(hydrogenCount);
+        if (charge != 0 || unpaired > 0)
+            adjuncts.add(chargeAdjunct);
+        if (mass >= 0)
+            adjuncts.add(massAdjunct);
+
+        return new AtomSymbol(element, adjuncts);
+    }
+
+    /**
+     * Position the hydrogen label relative to the element label.
+     *
+     * @param position relative position where the hydrogen is placed
+     * @param element  the outline of the element label
+     * @param hydrogen the outline of the hydrogen
+     * @return positioned hydrogen label
+     */
+    TextOutline positionHydrogenLabel(HydrogenPosition position, TextOutline element, TextOutline hydrogen) {
+        final Rectangle2D elementBounds = element.getBounds();
+        final Rectangle2D hydrogenBounds = hydrogen.getBounds();
+        switch (position) {
+            case Above:
+                return hydrogen.translate(0, (elementBounds.getMinY() - padding) - hydrogenBounds.getMaxY());
+            case Right:
+                return hydrogen.translate((elementBounds.getMaxX() + padding) - hydrogenBounds.getMinX(), 0);
+            case Below:
+                return hydrogen.translate(0, (elementBounds.getMaxY() + padding) - hydrogenBounds.getMinY());
+            case Left:
+                return hydrogen.translate((elementBounds.getMinX() - padding) - hydrogenBounds.getMaxX(), 0);
+        }
+        return hydrogen; // never reached
+    }
+
+    /**
+     * Positions an outline in the subscript position relative to another 'primary' label.
+     *
+     * @param label     a label outline
+     * @param subscript the label outline to position as subscript
+     * @return positioned subscript outline
+     */
+    TextOutline positionSubscript(TextOutline label, TextOutline subscript) {
+        final Rectangle2D hydrogenBounds = label.getBounds();
+        final Rectangle2D hydrogenCountBounds = subscript.getBounds();
+        subscript = subscript.translate((hydrogenBounds.getMaxX() + padding) - hydrogenCountBounds.getMinX(),
+                                        (hydrogenBounds.getMaxY() + (hydrogenCountBounds.getHeight() / 2)) - hydrogenCountBounds.getMaxY());
+        return subscript;
+    }
+
+    /**
+     * Position the charge label on the top right of either the element or hydrogen label. Where the
+     * charge is placed depends on the number of hydrogens and their position relative to the
+     * element symbol.
+     *
+     * @param hydrogens number of hydrogen
+     * @param position  position of hydrogen
+     * @param charge    the charge label outline (to be positioned)
+     * @param element   the element label outline
+     * @param hydrogen  the hydrogen label outline
+     * @return positioned charge label
+     */
+    TextOutline positionChargeLabel(int hydrogens, HydrogenPosition position,
+                                    TextOutline charge,
+                                    TextOutline element,
+                                    TextOutline hydrogen) {
+
+        final Rectangle2D chargeBounds = charge.getBounds();
+
+        // the charge is placed to the top right of the element symbol
+        // unless either the hydrogen label or the hydrogen count label
+        // are in the way - in which case we place it relative to the
+        // hydrogen
+        Rectangle2D referenceBounds = element.getBounds();
+        if (hydrogens > 0 && position == Right)
+            referenceBounds = hydrogen.getBounds();
+        else if (hydrogens > 1 && position == Above)
+            referenceBounds = hydrogen.getBounds();
+
+        return charge.translate((referenceBounds.getMaxX() + padding) - chargeBounds.getMinX(),
+                                (referenceBounds.getMinY() - (chargeBounds.getHeight() / 2)) - chargeBounds.getMinY());
+    }
+
+    /**
+     * Position the mass label relative to the element label. The mass adjunct is position to the
+     * top left of the element label.
+     *
+     * @param massLabel    mass label outline
+     * @param elementLabel element label outline
+     * @return positioned mass label
+     */
+    TextOutline positionMassLabel(TextOutline massLabel, TextOutline elementLabel) {
+        final Rectangle2D elementBounds = elementLabel.getBounds();
+        final Rectangle2D massBounds = massLabel.getBounds();
+        return massLabel.translate((elementBounds.getMinX() - padding) - massBounds.getMaxX(),
+                                   (elementBounds.getMinY() - (massBounds.getHeight() / 2)) - massBounds.getMinY());
+    }
+
+    /**
+     * If the hydrogens are position in from of the element we may need to move the hydrogen and
+     * hydrogen count labels. This code assesses the positions of the mass, hydrogen, and hydrogen
+     * count labels and determines the x-axis adjustment needed for the hydrogen label to dodge a
+     * collision.
+     *
+     * @param hydrogens     number of hydrogens
+     * @param mass          atomic mass
+     * @param elementLabel  element label outline
+     * @param hydrogenLabel hydrogen label outline
+     * @param hydrogenCount hydrogen count label outline
+     * @param massLabel     the mass label outline
+     * @return required adjustment to x-axis
+     */
+    private double hydrogenXDodge(int hydrogens, int mass,
+                                  TextOutline elementLabel,
+                                  TextOutline hydrogenLabel,
+                                  TextOutline hydrogenCount,
+                                  TextOutline massLabel) {
+        if (mass < 0 && hydrogens > 1) {
+            return (elementLabel.getBounds().getMinX() - padding) - hydrogenCount.getBounds().getMaxX();
+        }
+        else if (mass >= 0) {
+            if (hydrogens > 1) {
+                return (massLabel.getBounds().getMinX() + padding) - hydrogenCount.getBounds().getMaxX();
+            }
+            else if (hydrogens > 0) {
+                return (massLabel.getBounds().getMinX() - padding) - hydrogenLabel.getBounds().getMaxX();
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Utility to determine if the specified mass is the major isotope for the given atomic number.
+     *
+     * @param number atomic number
+     * @param mass   atomic mass
+     * @return the mass is the major mass for the atomic number
+     */
+    private boolean isMajorIsotope(int number, int mass) {
+        try {
+            IIsotope isotope = Isotopes.getInstance().getMajorIsotope(number);
+            return isotope != null && isotope.getMassNumber().equals(mass);
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Utility to safely unbox an object instance number. If the value is null, the default value is
+     * returned.
+     *
+     * @param value        a value
+     * @param defaultValue value to return if null
+     * @return unbox number or the default value
+     */
+    private static int unboxSafely(Integer value, int defaultValue) {
+        return value != null ? value : defaultValue;
+    }
+
+    /** Characters used in the charge label. */
+    private static final char
+            BULLET = '•', // '\u2022'
+            PLUS   = '+',
+            MINUS  = '−'; // '\u2212' and not a hyphen
+
+    /**
+     * Create the charge adjunct text for the specified charge and number of unpaired electrons.
+     *
+     * @param charge   formal charge
+     * @param unpaired number of unpaired electrons
+     * @return adjunct text
+     */
+    static String chargeAdjunctText(final int charge, final int unpaired) {
+        StringBuilder sb = new StringBuilder();
+
+        if (unpaired == 1) {
+            if (charge != 0) {
+                sb.append('(').append(BULLET).append(')');
+            }
+            else {
+                sb.append(BULLET);
+            }
+        }
+        else if (unpaired > 1) {
+            sb.append('(').append(unpaired).append(BULLET).append(')');
+        }
+
+        final char sign = charge < 0 ? MINUS : PLUS;
+        final int coefficient = Math.abs(charge);
+
+        if (coefficient > 1)
+            sb.append(coefficient);
+        if (coefficient > 0)
+            sb.append(sign);
+
+        return sb.toString();
+    }
+
+    /**
+     * Safely access the label of a pseudo atom. If the label is null or empty, the default label is
+     * returned.
+     *
+     * @param atom the pseudo
+     * @return pseudo label
+     */
+    static String accessPseudoLabel(IPseudoAtom atom, String defaultLabel) {
+        String label = atom.getLabel();
+        if (label != null && !label.isEmpty())
+            return label;
+        return defaultLabel;
+    }
+}
