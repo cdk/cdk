@@ -48,7 +48,7 @@ public class NomParser {
     private static int mainChainPrefix;
     private static boolean isMainCyclic;
 
-    /** The tempory vector of locations the current group/substiuant is attached to */
+    /** The temporary vector of locations the current group/substituent is attached to */
     private static List<Token> tempLocation;
 
     /** The vector of attached functional groups, with an instance of AttachedGroup for each
@@ -62,7 +62,7 @@ public class NomParser {
     private static List<AttachedGroup> attachedSubstituents;
 
     /**
-     * Used in the build up of ancient greek style prfixes
+     * Used in the build up of ancient Greek style prefixes
      */
     private static int currentNumber;
 
@@ -117,7 +117,7 @@ public class NomParser {
      * are connected to a valid atom which occurs on the main chain.
      *
      * @param vectorIterator An iterator which provides instances of AttachedGroup to check
-     * @throws ParseException A taylored instance of ParseException so nomen can display
+     * @throws ParseException A tailored instance of ParseException so Nomen can display
      * the error to the user.
      */
     private static void checkConnections (Iterator<AttachedGroup> vectorIterator) throws ParseException
@@ -283,7 +283,7 @@ TOKEN :
 |   < CONT: "cont" >
 }
 
-/* Skip the "a" letter for greek numbers */
+/* Skip the "a" letter for Greek numbers */
 SKIP :
 {
     < A : "a" > | < SPACE : " " >
