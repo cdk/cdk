@@ -22,10 +22,6 @@ package org.openscience.cdk.iupac.parser;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
-import org.openscience.cdk.Ring;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -34,6 +30,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IBond.Order;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.CDKHydrogenAdder;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
@@ -54,9 +52,13 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
 public class MoleculeBuilder
 {
     /** The molecule which is worked upon throughout the class and returned at the end */
-    private IAtomContainer currentMolecule = new AtomContainer();
+    private IAtomContainer currentMolecule = null;
     private IAtom endOfChain;
-        
+
+    public MoleculeBuilder(IChemObjectBuilder builder) {
+        currentMolecule = builder.newInstance(IAtomContainer.class);
+    }
+
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
      *
@@ -73,8 +75,8 @@ public class MoleculeBuilder
             if (isMainCyclic)
             {
                 //Rely on CDK's ring class constructor to generate our cyclic molecules.
-                currentChain = new AtomContainer();
-                currentChain.add(new Ring(length, "C"));
+                currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
+                currentChain.add(currentMolecule.getBuilder().newInstance(IRing.class, length, "C"));
             } //Else must not be cyclic
             else
             {
@@ -83,7 +85,7 @@ public class MoleculeBuilder
         }
         else
         {
-            currentChain = new AtomContainer();
+            currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
         }
         
         return currentChain;
@@ -302,15 +304,19 @@ public class MoleculeBuilder
             }
             currentMolecule.add(benzene);
             
-            Bond joiningBond;
+            IBond joiningBond;
             //If functional group hasn't had a location specified:
             if (addPos < 0)
             {
-                joiningBond = new Bond(currentMolecule.getFirstAtom(), benzene.getFirstAtom());
+                joiningBond = currentMolecule.getBuilder().newInstance(
+                    IBond.class, currentMolecule.getFirstAtom(), benzene.getFirstAtom()
+                );
             }
             else
             {
-                joiningBond = new Bond(currentMolecule.getAtom(addPos), benzene.getFirstAtom());
+                joiningBond = currentMolecule.getBuilder().newInstance(
+                    IBond.class, currentMolecule.getAtom(addPos), benzene.getFirstAtom()
+                );
             }
             currentMolecule.addBond(joiningBond);
         }
@@ -386,7 +392,8 @@ public class MoleculeBuilder
         //Organometals
         else if (getMetalAtomicSymbol (funGroupToken) != null)
         {
-            currentMolecule.addAtom (new Atom (getMetalAtomicSymbol (funGroupToken)));
+            currentMolecule.addAtom(
+                    currentMolecule.getBuilder().newInstance(IAtom.class, getMetalAtomicSymbol (funGroupToken)));
             endOfChain = currentMolecule.getLastAtom();
         }
         else
@@ -464,9 +471,11 @@ public class MoleculeBuilder
     private void addAtom(String newAtomType, IAtom otherConnectingAtom, Order bondOrder, int hydrogenCount)
     {
         //Create the new atom and bond.
-        Atom newAtom = new Atom(newAtomType);
+        IAtom newAtom = currentMolecule.getBuilder().newInstance(IAtom.class, newAtomType);
         newAtom.setImplicitHydrogenCount(hydrogenCount);
-        Bond newBond = new Bond(newAtom, otherConnectingAtom, bondOrder);
+        IBond newBond = currentMolecule.getBuilder().newInstance(
+            IBond.class, newAtom, otherConnectingAtom, bondOrder
+        );
         
         //Add the new atom and bond to the molecule.
         currentMolecule.addAtom(newAtom);
@@ -506,7 +515,9 @@ public class MoleculeBuilder
                 
                 IAtomContainer subChain = buildChain(attachedSubstituent.getLength(), false);
                 
-                Bond linkingBond = new Bond(subChain.getFirstAtom(), connectingAtom);
+                IBond linkingBond = currentMolecule.getBuilder().newInstance(
+                    IBond.class, subChain.getFirstAtom(), connectingAtom
+                );
                 currentMolecule.addBond(linkingBond);
                 currentMolecule.add(subChain);
             }

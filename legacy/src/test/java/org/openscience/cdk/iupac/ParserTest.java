@@ -26,6 +26,7 @@ import org.openscience.cdk.isomorphism.IsomorphismTester;
 import org.openscience.cdk.iupac.parser.NomParser;
 import org.openscience.cdk.iupac.parser.ParseException;
 import org.openscience.cdk.iupac.parser.TokenMgrError;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.templates.MoleculeFactory;
 
 /**
@@ -47,7 +48,7 @@ public class ParserTest extends CDKTestCase
     {
         IAtomContainer parserMolecule = null;
         try {
-            parserMolecule = NomParser.generate("ethane");
+            parserMolecule = NomParser.generate("ethane", SilentChemObjectBuilder.getInstance());
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
@@ -61,7 +62,7 @@ public class ParserTest extends CDKTestCase
     {
         IAtomContainer parserMolecule = null;
         try {
-            parserMolecule = NomParser.generate("pentane");
+            parserMolecule = NomParser.generate("pentane", SilentChemObjectBuilder.getInstance());
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
@@ -75,7 +76,7 @@ public class ParserTest extends CDKTestCase
     {
         IAtomContainer parserMolecule = null;
         try {
-            parserMolecule = NomParser.generate("heptane");
+            parserMolecule = NomParser.generate("heptane", SilentChemObjectBuilder.getInstance());
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
@@ -87,7 +88,7 @@ public class ParserTest extends CDKTestCase
     
     @Test public void testEicosane() throws Exception
     {
-        IAtomContainer parserMolecule = NomParser.generate("Eicosane");
+        IAtomContainer parserMolecule = NomParser.generate("Eicosane", SilentChemObjectBuilder.getInstance());
         IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(20);
 
         Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
@@ -98,7 +99,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            NomParser.generate("!\"$%^&*()-=_+");
+            NomParser.generate("!\"$%^&*()-=_+", SilentChemObjectBuilder.getInstance());
             Assert.fail("Molecule was successfully generated but should have thrown a TokenMgrError");
         } catch (ParseException pe) {
             Assert.fail("The molecule did throw a class, but it incorrectly threw a ParseException," +
@@ -113,7 +114,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            NomParser.generate("");
+            NomParser.generate("", SilentChemObjectBuilder.getInstance());
             Assert.fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             Assert.assertTrue (true);
@@ -126,7 +127,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            NomParser.generate("ethol");
+            NomParser.generate("ethol", SilentChemObjectBuilder.getInstance());
             Assert.fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             Assert.assertTrue (true);
@@ -139,7 +140,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            NomParser.generate("7-chloropentane");
+            NomParser.generate("7-chloropentane", SilentChemObjectBuilder.getInstance());
             Assert.fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             Assert.assertTrue (true);
@@ -152,7 +153,7 @@ public class ParserTest extends CDKTestCase
     {
         try
         {
-            NomParser.generate("9-ethylhexane");
+            NomParser.generate("9-ethylhexane", SilentChemObjectBuilder.getInstance());
             Assert.fail("Molecule was successfully generated but should have thrown a ParseException");
         } catch (ParseException pe) {
             Assert.assertTrue (true);
