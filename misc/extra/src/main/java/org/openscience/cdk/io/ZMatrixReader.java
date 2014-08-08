@@ -183,27 +183,27 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             {
               types[i] = tokenizer.nextToken();
               d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              d[i] = new Double(tokenizer.nextToken());
+              d[i] = Double.valueOf(tokenizer.nextToken());
               i++;
             }
             else if (i==2)
             {
               types[i] = tokenizer.nextToken();
               d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              d[i] = new Double(tokenizer.nextToken());
-              a_atom[i] = new Integer(tokenizer.nextToken()) -1;
-              a[i] = new Double(tokenizer.nextToken());
+              d[i] = Double.valueOf(tokenizer.nextToken());
+              a_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              a[i] = Double.valueOf(tokenizer.nextToken());
               i++;
             }
             else
             {
               types[i] = tokenizer.nextToken();
-              d_atom[i] = new Integer(tokenizer.nextToken()) -1;
-              d[i] = new Double(tokenizer.nextToken());
-              a_atom[i] = new Integer(tokenizer.nextToken()) -1;
-              a[i] = new Double(tokenizer.nextToken());
-              da_atom[i] = new Integer(tokenizer.nextToken()) -1;
-              da[i] = new Double(tokenizer.nextToken());
+              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              d[i] = Double.valueOf(tokenizer.nextToken());
+              a_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              a[i] = Double.valueOf(tokenizer.nextToken());
+              da_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
+              da[i] = Double.valueOf(tokenizer.nextToken());
               i++;
             }
           }

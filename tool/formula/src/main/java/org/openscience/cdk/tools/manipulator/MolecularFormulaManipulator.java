@@ -628,7 +628,7 @@ public class MolecularFormulaManipulator {
 		}
 		if (multiple.equals("") || multiple.equals("-"))
 			multiple += 1;
-		return new Integer(multiple);
+		return Integer.valueOf(multiple);
 	}
 
 	/**

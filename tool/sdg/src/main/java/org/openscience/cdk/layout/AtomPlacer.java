@@ -913,7 +913,7 @@ public class AtomPlacer
         int[] weights = getWeightNumbers(ac);
         for (int f = 0; f < ac.getAtomCount(); f++)
         {
-            ac.getAtom(f).setProperty("Weight", new Integer(weights[f]));
+            ac.getAtom(f).setProperty("Weight", Integer.valueOf(weights[f]));
         }
     }
 

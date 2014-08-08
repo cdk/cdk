@@ -430,7 +430,7 @@ public class ProteinPocketFinder {
 		// logger.debug(" ****** New Root ******:"+root.x+" "+root.y+"
 		// "+root.z);
 		visited.put((int) root.x + "." + (int) root.y + "."
-                + (int) root.z, new Integer(1));
+                + (int) root.z, 1);
 		int[] minMax = { 0, 0, 0, 0, 0, 0 };
 		minMax[0] = (int) (root.x - linkageRadius);
 		minMax[1] = (int) (root.x + linkageRadius);

@@ -119,7 +119,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                     IPseudoAtom rGroup = (IPseudoAtom)atom;
                     if (!rGroup.getLabel().equals("R") && // just "R" is not a proper query atom
                         rGroup.getLabel().startsWith("R") &&
-                        (rgroupNumber == null || new Integer(rGroup.getLabel().substring(1)).equals(rgroupNumber)))
+                        (rgroupNumber == null || Integer.valueOf(rGroup.getLabel().substring(1)).equals(rgroupNumber)))
                         rGroupQueryAtoms.add(atom);
                 }
             }
@@ -147,7 +147,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     public static boolean isValidRgroupQueryLabel(String Rxx) {
         Matcher matcher = validLabelPattern.matcher(Rxx);
         if (matcher.find()) {
-            int groupNumber = new Integer(Rxx.substring(1));
+            int groupNumber = Integer.valueOf(Rxx.substring(1));
             if (groupNumber >= 1 && groupNumber <= 32) {
                 return true;
             }
@@ -162,7 +162,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 
         for (IAtom rgp : allRgroupAtoms) {
             if (RGroupQuery.isValidRgroupQueryLabel(((IPseudoAtom)rgp).getLabel())) {
-                int groupNum = new Integer(((IPseudoAtom)rgp).getLabel().substring(1));
+                int groupNum = Integer.valueOf(((IPseudoAtom)rgp).getLabel().substring(1));
                 if (rGroupDefinitions == null || rGroupDefinitions.get(groupNum) == null ||
                     rGroupDefinitions.get(groupNum).getRGroups() == null ||
                     rGroupDefinitions.get(groupNum).getRGroups().size() == 0) {
@@ -181,7 +181,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 				if (rootAtom instanceof IPseudoAtom && rootAtom.getSymbol().startsWith("R")) {
 	    			IPseudoAtom pseudo = (IPseudoAtom) rootAtom; 
 	    			if(pseudo.getLabel().length()>1) {
-	    				int rootAtomRgrpNumber = new Integer(pseudo.getLabel().substring(1));
+	    				int rootAtomRgrpNumber = Integer.valueOf(pseudo.getLabel().substring(1));
 	    				if (rootAtomRgrpNumber==rgpNum) {
 	    					represented=true;
 	    					break rootLoop;

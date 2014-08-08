@@ -427,7 +427,7 @@ public class TemplateExtractor {
 				if (timings.containsKey(bin)) {
 					timings.put(bin, (timings.get(bin)) + 1);
 				} else {
-					timings.put(bin, new Integer(1));
+					timings.put(bin, Integer.valueOf(1));
 				}
 			}catch(Exception exc1){
 				System.out.println("QueryFingerprintError: from molecule:"

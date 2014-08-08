@@ -1739,8 +1739,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 st.nextToken();
                 //Process the R group numbers as defined in RGP line.
                 while (st.hasMoreTokens()) {
-                    Integer position = new Integer(st.nextToken());
-                    int rNumber = new Integer(st.nextToken());
+                    Integer position = Integer.valueOf(st.nextToken());
+                    int rNumber = Integer.valueOf(st.nextToken());
                     // the container may have already had atoms before the new atoms were read
                     int index   = container.getAtomCount() - nAtoms + position - 1;
                     IPseudoAtom pseudoAtom = (IPseudoAtom) container.getAtom(index);
@@ -1750,7 +1750,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 }
             }
             if (line.startsWith("V  ")) {
-                Integer atomNumber = new Integer(line.substring(3, 6).trim());
+                Integer atomNumber = Integer.valueOf(line.substring(3, 6).trim());
                 IAtom atomWithComment = container.getAtom(atomNumber - 1);
                 atomWithComment.setProperty(CDKConstants.COMMENT, line.substring(7));
             }

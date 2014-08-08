@@ -200,21 +200,21 @@ public class RGroupList {
             do {                                  
                 //Number: "n"
                 if (match("^\\d+$", cond)) {       
-                    if (new Integer(cond)<0) // not allowed  
+                    if (Integer.valueOf(cond)<0) // not allowed  
                         return false;
                     break;
                 }
                 //Range: "n-m" 
                 if (match("^\\d+-\\d+$", cond)) {   
-                    int from = new Integer(cond.substring(0,cond.indexOf("-")));
-                    int to = new Integer(cond.substring(cond.indexOf("-")+1,cond.length()));
+                    int from = Integer.valueOf(cond.substring(0,cond.indexOf("-")));
+                    int to = Integer.valueOf(cond.substring(cond.indexOf("-")+1,cond.length()));
                     if (from<0 || to <0 || to<from) // not allowed
                         return false;
                     break;
                 }
                 //Smaller than: "<n"
                 if (match("^<\\d+$", cond)){      
-                    int n = new Integer(cond.substring(cond.indexOf("<")+1,cond.length()));
+                    int n = Integer.valueOf(cond.substring(cond.indexOf("<")+1,cond.length()));
                     if(n==0) // not allowed
                         return false;
                     break;
@@ -274,20 +274,20 @@ public class RGroupList {
                         addVal=true;
                 }
                 if (match("^\\d+-\\d+$", cond)) { // n-m
-                    int from = new Integer(cond.substring(0,cond.indexOf("-")));
-                    int to = new Integer(cond.substring(cond.indexOf("-")+1,cond.length()));
+                    int from = Integer.valueOf(cond.substring(0,cond.indexOf("-")));
+                    int to = Integer.valueOf(cond.substring(cond.indexOf("-")+1,cond.length()));
                     if ( val>=from && val <=to)  {
                         addVal=true;
                     }
                 }
                 if (match("^>\\d+$", cond)) { // <n
-                    int n = new Integer(cond.substring(cond.indexOf(">")+1,cond.length()));
+                    int n = Integer.valueOf(cond.substring(cond.indexOf(">")+1,cond.length()));
                     if(val>n){
                         addVal=true;
                     }
                 } 
                 if (match("^<\\d+$", cond)) { // >n
-                    int n = new Integer(cond.substring(cond.indexOf("<")+1,cond.length()));
+                    int n = Integer.valueOf(cond.substring(cond.indexOf("<")+1,cond.length()));
                     if(val<n){
                         addVal=true;
                     }
