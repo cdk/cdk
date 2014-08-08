@@ -257,7 +257,7 @@ public class TemplateExtractor {
 						counterUniqueRings = counterUniqueRings + 1;
 						// Vector rings2=new Vector();
 						// rings2.add((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet));
-						hashRingSystems.put(key, new String("1"));
+						hashRingSystems.put(key, "1");
 						try {
 							// mdlw.write(new Molecule
 							// ((AtomContainer)RingSetManipulator.getAllInOneContainer(ringSet)));

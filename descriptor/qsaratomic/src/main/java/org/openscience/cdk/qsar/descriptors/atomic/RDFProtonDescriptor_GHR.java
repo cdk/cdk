@@ -386,9 +386,6 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         IAtom atom2;
 
 ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:		
-        String s=new String();
-	
-
 		if(atoms.size() > 0) {
 			int counter = 0;
 			for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {

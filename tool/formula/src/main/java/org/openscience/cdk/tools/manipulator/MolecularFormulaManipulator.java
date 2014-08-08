@@ -514,8 +514,8 @@ public class MolecularFormulaManipulator {
 		/*
 		 *  Buffer for
 		 */
-		String RecentElementSymbol = new String();
-		String RecentElementCountString = new String("0");
+		String RecentElementSymbol = "";
+		String RecentElementCountString = "0";
 		/*
 		 *  String to be converted to an integer
 		 */
@@ -1088,8 +1088,8 @@ public class MolecularFormulaManipulator {
 		if (newFormula.contains("("))
 			newFormula = breakExtractor(newFormula);
 
-		String recentElementSymbol = new String();
-		String recentElementCountString = new String("0");
+		String recentElementSymbol = "";
+		String recentElementCountString = "0";
 
 		List<String> eleSymb = new ArrayList<String>();
 		List<Integer> eleCount = new ArrayList<Integer>();
@@ -1130,7 +1130,7 @@ public class MolecularFormulaManipulator {
 				}
 			}
 		}
-		String newF = new String();
+		String newF = "";
 		for (int i = 0 ; i < eleCount.size(); i++) {
 			String element = eleSymb.get(i);
 			int num = eleCount.get(i);
@@ -1152,8 +1152,8 @@ public class MolecularFormulaManipulator {
 	 */
 	private static String breakExtractor(String formula) {
 		boolean finalBreak = false;
-		String recentformula = new String();
-		String multiple = new String("0");
+		String recentformula = "";
+		String multiple = "0";
 		for (int f = 0; f < formula.length(); f++) {
 			char thisChar = formula.charAt(f);
 			if (thisChar == '(') {
@@ -1180,8 +1180,8 @@ public class MolecularFormulaManipulator {
 	 * @return        Formula with the correction
 	 */
 	private static String multipleExtractor(String formula) {
-		String recentCompoundCount = new String("0");
-		String recentCompound = new String();
+		String recentCompoundCount = "0";
+		String recentCompound = "";
 
 		boolean found = false;
 		for (int f = 0; f < formula.length(); f++) {
@@ -1208,9 +1208,9 @@ public class MolecularFormulaManipulator {
 	 * @return        Formula with the correction
 	 */
 	private static String muliplier(String formula, int factor) {
-		String finalformula = new String();
-		String recentElementSymbol = new String();
-		String recentElementCountString = new String("0");
+		String finalformula = "";
+		String recentElementSymbol = "";
+		String recentElementCountString = "0";
 		for (int f = 0; f < formula.length(); f++) {
 			char thisChar = formula.charAt(f);
 			if (f < formula.length()) {

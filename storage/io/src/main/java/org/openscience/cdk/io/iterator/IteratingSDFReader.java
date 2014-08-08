@@ -304,7 +304,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         while ((currentLine = input.readLine()) != null
                 && !SDF_RECORD_SEPARATOR.matcher(currentLine).matches()) {
             logger.debug("looking for data header: ", currentLine);
-            String str = new String(currentLine);
+            String str = currentLine;
             if (SDF_FIELD_START.matcher(str).find()) {
                 fieldName = extractFieldName(fieldName, str);
                 str = skipOtherFieldHeaderLines(str);
@@ -336,7 +336,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 			}
             data.append(str);
             currentLine = input.readLine();
-            str = new String(currentLine).trim();
+            str = currentLine.trim();
         }
         return data.toString();
     }
@@ -345,7 +345,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         while (str.startsWith("> ")) {
             logger.debug("data header line: ", currentLine);
             currentLine = input.readLine();
-            str = new String(currentLine);
+            str = currentLine;
         }
         return str;
     }
