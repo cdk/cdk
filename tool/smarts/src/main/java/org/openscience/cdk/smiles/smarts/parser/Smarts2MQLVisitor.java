@@ -17,18 +17,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-/** 
-*
-* @cdk.module smarts 
-*/
-
-/** 
-*
-* @cdk.module smarts 
-*/
-
-import org.openscience.cdk.smiles.smarts.parser.*;
-
 /**
  * An AST tree visitor. It is a prototype that translate Smarts to MQL. 
  * It is far from fully functioning.
