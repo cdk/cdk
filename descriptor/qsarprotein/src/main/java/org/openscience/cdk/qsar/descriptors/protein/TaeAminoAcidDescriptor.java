@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.openscience.cdk.Strand;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -134,7 +133,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
         Set<String> strandKeys = strands.keySet();
         for (Iterator<String> iterator = strandKeys.iterator(); iterator.hasNext();) {
             String key = iterator.next();
-            Strand aStrand = (Strand) strands.get(key);
+            IStrand aStrand = strands.get(key);
             Map<String,IMonomer> tmp = aStrand.getMonomers();
             Set<String> keys = tmp.keySet();
             for (Iterator<String> iterator1 = keys.iterator(); iterator1.hasNext();) {
