@@ -37,7 +37,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.dict.DictRef;
 import org.openscience.cdk.geometry.CrystalGeometryTools;
@@ -1052,7 +1051,7 @@ public class CMLCoreModule implements ICMLModule {
                 if (DICTREF.equals("mdl:stereo")) {
                 	bondStereo.add(cData.trim());
                     stereoGiven=true;
-                }else{
+                } else {
                 	Map<String,String> bp = bondCustomProperty.get(bondid.get(bondid.size()-1));
                 	if (bp == null) {
                 		bp = new Hashtable<String, String>();
@@ -1069,7 +1068,7 @@ public class CMLCoreModule implements ICMLModule {
                     atomAromaticities.add(cData.trim());
                 } else if (DICTREF.equals("cdk:isotopicMass")) {
                     exactMasses.add(cData.trim());
-                }else {
+                } else {
                 	if(atomCustomProperty.get(Integer.valueOf(atomCounter-1))==null)
                 		atomCustomProperty.put(Integer.valueOf(atomCounter-1),new ArrayList<String>());
                 	atomCustomProperty.get(Integer.valueOf(atomCounter-1)).add(elementTitle);
@@ -1081,7 +1080,7 @@ public class CMLCoreModule implements ICMLModule {
                 	currentMolecule.setProperty(new DictRef(DICTREF, cData), cData);
                 } else if (DICTREF.equals("cdk:molecularProperty")) {
                 	currentMolecule.setProperty(elementTitle, cData);
-                }else{
+                } else {
                 	moleculeCustomProperty.add(elementTitle);
                 	moleculeCustomProperty.add(cData.trim());
                 }
@@ -1177,9 +1176,9 @@ public class CMLCoreModule implements ICMLModule {
             		currentMolecule.setProperty(CDKConstants.TITLE, cData);
             	}
             }
-        }else if ("formula".equals(name)) {
+        } else if ("formula".equals(name)) {
         	currentMolecule.setProperty(CDKConstants.FORMULA, cData);
-        }else {
+        } else {
         
             logger.warn("Skipping element: " + name);
         }
@@ -1230,6 +1229,10 @@ public class CMLCoreModule implements ICMLModule {
                 if (explicitHCount != 0) {
                     atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() - explicitHCount);
                 }
+            } else {
+            	if (atom.getAtomicNumber() == 1) {
+            		atom.setImplicitHydrogenCount(0);
+            	}
             }
         }
 	}
@@ -1393,7 +1396,7 @@ public class CMLCoreModule implements ICMLModule {
         for (int i = 0; i < atomCounter; i++) {
             logger.info("Storing atom: ", i);
 //            cdo.startObject("Atom");
-            currentAtom = currentChemFile.getBuilder().newInstance(IAtom.class,"H");
+            currentAtom = currentChemFile.getBuilder().newInstance(IAtom.class, "H");
             logger.debug("Atom # " + atomCounter);
             if (hasID) {
 //                cdo.setObjectProperty("Atom", "id", (String)elid.get(i));
@@ -1434,7 +1437,8 @@ public class CMLCoreModule implements ICMLModule {
                 }
 //                cdo.setObjectProperty("Atom", "type", symbol);
                 if (symbol.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class,currentAtom);
+                    currentAtom = currentChemFile.getBuilder().newInstance(IPseudoAtom.class, currentAtom);
+                    ((IPseudoAtom) currentAtom).setLabel("R");
                     if (hasID)
                     	atomEnumeration.put((String)elid.get(i), currentAtom);
                 }
@@ -1551,7 +1555,7 @@ public class CMLCoreModule implements ICMLModule {
                   currentAtom.setExactMass(Double.parseDouble(exactMasses.get(i)));
               }
 
-            if(atomCustomProperty.get(Integer.valueOf(i))!=null){
+            if (atomCustomProperty.get(Integer.valueOf(i)) != null){
             	Iterator<String> it=atomCustomProperty.get(Integer.valueOf(i)).iterator();
             	while(it.hasNext()){
 	            	currentAtom.setProperty(it.next(),it.next());
@@ -1568,7 +1572,14 @@ public class CMLCoreModule implements ICMLModule {
 	        	try {
 	        		int parity = (int) Math.round(Double.parseDouble(atomParities.get(i)));
 	            	//currentAtom.setStereoParity(parity);
-	            	currentMolecule.addStereoElement(new TetrahedralChirality(currentAtom, new IAtom[]{atomEnumeration.get(parityARef1.get(i)), atomEnumeration.get(parityARef2.get(i)), atomEnumeration.get(parityARef3.get(i)), atomEnumeration.get(parityARef4.get(i))}, (parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE)));
+	        		IAtom ligandAtom1 = atomEnumeration.get(parityARef1.get(i));
+	        		IAtom ligandAtom2 = atomEnumeration.get(parityARef2.get(i));
+	        		IAtom ligandAtom3 = atomEnumeration.get(parityARef3.get(i));
+	        		IAtom ligandAtom4 = atomEnumeration.get(parityARef4.get(i));
+	        		IAtom[] ligandAtoms = new IAtom[]{ligandAtom1, ligandAtom2, ligandAtom3, ligandAtom4};
+	        		Stereo stereo = (parity == 1 ? Stereo.CLOCKWISE : Stereo.ANTI_CLOCKWISE);
+	        		TetrahedralChirality chirality = new TetrahedralChirality(currentMolecule.getAtom(i), ligandAtoms, stereo);
+	            	currentMolecule.addStereoElement(chirality);
 	        	} catch (NumberFormatException e) {
 	        		 if (!e.getMessage().equals("empty String")) {
 	                 	logger.warn("Cannot interpret stereo information: " + atomParities.get(i));
