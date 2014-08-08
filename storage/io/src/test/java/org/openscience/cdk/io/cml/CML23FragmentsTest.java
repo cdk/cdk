@@ -34,11 +34,14 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
+import org.openscience.cdk.interfaces.IStereoElement;
+import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 import org.openscience.cdk.io.CMLReader;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
 import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.stereo.TetrahedralChirality;
 
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
@@ -121,6 +124,29 @@ public class CML23FragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
         Assert.assertEquals(12.0, atom.getExactMass().doubleValue(), 0.01);
+    }
+    
+    @Test public void testAtomParity() throws Exception {
+        String cmlString = "<molecule><atomArray><atom id='a1' elementType='C'><atomParity atomRefs4='a2 a3 a5 a4'>1</atomParity></atom>" +
+            "<atom id='a2' elementType='Br'/><atom id='a3' elementType='Cl'/><atom id='a4' elementType='F'/><atom id='a5' elementType='I'/></atomArray>" +
+            "<bondArray><bond atomRefs2='a1 a2' order='1'/><bond atomRefs2='a1 a3' order='1'/><bond atomRefs2='a1 a4' order='1'/><bond atomRefs2='a1 a5' order='1'/></bondArray></molecule>";
+        
+        IChemFile chemFile = parseCMLString(cmlString);
+        IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
+        
+        Assert.assertEquals(5, mol.getAtomCount());
+        IAtom atom = mol.getAtom(0);
+        Assert.assertEquals("C", atom.getSymbol());
+        IStereoElement stereo = mol.stereoElements().iterator().next(); 
+        Assert.assertTrue(stereo instanceof TetrahedralChirality);
+        Assert.assertEquals(((TetrahedralChirality) stereo).getChiralAtom().getID(), "a1");
+        IAtom[] ligandAtoms = ((TetrahedralChirality) stereo).getLigands();
+        Assert.assertEquals(4, ligandAtoms.length);
+        Assert.assertEquals(ligandAtoms[0].getID(), "a2");
+        Assert.assertEquals(ligandAtoms[1].getID(), "a3");
+        Assert.assertEquals(ligandAtoms[2].getID(), "a5");
+        Assert.assertEquals(ligandAtoms[3].getID(), "a4");
+        Assert.assertEquals(((TetrahedralChirality) stereo).getStereo(), Stereo.CLOCKWISE);
     }
 
     @Test public void testBond() throws Exception {
