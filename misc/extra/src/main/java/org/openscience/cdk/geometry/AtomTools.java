@@ -27,11 +27,10 @@ import java.util.List;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.Bond;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 
 /**
  * A set of static utility classes for geometric calculations on Atoms.
@@ -58,11 +57,11 @@ public class AtomTools {
      * @cdk.keyword coordinate calculation
      * @cdk.keyword 3D model
      */
-    public static void add3DCoordinates1(AtomContainer atomContainer) {
+    public static void add3DCoordinates1(IAtomContainer atomContainer) {
             // atoms without coordinates
-        AtomContainer noCoords = new AtomContainer();
+        IAtomContainer noCoords = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         // get vector of possible referenceAtoms?
-        AtomContainer refAtoms = new AtomContainer();
+        IAtomContainer refAtoms = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < atomContainer.getAtomCount(); i++) {
         	IAtom atom = atomContainer.getAtom(i);
             // is this atom without 3D coords, and has only one ligand?
@@ -77,7 +76,11 @@ public class AtomTools {
                         noCoords.addAtom(atom);
                         noCoords.addAtom(refAtom);
                         // bond is required to extract ligands
-                        noCoords.addBond(new Bond(atom, refAtom, CDKConstants.BONDORDER_SINGLE));
+                        noCoords.addBond(
+                            atomContainer.getBuilder().newInstance(
+                                IBond.class, atom, refAtom, CDKConstants.BONDORDER_SINGLE
+                            )
+                        );
                     }
                 }
             }
@@ -181,7 +184,7 @@ public class AtomTools {
      * @cdk.keyword coordinate generation
      */
     public static Point3d[] calculate3DCoordinatesForLigands(
-        AtomContainer atomContainer, IAtom refAtom, int nwanted, 
+        IAtomContainer atomContainer, IAtom refAtom, int nwanted, 
         double length, double angle) {
         Point3d newPoints[] = new Point3d[0];
         Point3d aPoint = refAtom.getPoint3d();
@@ -191,9 +194,9 @@ public class AtomTools {
             return newPoints;
         }
         int nligands = connectedAtoms.size();
-        AtomContainer ligandsWithCoords    = new AtomContainer();
+        IAtomContainer ligandsWithCoords    = atomContainer.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < nligands; i++) {
-            Atom ligand = (Atom) connectedAtoms.get(i);
+            IAtom ligand = connectedAtoms.get(i);
             if (ligand.getPoint3d() != null) {
                 ligandsWithCoords.addAtom(ligand);
             }
@@ -210,9 +213,9 @@ public class AtomTools {
         	IAtom bAtom = ligandsWithCoords.getAtom(0);
             connectedAtoms = ligandsWithCoords.getConnectedAtomsList(bAtom);
 // does B have a ligand (other than A)            
-            Atom jAtom = null;
+            IAtom jAtom = null;
             for (int i = 0; i < connectedAtoms.size(); i++) {
-                Atom connectedAtom = (Atom) connectedAtoms.get(i);
+                IAtom connectedAtom = connectedAtoms.get(i);
                 if (!connectedAtom.equals(refAtom)) {
                     jAtom = connectedAtom;
                     break;
