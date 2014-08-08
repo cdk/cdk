@@ -25,6 +25,7 @@ package org.openscience.cdk.iupac.parser;
 
 import java.io.StringReader;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.exception.*;
 import java.util.*;
 
@@ -72,7 +73,7 @@ public class NomParser {
      * @throws ParseException Any error which occur in the parsing get wrapped
      * up in a ParseException and thrown.
      */
-    public static IAtomContainer generate (String stringToParse) throws ParseException, CDKException
+    public static IAtomContainer generate (String stringToParse, IChemObjectBuilder builder) throws ParseException, CDKException
     {
         isMainCyclic = false;
         tempLocation = new ArrayList<Token>();
@@ -90,7 +91,7 @@ public class NomParser {
         //Scan functional groups for a too high connection point
         checkConnections (attachedGroups.iterator());
 
-        MoleculeBuilder moleculeBuilder = new MoleculeBuilder();
+        MoleculeBuilder moleculeBuilder = new MoleculeBuilder(builder);
         IAtomContainer returnedMolecule = moleculeBuilder.buildMolecule(mainChainPrefix, attachedSubstituents, attachedGroups, isMainCyclic, stringToParse);
         
         return returnedMolecule;
