@@ -24,6 +24,7 @@ PARSER_BEGIN(NomParser)
 package org.openscience.cdk.iupac.parser;
 
 import java.io.StringReader;
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.exception.*;
@@ -66,10 +67,24 @@ public class NomParser {
     private static int currentNumber;
 
     /**
-     * Parses the chemical name and returns the built molecule.
+     * Parses the chemical name and returns the built molecule. It uses
+     * the {@link DefaultChemObjectBuilder} to create a data model.
      *
      * @param stringToParse A case-insensitive name of the chemical to build.
-     * @return A molecule which represents the interpretatation of the name.
+     * @return A molecule which represents the interpretation of the name.
+     * @throws ParseException Any error which occur in the parsing get wrapped
+     * up in a ParseException and thrown.
+     */
+    public static IAtomContainer generate (String stringToParse) throws ParseException, CDKException {
+        return generate(stringToParse, DefaultChemObjectBuilder.getInstance());
+    }
+
+    /**
+     * Parses the chemical name and returns the built molecule. It uses the
+     * given {@link IChemObjectBuilder} to create a data model.
+     *
+     * @param stringToParse A case-insensitive name of the chemical to build.
+     * @return A molecule which represents the interpretation of the name.
      * @throws ParseException Any error which occur in the parsing get wrapped
      * up in a ParseException and thrown.
      */

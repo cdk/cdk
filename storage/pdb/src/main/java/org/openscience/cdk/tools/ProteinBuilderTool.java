@@ -24,6 +24,7 @@
  */
 package org.openscience.cdk.tools;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
@@ -102,15 +103,36 @@ public class ProteinBuilderTool {
         } // else : no current C-terminus, so nothing special to do
         return protein;
     }
-
+    
     /**
      * Creates a BioPolymer from a sequence of amino acid as identified by a
-     * the sequence of their one letter codes.
+     * the sequence of their one letter codes. It uses the {@link DefaultChemObjectBuilder}
+     * to create a data model.
      *
      * <p>For example:
      * <pre>
      * BioPolymer protein = ProteinBuilderTool.createProtein("GAGA");
      * </pre>
+     *
+     * @see #createProtein(String)
+     */
+    public static IBioPolymer createProtein(String sequence) throws CDKException {
+        return createProtein(sequence, DefaultChemObjectBuilder.getInstance());
+    }
+
+    /**
+     * Creates a BioPolymer from a sequence of amino acid as identified by a
+     * the sequence of their one letter codes. It uses the given {@link IChemObjectBuilder}
+     * to create a data model.
+     *
+     * <p>For example:
+     * <pre>
+     * BioPolymer protein = ProteinBuilderTool.createProtein(
+     *     "GAGA", SilentChemObjectBuilder.getInstance()
+     * );
+     * </pre>
+     *
+     * @see #createProtein(String)
      */
     public static IBioPolymer createProtein(String sequence, IChemObjectBuilder builder) throws CDKException {
         Map<String,IAminoAcid> templates = AminoAcids.getHashMapBySingleCharCode();

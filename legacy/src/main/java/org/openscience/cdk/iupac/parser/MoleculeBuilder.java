@@ -22,6 +22,7 @@ package org.openscience.cdk.iupac.parser;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.exception.CDKException;
@@ -57,6 +58,13 @@ public class MoleculeBuilder
 
     public MoleculeBuilder(IChemObjectBuilder builder) {
         currentMolecule = builder.newInstance(IAtomContainer.class);
+    }
+
+    /**
+     * Instantiates a builder using the {@link DefaultChemObjectBuilder}.
+     */
+    public MoleculeBuilder() {
+        this(DefaultChemObjectBuilder.getInstance());
     }
 
     /**
