@@ -171,8 +171,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             // center and scale the symbol, y-axis scale is inverted because CDK y-axis
             // is inverse of Java 2D
-            symbols[i] = symbols[i].center(p.x, p.y)
-                                   .resize(1 / scale, 1 / -scale);
+            symbols[i] = symbols[i].resize(1 / scale, 1 / -scale)
+                                   .center(p.x, p.y);
         }
 
         return symbols;
