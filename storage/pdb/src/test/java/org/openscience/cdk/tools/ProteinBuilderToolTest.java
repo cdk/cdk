@@ -22,6 +22,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IBioPolymer;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.tools.ProteinBuilderTool;
 
 /**
@@ -31,7 +32,7 @@ public class ProteinBuilderToolTest extends CDKTestCase {
 
     @Test
     public void testCreateProtein() throws Exception {
-        IBioPolymer protein = ProteinBuilderTool.createProtein("GAGA");
+        IBioPolymer protein = ProteinBuilderTool.createProtein("GAGA", SilentChemObjectBuilder.getInstance());
         Assert.assertNotNull(protein);
         Assert.assertEquals(4, protein.getMonomerCount());
         Assert.assertEquals(1, protein.getStrandCount());
