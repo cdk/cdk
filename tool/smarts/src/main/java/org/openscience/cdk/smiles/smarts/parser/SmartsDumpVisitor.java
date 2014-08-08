@@ -17,15 +17,6 @@
  */
 package org.openscience.cdk.smiles.smarts.parser;
 
-/** 
-*
-* @cdk.module smarts 
-*/
-
-/** 
-*
-* @cdk.module smarts 
-*/
 /**
  * An AST Tree visitor. It dumps the whole AST tree into console
  *
