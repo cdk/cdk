@@ -88,7 +88,7 @@ public class DebugMolecularFormula extends MolecularFormula implements IMolecula
     }
 
     /** {@inheritDoc} */ @Override
-    public Object getProperty(Object description) {
+    public <T> T getProperty(Object description) {
 	    logger.debug("Getting property: " + description);
 	    return super.getProperty(description);
     }

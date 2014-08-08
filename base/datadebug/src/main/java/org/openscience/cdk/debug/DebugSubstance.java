@@ -89,7 +89,7 @@ public class DebugSubstance extends AtomContainerSet
 	}
 
     /** {@inheritDoc} */ @Override
-    public Object getProperty(Object description) {
+    public <T> T getProperty(Object description) {
 		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
 		return super.getProperty(description);
 	}

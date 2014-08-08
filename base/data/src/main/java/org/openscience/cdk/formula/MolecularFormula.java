@@ -316,26 +316,42 @@ public class MolecularFormula implements IMolecularFormula {
         lazyProperties().remove(description);
 	}
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public <T> T getProperty(Object description)
+    {
+        if (properties == null)
+            return null;
+        // can't check the type
+        @SuppressWarnings("unchecked")
+        T value = (T) lazyProperties().get(description);
+        return value;
+    }
 
-	/**
-	 *  Returns a property for the IChemObject. I should
-	 * integrate into ChemObject.
-	 *
-	 *@param  description  An object description of the property (most likely a
-	 *      unique string)
-	 *@return              The object containing the property. Returns null if
-	 *      propert is not set.
-	 *@see                 #setProperty
-	 *@see                 #removeProperty
-	 */
-    @TestMethod("testGetProperty_Object")
-	public Object getProperty(Object description){
-        if (properties != null) {
-            return lazyProperties().get(description);
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public <T> T getProperty(Object description, Class<T> c)
+    {
+        Object value = lazyProperties().get(description);
+
+        if(c.isInstance(value)) {
+
+            @SuppressWarnings("unchecked")
+            T typed = (T) value;
+            return typed;
+
+        } else if(value != null){
+            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected " + c
+                    .getSimpleName() + " got " + value.getClass().getSimpleName());
         }
-        return null;
-	}
 
+        return null;
+
+    }
 
 	/**
 	 *  Returns a Map with the IChemObject's properties.I should
