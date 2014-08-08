@@ -25,9 +25,7 @@
 package org.openscience.cdk.smiles;
 
 import com.google.common.collect.FluentIterable;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -37,7 +35,6 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
-import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import uk.ac.ebi.beam.AtomBuilder;
@@ -47,7 +44,6 @@ import uk.ac.ebi.beam.Element;
 import uk.ac.ebi.beam.Functions;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

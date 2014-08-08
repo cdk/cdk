@@ -26,11 +26,9 @@ package org.openscience.cdk.smiles;
 
 import com.google.common.base.Joiner;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.smiles;
 
-import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
@@ -34,7 +33,6 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.stereo.DoubleBondStereochemistry;
-import org.openscience.cdk.stereo.ExtendedTetrahedral;
 import org.openscience.cdk.stereo.TetrahedralChirality;
 import uk.ac.ebi.beam.Graph;
 import uk.ac.ebi.beam.Atom;
@@ -44,7 +42,6 @@ import uk.ac.ebi.beam.Edge;
 import uk.ac.ebi.beam.Element;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.openscience.cdk.CDKConstants.ATOM_ATOM_MAPPING;
 import static org.openscience.cdk.CDKConstants.ISAROMATIC;

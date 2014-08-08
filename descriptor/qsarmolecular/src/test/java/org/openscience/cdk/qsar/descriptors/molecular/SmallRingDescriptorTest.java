@@ -1,4 +1,3 @@
-
 /* Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
  *
  * Implemented by Alex M. Clark, produced by Collaborative Drug Discovery, Inc.
@@ -34,11 +33,9 @@ import org.junit.Test;
 import org.openscience.cdk.*;
 import org.openscience.cdk.qsar.*;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
 import org.openscience.cdk.io.*;
 import org.openscience.cdk.qsar.result.*;
 import org.openscience.cdk.tools.*;
-import org.openscience.cdk.annotations.*;
 
 import java.util.*;
 import java.util.zip.*;

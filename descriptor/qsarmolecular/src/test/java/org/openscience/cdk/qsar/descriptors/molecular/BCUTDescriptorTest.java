@@ -27,7 +27,6 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
@@ -39,8 +38,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 import java.io.InputStream;
 import java.util.List;
-import java.util.Locale;
-
 
 /**
  * TestSuite that runs all QSAR tests.

@@ -24,12 +24,8 @@
  */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;

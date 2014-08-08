@@ -32,8 +32,6 @@ import org.openscience.cdk.silent.ChemModel;
 import org.openscience.cdk.silent.Reaction;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 /**

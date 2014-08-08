@@ -19,17 +19,12 @@
  */
 package org.openscience.cdk.io.iterator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.io.ChemObjectIO;
 import org.openscience.cdk.io.IChemObjectReader;
 import org.openscience.cdk.io.IChemObjectReaderErrorHandler;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
-import org.openscience.cdk.io.listener.IChemObjectIOListener;
-import org.openscience.cdk.io.setting.IOSetting;
 
 /**
  * Abstract class that IteratingChemObjectReader's can implement to have it

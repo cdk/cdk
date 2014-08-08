@@ -25,7 +25,6 @@
 package org.openscience.cdk.stereo;
 
 import com.google.common.collect.Iterables;
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -35,15 +34,12 @@ import org.openscience.cdk.interfaces.IDoubleBondStereochemistry;
 import org.openscience.cdk.interfaces.IStereoElement;
 import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import org.openscience.cdk.io.MDLV2000Reader;
-import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.silent.Atom;
 import org.openscience.cdk.silent.AtomContainer;
-import org.openscience.cdk.templates.TestMoleculeFactory;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.instanceOf;

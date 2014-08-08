@@ -24,7 +24,6 @@ package org.openscience.cdk.ringsearch;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.BitSet;
 
 import static org.hamcrest.CoreMatchers.is;

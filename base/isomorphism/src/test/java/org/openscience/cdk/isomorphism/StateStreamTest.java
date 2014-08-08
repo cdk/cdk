@@ -29,7 +29,6 @@ import org.openscience.cdk.graph.GraphUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.templates.TestMoleculeFactory;
 
-import java.util.Arrays;
 import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.is;

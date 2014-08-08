@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.fragment;
 
-import com.google.common.base.Joiner;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;

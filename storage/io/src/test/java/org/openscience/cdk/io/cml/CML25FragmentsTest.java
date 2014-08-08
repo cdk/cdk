@@ -26,7 +26,6 @@ import java.io.ByteArrayInputStream;
 
 import org.junit.Assert;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;

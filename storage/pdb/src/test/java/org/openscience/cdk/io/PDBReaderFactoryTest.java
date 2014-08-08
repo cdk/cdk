@@ -22,37 +22,8 @@
  *  */
 package org.openscience.cdk.io;
 
-import org.junit.Assert;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.ChemFile;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.io.formats.CMLFormat;
-import org.openscience.cdk.io.formats.CTXFormat;
-import org.openscience.cdk.io.formats.GamessFormat;
-import org.openscience.cdk.io.formats.Gaussian98Format;
-import org.openscience.cdk.io.formats.GhemicalSPMFormat;
-import org.openscience.cdk.io.formats.IChemFormat;
-import org.openscience.cdk.io.formats.IChemFormatMatcher;
-import org.openscience.cdk.io.formats.INChIFormat;
-import org.openscience.cdk.io.formats.INChIPlainTextFormat;
-import org.openscience.cdk.io.formats.MDLFormat;
-import org.openscience.cdk.io.formats.MDLV2000Format;
-import org.openscience.cdk.io.formats.MDLV3000Format;
-import org.openscience.cdk.io.formats.Mol2Format;
 import org.openscience.cdk.io.formats.PDBFormat;
-import org.openscience.cdk.io.formats.PubChemASNFormat;
-import org.openscience.cdk.io.formats.PubChemCompoundXMLFormat;
-import org.openscience.cdk.io.formats.PubChemSubstanceXMLFormat;
-import org.openscience.cdk.io.formats.ShelXFormat;
-import org.openscience.cdk.io.formats.VASPFormat;
-import org.openscience.cdk.io.formats.XYZFormat;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.util.zip.GZIPInputStream;
 
 /**
  * TestCase for the instantiation and functionality of the {@link org.openscience.cdk.io.ReaderFactory}.

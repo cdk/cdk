@@ -30,8 +30,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.ringsearch.RingSearch;
 
-import java.util.Arrays;
-
 import static org.openscience.cdk.interfaces.IBond.Order.DOUBLE;
 
 /**

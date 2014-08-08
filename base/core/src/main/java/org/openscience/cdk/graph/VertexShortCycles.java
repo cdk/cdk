@@ -27,7 +27,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

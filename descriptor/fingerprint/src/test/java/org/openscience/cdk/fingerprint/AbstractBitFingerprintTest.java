@@ -22,10 +22,7 @@
 */
 package org.openscience.cdk.fingerprint;
 
-import java.util.BitSet;
-
-import org.
-junit.Test;
+import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 
 import static org.junit.Assert.*;

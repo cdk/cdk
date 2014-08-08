@@ -19,13 +19,9 @@
  */
 package org.openscience.cdk.io;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.io.listener.IChemObjectIOListener;
 import org.openscience.cdk.io.listener.IReaderListener;
-import org.openscience.cdk.io.setting.IOSetting;
 
 /**
  * Abstract class that ChemObjectReader's can implement to have it

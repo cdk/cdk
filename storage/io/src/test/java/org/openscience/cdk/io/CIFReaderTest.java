@@ -26,16 +26,9 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemFile;
-import org.openscience.cdk.interfaces.IChemModel;
-import org.openscience.cdk.interfaces.IChemSequence;
-import org.openscience.cdk.interfaces.ICrystal;
 import org.openscience.cdk.silent.ChemFile;
-import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 

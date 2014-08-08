@@ -30,8 +30,6 @@ import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
-import java.util.BitSet;
-
 /**
  * A generator for basic atom hash codes. This implementation is based on the
  * description by {@cdk.cite Ihlenfeldt93}. The hash codes use an initial

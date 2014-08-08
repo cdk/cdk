@@ -35,9 +35,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality;
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;

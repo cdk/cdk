@@ -22,7 +22,6 @@ package org.openscience.cdk.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 

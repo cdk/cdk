@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Iterables;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openscience.cdk.SlowTest;

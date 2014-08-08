@@ -22,10 +22,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
-import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.modeling.builder3d.ModelBuilder3D;
-import org.openscience.cdk.modeling.builder3d.TemplateHandler3D;
-import org.openscience.cdk.smiles.SmilesParser;
 
 /**
  * TestSuite that runs all tests for the DescriptorEngine.

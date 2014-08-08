@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 import java.util.BitSet;
-import java.util.Map;
 import java.util.Random;
 
 /**

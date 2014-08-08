@@ -22,9 +22,6 @@
  */
 package org.openscience.cdk.io.formats;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -21,7 +21,6 @@ package org.openscience.cdk.silent;
 import java.io.Serializable;
 import java.util.Iterator;
 
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;

@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Iterables;
 import com.google.common.primitives.Ints;
 import org.junit.Assert;
 import org.junit.Assume;

@@ -27,7 +27,6 @@ import java.util.List;
 import org.junit.Assert;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.elements.IRenderingElement;

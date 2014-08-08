@@ -26,7 +26,6 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import com.google.common.base.Preconditions;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
-import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
  * This matches an atom using the atomic number.

@@ -21,8 +21,6 @@ package org.openscience.cdk.isomorphism.matchers.smarts;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
-import java.util.EnumSet;
-
 /**
  * This matches an atom with chirality property. It is not implemented yet. 
  * It'll match any atom right now.  

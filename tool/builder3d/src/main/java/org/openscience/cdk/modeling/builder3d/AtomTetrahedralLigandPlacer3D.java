@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.modeling.builder3d;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 

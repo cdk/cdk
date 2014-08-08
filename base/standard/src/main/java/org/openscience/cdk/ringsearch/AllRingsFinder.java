@@ -25,7 +25,6 @@
  */
 package org.openscience.cdk.ringsearch;
 
-import com.google.common.collect.Maps;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -37,9 +36,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
-
-import java.util.Arrays;
-import java.util.Map;
 
 import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 

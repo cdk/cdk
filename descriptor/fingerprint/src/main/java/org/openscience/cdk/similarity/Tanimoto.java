@@ -30,7 +30,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.fingerprint.BitSetFingerprint;
 import org.openscience.cdk.fingerprint.IBitFingerprint;
 import org.openscience.cdk.fingerprint.ICountFingerprint;
-import org.openscience.cdk.fingerprint.IntArrayCountFingerprint;
 import org.openscience.cdk.fingerprint.IntArrayFingerprint;
 
 import java.util.BitSet;

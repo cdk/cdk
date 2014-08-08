@@ -28,11 +28,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.hash.stereo.StereoEncoder;
 import org.openscience.cdk.hash.stereo.StereoEncoderFactory;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-
-import java.util.Arrays;
-import java.util.BitSet;
 
 /**
  * A generator for atom hash codes where atoms maybe be <i>suppressed</i>. A

@@ -21,8 +21,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 
-import java.util.EnumSet;
-
 /**
  * This class matches a logical operator that connects two query atoms. Logical
  * matchers are created with, {@link #and}, {@link #not} and {@link #or}.

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-import com.google.common.collect.Iterables;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.GraphUtil;

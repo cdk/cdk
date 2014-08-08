@@ -25,7 +25,6 @@
 package org.openscience.cdk.isomorphism;
 
 import org.junit.Test;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 import org.openscience.cdk.isomorphism.matchers.IQueryAtom;

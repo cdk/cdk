@@ -39,7 +39,6 @@ import org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom;
 import org.openscience.cdk.isomorphism.matchers.smarts.StereoBond;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation;

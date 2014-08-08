@@ -24,7 +24,6 @@ package org.openscience.cdk.fingerprint;
 
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 import static org.mockito.Mockito.mock;

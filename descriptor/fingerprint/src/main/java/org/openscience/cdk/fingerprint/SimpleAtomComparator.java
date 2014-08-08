@@ -26,7 +26,6 @@ package org.openscience.cdk.fingerprint;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IChemObject;
 
 import java.io.Serializable;
 import java.util.Comparator;

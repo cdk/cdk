@@ -23,8 +23,6 @@
 package org.openscience.cdk.fingerprint;
 
 import java.util.BitSet;
-import java.util.List;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
