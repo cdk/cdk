@@ -139,11 +139,11 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     		bondOrderSum = 0.0;
     	} else if ("hasElement".equals(local)) {
     		String attrValue = atts.getValue("rdf:resource");
-    		currentAtomType.setSymbol(attrValue.substring(attrValue.indexOf("#")+1));
+    		currentAtomType.setSymbol(attrValue.substring(attrValue.indexOf('#')+1));
     	} else if ("formalBondType".equals(local)) {
     		neighborCount++;
     		String attrValue = atts.getValue("rdf:resource");
-    		String bondType = attrValue.substring(attrValue.indexOf("#")+1);
+    		String bondType = attrValue.substring(attrValue.indexOf('#')+1);
     		if ("single".equals(bondType)) {
     			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.SINGLE);
     			bondOrderSum += 1.0;
@@ -162,7 +162,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     		} // else: should throw an exception 
     	} else if ("hybridization".equals(local)) {
     		String attrValue = atts.getValue("rdf:resource");
-    		String hybridization = attrValue.substring(attrValue.indexOf("#")+1);
+    		String hybridization = attrValue.substring(attrValue.indexOf('#')+1);
     		if ("sp3".equals(hybridization)) {
     			currentAtomType.setHybridization(IAtomType.Hybridization.SP3);
     		} else if ("sp2".equals(hybridization)) {

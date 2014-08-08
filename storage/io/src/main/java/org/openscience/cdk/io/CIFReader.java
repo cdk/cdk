@@ -176,7 +176,7 @@ public class CIFReader extends DefaultChemObjectReader {
                 
                 /* determine CIF command */
                 String command = "";
-                int spaceIndex = line.indexOf(" ");
+                int spaceIndex = line.indexOf(' ');
                 if (spaceIndex != -1) {
                     // everything upto space is command
                     try {
@@ -418,7 +418,7 @@ public class CIFReader extends DefaultChemObjectReader {
     private double parseIntoDouble(String value) {
         double returnVal = 0.0;
         if (value.charAt(0) == '.') value = "0" + value;
-        int bracketIndex = value.indexOf("(");
+        int bracketIndex = value.indexOf('(');
         if (bracketIndex != -1) {
             value = value.substring(0, bracketIndex);
         }

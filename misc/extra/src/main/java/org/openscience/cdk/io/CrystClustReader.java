@@ -195,8 +195,8 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         cart = new Point3d();
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
-                        symbol = line.substring(0, line.indexOf(":"));
-                        charge = Double.parseDouble(line.substring(line.indexOf(":")+1));
+                        symbol = line.substring(0, line.indexOf(':'));
+                        charge = Double.parseDouble(line.substring(line.indexOf(':')+1));
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.x = Double.parseDouble(line); // x

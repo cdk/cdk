@@ -209,7 +209,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             // Read all other data
             line = input.readLine().trim();
             while (input.ready() && (line != null)) {
-                if (line.indexOf("#") == 0) {
+                if (line.indexOf('#') == 0) {
                     // Found the route section
                     // Memorizing this for the description of the chemmodel
                     lastRoute = line;
@@ -520,7 +520,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             do {
                 line = input.readLine().trim();
                 summary.append(line);
-            } while (!(line.indexOf("@") >= 0));
+            } while (!(line.indexOf('@') >= 0));
         }
         catch (Exception exc) {
             logger.debug("syntax problem while parsing summary of g98 section: ");

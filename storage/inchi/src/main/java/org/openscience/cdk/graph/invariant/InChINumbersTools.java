@@ -54,7 +54,7 @@ public class InChINumbersTools {
     public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
         String aux =  auxInfo(atomContainer);
         aux = aux.substring(aux.indexOf("/N:") + 3);
-        String numberStringAux = aux.substring(0, aux.indexOf("/"));
+        String numberStringAux = aux.substring(0, aux.indexOf('/'));
         int i = 1; 
         long[] numbers = new long[atomContainer.getAtomCount()];
         for (String numberString : numberStringAux.split("\\,"))

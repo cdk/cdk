@@ -297,7 +297,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 } // else: default 0 is no mapping defined
                 
                 // the rest are key value things
-                if (command.indexOf("=") != -1) {
+                if (command.indexOf('=') != -1) {
                     Map<String,String> options = parseOptions(exhaustStringTokenizer(tokenizer));
                     Iterator<String> keys = options.keySet().iterator();
                     while (keys.hasNext()) {
@@ -393,7 +393,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                     throw new CDKException(error, exception);
                 }
                 // the rest are key=value fields
-                if (command.indexOf("=") != -1) {
+                if (command.indexOf('=') != -1) {
                     Map<String,String> options = parseOptions(exhaustStringTokenizer(tokenizer));
                     Iterator<String> keys = options.keySet().iterator();
                     while (keys.hasNext()) {
@@ -454,7 +454,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 
                 // the rest are key=value fields
                 Map<String,String> options = new Hashtable<String,String>();
-                if (command.indexOf("=") != -1) {
+                if (command.indexOf('=') != -1) {
                     options = parseOptions(exhaustStringTokenizer(tokenizer));
                 }
 
