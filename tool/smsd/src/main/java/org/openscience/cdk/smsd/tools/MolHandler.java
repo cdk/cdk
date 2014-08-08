@@ -175,7 +175,7 @@ public class MolHandler {
 
     private boolean isPseudoAtoms() {
         for (IAtom atoms : atomContainer.atoms()) {
-            if (atoms instanceof IPseudoAtom || atoms instanceof PseudoAtom) {
+            if (atoms instanceof IPseudoAtom) {
                 return true;
             }
         }
