@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.negate;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newPerpendicularVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
@@ -302,7 +303,7 @@ final class StandardBondGenerator {
         // the second atom may have zero or more bonds which we can use to get the offset
         // we find the one which is closest to the perpendicular vector
         if (!atom2Bonds.isEmpty() && !hasDisplayedSymbol(atom2)) {
-            Vector2d closest = VecmathUtil.getNearestVector(perpendicular, atom2, atom2Bonds);
+            Vector2d closest = getNearestVector(perpendicular, atom2, atom2Bonds);
             atom2Offset = adjacentLength(closest, perpendicular, separation);
             
             // closest bond may still be on the other side, if so the offset needs
@@ -351,13 +352,29 @@ final class StandardBondGenerator {
         Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular1, halfSeparation));
         Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular2, halfSeparation));
         Tuple2d line2Atom2Point = sum(atom2BackOffPoint, scale(perpendicular2, halfSeparation));
-        
+
+        // adjust atom 1 lines to be flush with adjacent bonds
         if (!hasDisplayedSymbol(atom1) && atom1Bonds.size() > 1) {
-            // adjust atom 1            
+            Vector2d nearest1 = getNearestVector(perpendicular1, atom1, atom1Bonds);            
+            Vector2d nearest2 = getNearestVector(perpendicular2, atom1, atom1Bonds);
+            
+            double line1Adjust = adjacentLength(nearest1, perpendicular1, halfSeparation);
+            double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
+            
+            line1Atom1Point = sum(line1Atom1Point, scale(unit, -line1Adjust));
+            line2Atom1Point = sum(line2Atom1Point, scale(unit, -line2Adjust));
         }
-        
+
+        // adjust atom 2 lines to be flush with adjacent bonds
         if (!hasDisplayedSymbol(atom2) && atom2Bonds.size() > 1) {
-            // adjust atom 2            
+            Vector2d nearest1 = getNearestVector(perpendicular1, atom2, atom2Bonds);
+            Vector2d nearest2 = getNearestVector(perpendicular2, atom2, atom2Bonds);
+
+            double line1Adjust = adjacentLength(nearest1, perpendicular1, halfSeparation);
+            double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
+
+            line1Atom2Point = sum(line1Atom2Point, scale(unit, line1Adjust));
+            line2Atom2Point = sum(line2Atom2Point, scale(unit, line2Adjust));                
         }
         
         group.add(newLineElement(line1Atom1Point, line1Atom2Point));
