@@ -22,6 +22,7 @@ package org.openscience.cdk.graph;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.*;
+import org.openscience.cdk.stereo.ExtendedTetrahedral;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -113,8 +114,12 @@ public class ConnectivityChecker
                 IBond bond = ((IDoubleBondStereochemistry) stereo).getStereoBond();
                 if (componentsMap.containsKey(bond.getAtom(0)) && componentsMap.containsKey(bond.getAtom(1)))
                     componentsMap.get(bond.getAtom(0)).addStereoElement(stereo);
+            } else if (stereo instanceof ExtendedTetrahedral) {
+                IAtom atom = ((ExtendedTetrahedral) stereo).focus();
+                if (componentsMap.containsKey(atom))
+                    componentsMap.get(atom).addStereoElement(stereo);
             } else {
-                System.err.println("New stereoelement is not currently paritioned with ConnectivityChecker:" + stereo.getClass());
+                System.err.println("New stereochemistry element is not currently partitioned with ConnectivityChecker:" + stereo.getClass());
             }
         }
         
