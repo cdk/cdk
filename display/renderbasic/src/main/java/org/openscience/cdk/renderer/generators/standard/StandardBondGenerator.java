@@ -292,8 +292,20 @@ final class StandardBondGenerator {
         return new ElementGroup();
     }
 
+    /**
+     * Generate a triple bond rendering, the triple is composed of a plain single bond
+     * and a centered double bond.
+     * 
+     * @param atom1 an atom
+     * @param atom2 the other atom
+     * @return triple bond rendering element
+     */
     private IRenderingElement generateTripleBond(IAtom atom1, IAtom atom2) {
-        return new ElementGroup();
+        ElementGroup group = new ElementGroup();
+        group.add(generatePlainSingleBond(atom1, atom2));
+        group.add(generateCenteredDoubleBond(atom1, atom2,
+                                             Collections.<IBond>emptyList(), Collections.<IBond>emptyList()));
+        return group;
     }
 
     IRenderingElement generateDashedBond(IAtom atom1, IAtom atom2) {
