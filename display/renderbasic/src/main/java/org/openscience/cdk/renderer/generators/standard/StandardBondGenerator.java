@@ -361,6 +361,12 @@ final class StandardBondGenerator {
             double line1Adjust = adjacentLength(nearest1, perpendicular1, halfSeparation);
             double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
             
+            // corner case when the adjacent bonds are acute to the double bond,
+            if (nearest1.dot(unit) > 0)
+                line1Adjust = -line1Adjust;
+            if (nearest2.dot(unit) > 0)
+                line2Adjust = -line2Adjust;
+            
             line1Atom1Point = sum(line1Atom1Point, scale(unit, -line1Adjust));
             line2Atom1Point = sum(line2Atom1Point, scale(unit, -line2Adjust));
         }
@@ -373,6 +379,12 @@ final class StandardBondGenerator {
             double line1Adjust = adjacentLength(nearest1, perpendicular1, halfSeparation);
             double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
 
+            // corner case when the adjacent bonds are acute to the double bond
+            if (nearest1.dot(unit) < 0)
+                line1Adjust = -line1Adjust;
+            if (nearest2.dot(unit) < 0)
+                line2Adjust = -line2Adjust;
+            
             line1Atom2Point = sum(line1Atom2Point, scale(unit, line1Adjust));
             line2Atom2Point = sum(line2Atom2Point, scale(unit, line2Adjust));                
         }
