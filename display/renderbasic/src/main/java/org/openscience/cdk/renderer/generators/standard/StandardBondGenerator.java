@@ -340,16 +340,25 @@ final class StandardBondGenerator {
         final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
 
         final Vector2d unit = newUnitVector(atom1BackOffPoint, atom2BackOffPoint);
-        final Vector2d perpendicular = newPerpendicularVector(unit);
+        final Vector2d perpendicular1 = newPerpendicularVector(unit);
+        final Vector2d perpendicular2 = negate(perpendicular1);
 
         final double halfSeparation = separation / 2;
 
         ElementGroup group = new ElementGroup();
         
-        Tuple2d line1Atom1Point = sum(atom1BackOffPoint, scale(perpendicular, halfSeparation));
-        Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular, halfSeparation));
-        Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular, -halfSeparation));
-        Tuple2d line2Atom2Point = sum(atom2BackOffPoint, scale(perpendicular, -halfSeparation));
+        Tuple2d line1Atom1Point = sum(atom1BackOffPoint, scale(perpendicular1, halfSeparation));
+        Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular1, halfSeparation));
+        Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular2, halfSeparation));
+        Tuple2d line2Atom2Point = sum(atom2BackOffPoint, scale(perpendicular2, halfSeparation));
+        
+        if (!hasDisplayedSymbol(atom1) && atom1Bonds.size() > 1) {
+            // adjust atom 1            
+        }
+        
+        if (!hasDisplayedSymbol(atom2) && atom2Bonds.size() > 1) {
+            // adjust atom 2            
+        }
         
         group.add(newLineElement(line1Atom1Point, line1Atom2Point));
         group.add(newLineElement(line2Atom1Point, line2Atom2Point));
