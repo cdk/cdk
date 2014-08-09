@@ -258,7 +258,8 @@ final class StandardBondGenerator {
     /**
      * Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
      * Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
-     * side. The side is determined by the 'atom1Bond' parameter.
+     * side. The side is determined by the 'atom1Bond' parameter. The first atom should not have
+     * a displayed symbol.
      *
      * @param atom1      first atom
      * @param atom2      second atom
@@ -268,6 +269,9 @@ final class StandardBondGenerator {
      */
     private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
 
+        assert !hasDisplayedSymbol(atom1);
+        assert atom1Bond != null;
+        
         final Point2d atom1Point = atom1.getPoint2d();
         final Point2d atom2Point = atom2.getPoint2d();
 
