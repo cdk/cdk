@@ -40,6 +40,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.geom.Line2D;
@@ -50,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newPerpendicularVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.scale;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.sum;
@@ -216,8 +218,39 @@ final class StandardBondGenerator {
         return new ElementGroup();
     }
 
+    /**
+     * Generates a double bond rendering element by deciding how best to display it.
+     *
+     * @param bond the bond to render
+     * @return rendering element
+     */
     private IRenderingElement generateDoubleBond(IBond bond) {
-        return new ElementGroup();
+
+        // select offset bonds from either the preferred ring or the whole structure
+        final IAtomContainer refContainer = ringMap.containsKey(bond) ? ringMap.get(bond)
+                                                                      : container;
+
+        final IAtom atom1 = bond.getAtom(0);
+        final IAtom atom2 = bond.getAtom(1);
+
+        if (IBond.Stereo.E_OR_Z.equals(bond.getStereo()))
+            return generateCrossedDoubleBond(atom1, atom2);
+
+        final List<IBond> atom1Bonds = refContainer.getConnectedBondsList(atom1);
+        final List<IBond> atom2Bonds = refContainer.getConnectedBondsList(atom2);
+
+        atom1Bonds.remove(bond);
+        atom2Bonds.remove(bond);
+
+        if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
+            return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);
+        }
+        else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2)) {
+            return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
+        }
+        else {
+            return generateCenteredDoubleBond(atom1, atom2, atom1Bonds, atom2Bonds);
+        }
     }
 
     // GR-1.10 Sidedness of double bonds
@@ -225,8 +258,34 @@ final class StandardBondGenerator {
         return new ElementGroup();
     }
 
+    /**
+     * Generates a centered double bond. Here the lines are depicted each side and equidistant from
+     * the line that travel through the two atoms.
+     *
+     * @param atom1      an atom
+     * @param atom2      the other atom
+     * @param atom1Bonds bonds to the first atom (excluding that being rendered)
+     * @param atom2Bonds bonds to the second atom (excluding that being rendered)
+     * @return the rendering element
+     */
     private IRenderingElement generateCenteredDoubleBond(IAtom atom1, IAtom atom2, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
-        return new ElementGroup();
+
+        final Point2d atom1BackOffPoint = backOffPoint(atom1, atom2);
+        final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
+
+        final Vector2d unit = newUnitVector(atom1BackOffPoint, atom2BackOffPoint);
+        final Vector2d perpendicular = newPerpendicularVector(unit);
+
+        final double halfSeparation = separation / 2;
+
+        ElementGroup group = new ElementGroup();
+
+        group.add(newLineElement(sum(atom1BackOffPoint, scale(perpendicular, halfSeparation)),
+                                 sum(atom2BackOffPoint, scale(perpendicular, halfSeparation))));
+        group.add(newLineElement(sum(atom1BackOffPoint, scale(perpendicular, -halfSeparation)),
+                                 sum(atom2BackOffPoint, scale(perpendicular, -halfSeparation))));
+
+        return group;
     }
 
     private IRenderingElement generateCrossedDoubleBond(IAtom atom1, IAtom atom2) {
@@ -250,7 +309,7 @@ final class StandardBondGenerator {
      * @param b end of the line
      * @return line rendering element
      */
-    IRenderingElement newLineElement(Point2d a, Point2d b) {
+    IRenderingElement newLineElement(Tuple2d a, Tuple2d b) {
         return new LineElement(a.x, a.y, b.x, b.y, stroke, foreground);
     }
 
@@ -264,6 +323,16 @@ final class StandardBondGenerator {
      */
     Point2d backOffPoint(IAtom from, IAtom to) {
         return backOffPointOf(symbols[atomIndexMap.get(from)], from.getPoint2d(), to.getPoint2d(), backOff);
+    }
+
+    /**
+     * Check if an atom has a displayed symbol.
+     *
+     * @param atom the atom to check
+     * @return the atom has a displayed symbol
+     */
+    boolean hasDisplayedSymbol(IAtom atom) {
+        return symbols[atomIndexMap.get(atom)] != null;
     }
 
     /**
