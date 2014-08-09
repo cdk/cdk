@@ -345,11 +345,14 @@ final class StandardBondGenerator {
         final double halfSeparation = separation / 2;
 
         ElementGroup group = new ElementGroup();
-
-        group.add(newLineElement(sum(atom1BackOffPoint, scale(perpendicular, halfSeparation)),
-                                 sum(atom2BackOffPoint, scale(perpendicular, halfSeparation))));
-        group.add(newLineElement(sum(atom1BackOffPoint, scale(perpendicular, -halfSeparation)),
-                                 sum(atom2BackOffPoint, scale(perpendicular, -halfSeparation))));
+        
+        Tuple2d line1Atom1Point = sum(atom1BackOffPoint, scale(perpendicular, halfSeparation));
+        Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular, halfSeparation));
+        Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular, -halfSeparation));
+        Tuple2d line2Atom2Point = sum(atom2BackOffPoint, scale(perpendicular, -halfSeparation));
+        
+        group.add(newLineElement(line1Atom1Point, line1Atom2Point));
+        group.add(newLineElement(line2Atom1Point, line2Atom2Point));
 
         return group;
     }
