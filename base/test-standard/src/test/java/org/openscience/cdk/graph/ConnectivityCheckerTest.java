@@ -39,9 +39,14 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.io.HINReader;
 import org.openscience.cdk.io.ISimpleChemObjectReader;
 import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  *  Checks the functionality of the ConnectivityChecker
@@ -196,6 +201,14 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         IAtomContainer ac = cList.get(0);
 
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
+    }
+    
+    @Test public void testPartitionExtendedTetrahedral() throws Exception {
+        SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer container = smipar.parseSmiles("CC=[C@]=CC.C");
+        IAtomContainerSet containerSet = ConnectivityChecker.partitionIntoMolecules(container);
+        assertThat(containerSet.getAtomContainerCount(), is(2));
+        assertTrue(containerSet.getAtomContainer(0).stereoElements().iterator().hasNext());
     }
 
     /**
