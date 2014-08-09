@@ -34,15 +34,27 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 
+import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.awt.Color;
+import java.awt.geom.Line2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.scale;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.sum;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.toAwtPoint;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.toVecmathPoint;
 
 /**
  * Generates {@link IRenderingElement}s for bonds. The generator is internal and called by the
@@ -57,6 +69,9 @@ final class StandardBondGenerator {
     private final AtomSymbol[]   symbols;
     private final RendererModel  parameters;
 
+    // logging
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(getClass());
+
     // indexes of atoms and rings
     private final Map<IAtom, Integer> atomIndexMap = new HashMap<IAtom, Integer>();
     private final Map<IBond, IAtomContainer> ringMap;
@@ -68,6 +83,7 @@ final class StandardBondGenerator {
     private final double wedgeWidth;
     private final double hatchSections;
     private final Color  foreground;
+
 
     /**
      * Create a new standard bond generator for the provided structure (container) with the laid out
@@ -146,19 +162,53 @@ final class StandardBondGenerator {
         return generateDashedBond(atom1, atom2);
     }
 
-    private IRenderingElement generateSingleBond(IAtom atom1, IAtom atom2, IBond.Stereo stereo) {
+    /**
+     * Generate a rendering element for single bond with the provided stereo type.
+     *
+     * @param from   an atom
+     * @param to     another atom
+     * @param stereo the stereo type of the bond
+     * @return bond rendering element
+     */
+    private IRenderingElement generateSingleBond(IAtom from, IAtom to, IBond.Stereo stereo) {
+        if (stereo == null)
+            return generatePlainSingleBond(from, to);
+        switch (stereo) {
+            case NONE:
+                return generatePlainSingleBond(from, to);
+            case DOWN:
+                return generateHashedWedgeBond(from, to);
+            case DOWN_INVERTED:
+                return generateHashedWedgeBond(to, from);
+            case UP:
+                return generateBoldWedgeBond(from, to);
+            case UP_INVERTED:
+                return generateBoldWedgeBond(to, from);
+            case UP_OR_DOWN:
+            case UP_OR_DOWN_INVERTED: // up/down is undirected
+                return generateWavyBond(to, from);
+            default:
+                logger.warn("Unknown single bond stereochemistry ", stereo, " is not displayed");
+                return generatePlainSingleBond(from, to);
+        }
+    }
+
+    /**
+     * Generate a plain single bond between two atoms accounting for displayed symbols.
+     *
+     * @param from one atom
+     * @param to   the other atom
+     * @return rendering element
+     */
+    IRenderingElement generatePlainSingleBond(final IAtom from, final IAtom to) {
+        return newLineElement(backOffPoint(from, to), backOffPoint(to, from));
+    }
+
+    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to) {
         return new ElementGroup();
     }
 
-    IRenderingElement generatePlainSingleBond(IAtom from, IAtom to) {
-        return new ElementGroup();
-    }
-
-    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
-        return new ElementGroup();
-    }
-
-    IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
+    IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to) {
         return new ElementGroup();
     }
 
@@ -190,6 +240,62 @@ final class StandardBondGenerator {
     IRenderingElement generateDashedBond(IAtom atom1, IAtom atom2) {
         return new ElementGroup();
     }
+
+
+    /**
+     * Create a new line element between two points. The line has the specified stroke and
+     * foreground color.
+     *
+     * @param a start of the line
+     * @param b end of the line
+     * @return line rendering element
+     */
+    IRenderingElement newLineElement(Point2d a, Point2d b) {
+        return new LineElement(a.x, a.y, b.x, b.y, stroke, foreground);
+    }
+
+    /**
+     * Determine the backed off (start) point of the 'from' atom for the line between 'from' and
+     * 'to'.
+     *
+     * @param from start atom
+     * @param to   end atom
+     * @return the backed off point of 'from' atom
+     */
+    Point2d backOffPoint(IAtom from, IAtom to) {
+        return backOffPointOf(symbols[atomIndexMap.get(from)], from.getPoint2d(), to.getPoint2d(), backOff);
+    }
+
+    /**
+     * Determine the backed off (start) point of the 'from' atom for the line between 'from' and
+     * 'to' given the symbol present at the 'from' point and the back off amount.
+     *
+     * @param symbol    the symbol present at the 'fromPoint' atom, may be null
+     * @param fromPoint the location of the from atom
+     * @param toPoint   the location of the to atom
+     * @param backOff   the amount to back off from the symbol
+     * @return the backed off (start) from point
+     */
+    static Point2d backOffPointOf(AtomSymbol symbol, Point2d fromPoint, Point2d toPoint, double backOff) {
+
+        // no symbol
+        if (symbol == null)
+            return fromPoint;
+
+        final Point2d intersect = toVecmathPoint(symbol.getConvexHull()
+                                                       .intersect(toAwtPoint(fromPoint),
+                                                                  toAwtPoint(toPoint)));
+
+        // does not intersect
+        if (intersect == null)
+            return fromPoint;
+
+
+        // move the point away from the intersect by the desired back off amount
+        final Vector2d unit = newUnitVector(fromPoint, toPoint);
+        return new Point2d(sum(intersect, scale(unit, backOff)));
+    }
+
 
     /**
      * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
