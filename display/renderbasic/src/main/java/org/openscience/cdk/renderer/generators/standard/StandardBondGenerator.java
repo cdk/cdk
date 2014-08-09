@@ -297,14 +297,14 @@ final class StandardBondGenerator {
         
         // the offset line isn't drawn the full length and is backed off more depending on the
         // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
-        double atom1Offset = adjacentLength(reference, perpendicular, separation);
+        double atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
         double atom2Offset = 0;
 
         // the second atom may have zero or more bonds which we can use to get the offset
         // we find the one which is closest to the perpendicular vector
         if (!atom2Bonds.isEmpty() && !hasDisplayedSymbol(atom2)) {
             Vector2d closest = getNearestVector(perpendicular, atom2, atom2Bonds);
-            atom2Offset = adjacentLength(closest, perpendicular, separation);
+            atom2Offset = adjacentLength(sum(closest, negate(unit)), perpendicular, separation);
             
             // closest bond may still be on the other side, if so the offset needs
             // negating
