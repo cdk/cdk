@@ -51,6 +51,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.negate;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newPerpendicularVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.scale;
@@ -253,9 +255,69 @@ final class StandardBondGenerator {
         }
     }
 
-    // GR-1.10 Sidedness of double bonds
+    /**
+     * Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
+     * Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
+     * side. The side is determined by the 'atom1Bond' parameter.
+     *
+     * @param atom1      first atom
+     * @param atom2      second atom
+     * @param atom1Bond  the reference bond used to decide which side the bond is offset
+     * @param atom2Bonds the bonds connected to atom 2
+     * @return the rendered bond element
+     */
     private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
-        return new ElementGroup();
+
+        final Point2d atom1Point = atom1.getPoint2d();
+        final Point2d atom2Point = atom2.getPoint2d();
+
+        final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
+
+        final Vector2d unit = newUnitVector(atom1Point, atom2Point);
+        Vector2d perpendicular = newPerpendicularVector(unit);
+
+        final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getConnectedAtom(atom1).getPoint2d());
+
+        // there are two perpendicular vectors, this check ensures we have one on the same side as
+        // the reference 
+        if (reference.dot(perpendicular) < 0)
+            perpendicular = negate(perpendicular);
+
+        // when the symbol is terminal, we move it such that it is between the two lines
+        if (atom2Bonds.isEmpty() && hasDisplayedSymbol(atom2)) {
+            final int atom2index = atomIndexMap.get(atom2);
+            final Tuple2d nudge = scale(perpendicular, separation / 2);
+            symbols[atom2index] = symbols[atom2index].translate(nudge.x, nudge.y);
+        }
+        
+        // the offset line isn't drawn the full length and is backed off more depending on the
+        // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
+        double atom1Offset = adjacentLength(reference, perpendicular, separation);
+        double atom2Offset = 0;
+
+        // the second atom may have zero or more bonds which we can use to get the offset
+        // we find the one which is closest to the perpendicular vector
+        if (!atom2Bonds.isEmpty() && !hasDisplayedSymbol(atom2)) {
+            Vector2d closest = VecmathUtil.getNearestVector(perpendicular, atom2, atom2Bonds);
+            atom2Offset = adjacentLength(closest, perpendicular, separation);
+            
+            // closest bond may still be on the other side, if so the offset needs
+            // negating
+            if (closest.dot(perpendicular) < 0)
+                atom2Offset = -atom2Offset;  
+        }
+
+        final ElementGroup group = new ElementGroup();
+
+        group.add(newLineElement(atom1Point, atom2BackOffPoint));
+        group.add(newLineElement(sum(sum(atom1Point,
+                                         scale(perpendicular, separation)),
+                                     scale(unit, atom1Offset)),
+                                 sum(sum(atom2BackOffPoint,
+                                         scale(perpendicular, separation)),
+                                     scale(unit, -atom2Offset))));
+
+        return group;
     }
 
     /**
@@ -293,9 +355,9 @@ final class StandardBondGenerator {
     }
 
     /**
-     * Generate a triple bond rendering, the triple is composed of a plain single bond
-     * and a centered double bond.
-     * 
+     * Generate a triple bond rendering, the triple is composed of a plain single bond and a
+     * centered double bond.
+     *
      * @param atom1 an atom
      * @param atom2 the other atom
      * @return triple bond rendering element
