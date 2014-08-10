@@ -45,6 +45,7 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.io.MDLV2000Reader;
 import org.openscience.cdk.isomorphism.AtomMappingTools;
+import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -754,8 +755,8 @@ public class GeometryToolsTest extends CDKTestCase {
         );
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
-        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        LoggingToolFactory.createLoggingTool(getClass()).info("R1: " + GeometryTools.getRectangle2D(react1));
+        LoggingToolFactory.createLoggingTool(getClass()).info("R2: " + GeometryTools.getRectangle2D(react2));
         for (int i=0; i<2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);
@@ -801,8 +802,8 @@ public class GeometryToolsTest extends CDKTestCase {
         );
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        System.out.println("R1: " + GeometryTools.getRectangle2D(react1));
-        System.out.println("R2: " + GeometryTools.getRectangle2D(react2));
+        LoggingToolFactory.createLoggingTool(getClass()).info("R1: " + GeometryTools.getRectangle2D(react1));
+        LoggingToolFactory.createLoggingTool(getClass()).info("R2: " + GeometryTools.getRectangle2D(react2));
         for (int i=0; i<2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);
