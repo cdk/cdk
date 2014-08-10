@@ -123,7 +123,11 @@ final class StandardBondGenerator {
         this.backOff = 2 * stroke;
         this.wedgeWidth = 7 * stroke;
         this.hatchSections = 8;
-        this.foreground = Color.BLACK;
+        
+        // foreground is based on the carbon color
+        this.foreground = parameters.get(StandardGenerator.AtomColor.class)
+                                    .getAtomColor(container.getBuilder()
+                                                           .newInstance(IAtom.class, "C"));
     }
 
     /**

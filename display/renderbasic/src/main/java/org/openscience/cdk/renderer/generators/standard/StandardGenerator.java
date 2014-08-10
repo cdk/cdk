@@ -31,6 +31,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
+import org.openscience.cdk.renderer.color.UniColor;
 import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
@@ -39,12 +40,14 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
+import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 import javax.vecmath.Point2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,6 +68,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
 
+    private final IGeneratorParameter<?> atomColor = new AtomColor(),
+                                         visibility = new Visibility();
+
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
      *
@@ -84,8 +90,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             return new ElementGroup();
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
-        final SymbolVisibility visibility = SymbolVisibility.iupacRecommendations();
-        final IAtomColorer coloring = new CDK2DAtomColors();
+        
+        final SymbolVisibility visibility = parameters.get(Visibility.class);
+        final IAtomColorer coloring = parameters.get(AtomColor.class);
 
         // the stroke width is based on the font
         final double stroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
@@ -96,7 +103,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
                                                     container.getAtom(0).getPoint2d().y,
                                                     0, 0);
-        
+
         ElementGroup elements = new ElementGroup();
 
         // bond elements can simply be added to the element group
@@ -182,7 +189,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @inheritDoc
      */
     @Override public List<IGeneratorParameter<?>> getParameters() {
-        return Collections.emptyList();
+        return Arrays.<IGeneratorParameter<?>>asList(atomColor,
+                                                     visibility);
     }
 
     /**
@@ -242,4 +250,32 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         double maxY = Math.max(y, bounds.getMaxY());
         bounds.setRect(minX, minY, maxX - minX, maxY - minY);
     }
+
+    /**
+     * Defines the color of unselected atoms (and bonds). Bonds colored is defined by the carbon
+     * color. The default option is uniform black coloring as recommended by IUPAC.
+     */
+    public static final class AtomColor extends AbstractGeneratorParameter<IAtomColorer> {
+        /**
+         * @inheritDoc
+         */
+        @Override public IAtomColorer getDefault() {
+            // off black
+            return new UniColor(new Color(0x444444));
+        }
+    }
+
+    /**
+     * Defines which atoms have their symbol displayed. The default option is {@link
+     * SymbolVisibility#iupacRecommendations()}
+     */
+    public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
+        /**
+         * @inheritDoc
+         */
+        @Override public SymbolVisibility getDefault() {
+            return SymbolVisibility.iupacRecommendations();
+        }
+    }
+
 }
