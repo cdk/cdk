@@ -53,7 +53,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
@@ -293,7 +292,7 @@ final class StandardBondGenerator {
         final double adjacent = fromPoint.distance(toPoint);
 
         // we subtract one due to fenceposts, this ensures the specified number
-        // of hashed is drawn
+        // of hashed sections is drawn
         final double step = adjacent / (hatchSections - 1);
 
         final ElementGroup group = new ElementGroup();
