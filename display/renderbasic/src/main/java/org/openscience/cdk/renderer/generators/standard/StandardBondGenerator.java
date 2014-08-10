@@ -68,6 +68,30 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.toVec
  * Generates {@link IRenderingElement}s for bonds. The generator is internal and called by the
  * {@link org.openscience.cdk.renderer.generators.standard.StandardGenerator}. A new bond generator
  * is required for each container instance.
+ * 
+ * <p/>
+ * The bonds generated are:
+ * <ul>
+ *     <li>
+ *         {@link #generateSingleBond} - delegates to one of the following types: 
+ *         <ul>
+ *             <li>{@link #generatePlainSingleBond} - single line between two atoms</li>
+ *             <li>{@link #generateBoldWedgeBond} - wedged up stereo </li>
+ *             <li>{@link #generateHashedWedgeBond} - wedged down stereo bond </li>
+ *             <li>{@link #generateWavyBond} - up or down bond </li>
+ *         </ul>
+ *     </li>
+ *     <li>
+ *         {@link #generateDoubleBond} - delegates to one of the following types:
+ *         <ul>
+ *             <li>{@link #generateOffsetDoubleBond} - one line rests on the center between the atoms</li>
+ *             <li>{@link #generateCenteredDoubleBond} - both lines rest equidistant from the center between the atoms</li>
+ *             <li>{@link #generateCrossedDoubleBond} - unknown double stereochemistry </li>
+ *         </ul>
+ *     </li>
+ *     <li>{@link #generateTripleBond} - composes a single and double bond</li>
+ *     <li>{@link #generateDashedBond} - the unknown bond type</li>
+ * </ul>
  *
  * @author John May
  */
