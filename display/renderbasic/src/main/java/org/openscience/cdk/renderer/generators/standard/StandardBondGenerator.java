@@ -228,6 +228,9 @@ final class StandardBondGenerator {
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint = to.getPoint2d();
 
+        final Point2d fromBackOffPoint = backOffPoint(from, to);
+        final Point2d toBackOffPoint   = backOffPoint(to, from);
+
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
         final Vector2d perpendicular = newPerpendicularVector(unit);
 
@@ -239,12 +242,27 @@ final class StandardBondGenerator {
         Tuple2d b = sum(fromPoint, scale(perpendicular, -halfNarrowEnd));
         Tuple2d c = sum(toPoint, scale(perpendicular, -halfWideEnd));
         Tuple2d d = sum(toPoint, scale(perpendicular, halfWideEnd));
+        
+        final double opposite = halfWideEnd - halfNarrowEnd;
+        final double adjacent = fromPoint.distance(toPoint);
+        
+        // adjust the points to account for the back off, the overall shape is maintained
+        if (hasDisplayedSymbol(from)) {            
+            final double offset = (opposite / adjacent) * fromBackOffPoint.distance(fromPoint);
+            a = sum(fromBackOffPoint, scale(perpendicular, offset));        
+            b = sum(fromBackOffPoint, scale(perpendicular, -offset));        
+        }
+        if (hasDisplayedSymbol(to)) {
+            final double offset = (opposite / adjacent) * toBackOffPoint.distance(fromPoint);
+            c = sum(toBackOffPoint, scale(perpendicular, -offset));
+            d = sum(toBackOffPoint, scale(perpendicular, offset));
+        }
 
-        return new GeneralPath(Arrays.<PathElement>asList(new MoveTo(new Point2d(a)),
-                                                          new LineTo(new Point2d(b)),
-                                                          new LineTo(new Point2d(c)),
-                                                          new LineTo(new Point2d(d)),
-                                                          new Close()),
+        return new GeneralPath(Arrays.asList(new MoveTo(new Point2d(a)),
+                                             new LineTo(new Point2d(b)),
+                                             new LineTo(new Point2d(c)),
+                                             new LineTo(new Point2d(d)),
+                                             new Close()),
                                foreground);
     }
 
