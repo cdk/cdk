@@ -27,14 +27,20 @@ package org.openscience.cdk.renderer.generators.standard;
 import com.google.common.primitives.Ints;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.Cycles;
+import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.ElementGroup;
+import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
+import org.openscience.cdk.renderer.elements.path.Close;
+import org.openscience.cdk.renderer.elements.path.LineTo;
+import org.openscience.cdk.renderer.elements.path.MoveTo;
+import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
@@ -44,6 +50,7 @@ import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.geom.Line2D;
+import java.awt.geom.Path2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -209,8 +216,36 @@ final class StandardBondGenerator {
         return newLineElement(backOffPoint(from, to), backOffPoint(to, from));
     }
 
+    /**
+     * Generates a rendering element for a bold wedge bond (i.e. up) from one atom to another.
+     *
+     * @param from narrow end of the wedge
+     * @param to   bold end of the wedge
+     * @return the rendering element
+     */
     IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to) {
-        return new ElementGroup();
+
+        final Point2d fromPoint = from.getPoint2d();
+        final Point2d toPoint = to.getPoint2d();
+
+        final Vector2d unit = newUnitVector(fromPoint, toPoint);
+        final Vector2d perpendicular = newPerpendicularVector(unit);
+
+        final double halfNarrowEnd = stroke / 2;
+        final double halfWideEnd   = wedgeWidth / 2;
+
+        // four points of the trapezoid
+        Tuple2d a = sum(fromPoint, scale(perpendicular, halfNarrowEnd));
+        Tuple2d b = sum(fromPoint, scale(perpendicular, -halfNarrowEnd));
+        Tuple2d c = sum(toPoint, scale(perpendicular, -halfWideEnd));
+        Tuple2d d = sum(toPoint, scale(perpendicular, halfWideEnd));
+
+        return new GeneralPath(Arrays.<PathElement>asList(new MoveTo(new Point2d(a)),
+                                                          new LineTo(new Point2d(b)),
+                                                          new LineTo(new Point2d(c)),
+                                                          new LineTo(new Point2d(d)),
+                                                          new Close()),
+                               foreground);
     }
 
     IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to) {
