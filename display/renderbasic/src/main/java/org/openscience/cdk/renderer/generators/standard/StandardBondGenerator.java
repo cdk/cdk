@@ -53,6 +53,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
@@ -516,8 +517,58 @@ final class StandardBondGenerator {
         return group;
     }
 
-    IRenderingElement generateDashedBond(IAtom atom1, IAtom atom2) {
-        return new ElementGroup();
+    /**
+     * Generates a rendering element for displaying an 'unknown' bond type.
+     *
+     * @param from drawn from this atom
+     * @param to drawn to this atom
+     * @return rendering of unknown bond
+     */
+    IRenderingElement generateDashedBond(IAtom from, IAtom to) {
+        
+        final Point2d fromPoint = from.getPoint2d();
+        final Point2d toPoint   = to.getPoint2d();
+        
+        final Vector2d unit = newUnitVector(fromPoint, toPoint);
+        
+        final int nDashes = parameters.get(StandardGenerator.DashSection.class);
+        
+        final double step     = fromPoint.distance(toPoint) / ((3 * nDashes) - 2);
+
+        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(backOffPoint(from, to))
+                                                      : Double.NEGATIVE_INFINITY;
+        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(backOffPoint(to, from))
+                                                  : Double.POSITIVE_INFINITY;
+
+
+        ElementGroup group = new ElementGroup();
+
+        double distance = 0;
+        
+        for (int i = 0; i < nDashes; i++) {
+            
+            // draw a full dash section
+            if (distance > start && distance + step < end) {
+                group.add(newLineElement(sum(fromPoint, scale(unit, distance)),
+                                         sum(fromPoint, scale(unit, distance + step))));
+            } 
+            // draw a dash section that starts late
+            else if (distance + step > start && distance + step < end) {
+                group.add(newLineElement(sum(fromPoint, scale(unit, start)),
+                                         sum(fromPoint, scale(unit, distance + step))));
+            }
+            // draw a dash section that stops early
+            else if (distance > start && distance < end) {
+                group.add(newLineElement(sum(fromPoint, scale(unit, distance)),
+                                         sum(fromPoint, scale(unit, end))));
+            }
+            
+            distance += step;
+            distance += step; // the gap
+            distance += step; // the gap
+        }
+        
+        return group;
     }
 
 

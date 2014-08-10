@@ -72,7 +72,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             separationRatio                        = new SeparationRatio(),
             wedgeRatio                             = new WedgeRatio(),
             marginRatio                            = new SymbolMarginRatio(),
-            hatchSections                          = new HatchSections();
+            hatchSections                          = new HatchSections(),
+            dashSections                           = new DashSection();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -200,7 +201,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                      separationRatio,
                                                      wedgeRatio,
                                                      marginRatio,
-                                                     hatchSections);
+                                                     hatchSections,
+                                                     dashSections);
     }
 
     /**
@@ -284,7 +286,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          * @inheritDoc
          */
         @Override public SymbolVisibility getDefault() {
-            return SymbolVisibility.iupacRecommendations();
+            return SymbolVisibility.iupacRecommendationsWithoutMethyl();
         }
     }
 
@@ -344,6 +346,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * The number of sections to render a hatch bond of default bond length. Default = 8.
      */
     public static final class HatchSections extends AbstractGeneratorParameter<Integer> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Integer getDefault() {
+            return 8;
+        }
+    }
+
+    /**
+     * The number of sections to render in a dashed 'unknown' bond, default = 4;
+     */
+    public static final class DashSection extends AbstractGeneratorParameter<Integer> {
         /**
          * @inheritDoc
          */
