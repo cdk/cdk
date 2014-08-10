@@ -68,30 +68,17 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.toVec
  * Generates {@link IRenderingElement}s for bonds. The generator is internal and called by the
  * {@link org.openscience.cdk.renderer.generators.standard.StandardGenerator}. A new bond generator
  * is required for each container instance.
- * 
- * <p/>
- * The bonds generated are:
- * <ul>
- *     <li>
- *         {@link #generateSingleBond} - delegates to one of the following types: 
- *         <ul>
- *             <li>{@link #generatePlainSingleBond} - single line between two atoms</li>
- *             <li>{@link #generateBoldWedgeBond} - wedged up stereo </li>
- *             <li>{@link #generateHashedWedgeBond} - wedged down stereo bond </li>
- *             <li>{@link #generateWavyBond} - up or down bond </li>
- *         </ul>
- *     </li>
- *     <li>
- *         {@link #generateDoubleBond} - delegates to one of the following types:
- *         <ul>
- *             <li>{@link #generateOffsetDoubleBond} - one line rests on the center between the atoms</li>
- *             <li>{@link #generateCenteredDoubleBond} - both lines rest equidistant from the center between the atoms</li>
- *             <li>{@link #generateCrossedDoubleBond} - unknown double stereochemistry </li>
- *         </ul>
- *     </li>
- *     <li>{@link #generateTripleBond} - composes a single and double bond</li>
- *     <li>{@link #generateDashedBond} - the unknown bond type</li>
- * </ul>
+ *
+ * <p/> The bonds generated are: <ul> <li> {@link #generateSingleBond} - delegates to one of the
+ * following types: <ul> <li>{@link #generatePlainSingleBond} - single line between two atoms</li>
+ * <li>{@link #generateBoldWedgeBond} - wedged up stereo </li> <li>{@link #generateHashedWedgeBond}
+ * - wedged down stereo bond </li> <li>{@link #generateWavyBond} - up or down bond </li> </ul> </li>
+ * <li> {@link #generateDoubleBond} - delegates to one of the following types: <ul> <li>{@link
+ * #generateOffsetDoubleBond} - one line rests on the center between the atoms</li> <li>{@link
+ * #generateCenteredDoubleBond} - both lines rest equidistant from the center between the atoms</li>
+ * <li>{@link #generateCrossedDoubleBond} - unknown double stereochemistry </li> </ul> </li>
+ * <li>{@link #generateTripleBond} - composes a single and double bond</li> <li>{@link
+ * #generateDashedBond} - the unknown bond type</li> </ul>
  *
  * @author John May
  */
@@ -143,7 +130,7 @@ final class StandardBondGenerator {
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
         this.hatchSections = parameters.get(StandardGenerator.HatchSections.class);
-        
+
         // foreground is based on the carbon color
         this.foreground = parameters.get(StandardGenerator.AtomColor.class)
                                     .getAtomColor(container.getBuilder()
@@ -253,7 +240,7 @@ final class StandardBondGenerator {
         final Point2d toPoint = to.getPoint2d();
 
         final Point2d fromBackOffPoint = backOffPoint(from, to);
-        final Point2d toBackOffPoint   = backOffPoint(to, from);
+        final Point2d toBackOffPoint = backOffPoint(to, from);
 
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
         final Vector2d perpendicular = newPerpendicularVector(unit);
@@ -263,16 +250,16 @@ final class StandardBondGenerator {
 
         final double opposite = halfWideEnd - halfNarrowEnd;
         final double adjacent = fromPoint.distance(toPoint);
-        
+
         final double fromOffset = halfNarrowEnd + opposite / adjacent * fromBackOffPoint.distance(fromPoint);
         final double toOffset = halfNarrowEnd + opposite / adjacent * toBackOffPoint.distance(fromPoint);
-        
+
         // four points of the trapezoid
         Tuple2d a = sum(fromBackOffPoint, scale(perpendicular, fromOffset));
         Tuple2d b = sum(fromBackOffPoint, scale(perpendicular, -fromOffset));
         Tuple2d c = sum(toBackOffPoint, scale(perpendicular, -toOffset));
         Tuple2d d = sum(toBackOffPoint, scale(perpendicular, toOffset));
-        
+
         return new GeneralPath(Arrays.asList(new MoveTo(new Point2d(a)),
                                              new LineTo(new Point2d(b)),
                                              new LineTo(new Point2d(c)),
@@ -310,18 +297,18 @@ final class StandardBondGenerator {
 
         final ElementGroup group = new ElementGroup();
 
-        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint) 
+        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint)
                                                       : Double.NEGATIVE_INFINITY;
-        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint) 
+        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint)
                                                   : Double.POSITIVE_INFINITY;
 
         for (int i = 0; i < hatchSections; i++) {
             final double distance = i * step;
-            
+
             // don't draw if we're within an atom symbol
             if (distance < start || distance > end)
                 continue;
-            
+
             final double offset = halfNarrowEnd + opposite / adjacent * distance;
             Tuple2d interval = sum(fromPoint, scale(unit, distance));
             group.add(newLineElement(sum(interval, scale(perpendicular, offset)),
