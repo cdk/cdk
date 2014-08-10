@@ -232,7 +232,7 @@ final class StandardBondGenerator {
         final Vector2d perpendicular = newPerpendicularVector(unit);
 
         final double halfNarrowEnd = stroke / 2;
-        final double halfWideEnd   = wedgeWidth / 2;
+        final double halfWideEnd = wedgeWidth / 2;
 
         // four points of the trapezoid
         Tuple2d a = sum(fromPoint, scale(perpendicular, halfNarrowEnd));
@@ -294,8 +294,8 @@ final class StandardBondGenerator {
     /**
      * Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
      * Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
-     * side. The side is determined by the 'atom1Bond' parameter. The first atom should not have
-     * a displayed symbol.
+     * side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
+     * displayed symbol.
      *
      * @param atom1      first atom
      * @param atom2      second atom
@@ -307,7 +307,7 @@ final class StandardBondGenerator {
 
         assert !hasDisplayedSymbol(atom1);
         assert atom1Bond != null;
-        
+
         final Point2d atom1Point = atom1.getPoint2d();
         final Point2d atom2Point = atom2.getPoint2d();
 
@@ -329,7 +329,7 @@ final class StandardBondGenerator {
             final Tuple2d nudge = scale(perpendicular, separation / 2);
             symbols[atom2index] = symbols[atom2index].translate(nudge.x, nudge.y);
         }
-        
+
         // the offset line isn't drawn the full length and is backed off more depending on the
         // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
         double atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
@@ -340,11 +340,11 @@ final class StandardBondGenerator {
         if (!atom2Bonds.isEmpty() && !hasDisplayedSymbol(atom2)) {
             Vector2d closest = getNearestVector(perpendicular, atom2, atom2Bonds);
             atom2Offset = adjacentLength(sum(closest, negate(unit)), perpendicular, separation);
-            
+
             // closest bond may still be on the other side, if so the offset needs
             // negating
             if (closest.dot(perpendicular) < 0)
-                atom2Offset = -atom2Offset;  
+                atom2Offset = -atom2Offset;
         }
 
         final ElementGroup group = new ElementGroup();
@@ -382,7 +382,7 @@ final class StandardBondGenerator {
         final double halfSeparation = separation / 2;
 
         ElementGroup group = new ElementGroup();
-        
+
         Tuple2d line1Atom1Point = sum(atom1BackOffPoint, scale(perpendicular1, halfSeparation));
         Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular1, halfSeparation));
         Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular2, halfSeparation));
@@ -390,18 +390,18 @@ final class StandardBondGenerator {
 
         // adjust atom 1 lines to be flush with adjacent bonds
         if (!hasDisplayedSymbol(atom1) && atom1Bonds.size() > 1) {
-            Vector2d nearest1 = getNearestVector(perpendicular1, atom1, atom1Bonds);            
+            Vector2d nearest1 = getNearestVector(perpendicular1, atom1, atom1Bonds);
             Vector2d nearest2 = getNearestVector(perpendicular2, atom1, atom1Bonds);
-            
+
             double line1Adjust = adjacentLength(nearest1, perpendicular1, halfSeparation);
             double line2Adjust = adjacentLength(nearest2, perpendicular2, halfSeparation);
-            
+
             // corner case when the adjacent bonds are acute to the double bond,
             if (nearest1.dot(unit) > 0)
                 line1Adjust = -line1Adjust;
             if (nearest2.dot(unit) > 0)
                 line2Adjust = -line2Adjust;
-            
+
             line1Atom1Point = sum(line1Atom1Point, scale(unit, -line1Adjust));
             line2Atom1Point = sum(line2Atom1Point, scale(unit, -line2Adjust));
         }
@@ -419,11 +419,11 @@ final class StandardBondGenerator {
                 line1Adjust = -line1Adjust;
             if (nearest2.dot(unit) < 0)
                 line2Adjust = -line2Adjust;
-            
+
             line1Atom2Point = sum(line1Atom2Point, scale(unit, line1Adjust));
-            line2Atom2Point = sum(line2Atom2Point, scale(unit, line2Adjust));                
+            line2Atom2Point = sum(line2Atom2Point, scale(unit, line2Adjust));
         }
-        
+
         group.add(newLineElement(line1Atom1Point, line1Atom2Point));
         group.add(newLineElement(line2Atom1Point, line2Atom2Point));
 
