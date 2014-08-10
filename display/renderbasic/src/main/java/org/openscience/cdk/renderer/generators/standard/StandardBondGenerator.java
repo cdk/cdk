@@ -237,27 +237,18 @@ final class StandardBondGenerator {
         final double halfNarrowEnd = stroke / 2;
         final double halfWideEnd = wedgeWidth / 2;
 
-        // four points of the trapezoid
-        Tuple2d a = sum(fromPoint, scale(perpendicular, halfNarrowEnd));
-        Tuple2d b = sum(fromPoint, scale(perpendicular, -halfNarrowEnd));
-        Tuple2d c = sum(toPoint, scale(perpendicular, -halfWideEnd));
-        Tuple2d d = sum(toPoint, scale(perpendicular, halfWideEnd));
-        
         final double opposite = halfWideEnd - halfNarrowEnd;
         final double adjacent = fromPoint.distance(toPoint);
         
-        // adjust the points to account for the back off, the overall shape is maintained
-        if (hasDisplayedSymbol(from)) {            
-            final double offset = (opposite / adjacent) * fromBackOffPoint.distance(fromPoint);
-            a = sum(fromBackOffPoint, scale(perpendicular, offset));        
-            b = sum(fromBackOffPoint, scale(perpendicular, -offset));        
-        }
-        if (hasDisplayedSymbol(to)) {
-            final double offset = (opposite / adjacent) * toBackOffPoint.distance(fromPoint);
-            c = sum(toBackOffPoint, scale(perpendicular, -offset));
-            d = sum(toBackOffPoint, scale(perpendicular, offset));
-        }
-
+        final double fromOffset = halfNarrowEnd + opposite / adjacent * fromBackOffPoint.distance(fromPoint);
+        final double toOffset = halfNarrowEnd + opposite / adjacent * toBackOffPoint.distance(fromPoint);
+        
+        // four points of the trapezoid
+        Tuple2d a = sum(fromBackOffPoint, scale(perpendicular, fromOffset));
+        Tuple2d b = sum(fromBackOffPoint, scale(perpendicular, -fromOffset));
+        Tuple2d c = sum(toBackOffPoint, scale(perpendicular, -toOffset));
+        Tuple2d d = sum(toBackOffPoint, scale(perpendicular, toOffset));
+        
         return new GeneralPath(Arrays.asList(new MoveTo(new Point2d(a)),
                                              new LineTo(new Point2d(b)),
                                              new LineTo(new Point2d(c)),
