@@ -125,7 +125,7 @@ final class StandardBondGenerator {
             atomIndexMap.put(container.getAtom(i), i);
         ringMap = ringPreferenceMap(container);
 
-        // set parameters (TODO need parameters from RendererModel)
+        // set parameters
         this.stroke = stroke;
         this.separation = parameters.get(StandardGenerator.SeparationRatio.class) * stroke;
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
