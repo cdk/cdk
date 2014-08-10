@@ -497,8 +497,37 @@ final class StandardBondGenerator {
         return group;
     }
 
-    private IRenderingElement generateCrossedDoubleBond(IAtom atom1, IAtom atom2) {
-        return new ElementGroup();
+    /**
+     * The crossed bond defines unknown geometric isomerism on a double bond. The cross is
+     * displayed for {@link IBond.Stereo#E_OR_Z}.
+     * 
+     * @param from drawn from this atom
+     * @param to drawn to this atom
+     * @return generated rendering element
+     */
+    private IRenderingElement generateCrossedDoubleBond(IAtom from, IAtom to) {
+
+        final Point2d atom1BackOffPoint = backOffPoint(from, to);
+        final Point2d atom2BackOffPoint = backOffPoint(to, from);
+
+        final Vector2d unit = newUnitVector(atom1BackOffPoint, atom2BackOffPoint);
+        final Vector2d perpendicular1 = newPerpendicularVector(unit);
+        final Vector2d perpendicular2 = negate(perpendicular1);
+
+        final double halfSeparation = separation / 2;
+
+        // same as centered double bond, this could be improved by interpolating the points
+        // during back off
+        Tuple2d line1Atom1Point = sum(atom1BackOffPoint, scale(perpendicular1, halfSeparation));
+        Tuple2d line1Atom2Point = sum(atom2BackOffPoint, scale(perpendicular1, halfSeparation));
+        Tuple2d line2Atom1Point = sum(atom1BackOffPoint, scale(perpendicular2, halfSeparation));
+        Tuple2d line2Atom2Point = sum(atom2BackOffPoint, scale(perpendicular2, halfSeparation));
+
+        // swap end points to generate a cross
+        ElementGroup group = new ElementGroup();
+        group.add(newLineElement(line1Atom1Point, line2Atom2Point));
+        group.add(newLineElement(line2Atom1Point, line1Atom2Point));
+        return group;
     }
 
     /**
