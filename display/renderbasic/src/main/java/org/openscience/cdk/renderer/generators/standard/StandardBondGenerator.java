@@ -93,7 +93,7 @@ final class StandardBondGenerator {
     private final double separation;
     private final double backOff;
     private final double wedgeWidth;
-    private final double hatchSections;
+    private final int    hatchSections;
     private final Color  foreground;
 
 
@@ -122,7 +122,7 @@ final class StandardBondGenerator {
         this.separation = 5 * stroke;
         this.backOff = 2 * stroke;
         this.wedgeWidth = 7 * stroke;
-        this.hatchSections = 16;
+        this.hatchSections = 8;
         this.foreground = Color.BLACK;
     }
 
@@ -257,8 +257,54 @@ final class StandardBondGenerator {
                                foreground);
     }
 
+    /**
+     * Generates a rendering element for a hashed wedge bond (i.e. down) from one atom to another.
+     *
+     * @param from narrow end of the wedge
+     * @param to   bold end of the wedge
+     * @return the rendering element
+     */
     IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to) {
-        return new ElementGroup();
+        final Point2d fromPoint = from.getPoint2d();
+        final Point2d toPoint = to.getPoint2d();
+
+        final Point2d fromBackOffPoint = backOffPoint(from, to);
+        final Point2d toBackOffPoint = backOffPoint(to, from);
+
+        final Vector2d unit = newUnitVector(fromPoint, toPoint);
+        final Vector2d perpendicular = newPerpendicularVector(unit);
+
+        final double halfNarrowEnd = stroke / 2;
+        final double halfWideEnd = wedgeWidth / 2;
+
+        final double opposite = halfWideEnd - halfNarrowEnd;
+        final double adjacent = fromPoint.distance(toPoint);
+
+        // we subtract one due to fenceposts, this ensures the specified number
+        // of hashed is drawn
+        final double step = adjacent / (hatchSections - 1);
+
+        final ElementGroup group = new ElementGroup();
+
+        final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint) 
+                                                      : Double.NEGATIVE_INFINITY;
+        final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint) 
+                                                  : Double.POSITIVE_INFINITY;
+
+        for (int i = 0; i < hatchSections; i++) {
+            final double distance = i * step;
+            
+            // don't draw if we're within an atom symbol
+            if (distance < start || distance > end)
+                continue;
+            
+            final double offset = halfNarrowEnd + opposite / adjacent * distance;
+            Tuple2d interval = sum(fromPoint, scale(unit, distance));
+            group.add(newLineElement(sum(interval, scale(perpendicular, offset)),
+                                     sum(interval, scale(perpendicular, -offset))));
+        }
+
+        return group;
     }
 
     IRenderingElement generateWavyBond(IAtom from, IAtom to) {
