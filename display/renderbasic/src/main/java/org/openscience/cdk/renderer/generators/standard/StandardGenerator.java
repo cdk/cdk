@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
-import org.openscience.cdk.renderer.color.CDK2DAtomColors;
 import org.openscience.cdk.renderer.color.IAtomColorer;
 import org.openscience.cdk.renderer.color.UniColor;
 import org.openscience.cdk.renderer.elements.Bounds;
@@ -48,7 +47,6 @@ import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
@@ -69,7 +67,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private final StandardAtomGenerator atomGenerator;
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(),
-                                         visibility = new Visibility();
+            visibility                             = new Visibility(),
+            strokeRatio                            = new StrokeRatio(),
+            separationRatio                        = new SeparationRatio(),
+            wedgeRatio                             = new WedgeRatio(),
+            marginRatio                            = new SymbolMarginRatio(),
+            hatchSections                          = new HatchSections();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -90,12 +93,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             return new ElementGroup();
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
-        
+
         final SymbolVisibility visibility = parameters.get(Visibility.class);
         final IAtomColorer coloring = parameters.get(AtomColor.class);
 
-        // the stroke width is based on the font
-        final double stroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
+        // the stroke width is based on the font. a better method is needed to get
+        // the exact font stroke but for now we use the width of the pipe character.
+        final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
+        final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, scale);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke);
@@ -190,7 +195,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     @Override public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.<IGeneratorParameter<?>>asList(atomColor,
-                                                     visibility);
+                                                     visibility,
+                                                     strokeRatio,
+                                                     separationRatio,
+                                                     wedgeRatio,
+                                                     marginRatio,
+                                                     hatchSections);
     }
 
     /**
@@ -275,6 +285,70 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override public SymbolVisibility getDefault() {
             return SymbolVisibility.iupacRecommendations();
+        }
+    }
+
+    /**
+     * Defines the ratio of the stroke to the width of the stroke of the font used to depict atom
+     * symbols. Default = 1.
+     */
+    public static final class StrokeRatio extends AbstractGeneratorParameter<Double> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Double getDefault() {
+            return 1d;
+        }
+    }
+
+    /**
+     * Defines the ratio of the separation between lines in double bonds compared to the stroke.
+     * Default = 5.
+     */
+    public static final class SeparationRatio extends AbstractGeneratorParameter<Double> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Double getDefault() {
+            return 5d;
+        }
+    }
+
+    /**
+     * Defines the margin between an atom symbol and a connected bond based on the stroke width.
+     * Default = 2.
+     */
+    public static final class SymbolMarginRatio extends AbstractGeneratorParameter<Double> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Double getDefault() {
+            return 2d;
+        }
+    }
+
+    /**
+     * Ratio of the wide end of wedge compared to the narrow end (stroke width). Default = 8.
+     */
+    public static final class WedgeRatio extends AbstractGeneratorParameter<Double> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Double getDefault() {
+            return 8d;
+        }
+    }
+
+
+    /**
+     * The number of sections to render a hatch bond of default bond length. Default = 8.
+     */
+    public static final class HatchSections extends AbstractGeneratorParameter<Integer> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Integer getDefault() {
+            return 8;
         }
     }
 

@@ -27,7 +27,6 @@ package org.openscience.cdk.renderer.generators.standard;
 import com.google.common.primitives.Ints;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.graph.Cycles;
-import org.openscience.cdk.graph.rebond.Point;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -40,7 +39,6 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.path.Close;
 import org.openscience.cdk.renderer.elements.path.LineTo;
 import org.openscience.cdk.renderer.elements.path.MoveTo;
-import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
@@ -49,8 +47,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
-import java.awt.geom.Line2D;
-import java.awt.geom.Path2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -119,10 +115,10 @@ final class StandardBondGenerator {
 
         // set parameters (TODO need parameters from RendererModel)
         this.stroke = stroke;
-        this.separation = 5 * stroke;
-        this.backOff = 2 * stroke;
-        this.wedgeWidth = 7 * stroke;
-        this.hatchSections = 8;
+        this.separation = parameters.get(StandardGenerator.SeparationRatio.class) * stroke;
+        this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
+        this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
+        this.hatchSections = parameters.get(StandardGenerator.HatchSections.class);
         
         // foreground is based on the carbon color
         this.foreground = parameters.get(StandardGenerator.AtomColor.class)
