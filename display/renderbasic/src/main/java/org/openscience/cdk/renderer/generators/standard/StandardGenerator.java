@@ -74,7 +74,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             marginRatio                            = new SymbolMarginRatio(),
             hatchSections                          = new HatchSections(),
             dashSections                           = new DashSection(),
-            waveSections                           = new WaveSections();
+            waveSections                           = new WaveSections(),
+            fancyBoldWedges                        = new FancyBoldWedges(),
+            fancyHashedWedges                      = new FancyHashedWedges();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -196,14 +198,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @inheritDoc
      */
     @Override public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.<IGeneratorParameter<?>>asList(atomColor,
-                                                     visibility,
-                                                     strokeRatio,
-                                                     separationRatio,
-                                                     wedgeRatio,
-                                                     marginRatio,
-                                                     hatchSections,
-                                                     dashSections, waveSections);
+        return Arrays.asList(atomColor,
+                             visibility,
+                             strokeRatio,
+                             separationRatio,
+                             wedgeRatio,
+                             marginRatio,
+                             hatchSections,
+                             dashSections,
+                             waveSections,
+                             fancyBoldWedges,
+                             fancyHashedWedges);
     }
 
     /**
@@ -376,6 +381,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          */
         @Override public Integer getDefault() {
             return 8;
+        }
+    }
+
+    /**
+     * Modify bold wedges to be flush with adjacent bonds, default = true. 
+     */
+    public static final class FancyBoldWedges extends AbstractGeneratorParameter<Boolean> {
+        /** @inheritDoc */
+        @Override public Boolean getDefault() {
+            return true;
+        }
+    } 
+    
+    /**
+     * Modify hashed wedges to be flush when there is a single adjacent bond, default = true. 
+     */
+    public static final class FancyHashedWedges extends AbstractGeneratorParameter<Boolean> {
+        /** @inheritDoc */
+        @Override public Boolean getDefault() {
+            return true;
         }
     }
 

@@ -106,6 +106,7 @@ final class StandardBondGenerator {
     private final double wedgeWidth;
     private final int    hatchSections;
     private final Color  foreground;
+    private final boolean fancyBoldWedges, fancyHashedWedges;
 
 
     /**
@@ -134,6 +135,8 @@ final class StandardBondGenerator {
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
         this.hatchSections = parameters.get(StandardGenerator.HatchSections.class);
+        this.fancyBoldWedges = parameters.get(StandardGenerator.FancyBoldWedges.class);
+        this.fancyHashedWedges = parameters.get(StandardGenerator.FancyHashedWedges.class);
 
         // foreground is based on the carbon color
         this.foreground = parameters.get(StandardGenerator.AtomColor.class)
@@ -279,7 +282,7 @@ final class StandardBondGenerator {
 
         // if the symbol at the wide end of the wedge is not displayed, we can improve
         // the aesthetics by adjusting the endpoints based on connected bond angles.
-        if (!hasDisplayedSymbol(to)) {
+        if (fancyBoldWedges && !hasDisplayedSymbol(to)) {
 
             // slanted wedge
             if (toBonds.size() == 1) {
@@ -381,23 +384,25 @@ final class StandardBondGenerator {
         Vector2d hatchAngle = perpendicular;
 
         // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
-        if (!hasDisplayedSymbol(to) && toBonds.size() == 1) {
-            final IBond toBondNeighbor = toBonds.get(0);
-            final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+        if (fancyHashedWedges && !hasDisplayedSymbol(to)) {
+            if (toBonds.size() == 1) {
+                final IBond toBondNeighbor = toBonds.get(0);
+                final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
 
-            Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
+                Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
 
-            // special case when wedge bonds are in a bridged ring, wide-to-wide end we
-            // don't want to slant as normal but rather butt up against each wind end
-            if (atWideEndOfWedge(to, toBondNeighbor)) {
-                refVector = sum(refVector, negate(unit));
-                refVector.normalize();
+                // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+                // don't want to slant as normal but rather butt up against each wind end
+                if (atWideEndOfWedge(to, toBondNeighbor)) {
+                    refVector = sum(refVector, negate(unit));
+                    refVector.normalize();
+                }
+
+                // only slant if the angle isn't shallow 
+                if (refVector.angle(unit) > threshold) {
+                    hatchAngle = refVector;
+                }
             }
-
-            // only slant if the angle isn't shallow 
-            if (refVector.angle(unit) > threshold) {
-                hatchAngle = refVector;
-            }      
         }
         
         for (int i = 0; i < hatchSections; i++) {
