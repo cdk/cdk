@@ -212,9 +212,9 @@ final class StandardBondGenerator {
             case NONE:
                 return generatePlainSingleBond(from, to);
             case DOWN:
-                return generateHashedWedgeBond(from, to);
+                return generateHashedWedgeBond(from, to, toBonds);
             case DOWN_INVERTED:
-                return generateHashedWedgeBond(to, from);
+                return generateHashedWedgeBond(to, from, fromBonds);
             case UP:
                 return generateBoldWedgeBond(from, to, toBonds);
             case UP_INVERTED:
@@ -344,9 +344,10 @@ final class StandardBondGenerator {
      *
      * @param from narrow end of the wedge
      * @param to   bold end of the wedge
+     * @param toBonds bonds connected to 
      * @return the rendering element
      */
-    IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to) {
+    IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint = to.getPoint2d();
 
@@ -373,6 +374,32 @@ final class StandardBondGenerator {
         final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint)
                                                   : Double.POSITIVE_INFINITY;
 
+        
+        // don't adjust wedge if the angle is shallow than this amount
+        final double threshold = Math.toRadians(15);
+
+        Vector2d hatchAngle = perpendicular;
+
+        // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
+        if (!hasDisplayedSymbol(to) && toBonds.size() == 1) {
+            final IBond toBondNeighbor = toBonds.get(0);
+            final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+
+            Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
+
+            // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+            // don't want to slant as normal but rather butt up against each wind end
+            if (atWideEndOfWedge(to, toBondNeighbor)) {
+                refVector = sum(refVector, negate(unit));
+                refVector.normalize();
+            }
+
+            // only slant if the angle isn't shallow 
+            if (refVector.angle(unit) > threshold) {
+                hatchAngle = refVector;
+            }      
+        }
+        
         for (int i = 0; i < hatchSections; i++) {
             final double distance = i * step;
 
@@ -382,8 +409,8 @@ final class StandardBondGenerator {
 
             final double offset = halfNarrowEnd + opposite / adjacent * distance;
             Tuple2d interval = sum(fromPoint, scale(unit, distance));
-            group.add(newLineElement(sum(interval, scale(perpendicular, offset)),
-                                     sum(interval, scale(perpendicular, -offset))));
+            group.add(newLineElement(sum(interval, scale(hatchAngle, offset)),
+                                     sum(interval, scale(hatchAngle, -offset))));
         }
 
         return group;
