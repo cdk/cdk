@@ -586,7 +586,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-        String[] lines = sw.toString().split("\n");
+        String[] lines = sw.toString().split(System.getProperty("line.separator"));
 
         assertThat("incorrect file length",
                    lines.length, is(9));
@@ -608,7 +608,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-        String[] lines = sw.toString().split("\n");
+        String[] lines = sw.toString().split(System.getProperty("line.separator"));
 
         assertThat("incorrect file length",
                    lines.length, is(9));
@@ -633,7 +633,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-        String[] lines = sw.toString().split("\n");
+        String[] lines = sw.toString().split(System.getProperty("line.separator"));
 
         
         assertThat("incorrect file length",
@@ -656,7 +656,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		writer.write(molecule);
 		writer.close();
 
-        String[] lines = sw.toString().split("\n");
+        String[] lines = sw.toString().split(System.getProperty("line.separator"));
 
         assertThat("incorrect file length",
                    lines.length, is(24));
