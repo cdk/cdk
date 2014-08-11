@@ -30,6 +30,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.geom.Point2D;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -173,5 +175,33 @@ public class VecmathUtilTest {
         Vector2d nearest = VecmathUtil.getNearestVector(new Vector2d(0.5, 0.5), a1, Arrays.asList(b1, b2, b3));
         assertThat(nearest.x, closeTo(0.707d, 0.01));
         assertThat(nearest.y, closeTo(0.707d, 0.01));
+    }
+
+    @Test public void intersection1() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(1, 1),
+                                                     new Vector2d(0, 1),
+                                                     new Point2d(1, 0),
+                                                     new Vector2d(1, 0));
+        assertThat(intersect.x, closeTo(1.0, 0.01));
+        assertThat(intersect.y, closeTo(0.0, 0.01));
+    }
+
+    @Test public void intersection2() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(6, 1),
+                                                     new Vector2d(-4, -2),
+                                                     new Point2d(1, 6),
+                                                     new Vector2d(2, 4));
+        System.out.println(intersect);
+        assertThat(intersect.x, closeTo(-4, 0.01));
+        assertThat(intersect.y, closeTo(-4, 0.01));
+    }
+
+    @Test public void parallelLines() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(0, 1),
+                                                     new Vector2d(0, 1),
+                                                     new Point2d(0, -1),
+                                                     new Vector2d(0, 1));
+        assertTrue(Double.isNaN(intersect.x));
+        assertTrue(Double.isNaN(intersect.y));    
     }
 }

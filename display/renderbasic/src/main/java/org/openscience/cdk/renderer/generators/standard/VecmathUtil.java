@@ -76,7 +76,7 @@ final class VecmathUtil {
      * @param to end of vector
      * @return unit vector
      */
-    static Vector2d newUnitVector(final Point2d from, final Point2d to) {
+    static Vector2d newUnitVector(final Tuple2d from, final Tuple2d to) {
         final Vector2d vector = new Vector2d(to.x - from.x, to.y - from.y);
         vector.normalize();
         return vector;
@@ -144,6 +144,50 @@ final class VecmathUtil {
         return new Vector2d(-vector.x, -vector.y);
     }
 
+
+    /**
+     * Calculate the intersection of two vectors given their starting positions.
+     * 
+     * @param p1 position vector 1
+     * @param d1 direction vector 1
+     * @param p2 position vector 2
+     * @param d2 direction vector 2
+     * @return the intersection
+     */
+    static Point2d intersection(final Tuple2d p1, final Tuple2d d1, final Tuple2d p2, final Tuple2d d2) {
+        final Vector2d p1End = sum(p1, d1);
+        final Vector2d p2End = sum(p2, d2);
+        return intersection(p1.x, p1.y, p1End.x, p1End.y,
+                            p2.x, p2.y, p2End.x, p2End.y);    
+    }
+    
+    /**
+     * Calculate the intersection of two lines described by the points (x1,y1 -> x2,y2) and (x3,y3
+     * -> x4,y4).
+     *
+     * @param x1 first x coordinate of line 1
+     * @param y1 first y coordinate of line 1
+     * @param x2 second x coordinate of line 1
+     * @param y2 second y coordinate of line 1
+     * @param x3 first x coordinate of line 2
+     * @param y3 first y coordinate of line 2
+     * @param x4 first x coordinate of line 2
+     * @param y4 first y coordinate of line 2
+     * @return the point where the two lines intersect (or null)
+     * @see <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection,
+     * Wikipedia</a>
+     */
+    static Point2d intersection(final double x1, final double y1,
+                                final double x2, final double y2,
+                                final double x3, final double y3,
+                                final double x4, final double y4) {
+        final double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1)) /
+                ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        final double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3)) /
+                ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        return new Point2d(x, y);
+    }
+    
     /**
      * Given vectors for the hypotenuse and adjacent side of a right angled
      * triangle and the length of the opposite side, determine how long the
