@@ -582,7 +582,7 @@ final class StandardBondGenerator {
         else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
             return generateOffsetDoubleBond(atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
         }
-        else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom1)) {
+        else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom2)) {
             return generateOffsetDoubleBond(atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
         }
         else {
