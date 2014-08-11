@@ -288,18 +288,35 @@ final class StandardBondGenerator {
                 final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
 
                 Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
+                boolean wideToWide = false;
                 
                 // special case when wedge bonds are in a bridged ring, wide-to-wide end we
                 // don't want to slant as normal but rather butt up against each wind end
                 if (UP.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(1) == to) {
-                    refVector = sum(refVector, negate(unit));   
+                    refVector = sum(refVector, negate(unit));
+                    wideToWide = true;
                 } else if (UP_INVERTED.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(0) == to) {
                     refVector = sum(refVector, negate(unit));
+                    wideToWide = true;
                 }
                 
-                if (refVector.angle(unit) > threshold) {
+                final double theta = refVector.angle(unit);
+
+                if (theta > threshold) {
                     c = intersection(b, newUnitVector(b, c), toPoint, refVector);
                     d = intersection(a, newUnitVector(a, d), toPoint, refVector);
+                    
+                    // the points c, d, and e lie on the center point of the line between
+                    // the 'to' and 'toNeighbor'. Since the bond is drawn with a stroke and
+                    // has a thickness we need to move these points slightly to be flush
+                    // with the bond depiction, we only do this if the bond is not
+                    // wide-on-wide with another bold wedge 
+                    if (!wideToWide) {
+                        final double nudge = (stroke / 2) / Math.sin(theta);
+                        c = sum(c, scale(unit, nudge));
+                        d = sum(d, scale(unit, nudge));
+                        e = sum(e, scale(unit, nudge));
+                    }
                 }
             }
 
