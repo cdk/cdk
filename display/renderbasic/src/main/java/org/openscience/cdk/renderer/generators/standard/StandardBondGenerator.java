@@ -388,7 +388,7 @@ final class StandardBondGenerator {
 
         
         // don't adjust wedge if the angle is shallow than this amount
-        final double threshold = Math.toRadians(15);
+        final double threshold = Math.toRadians(35);
 
         Vector2d hatchAngle = perpendicular;
 
