@@ -55,8 +55,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
-import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
+import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
+import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.intersection;
@@ -292,10 +292,7 @@ final class StandardBondGenerator {
                 
                 // special case when wedge bonds are in a bridged ring, wide-to-wide end we
                 // don't want to slant as normal but rather butt up against each wind end
-                if (UP.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(1) == to) {
-                    refVector = sum(refVector, negate(unit));
-                    wideToWide = true;
-                } else if (UP_INVERTED.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(0) == to) {
+                if (atWideEndOfWedge(to, toBondNeighbor)) {
                     refVector = sum(refVector, negate(unit));
                     wideToWide = true;
                 }
@@ -536,8 +533,85 @@ final class StandardBondGenerator {
         else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2)) {
             return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
         }
+        else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
+            return generateOffsetDoubleBond(atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
+        }
+        else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom1)) {
+            return generateOffsetDoubleBond(atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
+        }
         else {
             return generateCenteredDoubleBond(atom1, atom2, atom1Bonds, atom2Bonds);
+        }
+    }
+
+
+    /**
+     * Special condition for drawing offset bonds. If the double bond is adjacent to two bonds
+     * and one of those bonds is wedge (with this atom at the wide end) and the other is plain
+     * single bond, we can improve aesthetics by offsetting the double bond.
+     *
+     * @param atom an atom
+     * @param bonds bonds connected to 'atom'
+     * @return special case
+     */
+    private boolean specialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds) {
+        if (bonds.size() != 2)
+            return true; 
+        if (atWideEndOfWedge(atom, bonds.get(0)) && isPlainBond(bonds.get(1)))
+            return true;
+        if (atWideEndOfWedge(atom, bonds.get(1)) && isPlainBond(bonds.get(0)))
+            return true;
+        return false;
+    }
+
+    /**
+     * Select a plain bond from a list of bonds. If no bond was found, the first
+     * is returned.
+     * 
+     * @param bonds list of bonds
+     * @return a plain bond
+     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond) 
+     */
+    private IBond selectPlainSingleBond(List<IBond> bonds) {
+        for (IBond bond : bonds) {
+            if (isPlainBond(bond))
+                return bond;
+        }
+        return bonds.get(0);
+    }
+
+    /**
+     * A plain bond is a single bond with no stereochemistry type.  
+     * 
+     * @param bond the bond to check
+     * @return the bond is plain
+     */
+    private static boolean isPlainBond(IBond bond) {
+        return SINGLE.equals(bond.getOrder()) && (bond.getStereo() == null || bond.getStereo() == NONE);
+    }
+    
+    /**
+     * Check if the provided bond is a wedge (bold or hashed) and whether the atom is at the wide
+     * end.
+     *
+     * @param atom atom to check
+     * @param bond bond to check
+     * @return the atom is at the wide end of the wedge in the provided bond
+     */
+    private boolean atWideEndOfWedge(final IAtom atom, final IBond bond) {
+        if (bond.getStereo() == null)
+            return false;
+        switch (bond.getStereo()) {
+            case UP:
+                return bond.getAtom(1) == atom;
+            case UP_INVERTED:
+                return bond.getAtom(0) == atom;
+            case DOWN:
+                return bond.getAtom(1) == atom;
+            case DOWN_INVERTED:
+                return bond.getAtom(0) == atom;
+            default:
+                return false;
         }
     }
 
