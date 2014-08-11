@@ -1229,10 +1229,6 @@ public class CMLCoreModule implements ICMLModule {
                 if (explicitHCount != 0) {
                     atom.setImplicitHydrogenCount(atom.getImplicitHydrogenCount() - explicitHCount);
                 }
-            } else {
-            	if (atom.getAtomicNumber() == 1) {
-            		atom.setImplicitHydrogenCount(0);
-            	}
             }
         }
 	}
