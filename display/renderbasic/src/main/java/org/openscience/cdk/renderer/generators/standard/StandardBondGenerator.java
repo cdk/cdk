@@ -449,8 +449,13 @@ final class StandardBondGenerator {
         final Vector2d perpendicular = newPerpendicularVector(unit);
 
         // 2 times the number of wave sections because each semi circle is drawn with two parts
-        final int nCurves = 2 * parameters.get(StandardGenerator.WaveSections.class);
+        final int nExpCurves = 2 * parameters.get(StandardGenerator.WaveSections.class);
 
+        final boolean longBond = (fromPoint.distance(toPoint) * scale) - parameters.get(BasicSceneGenerator.BondLength.class) > 4;
+        
+        double expectedStep = (parameters.get(BasicSceneGenerator.BondLength.class) / scale) / nExpCurves;
+        int nCurves = longBond ? (int) Math.ceil(fromPoint.distance(toPoint) / expectedStep) : nExpCurves;
+        
         double step = fromPoint.distance(toPoint) / nCurves;
         Vector2d peak = scale(perpendicular, step);
 
@@ -597,7 +602,7 @@ final class StandardBondGenerator {
      */
     private boolean specialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds) {
         if (bonds.size() != 2)
-            return true; 
+            return false; 
         if (atWideEndOfWedge(atom, bonds.get(0)) && isPlainBond(bonds.get(1)))
             return true;
         if (atWideEndOfWedge(atom, bonds.get(1)) && isPlainBond(bonds.get(0)))
