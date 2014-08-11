@@ -175,7 +175,7 @@ final class StandardBondGenerator {
 
         switch (order) {
             case SINGLE:
-                return generateSingleBond(atom1, atom2, stereo);
+                return generateSingleBond(bond, atom1, atom2);
             case DOUBLE:
                 return generateDoubleBond(bond);
             case TRIPLE:
@@ -189,14 +189,22 @@ final class StandardBondGenerator {
     /**
      * Generate a rendering element for single bond with the provided stereo type.
      *
+     * @param bond   the bond to render
      * @param from   an atom
      * @param to     another atom
-     * @param stereo the stereo type of the bond
      * @return bond rendering element
      */
-    private IRenderingElement generateSingleBond(IAtom from, IAtom to, IBond.Stereo stereo) {
+    private IRenderingElement generateSingleBond(IBond bond, IAtom from, IAtom to) {
+        IBond.Stereo stereo = bond.getStereo();
         if (stereo == null)
             return generatePlainSingleBond(from, to);
+        
+        List<IBond> fromBonds = container.getConnectedBondsList(from);
+        List<IBond> toBonds  = container.getConnectedBondsList(to);
+        
+        fromBonds.remove(bond);
+        toBonds.remove(bond);
+        
         switch (stereo) {
             case NONE:
                 return generatePlainSingleBond(from, to);
@@ -205,9 +213,9 @@ final class StandardBondGenerator {
             case DOWN_INVERTED:
                 return generateHashedWedgeBond(to, from);
             case UP:
-                return generateBoldWedgeBond(from, to);
+                return generateBoldWedgeBond(from, to, toBonds);
             case UP_INVERTED:
-                return generateBoldWedgeBond(to, from);
+                return generateBoldWedgeBond(to, from, fromBonds);
             case UP_OR_DOWN:
             case UP_OR_DOWN_INVERTED: // up/down is undirected
                 return generateWavyBond(to, from);
@@ -233,9 +241,10 @@ final class StandardBondGenerator {
      *
      * @param from narrow end of the wedge
      * @param to   bold end of the wedge
+     * @param toBonds bonds connected to the 'to atom'            
      * @return the rendering element
      */
-    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to) {
+    IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
 
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint = to.getPoint2d();
