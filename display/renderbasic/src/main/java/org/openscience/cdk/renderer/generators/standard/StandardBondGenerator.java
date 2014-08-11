@@ -39,6 +39,7 @@ import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.path.Close;
 import org.openscience.cdk.renderer.elements.path.LineTo;
 import org.openscience.cdk.renderer.elements.path.MoveTo;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
@@ -100,6 +101,7 @@ final class StandardBondGenerator {
     private final Map<IBond, IAtomContainer> ringMap;
 
     // parameters
+    private final double scale;
     private final double stroke;
     private final double separation;
     private final double backOff;
@@ -130,6 +132,7 @@ final class StandardBondGenerator {
         ringMap = ringPreferenceMap(container);
 
         // set parameters
+        this.scale = parameters.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
         this.separation = parameters.get(StandardGenerator.SeparationRatio.class) * stroke;
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
@@ -364,12 +367,18 @@ final class StandardBondGenerator {
         final double halfWideEnd = wedgeWidth / 2;
 
         final double opposite = halfWideEnd - halfNarrowEnd;
-        final double adjacent = fromPoint.distance(toPoint);
+        double adjacent = fromPoint.distance(toPoint);
 
+        final boolean longBond = (adjacent * scale) - parameters.get(BasicSceneGenerator.BondLength.class) > 4;
+ 
         // we subtract one due to fenceposts, this ensures the specified number
         // of hashed sections is drawn
-        final double step = adjacent / (hatchSections - 1);
+        final double expectedStep = (parameters.get(BasicSceneGenerator.BondLength.class) / scale) / (hatchSections - 1);
 
+        
+        final int nSections = longBond ? 1 + (int) Math.ceil(adjacent / expectedStep) : hatchSections;          
+        final double step = adjacent / (nSections - 1);
+        
         final ElementGroup group = new ElementGroup();
 
         final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint)
@@ -384,7 +393,7 @@ final class StandardBondGenerator {
         Vector2d hatchAngle = perpendicular;
 
         // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
-        if (fancyHashedWedges && !hasDisplayedSymbol(to)) {
+        if (fancyHashedWedges && !longBond && !hasDisplayedSymbol(to)) {
             if (toBonds.size() == 1) {
                 final IBond toBondNeighbor = toBonds.get(0);
                 final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
@@ -405,7 +414,7 @@ final class StandardBondGenerator {
             }
         }
         
-        for (int i = 0; i < hatchSections; i++) {
+        for (int i = 0; i < nSections; i++) {
             final double distance = i * step;
 
             // don't draw if we're within an atom symbol
