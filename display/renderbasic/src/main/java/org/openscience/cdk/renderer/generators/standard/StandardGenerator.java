@@ -338,7 +338,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          * @inheritDoc
          */
         @Override public Double getDefault() {
-            return 8d;
+            return 6d;
         }
     }
 

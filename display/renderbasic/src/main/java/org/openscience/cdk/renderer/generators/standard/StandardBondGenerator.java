@@ -55,8 +55,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP;
+import static org.openscience.cdk.interfaces.IBond.Stereo.UP_INVERTED;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.intersection;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.negate;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newPerpendicularVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVector;
@@ -268,11 +271,55 @@ final class StandardBondGenerator {
         Tuple2d a = sum(fromBackOffPoint, scale(perpendicular, fromOffset));
         Tuple2d b = sum(fromBackOffPoint, scale(perpendicular, -fromOffset));
         Tuple2d c = sum(toBackOffPoint, scale(perpendicular, -toOffset));
+        Tuple2d e = toBackOffPoint;
         Tuple2d d = sum(toBackOffPoint, scale(perpendicular, toOffset));
+
+        // don't adjust wedge if the angle is shallow than this amount
+        final double threshold = Math.toRadians(15);
+
+        // if the symbol at the wide end of the wedge is not displayed, we can improve
+        // the aesthetics by adjusting the endpoints based on connected bond angles.
+        if (!hasDisplayedSymbol(to)) {
+
+            // slanted wedge
+            if (toBonds.size() == 1) {
+                
+                final IBond toBondNeighbor = toBonds.get(0);
+                final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+
+                Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
+                
+                // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+                // don't want to slant as normal but rather butt up against each wind end
+                if (UP.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(1) == to) {
+                    refVector = sum(refVector, negate(unit));   
+                } else if (UP_INVERTED.equals(toBondNeighbor.getStereo()) && toBondNeighbor.getAtom(0) == to) {
+                    refVector = sum(refVector, negate(unit));
+                }
+                
+                if (refVector.angle(unit) > threshold) {
+                    c = intersection(b, newUnitVector(b, c), toPoint, refVector);
+                    d = intersection(a, newUnitVector(a, d), toPoint, refVector);
+                }
+            }
+
+            // bifurcated (forked) wedge
+            else if (toBonds.size() > 1) {
+
+                Vector2d refVectorA = getNearestVector(perpendicular, to, toBonds);
+                Vector2d refVectorB = getNearestVector(negate(perpendicular), to, toBonds);
+
+                if (refVectorB.angle(unit) > threshold)
+                    c = intersection(b, newUnitVector(b, c), toPoint, refVectorB);
+                if (refVectorA.angle(unit) > threshold)
+                    d = intersection(a, newUnitVector(a, d), toPoint, refVectorA);
+            }
+        }
 
         return new GeneralPath(Arrays.asList(new MoveTo(new Point2d(a)),
                                              new LineTo(new Point2d(b)),
                                              new LineTo(new Point2d(c)),
+                                             new LineTo(new Point2d(e)),
                                              new LineTo(new Point2d(d)),
                                              new Close()),
                                foreground);
