@@ -73,7 +73,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             wedgeRatio                             = new WedgeRatio(),
             marginRatio                            = new SymbolMarginRatio(),
             hatchSections                          = new HatchSections(),
-            dashSections                           = new DashSection();
+            dashSections                           = new DashSection(),
+            waveSections                           = new WaveSections();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -202,7 +203,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                      wedgeRatio,
                                                      marginRatio,
                                                      hatchSections,
-                                                     dashSections);
+                                                     dashSections, waveSections);
     }
 
     /**
@@ -346,6 +347,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * The number of sections to render a hatch bond of default bond length. Default = 8.
      */
     public static final class HatchSections extends AbstractGeneratorParameter<Integer> {
+        /**
+         * @inheritDoc
+         */
+        @Override public Integer getDefault() {
+            return 8;
+        }
+    }
+
+    /**
+     * The number of waves (semi circles) to draw wavy bonds with. Default = 8.
+     */
+    public static final class WaveSections extends AbstractGeneratorParameter<Integer> {
         /**
          * @inheritDoc
          */

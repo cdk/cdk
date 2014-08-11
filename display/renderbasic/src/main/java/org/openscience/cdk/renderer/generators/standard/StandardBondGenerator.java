@@ -47,6 +47,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
+import java.awt.geom.Path2D;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -318,8 +319,118 @@ final class StandardBondGenerator {
         return group;
     }
 
-    IRenderingElement generateWavyBond(IAtom from, IAtom to) {
-        return new ElementGroup();
+    /**
+     * Generates a wavy bond (up or down stereo) between two atoms.
+     *
+     * @param from drawn from this atom
+     * @param to   drawn to this atom
+     * @return generated rendering element
+     */
+    IRenderingElement generateWavyBond(final IAtom from, final IAtom to) {
+
+        final Point2d fromPoint = from.getPoint2d();
+        final Point2d toPoint = to.getPoint2d();
+
+        final Point2d fromBackOffPoint = backOffPoint(from, to);
+        final Point2d toBackOffPoint = backOffPoint(to, from);
+
+        final Vector2d unit = newUnitVector(fromPoint, toPoint);
+        final Vector2d perpendicular = newPerpendicularVector(unit);
+
+        // 2 times the number of wave sections because each semi circle is drawn with two parts
+        final int nCurves = 2 * parameters.get(StandardGenerator.WaveSections.class);
+
+        double step = fromPoint.distance(toPoint) / nCurves;
+        Vector2d peak = scale(perpendicular, step);
+
+        boolean started = false;
+
+        final double start = fromPoint.equals(fromBackOffPoint) ? Double.MIN_VALUE : fromPoint.distance(fromBackOffPoint);
+        final double end = toPoint.equals(toBackOffPoint) ? Double.MAX_VALUE : fromPoint.distance(toBackOffPoint);
+
+
+        Path2D path = new Path2D.Double();
+        if (start == Double.MIN_VALUE) {
+            path.moveTo(fromPoint.x, fromPoint.y);
+            started = true;
+        }
+
+        // the wavy bond is drawn using Bezier curves, removing the control points each 
+        // first 'endPoint' of the iteration forms a zig-zag pattern. The second 'endPoint'
+        // lies on the central line between the atoms.
+        
+        // the following may help to visualise what we're doing,
+        // s  = start (could be any end point)
+        // e  = end point
+        // cp = control points 1 and 2
+        //
+        //     cp2 e cp1                   cp2 e cp1
+        //  cp1          cp2           cp1           cp2 
+        //  s ---------- e ----------- e ----------- e ------------ center line
+        //               cp1           cp2           cp1
+        //                   cp2 e cp1                   cp2 e
+        //  |            |
+        //  --------------
+        //   one iteration
+        //
+        //  |     |
+        //  -------
+        //   one curveTo / 'step' distance
+        
+        // for the back off on atom symbols, the start position is the first end point after
+        // the backed off point. Similarly, the curve is only drawn if the end point is 
+        // before the 'toBackOffPoint'
+        
+        for (int i = 1; i < nCurves; i += 2) {
+
+            peak = negate(peak); // alternate wave side
+
+            // curving away from the center line
+            {
+                double dist = i * step;
+
+                if (dist >= start && dist <= end) {
+
+                    // first end point
+                    final Tuple2d endPoint = sum(sum(fromPoint, scale(unit, dist)),
+                                                 peak);
+                    if (started) {
+
+                        final Tuple2d controlPoint1 = sum(sum(fromPoint, scale(unit, (i - 1) * step)), scale(peak, 0.5));
+                        final Tuple2d controlPoint2 = sum(sum(fromPoint, scale(unit, (i - 0.5) * step)), peak);
+                        path.curveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+
+                    }
+                    else {
+                        path.moveTo(endPoint.x, endPoint.y);
+                        started = true;
+                    }
+                }
+            }
+
+            // curving towards the center line
+            {
+                double dist = (i + 1) * step;
+
+                if (dist >= start && dist <= end) {
+
+                    // second end point
+                    final Tuple2d endPoint = sum(fromPoint, scale(unit, dist));
+
+                    if (started) {
+                        final Tuple2d controlPoint1 = sum(sum(fromPoint, scale(unit, (i + 0.5) * step)), peak);
+                        final Tuple2d controlPoint2 = sum(sum(fromPoint, scale(unit, dist)), scale(peak, 0.5));
+                        path.curveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+                    }
+                    else {
+                        path.moveTo(endPoint.x, endPoint.y);
+                        started = true;
+                    }
+                }
+            }
+        }
+
+        return GeneralPath.outlineOf(path, stroke, foreground);
     }
 
     /**
