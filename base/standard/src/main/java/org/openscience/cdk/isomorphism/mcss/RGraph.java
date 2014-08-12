@@ -72,7 +72,7 @@ import java.util.List;
   *  from any kind of source graphs, thus it is not restricted to a chemical
   *  context.
   *
-  *  <p>The RGraph model is indendant from the CDK model and the link between
+  *  <p>The RGraph model is independent from the CDK model and the link between
   *  both model is performed by the RTools class. In this way the RGraph 
   *  class may be reused in other graph context (conceptual graphs,....)
   *

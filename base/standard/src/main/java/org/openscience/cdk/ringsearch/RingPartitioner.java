@@ -115,7 +115,7 @@ public class RingPartitioner {
 
     /**
      *  Perform a walk in the given RingSet, starting at a given Ring and
-     *  recursivly searching for other Rings connected to this ring. By doing
+     *  recursively searching for other Rings connected to this ring. By doing
      *  this it finds all rings in the RingSet connected to the start ring,
      *  putting them in newRs, and removing them from rs.
      *

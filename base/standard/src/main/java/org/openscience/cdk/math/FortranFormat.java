@@ -29,9 +29,9 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Converts a String representation of a Fortran double to a double.
  *
- * <p>A modified version of the atof method provided in the Core Java
+ * <p>A modified version of the <code>atof</code> method provided in the Core Java
  * books by Cay S. Horstmann & Gary Cornell.  The main difference
- * here is that we scan for fortran double precision characters
+ * here is that we scan for Fortran double precision characters
  * ('D' and 'd') which often cause the C versions of atof to
  * barf.
  *

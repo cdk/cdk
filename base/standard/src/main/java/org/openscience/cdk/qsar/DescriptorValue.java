@@ -44,12 +44,12 @@ public class DescriptorValue implements Serializable{
     private Exception exception;
 
     /**
-     * Constrct a descriptor value object, representing the numeric values as well as parameters and provenance.
+     * Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
      *
      * This constructor should be used when there has been no error during the descriptor calculation
      *
      * @param specification The specification
-     * @param parameterNames The parameter names for the decriptors
+     * @param parameterNames The parameter names for the descriptors
      * @param parameterSettings  The parameter settings
      * @param value  The actual values
      * @param descriptorNames The names of the values
@@ -64,16 +64,16 @@ public class DescriptorValue implements Serializable{
     }
 
     /**
-     * Constrct a descriptor value object, representing the numeric values as well as parameters and provenance.
+     * Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
      *
      * This constructor should be used when there has been an error during the descriptor calculation
      *
      * @param specification The specification
-     * @param parameterNames The parameter names for the decriptors
+     * @param parameterNames The parameter names for the descriptors
      * @param parameterSettings  The parameter settings
      * @param value  The actual values
      * @param descriptorNames The names of the values
-     * @param exception The exception object that should have been caught if an error occured during decriptor
+     * @param exception The exception object that should have been caught if an error occurred during descriptor
      * calculation
      */
     public DescriptorValue(DescriptorSpecification specification,
@@ -125,7 +125,7 @@ public class DescriptorValue implements Serializable{
      * <p/>
      * In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
      * and 1, 2, ..., N are the indices. On the other hand it is also possible to return
-     * other arbitrary names, which should be documented in the Javadocs for the decsriptor
+     * other arbitrary names, which should be documented in the JavaDocs for the descriptor
      * (e.g., the CPSA descriptor).
      * <p/>
      * Note that by default if a descriptor returns a single value (such as {@link org.openscience.cdk.qsar.descriptors.molecular.ALOGPDescriptor}

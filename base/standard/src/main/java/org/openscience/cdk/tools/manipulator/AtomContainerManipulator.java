@@ -113,7 +113,7 @@ public class AtomContainerManipulator {
     }
 
 	/**
-	 * Returna an atom in an atomcontainer identified by id
+	 * Returns an atom in an atomcontainer identified by id
 	 *
 	 * @param ac The AtomContainer to search in
 	 * @param id The id to search for

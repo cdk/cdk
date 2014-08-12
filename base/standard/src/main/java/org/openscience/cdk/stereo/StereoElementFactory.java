@@ -89,7 +89,7 @@ public abstract class StereoElementFactory {
      * Internal constructor.
      * 
      * @param container an atom container
-     * @param graph     adjcancey list representation
+     * @param graph     adjacency list representation
      * @param bondMap   lookup bonds by atom index
      */
     protected StereoElementFactory(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap) {
@@ -302,7 +302,7 @@ public abstract class StereoElementFactory {
     static final class StereoElementFactory2D extends StereoElementFactory {
 
         /**
-         * Threshold at which the determinant is considered too small (unspeicifed
+         * Threshold at which the determinant is considered too small (unspecified
          * by coordinates).
          */
         private static final double THRESHOLD = 0.1;
