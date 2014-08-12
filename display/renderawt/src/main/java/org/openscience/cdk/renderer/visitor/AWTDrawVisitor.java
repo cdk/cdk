@@ -114,6 +114,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
 	private final Map<TextAttribute, Object> map = 
         new Hashtable<TextAttribute, Object>();
+    
+    private final float minStroke;
+    
+    private final boolean strokeCache;
 	
 	private final Graphics2D graphics;
 
@@ -136,12 +140,36 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      */
     @TestMethod("testConstructor")
 	public AWTDrawVisitor(Graphics2D graphics) {
-		this.graphics = graphics;
-		this.fontManager = null;
-		this.rendererModel = null;
-		
-        map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
+		this(graphics, true, 1.5f);
 	}
+
+    /**
+     * Internal constructor.
+     * 
+     * @param graphics the graphics instance
+     * @param strokeCache cache strokes internally, only sizes at 0.25 increments are stored
+     * @param minStroke the minimum stroke, strokes smaller than this are automatically resized
+     */
+    private AWTDrawVisitor(Graphics2D graphics, boolean strokeCache, float minStroke) {
+        this.graphics = graphics;
+        this.fontManager = null;
+        this.rendererModel = null;
+        this.strokeCache = strokeCache;
+        this.minStroke = minStroke;
+
+        map.put(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUB);
+    }
+
+    /**
+     * Create a draw visitor that will be rendering to a vector graphics output. This disables
+     * the minimum stroke size and stroke caching when drawing lines. 
+     * 
+     * @param g2 graphics environment
+     * @return draw visitor
+     */
+    public static AWTDrawVisitor forVectorGraphics(Graphics2D g2) {
+        return new AWTDrawVisitor(g2, false, Float.NEGATIVE_INFINITY);
+    }
 	
     private void visit(ElementGroup elementGroup) {
         elementGroup.visitChildren(this);
@@ -152,11 +180,11 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         
         // scale the stroke by zoom + scale (both included in the AffineTransform) 
         float width = (float) (line.width * transform.getScaleX());
-        if (width < 1.5f) width = 1.5f;
+        if (width < minStroke) width = minStroke;
 
         int key   = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
         
-        if (strokeMap.containsKey(key)) {
+        if (strokeCache && strokeMap.containsKey(key)) {
             this.graphics.setStroke(strokeMap.get(key));
         } else {
             BasicStroke stroke = new BasicStroke(width, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
