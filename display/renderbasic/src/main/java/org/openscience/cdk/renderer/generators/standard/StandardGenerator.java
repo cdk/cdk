@@ -141,9 +141,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             Color highlight = getHighlightColor(bond);
             
             if (highlight != null) {
-                middleLayer.add(recolor(bondElements[i], highlight));
+                frontLayer.add(recolor(bondElements[i], highlight));
             } else {
-                frontLayer.add(bondElements[i]);
+                middleLayer.add(bondElements[i]);
             }
         }
 
