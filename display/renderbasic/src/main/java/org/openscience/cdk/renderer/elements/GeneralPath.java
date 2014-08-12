@@ -100,6 +100,16 @@ public class GeneralPath implements IRenderingElement{
         this.stroke   = stroke;
     }
 
+    /**
+     * Recolor the path with the specified color.
+     * 
+     * @param newColor new path color
+     * @return the recolored path
+     */
+    public GeneralPath recolor(Color newColor) {
+        return new GeneralPath(elements, newColor, winding, stroke, fill);
+    }
+
     /** {@inheritDoc} */
     @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {

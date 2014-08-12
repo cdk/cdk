@@ -35,6 +35,7 @@ import org.openscience.cdk.renderer.elements.Bounds;
 import org.openscience.cdk.renderer.elements.ElementGroup;
 import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
+import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.renderer.generators.IGenerator;
@@ -209,6 +210,37 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              waveSections,
                              fancyBoldWedges,
                              fancyHashedWedges);
+    }
+
+    /**
+     * Recolor a rendering element after it has been generated. Since rendering elements
+     * are immutable, the input element remains unmodified.
+     * 
+     * @param element the rendering element
+     * @param color the new color
+     * @return recolored rendering element
+     */
+    private static IRenderingElement recolor(IRenderingElement element, Color color) {
+        if (element instanceof ElementGroup) {
+            ElementGroup orgGroup = (ElementGroup) element;
+            ElementGroup newGroup = new ElementGroup();
+            for (IRenderingElement child : orgGroup) {
+                newGroup.add(recolor(child, color));
+            }
+            return newGroup;
+        } 
+        else if (element instanceof LineElement) {
+            LineElement lineElement = (LineElement) element;
+            return new LineElement(lineElement.firstPointX,
+                                   lineElement.firstPointY,
+                                   lineElement.secondPointX,
+                                   lineElement.secondPointY,
+                                   lineElement.width,
+                                   color);    
+        } else if (element instanceof GeneralPath) {
+            return ((GeneralPath) element).recolor(color);
+        }
+        throw new IllegalArgumentException("Cannot highlight unknown element, " + element.getClass());
     }
 
     /**
