@@ -72,7 +72,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             separationRatio   = new BondSeparation(),
             wedgeRatio        = new WedgeRatio(),
             marginRatio       = new SymbolMarginRatio(),
-            hatchSections     = new HatchSections(),
+            hatchSections     = new HashSpacing(),
             dashSections      = new DashSection(),
             waveSections      = new WaveSections(),
             fancyBoldWedges   = new FancyBoldWedges(),
@@ -347,16 +347,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
-
     /**
-     * The number of sections to render a hatch bond of default bond length. Default = 8.
+     * The preferred spacing between lines in hashed bonds. The number of
+     * hashed sections displayed is then {@link BasicSceneGenerator.BondLength} / spacing.
+     * The default value is 5. 
      */
-    public static final class HatchSections extends AbstractGeneratorParameter<Integer> {
+    public static final class HashSpacing extends AbstractGeneratorParameter<Double> {
         /**
          * @inheritDoc
          */
-        @Override public Integer getDefault() {
-            return 8;
+        @Override public Double getDefault() {
+            return 5d;
         }
     }
 
