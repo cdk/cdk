@@ -69,14 +69,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private final IGeneratorParameter<?> atomColor = new AtomColor(),
             visibility                             = new Visibility(),
             strokeRatio                            = new StrokeRatio(),
-            separationRatio                        = new SeparationRatio(),
-            wedgeRatio                             = new WedgeRatio(),
-            marginRatio                            = new SymbolMarginRatio(),
-            hatchSections                          = new HatchSections(),
-            dashSections                           = new DashSection(),
-            waveSections                           = new WaveSections(),
-            fancyBoldWedges                        = new FancyBoldWedges(),
-            fancyHashedWedges                      = new FancyHashedWedges();
+            separationRatio   = new BondSeparation(),
+            wedgeRatio        = new WedgeRatio(),
+            marginRatio       = new SymbolMarginRatio(),
+            hatchSections     = new HatchSections(),
+            dashSections      = new DashSection(),
+            waveSections      = new WaveSections(),
+            fancyBoldWedges   = new FancyBoldWedges(),
+            fancyHashedWedges = new FancyHashedWedges();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -310,15 +310,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Defines the ratio of the separation between lines in double bonds compared to the stroke.
-     * Default = 5.
+     * Defines the ratio of the separation between lines in double bonds as a percentage
+     * of length ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18). 
      */
-    public static final class SeparationRatio extends AbstractGeneratorParameter<Double> {
+    public static final class BondSeparation extends AbstractGeneratorParameter<Double> {
         /**
          * @inheritDoc
          */
         @Override public Double getDefault() {
-            return 5d;
+            return 0.18;
         }
     }
 

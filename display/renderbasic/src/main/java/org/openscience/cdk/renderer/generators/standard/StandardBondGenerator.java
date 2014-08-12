@@ -58,6 +58,8 @@ import java.util.Map;
 
 import static org.openscience.cdk.interfaces.IBond.Order.SINGLE;
 import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
+import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.intersection;
@@ -134,7 +136,7 @@ final class StandardBondGenerator {
         // set parameters
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
-        this.separation = parameters.get(StandardGenerator.SeparationRatio.class) * stroke;
+        this.separation = (parameters.get(BondSeparation.class) * parameters.get(BondLength.class)) / scale;
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
         this.hatchSections = parameters.get(StandardGenerator.HatchSections.class);
@@ -369,11 +371,11 @@ final class StandardBondGenerator {
         final double opposite = halfWideEnd - halfNarrowEnd;
         double adjacent = fromPoint.distance(toPoint);
 
-        final boolean longBond = (adjacent * scale) - parameters.get(BasicSceneGenerator.BondLength.class) > 4;
+        final boolean longBond = (adjacent * scale) - parameters.get(BondLength.class) > 4;
  
         // we subtract one due to fenceposts, this ensures the specified number
         // of hashed sections is drawn
-        final double expectedStep = (parameters.get(BasicSceneGenerator.BondLength.class) / scale) / (hatchSections - 1);
+        final double expectedStep = (parameters.get(BondLength.class) / scale) / (hatchSections - 1);
 
         
         final int nSections = longBond ? 1 + (int) Math.ceil(adjacent / expectedStep) : hatchSections;          
@@ -451,9 +453,9 @@ final class StandardBondGenerator {
         // 2 times the number of wave sections because each semi circle is drawn with two parts
         final int nExpCurves = 2 * parameters.get(StandardGenerator.WaveSections.class);
 
-        final boolean longBond = (fromPoint.distance(toPoint) * scale) - parameters.get(BasicSceneGenerator.BondLength.class) > 4;
+        final boolean longBond = (fromPoint.distance(toPoint) * scale) - parameters.get(BondLength.class) > 4;
         
-        double expectedStep = (parameters.get(BasicSceneGenerator.BondLength.class) / scale) / nExpCurves;
+        double expectedStep = (parameters.get(BondLength.class) / scale) / nExpCurves;
         int nCurves = longBond ? (int) Math.ceil(fromPoint.distance(toPoint) / expectedStep) : nExpCurves;
         
         double step = fromPoint.distance(toPoint) / nCurves;
