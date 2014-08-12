@@ -70,6 +70,17 @@
       <bibtex:pages>915-926</bibtex:pages>
     </bibtex:article>
   </bibtex:entry>
+  
+   <bibtex:entry id="Clark13">
+      <bibtex:article>
+        <bibtex:author>Clark A.</bibtex:author>
+        <bibtex:title>Rendering Molecular Sketches for Publication Quality Output</bibtex:title>
+        <bibtex:journal>Molecular Informatics</bibtex:journal>
+        <bibtex:year>2013</bibtex:year>
+        <bibtex:volume>32</bibtex:volume>      
+        <bibtex:pages>291-301</bibtex:pages>
+      </bibtex:article>
+    </bibtex:entry>
 
   <bibtex:entry id="Downs89">
     <bibtex:article>

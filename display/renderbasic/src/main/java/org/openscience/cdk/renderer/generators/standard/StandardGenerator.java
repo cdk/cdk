@@ -55,14 +55,17 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
 
 /**
  * The standard generator creates {@link IRenderingElement}s for the atoms and bonds of a structure
- * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. <p/>
+ * diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
+ * generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
+ *
+ * <p/>
  *
  * Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
  *
- * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. Alternatively
- * an outer glow can be set with {@link #OUTER_GLOW_COLOR}.
+ * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. Alternatively an
+ * outer glow can be set with {@link #OUTER_GLOW_COLOR}.
  *
  * @author John May
  */
@@ -81,8 +84,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
 
     /**
-     * Defines that a particular chem object should have an outer glow in a depiction and
-     * what color that outline glow should be.
+     * Defines that a particular chem object should have an outer glow in a depiction and what color
+     * that outline glow should be.
      *
      * <pre>{@code
      * atom.setProperty(CDKConstants.OUTER_GLOW_COLOR, Color.GREEN);
@@ -142,7 +145,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                     0, 0);
 
         final double glowWidth = parameters.get(OuterGlowWidth.class);
-        
+
         ElementGroup backLayer = new ElementGroup();
         ElementGroup middleLayer = new ElementGroup();
         ElementGroup frontLayer = new ElementGroup();
@@ -155,7 +158,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             Color outerGlow = getColorProperty(bond, OUTER_GLOW_COLOR);
             Color highlight = getColorProperty(bond, HIGHLIGHT_COLOR);
             if (outerGlow != null) {
-                backLayer.add(outerGlow(bondElements[i], outerGlow, glowWidth, stroke));    
+                backLayer.add(outerGlow(bondElements[i], outerGlow, glowWidth, stroke));
             }
             if (highlight != null) {
                 frontLayer.add(recolor(bondElements[i], highlight));
@@ -177,7 +180,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             Color outerGlow = getColorProperty(atom, OUTER_GLOW_COLOR);
             Color highlight = getColorProperty(atom, HIGHLIGHT_COLOR);
             Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
-            
+
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
@@ -188,7 +191,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             if (outerGlow != null) {
                 backLayer.add(outerGlow(symbolElements, outerGlow, glowWidth, stroke));
             }
-            
+
             if (highlight != null) {
                 frontLayer.add(symbolElements);
             }
@@ -275,7 +278,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              glowWidth);
     }
 
-   
+
     /**
      * Safely access a chem object color property for a chem object.
      *
@@ -309,7 +312,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 newGroup.add(recolor(child, color));
             }
             return newGroup;
-        } 
+        }
         else if (element instanceof LineElement) {
             LineElement lineElement = (LineElement) element;
             return new LineElement(lineElement.firstPointX,
@@ -317,8 +320,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                    lineElement.secondPointX,
                                    lineElement.secondPointY,
                                    lineElement.width,
-                                   color);    
-        } else if (element instanceof GeneralPath) {
+                                   color);
+        }
+        else if (element instanceof GeneralPath) {
             return ((GeneralPath) element).recolor(color);
         }
         throw new IllegalArgumentException("Cannot highlight rendering element, " + element.getClass());
@@ -351,11 +355,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                    lineElement.secondPointY,
                                    stroke + (2 * (glowWidth * stroke)),
                                    color);
-        } else if (element instanceof GeneralPath) {
+        }
+        else if (element instanceof GeneralPath) {
             GeneralPath org = (GeneralPath) element;
             if (org.fill) {
-                return org.outline(2 * (glowWidth * stroke)).recolor(color);    
-            } else {
+                return org.outline(2 * (glowWidth * stroke)).recolor(color);
+            }
+            else {
                 return org.outline(stroke + (2 * (glowWidth * stroke))).recolor(color);
             }
         }
@@ -436,8 +442,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Defines which atoms have their symbol displayed. The default option is {@link
-     * SymbolVisibility#iupacRecommendationsWithoutTerminalCarbon()} wrapped with
-     * {@link SelectionVisibility#disconnected(SymbolVisibility)}.
+     * SymbolVisibility#iupacRecommendationsWithoutTerminalCarbon()} wrapped with {@link
+     * SelectionVisibility#disconnected(SymbolVisibility)}.
      */
     public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
         /**
@@ -462,8 +468,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Defines the ratio of the separation between lines in double bonds as a percentage
-     * of length ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18). 
+     * Defines the ratio of the separation between lines in double bonds as a percentage of length
+     * ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18).
      */
     public static final class BondSeparation extends AbstractGeneratorParameter<Double> {
         /**
@@ -500,9 +506,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * The preferred spacing between lines in hashed bonds. The number of
-     * hashed sections displayed is then {@link BasicSceneGenerator.BondLength} / spacing.
-     * The default value is 5. 
+     * The preferred spacing between lines in hashed bonds. The number of hashed sections displayed
+     * is then {@link BasicSceneGenerator.BondLength} / spacing. The default value is 5.
      */
     public static final class HashSpacing extends AbstractGeneratorParameter<Double> {
         /**
@@ -538,17 +543,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Modify bold wedges to be flush with adjacent bonds, default = true. 
+     * Modify bold wedges to be flush with adjacent bonds, default = true.
      */
     public static final class FancyBoldWedges extends AbstractGeneratorParameter<Boolean> {
         /** @inheritDoc */
         @Override public Boolean getDefault() {
             return true;
         }
-    } 
-    
+    }
+
     /**
-     * Modify hashed wedges to be flush when there is a single adjacent bond, default = true. 
+     * Modify hashed wedges to be flush when there is a single adjacent bond, default = true.
      */
     public static final class FancyHashedWedges extends AbstractGeneratorParameter<Boolean> {
         /** @inheritDoc */
@@ -556,12 +561,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             return true;
         }
     }
-    
-    
+
+
     /**
-     * The width of outer glow as a percentage of stroke width. The default value is
-     * 200% (2.0d). This means the bond outer glow, is 5 times the width as the glow
-     * extends to twice the width on each side.
+     * The width of outer glow as a percentage of stroke width. The default value is 200% (2.0d).
+     * This means the bond outer glow, is 5 times the width as the glow extends to twice the width
+     * on each side.
      */
     public static final class OuterGlowWidth extends AbstractGeneratorParameter<Double> {
         /** @inheritDoc */
