@@ -437,14 +437,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Defines which atoms have their symbol displayed. The default option is {@link
-     * SymbolVisibility#iupacRecommendations()}
+     * SymbolVisibility#iupacRecommendationsWithoutMethyl()} wrapped with
+     * {@link SelectionVisibility#disconnected(SymbolVisibility)}.
      */
     public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
         /**
          * @inheritDoc
          */
         @Override public SymbolVisibility getDefault() {
-            return SymbolVisibility.iupacRecommendationsWithoutMethyl();
+            return SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendationsWithoutMethyl());
         }
     }
 
