@@ -89,7 +89,7 @@ public class InChITautomerGenerator {
      * Overloaded {@link #getTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
      * provided as input argument.
      * @param inputMolecule and input molecule for which to generate tautomers
-     * @param inchi InChI for the inpute molecule
+     * @param inchi InChI for the input molecule
      * @return a list of tautomers
      * @throws CDKException
      * @throws CloneNotSupportedException
@@ -142,7 +142,7 @@ public class InChITautomerGenerator {
         /* Test for dots in the formula. For now, bail out when encountered; 
          * it would require more sophisticated InChI connection table parsing.
          * 
-         * Example: what happened to tyhe platinum connectivity below? 
+         * Example: what happened to the platinum connectivity below? 
          * N.N.O=C1O[Pt]OC(=O)C12CCC2<br>
          * InChI=1S/C6H8O4.2H3N.Pt/c7-4(8)6(5(9)10)2-1-3-6;;;/h1-3H2,(H,7,8)(H,9,10);2*1H3;/q;;;+2/p-2*/
         if (formula.contains("."))
@@ -584,7 +584,7 @@ public class InChITautomerGenerator {
 
 
     /**
-     * Helper method that locates an atom based on its InChi atom table
+     * Helper method that locates an atom based on its InChI atom table
      * position, which has been set as ID.
      * @param container input container
      * @param position InChI atom table position
@@ -602,7 +602,7 @@ public class InChITautomerGenerator {
 
     /**
      * Tries double bond combinations for a certain input container of which the double bonds have been stripped
-     * around the mobile hydrogen positions. Recursive.
+     * around the mobile hydrogen positions. Recursively.
      * 
      * @param container
      * @param dblBondsAdded counts double bonds added so far

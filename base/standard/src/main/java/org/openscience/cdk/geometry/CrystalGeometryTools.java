@@ -49,7 +49,7 @@ public class CrystalGeometryTools {
     /**
      * Inverts three cell axes.
      *
-     * @return         a 3x3 matrix with the three cartesian vectors representing
+     * @return         a 3x3 matrix with the three Cartesian vectors representing
      *                 the unit cell axes. The a axis is the first row.
      */
     @TestMethod("testCalcInvertedAxes_Vector3d_Vector3d_Vector3d")
@@ -106,12 +106,12 @@ public class CrystalGeometryTools {
     }
 
     /**
-     * Calculates cartesian vectors for unit cell axes from axes lengths and angles
+     * Calculates Cartesian vectors for unit cell axes from axes lengths and angles
      * between axes.
      *
-     * <p>To calculate cartesian coordinates, it places the a axis on the x axes,
+     * <p>To calculate Cartesian coordinates, it places the a axis on the x axes,
      * the b axis in the xy plane, making an angle gamma with the a axis, and places
-     * the c axis to fullfil the remaining constraints. (See also
+     * the c axis to fulfill the remaining constraints. (See also
      * <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the 
      * CCL archive</a>.)
      *
@@ -121,7 +121,7 @@ public class CrystalGeometryTools {
      * @param alpha     angle between b and c axes in degrees
      * @param beta      angle between a and c axes in degrees
      * @param gamma     angle between a and b axes in degrees
-     * @return          an array of Vector3d objects with the three cartesian vectors representing
+     * @return          an array of Vector3d objects with the three Cartesian vectors representing
      *                  the unit cell axes.
      *
      * @cdk.keyword  notional coordinates
@@ -198,7 +198,7 @@ public class CrystalGeometryTools {
     }
 
 	/**
-     * Creates cartesian coordinates for all Atoms in the Crystal.
+     * Creates Cartesian coordinates for all Atoms in the Crystal.
 	 */
     public static void fractionalToCartesian(ICrystal crystal) {
     	Iterator<IAtom> atoms = crystal.atoms().iterator();

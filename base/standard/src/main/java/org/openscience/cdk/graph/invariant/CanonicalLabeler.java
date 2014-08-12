@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * Canonically labels an atom container implementing
- * the algorithm published in David Weininger et.al. {@cdk.cite WEI89}.
+ * the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
  * The Collections.sort() method uses a merge sort which is 
  * stable and runs in n log(n).
  *
@@ -66,7 +66,7 @@ public class CanonicalLabeler {
    * <p>The Collections.sort() method uses a merge sort which is 
    * stable and runs in n log(n).
    * 
-   * <p>It is assumed that a chemicaly valid AtomContainer is provided: 
+   * <p>It is assumed that a chemically valid AtomContainer is provided: 
    * this method does not check
    * the correctness of the AtomContainer. Negative H counts will 
    * cause a NumberFormatException to be thrown.
@@ -116,7 +116,7 @@ public class CanonicalLabeler {
   /**
    * Create initial invariant labeling corresponds to step 1
    *
-   * @return ArrayList containting the
+   * @return ArrayList containing the
    */
   private List<InvPair> createInvarLabel(IAtomContainer atomContainer) {
     Iterator<IAtom> atoms = atomContainer.atoms().iterator();
@@ -226,10 +226,10 @@ public class CanonicalLabeler {
   }
 
   /**
-   * Checks to see if the vector is invariantely partitioned
+   * Checks to see if the vector is invariantly partitioned
    *
    * @param v the invariance pair vector
-   * @return true if the vector is invariantely partitioned, false otherwise
+   * @return true if the vector is invariantly partitioned, false otherwise
    */
   private boolean isInvPart(List<InvPair> v) {
     if (((InvPair) v.get(v.size()-1)).getCurr() == v.size())

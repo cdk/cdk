@@ -112,7 +112,7 @@ final class AtomTypeModel extends ElectronDonation {
                          "atom has unset atom type");
             
             // atom has been assigned an atom type but we don't know the hybrid state,
-            // typically for atomtype 'X' (unknown)
+            // typically for atom type 'X' (unknown)
             if (hyb == null)
                 continue;
 

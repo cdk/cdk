@@ -144,7 +144,7 @@ final class DaylightModel extends ElectronDonation {
             int element = element(container.getAtom(i));
             int charge  = charge(container.getAtom(i));
 
-            // abnormal valence, usally indicated a radical. these cause problems
+            // abnormal valence, usually indicated a radical. these cause problems
             // with kekulisations
             int bondedValence = bondOrderSum[i] + container.getAtom(i).getImplicitHydrogenCount();
             if (!normal(element, charge, bondedValence)) {

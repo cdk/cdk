@@ -121,7 +121,7 @@ public class UniversalIsomorphismTester {
   //                            Query Methods
   //
   // This methods are simple applications of the RGraph model on atom containers
-  // using different constrains and search options. They give an exemple of the
+  // using different constrains and search options. They give an example of the
   // most common queries but of course it is possible to define other type of
   // queries exploiting the constrain and option combinations
   //
@@ -361,7 +361,7 @@ public class UniversalIsomorphismTester {
   // Maximum common substructure search
 
   /**
-   * Returns all the maximal common substructure between twp atom containers.
+   * Returns all the maximal common substructure between two atom containers.
    *
    * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
    * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
@@ -814,7 +814,7 @@ public class UniversalIsomorphismTester {
                   )
                 )
                 &&
-                ( // atome type conditions
+                ( // atom type conditions
                   ( // a1 = a2 && b1 = b2
                 	  ac1.getBond(i).getAtom(0).getSymbol().equals(ac2.getBond(j).getAtom(0).getSymbol()) &&
                 	  ac1.getBond(i).getAtom(1).getSymbol().equals(ac2.getBond(j).getAtom(1).getSymbol())

@@ -207,7 +207,7 @@ public class Fingerprinter implements IFingerprinter {
     /**
      * Get all paths of lengths 0 to the specified length.
      *
-     * This method will find all paths upto length N starting from each
+     * This method will find all paths up to length N starting from each
      * atom in the molecule and return the unique set of such paths.
      *
      * @param container The molecule to search

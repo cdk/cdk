@@ -280,7 +280,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
 	/**
 	 * Saturates a molecule by setting appropriate bond orders.
-	 * This method is known to fail, especially on pyrolle-like compounts.
+	 * This method is known to fail, especially on pyrolle-like compounds.
 	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
 	 *
 	 * @cdk.keyword bond order, calculation
@@ -317,7 +317,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 
     /**
      * Saturates a set of Bonds in an AtomContainer.
-	 * This method is known to fail, especially on pyrolle-like compounts.
+	 * This method is known to fail, especially on pyrolle-like compounds.
 	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      */
     public boolean newSaturate(IBond[] bonds, IAtomContainer atomContainer) throws CDKException {
@@ -389,7 +389,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     
     /**
      * Saturate atom by adjusting its bond orders.
-	 * This method is known to fail, especially on pyrolle-like compounts.
+	 * This method is known to fail, especially on pyrolle-like compounds.
 	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      */
     public boolean newSaturate(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -446,7 +446,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     /**
      * The method is known to fail for certain compounds. For more information, see
      * cdk.test.limitations package.
-	 * This method is known to fail, especially on pyrolle-like compounts.
+	 * This method is known to fail, especially on pyrolle-like compounds.
 	 * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
      *
      */
@@ -567,7 +567,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	}
 	
 	/*
-	 * Recursivly fixes bond orders in a molecule for 
+	 * Recursively fixes bond orders in a molecule for 
 	 * which only connectivities but no bond orders are know.
 	 *
 	 *@ param  molecule  The molecule to fix the bond orders for
@@ -616,7 +616,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
 	}*/
 
 	/**
-	 * Calculate the number of missing hydrogens by substracting the number of
+	 * Calculate the number of missing hydrogens by subtracting the number of
 	 * bonds for the atom from the expected number of bonds. Charges are included
 	 * in the calculation. The number of expected bonds is defined by the AtomType
 	 * generated with the AtomTypeFactory.
@@ -645,7 +645,7 @@ public class SaturationChecker implements IValencyChecker, IDeduceBondOrderTool 
     }
     
     /**
-	 * Calculate the number of missing hydrogens by substracting the number of
+	 * Calculate the number of missing hydrogens by subtracting the number of
 	 * bonds for the atom from the expected number of bonds. Charges are included
 	 * in the calculation. The number of expected bonds is defined by the AtomType
 	 * generated with the AtomTypeFactory.

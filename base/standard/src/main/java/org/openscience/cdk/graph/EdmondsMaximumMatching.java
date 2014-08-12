@@ -215,7 +215,7 @@ final class EdmondsMaximumMatching {
             wCurr = parent(wAncestors, wCurr);
 
             // v and w lead to the same root - we have found a blossom. We
-            // travelled all the way down the tree thus vCurr (and wCurr) are
+            // traveled all the way down the tree thus vCurr (and wCurr) are
             // the base of the blossom
             if (vCurr == wCurr) {
                 blossom(v, w, vCurr);
@@ -389,10 +389,10 @@ final class EdmondsMaximumMatching {
     }
 
     /**
-     * Attempt to maxamise the provided matching over a subst of vertices in a
+     * Attempt to maximise the provided matching over a subset of vertices in a
      * graph.
      *
-     * @param matching the independant edge set to maxamie
+     * @param matching the independent edge set to maximise
      * @param graph    adjacency list graph representation
      * @param subset   subset of vertices
      * @return the matching 

@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * RandomGenerator is a generator of Constitutional Isomers. It needs to be 
+ * RandomGenerator is a generator of constitutional isomers. It needs to be 
  * provided with a starting constitution and it makes random moves in 
  * constitutional space from there. 
  * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.

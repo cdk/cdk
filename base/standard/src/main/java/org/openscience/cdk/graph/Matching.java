@@ -128,7 +128,7 @@ public final class Matching {
      * @param graph  adjacency list representation of graph
      * @param subset subset of vertices
      * @return the matching was perfect
-     * @throws IllegalArgumentException the graph was a diffeent size to the
+     * @throws IllegalArgumentException the graph was a different size to the
      *                                  matching capacity
      */
     @TestMethod("fulvelene2")
@@ -141,7 +141,7 @@ public final class Matching {
         if ((subset.cardinality() & 0x1) == 0x1) 
             return false;
         
-        // arbitary matching was perfect
+        // arbitrary matching was perfect
         if (arbitaryMatching(graph, subset))
             return true;
         
@@ -156,7 +156,7 @@ public final class Matching {
     }
 
     /**
-     * Assign an abirary matching that covers the subset of vertices.
+     * Assign an arbitrary matching that covers the subset of vertices.
      *
      * @param graph  adjacency list representation of graph
      * @param subset subset of vertices in the graph
@@ -167,7 +167,7 @@ public final class Matching {
 
         final BitSet unmatched = new BitSet();
 
-        // indiciates the deg of each vertex in unmatched subset
+        // indicates the deg of each vertex in unmatched subset
         final int[] deg  = new int[graph.length];
         
         // queue/stack of vertices with deg1 vertices 
@@ -211,7 +211,7 @@ public final class Matching {
                     match(v, w);
                     nMatched += 2;
                     unmatched.clear(w);
-                    // upate neighbors of w and v (if needed)
+                    // update neighbors of w and v (if needed)
                     for (final int u : graph[w])
                         if (--deg[u] == 1 && unmatched.get(u))
                             deg1[nd1++] = u;
@@ -233,7 +233,7 @@ public final class Matching {
     /**
      * Create an empty matching with the specified capacity.
      *
-     * @param capacity maxmium number of vertices
+     * @param capacity maximum number of vertices
      * @return empty matching
      */
     @TestMethod("nop")

@@ -55,15 +55,15 @@ import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
  * first. <p/>
  * 
  * For some inputs it may not be possible to assign a Kekulé form. In general
- * theses cases are rare but usally occur for one of two reasons. 
- * 1) Missing / abiguous implicit hydrogens, this is fundamental to determining the 
+ * theses cases are rare but usually occur for one of two reasons. 
+ * 1) Missing / ambiguous implicit hydrogens, this is fundamental to determining the 
  * Kekulé form and if guessed may be wrong. Some formats (e.g. molfile) can not
  * include the exact number of implicit hydrogens attached to atom whilst others
  * may omit it or optionally skip encoding. The typical example is found in the 
  * example for 1H-pyrrole, a correct SMILES encoding should include the hydrogen
- * on the aromatic nigrogen '[nH]1cccc1' (not: 'n1cccc1'). 
+ * on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1'). 
  * 2) The aromaticity perception algorithm has allowed atoms with abnormal 
- * valence. This usally happens when a non-convalent bond has be <i>upgraded</i> 
+ * valence. This usually happens when a non-convalent bond has be <i>upgraded</i> 
  * to a sigma bond during format conversion. <p/>
  * 
  * @author John May
@@ -79,7 +79,7 @@ public final class Kekulization {
     /**
      * Assign a Kekulé representation to the aromatic systems of a compound. 
      * 
-     * @param ac strucutral representation
+     * @param ac structural representation
      * @throws CDKException a Kekulé form could not be assigned
      */
     public static void kekulize(final IAtomContainer ac) throws CDKException {
@@ -122,9 +122,9 @@ public final class Kekulization {
     /**
      * Determine the set of atoms that are available to have a double-bond.
      *
-     * @param graph adjacent list reprsentation
+     * @param graph adjacent list representation
      * @param atoms array of atoms
-     * @param bonds map of atom indicies to bonds
+     * @param bonds map of atom indices to bonds
      * @return atoms that can require a double-bond
      */
     private static BitSet available(int[][] graph, IAtom[] atoms, EdgeToBondMap bonds) {
@@ -159,7 +159,7 @@ public final class Kekulization {
                 }
             }
 
-            // check if a pi bond can be asssigned
+            // check if a pi bond can be assigned
             final int element = atom.getAtomicNumber();
             final int charge  = atom.getFormalCharge();
             final int valence = graph[i].length + atom.getImplicitHydrogenCount() + nPiBonds;
@@ -173,7 +173,7 @@ public final class Kekulization {
     }
 
     /**
-     * Detemrine if the specified element with the provided charge and valance
+     * Determine if the specified element with the provided charge and valance
      * requires a pi bond? 
      *
      * @param element atomic number >= 0

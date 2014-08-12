@@ -46,7 +46,7 @@ import java.util.Arrays;
  *  is known that will distinguish all possible graph asymmetries. However, 
  *  for any given set of structures, a set of invariants can be devised to 
  *  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
- *  producer should not be considered a complete canonical labelledr but in
+ *  producer should not be considered a complete canonical labelled but in
  *  practice performs well. For a more accurate and computationally expensive
  *  labelling, please using the {@link InChINumbersTools}.
  *  
@@ -127,7 +127,7 @@ public final class Canon {
      *
      * @param container  structure
      * @param g          adjacency list graph representation
-     * @param invariants intial invariants
+     * @param invariants initial invariants
      * @return the canonical labelling
      * @see EquivalentClassPartitioner
      * @see InChINumbersTools
