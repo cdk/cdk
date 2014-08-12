@@ -74,7 +74,7 @@ public class SymbolVisibilityTest {
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
-        assertFalse(SymbolVisibility.iupacRecommendationsWithoutMethyl().visible(a1,
+        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon().visible(a1,
                                                                                  Arrays.asList(bond)));
     }
 

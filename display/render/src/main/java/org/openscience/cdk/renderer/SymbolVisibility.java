@@ -71,7 +71,7 @@ public abstract class SymbolVisibility {
     /**
      * Displays a symbol based on the preferred representation from the IUPAC guidelines (GR-2.1.2)
      * {@cdk.cite Brecher08}. Carbons are unlabeled unless they have abnormal valence, parallel
-     * bonds, or are terminal (i.e. methyl).
+     * bonds, or are terminal (i.e. methyl, methylene, etc).
      *
      * @return symbol visibility instance
      */
@@ -86,7 +86,7 @@ public abstract class SymbolVisibility {
      *
      * @return symbol visibility instance
      */
-    public static SymbolVisibility iupacRecommendationsWithoutMethyl() {
+    public static SymbolVisibility iupacRecommendationsWithoutTerminalCarbon() {
         return new IupacVisibility(false);
     }
 

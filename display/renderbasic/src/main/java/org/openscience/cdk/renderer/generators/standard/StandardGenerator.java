@@ -48,7 +48,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -437,7 +436,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Defines which atoms have their symbol displayed. The default option is {@link
-     * SymbolVisibility#iupacRecommendationsWithoutMethyl()} wrapped with
+     * SymbolVisibility#iupacRecommendationsWithoutTerminalCarbon()} wrapped with
      * {@link SelectionVisibility#disconnected(SymbolVisibility)}.
      */
     public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
@@ -445,7 +444,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
          * @inheritDoc
          */
         @Override public SymbolVisibility getDefault() {
-            return SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendationsWithoutMethyl());
+            return SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon());
         }
     }
 
