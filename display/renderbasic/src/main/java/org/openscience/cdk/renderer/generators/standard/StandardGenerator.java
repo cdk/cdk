@@ -74,7 +74,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             marginRatio       = new SymbolMarginRatio(),
             hatchSections     = new HashSpacing(),
             dashSections      = new DashSection(),
-            waveSections      = new WaveSections(),
+            waveSections      = new WaveSpacing(),
             fancyBoldWedges   = new FancyBoldWedges(),
             fancyHashedWedges = new FancyHashedWedges();
 
@@ -362,14 +362,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * The number of waves (semi circles) to draw wavy bonds with. Default = 8.
+     * The spacing of waves (semi circles) drawn in wavy bonds with. Default = 5.
      */
-    public static final class WaveSections extends AbstractGeneratorParameter<Integer> {
+    public static final class WaveSpacing extends AbstractGeneratorParameter<Integer> {
         /**
          * @inheritDoc
          */
         @Override public Integer getDefault() {
-            return 8;
+            return 5;
         }
     }
 

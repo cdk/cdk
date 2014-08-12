@@ -61,6 +61,7 @@ import static org.openscience.cdk.interfaces.IBond.Stereo.NONE;
 import static org.openscience.cdk.renderer.generators.BasicSceneGenerator.BondLength;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.BondSeparation;
 import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.HashSpacing;
+import static org.openscience.cdk.renderer.generators.standard.StandardGenerator.WaveSpacing;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.adjacentLength;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.getNearestVector;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.intersection;
@@ -111,6 +112,7 @@ final class StandardBondGenerator {
     private final double backOff;
     private final double wedgeWidth;
     private final double hashSpacing;
+    private final double waveSpacing;
     private final Color  foreground;
     private final boolean fancyBoldWedges, fancyHashedWedges;
 
@@ -143,6 +145,7 @@ final class StandardBondGenerator {
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
         this.hashSpacing = parameters.get(HashSpacing.class) / scale;
+        this.waveSpacing = parameters.get(WaveSpacing.class) / scale;
         this.fancyBoldWedges = parameters.get(StandardGenerator.FancyBoldWedges.class);
         this.fancyHashedWedges = parameters.get(StandardGenerator.FancyHashedWedges.class);
 
@@ -448,15 +451,12 @@ final class StandardBondGenerator {
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
         final Vector2d perpendicular = newPerpendicularVector(unit);
 
-        // 2 times the number of wave sections because each semi circle is drawn with two parts
-        final int nExpCurves = 2 * parameters.get(StandardGenerator.WaveSections.class);
+        final double length = fromPoint.distance(toPoint);
 
-        final boolean longBond = (fromPoint.distance(toPoint) * scale) - parameters.get(BondLength.class) > 4;
+        // 2 times the number of wave sections because each semi circle is drawn with two parts
+        final int nCurves = 2 * (int) (length / waveSpacing);
+        final double step = length / nCurves;
         
-        double expectedStep = (parameters.get(BondLength.class) / scale) / nExpCurves;
-        int nCurves = longBond ? (int) Math.ceil(fromPoint.distance(toPoint) / expectedStep) : nExpCurves;
-        
-        double step = fromPoint.distance(toPoint) / nCurves;
         Vector2d peak = scale(perpendicular, step);
 
         boolean started = false;
