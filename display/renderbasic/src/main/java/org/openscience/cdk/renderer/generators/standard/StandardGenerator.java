@@ -48,6 +48,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,7 +62,8 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
  *
- * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}.
+ * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. Alternatively
+ * an outer glow can be set with {@link #OUTER_GLOW_COLOR}.
  *
  * @author John May
  */
@@ -79,20 +81,31 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
 
+    /**
+     * Defines that a particular chem object should have an outer glow in a depiction and
+     * what color that outline glow should be.
+     *
+     * <pre>{@code
+     * atom.setProperty(CDKConstants.OUTER_GLOW_COLOR, Color.GREEN);
+     * }</pre>
+     */
+    public final static String OUTER_GLOW_COLOR = "stdgen.outer.glow.color";
+
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(),
             visibility                             = new Visibility(),
             strokeRatio                            = new StrokeRatio(),
-            separationRatio   = new BondSeparation(),
-            wedgeRatio        = new WedgeRatio(),
-            marginRatio       = new SymbolMarginRatio(),
-            hatchSections     = new HashSpacing(),
-            dashSections      = new DashSection(),
-            waveSections      = new WaveSpacing(),
-            fancyBoldWedges   = new FancyBoldWedges(),
-            fancyHashedWedges = new FancyHashedWedges();
+            separationRatio                        = new BondSeparation(),
+            wedgeRatio                             = new WedgeRatio(),
+            marginRatio                            = new SymbolMarginRatio(),
+            hatchSections                          = new HashSpacing(),
+            dashSections                           = new DashSection(),
+            waveSections                           = new WaveSpacing(),
+            fancyBoldWedges                        = new FancyBoldWedges(),
+            fancyHashedWedges                      = new FancyHashedWedges(),
+            glowWidth                              = new OuterGlowWidth();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -129,20 +142,26 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                     container.getAtom(0).getPoint2d().y,
                                                     0, 0);
 
+        final double glowWidth = parameters.get(OuterGlowWidth.class);
+        
         ElementGroup backLayer = new ElementGroup();
         ElementGroup middleLayer = new ElementGroup();
         ElementGroup frontLayer = new ElementGroup();
 
         // bond elements can simply be added to the element group
         for (int i = 0; i < container.getBondCount(); i++) {
-            
+
             IBond bond = container.getBond(i);
-            
-            Color highlight = getHighlightColor(bond);
-            
+
+            Color outerGlow = getColorProperty(bond, OUTER_GLOW_COLOR);
+            Color highlight = getColorProperty(bond, HIGHLIGHT_COLOR);
+            if (outerGlow != null) {
+                backLayer.add(outerGlow(bondElements[i], outerGlow, glowWidth, stroke));    
+            }
             if (highlight != null) {
                 frontLayer.add(recolor(bondElements[i], highlight));
-            } else {
+            }
+            else {
                 middleLayer.add(bondElements[i]);
             }
         }
@@ -156,18 +175,25 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
             }
 
-            Color highlight = getHighlightColor(atom);
+            Color outerGlow = getColorProperty(atom, OUTER_GLOW_COLOR);
+            Color highlight = getColorProperty(atom, HIGHLIGHT_COLOR);
             Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
+            
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
                 updateBounds(bounds, path);
                 symbolElements.add(path);
             }
-               
+
+            if (outerGlow != null) {
+                backLayer.add(outerGlow(symbolElements, outerGlow, glowWidth, stroke));
+            }
+            
             if (highlight != null) {
                 frontLayer.add(symbolElements);
-            } else {
+            }
+            else {
                 middleLayer.add(symbolElements);
             }
         }
@@ -246,23 +272,25 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              dashSections,
                              waveSections,
                              fancyBoldWedges,
-                             fancyHashedWedges);
+                             fancyHashedWedges,
+                             glowWidth);
     }
 
+   
     /**
-     * Safely access the highlight color for a chem object.
+     * Safely access a chem object color property for a chem object.
      *
      * @param object chem object
      * @return the highlight color
      * @throws java.lang.IllegalArgumentException the highlight property was set but was not a
      *                                            {@link Color} instance
      */
-    static Color getHighlightColor(IChemObject object) {
-        Object value = object.getProperty(HIGHLIGHT_COLOR);
+    static Color getColorProperty(IChemObject object, String key) {
+        Object value = object.getProperty(key);
         if (value instanceof Color)
             return (Color) value;
         if (value != null)
-            throw new IllegalArgumentException("Highlight property should be a java.awt.Color");
+            throw new IllegalArgumentException(key + " property should be a java.awt.Color");
         return null;
     }
 
@@ -294,7 +322,45 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         } else if (element instanceof GeneralPath) {
             return ((GeneralPath) element).recolor(color);
         }
-        throw new IllegalArgumentException("Cannot highlight unknown element, " + element.getClass());
+        throw new IllegalArgumentException("Cannot highlight rendering element, " + element.getClass());
+    }
+
+    /**
+     * Generate an outer glow for the provided rendering element. The glow is defined by the glow
+     * width and the stroke size.
+     *
+     * @param element   rendering element
+     * @param color     color of the glow
+     * @param glowWidth the width of the glow
+     * @param stroke    the stroke width
+     * @return generated outer glow
+     */
+    private static IRenderingElement outerGlow(IRenderingElement element, Color color, double glowWidth, double stroke) {
+        if (element instanceof ElementGroup) {
+            ElementGroup orgGroup = (ElementGroup) element;
+            ElementGroup newGroup = new ElementGroup();
+            for (IRenderingElement child : orgGroup) {
+                newGroup.add(outerGlow(child, color, glowWidth, stroke));
+            }
+            return newGroup;
+        }
+        else if (element instanceof LineElement) {
+            LineElement lineElement = (LineElement) element;
+            return new LineElement(lineElement.firstPointX,
+                                   lineElement.firstPointY,
+                                   lineElement.secondPointX,
+                                   lineElement.secondPointY,
+                                   stroke + (2 * (glowWidth * stroke)),
+                                   color);
+        } else if (element instanceof GeneralPath) {
+            GeneralPath org = (GeneralPath) element;
+            if (org.fill) {
+                return org.outline(2 * (glowWidth * stroke)).recolor(color);    
+            } else {
+                return org.outline(stroke + (2 * (glowWidth * stroke))).recolor(color);
+            }
+        }
+        throw new IllegalArgumentException("Cannot generate glow for rendering element, " + element.getClass());
     }
 
     /**
@@ -488,6 +554,19 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         /** @inheritDoc */
         @Override public Boolean getDefault() {
             return true;
+        }
+    }
+    
+    
+    /**
+     * The width of outer glow as a percentage of stroke width. The default value is
+     * 200% (2.0d). This means the bond outer glow, is 5 times the width as the glow
+     * extends to twice the width on each side.
+     */
+    public static final class OuterGlowWidth extends AbstractGeneratorParameter<Double> {
+        /** @inheritDoc */
+        @Override public Double getDefault() {
+            return 2d;
         }
     }
 

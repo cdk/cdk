@@ -110,6 +110,16 @@ public class GeneralPath implements IRenderingElement{
         return new GeneralPath(elements, newColor, winding, stroke, fill);
     }
 
+    /**
+     * Outline the general path with the specified stroke size.
+     *
+     * @param newStroke new stroke size
+     * @return the outlined path
+     */
+    public GeneralPath outline(double newStroke) {
+        return new GeneralPath(elements, color, winding, newStroke, false);
+    }
+
     /** {@inheritDoc} */
     @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
