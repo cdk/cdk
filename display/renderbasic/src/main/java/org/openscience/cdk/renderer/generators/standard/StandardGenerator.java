@@ -27,6 +27,7 @@ package org.openscience.cdk.renderer.generators.standard;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 import org.openscience.cdk.renderer.color.IAtomColorer;
@@ -60,9 +61,23 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
  *
+ * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}.
+ *
  * @author John May
  */
 public final class StandardGenerator implements IGenerator<IAtomContainer> {
+
+
+    /**
+     * Defines that a chem object should be highlighted in a depiction. Only atom symbols that are
+     * displayed are highlighted, the visibility of symbols can be modified with {@link
+     * SymbolVisibility}.
+     *
+     * <pre>{@code
+     * atom.setProperty(CDKConstants.HIGHLIGHT_COLOR, Color.RED);
+     * }</pre>
+     */
+    public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
 
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
@@ -114,11 +129,22 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                     container.getAtom(0).getPoint2d().y,
                                                     0, 0);
 
-        ElementGroup elements = new ElementGroup();
+        ElementGroup backLayer = new ElementGroup();
+        ElementGroup middleLayer = new ElementGroup();
+        ElementGroup frontLayer = new ElementGroup();
 
         // bond elements can simply be added to the element group
-        for (IRenderingElement bondElement : bondElements) {
-            elements.add(bondElement);
+        for (int i = 0; i < container.getBondCount(); i++) {
+            
+            IBond bond = container.getBond(i);
+            
+            Color highlight = getHighlightColor(bond);
+            
+            if (highlight != null) {
+                middleLayer.add(recolor(bondElements[i], highlight));
+            } else {
+                frontLayer.add(bondElements[i]);
+            }
         }
 
         // convert the atom symbols to IRenderingElements
@@ -130,20 +156,31 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
             }
 
-            Color color = coloring.getAtomColor(atom);
+            Color highlight = getHighlightColor(atom);
+            Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
                 updateBounds(bounds, path);
                 symbolElements.add(path);
             }
-            elements.add(symbolElements);
+               
+            if (highlight != null) {
+                frontLayer.add(symbolElements);
+            } else {
+                middleLayer.add(symbolElements);
+            }
         }
 
-        elements.add(new Bounds(bounds.getMinX(), bounds.getMinY(),
-                                bounds.getMaxX(), bounds.getMaxY()));
+        ElementGroup group = new ElementGroup();
 
-        return elements;
+        group.add(new Bounds(bounds.getMinX(), bounds.getMinY(),
+                             bounds.getMaxX(), bounds.getMaxY()));
+        group.add(backLayer);
+        group.add(middleLayer);
+        group.add(frontLayer);
+
+        return group;
     }
 
     /**
@@ -213,11 +250,28 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Recolor a rendering element after it has been generated. Since rendering elements
-     * are immutable, the input element remains unmodified.
-     * 
+     * Safely access the highlight color for a chem object.
+     *
+     * @param object chem object
+     * @return the highlight color
+     * @throws java.lang.IllegalArgumentException the highlight property was set but was not a
+     *                                            {@link Color} instance
+     */
+    static Color getHighlightColor(IChemObject object) {
+        Object value = object.getProperty(HIGHLIGHT_COLOR);
+        if (value instanceof Color)
+            return (Color) value;
+        if (value != null)
+            throw new IllegalArgumentException("Highlight property should be a java.awt.Color");
+        return null;
+    }
+
+    /**
+     * Recolor a rendering element after it has been generated. Since rendering elements are
+     * immutable, the input element remains unmodified.
+     *
      * @param element the rendering element
-     * @param color the new color
+     * @param color   the new color
      * @return recolored rendering element
      */
     private static IRenderingElement recolor(IRenderingElement element, Color color) {
