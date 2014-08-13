@@ -304,7 +304,13 @@ public class StandardAtomGeneratorTest {
     @Test
     public void diradical() throws Exception {
         assertThat(StandardAtomGenerator.chargeAdjunctText(0, 2),
-                   is("(2•)"));
+                   is("2•"));
+    }
+
+    @Test
+    public void diradicalCation() throws Exception {
+        assertThat(StandardAtomGenerator.chargeAdjunctText(1, 2),
+                   is("(2•)+"));
     }
 
     @Test

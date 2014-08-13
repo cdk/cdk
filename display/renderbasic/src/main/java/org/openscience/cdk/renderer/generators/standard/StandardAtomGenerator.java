@@ -402,7 +402,12 @@ final class StandardAtomGenerator {
             }
         }
         else if (unpaired > 1) {
-            sb.append('(').append(unpaired).append(BULLET).append(')');
+            if (charge != 0) {
+                sb.append('(').append(unpaired).append(BULLET).append(')');
+            }
+            else {
+                sb.append(unpaired).append(BULLET);
+            }
         }
 
         final char sign = charge < 0 ? MINUS : PLUS;
