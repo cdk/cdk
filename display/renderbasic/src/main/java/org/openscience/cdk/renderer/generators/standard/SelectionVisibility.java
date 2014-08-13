@@ -39,8 +39,7 @@ import java.util.List;
  * By default, the symbol is shown if the atom is selected an not next to any selected bonds
  * (disconnected). Alternatively, all select atoms can be displayed. <p/>
  *
- * An atom or bond is selected if the {@link StandardGenerator#HIGHLIGHT_COLOR} or {@link
- * StandardGenerator#OUTER_GLOW_COLOR} is non-null.
+ * An atom or bond is selected if the {@link StandardGenerator#HIGHLIGHT_COLOR} is non-null.
  *
  * @author John May
  */
@@ -98,8 +97,7 @@ public final class SelectionVisibility extends SymbolVisibility {
      * @return object is selected
      */
     static boolean isSelected(IChemObject object) {
-        return object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null
-                || object.getProperty(StandardGenerator.OUTER_GLOW_COLOR) != null;
+        return object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null;
     }
 
     /**

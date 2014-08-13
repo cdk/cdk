@@ -52,22 +52,6 @@ public class SelectionVisibilityTest {
         assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0))));
     }
 
-    @Test public void withGlow() {
-        IAtomContainer methyl = new AtomContainer();
-        methyl.addAtom(atomAt("C", new Point2d(0, 0)));
-        methyl.addAtom(atomAt("H", new Point2d(0, 1)));
-        methyl.addAtom(atomAt("H", new Point2d(0, -1)));
-        methyl.addAtom(atomAt("H", new Point2d(1, 0)));
-        methyl.addAtom(atomAt("H", new Point2d(-1, 0)));
-        methyl.getAtom(0).setProperty(StandardGenerator.OUTER_GLOW_COLOR, Color.RED);
-        methyl.addBond(0, 1, IBond.Order.SINGLE);
-        methyl.addBond(0, 2, IBond.Order.SINGLE);
-        methyl.addBond(0, 3, IBond.Order.SINGLE);
-        methyl.addBond(0, 4, IBond.Order.SINGLE);
-        SymbolVisibility visibility = SelectionVisibility.all(SymbolVisibility.iupacRecommendations());
-        assertTrue(visibility.visible(methyl.getAtom(0), methyl.getConnectedBondsList(methyl.getAtom(0))));
-    }
-
     @Test public void isolated() {
         IAtomContainer methyl = new AtomContainer();
         methyl.addAtom(atomAt("C", new Point2d(0, 0)));
@@ -104,12 +88,6 @@ public class SelectionVisibilityTest {
     @Test public void highlightIsSelected() {
         IChemObject chemObject = mock(IChemObject.class);
         when(chemObject.getProperty(StandardGenerator.HIGHLIGHT_COLOR)).thenReturn(Color.RED);
-        assertTrue(SelectionVisibility.isSelected(chemObject));
-    }
-
-    @Test public void glowIsSelected() {
-        IChemObject chemObject = mock(IChemObject.class);
-        when(chemObject.getProperty(StandardGenerator.OUTER_GLOW_COLOR)).thenReturn(Color.RED);
         assertTrue(SelectionVisibility.isSelected(chemObject));
     }
 
