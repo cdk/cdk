@@ -535,12 +535,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     /**
      * The spacing of waves (semi circles) drawn in wavy bonds with. Default = 5.
      */
-    public static final class WaveSpacing extends AbstractGeneratorParameter<Integer> {
+    public static final class WaveSpacing extends AbstractGeneratorParameter<Double> {
         /**
          * @inheritDoc
          */
-        @Override public Integer getDefault() {
-            return 5;
+        @Override public Double getDefault() {
+            return 5d;
         }
     }
 
