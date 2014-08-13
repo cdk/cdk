@@ -200,8 +200,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param value     new {@link IGeneratorParameter} value
      */
     @TestMethod("testSetRenderingParameter")
-    public <T extends IGeneratorParameter<S>,S> void set(
-            Class<T> paramType, S value) {
+    public <T extends IGeneratorParameter<S>,S,U extends S> void set(Class<T> paramType, U value) {
         T parameter = getParameter(paramType);
         parameter.setValue(value);
     }
