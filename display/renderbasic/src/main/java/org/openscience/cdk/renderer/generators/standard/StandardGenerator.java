@@ -64,8 +64,8 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
  *
- * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. Alternatively an
- * outer glow can be set with {@link #OUTER_GLOW_COLOR}.
+ * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of 
+ * highlight is set with the {@link Highlighting} parameter.
  *
  * @author John May
  */
@@ -83,18 +83,30 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
 
-    /**
-     * Defines that a particular chem object should have an outer glow in a depiction and what color
-     * that outline glow should be.
-     *
-     * <pre>{@code
-     * atom.setProperty(CDKConstants.OUTER_GLOW_COLOR, Color.GREEN);
-     * }</pre>
-     */
-    public final static String OUTER_GLOW_COLOR = "stdgen.outer.glow.color";
-
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
+
+    /**
+     * Enumeration of highlight style.
+     */
+    public static enum HighlightStyle {
+
+        /**
+         * Ignore highlight hints.
+         */
+        None,
+
+        /**
+         * Displayed atom symbols and bonds are coloured.
+         */
+        Colored,
+
+        /**
+         * An outer glow is placed in the background behind the depiction.
+         * @see StandardGenerator.OuterGlowWidth
+         */
+        OuterGlow
+    }
 
     private final IGeneratorParameter<?> atomColor = new AtomColor(),
             visibility                             = new Visibility(),
@@ -107,6 +119,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             waveSections                           = new WaveSpacing(),
             fancyBoldWedges                        = new FancyBoldWedges(),
             fancyHashedWedges                      = new FancyHashedWedges(),
+            highlighting                           = new Highlighting(),
             glowWidth                              = new OuterGlowWidth();
 
     /**
@@ -144,6 +157,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                     container.getAtom(0).getPoint2d().y,
                                                     0, 0);
 
+        final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
 
         ElementGroup backLayer = new ElementGroup();
@@ -155,12 +169,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             IBond bond = container.getBond(i);
 
-            Color outerGlow = getColorProperty(bond, OUTER_GLOW_COLOR);
             Color highlight = getColorProperty(bond, HIGHLIGHT_COLOR);
-            if (outerGlow != null) {
-                backLayer.add(outerGlow(bondElements[i], outerGlow, glowWidth, stroke));
+            if (highlight != null && style == HighlightStyle.OuterGlow) {
+                backLayer.add(outerGlow(bondElements[i], highlight, glowWidth, stroke));
             }
-            if (highlight != null) {
+            if (highlight != null && style == HighlightStyle.Colored) {
                 frontLayer.add(recolor(bondElements[i], highlight));
             }
             else {
@@ -177,7 +190,6 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
             }
 
-            Color outerGlow = getColorProperty(atom, OUTER_GLOW_COLOR);
             Color highlight = getColorProperty(atom, HIGHLIGHT_COLOR);
             Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
 
@@ -188,11 +200,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 symbolElements.add(path);
             }
 
-            if (outerGlow != null) {
-                backLayer.add(outerGlow(symbolElements, outerGlow, glowWidth, stroke));
+            if (highlight != null && style == HighlightStyle.OuterGlow) {
+                backLayer.add(outerGlow(symbolElements, highlight, glowWidth, stroke));
             }
 
-            if (highlight != null) {
+            if (highlight != null && style == HighlightStyle.Colored) {
                 frontLayer.add(symbolElements);
             }
             else {
@@ -275,6 +287,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              waveSections,
                              fancyBoldWedges,
                              fancyHashedWedges,
+                             highlighting,
                              glowWidth);
     }
 
@@ -572,6 +585,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         /** @inheritDoc */
         @Override public Double getDefault() {
             return 2d;
+        }
+    }
+
+
+    /**
+     * Parameter defines the style of highlight used to emphasis atoms and bonds. The
+     * default option is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
+     */
+    public static final class Highlighting extends AbstractGeneratorParameter<HighlightStyle> {
+        /** @inheritDoc */
+        @Override public HighlightStyle getDefault() {
+            return HighlightStyle.Colored;
         }
     }
 
