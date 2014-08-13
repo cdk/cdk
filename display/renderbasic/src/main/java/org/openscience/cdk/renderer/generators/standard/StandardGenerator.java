@@ -191,7 +191,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
 
             Color highlight = getColorProperty(atom, HIGHLIGHT_COLOR);
-            Color color = highlight != null ? highlight : coloring.getAtomColor(atom);
+            Color color = highlight != null && style == HighlightStyle.Colored ? highlight 
+                                                                               : coloring.getAtomColor(atom);
 
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
