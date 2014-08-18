@@ -23,8 +23,11 @@
  */
 package org.openscience.cdk.layout;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
@@ -38,11 +41,13 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.AtomContainerSetManipulator;
 import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
@@ -88,7 +93,7 @@ public class StructureDiagramGenerator
 	private Vector2d firstBondVector;
 	private RingPlacer ringPlacer = new RingPlacer();
 	private AtomPlacer atomPlacer = new AtomPlacer();
-	private List ringSystems = null;
+	private List<IRingSet> ringSystems = null;
 	private final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
 	private TemplateHandler templateHandler = null;
 	private boolean useTemplates = true;
@@ -96,7 +101,9 @@ public class StructureDiagramGenerator
 	/** Atoms of the molecule that mapped a template */
 	private IAtomContainerSet mappedSubstructures;
 
-
+    /** Identity templates - for laying out primary ring system. */
+    private IdentityTemplateLibrary identityLibrary = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
+    
 	/**
 	 *  The empty constructor.
 	 */
@@ -395,7 +402,20 @@ public class StructureDiagramGenerator
 			logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
 			logger.debug("Size of Largest RingSystem: " + largestSize);
 
-			layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
+            
+            IAtomContainer ringSystem = molecule.getBuilder().newInstance(IAtomContainer.class);
+            for (IAtomContainer container : ringSystems.get(largest).atomContainers())
+                ringSystem.add(container);
+            
+            // This is the primary ring system of the molecule, we lookup an identity template
+            // that helps us orientate in de factor conformation.  
+            if (lookupRingSystem(ringSystem, molecule)) {
+                for (IAtomContainer container : ringSystems.get(largest).atomContainers())
+                    container.setFlag(CDKConstants.ISPLACED, true);
+                ringSystems.get(largest).setFlag(CDKConstants.ISPLACED, true); 
+            } else {
+                layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
+            }
 			logger.debug("First RingSet placed");
 			/*
 			 *  and do the placement of all the directly connected atoms of this ringsystem
@@ -475,6 +495,87 @@ public class StructureDiagramGenerator
 		generateCoordinates(new Vector2d(0, 1));
 	}
 
+    /**
+     * Using a fast identity template library, lookup the the ring system and assign coordinates.
+     * The method indicates whether a match was found.
+     * 
+     * @param ringSystem the ring system (may be fused, bridged, etc.)
+     * @param molecule the rest of the compound
+     * @return coordinates were assigned
+     */
+    private boolean lookupRingSystem(IAtomContainer ringSystem, IAtomContainer molecule) {
+
+        final IChemObjectBuilder bldr = molecule.getBuilder();
+        
+        final Set<IAtom> ringAtoms = new HashSet<IAtom>();
+        for (IAtom atom : ringSystem.atoms())
+            ringAtoms.add(atom);
+
+        // a temporary molecule of the ring system and 'stubs' of the attached substituents
+        final IAtomContainer ringWithStubs = bldr.newInstance(IAtomContainer.class);
+        ringWithStubs.add(ringSystem);
+        for (IBond bond : molecule.bonds()) {
+            IAtom atom1 = bond.getAtom(0);
+            IAtom atom2 = bond.getAtom(1);
+            if (isHydrogen(atom1) || isHydrogen(atom2))
+                continue;            
+            if (ringAtoms.contains(atom1) ^ ringAtoms.contains(atom2)) {
+                ringWithStubs.addBond(bond);
+                ringWithStubs.addAtom(atom1);
+                ringWithStubs.addAtom(atom2);
+            }
+        }
+          
+        // Three levels of identity to check are as follows:
+        //   Level 1 - check for a skeleton ring system and attached substituents
+        //   Level 2 - check for a skeleton ring system
+        //   Level 3 - check for an anonymous ring system
+        // skeleton = all single bonds connecting different elements
+        // anonymous = all single bonds connecting carbon
+        final IAtomContainer skeletonStub = clearHydrogenCounts(AtomContainerManipulator.skeleton(ringWithStubs));
+        final IAtomContainer skeleton     = clearHydrogenCounts(AtomContainerManipulator.skeleton(ringSystem));
+        final IAtomContainer anonymous    = clearHydrogenCounts(AtomContainerManipulator.anonymise(ringSystem));
+        
+        for (IAtomContainer container : Arrays.asList(skeletonStub, skeleton, anonymous)) {
+
+            // assign the atoms 0 to |ring|, the stubs are added at the end of the container
+            // and are not placed here (since the index of each stub atom is > |ring|)
+            if (identityLibrary.assignLayout(container)) {
+                for (int i = 0; i < ringSystem.getAtomCount(); i++) {
+                    IAtom atom = ringSystem.getAtom(i);
+                    atom.setPoint2d(container.getAtom(i).getPoint2d());
+                    atom.setFlag(CDKConstants.ISPLACED, true);
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Is an atom a hydrogen atom.
+     * 
+     * @param atom an atom
+     * @return the atom is a hydrogen
+     */
+    private static boolean isHydrogen(IAtom atom) {
+        if (atom.getAtomicNumber() != null)
+            return atom.getAtomicNumber() == 1;
+        return "H".equals(atom.getSymbol());
+    }
+
+    /**
+     * Simple helper function that sets all hydrogen counts to 0.
+     * 
+     * @param container a structure representation
+     * @return the input container
+     */
+    private static IAtomContainer clearHydrogenCounts(IAtomContainer container) {
+        for (IAtom atom : container.atoms())
+            atom.setImplicitHydrogenCount(0);
+        return container;
+    }
 
 	/**
 	 *  Does a layout of all the rings in a given connected RingSet. Uses a TemplateHandler
