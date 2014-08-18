@@ -20,6 +20,9 @@
  */
 package org.openscience.cdk.layout;
 
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -28,6 +31,7 @@ import java.io.StringReader;
 
 import javax.vecmath.Vector2d;
 
+import org.hamcrest.number.OrderingComparison;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -40,6 +44,7 @@ import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -981,6 +986,60 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
       sdg.setMolecule(mol);
       sdg.generateCoordinates(new Vector2d(0, 1));
   }
+    
+    @Test public void pyrroleWithIdentityTemplate() throws Exception {
+
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String smiles = "C1=CNC=C1";
+        
+        StructureDiagramGenerator generator = new StructureDiagramGenerator();
+        generator.setUseIdentityTemplates(true);
+        generator.setUseTemplates(false);
+
+        IAtomContainer mol = sp.parseSmiles(smiles);
+        
+        generator.setMolecule(mol, false);
+        generator.generateCoordinates();
+        
+        IAtom nitrogen = mol.getAtom(2);
+        
+        // nitrogen is lowest point
+        assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(0).getPoint2d().y));
+        assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(1).getPoint2d().y));
+        assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(3).getPoint2d().y));
+        assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(4).getPoint2d().y));
+    }
+
+    @Test public void pyrroleWithoutIdentityTemplate() throws Exception {
+
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        String smiles = "C1=CNC=C1";
+
+        StructureDiagramGenerator generator = new StructureDiagramGenerator();
+        generator.setUseIdentityTemplates(false);
+        generator.setUseTemplates(false);
+
+        IAtomContainer mol = sp.parseSmiles(smiles);
+
+        generator.setMolecule(mol, false);
+        generator.generateCoordinates();
+
+        double minY = Double.MAX_VALUE;
+        int i = -1;
+        
+        // note if the SDG changes the nitrogen might be at
+        // the bottom by chance when generated ab initio
+        for (int j = 0; j < mol.getAtomCount(); j++) {
+            IAtom atom = mol.getAtom(j);
+            if (atom.getPoint2d().y < minY) {
+                minY = atom.getPoint2d().y;
+                i = j;
+            }
+        }
+                      
+        // N is at index 2
+        assertThat(i, not(2));
+    }
 
 }
 
