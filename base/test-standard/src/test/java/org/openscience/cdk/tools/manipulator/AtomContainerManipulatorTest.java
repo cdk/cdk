@@ -19,6 +19,8 @@
 package org.openscience.cdk.tools.manipulator;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -989,6 +991,22 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         assertFalse(anonymous.getBond(1).getFlag(CDKConstants.ISAROMATIC));
         assertFalse(anonymous.getBond(1).getFlag(CDKConstants.SINGLE_OR_DOUBLE));
+    }
+
+    @Test public void skeleton() throws Exception {
+
+        IAtomContainer adenine  = MoleculeFactory.makeAdenine();        
+        IAtomContainer skeleton = AtomContainerManipulator.skeleton(adenine);
+
+        assertThat(skeleton, is(not(sameInstance(adenine))));
+        
+        for (IBond bond : skeleton.bonds())
+            assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
+        
+        for (int i = 0; i < skeleton.getAtomCount(); i++) {
+            assertThat(skeleton.getAtom(i).getSymbol(),
+                       is(adenine.getAtom(i).getSymbol()));    
+        }
     }
 
     /**

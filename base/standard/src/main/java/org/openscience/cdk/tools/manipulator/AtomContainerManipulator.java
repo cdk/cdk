@@ -1365,6 +1365,40 @@ public class AtomContainerManipulator {
         return dest;
     }
 
+    /**
+     * Create a skeleton copy of the provided structure. The skeleton copy is
+     * similar to an anonymous copy ({@link #anonymise}) except that atom
+     * elements are preserved. All bonds are converted to single bonds and a
+     * 'clean' atom is created for the input elements. The 'clean' atom has
+     * unset charge, mass, and hydrogen count.
+     * 
+     * @param src input structure 
+     * @return the skeleton copy
+     */
+    public static IAtomContainer skeleton(IAtomContainer src) {
+
+        IChemObjectBuilder builder = src.getBuilder();
+
+        IAtom[] atoms = new IAtom[src.getAtomCount()];
+        IBond[] bonds = new IBond[src.getBondCount()];
+
+        for (int i = 0; i < atoms.length; i++) {
+            atoms[i] = builder.newInstance(IAtom.class, src.getAtom(i).getSymbol());
+        }
+        for (int i = 0; i < bonds.length; i++) {
+            IBond bond = src.getBond(i);
+            int u = src.getAtomNumber(bond.getAtom(0));
+            int v = src.getAtomNumber(bond.getAtom(1));
+            bonds[i] = builder.newInstance(IBond.class, atoms[u], atoms[v]);
+        }
+
+        IAtomContainer dest = builder
+                .newInstance(IAtomContainer.class, 0, 0, 0, 0);
+        dest.setAtoms(atoms);
+        dest.setBonds(bonds);
+        return dest;
+    }
+
 	/**
 	 * Returns the sum of the bond order equivalents for a given IAtom. It
 	 * considers single bonds as 1.0, double bonds as 2.0, triple bonds as 3.0,
