@@ -277,6 +277,8 @@ final class IdentityTemplateLibrary {
         String line = null;
         IdentityTemplateLibrary library = new IdentityTemplateLibrary();
         while ((line = br.readLine()) != null) {
+            // skip comments
+            if (line.charAt(0) == '#') continue;
             library.add(decodeEntry(line));
         }
         return library;
