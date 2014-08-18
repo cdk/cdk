@@ -97,6 +97,7 @@ public class StructureDiagramGenerator
 	private final String disconnectedMessage = "Molecule not connected. Use ConnectivityChecker.partitionIntoMolecules() and do the layout for every single component.";
 	private TemplateHandler templateHandler = null;
 	private boolean useTemplates = true;
+    private boolean useIdentTemplates = true;
 
 	/** Atoms of the molecule that mapped a template */
 	private IAtomContainerSet mappedSubstructures;
@@ -174,6 +175,17 @@ public class StructureDiagramGenerator
 	{
 		this.useTemplates = useTemplates;
 	}
+
+    /**
+     * Set whether identity templates are used. Identity templates use an exact match
+     * are are very fast. They are used for layout of the 'primary' ring system
+     * in de facto orientation.
+     * 
+     * @param use whether to use identity templates
+     */
+    public void setUseIdentityTemplates(boolean use) {
+        this.useIdentTemplates = use;
+    }
 
 
 	/**
@@ -505,6 +517,10 @@ public class StructureDiagramGenerator
      */
     private boolean lookupRingSystem(IAtomContainer ringSystem, IAtomContainer molecule) {
 
+        // identity templates are disabled
+        if (!useIdentTemplates)
+            return false;
+        
         final IChemObjectBuilder bldr = molecule.getBuilder();
         
         final Set<IAtom> ringAtoms = new HashSet<IAtom>();
