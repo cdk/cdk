@@ -896,6 +896,10 @@ public class AtomPlacer
         {
     		//path += ac.getAtom(f).getSymbol();
             degreeSum += superAC.getConnectedBondsCount(ac.getAtom(f));
+            
+            Integer implH = ac.getAtom(f).getImplicitHydrogenCount();            
+            if (implH != null)
+                degreeSum += implH;
         }
         //System.out.println(path + ": " + degreeSum);
         return degreeSum;
