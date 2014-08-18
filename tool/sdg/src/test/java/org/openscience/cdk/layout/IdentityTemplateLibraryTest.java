@@ -92,6 +92,9 @@ public class IdentityTemplateLibraryTest {
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
         container.addAtom(new Atom("C"));
+        container.getAtom(0).setImplicitHydrogenCount(0);
+        container.getAtom(1).setImplicitHydrogenCount(0);
+        container.getAtom(2).setImplicitHydrogenCount(0);
         container.addBond(0, 1, IBond.Order.SINGLE);
         container.addBond(1, 2, IBond.Order.SINGLE);
 
