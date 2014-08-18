@@ -99,7 +99,9 @@ public class StructureDiagramGenerator
 	private boolean useTemplates = true;
     private boolean useIdentTemplates = true;
 
-	/** Atoms of the molecule that mapped a template */
+    public static Vector2d DEFAULT_BOND_VECTOR = new Vector2d(0, 1);
+
+    /** Atoms of the molecule that mapped a template */
 	private IAtomContainerSet mappedSubstructures;
 
     /** Identity templates - for laying out primary ring system. */
@@ -261,7 +263,7 @@ public class StructureDiagramGenerator
 	 */
 	public void generateExperimentalCoordinates() throws CDKException
 	{
-		generateExperimentalCoordinates(new Vector2d(0, 1));
+		generateExperimentalCoordinates(DEFAULT_BOND_VECTOR);
 	}
 
 
@@ -456,7 +458,7 @@ public class StructureDiagramGenerator
 			 */
 			angle = Math.toRadians(-30);
 			logger.debug("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
-			if (firstBondVector != null)
+			if (firstBondVector != null && firstBondVector != DEFAULT_BOND_VECTOR)
 				atomPlacer.placeLinearChain(longestChain, firstBondVector, bondLength);
 			else
 				atomPlacer.placeLinearChain(longestChain, new Vector2d(Math.cos(angle), Math.sin(angle)), bondLength);
@@ -504,7 +506,7 @@ public class StructureDiagramGenerator
 	 */
 	public void generateCoordinates() throws CDKException
 	{
-		generateCoordinates(new Vector2d(0, 1));
+		generateCoordinates(DEFAULT_BOND_VECTOR);
 	}
 
     /**
