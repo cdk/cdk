@@ -592,8 +592,8 @@ final class StandardBondGenerator {
             } else if (wind2 > 0) {
                 return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
             } else {
-                // no bond points point in, offset bond drawn outside the ring :(
-                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);
+                // special case, offset line is drawn on the opposite side
+                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds, true);
             }
         } 
         else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
@@ -697,6 +697,23 @@ final class StandardBondGenerator {
      * @return the rendered bond element
      */
     private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
+        return generateOffsetDoubleBond(atom1, atom2, atom1Bond, atom2Bonds, false);    
+    }
+
+    /**
+     * Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite
+     * Brecher08}. An offset bond has one line drawn between the two atoms and other draw to one
+     * side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
+     * displayed symbol.
+     *
+     * @param atom1      first atom
+     * @param atom2      second atom
+     * @param atom1Bond  the reference bond used to decide which side the bond is offset
+     * @param atom2Bonds the bonds connected to atom 2
+     * @param invert     invert the offset (i.e. opposite to reference bond)            
+     * @return the rendered bond element
+     */
+    private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, boolean invert) {
 
         assert !hasDisplayedSymbol(atom1);
         assert atom1Bond != null;
@@ -714,6 +731,9 @@ final class StandardBondGenerator {
         // there are two perpendicular vectors, this check ensures we have one on the same side as
         // the reference 
         if (reference.dot(perpendicular) < 0)
+            perpendicular = negate(perpendicular);        
+        // caller requested inverted drawing
+        if (invert)
             perpendicular = negate(perpendicular);
 
         // when the symbol is terminal, we move it such that it is between the two lines
@@ -727,6 +747,10 @@ final class StandardBondGenerator {
         // angle of adjacent bonds, see GR-1.10 in the IUPAC recommendations
         double atom1Offset = adjacentLength(sum(reference, unit), perpendicular, separation);
         double atom2Offset = 0;
+
+        // reference bond may be on the other side (invert specified) -     the offset needs negating
+        if (reference.dot(perpendicular) < 0)
+            atom1Offset = -atom1Offset;
 
         // the second atom may have zero or more bonds which we can use to get the offset
         // we find the one which is closest to the perpendicular vector
