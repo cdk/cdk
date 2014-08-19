@@ -37,8 +37,10 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.LineElement;
 import org.openscience.cdk.renderer.elements.path.Close;
+import org.openscience.cdk.renderer.elements.path.CubicTo;
 import org.openscience.cdk.renderer.elements.path.LineTo;
 import org.openscience.cdk.renderer.elements.path.MoveTo;
+import org.openscience.cdk.renderer.elements.path.PathElement;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -48,7 +50,7 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
-import java.awt.geom.Path2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -465,9 +467,9 @@ final class StandardBondGenerator {
         final double end = toPoint.equals(toBackOffPoint) ? Double.MAX_VALUE : fromPoint.distance(toBackOffPoint);
 
 
-        Path2D path = new Path2D.Double();
+        List<PathElement> path = new ArrayList<PathElement>();
         if (start == Double.MIN_VALUE) {
-            path.moveTo(fromPoint.x, fromPoint.y);
+            path.add(new MoveTo(fromPoint.x, fromPoint.y));
             started = true;
         }
 
@@ -514,11 +516,11 @@ final class StandardBondGenerator {
 
                         final Tuple2d controlPoint1 = sum(sum(fromPoint, scale(unit, (i - 1) * step)), scale(peak, 0.5));
                         final Tuple2d controlPoint2 = sum(sum(fromPoint, scale(unit, (i - 0.5) * step)), peak);
-                        path.curveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+                        path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y));
 
                     }
                     else {
-                        path.moveTo(endPoint.x, endPoint.y);
+                        path.add(new MoveTo(endPoint.x, endPoint.y));
                         started = true;
                     }
                 }
@@ -536,17 +538,18 @@ final class StandardBondGenerator {
                     if (started) {
                         final Tuple2d controlPoint1 = sum(sum(fromPoint, scale(unit, (i + 0.5) * step)), peak);
                         final Tuple2d controlPoint2 = sum(sum(fromPoint, scale(unit, dist)), scale(peak, 0.5));
-                        path.curveTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y);
+                        path.add(new CubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, endPoint.x, endPoint.y));
                     }
                     else {
-                        path.moveTo(endPoint.x, endPoint.y);
+                        path.add(new MoveTo(endPoint.x, endPoint.y));
                         started = true;
                     }
                 }
             }
         }
 
-        return GeneralPath.outlineOf(path, stroke, foreground);
+        
+        return new GeneralPath(path, foreground).outline(stroke);
     }
 
     /**
