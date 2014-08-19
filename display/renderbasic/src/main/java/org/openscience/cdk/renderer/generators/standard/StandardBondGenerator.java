@@ -557,12 +557,23 @@ final class StandardBondGenerator {
      */
     private IRenderingElement generateDoubleBond(IBond bond) {
 
+        final boolean cyclic = ringMap.containsKey(bond);
+        
         // select offset bonds from either the preferred ring or the whole structure
-        final IAtomContainer refContainer = ringMap.containsKey(bond) ? ringMap.get(bond)
-                                                                      : container;
+        final IAtomContainer refContainer = cyclic ? ringMap.get(bond)
+                                                   : container;
 
-        final IAtom atom1 = bond.getAtom(0);
-        final IAtom atom2 = bond.getAtom(1);
+        final int length = refContainer.getAtomCount();
+        final int index1 = refContainer.getAtomNumber(bond.getAtom(0));
+        final int index2 = refContainer.getAtomNumber(bond.getAtom(1));
+        
+        // if the bond is in a cycle we are using ring bonds to determine offset, since rings
+        // have been normalised and ordered to wind anti-clockwise we want to get the atoms
+        // in the order they are in the ring.      
+        final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
+        
+        final IAtom atom1 = bond.getAtom(outOfOrder ? 1 : 0);
+        final IAtom atom2 = bond.getAtom(outOfOrder ? 0 : 1);
 
         if (IBond.Stereo.E_OR_Z.equals(bond.getStereo()))
             return generateCrossedDoubleBond(atom1, atom2);
@@ -572,8 +583,20 @@ final class StandardBondGenerator {
 
         atom1Bonds.remove(bond);
         atom2Bonds.remove(bond);
-
-        if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
+        
+        if (cyclic) {
+            final int wind1 = winding(atom1Bonds.get(0), bond); 
+            final int wind2  = winding(bond, atom2Bonds.get(0));
+            if (wind1 > 0) {
+                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);  
+            } else if (wind2 > 0) {
+                return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
+            } else {
+                // no bond points point in, offset bond drawn outside the ring :(
+                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);
+            }
+        } 
+        else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
             return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);
         }
         else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2)) {
@@ -968,6 +991,30 @@ final class StandardBondGenerator {
         return new Point2d(sum(intersect, scale(unit, backOff)));
     }
 
+    /**
+     * Determine the winding of two bonds. The winding is > 0 for anti clockwise and < 0
+     * for clockwise and is relative to bond 1.
+     * 
+     * @param bond1 first bond
+     * @param bond2 second bond
+     * @return winding relative to bond
+     * @throws java.lang.IllegalArgumentException bonds share no atoms
+     */
+    static int winding(IBond bond1, IBond bond2) {
+        final IAtom atom1 = bond1.getAtom(0);
+        final IAtom atom2 = bond1.getAtom(1);
+        if (bond2.contains(atom1)) {
+            return winding(atom2.getPoint2d(),
+                           atom1.getPoint2d(),
+                           bond2.getConnectedAtom(atom1).getPoint2d());
+        } else if (bond2.contains(atom2)) {
+            return winding(atom1.getPoint2d(),
+                           atom2.getPoint2d(),
+                           bond2.getConnectedAtom(atom2).getPoint2d());
+        } else {
+            throw new IllegalArgumentException("Bonds do not share any atoms");
+        }
+    }
 
     /**
      * Creates a mapping of bonds to preferred rings (stored as IAtomContainers).
@@ -986,6 +1033,7 @@ final class StandardBondGenerator {
 
         // index bond -> ring based on the first encountered bond
         for (IAtomContainer ring : rings) {
+            normalizeRingWinding(ring);
             for (IBond bond : ring.bonds()) {
                 if (ringMap.containsKey(bond))
                     continue;
@@ -994,6 +1042,53 @@ final class StandardBondGenerator {
         }
 
         return Collections.unmodifiableMap(ringMap);
+    }
+
+    /**
+     * Normalise the ring ordering in a ring such that the overall winding is anti clockwise.
+     * The normalisation exploits the fact that (most) rings will be drawn with more convex
+     * turns (i.e. close to 30 degrees). This not bullet proof, consider a hexagon drawn as
+     * a three point star.
+     * 
+     * @param container the ring to normalize
+     */
+    static void normalizeRingWinding(IAtomContainer container) {
+        
+        int prev = container.getAtomCount() - 1;
+        int curr = 0;
+        int next = 1;
+        
+        int n = container.getAtomCount();
+        
+        int winding = 0;
+        
+        while (curr < n) {
+            winding += winding(container.getAtom(prev).getPoint2d(),
+                               container.getAtom(curr).getPoint2d(),
+                               container.getAtom(next % n).getPoint2d());
+            prev = curr;
+            curr = next;
+            next = next + 1;
+        }
+
+        if (winding < 0) {
+            IAtom[] atoms = new IAtom[n];
+            for (int i = 0; i < n; i++)
+                atoms[n-i-1] = container.getAtom(i);
+            container.setAtoms(atoms);
+        }
+    }
+
+    /**
+     * Determine the winding of three points using the determinant.
+     * 
+     * @param a first point
+     * @param b second point
+     * @param c third point
+     * @return < 0 = clockwise, 0 = linear, > 0 anti-clockwise
+     */
+    static int winding(Point2d a, Point2d b, Point2d c) {
+        return (int) Math.signum((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));    
     }
 
     /**
