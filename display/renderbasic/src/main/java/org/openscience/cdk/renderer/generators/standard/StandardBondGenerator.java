@@ -589,14 +589,19 @@ final class StandardBondGenerator {
         
         if (cyclic) {
             final int wind1 = winding(atom1Bonds.get(0), bond); 
-            final int wind2  = winding(bond, atom2Bonds.get(0));
-            if (wind1 > 0) {
+            final int wind2 = winding(bond, atom2Bonds.get(0));
+            if (wind1 > 0 && !hasDisplayedSymbol(atom1)) {
                 return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);  
-            } else if (wind2 > 0) {
+            } else if (wind2 > 0 && !hasDisplayedSymbol(atom2)) {
                 return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
-            } else {
+            } else if (!hasDisplayedSymbol(atom1)) {
                 // special case, offset line is drawn on the opposite side
                 return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds, true);
+            } else if (!hasDisplayedSymbol(atom2)) {
+                // special case, offset line is drawn on the opposite side
+                return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds, true);
+            } else {
+                return generateCenteredDoubleBond(atom1, atom2, atom1Bonds, atom2Bonds);
             }
         } 
         else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
