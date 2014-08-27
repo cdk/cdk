@@ -150,7 +150,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, scale);
+        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke);
 
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
@@ -229,11 +229,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      *
      * @param container  structure representation
      * @param visibility defines whether an atom symbol is displayed
-     * @param scale      the CDK scaling value
+     * @param parameters render model parameters
      * @return generated atom symbols (can contain null)
      */
-    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, double scale) {
+    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters) {
 
+        final double scale = parameters.get(BasicSceneGenerator.Scale.class);
+        
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
 
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -243,7 +245,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
             // only generate if the symbol is visible
-            if (!visibility.visible(atom, bonds))
+            if (!visibility.visible(atom, bonds, parameters))
                 continue;
 
             final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
@@ -301,7 +303,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
         
         if (parameters.getSelection() != null && parameters.getSelection().contains(bond)) {
-            return parameters.get(RendererModel.ExternalHighlightColor.class);
+            return parameters.get(RendererModel.SelectionColor.class);
         }
         
         return null;

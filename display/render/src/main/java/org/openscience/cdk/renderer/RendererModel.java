@@ -79,6 +79,16 @@ public class RendererModel implements Serializable, Cloneable {
     private Map<IAtom, IAtom> merge=new HashMap<IAtom, IAtom>();
 
     /**
+     * Color of a selection.
+     */
+    public static class SelectionColor extends AbstractGeneratorParameter<Color> {
+        /** {@inheritDoc} */
+        public Color getDefault() {
+            return new Color(0x49DFFF);
+        }
+    }
+    
+    /**
      * The color used to highlight external selections.
      */
     public static class ExternalHighlightColor extends
@@ -119,6 +129,7 @@ public class RendererModel implements Serializable, Cloneable {
         renderingParameters.put(
                 externalHighlightColor.getClass().getName(), externalHighlightColor
         );
+        renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
     }
 
     /**
