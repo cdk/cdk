@@ -169,7 +169,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             IBond bond = container.getBond(i);
 
-            Color highlight = getColorProperty(bond, HIGHLIGHT_COLOR);
+            Color highlight = getHighlightColor(bond, parameters);
             if (highlight != null && style == HighlightStyle.OuterGlow) {
                 backLayer.add(outerGlow(bondElements[i], highlight, glowWidth, stroke));
             }
@@ -190,7 +190,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 continue;
             }
 
-            Color highlight = getColorProperty(atom, HIGHLIGHT_COLOR);
+            Color highlight = getHighlightColor(atom, parameters);
             Color color = highlight != null && style == HighlightStyle.Colored ? highlight 
                                                                                : coloring.getAtomColor(atom);
 
@@ -292,6 +292,20 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              glowWidth);
     }
 
+
+    private Color getHighlightColor(IChemObject bond, RendererModel parameters) {
+        Color propCol = getColorProperty(bond, HIGHLIGHT_COLOR);
+        
+        if (propCol != null) {
+            return propCol;
+        }
+        
+        if (parameters.getSelection() != null && parameters.getSelection().contains(bond)) {
+            return parameters.get(RendererModel.ExternalHighlightColor.class);
+        }
+        
+        return null;
+    }
 
     /**
      * Safely access a chem object color property for a chem object.
