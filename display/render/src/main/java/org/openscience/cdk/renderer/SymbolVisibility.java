@@ -53,7 +53,7 @@ public abstract class SymbolVisibility {
      * @param neighbors neighboring bonds
      * @return whether the atom symbol is visible
      */
-    public abstract boolean visible(IAtom atom, List<IBond> neighbors);
+    public abstract boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model);
 
     /**
      * All atom symbols are visible.
@@ -62,7 +62,7 @@ public abstract class SymbolVisibility {
      */
     public static SymbolVisibility all() {
         return new SymbolVisibility() {
-            @Override public boolean visible(IAtom atom, List<IBond> neighbors) {
+            @Override public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
                 return true;
             }
         };
@@ -104,7 +104,7 @@ public abstract class SymbolVisibility {
         /**
          * @inheritDoc
          */
-        @Override public boolean visible(IAtom atom, List<IBond> bonds) {
+        @Override public boolean visible(IAtom atom, List<IBond> bonds, RendererModel model) {
 
             final Elements element = Elements.ofNumber(atom.getAtomicNumber());
 

@@ -27,6 +27,7 @@ package org.openscience.cdk.renderer.generators.standard;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemObject;
+import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.SymbolVisibility;
 
 import java.util.List;
@@ -60,11 +61,10 @@ public final class SelectionVisibility extends SymbolVisibility {
     }
 
     /**
-     * Display the atom symbol if is disconnected from any other selected
-     * atoms or bonds. The provided visibility is used when the atom
-     * is not selected.
-     * 
-     * @param visibility visibility when not selected 
+     * Display the atom symbol if is disconnected from any other selected atoms or bonds. The
+     * provided visibility is used when the atom is not selected.
+     *
+     * @param visibility visibility when not selected
      * @return visibility instance
      */
     public static SymbolVisibility disconnected(SymbolVisibility visibility) {
@@ -73,8 +73,8 @@ public final class SelectionVisibility extends SymbolVisibility {
 
     /**
      * Display the atom symbol if is selected, otherwise use the provided visibility.
-     * 
-     * @param visibility visibility when not selected 
+     *
+     * @param visibility visibility when not selected
      * @return visibility instance
      */
     public static SymbolVisibility all(SymbolVisibility visibility) {
@@ -84,10 +84,10 @@ public final class SelectionVisibility extends SymbolVisibility {
     /**
      * @inheritDoc
      */
-    @Override public boolean visible(IAtom atom, List<IBond> neighbors) {
-        if (isSelected(atom) && (all || !hasSelectedBond(neighbors)))
+    @Override public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
+        if (isSelected(atom, model) && (all || !hasSelectedBond(neighbors, model)))
             return true;
-        return delegate.visible(atom, neighbors);
+        return delegate.visible(atom, neighbors, model);
     }
 
     /**
@@ -96,8 +96,12 @@ public final class SelectionVisibility extends SymbolVisibility {
      * @param object the object
      * @return object is selected
      */
-    static boolean isSelected(IChemObject object) {
-        return object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null;
+    static boolean isSelected(IChemObject object, RendererModel model) {
+        if (object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null)
+            return true;
+        if (model.getSelection() != null)
+            return model.getSelection().contains(object);
+        return false;
     }
 
     /**
@@ -106,9 +110,9 @@ public final class SelectionVisibility extends SymbolVisibility {
      * @param bonds list of bonds
      * @return at least bond bond is selected
      */
-    static boolean hasSelectedBond(List<IBond> bonds) {
+    static boolean hasSelectedBond(List<IBond> bonds, RendererModel model) {
         for (IBond bond : bonds) {
-            if (isSelected(bond))
+            if (isSelected(bond, model))
                 return true;
         }
         return false;
