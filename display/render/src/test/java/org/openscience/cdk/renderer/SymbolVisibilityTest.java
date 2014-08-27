@@ -40,7 +40,7 @@ import static org.junit.Assert.assertTrue;
 public class SymbolVisibilityTest {
 
     @Test public void anyAtom() {
-        assertTrue(SymbolVisibility.all().visible(null, null));
+        assertTrue(SymbolVisibility.all().visible(null, null, null));
     }
 
     @Test public void iupacOxygen() {
