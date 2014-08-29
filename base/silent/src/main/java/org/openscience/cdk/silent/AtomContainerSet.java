@@ -131,7 +131,6 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 	 * @param container  the replacement AtomContainer
 	 */
 	public void replaceAtomContainer(int position, IAtomContainer container) {
-		IAtomContainer old = atomContainers[position];
 		atomContainers[position] = container;
 	}
 	

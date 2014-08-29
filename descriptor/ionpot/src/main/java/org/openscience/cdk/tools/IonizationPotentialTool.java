@@ -371,7 +371,6 @@ public class IonizationPotentialTool {
 	private static double getDTHalogenF(double[] resultsH) {
 		double result = 0.0;
 		double SE = resultsH[0];
-		double PE = resultsH[1];
 		double PSC = resultsH[2];
 		double PIC  = resultsH[3];
 		double ETP  = resultsH[4];
@@ -452,7 +451,6 @@ public class IonizationPotentialTool {
 		double PSC = resultsH[2];
 		double PIC  = resultsH[3];
 		double ETP  = resultsH[4];
-		double SPC  = resultsH[5];
 		double COUNTR  = resultsH[6];
 	
 //		System.out.println("SE : "+SE+", PE : "+PE+", PSC : "+PSC+", PIC : "+PIC+", ETP : "+ETP+", SPC : "+SPC+", COUNTR : "+COUNTR);

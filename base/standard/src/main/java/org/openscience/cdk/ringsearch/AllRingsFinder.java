@@ -130,7 +130,6 @@ public final class AllRingsFinder {
     public IRingSet findAllRings(IAtomContainer container,
                                  int maxRingSize) throws CDKException {
 
-        final int m = container.getBondCount();
         final EdgeToBondMap edges = EdgeToBondMap.withSpaceFor(container);
         final int[][]       graph = GraphUtil.toAdjList(container, edges);
 
@@ -199,7 +198,6 @@ public final class AllRingsFinder {
                                                      int maxRingSize) throws
                                                                       CDKException {
 
-        final int m = atomContainer.getBondCount();
         final EdgeToBondMap edges = EdgeToBondMap.withSpaceFor(atomContainer);
         final int[][]       graph = GraphUtil.toAdjList(atomContainer, edges);
 
