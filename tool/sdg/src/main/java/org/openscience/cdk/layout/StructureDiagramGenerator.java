@@ -783,7 +783,7 @@ public class StructureDiagramGenerator
 	private IAtomContainer getUnplacedAtoms(IAtom atom)
 	{
 		IAtomContainer unplacedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
+		List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
 		{
@@ -808,7 +808,7 @@ public class StructureDiagramGenerator
 	private IAtomContainer getPlacedAtoms(IAtom atom)
 	{
 		IAtomContainer placedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
-		java.util.List bonds = molecule.getConnectedBondsList(atom);
+		List bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom;
 		for (int f = 0; f < bonds.size(); f++)
 		{

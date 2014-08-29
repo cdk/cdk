@@ -167,7 +167,7 @@ public class PathTools {
      */
     @TestMethod("testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer")
     public static boolean depthFirstTargetSearch(IAtomContainer molecule, IAtom root, IAtom target, IAtomContainer path) {
-        java.util.List<IBond> bonds = molecule.getConnectedBondsList(root);
+        List<IBond> bonds = molecule.getConnectedBondsList(root);
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
         for (IBond bond : bonds) {

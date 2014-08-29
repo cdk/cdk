@@ -841,7 +841,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 */
 	public IAtomContainer getPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
 
-		java.util.List bonds = ac.getConnectedBondsList(atom);
+		List bonds = ac.getConnectedBondsList(atom);
 		IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
@@ -863,7 +863,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return       The unsetAtomsInAtomContainer value
 	 */
 	public IAtomContainer getUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac) {
-		java.util.List atoms = ac.getConnectedAtomsList(atom);
+		List atoms = ac.getConnectedAtomsList(atom);
 		IAtomContainer connectedAtoms = atom.getBuilder().newInstance(IAtomContainer.class);
 		for (int i = 0; i < atoms.size(); i++) {
 			IAtom curAtom = (IAtom)atoms.get(i);
@@ -875,7 +875,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	}
 
 	public boolean hasUnsetNeighbour(IAtom atom, IAtomContainer ac) {
-		java.util.List atoms = ac.getConnectedAtomsList(atom);
+		List atoms = ac.getConnectedAtomsList(atom);
 		for (int i = 0; i < atoms.size(); i++) {
 			IAtom curAtom = (IAtom)atoms.get(i);
 			if (!curAtom.getFlag(CDKConstants.ISPLACED)) {//&& atoms[i].getPoint3d() == null) {
@@ -896,7 +896,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return        returns a connected atom (Atom)
 	 */
 	public IAtom getPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac) {
-		java.util.List atoms = ac.getConnectedAtomsList(atomA);
+		List atoms = ac.getConnectedAtomsList(atomA);
 		IAtom atom=null;
 		for (int i = 0; i < atoms.size(); i++) {
 			IAtom curAtom = (IAtom)atoms.get(i);

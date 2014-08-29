@@ -547,7 +547,7 @@ public class AtomPlacer
      */
     public void partitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners)
     {
-        java.util.List atoms = molecule.getConnectedAtomsList(atom);
+        List atoms = molecule.getConnectedAtomsList(atom);
         for (int i = 0; i < atoms.size(); i++)
         {
             IAtom curatom = (IAtom)atoms.get(i);
@@ -705,7 +705,7 @@ public class AtomPlacer
                 atomNr = ac.getAtomNumber(atom);
                 logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
-                java.util.List bonds = ac.getConnectedBondsList(atom);
+                List bonds = ac.getConnectedBondsList(atom);
                 for (int g = 0; g < bonds.size(); g++)
                 {
                     IBond curBond = (IBond)bonds.get(g);
@@ -931,7 +931,7 @@ public class AtomPlacer
         int N = atomContainer.getAtomCount();
         morganMatrix = new int[N];
         tempMorganMatrix = new int[N];
-        java.util.List atoms = null;
+        List atoms = null;
         for (int f = 0; f < N; f++)
         {
             morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
@@ -960,7 +960,7 @@ public class AtomPlacer
     static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
     {
         int sum = 0;
-        java.util.List bonds = molecule.getConnectedBondsList(atom);
+        List bonds = molecule.getConnectedBondsList(atom);
         for (int g = 0; g < bonds.size(); g++)
         {
             IBond bond = (IBond)bonds.get(g);

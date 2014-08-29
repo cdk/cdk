@@ -1045,7 +1045,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The alogenCount value
      */
     private int getHalogenCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int acounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("F") || neighbour.getSymbol().equals("I") || neighbour.getSymbol().equals("Cl") || neighbour.getSymbol().equals("Br")) {
@@ -1063,7 +1063,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The nitrogenOrOxygenCount value
      */
     private int getAtomTypeXCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int nocounter = 0;
         IBond bond;
         for (IAtom neighbour : neighbours) {
@@ -1087,7 +1087,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The aromaticCarbonsCount value
      */
     private int getAromaticCarbonsCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int carocounter = 0;
         for (IAtom neighbour : neighbours) {            
             if (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)) {
@@ -1106,7 +1106,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The carbonsCount value
      */
     private int getCarbonsCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int ccounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("C")) {
@@ -1126,7 +1126,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The carbonsCount value
      */
     private int getOxygenCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int ocounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("O")) {
@@ -1147,7 +1147,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The doubleBondedCarbonsCount value
      */
     private int getDoubleBondedCarbonsCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int cdbcounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1170,7 +1170,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The doubleBondedOxygenCount value
      */
     private int getDoubleBondedOxygenCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int odbcounter = 0;
         boolean chargeFlag=false;
@@ -1202,7 +1202,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The doubleBondedSulfurCount value
      */
     private int getDoubleBondedSulfurCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int sdbcounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1230,7 +1230,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The doubleBondedNitrogenCount value
      */
     private int getDoubleBondedNitrogenCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         IBond bond;
         int ndbcounter = 0;
         for (IAtom neighbour : neighbours) {
@@ -1255,7 +1255,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The aromaticNitrogensCount value
      */
     private int getAromaticNitrogensCount(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int narocounter = 0;
         for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("N") && (Boolean) neighbour.getProperty("IS_IN_AROMATIC_RING")) {
@@ -1276,9 +1276,9 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The piSystemsCount value
      */
     private int getPiSystemsCount(IAtomContainer ac, IAtom atom) {
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
+        List neighbours = ac.getConnectedAtomsList(atom);
         int picounter = 0;
-        java.util.List bonds=null;
+        List bonds=null;
         for (int i = 0; i < neighbours.size(); i++) {
             IAtom neighbour = (IAtom)neighbours.get(i);
             bonds = ac.getConnectedBondsList(neighbour);
@@ -1307,7 +1307,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      */
     private boolean getPresenceOfHydroxy(IAtomContainer ac, IAtom atom) {
         IAtom neighbour0 = (IAtom)ac.getConnectedAtomsList(atom).get(0);
-        java.util.List first = null;
+        List first = null;
         if (neighbour0.getSymbol().equals("C")) {
             first = ac.getConnectedAtomsList(neighbour0);
             for (int i = 0; i < first.size(); i++) {
@@ -1335,8 +1335,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The presenceOfNitor [boolean]
      */
     private boolean getPresenceOfNitro(IAtomContainer ac, IAtom atom) {
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
-        java.util.List second = null;
+        List neighbours = ac.getConnectedAtomsList(atom);
+        List second = null;
         IBond bond = null;
         //int counter = 0;
         for (int i = 0; i < neighbours.size(); i++) {
@@ -1365,7 +1365,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The presenceOfSulfat [boolean]
      */
     private boolean getPresenceOfSulfat(IAtomContainer ac, IAtom atom) {
-        java.util.List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+        List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         //org.openscience.cdk.interfaces.IAtom[] second = null;
         //IBond bond = null;
         //int counter = 0;
@@ -1385,8 +1385,8 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The presenceOfCarbonil value
      */
     private int getPresenceOfCarbonil(IAtomContainer ac, IAtom atom) {
-        java.util.List neighbours = ac.getConnectedAtomsList(atom);
-        java.util.List second = null;
+        List neighbours = ac.getConnectedAtomsList(atom);
+        List second = null;
         IBond bond = null;
         int counter = 0;
         for (int i = 0; i < neighbours.size(); i++) {
@@ -1417,9 +1417,9 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
      *@return       The ifCarbonIsHydrophobic value
      */
     private boolean getIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom) {
-        java.util.List first = ac.getConnectedAtomsList(atom);
-        java.util.List second = null;
-        java.util.List third = null;
+        List first = ac.getConnectedAtomsList(atom);
+        List second = null;
+        List third = null;
         //org.openscience.cdk.interfaces.IAtom[] fourth = null;
         if (first.size() > 0) {
             for (int i = 0; i < first.size(); i++) {

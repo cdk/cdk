@@ -149,7 +149,7 @@ public final class Stereocenters {
      * @return the stereocenters
      */
     public static Stereocenters of(IAtomContainer container) {
-        GraphUtil.EdgeToBondMap bondMap = GraphUtil.EdgeToBondMap.withSpaceFor(container);
+        EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(container);
         int[][] g = GraphUtil.toAdjList(container, bondMap);
         return new Stereocenters(container, g, bondMap);
     }

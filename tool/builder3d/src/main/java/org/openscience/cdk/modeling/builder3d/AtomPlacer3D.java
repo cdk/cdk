@@ -478,7 +478,7 @@ public class AtomPlacer3D {
 	 * @return       The unplacedRingHeavyAtom value
 	 */
 	public IAtom getUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom) {
-		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
+		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
@@ -508,7 +508,7 @@ public class AtomPlacer3D {
 	 * author:      steinbeck
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
-		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
+		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		for (int i = 0; i < bonds.size(); i++) {
 			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED) & !connectedAtom.getSymbol().equals("H")) {
@@ -527,7 +527,7 @@ public class AtomPlacer3D {
 	 * @return        The placedHeavyAtom value
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
-		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atomA);
+		List<IBond> bonds = molecule.getConnectedBondsList(atomA);
 		for (int i = 0; i < bonds.size(); i++) {
 			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atomA);
 			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H")
@@ -546,7 +546,7 @@ public class AtomPlacer3D {
 	 */
 	public IAtomContainer getPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom) {
 
-		java.util.List<IBond> bonds = molecule.getConnectedBondsList(atom);
+		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {

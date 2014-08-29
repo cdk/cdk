@@ -40,7 +40,7 @@ public class RandomNumbersTool extends Random {
 
     private static final long serialVersionUID = -8238833473383641882L;
 
-    private static java.util.Random random;
+    private static Random random;
     private static long randomSeed;
 
     static {
@@ -55,7 +55,7 @@ public class RandomNumbersTool extends Random {
      * @param base_random a <code>java.util.Random</code> subclass.
      */
     @TestMethod("testSetRandom")
-    public static void setRandom(java.util.Random base_random) {
+    public static void setRandom(Random base_random) {
         random = base_random;
     }
 
