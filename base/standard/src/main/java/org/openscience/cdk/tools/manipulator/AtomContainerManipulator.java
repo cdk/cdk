@@ -410,7 +410,6 @@ public class AtomContainerManipulator {
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
         List<IAtom> hydrogens = new ArrayList<IAtom>();
         List<IBond> newBonds = new ArrayList<IBond>();
-        List<Integer> atomIndex = new ArrayList<Integer>();
         
         // store a single explicit hydrogen of each original neighbor
         Map<IAtom,IAtom> hNeighbor = Maps.newHashMapWithExpectedSize(atomContainer.getAtomCount());

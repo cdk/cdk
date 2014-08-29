@@ -402,7 +402,6 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 		smooth = -1.15;
 		int goodPosition = 0;
 		IBond goodBond;
-		int counter = 0;
 		for(double ghd = limitInf; ghd < limitSup; ghd = ghd + step) {
 			sum = 0;
 			for( int dou = 0; dou < doubles.size(); dou++ ) {
@@ -436,7 +435,6 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 			//gDr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("GDR prob dist.: " + sum + " at distance " + ghd);
-			counter++;
 		}
 	}
 	else {
@@ -543,7 +541,6 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
         double[] values;
         double distance = 0;
         IAtom atom0 = bond.getAtom(0);
-        IAtom atom1 = bond.getAtom(1);
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {
