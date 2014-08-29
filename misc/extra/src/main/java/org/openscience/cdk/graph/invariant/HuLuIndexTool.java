@@ -52,8 +52,6 @@ public class HuLuIndexTool
     public static double getEAIDNumber(AtomContainer atomContainer) throws NoSuchAtomException,
             BadMatrixFormatException,IndexOutOfBoundsException
     {
-        boolean debug = false;
-
         GIMatrix matrix = new GIMatrix(getExtendedAdjacenyMatrix(atomContainer));
 
         GIMatrix tempMatrix = matrix;
@@ -81,7 +79,6 @@ public class HuLuIndexTool
     public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer)
         throws NoSuchAtomException
     {
-        boolean debug = false;
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 
         logger.debug("adjacency matrix: ");
@@ -120,7 +117,6 @@ public class HuLuIndexTool
 
     public static double[] getAtomWeights(AtomContainer atomContainer) throws NoSuchAtomException
     {
-        boolean debug = false;
         IAtom atom,headAtom,endAtom;        
         int headAtomPosition,endAtomPosition;
 

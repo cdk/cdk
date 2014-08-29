@@ -332,12 +332,8 @@ public class RingPlacer
 		startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - ringCenter.x, startAtom.getPoint2d().y - ringCenter.y);
 
 		IAtom currentAtom = startAtom;
-        // determine first bond in Ring
-        int k = 0;
-//        for (k = 0; k < ring.getElectronContainerCount(); k++) {
-//            if (ring.getElectronContainer(k) instanceof IBond) break;
-//        }
-        IBond currentBond = sharedAtoms.getBond(0);
+
+                IBond currentBond = sharedAtoms.getBond(0);
 		Vector atomsToDraw = new Vector();
 		for (int i = 0; i < ring.getBondCount(); i++)
 		{

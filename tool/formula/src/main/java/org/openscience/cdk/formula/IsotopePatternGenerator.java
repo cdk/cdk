@@ -192,12 +192,10 @@ public class IsotopePatternGenerator{
 			}
 
 			Iterator<Double> itr = isotopeMassAndAbundance.keySet().iterator();
-			int i = 0;
 			abundance_Mass = new IsotopePattern();
 			while (itr.hasNext()) {
 				mass = itr.next();
 				abundance_Mass.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
-				i++;
 			}
 		}
 
