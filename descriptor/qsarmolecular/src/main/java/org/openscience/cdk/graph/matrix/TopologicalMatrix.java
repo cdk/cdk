@@ -4,7 +4,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.interfaces.IAtomContainer;
-import org.openscience.cdk.graph.matrix.AdjacencyMatrix;
 
 /**
  * Calculator for a topological matrix representation of this AtomContainer. An
