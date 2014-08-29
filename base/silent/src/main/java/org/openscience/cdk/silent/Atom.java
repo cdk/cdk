@@ -80,16 +80,16 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *  A 2D point specifying the location of this atom in a 2D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point2d point2d = (Point2d) CDKConstants.UNSET;
+        protected Point2d point2d = (Point2d) CDKConstants.UNSET;
         /**
          *  A 3 point specifying the location of this atom in a 3D coordinate 
          *  space.
          */
-        protected javax.vecmath.Point3d point3d = (Point3d) CDKConstants.UNSET;
+        protected Point3d point3d = (Point3d) CDKConstants.UNSET;
         /**
          *  A 3 point specifying the location of this atom in a crystal unit cell.
          */
-        protected javax.vecmath.Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+        protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
         /**
          *  The number of implicitly bound hydrogen atoms for this atom.
          */
@@ -129,7 +129,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   elementSymbol   The symbol of the atom
          * @param   point3d         The 3D coordinates of the atom
          */
-        public Atom(String elementSymbol, javax.vecmath.Point3d point3d)
+        public Atom(String elementSymbol, Point3d point3d)
         {
                 this(elementSymbol);
                 this.point3d = point3d;
@@ -141,7 +141,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @param   elementSymbol   The Element
          * @param   point2d         The Point
          */
-        public Atom(String elementSymbol, javax.vecmath.Point2d point2d)
+        public Atom(String elementSymbol, Point2d point2d)
         {
                 this(elementSymbol);
                 this.point2d = point2d;
@@ -240,7 +240,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see    #getPoint2d
          */
-        public void setPoint2d(javax.vecmath.Point2d point2d) {
+        public void setPoint2d(Point2d point2d) {
                 this.point2d = point2d;
         }
         /**
@@ -252,7 +252,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see    #getPoint3d
          */
-        public void setPoint3d(javax.vecmath.Point3d point3d) {
+        public void setPoint3d(Point3d point3d) {
                 this.point3d = point3d;
         }
         /**
@@ -264,7 +264,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @see    #getFractionalPoint3d
          * @see    org.openscience.cdk.Crystal
          */
-        public void setFractionalPoint3d(javax.vecmath.Point3d point3d) {
+        public void setFractionalPoint3d(Point3d point3d) {
                 this.fractionalPoint3d = point3d;
         }
         /**
@@ -287,7 +287,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see       #setPoint2d
          */
-        public javax.vecmath.Point2d getPoint2d() {
+        public Point2d getPoint2d() {
                 return this.point2d;
         }
         /**
@@ -298,7 +298,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          *
          * @see       #setPoint3d
          */
-        public javax.vecmath.Point3d getPoint3d() {
+        public Point3d getPoint3d() {
                 return this.point3d;
         }
 
@@ -311,7 +311,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * @see       #setFractionalPoint3d
          * @see       org.openscience.cdk.CDKConstants for predefined values.
          */
-        public javax.vecmath.Point3d getFractionalPoint3d() {
+        public Point3d getFractionalPoint3d() {
                 return this.fractionalPoint3d;
         }
 

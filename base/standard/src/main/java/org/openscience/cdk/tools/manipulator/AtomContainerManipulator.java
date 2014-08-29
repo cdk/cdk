@@ -1139,7 +1139,7 @@ public class AtomContainerManipulator {
 	 * @return The array of Atom objects.
 	 */
     @TestMethod("testGetAtomArray_List")
-    public static IAtom[] getAtomArray(java.util.List<IAtom> list) {
+    public static IAtom[] getAtomArray(List<IAtom> list) {
 		IAtom[] ret = new IAtom[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
@@ -1163,7 +1163,7 @@ public class AtomContainerManipulator {
 	 * @return The array of Atom objects.
 	 */
     @TestMethod("testGetBondArray_List")
-    public static IBond[] getBondArray(java.util.List<IBond> list) {
+    public static IBond[] getBondArray(List<IBond> list) {
 		IBond[] ret = new IBond[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;
@@ -1185,7 +1185,7 @@ public class AtomContainerManipulator {
 	 * @param  list The original List.
 	 * @return The array of Atom objects.
 	 */
-	public static IElectronContainer[] getElectronContainerArray(java.util.List<IElectronContainer> list) {
+	public static IElectronContainer[] getElectronContainerArray(List<IElectronContainer> list) {
 		IElectronContainer[] ret = new IElectronContainer[list.size()];
 		for (int i = 0; i < ret.length; ++i) ret[i] = list.get(i);
 		return ret;

@@ -173,8 +173,8 @@ public class PiContactDetectionDescriptor extends AbstractAtomPairDescriptor imp
         }
         java.util.Iterator<IAtomContainer> detected = acSet.atomContainers().iterator();
 
-        java.util.List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(clonedFirst);
-        java.util.List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(clonedSecond);
+        List<IAtom> neighboorsFirst = mol.getConnectedAtomsList(clonedFirst);
+        List<IAtom> neighboorsSecond = mol.getConnectedAtomsList(clonedSecond);
 
         while (detected.hasNext()) {
         	IAtomContainer detectedAC = detected.next();

@@ -277,7 +277,7 @@ public class TPSADescriptor extends AbstractMolecularDescriptor implements IMole
                         tripleBondCount++;
                 }
                 int formalCharge = atom.getFormalCharge();
-                java.util.List connectedAtoms = ac.getConnectedAtomsList(atom);
+                List connectedAtoms = ac.getConnectedAtomsList(atom);
                 int numberOfNeighbours = connectedAtoms.size();
 
                 // EXPLICIT hydrogens: count the number of hydrogen atoms

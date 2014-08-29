@@ -313,7 +313,7 @@ public class BasicValidator extends AbstractValidator {
                 atom.getBuilder()
             );
             int bos = (int)molecule.getBondOrderSum(atom);
-            org.openscience.cdk.interfaces.IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
+            IAtomType[] atomTypes = structgenATF.getAtomTypes(atom.getSymbol());
             if (atomTypes.length == 0) {
                 checkBondSum.setDetails(
                     "Cannot validate bond order sum for atom not in valency atom type list: " +

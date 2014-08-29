@@ -305,7 +305,7 @@ public class BondTools {
 		{
 			return (0);
 		}
-		java.util.List<IBond> bonds = container.getConnectedBondsList(atom);
+		List<IBond> bonds = container.getConnectedBondsList(atom);
         int up = 0;
 		int down = 0;
         for (IBond bond : bonds) {

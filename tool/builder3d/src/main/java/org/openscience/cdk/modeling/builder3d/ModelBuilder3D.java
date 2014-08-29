@@ -462,7 +462,7 @@ public class ModelBuilder3D {
 	 */
 	private void searchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
-		java.util.List atoms = null;
+		List atoms = null;
 		IAtomContainer branchAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		for (int i = 0; i < chain.getAtomCount(); i++) {

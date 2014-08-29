@@ -503,7 +503,7 @@ public class ChemicalFilters {
     static Map<Integer, Double> sortMapByValueInAccendingOrder(Map<Integer, Double> map) {
         List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
-        java.util.Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
             public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
                 // Return 0 for eAtom match, -1 for less than and +1 for more then (Aceending Order Sort)
@@ -523,7 +523,7 @@ public class ChemicalFilters {
     static Map<Integer, Double> sortMapByValueInDecendingOrder(Map<Integer, Double> map) {
         List<Map.Entry<Integer, Double>> list = new LinkedList<Map.Entry<Integer, Double>>(map.entrySet());
         // Sort the list using an annonymous inner class implementing Comparator for the compare method
-        java.util.Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
+        Collections.sort(list, new Comparator<Map.Entry<Integer, Double>>() {
 
             public int compare(Map.Entry<Integer, Double> entry, Map.Entry<Integer, Double> entry1) {
                 // Return 0 for eAtom match, -1 for less than and +1 for more then (Decending Order Sort)
