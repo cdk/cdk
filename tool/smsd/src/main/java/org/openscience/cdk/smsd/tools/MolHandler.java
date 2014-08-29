@@ -30,7 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.PseudoAtom;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;

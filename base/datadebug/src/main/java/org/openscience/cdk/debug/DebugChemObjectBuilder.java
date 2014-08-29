@@ -20,7 +20,6 @@
 package org.openscience.cdk.debug;
 
 
-import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.DynamicFactory;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
