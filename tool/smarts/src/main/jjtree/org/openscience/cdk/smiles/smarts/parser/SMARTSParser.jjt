@@ -31,9 +31,6 @@ PARSER_BEGIN(SMARTSParser)
 package org.openscience.cdk.smiles.smarts.parser;
 
 import java.io.StringReader;
-import java.util.Stack;
-
-import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
