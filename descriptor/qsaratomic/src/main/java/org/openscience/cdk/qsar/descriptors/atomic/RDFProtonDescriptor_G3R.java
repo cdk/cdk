@@ -479,7 +479,6 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
         }
 
         // Variables
-		double distance;
 		double sum;
 		double smooth = -20;
 		double partial;
@@ -501,7 +500,6 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 			IAtom cycloexBondAtom0;
 			IAtom cycloexBondAtom1;
 			IBond theInCycloexBond;
-			distance = 0;
 			limitInf = 0;
 			limitSup = Math.PI;
 			step = (limitSup - limitInf) / 13;
@@ -510,7 +508,6 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 			angle = 0;
 			int ya_counter = 0;
 			List<IAtom> connAtoms;
-			int counter = 0;
 			for (double g3r = 0; g3r < limitSup; g3r = g3r + step) {
 				sum = 0;
                 for (Integer aBondsInCycloex : bondsInCycloex) {
@@ -561,7 +558,6 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
                 // g3r_function.add(new Double(sum));
 				rdfProtonCalculatedValues.add(sum);
 				logger.debug("RDF g3r prob.: "+sum+ " at distance "+g3r);
-				counter++;
 			}
 		}
 		else {

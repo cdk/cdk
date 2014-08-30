@@ -296,8 +296,6 @@ public abstract class RandomAccessReader
             if (isRecordEnd(s)) {
                 //fireFrameRead();
                 if (records >= maxRecords) {
-                    double averageLength = recordLength/records;
-                    //records + (rf.length()-rf.getFilePointer())/averageLength
                     index = resize(index,records + 
                             (int) (records + (raFile.length()-records*raFile.getFilePointer())/recordLength));
             	}

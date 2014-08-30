@@ -283,7 +283,6 @@ public class MurckoFragmenter implements IFragmenter {
             if (atom.getFlag(CDKConstants.ISINRING)) continue; // only need to look at non-ring atoms
             List<IAtom> conatoms = atomContainer.getConnectedAtomsList(atom);
             if (conatoms.size() == 1) continue; // this is actually a terminal atom and so is a side chain
-            boolean allRingAtoms = true;
             int nRingAtom = 0;
             for (IAtom conatom : conatoms) {
                 if (conatom.getFlag(CDKConstants.ISINRING)) {

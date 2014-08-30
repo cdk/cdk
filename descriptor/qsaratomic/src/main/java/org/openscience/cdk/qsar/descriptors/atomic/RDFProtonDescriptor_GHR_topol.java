@@ -396,7 +396,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 
 	if(atoms.size() > 0) {
 		//ArrayList gHr_topol_function = new ArrayList(15);
-		int counter = 0;
         ShortestPaths shortestPaths = new ShortestPaths(mol, startVertex);
 		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
 			sum = 0;
@@ -416,7 +415,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 			//gHr_topol_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gr-topol distance prob.: "+sum+ " at distance "+ghrt);
-			counter++;
 		}
 	}
 	else {
@@ -525,7 +523,6 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
         double[] values;
         double distance = 0;
         IAtom atom0 = bond.getAtom(0);
-        IAtom atom1 = bond.getAtom(1);
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {

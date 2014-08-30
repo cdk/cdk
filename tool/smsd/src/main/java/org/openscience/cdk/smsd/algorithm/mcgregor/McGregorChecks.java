@@ -577,7 +577,6 @@ public class McGregorChecks {
         List<String> cBondNeighborsA = mcGregorHelper.getcBondNeighborsA();
         List<String> cBondNeighborsB = mcGregorHelper.getcBondNeighborsB();
 
-        boolean moreMappingPossible = false;
         for (int row = 0; row < neighborBondNumA; row++) {
 //            System.out.println("i " + row);
             String G1A = cBondNeighborsA.get(row * 4 + 0);
