@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.config;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -126,8 +125,13 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
                         atomType.setCovalentRadius(covalent);
-                        Color color = new Color(colorR, colorG, colorB);
-                        atomType.setProperty("org.openscience.cdk.renderer.color", color);
+                        
+                        // pack the RGB color space components into a single int. Note we 
+                        // avoid java.awt.Color (not available on some JREs)
+                        atomType.setProperty("org.openscience.cdk.renderer.color",
+                                             ((colorR << 16) & 0xff0000) |
+                                             ((colorG << 8)  & 0x00ff00) |
+                                             (colorB         & 0x0000ff));
                         atomTypes.add(atomType);
                     } else {
                         throw new IOException("AtomTypeTable.ReadAtypes: " + 
