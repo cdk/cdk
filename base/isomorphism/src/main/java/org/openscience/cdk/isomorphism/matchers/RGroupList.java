@@ -270,7 +270,7 @@ public class RGroupList {
             while (st.hasMoreTokens() && !addVal) {
                 String cond = st.nextToken().trim().replaceAll(" ", "");
                 if (match("^\\d+$", cond)) { // n
-                    if(new Integer(cond)==val)
+                    if(Integer.valueOf(cond) == val)
                         addVal=true;
                 }
                 if (match("^\\d+-\\d+$", cond)) { // n-m
