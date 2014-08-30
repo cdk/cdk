@@ -376,7 +376,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
         // get charge weighted BCUT
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-        GasteigerPEPEPartialCharges pepe;
         GasteigerMarsiliPartialCharges peoe;
         try {
             lpcheck.saturate(molecule);

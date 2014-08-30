@@ -371,7 +371,6 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 
         //Variables
         double[] values; // for storage of results of other methods
-        double distance;
         double sum;
         double smooth = -20;
         double partial;
@@ -394,14 +393,12 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 		double dist1;
 		IAtom singleBondAtom0;
 		IAtom singleBondAtom1;
-		distance = 0;
 		position = 0;
 		IBond theSingleBond = null;
 		limitInf = 0;
 		limitSup = Math.PI / 2;
 		step = (limitSup - limitInf)/7;
 		smooth = -1.15;
-		int counter = 0;
 		for(double ghs = 0; ghs < limitSup; ghs = ghs + step) {
 			sum = 0;
 			for( int sing = 0; sing < singles.size(); sing++ ) {
@@ -433,7 +430,6 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 			//gSr_function.add(new Double(sum));
 			rdfProtonCalculatedValues.add(sum);
 			logger.debug("RDF gSr prob.: " + sum +  " at distance " + ghs);
-			counter++;
 		}
 	}
 	else {

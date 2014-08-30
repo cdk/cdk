@@ -642,7 +642,6 @@ public class MolecularFormulaManipulator {
 	public static double getTotalExactMass(IMolecularFormula formula) {
 		Double mass = 0.0;
 
-		IChemObjectBuilder builder = formula.getBuilder();
 		for (IIsotope isotope : formula.isotopes()) {
 			if (isotope.getExactMass() == CDKConstants.UNSET) {
 				try {

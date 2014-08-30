@@ -656,7 +656,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         int RCount = 0;
         int XCount = 0;
         boolean HaveCdX = false;
-        int AliphaticCount = 0;
         int AromaticCount = 0;
 
         for (int j = 0; j <= ca.size() - 1; j++) {
@@ -667,9 +666,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
                     XCount++;
                 }
 
-                if (!((IAtom)ca.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
-                    AliphaticCount++;
-                } else {
+                if (((IAtom)ca.get(j)).getFlag(CDKConstants.ISAROMATIC)) {
                     AromaticCount++;
                 }
 
@@ -1496,7 +1493,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         for (int j = 0; j <= ca2.size() - 1; j++) {
             IAtom ca2j = (IAtom)ca2.get(j);
-            String s = ca2j.getSymbol();
 
             // // F,O,Cl,Br,N
 
@@ -1646,7 +1642,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         for (int j = 0; j <= ca2.size() - 1; j++) {
             IAtom ca2j = (IAtom)ca2.get(j);
-            String s = ca2j.getSymbol();
 
             // // F,O,Cl,Br,N
 
@@ -1722,7 +1717,6 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
 
         for (int j = 0; j <= ca2.size() - 1; j++) {
             IAtom ca2j = (IAtom)ca2.get(j);
-            String s = ca2j.getSymbol();
 
             // // F,O,Cl,Br,N
 

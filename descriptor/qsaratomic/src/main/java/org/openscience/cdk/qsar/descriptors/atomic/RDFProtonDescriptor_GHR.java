@@ -387,7 +387,6 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
 
 ///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:		
 		if(atoms.size() > 0) {
-			int counter = 0;
 			for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
 				sum = 0;
                 for (Object atom1 : atoms) {
@@ -403,7 +402,6 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
                 rdfProtonCalculatedValues.add(sum);
 				
 				logger.debug("RDF gr distance prob.: "+sum+ " at distance "+ghr);				
-				counter++;
 			}
 		}
 		else {
@@ -509,7 +507,6 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         double[] values;
         double distance = 0;
         IAtom atom0 = bond.getAtom(0);
-        IAtom atom1 = bond.getAtom(1);
         List<IBond> bondsAtLeft = mol.getConnectedBondsList(atom0);
         int partial;
         for (int i = 0; i < bondsAtLeft.size(); i++) {
