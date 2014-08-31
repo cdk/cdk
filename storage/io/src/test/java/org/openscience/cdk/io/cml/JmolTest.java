@@ -30,7 +30,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -83,7 +83,7 @@ public class JmolTest extends CDKTestCase {
         ICrystal crystal = model.getCrystal();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(4*42, crystal.getAtomCount());
-        Assert.assertTrue(GeometryTools.has3DCoordinates(crystal));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(crystal));
         // test the cell axes
         Vector3d a = crystal.getA();
         Assert.assertTrue(a.x != 0.0);
@@ -122,7 +122,7 @@ public class JmolTest extends CDKTestCase {
         IAtomContainer mol = som.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 25);
-        Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
 
@@ -153,7 +153,7 @@ public class JmolTest extends CDKTestCase {
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 6);
-        Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
     /**
@@ -184,7 +184,7 @@ public class JmolTest extends CDKTestCase {
         IAtomContainer mol = som.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(mol.getAtomCount(), 6);
-        Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
 }

@@ -26,7 +26,7 @@ import javax.vecmath.Point3d;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
@@ -324,7 +324,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-        if (!GeometryTools.has3DCoordinates(container))
+        if (!GeometryUtil.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         double sum = 0.0;

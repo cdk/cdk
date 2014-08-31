@@ -23,7 +23,7 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.geometry.surface.NumericalSurface;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -230,7 +230,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         DoubleArrayResult retval = new DoubleArrayResult();
 
-        if (!GeometryTools.has3DCoordinates(atomContainer)) {
+        if (!GeometryUtil.has3DCoordinates(atomContainer)) {
             for (int i = 0; i < 29; i++) retval.add(Double.NaN);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     retval, getDescriptorNames(), new CDKException("Molecule must have 3D coordinates"));

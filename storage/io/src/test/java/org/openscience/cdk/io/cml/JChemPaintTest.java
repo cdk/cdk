@@ -27,7 +27,7 @@ import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemFile;
@@ -76,7 +76,7 @@ public class JChemPaintTest extends CDKTestCase {
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(4, mol.getAtomCount());
-        Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 
     /**
@@ -106,6 +106,6 @@ public class JChemPaintTest extends CDKTestCase {
         IAtomContainer mol = moleculeSet.getAtomContainer(0);
         Assert.assertNotNull(mol);
         Assert.assertEquals(2, mol.getAtomCount());
-        Assert.assertTrue(GeometryTools.has3DCoordinates(mol));
+        Assert.assertTrue(GeometryUtil.has3DCoordinates(mol));
     }
 }

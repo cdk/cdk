@@ -33,7 +33,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.io.formats.MDLV2000Format;
@@ -235,7 +235,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
             Assert.assertNotNull(object);
             Assert.assertTrue(object instanceof IAtomContainer);
             molCount++;
-            boolean has3d = GeometryTools.has3DCoordinates((IAtomContainer)object);
+            boolean has3d = GeometryUtil.has3DCoordinates((IAtomContainer) object);
             Assert.assertTrue(has3d);
         }
     }

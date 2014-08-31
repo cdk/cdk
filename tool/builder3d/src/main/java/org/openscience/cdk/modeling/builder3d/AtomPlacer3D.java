@@ -31,7 +31,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -496,7 +496,7 @@ public class AtomPlacer3D {
 	 */
 	public Point3d geometricCenterAllPlacedAtoms(IAtomContainer molecule) {
 		IAtomContainer allPlacedAtoms = getAllPlacedAtoms(molecule);
-		return GeometryTools.get3DCenter(allPlacedAtoms);
+		return GeometryUtil.get3DCenter(allPlacedAtoms);
 	}
 
 

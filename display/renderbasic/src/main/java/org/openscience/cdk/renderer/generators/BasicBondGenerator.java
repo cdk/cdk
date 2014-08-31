@@ -30,7 +30,7 @@ import javax.vecmath.Vector2d;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.ConnectivityChecker;
 import org.openscience.cdk.graph.Cycles;
 import org.openscience.cdk.interfaces.IAtom;
@@ -402,7 +402,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
      */
     public LineElement generateInnerElement(
             IBond bond, IRing ring, RendererModel model) {
-        Point2d center = GeometryTools.get2DCenter(ring);
+        Point2d center = GeometryUtil.get2DCenter(ring);
         Point2d a = bond.getAtom(0).getPoint2d();
         Point2d b = bond.getAtom(1).getPoint2d();
 

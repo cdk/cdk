@@ -26,7 +26,7 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IPseudoAtom;
@@ -320,10 +320,10 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             int alignment = 0;
             if (atom.getSymbol().equals("C")) {
                 alignment = 
-                  GeometryTools.getBestAlignmentForLabel(atomContainer, atom);
+                  GeometryUtil.getBestAlignmentForLabel(atomContainer, atom);
             } else {
                 alignment = 
-                  GeometryTools.getBestAlignmentForLabelXY(atomContainer, atom);
+                  GeometryUtil.getBestAlignmentForLabelXY(atomContainer, atom);
             }
 
             return generateElement(atom, alignment, model);

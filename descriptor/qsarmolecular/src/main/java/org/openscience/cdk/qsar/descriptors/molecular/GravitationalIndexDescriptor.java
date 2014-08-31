@@ -27,7 +27,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -185,7 +185,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
 
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-        if (!GeometryTools.has3DCoordinates(container))
+        if (!GeometryUtil.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         IsotopeFactory factory = null;

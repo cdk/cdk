@@ -28,7 +28,7 @@ import java.util.List;
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.annotations.TestClass;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.font.IFontManager;
@@ -163,7 +163,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * @param atomContainer the atom container that will be drawn
      */
     public void setScale(IAtomContainer atomContainer) {
-        double bondLength = GeometryTools.getBondLengthAverage(atomContainer);
+        double bondLength = GeometryUtil.getBondLengthAverage(atomContainer);
         rendererModel.getParameter(Scale.class).setValue(this.calculateScaleForBondLength(bondLength));
     }
 
@@ -225,7 +225,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
 
         if (atomContainer.getBondCount() > 0 || atomContainer.getAtomCount() == 1) {
             rendererModel.getParameter(Scale.class)
-                         .setValue(calculateScaleForBondLength(GeometryTools.getBondLengthAverage(atomContainer)));
+                         .setValue(calculateScaleForBondLength(GeometryUtil.getBondLengthAverage(atomContainer)));
         } else if (atomContainer.getAtomCount() > 1) {                                                     
             rendererModel.getParameter(Scale.class)
                          .setValue(calculateScaleForBondLength(estimatedBondLength(atomContainer)));

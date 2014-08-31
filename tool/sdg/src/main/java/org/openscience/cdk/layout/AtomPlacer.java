@@ -36,7 +36,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.geometry.BondTools;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.graph.PathTools;
 import org.openscience.cdk.graph.matrix.ConnectionMatrix;
 import org.openscience.cdk.interfaces.IAtom;
@@ -194,7 +194,7 @@ public class AtomPlacer
 
             logger.debug("distributePartners->xdiff: " + Math.toDegrees(xDiff));
             logger.debug("distributePartners->ydiff: " + Math.toDegrees(yDiff));
-            startAngle = GeometryTools.getAngle(xDiff, yDiff);
+            startAngle = GeometryUtil.getAngle(xDiff, yDiff);
             //- (Math.PI / 2.0);
             logger.debug("distributePartners->angle: " + Math.toDegrees(startAngle));
 
@@ -235,7 +235,7 @@ public class AtomPlacer
          *  get the two sharedAtom partners with the smallest distance to the new center
          */
         sortedAtoms = AtomContainerManipulator.getAtomArray(placedNeighbours);
-        GeometryTools.sortBy2DDistance(sortedAtoms, distanceMeasure);
+        GeometryUtil.sortBy2DDistance(sortedAtoms, distanceMeasure);
         Vector2d closestPoint1 = new Vector2d(sortedAtoms[0].getPoint2d());
         Vector2d closestPoint2 = new Vector2d(sortedAtoms[1].getPoint2d());
         closestPoint1.sub(new Vector2d(atom.getPoint2d()));
@@ -243,9 +243,9 @@ public class AtomPlacer
         occupiedAngle = closestPoint1.angle(occupiedDirection);
         occupiedAngle += closestPoint2.angle(occupiedDirection);
 
-        double angle1 = GeometryTools.getAngle(sortedAtoms[0].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[0].getPoint2d().y - atom.getPoint2d().y);
-        double angle2 = GeometryTools.getAngle(sortedAtoms[1].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[1].getPoint2d().y - atom.getPoint2d().y);
-        double angle3 = GeometryTools.getAngle(distanceMeasure.x - atom.getPoint2d().x, distanceMeasure.y - atom.getPoint2d().y);
+        double angle1 = GeometryUtil.getAngle(sortedAtoms[0].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[0].getPoint2d().y - atom.getPoint2d().y);
+        double angle2 = GeometryUtil.getAngle(sortedAtoms[1].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[1].getPoint2d().y - atom.getPoint2d().y);
+        double angle3 = GeometryUtil.getAngle(distanceMeasure.x - atom.getPoint2d().x, distanceMeasure.y - atom.getPoint2d().y);
         if (debug)
         {
             try
@@ -303,7 +303,7 @@ public class AtomPlacer
             atomsToDraw.add(unplacedNeighbours.getAtom(f));
         }
         radius = bondLength;
-        startAngle = GeometryTools.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y - atom.getPoint2d().y);
+        startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y - atom.getPoint2d().y);
         logger.debug("Before check: distributePartners->startAngle: " + startAngle);
 //        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
 //            -0.001))
@@ -395,7 +395,7 @@ public class AtomPlacer
                 }
             }
             
-            if(GeometryTools.has2DCoordinates(atomContainer)){
+            if(GeometryUtil.has2DCoordinates(atomContainer)){
                 try{
                     if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
                         trans=BondTools.isCisTrans(withh.getAtom(f-3),withh.getAtom(f-2),withh.getAtom(f-1),withh.getAtom(f-0),withh);
@@ -403,9 +403,9 @@ public class AtomPlacer
                 }catch(Exception ex){
                     logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
                 }
-                bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),trans);
+                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule),trans);
             }else{
-                bondVector = getNextBondVector(nextAtom, atom, GeometryTools.get2DCenter(molecule),true);
+                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule),true);
             }
             
             prevBond = currBond;
@@ -440,7 +440,7 @@ public class AtomPlacer
           logger.debug("Entering AtomPlacer.getNextBondVector()");
           logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
     }
-        double angle = GeometryTools.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x, previousAtom.getPoint2d().y - atom.getPoint2d().y);
+        double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x, previousAtom.getPoint2d().y - atom.getPoint2d().y);
         double addAngle = Math.toRadians(120);
         if(!trans)
             addAngle=Math.toRadians(60);

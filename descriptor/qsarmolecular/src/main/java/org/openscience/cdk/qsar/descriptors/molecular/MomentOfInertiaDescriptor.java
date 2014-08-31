@@ -26,7 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IMolecularFormula;
@@ -177,7 +177,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
 
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-        if (!GeometryTools.has3DCoordinates(container))
+        if (!GeometryUtil.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         IAtomContainer clone;
@@ -200,7 +200,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
 
         
         double[][] imat = new double[3][3];
-        Point3d centerOfMass = GeometryTools.get3DCentreOfMass(clone);
+        Point3d centerOfMass = GeometryUtil.get3DCentreOfMass(clone);
 
         double xdif;
         double ydif;
