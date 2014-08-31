@@ -41,7 +41,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
-import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -145,14 +144,14 @@ public final class GeometryUtil {
      * center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details
      * on coordinate sets
      *
-     * @param atomCon    The molecule to be scaled
-     * @param areaDim    The dimension to be filled
+     * @param atomCon    The molecule to be scaled {width, height}
+     * @param areaDim    The dimension to be filled {width, height}
      * @param fillFactor The percentage of the dimension to be filled
      */
-    public static void scaleMolecule(IAtomContainer atomCon, Dimension areaDim, double fillFactor) {
-        Dimension molDim = get2DDimension(atomCon);
-        double widthFactor = (double) areaDim.width / (double) molDim.width;
-        double heightFactor = (double) areaDim.height / (double) molDim.height;
+    public static void scaleMolecule(IAtomContainer atomCon, double[] areaDim, double fillFactor) {
+        double[] molDim = get2DDimension(atomCon);
+        double widthFactor = (double) areaDim[0] / (double) molDim[0];
+        double heightFactor = (double) areaDim[1] / (double) molDim[1];
         double scaleFactor = Math.min(widthFactor, heightFactor) * fillFactor;
         scaleMolecule(atomCon, scaleFactor);
     }
@@ -181,12 +180,13 @@ public final class GeometryUtil {
      * Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
      *
      * @param atomCon molecule to be centered
-     * @param areaDim dimension in which the molecule is to be centered
+     * @param areaDim dimension in which the molecule is to be centered, array containing 
+     *                {width, height}
      */
-    public static void center(IAtomContainer atomCon, Dimension areaDim) {
-        Dimension molDim = get2DDimension(atomCon);
-        int transX = (areaDim.width - molDim.width) / 2;
-        int transY = (areaDim.height - molDim.height) / 2;
+    public static void center(IAtomContainer atomCon, double[] areaDim) {
+        double[] molDim = get2DDimension(atomCon);
+        double transX = (areaDim[0] - molDim[0]) / 2;
+        double transY = (areaDim[1] - molDim[1]) / 2;
         translateAllPositive(atomCon);
         translate2D(atomCon, new Vector2d(transX, transY));
     }
@@ -300,22 +300,19 @@ public final class GeometryUtil {
 
 
     /**
-     * Returns the java.awt.Dimension of a molecule. See comment for center(IAtomContainer atomCon,
-     * Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
+     * Returns the dimension of a molecule (width/height).
      *
      * @param atomCon of which the dimension should be returned
-     * @return The java.awt.Dimension of this molecule
+     * @return array containing {width, height}
      */
-    public static Dimension get2DDimension(IAtomContainer atomCon) {
+    public static double[] get2DDimension(IAtomContainer atomCon) {
         double[] minmax = getMinMax(atomCon);
         double maxX = minmax[2];
-        double
-                maxY = minmax[3];
-        double
-                minX = minmax[0];
-        double
-                minY = minmax[1];
-        return new Dimension((int) (maxX - minX + 1), (int) (maxY - minY + 1));
+        double maxY = minmax[3];
+        double minX = minmax[0];
+        double minY = minmax[1];
+        return new double[]{maxX - minX,
+                            maxY - minY};
     }
 
     /**
