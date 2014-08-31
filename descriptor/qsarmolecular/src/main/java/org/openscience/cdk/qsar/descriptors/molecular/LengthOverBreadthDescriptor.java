@@ -26,7 +26,7 @@ import Jama.Matrix;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.qsar.AbstractMolecularDescriptor;
@@ -136,7 +136,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        if (!GeometryTools.has3DCoordinates(atomContainer))
+        if (!GeometryUtil.has3DCoordinates(atomContainer))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
 
         double angle = 10.0;
@@ -155,7 +155,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         }
 
         // get the com
-        Point3d com = GeometryTools.get3DCentreOfMass(atomContainer);
+        Point3d com = GeometryUtil.get3DCentreOfMass(atomContainer);
         if (com == null) return getDummyDescriptorValue(new CDKException("Error in center of mass calculation"));
 
         // translate everything to COM

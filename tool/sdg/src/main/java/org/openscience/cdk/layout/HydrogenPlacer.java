@@ -24,7 +24,7 @@ package org.openscience.cdk.layout;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.ILoggingTool;
@@ -88,7 +88,7 @@ public final class HydrogenPlacer {
      */
     @TestMethod("testPlaceHydrogens2D")
     public void placeHydrogens2D(IAtomContainer container, IAtom atom) {
-        double bondLength = GeometryTools.getBondLengthAverage(container);
+        double bondLength = GeometryUtil.getBondLengthAverage(container);
         placeHydrogens2D(container, atom, bondLength);
     }
 
@@ -144,7 +144,7 @@ public final class HydrogenPlacer {
             logger.debug("H-" + i, ": ", unplaced.getAtom(i).getPoint2d());
         }
 
-        Point2d centerPlacedAtoms = GeometryTools.get2DCenter(placed);
+        Point2d centerPlacedAtoms = GeometryUtil.get2DCenter(placed);
         atomPlacer.distributePartners(atom, placed, centerPlacedAtoms, unplaced, bondLength);
 
         logger.debug("Atom placement after procedure:");

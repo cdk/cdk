@@ -31,7 +31,7 @@ import javax.vecmath.Point2d;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
@@ -148,9 +148,9 @@ public class RingGenerator extends BasicBondGenerator {
 
     private IRenderingElement generateRingRingElement(
             IBond bond, IRing ring, RendererModel model) {
-        Point2d c = GeometryTools.get2DCenter(ring);
+        Point2d c = GeometryUtil.get2DCenter(ring);
 
-        double[] minmax = GeometryTools.getMinMax(ring);
+        double[] minmax = GeometryUtil.getMinMax(ring);
         double width  = minmax[2] - minmax[0];
         double height = minmax[3] - minmax[1];
         double radius = Math.min(width, height) * ringProportion.getValue();

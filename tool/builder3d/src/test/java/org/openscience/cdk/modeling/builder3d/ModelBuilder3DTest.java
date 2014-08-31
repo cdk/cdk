@@ -38,7 +38,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemObject;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
@@ -222,7 +222,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     }
     
     public static void checkAverageBondLength(IAtomContainer ac){
-    	double avlength=GeometryTools.getBondLengthAverage3D(ac);
+    	double avlength= GeometryUtil.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
     		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
     		Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i,

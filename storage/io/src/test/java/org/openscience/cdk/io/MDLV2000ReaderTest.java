@@ -41,7 +41,7 @@ import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.ChemModel;
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
@@ -544,7 +544,7 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertNotNull(mol);
         Assert.assertEquals(5, mol.getAtomCount());
 
-        boolean has3d = GeometryTools.has3DCoordinates(mol);
+        boolean has3d = GeometryUtil.has3DCoordinates(mol);
         assertTrue(has3d);
     }
 

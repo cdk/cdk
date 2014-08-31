@@ -24,7 +24,7 @@ import java.util.Comparator;
 
 import javax.vecmath.Point2d;
 
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
@@ -66,7 +66,7 @@ public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContai
     private static final Point2d MAXIMUM = new Point2d(Double.MAX_VALUE, Double.MAX_VALUE);
 
     private static Point2d center(IAtomContainer container){
-        return container != null ? GeometryTools.get2DCenter(container) : MAXIMUM;
+        return container != null ? GeometryUtil.get2DCenter(container) : MAXIMUM;
     }
 
 }

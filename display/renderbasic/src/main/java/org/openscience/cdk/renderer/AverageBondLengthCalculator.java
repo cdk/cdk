@@ -21,7 +21,7 @@
  */
 package org.openscience.cdk.renderer;
 
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemModel;
@@ -79,7 +79,7 @@ public class AverageBondLengthCalculator {
         double averageBondModelLength = 0.0;
         for (IAtomContainer atomContainer : moleculeSet.atomContainers()) {
             averageBondModelLength +=
-                GeometryTools.getBondLengthAverage(atomContainer);
+                GeometryUtil.getBondLengthAverage(atomContainer);
         }
         return averageBondModelLength / moleculeSet.getAtomContainerCount();
     }

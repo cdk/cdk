@@ -24,7 +24,7 @@
 package org.openscience.cdk.tools;
 
 import org.openscience.cdk.geometry.CrystalGeometryTools;
-import org.openscience.cdk.geometry.GeometryTools;
+import org.openscience.cdk.geometry.GeometryUtil;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
 
@@ -49,9 +49,9 @@ public class DataFeaturesTool {
 		int features = DataFeatures.NONE;
 		if (MoleculeFeaturesTool.hasElementSymbols(molecule))
 			features = features | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-		if (GeometryTools.has2DCoordinates(molecule))
+		if (GeometryUtil.has2DCoordinates(molecule))
 			features = features | DataFeatures.HAS_2D_COORDINATES;
-		if (GeometryTools.has3DCoordinates(molecule))
+		if (GeometryUtil.has3DCoordinates(molecule))
 			features = features | DataFeatures.HAS_3D_COORDINATES;
 		if (CrystalGeometryTools.hasCrystalCoordinates(molecule))
 			features = features | DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES;
