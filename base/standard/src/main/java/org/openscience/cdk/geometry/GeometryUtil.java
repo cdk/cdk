@@ -25,7 +25,6 @@
 package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
@@ -66,11 +65,9 @@ import java.util.TreeMap;
  * @author Christian Hoppe
  * @author Niels Out
  * @author John May
- * @cdk.module standard
  * @cdk.githash
  */
-@TestClass("org.openscience.cdk.geometry.GeometryToolsTest")
-public class GeometryUtil {
+public final class GeometryUtil {
 
     private static ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(GeometryUtil.class);
@@ -100,7 +97,10 @@ public class GeometryUtil {
 
     }
 
-    ;
+    /**
+     * Static utility class can not be instantiated.
+     */
+    private GeometryUtil() { }
 
     /**
      * Adds an automatically calculated offset to the coordinates of all atoms such that all
@@ -1025,7 +1025,6 @@ public class GeometryUtil {
      * @see #get3DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.interfaces.IAtom#getPoint2d()
      */
-    @TestMethod("get2DCoordinateCoverage_EmptyAtomContainer,get2DCoordinateCoverage_Partial,get2DCoordinateCoverage_Full")
     public static CoordinateCoverage get2DCoordinateCoverage(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0)
@@ -1119,7 +1118,6 @@ public class GeometryUtil {
      * @return indication that all 3D coordinates are available
      * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
      */
-    @TestMethod("testHas3DCoordinates_IAtomContainer,testHas3DCoordinates_EmptyAtomContainer")
     public static boolean has3DCoordinates(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0)
@@ -1153,7 +1151,6 @@ public class GeometryUtil {
      * @see #get2DCoordinateCoverage(org.openscience.cdk.interfaces.IAtomContainer)
      * @see org.openscience.cdk.interfaces.IAtom#getPoint3d()
      */
-    @TestMethod("get3DCoordinateCoverage_EmptyAtomContainer,get3DCoordinateCoverage_Partial,get3DCoordinateCoverage_Full")
     public static CoordinateCoverage get3DCoordinateCoverage(IAtomContainer container) {
 
         if (container == null || container.getAtomCount() == 0)
