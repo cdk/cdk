@@ -40,7 +40,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
-import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -312,20 +311,6 @@ public final class GeometryUtil {
         double minY = minmax[1];
         return new double[]{maxX - minX,
                             maxY - minY};
-    }
-
-    /**
-     * Returns the 2D rectangle spanning the space occupied by the atom container.
-     *
-     * @param container {@link org.openscience.cdk.interfaces.IAtomContainer} to calculate the
-     *                  rectangle for
-     * @return a {@link java.awt.geom.Rectangle2D} describing the space occupied
-     */
-    public static Rectangle2D getRectangle2D(IAtomContainer container) {
-        double[] minmax = getMinMax(container);
-        return new Rectangle2D.Double(
-                minmax[0], minmax[1], minmax[2] - minmax[0], minmax[3] - minmax[1]
-        );
     }
 
     /**
@@ -1600,29 +1585,39 @@ public final class GeometryUtil {
 
     /**
      * Shift the container horizontally to the right to make its bounds not overlap with the other
-     * bounds.
+     * bounds. To avoid dependence on Java AWT, rectangles are described by arrays of double. Each
+     * rectangle is specified by {minX, minY, maxX, maxY}.
      *
-     * @param container the {@link org.openscience.cdk.interfaces.IAtomContainer} to shift to the
+     * @param container the {@link IAtomContainer} to shift to the
      *                  right
-     * @param bounds    the {@link java.awt.geom.Rectangle2D} of the {@link
-     *                  org.openscience.cdk.interfaces.IAtomContainer} to shift
+     * @param bounds    the bounds of the {@link IAtomContainer} to shift
      * @param last      the bounds that is used as reference
-     * @param gap       the gap between the two {@link java.awt.geom.Rectangle2D}s
-     * @return the {@link java.awt.geom.Rectangle2D} of the {@link org.openscience.cdk.interfaces.IAtomContainer}
-     * after the shift
+     * @param gap       the gap between the two rectangles
+     * @return the rectangle of the {@link IAtomContainer} after the shift
      */
-    public static Rectangle2D shiftContainer(
-            IAtomContainer container, Rectangle2D bounds, Rectangle2D last,
-            double gap) {
+    public static double[] shiftContainer(IAtomContainer container, double[] bounds,  double[] last, double gap) {
+
+        assert bounds.length == 4;
+        assert last.length == 4;
+
+        final double boundsMinX = bounds[0];
+        final double boundsMinY = bounds[1];
+        final double boundsMaxX = bounds[2];
+        final double boundsMaxY = bounds[3];
+
+        final double lastMaxX = last[2];
+
         // determine if the containers are overlapping
-        if (last.getMaxX() + gap >= bounds.getMinX()) {
-            double xShift = last.getMaxX() + gap - bounds.getMinX();
+        if (lastMaxX + gap >= boundsMinX) {
+            double xShift = lastMaxX + gap - boundsMinX;
             Vector2d shift = new Vector2d(xShift, 0.0);
             GeometryUtil.translate2D(container, shift);
-            return new Rectangle2D.Double(bounds.getX() + xShift,
-                                          bounds.getY(),
-                                          bounds.getWidth(),
-                                          bounds.getHeight());
+            return new double[]{
+                boundsMinX + xShift,        
+                boundsMinY,        
+                boundsMaxX + xShift,        
+                boundsMaxY        
+            };
         }
         else {
             // the containers are not overlapping
@@ -1672,30 +1667,42 @@ public final class GeometryUtil {
 
     /**
      * Shift the containers in a reaction vertically upwards to not overlap with the reference
-     * Rectangle2D. The shift is such that the given gap is realized, but only if the reactions are
-     * actually overlapping.
+     * rectangle. The shift is such that the given gap is realized, but only if the reactions are
+     * actually overlapping. To avoid dependence on Java AWT, rectangles are described by 
+     * arrays of double. Each rectangle is specified by {minX, minY, maxX, maxY}.
      *
      * @param reaction the reaction to shift
      * @param bounds   the bounds of the reaction to shift
      * @param last     the bounds of the last reaction
-     * @return the Rectangle2D of the shifted reaction
+     * @return the rectangle of the shifted reaction
      */
-    public static Rectangle2D shiftReactionVertical(
-            IReaction reaction, Rectangle2D bounds, Rectangle2D last,
-            double gap) {
+    public static double[] shiftReactionVertical(IReaction reaction, double[] bounds, double[] last, double gap) {
+        assert bounds.length == 4;
+        assert last.length == 4;
+        
+        final double boundsMinX = bounds[0];
+        final double boundsMinY = bounds[1];
+        final double boundsMaxX = bounds[2];
+        final double boundsMaxY = bounds[3];
+        
+        final double lastMinY = last[1];
+        final double lastMaxY = last[3];
+
+        final double boundsHeight = boundsMaxY - boundsMinY;
+        final double lastHeight = lastMaxY - lastMinY;
+        
         // determine if the reactions are overlapping
-        if (last.getMaxY() + gap >= bounds.getMinY()) {
-            double yShift = bounds.getHeight() + last.getHeight() + gap;
+        if (lastMaxY + gap >= boundsMinY) {
+            double yShift = boundsHeight + lastHeight + gap;
             Vector2d shift = new Vector2d(0, yShift);
-            List<IAtomContainer> containers = ReactionManipulator.
-                                                                         getAllAtomContainers(reaction);
+            List<IAtomContainer> containers = ReactionManipulator.getAllAtomContainers(reaction);
             for (IAtomContainer container : containers) {
                 translate2D(container, shift);
             }
-            return new Rectangle2D.Double(bounds.getX(),
-                                          bounds.getY() + yShift,
-                                          bounds.getWidth(),
-                                          bounds.getHeight());
+            return new double[]{boundsMinX,
+                                boundsMinY + yShift,
+                                boundsMaxX,
+                                boundsMaxY + yShift};
         }
         else {
             // the reactions were not overlapping

@@ -46,7 +46,6 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
 
 import javax.vecmath.Point2d;
 import javax.vecmath.Point3d;
-import java.awt.geom.Rectangle2D;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -279,21 +278,6 @@ public class GeometryUtilTest extends CDKTestCase {
         Assert.assertEquals(-1, minmax[1],.1);
         Assert.assertEquals(-2, minmax[2],.1);
         Assert.assertEquals(-1, minmax[3],.1);
-    }
-      
-    @Test public void testGetRectangle2D_IAtomContainer(){
-        Atom atom1 = new Atom("C");
-        atom1.setPoint2d(new Point2d(2,2));
-        Atom atom2 = new Atom("C");
-        atom2.setPoint2d(new Point2d(5,1));
-        IAtomContainer container = new AtomContainer();
-        container.addAtom(atom1);
-        container.addAtom(atom2);
-        Rectangle2D rectangle = GeometryUtil.getRectangle2D(container);
-        Assert.assertEquals(2.0, rectangle.getMinX(), 0.0);
-        Assert.assertEquals(3.0, rectangle.getWidth(), 0.0);
-        Assert.assertEquals(1.0, rectangle.getMinY(), 0.0);
-        Assert.assertEquals(1.0, rectangle.getHeight(), 0.0);
     }
       
     @Test public void testRotate_IAtom_Point3d_Point3d_double(){
@@ -619,10 +603,9 @@ public class GeometryUtilTest extends CDKTestCase {
         // shift the second molecule right
         GeometryUtil.shiftContainer(
                 react2,
-                GeometryUtil.getRectangle2D(react2),
-                GeometryUtil.getRectangle2D(react1),
-                1.0
-                                   );
+                GeometryUtil.getMinMax(react2),
+                GeometryUtil.getMinMax(react1),
+                1.0);
         // assert all coordinates of the second molecule moved right
         AtomContainerDiff.diff(react1, react2);
         for (int i=0; i<2; i++) {
@@ -660,8 +643,8 @@ public class GeometryUtilTest extends CDKTestCase {
         // shift the second molecule right
         GeometryUtil.shiftContainer(
                 react2,
-                GeometryUtil.getRectangle2D(react2),
-                GeometryUtil.getRectangle2D(react1),
+                GeometryUtil.getMinMax(react2),
+                GeometryUtil.getMinMax(react1),
                 1.0
                                    );
         // assert all coordinates of the second molecule moved right
@@ -749,14 +732,12 @@ public class GeometryUtilTest extends CDKTestCase {
         // shift the second reaction up
         GeometryUtil.shiftReactionVertical(
                 reaction2,
-                GeometryUtil.getRectangle2D(react2),
-                GeometryUtil.getRectangle2D(react1),
+                GeometryUtil.getMinMax(react2),
+                GeometryUtil.getMinMax(react1),
                 1.0
                                           );
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        System.out.println("R1: " + GeometryUtil.getRectangle2D(react1));
-        System.out.println("R2: " + GeometryUtil.getRectangle2D(react2));
         for (int i=0; i<2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);
@@ -796,14 +777,11 @@ public class GeometryUtilTest extends CDKTestCase {
         // shift the second reaction up
         GeometryUtil.shiftReactionVertical(
                 reaction2,
-                GeometryUtil.getRectangle2D(react2),
-                GeometryUtil.getRectangle2D(react1),
-                1.0
-                                          );
+                GeometryUtil.getMinMax(react2),
+                GeometryUtil.getMinMax(react1),
+                1.0);
         // assert all coordinates of the second reaction moved up
         AtomContainerDiff.diff(react1, react2);
-        System.out.println("R1: " + GeometryUtil.getRectangle2D(react1));
-        System.out.println("R2: " + GeometryUtil.getRectangle2D(react2));
         for (int i=0; i<2; i++) {
             atom1 = react1.getAtom(0);
             atom2 = react2.getAtom(0);
