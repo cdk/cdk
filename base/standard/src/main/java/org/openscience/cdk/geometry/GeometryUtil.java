@@ -25,14 +25,12 @@
 package org.openscience.cdk.geometry;
 
 import org.openscience.cdk.CDKConstants;
-import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.interfaces.IReaction;
-import org.openscience.cdk.interfaces.IRing;
 import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
@@ -114,9 +112,7 @@ public final class GeometryUtil {
         double minX = Double.MAX_VALUE;
         double
                 minY = Double.MAX_VALUE;
-        Iterator<IAtom> atoms = atomCon.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : atomCon.atoms()) {
             if (atom.getPoint2d() != null) {
                 if (atom.getPoint2d().x < minX) {
                     minX = atom.getPoint2d().x;
@@ -392,9 +388,7 @@ public final class GeometryUtil {
     public static void translate2DCentreOfMassTo(IAtomContainer atomCon, Point2d p) {
         Point2d com = get2DCentreOfMass(atomCon);
         Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
-        Iterator<IAtom> atoms = atomCon.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : atomCon.atoms()) {
             if (atom.getPoint2d() != null) {
                 atom.getPoint2d().add(translation);
             }
@@ -439,7 +433,7 @@ public final class GeometryUtil {
         double ysum = 0;
         int length = 0;
         while (atoms.hasNext()) {
-            atom = (IAtom) atoms.next();
+            atom = atoms.next();
             if (atom.getPoint2d() != null) {
                 xsum += atom.getPoint2d().x;
                 ysum += atom.getPoint2d().y;
@@ -462,7 +456,7 @@ public final class GeometryUtil {
         double centerX = 0;
         double centerY = 0;
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
-            Point2d centerPoint = get2DCenter((IRing) ringSet.getAtomContainer(i));
+            Point2d centerPoint = get2DCenter(ringSet.getAtomContainer(i));
             centerX += centerPoint.x;
             centerY += centerPoint.y;
         }
@@ -486,9 +480,7 @@ public final class GeometryUtil {
 
         double totalmass = 0.0;
 
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = (IAtom) atoms.next();
+        for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             if (mass == null) return null;
             totalmass += mass;
@@ -512,9 +504,7 @@ public final class GeometryUtil {
         double centerX = 0;
         double centerY = 0;
         double counter = 0;
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (atom.getPoint2d() != null) {
                 centerX += atom.getPoint2d().x;
                 centerY += atom.getPoint2d().y;
@@ -537,9 +527,7 @@ public final class GeometryUtil {
     public static void translate2DCenterTo(IAtomContainer container, Point2d p) {
         Point2d com = get2DCenter(container);
         Vector2d translation = new Vector2d(p.x - com.x, p.y - com.y);
-        Iterator<IAtom> atoms = container.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : container.atoms()) {
             if (atom.getPoint2d() != null) {
                 atom.getPoint2d().add(translation);
             }
@@ -564,9 +552,7 @@ public final class GeometryUtil {
 
         double totalmass = 0.0;
 
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom a = (IAtom) atoms.next();
+        for (IAtom a : ac.atoms()) {
             Double mass = a.getExactMass();
             // some sanity checking
             if (a.getPoint3d() == null) return null;
@@ -595,9 +581,7 @@ public final class GeometryUtil {
         double centerY = 0;
         double centerZ = 0;
         double counter = 0;
-        Iterator<IAtom> atoms = ac.atoms().iterator();
-        while (atoms.hasNext()) {
-            IAtom atom = (IAtom) atoms.next();
+        for (IAtom atom : ac.atoms()) {
             if (atom.getPoint3d() != null) {
                 centerX += atom.getPoint3d().x;
                 centerY += atom.getPoint3d().y;
@@ -671,7 +655,7 @@ public final class GeometryUtil {
             angle = Math.PI / 2;
         }
         else {
-            angle = Math.atan(((double) coords[3] - (double) coords[1]) / ((double) coords[2] - (double) coords[0]));
+            angle = Math.atan((coords[3] - coords[1]) / (coords[2] - coords[0]));
         }
         double begin1X = (Math.cos(angle + Math.PI / 2) * dist + coords[0]);
         double begin1Y = (Math.sin(angle + Math.PI / 2) * dist + coords[1]);
@@ -843,9 +827,7 @@ public final class GeometryUtil {
 
         double smallestMouseDistance = -1;
         double mouseDistance;
-        Iterator<IBond> bonds = atomCon.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond currentBond = (IBond) bonds.next();
+        for (IBond currentBond : atomCon.bonds()) {
             bondCenter = get2DCenter(currentBond.atoms());
             mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
             if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
@@ -872,9 +854,7 @@ public final class GeometryUtil {
 
         double smallestMouseDistance = -1;
         double mouseDistance;
-        Iterator<IBond> bonds = atomCon.bonds().iterator();
-        while (bonds.hasNext()) {
-            IBond currentBond = (IBond) bonds.next();
+        for (IBond currentBond : atomCon.bonds()) {
             bondCenter = get2DCenter(currentBond.atoms());
             mouseDistance = Math.sqrt(Math.pow(bondCenter.x - xPosition, 2) + Math.pow(bondCenter.y - yPosition, 2));
             if (mouseDistance < smallestMouseDistance || smallestMouseDistance == -1) {
@@ -1325,41 +1305,20 @@ public final class GeometryUtil {
      */
     public static Map<Integer, Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,
                                                                     double searchRadius, Map<Integer, Integer> mappedAtoms) throws CDKException {
-        //to return the mapping setProperty("MappedAtom",AtomNumber)
-        //logger.debug("**** MAP ATOMS ****");
         getLargestAtomContainer(firstAtomContainer, secondAtomContainer);
         double[][] distanceMatrix = new double[firstAtomContainer.getAtomCount()][secondAtomContainer.getAtomCount()];
         for (int i = 0; i < firstAtomContainer.getAtomCount(); i++) {
             Point3d firstAtomPoint = firstAtomContainer.getAtom(i).getPoint3d();
-            //logger.debug("Closest atoms of "+firstAtomContainer.getAtoms()[i].getSymbol()+" :");
             for (int j = 0; j < secondAtomContainer.getAtomCount(); j++) {
                 distanceMatrix[i][j] = firstAtomPoint.distance(secondAtomContainer.getAtom(j).getPoint3d());
-                //logger.debug("Distance "+i+" "+j+":"+distanceMatrix[i][j]);
             }
-            //logger.debug(" Atoms from the secondAtomContainer");
         }
-
-        //logger.debug();
-        //logger.debug("\t");
-        //for (int j=0;j<secondAtomContainer.getAtomCount();j++){
-        //logger.debug(j+" "+secondAtomContainer.getAtomAt(j).getSymbol()+"\t");
-        //}
-        //DEBUGG
-		/*double tmp=0;
-		for(int i=0;i<firstAtomContainer.getAtomCount();i++){
-			//logger.debug(i+" "+firstAtomContainer.getAtomAt(i).getSymbol()+"\t");
-			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
-				tmp=Math.floor(distanceMatrix[i][j]*10);
-				//logger.debug(tmp/10+"\t");
-			}			
-		}*/
 
         double minimumDistance;
         for (int i = 0; i < firstAtomContainer.getAtomCount(); i++) {
             minimumDistance = searchRadius;
             for (int j = 0; j < secondAtomContainer.getAtomCount(); j++) {
                 if (distanceMatrix[i][j] < searchRadius && distanceMatrix[i][j] < minimumDistance) {
-                    //logger.debug("Distance OK "+i+" "+j+":"+distanceMatrix[i][j]+" AtomCheck:"+checkAtomMapping(firstAtomContainer,secondAtomContainer, i, j));
                     //check atom properties
                     if (checkAtomMapping(firstAtomContainer, secondAtomContainer, i, j)) {
                         minimumDistance = distanceMatrix[i][j];
@@ -1367,9 +1326,6 @@ public final class GeometryUtil {
                                 firstAtomContainer.getAtomNumber(firstAtomContainer.getAtom(i)),
                                 secondAtomContainer.getAtomNumber(secondAtomContainer.getAtom(j))
                                        );
-                        //firstAtomContainer.getAtomAt(i).setProperty("MappedAtom",new Integer(secondAtomContainer.getAtomNumber(secondAtomContainer.getAtomAt(j))));
-                        //logger.debug("#:"+countMappedAtoms+" Atom:"+i+" is mapped to Atom"+j);
-                        //logger.debug(firstAtomContainer.getConnectedAtoms(firstAtomContainer.getAtomAt(i)).length);
                     }
                 }
             }
@@ -1382,9 +1338,9 @@ public final class GeometryUtil {
         if (firstAC.getAtomCount() < secondAC.getAtomCount()) {
             IAtomContainer tmp;
             try {
-                tmp = (IAtomContainer) firstAC.clone();
-                firstAC = (IAtomContainer) secondAC.clone();
-                secondAC = (IAtomContainer) tmp.clone();
+                tmp = firstAC.clone();
+                firstAC = secondAC.clone();
+                secondAC = tmp.clone();
             } catch (CloneNotSupportedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1395,15 +1351,9 @@ public final class GeometryUtil {
     private static boolean checkAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom) {
         IAtom firstAtom = firstAC.getAtom(posFirstAtom);
         IAtom secondAtom = secondAC.getAtom(posSecondAtom);
-        if (firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size() &&
-                firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum() &&
-                firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()
-                ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size() &&
+                firstAtom.getBondOrderSum().equals(secondAtom.getBondOrderSum()) &&
+                firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder();
     }
 
     private static IAtomContainer setVisitedFlagsToFalse(IAtomContainer atomContainer) {
@@ -1442,18 +1392,18 @@ public final class GeometryUtil {
             centerAtomSecondMolecule = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(centerAtomFirstMolecule)));
             connectedAtoms = firstAtomContainer.getConnectedAtomsList(centerAtomFirstMolecule);
             for (int i = 0; i < connectedAtoms.size(); i++) {
-                IAtom conAtom = (IAtom) connectedAtoms.get(i);
+                IAtom conAtom = connectedAtoms.get(i);
                 //this step is built to know if the program has already calculate a bond length (so as not to have duplicate values)
                 if (!conAtom.getFlag(CDKConstants.VISITED)) {
                     if (Coords3d) {
-                        distance1 = ((Point3d) centerAtomFirstMolecule.getPoint3d()).distance(conAtom.getPoint3d());
-                        distance2 = ((Point3d) centerAtomSecondMolecule.getPoint3d()).distance(secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom))).getPoint3d());
+                        distance1 = centerAtomFirstMolecule.getPoint3d().distance(conAtom.getPoint3d());
+                        distance2 = centerAtomSecondMolecule.getPoint3d().distance(secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom))).getPoint3d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     }
                     else {
-                        distance1 = ((Point2d) centerAtomFirstMolecule.getPoint2d()).distance(conAtom.getPoint2d());
-                        distance2 = ((Point2d) centerAtomSecondMolecule.getPoint2d()).distance(secondAtomContainer.getAtom((mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom)))).getPoint2d());
+                        distance1 = centerAtomFirstMolecule.getPoint2d().distance(conAtom.getPoint2d());
+                        distance2 = centerAtomSecondMolecule.getPoint2d().distance(secondAtomContainer.getAtom((mappedAtoms.get(firstAtomContainer.getAtomNumber(conAtom)))).getPoint2d());
                         sum = sum + Math.pow((distance1 - distance2), 2);
                         n++;
                     }
@@ -1493,12 +1443,12 @@ public final class GeometryUtil {
             if (connectedAtoms.size() > 1) {
                 //logger.debug("If "+centerAtomfirstAC.getSymbol()+" is the center atom :");
                 for (int i = 0; i < connectedAtoms.size() - 1; i++) {
-                    firstAtomfirstAC = (IAtom) connectedAtoms.get(i);
+                    firstAtomfirstAC = connectedAtoms.get(i);
                     for (int j = i + 1; j < connectedAtoms.size(); j++) {
-                        angleFirstMolecule = getAngle(centerAtomfirstAC, firstAtomfirstAC, (IAtom) connectedAtoms.get(j));
+                        angleFirstMolecule = getAngle(centerAtomfirstAC, firstAtomfirstAC, connectedAtoms.get(j));
                         centerAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(centerAtomfirstAC)));
                         firstAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(firstAtomfirstAC)));
-                        secondAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber((IAtom) connectedAtoms.get(j))));
+                        secondAtomsecondAC = secondAtomContainer.getAtom(mappedAtoms.get(firstAtomContainer.getAtomNumber(connectedAtoms.get(j))));
                         angleSecondMolecule = getAngle(centerAtomsecondAC, firstAtomsecondAC, secondAtomsecondAC);
                         sum = sum + Math.pow(angleFirstMolecule - angleSecondMolecule, 2);
                         n++;
@@ -1590,10 +1540,10 @@ public final class GeometryUtil {
                                           Map<Integer, Integer> mappedAtoms, boolean hetAtomOnly, boolean Coords3d) {
         //logger.debug("**** GT getAllAtomRMSD ****");
         double sum = 0;
-        double RMSD = 0;
+        double RMSD;
         Iterator<Integer> firstAtoms = mappedAtoms.keySet().iterator();
-        int firstAtomNumber = 0;
-        int secondAtomNumber = 0;
+        int firstAtomNumber;
+        int secondAtomNumber;
         int n = 0;
         while (firstAtoms.hasNext()) {
             firstAtomNumber = firstAtoms.next();
@@ -1602,11 +1552,11 @@ public final class GeometryUtil {
             if (hetAtomOnly) {
                 if (!firstAtom.getSymbol().equals("H") && !firstAtom.getSymbol().equals("C")) {
                     if (Coords3d) {
-                        sum = sum + Math.pow(((Point3d) firstAtom.getPoint3d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()), 2);
+                        sum = sum + Math.pow(firstAtom.getPoint3d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()), 2);
                         n++;
                     }
                     else {
-                        sum = sum + Math.pow(((Point2d) firstAtom.getPoint2d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()), 2);
+                        sum = sum + Math.pow(firstAtom.getPoint2d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()), 2);
                         n++;
                     }
                 }
@@ -1614,11 +1564,11 @@ public final class GeometryUtil {
             else {
                 if (!firstAtom.getSymbol().equals("H")) {
                     if (Coords3d) {
-                        sum = sum + Math.pow(((Point3d) firstAtom.getPoint3d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()), 2);
+                        sum = sum + Math.pow(firstAtom.getPoint3d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint3d()), 2);
                         n++;
                     }
                     else {
-                        sum = sum + Math.pow(((Point2d) firstAtom.getPoint2d()).distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()), 2);
+                        sum = sum + Math.pow(firstAtom.getPoint2d().distance(secondAtomContainer.getAtom(secondAtomNumber).getPoint2d()), 2);
                         n++;
                     }
                 }
@@ -1715,9 +1665,8 @@ public final class GeometryUtil {
      */
     public static boolean has3DCoordinates(IChemModel chemModel) {
         List<IAtomContainer> acs = ChemModelManipulator.getAllAtomContainers(chemModel);
-        Iterator<IAtomContainer> it = acs.iterator();
-        while (it.hasNext()) {
-            if (!has3DCoordinates(it.next())) {
+        for (IAtomContainer ac : acs) {
+            if (!has3DCoordinates(ac)) {
                 return false;
             }
         }
