@@ -438,7 +438,6 @@ public class StructureResonanceGenerator {
 					for (IBond bond : acClone.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, false);
 				}
 		}
-		UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 		for(int i = 0 ; i < set.getAtomContainerCount(); i++){
 			IAtomContainer ss = set.getAtomContainer(i);
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
