@@ -1,4 +1,5 @@
 /* Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
+ *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  *  Contact: cdk-devel@list.sourceforge.net
  *
@@ -229,7 +230,7 @@ public class AtomPlacer3D {
 				n1.normalize();
 
 				Vector3d n2 = null;
-				if (index == 3 & flag_branched) {
+				if (index == 3 && flag_branched) {
 					n2 = AtomTetrahedralLigandPlacer3D.rotate(n1, bc, DIHEDRAL_BRANCHED_CHAIN);
 				} else {
 					n2 = AtomTetrahedralLigandPlacer3D.rotate(n1, bc, dihedrals[index]);
@@ -237,7 +238,7 @@ public class AtomPlacer3D {
 				n2.normalize();
 
 				Vector3d ba = new Vector3d();
-				if (index == 3 & flag_branched) {
+				if (index == 3 && flag_branched) {
 					ba = AtomTetrahedralLigandPlacer3D.rotate(cd, n2, (-angles[index] / 180) * Math.PI);
 					ba = AtomTetrahedralLigandPlacer3D.rotate(ba, cd, (-angles[index] / 180) * Math.PI);
 				} else {
@@ -384,13 +385,13 @@ public class AtomPlacer3D {
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
-			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) & !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
-				if (bond.getAtom(1).getFlag(CDKConstants.ISALIPHATIC) & !bond.getAtom(1).getSymbol().equals("H")) {
+			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
+				if (bond.getAtom(1).getFlag(CDKConstants.ISALIPHATIC) && !bond.getAtom(1).getSymbol().equals("H")) {
 					return bond.getAtom(1);
 				}
 			}
-			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) & !(bond.getAtom(0).getFlag(CDKConstants.ISPLACED))) {
-				if (bond.getAtom(0).getFlag(CDKConstants.ISALIPHATIC) & !bond.getAtom(0).getSymbol().equals("H")) {
+			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(0).getFlag(CDKConstants.ISPLACED))) {
+				if (bond.getAtom(0).getFlag(CDKConstants.ISALIPHATIC) && !bond.getAtom(0).getSymbol().equals("H")) {
 					return bond.getAtom(0);
 				}
 			}
@@ -410,13 +411,13 @@ public class AtomPlacer3D {
             IBond bond = bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			if (atom0.getFlag(CDKConstants.ISPLACED) & !(atom1.getFlag(CDKConstants.ISPLACED))) {
-				if (atom1.getFlag(CDKConstants.ISALIPHATIC) & !atom0.getSymbol().equals("H") & !atom1.getSymbol().equals("H")) {
+			if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
+				if (atom1.getFlag(CDKConstants.ISALIPHATIC) && !atom0.getSymbol().equals("H") && !atom1.getSymbol().equals("H")) {
 					return atom0;
 				}
 			}
-			if (atom1.getFlag(CDKConstants.ISPLACED) & !(atom0.getFlag(CDKConstants.ISPLACED))) {
-				if (atom0.getFlag(CDKConstants.ISALIPHATIC) & !atom1.getSymbol().equals("H") & !atom0.getSymbol().equals("H")) {
+			if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
+				if (atom0.getFlag(CDKConstants.ISALIPHATIC) && !atom1.getSymbol().equals("H") && !atom0.getSymbol().equals("H")) {
 					return atom1;
 				}
 			}
@@ -436,13 +437,13 @@ public class AtomPlacer3D {
             IBond bond = bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
-			if (atom0.getFlag(CDKConstants.ISPLACED) & !(atom1.getFlag(CDKConstants.ISPLACED))) {
-				if (atom1.getFlag(CDKConstants.ISINRING) & !atom0.getSymbol().equals("H") & !atom1.getSymbol().equals("H")) {
+			if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
+				if (atom1.getFlag(CDKConstants.ISINRING) && !atom0.getSymbol().equals("H") && !atom1.getSymbol().equals("H")) {
 					return atom0;
 				}
 			}
-			if (atom1.getFlag(CDKConstants.ISPLACED) & !(atom0.getFlag(CDKConstants.ISPLACED))) {
-				if (atom0.getFlag(CDKConstants.ISINRING) & !atom1.getSymbol().equals("H") & !atom0.getSymbol().equals("H")) {
+			if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
+				if (atom0.getFlag(CDKConstants.ISINRING) && !atom1.getSymbol().equals("H") && !atom0.getSymbol().equals("H")) {
 					return atom1;
 				}
 			}
@@ -511,7 +512,7 @@ public class AtomPlacer3D {
 		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		for (int i = 0; i < bonds.size(); i++) {
 			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) & !connectedAtom.getSymbol().equals("H")) {
+			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H")) {
 				return connectedAtom;
 			}
 		}
@@ -551,7 +552,7 @@ public class AtomPlacer3D {
 		IAtom connectedAtom = null;
 		for (int i = 0; i < bonds.size(); i++) {
 			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) & !(connectedAtom.getSymbol().equals("H"))) {
+			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !(connectedAtom.getSymbol().equals("H"))) {
 				connectedAtoms.addAtom(connectedAtom);
 			}
 		}
@@ -597,12 +598,64 @@ public class AtomPlacer3D {
 	 */
 	public boolean allHeavyAtomsPlaced(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) & !(ac.getAtom(i).getSymbol().equals("H"))) {
+			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !(ac.getAtom(i).getSymbol().equals("H"))) {
 				return false;
 			}
 		}
 		return true;
 	}
+    
+    /**
+	 *  Determine if the atom is non-hydrogen and has not been placed.
+	 *
+	 * @param  atom The atom to be checked
+	 * @return      True if the atom is non-hydrogen and has not been placed
+	 */
+    boolean isUnplacedHeavyAtom(IAtom atom) {
+        return (!atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom));
+    }
+    
+    /**
+	 *  Determine if the atom is non-hydrogen and has been placed.
+	 *
+	 * @param  atom The atom to be checked
+	 * @return      True if the atom is non-hydrogen and has been placed
+	 */
+    boolean isPlacedHeavyAtom(IAtom atom) {
+        return atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom);
+    }
+    
+    /**
+	 *  Determine if the atom is non-hydrogen and is aliphatic.
+	 *
+	 * @param  atom The atom to be checked
+	 * @return      True if the atom is non-hydrogen and is aliphatic
+	 */
+    boolean isAliphaticHeavyAtom(IAtom atom) {
+        return atom.getFlag(CDKConstants.ISALIPHATIC) && isHeavyAtom(atom);
+    }
+    
+    /**
+	 * Determine if the atom is non-hydrogen and is in a ring.
+     * Ring membership is determined from a property flag only, rather than a ring
+     * membership test
+	 *
+	 * @param  atom The atom to be checked
+	 * @return      True if the atom is non-hydrogen and is in a ring
+	 */
+    boolean isRingHeavyAtom(IAtom atom) {
+        return atom.getFlag(CDKConstants.ISINRING) && isHeavyAtom(atom);
+    }
+    
+    /**
+	 * Determine if the atom is heavy (non-hydrogen).
+     *
+	 * @param  atom The atom to be checked
+	 * @return      True if the atom is non-hydrogen
+	 */
+    boolean isHeavyAtom(IAtom atom) {
+        return !atom.getSymbol().equals("H");
+    }
 }
 
 
