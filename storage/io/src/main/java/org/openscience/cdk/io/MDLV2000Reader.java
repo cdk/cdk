@@ -848,8 +848,8 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                 case GROUP_ABBREVIATION:
                     // not supported, existing parsing doesn't do what is 
                     // mentioned in the specification above
-                    final int    from  = readMolfileInt(line, 3) - 1;
-                    final int    to    = readMolfileInt(line, 6) - 1;
+                    // final int    from  = readMolfileInt(line, 3) - 1;
+                    // final int    to    = readMolfileInt(line, 6) - 1;
                     final String group = input.readLine();
                     if (group == null)
                         return;
