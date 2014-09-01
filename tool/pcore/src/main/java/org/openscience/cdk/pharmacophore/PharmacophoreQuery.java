@@ -59,18 +59,18 @@ public class PharmacophoreQuery extends QueryAtomContainer {
      */
     @TestMethod("testToString")
     public String toString() {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("PharmacophoreQuery(").append(this.hashCode() + ", ");
-        stringBuffer.append("#A:" + getAtomCount() + ", ");
-        stringBuffer.append("#EC:" + getElectronContainerCount() + ", ");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("PharmacophoreQuery(").append(this.hashCode()).append(", ");
+        stringBuilder.append("#A:").append(getAtomCount()).append(", ");
+        stringBuilder.append("#EC:").append(getElectronContainerCount()).append(", ");
         for (IAtom atom : atoms()) {
             PharmacophoreQueryAtom qatom = (PharmacophoreQueryAtom) atom;
-            stringBuffer.append(qatom.getSymbol()).append(", ");
+            stringBuilder.append(qatom.getSymbol()).append(", ");
         }
         for (IBond bond : bonds()) {
-            stringBuffer.append(bond.toString()).append(", ");
+            stringBuilder.append(bond.toString()).append(", ");
         }
-        stringBuffer.append(")");
-        return stringBuffer.toString();
+        stringBuilder.append(')');
+        return stringBuilder.toString();
     }
 }

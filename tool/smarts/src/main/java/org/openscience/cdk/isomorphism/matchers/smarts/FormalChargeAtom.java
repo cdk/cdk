@@ -53,11 +53,11 @@ public class FormalChargeAtom extends SMARTSAtom {
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("FormalChargeAtom(");
-        s.append(this.hashCode() + ", ");
-		s.append("C:" + this.formalCharge);
-		s.append(")");
+        s.append(this.hashCode()).append(", ");
+		s.append("C:").append(this.formalCharge);
+		s.append(')');
 		return s.toString();
     }
 }

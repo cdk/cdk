@@ -46,13 +46,13 @@ public class SymbolChargeIDQueryAtom extends QueryAtom implements IQueryAtom {
     };
 
     public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("SymbolAndChargeQueryAtom(");
 		s.append(this.hashCode() + ", ");
 		s.append(getID() + ", ");
 		s.append(getSymbol() + ", ");
 		s.append(getFormalCharge());
-		s.append(")");
+		s.append(')');
 		return s.toString();
     }
 

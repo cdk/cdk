@@ -317,14 +317,14 @@ public class HOSECodeGenerator implements java.io.Serializable
 			if(bool[i])
 				sb.append(i+"");
 		}
-		if(sb.toString().equals(""))
+		if(sb.toString().isEmpty())
 			return "";
 		else
 			return "-"+sb.toString();
 	}
 
     private String createChargeCode(IAtom atom) {
-        StringBuffer tempCode = new StringBuffer();
+        StringBuilder tempCode = new StringBuilder();
 
         if (atom != null) {
             
@@ -335,18 +335,18 @@ public class HOSECodeGenerator implements java.io.Serializable
 
                 if (Math.abs(formalCharge) == 1) {
                     if (formalCharge < 0)
-                        tempCode.append("-");
+                        tempCode.append('-');
                     else
-                        tempCode.append("+");
+                        tempCode.append('+');
                 } else {
-                    tempCode.append("'");
+                    tempCode.append('\'');
                     if (formalCharge > 0)
-                        tempCode.append("+");
-                    tempCode.append(formalCharge + "'");
+                        tempCode.append('+');
+                    tempCode.append(formalCharge).append('\'');
                 }
             }
         }
-        return (tempCode + "");
+        return (tempCode.toString());
     }
 
     /**
@@ -568,7 +568,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 			if (!treeNode.source.stopper && treeNode.source.atom != branch)
 			{
 				branch = treeNode.source.atom;
-				code.append(",");
+				code.append(',');
 			}
 			
 			if (!treeNode.source.stopper && treeNode.source.atom == branch)
@@ -586,7 +586,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 				}
 				else if (treeNode.atom != null && treeNode.atom.getFlag(CDKConstants.VISITED))
 				{
-					tempCode.append("&");
+					tempCode.append('&');
 					treeNode.stopper = true;
 				}
         code.append(tempCode+createChargeCode(treeNode.atom));

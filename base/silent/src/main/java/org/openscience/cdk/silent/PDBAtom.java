@@ -313,7 +313,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
      * @return  The string representation of this Atom
      */
     public String toString() {
-        StringBuffer description = new StringBuffer();
+        StringBuilder description = new StringBuilder();
         description.append("PDBAtom(");
         description.append(this.hashCode()).append(", ");
         description.append("altLoc=").append(getAltLoc()).append(", ");
@@ -328,7 +328,7 @@ public class PDBAtom extends Atom implements Cloneable, IPDBAtom {
         description.append("oxt=").append(getOxt()).append(", ");
         description.append("hetatm=").append(getHetAtom()).append(", ");
         description.append(super.toString());
-        description.append(")");
+        description.append(')');
         return description.toString();
     }
 

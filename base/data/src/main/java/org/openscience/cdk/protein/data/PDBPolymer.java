@@ -125,11 +125,11 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
     }
 
     public String toString() {
-        StringBuffer stringContent = new StringBuffer();
+        StringBuilder stringContent = new StringBuilder();
         stringContent.append("PDBPolymer(");
         stringContent.append(this.hashCode()).append(", ");
         stringContent.append(super.toString());
-        stringContent.append(")");
+        stringContent.append(')');
         return stringContent.toString();
     }
 

@@ -268,7 +268,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 							sign = 1;
 							
 						StringTokenizer st = new StringTokenizer(hoseCode, "()/");
-						StringBuffer hoseCodeBuffer = new StringBuffer();
+						StringBuilder hoseCodeBuffer = new StringBuilder();
 						  int sum = exactSphere+sign*(i+1);
 						  for (int k = 0; k < sum; k++) {
 						    if (st.hasMoreTokens()) {
@@ -276,11 +276,11 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 						      hoseCodeBuffer.append(partcode);
 						    }
 						    if (k == 0) {
-						      hoseCodeBuffer.append("(");
+						      hoseCodeBuffer.append('(');
 						    } else if (k == 3) {
-						      hoseCodeBuffer.append(")");
+						      hoseCodeBuffer.append(')');
 						    } else {
-						      hoseCodeBuffer.append("/");
+						      hoseCodeBuffer.append('/');
 						    }
 						  }
 						  String hoseCodeBU = hoseCodeBuffer.toString();
@@ -310,7 +310,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 					if(line.startsWith("#"))
 						continue;
 					List<String> values = extractInfo(line);
-					if(values.get(1).equals(""))
+					if(values.get(1).isEmpty())
 						continue;
 					hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
 				}

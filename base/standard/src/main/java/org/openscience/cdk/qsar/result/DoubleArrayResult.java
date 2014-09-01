@@ -68,10 +68,10 @@ public class DoubleArrayResult extends DoubleArrayResultType {
 
     @TestMethod("testToString")
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i=0; i<length(); i++) {
             buf.append(get(i));
-            if (i+1<length()) buf.append(",");
+            if (i+1<length()) buf.append(',');
         }
         return buf.toString();
     }

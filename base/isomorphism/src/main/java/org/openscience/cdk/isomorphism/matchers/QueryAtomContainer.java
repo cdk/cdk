@@ -42,7 +42,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
     private static final long serialVersionUID = -1876912362585898476L;
 
 	public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("QueryAtomContainer(");
 		s.append(this.hashCode() + ", ");
 		s.append("#A:" + getAtomCount() + ", ");
@@ -59,7 +59,7 @@ public class QueryAtomContainer extends QueryChemObject implements IQueryAtomCon
 		for (int i = 0; i < getSingleElectronCount(); i++) {
 			s.append(getSingleElectron(i).toString() + ", ");
 		}
-		s.append(")");
+		s.append(')');
 		return s.toString();
 	}
     

@@ -63,11 +63,11 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("ImplicitHCountAtom(");
-        s.append(this.hashCode() + ", ");
+        s.append(this.hashCode()).append(", ");
 		s.append("IH:" + getIMPH(this));
-		s.append(")");
+		s.append(')');
 		return s.toString();
     }
 }

@@ -418,14 +418,14 @@ public class PermutationGroup {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("Base = ").append(base).append("\n");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Base = ").append(base).append('\n');
         for (int i = 0; i < size; i++) {
-            sb.append("U").append(i).append(" = ");
+            sb.append('U').append(i).append(" = ");
             for (int j = 0; j < size; j++) {
-                sb.append(permutations[i][j]).append(" ");
+                sb.append(permutations[i][j]).append(' ');
             }
-            sb.append("\n");
+            sb.append('\n');
         }
         return sb.toString(); 
     }

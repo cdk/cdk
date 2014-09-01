@@ -57,11 +57,11 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
     
 
     public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("SymbolQueryAtom(");
 		s.append(this.hashCode() + ", ");
 		s.append(getSymbol());
-		s.append(")");
+		s.append(')');
 		return s.toString();
     }
 

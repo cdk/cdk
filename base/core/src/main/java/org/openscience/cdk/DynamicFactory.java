@@ -1078,14 +1078,14 @@ public class DynamicFactory {
         public String toString() {
             StringBuilder sb = new StringBuilder(n() * 50);
             sb.append(intf().getSimpleName());
-            sb.append("(");
+            sb.append('(');
             int max = n() - 1;
             for (int i = 0; i <= max; i++) {
                 sb.append(type(i).getSimpleName());
                 if (i != max)
                     sb.append(", ");
             }
-            sb.append(")");
+            sb.append(')');
             return sb.toString();
         }
 

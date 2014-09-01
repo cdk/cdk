@@ -163,9 +163,9 @@ public class TetrahedralChirality implements ITetrahedralChirality {
         builder.append("c:").append(this.getChiralAtom()).append(", ");
         IAtom[] ligands = this.getLigands();
         for (int i=0; i<ligands.length; i++) {
-            builder.append(i+1).append(":").append(ligands[i]).append(", ");
+            builder.append(i+1).append(':').append(ligands[i]).append(", ");
         }
-        builder.append("}");
+        builder.append('}');
         return builder.toString();
     }
 }
