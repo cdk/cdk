@@ -449,23 +449,23 @@ public class Partition {
      */
     @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("[");
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
         for (int cellIndex = 0; cellIndex < cells.size(); cellIndex++) {
             SortedSet<Integer> cell = cells.get(cellIndex);
             int elementIndex = 0;
             for (int element : cell) {
                 sb.append(element);
                 if (cell.size() > 1 && elementIndex < cell.size() - 1) {
-                    sb.append(",");
+                    sb.append(',');
                 }
                 elementIndex++;
             }
             if (cells.size() > 1 && cellIndex < cells.size() - 1) {
-                sb.append("|");
+                sb.append('|');
             }
         }
-        sb.append("]");
+        sb.append(']');
         return sb.toString();
     }
 

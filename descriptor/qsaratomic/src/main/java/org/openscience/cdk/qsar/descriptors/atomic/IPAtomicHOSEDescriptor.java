@@ -288,11 +288,11 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 						      hoseCodeBuffer.append(partcode);
 						    }
 						    if (k == 0) {
-						      hoseCodeBuffer.append("(");
+						      hoseCodeBuffer.append('(');
 						    } else if (k == 3) {
-						      hoseCodeBuffer.append(")");
+						      hoseCodeBuffer.append(')');
 						    } else {
-						      hoseCodeBuffer.append("/");
+						      hoseCodeBuffer.append('/');
 						    }
 						  }
 						  String hoseCodeBU = hoseCodeBuffer.toString();

@@ -145,9 +145,9 @@ public class InvPair implements java.io.Serializable{
      */
     @TestMethod("testToString")
     public String toString() {
-        StringBuffer buff = new StringBuffer();
+        StringBuilder buff = new StringBuilder();
         buff.append(curr);
-        buff.append("\t");
+        buff.append('\t');
         return buff.toString();
     }
 

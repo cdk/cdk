@@ -83,13 +83,13 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
      * @return  The string representation of this Atom
      */
     public String toString() {
-        StringBuffer description = new StringBuffer();
+        StringBuilder description = new StringBuilder();
         description.append("PDBMonomer(");
         description.append(this.hashCode()).append(", ");
         description.append("iCode=").append(getICode()).append(", ");
         description.append("chainID=").append(getChainID()).append(", ");
         description.append(super.toString());
-        description.append(")");
+        description.append(')');
         return description.toString();
     }
 

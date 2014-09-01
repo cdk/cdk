@@ -123,7 +123,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
     }
 
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append("Monomer{").append(this.hashCode());
 		if (getMonomerName() != null) {
 			buffer.append(", N=").append(getMonomerName());
@@ -131,7 +131,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 		if (getMonomerType() != null) {
 			buffer.append(", T=").append(getMonomerType());
 		}
-		buffer.append("}");
+		buffer.append('}');
 		return buffer.toString();
 	}
 	

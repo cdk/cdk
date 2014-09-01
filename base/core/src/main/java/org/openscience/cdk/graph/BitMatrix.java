@@ -237,7 +237,7 @@ final class BitMatrix {
             for (int i = 0; i < n; i++) {
                 sb.append(rows[j].get(i) ? '1' : '-');
             }
-            sb.append("\n");
+            sb.append('\n');
         }
         return sb.toString();
     }
