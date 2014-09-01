@@ -285,15 +285,15 @@ final class ConvexHull {
         /** @inheritDoc */
         @Override public int compare(Point2D a, Point2D b) {
             final double deltaX1 = a.getX() - reference.getX();
-            final double deltaX2 = a.getY() - reference.getY();
-            final double deltaY1 = b.getX() - reference.getX();
+            final double deltaY1 = a.getY() - reference.getY();
+            final double deltaX2 = b.getX() - reference.getX();
             final double deltaY2 = b.getY() - reference.getY();
 
-            if (deltaX2 >= 0 && deltaY2 < 0) return -1;
-            else if (deltaY2 >= 0 && deltaX2 < 0) return +1;
-            else if (deltaX2 == 0 && deltaY2 == 0) { // corner case        
-                if (deltaX1 >= 0 && deltaY1 < 0) return -1;
-                else if (deltaY1 >= 0 && deltaX1 < 0) return +1;
+            if (deltaY1 >= 0 && deltaY2 < 0) return -1;
+            else if (deltaY2 >= 0 && deltaY1 < 0) return +1;
+            else if (deltaY1 == 0 && deltaY2 == 0) { // corner case        
+                if (deltaX1 >= 0 && deltaX2 < 0) return -1;
+                else if (deltaX2 >= 0 && deltaX1 < 0) return +1;
                 else return 0;
             }
             else return -winding(reference, a, b);     // both above or below
