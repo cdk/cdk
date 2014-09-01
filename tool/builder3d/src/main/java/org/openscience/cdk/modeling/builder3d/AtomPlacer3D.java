@@ -567,7 +567,7 @@ public class AtomPlacer3D {
 	public int numberOfUnplacedHeavyAtoms(IAtomContainer ac) {
 		int nUnplacedHeavyAtoms=0;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !ac.getAtom(i).equals("H")) {
+			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !ac.getAtom(i).getSymbol().equals("H")) {
 				nUnplacedHeavyAtoms+=1;
 			}
 		}
