@@ -41,6 +41,7 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector2d;
 import javax.vecmath.Vector3d;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1646,6 +1647,29 @@ public final class GeometryUtil {
             bondlenghtsum += getBondLengthAverage(container);
         }
         return bondlenghtsum / containercount;
+    }
+
+    /**
+     * Calculate the median bond length of an atom container.
+     *
+     * @param container structure representation
+     * @return median bond length
+     * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
+     */
+    public static double getBondLengthMedian(final IAtomContainer container) {
+        if (container.getBondCount() == 0)
+            throw new IllegalArgumentException("Container has no bonds.");
+        double[] lengths = new double[container.getBondCount()];
+        for (int i = 0; i < container.getBondCount(); i++) {
+            final IBond bond = container.getBond(i);
+            final IAtom atom1 = bond.getAtom(0);
+            final IAtom atom2 = bond.getAtom(1);
+            if (atom1.getPoint2d() == null || atom2.getPoint2d() == null)
+                throw new IllegalArgumentException("An atom has no 2D coordinates.");
+            lengths[i] = getLength2D(bond);
+        }
+        Arrays.sort(lengths);
+        return lengths[lengths.length/2];
     }
 
     /**

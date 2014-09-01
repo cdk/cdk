@@ -50,6 +50,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 /**
  * This class defines regression tests that should ensure that the source code
  * of the {@link org.openscience.cdk.geometry.GeometryUtil} is not broken.
@@ -811,6 +814,58 @@ public class GeometryUtilTest extends CDKTestCase {
     	Assert.assertEquals( 2, alignmentTestHelper(zero, nY));
 
     	Assert.assertEquals( 1, alignmentTestHelper(zero, pY,nY));
+    }
+
+    @Test public void medianBondLength() {
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addAtom(atomAt(new Point2d(0, -1.5)));
+        container.addAtom(atomAt(new Point2d(0, 5)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 2, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        assertThat(GeometryUtil.getBondLengthMedian(container),
+                   is(1.5));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void medianBondLengthNoBonds() {
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addAtom(atomAt(new Point2d(0, -1.5)));
+        container.addAtom(atomAt(new Point2d(0, 5)));
+        GeometryUtil.getBondLengthMedian(container);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void medianBondLengthNoPoints() {
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addAtom(atomAt(null));
+        container.addAtom(atomAt(new Point2d(0, 5)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        container.addBond(0, 2, IBond.Order.SINGLE);
+        container.addBond(0, 3, IBond.Order.SINGLE);
+        GeometryUtil.getBondLengthMedian(container);
+    }
+
+    @Test
+    public void medianBondLengthOneBond() {
+        IAtomContainer container = new AtomContainer();
+        container.addAtom(atomAt(new Point2d(0, 0)));
+        container.addAtom(atomAt(new Point2d(0, 1.5)));
+        container.addBond(0, 1, IBond.Order.SINGLE);
+        assertThat(GeometryUtil.getBondLengthMedian(container),
+                   is(1.5));
+    }
+
+    private IAtom atomAt(Point2d p) {
+        IAtom atom = new Atom("C");
+        atom.setPoint2d(p);
+        return atom;
     }
 
     private int alignmentTestHelper(IAtom zero, IAtom... pos) {
