@@ -72,7 +72,7 @@ public class AtomPlacer3DTest extends CDKTestCase{
      * @return the created test molecule
      */
     private IAtomContainer makeAlphaPinene() {
-	    IAtomContainer mol = new org.openscience.cdk.AtomContainer();
+	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C")); 
 		mol.addAtom(new Atom("C")); 
 		mol.addAtom(new Atom("C")); 
@@ -101,6 +101,22 @@ public class AtomPlacer3DTest extends CDKTestCase{
         catch (IOException ex) {
             Logger.getLogger(AtomPlacer3DTest.class.getName()).log(Level.SEVERE, null, ex);
         }
+		return mol;
+	}
+    
+    private IAtomContainer makeMethaneWithExplicitHydrogens() {
+	    IAtomContainer mol = new AtomContainer();
+		mol.addAtom(new Atom("C")); 
+		mol.addAtom(new Atom("H")); 
+		mol.addAtom(new Atom("H")); 
+		mol.addAtom(new Atom("H")); 
+		mol.addAtom(new Atom("H")); 
+	
+		mol.addBond(0, 1, IBond.Order.DOUBLE); 
+		mol.addBond(0, 2, IBond.Order.SINGLE); 
+		mol.addBond(0, 3, IBond.Order.SINGLE); 
+		mol.addBond(0, 4, IBond.Order.SINGLE); 
+		        
 		return mol;
 	}
     
@@ -139,10 +155,22 @@ public class AtomPlacer3DTest extends CDKTestCase{
 	@Test
 	public void testNumberOfUnplacedHeavyAtoms_IAtomContainer(){
 	    IAtomContainer ac = makeAlphaPinene();
-		int count=new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
-		Assert.assertEquals(10,count);
+		int count = new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
+		Assert.assertEquals(10, count);
 	}
 	
+    /**
+     * Demonstrate bug where AtomPlacer3D().numberOfUnplacedHeavyAtoms() counts
+     * explicit hydrogens as heavy atoms.
+     *
+     */
+    @Test
+	public void testNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens(){
+	    IAtomContainer ac = makeMethaneWithExplicitHydrogens();
+		int count = new AtomPlacer3D().numberOfUnplacedHeavyAtoms(ac);
+		Assert.assertEquals(1, count);
+	}
+    
 	@Test
 	public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom(){
 	    IAtomContainer ac = makeAlphaPinene();
