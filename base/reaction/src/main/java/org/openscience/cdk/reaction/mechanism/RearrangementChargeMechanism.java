@@ -92,7 +92,6 @@ public class RearrangementChargeMechanism implements IReactionMechanism{
 		IAtom atom1 = atomList.get(0);// Atom with the charge
 		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
 		IAtom atom2 = atomList.get(1);// Atom not participating
-		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
 		IAtom atom3 = atomList.get(2);// Atom which acquires the charge
 		IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
 		IBond bond1 = bondList.get(0);// Bond with single bond
