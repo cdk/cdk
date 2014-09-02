@@ -150,7 +150,7 @@ public class VecmathUtilTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
-        Vector2d nearest = VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.<Vector2d> emptyList());
+        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.<Vector2d>emptyList());
     }
 
     @Test
@@ -203,5 +203,25 @@ public class VecmathUtilTest {
                                                      new Vector2d(0, 1));
         assertTrue(Double.isNaN(intersect.x));
         assertTrue(Double.isNaN(intersect.y));    
+    }
+    
+    @Test public void sweepEast() {
+        assertThat(VecmathUtil.sweep(new Vector2d(1, 0)),
+                   is(closeTo(Math.toRadians(0), 0.01)));
+    }
+
+    @Test public void sweepNorth() {
+        assertThat(VecmathUtil.sweep(new Vector2d(0, 1)),
+                   is(closeTo(Math.toRadians(90), 0.01)));
+    }
+
+    @Test public void sweepWest() {
+        assertThat(VecmathUtil.sweep(new Vector2d(-1, 0)),
+                   is(closeTo(Math.toRadians(180), 0.01)));
+    }
+    
+    @Test public void sweepSouth() {
+        assertThat(VecmathUtil.sweep(new Vector2d(0, -1)),
+                   is(closeTo(Math.toRadians(270), 0.01)));
     }
 }
