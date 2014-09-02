@@ -231,15 +231,23 @@ final class TextOutline {
     @Override
     public String toString() {
         final Rectangle2D bounds = getBounds();
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder(25);
         sb.append(text);
-        sb.append(' ');
-        sb.append("[");
-        sb.append("x=").append(String.format("%.2f", bounds.getX())).append(", ");
-        sb.append("y=").append(String.format("%.2f", bounds.getY())).append(", ");
-        sb.append("w=").append(String.format("%.2f", bounds.getWidth())).append(", ");
-        sb.append("h=").append(String.format("%.2f", bounds.getHeight()));
-        sb.append("]");
+        sb.append(" [x=").append(formatDouble(bounds.getX()));
+        sb.append(", y=").append(formatDouble(bounds.getY()));
+        sb.append(", w=").append(formatDouble(bounds.getWidth()));
+        sb.append(", h=").append(formatDouble(bounds.getHeight()));
+        sb.append(']');
         return sb.toString();
+    }
+
+    /**
+     * Format a double - displayed as two decimal places.
+     * 
+     * @param value number value
+     * @return string of formatted double 
+     */
+    static String formatDouble(double value) {
+        return String.format("%.2f", value);    
     }
 }
