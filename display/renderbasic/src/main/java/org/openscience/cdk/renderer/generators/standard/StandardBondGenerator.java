@@ -108,7 +108,6 @@ final class StandardBondGenerator {
 
     // parameters
     private final double scale;
-    private final double length;
     private final double stroke;
     private final double separation;
     private final double backOff;
@@ -142,7 +141,7 @@ final class StandardBondGenerator {
         // set parameters
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
-        this.length = parameters.get(BondLength.class) / scale;
+        double length = parameters.get(BondLength.class) / scale;
         this.separation = (parameters.get(BondSeparation.class) * parameters.get(BondLength.class)) / scale;
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
