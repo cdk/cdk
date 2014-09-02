@@ -108,7 +108,6 @@ final class StandardBondGenerator {
 
     // parameters
     private final double scale;
-    private final double length;
     private final double stroke;
     private final double separation;
     private final double backOff;
@@ -142,7 +141,7 @@ final class StandardBondGenerator {
         // set parameters
         this.scale = parameters.get(BasicSceneGenerator.Scale.class);
         this.stroke = stroke;
-        this.length = parameters.get(BondLength.class) / scale;
+        double length = parameters.get(BondLength.class) / scale;
         this.separation = (parameters.get(BondSeparation.class) * parameters.get(BondLength.class)) / scale;
         this.backOff = parameters.get(StandardGenerator.SymbolMarginRatio.class) * stroke;
         this.wedgeWidth = parameters.get(StandardGenerator.WedgeRatio.class) * stroke;
@@ -187,8 +186,7 @@ final class StandardBondGenerator {
         final IAtom atom2 = bond.getAtom(1);
 
         final IBond.Order order = bond.getOrder();
-        final IBond.Stereo stereo = bond.getStereo();
-
+        
         if (order == null)
             return generateDashedBond(atom1, atom2);
 
@@ -379,7 +377,7 @@ final class StandardBondGenerator {
         final double opposite = halfWideEnd - halfNarrowEnd;
         double adjacent = fromPoint.distance(toPoint);
 
-        final boolean longBond = (adjacent * scale) - parameters.get(BondLength.class) > 4;
+        
  
         final int nSections = (int) (adjacent / hashSpacing);
         final double step = adjacent / (nSections - 1);
@@ -398,25 +396,23 @@ final class StandardBondGenerator {
         Vector2d hatchAngle = perpendicular;
 
         // fancy hashed wedges with slanted hatch sections aligned with neighboring bonds
-        if (fancyHashedWedges && !longBond && !hasDisplayedSymbol(to)) {
-            if (toBonds.size() == 1) {
-                final IBond toBondNeighbor = toBonds.get(0);
-                final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
+        if (canDrawFancyHashedWedge(to, toBonds, adjacent)) {
+            final IBond toBondNeighbor = toBonds.get(0);
+            final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
 
-                Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
+            Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
 
-                // special case when wedge bonds are in a bridged ring, wide-to-wide end we
-                // don't want to slant as normal but rather butt up against each wind end
-                if (atWideEndOfWedge(to, toBondNeighbor)) {
-                    refVector = sum(refVector, negate(unit));
-                    refVector.normalize();
-                }
-
-                // only slant if the angle isn't shallow 
-                if (refVector.angle(unit) > threshold) {
-                    hatchAngle = refVector;
-                }
+            // special case when wedge bonds are in a bridged ring, wide-to-wide end we
+            // don't want to slant as normal but rather butt up against each wind end
+            if (atWideEndOfWedge(to, toBondNeighbor)) {
+                refVector = sum(refVector, negate(unit));
+                refVector.normalize();
             }
+
+            // only slant if the angle isn't shallow 
+            if (refVector.angle(unit) > threshold) {
+                hatchAngle = refVector;
+            }            
         }
         
         for (int i = 0; i < nSections; i++) {
@@ -433,6 +429,23 @@ final class StandardBondGenerator {
         }
 
         return group;
+    }
+
+    /**
+     * A fancy hashed wedge can be drawn if the following conditions are met: 
+     *      (1) {@link StandardGenerator.FancyHashedWedges} is enabled
+     *      (2) Bond is of 'normal' length
+     *      (3) The atom at the wide has one other neighbor and no symbol displayed 
+     *
+     * @param to       the target atom
+     * @param toBonds  bonds to the target atom (excluding the hashed wedge)
+     * @param length   the length of the bond (unscaled)
+     * @return a fancy hashed wedge can be rendered
+     */
+    private boolean canDrawFancyHashedWedge(IAtom to, List<IBond> toBonds, double length) {
+        // a bond is long if is more than 4 units larger that the desired 'BondLength'
+        final boolean longBond = (length * scale) - parameters.get(BondLength.class) > 4;
+        return fancyHashedWedges && !longBond && !hasDisplayedSymbol(to) && toBonds.size() == 1;
     }
 
     /**

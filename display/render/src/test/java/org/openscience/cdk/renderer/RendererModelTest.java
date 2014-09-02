@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -43,6 +44,9 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.generators.IGenerator;
 import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
+
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @cdk.module test-render
@@ -202,11 +206,17 @@ public class RendererModelTest {
 			}
 		};
 		RendererModel model = new RendererModel();
+        int nDefaultParams = model.getRenderingParameters().size();
 		model.registerParameters(generator);
 		List<IGeneratorParameter<?>> params = model.getRenderingParameters();
 		Assert.assertNotNull(params);
-		Assert.assertEquals(3, params.size()); // the registered one + two defaults
-		Assert.assertEquals(SomeParam.class, params.get(2).getClass());
+		Assert.assertEquals(nDefaultParams + 1, params.size()); // the registered one + defaults
+        
+        List<Class<?>> paramClasses = new ArrayList<Class<?>>();
+        for (IGeneratorParameter<?> param : params)
+            paramClasses.add(param.getClass());
+        
+		assertThat(paramClasses, hasItem(SomeParam.class));
 	}
 	
 	@Test

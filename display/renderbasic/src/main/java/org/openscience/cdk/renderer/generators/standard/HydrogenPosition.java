@@ -37,10 +37,9 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.avera
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
 
 /**
- * Enumeration of hydrogen label position. The best placement of the label can
- * depend on a variety of factors. Currently, the {@link #position(IAtom, List)}
- * method decides the position based on the atom and neighbouring atom
- * coordinates.
+ * Enumeration of hydrogen label position for 2D depictions. The best placement of the
+ * label can depend on a variety of factors. Currently, the {@link #position(IAtom, List)}
+ * method decides the position based on the atom and neighbouring atom coordinates.
  * 
  * @author John May
  */
