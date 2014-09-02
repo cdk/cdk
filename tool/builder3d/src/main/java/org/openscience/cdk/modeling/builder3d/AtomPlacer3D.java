@@ -55,11 +55,11 @@ public class AtomPlacer3D {
 
 	private Map<Object,List> pSet = null;
 	private double[] distances;
-	private int[] first_atoms = null;
+	private int[] firstAtoms = null;
 	private double[] angles = null;
-	private int[] second_atoms = null;
+	private int[] secondAtoms = null;
 	private double[] dihedrals = null;
-	private int[] third_atoms = null;
+	private int[] thirdAtoms = null;
 	private final static double DIHEDRAL_EXTENDED_CHAIN = (180.0 / 180) * Math.PI;
 	private final static double DIHEDRAL_BRANCHED_CHAIN = 0.0;
 	private final static double DEFAULT_BOND_LENGTH = 1.5;
@@ -89,7 +89,7 @@ public class AtomPlacer3D {
 		int[] heavy = {-1, -1};
 		int hc = 0;
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			if (!(chain.getAtom(i).getSymbol()).equals("H")) {
+			if (isHeavyAtom(chain.getAtom(i))) {
 				if (heavy[0] < 0) {
 					heavy[0] = molecule.getAtomNumber(chain.getAtom(i));
 				}
@@ -116,7 +116,7 @@ public class AtomPlacer3D {
 
 	
 	/**
-	 *  Method assigns 3Dcoordinates to the heavy atoms in an aliphatic chain.
+	 *  Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
 	 *
 	 * @param molecule        the reference molecule for the chain
 	 * @param  chain          the atoms to be assigned, must be connected
@@ -127,71 +127,71 @@ public class AtomPlacer3D {
 		int[] first = new int[2];
 		int counter = 1;
 		int nextAtomNr = 0;
-		String ID1 = "";
-		String ID2 = "";
-		String ID3 = "";
+		String id1 = "";
+		String id2 = "";
+		String id3 = "";
 		first = findHeavyAtomsInChain(molecule,chain);
 		distances = new double[first[1]];
-		first_atoms = new int[first[1]];
+		firstAtoms = new int[first[1]];
 		angles = new double[first[1]];
-		second_atoms = new int[first[1]];
+		secondAtoms = new int[first[1]];
 		dihedrals = new double[first[1]];
-		third_atoms = new int[first[1]];
-		first_atoms[0] = first[0];
-		molecule.getAtom(first_atoms[0]).setFlag(CDKConstants.VISITED, true);
+		thirdAtoms = new int[first[1]];
+		firstAtoms[0] = first[0];
+		molecule.getAtom(firstAtoms[0]).setFlag(CDKConstants.VISITED, true);
 		int hybridisation = 0;
 		for (int i = 0; i < chain.getAtomCount(); i++) {
-			if (!(chain.getAtom(i).getSymbol()).equals("H") &
-					!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
-				//logger.debug("Counter:" + counter);
-				nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
-				ID2 = molecule.getAtom(first_atoms[counter - 1]).getAtomTypeName();
-				ID1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
-
-                if (molecule.getBond(molecule.getAtom(first_atoms[counter - 1]),
-                                     molecule.getAtom(nextAtomNr)) == null)
-                    throw new CDKException("atoms do not form a chain, please us ModelBuilder3D");
-
-				distances[counter] = getBondLengthValue(ID1, ID2);
-				//logger.debug(" Distance:" + distances[counter]);
-				first_atoms[counter] = nextAtomNr;
-				second_atoms[counter] = first_atoms[counter - 1];
-				if (counter > 1) {
-					ID3 = molecule.getAtom(first_atoms[counter - 2]).getAtomTypeName();
-					hybridisation = getHybridisationState(molecule.getAtom(first_atoms[counter - 1]));
-					angles[counter] = getAngleValue(ID1, ID2, ID3);
-					//Check if sp,sp2
-					if (angles[counter] == -1) {
-						if (hybridisation == 3) {
-							angles[counter] = DEFAULT_SP3_ANGLE;
-						} else if (hybridisation == 2) {
-							angles[counter] = DEFAULT_SP2_ANGLE;
-						} else if (hybridisation == 1) {
-							angles[counter] = DEFAULT_SP_ANGLE;
-						}
-					}
-					third_atoms[counter] = first_atoms[counter - 2];
-					//logger.debug(" Angle:" + angles[counter]);
-				} else {
-					angles[counter] = -1;
-					third_atoms[counter] = -1;
-				}
-				if (counter > 2) {
-					//double bond
-					try{
-						if (getDoubleBondConfiguration2D( molecule.getBond(molecule.getAtom(first_atoms[counter-1]),molecule.getAtom(first_atoms[counter-2])),
-										(molecule.getAtom(first_atoms[counter])).getPoint2d(),(molecule.getAtom(first_atoms[counter-1])).getPoint2d(),
-										(molecule.getAtom(first_atoms[counter-2])).getPoint2d(),(molecule.getAtom(first_atoms[counter-3])).getPoint2d())
-							==5){
-							dihedrals[counter] = DIHEDRAL_BRANCHED_CHAIN;
-						}else{ dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;}
-					}catch(CDKException ex1){
-						dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;
-					}
-				} else {
-					dihedrals[counter] = -1;
-				}
-				counter++;
+			if (isHeavyAtom(chain.getAtom(i))) {
+                if (!chain.getAtom(i).getFlag(CDKConstants.VISITED)) {
+                    //logger.debug("Counter:" + counter);
+                    nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
+                    id2 = molecule.getAtom(firstAtoms[counter - 1]).getAtomTypeName();
+                    id1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
+                    
+                    if (molecule.getBond(molecule.getAtom(firstAtoms[counter - 1]), molecule.getAtom(nextAtomNr)) == null)
+                        throw new CDKException("atoms do not form a chain, please use ModelBuilder3D");
+                    
+                    distances[counter] = getBondLengthValue(id1, id2);
+                    //logger.debug(" Distance:" + distances[counter]);
+                    firstAtoms[counter] = nextAtomNr;
+                    secondAtoms[counter] = firstAtoms[counter - 1];
+                    if (counter > 1) {
+                        id3 = molecule.getAtom(firstAtoms[counter - 2]).getAtomTypeName();
+                        hybridisation = getHybridisationState(molecule.getAtom(firstAtoms[counter - 1]));
+                        angles[counter] = getAngleValue(id1, id2, id3);
+                        //Check if sp,sp2
+                        if (angles[counter] == -1) {
+                            if (hybridisation == 3) {
+                                angles[counter] = DEFAULT_SP3_ANGLE;
+                            } else if (hybridisation == 2) {
+                                angles[counter] = DEFAULT_SP2_ANGLE;
+                            } else if (hybridisation == 1) {
+                                angles[counter] = DEFAULT_SP_ANGLE;
+                            }
+                        }
+                        thirdAtoms[counter] = firstAtoms[counter - 2];
+                        //logger.debug(" Angle:" + angles[counter]);
+                    } else {
+                        angles[counter] = -1;
+                        thirdAtoms[counter] = -1;
+                    }
+                    if (counter > 2) {
+                        //double bond
+                        try{
+                            if (getDoubleBondConfiguration2D( molecule.getBond(molecule.getAtom(firstAtoms[counter-1]),molecule.getAtom(firstAtoms[counter-2])),
+                                    (molecule.getAtom(firstAtoms[counter])).getPoint2d(),(molecule.getAtom(firstAtoms[counter-1])).getPoint2d(),
+                                    (molecule.getAtom(firstAtoms[counter-2])).getPoint2d(),(molecule.getAtom(firstAtoms[counter-3])).getPoint2d())
+                                    ==5){
+                                dihedrals[counter] = DIHEDRAL_BRANCHED_CHAIN;
+                            }else{ dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;}
+                        }catch(CDKException ex1){
+                            dihedrals[counter] = DIHEDRAL_EXTENDED_CHAIN;
+                        }
+                    } else {
+                        dihedrals[counter] = -1;
+                    }
+                    counter++;
+                }
 			}
 		}
 	}
@@ -203,11 +203,11 @@ public class AtomPlacer3D {
 	 * and dihedrals. Assign coordinates directly to the atoms.
 	 * 
 	 * @param  molecule  the molecule to be placed in 3D
-	 * @param  flag_branched  marks branched chain
+	 * @param  flagBranched  marks branched chain
 	 * author: egonw,cho
 	 */
 
-	public void zmatrixChainToCartesian(IAtomContainer molecule, boolean flag_branched) {
+	public void zmatrixChainToCartesian(IAtomContainer molecule, boolean flagBranched) {
 		Point3d result = null;
 		for (int index = 0; index < distances.length; index++) {
 			if (index == 0) {
@@ -220,17 +220,17 @@ public class AtomPlacer3D {
 						0d);
 			} else {
 				Vector3d cd = new Vector3d();
-				cd.sub((molecule.getAtom(third_atoms[index])).getPoint3d(), (molecule.getAtom(second_atoms[index])).getPoint3d());
+				cd.sub(molecule.getAtom(thirdAtoms[index]).getPoint3d(), molecule.getAtom(secondAtoms[index]).getPoint3d());
 
 				Vector3d bc = new Vector3d();
-				bc.sub(molecule.getAtom(second_atoms[index]).getPoint3d(), molecule.getAtom(first_atoms[index - 3]).getPoint3d());
+				bc.sub(molecule.getAtom(secondAtoms[index]).getPoint3d(), molecule.getAtom(firstAtoms[index - 3]).getPoint3d());
 
 				Vector3d n1 = new Vector3d();
 				n1.cross(cd, bc);
 				n1.normalize();
 
 				Vector3d n2 = null;
-				if (index == 3 && flag_branched) {
+				if (index == 3 && flagBranched) {
 					n2 = AtomTetrahedralLigandPlacer3D.rotate(n1, bc, DIHEDRAL_BRANCHED_CHAIN);
 				} else {
 					n2 = AtomTetrahedralLigandPlacer3D.rotate(n1, bc, dihedrals[index]);
@@ -238,7 +238,7 @@ public class AtomPlacer3D {
 				n2.normalize();
 
 				Vector3d ba = new Vector3d();
-				if (index == 3 && flag_branched) {
+				if (index == 3 && flagBranched) {
 					ba = AtomTetrahedralLigandPlacer3D.rotate(cd, n2, (-angles[index] / 180) * Math.PI);
 					ba = AtomTetrahedralLigandPlacer3D.rotate(ba, cd, (-angles[index] / 180) * Math.PI);
 				} else {
@@ -251,21 +251,20 @@ public class AtomPlacer3D {
 				ban.scale(distances[index]);
 
 				result = new Point3d();
-				result.add(molecule.getAtom(first_atoms[index - 1]).getPoint3d(), ban);
+				result.add(molecule.getAtom(firstAtoms[index - 1]).getPoint3d(), ban);
 			}
-
-			if ((molecule.getAtom(first_atoms[index]).getPoint3d() == null || !(molecule.getAtom(first_atoms[index])).getFlag(CDKConstants.ISPLACED))
-					 && !(molecule.getAtom(first_atoms[index])).getFlag(CDKConstants.ISINRING)
-					 && !(molecule.getAtom(first_atoms[index])).getSymbol().equals("H")) {
-				molecule.getAtom(first_atoms[index]).setPoint3d(result);
-				molecule.getAtom(first_atoms[index]).setFlag(CDKConstants.ISPLACED, true);
+            IAtom atom = molecule.getAtom(firstAtoms[index]);
+			if ((atom.getPoint3d() == null || !atom.getFlag(CDKConstants.ISPLACED))
+					 && !atom.getFlag(CDKConstants.ISINRING) && isHeavyAtom(atom)) {
+				atom.setPoint3d(result);
+				atom.setFlag(CDKConstants.ISPLACED, true);
 			}
 		}
 	}
 
 
 	/**
-	 *  Gets the hybridisationState of an atom.
+	 *  Gets the hybridisation state of an atom.
 	 *
 	 *@param  atom1  atom
 	 *@return        The hybridisationState value (sp=1;sp2=2;sp3=3)
@@ -277,17 +276,12 @@ public class AtomPlacer3D {
 //        if (atom1.getFormalNeighbourCount() == 1 || maxBondOrder > 4) {
         if (atom1.getFormalNeighbourCount() == 1) {
         	// WTF??
-		} else if (atom1.getFormalNeighbourCount() == 2 ||
-				   maxBondOrder == IBond.Order.TRIPLE) {
-			//sp
-			return 1;
-		} else if (atom1.getFormalNeighbourCount() == 3 ||
-				   (maxBondOrder == IBond.Order.DOUBLE)) {
-			//sp2
-			return 2;
+		} else if (atom1.getFormalNeighbourCount() == 2 || maxBondOrder == IBond.Order.TRIPLE) {
+			return 1;   //sp
+		} else if (atom1.getFormalNeighbourCount() == 3 || (maxBondOrder == IBond.Order.DOUBLE)) {
+			return 2;   //sp2
 		} else {
-			//sp3
-			return 3;
+			return 3;   //sp3
 		}
 		return -1;
 	}
@@ -341,7 +335,7 @@ public class AtomPlacer3D {
 			);
 			return DEFAULT_BOND_LENGTH;
 		}
-		return ((Double) (((List) pSet.get(dkey)).get(0))).doubleValue();
+		return ((Double) (pSet.get(dkey).get(0))).doubleValue();
 	}
 
 	/**
@@ -371,13 +365,14 @@ public class AtomPlacer3D {
 			//logger.debug("KEYErrorAngle:Unknown angle key in pSet: " +id2 + " ; " + id3 + " ; " + id1+" take default angle:"+DEFAULT_ANGLE);
 			return -1;
 		}
-		return ((Double) (((List) pSet.get(akey)).get(0))).doubleValue();
+		return ((Double) (pSet.get(akey).get(0))).doubleValue();
 	}
 
 
 	/**
 	 *  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule.
 	 *
+     * @param molecule
 	 * @return    The nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour value
 	 * author:    steinbeck,cho
 	 */
@@ -386,12 +381,12 @@ public class AtomPlacer3D {
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 			if (bond.getAtom(0).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(1).getFlag(CDKConstants.ISPLACED))) {
-				if (bond.getAtom(1).getFlag(CDKConstants.ISALIPHATIC) && !bond.getAtom(1).getSymbol().equals("H")) {
+				if (isAliphaticHeavyAtom(bond.getAtom(1))) {
 					return bond.getAtom(1);
 				}
 			}
 			if (bond.getAtom(1).getFlag(CDKConstants.ISPLACED) && !(bond.getAtom(0).getFlag(CDKConstants.ISPLACED))) {
-				if (bond.getAtom(0).getFlag(CDKConstants.ISALIPHATIC) && !bond.getAtom(0).getSymbol().equals("H")) {
+				if (isAliphaticHeavyAtom(bond.getAtom(0))) {
 					return bond.getAtom(0);
 				}
 			}
@@ -402,6 +397,7 @@ public class AtomPlacer3D {
 	/**
 	 *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule.
 	 *
+     * @param molecule
 	 * @return    The nextUnplacedHeavyAtomWithUnplacedAliphaticNeigbor
 	 * author: steinbeck,cho
 	 */
@@ -412,12 +408,12 @@ public class AtomPlacer3D {
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
-				if (atom1.getFlag(CDKConstants.ISALIPHATIC) && !atom0.getSymbol().equals("H") && !atom1.getSymbol().equals("H")) {
+				if (isAliphaticHeavyAtom(atom1) && isHeavyAtom(atom0)) {
 					return atom0;
 				}
 			}
 			if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
-				if (atom0.getFlag(CDKConstants.ISALIPHATIC) && !atom1.getSymbol().equals("H") && !atom0.getSymbol().equals("H")) {
+				if (isAliphaticHeavyAtom(atom0) && isHeavyAtom(atom1)) {
 					return atom1;
 				}
 			}
@@ -428,22 +424,22 @@ public class AtomPlacer3D {
 	/**
 	 *  Gets the nextPlacedHeavyAtomWithUnplacedRingNeighbour attribute of the AtomPlacer3D object.
 	 *
-	 * @return    The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
+     * @param molecule  The atom container under consideration
+	 * @return          The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
 	 */
 	public IAtom getNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule) {
-//		IBond[] bonds = molecule.getBonds();
         Iterator<IBond> bonds = molecule.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 			IAtom atom0 = bond.getAtom(0);
 			IAtom atom1 = bond.getAtom(1);
 			if (atom0.getFlag(CDKConstants.ISPLACED) && !(atom1.getFlag(CDKConstants.ISPLACED))) {
-				if (atom1.getFlag(CDKConstants.ISINRING) && !atom0.getSymbol().equals("H") && !atom1.getSymbol().equals("H")) {
+				if (isRingHeavyAtom(atom1) && isHeavyAtom(atom0)) {
 					return atom0;
 				}
 			}
 			if (atom1.getFlag(CDKConstants.ISPLACED) && !(atom0.getFlag(CDKConstants.ISPLACED))) {
-				if (atom0.getFlag(CDKConstants.ISINRING) && !atom1.getSymbol().equals("H") && !atom0.getSymbol().equals("H")) {
+				if (isRingHeavyAtom(atom0) && isHeavyAtom(atom1)) {
 					return atom1;
 				}
 			}
@@ -475,24 +471,26 @@ public class AtomPlacer3D {
 	/**
 	 *  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
 	 *
+     * @param molecule
 	 * @param  atom  Description of the Parameter
 	 * @return       The unplacedRingHeavyAtom value
 	 */
 	public IAtom getUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom) {
 		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtom connectedAtom = null;
-		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (!connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H") && connectedAtom.getFlag(CDKConstants.ISINRING)) {
-				return connectedAtom;
-			}
-		}
+        for (IBond bond : bonds) {
+            connectedAtom = bond.getConnectedAtom(atom);
+            if (isUnplacedHeavyAtom(connectedAtom) && connectedAtom.getFlag(CDKConstants.ISINRING)) {
+                return connectedAtom;
+            }
+        }
 		return connectedAtom;
 	}
 
 	/**
 	 *  Calculates the geometric center of all placed atoms in the atomcontainer.
 	 *
+     * @param molecule
 	 * @return    Point3d the geometric center
 	 */
 	public Point3d geometricCenterAllPlacedAtoms(IAtomContainer molecule) {
@@ -504,18 +502,19 @@ public class AtomPlacer3D {
 	/**
 	 *  Returns a placed atom connected to a given atom.
 	 *
+     * @param molecule
 	 * @param  atom  The Atom whose placed bonding partners are to be returned
 	 * @return       a placed heavy atom connected to a given atom
 	 * author:      steinbeck
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atom) {
 		List<IBond> bonds = molecule.getConnectedBondsList(atom);
-		for (int i = 0; i < bonds.size(); i++) {
-			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H")) {
-				return connectedAtom;
-			}
-		}
+        for (IBond bond : bonds) {
+            IAtom connectedAtom = bond.getConnectedAtom(atom);
+            if (isPlacedHeavyAtom(connectedAtom)) {
+                return connectedAtom;
+            }
+        }
 		return null;
 	}
 
@@ -523,25 +522,26 @@ public class AtomPlacer3D {
 	/**
 	 *  Gets the first placed Heavy Atom around atomA which is not atomB.
 	 *
+     * @param molecule
 	 * @param  atomA  Description of the Parameter
 	 * @param  atomB  Description of the Parameter
 	 * @return        The placedHeavyAtom value
 	 */
 	public IAtom getPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB) {
 		List<IBond> bonds = molecule.getConnectedBondsList(atomA);
-		for (int i = 0; i < bonds.size(); i++) {
-			IAtom connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atomA);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !connectedAtom.getSymbol().equals("H")
-					 && connectedAtom != atomB) {
-				return connectedAtom;
-			}
-		}
+        for (IBond bond : bonds) {
+            IAtom connectedAtom = bond.getConnectedAtom(atomA);
+            if (isPlacedHeavyAtom(connectedAtom) && connectedAtom != atomB) {
+                return connectedAtom;
+            }
+        }
 		return null;
 	}
 
 	/**
 	 *  Gets the placed Heavy Atoms connected to an atom.
 	 *
+     * @param molecule
 	 * @param  atom  The atom the atoms must be connected to.
 	 * @return       The placed heavy atoms.
 	 */
@@ -550,12 +550,12 @@ public class AtomPlacer3D {
 		List<IBond> bonds = molecule.getConnectedBondsList(atom);
 		IAtomContainer connectedAtoms = molecule.getBuilder().newInstance(IAtomContainer.class);
 		IAtom connectedAtom = null;
-		for (int i = 0; i < bonds.size(); i++) {
-			connectedAtom = ((IBond)bonds.get(i)).getConnectedAtom(atom);
-			if (connectedAtom.getFlag(CDKConstants.ISPLACED) && !(connectedAtom.getSymbol().equals("H"))) {
-				connectedAtoms.addAtom(connectedAtom);
-			}
-		}
+        for (IBond bond : bonds) {
+            connectedAtom = bond.getConnectedAtom(atom);
+            if (isPlacedHeavyAtom(connectedAtom)) {
+                connectedAtoms.addAtom(connectedAtom);
+            }
+        }
 		return connectedAtoms;
 	}
 	
@@ -568,8 +568,8 @@ public class AtomPlacer3D {
 	public int numberOfUnplacedHeavyAtoms(IAtomContainer ac) {
 		int nUnplacedHeavyAtoms=0;
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !ac.getAtom(i).getSymbol().equals("H")) {
-				nUnplacedHeavyAtoms+=1;
+			if (isUnplacedHeavyAtom(ac.getAtom(i))) {
+				nUnplacedHeavyAtoms++;
 			}
 		}
 		return nUnplacedHeavyAtoms;
@@ -598,7 +598,7 @@ public class AtomPlacer3D {
 	 */
 	public boolean allHeavyAtomsPlaced(IAtomContainer ac) {
 		for (int i = 0; i < ac.getAtomCount(); i++) {
-			if (!ac.getAtom(i).getFlag(CDKConstants.ISPLACED) && !(ac.getAtom(i).getSymbol().equals("H"))) {
+			if (isUnplacedHeavyAtom(ac.getAtom(i))) {
 				return false;
 			}
 		}
