@@ -66,8 +66,14 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  *
  * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of 
  * highlight is set with the {@link Highlighting} parameter.
+ * 
+ * <p/>
  *
+ * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki 
+ * page</a> provides extended details of using and configuring this generator.
+ * 
  * @author John May
+ * @see <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki</a>
  */
 public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
