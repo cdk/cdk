@@ -47,17 +47,17 @@ import java.util.List;
 public final class SelectionVisibility extends SymbolVisibility {
 
     private final SymbolVisibility delegate;
-    private final boolean          all;
+    private final boolean          showAll;
 
     /**
      * Internal constructor.
      *
      * @param delegate default viability
-     * @param all      all select atoms are displayed
+     * @param showAll      all select atoms are displayed
      */
-    private SelectionVisibility(SymbolVisibility delegate, boolean all) {
+    private SelectionVisibility(SymbolVisibility delegate, boolean showAll) {
         this.delegate = delegate;
-        this.all = all;
+        this.showAll = showAll;
     }
 
     /**
@@ -85,7 +85,7 @@ public final class SelectionVisibility extends SymbolVisibility {
      * @inheritDoc
      */
     @Override public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
-        if (isSelected(atom, model) && (all || !hasSelectedBond(neighbors, model)))
+        if (isSelected(atom, model) && (showAll || !hasSelectedBond(neighbors, model)))
             return true;
         return delegate.visible(atom, neighbors, model);
     }
