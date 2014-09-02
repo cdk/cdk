@@ -72,7 +72,7 @@ public class AtomContainerPrinter {
                 }
             }
             if (!sortEdges && i < atomContainer.getBondCount() - 1) {
-                sb.append(",");
+                sb.append(',');
             }
             i++;
         }

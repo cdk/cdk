@@ -236,7 +236,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                    if (formalCharge < 0) {
                        buffer.append(formalCharge);
                    } else {
-                       buffer.append("+").append(formalCharge);
+                       buffer.append('+').append(formalCharge);
                    }
                }
                
