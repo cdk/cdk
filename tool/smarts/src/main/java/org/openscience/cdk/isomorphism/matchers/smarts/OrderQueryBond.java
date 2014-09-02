@@ -64,11 +64,11 @@ public class OrderQueryBond extends SMARTSBond {
      * @see org.openscience.cdk.Bond#toString()
      */
     public String toString() {
-		StringBuffer s = new StringBuffer();
+		StringBuilder s = new StringBuilder();
 		s.append("OrderQueryBond(");
         s.append(this.hashCode() + ", ");
 		s.append("#O:" + getOrder());
-		s.append(")");
+		s.append(')');
 		return s.toString();
     }
 }

@@ -310,12 +310,12 @@ public class MolecularFormulaManipulator {
 		// and then remove these elements
 		int count;
 		if (hillMap.containsKey("C")) {
-			hillString.append("C");
+			hillString.append('C');
 			count = hillMap.get("C");
 			if (count> 1) hillString.append(count);
 			hillMap.remove("C");
 			if (hillMap.containsKey("H")) {
-				hillString.append("H");
+				hillString.append('H');
 				count = hillMap.get("H");
 				if (count > 1) hillString.append(count);
 				hillMap.remove("H");
@@ -418,9 +418,9 @@ public class MolecularFormulaManipulator {
 			if (charge == CDKConstants.UNSET || charge == 0) {
 				return sb.toString();
 			} else if (charge < 0) {
-				sb.append("<sup>").append(charge * -1).append("-").append("</sup>");
+				sb.append("<sup>").append(charge * -1).append('-').append("</sup>");
 			} else {
-                sb.append("<sup>").append(charge).append("+").append("</sup>");
+                sb.append("<sup>").append(charge).append('+').append("</sup>");
 			}
 		}
 		return sb.toString();
@@ -626,7 +626,7 @@ public class MolecularFormulaManipulator {
 				multiple += thisChar;
 			}
 		}
-		if (multiple.equals("") || multiple.equals("-"))
+		if (multiple.isEmpty() || multiple.equals("-"))
 			multiple += 1;
 		return Integer.valueOf(multiple);
 	}

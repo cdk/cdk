@@ -234,12 +234,12 @@ final class TextOutline {
         final StringBuilder sb = new StringBuilder();
         sb.append(text);
         sb.append(' ');
-        sb.append("[");
+        sb.append('[');
         sb.append("x=").append(String.format("%.2f", bounds.getX())).append(", ");
         sb.append("y=").append(String.format("%.2f", bounds.getY())).append(", ");
         sb.append("w=").append(String.format("%.2f", bounds.getWidth())).append(", ");
         sb.append("h=").append(String.format("%.2f", bounds.getHeight()));
-        sb.append("]");
+        sb.append(']');
         return sb.toString();
     }
 }

@@ -128,7 +128,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
             			buffer.append("}\n");
             			break;
             		} else {
-            			buffer.append(currentLine).append("\n");
+            			buffer.append(currentLine).append('\n');
             		}
             		currentLine = input.readLine();
             	}
