@@ -472,7 +472,7 @@ public enum Elements {
     public final static IElement PROTACTINIUM  = Protactinium.toIElement();
     public final static IElement URANIUM       = Uranium.toIElement();
     public final static IElement NEPTUNIUM     = Neptunium.toIElement();
-    public final static IElement PLUTOMNIUM    = Plutonium.toIElement();
+    public final static IElement PLUTONIUM     = Plutonium.toIElement();
     public final static IElement AMERICIUM     = Americium.toIElement();
     public final static IElement CURIUM        = Curium.toIElement();
     public final static IElement BERKELIUM     = Berkelium.toIElement();
@@ -498,4 +498,7 @@ public enum Elements {
     public final static IElement UNUNHEXIUM    = Livermorium.toIElement();
     public final static IElement LIVERMORIUM   = Livermorium.toIElement();
 
+    // Incorrect spelling
+    @Deprecated     
+    public final static IElement PLUTOMNIUM    = PLUTONIUM;
 }
