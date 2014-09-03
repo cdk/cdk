@@ -47,11 +47,11 @@ public class AtomContainerPrinter {
     }
     
     public String toString(IAtomContainer atomContainer) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (IAtom atom : atomContainer.atoms()) {
             sb.append(atom.getSymbol());
         }
-        sb.append(" ");
+        sb.append(' ');
         List<Edge> edges = new ArrayList<Edge>();
         for (IBond bond : atomContainer.bonds()) {
             IAtom a0 = bond.getAtom(0);

@@ -84,11 +84,11 @@ public class CMLModuleStack {
    * Returns a String representation of the stack.
    */
   public String toString() {
-    StringBuffer sb = new StringBuffer();
-    sb.append("/");
+    StringBuilder sb = new StringBuilder();
+    sb.append('/');
     for (int i = 0; i < sp; ++i) {
       sb.append(stack[i].getClass().getSimpleName());
-      sb.append("/");
+      sb.append('/');
     }
     return sb.toString();
   }
