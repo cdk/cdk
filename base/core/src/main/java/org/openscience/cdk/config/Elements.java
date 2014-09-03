@@ -498,4 +498,7 @@ public enum Elements {
     public final static IElement UNUNHEXIUM    = Livermorium.toIElement();
     public final static IElement LIVERMORIUM   = Livermorium.toIElement();
 
+    @Deprecated
+    public final static IElement PLUTOMNIUM     = PLUTONIUM;
+
 }
