@@ -187,19 +187,28 @@ public class TemplateHandler3D {
 		}
 		return resultContainer;
 	}
+    
+    /**
+     * @deprecated Use {@link #mapTemplates(org.openscience.cdk.interfaces.IAtomContainer, int)}
+     */
+    @Deprecated
+    public void mapTemplates(IAtomContainer ringSystems, double numberOfRingAtoms) throws CDKException, CloneNotSupportedException{
+        mapTemplates(ringSystems, (int) numberOfRingAtoms);
+    }
+    
     /**
      * Checks if one of the loaded templates is a substructure in the given
      * Molecule. If so, it assigns the coordinates from the template to the
      * respective atoms in the Molecule.
      *
      * @param ringSystems       AtomContainer from the ring systems.
-     * @param NumberOfRingAtoms double
+     * @param numberOfRingAtoms Number of atoms in the specified ring
      * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
-    public void mapTemplates(IAtomContainer ringSystems, double NumberOfRingAtoms) throws CDKException, CloneNotSupportedException{
+    public void mapTemplates(IAtomContainer ringSystems, int numberOfRingAtoms) throws CDKException, CloneNotSupportedException{
 		if (!templatesLoaded) self.loadTemplates();
 
-        //logger.debug("Map Template...START---Number of Ring Atoms:"+NumberOfRingAtoms);
+        //logger.debug("Map Template...START---Number of Ring Atoms:"+numberOfRingAtoms);
         IAtomContainer ringSystemAnyBondAnyAtom = AtomContainerManipulator.anonymise(ringSystems);
         BitSet ringSystemFingerprint = new HybridizationFingerprinter().getBitFingerprint(ringSystemAnyBondAnyAtom).asBitSet();
         boolean flagMaxSubstructure = false;
@@ -218,7 +227,7 @@ public class TemplateHandler3D {
                 	//if this is the case, we keep it as a guess, but look if we can do better
                     List<RMap> list = universalIsomorphismTester.getSubgraphAtomsMap(ringSystemAnyBondAnyAtom, templateAnyBondAnyAtom);
                     boolean flagwritefromsecondbest=false;
-                    if ((NumberOfRingAtoms) / list.size() == 1 && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
+                    if ((numberOfRingAtoms == list.size()) && templateAnyBondAnyAtom.getBondCount()==ringSystems.getBondCount()) {
                     	//so atom and bond count match, could be it's even an exact match,
                     	//we check this with the original ring system
                     	if(universalIsomorphismTester.isSubgraph(ringSystems, template)){
