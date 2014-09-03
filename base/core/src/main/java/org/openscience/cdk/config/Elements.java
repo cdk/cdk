@@ -377,7 +377,7 @@ public enum Elements {
         return e;
     }
 
-    /** These instances are for backards compatability. */          
+    /** These instances are for backwards compatability. */          
     public final static IElement DUMMY         = Unknown.toIElement();
     public final static IElement HYDROGEN      = Hydrogen.toIElement();
     public final static IElement HELIUM        = Helium.toIElement();
@@ -472,7 +472,7 @@ public enum Elements {
     public final static IElement PROTACTINIUM  = Protactinium.toIElement();
     public final static IElement URANIUM       = Uranium.toIElement();
     public final static IElement NEPTUNIUM     = Neptunium.toIElement();
-    public final static IElement PLUTOMNIUM    = Plutonium.toIElement();
+    public final static IElement PLUTONIUM     = Plutonium.toIElement();
     public final static IElement AMERICIUM     = Americium.toIElement();
     public final static IElement CURIUM        = Curium.toIElement();
     public final static IElement BERKELIUM     = Berkelium.toIElement();
