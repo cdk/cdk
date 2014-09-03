@@ -194,7 +194,7 @@ public class ModelBuilder3D {
 		IRingSet ringSetMolecule = ffc.assignAtomTyps(molecule);
 		List ringSystems = null;
 		IRingSet largestRingSet = null;
-		double NumberOfRingAtoms = 0;
+		int numberOfRingAtoms = 0;
 
 		if (ringSetMolecule.getAtomContainerCount() > 0) {
 			if(templateHandler==null){
@@ -203,8 +203,8 @@ public class ModelBuilder3D {
 			ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
 			largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
 			IAtomContainer largestRingSetContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
-			NumberOfRingAtoms = (double)largestRingSetContainer.getAtomCount();
-			templateHandler.mapTemplates(largestRingSetContainer, NumberOfRingAtoms);
+			numberOfRingAtoms = largestRingSetContainer.getAtomCount();
+			templateHandler.mapTemplates(largestRingSetContainer, numberOfRingAtoms);
 			if (!checkAllRingAtomsHasCoordinates(largestRingSetContainer)) {
 				throw new CDKException("RingAtomLayoutError: Not every ring atom is placed! Molecule cannot be layout.");
 			}
@@ -278,7 +278,7 @@ public class ModelBuilder3D {
 				IAtom unplacedAtom = ap3d.getUnplacedRingHeavyAtom(molecule, atom);
 				IRingSet ringSetA = getRingSetOfAtom(ringSetMolecule, unplacedAtom);
 				IAtomContainer ringSetAContainer = RingSetManipulator.getAllInOneContainer(ringSetA);
-				templateHandler.mapTemplates(ringSetAContainer, (double)ringSetAContainer.getAtomCount());
+				templateHandler.mapTemplates(ringSetAContainer, ringSetAContainer.getAtomCount());
 
 				if (checkAllRingAtomsHasCoordinates(ringSetAContainer)) {
 				} else {
