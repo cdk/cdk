@@ -202,7 +202,7 @@ public class TemplateHandler3D {
      * respective atoms in the Molecule.
      *
      * @param ringSystems       AtomContainer from the ring systems.
-     * @param numberOfRingAtoms double
+     * @param numberOfRingAtoms Number of atoms in the specified ring
      * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
      */
     public void mapTemplates(IAtomContainer ringSystems, int numberOfRingAtoms) throws CDKException, CloneNotSupportedException{
