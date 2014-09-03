@@ -411,11 +411,11 @@ public final class PeriodicTable {
         ids.put(Meitnerium, "54038-01-6");
         ids.put(Darmstadtium, "54083-77-1");
         ids.put(Roentgenium, "54386-24-2");
-        ids.put(Copernicium, "");
+        ids.put(Copernicium, "54084-26-3");
         ids.put(Ununtrium, "");
-        ids.put(Flerovium, "");
+        ids.put(Flerovium, "54085-16-4");
         ids.put(Ununpentium, "");
-        ids.put(Livermorium, "");
+        ids.put(Livermorium, "54100-71-9");
         ids.put(Ununseptium, "");
         ids.put(Ununoctium, "");
         return ids;
