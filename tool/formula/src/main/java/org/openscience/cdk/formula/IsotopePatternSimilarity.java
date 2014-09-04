@@ -18,7 +18,7 @@ public class IsotopePatternSimilarity{
 
 	private double chargeToAdd;
 	
-	private double tolerance_ppm = 1;
+	private double tolerancePPM = 1;
 	
 	private static double massE = 0.0005485;
     
@@ -35,7 +35,7 @@ public class IsotopePatternSimilarity{
      */
     @TestMethod("testSeTolerance_double")
 	public void seTolerance(double tolerance) {
-    	tolerance_ppm = tolerance;
+    	tolerancePPM = tolerance;
     }
     /**
      * Get the tolerance of the mass accuracy.
@@ -44,7 +44,7 @@ public class IsotopePatternSimilarity{
      */
     @TestMethod("testGetTolerance")
     public double getTolerance(){
-    	return tolerance_ppm;
+    	return tolerancePPM;
     }
     /**
      * Compare the IMolecularFormula with a isotope
@@ -122,7 +122,7 @@ public class IsotopePatternSimilarity{
     	int posi = -1;
 		for(int i = 0 ; i < pattern.getNumberOfIsotopes(); i++) {
 			double tempDiff = Math.abs((isoContainer.getMass()) - pattern.getIsotopes().get(i).getMass());
-			if (tempDiff <= (tolerance_ppm/isoContainer.getMass()) && tempDiff < diff){
+			if (tempDiff <= (tolerancePPM/isoContainer.getMass()) && tempDiff < diff){
 				diff = tempDiff;
 				posi = i;
 			}
