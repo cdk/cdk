@@ -23,7 +23,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.aromaticity.Aromaticity;
 import org.openscience.cdk.charges.GasteigerMarsiliPartialCharges;
-import org.openscience.cdk.charges.GasteigerPEPEPartialCharges;
 import org.openscience.cdk.charges.Polarizability;
 import org.openscience.cdk.config.Isotopes;
 import org.openscience.cdk.exception.CDKException;

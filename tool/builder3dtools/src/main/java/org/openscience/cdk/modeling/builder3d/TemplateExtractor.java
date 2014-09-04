@@ -47,7 +47,6 @@ import org.openscience.cdk.interfaces.IRingSet;
 import org.openscience.cdk.io.MDLV2000Writer;
 import org.openscience.cdk.io.iterator.IteratingSDFReader;
 import org.openscience.cdk.isomorphism.matchers.QueryAtomContainerCreator;
-import org.openscience.cdk.ringsearch.AllRingsFinder;
 import org.openscience.cdk.ringsearch.RingPartitioner;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesGenerator;
