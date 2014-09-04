@@ -47,11 +47,11 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
     /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
     public int compare(ILigand ligand1, ILigand ligand2) {
-        ensureFactory(ligand1);
+        ensureFactory();
         return getMassNumber(ligand1).compareTo(getMassNumber(ligand2));
     }
 
-    private void ensureFactory(ILigand ligand) {
+    private void ensureFactory() {
         if (factory == null) {
             try {
                 factory = Isotopes.getInstance();

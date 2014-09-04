@@ -172,7 +172,7 @@ public class HOSECodeGenerator implements java.io.Serializable
   
 	private IsotopeFactory isotopeFac = null;
 	
-	private void ensureIsotopeFactory(IChemObjectBuilder builder) throws CDKException {
+	private void ensureIsotopeFactory() throws CDKException {
 		if (isotopeFac == null) {
 			try {
 	            isotopeFac = Isotopes.getInstance();
@@ -194,7 +194,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 **/
 	public List<IAtom>[] getSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
 	{
-		ensureIsotopeFactory(ac.getBuilder());
+		ensureIsotopeFactory();
 		centerCode = "";
 		this.atomContainer = ac;
 		maxSphere = noOfSpheres;
@@ -266,7 +266,7 @@ public class HOSECodeGenerator implements java.io.Serializable
 	 */
 	public String getHOSECode(IAtomContainer ac, IAtom root, int noOfSpheres, boolean ringsize) throws CDKException
 	{
-		ensureIsotopeFactory(ac.getBuilder());
+		ensureIsotopeFactory();
     CanonicalLabeler canLabler = new CanonicalLabeler();
     canLabler.canonLabel(ac);
 		centerCode = "";
