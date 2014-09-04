@@ -41,12 +41,12 @@ public class ProblemMarker {
 
     @TestMethod("testMarkWithError_IChemObject")
     public static void markWithError(IChemObject object) {
-        object.setProperty(ERROR_MARKER, new Boolean(true));
+        object.setProperty(ERROR_MARKER, Boolean.TRUE);
     }
 
     @TestMethod("testMarkWithWarning_IChemObject")
     public static void markWithWarning(IChemObject object) {
-        object.setProperty(WARNING_MARKER, new Boolean(true));
+        object.setProperty(WARNING_MARKER, Boolean.TRUE);
     }
 
     @TestMethod("testUnmarkWithError_IChemObject")
