@@ -110,11 +110,12 @@ public class AtomSymbolTest {
         TextOutline outline = new TextOutline("Cl", font);
         AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
         AtomSymbol transformed = symbol.resize(2, 2);
+        Rectangle2D orgBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
-        assertThat(newBounds.getX(), closeTo(-4.27, 0.01));
-        assertThat(newBounds.getY(), closeTo(-13.75, 0.01));
-        assertThat(newBounds.getMaxX(), closeTo(15.52, 0.01));
-        assertThat(newBounds.getMaxY(), closeTo(4.79, 0.01));
+        assertThat(newBounds.getX(), closeTo(orgBounds.getX() - orgBounds.getWidth() / 2, 0.01));
+        assertThat(newBounds.getY(), closeTo(orgBounds.getY() - orgBounds.getHeight() / 2, 0.01));
+        assertThat(newBounds.getMaxX(), closeTo(orgBounds.getMaxX() + orgBounds.getWidth() / 2, 0.01));
+        assertThat(newBounds.getMaxY(), closeTo(orgBounds.getMaxY() + orgBounds.getHeight() / 2, 0.01));
     }
 
     @Test
@@ -122,11 +123,16 @@ public class AtomSymbolTest {
         TextOutline outline = new TextOutline("Cl", font);
         AtomSymbol symbol = new AtomSymbol(outline, Collections.<TextOutline> emptyList());
         AtomSymbol transformed = symbol.center(2, 2);
+        Rectangle2D oBounds = outline.getBounds();
         Rectangle2D newBounds = transformed.getOutlines().get(0).getBounds2D();
-        assertThat(newBounds.getX(), closeTo(-2.95, 0.01));
-        assertThat(newBounds.getY(), closeTo(-2.63, 0.01));
-        assertThat(newBounds.getMaxX(), closeTo(6.95, 0.01));
-        assertThat(newBounds.getMaxY(), closeTo(6.63, 0.01));
+
+        double dx = 2 - oBounds.getCenterX();
+        double dy = 2 - oBounds.getCenterY();
+        
+        assertThat(newBounds.getX(), closeTo(oBounds.getMinX() + dx, 0.01));
+        assertThat(newBounds.getY(), closeTo(oBounds.getMinY() + dy, 0.01));
+        assertThat(newBounds.getMaxX(), closeTo(oBounds.getMaxX() + dx, 0.01));
+        assertThat(newBounds.getMaxY(), closeTo(oBounds.getMaxY() + dy, 0.01));
     }
 
     @Test
