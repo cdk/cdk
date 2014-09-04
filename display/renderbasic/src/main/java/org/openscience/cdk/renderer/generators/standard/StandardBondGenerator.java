@@ -187,7 +187,6 @@ final class StandardBondGenerator {
         final IAtom atom2 = bond.getAtom(1);
 
         final IBond.Order order = bond.getOrder();
-        final IBond.Stereo stereo = bond.getStereo();
 
         if (order == null)
             return generateDashedBond(atom1, atom2);

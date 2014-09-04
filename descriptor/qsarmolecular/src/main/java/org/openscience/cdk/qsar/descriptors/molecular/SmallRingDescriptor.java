@@ -29,13 +29,20 @@
  
 package org.openscience.cdk.qsar.descriptors.molecular;
 
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.*;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.annotations.*;
+import java.util.ArrayList;
 
-import java.util.*;
+import org.openscience.cdk.annotations.TestClass;
+import org.openscience.cdk.annotations.TestMethod;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IChemObjectBuilder;
+import org.openscience.cdk.qsar.DescriptorSpecification;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.IMolecularDescriptor;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
 
 /**
  * 
@@ -258,7 +265,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor
 
     	boolean visited[]=new boolean[na];
 
-    	int path[]=new int[na+1],plen=0,numVisited=0;
+    	int path[]=new int[na+1],plen=0;
     	while (true)
     	{
     	    int last,current;
@@ -301,7 +308,6 @@ public class SmallRingDescriptor implements IMolecularDescriptor
     	    {
     	    	visited[current]=true;
         		path[plen++]=current;
-        		numVisited++;
 		    }
     	    else // otherwise, found nothing and must rewind the path
     	    {
