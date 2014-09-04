@@ -242,17 +242,17 @@ public class Convertor {
     public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
     	cml.appendChild(cdkAtomContainerSetToCMLList(ReactionSchemeManipulator.getAllAtomContainers(cdkScheme)));
-    	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true, true));
+    	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true));
     	return cml;
     }
     
 	public CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme){
-    	return cdkReactionSchemeToCMLReactionScheme(cdkScheme, true, false);
+    	return cdkReactionSchemeToCMLReactionScheme(cdkScheme, true);
     }
     
-    private CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(
-        IReactionScheme cdkScheme, boolean setIDs, boolean isRef) {
-    	CMLReactionScheme reactionScheme = new CMLReactionScheme();
+    private CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme, boolean setIDs) {
+
+        CMLReactionScheme reactionScheme = new CMLReactionScheme();
     	
     	if (useCMLIDs && setIDs) {
             IDCreator.createIDs(cdkScheme);
