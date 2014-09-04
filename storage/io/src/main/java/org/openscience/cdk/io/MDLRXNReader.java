@@ -234,9 +234,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 			 			String fieldName = null;
                         if (line.startsWith("> ")) {
 			 			    // ok, should extract the field name
-                            int index = line.indexOf("<");
+                            int index = line.indexOf('<');
 			 			    if (index != -1) {
-                                int index2 = line.substring(index).indexOf(">");
+                                int index2 = line.substring(index).indexOf('>');
 				 				if (index2 != -1) {
                                     fieldName = line.substring(index+1,index+index2);
 				 				}

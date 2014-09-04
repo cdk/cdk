@@ -100,7 +100,7 @@ public class ReactionEngine{
 		DictionaryDatabase db = new DictionaryDatabase();
 		dictionary = db.getDictionary(nameDict);
     	String entryString = reaction.getSpecification().getSpecificationReference();
-		entryString = entryString.substring(entryString.indexOf("#")+1, entryString.length());
+		entryString = entryString.substring(entryString.indexOf('#')+1, entryString.length());
     	
     	return (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 	}

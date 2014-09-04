@@ -730,7 +730,7 @@ public class PDBReader extends DefaultChemObjectReader {
 	        hetDictionary = new HashMap<String, String>();
 	        String line;
 	        while ((line = bufferedReader.readLine()) != null) {
-	            int colonIndex = line.indexOf(":");
+	            int colonIndex = line.indexOf(':');
 	            if (colonIndex == -1) continue;
 	            String typeKey = line.substring(0, colonIndex);
 	            String typeValue = line.substring(colonIndex + 1);

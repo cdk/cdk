@@ -462,7 +462,7 @@ public class HOSECodeGenerator implements java.io.Serializable
   @TestMethod("testMakeBremserCompliant")
 	public String makeBremserCompliant(String code)
 	{
-		int sepIndex = code.indexOf(";");
+		int sepIndex = code.indexOf(';');
 		if (sepIndex >= 0)
 		{
 			code = code.substring(sepIndex + 1, code.length());	
@@ -521,11 +521,12 @@ public class HOSECodeGenerator implements java.io.Serializable
 			for (int g = 0; g < sphereNodes.size() ; g++)
 			{
 				tn = (TreeNode) sphereNodes.get(g);
-        String localscore=tn.score+"";
-        while(localscore.length()<6){
-          localscore="0"+localscore;
-        }
-        tn.stringscore=tn.source.stringscore+""+localscore;
+                String localscore=tn.score+"";
+                while(localscore.length()<6)
+                {
+                    localscore="0"+localscore;
+                }
+                tn.stringscore=tn.source.stringscore+""+localscore;
 			}
 			sortNodesByScore(sphereNodes);
 		}
