@@ -642,7 +642,7 @@ public class SimpleCycleBasis {
 					
 					boolean sameClass = false;
 					
-					AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, edgeList, u[i], u[j]);
+					AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[j]);
 					
 					for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 						Object vertex = it.next();
@@ -705,7 +705,7 @@ public class SimpleCycleBasis {
 					
 					for (int k=0; ((SimpleCycle)cyclesArray[k]).weight() < weight[left]; k++) {
 						
-						AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, edgeList, u[i], u[k]);
+						AuxiliaryGraph2 auxGraph = new AuxiliaryGraph2(graph, u[i], u[k]);
 						
 						boolean shortestPathFound = false;
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
@@ -727,7 +727,7 @@ public class SimpleCycleBasis {
 						if (!shortestPathFound) 
 							continue;
 						
-						auxGraph = new AuxiliaryGraph2(graph, edgeList, u[j], u[k]);
+						auxGraph = new AuxiliaryGraph2(graph, u[j], u[k]);
 						
 						for (Iterator it = graph.vertexSet().iterator(); it.hasNext();) {
 							Object vertex = it.next();
@@ -877,7 +877,7 @@ public class SimpleCycleBasis {
 		private boolean[] ui;
 		private boolean[] uj;
 		
-		AuxiliaryGraph2(Graph graph, List edgeList, boolean[] ui, boolean[] uj) {
+		AuxiliaryGraph2(Graph graph, boolean[] ui, boolean[] uj) {
 			g = graph;
 			this.ui = ui;
 			this.uj = uj;
