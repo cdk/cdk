@@ -23,13 +23,19 @@
  */
 package org.openscience.cdk.io.cml;
 
+import java.util.StringTokenizer;
+
 import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
-import org.openscience.cdk.qsar.result.*;
-import org.xml.sax.Attributes;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
-import java.util.StringTokenizer;
+import org.xml.sax.Attributes;
 
 /**
  * This is an implementation for the CDK convention.
@@ -138,7 +144,7 @@ public class QSARConvention extends CMLCoreModule {
     	} else if ("xsd:integer".equals(currentDescriptorDataType)) {
     		result = new IntegerResult(Integer.parseInt(descriptorValue));
     	} else if ("xsd:boolean".equals(currentDescriptorDataType)) {
-    		result = new BooleanResult(new Boolean(descriptorValue).booleanValue());
+    		result = new BooleanResult(Boolean.valueOf(descriptorValue));
     	}
 		return result;
 	}
