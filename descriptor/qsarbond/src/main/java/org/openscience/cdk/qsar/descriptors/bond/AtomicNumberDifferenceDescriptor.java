@@ -28,7 +28,6 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemObjectBuilder;
 import org.openscience.cdk.qsar.AbstractBondDescriptor;
 import org.openscience.cdk.qsar.DescriptorSpecification;
 import org.openscience.cdk.qsar.DescriptorValue;
@@ -56,7 +55,7 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     public AtomicNumberDifferenceDescriptor() {
     }	
     
-    private void ensureIsotopeFactory(IChemObjectBuilder builder) {
+    private void ensureIsotopeFactory() {
     	if (factory == null) {
     		try {
 	            factory = Isotopes.getInstance();
@@ -92,7 +91,7 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     @TestMethod(value="testCalculate_IBond_IAtomContainer,testDescriptor1," +
         "testDescriptor2")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
-    	ensureIsotopeFactory(ac.getBuilder());
+    	ensureIsotopeFactory();
     	if (bond.getAtomCount() != 2) {
     		return new DescriptorValue(
     			getSpecification(), getParameterNames(),
