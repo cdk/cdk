@@ -351,9 +351,9 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     private String extractFieldName(String fieldName, String str) {
-        int index = str.indexOf("<");
+        int index = str.indexOf('<');
         if (index != -1) {
-            int index2 = str.substring(index).indexOf(">");
+            int index2 = str.substring(index).indexOf('>');
             if (index2 != -1) {
                 fieldName = str.substring(
                 index+1,

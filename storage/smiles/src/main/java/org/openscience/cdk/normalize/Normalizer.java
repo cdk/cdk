@@ -77,14 +77,14 @@ public class Normalizer {
       NodeList replaces = child.getElementsByTagName("replace");
       NodeList replacement = child.getElementsByTagName("replacement");
       String replacementstring = replacement.item(0).getFirstChild().getNodeValue();
-      if (replacementstring.indexOf("\n") > -1 || replacementstring.length() < 1) {
+      if (replacementstring.indexOf('\n') > -1 || replacementstring.length() < 1) {
         replacementstring = replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
       }
       IAtomContainer replacementStructure = sp.parseSmiles(replacementstring);
       for (int k = 0; k < replaces.getLength(); k++) {
         Element replace = (Element) replaces.item(k);
         String replacestring = replace.getFirstChild().getNodeValue();
-        if (replacestring.indexOf("\n") > -1 || replacestring.length() < 1) {
+        if (replacestring.indexOf('\n') > -1 || replacestring.length() < 1) {
           replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
         }
         IAtomContainer replaceStructure = sp.parseSmiles(replacestring);

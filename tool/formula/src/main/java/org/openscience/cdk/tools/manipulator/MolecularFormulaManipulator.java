@@ -1062,7 +1062,7 @@ public class MolecularFormulaManipulator {
 
 		List<String> listMF = new ArrayList<String>();
 		while(newFormula.contains(".")) {
-			int pos = newFormula.indexOf(".");
+			int pos = newFormula.indexOf('.');
 			String thisFormula = newFormula.substring(0, pos);
 			if (thisFormula.charAt(0) >= '0' && thisFormula.charAt(0) <= '9')
 				thisFormula = multipleExtractor(thisFormula);

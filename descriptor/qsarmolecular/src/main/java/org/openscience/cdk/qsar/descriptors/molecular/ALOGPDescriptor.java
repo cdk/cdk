@@ -1441,7 +1441,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
             if (fragment[i].equals("SdNH"))
                 frags[50]++; //H atom attached to a hetero atom
         }
-        else if (fragment[i].indexOf("p") > -1)
+        else if (fragment[i].indexOf('p') > -1)
         {
             frags[79]++;
             alogpfrag[i] = 79;
