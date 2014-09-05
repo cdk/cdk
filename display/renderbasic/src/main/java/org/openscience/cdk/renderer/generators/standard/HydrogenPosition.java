@@ -28,7 +28,6 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
 import javax.vecmath.Vector2d;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
-import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.extent;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
 
 /**
@@ -103,16 +101,13 @@ enum HydrogenPosition {
     static HydrogenPosition position(final IAtom atom, final List<IAtom> neighbors) {
 
         final List<Vector2d> vectors = newUnitVectors(atom, neighbors);
-        final Vector2d average = average(vectors);
 
-        if (neighbors.size() > 1) {
-            // TODO: when average.length() is small cardinal direction doesn't
-            // do great, this happens with symmetric bonding and ideally we
-            // should 'sweep' around and find the best free or least cluttered
-            // position
-            return usingCardinalDirection(average);
+        if (neighbors.size() > 2) {
+            return usingAngularExtent(vectors);
+        } else if (neighbors.size() > 1) {
+            return usingCardinalDirection(average(vectors));
         } else if (neighbors.size() == 1) {
-            return average.x > VERTICAL_THRESHOLD ? Left : Right;
+            return vectors.get(0).x > VERTICAL_THRESHOLD ? Left : Right;
         } else {
             return usingDefaultPlacement(atom);
         }
