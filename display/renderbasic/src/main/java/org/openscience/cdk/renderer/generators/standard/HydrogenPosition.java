@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
+import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.extent;
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUnitVectors;
 
 /**
@@ -44,17 +45,20 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUn
  * @author John May
  */
 enum HydrogenPosition {
-    Above, Right, Below, Left;
+    Right(0),
+    Left(Math.PI),
+    Above(Math.PI / 2),
+    Below(Math.PI + (Math.PI / 2));
 
     /**
      * When a single atom is displayed in isolation the position defaults to the
      * right unless the element is listed here. This allows us to correctly
      * displayed H2O not OH2 and CH4 not H4C.
      */
-    private static final Set<Elements> PREFIXED_H         = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
-                                                                  Elements.Sulfur, Elements.Selenium,
-                                                                  Elements.Tellurium, Elements.Fluorine,
-                                                                  Elements.Chlorine, Elements.Bromine, Elements.Iodine));
+    private static final Set<Elements> PREFIXED_H = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
+                                                                                        Elements.Sulfur, Elements.Selenium,
+                                                                                        Elements.Tellurium, Elements.Fluorine,
+                                                                                        Elements.Chlorine, Elements.Bromine, Elements.Iodine));
 
     /**
      * When an atom has a single bond, the position is left or right depending
@@ -63,7 +67,20 @@ enum HydrogenPosition {
      * A positive value favours placing them on the right, a negative on the
      * left.
      */
-    private static final double        VERTICAL_THRESHOLD = 0.1;
+    private static final double VERTICAL_THRESHOLD = 0.1;
+
+    /**
+     * Direction this position is pointing in radians.
+     */
+    private final double direction;
+
+    /**
+     * Internal - create a hydrogen position pointing int he specified direction.
+     * @param direction angle of the position in radians
+     */
+    HydrogenPosition(double direction) {
+        this.direction = direction;
+    }
 
     /**
      * Determine an appropriate position for the hydrogen label of an atom with
@@ -94,7 +111,7 @@ enum HydrogenPosition {
     /**
      * By snapping to the cardinal direction (compass point) of the provided
      * vector, return the position opposite the 'snapped' coordinate.
-     * 
+     *
      * @param opposite position the hydrogen label opposite to this vector
      * @return the position
      */
