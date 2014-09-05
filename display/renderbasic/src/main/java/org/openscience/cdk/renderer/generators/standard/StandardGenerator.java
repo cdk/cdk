@@ -64,16 +64,17 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  * independent of the system used to view the diagram (primarily important for vector graphic
  * depictions). The font used to generate the diagram must be provided to the constructor. <p/>
  *
- * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of 
+ * Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
  * highlight is set with the {@link Highlighting} parameter.
- * 
+ *
  * <p/>
  *
- * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki 
+ * The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
  * page</a> provides extended details of using and configuring this generator.
- * 
+ *
  * @author John May
- * @see <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki</a>
+ * @see <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK
+ * Wiki</a>
  */
 public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
@@ -109,6 +110,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         /**
          * An outer glow is placed in the background behind the depiction.
+         *
          * @see StandardGenerator.OuterGlowWidth
          */
         OuterGlow
@@ -126,7 +128,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             fancyBoldWedges                        = new FancyBoldWedges(),
             fancyHashedWedges                      = new FancyHashedWedges(),
             highlighting                           = new Highlighting(),
-            glowWidth                              = new OuterGlowWidth();
+            glowWidth                              = new OuterGlowWidth(),
+            annCol                                 = new AnnotationColor(),
+            annDist                                = new AnnotationDistance(),
+            annFontSize                            = new AnnotationFontScale();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -155,7 +160,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // the exact font stroke but for now we use the width of the pipe character.
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
-        
+
         ElementGroup annotations = new ElementGroup();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations);
@@ -199,7 +204,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
 
             Color highlight = getHighlightColor(atom, parameters);
-            Color color = highlight != null && style == HighlightStyle.Colored ? highlight 
+            Color color = highlight != null && style == HighlightStyle.Colored ? highlight
                                                                                : coloring.getAtomColor(atom);
 
             ElementGroup symbolElements = new ElementGroup();
@@ -223,7 +228,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         /** Annotations are added to the front layer. */
         frontLayer.add(annotations);
-        
+
         ElementGroup group = new ElementGroup();
 
         group.add(new Bounds(bounds.getMinX(), bounds.getMinY(),
@@ -246,7 +251,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
-        
+        final double atmNumDist = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
 
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -302,7 +308,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              fancyBoldWedges,
                              fancyHashedWedges,
                              highlighting,
-                             glowWidth);
+                             glowWidth,
+                             annCol,
+                             annDist,
+                             annFontSize);
     }
 
 
@@ -618,8 +627,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
 
     /**
-     * Parameter defines the style of highlight used to emphasis atoms and bonds. The
-     * default option is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
+     * Parameter defines the style of highlight used to emphasis atoms and bonds. The default option
+     * is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
      */
     public static final class Highlighting extends AbstractGeneratorParameter<HighlightStyle> {
         /** @inheritDoc */
@@ -628,4 +637,34 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
     }
 
+    /**
+     * The color of the atom numbers. The the parameter value is null, the color of the symbol
+     * {@link AtomColor} is used.
+     */
+    public static final class AnnotationColor extends AbstractGeneratorParameter<Color> {
+        /** @inheritDoc */
+        @Override public Color getDefault() {
+            return new Color(0xff4444);
+        }
+    }
+    
+    /**
+     * The distance of atom numbers from their parent atom as a percentage of bond length.
+     */
+    public static final class AnnotationDistance extends AbstractGeneratorParameter<Double> {
+        /** @inheritDoc */
+        @Override public Double getDefault() {
+            return 0.25;
+        }
+    } 
+    
+    /**
+     * Annotation font size relative to element symbols, default = 0.4 (40%).  
+     */
+    public static final class AnnotationFontScale extends AbstractGeneratorParameter<Double> {
+        /** @inheritDoc */
+        @Override public Double getDefault() {
+            return 0.4;
+        }
+    }
 }
