@@ -25,7 +25,6 @@
 package org.openscience.cdk.renderer.generators.standard;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
@@ -206,22 +205,22 @@ public class VecmathUtilTest {
     }
     
     @Test public void sweepEast() {
-        assertThat(VecmathUtil.sweep(new Vector2d(1, 0)),
+        assertThat(VecmathUtil.extent(new Vector2d(1, 0)),
                    is(closeTo(Math.toRadians(0), 0.01)));
     }
 
     @Test public void sweepNorth() {
-        assertThat(VecmathUtil.sweep(new Vector2d(0, 1)),
+        assertThat(VecmathUtil.extent(new Vector2d(0, 1)),
                    is(closeTo(Math.toRadians(90), 0.01)));
     }
 
     @Test public void sweepWest() {
-        assertThat(VecmathUtil.sweep(new Vector2d(-1, 0)),
+        assertThat(VecmathUtil.extent(new Vector2d(-1, 0)),
                    is(closeTo(Math.toRadians(180), 0.01)));
     }
     
     @Test public void sweepSouth() {
-        assertThat(VecmathUtil.sweep(new Vector2d(0, -1)),
+        assertThat(VecmathUtil.extent(new Vector2d(0, -1)),
                    is(closeTo(Math.toRadians(270), 0.01)));
     }
 }

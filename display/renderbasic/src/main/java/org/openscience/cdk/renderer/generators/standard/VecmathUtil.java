@@ -272,13 +272,13 @@ final class VecmathUtil {
     private final static double TAU = 2 * Math.PI;
 
     /**
-     * Calculate the sweep of a vector (0-2π radians) anti clockwise from
+     * Calculate the angular extent of a vector (0-2π radians) anti clockwise from
      * east {1,0}.
      * 
      * @param vector a vector
-     * @return the sweep (radians)
+     * @return the extent (radians)
      */
-    static double sweep(Vector2d vector) {
+    static double extent(Vector2d vector) {
         double radians = Math.atan2(vector.y, vector.x);
         return radians < 0 ? TAU + radians : radians;
     }
