@@ -32,6 +32,7 @@ import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -281,5 +282,20 @@ final class VecmathUtil {
     static double extent(Vector2d vector) {
         double radians = Math.atan2(vector.y, vector.x);
         return radians < 0 ? TAU + radians : radians;
+    }
+
+    /**
+     * Obtain the extents for a list of vectors.
+     *
+     * @param vectors list of vectors
+     * @return array of extents (not sorted)
+     * @see #extent(javax.vecmath.Vector2d)
+     */
+    static double[] extents(final List<Vector2d> vectors) {
+        final int n = vectors.size();
+        final double[] extents = new double[n];
+        for (int i = 0; i < n; i++)
+            extents[i] = VecmathUtil.extent(vectors.get(i));
+        return extents;
     }
 }

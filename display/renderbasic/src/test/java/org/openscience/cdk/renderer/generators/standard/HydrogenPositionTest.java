@@ -32,6 +32,7 @@ import javax.vecmath.Vector2d;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -145,17 +146,69 @@ public class HydrogenPositionTest {
     public void useDefaultPlacementWithNoBonds() throws Exception {
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(8);
-        assertThat(HydrogenPosition.position(atom, Collections.<IAtom> emptyList()), is(Left));
+        assertThat(HydrogenPosition.position(atom, Collections.<IAtom>emptyList()), is(Left));
     }
 
     @Test
     public void values() throws Exception {
-        assertThat(HydrogenPosition.values(), is(new HydrogenPosition[]{Above, Right, Below, Left}));
+        assertThat(HydrogenPosition.values(), is(new HydrogenPosition[]{Right, Left, Above, Below}));
     }
 
     @Test
     public void valueOf() throws Exception {
         assertThat(HydrogenPosition.valueOf("Above"), is(HydrogenPosition.Above));
+    }
+
+    @Test public void angularExtentRight() throws Exception {
+        double theta = Math.toRadians(60);
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(-1, 0),
+                                               new Vector2d(Math.cos(theta), Math.sin(theta)),
+                                               new Vector2d(Math.cos(-theta), Math.sin(-theta)));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Right));
+    }
+
+    @Test public void angularExtentLeft() throws Exception {
+        double theta = Math.toRadians(120);
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(1, 0),
+                                               new Vector2d(Math.cos(theta), Math.sin(theta)),
+                                               new Vector2d(Math.cos(-theta), Math.sin(-theta)));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Left));
+    }
+
+    @Test public void angularExtentBelow() throws Exception {
+        double theta1 = Math.toRadians(210);
+        double theta2 = Math.toRadians(330);
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(0, 1),
+                                               new Vector2d(Math.cos(theta1), Math.sin(theta1)),
+                                               new Vector2d(Math.cos(theta2), Math.sin(theta2)));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Below));
+    }
+
+    @Test public void angularExtentAbove() throws Exception {
+        double theta1 = Math.toRadians(30);
+        double theta2 = Math.toRadians(150);
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(0, -1),
+                                               new Vector2d(Math.cos(theta1), Math.sin(theta1)),
+                                               new Vector2d(Math.cos(theta2), Math.sin(theta2)));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Above));
+    }
+    
+    @Test public void symmetric() throws Exception {
+        // all extents are the same so 'Right' is chosen in preference
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(1, 1),
+                                               new Vector2d(1, -1),
+                                               new Vector2d(-1, 1),
+                                               new Vector2d(-1, -1));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Right));
+    }
+    
+    @Test public void largestExtent() throws Exception {
+        // the largest extents here are above and below
+        List<Vector2d> vectors = Arrays.asList(new Vector2d(Math.cos(Math.toRadians(30)), Math.sin(Math.toRadians(30))),
+                                               new Vector2d(Math.cos(Math.toRadians(-30)), Math.sin(Math.toRadians(-30))),
+                                               new Vector2d(Math.cos(Math.toRadians(150)), Math.sin(Math.toRadians(150))),
+                                               new Vector2d(Math.cos(Math.toRadians(-150)), Math.sin(Math.toRadians(-150))));
+        assertThat(HydrogenPosition.usingAngularExtent(vectors), is(Above));
     }
 
 }

@@ -28,9 +28,13 @@ import org.openscience.cdk.config.Elements;
 import org.openscience.cdk.interfaces.IAtom;
 
 import javax.vecmath.Vector2d;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.average;
@@ -69,6 +73,12 @@ enum HydrogenPosition {
      */
     private static final double VERTICAL_THRESHOLD = 0.1;
 
+
+    /**
+     * Tau = 2π.
+     */
+    private static final double TAU = Math.PI + Math.PI;
+
     /**
      * Direction this position is pointing in radians.
      */
@@ -85,7 +95,7 @@ enum HydrogenPosition {
     /**
      * Determine an appropriate position for the hydrogen label of an atom with
      * the specified neighbors.
-     * 
+     *
      * @param atom the atom to which the hydrogen position is being determined
      * @param neighbors atoms adjacent to the 'atom'
      * @return a hydrogen position
@@ -108,6 +118,120 @@ enum HydrogenPosition {
         }
     }
 
+    /**
+     * Using the angular extents of vectors, determine the best position for a hydrogen label. The
+     * position with the most space is selected first. If multiple positions have the same amount of
+     * space, the one where the hydrogen position is most centred is selected. If all position are
+     * okay, the priority is Right > Left > Above > Below.
+     *
+     * @param vectors directional vectors for each bond from an atom
+     * @return best hydrogen position
+     */
+    static HydrogenPosition usingAngularExtent(final List<Vector2d> vectors) {
+
+        double[] extents = VecmathUtil.extents(vectors);
+        Arrays.sort(extents);
+
+        Map<HydrogenPosition, OffsetExtent> extentMap = new HashMap<HydrogenPosition, OffsetExtent>();
+
+        for (int i = 0; i < extents.length; i++) {
+            final double before = extents[i];
+            final double after  = extents[(i + 1) % extents.length];
+
+            for (final HydrogenPosition position : values()) {
+                
+                // adjust the extents such that this position is '0'
+                final double bias = TAU - position.direction;
+                double afterBias  = after + bias;
+                double beforeBias = before + bias;
+                
+                // ensure values are 0 <= x < Tau
+                if (beforeBias >= TAU) beforeBias -= TAU;
+                if (afterBias >= TAU) afterBias -= TAU;
+                
+                // we can now determine the extents before and after this
+                // hydrogen position
+                final double afterExtent = afterBias;
+                final double beforeExtent = TAU - beforeBias;
+                
+                // the total extent is amount of space between these two bonds
+                // when sweeping round. The offset is how close this hydrogen
+                // position is to the center of the extent.
+                final double totalExtent = afterExtent + beforeExtent;
+                final double offset      = Math.abs(totalExtent / 2 - beforeExtent);
+
+                // for each position keep the one with the smallest extent this is
+                // the most space available without another bond getting in the way
+                OffsetExtent offsetExtent = extentMap.get(position);
+                if (offsetExtent == null || totalExtent < offsetExtent.extent) {
+                    extentMap.put(position, new OffsetExtent(totalExtent, offset));
+                }
+            }
+        }
+
+        // we now have the offset extent for each position that we can sort and prioritise
+        Set<Map.Entry<HydrogenPosition, OffsetExtent>> extentEntries = extentMap.entrySet();
+        Map.Entry<HydrogenPosition,OffsetExtent> best = null;
+        for (Map.Entry<HydrogenPosition,OffsetExtent> e : extentEntries) {
+            if (best == null || ExtentPriority.INSTANCE.compare(e, best) < 0)
+                best = e;
+        }
+        
+        assert best != null;
+        return best.getKey();
+    }
+
+    /**
+     * A simple value class that stores a tuple of an angular extent and an offset.
+     */
+    private static final class OffsetExtent {
+        private final double extent;
+        private final double offset;
+
+        /**
+         * Internal - create pairing of angular extent and offset. 
+         * @param extent the angular extent
+         * @param offset offset from the centre of the extent
+         */
+        private OffsetExtent(double extent, double offset) {
+            this.extent = extent;
+            this.offset = offset;
+        }
+
+        /** @inheritDoc */
+        @Override public String toString() {
+            return String.format("%.2f, %.2f", extent, offset);
+        }
+    }
+
+    /**
+     * Comparator to prioritise {@link OffsetExtent}s.  
+     */
+    private static enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
+        INSTANCE;
+        @Override public int compare(Map.Entry<HydrogenPosition, OffsetExtent> a,
+                                     Map.Entry<HydrogenPosition, OffsetExtent> b) {
+            
+            OffsetExtent aExtent = a.getValue();
+            OffsetExtent bExtent = b.getValue();
+            
+            // if difference in extents is noticeable, favour the one
+            // with a larger extent
+            double extentDiff = bExtent.extent - aExtent.extent;
+            if (Math.abs(extentDiff) > 0.05)
+                return (int) Math.signum(extentDiff);
+            
+            // if the difference in offset is noticeable, favour the one 
+            // with the smaller offset (position is more centered)
+            double offsetDiff = bExtent.offset - aExtent.offset;
+            if (Math.abs(offsetDiff) > 0.05)
+                return (int) -Math.signum(offsetDiff);
+            
+            // favour Right > Left > Above > Below
+            return a.getKey().compareTo(b.getKey());
+        }
+    }
+    
     /**
      * By snapping to the cardinal direction (compass point) of the provided
      * vector, return the position opposite the 'snapped' coordinate.
