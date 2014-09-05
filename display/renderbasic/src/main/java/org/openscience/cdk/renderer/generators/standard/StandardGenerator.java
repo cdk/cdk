@@ -155,8 +155,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // the exact font stroke but for now we use the width of the pipe character.
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
+        
+        ElementGroup annotations = new ElementGroup();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters);
+        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke);
 
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
@@ -219,6 +221,9 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
+        /** Annotations are added to the front layer. */
+        frontLayer.add(annotations);
+        
         ElementGroup group = new ElementGroup();
 
         group.add(new Bounds(bounds.getMinX(), bounds.getMinY(),
@@ -238,7 +243,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param parameters render model parameters
      * @return generated atom symbols (can contain null)
      */
-    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters) {
+    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations) {
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
         
