@@ -47,10 +47,10 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUn
  * @author John May
  */
 enum HydrogenPosition {
-    Right(0),
-    Left(Math.PI),
-    Above(Math.PI / 2),
-    Below(Math.PI + (Math.PI / 2));
+    Right(0, new Vector2d(1, 0)),
+    Left(Math.PI, new Vector2d(-1, 0)),
+    Above(Math.PI / 2, new Vector2d(0, 1)),
+    Below(Math.PI + (Math.PI / 2), new Vector2d(0, -1));
 
     /**
      * When a single atom is displayed in isolation the position defaults to the
@@ -80,14 +80,25 @@ enum HydrogenPosition {
     /**
      * Direction this position is pointing in radians.
      */
-    private final double direction;
+    private final double   direction;
+    private final Vector2d vector;
 
     /**
      * Internal - create a hydrogen position pointing int he specified direction.
      * @param direction angle of the position in radians
      */
-    HydrogenPosition(double direction) {
+    HydrogenPosition(double direction, Vector2d vector) {
         this.direction = direction;
+        this.vector = vector;
+    }
+
+    /**
+     * Access the directional vector for this hydrogen position.
+     * 
+     * @return the directional vector for this hydrogen position.
+     */
+    Vector2d vector() {
+        return vector;
     }
 
     /**
