@@ -92,6 +92,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
 
+    /**
+     * Defines the annotation label(s) of a chem object in a depiction. The annotation
+     * must be a string.
+     *
+     * <pre>{@code
+     * String number = Integer.toString(1 + container.getAtomNumber(atom)); 
+     * atom.setProperty(CDKConstants.ANNOTATION_LABEL, number);
+     * }</pre>
+     */
+    public final static String ANNOTATION_LABEL = "stdgen.annotation.label";
+
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
 
@@ -316,6 +327,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              annFontSize);
     }
 
+    private String getAnnotationLabel(IChemObject chemObject) {
+        Object obj = chemObject.getProperty(ANNOTATION_LABEL);
+        return obj instanceof String ? (String) obj : null;
+    }
 
     private Color getHighlightColor(IChemObject bond, RendererModel parameters) {
         Color propCol = getColorProperty(bond, HIGHLIGHT_COLOR);
