@@ -66,6 +66,21 @@ public class VecmathUtilTest {
         assertThat(unit.y, closeTo(0.928d, 0.01));
         assertThat(unit.length(), closeTo(1d, 0.01));
     }
+    
+    @Test
+    public void testNewUnitVectorFromBond() throws Exception {
+        IAtom a1 = mock(IAtom.class);
+        IAtom a2 = mock(IAtom.class);
+        when(a1.getPoint2d()).thenReturn(new Point2d(0, 1));
+        when(a2.getPoint2d()).thenReturn(new Point2d(1, 0));
+        IBond bond = mock(IBond.class);
+        when(bond.getConnectedAtom(a1)).thenReturn(a2);
+        when(bond.getConnectedAtom(a2)).thenReturn(a1);
+        Vector2d unit = VecmathUtil.newUnitVector(a1, bond);
+        assertThat(unit.x, closeTo(0.707d, 0.01));
+        assertThat(unit.y, closeTo(-0.707d, 0.01));
+        assertThat(unit.length(), closeTo(1d, 0.01));
+    }
 
     @Test
     public void testNewUnitVectors() throws Exception {
@@ -222,5 +237,26 @@ public class VecmathUtilTest {
     @Test public void sweepSouth() {
         assertThat(VecmathUtil.extent(new Vector2d(0, -1)),
                    is(closeTo(Math.toRadians(270), 0.01)));
+    }
+    
+    @Test public void largestGapSouthWest() {
+        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(0, 1),
+                                                                          new Vector2d(1, 0)));
+        assertThat(vector.x, closeTo(-0.707d, 0.01));
+        assertThat(vector.y, closeTo(-0.707d, 0.01));
+        assertThat(vector.length(), closeTo(1d, 0.01));
+    }
+    
+    @Test public void largestGapEast() {
+        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(1, 1),
+                                                                          new Vector2d(1, -1),
+                                                                          new Vector2d(-1, -1),
+                                                                          new Vector2d(-1, 1),
+                                                                          new Vector2d(-1, 0),
+                                                                          new Vector2d(0, 1),
+                                                                          new Vector2d(0, -1)));
+        assertThat(vector.x, closeTo(1, 0.01));
+        assertThat(vector.y, closeTo(0, 0.01));
+        assertThat(vector.length(), closeTo(1d, 0.01));
     }
 }

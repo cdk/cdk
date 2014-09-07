@@ -82,6 +82,17 @@ final class VecmathUtil {
         vector.normalize();
         return vector;
     }
+    
+    /**
+     * Create a unit vector for a bond with the start point being the specified atom.
+     * 
+     * @param atom start of vector
+     * @param bond the bond used to create the vector
+     * @return unit vector
+     */
+    static Vector2d newUnitVector(final IAtom atom, final IBond bond) {
+        return newUnitVector(atom.getPoint2d(), bond.getConnectedAtom(atom).getPoint2d());
+    }
 
     /**
      * Create unit vectors from one atom to all other provided atoms.
@@ -297,5 +308,41 @@ final class VecmathUtil {
         for (int i = 0; i < n; i++)
             extents[i] = VecmathUtil.extent(vectors.get(i));
         return extents;
+    }
+
+    /**
+     * Generate a 2D directional vector that is located in the middle of the largest angular extent
+     * (i.e. has the most space). For example if we have a two vectors, one pointing up and one 
+     * pointing right we have to extents (.5π and 1.5π). The new vector would be pointing down and
+     * to the left in the middle of the 1.5π extent.
+     *
+     * @param vectors list of vectors
+     * @return the new vector
+     */
+    static Vector2d newVectorInLargestGap(final List<Vector2d> vectors) {
+
+        assert vectors.size() > 1;
+        final double[] extents = VecmathUtil.extents(vectors);
+        Arrays.sort(extents);
+
+        // find and store the index of the largest extent
+        double max = -1;
+        int index = -1;
+        for (int i = 0; i < vectors.size(); i++) {
+            double extent = extents[(i + 1) % vectors.size()] - extents[i];
+            if (extent < 0)
+                extent += TAU;
+            if (extent > max) {
+                max = extent;
+                index = i;
+            }
+        }
+
+        assert index >= 0;
+        
+        double mid   = (max / 2); 
+        double theta = extents[index] + mid;
+        
+        return new Vector2d(Math.cos(theta), Math.sin(theta));
     }
 }
