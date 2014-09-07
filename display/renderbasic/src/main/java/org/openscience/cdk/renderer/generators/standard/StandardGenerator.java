@@ -44,10 +44,12 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
 import javax.vecmath.Point2d;
+import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -419,6 +421,122 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
+     * Generate a new annotation vector for an atom using the connected bonds and any other occupied
+     * space (auxiliary vectors). The fall back method is to use the largest available space but
+     * some common cases are handled differently. For example, when the number of bonds is two
+     * the annotation is placed in the acute angle of the bonds (providing there is space). This
+     * improves labelling of atoms saturated rings. When there are three bonds and two are 'plain' 
+     * the label is again placed in the acute section of the plain bonds.
+     *                       
+     * @param atom       the atom having an annotation
+     * @param bonds      the bonds connected to the atom
+     * @param auxVectors additional vectors to avoid (filled spaced)
+     * @return unit vector along which the annotation should be placed.
+     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond) 
+     * @see VecmathUtil#newVectorInLargestGap(java.util.List) 
+     */
+    static Vector2d newAtomAnnotationVector(IAtom atom, List<IBond> bonds, List<Vector2d> auxVectors) {
+
+        final List<Vector2d> vectors = new ArrayList<Vector2d>(bonds.size());
+        for (IBond bond : bonds)
+            vectors.add(VecmathUtil.newUnitVector(atom, bond));
+
+        if (vectors.size() == 0) {
+            // no bonds, place below
+            if (auxVectors.size() == 0)
+                return new Vector2d(0, -1);
+            if (auxVectors.size() == 1)
+                return VecmathUtil.negate(auxVectors.get(0));
+            return VecmathUtil.newVectorInLargestGap(auxVectors);
+        }
+        else if (vectors.size() == 1) {
+            // 1 bond connected
+            // H0, then label simply appears on the opposite side
+            if (auxVectors.size() == 0)
+                return VecmathUtil.negate(vectors.get(0));
+            // !H0, then place it in the largest gap 
+            vectors.addAll(auxVectors);
+            return VecmathUtil.newVectorInLargestGap(vectors);
+        }
+        else if (vectors.size() == 2 && auxVectors.size() == 0) {
+            // 2 bonds connected to an atom with no hydrogen labels
+
+            // sum the vectors such that the label appears in the acute/nook of the two bonds
+            Vector2d combined = VecmathUtil.sum(vectors.get(0), vectors.get(1));
+
+            // shallow angle (< 30 deg) means the label probably won't fit
+            if (vectors.get(0).angle(vectors.get(1)) < Math.toRadians(30))
+                combined.negate();
+
+            // flip vector if either bond is a non-single bond or a wedge, this will
+            // place the label in the largest space. 
+            // However - when both bonds are wedged (consider a bridging system) to
+            // keep the label in the nook of the wedges
+            else if ((!isPlainBond(bonds.get(0)) || !isPlainBond(bonds.get(1)))
+                    && !(isWedged(bonds.get(0)) && isWedged(bonds.get(1))))
+                combined.negate();
+
+            combined.normalize();
+            
+            // did we divide by 0? whoops - this happens when the bonds are collinear
+            if (Double.isNaN(combined.length()))
+                return VecmathUtil.newVectorInLargestGap(vectors);
+            
+            return combined;
+        }
+        else {
+            if (vectors.size() == 3 && auxVectors.size() == 0) {
+                // 3 bonds connected to an atom with no hydrogen label
+
+                // the easy and common case is to check when two bonds are plain 
+                // (i.e. non-stereo sigma bonds) and use those. This gives good
+                // placement for fused conjugated rings
+                
+                List<Vector2d> plainVectors = new ArrayList<Vector2d>();
+                
+                for (IBond bond : bonds) {
+                    if (isPlainBond(bond))
+                        plainVectors.add(VecmathUtil.newUnitVector(atom, bond));
+                }
+
+                if (plainVectors.size() == 2) {
+                    Vector2d combined = VecmathUtil.sum(plainVectors.get(0), plainVectors.get(1));
+                    return combined;
+                }
+            }
+            
+            // the default option is to find the largest gap
+            if (auxVectors.size() > 0)
+                vectors.addAll(auxVectors);
+            return VecmathUtil.newVectorInLargestGap(vectors);
+        }
+    }
+
+    /**
+     * A plain bond is a non-stereo sigma bond that is displayed simply as a line. 
+     * 
+     * @param bond a non-null bond
+     * @return the bond is plain
+     */
+    static boolean isPlainBond(IBond bond) {
+        return bond.getOrder() == IBond.Order.SINGLE
+                && (bond.getStereo() == IBond.Stereo.NONE || bond.getStereo() == null);
+    }
+
+    /**
+     * A bond is wedge if it points up or down.
+     * 
+     * @param bond a non-null bond
+     * @return the bond is wedge (bold or hashed)
+     */
+    static boolean isWedged(IBond bond) {
+        return (bond.getStereo() == IBond.Stereo.UP
+                || bond.getStereo() == IBond.Stereo.DOWN
+                || bond.getStereo() == IBond.Stereo.UP_INVERTED
+                || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
+    }
+
+    /**
      * Updating the bounds such that it contains every point in the provided path.
      *
      * @param bounds bounding box
@@ -647,7 +765,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             return new Color(0xff4444);
         }
     }
-    
+
     /**
      * The distance of atom numbers from their parent atom as a percentage of bond length.
      */
