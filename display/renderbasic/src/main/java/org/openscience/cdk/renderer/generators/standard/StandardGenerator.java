@@ -287,11 +287,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             final List<IBond> bonds = container.getConnectedBondsList(atom);
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
+            final List<Vector2d> auxVectors = new ArrayList<Vector2d>(1);
+            
             // only generate if the symbol is visible
             if (visibility.visible(atom, bonds, parameters)) {
 
                 final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
 
+                if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
+                    auxVectors.add(hPosition.vector());
+                
                 symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
 
                 // defines how the element is aligned on the atom point, when
@@ -316,7 +321,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             
             final String label = getAnnotationLabel(atom);
             if (label != null) {
-                final Vector2d vector = newAtomAnnotationVector(atom, bonds, Collections.<Vector2d>emptyList());
+                final Vector2d vector = newAtomAnnotationVector(atom, bonds, auxVectors);
                 final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
                                                                   label,
                                                                   vector,
