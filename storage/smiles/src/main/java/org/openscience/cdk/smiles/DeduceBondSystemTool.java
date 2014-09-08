@@ -250,8 +250,8 @@ public class DeduceBondSystemTool {
         for (int i = 0; i <= al.size() - 1; i++) {
 
             String s = al.get(i);
-            String s1 = s.substring(0, s.indexOf("-"));
-            String s2 = s.substring(s.indexOf("-") + 1, s.length());
+            String s1 = s.substring(0, s.indexOf('-'));
+            String s2 = s.substring(s.indexOf('-') + 1, s.length());
 
             int i1 = Integer.parseInt(s1);
             int i2 = Integer.parseInt(s2);

@@ -48,7 +48,7 @@ public class IsotopePatternGenerator{
 
 	private IChemObjectBuilder builder = null;
 	private IsotopeFactory isoFactory;
-	private IsotopePattern abundance_Mass = null;
+	private IsotopePattern abundanceMass = null;
 	
 	private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
@@ -109,7 +109,7 @@ public class IsotopePatternGenerator{
 			}
 		}
 		
-		IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
+		IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundanceMass);
 		isoP = cleanAbundance(isoP, minAbundance);
 		IsotopePattern isoPattern = IsotopePatternManipulator.sortByMass(isoP);
 	
@@ -151,14 +151,14 @@ public class IsotopePatternGenerator{
 		
 		// Verify if there is a previous calculation. If it exists, add the new
 		// isotopes
-		if (abundance_Mass == null) {
+		if (abundanceMass == null) {
 
-			abundance_Mass = currentISOPattern;
+			abundanceMass = currentISOPattern;
 			return true;
 
 		} else {
-			for (int i = 0; i < abundance_Mass.getNumberOfIsotopes(); i++) {
-				totalAbundance = abundance_Mass.getIsotopes().get(i).getIntensity();
+			for (int i = 0; i < abundanceMass.getNumberOfIsotopes(); i++) {
+				totalAbundance = abundanceMass.getIsotopes().get(i).getIntensity();
 
 				if (totalAbundance == 0)
 					continue;
@@ -166,7 +166,7 @@ public class IsotopePatternGenerator{
 				for (int j = 0; j < currentISOPattern.getNumberOfIsotopes(); j++) {
 
 					abundance = currentISOPattern.getIsotopes().get(j).getIntensity();
-					mass = abundance_Mass.getIsotopes().get(i).getMass();
+					mass = abundanceMass.getIsotopes().get(i).getMass();
 
 					if (abundance == 0)
 						continue;
@@ -192,10 +192,10 @@ public class IsotopePatternGenerator{
 			}
 
 			Iterator<Double> itr = isotopeMassAndAbundance.keySet().iterator();
-			abundance_Mass = new IsotopePattern();
+			abundanceMass = new IsotopePattern();
 			while (itr.hasNext()) {
 				mass = itr.next();
-				abundance_Mass.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
+				abundanceMass.addIsotope(new IsotopeContainer(mass, isotopeMassAndAbundance.get(mass)));
 			}
 		}
 

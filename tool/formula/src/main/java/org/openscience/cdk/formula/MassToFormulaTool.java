@@ -79,7 +79,7 @@ public class MassToFormulaTool {
 	AtomTypeFactory factory;
 	
 	/** matrix to follow for the permutations.*/
-	private int[][] matrix_Base;
+	private int[][] matrixBase;
 
 	/** Array listing the order of the elements to be shown according probability occurrence.*/
 	private String[] orderElements;
@@ -135,7 +135,7 @@ public class MassToFormulaTool {
 						 break;
 					 }
 				 }
-				 this.matrix_Base = getMatrix(mfRange.getIsotopeCount());
+				 this.matrixBase = getMatrix(mfRange.getIsotopeCount());
 			}else if(rule instanceof ChargeRule){
 				this.charge = (Double) ((Object[])rule.getParameters())[0];
 				
@@ -238,7 +238,7 @@ public class MassToFormulaTool {
 		rules1.add(rule);
 		this.tolerance  = (Double) ((Object[])rule.getParameters())[1];
 		
-		this.matrix_Base = getMatrix(mfRange1.getIsotopeCount());
+		this.matrixBase = getMatrix(mfRange1.getIsotopeCount());
 		
 		this.mfRange = mfRange1;
 		this.rules = rules1;
@@ -270,36 +270,36 @@ public class MassToFormulaTool {
 		
 		IMolecularFormulaSet molecularFormulaSet = builder.newInstance(IMolecularFormulaSet.class);
 		
-		int[][] matrix = this.matrix_Base;
+		int[][] matrix = this.matrixBase;
 		int numberElements = mfRange.getIsotopeCount();
 		
 		
 		// put IIsotope into a list
-		List<IIsotope> isotopes_TO = new ArrayList<IIsotope>();
+		List<IIsotope> isotopesTo = new ArrayList<IIsotope>();
 		Iterator<IIsotope> isIt = mfRange.isotopes().iterator();
 		while(isIt.hasNext())
-			isotopes_TO.add(isIt.next());
+			isotopesTo.add(isIt.next());
 		
-		isotopes_TO = orderList(isotopes_TO);
+		isotopesTo = orderList(isotopesTo);
 
 		for(int i = 0; i < matrix.length ; i++){
 			
 			/*constructing initial combinations*/
-			int[] value_In = new int[numberElements];
+			int[] valueIn = new int[numberElements];
 			for(int j= 0; j < numberElements ; j++){
 				if(matrix[i][j] == 0)
-					value_In[j] = 0;
+					valueIn[j] = 0;
 				else
-					value_In[j] = 1;
+					valueIn[j] = 1;
 			}
 			
 			/*find number of element to combine*/
-			int count_E = 0;
-			ArrayList<Integer> elem_Pos = new ArrayList<Integer>();
+			int countE = 0;
+			ArrayList<Integer> elemPos = new ArrayList<Integer>();
 			for(int j= 0 ; j< matrix[1].length; j++)
-				if(value_In[j] != 0){
-					count_E++;
-					elem_Pos.add(j);
+				if(valueIn[j] != 0){
+					countE++;
+					elemPos.add(j);
 				}
 			
 			
@@ -310,9 +310,9 @@ public class MassToFormulaTool {
 			while(flag){
 				
 //				// print all combinations --------------------------------------------------
-//				System.out.print(elem_Pos.get(possChan).intValue()+">");
+//				System.out.print(elemPos.get(possChan).intValue()+">");
 //				for(int j= 0 ; j< matrix[1].length; j++)
-//					System.out.print(isotopes_TO.get(j).getSymbol()+value_In[j]+"-");
+//					System.out.print(isotopesTo.get(j).getSymbol()+valueIn[j]+"-");
 //				System.out.println();
 //				// print all combinations --------------------------------------------------
 				
@@ -320,8 +320,8 @@ public class MassToFormulaTool {
 				// the matrix 01 or 10 can not exist
 				boolean flagBreak = false;
 				for(int j= 0 ; j< matrix[1].length; j++){
-					int min = mfRange.getIsotopeCountMin(isotopes_TO.get(j));
-					if(value_In[j] == 0)
+					int min = mfRange.getIsotopeCountMin(isotopesTo.get(j));
+					if(valueIn[j] == 0)
 						if(min != 0)
 							flagBreak = true;
 				}
@@ -330,38 +330,38 @@ public class MassToFormulaTool {
 				
 				
 				/*Find max occurence given a mass for a element with minimal elements*/
-				int occurence = getMaxOccurence(mass, elem_Pos.get(possChan).intValue(),value_In,isotopes_TO);
+				int occurence = getMaxOccurence(mass, elemPos.get(possChan).intValue(),valueIn,isotopesTo);
 
 				/*at least one*/
 				if (occurence == 0)
 					break;
 				
-				int maxx = mfRange.getIsotopeCountMax(isotopes_TO.get(elem_Pos.get(possChan).intValue()));
-				int minn = mfRange.getIsotopeCountMin(isotopes_TO.get(elem_Pos.get(possChan).intValue()));
+				int maxx = mfRange.getIsotopeCountMax(isotopesTo.get(elemPos.get(possChan).intValue()));
+				int minn = mfRange.getIsotopeCountMin(isotopesTo.get(elemPos.get(possChan).intValue()));
 				
 				/*restriction of the number of max and min number for a element*/
 				if(occurence < minn | maxx < occurence){
 					/* when is not in the occurrence that means that we have to
 					 * restart one value to the predecessor.*/
 					
-					if (possChan < elem_Pos.size()-1){
+					if (possChan < elemPos.size()-1){
 						/*Means that is possible to fit the next*/
 						if (maxx < occurence)
-							value_In[elem_Pos.get(possChan).intValue()] = maxx;
+							valueIn[elemPos.get(possChan).intValue()] = maxx;
 						possChan++;
 						
 					}else{
 						boolean foundZ = false;
 						for(int z= possChan-1; z >= 0 ; z--){
-							if (value_In[elem_Pos.get(z).intValue()] != 1){
+							if (valueIn[elemPos.get(z).intValue()] != 1){
 								possChan = z;
 								foundZ = true;
-								int newValue = value_In[elem_Pos.get(possChan).intValue()]-1;
+								int newValue = valueIn[elemPos.get(possChan).intValue()]-1;
 								
-								value_In[elem_Pos.get(possChan).intValue()] = newValue;
-								for(int j= possChan+1; j < elem_Pos.size() ; j++){
-									int p = elem_Pos.get(j).intValue();
-									value_In[p] = 1;
+								valueIn[elemPos.get(possChan).intValue()] = newValue;
+								for(int j= possChan+1; j < elemPos.size() ; j++){
+									int p = elemPos.get(j).intValue();
+									valueIn[p] = 1;
 								}
 								possChan++;
 								break;
@@ -376,13 +376,13 @@ public class MassToFormulaTool {
 				} /*final not occurrence*/
 				
 				/*set the occurrence into the matrix*/
-				value_In[elem_Pos.get(possChan).intValue()] = occurence;
+				valueIn[elemPos.get(possChan).intValue()] = occurence;
 					
-				double massT = calculateMassT(isotopes_TO,value_In);
-				double diff_new = Math.abs(mass - (massT));
+				double massT = calculateMassT(isotopesTo,valueIn);
+				double diffNew = Math.abs(mass - (massT));
 				
-				if(diff_new < tolerance){
-					IMolecularFormula myMF = getFormula(isotopes_TO,value_In);
+				if(diffNew < tolerance){
+					IMolecularFormula myMF = getFormula(isotopesTo,valueIn);
 					String newMFString = MolecularFormulaManipulator.getString(myMF);
 
 					if(!newMFString.equals(lastMFString)){
@@ -391,26 +391,26 @@ public class MassToFormulaTool {
 					}
 				}
 				
-				if(count_E == 1)/*only valid for the first random 1000*/
+				if(countE == 1)/*only valid for the first random 1000*/
 					break;
 				
-				if (possChan < elem_Pos.size()-1){
+				if (possChan < elemPos.size()-1){
 					/*Means that is possible to fit the next*/
-//					value_In[elem_Pos.get(possChan).intValue()] = maxx;
+//					valueIn[elemPos.get(possChan).intValue()] = maxx;
 					possChan++;
 					
 				}else{
 					boolean foundZ = false;
 					for(int z= possChan-1; z >= 0 ; z--){
-						if (value_In[elem_Pos.get(z).intValue()] != 1){
+						if (valueIn[elemPos.get(z).intValue()] != 1){
 							possChan = z;
 							foundZ = true;
-							int newValue = value_In[elem_Pos.get(possChan).intValue()]-1;
+							int newValue = valueIn[elemPos.get(possChan).intValue()]-1;
 							
-							value_In[elem_Pos.get(possChan).intValue()] = newValue;
-							for(int j= possChan+1; j < elem_Pos.size() ; j++){
-								int p = elem_Pos.get(j).intValue();
-								value_In[p] = 1;
+							valueIn[elemPos.get(possChan).intValue()] = newValue;
+							for(int j= possChan+1; j < elemPos.size() ; j++){
+								int p = elemPos.get(j).intValue();
+								valueIn[p] = 1;
 							}
 							possChan++;
 							break;
@@ -429,14 +429,14 @@ public class MassToFormulaTool {
 	/**
 	 * Put the order the List of IIsotope according the probability occurrence.
 	 * 
-	 * @param isotopes_TO  The List of IIsotope
+	 * @param isotopesTo  The List of IIsotope
 	 * @return             The list of IIsotope ordered
 	 */
-	private List<IIsotope> orderList(List<IIsotope> isotopes_TO) {
+	private List<IIsotope> orderList(List<IIsotope> isotopesTo) {
 		List<IIsotope> newOrderList = new ArrayList<IIsotope>();
 		for(int i = 0 ; i < orderElements.length; i++){
 			String symbol = orderElements[i];
-			Iterator<IIsotope> itIso = isotopes_TO.iterator();
+			Iterator<IIsotope> itIso = isotopesTo.iterator();
 			while(itIso.hasNext()){
 				IIsotope isotopeToCo = itIso.next();
 				if(isotopeToCo.getSymbol().equals(symbol)){
@@ -478,18 +478,18 @@ public class MassToFormulaTool {
 	 * Get the maximal occurrence of this List.
 	 * 
 	 * @param massTo
-	 * @param element_pos
+	 * @param elementPos
 	 * @param matrix
-	 * @param elemToCond_new
+	 * @param elemToCondNew
 	 * @return                 The occurrence value
 	 */
-	private int getMaxOccurence(double massTo, int element_pos, int[] matrix,List<IIsotope> isoToCond_new) {
-		double massIn = isoToCond_new.get(element_pos).getExactMass();
+	private int getMaxOccurence(double massTo, int elementPos, int[] matrix,List<IIsotope> isoToCondNew) {
+		double massIn = isoToCondNew.get(elementPos).getExactMass();
 		double massToM = massTo;
 		for(int i = 0; i < matrix.length ; i++)
-			if (i != element_pos)
+			if (i != elementPos)
 				if(matrix[i] != 0)
-					massToM -= isoToCond_new.get(i).getExactMass()*matrix[i];
+					massToM -= isoToCondNew.get(i).getExactMass()*matrix[i];
 				
 		
 		int value = (int)((massToM+1)/massIn);
@@ -499,16 +499,16 @@ public class MassToFormulaTool {
 	/**
 	 * Set the formula molecular as IMolecularFormula object.
 	 *   
-	 * @param elemToCond_new   List with IIsotope
-	 * @param value_In         Array matrix with occurrences
+	 * @param elemToCondNew   List with IIsotope
+	 * @param valueIn         Array matrix with occurrences
 	 * @return                 The IMolecularFormula
 	 */
-	private IMolecularFormula getFormula(List<IIsotope> isoToCond_new, int[] value_In) {
+	private IMolecularFormula getFormula(List<IIsotope> isoToCondNew, int[] valueIn) {
 		IMolecularFormula mf = builder.newInstance(IMolecularFormula.class);
-		for(int i = 0; i < isoToCond_new.size() ; i++){
-			if(value_In[i] != 0){
-				for(int j = 0 ; j < value_In[i] ; j ++)
-					mf.addIsotope(isoToCond_new.get(i));
+		for(int i = 0; i < isoToCondNew.size() ; i++){
+			if(valueIn[i] != 0){
+				for(int j = 0 ; j < valueIn[i] ; j ++)
+					mf.addIsotope(isoToCondNew.get(i));
 				
 			}
 		}
@@ -523,32 +523,32 @@ public class MassToFormulaTool {
 	 * @return        IMolecularFormula object
 	 */
 	private IMolecularFormula putInOrder(IMolecularFormula formula) {
-		IMolecularFormula new_formula = formula.getBuilder().newInstance(IMolecularFormula.class);
+		IMolecularFormula newFormula = formula.getBuilder().newInstance(IMolecularFormula.class);
 		for(int i = 0 ; i < orderElements.length; i++){
 			IElement element = builder.newInstance(IElement.class, orderElements[i]);
 			if(MolecularFormulaManipulator.containsElement(formula,element)){
 				Iterator<IIsotope> isotopes = MolecularFormulaManipulator.getIsotopes(formula, element).iterator();
 				while(isotopes.hasNext()){
 					IIsotope isotope = isotopes.next();
-					new_formula.addIsotope(isotope,formula.getIsotopeCount(isotope));
+					newFormula.addIsotope(isotope,formula.getIsotopeCount(isotope));
 				}
 			}
 		}
 //		new_mf.setCharge(charge);
-		return new_formula;
+		return newFormula;
 	}
 	/**
 	 * Calculate the mass total given the elements and their respective occurrences.
 	 * 
-	 * @param elemToCond_new  The IIsotope to calculate
-	 * @param value_In        Array matrix with occurrences
+	 * @param elemToCondNew  The IIsotope to calculate
+	 * @param valueIn        Array matrix with occurrences
 	 * @return                The sum total
 	 */
-	private double calculateMassT(List<IIsotope> isoToCond_new, int[] value_In) {
+	private double calculateMassT(List<IIsotope> isoToCondNew, int[] valueIn) {
 		double result = 0;
-		for(int i = 0; i < isoToCond_new.size() ; i++){
-			if(value_In[i] != 0){
-				result += isoToCond_new.get(i).getExactMass()*value_In[i];
+		for(int i = 0; i < isoToCondNew.size() ; i++){
+			if(valueIn[i] != 0){
+				result += isoToCondNew.get(i).getExactMass()*valueIn[i];
 			}
 		}
 		return result;
@@ -564,13 +564,13 @@ public class MassToFormulaTool {
 	 * @return             The IMolecularFormulaSet ordered
 	 */
 	private IMolecularFormulaSet returnOrdered(double mass, IMolecularFormulaSet formulaSet){
-		IMolecularFormulaSet solutions_new = null;
+		IMolecularFormulaSet solutionsNew = null;
 		
 		if(formulaSet.size() != 0){
 
 			double valueMin = 100;
-			int i_final = 0;
-	        solutions_new = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
+			int iFinal = 0;
+	        solutionsNew = formulaSet.getBuilder().newInstance(IMolecularFormulaSet.class);
 			List<Integer> listI = new ArrayList<Integer>();
 			for (int j = 0; j < formulaSet.size() ; j++){
 				for (int i = 0; i < formulaSet.size() ; i++){
@@ -581,17 +581,17 @@ public class MassToFormulaTool {
 					double diff = Math.abs(mass - Math.abs(value));
 					if (valueMin > diff){
 						valueMin = diff;
-						i_final = i;
+						iFinal = i;
 					}
 	
 				}
 				valueMin = 100;
-				solutions_new.addMolecularFormula(formulaSet.getMolecularFormula(i_final));
-				listI.add(i_final);
+				solutionsNew.addMolecularFormula(formulaSet.getMolecularFormula(iFinal));
+				listI.add(iFinal);
 			}
 		}
 		
-		return solutions_new;
+		return solutionsNew;
 	}
 	/**
 	 * Get the corresponding matrix and create it.
