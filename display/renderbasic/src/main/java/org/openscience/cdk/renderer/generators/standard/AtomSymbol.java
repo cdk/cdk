@@ -46,7 +46,7 @@ final class AtomSymbol {
     /**
      * The element symbol.
      */
-    private final TextOutline       element;
+    private final TextOutline element;
 
     /**
      * Adjuncts to the symbol, hydrogen count, charge, and mass.
@@ -54,14 +54,19 @@ final class AtomSymbol {
     private final List<TextOutline> adjuncts;
 
     /**
+     * Annotation adjuncts.
+     */
+    private final List<TextOutline> annotationAdjuncts;
+
+    /**
      * Desired alignment of the symbol.
      */
-    private final SymbolAlignment   alignment;
+    private final SymbolAlignment alignment;
 
     /**
      * The convex hull of the entire atom symbol.
      */
-    private final ConvexHull        hull;
+    private final ConvexHull hull;
 
     /**
      * Alignment of symbol, left aligned symbols are centered on the first
@@ -73,28 +78,30 @@ final class AtomSymbol {
 
     /**
      * Create a new atom symbol with the specified adjuncts.
-     * 
+     *
      * @param element the element symbol (e.g. 'N' in 'NH4+')
      * @param adjuncts the adjuncts
      */
     AtomSymbol(TextOutline element, List<TextOutline> adjuncts) {
         this.element = element;
         this.adjuncts = adjuncts;
+        this.annotationAdjuncts = new ArrayList<TextOutline>();
         this.alignment = SymbolAlignment.Center;
         this.hull = ConvexHull.ofShapes(getOutlines());
     }
 
     /**
      * Internal constructor provides the attributes.
-     * 
+     *
      * @param element the element label
      * @param adjuncts the adjunct labels
      * @param alignment left, center, or right alignment
      * @param hull convex hull
      */
-    private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, SymbolAlignment alignment, ConvexHull hull) {
+    private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, List<TextOutline> annotationAdjuncts, SymbolAlignment alignment, ConvexHull hull) {
         this.element = element;
         this.adjuncts = adjuncts;
+        this.annotationAdjuncts = annotationAdjuncts;
         this.alignment = alignment;
         this.hull = hull;
     }
@@ -102,18 +109,30 @@ final class AtomSymbol {
     /**
      * Create a new atom symbol (from this symbol) but with the specified
      * alignment.
-     * 
+     *
      * @param alignment element alignment
      * @return new atom symbol
      */
     AtomSymbol alignTo(SymbolAlignment alignment) {
-        return new AtomSymbol(element, adjuncts, alignment, hull);
+        return new AtomSymbol(element, adjuncts, annotationAdjuncts, alignment, hull);
+    }
+
+    /**
+     * Include a new annotation adjunct in the atom symbol.
+     * 
+     * @param annotation the new annotation adjunct 
+     * @return a new AtomSymbol instance including the annotation adjunct
+     */
+    AtomSymbol addAnnotation(TextOutline annotation) {
+        List<TextOutline> newAnnotations = new ArrayList<TextOutline>(annotationAdjuncts);
+        newAnnotations.add(annotation);
+        return new AtomSymbol(element, adjuncts, newAnnotations, alignment, hull); 
     }
 
     /**
      * Access the center point of the symbol. The center point is determined by
      * the alignment.
-     * 
+     *
      * @return center point
      */
     Point2D getAlignmentCenter() {
@@ -157,6 +176,18 @@ final class AtomSymbol {
     }
 
     /**
+     * Access the java.awt.Shape outlines of each annotation adjunct. 
+     * 
+     * @return annotation outlines
+     */
+    List<Shape> getAnnotationOutlines() {
+        List<Shape> shapes = new ArrayList<Shape>();
+        for (TextOutline adjunct : annotationAdjuncts)
+            shapes.add(adjunct.getOutline());
+        return shapes;     
+    }
+
+    /**
      * Access the convex hull of the whole atom symbol.
      * 
      * @return convex hull
@@ -175,7 +206,10 @@ final class AtomSymbol {
         List<TextOutline> transformedAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
         for (TextOutline adjunct : adjuncts)
             transformedAdjuncts.add(adjunct.transform(transform));
-        return new AtomSymbol(element.transform(transform), transformedAdjuncts, alignment, hull.transform(transform));
+        List<TextOutline> transformedAnnAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
+        for (TextOutline adjunct : annotationAdjuncts)
+            transformedAnnAdjuncts.add(adjunct.transform(transform));
+        return new AtomSymbol(element.transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment, hull.transform(transform));
     }
 
     /**
