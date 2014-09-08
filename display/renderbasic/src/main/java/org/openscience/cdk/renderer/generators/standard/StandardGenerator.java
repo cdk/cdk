@@ -288,46 +288,44 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
             // only generate if the symbol is visible
-            if (!visibility.visible(atom, bonds, parameters)) {
+            if (visibility.visible(atom, bonds, parameters)) {
 
-                final String label = getAnnotationLabel(atom);
-                if (label != null) {
-                    final Vector2d vector = newAtomAnnotationVector(atom, bonds, Collections.<Vector2d>emptyList());
-                    final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
-                                                                      label,
-                                                                      vector,
-                                                                      annDist,
-                                                                      annScale,
-                                                                      null);
-                    annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
-                                                        annColor));
+                final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
+
+                symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
+
+                // defines how the element is aligned on the atom point, when
+                // aligned to the left, the first character 'e.g. Cl' is used.
+                if (neighbors.size() == 1) {
+                    if (hPosition == Left)
+                        symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
+                    else
+                        symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
                 }
-                
-                continue;
+
+                final Point2d p = atom.getPoint2d();
+
+                if (p == null)
+                    throw new IllegalArgumentException("Atom did not have 2D coordinates");
+
+                // center and scale the symbol, y-axis scale is inverted because CDK y-axis
+                // is inverse of Java 2D
+                symbols[i] = symbols[i].resize(1 / scale, 1 / -scale)
+                                       .center(p.x, p.y);
             }
-
-            final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
-
-            symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
-
-            // defines how the element is aligned on the atom point, when
-            // aligned to the left, the first character 'e.g. Cl' is used.
-            if (neighbors.size() == 1) {
-                if (hPosition == Left)
-                    symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Right);
-                else
-                    symbols[i] = symbols[i].alignTo(AtomSymbol.SymbolAlignment.Left);
+            
+            final String label = getAnnotationLabel(atom);
+            if (label != null) {
+                final Vector2d vector = newAtomAnnotationVector(atom, bonds, Collections.<Vector2d>emptyList());
+                final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
+                                                                  label,
+                                                                  vector,
+                                                                  annDist,
+                                                                  annScale,
+                                                                  symbols[i]);
+                annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
+                                                    annColor));
             }
-
-            final Point2d p = atom.getPoint2d();
-
-            if (p == null)
-                throw new IllegalArgumentException("Atom did not have 2D coordinates");
-
-            // center and scale the symbol, y-axis scale is inverted because CDK y-axis
-            // is inverse of Java 2D
-            symbols[i] = symbols[i].resize(1 / scale, 1 / -scale)
-                                   .center(p.x, p.y);
         }
 
         return symbols;
