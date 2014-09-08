@@ -194,7 +194,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         ElementGroup annotations = new ElementGroup();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations, stroke);
-        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke, annotations);
+        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke, font, annotations);
 
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
                                                     container.getAtom(0).getPoint2d().y,

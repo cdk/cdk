@@ -50,6 +50,9 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Tuple2d;
 import javax.vecmath.Vector2d;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.geom.Point2D;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -114,8 +117,10 @@ final class StandardBondGenerator {
     private final double wedgeWidth;
     private final double hashSpacing;
     private final double waveSpacing;
-    private final Color  foreground;
+    private final Color  foreground, annotationColor;
     private final boolean fancyBoldWedges, fancyHashedWedges;
+    private final double annotationDistance, annotationScale;
+    private final Font font;
     private final ElementGroup annotations;
 
 
@@ -129,7 +134,7 @@ final class StandardBondGenerator {
      * @param parameters rendering options
      * @param stroke     scaled stroke width
      */
-    private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, ElementGroup annotations, double stroke) {
+    private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, ElementGroup annotations, Font font, double stroke) {
         this.container = container;
         this.symbols = symbols;
         this.parameters = parameters;
@@ -151,6 +156,10 @@ final class StandardBondGenerator {
         this.waveSpacing = parameters.get(WaveSpacing.class) / scale;
         this.fancyBoldWedges = parameters.get(StandardGenerator.FancyBoldWedges.class);
         this.fancyHashedWedges = parameters.get(StandardGenerator.FancyHashedWedges.class);
+        this.annotationDistance = parameters.get(StandardGenerator.AnnotationDistance.class) * (parameters.get(BondLength.class) / scale);
+        this.annotationScale = (1 / scale) * parameters.get(StandardGenerator.AnnotationFontScale.class);
+        this.annotationColor = parameters.get(StandardGenerator.AnnotationColor.class);
+        this.font = font;
 
         // foreground is based on the carbon color
         this.foreground = parameters.get(StandardGenerator.AtomColor.class)
@@ -168,8 +177,8 @@ final class StandardBondGenerator {
      * @param parameters rendering options
      * @param stroke     scaled stroke width
      */
-    static IRenderingElement[] generateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke, ElementGroup annotations) {
-        StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations, stroke);
+    static IRenderingElement[] generateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke, Font font, ElementGroup annotations) {
+        StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations, font, stroke);
         IRenderingElement[] elements = new IRenderingElement[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
             elements[i] = bondGenerator.generate(container.getBond(i));
@@ -198,7 +207,7 @@ final class StandardBondGenerator {
             case DOUBLE:
                 return generateDoubleBond(bond);
             case TRIPLE:
-                return generateTripleBond(atom1, atom2);
+                return generateTripleBond(bond, atom1, atom2);
         }
 
         // bond order > 3 not supported
@@ -224,6 +233,11 @@ final class StandardBondGenerator {
         fromBonds.remove(bond);
         toBonds.remove(bond);
         
+        // add annotation label
+        String label = StandardGenerator.getAnnotationLabel(bond);
+        if (label != null)
+            addAnnotation(from, to, label);
+
         switch (stereo) {
             case NONE:
                 return generatePlainSingleBond(from, to);
@@ -606,33 +620,33 @@ final class StandardBondGenerator {
             final int wind1 = winding(atom1Bonds.get(0), bond); 
             final int wind2 = winding(bond, atom2Bonds.get(0));
             if (wind1 > 0 && !hasDisplayedSymbol(atom1)) {
-                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);  
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);  
             } else if (wind2 > 0 && !hasDisplayedSymbol(atom2)) {
-                return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
             } else if (!hasDisplayedSymbol(atom1)) {
                 // special case, offset line is drawn on the opposite side
-                return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds, true);
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds, true);
             } else if (!hasDisplayedSymbol(atom2)) {
                 // special case, offset line is drawn on the opposite side
-                return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds, true);
+                return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds, true);
             } else {
-                return generateCenteredDoubleBond(atom1, atom2, atom1Bonds, atom2Bonds);
+                return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
         } 
         else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
-            return generateOffsetDoubleBond(atom1, atom2, atom1Bonds.get(0), atom2Bonds);
+            return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
         }
         else if (atom2Bonds.size() == 1 && !hasDisplayedSymbol(atom2)) {
-            return generateOffsetDoubleBond(atom2, atom1, atom2Bonds.get(0), atom1Bonds);
+            return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
         }
         else if (specialOffsetBondNextToWedge(atom1, atom1Bonds) && !hasDisplayedSymbol(atom1)) {
-            return generateOffsetDoubleBond(atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
+            return generateOffsetDoubleBond(bond, atom1, atom2, selectPlainSingleBond(atom1Bonds), atom2Bonds);
         }
         else if (specialOffsetBondNextToWedge(atom2, atom2Bonds) && !hasDisplayedSymbol(atom2)) {
-            return generateOffsetDoubleBond(atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
+            return generateOffsetDoubleBond(bond, atom2, atom1, selectPlainSingleBond(atom2Bonds), atom1Bonds);
         }
         else {
-            return generateCenteredDoubleBond(atom1, atom2, atom1Bonds, atom2Bonds);
+            return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
         }
     }
 
@@ -719,8 +733,8 @@ final class StandardBondGenerator {
      * @param atom2Bonds the bonds connected to atom 2
      * @return the rendered bond element
      */
-    private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
-        return generateOffsetDoubleBond(atom1, atom2, atom1Bond, atom2Bonds, false);    
+    private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
+        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false);    
     }
 
     /**
@@ -736,7 +750,7 @@ final class StandardBondGenerator {
      * @param invert     invert the offset (i.e. opposite to reference bond)            
      * @return the rendered bond element
      */
-    private IRenderingElement generateOffsetDoubleBond(IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, boolean invert) {
+    private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, boolean invert) {
 
         assert !hasDisplayedSymbol(atom1);
         assert atom1Bond != null;
@@ -797,6 +811,11 @@ final class StandardBondGenerator {
                                          scale(perpendicular, separation)),
                                      scale(unit, -atom2Offset))));
 
+        // add annotation label on the opposite side
+        String label = StandardGenerator.getAnnotationLabel(bond);
+        if (label != null)
+            addAnnotation(atom1, atom2, label, VecmathUtil.negate(perpendicular));
+
         return group;
     }
 
@@ -810,7 +829,7 @@ final class StandardBondGenerator {
      * @param atom2Bonds bonds to the second atom (excluding that being rendered)
      * @return the rendering element
      */
-    private IRenderingElement generateCenteredDoubleBond(IAtom atom1, IAtom atom2, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
+    private IRenderingElement generateCenteredDoubleBond(IBond bond, IAtom atom1, IAtom atom2, List<IBond> atom1Bonds, List<IBond> atom2Bonds) {
 
         final Point2d atom1BackOffPoint = backOffPoint(atom1, atom2);
         final Point2d atom2BackOffPoint = backOffPoint(atom2, atom1);
@@ -867,6 +886,11 @@ final class StandardBondGenerator {
         group.add(newLineElement(line1Atom1Point, line1Atom2Point));
         group.add(newLineElement(line2Atom1Point, line2Atom2Point));
 
+        // add annotation label
+        String label = StandardGenerator.getAnnotationLabel(bond);
+        if (label != null)
+            addAnnotation(atom1, atom2, label);
+        
         return group;
     }
 
@@ -911,12 +935,54 @@ final class StandardBondGenerator {
      * @param atom2 the other atom
      * @return triple bond rendering element
      */
-    private IRenderingElement generateTripleBond(IAtom atom1, IAtom atom2) {
+    private IRenderingElement generateTripleBond(IBond bond, IAtom atom1, IAtom atom2) {
         ElementGroup group = new ElementGroup();
         group.add(generatePlainSingleBond(atom1, atom2));
-        group.add(generateCenteredDoubleBond(atom1, atom2,
+        group.add(generateCenteredDoubleBond(bond, atom1, atom2,
                                              Collections.<IBond>emptyList(), Collections.<IBond>emptyList()));
+        
+        // add annotation label
+        String label = StandardGenerator.getAnnotationLabel(bond);
+        if (label != null)
+            addAnnotation(atom1, atom2, label);
+        
         return group;
+    }
+
+    /**
+     * Add an annotation label for the bond between the two atoms. The side of the bond that
+     * is chosen is arbitrary.
+     *
+     * @param atom1 first atom
+     * @param atom2 second atom
+     * @param label annotation label
+     * @see #addAnnotation(IAtom, IAtom, String, Vector2d)              
+     */
+    private void addAnnotation(IAtom atom1, IAtom atom2, String label) {
+        Vector2d perpendicular = VecmathUtil.newPerpendicularVector(VecmathUtil.newUnitVector(atom1.getPoint2d(), atom2.getPoint2d()));
+        addAnnotation(atom1, atom2, label, perpendicular);
+    }
+
+    /**
+     * Add an annotation label for the bond between the two atoms on the specified 'side' (providied
+     * as a the perpendicular directional vector).
+     * 
+     * @param atom1 first atom
+     * @param atom2 second atom
+     * @param label annotation label
+     * @param perpendicular the vector along which to place the annotation (starting from the midpoint)
+     */
+    private void addAnnotation(IAtom atom1, IAtom atom2, String label, Vector2d perpendicular) {
+        Point2d midPoint = VecmathUtil.midpoint(atom1.getPoint2d(), atom2.getPoint2d());
+
+        TextOutline outline = StandardGenerator.generateAnnotation(midPoint,
+                                                                   label,
+                                                                   perpendicular,
+                                                                   annotationDistance,
+                                                                   annotationScale,
+                                                                   font,
+                                                                   null);
+        annotations.add(GeneralPath.shapeOf(outline.getOutline(), annotationColor));
     }
 
     /**
