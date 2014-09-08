@@ -170,11 +170,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         final SymbolVisibility visibility = parameters.get(Visibility.class);
         final IAtomColorer coloring = parameters.get(AtomColor.class);
+        final Color annotationColor = parameters.get(AnnotationColor.class);
 
         // the stroke width is based on the font. a better method is needed to get
         // the exact font stroke but for now we use the width of the pipe character.
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
+        
 
         ElementGroup annotations = new ElementGroup();
 
@@ -227,6 +229,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 GeneralPath path = GeneralPath.shapeOf(shape, color);
                 updateBounds(bounds, path);
                 symbolElements.add(path);
+            }
+            
+            // add the annotations of the symbol to the annotations ElementGroup
+            for (Shape shape : symbols[i].getAnnotationOutlines()) {
+                annotations.add(GeneralPath.shapeOf(shape, annotationColor));
             }
 
             if (highlight != null && style == HighlightStyle.OuterGlow) {
@@ -328,8 +335,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                                   annDist,
                                                                   annScale,
                                                                   symbols[i]);
-                annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
-                                                    annColor));
+                
+                // the AtomSymbol may migrate during bond generation and therefore the annotation
+                // needs to be tied to the symbol. If no symbol is available the annotation is
+                // fixed and we can add it to the annotation ElementGroup right away.
+                if (symbols[i] != null) {
+                    symbols[i] = symbols[i].addAnnotation(annOutline);
+                } else {
+                    annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
+                                                        annColor));
+                }
             }
         }
 
