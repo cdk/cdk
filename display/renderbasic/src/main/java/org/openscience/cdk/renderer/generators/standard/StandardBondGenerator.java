@@ -116,6 +116,7 @@ final class StandardBondGenerator {
     private final double waveSpacing;
     private final Color  foreground;
     private final boolean fancyBoldWedges, fancyHashedWedges;
+    private final ElementGroup annotations;
 
 
     /**
@@ -128,10 +129,11 @@ final class StandardBondGenerator {
      * @param parameters rendering options
      * @param stroke     scaled stroke width
      */
-    private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke) {
+    private StandardBondGenerator(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, ElementGroup annotations, double stroke) {
         this.container = container;
         this.symbols = symbols;
         this.parameters = parameters;
+        this.annotations = annotations;
 
         // index atoms and rings
         for (int i = 0; i < container.getAtomCount(); i++)
@@ -166,8 +168,8 @@ final class StandardBondGenerator {
      * @param parameters rendering options
      * @param stroke     scaled stroke width
      */
-    static IRenderingElement[] generateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke) {
-        StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, stroke);
+    static IRenderingElement[] generateBonds(IAtomContainer container, AtomSymbol[] symbols, RendererModel parameters, double stroke, ElementGroup annotations) {
+        StandardBondGenerator bondGenerator = new StandardBondGenerator(container, symbols, parameters, annotations, stroke);
         IRenderingElement[] elements = new IRenderingElement[container.getBondCount()];
         for (int i = 0; i < container.getBondCount(); i++) {
             elements[i] = bondGenerator.generate(container.getBond(i));
