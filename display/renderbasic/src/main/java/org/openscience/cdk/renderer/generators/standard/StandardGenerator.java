@@ -105,6 +105,20 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     public final static String ANNOTATION_LABEL = "stdgen.annotation.label";
 
+
+    /**
+     * A special markup for annotation labels that hints the generator to renderer
+     * the annotation label in italic. The primary use case is for Cahn-Ingold-Prelog
+     * descriptors.
+     * 
+     * <pre>{@code
+     * String cipLabel = "R"; 
+     * atom.setProperty(CDKConstants.ANNOTATION_LABEL, 
+     *                  StandardGenerator.ITALIC_DISPLAY_PREFIX + cipLabel);
+     * }</pre>
+     */
+    public final static String ITALIC_DISPLAY_PREFIX = "std.itl:";
+
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
 
@@ -371,7 +385,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     private TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, AtomSymbol symbol) {       
         
-        final TextOutline annOutline = new TextOutline(label, font).resize(scale, -scale);
+        boolean italicHint = label.startsWith(ITALIC_DISPLAY_PREFIX);
+        
+        label = italicHint ? label.substring(ITALIC_DISPLAY_PREFIX.length()) : label;
+
+        Font annFont = italicHint ? font.deriveFont(Font.ITALIC)
+                                  : font;
+        
+        final TextOutline annOutline = new TextOutline(label, annFont).resize(scale, -scale);
         
         // align to the first or last character of the annotation depending on the direction
         final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() : 
