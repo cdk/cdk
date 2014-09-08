@@ -352,6 +352,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                direction.x < -0.3 ? annOutline.getLastGlyphCenter() :
                                annOutline.getCenter();
         
+        // Avoid atom symbol
+        if (symbol != null) {
+            Point2D intersect = symbol.getConvexHull().intersect(VecmathUtil.toAwtPoint(basePoint),
+                                                                 VecmathUtil.toAwtPoint(new Point2d(VecmathUtil.sum(basePoint, direction))));
+            // intersect should never be null be check against this
+            if (intersect != null)
+                basePoint = VecmathUtil.toVecmathPoint(intersect);
+        }
+
         direction.scale(distance);
         direction.add(basePoint);
         
