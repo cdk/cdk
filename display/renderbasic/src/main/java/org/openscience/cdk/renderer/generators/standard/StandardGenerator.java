@@ -48,9 +48,11 @@ import javax.vecmath.Vector2d;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Shape;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.Left;
@@ -239,7 +241,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-        /** Annotations are added to the front layer. */
+         
+        // ensure annotations are included in the bound calculation
+        for (IRenderingElement element : annotations) {
+            if (element instanceof GeneralPath)
+                updateBounds(bounds, (GeneralPath) element);
+            else
+                throw new InternalError("Annotation element not included in bounds calculation");
+        }
+
+        // Annotations are added to the front layer.
         frontLayer.add(annotations);
 
         ElementGroup group = new ElementGroup();
@@ -263,8 +274,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations) {
 
-        final double scale = parameters.get(BasicSceneGenerator.Scale.class);
-        final double atmNumDist = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+        final double scale    = parameters.get(BasicSceneGenerator.Scale.class);
+        final double annDist  = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+        final double annScale = (1 / scale) * parameters.get(AnnotationFontScale.class);
+        final Color  annColor = parameters.get(AnnotationColor.class);
 
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
 
@@ -275,8 +288,23 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
             // only generate if the symbol is visible
-            if (!visibility.visible(atom, bonds, parameters))
+            if (!visibility.visible(atom, bonds, parameters)) {
+
+                final String label = getAnnotationLabel(atom);
+                if (label != null) {
+                    final Vector2d vector = newAtomAnnotationVector(atom, bonds, Collections.<Vector2d>emptyList());
+                    final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
+                                                                      label,
+                                                                      vector,
+                                                                      annDist,
+                                                                      annScale,
+                                                                      null);
+                    annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
+                                                        annColor));
+                }
+                
                 continue;
+            }
 
             final HydrogenPosition hPosition = HydrogenPosition.position(atom, neighbors);
 
@@ -303,6 +331,35 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         }
 
         return symbols;
+    }
+
+    /**
+     * Generate an annotation 'label' for an atom (located at 'basePoint'). The label is offset from
+     * the basePoint by the provided 'distance' and 'direction'.
+     *
+     * @param basePoint the relative (0,0) reference
+     * @param label     the annotation text
+     * @param direction the direction along which the label is laid out
+     * @param distance  the distance along the direct to travel
+     * @param scale     the font scale of the label
+     * @param symbol    the atom symbol to avoid overlap with
+     * @return the position text outline for the annotation
+     */
+    private TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, AtomSymbol symbol) {       
+        
+        final TextOutline annOutline = new TextOutline(label, font).resize(scale, -scale);
+        
+        // align to the first or last character of the annotation depending on the direction
+        final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() : 
+                               direction.x < -0.3 ? annOutline.getLastGlyphCenter() :
+                               annOutline.getCenter();
+        
+        direction.scale(distance);
+        direction.add(basePoint);
+        
+        // move to position
+        return annOutline.translate(direction.x - center.getX(),
+                                    direction.y - center.getY());
     }
 
     /**
