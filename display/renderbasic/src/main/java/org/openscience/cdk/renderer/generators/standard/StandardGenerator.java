@@ -180,7 +180,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup annotations = new ElementGroup();
 
-        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations);
+        AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations, stroke);
         IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke);
 
         Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
@@ -279,12 +279,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param parameters render model parameters
      * @return generated atom symbols (can contain null)
      */
-    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations) {
+    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations, double stroke) {
 
-        final double scale    = parameters.get(BasicSceneGenerator.Scale.class);
-        final double annDist  = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
-        final double annScale = (1 / scale) * parameters.get(AnnotationFontScale.class);
-        final Color  annColor = parameters.get(AnnotationColor.class);
+        final double scale     = parameters.get(BasicSceneGenerator.Scale.class);
+        final double annDist   = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+        final double annScale  = (1 / scale) * parameters.get(AnnotationFontScale.class);
+        final Color  annColor  = parameters.get(AnnotationColor.class);
+        final double halfStroke = stroke / 2;
 
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
 
@@ -328,11 +329,16 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             
             final String label = getAnnotationLabel(atom);
             if (label != null) {
+                
+                // to ensure consistent draw distance we need to adjust the annotation distance
+                // depending on whether we are drawing next to an atom symbol or not.
+                final double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
+                
                 final Vector2d vector = newAtomAnnotationVector(atom, bonds, auxVectors);
                 final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
                                                                   label,
                                                                   vector,
-                                                                  annDist,
+                                                                  annDist + strokeAdjust,
                                                                   annScale,
                                                                   symbols[i]);
                 
@@ -564,7 +570,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             Vector2d combined = VecmathUtil.sum(vectors.get(0), vectors.get(1));
 
             // shallow angle (< 30 deg) means the label probably won't fit
-            if (vectors.get(0).angle(vectors.get(1)) < Math.toRadians(30))
+            if (vectors.get(0).angle(vectors.get(1)) < Math.toRadians(65))
                 combined.negate();
 
             // flip vector if either bond is a non-single bond or a wedge, this will
@@ -592,15 +598,20 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 // placement for fused conjugated rings
                 
                 List<Vector2d> plainVectors = new ArrayList<Vector2d>();
+                List<Vector2d> wedgeVectors = new ArrayList<Vector2d>();
                 
                 for (IBond bond : bonds) {
                     if (isPlainBond(bond))
                         plainVectors.add(VecmathUtil.newUnitVector(atom, bond));
+                    if (isWedged(bond))
+                        wedgeVectors.add(VecmathUtil.newUnitVector(atom, bond));
                 }
 
                 if (plainVectors.size() == 2) {
-                    Vector2d combined = VecmathUtil.sum(plainVectors.get(0), plainVectors.get(1));
-                    return combined;
+                    return VecmathUtil.sum(plainVectors.get(0), plainVectors.get(1));
+                } else if (plainVectors.size() + wedgeVectors.size() == 2) {
+                    plainVectors.addAll(wedgeVectors);
+                    return VecmathUtil.sum(plainVectors.get(0), plainVectors.get(1));
                 }
             }
             
@@ -856,17 +867,18 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * The color of the atom numbers. The the parameter value is null, the color of the symbol
-     * {@link AtomColor} is used.
+     * {@link AtomColor} is used. The default color is red to distinguish from normal atom symbols.
      */
     public static final class AnnotationColor extends AbstractGeneratorParameter<Color> {
         /** @inheritDoc */
         @Override public Color getDefault() {
-            return new Color(0xff4444);
+            return Color.RED;
         }
     }
 
     /**
-     * The distance of atom numbers from their parent atom as a percentage of bond length.
+     * The distance of atom numbers from their parent atom as a percentage of bond length, default
+     * value is 0.25 (25%)
      */
     public static final class AnnotationDistance extends AbstractGeneratorParameter<Double> {
         /** @inheritDoc */
@@ -881,7 +893,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     public static final class AnnotationFontScale extends AbstractGeneratorParameter<Double> {
         /** @inheritDoc */
         @Override public Double getDefault() {
-            return 0.4;
+            return 0.5;
         }
     }
 }
