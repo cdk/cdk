@@ -122,6 +122,18 @@ final class VecmathUtil {
     }
 
     /**
+     * Midpoint of a line described by two points, a and b.
+     * 
+     * @param a first point
+     * @param b second point
+     * @return the midpoint
+     */
+    static Point2d midpoint(Point2d a, Point2d b) {
+        return new Point2d((a.x + b.x) / 2,
+                           (a.y + b.y) / 2);
+    }
+
+    /**
      * Scale a vector by a given factor, the input vector is not modified.
      * 
      * @param vector a vector to scale

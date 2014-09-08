@@ -353,6 +353,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                                   vector,
                                                                   annDist + strokeAdjust,
                                                                   annScale,
+                                                                  font,
                                                                   symbols[i]);
                 
                 // the AtomSymbol may migrate during bond generation and therefore the annotation
@@ -379,10 +380,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param direction the direction along which the label is laid out
      * @param distance  the distance along the direct to travel
      * @param scale     the font scale of the label
+     * @param font      the font to use
      * @param symbol    the atom symbol to avoid overlap with
      * @return the position text outline for the annotation
      */
-    private TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, AtomSymbol symbol) {       
+    static TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, Font font, AtomSymbol symbol) {       
         
         boolean italicHint = label.startsWith(ITALIC_DISPLAY_PREFIX);
         
@@ -437,7 +439,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                              annFontSize);
     }
 
-    private String getAnnotationLabel(IChemObject chemObject) {
+    static String getAnnotationLabel(IChemObject chemObject) {
         Object obj = chemObject.getProperty(ANNOTATION_LABEL);
         return obj instanceof String ? (String) obj : null;
     }
