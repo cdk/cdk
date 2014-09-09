@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0mm" y="0mm" width="16mm" height="10mm" viewBox="0 0 16 10">
+<style type="text/css"><![CDATA[
+text { font:12px Dialog; }
+]]></style>
+<line x1="0.6333267" y1="2.7481129" x2="0.6333267" y2="7.2518871" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="0.6333267" y1="7.2518871" x2="4.5335952" y2="9.5037742" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="4.5335952" y1="9.5037742" x2="8.4368661" y2="7.2518871" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="8.4368661" y1="7.2518871" x2="8.4368661" y2="2.7481129" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="8.4368661" y1="2.7481129" x2="12.7184541" y2="1.3549454" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="12.7184541" y1="1.3549454" x2="15.3666733" y2="5" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="15.3666733" y1="5" x2="12.7184541" y2="8.6450546" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="8.4368661" y1="7.2518871" x2="12.7184541" y2="8.6450546" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="8.4368661" y1="2.7481129" x2="4.5335952" y2="0.4962258" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+<line x1="0.6333267" y1="2.7481129" x2="4.5335952" y2="0.4962258" style="fill:none;stroke:rgb(68,68,68);stroke-width:0.2066282;stroke-linecap:round;stroke-linejoin:round" />
+</svg>
