@@ -77,7 +77,7 @@ public class QueryCompiler implements IQueryCompiler {
     /**
      * Construct query object from the molecule
      * @param molecule
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      */
     public QueryCompiler(IAtomContainer molecule, boolean shouldMatchBonds) {
         this.setMolecule(molecule);

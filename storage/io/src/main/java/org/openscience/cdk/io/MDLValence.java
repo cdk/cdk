@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -22,7 +22,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  *
  * Additionally the 'MDLValence' method has the following licence/copyright.
- *  
+ *
  * Copyright (C) 2012 NextMove Software
  *
  * @@ All Rights Reserved @@ This file is part of the RDKit. The contents
@@ -72,7 +72,7 @@ final class MDLValence {
         for (IAtom atom : container.atoms())
             atomToIndex.put(atom, atomToIndex.size());
 
-        // compute the bond order sums 
+        // compute the bond order sums
         for (IBond bond : container.bonds()) {
             int u = atomToIndex.get(bond.getAtom(0));
             int v = atomToIndex.get(bond.getAtom(1));
@@ -103,9 +103,9 @@ final class MDLValence {
             if (atom.getValency() != null) {
                 atom.setImplicitHydrogenCount(atom.getValency() - explicit);
             } else {
-                int implicit = implicitValence(element, charge, valences[i]);                 
+                int implicit = implicitValence(element, charge, valences[i]);
                 atom.setImplicitHydrogenCount(implicit - explicit);
-                atom.setValency(implicit);                
+                atom.setValency(implicit);
             }
         }
 

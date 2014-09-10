@@ -39,14 +39,14 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 
 /**
  * Generate the symbols for lone pairs.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.LonePairGeneratorTest")
 public class LonePairGenerator implements IGenerator<IAtomContainer> {
-    
+
     public LonePairGenerator() {}
 
 	/** {@inheritDoc} */
@@ -54,18 +54,18 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
-        
+
         // TODO : put into RendererModel
         final double SCREEN_RADIUS = 1.0;
         // separation between centers
-        final double SCREEN_SEPARATION = 2.5;   
+        final double SCREEN_SEPARATION = 2.5;
         final Color RADICAL_COLOR = Color.BLACK;
 
         // XXX : is this the best option?
         final double ATOM_RADIUS =
             ((AtomRadius)model.getParameter(AtomRadius.class)).
             getValue();
-        
+
         double scale = model.getParameter(Scale.class).getValue();
         double modelAtomRadius = ATOM_RADIUS / scale;
         double modelPointRadius = SCREEN_RADIUS / scale;

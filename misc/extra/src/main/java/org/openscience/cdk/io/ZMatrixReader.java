@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -52,7 +52,7 @@ import java.util.StringTokenizer;
 public class ZMatrixReader extends DefaultChemObjectReader {
 
   private BufferedReader input;
-  
+
   /**
    * Constructs a ZMatrixReader from a Reader that contains the
    * data to be parsed.
@@ -62,15 +62,15 @@ public class ZMatrixReader extends DefaultChemObjectReader {
   public ZMatrixReader(Reader input) {
     this.input = new BufferedReader(input);
   }
-  
+
     public ZMatrixReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public ZMatrixReader() {
         this(new StringReader(""));
     }
-  
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return ZMatrixFormat.getInstance();
@@ -97,7 +97,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 
   /**
    *  Returns a IChemObject of type object bye reading from
-   *  the input. 
+   *  the input.
    *
    *  The function supports only reading of ChemFile's.
    *
@@ -106,9 +106,9 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    */
   public <T extends IChemObject> T read(T object) throws CDKException
   {
-    if (object instanceof IChemFile) 
+    if (object instanceof IChemFile)
       return (T)readChemFile((IChemFile)object);
-    else 
+    else
       throw new CDKException("Only ChemFile objects can be read.");
   }
 
@@ -121,28 +121,28 @@ public class ZMatrixReader extends DefaultChemObjectReader {
    */
   private IChemFile readChemFile(IChemFile file) {
     IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
-        
+
     int number_of_atoms;
     StringTokenizer tokenizer;
-        
-    try 
+
+    try
     {
       String line = input.readLine();
       while (line.startsWith("#"))
         line = input.readLine();
-      /*while (input.ready() && line != null) 
+      /*while (input.ready() && line != null)
       {*/
 //        logger.debug("lauf");
         // parse frame by frame
         tokenizer = new StringTokenizer(line, "\t ,;");
-                
+
         String token = tokenizer.nextToken();
         number_of_atoms = Integer.parseInt(token);
         String info = input.readLine();
-                
+
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
-                
+
         IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
         m.setProperty(CDKConstants.TITLE ,info);
 
@@ -151,17 +151,17 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         double[] a = new double[number_of_atoms]; int[] a_atom = new int[number_of_atoms]; // Angles
         double[] da = new double[number_of_atoms]; int[] da_atom = new int[number_of_atoms]; // Diederangles
         //Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
-                
+
         int i = 0;
         while(i < number_of_atoms)
         {
           line = input.readLine();
 //          logger.debug("line:\""+line+"\"");
           if (line == null) break;
-          if (line.startsWith("#")) 
+          if (line.startsWith("#"))
           {
             // skip comment in file
-          } else 
+          } else
           {
             d[i] = 0d; d_atom[i] = -1;
             a[i] = 0d; a_atom[i] = -1;
@@ -169,8 +169,8 @@ public class ZMatrixReader extends DefaultChemObjectReader {
 
             tokenizer = new StringTokenizer(line, "\t ,;");
             int fields = tokenizer.countTokens();
-                        
-            if (fields < Math.min(i*2+1,7)) 
+
+            if (fields < Math.min(i*2+1,7))
             {
               // this is an error but cannot throw exception
             }
@@ -208,10 +208,10 @@ public class ZMatrixReader extends DefaultChemObjectReader {
             }
           }
         }
-        
+
         // calculate cartesian coordinates
         Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
-        
+
         for (i=0; i<number_of_atoms; i++) {
               m.addAtom(file.getBuilder().newInstance(IAtom.class,types[i], cartCoords[i]));
         }
@@ -223,7 +223,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         chemSequence.addChemModel(chemModel);
         line = input.readLine();
         file.addChemSequence(chemSequence);
-    } catch (IOException e) 
+    } catch (IOException e)
     {
       // should make some noise now
       file = null;

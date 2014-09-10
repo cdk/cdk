@@ -15,11 +15,11 @@ import org.openscience.cdk.ChemObject;
 
 /**
  * A Test case for the "GamessReader" class.
- * 
- * <p><b>References</b>: 
+ *
+ * <p><b>References</b>:
  * <br>This test class complies the <a href="http://www.hacknot.info/hacknot/action/showEntry?eid=17">
- * JUnit by Contract</a> article published on Hacknot. 
- * 
+ * JUnit by Contract</a> article published on Hacknot.
+ *
  * @cdk.module test-extra
  *
  * @author Nathana&euml;l "M.Le_maudit" Mazuir
@@ -29,8 +29,8 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 
 	/**
 	 * The "BufferedReader" object used as input parameter for the "GamessReader" object.
-	 * 
-	 * @see	GamessReaderTest#gamessReaderUnderTest 
+	 *
+	 * @see	GamessReaderTest#gamessReaderUnderTest
 	 */
 	//TODO Update field comment with appropriate information.
 	private BufferedReader inputReader;
@@ -40,20 +40,20 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 	 */
 	//TODO Update field comment with appropriate information.
 	private GamessReader gamessReaderUnderTest;
-		
+
 	/**
-	 * Sets up the fixture. 
-	 * <p>This method is called before a test is executed and performs the 
+	 * Sets up the fixture.
+	 * <p>This method is called before a test is executed and performs the
 	 * following actions:
 	 * <ul>
 	 * 	<li>Constructs a new FileReader.</li>
 	 * 	<li>Constructs a new BufferedReader.</li>
 	 * 	<li>Constructs a new GamessReader.</li>
 	 * </ul>
-	 * 
+	 *
 	 * @throws	Exception	may be thrown by the <code>super.setUp()</code> instruction.
 	 * @throws	FileNotFoundException	may be thrown by the "FileReader" object if the string given in parameter does not contain a valid file name.
-	 * 
+	 *
 	 * @see java.io.FileReader#FileReader(java.lang.String)
 	 */
 	@Before public void setUp() throws Exception {
@@ -63,7 +63,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 		this.gamessReaderUnderTest = new GamessReader(this.inputReader);
 		setSimpleChemObjectReader(this.gamessReaderUnderTest, filename);
 	}
-	
+
 	/*
 	 * @see TestCase#tearDown()
 	 */
@@ -74,7 +74,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 
 	/**
 	 * Tests the <code>GamessReader()</code> constructor for the "GamessReader" object.
-	 * 
+	 *
 	 * <p><b>Contract</b>:
 	 * <br><code>Preconditions</code>:
 	 * <ul>
@@ -90,10 +90,10 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 	 * 	<li>The "GamessReader" object is constructed.</li>
 	 * 	<li>GamessReader.input is constructed with the parameter given to the constructor.</li>
 	 * </ul>
-	 * 
+	 *
 	 * <p><b>Implementation</b>:
 	 * <br>The second postcondition is not yet implemented.
-	 * 
+	 *
 	 * @see org.openscience.cdk.io.GamessReader#GamessReader(Reader)
 	 */
 	//TODO Update method comments with appropriate information.
@@ -106,7 +106,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 
 	/**
 	 * Tests the <code>accepts</code> method for the "GamessReader" object.
-	 * 
+	 *
 	 * <p><b>Contract</b>:
 	 * <br><code>Preconditions</code>:
 	 * <ul>
@@ -129,7 +129,7 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 
 	/**
 	 * Tests the <code>read(IChemObject object)</code> method for the "GamessReader" object.
-	 * 
+	 *
 	 * <p><b>Contract</b>:
 	 * <br><code>Preconditions</code>:
 	 * <ul>
@@ -143,9 +143,9 @@ public class GamessReaderTest extends SimpleChemObjectReaderTest  {
 	 * <ul>
 	 * 	<li>The <code>read(IChemObject object)</code> method must return a "IChemObject" instance.</li>
 	 * </ul>
-	 * 
+	 *
 	 * @throws	Exception	may be thrown by the "IChemObject" object.
-	 * 
+	 *
 	 * @see org.openscience.cdk.ChemObject
 	 */
 	//TODO Update method comments with appropriate information.

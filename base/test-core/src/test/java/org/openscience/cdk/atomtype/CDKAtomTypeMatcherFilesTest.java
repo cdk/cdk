@@ -14,7 +14,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -128,7 +128,7 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
         Assert.assertNotNull(chemFile);
         IAtomContainer mol2 = ChemFileManipulator
             .getAllAtomContainers(chemFile).get(0);
-        
+
         IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
         for (int i=0; i<mol1.getAtomCount(); i++) {

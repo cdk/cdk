@@ -54,7 +54,7 @@ public class CDK {
     public static final Resource ELEMENT = resource("Element");
     public static final Resource ATOMTYPE = resource("AtomType");
     public static final Resource ISOTOPE = resource("Isotope");
-    
+
     // IBond.Order
     public static final Resource SINGLEBOND = resource("SingleBond");
     public static final Resource DOUBLEBOND = resource("DoubleBond");
@@ -72,7 +72,7 @@ public class CDK {
     public static final Resource HYBRID_SP3D3 = resource("SP3D3");
     public static final Resource HYBRID_SP3D4 = resource("SP3D4");
     public static final Resource HYBRID_SP3D5 = resource("SP3D5");
-    
+
     public static final Property HASATOM = property("hasAtom");
     public static final Property HASBOND = property("hasBond");
     public static final Property BINDSATOM = property("bindsAtom");

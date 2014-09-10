@@ -176,7 +176,7 @@ public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
     /**
      * Test of getAllMapping method, of class VFlibSubStructureHandler.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
      */
     @Test
     public void testGetAllMapping() throws InvalidSmilesException {

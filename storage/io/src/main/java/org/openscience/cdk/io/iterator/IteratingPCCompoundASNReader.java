@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.PCCompoundASNReader
- * 
+ *
  * @author       Egon Willighagen <egonw@users.sf.net>
  * @cdk.created  2008-05-05
  *
@@ -63,14 +63,14 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReader.class);
     private IChemObjectBuilder builder;
-    
+
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IAtomContainer nextMolecule;
-    
+
     private String currentLine;
     private int depth;
-    
+
     /**
      * Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given Reader.
      *
@@ -100,13 +100,13 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
-            
+
             // now try to read the next molecule
             try {
                 currentLine = input.readLine();
             	boolean endMoleculeFound = false;
             	boolean startMoleculeFound = false;
-            	
+
             	StringBuffer buffer = new StringBuffer();
             	while (!startMoleculeFound && currentLine != null) {
             		int depthDiff = countBrackets(currentLine);
@@ -152,7 +152,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
         }
         return hasNext;
     }
-    
+
     private int countChars(String copy, char character) {
     	int occurences = 0;
     	for (int i=0; i<copy.length(); i++) {
@@ -160,7 +160,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     	}
     	return occurences;
     }
-    
+
     private int countBrackets(String currentLine) {
 		int bracketsOpen = countChars(currentLine, '{');
 		int bracketsClose = countChars(currentLine, '}');
@@ -177,16 +177,16 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
         }
         return nextMolecule;
     }
-    
+
     @TestMethod("testClose")
 	  public void close() throws IOException {
         input.close();
     }
-    
+
     public void remove() {
         throw new UnsupportedOperationException();
     }
-    
+
     private String getCommand(String line) {
     	StringBuffer buffer = new StringBuffer();
     	int i = 0;

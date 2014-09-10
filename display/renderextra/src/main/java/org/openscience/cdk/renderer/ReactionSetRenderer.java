@@ -106,10 +106,10 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 @TestClass("org.openscience.cdk.renderer.ReactionSetRendererTest")
 public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
   implements IRenderer<IReactionSet> {
-    
+
     private IRenderer<IReaction> reactionRenderer;
 
-	
+
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -132,7 +132,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         reactionRenderer = new ReactionRenderer(rendererModel,generators, fontManager);
         this.setup();
     }
-	
+
     /**
      * A renderer that generates diagrams using the specified
      * generators for {@link IAtomContainer}s and {@link IReactionSet}s
@@ -145,8 +145,8 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, 
-	                List<IGenerator<IReaction>> reactionGenerators, 
+	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators,
+	                List<IGenerator<IReaction>> reactionGenerators,
 	                IFontManager fontManager) {
 		this(new RendererModel(),generators,reactionGenerators,fontManager);
 	}
@@ -159,7 +159,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
 	        new ReactionRenderer(generators, reactionGenerators, fontManager);
         this.setup();
 	}
-	
+
 	/**
 	 * Setup the transformations necessary to draw this Reaction Set.
 	 *

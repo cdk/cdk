@@ -1,4 +1,4 @@
-/* 
+/*
  *  Copyright (C) 2001-2013  Christoph Steinbeck <steinbeck@users.sf.net>
  *                           John May <jwmay@users.sourceforge.net>
  *                           Egon Willighagen <egonw@users.sourceforge.net>
@@ -36,7 +36,7 @@ import java.io.Serializable;
 
 /**
  * The base class for atom types. Atom types are typically used to describe the
- * behaviour of an atom of a particular element in different environment like 
+ * behaviour of an atom of a particular element in different environment like
  * sp<sup>3</sup>
  * hybridized carbon C3, etc., in some molecular modelling applications.
  *
@@ -72,10 +72,10 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * The covalent radius of this atom type.
      */
     Double covalentRadius = (Double) CDKConstants.UNSET;
-    
+
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
-     * 
+     *
      *  Note that some constructors ({@link #AtomType(String)} and
      * {@link #AtomType(String, String)} ) will explicitly set this field to 0
      */
@@ -103,7 +103,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * String representing the identifier for this atom type with null as default.
      */
     private String identifier = (String) CDKConstants.UNSET;
-    
+
     /**
 	 * Constructor for the AtomType object.
      *
@@ -132,14 +132,14 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 
 	/**
 	 * Constructs an isotope by copying the symbol, atomic number,
-	 * flags, identifier, exact mass, natural abundance and mass 
+	 * flags, identifier, exact mass, natural abundance and mass
 	 * number from the given IIsotope. It does not copy the
 	 * listeners and properties. If the element is an instanceof
 	 * IAtomType, then the maximum bond order, bond order sum,
 	 * van der Waals and covalent radii, formal charge, hybridization,
 	 * electron valency, formal neighbour count and atom type name
 	 * are copied too.
-	 * 
+	 *
 	 * @param element IIsotope to copy information from
 	 */
 	public AtomType(IElement element) {
@@ -247,7 +247,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     	this.formalCharge = charge;
     	notifyChanged();
     }
-    
+
     /**
      *  Returns the formal charge of this atom.
      *
@@ -258,7 +258,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     public Integer getFormalCharge() {
         return this.formalCharge;
     }
-    
+
     /**
      * Sets the formal neighbour count of this atom.
      *
@@ -270,7 +270,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         this.formalNeighbourCount = count;
 	notifyChanged();
     }
-    
+
     /**
      * Returns the formal neighbour count of this atom.
      *
@@ -281,7 +281,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     public Integer getFormalNeighbourCount() {
         return this.formalNeighbourCount;
     }
-    
+
     /**
      *  Sets the hybridization of this atom.
      *
@@ -293,7 +293,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         this.hybridization = hybridization;
         notifyChanged();
     }
-    
+
     /**
      *  Returns the hybridization of this atom.
      *
@@ -304,7 +304,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     public IAtomType.Hybridization getHybridization() {
         return this.hybridization;
     }
-    
+
     /**
      * Compares a atom type with this atom type.
      *
@@ -334,7 +334,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         this.covalentRadius = radius;
 	notifyChanged();
     }
-    
+
     /**
      * Returns the covalent radius for this AtomType.
      *
@@ -344,7 +344,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     public Double getCovalentRadius() {
         return this.covalentRadius;
     }
-    
+
 	/**
 	 *  Sets the the exact electron valency of the AtomType object.
 	 *
@@ -373,7 +373,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-	
+
     public String toString() {
         StringBuffer resultString = new StringBuffer(64);
         resultString.append("AtomType(").append(hashCode());
@@ -397,13 +397,13 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
         }
         if (getCovalentRadius() != null) {
         	resultString.append(", CR:").append(getCovalentRadius());
-        }        
+        }
         if (getValency() != null) {
         	resultString.append(", EV:").append(getValency());
         }
         resultString.append(", ").append(super.toString());
         resultString.append(')');
-        return resultString.toString(); 
+        return resultString.toString();
     }
 }
 

@@ -78,7 +78,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
 
     /* find the set of vertices in which we will add systematic differences */
     private final EquivalentSetFinder finder;
-    
+
     /* suppression of atoms */
     private final AtomSuppression suppression;
 
@@ -137,7 +137,7 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
                             StereoEncoder encoder, int[][] graph) {
 
         Suppressed suppressed = suppression.suppress(container);
-        
+
         // compute original values then find indices equivalent values
         long[] original = simple.generate(seeds, encoder, graph, suppressed);
         Set<Integer> equivalentSet = finder.find(original, container, graph);

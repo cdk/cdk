@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.manipulator;
 
@@ -58,10 +58,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module test-standard
  */
 public class ChemFileManipulatorTest extends CDKTestCase {
-    
+
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ChemFileManipulatorTest.class);
-	
+
 	IAtomContainer molecule1 = null;
 	IAtomContainer molecule2 = null;
 	IAtom atomInMol1 = null;
@@ -74,7 +74,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
 	IChemSequence chemSequence1 = null;
 	IChemSequence chemSequence2 = null;
 	IChemFile chemFile = null;
-	
+
     public ChemFileManipulatorTest() {
         super();
     }
@@ -188,7 +188,7 @@ public class ChemFileManipulatorTest extends CDKTestCase {
     	List<IChemModel> list = ChemFileManipulator.getAllChemModels(chemFile);
     	Assert.assertEquals(1, list.size());
     }
-    
+
     @Test
     public void testGetAllReactions_IChemFile()
     {

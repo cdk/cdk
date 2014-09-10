@@ -27,7 +27,7 @@ import javax.swing.undo.UndoableEdit;
  * An undo adapter for updating the state of the undo components according to
  * the new state of the undo history list. Is registered as a listener to the
  * undoSupport which is receiving the undo/redo events.
- * 
+ *
  * @author      tohel
  * @cdk.module  control
  * @cdk.githash
@@ -46,7 +46,7 @@ public class UndoAdapter implements UndoableEditListener {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see javax.swing.event.UndoableEditListener#undoableEditHappened(javax.swing.event.UndoableEditEvent)
 	 */
 	public void undoableEditHappened(UndoableEditEvent arg0) {

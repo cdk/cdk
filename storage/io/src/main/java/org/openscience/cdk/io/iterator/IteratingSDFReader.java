@@ -54,10 +54,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * Iterating MDL SDF reader. It allows to iterate over all molecules
  * in the SD file, without reading them into memory first. Suitable
  * for (very) large SDF files. For parsing the molecules in the
- * SD file, it uses the <code>MDLV2000Reader</code> or 
+ * SD file, it uses the <code>MDLV2000Reader</code> or
  * <code>MDLV3000Reader</code> reader; it does <b>not</b> work
  * for SDF files with MDL formats prior to the V2000 format.
- * 
+ *
  * <p>Example use:
  * <pre>
  * File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
@@ -74,7 +74,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @see org.openscience.cdk.io.MDLV2000Reader
  * @see org.openscience.cdk.io.MDLV3000Reader
- * 
+ *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created    2003-10-19
  *
@@ -91,12 +91,12 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private String currentLine;
     private IChemFormat currentFormat;
     private final ReaderFactory factory = new ReaderFactory();
-    
+
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IChemObjectBuilder builder;
     private IAtomContainer nextMolecule;
-    
+
     private BooleanIOSetting forceReadAs3DCoords;
 
     // if an error is encountered the reader will skip over the error
@@ -106,7 +106,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     private StringBuffer buffer = new StringBuffer(10000);
 
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-    
+
     // patterns to match
     private static Pattern MDL_VERSION          = Pattern.compile("[vV](2000|3000)");
     private static Pattern M_END                = Pattern.compile("M\\s\\sEND");
@@ -221,7 +221,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         hasNext = false;
         nextMolecule = null;
         buffer.delete(0, buffer.length());
-            
+
         // now try to parse the next Molecule
         try {
             currentFormat = (IChemFormat)MDLFormat.getInstance();
@@ -241,7 +241,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
                 // un-trimmed line has already been stored in buffer
                 currentLine = currentLine.trim();
-                
+
                 if(M_END.matcher(currentLine).matches()) {
 
                     logger.debug("MDL file part read: ", buffer);
@@ -278,7 +278,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
                     // empty the buffer
                     buffer.delete(0, buffer.length());
-                       
+
                 }
 
                 // found SDF record separator ($$$$) without parsing a molecule (separator is detected
@@ -363,7 +363,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         }
         return fieldName;
     }
-    
+
     /**
      * Returns the next IMolecule.
      */
@@ -377,12 +377,12 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
         }
         return nextMolecule;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
     }
-    
+
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -406,11 +406,11 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
 
     private void initIOSettings() {
         forceReadAs3DCoords = new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-          "Should coordinates always be read as 3D?", 
+          "Should coordinates always be read as 3D?",
           "false");
         addSetting(forceReadAs3DCoords);
     }
-    
+
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }

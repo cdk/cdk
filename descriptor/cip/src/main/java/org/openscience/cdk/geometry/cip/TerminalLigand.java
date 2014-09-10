@@ -41,5 +41,5 @@ class TerminalLigand extends Ligand {
             IAtom centralAtom, IAtom ligandAtom) {
         super(container, visitedAtoms, centralAtom, ligandAtom);
     }
-    
+
 }

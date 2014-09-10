@@ -89,7 +89,7 @@ public class AtomValenceTool {
             valencesTable.put("Mn", 2);
             valencesTable.put("Co", 2);
         }
-        
+
         return valencesTable.get(atom.getSymbol());
     }
 

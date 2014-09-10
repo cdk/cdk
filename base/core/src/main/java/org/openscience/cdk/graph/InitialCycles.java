@@ -76,7 +76,7 @@ final class InitialCycles {
 
     /** Number of vertices which have degree 2. */
     private int nDeg2Vertices;
-    
+
     /** Limit the size of cycles discovered. */
     private final int limit;
 
@@ -100,19 +100,19 @@ final class InitialCycles {
      * Create a set of initial cycles for the provided graph.
      *
      * @param graph input graph
-     * @param limit the maximum size of cycle found             
+     * @param limit the maximum size of cycle found
      * @throws NullPointerException the graph was null
      */
     InitialCycles(final int[][] graph, int limit) {
         this(graph, limit, false);
     }
-    
+
     /**
      * Internal constructor - takes a graph and a flag that the graph is a
      * biconnected component. This allows a minor optimisation to trigger.
      *
      * @param graph input graph
-     * @param biconnected the graph is known to be biconnected             
+     * @param biconnected the graph is known to be biconnected
      * @throws NullPointerException the graph was null
      */
     private InitialCycles(final int[][] graph, final int limit, boolean biconnected) {
@@ -262,9 +262,9 @@ final class InitialCycles {
             vertices[ordering[v]] = v;
         }
 
-        // if the graph is known to be a biconnected component (prepossessing) 
-        // and there is at least one vertex with a degree > 2 we can skip all 
-        // vertices of degree 2.  
+        // if the graph is known to be a biconnected component (prepossessing)
+        // and there is at least one vertex with a degree > 2 we can skip all
+        // vertices of degree 2.
         //
         // otherwise the smallest possible cycle is {0,1,2} (no parallel edges
         // or loops) we can therefore don't need to do the first two shortest
@@ -479,12 +479,12 @@ final class InitialCycles {
     static InitialCycles ofBiconnectedComponent(int[][] graph) {
         return ofBiconnectedComponent(graph, graph.length);
     }
-    
+
     /**
      * Compute the initial cycles of a biconnected graph.
      *
      * @param graph the biconnected graph
-     * @param limit maximum size of the cycle to find             
+     * @param limit maximum size of the cycle to find
      * @return computed initial cycles
      * @throws NullPointerException the graph was null
      */

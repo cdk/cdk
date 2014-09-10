@@ -31,9 +31,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- *   Vertex adjacency information (magnitude): 
+ *   Vertex adjacency information (magnitude):
  *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
- *   (definition from MOE tutorial on line) 
+ *   (definition from MOE tutorial on line)
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -116,7 +116,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
 	 *
 	 *@param  atomContainer                AtomContainer
 	 *@return                   VAdjMa
-	 
+
 	 */
 	@TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -150,7 +150,7 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
      */
     @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
-        return new DoubleResult(0.0); 
+        return new DoubleResult(0.0);
     }
 
 

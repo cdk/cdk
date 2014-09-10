@@ -1,17 +1,17 @@
 /* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,12 +40,12 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
     private String implementationTitle;
     private String implementationIdentifier;
     private String implementationVendor;
-    
+
     /**
      * Container for specifying the type of descriptor.
      *
      * @param specificationReference Reference to a formal definition in a
-     *          dictionary (e.g. in STMML format) of the descriptor, preferably 
+     *          dictionary (e.g. in STMML format) of the descriptor, preferably
      *          referring to the original article. The format of the content is
      *          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
      * @param implementationTitle Title for the implementation of the descriptor
@@ -54,7 +54,7 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
      *          implementation, preferably including the exact version number of
      *          the source code. E.g. $Id$ can be used when the source code is
      *          in a CVS repository.
-     * @param implementationVendor Name of the organisation/person/program/whatever 
+     * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
     public DescriptorSpecification(
@@ -73,12 +73,12 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
      * defined by the CDK version.
      *
      * @param specificationReference Reference to a formal definition in a
-     *          dictionary (e.g. in STMML format) of the descriptor, preferably 
+     *          dictionary (e.g. in STMML format) of the descriptor, preferably
      *          referring to the original article. The format of the content is
      *          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
      * @param implementationTitle Title for the implementation of the descriptor
      *          for which the algorithm is given by the specification.
-     * @param implementationVendor Name of the organisation/person/program/whatever 
+     * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
     public DescriptorSpecification(
@@ -110,6 +110,6 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
     public String getImplementationVendor() {
         return this.implementationVendor;
     }
-    
+
 }
 

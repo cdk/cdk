@@ -39,7 +39,7 @@ public class InvPairTest extends CDKTestCase {
     	InvPair pair = new InvPair();
     	Assert.assertNotNull(pair);
     }
-    
+
     @Test public void testInvPair_long_IAtom() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
@@ -47,7 +47,7 @@ public class InvPairTest extends CDKTestCase {
     	Assert.assertEquals(5l, pair.getCurr());
     	Assert.assertEquals(atom, pair.getAtom());
     }
-    
+
     @Test public void testEquals_Object() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
@@ -55,14 +55,14 @@ public class InvPairTest extends CDKTestCase {
     	Assert.assertNotSame("NotSame", pair);
     	Assert.assertNotSame(new InvPair(), pair);
     }
-    
+
     @Test public void testToString() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
     	Assert.assertNotNull(pair.toString());
     	Assert.assertTrue(pair.toString().length() > 0);
     }
-    
+
     @Test public void testSetAtom_IAtom() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair();
@@ -70,7 +70,7 @@ public class InvPairTest extends CDKTestCase {
     	pair.setAtom(atom);
     	Assert.assertEquals(atom, pair.getAtom());
     }
-    
+
     @Test public void testGetAtom() {
     	InvPair pair = new InvPair();
     	Assert.assertNull(pair.getAtom());
@@ -79,7 +79,7 @@ public class InvPairTest extends CDKTestCase {
     }
 
     /**
-     * @cdk.bug 2045574 
+     * @cdk.bug 2045574
      */
     @Test public void testGetPrime() {
     	IAtom atom = new Atom(Elements.CARBON);
@@ -93,7 +93,7 @@ public class InvPairTest extends CDKTestCase {
         pair.setPrime();
         Assert.assertNotSame(prime, pair.getPrime());
     }
-    
+
     @Test public void testSetPrime() {
     	InvPair pair = new InvPair();
     	try {
@@ -103,7 +103,7 @@ public class InvPairTest extends CDKTestCase {
 			// OK, is apparently expected to happen
 		}
     }
-    
+
     @Test public void testCommit() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);
@@ -111,7 +111,7 @@ public class InvPairTest extends CDKTestCase {
     	Assert.assertNotNull(atom.getProperty(InvPair.CANONICAL_LABEL));
     	Assert.assertEquals(5l, ((Long)atom.getProperty(InvPair.CANONICAL_LABEL)).longValue());
     }
-    
+
     @Test public void testSetCurr_long() {
     	IAtom atom = new Atom(Elements.CARBON);
     	InvPair pair = new InvPair(5l, atom);

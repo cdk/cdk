@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -98,19 +98,19 @@ final class AtomTypeModel extends ElectronDonation {
         final Map<IAtom, Integer> indexMap = Maps.newHashMapWithExpectedSize(nAtoms);
 
         for (int i = 0; i < nAtoms; i++) {
-            
+
             IAtom atom = container.getAtom(i);
             indexMap.put(atom, i);
-            
+
             // acyclic atom skipped
             if (!ringSearch.cyclic(i))
                 continue;
-            
+
             Hybridization hyb = atom.getHybridization();
 
             checkNotNull(atom.getAtomTypeName(),
                          "atom has unset atom type");
-            
+
             // atom has been assigned an atom type but we don't know the hybrid state,
             // typically for atom type 'X' (unknown)
             if (hyb == null)
@@ -130,28 +130,28 @@ final class AtomTypeModel extends ElectronDonation {
         // exocyclic double bonds are allowed no further processing
         if (exocyclic)
             return electrons;
-        
+
         // check for exocyclic double/triple bonds and disallow their contribution
         for (IBond bond : container.bonds()) {
             if (bond.getOrder() == IBond.Order.DOUBLE || bond.getOrder() == IBond.Order.TRIPLE) {
 
                 IAtom a1 = bond.getAtom(0);
                 IAtom a2 = bond.getAtom(1);
-                
+
                 String a1Type = a1.getAtomTypeName();
                 String a2Type = a2.getAtomTypeName();
-                
+
                 int u = indexMap.get(a1);
                 int v = indexMap.get(a2);
 
                 if (!ringSearch.cyclic(u, v)) {
-                    
+
                     // XXX: single exception - we could make this more general but
                     // for now this mirrors the existing behavior
                     if (a1Type.equals("N.sp2.3") && a2Type.equals("O.sp2")
                             || a1Type.equals("O.sp2") && a2Type.equals("N.sp2.3"))
                         continue;
-                    
+
                     electrons[u] = electrons[v] = -1;
                 }
             }

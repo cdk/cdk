@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  */
 public class AliphaticSymbolAtom extends SMARTSAtom {
-	
+
 	/**
 	 * Creates a new instance.
 	 *
@@ -47,7 +47,7 @@ public class AliphaticSymbolAtom extends SMARTSAtom {
 	public boolean matches(IAtom atom) {
 		return !atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.openscience.cdk.PseudoAtom#toString()
 	 */

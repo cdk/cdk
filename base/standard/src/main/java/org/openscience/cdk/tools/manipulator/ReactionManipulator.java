@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -109,10 +109,10 @@ public class ReactionManipulator {
             }
         }
     }
-    
+
     /**
      * get all molecule of a IReaction. Reactants + Products
-     * 
+     *
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
@@ -122,12 +122,12 @@ public class ReactionManipulator {
 
         moleculeSet.add(getAllReactants(reaction));
         moleculeSet.add(getAllProducts(reaction));
-        
+
         return moleculeSet;
     }
     /**
      * get all products of a IReaction
-     * 
+     *
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
@@ -143,7 +143,7 @@ public class ReactionManipulator {
 
     /**
      * get all reactants of a IReaction
-     * 
+     *
      * @param reaction  The IReaction
      * @return The IMoleculeSet
      */
@@ -156,7 +156,7 @@ public class ReactionManipulator {
         }
         return moleculeSet;
     }
-    
+
     /**
      * Returns a new Reaction object which is the reverse of the given
      * Reaction.
@@ -185,7 +185,7 @@ public class ReactionManipulator {
         }
         return reversedReaction;
     }
-    
+
     /**
      * Returns all the AtomContainer's of a Reaction.
      * @param reaction The reaction being considered
@@ -265,8 +265,8 @@ public class ReactionManipulator {
     }
     /**
      * get the IAtom which is mapped
-     * 
-     * @param reaction   The IReaction which contains the mapping 
+     *
+     * @param reaction   The IReaction which contains the mapping
      * @param chemObject The IChemObject which will be searched its mapped IChemObject
      * @return           The mapped IChemObject
      */
@@ -280,5 +280,5 @@ public class ReactionManipulator {
         }
     	return null;
     }
-    
+
 }

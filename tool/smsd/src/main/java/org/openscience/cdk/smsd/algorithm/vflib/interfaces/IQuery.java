@@ -95,7 +95,7 @@ public interface IQuery {
 
     /**
      * Returns an edge associated between two nodes.
-     * 
+     *
      * @param source get an between source.
      * @param target and target.
      * @return IEdge egde between source and target.

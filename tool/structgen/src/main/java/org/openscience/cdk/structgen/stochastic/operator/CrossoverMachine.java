@@ -1,20 +1,20 @@
 /* Copyright (C) 2000-2009  Christoph Steinbeck, Stefan Kuhn<shk3@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.structgen.stochastic.operator;
 
@@ -31,28 +31,28 @@ import org.openscience.cdk.structgen.stochastic.PartialFilledStructureMerger;
 import org.openscience.cdk.tools.SaturationChecker;
 
 /**
- * Modified molecular structures by applying crossover operator on a pair of parent structures 
- * and generate a pair of offspring structures. Each of the two offspring structures inherits 
+ * Modified molecular structures by applying crossover operator on a pair of parent structures
+ * and generate a pair of offspring structures. Each of the two offspring structures inherits
  * a certain fragments from both of its parents.
- * 
+ *
  * @cdk.module structgen
  * @cdk.githash
  */
-public class CrossoverMachine  
+public class CrossoverMachine
 {
 	PartialFilledStructureMerger pfsm;
-	
+
 	/** selects a partitioning mode*/
-	int splitMode = 2;	
-	/** selects a partitioning scale*/	
+	int splitMode = 2;
+	/** selects a partitioning scale*/
 	int numatoms = 5;
 	/** Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode. */
     public static final int SPLIT_MODE_RADNDOM = 0;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_DEPTH_FIRST mode. */
-    public static final int SPLIT_MODE_DEPTH_FIRST = 1;	
+    public static final int SPLIT_MODE_DEPTH_FIRST = 1;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_BREADTH_FIRST mode. */
     public static final int SPLIT_MODE_BREADTH_FIRST = 2;
-	
+
     /**
      * Constructs a new CrossoverMachine operator.
      */
@@ -60,14 +60,14 @@ public class CrossoverMachine
     {
 		pfsm = new PartialFilledStructureMerger();
     }
-	
+
 	/**
      * Performs the n point crossover of two {@link IAtomContainer}.
-     * Precondition: The atoms in the molecules are ordered by properties to 
-     * preserve (e. g. atom symbol). Due to its randomized nature, this method 
-     * fails in around 3% of all cases. A CDKException with message "Could not 
+     * Precondition: The atoms in the molecules are ordered by properties to
+     * preserve (e. g. atom symbol). Due to its randomized nature, this method
+     * fails in around 3% of all cases. A CDKException with message "Could not
      * mate these properly" will then be thrown.
-     * 
+     *
      * @return The children.
      * @exception CDKException if it was not possible to form offsprings.
      */
@@ -78,10 +78,10 @@ public class CrossoverMachine
 			int dim = dad.getAtomCount();
 			IAtomContainer[] redChild = new IAtomContainer[2];
 			IAtomContainer[] blueChild = new IAtomContainer[2];
-			
+
 			List<Integer> redAtoms = new ArrayList<Integer>();
-			List<Integer> blueAtoms = new ArrayList<Integer>();		
-	
+			List<Integer> blueAtoms = new ArrayList<Integer>();
+
 			/* *randomly divide atoms into two parts: redAtoms and blueAtoms.***/
 			if (splitMode==SPLIT_MODE_RADNDOM)
 			{
@@ -93,7 +93,7 @@ public class CrossoverMachine
 					redAtoms.remove(Integer.valueOf(ranInt));
 					blueAtoms.add(Integer.valueOf(ranInt));
 				}
-					 
+
 			}
 			else
 			{
@@ -109,21 +109,21 @@ public class CrossoverMachine
 					//this is SPLIT_MODE_BREADTH_FIRST
 					redAtoms = graph.pickBFgraph();
 				}
-				
+
 				for (int i = 0; i < dim; i++){
 					Integer element = Integer.valueOf(i);
 					if (!(redAtoms.contains(element)))
 					{
 						blueAtoms.add(element);
-					}	
+					}
 				}
-			}	
+			}
 			/* * dividing over ***/
-			redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
-			blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad); 
-			redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom); 
-			blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom); 
-			
+			redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad);
+			blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad);
+			redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom);
+			blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom);
+
 			List<IAtom> blueAtomsInRedChild0 = new ArrayList<IAtom>();
 			for (int j = 0; j < blueAtoms.size(); j++)
 			{
@@ -203,9 +203,9 @@ public class CrossoverMachine
 				newstrucs[1] = dad.getBuilder().newInstance(IAtomContainerSet.class);
 				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(redChild[1]));
 				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(blueChild[0]));
-		
+
 				//and merge
-				List<IAtomContainer> children=new ArrayList<IAtomContainer>(2);	
+				List<IAtomContainer> children=new ArrayList<IAtomContainer>(2);
 				for (int f = 0; f < 2; f++)
 				{
 					try{
@@ -222,5 +222,5 @@ public class CrossoverMachine
 			if(tries>20)
 				throw new CDKException("Could not mate these properly");
     	}
-    } 
+    }
 }

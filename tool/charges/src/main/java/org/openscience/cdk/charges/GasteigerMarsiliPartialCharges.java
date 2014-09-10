@@ -29,14 +29,14 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on 
+ * <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
  * {@cdk.cite GM80}. This class only implements the original method which only
- * applies to &sigma;-bond systems.</p> 
- * 
+ * applies to &sigma;-bond systems.</p>
+ *
  *
  * @author      chhoppe
  * @author      rojas
- * 
+ *
  * @cdk.module  charges
  * @cdk.githash
  * @cdk.created 2004-11-03
@@ -180,7 +180,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
             Iterator<IBond> bonds = ac.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
-                
+
                 atom1 = ac.getAtomNumber(bond.getAtom(0));
                 atom2 = ac.getAtomNumber(bond.getAtom(1));
 
@@ -291,7 +291,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
                     factors[1] = 10.82;
                     factors[2] = 1.36;
                 } else if ((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.DOUBLE)
-                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)&& 
+                        ||((ac.getMaximumBondOrder(ac.getAtom(i)) == IBond.Order.SINGLE)&&
                         	ac.getAtom(i).getFormalCharge() == -1)) {
                     factors[0] = 12.87;
                     factors[1] = 11.15;

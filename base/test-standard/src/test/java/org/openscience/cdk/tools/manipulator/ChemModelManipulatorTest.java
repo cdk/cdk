@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.manipulator;
 
@@ -54,10 +54,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module test-standard
  */
 public class ChemModelManipulatorTest extends CDKTestCase {
-    
+
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ChemModelManipulatorTest.class);
-	
+
 	IAtomContainer molecule1 = null;
 	IAtomContainer molecule2 = null;
 	IAtom atomInMol1 = null;
@@ -67,7 +67,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 	IReaction reaction = null;
 	IReactionSet reactionSet = null;
 	IChemModel chemModel = null;
-	
+
 	public ChemModelManipulatorTest() {
         super();
     }
@@ -136,19 +136,19 @@ public class ChemModelManipulatorTest extends CDKTestCase {
         Assert.assertNotNull(mol);
         Assert.assertEquals(ac.getAtomCount(), mol.getAtomCount());
     }
-    
+
     @Test public void testGetAtomCount_IChemModel()
     {
     	int count = ChemModelManipulator.getAtomCount(chemModel);
     	Assert.assertEquals(6, count);
     }
-    
+
     @Test public void testGetBondCount_IChemModel()
     {
     	int count = ChemModelManipulator.getBondCount(chemModel);
     	Assert.assertEquals(2, count);
     }
-    
+
     @Test public void testRemoveElectronContainer_IChemModel_IElectronContainer()
     {
     	IAtomContainer mol1 = new AtomContainer();
@@ -179,7 +179,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		ChemModelManipulator.removeElectronContainer(model, bond2);
 		Assert.assertEquals(0, ChemModelManipulator.getBondCount(model));
     }
-    
+
     @Test public void testRemoveAtomAndConnectedElectronContainers_IChemModel_IAtom()
     {
     	IAtomContainer mol1 = new AtomContainer();
@@ -216,7 +216,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(0, ChemModelManipulator.getBondCount(model));
 		Assert.assertEquals(2, ChemModelManipulator.getAtomCount(model));
     }
-    
+
     @Test public void testSetAtomProperties_IChemModel_Object_Object()
     {
     	String key = "key";
@@ -225,7 +225,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(value, atomInMol1.getProperty(key));
 		Assert.assertEquals(value, atomInMol2.getProperty(key));
     }
-    
+
     @Test public void testGetRelevantAtomContainer_IChemModel_IAtom()
     {
     	IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol1);
@@ -233,13 +233,13 @@ public class ChemModelManipulatorTest extends CDKTestCase {
 		IAtomContainer ac2 = ChemModelManipulator.getRelevantAtomContainer(chemModel, atomInMol2);
 		Assert.assertEquals(molecule2, ac2);
     }
-    
+
     @Test public void testGetRelevantAtomContainer_IChemModel_IBond()
     {
     	IAtomContainer ac1 = ChemModelManipulator.getRelevantAtomContainer(chemModel, bondInMol1);
 		Assert.assertEquals(molecule1, ac1);
     }
-    
+
     @Test public void testGetAllChemObjects_IChemModel()
     {
     	List<IChemObject> list = ChemModelManipulator.getAllChemObjects(chemModel);
@@ -266,7 +266,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     	Assert.assertEquals(1, reactionCount);
     	Assert.assertEquals(1, reactionSetCount);
     }
-    
+
     @Test public void testCreateNewMolecule_IChemModel()
     {
     	IChemModel model = new ChemModel();
@@ -274,7 +274,7 @@ public class ChemModelManipulatorTest extends CDKTestCase {
     	Assert.assertEquals(1, model.getMoleculeSet().getAtomContainerCount());
     	Assert.assertEquals(ac, model.getMoleculeSet().getAtomContainer(0));
     }
-    
+
     @Test public void testGetRelevantReaction_IChemModel_IAtom()
     {
     	IReaction r = ChemModelManipulator.getRelevantReaction(chemModel, atomInMol1);

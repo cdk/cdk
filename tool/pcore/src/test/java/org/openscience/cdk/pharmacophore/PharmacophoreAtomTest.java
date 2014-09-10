@@ -27,7 +27,7 @@ import javax.vecmath.Point3d;
  * @cdk.module test-pcore
  */
 public class PharmacophoreAtomTest {
-      
+
     @Test
     public void testGetterSetter() {
         PharmacophoreAtom patom = new PharmacophoreAtom("[CX2]N", "Amine", new Point3d(0,0,0));

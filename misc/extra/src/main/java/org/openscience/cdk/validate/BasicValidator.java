@@ -1,18 +1,18 @@
 /* Copyright (C) 2008-2010  Egon Willighagen <egonw@users.sf.net>
  *                    2009  Rajarshi Guha <rajarshi.guha@gmail.com>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -43,15 +43,15 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @author   Egon Willighagen
  * @cdk.githash
  * @cdk.created  2003-08-22
- */ 
+ */
 public class BasicValidator extends AbstractValidator {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(BasicValidator.class);
-    
+
     public BasicValidator() {
     }
-    
+
     public ValidationReport validateAtom(IAtom subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateCharge(subject));
@@ -73,7 +73,7 @@ public class BasicValidator extends AbstractValidator {
         ValidationTest emptyMolecule = new ValidationTest(subject,
             "Molecule does not contain any atom"
         );
-        
+
         if (subject.getAtomCount() == 0) {
             report.addError(emptyMolecule);
         } else {
@@ -113,9 +113,9 @@ public class BasicValidator extends AbstractValidator {
         report.addReport(validateChargeConservation(subject, container1, container2));
         return report;
     }
-    
+
     // the Atom tests
-    
+
     private ValidationReport validateCharge(IAtom atom) {
         ValidationReport report = new ValidationReport();
         ValidationTest tooCharged = new ValidationTest(atom, "Atom has an unlikely large positive or negative charge");
@@ -160,7 +160,7 @@ public class BasicValidator extends AbstractValidator {
             "An Atom cannot have a negative number of hydrogens attached."
         );
         if (atom.getImplicitHydrogenCount() == null) {
-            report.addWarning(new ValidationTest(atom, "An atom had unset (null) implicit hydrogen count"));    
+            report.addWarning(new ValidationTest(atom, "An atom had unset (null) implicit hydrogen count"));
         }
         else if (atom.getImplicitHydrogenCount() < 0 ) {
             negativeHydrogenCount.setDetails(
@@ -202,9 +202,9 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    
+
     // the Bond tests
-    
+
     private ValidationReport validateStereoChemistry(IBond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest bondStereo = new ValidationTest(bond,
@@ -218,7 +218,7 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    
+
     private ValidationReport validateMaxBondOrder(IBond bond) {
         ValidationReport report = new ValidationReport();
         ValidationTest maxBO = new ValidationTest(bond,
@@ -226,7 +226,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/dict/data/cdk-atom-types.owl", 
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl",
                 bond.getBuilder()
             );
             for (int i=0; i<bond.getAtomCount(); i++) {
@@ -267,9 +267,9 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    
+
     // the Isotope tests
-    
+
     public ValidationReport validateIsotopeExistence(IIsotope isotope) {
         ValidationReport report = new ValidationReport();
         ValidationTest isotopeExists = new ValidationTest(isotope,
@@ -299,7 +299,7 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    
+
     // the Molecule tests
 
     private ValidationReport validateBondOrderSum(IAtom atom, IAtomContainer molecule) {
@@ -309,7 +309,7 @@ public class BasicValidator extends AbstractValidator {
         );
         try {
             AtomTypeFactory structgenATF = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/dict/data/cdk-atom-types.owl", 
+                "org/openscience/cdk/dict/data/cdk-atom-types.owl",
                 atom.getBuilder()
             );
             int bos = (int)molecule.getBondOrderSum(atom);
@@ -393,5 +393,5 @@ public class BasicValidator extends AbstractValidator {
         }
         return report;
     }
-    
+
 }

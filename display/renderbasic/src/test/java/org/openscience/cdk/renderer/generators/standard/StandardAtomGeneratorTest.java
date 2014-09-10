@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -71,7 +71,7 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMinY(), lessThan(hydrogenBounds.getMaxY()));
         assertThat(elementBounds.getMinX(), closeTo(hydrogenBounds.getMinX(), 0.01));
     }
-    
+
     @Test public void positionHydrogenToLeft() {
         TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Left,
                                                                      element,
@@ -82,8 +82,8 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMaxX(), greaterThan(hydrogenBounds.getMinX()));
         assertThat(elementBounds.getMaxY(), closeTo(hydrogenBounds.getMaxY(), 0.01));
     }
-    
-    @Test public void positionHydrogenToRight() {       
+
+    @Test public void positionHydrogenToRight() {
 
         TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Right,
                                                                      element,
@@ -94,11 +94,11 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMaxX(), lessThan(hydrogenBounds.getMinX()));
         assertThat(elementBounds.getMaxY(), closeTo(hydrogenBounds.getMaxY(), 0.01));
     }
-    
+
     @Test public void positionHydrogenCount() {
         TextOutline hydrogenCount = new TextOutline("2", font);
         TextOutline positioned = atomGenerator.positionSubscript(hydrogen, hydrogenCount);
-        
+
         Rectangle2D hydrogenBounds = hydrogen.getBounds();
         Rectangle2D hydrogenCountBounds = positioned.getBounds();
 
@@ -120,7 +120,7 @@ public class StandardAtomGeneratorTest {
     @Test public void positionOfChargeWhenHydrogensAreRight() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10); 
+        TextOutline localHydrogen = hydrogen.translate(10,10);
         TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Right, charge, element, localHydrogen);
 
         Rectangle2D hydrogenBounds = localHydrogen.getBounds();
@@ -193,7 +193,7 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getMinX(), greaterThan(elementBounds.getMinX()));
         assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
-    
+
     @Test public void generateWithNoAdjuncts() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(1));
@@ -203,7 +203,7 @@ public class StandardAtomGeneratorTest {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
-    
+
     @Test public void generateWithHydrogenAndCountAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(3));
@@ -223,7 +223,7 @@ public class StandardAtomGeneratorTest {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
-    
+
     @Test public void hydrogenDodgesMassLabel() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left);
         List<Shape> outlines = symbol.getOutlines();
@@ -239,14 +239,14 @@ public class StandardAtomGeneratorTest {
         assertThat(outlines.size(), is(4));
         Shape hydrogenShape = outlines.get(1);
         Shape hydrogenCountShape = outlines.get(2);
-        Shape massShape = outlines.get(3);         
-        
+        Shape massShape = outlines.get(3);
+
         assertThat(hydrogenShape.getBounds2D().getMaxX(), lessThan(massShape.getBounds2D().getMinX()));
-        
+
         // the count subscript and mass overlap a little
         assertThat(hydrogenCountShape.getBounds2D().getMaxX(), greaterThan(massShape.getBounds2D().getMinX()));
         assertThat(hydrogenCountShape.getBounds2D().getMaxX(), lessThan(massShape.getBounds2D().getMaxX()));
-        
+
         assertThat(hydrogenShape.getBounds2D().getMaxX(), lessThan(hydrogenCountShape.getBounds2D().getMinX()));
     }
 
@@ -325,12 +325,12 @@ public class StandardAtomGeneratorTest {
         assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
                    is("*"));
     }
-    
+
     @Test public void accessEmptyPseudoLabel() throws Exception {
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("");
         assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
-                   is("*"));    
+                   is("*"));
     }
 
     @Test public void accessRgroupPseudoLabel() throws Exception {
@@ -339,7 +339,7 @@ public class StandardAtomGeneratorTest {
         assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
                    is("R1"));
     }
-    
+
     @Test public void numberedRgroupSymbol() {
         AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1");
         List<Shape> shapes = atomSymbol.getOutlines();
@@ -373,7 +373,7 @@ public class StandardAtomGeneratorTest {
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
-    
+
     @Test public void generatesCarbon13() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);

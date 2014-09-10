@@ -43,7 +43,7 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.ringsearch.RingPartitionerTest")
 public class RingPartitioner {
-    
+
     /**
      *  Debugging on/off
      */

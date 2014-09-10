@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -38,7 +38,7 @@ import java.util.List;
  * adjuncts. The adjuncts are hydrogen count, charge, and mass. The atom symbol
  * is immutable and modifying a property or transforming the symbol makes a new
  * instance.
- * 
+ *
  * @author John May
  */
 final class AtomSymbol {
@@ -119,14 +119,14 @@ final class AtomSymbol {
 
     /**
      * Include a new annotation adjunct in the atom symbol.
-     * 
-     * @param annotation the new annotation adjunct 
+     *
+     * @param annotation the new annotation adjunct
      * @return a new AtomSymbol instance including the annotation adjunct
      */
     AtomSymbol addAnnotation(TextOutline annotation) {
         List<TextOutline> newAnnotations = new ArrayList<TextOutline>(annotationAdjuncts);
         newAnnotations.add(annotation);
-        return new AtomSymbol(element, adjuncts, newAnnotations, alignment, hull); 
+        return new AtomSymbol(element, adjuncts, newAnnotations, alignment, hull);
     }
 
     /**
@@ -155,16 +155,16 @@ final class AtomSymbol {
 
     /**
      * Access the adjunct outlines.
-     * 
+     *
      * @return immutable adjunct outlines
      */
     List<TextOutline> adjunctOutlines() {
         return Collections.unmodifiableList(adjuncts);
     }
-    
+
     /**
      * Access the Java 2D shape text outlines that display the atom symbol.
-     * 
+     *
      * @return shapes
      */
     List<Shape> getOutlines() {
@@ -176,20 +176,20 @@ final class AtomSymbol {
     }
 
     /**
-     * Access the java.awt.Shape outlines of each annotation adjunct. 
-     * 
+     * Access the java.awt.Shape outlines of each annotation adjunct.
+     *
      * @return annotation outlines
      */
     List<Shape> getAnnotationOutlines() {
         List<Shape> shapes = new ArrayList<Shape>();
         for (TextOutline adjunct : annotationAdjuncts)
             shapes.add(adjunct.getOutline());
-        return shapes;     
+        return shapes;
     }
 
     /**
      * Access the convex hull of the whole atom symbol.
-     * 
+     *
      * @return convex hull
      */
     ConvexHull getConvexHull() {
@@ -198,7 +198,7 @@ final class AtomSymbol {
 
     /**
      * Transform the position and orientation of the symbol.
-     * 
+     *
      * @param transform affine transform
      * @return the transformed symbol (new instance)
      */
@@ -214,7 +214,7 @@ final class AtomSymbol {
 
     /**
      * Convenience function to resize an atom symbol.
-     * 
+     *
      * @param scaleX x-axis scaling
      * @param scaleY y-axis scaling
      * @return the resized symbol (new instance)
@@ -231,7 +231,7 @@ final class AtomSymbol {
     /**
      * Convenience function to center an atom symbol on a specified point. The
      * centering depends on the symbol alignment.
-     * 
+     *
      * @param x x-axis location
      * @param y y-axis location
      * @return the centered symbol (new instance)
@@ -243,7 +243,7 @@ final class AtomSymbol {
 
     /**
      * Convenience function to translate an atom symbol on a specified point.
-     * 
+     *
      * @param x x-axis location
      * @param y y-axis location
      * @return the translated symbol (new instance)

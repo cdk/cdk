@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -78,7 +78,7 @@ final class StereoMatch implements Predicate<int[]> {
     /**
      * Create a predicate for checking mappings between a provided
      * {@code query} and {@code target}.
-     * 
+     *
      * @param query query container
      * @param target target container
      */
@@ -109,7 +109,7 @@ final class StereoMatch implements Predicate<int[]> {
         // n.b. not true for unspecified queries e.g. [C@?H](*)(*)*
         if (queryStereoIndices.length > targetStereoIndices.length)
             return false;
-        
+
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
                 case Tetrahedral:
@@ -145,7 +145,7 @@ final class StereoMatch implements Predicate<int[]> {
         int[] us = neighbors(queryElement, queryMap);
         int[] vs = neighbors(targetElement, targetMap);
         us = map(u, v, us, mapping);
-        
+
         if (us == null)
             return false;
 
@@ -212,7 +212,7 @@ final class StereoMatch implements Predicate<int[]> {
         IDoubleBondStereochemistry targetElement = (IDoubleBondStereochemistry) targetElements[v1];
 
         // although the atoms were mapped and 'v1' and 'v2' are bond in double-bond
-        // elements they are not in the same element 
+        // elements they are not in the same element
         if (!targetElement.getStereoBond().contains(target.getAtom(v1))
                 || !targetElement.getStereoBond().contains(target.getAtom(v2)))
             return false;

@@ -19,7 +19,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * An AST node. It represents any atom (*) in smarts.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
@@ -29,7 +29,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 class ASTAnyAtom extends SimpleNode {
 	/**
 	 * Creates a new instance
-	 * 
+	 *
 	 * @param id
 	 */
 	public ASTAnyAtom(int id) {
@@ -38,7 +38,7 @@ class ASTAnyAtom extends SimpleNode {
 
 	/**
 	 * Creates a new instance
-	 * 
+	 *
 	 * @param p
 	 * @param id
 	 */

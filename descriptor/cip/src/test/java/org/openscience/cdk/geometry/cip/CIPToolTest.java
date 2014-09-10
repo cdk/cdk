@@ -125,7 +125,7 @@ public class CIPToolTest extends CDKTestCase {
         ILigand[] antiLigands = new ILigand[] {
             ligands[0], ligands[1], ligands[3], ligands[2]
         };
-        
+
         LigancyFourChirality chirality = new LigancyFourChirality(
             molecule.getAtom(1), antiLigands, Stereo.ANTI_CLOCKWISE
         );
@@ -173,7 +173,7 @@ public class CIPToolTest extends CDKTestCase {
                                 ));
         assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
     }
-    
+
     @Test public void testGetCIPChirality_DoubleBond_Opposite() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
                 .parseSmiles("CCC(C)=C(C)CC");
@@ -188,7 +188,7 @@ public class CIPToolTest extends CDKTestCase {
                                 ));
         assertThat(label, is(CIPTool.CIP_CHIRALITY.Z));
     }
-    
+
     @Test public void label() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
                 .parseSmiles("C/C=C/[C@@H](C)C(/C)=C(/C)C[C@H](C)O");
@@ -205,7 +205,7 @@ public class CIPToolTest extends CDKTestCase {
                    CoreMatchers.is("Z"));
     }
 
-    
+
 
     @Test
     public void testDefineLigancyFourChirality() {
@@ -233,7 +233,7 @@ public class CIPToolTest extends CDKTestCase {
     public void testDefineLigand() {
         ILigand ligand = CIPTool.defineLigand(molecule, new VisitedAtoms(), 1, 2);
         Assert.assertEquals(molecule, ligand.getAtomContainer());
-        Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());        
+        Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
         Assert.assertEquals(molecule.getAtom(2), ligand.getLigandAtom());
     }
 
@@ -311,7 +311,7 @@ public class CIPToolTest extends CDKTestCase {
             ring.addBond(j, j + 1, IBond.Order.SINGLE);
         }
         ring.addBond(ringSize - 1, 0, IBond.Order.SINGLE);
-        
+
         ring.addAtom(new Atom("Cl"));
         ring.addAtom(new Atom("F"));
         ring.addBond(0, ringSize, IBond.Order.SINGLE);
@@ -319,10 +319,10 @@ public class CIPToolTest extends CDKTestCase {
         ring.addAtom(new Atom("O"));
         ring.addBond(1, ringSize + 2, IBond.Order.SINGLE);
         IAtom[] atoms = new IAtom[] {
-            ring.getAtom(ringSize), 
-            ring.getAtom(ringSize + 1), 
-            ring.getAtom(ringSize - 1), 
-            ring.getAtom(1) 
+            ring.getAtom(ringSize),
+            ring.getAtom(ringSize + 1),
+            ring.getAtom(ringSize - 1),
+            ring.getAtom(1)
         };
         ITetrahedralChirality stereoCenter =
             new TetrahedralChirality(ring.getAtom(0), atoms, Stereo.ANTI_CLOCKWISE);
@@ -356,7 +356,7 @@ public class CIPToolTest extends CDKTestCase {
                         neighbors.toArray(new IAtom[]{}),
                         stereo
                     );
-                CIP_CHIRALITY chirality = 
+                CIP_CHIRALITY chirality =
                     CIPTool.getCIPChirality(mol, stereoCenter);
                 System.out.println("chirality: " + chirality);
             }

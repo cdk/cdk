@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 package org.openscience.cdk.fingerprint;
 
 import org.openscience.cdk.exception.CDKException;
@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.*;
 import java.util.*;
 import java.util.zip.CRC32;
 import javax.vecmath.*;
- 
+
 /**
  *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
  *  fingerprints, which are partially described by Rogers et al. {@cdk.cite Rogers2010}.
@@ -44,14 +44,14 @@ import javax.vecmath.*;
  *  lists of integers into 32-bit codes, nor does it describe the scheme used to classify the atom types for creating
  *  the FCFP-class of descriptors. For this reason, the fingerprints that are created are not binary compatible with
  *  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.</p>
- *  
+ *
  *  <p>The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
  *  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
  *  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</p>
  *
  *	<p>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
  *	formula/parameters as used by PNG files, and described in:</p>
- *		
+ *
  *		<a href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</a>
  *
  *	<p>Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
@@ -62,10 +62,10 @@ import javax.vecmath.*;
  *  elsewhere in the CDK. This is to ensure that the CDK implementation of the algorithm is strictly equal to other
  *  implementations: dependencies on CDK functionality that could be modified or improved in the future would break
  *  binary compatibility with formerly identical implementations on other platforms.</p>
- *  
+ *
  *  <p>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
  *  Green et al {@cdk.cite Green1994}.</p>
- *  
+ *
  * @author         am.clark
  * @cdk.created    2014-01-01
  * @cdk.keyword    fingerprint
@@ -74,8 +74,8 @@ import javax.vecmath.*;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.fingerprint.CircularFingerprinterTest")
-public class CircularFingerprinter implements IFingerprinter 
-{	
+public class CircularFingerprinter implements IFingerprinter
+{
 	// ------------ constants ------------
 
 	// identity by literal atom environment
@@ -84,10 +84,10 @@ public class CircularFingerprinter implements IFingerprinter
 	public static final int CLASS_ECFP4=3;
 	public static final int CLASS_ECFP6=4;
 	// identity by functional character of the atom
-	public static final int CLASS_FCFP0=5; 
-	public static final int CLASS_FCFP2=6; 
-	public static final int CLASS_FCFP4=7; 
-	public static final int CLASS_FCFP6=8; 	
+	public static final int CLASS_FCFP0=5;
+	public static final int CLASS_FCFP2=6;
+	public static final int CLASS_FCFP4=7;
+	public static final int CLASS_FCFP6=8;
 
 	public static final class FP
 	{
@@ -104,19 +104,19 @@ public class CircularFingerprinter implements IFingerprinter
 	}
 
 	// ------------ private members ------------
-	
+
 	private final int ATOMCLASS_ECFP=1;
 	private final int ATOMCLASS_FCFP=2;
 
 	private int classType,atomClass;
 	private IAtomContainer mol;
-	
+
 	private int[] identity;
 	private boolean[] resolvedChiral;
 	private int[][] atomGroup;
 	private CRC32 crc=new CRC32(); // recycled for each CRC calculation
 	private ArrayList<FP> fplist=new ArrayList<FP>();
-	
+
 	// summary information about the molecule, for quick access
 	private boolean[] amask; // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
 	private int[] hcount; // total hydrogen count, including explicit and implicit hydrogens
@@ -145,22 +145,22 @@ public class CircularFingerprinter implements IFingerprinter
     {
     	classType=CLASS_ECFP6;
 	}
-	
+
 	/**
 	 * Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
 	 * for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
 	 * path diameter, and may be 0, 2, 4 or 6.
-	 * 
+	 *
 	 * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
 	 */
 	public CircularFingerprinter(int classType)
 	{
 		this.classType=classType;
 	}
-	
+
 	/**
 	 * Calculates the fingerprints for the given {@link IAtomContainer}, and stores them for subsequent retrieval.
-	 * 
+	 *
 	 * @param mol chemical structure; all nodes should be known legitimate elements
 	 */
 	public void calculate(IAtomContainer mol) throws CDKException
@@ -168,10 +168,10 @@ public class CircularFingerprinter implements IFingerprinter
 		this.mol=mol;
 		fplist.clear();
 		atomClass=classType<=CLASS_ECFP6 ? ATOMCLASS_ECFP : ATOMCLASS_FCFP;
-		
+
 		excavateMolecule();
 		if (atomClass==ATOMCLASS_FCFP) calculateBioTypes();
-		
+
 		final int na=mol.getAtomCount();
 		identity=new int[na];
 		resolvedChiral=new boolean[na];;
@@ -186,9 +186,9 @@ public class CircularFingerprinter implements IFingerprinter
 			atomGroup[n]=new int[]{n};
 			fplist.add(new FP(identity[n],0,atomGroup[n]));
 		}
-		
-		int niter=classType==CLASS_ECFP2 || classType==CLASS_FCFP2 ? 1 : 
-				  classType==CLASS_ECFP4 || classType==CLASS_FCFP4 ? 2 : 
+
+		int niter=classType==CLASS_ECFP2 || classType==CLASS_FCFP2 ? 1 :
+				  classType==CLASS_ECFP4 || classType==CLASS_FCFP4 ? 2 :
 				  classType==CLASS_ECFP6 || classType==CLASS_FCFP6 ? 3 : 0;
 
 		// iterate outward
@@ -197,34 +197,34 @@ public class CircularFingerprinter implements IFingerprinter
 			final int[] newident=new int[na];
 			for (int n=0;n<na;n++) if (amask[n]) newident[n]=circularIterate(iter,n);
 			identity=newident;
-			
+
 			for (int n=0;n<na;n++) if (amask[n])
 			{
 				atomGroup[n]=growAtoms(atomGroup[n]);
 				considerNewFP(new FP(identity[n],iter,atomGroup[n]));
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * Returns the number of fingerprints generated.
-	 * 
+	 *
 	 * @return total number of unique fingerprint hashes generated
 	 * */
 	public int getFPCount() {return fplist.size();}
-	
+
 	/**
 	 * Returns the requested fingerprint.
-	 * 
+	 *
 	 * @param N index of fingerprint (0-based)
 	 * @return instance of a fingerprint hash
 	 * */
 	public FP getFP(int N) {return fplist.get(N);}
-	
+
 	/**
 	 * Calculates the circular fingerprint for the given {@link IAtomContainer}, and <b>folds</b> the result into a single bitset
 	 * (see getSize()).
-	 * 
+	 *
 	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
 	 * @return the fingerprint
 	 */
@@ -246,7 +246,7 @@ public class CircularFingerprinter implements IFingerprinter
 	/**
 	 * Calculates the circular fingerprint for the given {@link IAtomContainer}, and returns a datastructure that enumerates all
 	 * of the fingerprints, and their counts (i.e. does <b>not</b> fold them into a bitmask).
-	 * 
+	 *
 	 * @param  mol IAtomContainer for which the fingerprint should be calculated.
 	 * @return the count fingerprint
 	 */
@@ -254,12 +254,12 @@ public class CircularFingerprinter implements IFingerprinter
 	public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException
 	{
 		calculate(mol);
-		
+
 		// extract a convenient {hash:count} datastructure
 		final HashMap<Integer,Integer> map=new HashMap<Integer,Integer>();
 		for (FP fp : fplist)
 		{
-			if (map.containsKey(fp.hashCode)) 
+			if (map.containsKey(fp.hashCode))
 				map.put(fp.hashCode,map.get(fp.hashCode)+1);
 			else
 				map.put(fp.hashCode,1);
@@ -272,7 +272,7 @@ public class CircularFingerprinter implements IFingerprinter
 			hash[n]=h;
 			count[n++]=map.get(h);
 		}
-		
+
 		// implement a custom instance that provides a window directly into the summary content
 		return new ICountFingerprint()
 		{
@@ -286,7 +286,7 @@ public class CircularFingerprinter implements IFingerprinter
             public int getCountForHash(int hash) {return map.containsKey(hash) ? map.get(hash) : 0;}
 		};
 	}
-    
+
 	/**
      * Invalid: it is not appropriate to convert the integer hash codes into strings.
      */
@@ -294,16 +294,16 @@ public class CircularFingerprinter implements IFingerprinter
     {
     	throw new UnsupportedOperationException();
     }
-	
+
 	/**
 	 * Returns the extent of the folded fingerprints.
-	 * 
+	 *
 	 * @return the size of the fingerprint
 	 */
 	public int getSize() {return 1024;}
 
 	// ------------ private methods ------------
-	
+
 	// calculates an integer number that stores the bit-packed identity of the given atom
 	private int initialIdentityECFP(int aidx)
 	{
@@ -319,7 +319,7 @@ public class CircularFingerprinter implements IFingerprinter
 		*/
 
 		IAtom atom=mol.getAtom(aidx);
-	
+
 		int nheavy=atomAdj[aidx].length,nhydr=hcount[aidx];
 		int atno=atom.getAtomicNumber();
 
@@ -343,7 +343,7 @@ public class CircularFingerprinter implements IFingerprinter
 		int degree=(atno>0 && atno<ELEMENT_BONDING.length ? ELEMENT_BONDING[atno] : 0)-nhydr;
 		int chg=atom.getFormalCharge();
 		int inring=ringBlock[aidx]>0 ? 1 : 0;
-		
+
 		crc.reset();
 		crc.update((nheavy<<4)|degree);
 		crc.update(atno);
@@ -361,11 +361,11 @@ public class CircularFingerprinter implements IFingerprinter
 			   (maskHal[aidx] ? 0x20 : 0);
 	}
 
-	// takes the current identity values 
+	// takes the current identity values
 	private int circularIterate(int iter,int atom)
 	{
 		final int[] adj=atomAdj[atom],adjb=bondAdj[atom];
-		
+
 		// build out a sequence, formulated as
 		//     {iteration,original#, adj0-bondorder,adj0-identity, ..., [chiral?]}
 		final int[] seq=new int[2+2*adj.length];
@@ -376,7 +376,7 @@ public class CircularFingerprinter implements IFingerprinter
 			seq[2*n+2]=bondArom[adjb[n]] ? 0xF : bondOrder[adjb[n]];
 			seq[2*n+3]=identity[adj[n]];
 		}
-		
+
 		// now sort the adjacencies by bond order first, then identity second
 		int p=0;
 		while (p<adj.length-1)
@@ -390,7 +390,7 @@ public class CircularFingerprinter implements IFingerprinter
 			}
 			else p++;
 		}
-		
+
 		// roll it up into a hash code
 		crc.reset();
 		for (int n=0;n<seq.length;n+=2)
@@ -402,7 +402,7 @@ public class CircularFingerprinter implements IFingerprinter
 			crc.update((v>>8)&0xFF);
 			crc.update(v&0xFF);
 		}
-		
+
 		// chirality flag: one chance to resolve it
 		if (!resolvedChiral[atom] && tetra[atom]!=null)
 		{
@@ -429,10 +429,10 @@ public class CircularFingerprinter implements IFingerprinter
 				resolvedChiral[atom]=true;
 			}
 		}
-		
+
 		return (int)crc.getValue();
 	}
-	
+
 	// takes a set of atom indices and adds all atoms that are adjacent to at least one of them; the resulting list of
 	// atom indices is sorted
 	private int[] growAtoms(int[] atoms)
@@ -451,7 +451,7 @@ public class CircularFingerprinter implements IFingerprinter
 		for (int n=na-1;n>=0;n--) if (mask[n]) newList[--sz]=n;
 		return newList;
 	}
-	
+
 	// consider adding a new fingerprint: if it's a duplicate with regard to the atom list, either replace the match or
 	// discard it
 	private void considerNewFP(FP newFP)
@@ -466,24 +466,24 @@ public class CircularFingerprinter implements IFingerprinter
 			for (int i=fp.atoms.length-1;equal && i>=0;i--) if (fp.atoms[i]!=newFP.atoms[i]) equal=false;
 			if (equal) {hit=n; break;}
 		}
-		if (hit<0) 
+		if (hit<0)
 		{
 			fplist.add(newFP);
 			return;
 		}
-		
+
 		// if the preexisting fingerprint is from an earlier iteration, or has a lower hashcode, discard
 		if (fp.iteration<newFP.iteration || fp.hashCode<newFP.hashCode) return;
 		fplist.set(hit,newFP);
-	}	
-	
+	}
+
 	// ------------ molecule analysis: cached cheminformatics ------------
-	
+
 	// summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
 	private void excavateMolecule()
 	{
 		final int na=mol.getAtomCount(),nb=mol.getBondCount();
-		
+
 		// create the mask of heavy atoms (amask) and the adjacency graphs, index-based, that are used to traverse
 		// the heavy part of the graph
 		amask=new boolean[na];
@@ -542,9 +542,9 @@ public class CircularFingerprinter implements IFingerprinter
 			}
         	hcount[n]+=Math.max(0,hy);
         }
-		
+
 		markRingBlocks();
-		
+
 		ArrayList<int[]> rings=new ArrayList<int[]>();
 		for (int rsz=3;rsz<=7;rsz++)
 		{
@@ -558,11 +558,11 @@ public class CircularFingerprinter implements IFingerprinter
 		smallRings=rings.toArray(new int[rings.size()][]);
 
 		detectStrictAromaticity();
-		
+
 		tetra=new int[na][];
 		for (int n=0;n<na;n++) tetra[n]=rubricTetrahedral(n);
 	}
-	
+
 	// assign a ring block ID to each atom (0=not in ring)
 	private void markRingBlocks()
 	{
@@ -576,7 +576,7 @@ public class CircularFingerprinter implements IFingerprinter
     	while (true)
     	{
     	    int last,current;
-    
+
     	    if (plen==0) // find an element of a new component to visit
     	    {
     	    	last=-1;
@@ -589,11 +589,11 @@ public class CircularFingerprinter implements IFingerprinter
     	    	current=-1;
     	    	for (int n=0;n<atomAdj[last].length;n++) if (!visited[atomAdj[last][n]]) {current=atomAdj[last][n]; break;}
     	    }
-	    
+
     	    if (current>=0 && plen>=2) // path is at least 2 items long, so look for any not-previous visited neighbours
     	    {
     	    	int back=path[plen-1];
-        		for (int n=0;n<atomAdj[current].length;n++) 
+        		for (int n=0;n<atomAdj[current].length;n++)
         		{
         		    int join=atomAdj[current][n];
         		    if (join!=back && visited[join])
@@ -621,7 +621,7 @@ public class CircularFingerprinter implements IFingerprinter
     	    	plen--;
     	    }
     	}
-	
+
     	// the ring ID's are not necessarily consecutive, so reassign them to 0=none, 1..NBlocks
     	int nextID=0;
     	for (int i=0;i<na;i++) if (ringBlock[i]>0)
@@ -631,7 +631,7 @@ public class CircularFingerprinter implements IFingerprinter
     	}
     	for (int i=0;i<na;i++) ringBlock[i]=-ringBlock[i];
 	}
-	
+
     // hunt for ring recursively: start with a partially defined path, and go exploring
     private void recursiveRingFind(int[] path,int psize,int capacity,int rblk,ArrayList<int[]> rings)
     {
@@ -655,13 +655,13 @@ public class CircularFingerprinter implements IFingerprinter
     	    }
     	    return;
     	}
-	
+
     	// path is full, so make sure it eats its tail
     	int last=path[psize-1];
     	boolean fnd=false;
     	for (int n=0;n<atomAdj[last].length;n++) if (atomAdj[last][n]==path[0]) {fnd=true; break;}
     	if (!fnd) return;
-    	
+
     	// make sure every element in the path has exactly 2 neighbours within the path; otherwise it is spanning a bridge, which
     	// is an undesirable ring definition
     	for (int n=0;n<path.length;n++)
@@ -670,7 +670,7 @@ public class CircularFingerprinter implements IFingerprinter
     		for (int i=0;i<atomAdj[p].length;i++) for (int j=0;j<path.length;j++) if (atomAdj[p][i]==path[j]) {count++; break;}
     		if (count!=2) return; // invalid
     	}
-	
+
     	// reorder the array (there are 2N possible ordered permutations) then look for duplicates
     	int first=0;
     	for (int n=1;n<psize;n++) if (path[n]<path[first]) first=n;
@@ -682,7 +682,7 @@ public class CircularFingerprinter implements IFingerprinter
     	    for (int n=0;n<psize;n++) newPath[n]=path[(first+(flip ? psize-n : n))%psize];
     	    path=newPath;
     	}
-		
+
     	for (int n=0;n<rings.size();n++)
     	{
     	    int[] look=rings.get(n);
@@ -690,7 +690,7 @@ public class CircularFingerprinter implements IFingerprinter
     	    for (int i=0;i<psize;i++) if (look[i]!=path[i]) {same=false; break;}
     	    if (same) return;
     	}
-    	
+
     	rings.add(path);
     }
 
@@ -702,9 +702,9 @@ public class CircularFingerprinter implements IFingerprinter
 		final int na=mol.getAtomCount(),nb=mol.getBondCount();
 		atomArom=new boolean[na];
 		bondArom=new boolean[nb];
-		
+
 		if (smallRings.length==0) return;
-		
+
 		boolean[] piAtom=new boolean[na];
 		for (int n=0;n<nb;n++) if (bondOrder[n]==2)
 		{
@@ -726,13 +726,13 @@ public class CircularFingerprinter implements IFingerprinter
 			}
 			if (consider) maybe.add(r);
 		}
-		
+
 		// keep classifying rings as aromatic until no change; this needs to be done iteratively, for the benefit of highly
 		// embedded ring systems, that can't be classified as aromatic until it is known that their neighbours obviously are
 		while (true)
 		{
 			boolean anyChange=false;
-			
+
 			for (int n=maybe.size()-1;n>=0;n--)
 			{
 				int[] r=maybe.get(n);
@@ -745,7 +745,7 @@ public class CircularFingerprinter implements IFingerprinter
 					phase2=phase2 && bondOrder[b]==(1+(i&1));
 				}
 				if (!phase1 && !phase2) continue;
-				
+
 				// the ring is deemed aromatic: mark the flags and remove from the maybe list
 				for (int i=0;i<r.length;i++)
 				{
@@ -755,11 +755,11 @@ public class CircularFingerprinter implements IFingerprinter
 				maybe.remove(n);
 				anyChange=true;
 			}
-			
+
 			if (!anyChange) break;
 		}
 	}
-	
+
 	// tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
 	// build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
 	// 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
@@ -769,7 +769,7 @@ public class CircularFingerprinter implements IFingerprinter
     private int[] rubricTetrahedral(int aidx)
     {
     	if (hcount[aidx]>1) return null;
-    	
+
     	// make sure the atom has an acceptable environment
     	IAtom atom=mol.getAtom(aidx);
         final int[] ELEMENT_BLOCKS=
@@ -806,7 +806,7 @@ public class CircularFingerprinter implements IFingerprinter
 			if (a3d!=null && o3d!=null && a3d.z!=o3d.z) {wedgeOr3D=true; break;}
 		}
 		if (!wedgeOr3D) return null;
-		
+
 		// fill in existing positions, including "fake" Z coordinate if wedges are being used
 		Point2d a2d=atom.getPoint2d();
 		final float x0=a3d!=null ? (float)a3d.x : (float)a2d.x;
@@ -835,7 +835,7 @@ public class CircularFingerprinter implements IFingerprinter
 				yp[n]=(float)(o2d.y-y0);
 				zp[n]=other==bond.getAtom(0) ? 0 : stereo==IBond.Stereo.UP ? 1 : stereo==IBond.Stereo.DOWN ? -1 : 0;
 			}
-			
+
 			final float dx=xp[n]-x0,dy=yp[n]-y0,dz=zp[n]-z0;
 			final float dsq=dx*dx+dy*dy+dz*dz;
 			if (dsq<0.01f*0.01f)
@@ -844,7 +844,7 @@ public class CircularFingerprinter implements IFingerprinter
 				if (numShort>1) return null; // second one's the dealbreaker
 			}
 		}
-		
+
 		// build an implicit H if necessary
 		int[] adj=atomAdj[aidx];
 		if (adjc==3)
@@ -858,7 +858,7 @@ public class CircularFingerprinter implements IFingerprinter
 			float inv=1.0f/(float)Math.sqrt(dsq);
 			xp[3]*=inv; yp[3]*=inv; zp[3]*=inv;
 		}
-		
+
 		// make the call on permutational parity
 		float one=0,two=0;
 		for (int i=1;i<=6;i++)
@@ -871,11 +871,11 @@ public class CircularFingerprinter implements IFingerprinter
     		float zz=xp[a]*yp[b]-xp[b]*yp[a] - zp[0];
     		if (i<=3) one+=xx*xx+yy*yy+zz*zz; else two+=xx*xx+yy*yy+zz*zz;
 		}
-		
+
 		if (two>one) {int i=adj[2]; adj[2]=adj[3]; adj[3]=i;}
 		return adj;
     }
-    
+
     // biotypes: when generating FCFP-type descriptors, atoms are initially labelled according to their functional
     // capabilities, that being defined by centers of biological interactions, such as hydrogen bonding and electrostatics
 	private void calculateBioTypes()
@@ -888,9 +888,9 @@ public class CircularFingerprinter implements IFingerprinter
 		maskNeg=new boolean[na];
 		maskAro=new boolean[na];
 		maskHal=new boolean[na];
-		
+
 		aliphatic=new boolean[na];
-		bondSum=new int[na];		
+		bondSum=new int[na];
 		for (int n=0;n<na;n++) if (amask[n])
 		{
 			aliphatic[n]=mol.getAtom(n).getSymbol().equals("C");
@@ -937,7 +937,7 @@ public class CircularFingerprinter implements IFingerprinter
 			considerBioTypeAromaticity(r);
 			if (r.length==5) considerBioTypeTetrazole(r);
 		}
-		
+
 		// calculate each remaining property
 		for (int n=0;n<na;n++) if (amask[n])
 		{
@@ -948,7 +948,7 @@ public class CircularFingerprinter implements IFingerprinter
     		maskHal[n]=determineHalide(n);
 		}
 	}
-	
+
 	// if the given ring is aromatic, mark the atoms accordingly: note that this "biotype" definition of aromaticity is
 	// different to the one used in the rest of this class: any ring of size 5 to 7 that has a lone pair or pi bond on every
 	// atom is labelled as aromatic, because the concept required is physical behaviour, i.e. ring current and effect on
@@ -966,7 +966,7 @@ public class CircularFingerprinter implements IFingerprinter
 		if (countDouble<rsz-2) return;
 		for (int n=0;n<rsz;n++) maskAro[ring[n]]=true;
 	}
-	
+
 	// if the given ring is a tetrazole, mark the aroms accordingly; must be ring size length 5; it's possible to fool the
 	// tetrazole test with a non-sane/invalid molecule
 	private void considerBioTypeTetrazole(final int[] ring)
@@ -989,14 +989,14 @@ public class CircularFingerprinter implements IFingerprinter
 	{
 		// must have a hydrogen atom, either implicit or explicit
 		if (hcount[aidx]==0) return false;
-		
+
 		IAtom atom=mol.getAtom(aidx);
 		final String el=atom.getSymbol();
 		if (el.equals("N") || el.equals("O"))
 		{
 			// tetrazoles do not donate
 			if (tetrazole[aidx]) return false;
-		
+
 			// see if any of the neighbours is an oxide of some sort; this is grounds for disqualification, with the exception
 			// of amides, which are consider nonacidic
 			for (int n=0;n<atomAdj[aidx].length;n++) if (isOxide[atomAdj[aidx][n]])
@@ -1017,7 +1017,7 @@ public class CircularFingerprinter implements IFingerprinter
 			for (int n=0;n<bondAdj[aidx].length;n++) if (bondOrderBioType(bondAdj[aidx][n])==3) return true;
 			return false;
 		}
-		
+
 		return false;
 	}
 
@@ -1028,7 +1028,7 @@ public class CircularFingerprinter implements IFingerprinter
 
     	// must have an N,O,S lonepair and nonpositive charge for starters
     	if (!lonePair[aidx] || mol.getAtom(aidx).getFormalCharge()>0) return false;
-    
+
     	// basic nitrogens do not qualify
     	if (atom.getSymbol().equals("N"))
     	{
@@ -1036,10 +1036,10 @@ public class CircularFingerprinter implements IFingerprinter
     		for (int n=0;n<atomAdj[aidx].length;n++) if (!aliphatic[atomAdj[aidx][n]]) {basic=false; break;}
     		if (basic) return false;
     	}
-    
+
     	return true;
     }
-    
+
     // positive charge centre
     private boolean determinePositive(int aidx)
     {
@@ -1061,7 +1061,7 @@ public class CircularFingerprinter implements IFingerprinter
     		boolean basic=true;
     		for (int n=0;n<atomAdj[aidx].length;n++) if (!aliphatic[atomAdj[aidx][n]]) {basic=false; break;}
     		if (basic) return true;
-    		
+
     		// imines with N=C-N motif: the carbon atom must be bonded to at least one amine, and both other substituents
     		// have to be without double bonds, i.e. R-N=C(R)NR2 or R-N=C(NR2)NR2 (R=not hydrogen)
     		if (hasDouble[aidx] && hcount[aidx]==0)
@@ -1071,7 +1071,7 @@ public class CircularFingerprinter implements IFingerprinter
     			if (other>=0)
     			{
         			int amines=0;
-        			for (int n=0;n<atomAdj[other].length;n++) 
+        			for (int n=0;n<atomAdj[other].length;n++)
         			{
         				final int a=atomAdj[other][n];
         				if (a==aidx) continue;
@@ -1102,15 +1102,15 @@ public class CircularFingerprinter implements IFingerprinter
     		}
     		if (imine && amine) return true;
     	}
-    
+
 		return false;
     }
-    
+
     // negative charge centre
     private boolean determineNegative(int aidx)
     {
     	IAtom atom=mol.getAtom(aidx);
-    	
+
     	// consider formal ionic charge first
     	final int chg=atom.getFormalCharge();
     	if (chg>0) return false;
@@ -1119,12 +1119,12 @@ public class CircularFingerprinter implements IFingerprinter
     		for (int n=0;n<atomAdj[aidx].length;n++) if (mol.getAtom(atomAdj[aidx][n]).getFormalCharge()>0) return false;
     		return true;
     	}
-    	
+
     	final String el=atom.getSymbol();
-    	
+
     	// tetrazole nitrogens get negative charges
     	if (tetrazole[aidx] && el.equals("N")) return true;
-    	
+
     	// centres with an oxide and an -OH group qualify as negative
     	if (isOxide[aidx] && (el.equals("C") || el.equals("S") || el.equals("P")))
     	{
@@ -1137,14 +1137,14 @@ public class CircularFingerprinter implements IFingerprinter
 
 		return false;
     }
-    
+
     // halide
     private boolean determineHalide(int aidx)
     {
     	final String el=mol.getAtom(aidx).getSymbol();
     	return el.equals("F") || el.equals("Cl") || el.equals("Br") || el.equals("I");
     }
-    
+
     // returns either the bond order in the molecule, or -1 if the atoms are both labelled as aromatic
     private int bondOrderBioType(int bidx)
     {
@@ -1154,7 +1154,7 @@ public class CircularFingerprinter implements IFingerprinter
     	if (maskAro[a1] && maskAro[a2]) return -1;
     	return bondOrder[bidx];
     }
-	
+
 	// convenience: appending to an int array
 	private int[] appendInteger(int[] a,int v)
 	{
@@ -1167,11 +1167,11 @@ public class CircularFingerprinter implements IFingerprinter
 
 	// convenience: scans the atom adjacency to grab the bond index
 	private int findBond(int a1,int a2)
-	{	
+	{
 		for (int n=atomAdj[a1].length-1;n>=0;n--) if (atomAdj[a1][n]==a2) return bondAdj[a1][n];
 		return -1;
 	}
-		
+
 	/* for debugging convenience: revive if necessary
 	private void wr(String str) {System.out.println(str);}
 	private String arrayStr(int[] val)

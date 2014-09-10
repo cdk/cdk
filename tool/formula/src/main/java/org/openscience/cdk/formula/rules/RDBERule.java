@@ -35,10 +35,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
- * <p>Ring Double Bond Equivalents (RDBE) or 
- * Double Bond Equivalents (DBE) are calculated from valence values of 
+ * <p>Ring Double Bond Equivalents (RDBE) or
+ * Double Bond Equivalents (DBE) are calculated from valence values of
  * elements contained in a formula and should tell the number of bonds - or rings.
- *  Since this formula will fail for MFs with higher valence states such as 
+ *  Since this formula will fail for MFs with higher valence states such as
  *  N(V), P(V), S(IV) or S(VI), this method will focus on the lowest valence state for these elements.</p>
  *  <p>The equation used is: D = 1 + [0.5 SUM_i(N_i(V_I-2))]</p>
  *  <p>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  *     <td>The RDBE rule of MolecularFormula</td>
  *   </tr>
  * </table>
- * 
+ *
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2008-06-11
@@ -78,28 +78,28 @@ public class RDBERule implements IRule{
         createTable();
     }
 
-    
+
 	/**
      * Sets the parameters attribute of the RDBE object.
      *
      * @param params          The new parameters value
      * @throws CDKException   Description of the Exception
-     * 
+     *
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	if (params.length != 2) 
+    	if (params.length != 2)
             throw new CDKException("RDBERule expects two parameters");
-        
+
       	 if(!(params[0] instanceof Double))
       		 throw new CDKException("The 1 parameter must be of type Double");
 
       	 if(!(params[1] instanceof Double))
       		 throw new CDKException("The 2 parameter must be of type Double");
-      	 
+
       	min = (Double)params[0];
       	max = (Double)params[1];
-        
+
     }
 
     /**
@@ -116,7 +116,7 @@ public class RDBERule implements IRule{
         return params;
     }
 
-    
+
     /**
      * Validate the RDBRule of this IMolecularFormula.
      *
@@ -126,7 +126,7 @@ public class RDBERule implements IRule{
 
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
-    	
+
     	List<Double> RDBEList = getRDBEValue(formula);
     	for(Iterator<Double> it = RDBEList.iterator(); it.hasNext();){
     		double RDBE = it.next();
@@ -134,43 +134,43 @@ public class RDBERule implements IRule{
     			if(validate(formula, RDBE))
     				return 1.0;
     	}
-    	
+
     	return 0.0;
-    	
+
     }
     /**
      * Validate the ion state. It takes into account that neutral, nonradical compounds
      * always have an even-numbered pair-wiser arrangement of binding electrons signilizaded
      * by an integer DBE value. Charged compounds due to soft ionzation techniques
      * will give an odd number of binding electrons and a fractional DBE (X.05).
-     * 
+     *
      * @param formula   Parameter is the IMolecularFormula
      * @param  value    The RDBE value
-     * @return          True, if corresponds with 
+     * @return          True, if corresponds with
      */
     public boolean validate(IMolecularFormula formula, double value) throws CDKException {
-    	
+
     	double charge = 0.0;
-    	
+
     	if(formula.getCharge() != CDKConstants.UNSET)
     		charge = formula.getCharge();
-    	
+
     	long iPart = (long) value;
         double fPart = value - iPart;
-        
+
         if(fPart == 0.0 && charge == 0)
         	return true;
         if(fPart != 0.0 && charge != 0)
         	return true;
-        else 
+        else
         	return false;
-        	
+
     }
 
     /**
-     * Method to extract the Ring Double Bond Equivalents (RDB) value. It test all possible 
+     * Method to extract the Ring Double Bond Equivalents (RDB) value. It test all possible
      * oxidation states.
-     * 
+     *
      * @param formula The IMolecularFormula object
      * @return        The RDBE value
      * @see           #createTable()
@@ -191,7 +191,7 @@ public class RDBERule implements IRule{
     			nE += MolecularFormulaManipulator.getElementCount(formula, formula.getBuilder().newInstance(IElement.class,isotope.getSymbol()));
     		}
 		}
-		
+
 		double RDBE = 0;
 		if(nE == 0){
 			for(Iterator<IIsotope> it = formula.isotopes().iterator(); it.hasNext();){
@@ -199,7 +199,7 @@ public class RDBERule implements IRule{
 	    		int[] valence = getOxidationState(formula.getBuilder().newInstance(IAtom.class,isotope.getSymbol()));
 	    		double value = (valence[0]-2)*formula.getIsotopeCount(isotope)/2.0;
 	    		RDBE += value;
-	    	}	
+	    	}
 			RDBE += 1;
 	    	RDBEList.add(RDBE);
 		}else{
@@ -212,8 +212,8 @@ public class RDBERule implements IRule{
 	    	}
 			String[] valences = new String[nV.size()];
 			for(int i = 0 ; i < valences.length; i++)
-				valences[i] = Integer.toString(nV.get(i)); 
-			
+				valences[i] = Integer.toString(nV.get(i));
+
 			Combinations c = new Combinations(valences, nE);
 			while (c.hasMoreElements()) {
 				double RDBE_int = 0.0;
@@ -231,7 +231,7 @@ public class RDBERule implements IRule{
 
 	/**
 	 * Get the common oxidation state given a atom.
-	 * 
+	 *
 	 * @param newAtom The IAtom
 	 * @return        The oxidation state value
 	 */
@@ -294,7 +294,7 @@ public class RDBERule implements IRule{
         private int[] index;
         private boolean hasMore = true;
         /**
-        * Create a Combination to enumerate through all subsets of the 
+        * Create a Combination to enumerate through all subsets of the
         * supplied Object array, selecting m at a time.
         *
         * @param inArray the group to choose from
@@ -304,11 +304,11 @@ public class RDBERule implements IRule{
             this.inArray = inArray;
             this.n = inArray.length;
             this.m = m;
-            
-            /**
-            * index is an array of ints that keep track of the next combination to return. 
 
-            * For example, an index on 5 things taken 3 at a time might contain {0 3 4}. 
+            /**
+            * index is an array of ints that keep track of the next combination to return.
+
+            * For example, an index on 5 things taken 3 at a time might contain {0 3 4}.
             * This index will be followed by {1 2 3}. Initially, the index is {0 ... m - 1}.
             */
             index = new int[m];
@@ -319,13 +319,13 @@ public class RDBERule implements IRule{
         * @return true, unless we have already returned the last combination.
         */
         public boolean hasMoreElements()
-        { 
+        {
             return hasMore;
         }
         /**
         * Move the index forward a notch. The algorithm finds the rightmost
-        * index element that can be incremented, increments it, and then 
-        * changes the elements to the right to each be 1 plus the element on their left. 
+        * index element that can be incremented, increments it, and then
+        * changes the elements to the right to each be 1 plus the element on their left.
         * <p>
         * For example, if an index of 5 things taken 3 at a time is at {0 3 4}, only the 0 can
         * be incremented without running out of room. The next index is {1, 1+1, 1+2) or
@@ -336,15 +336,15 @@ public class RDBERule implements IRule{
         */
         private void moveIndex(){
             int i = rightmostIndexBelowMax();
-            if (i >= 0){    
-                index[i] = index[i] + 1; 
+            if (i >= 0){
+                index[i] = index[i] + 1;
                 for (int j = i + 1; j < m; j++)
                     index[j] = index[j-1];
             }else
             	hasMore = false;
         }
         /**
-        * @return java.lang.Object, the next combination from the supplied Object array. 
+        * @return java.lang.Object, the next combination from the supplied Object array.
         * <p>
         * Actually, an array of Objects is returned. The declaration must say just Object,
         * because the Combinations class implements Enumeration, which declares that the

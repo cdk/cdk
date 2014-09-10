@@ -23,9 +23,9 @@ import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.tools.DataFeatures;
 
 /**
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -34,15 +34,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class UniChemXYZFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public UniChemXYZFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new UniChemXYZFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

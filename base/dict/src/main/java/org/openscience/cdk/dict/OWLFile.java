@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -66,21 +66,21 @@ public class OWLFile extends Dictionary {
             Document doc = parser.build(reader);
             Element root = doc.getRootElement();
             logger.debug("Found root element: ", root.getQualifiedName());
-            
+
             // Extract ownNS from root element
 //            final String ownNS = root.getBaseURI();
             final String ownNS = root.getBaseURI();
             dict.setNS(ownNS);
 
             logger.debug("Found ontology namespace: ", ownNS);
-            
+
             // process the defined facts
             Elements entries = root.getChildElements();
             logger.info("Found #elements in OWL dict:", entries.size());
             for (int i=0; i<entries.size(); i++) {
                 Element entry = entries.get(i);
                 if (entry.getNamespaceURI().equals(ownNS)) {
-                	Entry dbEntry = unmarshal(entry, ownNS); 
+                	Entry dbEntry = unmarshal(entry, ownNS);
                 	dict.addEntry(dbEntry);
                 	logger.debug("Added entry: ", dbEntry);
                 } else {
@@ -92,7 +92,7 @@ public class OWLFile extends Dictionary {
             logger.debug("Error at line " + ex.getLineNumber(),
                          ", column " + ex.getColumnNumber());
             dict = null;
-        } catch (IOException ex) { 
+        } catch (IOException ex) {
             logger.error("Due to an IOException, the parser could not check:",
                 ex.getMessage()
             );
@@ -132,5 +132,5 @@ public class OWLFile extends Dictionary {
 
         return dbEntry;
     }
-    
+
 }

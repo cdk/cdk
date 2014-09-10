@@ -1,4 +1,4 @@
-/*  
+/*
 *  Copyright (C) 2009  Mark Rijnbeek <markrynbeek@gmail.com>
 *
 *  Contact: cdk-devel@list.sourceforge.net
@@ -40,7 +40,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class AtomContainerComparatorBy2DCenter implements Comparator<IAtomContainer> {
 
 
-    /** 
+    /**
      * Compare two AtomContainers based on their 2D position.
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */

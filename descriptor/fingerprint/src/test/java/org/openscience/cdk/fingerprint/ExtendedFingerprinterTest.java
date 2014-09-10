@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2009,2011  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,15 +10,15 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
  * @cdk.module test-fingerprint
  */
 public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
-	
+
 	public IFingerprinter getBitFingerprinter() {
 		return new ExtendedFingerprinter();
 	}
@@ -58,11 +58,11 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
 	}
-	
+
 	@Test public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
-		
+
 		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
@@ -70,12 +70,12 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
-	
+
 	@Test
     public void testgetBitFingerprint_IAtomContainer_IRingSet_List() throws java.lang.Exception {
 		ExtendedFingerprinter fingerprinter = new ExtendedFingerprinter();
 		Assert.assertNotNull(fingerprinter);
-		
+
 		IAtomContainer mol = MoleculeFactory.makeIndole();
 		IRingSet rs= Cycles.sssr(mol).toRingSet();
 		List<IRingSet> rslist=RingPartitioner.partitionRings(rs);
@@ -85,8 +85,8 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
-	
-	
+
+
 	@Test public void testGetSize() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
 		Assert.assertNotNull(fingerprinter);
@@ -96,7 +96,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 	@Test public void testExtendedFingerprinter_int() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512);
 		Assert.assertNotNull(fingerprinter);
-		
+
 		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
@@ -104,11 +104,11 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
-	
+
 	@Test public void testExtendedFingerprinter_int_int() throws java.lang.Exception {
 		IFingerprinter fingerprinter = new ExtendedFingerprinter(512,7);
 		Assert.assertNotNull(fingerprinter);
-		
+
 		IAtomContainer mol = MoleculeFactory.makeIndole();
 		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
 		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
@@ -116,10 +116,10 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
 		Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs));
 	}
-	
+
 	/*
 	 * this test only works with allringsfinder in fingerprinter
-	 * shk3 2008-8-7: With the change of the extended fingerprinter in r11932, this works by default 
+	 * shk3 2008-8-7: With the change of the extended fingerprinter in r11932, this works by default
 	 */
 	@Test public void testDifferentRingFinders()throws Exception{
 		IFingerprinter fingerprinter = new ExtendedFingerprinter();
@@ -242,7 +242,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		  molcondensed.addBond(b17);
 		  IBond b18 = molcondensed.getBuilder().newInstance(IBond.class,a13, a16, IBond.Order.SINGLE);
 		  molcondensed.addBond(b18);
-		  
+
 		  IAtomContainer molsingle = new AtomContainer();
 		  IAtom a1s = molsingle.getBuilder().newInstance(IAtom.class,"C");
 		  a1s.setPoint2d(new Point2d(421.99999999999994, 860.0));  molsingle.addAtom(a1s);
@@ -328,16 +328,16 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
 		  molsingle.addBond(b21s);
 		  IBond b22s = molsingle.getBuilder().newInstance(IBond.class,a17s, a20s, IBond.Order.SINGLE);
 		  molsingle.addBond(b22s);
-		  
+
 		  IFingerprinter fingerprinter = new ExtendedFingerprinter();
 		  BitSet bs1 = fingerprinter.getBitFingerprint(molsingle).asBitSet();
 		  BitSet bs2 = fingerprinter.getBitFingerprint(molcondensed).asBitSet();
-		  
+
 		  Assert.assertFalse(FingerprinterTool.isSubset(bs1, bs2));
 		  Assert.assertTrue(FingerprinterTool.isSubset(bs2, bs1));
 
-	}	
-	
+	}
+
 	/*
 	 * The power of the extended fingerprinter could not distinguish these before the change in r11932
 	 */
@@ -378,7 +378,7 @@ public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterT
         for (IAtom atom : mol.atoms()) {
             Assert.assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
         }
-        
+
         String diff1 = AtomContainerDiff.diff(mol, clone);
         Assert.assertEquals("",diff1);
 

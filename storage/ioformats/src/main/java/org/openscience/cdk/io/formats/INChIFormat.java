@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.iupac.org/inchi/">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class INChIFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public INChIFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new INChIFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,7 +68,7 @@ public class INChIFormat extends SimpleChemFormatMatcher implements IChemFormatM
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.INChIReader";
     }
 

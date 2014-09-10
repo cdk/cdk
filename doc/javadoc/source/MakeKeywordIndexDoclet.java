@@ -23,7 +23,7 @@ import java.io.*;
 public class MakeKeywordIndexDoclet {
 
     private final String javaDocKeywordTag = "cdk.keyword";
-    
+
     private final String rootToAPI = "/api/";
     private final String omitPackageNamePart = "org.openscience.cdk.";
 

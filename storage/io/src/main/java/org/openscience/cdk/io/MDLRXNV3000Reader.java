@@ -52,7 +52,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created 2003-10-05
- * 
+ *
  * @cdk.keyword MDL V3000
  * @cdk.require java1.4+
  */
@@ -82,11 +82,11 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     public MDLRXNV3000Reader(InputStream input, Mode mode) {
         this(new InputStreamReader(input), mode);
     }
-    
+
     public MDLRXNV3000Reader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNV3000Format.getInstance();
@@ -136,7 +136,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
              );
          }
      }
-    
+
     /**
      * Reads the command on this line. If the line is continued on the next, that
      * part is added.
@@ -156,7 +156,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
             throw new CDKException("Could not read MDL file: unexpected line: " + line);
         }
     }
-    
+
     private String readLine() throws CDKException {
         String line = null;
         try {
@@ -170,7 +170,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
         }
         return line;
     }
-    
+
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
         IReaction reaction = builder.newInstance(IReaction.class);
         readLine(); // first line should be $RXN
@@ -200,7 +200,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 logger.warn("Waiting for COUNTS line, but found: " + command);
             }
         }
-        
+
         // now read the reactants
         for (int i=1; i<=reactantCount; i++) {
             StringBuffer molFile = new StringBuffer();
@@ -216,7 +216,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 molFile.append(molFileLine);
                 molFile.append(System.getProperty("line.separator"));
             };
-            
+
             try {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
@@ -226,7 +226,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 IAtomContainer reactant = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
                 reader.close();
-                  
+
                 // add reactant
                 reaction.addReactant(reactant);
             } catch (Exception exception) {
@@ -236,7 +236,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 throw new CDKException(error, exception);
             }
         }
-        
+
         // now read the products
         for (int i=1; i<=productCount; i++) {
             StringBuffer molFile = new StringBuffer();
@@ -252,7 +252,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 molFile.append(molFileLine);
                 molFile.append(System.getProperty("line.separator"));
             };
-            
+
             try {
                 // read MDL molfile content
                 MDLV3000Reader reader = new MDLV3000Reader(
@@ -260,7 +260,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 IAtomContainer product = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
                 reader.close();
-                  
+
                 // add product
                 reaction.addProduct(product);
             } catch (Exception exception) {
@@ -270,7 +270,7 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
                 throw new CDKException(error, exception);
             }
         }
-        
+
         return reaction;
     }
 
@@ -299,9 +299,9 @@ public class MDLRXNV3000Reader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-    
+
     private void initIOSettings() {
     }
 
-    
+
 }

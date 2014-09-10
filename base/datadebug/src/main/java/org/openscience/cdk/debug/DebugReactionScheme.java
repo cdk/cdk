@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
  * @cdk.module datadebug
  * @cdk.githash
@@ -39,7 +39,7 @@ public class DebugReactionScheme extends ReactionScheme
     implements IReactionScheme {
 
 	private static final long serialVersionUID = 705803374163613819L;
-	
+
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
 
@@ -161,7 +161,7 @@ public class DebugReactionScheme extends ReactionScheme
 		logger.debug("Adding scheme: ", scheme);
 		super.add(scheme);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public Iterable<IReactionScheme> reactionSchemes() {
 		logger.debug("Getting reactionSchemeIterator");

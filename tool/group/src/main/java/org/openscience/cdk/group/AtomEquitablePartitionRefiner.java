@@ -27,14 +27,14 @@ import java.util.Set;
 /**
  * Refiner for atom containers, which refines partitions of the atoms to
  * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
- * 
+ *
  * @author maclean
  * @cdk.module group
  *
  */
 public class AtomEquitablePartitionRefiner extends
         AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
-    
+
     /**
      * A reference to the discrete refiner, which has the connectivity info.
      */
@@ -43,7 +43,7 @@ public class AtomEquitablePartitionRefiner extends
     public AtomEquitablePartitionRefiner(AtomDiscretePartitionRefiner discreteRefiner) {
         this.discreteRefiner = discreteRefiner;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -57,7 +57,7 @@ public class AtomEquitablePartitionRefiner extends
         }
         return neighbours;
     }
-    
+
     /**
      * @inheritDoc
      */

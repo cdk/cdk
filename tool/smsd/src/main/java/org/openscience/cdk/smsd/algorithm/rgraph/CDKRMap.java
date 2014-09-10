@@ -32,7 +32,7 @@ import org.openscience.cdk.annotations.TestClass;
 /**
  *  An CDKRMap implements the association between an edge (bond) in G1 and an edge
  *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
- * 
+ *
  * @author      Stephane Werner, IXELIS <mail@ixelis.net>,
  *              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
  * @cdk.created 2002-07-24

@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author  Egon Willighagen <egonw@sci.kun.nl>
  */
 public class ChemObjectIOInstantionTests extends CDKTestCase {
-    
+
     private final static String IO_FORMATS_LIST = "io-formats.set";
 
     private static ILoggingTool logger =
@@ -87,7 +87,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
 
     @Test public void testInstantion() {
     	loadFormats();
-    	
+
     	IChemFormat format = null;
     	Iterator<IChemFormat> formatIter = formats.iterator();
     	while (formatIter.hasNext()) {
@@ -100,7 +100,7 @@ public class ChemObjectIOInstantionTests extends CDKTestCase {
             }
         }
     }
-    
+
     private void tryToInstantiate(String className) {
     	try {
             // make a new instance of this class

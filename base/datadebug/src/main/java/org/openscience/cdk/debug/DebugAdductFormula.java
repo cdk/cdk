@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging implementation of {@link IAdductFormula}.
- * 
+ *
  * @cdk.module datadebug
  * @cdk.githash tag
  */
@@ -39,15 +39,15 @@ public class DebugAdductFormula extends AdductFormula implements IAdductFormula 
 
     private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAdductFormula.class);
-	
+
     public DebugAdductFormula() {
     	super();
     }
-    
+
     public DebugAdductFormula(IMolecularFormula formula) {
     	super(formula);
     }
-    
+
     /** {@inheritDoc} */ @Override
 	public boolean contains(IIsotope isotope) {
 	    logger.debug("Contains Isotope?: ", isotope);

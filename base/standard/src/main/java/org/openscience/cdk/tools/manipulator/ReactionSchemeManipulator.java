@@ -1,7 +1,7 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -43,8 +43,8 @@ import java.util.List;
 public class ReactionSchemeManipulator {
 
     /**
-     * Get all Molecules object from a set of Reactions given a IMoleculeSet to add. 
-     * 
+     * Get all Molecules object from a set of Reactions given a IMoleculeSet to add.
+     *
      * @param  scheme The set of reaction to inspect
      * @param  molSet The set of molecules to be added
      * @return        The IMoleculeSet
@@ -81,12 +81,12 @@ public class ReactionSchemeManipulator {
 
             }
         }
-	    
+
 	    return molSet;
     }
     /**
-     * get all AtomContainers object from a set of Reactions. 
-     * 
+     * get all AtomContainers object from a set of Reactions.
+     *
      * @param scheme The scheme of reaction to inspect
      * @return       The IAtomContainerSet
      */
@@ -97,7 +97,7 @@ public class ReactionSchemeManipulator {
 
     /**
      * Get all ID of this IReactionSet.
-     * 
+     *
      * @param scheme  The IReactionScheme to analyze
      * @return        A List with all ID
      */
@@ -116,15 +116,15 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Get all IReaction's object from a given IReactionScheme. 
-     * 
+     * Get all IReaction's object from a given IReactionScheme.
+     *
      * @param  scheme The IReactionScheme to extract
      * @return        The IReactionSet
      */
     @TestMethod("testGetAllReactions_IReactionScheme")
     public static IReactionSet getAllReactions(IReactionScheme scheme) {
     	IReactionSet reactionSet = scheme.getBuilder().newInstance(IReactionSet.class);
-    	
+
     	// A ReactionScheme can contain other IRreactionSet objects
 		if(scheme.getReactionSchemeCount() != 0)
     		for(IReactionScheme schemeInt : scheme.reactionSchemes()){
@@ -133,15 +133,15 @@ public class ReactionSchemeManipulator {
     		}
         for (IReaction reaction : scheme.reactions())
         	reactionSet.addReaction(reaction);
-        
-            
-	    
+
+
+
 	    return reactionSet;
     }
 
     /**
      * Create a IReactionScheme give a IReactionSet object.
-     * 
+     *
      * @param  reactionSet The IReactionSet
      * @return             The IReactionScheme
      */
@@ -149,14 +149,14 @@ public class ReactionSchemeManipulator {
 	public static IReactionScheme createReactionScheme(IReactionSet reactionSet) {
         IReactionScheme reactionScheme =
             reactionSet.getBuilder().newInstance(IReactionScheme.class);
-        
+
         // Looking for those reactants which doesn't have any precursor. They are the top.
         ArrayList<IReaction> listTopR = new ArrayList<IReaction>();
         for (IReaction reaction : reactionSet.reactions()) {
         	if(extractPrecursorReaction(reaction,reactionSet).getReactionCount() == 0)
     			listTopR.add(reaction);
         }
-        
+
         for(IReaction reaction: listTopR){
         	reactionScheme.addReaction(reaction);
         	IReactionScheme newReactionScheme = setScheme(reaction, reactionSet);
@@ -168,14 +168,14 @@ public class ReactionSchemeManipulator {
     /**
      * Extract a set of Reactions which are in top of a IReactionScheme. The top reactions are those
      * which any of their reactants are participating in other reactions as a products.
-     * 
+     *
      * @param reactionScheme  The IReactionScheme
      * @return                The set of top reactions
      */
     @TestMethod("testExtractTopReactions_IReactionScheme")
 	public static IReactionSet extractTopReactions(IReactionScheme reactionScheme) {
     	IReactionSet reactionSet = reactionScheme.getBuilder().newInstance(IReactionSet.class);
-    	
+
     	IReactionSet allSet = getAllReactions(reactionScheme);
     	for (IReaction reaction : allSet.reactions()) {
 			IReactionSet precuSet = extractPrecursorReaction(reaction,allSet);
@@ -188,14 +188,14 @@ public class ReactionSchemeManipulator {
     			if(!found)
     				reactionSet.addReaction(reaction);
     		}
-    			
+
     	}
         return reactionSet;
     }
     /**
      * Create a IReactionScheme given as a top a IReaction. If it doesn't exist any subsequent reaction
      * return null;
-     * 
+     *
      * @param reaction       The IReaction as a top
      * @param reactionSet    The IReactionSet to extract a IReactionScheme
      * @return               The IReactionScheme
@@ -203,7 +203,7 @@ public class ReactionSchemeManipulator {
     private static IReactionScheme setScheme(IReaction reaction, IReactionSet reactionSet){
     	IReactionScheme reactionScheme =
     	    reaction.getBuilder().newInstance(IReactionScheme.class);
-    	
+
     	IReactionSet reactConSet = extractSubsequentReaction(reaction, reactionSet);
     	if(reactConSet.getReactionCount() != 0){
     		for (IReaction reactionInt : reactConSet.reactions()) {
@@ -212,14 +212,14 @@ public class ReactionSchemeManipulator {
         		if(newRScheme.getReactionCount() != 0 || newRScheme.getReactionSchemeCount() != 0){
         			reactionScheme.add(newRScheme);
         		}
-    		}  	
+    		}
     	}
     	return reactionScheme;
     }
     /**
-     * Extract reactions from a IReactionSet which at least one product is existing 
+     * Extract reactions from a IReactionSet which at least one product is existing
      * as reactant given a IReaction
-     * 
+     *
      * @param reaction    The IReaction to analyze
      * @param reactionSet The IReactionSet to inspect
      * @return            A IReactionSet containing the reactions
@@ -239,9 +239,9 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Extract reactions from a IReactionSet which at least one reactant is existing 
+     * Extract reactions from a IReactionSet which at least one reactant is existing
      * as precursor given a IReaction
-     * 
+     *
      * @param reaction    The IReaction to analyze
      * @param reactionSet The IReactionSet to inspect
      * @return            A IReactionSet containing the reactions
@@ -261,9 +261,9 @@ public class ReactionSchemeManipulator {
     }
 
     /**
-     * Extract the list of AtomContainers taking part in the IReactionScheme to originate a 
-     * product given a reactant. 
-     * 
+     * Extract the list of AtomContainers taking part in the IReactionScheme to originate a
+     * product given a reactant.
+     *
      * @param origenMol           The start IAtomContainer
      * @param finalMol            The end IAtomContainer
      * @param reactionScheme      The IReactionScheme containing the AtomContainers
@@ -273,7 +273,7 @@ public class ReactionSchemeManipulator {
 	public static ArrayList<IAtomContainerSet> getAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol, IReactionScheme reactionScheme) {
     	ArrayList<IAtomContainerSet> listPath = new ArrayList<IAtomContainerSet>();
     	IReactionSet reactionSet = getAllReactions(reactionScheme);
-    	
+
     	// down search
     	// Looking for those reactants which are the origenMol
     	boolean found = false;
@@ -305,15 +305,15 @@ public class ReactionSchemeManipulator {
 	        	            found = true;
         	            }
     	        	}
-    	            
+
     	            break;
     	        }
         	}
         }
     	// TODO Looking for those products which are the origenMol
-        
+
         // TODO: up search
-    	
+
         return listPath;
     }
 	private static IAtomContainerSet getReactionPath(IAtomContainer reactant, IAtomContainer finalMol,IReactionSet reactionSet) {
@@ -333,7 +333,7 @@ public class ReactionSchemeManipulator {
     	    	        	return allSet;
     	    	        }
     	        	}
-    	        	
+
     	        }
         	}
         }

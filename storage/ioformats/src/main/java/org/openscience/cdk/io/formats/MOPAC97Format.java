@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MOPAC97Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public MOPAC97Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MOPAC97Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

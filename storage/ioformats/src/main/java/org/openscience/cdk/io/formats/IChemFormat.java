@@ -46,21 +46,21 @@ public interface IChemFormat extends IResourceFormat {
      * @return null if no CDK Writer is available.
      */
     public String getWriterClassName();
-    
+
     /**
-     * Returns an integer indicating the data features that this 
-     * format supports. The integer is composed as explained in 
+     * Returns an integer indicating the data features that this
+     * format supports. The integer is composed as explained in
      * DataFeatures. May be set to DataFeatures.NONE as default.
-     * 
+     *
      * @see org.openscience.cdk.tools.DataFeatures
      */
 	public int getSupportedDataFeatures();
 
     /**
-     * Returns an integer indicating the data features that this 
+     * Returns an integer indicating the data features that this
      * format requires. For example, the XYZ format requires 3D
      * coordinates.
-     * 
+     *
      * @see org.openscience.cdk.tools.DataFeatures
      */
     public int getRequiredDataFeatures();

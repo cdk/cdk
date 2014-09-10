@@ -1,7 +1,7 @@
 /* Copyright (C) 2002  Bradley A. Smith <bradley@baysmith.com>
  *               2002  Miguel Howard
  *               2003-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 @TestClass("org.openscience.cdk.io.XYZWriterTest")
 public class XYZWriter extends DefaultChemObjectWriter {
-  
+
     private BufferedWriter writer;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(XYZWriter.class);
@@ -62,7 +62,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
     /**
     * Constructor.
-    * 
+    *
     * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
@@ -80,16 +80,16 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public XYZWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public XYZWriter() {
         this(new StringWriter());
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return XYZFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -101,7 +101,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
     /**
      * Flushes the output and closes this object.
      */
@@ -109,7 +109,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
     public void close() throws IOException {
     	writer.close();
     }
-    
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
 		if (IAtomContainer.class.equals(classObject)) return true;
@@ -139,28 +139,28 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * @param mol the Molecule to write
     */
     public void writeMolecule(IAtomContainer mol) throws IOException {
-        
+
         String st = "";
         boolean writecharge = true;
-        
+
         try {
-            
+
             String s1 = "" + mol.getAtomCount();
             writer.write(s1, 0, s1.length());
             writer.newLine();
-            
+
             String s2 = null; // FIXME: add some interesting comment
             if (s2 != null) {
             	writer.write(s2, 0, s2.length());
             }
             writer.newLine();
-            
+
             // Loop through the atoms and write them out:
             Iterator<IAtom> atoms = mol.atoms().iterator();
             while (atoms.hasNext()) {
             	IAtom a = atoms.next();
                 st = a.getSymbol();
-                
+
                 Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
                     st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t"
@@ -169,15 +169,15 @@ public class XYZWriter extends DefaultChemObjectWriter {
                 } else {
                     st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
                 }
-                
+
                 if (writecharge) {
                     double ct = a.getCharge() == CDKConstants.UNSET ? 0.0 : a.getCharge();
                     st = st + "\t" + ct;
                 }
-                
+
                 writer.write(st, 0, st.length());
                 writer.newLine();
-                
+
             }
         } catch (IOException e) {
 //            throw e;

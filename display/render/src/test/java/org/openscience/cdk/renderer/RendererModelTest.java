@@ -1,7 +1,7 @@
 /* Copyright (C) 2010  Egon Willighagen <egon.willighagen@gmail.com>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
@@ -9,12 +9,12 @@
  * which includes - but is not limited to - adding the above copyright notice to
  * the beginning of your source code files, and to any copyright notice that you
  * may distribute with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -56,14 +56,14 @@ public class RendererModelTest {
 	@Test
 	public void testGetRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
 					add(someParam);
 				}};
 			}
-			
+
 			public IRenderingElement generate(IChemObject object,
 					RendererModel model) {
 				// TODO Auto-generated method stub
@@ -81,7 +81,7 @@ public class RendererModelTest {
 	@Test
 	public void testHasParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
@@ -108,7 +108,7 @@ public class RendererModelTest {
 	@Test
 	public void testReturningTheRealParamaterValue() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
@@ -138,7 +138,7 @@ public class RendererModelTest {
 	@Test
 	public void testSetRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
@@ -166,7 +166,7 @@ public class RendererModelTest {
 	@Test
 	public void testGetDefaultRenderingParameter() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
@@ -191,7 +191,7 @@ public class RendererModelTest {
 	@Test
 	public void testGetRenderingParameters() {
 		IGenerator<IChemObject> generator = new IGenerator<IChemObject>() {
-			IGeneratorParameter<Boolean> someParam = new SomeParam(); 
+			IGeneratorParameter<Boolean> someParam = new SomeParam();
 
 			public List<IGeneratorParameter<?>> getParameters() {
 				return new ArrayList<IGeneratorParameter<?>>() {{
@@ -211,14 +211,14 @@ public class RendererModelTest {
 		List<IGeneratorParameter<?>> params = model.getRenderingParameters();
 		Assert.assertNotNull(params);
 		Assert.assertEquals(nDefaultParams + 1, params.size()); // the registered one + defaults
-        
+
         List<Class<?>> paramClasses = new ArrayList<Class<?>>();
         for (IGeneratorParameter<?> param : params)
             paramClasses.add(param.getClass());
-        
+
 		assertThat(paramClasses, hasItem(SomeParam.class));
 	}
-	
+
 	@Test
 	public void testGetSetNotification() {
 		RendererModel model = new RendererModel();
@@ -325,12 +325,12 @@ public class RendererModelTest {
 
 	class MockListener implements ICDKChangeListener {
 		boolean isChanged = false;
-		
+
 		public void stateChanged(EventObject event) {
 			isChanged = true;
 		}
 	}
-	
+
 	@Test
 	public void testListening() {
 		RendererModel model = new RendererModel();

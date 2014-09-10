@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -39,16 +39,16 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * Extended tetrahedral configuration. Defines the winding configuration in
- * a system with an even number of cumulated pi bonds. Examples include, 
+ * a system with an even number of cumulated pi bonds. Examples include,
  * (R)-laballenic acid (CHEBI:38401) and (S)-laballenic acid (CHEBI:38402).
- * 
+ *
  * <p/>
- * 
+ *
  * The extended tetrahedral stereochemistry can be represented and handled the
- * same as normal tetrahedral stereochemistry. However the handling of the 
+ * same as normal tetrahedral stereochemistry. However the handling of the
  * neighbours is subtly different. To assist in the description here are how
- * atoms are refered to. 
- * 
+ * atoms are refered to.
+ *
  * <pre>{@code
  * p0           p2     p<i>: periphals
  *  \          /       t<i>: terminals
@@ -56,7 +56,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  *  /          \
  * p1           p3
  * }</pre>
- * 
+ *
  * The data structure stores, the central 'focus' atom and the four peripheral
  * atoms. The peripheral atoms are stored in a single array, {@code {p0, p1,
  * p2, p3}}, the first two and last two entires should be attached to the same
@@ -71,14 +71,14 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * p1           p3           p1  p3
  * }</pre>
  * The configuration treates the focus and terminal atoms as a single atom, the
- * neighbors {@code {p1, p2, p3}} then proceeded either clockwise or 
+ * neighbors {@code {p1, p2, p3}} then proceeded either clockwise or
  * anti-clockwise when the centre (t0/f/t1) is viewed from the first peripheral
  * atom {@code p0}.
- * 
+ *
  * <p/>
- * If any of the periphals are implicit hydrogen atoms, then the terminal atom 
+ * If any of the periphals are implicit hydrogen atoms, then the terminal atom
  * to which the hydrogen is attached can be used as a placeholder.
- * 
+ *
  * @author John May
  * @cdk.keywords extended tetrahedral
  * @cdk.keywords allene
@@ -92,13 +92,13 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
     /**
      * Create an extended tetrahedral stereo element for the provided 'focus'
-     * and 'peripherals' in the given 'winding'. See class documentation an 
+     * and 'peripherals' in the given 'winding'. See class documentation an
      * annotated storage description.
-     * 
+     *
      * @param focus       the central cumulated atom
      * @param peripherals atoms attached to the terminal atoms
      * @param winding     the configuration
-     */      
+     */
     @TestMethod("peripheralsAreCopied")
     public ExtendedTetrahedral(IAtom focus, IAtom[] peripherals, Stereo winding) {
         assert focus != null && peripherals != null && winding != null;
@@ -109,8 +109,8 @@ public final class ExtendedTetrahedral implements IStereoElement {
     }
 
     /**
-     * The central atom in the cumulated system. 
-     * 
+     * The central atom in the cumulated system.
+     *
      * @return the focus
      */
     @TestMethod("noOperation")
@@ -120,7 +120,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
     /**
      * The neighbouring peripherals atoms, these are attached to the terminal
-     * atoms in the cumulate dsystem. 
+     * atoms in the cumulate dsystem.
      *
      * @return the peropheral atoms
      */
@@ -130,8 +130,8 @@ public final class ExtendedTetrahedral implements IStereoElement {
     }
 
     /**
-     * The winding of the peripherals, when viewed from the first atom. 
-     * 
+     * The winding of the peripherals, when viewed from the first atom.
+     *
      * @return winding configuration
      */
     @TestMethod("noOperation")
@@ -142,10 +142,10 @@ public final class ExtendedTetrahedral implements IStereoElement {
     /**
      * Helper method to locate two terminal atoms in a container for a given
      * focus.
-     * 
+     *
      * @param container structure representation
-     * @param focus cumulated atom                                 
-     * @return the terminal atoms (unordered) 
+     * @param focus cumulated atom
+     * @return the terminal atoms (unordered)
      */
     @TestMethod("terminalAtomsAreFoundUnordered")
     public static IAtom[] findTerminalAtoms(IAtomContainer container, IAtom focus) {
@@ -153,7 +153,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
         if (focusBonds.size() != 2)
             throw new IllegalArgumentException("focus must have exactly 2 neighbors");
-        
+
         IAtom left  = focusBonds.get(0).getConnectedAtom(focus);
         IAtom right = focusBonds.get(1).getConnectedAtom(focus);
 
@@ -175,15 +175,15 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
         if (focusBonds.size() != 2)
             throw new IllegalArgumentException("focus must have exactly 2 neighbors");
-        
+
         final IAtom left  = focusBonds.get(0).getConnectedAtom(focus);
         final IAtom right = focusBonds.get(1).getConnectedAtom(focus);
 
         List<IAtom> leftAtoms = container.getConnectedAtomsList(left);
-        
+
         if (leftAtoms.contains(peripherals[2]) || leftAtoms.contains(peripherals[3])) {
             return new IAtom[]{right, left};
-        } else { 
+        } else {
             return new IAtom[]{left, right};
         }
     }

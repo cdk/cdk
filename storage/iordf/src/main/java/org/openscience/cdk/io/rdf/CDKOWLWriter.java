@@ -1,5 +1,5 @@
 /* Copyright (C) 2009  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This library is free software; you can redistribute it and/or

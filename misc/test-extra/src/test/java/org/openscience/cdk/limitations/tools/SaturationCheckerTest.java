@@ -1,17 +1,17 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,7 +40,7 @@ import org.openscience.cdk.tools.SaturationChecker;
  * class.
  *
  * @cdk.module test-extra
- * 
+ *
  * @author     egonw
  * @cdk.created    2003-11-02
  *
@@ -49,11 +49,11 @@ import org.openscience.cdk.tools.SaturationChecker;
 public class SaturationCheckerTest extends CDKTestCase {
 
     private static SaturationChecker satcheck = null;
-    
+
     @BeforeClass public static void setup() throws Exception {
         satcheck = new SaturationChecker();
     }
-    
+
     /**
      * Tests the method saturate().
      */
@@ -127,7 +127,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, b1.getOrder());
         Assert.assertEquals(IBond.Order.DOUBLE, b2.getOrder());
     }
-    
+
     /**
      * Tests the method saturate().
      */
@@ -233,7 +233,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.DOUBLE, b6.getOrder());
         Assert.assertEquals(IBond.Order.DOUBLE, b7.getOrder());
     }
-    
+
     /**
      * Tests the method saturate().
      */
@@ -282,7 +282,7 @@ public class SaturationCheckerTest extends CDKTestCase {
         Assert.assertEquals(IBond.Order.SINGLE, b8.getOrder());
         Assert.assertEquals(IBond.Order.DOUBLE, b4.getOrder());
     }
-    
+
     /**
      * Tests whether the saturation checker gets a proton right.
      */
@@ -294,7 +294,7 @@ public class SaturationCheckerTest extends CDKTestCase {
 		m.addAtom(h);
 		Assert.assertTrue(satcheck.isSaturated(h, m));
 	}
-    
+
     @Test public void testCalculateMissingHydrogens_Aromatic() throws Exception{
         IAtomContainer pyrrole = MoleculeFactory.makePyrrole();
 	    IAtom n = pyrrole.getAtom(1);

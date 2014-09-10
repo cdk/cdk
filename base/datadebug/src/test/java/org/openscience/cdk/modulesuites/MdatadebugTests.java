@@ -100,7 +100,7 @@ import org.openscience.cdk.debug.DebugStrandTest;
     DebugAdductFormulaTest.class,
     DebugMolecularFormulaTest.class,
     DebugMolecularFormulaSetTest.class,
-        
+
     // tests from test.protein.data
     DebugPDBAtomTest.class,
     DebugPDBMonomerTest.class,

@@ -68,7 +68,7 @@ public class TargetProperties implements java.io.Serializable {
 
     /**
      * @param atom1
-     * @param atom2 
+     * @param atom2
      * @return the map
      */
     public IBond getBond(IAtom atom1, IAtom atom2) {
@@ -83,7 +83,7 @@ public class TargetProperties implements java.io.Serializable {
     }
 
     /**
-     * 
+     *
      * @param container
      */
     public TargetProperties(IAtomContainer container) {

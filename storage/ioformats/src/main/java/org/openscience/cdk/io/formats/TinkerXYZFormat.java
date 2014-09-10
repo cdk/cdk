@@ -24,9 +24,9 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://dasher.wustl.edu/tinker/">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,15 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class TinkerXYZFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public TinkerXYZFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new TinkerXYZFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

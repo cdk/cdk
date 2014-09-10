@@ -109,7 +109,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		findAndConfigureAtomTypesForAllAtoms(mol);
          for (IAtom atom : mol.atoms()) {
              Assert.assertTrue(checker.isSaturated(atom, mol));
-         }        
+         }
 	}
 
     @Test
@@ -149,7 +149,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		Assert.assertTrue(checker.isSaturated(mol));
 	}
-	
+
     /**
      * Tests if the saturation checker considers positive
      * charges.
@@ -221,18 +221,18 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		Assert.assertTrue(checker.isSaturated(mol));
 	}
-	
+
 	/** TODO: check who added this test. I think Miguel; it seems to be a
 	 *  resonance structure.
 	 */
     @Test public void test1() throws Exception {
-        IAtomContainer mol = new AtomContainer();        
+        IAtomContainer mol = new AtomContainer();
         Atom f1 = new Atom("F");
         Atom c2 = new Atom("C");
         Atom c3 = new Atom("C");
         f1.setFormalCharge(1);
-        mol.addAtom(f1);    	
-        mol.addAtom(c2);    	
+        mol.addAtom(f1);
+        mol.addAtom(c2);
         mol.addAtom(c3);
         mol.addBond(0, 1, IBond.Order.DOUBLE);
         mol.addBond(1, 2, IBond.Order.DOUBLE);
@@ -241,7 +241,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		mol.getAtom(2).setImplicitHydrogenCount(2); // third atom
 		Assert.assertTrue(checker.isSaturated(mol));
     }
-        
+
 	@Test public void testIsSaturated_MissingBondOrders_Ethane() throws Exception {
 		// test ethane with explicit hydrogen
 	    IAtomContainer mol = new AtomContainer();
@@ -258,7 +258,7 @@ public class CDKValencyCheckerTest extends CDKTestCase {
 		mol.addBond(bond);
 		findAndConfigureAtomTypesForAllAtoms(mol);
 		Assert.assertFalse(checker.isSaturated(mol));
-		
+
 		// sanity check
 		bond.setOrder(CDKConstants.BONDORDER_DOUBLE);
 		mol.addBond(bond);
@@ -275,5 +275,5 @@ public class CDKValencyCheckerTest extends CDKTestCase {
     		if (type != null) AtomTypeManipulator.configure(atom, type);
     	}
     }
-    
+
 }

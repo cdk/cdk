@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * A Test case for the gaussian 98 (G98Reader) class.
- * 
+ *
  * @cdk.module test-io
  *
  * @author Christoph Steinbeck
@@ -68,7 +68,7 @@ public class Gaussian98ReaderTest extends SimpleChemObjectReaderTest {
 			else Assert.assertTrue(shieldingCounter == ac.getAtomCount());
 			//logger.debug("AtomContainer " + (f + 1) + " has " + atomContainers[f].getAtomCount() + " atoms and " + shieldingCounter + " shielding entries");
 			counter++;
-		}		
+		}
 	}
-	
+
 }

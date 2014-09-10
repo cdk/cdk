@@ -27,17 +27,17 @@ package org.openscience.cdk.tools;
  * Class with constants for possible data features defined in the
  * a Data Feature Ontology. Actual integers are random
  * and should <b>not</b> be used directly.
- * 
+ *
  * <p>To test whether a IChemFormat supports a certain feature, the
  * following code can be used:
  * <pre>
  * int features = new XYZFormat().getSupportedDataFeatures();
  * boolean has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
  * </pre>
- * 
+ *
  * <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
  * >Blue Obelisk Data Features Ontology</a>.
- * 
+ *
  * @author     Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module annotation
  * @cdk.githash
@@ -45,10 +45,10 @@ package org.openscience.cdk.tools;
 public class DataFeatures {
 
     public final static int NONE = 0;
-    
+
     // The int allows for up to 750 different properties. Should
     // be enough for now.
-    
+
     // COORDINATE SYSTEMS
 
     /** @cdk.dictref bodf:coordinates2D */
@@ -57,7 +57,7 @@ public class DataFeatures {
     public final static int HAS_3D_COORDINATES = 1<<1;
     /** @cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates */
     public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1<<2;
-    
+
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
 
@@ -73,20 +73,20 @@ public class DataFeatures {
     public final static int HAS_ATOM_MASS_NUMBERS = 1<<7;
     /** @cdk.dictref bodf:isotopeNumbers */
     public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<8;
-    
+
     // GRAPH FEATURES
-    
+
     /** @cdk.dictref bodf:graphRepresentation */
     public final static int HAS_GRAPH_REPRESENTATION = 1<<9;
     /** @cdk.dictref bodf:dietzRepresentation */
     public final static int HAS_DIETZ_REPRESENTATION = 1<<10;
-    
+
     // MODEL FEATURES
-    
+
     /** FIXME: NOT YET IN BODF !!! **/
     public final static int HAS_UNITCELL_PARAMETERS = 1<<11;
     /** FIXME: NOT YET IN BODF !!! **/
         public final static int HAS_REACTIONS = 1<<12;
-	
+
 }
 

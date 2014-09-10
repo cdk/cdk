@@ -38,7 +38,7 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 /**
  * Returns the number of basic groups. The list of basic groups is defined
  * by this SMARTS "[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
- * "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]", 
+ * "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]",
  * "[$(N=C-N)]", and "[$(N-C=N)]" originally presented in
  * JOELib {@cdk.cite WEGNER2006}.
  *
@@ -53,7 +53,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
 
     private final static String[] SMARTS_STRINGS = {
         "[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
-        "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]", 
+        "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]",
         "[$(N=C-N)]", "[$(N-C=N)]"
     };
     private final static String[] names = {"nBase"};

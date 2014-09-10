@@ -26,7 +26,7 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Calculation of the electronegativity of orbitals of a molecule 
+ * Calculation of the electronegativity of orbitals of a molecule
  * by the method Gasteiger based on electronegativity is given by X = a + bq + c(q*q).
  *
  * @author       Miguel Rojas Cherto
@@ -37,19 +37,19 @@ import org.openscience.cdk.interfaces.IBond;
  */
 @TestClass("org.openscience.cdk.charges.PiElectronegativityTest")
 public class PiElectronegativity {
-	
+
     private GasteigerMarsiliPartialCharges peoe = null;
     private GasteigerPEPEPartialCharges pepe = null;
-    
+
 	/**Number of maximum iterations*/
 	private int maxI = 6;
     /**Number of maximum resonance structures*/
 	private int maxRS = 50;
-	
+
 	private IAtomContainer molPi;
 	private IAtomContainer acOldP;
 	private double[][] gasteigerFactors;
-	
+
     /**
      * Constructor for the PiElectronegativity object.
      */
@@ -59,8 +59,8 @@ public class PiElectronegativity {
 
     /**
      * Constructor for the Electronegativity object.
-     * 
-     * @param maxIterations         The maximal number of Iteration  
+     *
+     * @param maxIterations         The maximal number of Iteration
      * @param maxResonStruc         The maximal number of Resonance Structures
      */
     public PiElectronegativity( int maxIterations, int maxResonStruc) {
@@ -74,8 +74,8 @@ public class PiElectronegativity {
      * calculate the electronegativity of orbitals pi.
      *
      * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated     
-     * 
+     * @param atom                  atom for which effective atom electronegativity should be calculated
+     *
      * @return piElectronegativity
      */
     @TestMethod("testCalculatePiElectronegativity_IAtomContainer_IAtom")
@@ -88,10 +88,10 @@ public class PiElectronegativity {
      * calculate the electronegativity of orbitals pi.
      *
      * @param ac                    IAtomContainer
-     * @param atom                  atom for which effective atom electronegativity should be calculated     
-     * @param maxIterations         The maximal number of Iteration  
+     * @param atom                  atom for which effective atom electronegativity should be calculated
+     * @param maxIterations         The maximal number of Iteration
      * @param maxResonStruc         The maximal number of Resonance Structures
-     * 
+     *
      * @return piElectronegativity
      */
     @TestMethod("testCalculatePiElectronegativity_IAtomContainer_IAtom_Int_Int")
@@ -101,23 +101,23 @@ public class PiElectronegativity {
                                                int maxResonStruc) {
     	maxI = maxIterations;
     	maxRS = maxResonStruc;
-    	
+
     	double electronegativity = 0;
 
         try {
         	if(!ac.equals(acOldP)){
         		molPi = ac.getBuilder().newInstance(IAtomContainer.class,ac);
-        		
+
                 peoe = new GasteigerMarsiliPartialCharges();
 	    		peoe.assignGasteigerMarsiliSigmaPartialCharges(molPi, true);
 				IAtomContainerSet iSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
 	        	iSet.addAtomContainer(molPi);
 	        	iSet.addAtomContainer(molPi);
-	
+
 	        	gasteigerFactors = pepe.assignrPiMarsilliFactors(iSet);
-	        	
+
 	        	acOldP = ac;
-        	}        	
+        	}
         	IAtom atomi = molPi.getAtom(ac.getAtomNumber(atom));
         	int atomPosition = molPi.getAtomNumber(atomi);
         	int stepSize = pepe.getStepSize();
@@ -132,12 +132,12 @@ public class PiElectronegativity {
 			e.printStackTrace();
 		}
 
-		return electronegativity;        
+		return electronegativity;
     }
-    
+
     /**
      * set the maximal number of Iterations.
-     * 
+     *
      * @param maxIterations The number maximal of iterations
      */
 	@TestMethod("testSetMaxIterations_Int")
@@ -147,17 +147,17 @@ public class PiElectronegativity {
 
     /**
      * set the maximal number of resonance structures.
-     * 
+     *
      * @param maxResonStruc The number maximal of resonance structures
      */
 	@TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc){
     	maxRS = maxResonStruc;
     }
-    
+
     /**
      * get the maximal number of Iterations.
-     * 
+     *
      * @return The number maximal of iterations
      */
 	@TestMethod("testGetMaxIterations")
@@ -167,14 +167,14 @@ public class PiElectronegativity {
 
     /**
      * get the maximal number of resonance structures.
-     * 
+     *
      * @return The number maximal of resonance structures
      */
 	@TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc(){
     	return maxRS;
     }
-    
-    
+
+
 }
 

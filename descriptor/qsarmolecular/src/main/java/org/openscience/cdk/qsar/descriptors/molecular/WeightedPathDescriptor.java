@@ -63,7 +63,7 @@ import java.util.List;
  * from nitrogens</td></tr>
  * </table>
  * </center>
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -77,7 +77,7 @@ import java.util.List;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
  * @author Rajarshi Guha
  * @cdk.created 2006-01-15
  * @cdk.module qsarmolecular
@@ -129,7 +129,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
 
     @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
-        return names; 
+        return names;
     }
 
     /**
@@ -282,5 +282,5 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     }
 
 }
-    
+
 

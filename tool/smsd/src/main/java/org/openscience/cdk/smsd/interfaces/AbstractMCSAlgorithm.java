@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.smsd.interfaces.AbstractMCSAlgorithmTest")
 public abstract class AbstractMCSAlgorithm {
 
-    /** 
+    /**
      * Initialise the MCS search algorithm. Each MCS algorithm should contain
      * this method.
      * @param shouldMatchBonds bond match

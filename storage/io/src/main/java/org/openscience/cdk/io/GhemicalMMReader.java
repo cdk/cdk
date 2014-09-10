@@ -70,7 +70,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     public GhemicalMMReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public GhemicalMMReader() {
         this(new StringReader(""));
     }
@@ -97,7 +97,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     @TestMethod("testClose")
     public void close() {
     }
-    
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -124,21 +124,21 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
             throw new CDKException("Only supported is ChemModel.");
         }
     }
-    
+
     private IChemModel readChemModel(IChemModel model) throws CDKException {
         int[] atoms = new int[1];
         double[] atomxs = new double[1];
         double[] atomys = new double[1];
         double[] atomzs = new double[1];
         double[] atomcharges = new double[1];
-        
+
         int[] bondatomid1 = new int[1];
         int[] bondatomid2 = new int[1];
         IBond.Order[] bondorder = new IBond.Order[1];
-        
+
         int numberOfAtoms = 0;
         int numberOfBonds = 0;
-        
+
         try {
             String line = input.readLine();
             while (line != null) {
@@ -159,7 +159,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         atomys = new double[numberOfAtoms];
                         atomzs = new double[numberOfAtoms];
                         atomcharges = new double[numberOfAtoms];
-                        
+
                         for (int i = 0; i < numberOfAtoms; i++) {
                             line = input.readLine();
                             StringTokenizer atomInfoFields = new StringTokenizer(line);
@@ -179,7 +179,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                         bondatomid1 = new int[numberOfAtoms];
                         bondatomid2 = new int[numberOfAtoms];
                         bondorder = new IBond.Order[numberOfAtoms];
-                        
+
                         for (int i = 0; i < numberOfBonds; i++) {
                             line = input.readLine();
                             StringTokenizer bondInfoFields = new StringTokenizer(line);
@@ -251,30 +251,30 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                             logger.debug(exception);
                         }
                     }
-                    
+
                     // Store bonds
                     for (int i = 0; i < numberOfBonds; i++) {
                         container.addBond(bondatomid1[i], bondatomid2[i], bondorder[i]);
                     }
-                    
+
                     IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
                     moleculeSet.addAtomContainer(model.getBuilder().newInstance(IAtomContainer.class,container));
                     model.setMoleculeSet(moleculeSet);
-                    
+
                     return model;
                 } else {
                     logger.warn("Skipping line: " + line);
                 }
-                
+
                 line = input.readLine();
             }
         } catch (Exception exception) {
             logger.error("Error while reading file");
             logger.debug(exception);
         }
-        
+
         // this should not happen, file is lacking !End command
         return null;
-        
+
     }
 }

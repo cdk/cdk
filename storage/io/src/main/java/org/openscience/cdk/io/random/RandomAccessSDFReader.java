@@ -44,7 +44,7 @@ import org.openscience.cdk.io.listener.IReaderListener;
 /**
  * Random access of SDF file. Doesn't load molecules in memory, uses prebuilt
  * index and seeks to find the correct record offset.
- * 
+ *
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module io
  * @cdk.githash
@@ -91,10 +91,10 @@ public class RandomAccessSDFReader extends RandomAccessReader {
                     while (cm.hasNext()) {
                     	Iterator<IAtomContainer> sm = (cm.next()).getMoleculeSet().atomContainers().iterator();
                         while (sm.hasNext()) {
-                        	
+
                         	co = sm.next();
                         	break;
-                        }	
+                        }
                     	break;
                     }
                     cm = null;
@@ -103,19 +103,19 @@ public class RandomAccessSDFReader extends RandomAccessReader {
                 //cs = null;
             }
             return co;
-            
+
         }
 	@TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
 		throw new UnsupportedOperationException();
-		
+
 	}
 	@TestMethod("testSetReader_InputStream")
     public void setReader(InputStream reader) throws CDKException {
 		throw new UnsupportedOperationException();
-		
+
 	}
-	
+
     @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
 		return chemObjectReader.accepts(classObject);

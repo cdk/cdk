@@ -127,7 +127,7 @@ public class INChIHandler extends DefaultHandler {
      * @param raw       the complete element name (with namespace part)
      * @param atts      the attributes of this element
      */
-    public void startElement(String uri, String local, 
+    public void startElement(String uri, String local,
                              String raw, Attributes atts) {
         currentChars = "";
         logger.debug("startElement: ", raw);
@@ -161,5 +161,5 @@ public class INChIHandler extends DefaultHandler {
     public ChemFile getChemFile() {
         return chemFile;
     }
-    
+
 }

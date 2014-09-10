@@ -38,12 +38,12 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Sum of the absolute value of the difference between atomic polarizabilities 
+ * Sum of the absolute value of the difference between atomic polarizabilities
  *  of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
  * http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm
  *
  * This descriptor assumes 2-centered bonds.
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -163,7 +163,7 @@ public class BPolDescriptor extends AbstractMolecularDescriptor implements IMole
                 atomicNumber0 = element0.getAtomicNumber();
                 atomicNumber1 = element1.getAtomicNumber();
                 difference = polarizabilities[atomicNumber0] -polarizabilities[atomicNumber1];
-                bpol += Math.abs(difference);               
+                bpol += Math.abs(difference);
             }
 
             // after going through the bonds, we go through the atoms and see if they have

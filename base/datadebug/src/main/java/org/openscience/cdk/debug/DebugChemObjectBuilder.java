@@ -91,7 +91,7 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
 	private static volatile IChemObjectBuilder instance = null;
     private static final Object lock = new Object();
     private final DynamicFactory factory = new DynamicFactory(200);
-	
+
 	private DebugChemObjectBuilder() {
 
         // self reference required for stereo-elements

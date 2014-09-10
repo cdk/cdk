@@ -1,20 +1,20 @@
 /* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.graph.invariant;
 
@@ -148,20 +148,20 @@ public class InChINumbersToolsTest extends CDKTestCase {
                                                          mock(9)),
                    is(new long[]{8, 4, 3, 5, 2, 1, 9, 6, 7}));
     }
-    
+
     // if '[O-]' is first start at '=O' instead
     @Test public void favorCarbonyl() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("P([O-])=O");
         assertThat(InChINumbersTools.getUSmilesNumbers(container),
                    is(new long[]{3, 2, 1}));
     }
-    
+
     @Test public void unlabelledHydrogens() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("[H]C([H])([H])[H]");
         assertThat(InChINumbersTools.getUSmilesNumbers(container),
-                   is(new long[]{2, 1, 3, 4, 5}));   
+                   is(new long[]{2, 1, 3, 4, 5}));
     }
-    
+
     static IAtomContainer mock(int nAtoms) {
         IAtomContainer container = Mockito.mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(nAtoms);

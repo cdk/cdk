@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -98,7 +98,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * must be a string.
      *
      * <pre>{@code
-     * String number = Integer.toString(1 + container.getAtomNumber(atom)); 
+     * String number = Integer.toString(1 + container.getAtomNumber(atom));
      * atom.setProperty(CDKConstants.ANNOTATION_LABEL, number);
      * }</pre>
      */
@@ -109,10 +109,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * A special markup for annotation labels that hints the generator to renderer
      * the annotation label in italic. The primary use case is for Cahn-Ingold-Prelog
      * descriptors.
-     * 
+     *
      * <pre>{@code
-     * String cipLabel = "R"; 
-     * atom.setProperty(CDKConstants.ANNOTATION_LABEL, 
+     * String cipLabel = "R";
+     * atom.setProperty(CDKConstants.ANNOTATION_LABEL,
      *                  StandardGenerator.ITALIC_DISPLAY_PREFIX + cipLabel);
      * }</pre>
      */
@@ -189,7 +189,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         // the exact font stroke but for now we use the width of the pipe character.
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
-        
+
 
         ElementGroup annotations = new ElementGroup();
 
@@ -243,7 +243,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 updateBounds(bounds, path);
                 symbolElements.add(path);
             }
-            
+
             // add the annotations of the symbol to the annotations ElementGroup
             for (Shape shape : symbols[i].getAnnotationOutlines()) {
                 annotations.add(GeneralPath.shapeOf(shape, annotationColor));
@@ -261,7 +261,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
         }
 
-         
+
         // ensure annotations are included in the bound calculation
         for (IRenderingElement element : annotations) {
             if (element instanceof GeneralPath)
@@ -309,7 +309,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             final List<IAtom> neighbors = container.getConnectedAtomsList(atom);
 
             final List<Vector2d> auxVectors = new ArrayList<Vector2d>(1);
-            
+
             // only generate if the symbol is visible
             if (visibility.visible(atom, bonds, parameters)) {
 
@@ -317,7 +317,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 if (atom.getImplicitHydrogenCount() != null && atom.getImplicitHydrogenCount() > 0)
                     auxVectors.add(hPosition.vector());
-                
+
                 symbols[i] = atomGenerator.generateSymbol(container, atom, hPosition);
 
                 // defines how the element is aligned on the atom point, when
@@ -339,14 +339,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 symbols[i] = symbols[i].resize(1 / scale, 1 / -scale)
                                        .center(p.x, p.y);
             }
-            
+
             final String label = getAnnotationLabel(atom);
             if (label != null) {
-                
+
                 // to ensure consistent draw distance we need to adjust the annotation distance
                 // depending on whether we are drawing next to an atom symbol or not.
                 final double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
-                
+
                 final Vector2d vector = newAtomAnnotationVector(atom, bonds, auxVectors);
                 final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
                                                                   label,
@@ -355,7 +355,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                                                                   annScale,
                                                                   font,
                                                                   symbols[i]);
-                
+
                 // the AtomSymbol may migrate during bond generation and therefore the annotation
                 // needs to be tied to the symbol. If no symbol is available the annotation is
                 // fixed and we can add it to the annotation ElementGroup right away.
@@ -384,22 +384,22 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param symbol    the atom symbol to avoid overlap with
      * @return the position text outline for the annotation
      */
-    static TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, Font font, AtomSymbol symbol) {       
-        
+    static TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, Font font, AtomSymbol symbol) {
+
         boolean italicHint = label.startsWith(ITALIC_DISPLAY_PREFIX);
-        
+
         label = italicHint ? label.substring(ITALIC_DISPLAY_PREFIX.length()) : label;
 
         Font annFont = italicHint ? font.deriveFont(Font.ITALIC)
                                   : font;
-        
+
         final TextOutline annOutline = new TextOutline(label, annFont).resize(scale, -scale);
-        
+
         // align to the first or last character of the annotation depending on the direction
-        final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() : 
+        final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() :
                                direction.x < -0.3 ? annOutline.getLastGlyphCenter() :
                                annOutline.getCenter();
-        
+
         // Avoid atom symbol
         if (symbol != null) {
             Point2D intersect = symbol.getConvexHull().intersect(VecmathUtil.toAwtPoint(basePoint),
@@ -411,7 +411,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         direction.scale(distance);
         direction.add(basePoint);
-        
+
         // move to position
         return annOutline.translate(direction.x - center.getX(),
                                     direction.y - center.getY());
@@ -446,15 +446,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     private Color getHighlightColor(IChemObject bond, RendererModel parameters) {
         Color propCol = getColorProperty(bond, HIGHLIGHT_COLOR);
-        
+
         if (propCol != null) {
             return propCol;
         }
-        
+
         if (parameters.getSelection() != null && parameters.getSelection().contains(bond)) {
             return parameters.get(RendererModel.SelectionColor.class);
         }
-        
+
         return null;
     }
 
@@ -552,15 +552,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * space (auxiliary vectors). The fall back method is to use the largest available space but
      * some common cases are handled differently. For example, when the number of bonds is two
      * the annotation is placed in the acute angle of the bonds (providing there is space). This
-     * improves labelling of atoms saturated rings. When there are three bonds and two are 'plain' 
+     * improves labelling of atoms saturated rings. When there are three bonds and two are 'plain'
      * the label is again placed in the acute section of the plain bonds.
-     *                       
+     *
      * @param atom       the atom having an annotation
      * @param bonds      the bonds connected to the atom
      * @param auxVectors additional vectors to avoid (filled spaced)
      * @return unit vector along which the annotation should be placed.
-     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond) 
-     * @see VecmathUtil#newVectorInLargestGap(java.util.List) 
+     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond)
+     * @see VecmathUtil#newVectorInLargestGap(java.util.List)
      */
     static Vector2d newAtomAnnotationVector(IAtom atom, List<IBond> bonds, List<Vector2d> auxVectors) {
 
@@ -581,7 +581,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             // H0, then label simply appears on the opposite side
             if (auxVectors.size() == 0)
                 return VecmathUtil.negate(vectors.get(0));
-            // !H0, then place it in the largest gap 
+            // !H0, then place it in the largest gap
             vectors.addAll(auxVectors);
             return VecmathUtil.newVectorInLargestGap(vectors);
         }
@@ -596,7 +596,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 combined.negate();
 
             // flip vector if either bond is a non-single bond or a wedge, this will
-            // place the label in the largest space. 
+            // place the label in the largest space.
             // However - when both bonds are wedged (consider a bridging system) to
             // keep the label in the nook of the wedges
             else if ((!isPlainBond(bonds.get(0)) || !isPlainBond(bonds.get(1)))
@@ -604,24 +604,24 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 combined.negate();
 
             combined.normalize();
-            
+
             // did we divide by 0? whoops - this happens when the bonds are collinear
             if (Double.isNaN(combined.length()))
                 return VecmathUtil.newVectorInLargestGap(vectors);
-            
+
             return combined;
         }
         else {
             if (vectors.size() == 3 && auxVectors.size() == 0) {
                 // 3 bonds connected to an atom with no hydrogen label
 
-                // the easy and common case is to check when two bonds are plain 
+                // the easy and common case is to check when two bonds are plain
                 // (i.e. non-stereo sigma bonds) and use those. This gives good
                 // placement for fused conjugated rings
-                
+
                 List<Vector2d> plainVectors = new ArrayList<Vector2d>();
                 List<Vector2d> wedgeVectors = new ArrayList<Vector2d>();
-                
+
                 for (IBond bond : bonds) {
                     if (isPlainBond(bond))
                         plainVectors.add(VecmathUtil.newUnitVector(atom, bond));
@@ -636,7 +636,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                     return VecmathUtil.sum(plainVectors.get(0), plainVectors.get(1));
                 }
             }
-            
+
             // the default option is to find the largest gap
             if (auxVectors.size() > 0)
                 vectors.addAll(auxVectors);
@@ -645,8 +645,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * A plain bond is a non-stereo sigma bond that is displayed simply as a line. 
-     * 
+     * A plain bond is a non-stereo sigma bond that is displayed simply as a line.
+     *
      * @param bond a non-null bond
      * @return the bond is plain
      */
@@ -657,7 +657,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * A bond is wedge if it points up or down.
-     * 
+     *
      * @param bond a non-null bond
      * @return the bond is wedge (bold or hashed)
      */
@@ -907,10 +907,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         @Override public Double getDefault() {
             return 0.25;
         }
-    } 
-    
+    }
+
     /**
-     * Annotation font size relative to element symbols, default = 0.4 (40%).  
+     * Annotation font size relative to element symbols, default = 0.4 (40%).
      */
     public static final class AnnotationFontScale extends AbstractGeneratorParameter<Double> {
         /** @inheritDoc */

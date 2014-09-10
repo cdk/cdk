@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2008  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -101,7 +101,7 @@ public class PMPReader extends DefaultChemObjectReader {
     int lineNumber = 0;
     int bondCounter = 0;
 	private RebondTool rebonder;
-    
+
     /*
      * construct a new reader from a Reader type object
      *
@@ -110,28 +110,28 @@ public class PMPReader extends DefaultChemObjectReader {
     public PMPReader(Reader input) {
         this.input = new BufferedReader(input);
         this.lineNumber = 0;
-    
+
         /* compile patterns */
         objHeader = Pattern.compile(".*\\((\\d+)\\s(\\w+)$");
         objCommand = Pattern.compile(".*\\(A\\s(C|F|D|I|O)\\s(\\w+)\\s+\"?(.*?)\"?\\)$");
         atomTypePattern = Pattern.compile("^(\\d+)\\s+(\\w+)$");
-        
+
         rebonder = new RebondTool(2.0, 0.5, 0.5);
     }
 
     public PMPReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public PMPReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return PMPFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -175,7 +175,7 @@ public class PMPReader extends DefaultChemObjectReader {
     }
 
     // private procedures
-    
+
     private String readLine() throws IOException {
     	String line = input.readLine();
     	lineNumber = lineNumber + 1;
@@ -236,7 +236,7 @@ public class PMPReader extends DefaultChemObjectReader {
                                     String format = objCommandMatcher.group(1);
                                     String command = objCommandMatcher.group(2);
                                     String field = objCommandMatcher.group(3);
-                                    
+
                                     processModelCommand(object, command, format, field);
                                 } else {
                                     logger.warn("Skipping line: " + line);
@@ -477,7 +477,7 @@ public class PMPReader extends DefaultChemObjectReader {
             logger.warn("Unkown PMP object: " + object);
         }
     }
-    
+
     private void constructObject(IChemObjectBuilder builder, String object) {
         if ("Atom".equals(object)) {
             chemObject = builder.newInstance(IAtom.class,"C");

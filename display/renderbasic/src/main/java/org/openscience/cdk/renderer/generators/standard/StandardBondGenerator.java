@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -226,13 +226,13 @@ final class StandardBondGenerator {
         IBond.Stereo stereo = bond.getStereo();
         if (stereo == null)
             return generatePlainSingleBond(from, to);
-        
+
         List<IBond> fromBonds = container.getConnectedBondsList(from);
         List<IBond> toBonds  = container.getConnectedBondsList(to);
-        
+
         fromBonds.remove(bond);
         toBonds.remove(bond);
-        
+
         // add annotation label
         String label = StandardGenerator.getAnnotationLabel(bond);
         if (label != null)
@@ -274,7 +274,7 @@ final class StandardBondGenerator {
      *
      * @param from narrow end of the wedge
      * @param to   bold end of the wedge
-     * @param toBonds bonds connected to the 'to atom'            
+     * @param toBonds bonds connected to the 'to atom'
      * @return the rendering element
      */
     IRenderingElement generateBoldWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
@@ -313,31 +313,31 @@ final class StandardBondGenerator {
 
             // slanted wedge
             if (toBonds.size() == 1) {
-                
+
                 final IBond toBondNeighbor = toBonds.get(0);
                 final IAtom toNeighbor = toBondNeighbor.getConnectedAtom(to);
 
                 Vector2d refVector = newUnitVector(toPoint, toNeighbor.getPoint2d());
                 boolean wideToWide = false;
-                
+
                 // special case when wedge bonds are in a bridged ring, wide-to-wide end we
                 // don't want to slant as normal but rather butt up against each wind end
                 if (atWideEndOfWedge(to, toBondNeighbor)) {
                     refVector = sum(refVector, negate(unit));
                     wideToWide = true;
                 }
-                
+
                 final double theta = refVector.angle(unit);
 
                 if (theta > threshold) {
                     c = intersection(b, newUnitVector(b, c), toPoint, refVector);
                     d = intersection(a, newUnitVector(a, d), toPoint, refVector);
-                    
+
                     // the points c, d, and e lie on the center point of the line between
                     // the 'to' and 'toNeighbor'. Since the bond is drawn with a stroke and
                     // has a thickness we need to move these points slightly to be flush
                     // with the bond depiction, we only do this if the bond is not
-                    // wide-on-wide with another bold wedge 
+                    // wide-on-wide with another bold wedge
                     if (!wideToWide) {
                         final double nudge = (stroke / 2) / Math.sin(theta);
                         c = sum(c, scale(unit, nudge));
@@ -374,7 +374,7 @@ final class StandardBondGenerator {
      *
      * @param from narrow end of the wedge
      * @param to   bold end of the wedge
-     * @param toBonds bonds connected to 
+     * @param toBonds bonds connected to
      * @return the rendering element
      */
     IRenderingElement generateHashedWedgeBond(IAtom from, IAtom to, List<IBond> toBonds) {
@@ -393,11 +393,11 @@ final class StandardBondGenerator {
         final double opposite = halfWideEnd - halfNarrowEnd;
         double adjacent = fromPoint.distance(toPoint);
 
-        
- 
+
+
         final int nSections = (int) (adjacent / hashSpacing);
         final double step = adjacent / (nSections - 1);
-        
+
         final ElementGroup group = new ElementGroup();
 
         final double start = hasDisplayedSymbol(from) ? fromPoint.distance(fromBackOffPoint)
@@ -405,7 +405,7 @@ final class StandardBondGenerator {
         final double end = hasDisplayedSymbol(to) ? fromPoint.distance(toBackOffPoint)
                                                   : Double.POSITIVE_INFINITY;
 
-        
+
         // don't adjust wedge if the angle is shallow than this amount
         final double threshold = Math.toRadians(35);
 
@@ -425,12 +425,12 @@ final class StandardBondGenerator {
                 refVector.normalize();
             }
 
-            // only slant if the angle isn't shallow 
+            // only slant if the angle isn't shallow
             if (refVector.angle(unit) > threshold) {
                 hatchAngle = refVector;
-            }            
+            }
         }
-        
+
         for (int i = 0; i < nSections; i++) {
             final double distance = i * step;
 
@@ -448,10 +448,10 @@ final class StandardBondGenerator {
     }
 
     /**
-     * A fancy hashed wedge can be drawn if the following conditions are met: 
+     * A fancy hashed wedge can be drawn if the following conditions are met:
      *      (1) {@link StandardGenerator.FancyHashedWedges} is enabled
      *      (2) Bond is of 'normal' length
-     *      (3) The atom at the wide has one other neighbor and no symbol displayed 
+     *      (3) The atom at the wide has one other neighbor and no symbol displayed
      *
      * @param to       the target atom
      * @param toBonds  bonds to the target atom (excluding the hashed wedge)
@@ -487,7 +487,7 @@ final class StandardBondGenerator {
         // 2 times the number of wave sections because each semi circle is drawn with two parts
         final int nCurves = 2 * (int) (length / waveSpacing);
         final double step = length / nCurves;
-        
+
         Vector2d peak = scale(perpendicular, step);
 
         boolean started = false;
@@ -502,17 +502,17 @@ final class StandardBondGenerator {
             started = true;
         }
 
-        // the wavy bond is drawn using Bezier curves, removing the control points each 
+        // the wavy bond is drawn using Bezier curves, removing the control points each
         // first 'endPoint' of the iteration forms a zig-zag pattern. The second 'endPoint'
         // lies on the central line between the atoms.
-        
+
         // the following may help to visualise what we're doing,
         // s  = start (could be any end point)
         // e  = end point
         // cp = control points 1 and 2
         //
         //     cp2 e cp1                   cp2 e cp1
-        //  cp1          cp2           cp1           cp2 
+        //  cp1          cp2           cp1           cp2
         //  s ---------- e ----------- e ----------- e ------------ center line
         //               cp1           cp2           cp1
         //                   cp2 e cp1                   cp2 e
@@ -523,11 +523,11 @@ final class StandardBondGenerator {
         //  |     |
         //  -------
         //   one curveTo / 'step' distance
-        
+
         // for the back off on atom symbols, the start position is the first end point after
-        // the backed off point. Similarly, the curve is only drawn if the end point is 
+        // the backed off point. Similarly, the curve is only drawn if the end point is
         // before the 'toBackOffPoint'
-        
+
         for (int i = 1; i < nCurves; i += 2) {
 
             peak = negate(peak); // alternate wave side
@@ -577,7 +577,7 @@ final class StandardBondGenerator {
             }
         }
 
-        
+
         return new GeneralPath(path, foreground).outline(stroke);
     }
 
@@ -590,7 +590,7 @@ final class StandardBondGenerator {
     private IRenderingElement generateDoubleBond(IBond bond) {
 
         final boolean cyclic = ringMap.containsKey(bond);
-        
+
         // select offset bonds from either the preferred ring or the whole structure
         final IAtomContainer refContainer = cyclic ? ringMap.get(bond)
                                                    : container;
@@ -598,12 +598,12 @@ final class StandardBondGenerator {
         final int length = refContainer.getAtomCount();
         final int index1 = refContainer.getAtomNumber(bond.getAtom(0));
         final int index2 = refContainer.getAtomNumber(bond.getAtom(1));
-        
+
         // if the bond is in a cycle we are using ring bonds to determine offset, since rings
         // have been normalised and ordered to wind anti-clockwise we want to get the atoms
-        // in the order they are in the ring.      
+        // in the order they are in the ring.
         final boolean outOfOrder = cyclic && index1 == (index2 + 1) % length;
-        
+
         final IAtom atom1 = bond.getAtom(outOfOrder ? 1 : 0);
         final IAtom atom2 = bond.getAtom(outOfOrder ? 0 : 1);
 
@@ -615,12 +615,12 @@ final class StandardBondGenerator {
 
         atom1Bonds.remove(bond);
         atom2Bonds.remove(bond);
-        
+
         if (cyclic) {
-            final int wind1 = winding(atom1Bonds.get(0), bond); 
+            final int wind1 = winding(atom1Bonds.get(0), bond);
             final int wind2 = winding(bond, atom2Bonds.get(0));
             if (wind1 > 0 && !hasDisplayedSymbol(atom1)) {
-                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);  
+                return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
             } else if (wind2 > 0 && !hasDisplayedSymbol(atom2)) {
                 return generateOffsetDoubleBond(bond, atom2, atom1, atom2Bonds.get(0), atom1Bonds);
             } else if (!hasDisplayedSymbol(atom1)) {
@@ -632,7 +632,7 @@ final class StandardBondGenerator {
             } else {
                 return generateCenteredDoubleBond(bond, atom1, atom2, atom1Bonds, atom2Bonds);
             }
-        } 
+        }
         else if (atom1Bonds.size() == 1 && !hasDisplayedSymbol(atom1)) {
             return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bonds.get(0), atom2Bonds);
         }
@@ -662,7 +662,7 @@ final class StandardBondGenerator {
      */
     private boolean specialOffsetBondNextToWedge(IAtom atom, List<IBond> bonds) {
         if (bonds.size() != 2)
-            return false; 
+            return false;
         if (atWideEndOfWedge(atom, bonds.get(0)) && isPlainBond(bonds.get(1)))
             return true;
         if (atWideEndOfWedge(atom, bonds.get(1)) && isPlainBond(bonds.get(0)))
@@ -673,10 +673,10 @@ final class StandardBondGenerator {
     /**
      * Select a plain bond from a list of bonds. If no bond was found, the first
      * is returned.
-     * 
+     *
      * @param bonds list of bonds
      * @return a plain bond
-     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond) 
+     * @see #isPlainBond(org.openscience.cdk.interfaces.IBond)
      */
     private IBond selectPlainSingleBond(List<IBond> bonds) {
         for (IBond bond : bonds) {
@@ -687,15 +687,15 @@ final class StandardBondGenerator {
     }
 
     /**
-     * A plain bond is a single bond with no stereochemistry type.  
-     * 
+     * A plain bond is a single bond with no stereochemistry type.
+     *
      * @param bond the bond to check
      * @return the bond is plain
      */
     private static boolean isPlainBond(IBond bond) {
         return SINGLE.equals(bond.getOrder()) && (bond.getStereo() == null || bond.getStereo() == NONE);
     }
-    
+
     /**
      * Check if the provided bond is a wedge (bold or hashed) and whether the atom is at the wide
      * end.
@@ -734,7 +734,7 @@ final class StandardBondGenerator {
      * @return the rendered bond element
      */
     private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds) {
-        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false);    
+        return generateOffsetDoubleBond(bond, atom1, atom2, atom1Bond, atom2Bonds, false);
     }
 
     /**
@@ -747,7 +747,7 @@ final class StandardBondGenerator {
      * @param atom2      second atom
      * @param atom1Bond  the reference bond used to decide which side the bond is offset
      * @param atom2Bonds the bonds connected to atom 2
-     * @param invert     invert the offset (i.e. opposite to reference bond)            
+     * @param invert     invert the offset (i.e. opposite to reference bond)
      * @return the rendered bond element
      */
     private IRenderingElement generateOffsetDoubleBond(IBond bond, IAtom atom1, IAtom atom2, IBond atom1Bond, List<IBond> atom2Bonds, boolean invert) {
@@ -766,9 +766,9 @@ final class StandardBondGenerator {
         final Vector2d reference = newUnitVector(atom1.getPoint2d(), atom1Bond.getConnectedAtom(atom1).getPoint2d());
 
         // there are two perpendicular vectors, this check ensures we have one on the same side as
-        // the reference 
+        // the reference
         if (reference.dot(perpendicular) < 0)
-            perpendicular = negate(perpendicular);        
+            perpendicular = negate(perpendicular);
         // caller requested inverted drawing
         if (invert)
             perpendicular = negate(perpendicular);
@@ -890,14 +890,14 @@ final class StandardBondGenerator {
         String label = StandardGenerator.getAnnotationLabel(bond);
         if (label != null)
             addAnnotation(atom1, atom2, label);
-        
+
         return group;
     }
 
     /**
      * The crossed bond defines unknown geometric isomerism on a double bond. The cross is
      * displayed for {@link IBond.Stereo#E_OR_Z}.
-     * 
+     *
      * @param from drawn from this atom
      * @param to drawn to this atom
      * @return generated rendering element
@@ -940,12 +940,12 @@ final class StandardBondGenerator {
         group.add(generatePlainSingleBond(atom1, atom2));
         group.add(generateCenteredDoubleBond(bond, atom1, atom2,
                                              Collections.<IBond>emptyList(), Collections.<IBond>emptyList()));
-        
+
         // add annotation label
         String label = StandardGenerator.getAnnotationLabel(bond);
         if (label != null)
             addAnnotation(atom1, atom2, label);
-        
+
         return group;
     }
 
@@ -956,7 +956,7 @@ final class StandardBondGenerator {
      * @param atom1 first atom
      * @param atom2 second atom
      * @param label annotation label
-     * @see #addAnnotation(IAtom, IAtom, String, Vector2d)              
+     * @see #addAnnotation(IAtom, IAtom, String, Vector2d)
      */
     private void addAnnotation(IAtom atom1, IAtom atom2, String label) {
         Vector2d perpendicular = VecmathUtil.newPerpendicularVector(VecmathUtil.newUnitVector(atom1.getPoint2d(), atom2.getPoint2d()));
@@ -966,7 +966,7 @@ final class StandardBondGenerator {
     /**
      * Add an annotation label for the bond between the two atoms on the specified 'side' (providied
      * as a the perpendicular directional vector).
-     * 
+     *
      * @param atom1 first atom
      * @param atom2 second atom
      * @param label annotation label
@@ -993,14 +993,14 @@ final class StandardBondGenerator {
      * @return rendering of unknown bond
      */
     IRenderingElement generateDashedBond(IAtom from, IAtom to) {
-        
+
         final Point2d fromPoint = from.getPoint2d();
         final Point2d toPoint   = to.getPoint2d();
-        
+
         final Vector2d unit = newUnitVector(fromPoint, toPoint);
-        
+
         final int nDashes = parameters.get(StandardGenerator.DashSection.class);
-        
+
         final double step     = fromPoint.distance(toPoint) / ((3 * nDashes) - 2);
 
         final double start = hasDisplayedSymbol(from) ? fromPoint.distance(backOffPoint(from, to))
@@ -1012,14 +1012,14 @@ final class StandardBondGenerator {
         ElementGroup group = new ElementGroup();
 
         double distance = 0;
-        
+
         for (int i = 0; i < nDashes; i++) {
-            
+
             // draw a full dash section
             if (distance > start && distance + step < end) {
                 group.add(newLineElement(sum(fromPoint, scale(unit, distance)),
                                          sum(fromPoint, scale(unit, distance + step))));
-            } 
+            }
             // draw a dash section that starts late
             else if (distance + step > start && distance + step < end) {
                 group.add(newLineElement(sum(fromPoint, scale(unit, start)),
@@ -1030,12 +1030,12 @@ final class StandardBondGenerator {
                 group.add(newLineElement(sum(fromPoint, scale(unit, distance)),
                                          sum(fromPoint, scale(unit, end))));
             }
-            
+
             distance += step;
             distance += step; // the gap
             distance += step; // the gap
         }
-        
+
         return group;
     }
 
@@ -1107,7 +1107,7 @@ final class StandardBondGenerator {
     /**
      * Determine the winding of two bonds. The winding is > 0 for anti clockwise and < 0
      * for clockwise and is relative to bond 1.
-     * 
+     *
      * @param bond1 first bond
      * @param bond2 second bond
      * @return winding relative to bond
@@ -1162,19 +1162,19 @@ final class StandardBondGenerator {
      * The normalisation exploits the fact that (most) rings will be drawn with more convex
      * turns (i.e. close to 30 degrees). This not bullet proof, consider a hexagon drawn as
      * a three point star.
-     * 
+     *
      * @param container the ring to normalize
      */
     static void normalizeRingWinding(IAtomContainer container) {
-        
+
         int prev = container.getAtomCount() - 1;
         int curr = 0;
         int next = 1;
-        
+
         int n = container.getAtomCount();
-        
+
         int winding = 0;
-        
+
         while (curr < n) {
             winding += winding(container.getAtom(prev).getPoint2d(),
                                container.getAtom(curr).getPoint2d(),
@@ -1194,14 +1194,14 @@ final class StandardBondGenerator {
 
     /**
      * Determine the winding of three points using the determinant.
-     * 
+     *
      * @param a first point
      * @param b second point
      * @param c third point
      * @return < 0 = clockwise, 0 = linear, > 0 anti-clockwise
      */
     static int winding(Point2d a, Point2d b, Point2d c) {
-        return (int) Math.signum((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));    
+        return (int) Math.signum((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x));
     }
 
     /**
@@ -1244,7 +1244,7 @@ final class StandardBondGenerator {
             if (piBondCmp != 0)
                 return -piBondCmp;
 
-            // order by element frequencies, all carbon rings are preferred 
+            // order by element frequencies, all carbon rings are preferred
             int[] freqA = countLightElements(containerA);
             int[] freqB = countLightElements(containerB);
 

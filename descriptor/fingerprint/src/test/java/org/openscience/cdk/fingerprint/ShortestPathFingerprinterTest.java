@@ -1,9 +1,9 @@
-/* 
+/*
  * Copyright (C) 1997-2007, 2011  Egon Willighagen <egonw@users.sf.net>
  * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -12,15 +12,15 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- * @author Syed Asad Rahman (2012) 
+ * @author Syed Asad Rahman (2012)
  * @cdk.module test-fingerprint
  */
 public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
@@ -118,7 +118,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeQ);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeT);
-        
+
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprintQ;
         BitSet fingerprintT;
@@ -149,7 +149,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeQ);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(moleculeT);
-        
+
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprintQ;
         BitSet fingerprintT;
@@ -176,7 +176,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     public void testGenerateFingerprintNaphthalene() throws InvalidSmilesException, Exception {
 
         String smiles = "C1=CC2=CC=CC=C2C=C1";
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         Aromaticity.cdkLegacy().apply(molecule);
@@ -193,7 +193,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-        
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         ShortestPathFingerprinter fingerprint = new ShortestPathFingerprinter(1024);
         BitSet fingerprint1;
@@ -329,7 +329,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testAtomPermutation2() throws CDKException {
         IAtomContainer pamine = MoleculeFactory.makeCyclopentane();
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pamine);        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(pamine);
         ShortestPathFingerprinter fp = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fp.getBitFingerprint(pamine);
 

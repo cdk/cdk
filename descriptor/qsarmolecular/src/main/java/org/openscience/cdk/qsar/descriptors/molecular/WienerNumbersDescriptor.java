@@ -36,10 +36,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 
 /**
- * This descriptor calculates the Wiener numbers. This includes the Wiener Path number 
+ * This descriptor calculates the Wiener numbers. This includes the Wiener Path number
  * and the Wiener Polarity Number.
  * <BR>
- * Further information is given in   
+ * Further information is given in
  * Wiener path number: half the sum of all the distance matrix entries; Wiener
  * polarity number: half the sum of all the distance matrix entries with a
  * value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
@@ -54,9 +54,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <li>WPATH - weiner path number
  * <li>WPOL - weiner polarity number
  * </ol>
- * 
+ *
  * <p>This descriptor does not have any parameters.
- * 
+ *
  * @author         mfe4
  * @cdk.created        December 7, 2004
  * @cdk.created    2004-11-03
@@ -79,13 +79,13 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     /**
      *  Constructor for the WienerNumbersDescriptor object.
      */
-    public WienerNumbersDescriptor() { 
+    public WienerNumbersDescriptor() {
 
     }
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -155,7 +155,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         double wienerPolarityNumber = 0; //wienerPol
 
 
-        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));        
+        matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
         int[][] distances = PathTools.computeFloydAPSP(matr);
 
         int partial;

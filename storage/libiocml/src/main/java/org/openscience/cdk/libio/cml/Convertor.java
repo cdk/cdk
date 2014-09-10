@@ -118,7 +118,7 @@ public class Convertor {
 
     public void registerCustomizer(ICMLCustomizer customizer) {
     	if (customizers == null) customizers = new HashMap<String, ICMLCustomizer>();
-    	
+
     	if (!customizers.containsKey(customizer.getClass().getName())) {
     		customizers.put(customizer.getClass().getName(), customizer);
     		logger.info("Loaded Customizer: ", customizer.getClass().getName());
@@ -126,10 +126,10 @@ public class Convertor {
     		logger.warn("Duplicate attempt to register a customizer");
     	}
     }
-    
+
     private void setupCustomizers() {
         if (customizers == null) customizers = new HashMap<String, ICMLCustomizer>();
-        
+
         try {
         	logger.debug("Starting loading Customizers...");
         	BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -178,7 +178,7 @@ public class Convertor {
         }
         if (file.getID() != null && !file.getID().equals(""))
         	cmlList.setId(file.getID());
-        
+
         if (file.getChemSequenceCount() > 0) {
             Iterator<IChemSequence> sequences = file.chemSequences().iterator();
             while (sequences.hasNext()) {
@@ -202,7 +202,7 @@ public class Convertor {
         }
         if (sequence.getID() != null && !sequence.getID().equals(""))
         	cmlList.setId(sequence.getID());
-        	
+
         if (sequence.getChemModelCount() > 0) {
             for (int i = 0; i < sequence.getChemModelCount(); i++) {
                 cmlList.appendChild(cdkChemModelToCMLList(sequence.getChemModel(i)));
@@ -225,7 +225,7 @@ public class Convertor {
         }
         if (model.getID() != null && !model.getID().equals(""))
         	cmlList.setId(model.getID());
-        	
+
         if (model.getCrystal() != null) {
             cmlList.appendChild(cdkCrystalToCMLMolecule(model.getCrystal(), false));
         }
@@ -238,50 +238,50 @@ public class Convertor {
 
         return cmlList;
     }
-    
+
     public CMLCml cdkReactionSchemeToCMLReactionSchemeAndMoleculeList(IReactionScheme cdkScheme){
     	CMLCml cml = new CMLCml();
     	cml.appendChild(cdkAtomContainerSetToCMLList(ReactionSchemeManipulator.getAllAtomContainers(cdkScheme)));
     	cml.appendChild(cdkReactionSchemeToCMLReactionScheme(cdkScheme, true));
     	return cml;
     }
-    
+
 	public CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme){
     	return cdkReactionSchemeToCMLReactionScheme(cdkScheme, true);
     }
-    
+
     private CMLReactionScheme cdkReactionSchemeToCMLReactionScheme(IReactionScheme cdkScheme, boolean setIDs) {
 
         CMLReactionScheme reactionScheme = new CMLReactionScheme();
-    	
+
     	if (useCMLIDs && setIDs) {
             IDCreator.createIDs(cdkScheme);
         }
         if (cdkScheme.getID() != null && !cdkScheme.getID().equals(""))
         	reactionScheme.setId(cdkScheme.getID());
-        	
+
     	for(Iterator<IReaction> it = cdkScheme.reactions().iterator(); it.hasNext();){
     		reactionScheme.appendChild(cdkReactionToCMLReaction(it.next(), true));
     	}
     	for(IReactionScheme intScheme : cdkScheme.reactionSchemes()){
         		reactionScheme.appendChild(cdkReactionSchemeToCMLReactionScheme(intScheme));
     	}
-        	
+
     	return reactionScheme;
-    } 
-    
+    }
+
     public CMLReactionStep cdkReactionToCMLReactionStep(IReaction reaction){
     	return cdkReactionToCMLReactionStep(reaction, true);
     }
-    
+
     private CMLReactionStep cdkReactionToCMLReactionStep(IReaction reaction, boolean setIDs){
     	CMLReactionStep reactionStep = new CMLReactionStep();
-    	
+
     	reactionStep.appendChild(cdkReactionToCMLReaction(reaction, true));
-    	
+
     	return reactionStep;
     }
-    
+
     public CMLReactionList cdkReactionSetToCMLReactionList(IReactionSet reactionSet) {
         return cdkReactionSetToCMLReactionList(reactionSet, true);
     }
@@ -294,7 +294,7 @@ public class Convertor {
         }
         if (reactionSet.getID() != null && !reactionSet.getID().equals(""))
         	reactionList.setId(reactionSet.getID());
-        	
+
         Iterator<IReaction> reactionIter = reactionSet.reactions().iterator();
         while (reactionIter.hasNext()) {
             reactionList.appendChild(cdkReactionToCMLReaction(reactionIter.next(), false));
@@ -316,7 +316,7 @@ public class Convertor {
         }
         if (moleculeSet.getID() != null && !moleculeSet.getID().equals(""))
         	cmlList.setId(moleculeSet.getID());
-        	
+
         for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
             IAtomContainer container = moleculeSet.getAtomContainer(i);
             cmlList.appendChild(
@@ -338,12 +338,12 @@ public class Convertor {
         }
         if (reaction.getID() != null && !reaction.getID().equals(""))
         	cmlReaction.setId(reaction.getID());
-        
+
         Map<Object, Object> props = reaction.getProperties();
  		Iterator<Object> keys = props.keySet().iterator();
         while (keys.hasNext()) {
         	Object key = keys.next();
-    		if (key instanceof String &&  
+    		if (key instanceof String &&
          			props.get(key) instanceof String) {
          		Object value = props.get(key);
          		if (!key.toString().equals(CDKConstants.TITLE)) {
@@ -351,12 +351,12 @@ public class Convertor {
                      this.checkPrefix(scalar);
                      scalar.setDictRef("cdk:reactionProperty");
                      scalar.setTitle(key.toString());
-                     scalar.setValue(value.toString());  
+                     scalar.setValue(value.toString());
                      cmlReaction.appendChild(scalar);
          		}
          	}
         }
-        
+
         // reactants
         CMLReactantList cmlReactants = new CMLReactantList();
         Iterator<IAtomContainer> reactants = reaction.getReactants().atomContainers().iterator();
@@ -364,7 +364,7 @@ public class Convertor {
             CMLReactant cmlReactant = new CMLReactant();
             cmlReactant.addMolecule(cdkAtomContainerToCMLMolecule(reactants.next()));
             cmlReactants.addReactant(cmlReactant);
-            
+
         }
 
         // products
@@ -375,7 +375,7 @@ public class Convertor {
             cmlProduct.addMolecule(cdkAtomContainerToCMLMolecule(products.next()));
             cmlProducts.addProduct(cmlProduct);
         }
-        
+
 //      substance
         CMLSubstanceList cmlSubstances = new CMLSubstanceList();
         Iterator<IAtomContainer> substance = reaction.getAgents().atomContainers().iterator();
@@ -384,9 +384,9 @@ public class Convertor {
             cmlSubstance.addMolecule(cdkAtomContainerToCMLMolecule(substance.next()));
             cmlSubstances.addSubstance(cmlSubstance);
         }
-        if (reaction.getID() != null) 
+        if (reaction.getID() != null)
         	cmlReaction.setId(reaction.getID());
-        
+
         cmlReaction.addReactantList(cmlReactants);
         cmlReaction.addProductList(cmlProducts);
         cmlReaction.addSubstanceList(cmlSubstances);
@@ -406,7 +406,7 @@ public class Convertor {
         }
         if (crystal.getID() != null && !crystal.getID().equals(""))
         	cmlCrystal.setId(crystal.getID());
-        
+
         this.checkPrefix(cmlCrystal);
         cmlCrystal.setZ(crystal.getZ());
         double[] params = CrystalGeometryTools.cartesianToNotional(
@@ -417,7 +417,7 @@ public class Convertor {
         molecule.appendChild(cmlCrystal);
         return molecule;
     }
-    
+
     public CMLMolecule cdkPDBPolymerToCMLMolecule(IPDBPolymer pdbPolymer) {
         return cdkPDBPolymerToCMLMolecule(pdbPolymer, true);
     }
@@ -426,7 +426,7 @@ public class Convertor {
     	CMLMolecule cmlMolecule = new CMLMolecule();
        	cmlMolecule.setConvention("PDB");
        	cmlMolecule.setDictRef("pdb:model");
-       	
+
        	Map<String, IStrand> mapS = pdbPolymer.getStrands();
        	Iterator<String> iter = mapS.keySet().iterator();
         while (iter.hasNext()) {
@@ -440,11 +440,11 @@ public class Convertor {
                	cmlMolecule.appendChild(clmono);
             }
         }
-       	
+
 
         return cmlMolecule;
     }
-    
+
     public CMLMolecule cdkMonomerToCMLMolecule(IMonomer monomer) {
         return cdkMonomerToCMLMolecule(monomer, true);
     }
@@ -452,10 +452,10 @@ public class Convertor {
     private CMLMolecule cdkMonomerToCMLMolecule(IMonomer monomer, boolean setIDs) {
     	CMLMolecule cmlMolecule = new CMLMolecule();
        	cmlMolecule.setDictRef("pdb:sequence");
-       	
+
        	if (monomer.getMonomerName() != null && !monomer.getMonomerName().equals(""))
         	cmlMolecule.setId(monomer.getMonomerName());
-        	
+
        	for(int i = 0 ; i < monomer.getAtomCount(); i++){
        		IAtom cdkAtom = monomer.getAtom(i);
             CMLAtom cmlAtom = cdkAtomToCMLAtom(monomer, cdkAtom);
@@ -483,7 +483,7 @@ public class Convertor {
         if (structure.getID() != null && !structure.getID().equals(""))
         	if(!isRef) cmlMolecule.setId(structure.getID());
         	else cmlMolecule.setRef(structure.getID());
-        
+
         if (structure.getProperty(CDKConstants.TITLE) != null) {
             cmlMolecule.setTitle((String) structure.getProperty(CDKConstants.TITLE));
         }
@@ -507,7 +507,7 @@ public class Convertor {
 	            cmlMolecule.addBond(cmlBond);
 	        }
         }
-        
+
         // ok, output molecular properties, but not TITLE, INCHI, or DictRef's
         Map<Object, Object> props = structure.getProperties();
         Iterator<Object> keys = props.keySet().iterator();
@@ -534,7 +534,7 @@ public class Convertor {
         				key.toString().equals(CDKConstants.FORMULA)){
         			if(props.get(key) instanceof IMolecularFormula){
 	        			IMolecularFormula cdkFormula = (IMolecularFormula)props.get(key);
-	        			
+
 	        			CMLFormula cmlFormula = new CMLFormula();
 	        			List<IIsotope> isotopesList = MolecularFormulaManipulator.putInOrder(MolecularFormulaManipulator.generateOrderEle(),cdkFormula);
 	        			for(int i = 0; i< isotopesList.size(); i++){
@@ -544,7 +544,7 @@ public class Convertor {
         			}else if (props.get(key) instanceof IMolecularFormulaSet){
         				IMolecularFormulaSet cdkFormulaSet = (IMolecularFormulaSet)props.get(key);
 	        			for(Iterator<IMolecularFormula> it = cdkFormulaSet.molecularFormulas().iterator(); it.hasNext();){
-	        				IMolecularFormula cdkFormula = it.next(); 
+	        				IMolecularFormula cdkFormula = it.next();
 	        				List<IIsotope> isotopesList = MolecularFormulaManipulator.putInOrder(MolecularFormulaManipulator.generateOrderEle(),cdkFormula);
 	        				CMLFormula cmlFormula = new CMLFormula();
 	        				cmlFormula.setDictRef("cdk:possibleMachts");
@@ -617,7 +617,7 @@ public class Convertor {
 
         Integer formalCharge = cdkAtom.getFormalCharge();
         if (formalCharge != null) cmlAtom.setFormalCharge(formalCharge);
-        
+
         // CML's hydrogen count consists of the sum of implicit and explicit
         // hydrogens (see bug #1655045).
         Integer totalHydrogen = cdkAtom.getImplicitHydrogenCount();
@@ -744,7 +744,7 @@ public class Convertor {
         		logger.debug(exception);
         	}
         }
-        
+
         return cmlBond;
     }
 

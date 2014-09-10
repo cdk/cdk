@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,7 +40,7 @@ public class DebugIsotope extends Isotope
     implements IIsotope {
 
     private static final long serialVersionUID = -2659188100080921299L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugIsotope.class);
 
@@ -48,14 +48,14 @@ public class DebugIsotope extends Isotope
 		super(elementSymbol);
 		logger.debug("Instantiated a DebugIsotope.");
 	}
-	
-	public DebugIsotope(int atomicNumber, String elementSymbol, 
+
+	public DebugIsotope(int atomicNumber, String elementSymbol,
 			int massNumber, double exactMass, double abundance) {
 		super(atomicNumber, elementSymbol, massNumber, exactMass, abundance);
 		logger.debug("Instantiated a DebugIsotope.");
 	}
 
-	public DebugIsotope(int atomicNumber, String elementSymbol, 
+	public DebugIsotope(int atomicNumber, String elementSymbol,
 			double exactMass, double abundance) {
 		super(atomicNumber, elementSymbol, exactMass, abundance);
 		logger.debug("Instantiated a DebugIsotope.");
@@ -218,7 +218,7 @@ public class DebugIsotope extends Isotope
     public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
-		
+
 	}
 
     /** {@inheritDoc} */ @Override

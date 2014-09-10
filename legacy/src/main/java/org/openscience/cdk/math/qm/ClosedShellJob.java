@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sf.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Calculates the orbitals and orbital energies of electron systems
  * with closed shells
- * 
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.githash
  * @cdk.created 2001-06-14
@@ -48,7 +48,7 @@ public class ClosedShellJob
   private int iterations = 0;
 
   public ClosedShellJob(Orbitals orbitals)
-  { 
+  {
     this.orbitals = orbitals;
   }
 
@@ -107,7 +107,7 @@ public class ClosedShellJob
   {
     int size = basis.getSize();
     Matrix J = new Matrix(size,size);
-    int i,j; 
+    int i,j;
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)
         // (1/2) * -<d^2/dx^2 chi_i | chi_j>
@@ -148,7 +148,7 @@ public class ClosedShellJob
       for(j=0; j<=i; j++)
       {
         result[i][j] = new double[size][];
-        for(k=0; k<size; k++) 
+        for(k=0; k<size; k++)
         {
           result[i][j][k] = new double[k+1];
           for(l=0; l<=k; l++)
@@ -192,7 +192,7 @@ public class ClosedShellJob
   }
 
   private Matrix calculateJ(IBasis basis, double[][][][] I, Matrix D)
-  { 
+  {
     int i,j,k,l;
     int size = basis.getSize();
     Matrix J = new Matrix(size,size);
@@ -224,17 +224,17 @@ public class ClosedShellJob
   }
 
   private Matrix calculateK(IBasis basis, double[][][][] I, Matrix D)
-  { 
+  {
     int i,j,k,l;
     int size = basis.getSize();
     Matrix K = new Matrix(size,size);
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)
-      { 
+      {
         K.matrix[i][j] = 0;
         for(k=0; k<size; k++)
           for(l=0; l<size; l++)
-          { 
+          {
             if (i>=j)
             {
               if (k>=l)
@@ -249,8 +249,8 @@ public class ClosedShellJob
               else
                 K.matrix[i][j] += D.matrix[k][l]*I[j][i][l][k];
             }
-          } 
-      }   
+          }
+      }
     return K;
   }
 
@@ -263,7 +263,7 @@ public class ClosedShellJob
         result += A.matrix[i][j]*B.matrix[i][j];
     return result;
   }
-  
+
   public Orbitals calculate()
   {
     long time = System.currentTimeMillis();
@@ -295,7 +295,7 @@ public class ClosedShellJob
 
     HAO = T.add(V);
     log.debug("HAO = \n"+HAO+"\n");
- 
+
     H = HAO.similar(C);
     log.debug("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
 
@@ -344,7 +344,7 @@ public class ClosedShellJob
 
       F = HAO.add(J).sub(K);
       log.debug("F = H+J-K = \n"+F+"\n");
-      
+
       H = F.similar(C);
       log.debug("H = C't * F * C' = \n"+H+"\n");
 

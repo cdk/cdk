@@ -167,13 +167,13 @@ public class ConformerContainerTest extends CDKTestCase {
     @Test(expected  = IndexOutOfBoundsException.class)
     public void testGet_int() {
         ConformerContainer container = new ConformerContainer(confs);
-        container.get(100);        
+        container.get(100);
     }
 
     @Test(expected  = IndexOutOfBoundsException.class)
     public void testGet2() {
         ConformerContainer container = new ConformerContainer(confs);
-        for (int i = 0; i < container.size()+1; i++) container.get(i);        
+        for (int i = 0; i < container.size()+1; i++) container.get(i);
     }
 
     @Test public void testAdd_int_IAtomContainer() {
@@ -242,7 +242,7 @@ public class ConformerContainerTest extends CDKTestCase {
     	container.addAll(5, null);
     }
 
-    @Test(expected=UnsupportedOperationException.class) 
+    @Test(expected=UnsupportedOperationException.class)
     public void testToArray_arrayObject() {
     	ConformerContainer container = new ConformerContainer(confs);
     	container.toArray(new IAtomContainer[]{});
@@ -290,16 +290,16 @@ public class ConformerContainerTest extends CDKTestCase {
     public void testContainsAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
-        Assert.assertEquals(nconfs, container.size());        
+        Assert.assertEquals(nconfs, container.size());
         Assert.assertTrue(container.containsAll(container));
     }
 
-    @Test(expected=UnsupportedOperationException.class) 
+    @Test(expected=UnsupportedOperationException.class)
     public void testRemoveAll_Collection() {
         ConformerContainer container = new ConformerContainer(confs);
         Assert.assertNotNull(container);
         Assert.assertEquals(nconfs, container.size());
-        
+
         container.removeAll(container);
         Assert.assertEquals(0, container.size());
     }
@@ -333,5 +333,5 @@ public class ConformerContainerTest extends CDKTestCase {
         Assert.assertNotNull(container);
         Assert.assertEquals(1, container.size());
     }
-    
+
 }

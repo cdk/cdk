@@ -1,20 +1,20 @@
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.type;
 
@@ -63,7 +63,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	public  SharingChargeDBReactionTest()  throws Exception {
 			setReaction(SharingChargeDBReaction.class);
 	}
-	 
+
 	 /**
 	  *  The JUnit setup method
 	  */
@@ -71,7 +71,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 			IReactionProcess type = new SharingChargeDBReaction();
 			Assert.assertNotNull(type);
 	 }
-	
+
 	/**
 	 * A unit test suite for JUnit. Reaction: C-C=[O+] => C-[C+]O|
 	 * Automatic search of the center active.
@@ -80,31 +80,31 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		IReactionProcess type = new SharingChargeDBReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
 		/* initiate */
-		
+
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
-        
-        
+
+
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         Assert.assertEquals(1, product.getAtom(1).getFormalCharge().intValue());
         Assert.assertEquals(0, product.getConnectedLonePairsCount(molecule.getAtom(1)));
-        
+
 		/*C[C+]O|*/
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
-        
+
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 	}
@@ -116,58 +116,58 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	 */
 	@Test public void testManuallyCentreActive() throws Exception {
 		IReactionProcess type = new SharingChargeDBReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-		
+
 		/*manually put the center active*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 		IParameterReact param = new SetReactionCenter();
 	    param.setParameter(Boolean.TRUE);
 	    paramList.add(param);
 	    type.setParameterList(paramList);
-		
+
 		/* initiate */
-		
+
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        
+
         /*C-[C+]O|*/
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
-        
+
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
 	}
 	/**
 	 * A unit test suite for JUnit.
-	 * 
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new SharingChargeDBReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-		
+
 		/*manually put the reactive center*/
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
-        
+
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
@@ -182,15 +182,15 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 
 	/**
 	 * A unit test suite for JUnit.
-	 *  
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new SharingChargeDBReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-		
+
 		/*automatic search of the center active*/
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
@@ -198,18 +198,18 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
         paramList.add(param);
         type.setParameterList(paramList);
 		/* initiate */
-		
+
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(8,setOfReactions.getReaction(0).getMappingCount());
-        
+
         IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
         Assert.assertEquals(mappedProductA1, product.getAtom(1));
         mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(2));
         Assert.assertEquals(mappedProductA1, product.getAtom(2));
-		
+
 	}
 
 
@@ -219,7 +219,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	@Test public void testAtomTypesAtomContainer1() throws Exception{
 		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
-		
+
 	}
 
 	/**
@@ -228,16 +228,16 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	@Test public void testAtomTypesAtomContainer2() throws Exception{
 		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
 		makeSureAtomTypesAreRecognized(moleculeTest);
-		
+
 	}
 	/**
 	 * get the molecule 1: C-C=[O+]
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-		
+
 		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -247,8 +247,8 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		molecule.addBond(1, 2, IBond.Order.DOUBLE);
 		try {
 			addExplicitHydrogens(molecule);
-	        
-	    
+
+
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
@@ -259,7 +259,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * Get the expected set of molecules.
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExpectedProducts() {
@@ -272,10 +272,10 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		molecule.addBond(0, 1, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
 		molecule.addBond(1, 2, IBond.Order.SINGLE);
-		
+
 		try {
 			addExplicitHydrogens(molecule);
-	    
+
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 	        lpcheck.saturate(molecule);
 		} catch (Exception e) {
@@ -286,7 +286,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-	 * 
+	 *
 	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
@@ -297,7 +297,7 @@ public class SharingChargeDBReactionTest extends ReactionProcessTest {
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
+					"Missing atom type for: " + nextAtom,
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}

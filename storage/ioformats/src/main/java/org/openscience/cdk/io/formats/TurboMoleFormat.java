@@ -24,9 +24,9 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.cosmologic.de/turbomole.html">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,15 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class TurboMoleFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public TurboMoleFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new TurboMoleFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

@@ -42,7 +42,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 
 /**
  * A generator for atoms with mass, charge, etc.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -72,7 +72,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     }
     private ShowAtomTypeNames showAtomTypeNames =
     	new ShowAtomTypeNames();
-    
+
 	/** {@inheritDoc} */
 	@Override
     @TestMethod("testSingleAtom")
@@ -80,12 +80,12 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             IAtomContainer container, IAtom atom, RendererModel model) {
         boolean drawNumbers = false;
     	if (model.hasParameter(WillDrawAtomNumbers.class)) {
-            drawNumbers = 
-            	model.getParameter(WillDrawAtomNumbers.class).getValue(); 
+            drawNumbers =
+            	model.getParameter(WillDrawAtomNumbers.class).getValue();
     	}
-        if (!hasCoordinates(atom) 
-             || invisibleHydrogen(atom, model) 
-             || (invisibleCarbon(atom, container, model) 
+        if (!hasCoordinates(atom)
+             || invisibleHydrogen(atom, model)
+             || (invisibleCarbon(atom, container, model)
              && !drawNumbers)) {
             return null;
         } else if (model.getParameter(CompactAtom.class).getValue()) {
@@ -106,15 +106,15 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             return textGroup;
         }
     }
-    
-    private void decorate(TextGroupElement textGroup, 
-                         IAtomContainer container, 
-                         IAtom atom, 
+
+    private void decorate(TextGroupElement textGroup,
+                         IAtomContainer container,
+                         IAtom atom,
                          RendererModel model) {
         Stack<Position> unused = getUnusedPositions(container, atom);
 
         if (model.hasParameter(WillDrawAtomNumbers.class)) {
-        	boolean drawNumbers = 
+        	boolean drawNumbers =
         			model.getParameter(WillDrawAtomNumbers.class).getValue();
         	if (!invisibleCarbon(atom, container, model) && drawNumbers) {
         		Position position = getNextPosition(unused);
@@ -122,7 +122,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         		textGroup.addChild(number, position);
         	}
         }
-        
+
         if (showImplicitHydrogens.getValue()) {
         	if(atom.getImplicitHydrogenCount()!=null){
 	            int hCount = atom.getImplicitHydrogenCount();
@@ -136,23 +136,23 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
 	            }
         	}
         }
-        
+
         Integer massNumber = atom.getMassNumber();
         if (massNumber != null) {
             try {
                 IsotopeFactory factory = Isotopes.getInstance();
-                int majorMass = 
+                int majorMass =
                     factory.getMajorIsotope(atom.getSymbol()).getMassNumber();
                 if (massNumber != majorMass) {
                     Position position = getNextPosition(unused);
                     textGroup.addChild(String.valueOf(massNumber), position);
                 }
             } catch (IOException io) {
-                
+
             }
         }
     }
-    
+
     private Position getNextPosition(Stack<Position> unused) {
         if (unused.size() > 0) {
             return unused.pop();
@@ -160,13 +160,13 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             return Position.N;
         }
     }
-    
+
     private Stack<Position> getUnusedPositions(IAtomContainer container, IAtom atom) {
         Stack<Position> unused = new Stack<Position>();
         for (Position p : Position.values()) {
             unused.add(p);
         }
-        
+
         for (IAtom connectedAtom : container.getConnectedAtomsList(atom)) {
             Position used = getPosition(atom, connectedAtom);
             if (unused.contains(used)) {
@@ -175,15 +175,15 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
         }
         return unused;
     }
-    
+
     private Position getPosition(IAtom atom, IAtom connectedAtom) {
         Point2d pointA = atom.getPoint2d();
         Point2d pointB = connectedAtom.getPoint2d();
         double diffx = pointB.x - pointA.x;
         double diffy = pointB.y - pointA.y;
-        
+
         final double DELTA = 0.2;
-        
+
         if (diffx < -DELTA) {                          // generally west
             if (diffy < -DELTA) {
                 return Position.NW;
@@ -200,7 +200,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
             } else {
                 return Position.S;
             }
-        } else {                                    // generally east 
+        } else {                                    // generally east
             if (diffy < -DELTA) {
                 return Position.NE;
             } else if (diffy > -DELTA && diffy < DELTA) {

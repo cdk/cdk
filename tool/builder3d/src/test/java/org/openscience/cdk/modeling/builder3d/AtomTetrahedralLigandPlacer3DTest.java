@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.githash
  */
 public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
-	
+
 	@Test
 	public void testAdd3DCoordinatesForSinglyBondedLigands_IAtomContainer() throws Exception{
 		IAtom atom1=new Atom("C");
@@ -67,7 +67,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		new AtomTetrahedralLigandPlacer3D().add3DCoordinatesForSinglyBondedLigands(ac);
 		ModelBuilder3DTest.checkAverageBondLength(ac);
 	}
-	
+
 	@Test
 	public void rescaleBondLength_IAtom_IAtom_Point3d(){
 		IAtom atom1=new Atom("C");
@@ -112,7 +112,7 @@ public class AtomTetrahedralLigandPlacer3DTest extends CDKTestCase{
 		IAtomContainer withCoords = new AtomTetrahedralLigandPlacer3D()
 			.getPlacedAtomsInAtomContainer(atom1, ac);
 		Point3d[] newPoints = new AtomTetrahedralLigandPlacer3D()
-			.get3DCoordinatesForLigands(atom1, noCoords, withCoords, null, 
+			.get3DCoordinatesForLigands(atom1, noCoords, withCoords, null,
 			4, AtomTetrahedralLigandPlacer3D.DEFAULT_BOND_LENGTH_H, -1);
 		for (int j = 0; j < noCoords.getAtomCount(); j++) {
 			if(newPoints[j]==null)

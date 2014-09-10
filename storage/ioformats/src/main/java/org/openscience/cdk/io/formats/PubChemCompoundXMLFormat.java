@@ -33,15 +33,15 @@ import java.util.List;
 public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public PubChemCompoundXMLFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PubChemCompoundXMLFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -53,13 +53,13 @@ public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements 
     public String getMIMEType() {
         return null;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
@@ -68,13 +68,13 @@ public class PubChemCompoundXMLFormat extends AbstractResourceFormat implements 
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
     	return "org.openscience.cdk.io.PCCompoundXMLReader";
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
     	return null;
     }
 

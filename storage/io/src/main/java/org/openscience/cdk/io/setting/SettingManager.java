@@ -133,16 +133,16 @@ public class SettingManager<T extends ISetting> {
      * @return usable setting
      */
     public T add(T setting) {
-        
+
         String key = key(setting);
-        
+
         if(settings.containsKey(key)){
             T instance = settings.get(key);
             if(instance.getClass() == setting.getClass()) {
                 return instance;
             }
         }
-        
+
         // we could not add if we have a clash, but actual it might be useful
         // to 'override' a setting in sub classes with a new one
         settings.put(key(setting), setting);

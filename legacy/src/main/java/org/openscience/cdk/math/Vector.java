@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -24,10 +24,10 @@
 package org.openscience.cdk.math;
 
 import javax.vecmath.Tuple3d;
- 
+
 /**
  * This class handles vectors.
- * 
+ *
  * @cdk.module  qm
  */
 public class Vector
@@ -69,7 +69,7 @@ public class Vector
    * Constructs a Vector with a Tuple3d, Vector3d or Point3d
    */
   public Vector(Tuple3d t)
-  { 
+  {
     vector = new double[3];
     size = 3;
     vector[0] = t.x; vector[1] = t.y; vector[2] = t.z;
@@ -91,7 +91,7 @@ public class Vector
     if ((b==null) ||
          (size!=b.size))
       return null;
-      
+
     int i;
     Vector result = new Vector(size);
     for(i=0; i<size; i++)
@@ -107,14 +107,14 @@ public class Vector
     if ((b==null) ||
         (size!=b.size))
       return null;
-      
+
     int i;
     Vector result = new Vector(size);
     for(i=0; i<size; i++)
       result.vector[i] = vector[i]-b.vector[i];
     return result;
   }
-  
+
   /**
    *  Multiplikation from a vectors with an double
    */
@@ -197,14 +197,14 @@ public class Vector
    *  Copy a vector
    */
   public Vector duplicate()
-  { 
+  {
     Vector result = new Vector(size);
-    int i; 
+    int i;
     for(i=0; i<size; i++)
       result.vector[i] = vector[i];
     return result;
   }
-  
+
   /**
    *  Return a vector as a string
    */

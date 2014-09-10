@@ -1,20 +1,20 @@
 /* Copyright (C) 2009  Stefan Kuhn <shk3@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.structgen.stochastic.operator;
 
@@ -40,14 +40,14 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  */
 @Category(SlowTest.class) // structgen is slow... a single method here currently takes ~6 seconds
 public class CrossoverMachineTest extends CDKTestCase {
-    
+
 
     @Test public void testdoCrossover_IAtomContainer() throws Exception {
         String filename = "data/smiles/c10h16isomers.smi";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         SMILESReader reader = new SMILESReader(ins);
         IAtomContainerSet som = reader.read(new AtomContainerSet());
-        Assert.assertEquals("We must have read 99 structures", 99, 
+        Assert.assertEquals("We must have read 99 structures", 99,
         	som.getAtomContainerCount());
 		CrossoverMachine cm = new CrossoverMachine();
 		String correctFormula="C10H16";
@@ -60,7 +60,7 @@ public class CrossoverMachineTest extends CDKTestCase {
         	for(int k=i+1;k<som.getAtomContainerCount();k++){
         		try{
 	        		List<IAtomContainer> result = cm
-	        			.doCrossover(som.getAtomContainer(i), 
+	        			.doCrossover(som.getAtomContainer(i),
 	        			som.getAtomContainer(k));
 	    			int[] hydrogencount2=new int[4];
 	    			for(IAtom atom : som.getAtomContainer(k).atoms()){
@@ -69,7 +69,7 @@ public class CrossoverMachineTest extends CDKTestCase {
 	        		Assert.assertEquals("Result size must be 2",2, result.size());
 	        		for(int l=0;l<2;l++){
 	        			IAtomContainer ac = result.get(l);
-	        			Assert.assertTrue("Result must be connected", 
+	        			Assert.assertTrue("Result must be connected",
 	        					ConnectivityChecker.isConnected(ac));
 	        			Assert.assertEquals("Molecular formula must be the same as" +
 	        					"of the input", MolecularFormulaManipulator.getString(

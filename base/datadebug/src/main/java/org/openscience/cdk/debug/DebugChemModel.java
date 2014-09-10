@@ -35,7 +35,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -44,7 +44,7 @@ public class DebugChemModel extends ChemModel
     implements IChemModel {
 
     private static final long serialVersionUID = -920209300005079592L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugChemModel.class);
 
@@ -214,7 +214,7 @@ public class DebugChemModel extends ChemModel
      */
     @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
     @Override
-    public boolean isEmpty() 
+    public boolean isEmpty()
 	{
     	boolean res = true;
     	if (setOfMolecules != null && !setOfMolecules.isEmpty())

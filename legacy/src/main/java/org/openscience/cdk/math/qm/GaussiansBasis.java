@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sf.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,19 +10,19 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
+ *
  */
 package org.openscience.cdk.math.qm;
- 
+
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
@@ -38,14 +38,14 @@ import org.openscience.cdk.math.Vector;
  * S = &lt;phi_i|phi_j><br>
  * J = &lt;d/dr phi_i | d/dr phi_j><br>
  * V = &lt;phi_i | 1/r | phi_j><br>
- * 
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.githash
  * @cdk.created 2001-06-14
  * @cdk.module  qm
  *
  * @cdk.keyword Gaussian basis set
- */ 
+ */
 public class GaussiansBasis implements IBasis
 {
   private int count; // number of the basis functions
@@ -59,7 +59,7 @@ public class GaussiansBasis implements IBasis
   private int count_atoms; // number of the atoms
   private Vector[] rN; // [atom] Positions of the atoms
   private int[] oz; // [atom] Atomic numbers of the atoms
-  
+
   // For the volume
   private double minx = 0; private double maxx = 0;
   private double miny = 0; private double maxy = 0;
@@ -92,13 +92,13 @@ public class GaussiansBasis implements IBasis
 
     //count_atoms = molecule.getSize();
     count_atoms = atoms.length;
-    
+
 //    logger.debug("Count of atoms: "+count_atoms);
-    
+
     this.rN = new Vector[count_atoms];
     this.oz = new int[count_atoms];
     for(i=0; i<count_atoms; i++)
-    { 
+    {
       this.rN[i] = (new Vector(atoms[i].getPoint3d())).mul(1.8897);
       this.oz[i] = atoms[i].getAtomicNumber();
 //      logger.debug((i+1)+".Atom Z="+this.oz[i]+" r="+(new Vector(atoms[i].getPoint3d()))+"[angstrom]");
@@ -131,7 +131,7 @@ public class GaussiansBasis implements IBasis
       this.r[i] = r[i].mul(1.8897);
 
       norm[i] = Math.sqrt(calcS(i,i));
-      if (norm[i]==0d) 
+      if (norm[i]==0d)
         norm[i] = 1d;
       else
         norm[i] = 1/norm[i];
@@ -191,7 +191,7 @@ public class GaussiansBasis implements IBasis
   {
     return miny;
   }
-  
+
   /**
    * Gets the dimension of the volume, which describes the base.
    */
@@ -207,7 +207,7 @@ public class GaussiansBasis implements IBasis
   {
     return minz;
   }
-  
+
   /**
    * Gets the dimension of the volume, which describes the base.
    */
@@ -218,7 +218,7 @@ public class GaussiansBasis implements IBasis
 
   /**
    * Calculates the function value an (x,y,z).
-   * @param index The number of the base 
+   * @param index The number of the base
    */
   public double getValue(int index, double x, double y, double z)
   {
@@ -238,7 +238,7 @@ public class GaussiansBasis implements IBasis
 
   /**
    * Calculates the function values.
-   * @param index The number of the base 
+   * @param index The number of the base
    */
   public Vector getValues(int index, Matrix m)
   {
@@ -248,13 +248,13 @@ public class GaussiansBasis implements IBasis
     double x,y,z,dx,dy,dz,mx,my,mz;
 
     x = m.matrix[0][0]; y = m.matrix[1][0]; z = m.matrix[2][0];
-            
+
     dx = (x*1.8897)-r[index].vector[0];
     dy = (y*1.8897)-r[index].vector[1];
     dz = (z*1.8897)-r[index].vector[2];
-    
+
     Vector result = new Vector(m.columns);
-    int i,j; 
+    int i,j;
 
     mx = 1d;
     for(i=0; i<nx[index]; i++)
@@ -288,7 +288,7 @@ public class GaussiansBasis implements IBasis
       {
         y = m.matrix[1][j];
         dy = (y*1.8897)-r[index].vector[1];
-        my = 1d; 
+        my = 1d;
         for(i=0; i<ny[index]; i++)
           my *= dy;
         dy *= dy;
@@ -298,7 +298,7 @@ public class GaussiansBasis implements IBasis
       {
         z = m.matrix[2][j];
         dz = (z*1.8897)-r[index].vector[2];
-        mz = 1d; 
+        mz = 1d;
         for(i=0; i<nz[index]; i++)
           mz *= dz;
         dz *= dz;
@@ -335,30 +335,30 @@ public class GaussiansBasis implements IBasis
     {
       System.err.println("Error [Basis.calcI()]: nj="+nj);
       return Double.NaN; // Falls fehlerhafte Parameter
-    } 
+    }
     double[][] I = new double[nj+1][];
-    
+
     double alphaij = alphai+alphaj;
     double xij = (alphai*xi+alphaj*xj)/alphaij;
-    
+
     I[0] = new double[(nj+ni+1)];
     I[0][0] = Math.sqrt(Math.PI)/Math.sqrt(alphaij); // I(0,0)=G(0)
-    
+
     if ((nj+ni+1)>1)
     {
       I[0][1] = -(xi-xij)*I[0][0]; // I(0,1)=G(1)
-      
+
       // I(0,n)=G(n)
       for(int i=2; i<=(nj+ni); i++)
         I[0][i] = ((i-1)/(2*alphaij))*I[0][i-2]-(xi-xij)*I[0][i-1];
-        
+
       for(int j=1; j<=nj; j++)
       {
         I[j] = new double[(nj+ni+1)-j];
-        
+
         for(int i=0; i<=(nj+ni-j); i++)
           I[j][i] = I[nj-1][ni+1]+(xi-xj)*I[nj-1][ni];
-      }   
+      }
     }
 
     return I[nj][ni];
@@ -367,9 +367,9 @@ public class GaussiansBasis implements IBasis
   public double calcS(int i, int j)
   {
     //logger.debug("S: i="+i+" j="+j+" r[i]="+r[i]+" r[j]="+r[j]);
-    return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j]) * 
+    return calcD(norm[i], norm[j], alpha[i],alpha[j],r[i],r[j]) *
            calcI(nx[i],nx[j],alpha[i],alpha[j],r[i].vector[0],r[j].vector[0]) *
-           calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1]) * 
+           calcI(ny[i],ny[j],alpha[i],alpha[j],r[i].vector[1],r[j].vector[1]) *
            calcI(nz[i],nz[j],alpha[i],alpha[j],r[i].vector[2],r[j].vector[2]);
   }
 
@@ -388,7 +388,7 @@ public class GaussiansBasis implements IBasis
     else if (ni==0)
       return -4d*alphai*alphai*   calcI(2   ,nj,alphai,alphaj,xi,xj)
              +2d*alphai*          calcI(0   ,nj,alphai,alphaj,xi,xj);
-             
+
     System.err.println("Error [Basis.calcJ]: ni="+ni);
     return Double.NaN; // Falls fehlerhafte Parameter
   }
@@ -419,14 +419,14 @@ public class GaussiansBasis implements IBasis
              -(n-1)*t*t*                                        calcG(n-2, t, alphai, alphaj, xi, xj, xN)
              +(((alphai*xi+alphaj*xj)/(alphai+alphaj))-xi)*     calcG(n-1, t, alphai, alphaj, xi, xj, xN)
              +(((alphai*xi+alphaj*xj)/(alphai+alphaj))-xN)*t*t* calcG(n-1, t, alphai, alphaj, xi, xj, xN);
-             
+
     else if (n==1)
       return (((alphai*xi+alphaj*xj)/(alphai+alphaj))-xi)*      calcG(0, t, alphai, alphaj, xi, xj, xN)
              +(((alphai*xi+alphaj*xj)/(alphai+alphaj))-xN)*t*t* calcG(0, t, alphai, alphaj, xi, xj, xN);
-             
+
     else if (n==0)
       return Math.sqrt(Math.PI)/Math.sqrt(alphai+alphaj);
-      
+
     System.err.println("Error [Basis.calcG]: n="+n);
     return Double.NaN; // Falls fehlerhafte Parameter
   }
@@ -434,16 +434,16 @@ public class GaussiansBasis implements IBasis
   /**
    * Transfer equation for the calculation of core potentials.
    */
-  private double calcI(int ni, int nj, double t, double alphai, double alphaj, 
+  private double calcI(int ni, int nj, double t, double alphai, double alphaj,
                         double xi, double xj, double xN)
   {
     if (nj>0)
       return calcI(ni+1, nj-1, t, alphai, alphaj, xi, xj, xN)+
              (xi-xj)*calcI(ni, nj-1, t, alphai, alphaj, xi, xj, xN);
-             
+
     else if (nj==0)
       return calcG(ni, t, alphai, alphaj, xi, xj, xN);
-      
+
     System.err.println("Error [Basis.calcI()]: nj="+nj);
     return Double.NaN; // Falls fehlerhafte Parameter
   }
@@ -477,18 +477,18 @@ public class GaussiansBasis implements IBasis
                         (ryij-rN.vector[1])*(ryij-rN.vector[1]) +
                         (rzij-rN.vector[2])*(rzij-rN.vector[2]));
 
-    double C = 2*calcD(norm[i], norm[j], 
+    double C = 2*calcD(norm[i], norm[j],
               alpha[i], alpha[j], r[i], r[j])*Math.sqrt(alphaij)/Math.sqrt(Math.PI);
 
     sum1 = 0;
     for(f = 1; f<steps; f=f+2)
     {
       t = f*h;
-      sum1 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j], 
+      sum1 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
-                               calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
+                               calcI(ny[i], ny[j], t, alpha[i], alpha[j],
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
-                               calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
+                               calcI(nz[i], nz[j], t, alpha[i], alpha[j],
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
     }
 
@@ -498,26 +498,26 @@ public class GaussiansBasis implements IBasis
       t = f*h;
       sum2 += Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
-                               calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
+                               calcI(ny[i], ny[j], t, alpha[i], alpha[j],
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
-                               calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
+                               calcI(nz[i], nz[j], t, alpha[i], alpha[j],
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
     }
 
     t = 0d;
     f1 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
-                               calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
+                               calcI(ny[i], ny[j], t, alpha[i], alpha[j],
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
-                               calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
+                               calcI(nz[i], nz[j], t, alpha[i], alpha[j],
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
 
     t = 1d;
     f2 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], t, alpha[i], alpha[j],
                                      r[i].vector[0], r[j].vector[0], rN.vector[0]) *
-                               calcI(ny[i], ny[j], t, alpha[i], alpha[j], 
+                               calcI(ny[i], ny[j], t, alpha[i], alpha[j],
                                      r[i].vector[1], r[j].vector[1], rN.vector[1]) *
-                               calcI(nz[i], nz[j], t, alpha[i], alpha[j], 
+                               calcI(nz[i], nz[j], t, alpha[i], alpha[j],
                                      r[i].vector[2], r[j].vector[2], rN.vector[2]);
 
     return (h/3)*(f1 + 4*sum1 + 2*sum2 + f2)*Z*C;
@@ -534,7 +534,7 @@ public class GaussiansBasis implements IBasis
   {
     double result = 0d;
     for(int k=0; k<count_atoms; k++)
-    { 
+    {
       //logger.debug("k="+k+" r="+r[k]);
       result += calcV(i,j, rN[k], oz[k]);
     }
@@ -544,7 +544,7 @@ public class GaussiansBasis implements IBasis
   /**
    * Transfer equation for a four center integral.
    */
-  public double calcG(int n, int m, double u, 
+  public double calcG(int n, int m, double u,
      double alphai, double alphaj, double alphak, double alphal, double xi, double xj, double xk, double xl)
   {
     if ((n<0) || (m<0))
@@ -570,7 +570,7 @@ public class GaussiansBasis implements IBasis
     int i,j;
 
     G[0][0] = 1d;
-    
+
     // Nach 1)
     if (n>0)
       G[1][0] = C00;
@@ -603,12 +603,12 @@ public class GaussiansBasis implements IBasis
                   C00         *G[i-1][j];
 
     return G[n][m];
-  }  
+  }
 
   /**
    * Transfer equation for a four center integral.
    */
-  public double calcI(int ni, int nj, int nk, int nl, double u, 
+  public double calcI(int ni, int nj, int nk, int nl, double u,
                       double alphai, double alphaj, double alphak, double alphal,
                       double xi, double xj, double xk, double xl)
   {
@@ -633,10 +633,10 @@ public class GaussiansBasis implements IBasis
   public double calcI(int i, int j, int k, int l)
   {
     double f,t;
-    
+
     double sum1,sum2;
     double f1,f2;
-    
+
     // Berechnen der Integration nach Simson
     int steps = 10;
     double h = 1d/steps;
@@ -658,7 +658,7 @@ public class GaussiansBasis implements IBasis
     double X = alpha0*((rxij-rxkl)*(rxij-rxkl) +
                        (ryij-rykl)*(ryij-rzkl) +
                        (rzij-rzkl)*(rzij-rzkl));
-    
+
     double C = (Math.PI*Math.PI*Math.PI/Math.pow((alpha[i]+alpha[j])*(alpha[k]+alpha[l]),1.5))*
                Math.sqrt(alpha0)*
                calcD(norm[i], norm[j], alpha[i], alpha[j], r[i], r[j])*
@@ -688,8 +688,8 @@ public class GaussiansBasis implements IBasis
                  r[i].vector[1], r[j].vector[1], r[k].vector[1], r[l].vector[1]) *
                                calcI(nz[i], nz[j], nz[k], nz[l], t, alpha[i], alpha[j], alpha[k], alpha[l],
                  r[i].vector[2], r[j].vector[2], r[k].vector[2], r[l].vector[2]);
-    }                                
-    
+    }
+
     t = 0d;
     f1 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], nx[k], nx[l], t, alpha[i], alpha[j], alpha[k], alpha[l],
                  r[i].vector[0], r[j].vector[0], r[k].vector[0], r[l].vector[0]) *
@@ -697,8 +697,8 @@ public class GaussiansBasis implements IBasis
                  r[i].vector[1], r[j].vector[1], r[k].vector[1], r[l].vector[1]) *
                                calcI(nz[i], nz[j], nz[k], nz[l], t, alpha[i], alpha[j], alpha[k], alpha[l],
                  r[i].vector[2], r[j].vector[2], r[k].vector[2], r[l].vector[2]);
-                                     
-    t = 1d;                          
+
+    t = 1d;
     f2 = Math.exp(-X*t*t)*calcI(nx[i], nx[j], nx[k], nx[l], t, alpha[i], alpha[j], alpha[k], alpha[l],
                  r[i].vector[0], r[j].vector[0], r[k].vector[0], r[l].vector[0]) *
                                calcI(ny[i], ny[j], ny[k], ny[l], t, alpha[i], alpha[j], alpha[k], alpha[l],

@@ -317,7 +317,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         double wnsa2 = pnsa2 * totalSA / 1000;
         double wnsa3 = pnsa3 * totalSA / 1000;
 
-        // hydrophobic and poalr surface area 
+        // hydrophobic and poalr surface area
         double phobic = 0.0;
         double polar = 0.0;
         for (int i = 0; i < container.getAtomCount(); i++) {

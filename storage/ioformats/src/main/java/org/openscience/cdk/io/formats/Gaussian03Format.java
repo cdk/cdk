@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.gaussian.com/g_ur/m_input.htm">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class Gaussian03Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public Gaussian03Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Gaussian03Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,7 +68,7 @@ public class Gaussian03Format extends SimpleChemFormatMatcher implements IChemFo
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.Gaussian03Reader";
     }
 

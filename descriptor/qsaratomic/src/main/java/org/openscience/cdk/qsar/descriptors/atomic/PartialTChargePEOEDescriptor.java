@@ -39,9 +39,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *  <p>The calculation of total partial charges of an heavy atom is based on 
+ *  <p>The calculation of total partial charges of an heavy atom is based on
  *  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
- *  <p>They are obtained by summation of the results of the calculations on 
+ *  <p>They are obtained by summation of the results of the calculations on
  *  sigma- and pi-charges. </p>
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -75,7 +75,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
     private GasteigerPEPEPartialCharges pepe = null;
-    
+
 	/**Number of maximum iterations*/
 	private int maxIterations = -1;
     /**Number of maximum resonance structures*/
@@ -111,19 +111,19 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-    	if (params.length > 3) 
+    	if (params.length > 3)
             throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-        
+
         if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
 	        maxIterations = (Integer) params[0];
-	        
+
 	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
         	lpeChecker = (Boolean) params[1];
         }
-	    
+
 	    if(params.length > 2 && params[2] != null){
         	if (!(params[2] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
@@ -190,17 +190,17 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
                             new DoubleResult(Double.NaN), names, e);
                 }
             }
-    		
+
         	if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
         	if(maxIterations != -1)	pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)	pepe.setMaxResoStruc(maxResonStruc);
-    		
+
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
 				List<Double> peoeAtom = new ArrayList<Double>();
 				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					peoeAtom.add(it.next().getCharge());
-				
+
 				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					it.next().setCharge(0.0);
 

@@ -24,9 +24,9 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://viewmol.sourceforge.net/">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,15 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class ViewmolFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public ViewmolFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ViewmolFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

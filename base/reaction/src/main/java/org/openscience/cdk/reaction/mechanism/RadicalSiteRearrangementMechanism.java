@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -37,10 +37,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>This mechanism displaces an Atom or substructure (R) from one position to an other. 
+ * <p>This mechanism displaces an Atom or substructure (R) from one position to an other.
  * It returns the reaction mechanism which has been cloned the IMolecule.</p>
  * <p>This reaction could be represented as [A*]-(X)_n-Y-Z => A(Z)-(X)_n-[Y*]</p>
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -49,9 +49,9 @@ import java.util.List;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.RadicalSiteRearrangementMechanismTest")
 public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
-     * reactants and products. 
+     * reactants and products.
      *
      *
      * @param atomContainerSet
@@ -62,7 +62,7 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond.
      * 					  It is the bond which is moved
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -91,37 +91,37 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
 		IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
 		IBond bond1 = bondList.get(0);// Bond to move
 		int posBond1 = molecule.getBondNumber(bond1);
-		
+
 
 		reactantCloned.removeBond(reactantCloned.getBond(posBond1));
-		IBond newBond = atom1.getBuilder().newInstance(IBond.class,atom1C, 
+		IBond newBond = atom1.getBuilder().newInstance(IBond.class,atom1C,
 				atom2C, IBond.Order.SINGLE);
 		reactantCloned.addBond(newBond);
-		
+
 		List<ISingleElectron> selectron = reactantCloned.getConnectedSingleElectronsList(atom2C);
-		reactantCloned.removeSingleElectron(selectron.get(selectron.size() -1));		
+		reactantCloned.removeSingleElectron(selectron.get(selectron.size() -1));
 		atom2C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		reactantCloned.addSingleElectron(atom2C.getBuilder().newInstance(ISingleElectron.class, atom3C));
 		atom3C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
-		
+
     	reaction.addProduct(reactantCloned);
-    	
+
 		return reaction;
 	}
 

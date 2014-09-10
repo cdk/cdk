@@ -46,14 +46,14 @@ import org.openscience.cdk.ringsearch.AllRingsFinder;
  * 4n+2 pi-electrons rule applied to isolated ring systems. It assumes
  * CDK atom types to be perceived with the {@link CDKAtomTypeMatcher} or with
  * any compatible class.
- * 
+ *
  * <p>But unlike the {@link CDKHueckelAromaticityDetector}, this one accepts
  * ring atoms with double bonds pointing out of the ring.
  *
  * @author         egonw
  * @cdk.module     standard
  * @cdk.githash
- * 
+ *
  * @see org.openscience.cdk.CDKConstants
  * @see CDKHueckelAromaticityDetector
  * @deprecated use {@link Aromaticity} with the {@link org.openscience.cdk.aromaticity.ElectronDonation#cdkAllowingExocyclic()} model
@@ -81,8 +81,8 @@ public class DoubleBondAcceptingAromaticityDetector {
 		Iterator<IAtom> atoms = ringSystems.atoms().iterator();
 		while (atoms.hasNext()) atoms.next().setFlag(CDKConstants.ISINRING, true);
 		Iterator<IBond> bonds = ringSystems.bonds().iterator();
-		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);		
-		
+		while (bonds.hasNext()) bonds.next().setFlag(CDKConstants.ISINRING, true);
+
 		boolean foundSomeAromaticity = false;
 		Iterator<IAtomContainer> isolatedRingSystems =
 		    ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers().iterator();
@@ -120,7 +120,7 @@ public class DoubleBondAcceptingAromaticityDetector {
 				}
 			}
 		}
-		
+
 		return foundSomeAromaticity;
 	}
 
@@ -191,7 +191,7 @@ public class DoubleBondAcceptingAromaticityDetector {
 			return count;
 		}
 	}
-	
+
 	private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
 	    for (IAtom atom : container.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, true);
 		  for (IBond bond : container.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, true);

@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -35,7 +35,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Represents the idea of a chemical reaction. The reaction consists of 
+ * Represents the idea of a chemical reaction. The reaction consists of
  * a set of reactants and a set of products.
  *
  * <p>The class mostly represents abstract reactions, such as 2D diagrams,
@@ -68,12 +68,12 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     /** These are the used solvent, catalysts etc that normally appear above
         the reaction arrow */
     protected IAtomContainerSet agents;
-    
+
     protected IMapping[] map;
     protected int mappingCount;
-    
+
     private IReaction.Direction reactionDirection;
-    
+
     /**
      * Constructs an empty, forward reaction.
      */
@@ -85,7 +85,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         mappingCount = 0;
         reactionDirection = IReaction.Direction.FORWARD;
     }
-    
+
     /**
      * Returns the number of reactants in this reaction.
      *
@@ -94,7 +94,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public int getReactantCount() {
         return reactants.getAtomContainerCount();
     }
-    
+
     /**
      * Returns the number of products in this reaction.
      *
@@ -124,7 +124,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public void setReactants(IAtomContainerSet setOfMolecules) {
         reactants = setOfMolecules;
     }
-	
+
     /**
      * Returns a MoleculeSet containing the products of this reaction.
      *
@@ -134,7 +134,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public IAtomContainerSet getProducts() {
         return products;
     }
-    
+
 	/**
      * Assigns a MoleculeSet to the products of this reaction.
      *
@@ -145,7 +145,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public void setProducts(IAtomContainerSet setOfMolecules) {
         products = setOfMolecules;
     }
-	
+
     /**
      * Returns a MoleculeSet containing the agents in this reaction.
      *
@@ -155,7 +155,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public IAtomContainerSet getAgents() {
         return agents;
     }
-    
+
     /**
      * Returns the mappings between the reactant and the product side.
      *
@@ -169,7 +169,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         	}
         };
     }
-    
+
     /**
      * The inner Mapping Iterator class.
      *
@@ -177,7 +177,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     private class MappingIterator implements Iterator<IMapping> {
 
         private int pointer = 0;
-    	
+
         public boolean hasNext() {
             return pointer < mappingCount;
         }
@@ -189,9 +189,9 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         public void remove() {
             removeMapping(--pointer);
         }
-    	
+
     }
-    
+
     /**
      * Adds a reactant to this reaction.
      *
@@ -200,10 +200,10 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void addReactant(IAtomContainer reactant) {
         addReactant(reactant, 1.0);
-	/* notifyChanged() is called by 
+	/* notifyChanged() is called by
 	   addReactant(Molecule reactant, double coefficient) */
     }
-    
+
     /**
      * Adds an agent to this reaction.
      *
@@ -224,7 +224,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public void addReactant(IAtomContainer reactant, Double coefficient) {
         reactants.addAtomContainer(reactant, coefficient);
     }
-    
+
     /**
      * Adds a product to this reaction.
      *
@@ -233,10 +233,10 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void addProduct(IAtomContainer product) {
         this.addProduct(product, 1.0);
-	/* notifyChanged() is called by 
+	/* notifyChanged() is called by
 	addProduct(Molecule product, double coefficient)*/
     }
-    
+
     /**
      * Adds a product to this reaction.
      *
@@ -246,10 +246,10 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
      */
     public void addProduct(IAtomContainer product, Double coefficient) {
         products.addAtomContainer(product, coefficient);
-	/* notifyChanged() is called by 
+	/* notifyChanged() is called by
 	   addReactant(Molecule reactant, double coefficient) */
     }
-    
+
     /**
      * Returns the stoichiometry coefficient of the given reactant.
      *
@@ -260,7 +260,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public Double getReactantCoefficient(IAtomContainer reactant) {
         return reactants.getMultiplier(reactant);
     }
-    
+
     /**
      * Returns the stoichiometry coefficient of the given product.
      *
@@ -271,7 +271,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public Double getProductCoefficient(IAtomContainer product) {
         return products.getMultiplier(product);
     }
-	
+
 	/**
      * Sets the coefficient of a a reactant to a given value.
      *
@@ -284,8 +284,8 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     	boolean result = reactants.setMultiplier(reactant, coefficient);
     	return result;
     }
-	
-	    
+
+
 	/**
      * Sets the coefficient of a a product to a given value.
      *
@@ -298,7 +298,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         boolean result = products.setMultiplier(product, coefficient);
     	return result;
     }
-	
+
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the reactants.
@@ -309,7 +309,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public Double[] getReactantCoefficients() {
         return reactants.getMultipliers();
     }
-	
+
 	/**
      * Returns an array of double with the stoichiometric coefficients
 	 * of the products.
@@ -320,8 +320,8 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public Double[] getProductCoefficients() {
         return products.getMultipliers();
     }
-	
-	
+
+
 	/**
      * Sets the coefficients of the reactants.
      *
@@ -333,7 +333,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         boolean result = reactants.setMultipliers(coefficients);
     	return result;
     }
-	
+
 	/**
      * Sets the coefficient of the products.
      *
@@ -345,7 +345,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     	boolean result =  products.setMultipliers(coefficients);
     	return result;
     }
-	
+
     /**
      * Sets the direction of the reaction.
      *
@@ -355,7 +355,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public void setDirection(IReaction.Direction direction) {
 	reactionDirection = direction;
     }
-    
+
     /**
      * Returns the direction of the reaction.
      *
@@ -366,7 +366,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public IReaction.Direction getDirection() {
         return reactionDirection;
     }
-    
+
     /**
      * Adds a mapping between the reactant and product side to this
      * Reaction.
@@ -379,7 +379,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         map[mappingCount] = mapping;
         mappingCount++;
     }
-    
+
     /**
      * Removes a mapping between the reactant and product side to this
      * Reaction.
@@ -394,7 +394,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
 		map[mappingCount - 1] = null;
 		mappingCount--;
 	}
-    
+
     /**
      * Retrieves a mapping between the reactant and product side to this
      * Reaction.
@@ -404,7 +404,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public IMapping getMapping(int pos) {
     	return map[pos];
     }
-    
+
     /**
      * Get the number of mappings between the reactant and product side to this
      * Reaction.
@@ -414,7 +414,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
     public int getMappingCount() {
     	return mappingCount;
     }
-    
+
     private void growMappingArray() {
         Mapping[] newMap = new Mapping[map.length + growArraySize];
         System.arraycopy(map, 0, newMap, 0, map.length);
@@ -438,7 +438,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         description.append(')');
         return description.toString();
     }
-    
+
 	/**
 	 * Clones this <code>Reaction</code> and its content.
 	 *
@@ -450,7 +450,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
         clone.reactants = (IAtomContainerSet) reactants.clone();
         clone.agents = (IAtomContainerSet) agents.clone();
         clone.products = (IAtomContainerSet) products.clone();
-        // create a Map of corresponding atoms for molecules (key: original Atom, 
+        // create a Map of corresponding atoms for molecules (key: original Atom,
         // value: clone Atom)
         Map<IAtom, IAtom> atomatom = new Hashtable<IAtom, IAtom>();
         for (int i = 0; i < reactants.getAtomContainerCount(); ++i) {
@@ -458,7 +458,7 @@ public class Reaction extends ChemObject implements Serializable, IReaction, Clo
             IAtomContainer mol2 = clone.reactants.getAtomContainer(i);
             for (int j = 0; j < mol.getAtomCount(); ++j) atomatom.put(mol.getAtom(j), mol2.getAtom(j));
         }
-        
+
         // clone the maps
 		clone.map = new Mapping[map.length];
 		for (int f = 0; f < mappingCount; f++) {

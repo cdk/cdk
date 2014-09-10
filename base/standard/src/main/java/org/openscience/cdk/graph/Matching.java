@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -112,7 +112,7 @@ public final class Matching {
     }
 
     /**
-     * Determine if a vertex is not matched. 
+     * Determine if a vertex is not matched.
      *
      * @param v a vertex
      * @return the vertex has no matching
@@ -133,25 +133,25 @@ public final class Matching {
      */
     @TestMethod("fulvelene2")
     public boolean perfect(int[][] graph, BitSet subset) {
-        
+
         if (graph.length != match.length || subset.cardinality() > graph.length)
             throw new IllegalArgumentException("graph and matching had different capacity");
-        
+
         // and odd set can never provide a perfect matching
-        if ((subset.cardinality() & 0x1) == 0x1) 
+        if ((subset.cardinality() & 0x1) == 0x1)
             return false;
-        
+
         // arbitrary matching was perfect
         if (arbitaryMatching(graph, subset))
             return true;
-        
+
         EdmondsMaximumMatching.maxamise(this, graph, subset);
-        
-        // the matching is imperfect if any vertex was 
+
+        // the matching is imperfect if any vertex was
         for (int v = subset.nextSetBit(0); v >= 0; v = subset.nextSetBit(v + 1))
             if (unmatched(v))
                 return false;
-        
+
         return true;
     }
 
@@ -169,11 +169,11 @@ public final class Matching {
 
         // indicates the deg of each vertex in unmatched subset
         final int[] deg  = new int[graph.length];
-        
-        // queue/stack of vertices with deg1 vertices 
+
+        // queue/stack of vertices with deg1 vertices
         final int[] deg1 = new int[graph.length];
         int nd1 = 0, nMatched = 0;
-        
+
         for (int v = subset.nextSetBit(0); v >= 0; v = subset.nextSetBit(v + 1)) {
             if (matched(v)) {
                 assert subset.get(other(v));
@@ -187,9 +187,9 @@ public final class Matching {
             if (deg[v] == 1)
                 deg1[nd1++] = v;
         }
-        
+
         while (!unmatched.isEmpty()) {
-            
+
             int v = -1;
 
             // attempt to select a vertex with degree = 1 (in matched set)
@@ -202,9 +202,9 @@ public final class Matching {
             // no unmatched degree 1 vertex, select the first unmatched
             if (v < 0 || unmatched.get(v))
                 v = unmatched.nextSetBit(0);
-            
+
             unmatched.clear(v);
-            
+
             // find a unmatched edge and match it, adjacent degrees are updated
             for (final int w : graph[v]) {
                 if (unmatched.get(w)) {
@@ -226,7 +226,7 @@ public final class Matching {
                 }
             }
         }
-        
+
         return nMatched == subset.cardinality();
     }
 

@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.silent;
 
@@ -35,7 +35,7 @@ public class ChemObjectTestHelper {
     public static void testNotifyChanged(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertFalse(listener.getChanged());
     }
@@ -43,7 +43,7 @@ public class ChemObjectTestHelper {
     public static void testNotifyChanged_IChemObjectChangeEvent(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertNull(listener.getEvent());
     }
@@ -51,10 +51,10 @@ public class ChemObjectTestHelper {
     public static void testStateChanged_IChemObjectChangeEvent(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertFalse(listener.getChanged());
-        
+
         listener.reset();
         Assert.assertFalse(listener.getChanged());
         chemObject.setProperty("Changed", "Again");
@@ -93,14 +93,14 @@ public class ChemObjectTestHelper {
         Assert.assertEquals(0, chemObject.getListenerCount());
         Assert.assertEquals(0, chemObject2.getListenerCount());
     }
-    
+
     public static void testAddListener_IChemObjectListener(IChemObject chemObject) {
         Assert.assertEquals(0, chemObject.getListenerCount());
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
         Assert.assertEquals(0, chemObject.getListenerCount());
     }
-    
+
     public static void testGetListenerCount(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
@@ -114,12 +114,12 @@ public class ChemObjectTestHelper {
         chemObject.removeListener(listener);
         Assert.assertEquals(0, chemObject.getListenerCount());
     }
-    
+
     public static void testSetNotification_true(IChemObject chemObject) {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
-        
+
         chemObject.setID("Changed");
         Assert.assertFalse(listener.getChanged());
     }

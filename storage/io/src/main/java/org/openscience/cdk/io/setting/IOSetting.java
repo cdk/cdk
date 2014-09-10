@@ -42,31 +42,31 @@ public abstract class IOSetting implements ISetting {
     protected String name;
     protected String question;
     protected String setting;
-    
+
     /**
-     * The default constructor that sets this field. All textual 
+     * The default constructor that sets this field. All textual
      * information is supposed to be English. Localization is taken care
      * off by the ReaderConfigurator.
      *
      * @param name           Name of the setting
      * @param level          Level at which question is asked
-     * @param question       Question that is poped to the user when the 
+     * @param question       Question that is poped to the user when the
      *                       ReaderSetting needs setting
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user
      */
-    public IOSetting(String name, Importance level, 
+    public IOSetting(String name, Importance level,
                          String question, String defaultSetting) {
         this.level = level;
         this.name  = name;
         this.question = question;
         this.setting = defaultSetting;
     }
-    
+
     public String getName() {
         return this.name;
     }
-    
+
     public String getQuestion() {
         return this.question;
     }
@@ -74,28 +74,28 @@ public abstract class IOSetting implements ISetting {
     public String getDefaultSetting() {
         return this.setting;
     }
-    
+
     public Importance getLevel() {
         return this.level;
     }
-    
+
     /**
      * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.    
+     * a CDKException when the setting is not valid.
      *
      */
     public void setSetting(String setting) throws CDKException {
-        // by default, except all input, so no setting checking                     
+        // by default, except all input, so no setting checking
         this.setting = setting;
     }
 
     /**
      * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.    
+     * a CDKException when the setting is not valid.
      *
      */
     public String getSetting() {
-        // by default, except all input, so no setting checking                     
+        // by default, except all input, so no setting checking
         return this.setting;
     }
 }

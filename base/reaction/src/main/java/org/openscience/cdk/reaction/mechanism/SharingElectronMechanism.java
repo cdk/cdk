@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -39,10 +39,10 @@ import java.util.List;
 
 /**
  * <p>This mechanism displaces the charge (lonePair) because of
- * deficiency of charge. 
+ * deficiency of charge.
  * It returns the reaction mechanism which has been cloned the IMolecule.</p>
  * <p>This reaction could be represented as [A*]-B| => A=[B*]</p>
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -51,16 +51,16 @@ import java.util.List;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.SharingElectronMechanismTest")
 public class SharingElectronMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
-     * reactants and products. 
+     * reactants and products.
      *
      *
      * @param atomContainerSet
      * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -89,36 +89,36 @@ public class SharingElectronMechanism implements IReactionMechanism{
 		int posBond1 = molecule.getBondNumber(bond1);
 
 		BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
-		
+
 		List<ILonePair> lonePair = reactantCloned.getConnectedLonePairsList(atom1C);
 		reactantCloned.removeLonePair(lonePair.get(lonePair.size() -1));
 		int charge = atom1C.getFormalCharge();
 		atom1C.setFormalCharge(charge+1);
-		
+
 		charge = atom2C.getFormalCharge();
 		atom2C.setFormalCharge(charge-1);
-    	
+
     	atom1C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		atom2C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		reaction.addProduct(reactantCloned);
-		
+
 		return reaction;
 	}
 

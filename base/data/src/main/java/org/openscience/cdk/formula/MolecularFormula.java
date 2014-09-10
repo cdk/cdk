@@ -33,14 +33,14 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  * Class defining a molecular formula object. It maintains
  * a list of list {@link IIsotope}.
- *   
+ *
  * <p>Examples:
  * <ul>
  *   <li><code>[C<sub>5</sub>H<sub>5</sub>]-</code></li>
  *   <li><code>C<sub>6</sub>H<sub>6</sub></code></li>
  *   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
  * </ul>
- * 
+ *
  * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
@@ -59,7 +59,7 @@ public class MolecularFormula implements IMolecularFormula {
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -2011407700837295287L;
-	
+
 	private Map<IIsotope, Integer> isotopes;
 	/**
      *  The partial charge of the molecularFormula. The default value is Double.NaN.
@@ -70,14 +70,14 @@ public class MolecularFormula implements IMolecularFormula {
 	 *  A hashtable for the storage of any kind of properties of this IChemObject.
 	 */
 	private Map<Object, Object> properties;
-	
+
 	/**
 	 *  Constructs an empty MolecularFormula.
 	 */
 	public MolecularFormula() {
 		isotopes = new HashMap<IIsotope,Integer>();
 	}
-	
+
 	/**
 	 * Adds an molecularFormula to this MolecularFormula.
 	 *
@@ -93,7 +93,7 @@ public class MolecularFormula implements IMolecularFormula {
 		return this;
 	}
 
-	
+
 	/**
 	 *  Adds an Isotope to this MolecularFormula one time.
 	 *
@@ -125,7 +125,7 @@ public class MolecularFormula implements IMolecularFormula {
 		if(!flag){
 			isotopes.put(isotope, count);
 		}
-		
+
 		return this;
 	}
 
@@ -148,7 +148,7 @@ public class MolecularFormula implements IMolecularFormula {
 	}
 
 	/**
-     *  Returns the partial charge of this IMolecularFormula. If the charge 
+     *  Returns the partial charge of this IMolecularFormula. If the charge
      *  has not been set the return value is Double.NaN.
      *
      * @return the charge of this IMolecularFormula
@@ -161,7 +161,7 @@ public class MolecularFormula implements IMolecularFormula {
 	}
 
 	/**
-	 *  Checks a set of Nodes for the occurrence of the isotope in the 
+	 *  Checks a set of Nodes for the occurrence of the isotope in the
 	 *  IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
 	 *
 	 * @param   isotope          The IIsotope to look for
@@ -174,7 +174,7 @@ public class MolecularFormula implements IMolecularFormula {
 	}
 
 	/**
-	 *  Checks a set of Nodes for the number of different isotopes in the 
+	 *  Checks a set of Nodes for the number of different isotopes in the
 	 *  IMolecularFormula.
 	 *
 	 * @return        The the number of different isotopes in this IMolecularFormula
@@ -184,7 +184,7 @@ public class MolecularFormula implements IMolecularFormula {
 	public int getIsotopeCount() {
 		return isotopes.size();
 	}
-	
+
 	/**
 	 *  Get the isotope instance given an IIsotope. The instance is those
 	 *  that has the isotope with the same symbol, natural abundance and
@@ -249,7 +249,7 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
     @TestMethod("testClone")
 	public Object clone() throws CloneNotSupportedException {
-		
+
 //		/* it is not a super class of chemObject */
 //		MolecularFormula clone = (MolecularFormula) super.clone();
 //        // start from scratch
@@ -260,7 +260,7 @@ public class MolecularFormula implements IMolecularFormula {
 //			IIsotope isotope = iterIso.next();
 //			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCount(isotope));
 //		}
-		
+
 		MolecularFormula clone = new MolecularFormula();
 		for (IIsotope isotope : isotopes()) {
 			clone.addIsotope((IIsotope) isotope.clone(),getIsotopeCount(isotope));
@@ -372,7 +372,7 @@ public class MolecularFormula implements IMolecularFormula {
 	 */
     @TestMethod("testSetProperties_Hashtable")
 	public void setProperties(Map<Object, Object> properties){
-		
+
 		Iterator<Object> keys = properties.keySet().iterator();
 		while (keys.hasNext()) {
 			Object key = keys.next();
@@ -382,7 +382,7 @@ public class MolecularFormula implements IMolecularFormula {
 	/**
 	 * Compare to IIsotope. The method doesn't compare instance but if they
 	 * have the same symbol, natural abundance and exact mass.
-	 * 
+	 *
 	 * @param isotopeOne   The first Isotope to compare
 	 * @param isotopeTwo   The second Isotope to compare
 	 * @return             True, if both isotope are the same

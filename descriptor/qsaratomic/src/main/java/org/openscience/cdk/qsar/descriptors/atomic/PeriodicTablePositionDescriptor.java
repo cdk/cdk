@@ -61,12 +61,12 @@ public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor im
 
     private static final String[] names = {"periodicTablePosition"};
     public Map<String, Integer> periodicTable;
-	
+
 	/**
 	 *  Constructor for the PeriodicTablePositionDescriptor object
 	 */
 	public PeriodicTablePositionDescriptor() {
-	    if (periodicTable == null) { 
+	    if (periodicTable == null) {
 		periodicTable = new Hashtable<String, Integer>();
 		periodicTable.put("H", 1);
 		periodicTable.put("Li", 2);

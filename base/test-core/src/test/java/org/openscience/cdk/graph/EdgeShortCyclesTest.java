@@ -144,7 +144,7 @@ public class EdgeShortCyclesTest {
                                        {13, 14, 15, 2, 17, 16, 13}};
         assertThat(paths, is(expected));
     }
-    
+
     @Test public void paths_cyclophanelike2() throws Exception {
         int[][] g = cyclophanelike2();
         EdgeShortCycles esc = new EdgeShortCycles(g);
@@ -180,15 +180,15 @@ public class EdgeShortCyclesTest {
                            {0, 2},
                            {1, 3, 15, 17},
                            {2, 4},
-                           {3, 5}, 
+                           {3, 5},
                            {4, 0, 6, 10},
                            {5, 7},
                            {6, 8},
                            {7, 9, 11, 19},
                            {8, 10},
                            {9, 5},
-                           {8, 12}, 
-                           {11, 13}, 
+                           {8, 12},
+                           {11, 13},
                            {12, 14, 16, 18},
                            {13, 15},
                            {14, 2},
@@ -209,7 +209,7 @@ public class EdgeShortCyclesTest {
                            {3, 5},
                            {4, 0, 6},
                            {5, 7, 11},
-                           {6, 8}, 
+                           {6, 8},
                            {7, 9},
                            {8, 10, 12},
                            {9, 11},
@@ -219,12 +219,12 @@ public class EdgeShortCyclesTest {
                            {13, 15},
                            {14, 16, 18},
                            {15, 17},
-                           {16, 12}, 
+                           {16, 12},
                            {15, 19, 23},
                            {18, 20},
-                           {19, 21}, 
+                           {19, 21},
                            {20, 2, 22},
-                           {21, 23}, 
+                           {21, 23},
                            {22, 18}};
     }
 }

@@ -348,9 +348,9 @@ public class ExtAtomContainerManipulator extends AtomContainerManipulator {
             setID(container, index, atoms);
             setHydrogenCount(container, index, atoms);
             setCharge(container, index, atoms);
-            newAtomContainer.addAtom(atoms[index]);            
+            newAtomContainer.addAtom(atoms[index]);
         }
-        
+
         for (IStereoElement stereoElement : container.stereoElements()) {
             newAtomContainer.addStereoElement(stereoElement);
         }

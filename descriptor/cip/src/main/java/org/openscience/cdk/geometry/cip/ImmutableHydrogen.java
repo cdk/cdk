@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IBond.Order;
  * Helper class to represent a immutable hydrogen. All set methods are void, and only
  * {@link #getSymbol()}, {@link #getAtomicNumber()}, and {@link #getMassNumber()} are
  * implemented.
- * 
+ *
  * @author egonw
  * @cdk.module cip
  * @cdk.githash
@@ -54,7 +54,7 @@ class ImmutableHydrogen implements IAtom {
     public IAtom clone() {
         return this;
     }
-    
+
     /**
      * This field is not used by this immutable hydrogen.
      *
@@ -127,7 +127,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param point3d The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -145,7 +145,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param point2d The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -154,7 +154,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param point3d The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -163,7 +163,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param stereoParity The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -252,7 +252,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param identifier The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -261,7 +261,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param bondOrderSum The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -270,7 +270,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param radius The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -279,7 +279,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param charge The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -288,7 +288,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param count The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -297,7 +297,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param hybridization The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -306,7 +306,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param maxBondOrder The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -315,7 +315,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param valency The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -354,7 +354,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param exactMass The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -363,7 +363,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param massNumber The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -372,7 +372,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param naturalAbundance The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -380,7 +380,7 @@ class ImmutableHydrogen implements IAtom {
 
     /**
      * Returns the atomic number of hydrogen.
-     * 
+     *
      * @return 1.
      */
     @TestMethod("testExpectedValues")
@@ -390,7 +390,7 @@ class ImmutableHydrogen implements IAtom {
 
     /**
      * Returns the symbol of the hydrogen element.
-     * 
+     *
      * @return "H".
      */
     @TestMethod("testExpectedValues")
@@ -399,14 +399,14 @@ class ImmutableHydrogen implements IAtom {
     }
 
     /** Using this method on this immutable object has no effect.
-     * 
+     *
      * @param atomicNumber An integer that will just be disregarded.
      */
     @TestMethod("testOverwriteStaticValues")
     public void setAtomicNumber(Integer atomicNumber) {}
 
     /** Using this method on this immutable object has no effect.
-     * 
+     *
      * @param symbol A string that will just be disregarded.
      */
     @TestMethod("testOverwriteStaticValues")
@@ -528,7 +528,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param flagsNew The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -537,7 +537,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param identifier The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -555,11 +555,11 @@ class ImmutableHydrogen implements IAtom {
      */
     @TestMethod("testSetIsSilent")
     public void setProperties(Map<Object, Object> properties) {}
-    
+
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param properties The value will be disregarded.
      */
     @TestMethod("testSetIsSilent")
@@ -568,7 +568,7 @@ class ImmutableHydrogen implements IAtom {
     /**
      * This field is not used by this immutable hydrogen.
      * Any setting will have no effect what so ever.
-     * 
+     *
      * @param description The value will be disregarded.
      * @param property    The value will be disregarded.
      */

@@ -64,11 +64,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *    <tr>
  *
  *      <td>
- *        
+ *
  *      </td>
  *
  *      <td>
- *        
+ *
  *      </td>
  *
  *      <td>
@@ -133,7 +133,7 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
 	/**
 	 *  Gets the parameters attribute of the InductiveAtomicHardnessDescriptor
 	 *  object
-	 *  
+	 *
 	 * @return    The parameters value
      * @see #setParameters
      */
@@ -166,7 +166,7 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
 		if (factory == null)
             try {
                 factory = AtomTypeFactory.getInstance(
-                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt",
                     ac.getBuilder()
                 );
             } catch (Exception exception) {
@@ -176,7 +176,7 @@ public class InductiveAtomicHardnessDescriptor extends AbstractAtomicDescriptor 
         double atomicHardness;
 
 		double radiusTarget;
-		
+
 		Iterator<IAtom> allAtoms = ac.atoms().iterator();
 		atomicHardness = 0;
 		double partial;

@@ -53,7 +53,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
 	private IReaction reaction;
    	private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-	
+
 	public ReactionManipulatorTest() {
 		super();
 	}
@@ -77,14 +77,14 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(water, 3.0);
         reaction.addReactant(new AtomContainer());
         reaction.addProduct(new AtomContainer());
-        
+
         Reaction reversedReaction = (Reaction)ReactionManipulator.reverse(reaction);
         Assert.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
         Assert.assertEquals(2, reversedReaction.getProductCount());
         Assert.assertEquals(1, reversedReaction.getReactantCount());
         Assert.assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
     }
-    
+
     @Test public void testGetAllIDs_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setID("r1");
@@ -95,7 +95,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
         water.addAtom(oxygen);
         reaction.addReactant(water);
         reaction.addProduct(water);
-        
+
         List<String> ids = ReactionManipulator.getAllIDs(reaction);
         Assert.assertNotNull(ids);
         Assert.assertEquals(5, ids.size());
@@ -109,24 +109,24 @@ public class ReactionManipulatorTest extends CDKTestCase {
     	IReaction reaction = builder.newInstance(IReaction.class);
     	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
     	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
-    	
+
     	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class,reactant.getAtom(1),product.getAtom(1));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class,reactant.getAtom(2),product.getAtom(2));
         reaction.addMapping(mapping);
-    	
+
         reaction.addReactant(reactant);
         reaction.addProduct(product);
-        
+
         IAtom mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
         Assert.assertEquals(mappedAtom, product.getAtom(0));
-        
+
         mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
         Assert.assertEquals(mappedAtom, reactant.getAtom(1));
-        
-        
+
+
     }
     /**
 	 * A unit test suite for JUnit. Test of mapped IBond
@@ -137,36 +137,36 @@ public class ReactionManipulatorTest extends CDKTestCase {
     	IReaction reaction = builder.newInstance(IReaction.class);
     	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
     	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
-    	
+
     	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class,reactant.getBond(0),product.getBond(0));
         reaction.addMapping(mapping);
         mapping = builder.newInstance(IMapping.class,reactant.getBond(1),product.getBond(1));
         reaction.addMapping(mapping);
-    	
+
         reaction.addReactant(reactant);
         reaction.addProduct(product);
-        
+
         IBond mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
         Assert.assertEquals(mappedBond, product.getBond(0));
-        
+
         mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
         Assert.assertEquals(mappedBond, reactant.getBond(1));
     }
-    
+
 	@Test public void testGetAtomCount_IReaction() throws Exception {
         Assert.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
 	}
-	
+
 	@Test public void testGetBondCount_IReaction() throws Exception {
         Assert.assertEquals(18, ReactionManipulator.getBondCount(reaction));
 	}
-	
+
 	@Test public void testGetAllAtomContainers_IReaction() throws Exception {
 		Assert.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
-	}	
-    
+	}
+
 	@Test public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
 		ReactionManipulator.setAtomProperties(reaction, "test", "ok");
 		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
@@ -194,24 +194,24 @@ public class ReactionManipulatorTest extends CDKTestCase {
 			IAtomContainer container = atomContainers.next();
 			IAtom anAtom = container.getAtom(0);
 			Assert.assertEquals(
-				container, 
+				container,
 				ReactionManipulator.getRelevantAtomContainer(reaction, anAtom)
 			);
 		}
 	}
-	
+
 	@Test public void testGetRelevantAtomContainer_IReaction_IBond() {
 		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
 		while (atomContainers.hasNext()) {
 			IAtomContainer container = atomContainers.next();
 			IBond aBond = container.getBond(0);
 			Assert.assertEquals(
-				container, 
+				container,
 				ReactionManipulator.getRelevantAtomContainer(reaction, aBond)
 			);
 		}
 	}
-	
+
 	@Test public void testRemoveElectronContainer_IReaction_IElectronContainer() {
 		IReaction reaction = builder.newInstance(IReaction.class);
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -229,9 +229,9 @@ public class ReactionManipulatorTest extends CDKTestCase {
 
 		Assert.assertEquals(2,mol.getAtomCount());
 		Assert.assertEquals(0,mol.getBondCount());
-		
+
 	}
-	
+
 	@Test public void testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom() {
 		IReaction reaction = builder.newInstance(IReaction.class);
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
@@ -250,7 +250,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(1,mol.getAtomCount());
 		Assert.assertEquals(0,mol.getBondCount());
 	}
-	
+
 	@Test public void testGetAllMolecules_IReaction() {
 		IReaction reaction = builder.newInstance(IReaction.class);
 		reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -260,7 +260,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		reaction.addProduct(builder.newInstance(IAtomContainer.class));
 		Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
 	}
-	
+
 	@Test public void testGetAllProducts_IReaction() {
 		IReaction reaction = builder.newInstance(IReaction.class);
 		reaction.addReactant(builder.newInstance(IAtomContainer.class));
@@ -270,7 +270,7 @@ public class ReactionManipulatorTest extends CDKTestCase {
 		reaction.addProduct(builder.newInstance(IAtomContainer.class));
 		Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
 	}
-	
+
 	@Test public void testGetAllReactants_IReaction() {
 		IReaction reaction = builder.newInstance(IReaction.class);
 		reaction.addReactant(builder.newInstance(IAtomContainer.class));

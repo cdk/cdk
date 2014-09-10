@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Canonically labels an atom container implementing
  * the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
- * The Collections.sort() method uses a merge sort which is 
+ * The Collections.sort() method uses a merge sort which is
  * stable and runs in n log(n).
  *
  * @cdk.module standard
@@ -62,13 +62,13 @@ public class CanonicalLabeler {
    * Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type Integer, indicating the canonical order.
    * This is an implementation of the algorithm published in
    * David Weininger et.al. {@cdk.cite WEI89}.
-   * 
-   * <p>The Collections.sort() method uses a merge sort which is 
+   *
+   * <p>The Collections.sort() method uses a merge sort which is
    * stable and runs in n log(n).
-   * 
-   * <p>It is assumed that a chemically valid AtomContainer is provided: 
+   *
+   * <p>It is assumed that a chemically valid AtomContainer is provided:
    * this method does not check
-   * the correctness of the AtomContainer. Negative H counts will 
+   * the correctness of the AtomContainer. Negative H counts will
    * cause a NumberFormatException to be thrown.
    * @param atomContainer The molecule to label
    */
@@ -79,7 +79,7 @@ public class CanonicalLabeler {
     if (atomContainer.getAtomCount() == 1) {
     	atomContainer.getAtom(0).setProperty(InvPair.CANONICAL_LABEL, 1);
     }
-      
+
     List<InvPair> vect = createInvarLabel(atomContainer);
     step3(vect, atomContainer);
   }
@@ -130,7 +130,7 @@ public class CanonicalLabeler {
               (a.getImplicitHydrogenCount() == CDKConstants.UNSET ? 0 : a.getImplicitHydrogenCount())); //Num connections
       inv.append(atomContainer.getConnectedAtomsList(a).size());                        //Num of non H bonds
       inv.append(PeriodicTable.getAtomicNumber(a.getSymbol()));
-        
+
       Double charge = a.getCharge();
         if (charge == CDKConstants.UNSET) charge = 0.0;
       if (charge < 0)                                                        //Sign of charge

@@ -1,20 +1,20 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
@@ -55,7 +55,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         // original molecule O=N(=O)c1cccc2cn[nH]c12 - correct kekulisation will give
         // the same result. this test though should depend on kekulisation working
-        IAtomContainer mol = sp.parseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");         
+        IAtomContainer mol = sp.parseSmiles("O=N(=O)C1=C2NN=CC2=CC=C1");
         Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
@@ -115,7 +115,7 @@ public class HBondAcceptorCountDescriptorTest extends MolecularDescriptorTest {
         mol.addBond(b7);
         IBond b8 = builder.newInstance(IBond.class,a5, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        
+
         Object[] params = {new Boolean(true)};
         descriptor.setParameters(params);
         Assert.assertEquals(

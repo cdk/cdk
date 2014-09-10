@@ -111,10 +111,10 @@ public class MakeJarDependencyDoclet {
         }
         packageClasses.addElement(packageClass);
     }
-    
+
     private void processClass(ClassDoc classDoc) throws IOException {
         if (classDoc == null) return;
-        
+
         String className = classDoc.qualifiedName();
         // first deal with build dependencies
         Tag[] tags = classDoc.tags(javaDocBuildDependsTag);
@@ -131,7 +131,7 @@ public class MakeJarDependencyDoclet {
             }
         }
     }
-    
+
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
             ClassDoc doc = classes[i];

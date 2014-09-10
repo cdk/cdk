@@ -338,14 +338,14 @@ public class AtomPlacer
         for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
             Integer tmp = atomContainer.getAtom(i).getImplicitHydrogenCount();
             if (tmp == CDKConstants.UNSET) numh[i]= 0;
-            else numh[i] = tmp;            
+            else numh[i] = tmp;
         }
 
 //		SDG should lay out what it gets and not fiddle with molecules
-//      during layout so this was 
+//      during layout so this was
 //      removed during debugging. Before you put this in again, contact
 //      er@doktor-steinbeck.de
-        
+
 //        if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
 //            try{
 //                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
@@ -379,7 +379,7 @@ public class AtomPlacer
             if (prevBond != null
                     && IBond.Order.DOUBLE.equals(prevBond.getOrder())
                     && IBond.Order.DOUBLE.equals(currBond.getOrder())) {
-                
+
                 int atomicNumber = atom.getAtomicNumber();
                 int charge       = atom.getFormalCharge();
 
@@ -387,14 +387,14 @@ public class AtomPlacer
                         && (Elements.Carbon.number() == atomicNumber
                         || Elements.Germanium.number() == atomicNumber
                         || Elements.Silicon.number() == atomicNumber)) {
-                    
+
                     // double length of the last bond to determing next placement
                     Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
                     p.interpolate(atom.getPoint2d(), 2);
                     nextAtom.setPoint2d(p);
                 }
             }
-            
+
             if(GeometryUtil.has2DCoordinates(atomContainer)){
                 try{
                     if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
@@ -407,7 +407,7 @@ public class AtomPlacer
             }else{
                 bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule),true);
             }
-            
+
             prevBond = currBond;
         }
 
@@ -522,7 +522,7 @@ public class AtomPlacer
             IAtom connectAtom = atomsToDraw.get(i);
             connectAtom.setPoint2d((Point2d) points.get(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
-            
+
             if (logger.isDebugEnabled() && connectAtom != null) {
                 try {
                     logger.debug("populatePolygonCorners->connectAtom: "
@@ -533,7 +533,7 @@ public class AtomPlacer
                 }
             }
         }
-        
+
     }
 
     /**
@@ -656,8 +656,8 @@ public class AtomPlacer
             if (pathes[f].getAtomCount() >= longestPathLength)
             {
             	degreeSum = getDegreeSum(pathes[f], molecule);
-            	
-            	if (degreeSum > maxDegreeSum) 
+
+            	if (degreeSum > maxDegreeSum)
             	{
             		maxDegreeSum = degreeSum;
             		longest = f;
@@ -896,8 +896,8 @@ public class AtomPlacer
         {
     		//path += ac.getAtom(f).getSymbol();
             degreeSum += superAC.getConnectedBondsCount(ac.getAtom(f));
-            
-            Integer implH = ac.getAtom(f).getImplicitHydrogenCount();            
+
+            Integer implH = ac.getAtom(f).getImplicitHydrogenCount();
             if (implH != null)
                 degreeSum += implH;
         }
@@ -906,7 +906,7 @@ public class AtomPlacer
     }
 
 
-    
+
     /**
      *  Calculates weights for unplaced atoms.
      *

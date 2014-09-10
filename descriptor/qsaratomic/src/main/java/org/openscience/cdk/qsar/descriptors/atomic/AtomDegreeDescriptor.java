@@ -51,7 +51,7 @@ import java.util.List;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
  * @author      mfe4
  * @cdk.created 2004-11-13
  * @cdk.module  qsaratomic
@@ -111,7 +111,7 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
             if (!neighboor.getSymbol().equals("H")) atomDegree += 1;
         }
         return new DescriptorValue(
-        	getSpecification(), getParameterNames(), getParameters(), 
+        	getSpecification(), getParameterNames(), getParameters(),
         	new IntegerResult(atomDegree),
         	getDescriptorNames());
     }

@@ -32,10 +32,10 @@ public class RDFProtonDescriptor_G3RTest extends AtomicDescriptorTest {
     public void setUp() throws Exception {
     	setDescriptor(RDFProtonDescriptor_G3R.class);
     }
-    
+
 	@Test
     public void testExample1() throws Exception {
-		//firstly read file to molecule		
+		//firstly read file to molecule
 		String filename = "data/mdl/hydroxyamino.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -54,7 +54,7 @@ public class RDFProtonDescriptor_G3RTest extends AtomicDescriptorTest {
 				IDescriptorResult result = dv.getValue();
 //				System.out.println("array: " + result.toString());
 				Assert.assertNotNull(result);
-			}		
+			}
 
 		}
 	}

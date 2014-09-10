@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class GhemicalSPMFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public GhemicalSPMFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GhemicalSPMFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,8 +66,8 @@ public class GhemicalSPMFormat extends SimpleChemFormatMatcher implements IChemF
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
-        return "org.openscience.cdk.io.GhemicalMMReader"; 
+    public String getReaderClassName() {
+        return "org.openscience.cdk.io.GhemicalMMReader";
     }
 
     /** {@inheritDoc} */ @Override

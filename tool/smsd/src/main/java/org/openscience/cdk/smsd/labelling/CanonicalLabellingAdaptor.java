@@ -30,7 +30,7 @@ public class CanonicalLabellingAdaptor implements ICanonicalMoleculeLabeller {
         int[] perm = new int[n];
         for (int i = 0; i < n; i++) {
             IAtom a = container.getAtom(i);
-            int x = ((Long) a.getProperty(InvPair.CANONICAL_LABEL)).intValue(); 
+            int x = ((Long) a.getProperty(InvPair.CANONICAL_LABEL)).intValue();
             perm[i] = x - 1;
         }
         return perm;

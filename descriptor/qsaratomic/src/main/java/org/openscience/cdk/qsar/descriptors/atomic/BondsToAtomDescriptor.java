@@ -100,7 +100,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
     /**
      *  Gets the parameters attribute of the BondsToAtomDescriptor object
      *
-     *@return    The parameters value 
+     *@return    The parameters value
      */
     @TestMethod(value="testGetParameters")
     public Object[] getParameters() {
@@ -125,7 +125,7 @@ public class BondsToAtomDescriptor extends AbstractAtomicDescriptor implements I
 
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        
+
         IAtom focus = container.getAtom(focusPosition);
 
         // could be cached

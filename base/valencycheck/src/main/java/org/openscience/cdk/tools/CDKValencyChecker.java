@@ -35,7 +35,7 @@ import java.util.Map;
 /**
  * Assumes CDK atom types to be detected and adds missing hydrogens based on the
  * atom typing.
- * 
+ *
  * @author     egonw
  * @cdk.module valencycheck
  * @cdk.githash
@@ -64,7 +64,7 @@ public class CDKValencyChecker implements IValencyChecker {
     public boolean isSaturated(IAtomContainer atomContainer) throws CDKException {
         for (IAtom atom : atomContainer.atoms()) {
             if (!isSaturated(atom, atomContainer)) return false;
-        }        
+        }
 		return true;
 	}
 
@@ -74,7 +74,7 @@ public class CDKValencyChecker implements IValencyChecker {
 		IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
 		if (type == null)
 			throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
-		
+
 		if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
 			throw new CDKException("Atom tfindAndConfigureAtomTypesForAllAtomsype is too general; cannot decide the number of implicit hydrogen to add for: " + atom.getAtomTypeName());
 
@@ -84,11 +84,11 @@ public class CDKValencyChecker implements IValencyChecker {
         double bondOrderSum = container.getBondOrderSum(atom);
         IBond.Order maxBondOrder = container.getMaximumBondOrder(atom);
         Integer hcount = atom.getImplicitHydrogenCount() == CDKConstants.UNSET ?  0 : atom.getImplicitHydrogenCount();
-        
+
         int piBondCount = ((Integer)type.getProperty(CDKConstants.PI_BOND_COUNT)).intValue();
         int formalNeighborCount = type.getFormalNeighbourCount().intValue();
-        
-        int typeMaxBondOrder = piBondCount + 1;   
+
+        int typeMaxBondOrder = piBondCount + 1;
         int typeBondOrderSum = formalNeighborCount + piBondCount;
 
         if (bondOrderSum + hcount == typeBondOrderSum &&

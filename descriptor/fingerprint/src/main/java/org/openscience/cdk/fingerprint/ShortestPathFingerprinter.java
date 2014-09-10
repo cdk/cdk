@@ -44,10 +44,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * search in a database. They are also a means for determining the similarity of chemical structures.
 
  * <pre>
- * 
+ *
  * A fingerprint is generated for an AtomContainer with this code:
  * It is recommended to use atomtyped container before generating the fingerprints.
- * 
+ *
  * For example: AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(atomContainer);
  *
  *   AtomContainer molecule = new AtomContainer();
@@ -66,9 +66,9 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * </P>
  *
  *
- * @author Syed Asad Rahman (2012) 
- * @cdk.keyword fingerprint 
- * @cdk.keyword similarity 
+ * @author Syed Asad Rahman (2012)
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
  *

@@ -40,7 +40,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 @TestClass("org.openscience.cdk.smsd.interfaces.IMCSBaseTest")
 public interface IMCSBase {
 
-    /** 
+    /**
      * Initialise the query and target molecule.
      *
      * @param source source molecule

@@ -44,7 +44,7 @@ import java.util.Iterator;
  * <p>IReactionProcess which make an electron impact for pi-Bond Dissociation.</p>
  * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  * <p>It is processed by the RemovingSEofPBMechanism class</p>
- * 
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
@@ -53,24 +53,24 @@ import java.util.Iterator;
     type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
- * 
+ *
  * <p>We have the possibility to localize the reactive center. Good method if you
  * want to localize the reaction in a fixed point</p>
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter Boolean.TRUE</p>
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the possible reactive center.</p>
- * 
- * 
+ *
+ *
  * @author         Miguel Rojas
- * 
+ *
  * @cdk.created    2006-04-01
  * @cdk.module     reaction
  * @cdk.githash
  * @cdk.set        reaction-types
- * 
+ *
  * @see RemovingSEofBMechanism
- * 
+ *
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactPDBReactionTest")
 public class ElectronImpactPDBReaction extends ReactionEngine implements IReactionProcess{
@@ -122,7 +122,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
 
         IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
         IAtomContainer reactant = reactants.getAtomContainer(0);
-        
+
         /* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
         IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
 		if( ipr != null && !ipr.isSetParameter())
@@ -139,9 +139,9 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
 				&& (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
 				&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
  				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
-            	
+
             	for (int j = 0; j < 2; j++){
-                    
+
                 	ArrayList<IAtom> atomList = new ArrayList<IAtom>();
                 	if (j == 0){
                 		atomList.add(atom1);
@@ -161,7 +161,7 @@ public class ElectronImpactPDBReaction extends ReactionEngine implements IReacti
 					else
 						setOfReactions.addReaction(reaction);
             	}
-                    
+
             }
         }
         return setOfReactions;

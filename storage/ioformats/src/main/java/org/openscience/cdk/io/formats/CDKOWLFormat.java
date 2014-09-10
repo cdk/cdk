@@ -25,7 +25,7 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * Serializes a CDK model into the Web Ontology Language using the
  * N3 format.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -34,15 +34,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class CDKOWLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public CDKOWLFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CDKOWLFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -69,13 +69,13 @@ public class CDKOWLFormat extends SimpleChemFormatMatcher implements IChemFormat
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.rdf.CDKOWLReader";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return "org.openscience.cdk.io.rdf.CDKOWLWriter";
     }
 

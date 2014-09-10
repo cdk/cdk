@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.formula;
 
@@ -34,14 +34,14 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 
 /**
  * Generates all Combinatorial chemical isotopes given a structure.
- * 
+ *
  * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
  * @cdk.githash
  *
  * @cdk.keyword isotope pattern
- * 
+ *
  */
 @TestClass("org.openscience.cdk.formula.IsotopePatternGeneratorTest")
 public class IsotopePatternGenerator{
@@ -49,10 +49,10 @@ public class IsotopePatternGenerator{
 	private IChemObjectBuilder builder = null;
 	private IsotopeFactory isoFactory;
 	private IsotopePattern abundance_Mass = null;
-	
+
 	private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IsotopePatternGenerator.class);
-	
+
 	/** Minimal abundance of the isotopes to be added in the combinatorial search.*/
 	private double minAbundance = .1;
 
@@ -62,26 +62,26 @@ public class IsotopePatternGenerator{
 	public IsotopePatternGenerator(){
 		this(0.1);
 	}
-	
+
 	/**
 	 * Constructor for the IsotopeGenerator.
-	 * 
-	 * @param minAb Minimal abundance of the isotopes to be added 
+	 *
+	 * @param minAb Minimal abundance of the isotopes to be added
 	 * 				in the combinatorial search
-	 * 
+	 *
 	 */
 	public IsotopePatternGenerator(double minAb){
 		minAbundance = minAb;
 		logger.info("Generating all Isotope structures with IsotopeGenerator");
 	}
 	/**
-	 * Get all combinatorial chemical isotopes given a structure. 
-	 * 
+	 * Get all combinatorial chemical isotopes given a structure.
+	 *
 	 * @param molFor  The IMolecularFormula to start
 	 * @return        A IsotopePattern object containing the different combinations
 	 */
 	public IsotopePattern getIsotopes(IMolecularFormula molFor){
-    	
+
 		if(builder==null){
 			try {
 				isoFactory = Isotopes.getInstance();
@@ -91,7 +91,7 @@ public class IsotopePatternGenerator{
 			}
 		}
     	String mf = MolecularFormulaManipulator.getString(molFor,true);
-    	
+
 		// Divide the chemical formula into tokens (element and coefficients)
 		HashMap<String, Integer> tokens = new HashMap<String, Integer>();
 		IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula(mf, builder);
@@ -102,17 +102,17 @@ public class IsotopePatternGenerator{
 		for(IIsotope isos : molecularFormula.isotopes()){
 			String elementSymbol = isos.getSymbol();
 			atomCount = tokens.get(elementSymbol);
-			
+
 			for (int i = 0; i < atomCount; i++) {
 				if (!calculateAbundanceAndMass(elementSymbol)) {
 				}
 			}
 		}
-		
+
 		IsotopePattern isoP = IsotopePatternManipulator.sortAndNormalizedByIntensity(abundance_Mass);
 		isoP = cleanAbundance(isoP, minAbundance);
 		IsotopePattern isoPattern = IsotopePatternManipulator.sortByMass(isoP);
-	
+
 		return isoPattern;
 
 	}
@@ -122,9 +122,9 @@ public class IsotopePatternGenerator{
 	 * there exist a previous calculation, add these new isotopes. In the
 	 * process of adding the new isotopes, remove those that has an abundance
 	 * less than setup parameter minAbundance, and remove duplicated masses.
-	 * 
+	 *
 	 * @param elementSymbol  The chemical element symbol
-	 * @return the calculation was successful               
+	 * @return the calculation was successful
 	 */
 	private boolean calculateAbundanceAndMass(String elementSymbol) {
 
@@ -148,7 +148,7 @@ public class IsotopePatternGenerator{
 			currentISOPattern.addIsotope(new IsotopeContainer(mass, abundance));
 		}
 
-		
+
 		// Verify if there is a previous calculation. If it exists, add the new
 		// isotopes
 		if (abundance_Mass == null) {
@@ -205,7 +205,7 @@ public class IsotopePatternGenerator{
 
 	/**
 	 * Search the key mass in this Set.
-	 * 
+	 *
 	 * @param keySet  The Set object
 	 * @param mass    The mass to look for
 	 * @return        The key value
@@ -224,7 +224,7 @@ public class IsotopePatternGenerator{
 
 	/**
 	 * Detection if the value is zero.
-	 * 
+	 *
 	 * @param number The number to analyze
 	 * @return       TRUE, if it zero
 	 */
@@ -241,7 +241,7 @@ public class IsotopePatternGenerator{
 	/**
 	 * Normalize the intensity (relative abundance) of all isotopes in relation
 	 * of the most abundant isotope.
-	 * 
+	 *
 	 * @param isopattern   The IsotopePattern object
 	 * @param minAbundance The minimum abundance
 	 * @return             The IsotopePattern cleaned

@@ -74,7 +74,7 @@ public class SMARTSSearchTest extends CDKTestCase {
                                                         InvalidSmilesException {
         return smiles(smiles, false);
     }
-    
+
     static IAtomContainer smilesAtomTyped(String smiles) throws
                                                          CDKException {
         IAtomContainer molecule = smiles(smiles, false);
@@ -255,10 +255,10 @@ public class SMARTSSearchTest extends CDKTestCase {
         logger.debug("Query CaC: " + query.toString());
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
-        
+
         IAtomContainer atomContainer = sp.parseSmiles("CCC");
         Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));
-        
+
         atomContainer = sp.parseSmiles("c1ccccc1"); // benzene, aromatic
         Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
     }
@@ -824,7 +824,7 @@ public class SMARTSSearchTest extends CDKTestCase {
     /**
      * Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
      * suppressed by default.
-     * 
+     *
      * @throws Exception
      * @cdk.bug 2489533
      */
@@ -1008,7 +1008,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(22, results[1]);
     }
 
-    @Test public void testBondStereo1() throws Exception { 
+    @Test public void testBondStereo1() throws Exception {
     	int[] results = match("F/?C=C/Cl", "F/C=C/Cl");
     	Assert.assertEquals(1, results[0]);
     	Assert.assertEquals(1, results[1]);
@@ -1018,13 +1018,13 @@ public class SMARTSSearchTest extends CDKTestCase {
     	Assert.assertEquals(1, results[0]);
     	Assert.assertEquals(1, results[1]);
     }
-    
+
     @Test public void testBondStereo3() throws Exception {
     	int[] results = match("F/?C=C/Cl", "FC=CCl");
     	Assert.assertEquals(1, results[0]);
     	Assert.assertEquals(1, results[1]);
     }
-    
+
     @Test public void testBondStereo4() throws Exception {
     	int[] results = match("F/?C=C/Cl", "F\\C=C/Cl");
     	Assert.assertEquals(0, results[0]);
@@ -1641,7 +1641,7 @@ public class SMARTSSearchTest extends CDKTestCase {
         Assert.assertEquals(0, results[1]);
 
         IAtomContainer m = smiles("c1ccccc1c2ccccc2");
-        
+
         // note - missing explicit single bond, SMILES preserves the
         // aromatic specification but in this case we want the single
         // bond. as the molecule as assigned bond orders we can easily
@@ -1650,7 +1650,7 @@ public class SMARTSSearchTest extends CDKTestCase {
             bond.setFlag(CDKConstants.ISAROMATIC, false);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
         Aromaticity.cdkLegacy().apply(m);
-        
+
         results = match(smarts("c-c"), m);
         Assert.assertEquals(2, results[0]);
         Assert.assertEquals(1, results[1]);
@@ -1769,7 +1769,7 @@ public class SMARTSSearchTest extends CDKTestCase {
 
     /**
      * Check that bond order query respects aromaticity.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -1793,12 +1793,12 @@ public class SMARTSSearchTest extends CDKTestCase {
         assertThat(match("[#6+0&R]=[#6+0&!R]", "C1=C2CCCC2CCC1"),
                    is(new int[]{0, 0}));
     }
-        
+
     @Test public void cyclopropane() throws Exception {
         assertThat(match("**(*)*", "C1CC1"),
                    is(new int[]{0, 0}));
     }
-    
+
     @Test public void componentGrouping1() throws Exception {
         assertThat(match("[#8].[#8]", "O"),     is(new int[]{0, 0}));
         assertThat(match("[#8].[#8]", "O=O"),   is(new int[]{2, 1}));

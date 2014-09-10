@@ -81,23 +81,23 @@ import java.util.StringTokenizer;
  * <li>octahedral stereochemistry</li> </il>
  *
  * <b>Atom Class</b><p/>
- * 
+ *
  * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
  * property.
- * 
+ *
  * <blockquote><pre>
- * 
+ *
  * SmilesParser   sp  = new SmilesParser(SilentChemObjectBuilder.getInstance());
  * IAtomContainer m   = sp.parseSmiles("c1[cH:5]cccc1");
  * Integer        c1  = m.getAtom(1)
  *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // 5
  * Integer        c2  = m.getAtom(2)
  *                       .getProperty(CDKConstants.ATOM_ATOM_MAPPING); // null
- * 
+ *
  * </pre>
  * </blockquote><p/>
- * 
- * 
+ *
+ *
  * @author Christoph Steinbeck
  * @author Egon Willighagen
  * @author John May
@@ -123,10 +123,10 @@ public final class SmilesParser {
     private final BeamToCDK beamToCDK;
 
     /**
-     * Kekulise the molecule on load. Generally this is a good idea as a 
+     * Kekulise the molecule on load. Generally this is a good idea as a
      * lower-case symbols in a SMILES do not really mean 'aromatic' but rather
      * 'conjugated'. Loading with kekulise 'on' will automatically assign
-     * bond orders (if possible) using an efficient algorithm from the 
+     * bond orders (if possible) using an efficient algorithm from the
      * underlying Beam library (soon to be added to CDK).
      */
     private boolean kekulise = true;
@@ -199,10 +199,10 @@ public final class SmilesParser {
      */
     @TestMethod("testAromaticSmiles,testSFBug1296113")
     public IAtomContainer parseSmiles(String smiles) throws InvalidSmilesException {
-        try {                                                                     
+        try {
             // create the Beam object from the SMILES
             Graph g = Graph.fromSmiles(smiles);
-            
+
             // convert the Beam object model to the CDK - note exception thrown
             // if a kekule structure could not be assigned.
             return beamToCDK.toAtomContainer(kekulise ? g.kekule() : g);
@@ -218,7 +218,7 @@ public final class SmilesParser {
      *
      * @param preservingAromaticity boolean to indicate if aromaticity is to be
      *                              preserved.
-     * @see #kekulise                              
+     * @see #kekulise
      */
     @Deprecated
     public void setPreservingAromaticity(boolean preservingAromaticity) {
@@ -237,11 +237,11 @@ public final class SmilesParser {
     }
 
     /**
-     * Indicated whether structures should be automatically kekulised if they 
+     * Indicated whether structures should be automatically kekulised if they
      * are provided as aromatic. Kekulisation is on by default but can be
      * turned off if it is believed the structures can be handled without
-     * assigned bond orders (not recommended). 
-     * 
+     * assigned bond orders (not recommended).
+     *
      * @param kekulise should structures be kekulised
      */
     public void kekulise(boolean kekulise) {

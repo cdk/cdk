@@ -90,11 +90,11 @@ public class PDBConvention extends CMLCoreModule {
 	private List<String> segIDV;
 	private List<String> serialV;
 	private List<String> tempFactorV;
-	
+
     public PDBConvention(IChemFile chemFile) {
         super(chemFile);
     }
-    
+
     public PDBConvention(ICMLModule conv) {
         super(conv);
     }
@@ -103,17 +103,17 @@ public class PDBConvention extends CMLCoreModule {
         storeData();
         super.endDocument();
     }
-    
-    public void startElement(CMLStack xpath, String uri, String local, String raw, 
+
+    public void startElement(CMLStack xpath, String uri, String local, String raw,
                               Attributes atts) {
         String name = raw;
         isELSYM = false;
         if ("molecule".equals(name)) {
-        	
+
             for (int j = 0; j < atts.getLength(); j++) {
             	logger.debug("StartElement");
                 currentChars = "";
-                
+
                 BUILTIN = "";
                 DICTREF = "";
 
@@ -138,7 +138,7 @@ public class PDBConvention extends CMLCoreModule {
                 	currentStrand.setStrandName("A");
                     currentMolecule = currentChemFile.getBuilder().newInstance(IPDBPolymer.class);
                 }else if (atts.getQName(j).equals("dictRef") && atts.getValue(j).equals("pdb:sequence")) {
-                    
+
                     newSequence();
                     BUILTIN = "";
                     for (int i = 0; i < atts.getLength(); i++) {
@@ -150,15 +150,15 @@ public class PDBConvention extends CMLCoreModule {
                         	// FIXME: has no equivalent in ChemFileCDO
                         }
                     }
-                	
-                } else if (atts.getQName(j).equals("title") && 
+
+                } else if (atts.getQName(j).equals("title") &&
                          atts.getValue(j).equals("connections")) {
                     // assume that Atom's have been read
                     logger.debug("Assuming that Atom's have been read: storing them");
                     super.storeAtomData();
                     connectionTable = true;
                     logger.debug("Start Connection Table");
-                } else if (atts.getQName(j).equals("title") && 
+                } else if (atts.getQName(j).equals("title") &&
                          atts.getValue(j).equals("connect")) {
                     logger.debug("New connection");
                     isBond = true;
@@ -184,7 +184,7 @@ public class PDBConvention extends CMLCoreModule {
         	super.startElement(xpath, uri, local, raw, atts);
         }
     }
-    
+
     public void newSequence(){
     	altLocV = new ArrayList<String>();
     	chainIDV = new ArrayList<String>();
@@ -198,7 +198,7 @@ public class PDBConvention extends CMLCoreModule {
     	segIDV = new ArrayList<String>();
     	serialV = new ArrayList<String>();
     	tempFactorV = new ArrayList<String>();
-    	
+
     }
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = raw;
@@ -209,7 +209,7 @@ public class PDBConvention extends CMLCoreModule {
             connectionTable = false;
         // OLD +++++++++++++++++++++++++++++++++++++++++++++
 
-         
+
         } else if(name.equals("molecule")){
         	storeData();
             if(xpath.size() == 1){
@@ -227,7 +227,7 @@ public class PDBConvention extends CMLCoreModule {
         }
         isELSYM = false;
         isBond = false;
-        
+
     }
 
     public void characterData(CMLStack xpath, char[] ch, int start, int length) {
@@ -236,7 +236,7 @@ public class PDBConvention extends CMLCoreModule {
         StringTokenizer st1 = new StringTokenizer(s);
         String dictpdb = "";
         while (st1.hasMoreElements()) {
-        	
+
             dictpdb += (String)st1.nextElement();
             if(st1.hasMoreElements())
             	dictpdb += " ";
@@ -268,9 +268,9 @@ public class PDBConvention extends CMLCoreModule {
         	serialV.add(dictpdb);
         else if(idValue.equals("pdb:tempFactor"))
         	tempFactorV.add(dictpdb);
-        
+
         idValue = "";
-        
+
         if (isELSYM) {
             elsym.add(s);
         } else if (isBond) {
@@ -280,14 +280,14 @@ public class PDBConvention extends CMLCoreModule {
                 while (st.hasMoreElements()) {
                     String atom = (String)st.nextElement();
                     if (!atom.equals("0")) {
-                        logger.debug("new bond: " + connect_root + "-" + 
+                        logger.debug("new bond: " + connect_root + "-" +
                                      atom);
 //                        cdo.startObject("Bond");
 //                        int atom1 = Integer.parseInt(connect_root) - 1;
 //                        int atom2 = Integer.parseInt(atom) - 1;
-//                        cdo.setObjectProperty("Bond", "atom1", 
+//                        cdo.setObjectProperty("Bond", "atom1",
 //                                (new Integer(atom1)).toString());
-//                        cdo.setObjectProperty("Bond", "atom2", 
+//                        cdo.setObjectProperty("Bond", "atom2",
 //                                (new Integer(atom2)).toString());
                         currentBond = currentMolecule.getBuilder().newInstance(IBond.class,
                         	currentMolecule.getAtom(Integer.parseInt(connect_root) - 1),
@@ -298,10 +298,10 @@ public class PDBConvention extends CMLCoreModule {
                     }
                 }
             }
-        } 
+        }
     }
-    
-    
+
+
     protected void storeData() {
         if (inchi != null) {
 //            cdo.setObjectProperty("Molecule", "inchi", inchi);
@@ -351,21 +351,21 @@ public class PDBConvention extends CMLCoreModule {
                     "No atom titles: " + eltitles.size(), " != " + atomCounter);
         }
 
-        if ((x3.size() == atomCounter) && (y3.size() == atomCounter) && 
+        if ((x3.size() == atomCounter) && (y3.size() == atomCounter) &&
             (z3.size() == atomCounter)) {
             has3D = true;
         } else {
             logger.debug(
-                    "No 3D info: " + x3.size(), " " + y3.size(), " " + 
+                    "No 3D info: " + x3.size(), " " + y3.size(), " " +
                     z3.size(), " != " + atomCounter);
         }
 
-        if ((xfract.size() == atomCounter) && (yfract.size() == atomCounter) && 
+        if ((xfract.size() == atomCounter) && (yfract.size() == atomCounter) &&
             (zfract.size() == atomCounter)) {
             has3Dfract = true;
         } else {
             logger.debug(
-                    "No 3D fractional info: " + xfract.size(), " " + yfract.size(), " " + 
+                    "No 3D fractional info: " + xfract.size(), " " + yfract.size(), " " +
                     zfract.size(), " != " + atomCounter);
         }
 
@@ -373,7 +373,7 @@ public class PDBConvention extends CMLCoreModule {
             has2D = true;
         } else {
             logger.debug(
-                    "No 2D info: " + x2.size(), " " + y2.size(), " != " + 
+                    "No 2D info: " + x2.size(), " " + y2.size(), " != " +
                     atomCounter);
         }
 
@@ -381,7 +381,7 @@ public class PDBConvention extends CMLCoreModule {
             hasFormalCharge = true;
         } else {
             logger.debug(
-                    "No formal Charge info: " + formalCharges.size(), 
+                    "No formal Charge info: " + formalCharges.size(),
                     " != " + atomCounter);
         }
 
@@ -397,7 +397,7 @@ public class PDBConvention extends CMLCoreModule {
             hasHCounts = true;
         } else {
             logger.debug(
-                    "No hydrogen Count info: " + hCounts.size(), 
+                    "No hydrogen Count info: " + hCounts.size(),
                     " != " + atomCounter);
         }
 
@@ -513,14 +513,14 @@ public class PDBConvention extends CMLCoreModule {
             }
 
             if (hasFormalCharge) {
-//              cdo.setObjectProperty("Atom", "formalCharge", 
+//              cdo.setObjectProperty("Atom", "formalCharge",
 //                                    (String)formalCharges.get(i));
             	currentAtom.setFormalCharge(Integer.parseInt((String)formalCharges.get(i)));
             }
 
             if (hasPartialCharge) {
             	logger.debug("Storing partial atomic charge...");
-//          	cdo.setObjectProperty("Atom", "partialCharge", 
+//          	cdo.setObjectProperty("Atom", "partialCharge",
 //          	(String)partialCharges.get(i));
             	currentAtom.setCharge(Double.parseDouble((String)partialCharges.get(i)));
             }
@@ -543,7 +543,7 @@ public class PDBConvention extends CMLCoreModule {
                 	);
                 }
             }
-            
+
             if (hasDictRefs) {
 //                cdo.setObjectProperty("Atom", "dictRef", (String)atomDictRefs.get(i));
             	currentAtom.setProperty("org.openscience.cdk.dict", (String)atomDictRefs.get(i));
@@ -568,7 +568,7 @@ public class PDBConvention extends CMLCoreModule {
 //              cdo.setObjectProperty("Atom", "massNumber", (String)isotope.get(i));
             	currentAtom.setMassNumber(Integer.parseInt((String)isotope.get(i)));
             }
-            
+
             if(hasScalar){
                 IPDBAtom pdbAtom = (IPDBAtom)currentAtom;
 //                cdo.setObjectProperty("PDBAtom", "altLoc", altLocV.get(i).toString());
@@ -596,7 +596,7 @@ public class PDBConvention extends CMLCoreModule {
 //                cdo.setObjectProperty("PDBAtom", "tempFactor", tempFactorV.get(i).toString());
                 if (tempFactorV.size() > 0) pdbAtom.setTempFactor(Double.parseDouble(tempFactorV.get(i).toString()));
             }
-            
+
 //            cdo.endObject("PDBAtom");
             String cResidue = ((IPDBAtom)currentAtom).getResName()+"A"+((IPDBAtom)currentAtom).getResSeq();
             ((IPDBMonomer)currentMonomer).setMonomerName(cResidue);
@@ -615,6 +615,6 @@ public class PDBConvention extends CMLCoreModule {
         }
         newAtomData();
     }
-    
-    
+
+
 }

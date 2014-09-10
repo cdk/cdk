@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
@@ -97,7 +97,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         IAtomContainer clone = (IAtomContainer)mol.clone();
         descriptor.calculate(mol);
-        String diff = AtomContainerDiff.diff(clone, mol); 
+        String diff = AtomContainerDiff.diff(clone, mol);
         Assert.assertEquals(
           "The descriptor must not change the passed molecule in any respect, but found this diff: " + diff,
           0, diff.length()
@@ -106,13 +106,13 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
 
     /**
 	 * Checks if the given labels are consistent.
-	 * 
+	 *
 	 * @throws Exception Passed on from calculate.
 	 */
     @Test
     public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
-        
+
         DescriptorValue v = descriptor.calculate(mol);
         Assert.assertNotNull(v);
         String[] names = v.getNames();
@@ -171,13 +171,13 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
     		"The getDescriptorResultType() must not be null.",
     		result
     	);
-    	
+
     	IAtomContainer mol = someoneBringMeSomeWater(DefaultChemObjectBuilder.getInstance());
         DescriptorValue v = descriptor.calculate(mol);
-        
+
     	Assert.assertTrue(
     		"The getDescriptorResultType() is inconsistent with the calculated descriptor results",
-    		result.getClass().getName().contains(v.getValue().getClass().getName()) 
+    		result.getClass().getName().contains(v.getValue().getClass().getName())
     	);
     	Assert.assertEquals(
     		"The specified getDescriptorResultType() length does not match the actually calculated result vector length",
@@ -262,7 +262,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ethane2);
         addImplicitHydrogens(ethane1);
         addImplicitHydrogens(ethane2);
-        
+
         IDescriptorResult v1 = descriptor.calculate(ethane1).getValue();
         IDescriptorResult v2 = descriptor.calculate(ethane2).getValue();
 
@@ -360,7 +360,7 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         IAtom sodium = new Atom("Na");
         sodium.setFormalCharge(+1);
         disconnected.addAtom(sodium);
-        
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(disconnected);
         addImplicitHydrogens(disconnected);
 
@@ -410,5 +410,5 @@ public abstract class MolecularDescriptorTest extends DescriptorTest<IMolecularD
         addImplicitHydrogens(mol);
         return mol;
     }
-    
+
 }

@@ -35,15 +35,15 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 {
 
     private static final long serialVersionUID = 4382025930031432321L;
-    
+
     Hashtable<String,HOSECodeShiftRange> ht;
-	
+
 	public BremserOneSphereHOSECodePredictor()
 	{
 		ht = new Hashtable<String,HOSECodeShiftRange>(700);
 		prepareHashTable();
 	}
-	
+
 	public double predict(String hoseCode) throws CDKException
 	{
 		if (!(hoseCode == null) && ht.containsKey(hoseCode))
@@ -76,7 +76,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 	{
 
         private static final long serialVersionUID = 1649047314594679297L;
-        
+
         String code;
 		double shift;
 		double confidenceLimit;
@@ -85,7 +85,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		double minShift;
 		int fourSphereCount;
 		int lineCount;
-		
+
 		HOSECodeShiftRange(String c, double s, double conf, String m, double ma, double mi, int f, int l)
 		{
 			code = c;
@@ -97,16 +97,16 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 			fourSphereCount = f;
 			lineCount = l;
 		}
-		
+
 		public String toString()
 		{
 			String s = "delta_C: " + shift + " for code " + code + " with confidence limit " + confidenceLimit;
 			s += " in shift range " + maxShift + "-" + minShift + ". ";
-			return s; 
+			return s;
 		}
-		
+
 	}
-	
+
 	public String getBibData()
 	{
 		String s = "The carbon NMR chemical shift prediction of this module \n";
@@ -116,7 +116,7 @@ public class BremserOneSphereHOSECodePredictor implements java.io.Serializable
 		s += "It is important to understand, that these values are indeed not more than expectation ranges.\n";
 		return s;
 	}
-	
+
 	private void prepareHashTable()
 	{
 		ht.put("%CC$(//)", new HOSECodeShiftRange("%CC$(//)", 79.3, 16.4, "S", 112.7, 54.4, 36, 54));

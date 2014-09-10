@@ -165,7 +165,7 @@ public class GraphUtilTest {
 
 
     }
-    
+
     @Test
     public void testToAdjList_withMap() throws Exception {
 
@@ -194,7 +194,7 @@ public class GraphUtilTest {
         assertArrayEquals(new int[]{1, 3}, adjacent[2]);
         assertArrayEquals(new int[]{2}, adjacent[3]);
         assertArrayEquals(new int[]{1}, adjacent[4]);
-        
+
         assertNotNull(map.get(0, 1));
         assertNotNull(map.get(1, 2));
 

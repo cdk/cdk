@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -31,38 +31,38 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 import java.util.Arrays;
 
 /**
- * An implementation based on the canon algorithm {@cdk.cite WEI89}. The 
+ * An implementation based on the canon algorithm {@cdk.cite WEI89}. The
  * algorithm uses an initial set of of invariants which are assigned a rank.
  * Equivalent ranks are then shattered using an unambiguous function (in this
  * case, the product of primes of adjacent ranks). Once no more equivalent ranks
  * can be shattered ties are artificially broken and rank shattering continues.
  * Unlike the original description rank stability is not maintained reducing
  * the number of values to rank at each stage to only those which are equivalent.
- * <p/>    
- * 
- * The initial set of invariants is basic and are - <i> 
+ * <p/>
+ *
+ * The initial set of invariants is basic and are - <i>
  * "sufficient for the purpose of obtaining unique notation for simple SMILES,
  *  but it is not necessarily a “complete” set. No “perfect” set of invariants
- *  is known that will distinguish all possible graph asymmetries. However, 
- *  for any given set of structures, a set of invariants can be devised to 
+ *  is known that will distinguish all possible graph asymmetries. However,
+ *  for any given set of structures, a set of invariants can be devised to
  *  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
  *  producer should not be considered a complete canonical labelled but in
  *  practice performs well. For a more accurate and computationally expensive
  *  labelling, please using the {@link InChINumbersTools}.
- *  
+ *
  * <blockquote><pre>
  * IAtomContainer m = ...;
  * int[][]        g = GraphUtil.toAdjList(m);
- * 
+ *
  * // obtain canon labelling
  * long[] labels = Canon.label(m, g);
- * 
+ *
  * // obtain symmetry classes
  * long[] labels = Canon.symmetry(m, g);
  * </pre></blockquote>
- * 
+ *
  * @author John May
- * @cdk.module standard 
+ * @cdk.module standard
  * @cdk.githash
  */
 public final class Canon {
@@ -76,7 +76,7 @@ public final class Canon {
      * Storage of canon labelling and symmetry classes.
      */
     private final long[] labelling, symmetry;
-    
+
     /** Only compute the symmetry classes. */
     private boolean symOnly = false;
 
@@ -85,7 +85,7 @@ public final class Canon {
      * invariants.
      *
      * @param g         a graph (adjacency list representation)
-     * @param hydrogens binary vector of terminal hydrogens                  
+     * @param hydrogens binary vector of terminal hydrogens
      * @param partition an initial partition of the vertices
      */
     private Canon(int[][] g, long[] partition, boolean[] hydrogens, boolean symOnly) {
@@ -97,9 +97,9 @@ public final class Canon {
 
     /**
      * Compute the canonical labels for the provided structure. The labelling
-     * does not consider isomer information or stereochemistry. The current 
+     * does not consider isomer information or stereochemistry. The current
      * implementation does not fully distinguish all structure topologies
-     * but in practise performs well in the majority of cases. A complete 
+     * but in practise performs well in the majority of cases. A complete
      * canonical labelling can be obtained using the {@link InChINumbersTools}
      * but is computationally much more expensive.
      *
@@ -112,16 +112,16 @@ public final class Canon {
     public static long[] label(IAtomContainer container, int[][] g) {
         return label(container, g, basicInvariants(container, g));
     }
-    
+
     /**
      * Compute the canonical labels for the provided structure. The labelling
      * does not consider isomer information or stereochemistry. This method
      * allows provision of a custom array of initial invariants.
-     * 
+     *
      * <p/>
-     * The current 
+     * The current
      * implementation does not fully distinguish all structure topologies
-     * but in practise performs well in the majority of cases. A complete 
+     * but in practise performs well in the majority of cases. A complete
      * canonical labelling can be obtained using the {@link InChINumbersTools}
      * but is computationally much more expensive.
      *
@@ -145,7 +145,7 @@ public final class Canon {
      * Compute the symmetry classes for the provided structure. There are known
      * examples where symmetry is incorrectly found. The {@link
      * EquivalentClassPartitioner} gives more accurate symmetry perception but
-     * this method is very quick and in practise successfully portions the 
+     * this method is very quick and in practise successfully portions the
      * majority of chemical structures.
      *
      * @param container structure
@@ -162,24 +162,24 @@ public final class Canon {
 
     /**
      * Internal - refine invariants to a canonical labelling and
-     * symmetry classes. 
-     * 
+     * symmetry classes.
+     *
      * @param invariants the invariants to refine (canonical labelling gets
      *                   written here)
-     * @param hydrogens  binary vector of terminal hydrogens                  
+     * @param hydrogens  binary vector of terminal hydrogens
      * @return the symmetry classes
      */
     private long[] refine(long[] invariants, boolean[] hydrogens) {
-        
+
         int ord = g.length;
-        
+
         InvariantRanker ranker = new InvariantRanker(ord);
-        
+
         // current/next vertices, these only hold the vertices which are
         // equivalent
         int[] currVs = new int[ord];
         int[] nextVs = new int[ord];
-        
+
         // fill with identity (also set number of non-unique)
         int nnu = ord;
         for (int i = 0; i < ord; i++)
@@ -187,19 +187,19 @@ public final class Canon {
 
         long[] prev = invariants;
         long[] curr = Arrays.copyOf(invariants, ord);
-        
-        // initially all labels are 1, the input invariants are then used to 
+
+        // initially all labels are 1, the input invariants are then used to
         // refine this coarse partition
         Arrays.fill(prev, 1L);
 
         // number of ranks
         int n = 0, m = 0;
-        
+
         // storage of symmetry classes
-        long[] symmetry = null; 
+        long[] symmetry = null;
 
         while (n < ord) {
-            
+
             // refine the initial invariants using product of primes from
             // adjacent ranks
             while ((n = ranker.rank(currVs, nextVs, nnu, curr, prev)) > m && n < ord) {
@@ -207,14 +207,14 @@ public final class Canon {
                 for (int i = 0; i < ord && nextVs[i] >= 0; i++) {
                     int v         = nextVs[i];
                     currVs[nnu++] = v;
-                    curr[v]       = hydrogens[v] ? prev[v] 
+                    curr[v]       = hydrogens[v] ? prev[v]
                                                  : primeProduct(g[v], prev, hydrogens);
                 }
                 m = n;
             }
-            
+
             if (symmetry == null) {
-                
+
                 // After symmetry classes have been found without hydrogens we add
                 // back in the hydrogens and assign ranks. We don't refine the
                 // partition until the next time round the while loop to avoid
@@ -248,19 +248,19 @@ public final class Canon {
             int lo = nextVs[0];
             for (int i = 1; i < ord && nextVs[i] >= 0 && prev[nextVs[i]] == prev[lo]; i++)
                 prev[nextVs[i]]++;
-            
+
             // could also swap but this is cleaner
             System.arraycopy(nextVs, 0, currVs, 0, nnu);
         }
 
         return symmetry;
     }
-    
+
 
     /**
      * Compute the prime product of the values (ranks) for the given
      * adjacent neighbors (ws).
-     * 
+     *
      * @param ws    indices (adjacent neighbors)
      * @param ranks invariant ranks
      * @return the prime product
@@ -274,11 +274,11 @@ public final class Canon {
         }
         return prod;
     }
-    
+
     /**
      * Generate the initial invariants for each atom in the {@code container}.
-     * The labels use the invariants described in {@cdk.cite WEI89}. <p/> 
-     * 
+     * The labels use the invariants described in {@cdk.cite WEI89}. <p/>
+     *
      * The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
      * where:
      * <ul>
@@ -292,9 +292,9 @@ public final class Canon {
      * </ul>
      *
      * <b>Important: These invariants are <i>basic</i> and there are known
-     * examples they don't distinguish. One trivial example to consider is 
-     * {@code [O]C=O} where both oxygens have no hydrogens and a single 
-     * connection but the atoms are not equivalent. Including a better 
+     * examples they don't distinguish. One trivial example to consider is
+     * {@code [O]C=O} where both oxygens have no hydrogens and a single
+     * connection but the atoms are not equivalent. Including a better
      * initial partition is more expensive</b>
      *
      * @param container an atom container to generate labels for
@@ -310,7 +310,7 @@ public final class Canon {
 
         for (int v = 0; v < graph.length; v++) {
             IAtom atom = container.getAtom(v);
-            
+
             int deg  = graph[v].length;
             int impH = implH(atom);
             int expH = 0;

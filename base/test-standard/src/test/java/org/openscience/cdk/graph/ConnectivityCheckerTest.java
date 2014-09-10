@@ -95,7 +95,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		Assert.assertEquals(2, moleculeSet.getAtomContainerCount());
 		org.openscience.cdk.interfaces.IAtom copy1 = moleculeSet.getAtomContainer(0).getAtom(0);
 		org.openscience.cdk.interfaces.IAtom copy2 = moleculeSet.getAtomContainer(1).getAtom(0);
-        
+
         Assert.assertEquals(atom1.getID(), copy1.getID());
         Assert.assertEquals(atom2.getID(), copy2.getID());
     }
@@ -113,7 +113,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 		IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
 		Assert.assertEquals(3, moleculeSet.getAtomContainerCount());
-        
+
         Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(0)));
         Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(1)));
         Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(2)));
@@ -137,18 +137,18 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         mol2.addAtom(atom2);
         SingleElectron se2 = new SingleElectron(atom2);
         mol2.addSingleElectron(se2);
-        
+
         atomCon.add(mol1);
         atomCon.add(mol2);
-        
+
         // now partition
         IAtomContainerSet moleculeSet = ConnectivityChecker.partitionIntoMolecules(atomCon);
         Assert.assertNotNull(moleculeSet);
 		Assert.assertEquals(2, moleculeSet.getAtomContainerCount());
-        
+
         Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(0)));
         Assert.assertTrue(ConnectivityChecker.isConnected(moleculeSet.getAtomContainer(1)));
-        
+
         // make sure
         Assert.assertEquals(1, moleculeSet.getAtomContainer(0).getAtomCount());
         Assert.assertEquals(1, moleculeSet.getAtomContainer(0).getElectronContainerCount());
@@ -160,7 +160,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
         Assert.assertTrue(moleculeSet.getAtomContainer(0).getConnectedLonePairsCount(moleculeSet.getAtomContainer(0).getAtom(0)) == 0 ||
         		moleculeSet.getAtomContainer(1).getConnectedLonePairsCount(moleculeSet.getAtomContainer(1).getAtom(0)) == 0);
 	}
-    
+
 	/**
 	 * This test tests the algorithm behind isConnected().
 	 */
@@ -202,7 +202,7 @@ public class ConnectivityCheckerTest extends CDKTestCase {
 
         Assert.assertTrue("Molecule appears not to be connected", ConnectivityChecker.isConnected(ac));
     }
-    
+
     @Test public void testPartitionExtendedTetrahedral() throws Exception {
         SmilesParser smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer container = smipar.parseSmiles("CC=[C@]=CC.C");

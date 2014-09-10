@@ -200,7 +200,7 @@ public class HashGeneratorMakerTest {
     public void testInvalidDepth() {
         new HashGeneratorMaker().depth(-1);
     }
-    
+
     @Test
     public void suppressHydrogens() {
         AtomHashGenerator generator = new HashGeneratorMaker().elemental()

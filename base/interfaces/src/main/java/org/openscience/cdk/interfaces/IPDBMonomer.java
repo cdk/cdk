@@ -25,50 +25,50 @@ package org.openscience.cdk.interfaces;
  * @cdk.githash
  *
  * @author      Miguel Rojas <miguel.rojas@uni-koeln.de>
- * @cdk.created 2006-11-20 
+ * @cdk.created 2006-11-20
  *
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBMonomer extends IMonomer {
-	
+
 	/**
      * Sets the ICode of this monomer.
-     * 
+     *
      * @param newICode  the I code of this monomer
      */
 	public void setICode(String newICode);
-	
+
 	/**
      * Gets the ICode of this monomer.
-     * 
+     *
      * @return the ICode of this monomer
      */
     public String getICode();
-    
+
     /**
      * Sets the Chain ID of this monomer.
-     * 
+     *
      * @param newChainID  the Chain ID of this monomer
      */
     public void setChainID(String newChainID);
-    
+
     /**
      * Gets the Chain ID of this monomer.
-     * 
+     *
      * @return the Chain ID of this monomer
      */
     public String getChainID();
-	
+
     /**
      * Gets the sequence identifier of this monomer.
-     * 
+     *
      * @return  the sequence identifier of this monomer
      */
     public String getResSeq();
 
     /**
      * Sets the sequence identifier of this monomer.
-     * 
+     *
      * @param newResSeq  the new sequence identifier of this monomer
      */
     public void setResSeq(String newResSeq);

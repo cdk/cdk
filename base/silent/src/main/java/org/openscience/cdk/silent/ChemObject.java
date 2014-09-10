@@ -353,7 +353,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
         if (properties != null)
             addProperties(properties);
     }
-    
+
 	/**
 	 *  Sets the properties of this object.
 	 *

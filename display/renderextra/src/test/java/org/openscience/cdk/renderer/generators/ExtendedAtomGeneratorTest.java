@@ -1,8 +1,8 @@
 /* Copyright (C) 2010  Gilleain Torrance <gilleain.torrance@gmail.com>
  *               2012  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
@@ -10,12 +10,12 @@
  * which includes - but is not limited to - adding the above copyright notice to
  * the beginning of your source code files, and to any copyright notice that you
  * may distribute with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -73,14 +73,14 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         model.registerParameters(generator);
         super.setTestedGenerator(generator);
     }
-    
+
     @Test
     public void generateElementTest() {
         IAtom atom = super.builder.newInstance(IAtom.class, "C");
         atom.setPoint2d(new Point2d(2, 3));
         atom.setImplicitHydrogenCount(0);
         int alignment = 1;
-        AtomSymbolElement element = 
+        AtomSymbolElement element =
             generator.generateElement(atom, alignment, model);
         Assert.assertEquals(atom.getPoint2d().x, element.xCoord, 0.1);
         Assert.assertEquals(atom.getPoint2d().y, element.yCoord, 0.1);
@@ -113,7 +113,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtom drawableHAtom = super.builder.newInstance(IAtom.class, "H");
         drawableHAtom.setPoint2d(new Point2d(0, 0));
 
-        IAtomContainer dummyContainer = 
+        IAtomContainer dummyContainer =
             super.builder.newInstance(IAtomContainer.class);
 
         model.set(KekuleStructure.class, true);
@@ -147,7 +147,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         // NOTE : just testing the element symbol here, see showCarbonTest
         // for the full range of possibilities...
         IAtom carbon = super.builder.newInstance(IAtom.class, "C");
-        IAtomContainer dummyContainer = 
+        IAtomContainer dummyContainer =
             super.builder.newInstance(IAtomContainer.class);
 
         // we force the issue by making isKekule=true
@@ -190,21 +190,21 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         model.set(ShowEndCarbons.class, true);
         Assert.assertTrue(generator.showCarbon(carbon, atomContainer, model));
     }
-	
+
     @Test
     public void showCarbon_ErrorMarker() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
         ProblemMarker.markWithError(carbon);
-        Assert.assertTrue(generator.showCarbon(carbon, atomContainer, model));        
+        Assert.assertTrue(generator.showCarbon(carbon, atomContainer, model));
     }
-    
+
     @Test
     public void showCarbon_ConnectedSingleElectrons() {
         IAtomContainer atomContainer = super.makeCCC();
         IAtom carbon = atomContainer.getAtom(1);
         atomContainer.addSingleElectron(1);
-        Assert.assertTrue(generator.showCarbon(carbon, atomContainer, model));        
+        Assert.assertTrue(generator.showCarbon(carbon, atomContainer, model));
     }
 
     @Test
@@ -212,7 +212,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.OVAL);
         model.set(CompactAtom.class, true);
-        List<IRenderingElement> elements = 
+        List<IRenderingElement> elements =
             getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
         Assert.assertEquals(OvalElement.class, elements.get(0).getClass());
@@ -223,12 +223,12 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.SQUARE);
         model.set(CompactAtom.class, true);
-        List<IRenderingElement> elements = 
+        List<IRenderingElement> elements =
             getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
         Assert.assertEquals(RectangleElement.class, elements.get(0).getClass());
     }
-    
+
     @Test
     public void getAtomColorTest() {
         Color testColor = Color.RED;
@@ -236,8 +236,8 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         model.set(AtomColor.class, testColor);
         model.set(ColorByType.class, false);
         generator.getAtomColor(singleAtom.getAtom(0), model);
-        
-        List<IRenderingElement> elements = 
+
+        List<IRenderingElement> elements =
             getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
         TextGroupElement element = ((TextGroupElement)elements.get(0));
@@ -334,7 +334,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
 
         // nothing should be made
-        IRenderingElement root = 
+        IRenderingElement root =
             generator.generate(singleAtom, singleAtom.getAtom(0), model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(1, elements.size());
@@ -371,7 +371,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         // test that the center is at the origin
         Assert.assertEquals(new Point2d(0,0), center(elements));
     }
-    
+
     @Test
     public void getParametersTest() {
         List<IGeneratorParameter<?>> parameters = generator.getParameters();

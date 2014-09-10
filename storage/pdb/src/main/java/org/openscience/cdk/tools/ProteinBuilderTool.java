@@ -41,7 +41,7 @@ import java.util.Map;
  * Class that facilitates building protein structures. Building DNA and RNA
  * is done by a complementary class <code>NucleicAcidBuilderTool</code> (to be
  * written).
- * 
+ *
  * @cdk.module pdb
  * @cdk.githash
  */
@@ -65,7 +65,7 @@ public class ProteinBuilderTool {
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if (protein.getMonomerCount() == 0) {
-            // make the connection between that aminoAcid's C-terminus and the 
+            // make the connection between that aminoAcid's C-terminus and the
             // protein's N-terminus
             protein.addBond(
                 aaToAdd.getBuilder().newInstance(
@@ -93,7 +93,7 @@ public class ProteinBuilderTool {
         addAminoAcid(protein, aaToAdd, strand);
         // Now think about the protein back bone connection
         if ((protein.getMonomerCount() != 0) && (aaToAddTo != null)) {
-            // make the connection between that aminoAcid's N-terminus and the 
+            // make the connection between that aminoAcid's N-terminus and the
             // protein's C-terminus
             protein.addBond(
                 aaToAdd.getBuilder().newInstance(
@@ -103,7 +103,7 @@ public class ProteinBuilderTool {
         } // else : no current C-terminus, so nothing special to do
         return protein;
     }
-    
+
     /**
      * Creates a BioPolymer from a sequence of amino acid as identified by a
      * the sequence of their one letter codes. It uses the {@link DefaultChemObjectBuilder}

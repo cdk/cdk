@@ -75,7 +75,7 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>

@@ -352,7 +352,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
             setStereoParity(container, index, atoms);
             newAtomContainer.addAtom(atoms[index]);
         }
-        
+
         for (IStereoElement element : container.stereoElements()) {
             newAtomContainer.addStereoElement(element);
         }

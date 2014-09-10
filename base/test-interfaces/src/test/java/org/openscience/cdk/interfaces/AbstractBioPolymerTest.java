@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.interfaces;
 
@@ -35,7 +35,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 	@Test public void testGetMonomerCount() {
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 		Assert.assertEquals(0, oBioPolymer.getMonomerCount());
-		
+
 		IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
 		IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -59,11 +59,11 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 
 		Assert.assertEquals(2, oBioPolymer.getMonomerCount());
 	}
-	
+
 	@Test public void testGetMonomerNames() {
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 		Assert.assertEquals(0, oBioPolymer.getMonomerNames().size());
-		
+
 		IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
 		IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -89,10 +89,10 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		Assert.assertTrue(oBioPolymer.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertTrue(oBioPolymer.getMonomerNames().contains(oMono2.getMonomerName()));
 	}
-	
+
 	@Test public void testGetMonomer_String_String() {
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
-		
+
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
 		IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -111,10 +111,10 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		Assert.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
 		Assert.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
 	}
-    
+
 	@Test public void testAddAtom_IAtom() {
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
-		
+
 		IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C1");
 		IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C2");
 		oBioPolymer.addAtom(oAtom1);
@@ -122,7 +122,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 
 		Assert.assertEquals(2, oBioPolymer.getAtomCount());
 	}
-    
+
 	@Test public void testAddAtom_IAtom_IStrand() {
 	    IBioPolymer oBioPolymer =(IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -140,7 +140,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		Assert.assertEquals(1, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
 		Assert.assertEquals(3, oBioPolymer.getAtomCount());
 	}
-	
+
 	@Test public void testAddAtom_IAtom_IMonomer_IStrand()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -152,11 +152,11 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom2, oMono1, oStrand1);
 		oBioPolymer.addAtom(oAtom1, null, oStrand1);
-		
+
 		Assert.assertEquals(2, oBioPolymer.getMonomer("TRP279", "A").getAtomCount());
 		Assert.assertEquals(0, oBioPolymer.getMonomer("", "A").getAtomCount());
 	}
-	
+
 	@Test public void testGetStrandCount()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -168,7 +168,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 
 		Assert.assertEquals(1, oBioPolymer.getStrandCount());
 	}
-	
+
 	@Test public void testGetStrand_String()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -177,10 +177,10 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C1");
 		oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		
+
 		Assert.assertEquals(oStrand1, oBioPolymer.getStrand("A"));
 	}
-	
+
 	@Test public void testGetStrandNames()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -198,10 +198,10 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		Map<String,IStrand> strands = new Hashtable<String,IStrand>();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
-		
+
 		Assert.assertEquals(strands.keySet(), oBioPolymer.getStrandNames());
 	}
-	
+
 	@Test public void testRemoveStrand_String()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -210,14 +210,14 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C1");
 		oBioPolymer.addAtom(oAtom1, oMono1, oStrand1);
-		
+
 		Assert.assertTrue(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
 		Assert.assertEquals(1, oBioPolymer.getAtomCount());
 		oBioPolymer.removeStrand("A");
 		Assert.assertFalse(oBioPolymer.getStrandNames().contains(oStrand1.getStrandName()));
 		Assert.assertEquals(0, oBioPolymer.getAtomCount());
 	}
-	
+
 	@Test public void testGetStrands()	{
 	    IBioPolymer oBioPolymer = (IBioPolymer)newChemObject();
 	    IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -235,10 +235,10 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
 		Map<String,IStrand> strands = new Hashtable<String,IStrand>();
 		strands.put("A", oStrand1);
 		strands.put("B", oStrand2);
-		
+
 		Assert.assertEquals(strands, oBioPolymer.getStrands());
 	}
-    
+
     /**
      * Method to test whether the class complies with RFC #9.
      */
@@ -250,7 +250,7 @@ public abstract class AbstractBioPolymerTest extends AbstractPolymerTest {
             Assert.assertTrue('\r' != description.charAt(i));
         }
     }
-    
+
     /**
      * Method to test the clone() method
      */

@@ -1,9 +1,9 @@
 /* IVector.java
- * 
+ *
  * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -12,12 +12,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -75,7 +75,7 @@ public class IVector
     if ((b==null) ||
          (size!=b.size))
       return;
-      
+
     if (result.size!=size)
       result.reshape(size);
 
@@ -93,10 +93,10 @@ public class IVector
   public IVector sub(IVector b)
   {
     IVector result = new IVector(size);
-    sub(b, result); 
+    sub(b, result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Subtraction from two vectors
    */
@@ -105,7 +105,7 @@ public class IVector
     if ((b==null) ||
         (size!=b.size))
       return;
-      
+
     if (result.size!=size)
       result.reshape(size);
 
@@ -116,17 +116,17 @@ public class IVector
       result.imagvector[i] = imagvector[i]-b.imagvector[i];
     }
   }
-  
+
   /**
    *  Multiplication from a vectors with an double
    */
   public IVector mul(double b)
   {
     IVector result = new IVector(size);
-    mul(b, result); 
+    mul(b, result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Multiplication from a vectors with an double
    */
@@ -168,26 +168,26 @@ public class IVector
   public IVector duplicate()
   {
     IVector result = new IVector(size);
-    duplicate(result); 
+    duplicate(result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Copy a vector
    */
   public void duplicate(IVector result)
-  { 
+  {
     if (result.size!=size)
       result.reshape(size);
 
-    int i; 
+    int i;
     for(i=0; i<size; i++)
     {
       result.realvector[i] = realvector[i];
       result.imagvector[i] = imagvector[i];
     }
   }
-  
+
   /**
    *  Return a vector as a string
    */
@@ -219,7 +219,7 @@ public class IVector
       newrealvector[i] = realvector[i];
       newimagvector[i] = imagvector[i];
     }
-    for(i=min; i<newsize; i++)  
+    for(i=min; i<newsize; i++)
     {
       newrealvector[i] = 0d;
       newimagvector[i] = 0d;

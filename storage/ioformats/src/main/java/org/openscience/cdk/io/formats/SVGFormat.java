@@ -30,15 +30,15 @@ import org.openscience.cdk.annotations.TestMethod;
 public class SVGFormat extends AbstractResourceFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public SVGFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SVGFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {

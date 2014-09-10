@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,9 +33,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class BGFFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public BGFFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new BGFFormat();
@@ -69,7 +69,7 @@ public class BGFFormat extends AbstractResourceFormat implements IChemFormat {
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() { return null; }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() { return null; }

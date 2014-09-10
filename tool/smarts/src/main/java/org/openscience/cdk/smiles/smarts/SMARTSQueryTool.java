@@ -97,7 +97,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
  * <p/>
  * It's not entirely clear what the behavior of * should be with respect to hydrogens. it is possible that the code will
- * be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li> <li>The 
+ * be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</li> <li>The
  * org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector only considers single rings and two fused non-spiro
  * rings. As a result, it does not properly detect aromaticity in polycyclic systems such as
  * <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper aromaticity
@@ -180,9 +180,9 @@ public class SMARTSQueryTool {
 
     /**
      * Logical flag indicates whether the aromaticity model should be skipped.
-     * Generally this should be left as false to ensure the structures being 
+     * Generally this should be left as false to ensure the structures being
      * matched are all treated the same. The flag can however be turned off if
-     * the molecules being tests are known to all have the same aromaticity 
+     * the molecules being tests are known to all have the same aromaticity
      * model.
      */
     private boolean skipAromaticity = false;
@@ -260,7 +260,7 @@ public class SMARTSQueryTool {
 
     /**
      * Set the aromaticity perception to use. Different aromaticity models
-     * may required certain attributes to be set (e.g. atom typing). These 
+     * may required certain attributes to be set (e.g. atom typing). These
      * will not be automatically configured and should be preset before matching.
      *
      * <blockquote><pre>
@@ -268,14 +268,14 @@ public class SMARTSQueryTool {
      * sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
      *                                    Cycles.cdkAromaticSet));
      * for (IAtomContainer molecule : molecules) {
-     * 
+     *
      *     // CDK Aromatic model needs atom types
      *     AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-     *     
-     *     sqt.matches(molecule);     
-     * }                                   
+     *
+     *     sqt.matches(molecule);
+     * }
      * </pre></blockquote>
-     * 
+     *
      * @param aromaticity the new aromaticity perception
      * @see ElectronDonation
      * @see Cycles
@@ -440,8 +440,8 @@ public class SMARTSQueryTool {
         // the query contains ring queries [R?] [r?] [x?] etc.
         SmartsMatchers.prepare(atomContainer,
                                true);
-        
-        // providing skip aromaticity has not be set apply the desired 
+
+        // providing skip aromaticity has not be set apply the desired
         // aromaticity model
         try {
              if (!skipAromaticity) {
@@ -463,7 +463,7 @@ public class SMARTSQueryTool {
     }
 
     private List<Set<Integer>> matchedAtoms(List<List<RMap>> bondMapping, IAtomContainer atomContainer) {
-        
+
         List<Set<Integer>> atomMapping = new ArrayList<Set<Integer>>();
         // loop over each mapping
         for (List<RMap> mapping : bondMapping) {
@@ -473,7 +473,7 @@ public class SMARTSQueryTool {
             IAtom atom2 = null;
             // loop over this mapping
             for (RMap map : mapping) {
-                
+
                 int bondID = map.getId1();
 
                 // get the atoms in this bond

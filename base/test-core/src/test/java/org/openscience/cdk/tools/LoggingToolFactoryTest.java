@@ -34,7 +34,7 @@ public class LoggingToolFactoryTest {
             LoggingToolFactory.getLoggingToolClass().getName()
         );
     }
-    
+
     @Test public void testCreateLoggingTool() {
         ILoggingTool logger = LoggingToolFactory.createLoggingTool(
             LoggingToolFactoryTest.class
@@ -50,7 +50,7 @@ public class LoggingToolFactoryTest {
         );
         Assert.assertTrue(instance instanceof LoggingTool);
     }
-    
+
     @Test public void testCustomLogger() {
         LoggingToolFactory.setLoggingToolClass(CustomLogger.class);
         ILoggingTool instance = LoggingToolFactory.createLoggingTool(
@@ -58,7 +58,7 @@ public class LoggingToolFactoryTest {
         );
         Assert.assertTrue(instance instanceof CustomLogger);
     }
-    
+
     /**
      * Custom dummy logger used in the
      * {@link LoggingToolFactoryTest#testCustomLogger()} test to see if
@@ -69,11 +69,11 @@ public class LoggingToolFactoryTest {
     private static class CustomLogger implements ILoggingTool {
 
         private CustomLogger(Class<?> sourceClass) {}
-        
+
         public static ILoggingTool create(Class<?> sourceClass) {
             return new CustomLogger(sourceClass);
         }
-        
+
         public void debug(Object object) {}
         public void debug(Object object, Object... objects) {}
         public void dumpClasspath() {}

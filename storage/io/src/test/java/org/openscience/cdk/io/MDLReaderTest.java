@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -113,7 +113,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(9, m.getAtomCount());
         Assert.assertEquals(9, m.getBondCount());
     }
-    
+
     /**
      * @cdk.bug 1542467
      */
@@ -130,7 +130,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue((containersList.get(0)).getAtomCount() > 0);
         Assert.assertTrue((containersList.get(0)).getBondCount() > 0);
     }
-    
+
     @Test public void testReadProton() throws Exception {
     	String mdl =
             "proton.mol\n" +
@@ -147,7 +147,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
     	IAtom atom = mol.getAtom(0);
     	Assert.assertEquals(1, atom.getFormalCharge().intValue());
     }
-    
+
     /**
      * The corrupt file is really ok; it is just not V2000 material.
      */
@@ -189,7 +189,7 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         	container.getBond(0).getStereo()
         );
     }
-    
+
     @Test public void testEmptyString() throws Exception {
     	String emptyString = "";
     	MDLReader reader = new MDLReader(new StringReader(emptyString), Mode.STRICT);
@@ -197,8 +197,8 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         reader.close();
     	Assert.assertNull(mol);
     }
-    
-    
+
+
     @Test public void testUndefinedStereo() throws Exception {
         String filename = "data/mdl/ChEBI_26120.mol";
         logger.info("Testing: " + filename);
@@ -212,14 +212,14 @@ public class MDLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(IBond.Stereo.E_OR_Z,mol.getBond(11).getStereo());
     }
 
-    
+
     @Test public void testReadAtomAtomMapping() throws Exception {
         String filename = "data/mdl/a-pinene-with-atom-atom-mapping.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-     
-        IAtomContainer mol = reader.read(new AtomContainer()); 
+
+        IAtomContainer mol = reader.read(new AtomContainer());
         reader.close();
         Assert.assertNotNull(mol);
         Assert.assertEquals(1, ((Integer)mol.getAtom(0).getProperty(CDKConstants.ATOM_ATOM_MAPPING)).intValue());

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -46,7 +46,7 @@ public class AbsoluteSMILESTest {
              "O[C@@H]1[C@@H](O)[C@H](O)[C@@H](O)[C@H](O)[C@@H]1O",
              "[C@@H]1(O)[C@H](O)[C@@H](O)[C@H](O)[C@@H](O)[C@@H]1O",
              "[C@@H]1([C@@H](O)[C@@H]([C@H]([C@H](O)[C@H]1O)O)O)O",
-             "O[C@H]1[C@@H]([C@@H]([C@H](O)[C@H]([C@@H]1O)O)O)O", 
+             "O[C@H]1[C@@H]([C@@H]([C@H](O)[C@H]([C@@H]1O)O)O)O",
              "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H]([C@H]1O)O",
              "[C@H]1(O)[C@H](O)[C@@H](O)[C@@H]([C@H](O)[C@@H]1O)O",
              "O[C@@H]1[C@@H](O)[C@H]([C@H]([C@H](O)[C@H]1O)O)O",
@@ -57,7 +57,7 @@ public class AbsoluteSMILESTest {
              "[C@H]1([C@H](O)[C@H](O)[C@H]([C@@H]([C@H]1O)O)O)O",
              "[C@H]1([C@H](O)[C@@H]([C@@H](O)[C@@H]([C@H]1O)O)O)O",
              "[C@@H]1(O)[C@@H](O)[C@@H]([C@@H](O)[C@H](O)[C@@H]1O)O",
-             "[C@H]1(O)[C@@H]([C@H]([C@H](O)[C@@H](O)[C@H]1O)O)O", 
+             "[C@H]1(O)[C@@H]([C@H]([C@H](O)[C@@H](O)[C@H]1O)O)O",
              "O[C@H]1[C@H]([C@H](O)[C@@H](O)[C@H](O)[C@H]1O)O",
              "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O",
              "[C@H]1([C@@H]([C@@H]([C@H]([C@H](O)[C@H]1O)O)O)O)O",
@@ -72,7 +72,7 @@ public class AbsoluteSMILESTest {
              "C/C=C1/CC(=C/C)/C1",
              "C1(=C/C)/CC(=C\\C)/C1",
              "C\\C=C1/CC(=C\\C)/C1",
-             "C(\\C)=C1/CC(=C/C)/C1", 
+             "C(\\C)=C1/CC(=C/C)/C1",
              "C1\\C(C\\C1=C\\C)=C/C",
              "C/1(C\\C(=C/C)C1)=C\\C",
              "C(/C)=C1/CC(=C\\C)/C1",
@@ -84,7 +84,7 @@ public class AbsoluteSMILESTest {
              "C1\\C(=C/C)C\\C1=C\\C",
              "C1(/CC(/C1)=C/C)=C\\C",
              "C/C=C1/CC(=C/C)/C1",
-             "C(=C/1C\\C(=C\\C)C1)/C");   
+             "C(=C/1C\\C(=C\\C)C1)/C");
     }
 
     @Test public void bispropenyloctatriene() throws Exception{
@@ -98,31 +98,31 @@ public class AbsoluteSMILESTest {
              "C(\\C=C/C)(/C=C/C)=C(/C=C/C)\\C=C/C",
              "C(/C(/C=C/C)=C(\\C=C/C)/C=C/C)=C/C",
              "C(/C(=C(/C=C/C)\\C=C/C)/C=C/C)=C/C",
-             "C\\C=C\\C(=C(/C=C/C)\\C=C/C)\\C=C/C", 
+             "C\\C=C\\C(=C(/C=C/C)\\C=C/C)\\C=C/C",
              "C(/C(/C=C/C)=C(\\C=C/C)/C=C/C)=C/C",
              "C(\\C(=C(\\C=C/C)/C=C/C)\\C=C/C)=C/C",
              "C(\\C(\\C=C/C)=C(/C=C/C)\\C=C/C)=C/C",
              "C(/C)=C\\C(\\C=C/C)=C(/C=C/C)\\C=C/C",
-             "C(/C)=C/C(/C=C/C)=C(/C=C/C)\\C=C/C", 
+             "C(/C)=C/C(/C=C/C)=C(/C=C/C)\\C=C/C",
              "C(\\C=C/C)(=C(/C=C/C)\\C=C/C)/C=C/C",
              "C(=C/C)/C(=C(/C=C/C)\\C=C/C)/C=C/C",
              "C\\C=C/C(=C(/C=C/C)\\C=C/C)/C=C/C",
-             "C(=C/C)\\C(\\C=C/C)=C(\\C=C/C)/C=C/C", 
-             "C\\C=C/C(/C=C/C)=C(/C=C/C)\\C=C/C");    
+             "C(=C/C)\\C(\\C=C/C)=C(\\C=C/C)/C=C/C",
+             "C\\C=C/C(/C=C/C)=C(/C=C/C)\\C=C/C");
     }
-    
+
     // 2,4,6,8-tetramethyl-1,3,5,7-tetraazatricyclo[5.1.0.0³,⁵]octane
     @Test public void tetramethyltetraazatricyclooctane() throws Exception {
         test("C[C@H]1N2N([C@@H](C)N3[C@H](C)N13)[C@H]2C",
              "N12N([C@H](C)N3[C@@H](C)N3[C@@H]1C)[C@@H]2C",
              "C[C@H]1N2[C@@H](N3[C@H](N3[C@H](C)N21)C)C",
              "C[C@@H]1N2[C@@H](C)N3[C@H](C)N3[C@@H](C)N12",
-             "N12N([C@H](N3N([C@H]1C)[C@H]3C)C)[C@H]2C", 
+             "N12N([C@H](N3N([C@H]1C)[C@H]3C)C)[C@H]2C",
              "C[C@@H]1N2N1[C@@H](N3[C@H](N3[C@@H]2C)C)C",
              "[C@H]1(N2[C@@H](C)N3N([C@H](N12)C)[C@H]3C)C",
-             "[C@H]1(C)N2[C@@H](N3[C@@H](C)N3[C@H](C)N12)C", 
-             "[C@H]1(N2N1[C@H](C)N3N([C@@H]2C)[C@@H]3C)C", 
-             "[C@H]1(N2[C@H](N2[C@@H](N3N1[C@@H]3C)C)C)C", 
+             "[C@H]1(C)N2[C@@H](N3[C@@H](C)N3[C@H](C)N12)C",
+             "[C@H]1(N2N1[C@H](C)N3N([C@@H]2C)[C@@H]3C)C",
+             "[C@H]1(N2[C@H](N2[C@@H](N3N1[C@@H]3C)C)C)C",
              "C[C@@H]1N2[C@H](N2[C@@H](N3N1[C@@H]3C)C)C",
              "N12N([C@@H](N3[C@@H](C)N3[C@@H]1C)C)[C@@H]2C",
              "N12N([C@@H]1C)[C@@H](N3[C@@H](C)N3[C@@H]2C)C",
@@ -130,7 +130,7 @@ public class AbsoluteSMILESTest {
              "[C@H]1(C)N2N([C@H]2C)[C@H](N3N1[C@H]3C)C",
              "N12[C@H](C)N1[C@@H](C)N3[C@H](C)N3[C@H]2C",
              "N12N([C@H](C)N3[C@H](N3[C@@H]1C)C)[C@@H]2C",
-             "[C@H]1(N2[C@@H](C)N2[C@@H](N3[C@@H](C)N13)C)C", 
+             "[C@H]1(N2[C@@H](C)N2[C@@H](N3[C@@H](C)N13)C)C",
              "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C",
              "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
     }
@@ -141,7 +141,7 @@ public class AbsoluteSMILESTest {
         SmilesGenerator sg = SmilesGenerator.absolute();
 
         Set<String> output = new HashSet<String>();
-        
+
         for (String input : inputs)
             output.add(sg.create(sp.parseSmiles(input)));
 

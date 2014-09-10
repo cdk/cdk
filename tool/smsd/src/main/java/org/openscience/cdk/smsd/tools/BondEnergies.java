@@ -43,7 +43,7 @@ import org.openscience.cdk.smsd.helper.BondEnergy;
  * B. deB. Darwent, "National Standard Reference Data Series,
  * "National Bureau of Standards, No. 31, Washington, DC, 1970;
  * S.W. Benson, J. Chem. Educ., 42, 502 (1965).
- * 
+ *
  *
  * Common Bond Energies (D) and Bond Lengths (r)
  *
@@ -201,7 +201,7 @@ public class BondEnergies {
     /**
      * Returns Singleton pattern instance for the Bond Energy class
      * @return instance
-     * @throws CDKException 
+     * @throws CDKException
      */
     @TestMethod("testGetInstance")
     public synchronized static BondEnergies getInstance()

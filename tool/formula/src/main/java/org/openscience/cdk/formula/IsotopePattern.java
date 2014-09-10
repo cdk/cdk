@@ -10,11 +10,11 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * This class defines the properties of a deisotoped
- * pattern distribution. A isotope pattern is a set of 
+ * pattern distribution. A isotope pattern is a set of
  * compounds with different set of isotopes.
- * 
+ *
  * @author Miguel Rojas Cherto
- * 
+ *
  * @cdk.module formula
  * @cdk.githash
  */
@@ -26,16 +26,16 @@ public class IsotopePattern {
 	private int monoIsotopePosition;
 
 	private double chargI=0;
-	
+
 	/**
 	 * Constructor of the IsotopePattern object.
 	 */
 	public IsotopePattern(){
-		
+
 	}
 	/**
 	 * Set the mono isotope object.
-	 * 
+	 *
 	 *  @param isoContainer   The IsotopeContainer object
 	 */
 	@TestMethod("testSetMonoIsotope_IsotopeContainer")
@@ -45,7 +45,7 @@ public class IsotopePattern {
 	}
 	/**
 	 * Add an isotope object.
-	 * 
+	 *
 	 *  @param isoContainer   The IsotopeContainer object
 	 */
 	@TestMethod("testAddIsotope_IsotopeContainer")
@@ -54,17 +54,17 @@ public class IsotopePattern {
 	}
 	/**
      * Returns the mono-isotope peak that form this isotope pattern.
-     * 
+     *
      * @return The IsotopeContainer acting as mono-isotope
      */
 	@TestMethod("testGetMonoIsotope")
     public IsotopeContainer getMonoIsotope(){
     	return isotopeCList.get(monoIsotopePosition);
     }
-    
+
     /**
      * Returns the all isotopes that form this isotope pattern.
-     * 
+     *
      * @return The IsotopeContainer acting as mono-isotope
      */
 	@TestMethod("testGetIsotopes")
@@ -73,7 +73,7 @@ public class IsotopePattern {
     }
     /**
      * Returns the a isotopes given a specific position.
-     * 
+     *
      * @param  position position of the isotope to return
      * @return The isotope
      */
@@ -83,7 +83,7 @@ public class IsotopePattern {
     }
     /**
      * Returns the number of isotopes in this pattern.
-     * 
+     *
      * @return The number of isotopes
      */
 	@TestMethod("testGetNumberOfIsotopes")
@@ -93,27 +93,27 @@ public class IsotopePattern {
 
     /**
      * Set the charge in this pattern.
-     * 
+     *
      * @param charge The charge value
      */
 	@TestMethod("testSetCharge_double")
 	public void setCharge(double charge) {
 		chargI = charge;
-		
+
 	}
 
     /**
      * Get the charge in this pattern.
-     * 
+     *
      * @return The charge value
      */
 	@TestMethod("testGetCharge")
 	public double getCharge() {
 		return chargI;
-		
+
 	}
     /**
-	 * Clones this IsotopePattern object and its content. 
+	 * Clones this IsotopePattern object and its content.
 	 *
 	 * @return    The cloned object
 	 */

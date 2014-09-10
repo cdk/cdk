@@ -34,27 +34,27 @@ import signature.AbstractGraphBuilder;
 
 /**
  * Builds a molecule from a signature.
- * 
+ *
  * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.MoleculeFromSignatureBuilderTest")
 public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
-    
+
     /**
      * The chem object builder
      */
     private IChemObjectBuilder builder;
-    
+
     /**
      * The container that is being constructed
      */
     private IAtomContainer container;
-    
+
     /**
      * Uses the chem object builder for making molecules.
-     * 
+     *
      * @param builder a builder for CDK molecules.
      */
     public MoleculeFromSignatureBuilder(IChemObjectBuilder builder) {
@@ -73,7 +73,7 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
             container.addBond(vertexIndex1, vertexIndex2, IBond.Order.TRIPLE);
         } else if (edgeLabel.equals("p")) {
             IBond bond = builder.newInstance(IBond.class,
-                    container.getAtom(vertexIndex1), 
+                    container.getAtom(vertexIndex1),
                     container.getAtom(vertexIndex2),
                     IBond.Order.SINGLE);
             bond.setFlag(CDKConstants.ISAROMATIC, true);
@@ -92,10 +92,10 @@ public class MoleculeFromSignatureBuilder extends AbstractGraphBuilder {
     public void makeVertex(String label) {
         this.container.addAtom(this.builder.newInstance(IAtom.class, label));
     }
-    
+
     /**
      * Gets the atom container.
-     * 
+     *
      * @return the constructed atom container
      */
     @TestMethod("getAtomContainerTest")

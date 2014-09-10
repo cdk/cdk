@@ -76,7 +76,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
         Map<String, Object> parameterSet = ffc.getParameterSet();
         // for this calculation,
         // we need some values stored in the vector "data" in the
-        // hashtable of these atomTypes:		
+        // hashtable of these atomTypes:
         double charge = 0;
         double formalCharge = 0;
         double formalChargeNeigh = 0;

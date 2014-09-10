@@ -57,9 +57,9 @@ public abstract class AbstractMCS {
      *
      * Note: Here its assumed that hydrogens are implicit
      * and user has called these two methods
-     * percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector 
+     * percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector
      * before initializing calling this method.
-     * 
+     *
      * @param source query mol
      * @param target target mol
      * @throws CDKException
@@ -75,17 +75,17 @@ public abstract class AbstractMCS {
      */
     public abstract void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter);
 
-    /** 
+    /**
      * Returns summation energy score of the disorder if the MCS is removed
      * from the target and query graph. Amongst the solutions, a solution
      * with lowest energy score is preferred.
-     * 
+     *
      * @param Key Index of the mapping solution
      * @return Total bond breaking energy required to remove the mapped part
      */
     public abstract Double getEnergyScore(int Key);
 
-    /** 
+    /**
      * Returns number of fragment generated in the solution space,
      * if the MCS is removed from the target and query graph.
      * Amongst the solutions, a solution with lowest fragment size
@@ -96,8 +96,8 @@ public abstract class AbstractMCS {
      */
     public abstract Integer getFragmentSize(int Key);
 
-    /** 
-     * 
+    /**
+     *
      * Returns modified target molecule on which mapping was
      * performed.
      *
@@ -106,7 +106,7 @@ public abstract class AbstractMCS {
      */
     public abstract IAtomContainer getProductMolecule();
 
-    /** 
+    /**
      * Returns modified query molecule on which mapping was
      * performed.
      *
@@ -114,7 +114,7 @@ public abstract class AbstractMCS {
      */
     public abstract IAtomContainer getReactantMolecule();
 
-    /** 
+    /**
      * Returns a number which denotes the quality of the mcs.
      * A solution with highest stereo score is preferred over other
      * scores.
@@ -128,7 +128,7 @@ public abstract class AbstractMCS {
      *
      * Returns true if mols have different stereo
      * chemistry else false if no stereo mismatch.
-     * 
+     *
      * @return true if mols have different stereo
      * chemistry else false if no stereo mismatch.
      * true if stereo mismatch occurs
@@ -136,14 +136,14 @@ public abstract class AbstractMCS {
      */
     public abstract boolean isStereoMisMatch();
 
-    /** 
+    /**
      * Checks if query is a subgraph of the target.
      * Returns true if query is a subgraph of target else false
      * @return true if query molecule is a subgraph of the target molecule
      */
     public abstract boolean isSubgraph();
 
-    /** 
+    /**
      * Returns Tanimoto similarity between query and target molecules
      * (Score is between 0-min and 1-max).
      *
@@ -152,7 +152,7 @@ public abstract class AbstractMCS {
      */
     public abstract double getTanimotoSimilarity() throws IOException;
 
-    /** 
+    /**
      * Returns Euclidean Distance between query and target molecule.
      * @return Euclidean Distance (lower the score, better the match)
      * @throws IOException
@@ -209,7 +209,7 @@ public abstract class AbstractMCS {
 
     /**
      * set timeout in mins (default 1.00 min) for bond insensitive searches
-     * @param bondInSensitiveTimeOut the bond insensitive 
+     * @param bondInSensitiveTimeOut the bond insensitive
      */
     public abstract void setBondInSensitiveTimeOut(double bondInSensitiveTimeOut);
 }

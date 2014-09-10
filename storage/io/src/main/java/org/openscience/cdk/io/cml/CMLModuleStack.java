@@ -51,7 +51,7 @@ public class CMLModuleStack {
     }
     stack[sp++] = item;
   }
-  
+
   public int length() {
 	  return sp;
   }
@@ -94,7 +94,7 @@ public class CMLModuleStack {
   }
 
   /**
-   * Convenience method to check the last added elements. 
+   * Convenience method to check the last added elements.
    */
   @TestMethod("testEndsWith_String")
   public boolean endsWith(ICMLModule lastElement) {
@@ -102,7 +102,7 @@ public class CMLModuleStack {
   }
 
   /**
-   * Convenience method to check the last two added elements. 
+   * Convenience method to check the last two added elements.
    */
   @TestMethod("testEndsWith_String_String")
   public boolean endsWith(ICMLModule oneButLast, ICMLModule lastElement) {
@@ -110,7 +110,7 @@ public class CMLModuleStack {
   }
 
   /**
-   * Convenience method to check the last three added elements. 
+   * Convenience method to check the last three added elements.
    */
   @TestMethod("testEndsWith_String_String_String")
   public boolean endsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement) {

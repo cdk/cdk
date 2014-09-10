@@ -1,17 +1,17 @@
 /* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,7 +27,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.tools.diff.AtomDiff;
 
 /**
- * Checks the functionality of {@link IAtom} implementations. 
+ * Checks the functionality of {@link IAtom} implementations.
  *
  * @cdk.module test-interfaces
  */
@@ -78,10 +78,10 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     @Test public void testGetFractionalPoint3d() {
         testSetFractionalPoint3d_Point3d();
     }
-    
+
     @Test public void testGetPoint3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-        
+
         IAtom a = (IAtom)newChemObject();
         a.setPoint3d(point3d);
         Assert.assertNotNull(a.getPoint3d());
@@ -89,15 +89,15 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     }
     @Test public void testSetPoint3d_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
-        
+
         IAtom a = (IAtom)newChemObject();
         a.setPoint3d(point3d);
         Assert.assertEquals(point3d, a.getPoint3d());
     }
-        
+
     @Test public void testGetPoint2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
-        
+
         IAtom a = (IAtom)newChemObject();
         a.setPoint2d(point2d);
         Assert.assertNotNull(a.getPoint2d());
@@ -106,7 +106,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     }
     @Test public void testSetPoint2d_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
-        
+
         IAtom a = (IAtom)newChemObject();
         a.setPoint2d(point2d);
         Assert.assertEquals(point2d, a.getPoint2d());
@@ -125,7 +125,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
     @Test public void testGetStereoParity() {
         testSetStereoParity_Integer();
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -139,7 +139,7 @@ public abstract class AbstractAtomTest extends AbstractAtomTypeTest {
         Assert.assertNotNull(diff);
         Assert.assertEquals(0, diff.length());
     }
-    
+
     /**
      * Method to test the clone() method
      */

@@ -42,6 +42,6 @@ import org.openscience.cdk.io.IChemObjectReader;
  */
 public interface  IIteratingChemObjectReader<T extends IChemObject>
     extends IChemObjectReader, Iterator<T> {
-	
+
 }
 

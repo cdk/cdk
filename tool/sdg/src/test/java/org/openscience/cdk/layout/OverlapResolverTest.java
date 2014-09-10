@@ -136,7 +136,7 @@ public class OverlapResolverTest extends CDKTestCase {
 			IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
 			IAtomContainer atomContainer = (IAtomContainer)ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 			//MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
-			OverlapResolver or = new OverlapResolver(); 
+			OverlapResolver or = new OverlapResolver();
 			overlapScore = or.resolveOverlap(atomContainer, null);
 			//MoleculeViewer2D.display(new AtomContainer(atomContainer), false);
 			Assert.assertEquals(0.0, overlapScore, 0.0001);
@@ -158,7 +158,7 @@ public class OverlapResolverTest extends CDKTestCase {
 		sdg.setMolecule(new AtomContainer(atomContainer));
 		sdg.generateCoordinates();
 		atomContainer = sdg.getMolecule();
-		OverlapResolver or = new OverlapResolver(); 
+		OverlapResolver or = new OverlapResolver();
 		overlapScore = or.resolveOverlap(atomContainer, null);
 		//MoleculeViewer2D.display(new AtomContainer(atomContainer), true);
 		Assert.assertEquals(0.0, overlapScore, 0.0001);
@@ -166,6 +166,6 @@ public class OverlapResolverTest extends CDKTestCase {
 
 	}
 
-	
+
 }
 

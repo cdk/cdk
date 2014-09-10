@@ -92,11 +92,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     public MDLRXNReader(InputStream input, Mode mode) {
         this(new InputStreamReader(input), mode);
     }
-    
+
     public MDLRXNReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNFormat.getInstance();
@@ -110,7 +110,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             this.input = new BufferedReader(input);
         }
     }
-    
+
     @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
@@ -159,7 +159,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              );
          }
      }
-     
+
      @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
          if (object instanceof IReaction) {
@@ -182,7 +182,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
  	 */
      private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
          IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
-         
+
          IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
          chemSequence.addChemModel(readChemModel(chemModel));
          chemFile.addChemSequence(chemSequence);
@@ -219,11 +219,11 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              String line;
              while ((line = input.readLine()) != null) {
                  logger.debug("line: ", line);
-                 // apparently, this is a SDF file, continue with 
+                 // apparently, this is a SDF file, continue with
                  // reading mol files
                  if (line.equals("$$$$")) {
 		 		    r = readReaction(setOfReactions.getBuilder());
-		 		    
+
 		 		    if (r != null) {
 			 			setOfReactions.addReaction(r);
 		 		    }
@@ -277,7 +277,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
              logger.debug(exception);
              throw new CDKException(error, exception);
          }
-         
+
          return setOfReactions;
      }
     /**
@@ -323,7 +323,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while counts line of RXN file", exception);
         }
-        
+
         // now read the reactants
         try {
             for (int i=1; i<=reactantCount; i++) {
@@ -335,7 +335,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                     molFile.append(molFileLine);
                     molFile.append(System.getProperty("line.separator"));
                 } while (!molFileLine.equals("M  END"));
-                
+
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
                   new StringReader(molFile.toString()));
@@ -343,7 +343,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                   builder.newInstance(IAtomContainer.class)
                 );
                 reader.close();
-                  
+
                 // add reactant
                 reaction.addReactant(reactant);
             }
@@ -354,19 +354,19 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while reading reactant", exception);
         }
-        
+
         // now read the products
         try {
             for (int i=1; i<=productCount; i++) {
                 StringBuffer molFile = new StringBuffer();
-                input.readLine(); // String announceMDLFileLine = 
+                input.readLine(); // String announceMDLFileLine =
                 String molFileLine = "";
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
                     molFile.append(System.getProperty("line.separator"));
                 } while (!molFileLine.equals("M  END"));
-                
+
                 // read MDL molfile content
                 MDLReader reader = new MDLReader(
                     new StringReader(molFile.toString()),
@@ -375,7 +375,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 IAtomContainer product = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
                 reader.close();
-                  
+
                 // add reactant
                 reaction.addProduct(product);
             }
@@ -386,7 +386,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while reading products", exception);
         }
-        
+
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
@@ -400,7 +400,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         while (molecules.hasNext()) {
             producedSide.add(molecules.next());
         }
-        
+
         // map the atoms
         int mappingCount = 0;
 //        IAtom[] reactantAtoms = reactingSide.getAtoms();
@@ -420,10 +420,10 @@ public class MDLRXNReader extends DefaultChemObjectReader {
             }
         }
         logger.info("Mapped atom pairs: " + mappingCount);
-        
+
         return reaction;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

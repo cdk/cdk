@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -51,10 +51,10 @@ public class RingSetManipulator {
         }
         return count;
 	}
-    
+
 	/**
 	 * Puts all rings of a ringSet in a single atomContainer
-	 * 
+	 *
 	 * @param ringSet The ringSet to use
 	 * @return	The produced atomContainer
 	 */
@@ -67,12 +67,12 @@ public class RingSetManipulator {
 		}
 		return resultContainer;
 	}
-	
+
 	/**
 	 * Returns the largest (number of atoms) ring set in a molecule
 	 *
-	 *@param  ringSystems  RingSystems of a molecule 
-	 *@return              The largestRingSet 
+	 *@param  ringSystems  RingSystems of a molecule
+	 *@return              The largestRingSet
 	 */
     @TestMethod("testGetLargestRingSet_List_IRingSet")
 	public static IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
@@ -103,7 +103,7 @@ public class RingSetManipulator {
         }
         return count;
 	}
-	
+
 	/**
      * Returns all the AtomContainer's in a RingSet.
      * @param set The collection of rings
@@ -132,7 +132,7 @@ public class RingSetManipulator {
 		Collections.sort(ringList, new RingSizeComparator(RingSizeComparator.SMALL_FIRST));
 		ringSet.removeAllAtomContainers();
         for (IAtomContainer aRingList : ringList) ringSet.addAtomContainer(aRingList);
-		
+
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class RingSetManipulator {
 							atom2 = ring2.getAtom(l);
 							if (atom1 == atom2)
 							{
-								neighbors[i]++;								
+								neighbors[i]++;
 								neighbors[k]++;
 								break;
 							}
@@ -215,7 +215,7 @@ public class RingSetManipulator {
 	   * Checks if <code>atom1</code> and <code>atom2</code> share membership in the same ring or ring system.
 	   * Membership in the same ring is checked if the RingSet contains the SSSR of a molecule; membership in
 	   * the same ring or same ring system is checked if the RingSet contains all rings of a molecule.<BR><BR>
-	   * 
+	   *
 	   * <p><B>Important:</B> This method only returns meaningful results if <code>atom1</code> and
 	   * <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
 	   *
@@ -233,11 +233,11 @@ public class RingSetManipulator {
           }
 	    return false;
 	  }
-	  
+
 	  /**
 	   * Checks - and returns 'true' - if a certain ring is already
 	   * stored in the ringset. This is not a test for equality of Ring
-	   * objects, but compares all Bond objects of the ring. 
+	   * objects, but compares all Bond objects of the ring.
 	   *
 	   * @param   newRing  The ring to be tested if it is already stored
 	   * @param ringSet The collection of rings
@@ -285,7 +285,7 @@ public class RingSetManipulator {
      * aromatic if all atoms and all bonds are aromatic.
      *
      * This method assumes that aromaticity perception has been done before hand.
-     * 
+     *
      * @param ringset The collection of rings
      */
     @TestMethod("markAromatic")

@@ -69,11 +69,11 @@ public class QSARCustomizer implements ICMLCustomizer {
 	public void customize(IBond bond, Object nodeToAdd) throws Exception {
     	customizeIChemObject(bond, nodeToAdd);
 	}
-	
+
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
     	customizeIChemObject(atom, nodeToAdd);
     }
-    
+
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
     	customizeIChemObject(molecule, nodeToAdd);
     }
@@ -119,11 +119,11 @@ public class QSARCustomizer implements ICMLCustomizer {
         }
         return scalar;
      }
-    
+
     private void customizeIChemObject(IChemObject object, Object nodeToAdd) throws Exception {
     	if (!(nodeToAdd instanceof Element))
     		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
-    	
+
     	Element element = (Element)nodeToAdd;
     	Map<Object,Object> props = object.getProperties();
         Iterator<Object> keys = props.keySet().iterator();
@@ -197,7 +197,7 @@ public class QSARCustomizer implements ICMLCustomizer {
             element.appendChild(propList);
         }
     }
-    
-	
+
+
 }
 

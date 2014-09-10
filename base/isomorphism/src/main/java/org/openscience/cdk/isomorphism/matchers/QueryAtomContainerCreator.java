@@ -95,7 +95,7 @@ public class QueryAtomContainerCreator {
         }
         return queryContainer;
     }
-    
+
     /**
      *  Creates a QueryAtomContainer with SymbolAncChargeQueryAtom's and
      *  OrderQueryBond's.
@@ -125,8 +125,8 @@ public class QueryAtomContainerCreator {
             }
         }
         return queryContainer;
-    }    
-    
+    }
+
     public static QueryAtomContainer createSymbolChargeIDQueryContainer(IAtomContainer container) {
         QueryAtomContainer queryContainer = new QueryAtomContainer(container.getBuilder());
         for (int i = 0; i < container.getAtomCount(); i++) {
@@ -149,7 +149,7 @@ public class QueryAtomContainerCreator {
             }
         }
         return queryContainer;
-    }    
+    }
 
     /**
      *  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
@@ -224,7 +224,7 @@ public class QueryAtomContainerCreator {
 
     /**
      *  Creates a QueryAtomContainer with SymbolQueryAtom's and
-     *  OrderQueryBond's. Each PseudoAtom will be replaced by a 
+     *  OrderQueryBond's. Each PseudoAtom will be replaced by a
      *  AnyAtom
      *
      *@param  container  The AtomContainer that stands as model
@@ -239,7 +239,7 @@ public class QueryAtomContainerCreator {
         	else {
         		queryContainer.addAtom(new SymbolQueryAtom(container.getAtom(i)));
 			}
-            
+
         }
         Iterator<IBond> bonds = container.bonds().iterator();
         while (bonds.hasNext()) {

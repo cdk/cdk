@@ -132,7 +132,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of getImplicitHydrogenCount method, of class ExtAtomContainerManipulator.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
      */
     @Test
     public void testGetImplicitHydrogenCount() throws InvalidSmilesException {
@@ -209,7 +209,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of convertExplicitToImplicitHydrogens method, of class ExtAtomContainerManipulator.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
      */
     @Test
     public void testConvertExplicitToImplicitHydrogens() throws InvalidSmilesException {
@@ -224,7 +224,7 @@ public class ExtAtomContainerManipulatorTest {
 
     /**
      * Test of percieveAtomTypesAndConfigureAtoms method, of class ExtAtomContainerManipulator.
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void testPercieveAtomTypesAndConfigureAtoms() throws Exception {

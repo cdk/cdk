@@ -54,11 +54,11 @@ import org.openscience.cdk.libio.cml.Convertor;
  */
 @TestClass("org.openscience.cdk.io.RssWriterTest")
 public class RssWriter extends DefaultChemObjectWriter {
-	
+
 	private final static String NS_RSS10      = "http://purl.org/rss/1.0/";
 	private final static String NS_RDF        = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	private final static String NS_DCELEMENTS = "http://purl.org/dc/elements/1.1/";
-	
+
     private BufferedWriter writer;
     private Map linkmap=new HashMap();
     private Map datemap=new HashMap();
@@ -82,13 +82,13 @@ public class RssWriter extends DefaultChemObjectWriter {
     public void close() throws IOException {
         writer.close();
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLRSSFormat.getInstance();
     }
-    
-    
+
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -100,14 +100,14 @@ public class RssWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
 		return true;
 	}
 
     /**
-     * Writes a IChemObject to the MDL molfile formated output. 
+     * Writes a IChemObject to the MDL molfile formated output.
      *
      * @param object Best choice is a set of molecules
      */
@@ -156,7 +156,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    	}
 		    }else{
 		    	list.add(object);
-		    }        	
+		    }
 		    for(int i=0;i<list.size();i++){
 		      IChemObject chemObject =(IChemObject)list.get(i);
 		      Element itemElement = new Element("item",NS_RSS10);
@@ -165,7 +165,7 @@ public class RssWriter extends DefaultChemObjectWriter {
 		    	  itemElement.addAttribute(new Attribute("rdf:about",NS_RDF,easylink));
 		      Element link2Element = new Element("link",NS_RSS10);
 		      link2Element.appendChild(new Text(easylink));
-		      itemElement.appendChild(link2Element);          
+		      itemElement.appendChild(link2Element);
 		      String title=(String)chemObject.getProperties().get(CDKConstants.TITLE);
 		      if(titlemap.get(chemObject)!=null){
 			      Element title2Element = new Element("title",NS_RSS10);

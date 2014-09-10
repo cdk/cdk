@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -114,7 +114,7 @@ final class NonplanarBonds {
      * container}.
      *
      * @param container structure
-     * @param g         graph adjacency list representation        
+     * @param g         graph adjacency list representation
      * @throws IllegalArgumentException an atom had no 2D coordinates or labels
      *                                  could not be assigned to a tetrahedral
      *                                  centre
@@ -159,7 +159,7 @@ final class NonplanarBonds {
             }
         }
 
-        // prioritise to highly-congested tetrahedral centres first  
+        // prioritise to highly-congested tetrahedral centres first
         Arrays.sort(foci, 0, n, new Comparator<Integer>() {
             @Override public int compare(Integer i, Integer j) {
                 return -Ints.compare(nAdjacentCentres(i),
@@ -170,7 +170,7 @@ final class NonplanarBonds {
         // label a bond on each element
         for (int i = 0; i < n; i++)
             label(elements[foci[i]]);
-        
+
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof ExtendedTetrahedral)
                 label((ExtendedTetrahedral) se);
@@ -178,29 +178,29 @@ final class NonplanarBonds {
     }
 
     /**
-     * Assign non-planar labels (wedge/hatch) to the bonds of extended 
+     * Assign non-planar labels (wedge/hatch) to the bonds of extended
      * tetrahedral elements to correctly represent its stereochemistry.
      *
      * @param element a extended tetrahedral element
      */
     private void label(final ExtendedTetrahedral element) {
-        
+
         final IAtom   focus = element.focus();
         final IAtom[] atoms = element.peripherals();
         final IBond[] bonds = new IBond[4];
 
         int p = parity(element.winding());
-        
+
         List<IBond> focusBonds = container.getConnectedBondsList(focus);
-        
+
         if (focusBonds.size() != 2) {
             LoggingToolFactory.createLoggingTool(getClass())
                               .warn("Non-cumulated carbon presented as the focus of extended tetrahedral stereo configuration");
             return;
         }
-        
+
         IAtom[] terminals = element.findTerminalAtoms(container);
-        
+
         IAtom left  = terminals[0];
         IAtom right = terminals[1];
 
@@ -210,7 +210,7 @@ final class NonplanarBonds {
         bonds[1] = container.getBond(left, atoms[1]);
         bonds[2] = container.getBond(right, atoms[2]);
         bonds[3] = container.getBond(right, atoms[3]);
-        
+
         // find the clockwise ordering (in the plane of the page) by sorting by
         // polar corodinates
         int[] rank = new int[4];
@@ -227,7 +227,7 @@ final class NonplanarBonds {
         }
 
         int[] priority = new int[]{5, 5, 5, 5};
-        
+
         // set the label for the highest priority and available bonds on one side
         // of the cumulated system, setting both sides doesn't make sense
         int i = 0;
@@ -236,11 +236,11 @@ final class NonplanarBonds {
             if (bond.getStereo() == NONE && bond.getOrder() == SINGLE)
                 priority[v] = i++;
         }
-        
+
         // we now check which side was more favourable and assign two labels
         // to that side only
-        if (priority[0] + priority[1] < priority[2] + priority[3]) {            
-            if (priority[0] < 5) { 
+        if (priority[0] + priority[1] < priority[2] + priority[3]) {
+            if (priority[0] < 5) {
                 bonds[0].setAtoms(new IAtom[]{left, atoms[0]});
                 bonds[0].setStereo(labels[0]);
             }
@@ -340,7 +340,7 @@ final class NonplanarBonds {
             }
         }
 
-        // it should be possible to always assign labels somewhere -> unchecked exception 
+        // it should be possible to always assign labels somewhere -> unchecked exception
         throw new IllegalArgumentException("could not assign non-planar (up/down) labels");
     }
 
@@ -423,8 +423,8 @@ final class NonplanarBonds {
      * @return whether atom i has priority
      */
     boolean hasPriority(int focus, int i, int j) {
-        
-        // prioritise bonds to non-centres 
+
+        // prioritise bonds to non-centres
         if (elements[i] == null && elements[j] != null)
             return true;
         if (elements[i] != null && elements[j] == null)

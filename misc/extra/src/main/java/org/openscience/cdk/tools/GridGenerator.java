@@ -1,17 +1,17 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,7 +27,7 @@ import javax.vecmath.Point3d;
 
 /**
  * Generates a grid of points in 3D space within given boundaries.
- * 
+ *
  * @author cho
  * @cdk.githash
  * @cdk.created 2005-09-30
@@ -122,7 +122,7 @@ public class GridGenerator {
 
 	/**
 	 * Main method creates a grid between given boundaries (dimensions).
-	 * The grid my be extended over the given boundaries with the 
+	 * The grid my be extended over the given boundaries with the
 	 * variable extendGrid.
 	 */
 	public void generateGrid() {
@@ -338,7 +338,7 @@ public class GridGenerator {
 				+ "\nminz:" + minz + " maxz:" + maxz;
 	}
 
-	
+
 	/**
 	 * @return Returns the dim.
 	 */
@@ -346,7 +346,7 @@ public class GridGenerator {
 		return dim;
 	}
 
-	
+
 	/**
 	 * @param dim The dim to set.
 	 */
@@ -354,7 +354,7 @@ public class GridGenerator {
 		this.dim = dim;
 	}
 
-	
+
 	/**
 	 * @return Returns the extendGrid.
 	 */
@@ -362,7 +362,7 @@ public class GridGenerator {
 		return extendGrid;
 	}
 
-	
+
 	/**
 	 * @param extendGrid The extendGrid to set.
 	 */
@@ -370,7 +370,7 @@ public class GridGenerator {
 		this.extendGrid = extendGrid;
 	}
 
-	
+
 	/**
 	 * @return Returns the grid.
 	 */
@@ -378,7 +378,7 @@ public class GridGenerator {
 		return grid;
 	}
 
-	
+
 	/**
 	 * @param grid The grid to set.
 	 */
@@ -386,7 +386,7 @@ public class GridGenerator {
 		this.grid = grid;
 	}
 
-	
+
 	/**
 	 * @return Returns the latticeConstant.
 	 */
@@ -394,7 +394,7 @@ public class GridGenerator {
 		return latticeConstant;
 	}
 
-	
+
 	/**
 	 * @param latticeConstant The latticeConstant to set.
 	 */
@@ -402,7 +402,7 @@ public class GridGenerator {
 		this.latticeConstant = latticeConstant;
 	}
 
-	
+
 	/**
 	 * @return Returns the gridArray.
 	 */
@@ -410,7 +410,7 @@ public class GridGenerator {
 		return gridArray;
 	}
 
-	
+
 	/**
 	 * @return Returns the maxx.
 	 */
@@ -418,7 +418,7 @@ public class GridGenerator {
 		return maxx;
 	}
 
-	
+
 	/**
 	 * @return Returns the maxy.
 	 */
@@ -426,7 +426,7 @@ public class GridGenerator {
 		return maxy;
 	}
 
-	
+
 	/**
 	 * @return Returns the maxz.
 	 */
@@ -434,7 +434,7 @@ public class GridGenerator {
 		return maxz;
 	}
 
-	
+
 	/**
 	 * @return Returns the minx.
 	 */
@@ -442,7 +442,7 @@ public class GridGenerator {
 		return minx;
 	}
 
-	
+
 	/**
 	 * @return Returns the miny.
 	 */
@@ -450,7 +450,7 @@ public class GridGenerator {
 		return miny;
 	}
 
-	
+
 	/**
 	 * @return Returns the minz.
 	 */

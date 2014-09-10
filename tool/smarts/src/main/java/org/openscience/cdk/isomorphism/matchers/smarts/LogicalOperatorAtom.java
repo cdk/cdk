@@ -27,7 +27,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  *
  * @cdk.module  smarts
  * @cdk.githash
- * @cdk.keyword SMARTS 
+ * @cdk.keyword SMARTS
  */
 public final class LogicalOperatorAtom extends SMARTSAtom {
 
@@ -49,29 +49,29 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     public LogicalOperatorAtom(IChemObjectBuilder builder){
         super(builder);
     }
-    
+
     @Deprecated
     public IQueryAtom getLeft() {
         return left;
     }
-    
+
     @Deprecated
     public String getOperator() {
         return operator;
     }
-    
+
     @Deprecated
     public IQueryAtom getRight() {
         return right;
     }
-    
+
     @Deprecated
     public void setLeft(IQueryAtom left) {
         this.left = left;
     }
 
     /**
-     * 
+     *
      * @deprecated use static utility methods to create logical atom matcher,
      * {@link #and}, {@link #or} or {@link #not}.
      */
@@ -79,12 +79,12 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
     public void setOperator(String name) {
         this.operator = name;
     }
-    
+
     @Deprecated
     public void setRight(IQueryAtom right) {
         this.right = right;
     }
-    
+
     /* (non-Javadoc)
      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
      */
@@ -159,7 +159,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
 
     /**
      * Negate the provided expression.
-     * 
+     *
      * @param expr expression to negate
      * @return a SMARTS atom which is the negation of the expression
      */
@@ -237,7 +237,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
 
         /** Expression to negate. */
         private SMARTSAtom expression;
-        
+
         /** Is the expression chiral - if so, always true! */
         private boolean    chiral;
 
@@ -250,7 +250,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
         private Negation(IChemObjectBuilder builder, IQueryAtom expression) {
             super(builder);
             this.expression = (SMARTSAtom) expression;
-            this.chiral     = expression.getClass().equals(ChiralityAtom.class); 
+            this.chiral     = expression.getClass().equals(ChiralityAtom.class);
         }
 
         /** @inheritDoc */

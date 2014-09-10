@@ -30,48 +30,48 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Refines vertex partitions until they are discrete, and therefore equivalent
  * to permutations. These permutations are automorphisms of the graph that was
- * used during the refinement to guide the splitting of partition blocks. 
- * 
+ * used during the refinement to guide the splitting of partition blocks.
+ *
  * @author maclean
  * @cdk.module group
  */
 @TestClass("org.openscience.cdk.group.AbstractDiscretePartitionRefinerTest")
 public abstract class AbstractDiscretePartitionRefiner {
-    
+
     /**
-     * The result of a comparison between the current partition 
+     * The result of a comparison between the current partition
      * and the best permutation found so far.
      *
      */
     public enum Result { WORSE, EQUAL, BETTER };
-    
+
     /**
-     * If true, then at least one partition has been refined 
+     * If true, then at least one partition has been refined
      * to a permutation (IE : to a discrete partition).
      */
     private boolean bestExist;
-    
+
     /**
-     * The best permutation is the one that gives the maximal 
+     * The best permutation is the one that gives the maximal
      * half-matrix string (so far) when applied to the graph.
      */
     private Permutation best;
-    
+
     /**
      * The first permutation seen when refining.
      */
     private Permutation first;
-    
+
     /**
      * An equitable refiner.
      */
     private IEquitablePartitionRefiner equitableRefiner;
-    
+
     /**
      * The automorphism group that is used to prune the search.
      */
     private PermutationGroup group;
-    
+
     /**
      * A refiner - it is necessary to call {@link #setup} before use.
      */
@@ -81,29 +81,29 @@ public abstract class AbstractDiscretePartitionRefiner {
         this.best = null;
         this.equitableRefiner = null;
     }
-    
+
     /**
      * Get the number of vertices in the graph to be refined.
-     *  
+     *
      * @return a count of the vertices in the underlying graph
      */
     public abstract int getVertexCount();
-    
+
     /**
-     * Get the connectivity between two vertices as an integer, to allow 
-     * for multigraphs : so a single edge is 1, a double edge 2, etc. If 
-     * there is no edge, then 0 should be returned. 
-     * 
+     * Get the connectivity between two vertices as an integer, to allow
+     * for multigraphs : so a single edge is 1, a double edge 2, etc. If
+     * there is no edge, then 0 should be returned.
+     *
      * @param vertexI a vertex of the graph
      * @param vertexJ a vertex of the graph
      * @return the multiplicity of the edge (0, 1, 2, 3, ...)
      */
     public abstract int getConnectivity(int vertexI, int vertexJ);
-    
+
     /**
      * Setup the group and refiner; it is important to call this method before
      * calling {@link #refine} otherwise the refinement process will fail.
-     * 
+     *
      * @param group a group (possibly empty) of automorphisms
      * @param refiner the equitable refiner
      */
@@ -114,37 +114,37 @@ public abstract class AbstractDiscretePartitionRefiner {
         this.group = group;
         this.equitableRefiner = refiner;
     }
-    
+
     /**
      * Check that the first refined partition is the identity.
-     * 
+     *
      * @return true if the first is the identity permutation
      */
     @TestMethod("firstIsIdentityTest")
     public boolean firstIsIdentity() {
         return this.first.isIdentity();
     }
-    
+
     /**
      * The automorphism partition is a partition of the elements of the group.
-     * 
-     * @return a partition of the elements of group 
+     *
+     * @return a partition of the elements of group
      */
     @TestMethod("getAutomorphismPartitionTest")
     public Partition getAutomorphismPartition() {
         final int n = group.getSize();
         final DisjointSetForest forest = new DisjointSetForest(n);
         group.apply(new PermutationGroup.Backtracker() {
-            
+
             boolean[] inOrbit = new boolean[n];
             private int inOrbitCount = 0;
             private boolean isFinished;
-            
+
             @Override
             public boolean isFinished() {
                 return isFinished;
             }
-            
+
             @Override
             public void applyTo(Permutation p) {
                 for (int elementX = 0; elementX < n; elementX++) {
@@ -167,21 +167,21 @@ public abstract class AbstractDiscretePartitionRefiner {
                 }
             }
         });
-        
+
         // convert to a partition
         Partition partition = new Partition();
         for (int[] set : forest.getSets()) {
             partition.addCell(set);
         }
-        
+
         // necessary for comparison by string
-        partition.order();  
+        partition.order();
         return partition;
     }
-    
+
     /**
      * Get the upper-half of the adjacency matrix under the permutation.
-     * 
+     *
      * @param permutation a permutation of the adjacency matrix
      * @return a string containing the permuted values of half the matrix
      */
@@ -198,116 +198,116 @@ public abstract class AbstractDiscretePartitionRefiner {
         }
         return builder.toString();
     }
-    
+
     /**
      * Get the half-matrix string under the best permutation.
-     * 
+     *
      * @return the upper-half adjacency matrix string permuted by the best
      */
     @TestMethod("getHalfMatrixStringTest")
     public String getBestHalfMatrixString() {
        return getHalfMatrixString(best);
     }
-    
+
     /**
      * Get the half-matrix string under the first permutation.
-     * 
+     *
      * @return the upper-half adjacency matrix string permuted by the first
      */
     @TestMethod("getFirstMatrixStringTest")
     public String getFirstHalfMatrixString() {
         return getHalfMatrixString(first);
      }
-    
+
     /**
      * Get the initial (unpermuted) half-matrix string.
-     * 
-     * @return the upper-half adjacency matrix string 
+     *
+     * @return the upper-half adjacency matrix string
      */
     @TestMethod("getHalfMatrixStringTest")
     public String getHalfMatrixString() {
         return getHalfMatrixString(new Permutation(getVertexCount()));
     }
-    
+
     /**
      * Get the automorphism group used to prune the search.
-     * 
+     *
      * @return the automorphism group
      */
     @TestMethod("getGroupTest")
     public PermutationGroup getAutomorphismGroup() {
         return this.group;
     }
-    
+
     /**
      * Get the best permutation found.
-     * 
+     *
      * @return the permutation that gives the maximal half-matrix string
      */
     @TestMethod("getBestTest")
     public Permutation getBest() {
         return this.best;
     }
-    
+
     /**
      * Get the first permutation reached by the search.
-     * 
+     *
      * @return the first permutation reached
      */
     @TestMethod("getFirstTest")
     public Permutation getFirst() {
         return this.first;
     }
-    
+
     /**
-     * Check for a canonical graph, without generating the whole 
+     * Check for a canonical graph, without generating the whole
      * automorphism group.
-     * 
+     *
      * @return true if the graph is canonical
      */
     @TestMethod("isCanonical_TrueTest,isCanonical_FalseTest")
     public boolean isCanonical() {
         return best.isIdentity();
     }
-    
-    
+
+
     /**
      * Refine the partition. The main entry point for subclasses.
-     * 
+     *
      * @param partition the initial partition of the vertices
      */
     @TestMethod("refineTest")
     public void refine(Partition partition) {
         refine(this.group, partition);
     }
-    
+
     /**
      * Does the work of the class, that refines a coarse partition into a finer
      * one using the supplied automorphism group to prune the search.
-     * 
+     *
      * @param group the automorphism group of the graph
      * @param coarser the partition to refine
      */
     private void refine(PermutationGroup group, Partition coarser) {
         int vertexCount = getVertexCount();
-        
+
         Partition finer = equitableRefiner.refine(coarser);
-        
+
         int firstNonDiscreteCell = finer.getIndexOfFirstNonDiscreteCell();
         if (firstNonDiscreteCell == -1) {
             firstNonDiscreteCell = vertexCount;
         }
-        
+
         Permutation pi1 = new Permutation(firstNonDiscreteCell);
-        
+
         Result result = Result.BETTER;
         if (bestExist) {
             pi1 = finer.setAsPermutation(firstNonDiscreteCell);
             result = compareRowwise(pi1);
         }
-        
+
         // partition is discrete
-        if (finer.size() == vertexCount) {    
+        if (finer.size() == vertexCount) {
             if (!bestExist) {
                 best = finer.toPermutation();
                 first = finer.toPermutation();
@@ -324,18 +324,18 @@ public abstract class AbstractDiscretePartitionRefiner {
                 Set<Integer> blockCopy = finer.copyBlock(firstNonDiscreteCell);
                 for (int vertexInBlock = 0; vertexInBlock < vertexCount; vertexInBlock++) {
                     if (blockCopy.contains(vertexInBlock)) {
-                        Partition nextPartition = 
+                        Partition nextPartition =
                             finer.splitBefore(firstNonDiscreteCell, vertexInBlock);
-                        
+
                         this.refine(group, nextPartition);
-                        
+
                         int[] permF = new int[vertexCount];
                         int[] invF = new int[vertexCount];
                         for (int i = 0; i < vertexCount; i++) {
                             permF[i] = i;
                             invF[i] = i;
                         }
-                        
+
                         for (int j = 0; j <= firstNonDiscreteCell; j++) {
                             int x = nextPartition.getFirstInCell(j);
                             int i = invF[x];
@@ -358,11 +358,11 @@ public abstract class AbstractDiscretePartitionRefiner {
             }
         }
     }
-    
+
     /**
-     * Check a permutation to see if it is better, equal, or worse than the 
+     * Check a permutation to see if it is better, equal, or worse than the
      * current best.
-     * 
+     *
      * @param perm the permutation to check
      * @return BETTER, EQUAL, or WORSE
      */
@@ -378,5 +378,5 @@ public abstract class AbstractDiscretePartitionRefiner {
         }
         return Result.EQUAL;
     }
-    
+
 }

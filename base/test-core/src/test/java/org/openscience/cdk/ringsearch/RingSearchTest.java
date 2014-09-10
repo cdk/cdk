@@ -113,7 +113,7 @@ public class RingSearchTest {
 
         verify(cyclicSearch, times(1)).cyclic(1);
     }
-    
+
     @Test
     public void testCyclic_IntInt() throws Exception {
 
@@ -142,7 +142,7 @@ public class RingSearchTest {
         verify(container, times(1)).getAtomNumber(atom);
         verify(cyclicSearch, times(1)).cyclic(42);
     }
-    
+
     @Test
     public void testCyclic_Bond() throws Exception {
 
@@ -344,14 +344,14 @@ public class RingSearchTest {
         verify(builder, times(2)).newInstance(IAtomContainer.class, 0, 0, 0, 0);
     }
 
-    
+
     @Test public void connectingEdge1() {
         IAtomContainer mol  = diSpiroPentane();
         RingSearch     rs   = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
         assertThat(mol.getBondCount(), is(frag.getBondCount() + 1));
     }
-    
+
     @Test public void connectingEdge2() {
         IAtomContainer mol  = triSpiroPentane();
         RingSearch     rs   = new RingSearch(mol);
@@ -426,7 +426,7 @@ public class RingSearchTest {
         mol.addBond(b13);
         return mol;
     }
-    
+
     /**
      * Hypothetial molecule - C1C[C]1123CC1.C1C[C]211(CC1)C3
      *
@@ -501,5 +501,5 @@ public class RingSearchTest {
         mol.addBond(b15);
         return mol;
     }
-    
+
 }

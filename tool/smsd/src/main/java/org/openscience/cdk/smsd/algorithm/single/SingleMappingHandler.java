@@ -61,7 +61,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
     private boolean removeHydrogen = false;
 
     /**
-     * 
+     *
      * @param removeH true
      */
     @TestMethod("setMCSAlgorithm")
@@ -101,7 +101,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
 
     /** {@inheritDoc}
      *
-     * @param bondTypeMatch 
+     * @param bondTypeMatch
      */
     @Override
     @TestMethod("testSearchMCS")

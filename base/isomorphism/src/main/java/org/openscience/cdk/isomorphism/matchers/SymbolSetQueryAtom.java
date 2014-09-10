@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class SymbolSetQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = 7539577277779603551L;
-    
+
     private Set<String> symbols = new HashSet<String>();
 
     /**

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -723,7 +723,7 @@ public final class Cycles {
         ALL {
             /** {@inheritDoc} */
             @Override int[][] apply(int[][] graph, int length) throws Intractable {
-                final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99  
+                final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
                 AllCycles ac = new AllCycles(graph, Math.min(length, graph.length), threshold);
                 if (!ac.completed())
                     throw new Intractable("A large number of cycles were being generated and the" +
@@ -761,7 +761,7 @@ public final class Cycles {
                 InitialCycles ic = InitialCycles.ofBiconnectedComponent(graph, length);
                 MinimumCycleBasis mcb = new MinimumCycleBasis(ic, true);
 
-                // As per the old aromaticity detector if the MCB/SSSR is made 
+                // As per the old aromaticity detector if the MCB/SSSR is made
                 // of 2 or 3 rings we check all rings for aromaticity - otherwise
                 // we just check the MCB/SSSR
                 if (mcb.size() > 3) {
@@ -775,7 +775,7 @@ public final class Cycles {
         ALL_OR_VERTEX_SHORT {
             /** {@inheritDoc} */
             @Override int[][] apply(int[][] graph, int length) throws Intractable {
-                final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99  
+                final int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
                 AllCycles ac = new AllCycles(graph, Math.min(length, graph.length), threshold);
 
                 return ac.completed() ? ac.paths()
@@ -808,7 +808,7 @@ public final class Cycles {
             List<int[]> walks = new ArrayList<int[]>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
-            // the vertices in the subset 'isolated' 
+            // the vertices in the subset 'isolated'
             for (int[] isolated : ringSearch.isolated()) {
                 if (isolated.length <= length)
                     walks.add(GraphUtil.cycle(graph, isolated));
@@ -818,8 +818,8 @@ public final class Cycles {
             // separately as a subgraph.
             for (int[] fused : ringSearch.fused()) {
 
-                // make a subgraph and 'apply' the cycle computation - the walk 
-                // (path) is then lifted to the original graph            
+                // make a subgraph and 'apply' the cycle computation - the walk
+                // (path) is then lifted to the original graph
                 for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
@@ -838,7 +838,7 @@ public final class Cycles {
             List<int[]> walks = new ArrayList<int[]>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
-            // the vertices in the subset 'isolated' 
+            // the vertices in the subset 'isolated'
             for (int[] isolated : ringSearch.isolated()) {
                 walks.add(GraphUtil.cycle(graph, isolated));
             }
@@ -847,8 +847,8 @@ public final class Cycles {
             // separately as a subgraph.
             for (int[] fused : ringSearch.fused()) {
 
-                // make a subgraph and 'apply' the cycle computation - the walk 
-                // (path) is then lifted to the original graph            
+                // make a subgraph and 'apply' the cycle computation - the walk
+                // (path) is then lifted to the original graph
                 for (int[] cycle : apply(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }
@@ -986,7 +986,7 @@ public final class Cycles {
             List<int[]> walks = new ArrayList<int[]>(6);
 
             // all isolated cycles are relevant - all we need to do is walk around
-            // the vertices in the subset 'isolated' 
+            // the vertices in the subset 'isolated'
             for (int[] isolated : ringSearch.isolated()) {
                 if (isolated.length <= length)
                     walks.add(GraphUtil.cycle(graph, isolated));
@@ -996,8 +996,8 @@ public final class Cycles {
             // separately as a subgraph.
             for (int[] fused : ringSearch.fused()) {
 
-                // make a subgraph and 'apply' the cycle computation - the walk 
-                // (path) is then lifted to the original graph            
+                // make a subgraph and 'apply' the cycle computation - the walk
+                // (path) is then lifted to the original graph
                 for (int[] cycle : findInFused(GraphUtil.subgraph(graph, fused), length)) {
                     walks.add(lift(cycle, fused));
                 }

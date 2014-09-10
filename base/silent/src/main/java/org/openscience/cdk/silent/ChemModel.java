@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package org.openscience.cdk.silent;
@@ -30,9 +30,9 @@ import org.openscience.cdk.interfaces.IRingSet;
 
 import java.io.Serializable;
 
-/** 
- * An object containing multiple MoleculeSet and 
- * the other lower level concepts like rings, sequences, 
+/**
+ * An object containing multiple MoleculeSet and
+ * the other lower level concepts like rings, sequences,
  * fragments, etc.
  *
  * @cdk.module  silent
@@ -65,7 +65,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 	 *  A RingSet.
 	 */
 	protected IRingSet ringSet = null;
-	
+
     /**
 	 *  A Crystal.
 	 */
@@ -101,7 +101,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
 		this.setOfMolecules = setOfMolecules;
 	}
 
-	
+
 
 	/**
 	 * Returns the RingSet of this ChemModel.
@@ -170,7 +170,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
     public void setReactionSet(IReactionSet sor) {
         this.setOfReactions = sor;
     }
-    
+
     /**
      * Returns a String representation of the contents of this
      * IChemObject.
@@ -227,7 +227,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         }
 		return clone;
 	}
-	
+
 	/**
 	 *  Called by objects to which this object has
 	 *  registered as a listener.
@@ -241,7 +241,7 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      */
     @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
     @Override
-    public boolean isEmpty() 
+    public boolean isEmpty()
 	{
     	if (setOfMolecules != null && !setOfMolecules.isEmpty())
     		return false;

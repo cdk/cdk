@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -32,25 +32,25 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * RandomGenerator is a generator of constitutional isomers. It needs to be 
- * provided with a starting constitution and it makes random moves in 
- * constitutional space from there. 
+ * RandomGenerator is a generator of constitutional isomers. It needs to be
+ * provided with a starting constitution and it makes random moves in
+ * constitutional space from there.
  * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
  *
  * <p>Unlike the VicinitySampler, this methods does not sample
  * the full Faulon vicinity.
- * 
+ *
  * @see         org.openscience.cdk.structgen.VicinitySampler
- * 
+ *
  * @cdk.githash
  * @cdk.keyword structure generator
  * @cdk.module structgen
  */
 public class RandomGenerator {
-	
+
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RandomGenerator.class);
-	
+
 	private IAtomContainer proposedStructure = null;
 	private IAtomContainer molecule = null;
 	private IAtomContainer trial = null;
@@ -67,11 +67,11 @@ public class RandomGenerator {
 
 
 	/**
-	 * Proposes a structure which can be accepted or rejected by an external 
-	 * entity. If rejected, the structure is not used as a starting point 
+	 * Proposes a structure which can be accepted or rejected by an external
+	 * entity. If rejected, the structure is not used as a starting point
 	 * for the next random move in structure space.
 	 *
-	 * @return A proposed molecule    
+	 * @return A proposed molecule
 	 */
 	public IAtomContainer proposeStructure()
 	{
@@ -100,7 +100,7 @@ public class RandomGenerator {
 		}
 		while(trial == null || !ConnectivityChecker.isConnected(trial));
 		proposedStructure = trial;
-		
+
 		return proposedStructure;
 	}
 
@@ -114,11 +114,11 @@ public class RandomGenerator {
 			molecule = proposedStructure;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Randomly chooses four atoms and alters the bonding
-	 * pattern between them according to rules described 
+	 * pattern between them according to rules described
 	 * in "Faulon, JCICS 1996, 36, 731".
 	 */
 	public void mutate(IAtomContainer ac)
@@ -156,23 +156,23 @@ public class RandomGenerator {
 				ax2 = ac.getAtom(x2);
 				ay2 = ac.getAtom(y2);
 				/* Get four bonds for these four atoms */
-				
+
 				b1 = ac.getBond(ax1, ay1);
 				if (b1 != null)
 				{
 					a11 = BondManipulator.destroyBondOrder(b1.getOrder());
-					nonZeroBondsCounter ++;				
+					nonZeroBondsCounter ++;
 				}
 				else
 				{
 					a11 = 0;
 				}
-				
+
 				b2 = ac.getBond(ax1, ay2);
 				if (b2 != null)
 				{
 					a12 = BondManipulator.destroyBondOrder(b2.getOrder());
-					nonZeroBondsCounter ++;				
+					nonZeroBondsCounter ++;
 				}
 				else
 				{
@@ -183,14 +183,14 @@ public class RandomGenerator {
 				if (b3 != null)
 				{
 					a21 = BondManipulator.destroyBondOrder(b3.getOrder());
-					nonZeroBondsCounter ++;				
+					nonZeroBondsCounter ++;
 				}
 				else
 				{
 					a21 = 0;
 				}
-				
-				b4 = ac.getBond(ax2, ay2);									
+
+				b4 = ac.getBond(ax2, ay2);
 				if (b4 != null)
 				{
 					a22 = BondManipulator.destroyBondOrder(b4.getOrder());
@@ -202,8 +202,8 @@ public class RandomGenerator {
 				}
 				logger.debug("RandomGenerator->mutate()->The old bond orders: a11, a12, a21, a22: " +  + a11 + ", " + a12 + ", " + a21 + ", " + a22);
 			}while(nonZeroBondsCounter < 2);
-			
-					
+
+
 			/* Compute the range for b11 (see Faulons formulae for details) */
 			double[] cmax = {0, a11 - a22, a11 + a12 - 3, a11 + a21 - 3};
 			double[] cmin = {3, a11 + a12, a11 + a21, a11 - a22 + 3};
@@ -235,8 +235,8 @@ public class RandomGenerator {
 		double b12 = a11 + a12 - b11;
 		double b21 = a11 + a21 - b11;
 		double b22 = a22 - a11 + b11;
-		
-		
+
+
 		if (b11 > 0)
 		{
 			if (b1 == null)
@@ -255,8 +255,8 @@ public class RandomGenerator {
 		{
 			ac.removeBond(b1);
 		}
-		
-		if (b12 > 0) 
+
+		if (b12 > 0)
 		{
 			if (b2 == null)
 			{
@@ -274,8 +274,8 @@ public class RandomGenerator {
 		{
 			ac.removeBond(b2);
 		}
-		
-		if (b21 > 0) 
+
+		if (b21 > 0)
 		{
 			if (b3 == null)
 			{
@@ -294,7 +294,7 @@ public class RandomGenerator {
 			ac.removeBond(b3);
 		}
 
-		if (b22 > 0) 
+		if (b22 > 0)
 		{
 			if (b4 == null)
 			{
@@ -312,12 +312,12 @@ public class RandomGenerator {
 		{
 			ac.removeBond(b4);
 		}
-		
+
 		logger.debug("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
 		logger.debug("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
 	}
 
-	
+
 	/**
 	 * Assigns a starting structure to this generator.
 	 *
@@ -325,7 +325,7 @@ public class RandomGenerator {
 	 */
 	public void setMolecule(IAtomContainer molecule)
 	{
-		this.molecule = molecule;	
+		this.molecule = molecule;
 	}
 
 
@@ -333,11 +333,11 @@ public class RandomGenerator {
 	 * Returns the molecule which reflects the current state of this
 	 * stochastic structure generator.
 	 *
-	 * @return The molecule    
+	 * @return The molecule
 	 */
 	public IAtomContainer getMolecule()
 	{
 		return this.molecule;
 	}
-	
+
 }

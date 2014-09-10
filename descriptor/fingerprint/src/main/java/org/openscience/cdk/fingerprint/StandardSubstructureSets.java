@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * Default sets of atom containers aimed for use with the substructure.
- * 
+ *
  * @author egonw
- * 
+ *
  * @cdk.module fingerprint
  * @cdk.githash
  */
@@ -21,10 +21,10 @@ import java.util.List;
 public class StandardSubstructureSets {
 
 	private static String[] smarts = null;
-	
+
 	/**
-	 * The functional groups. 
-	 * 
+	 * The functional groups.
+	 *
 	 * @return A set of the functional groups.
      * @throws Exception if there is an error parsing SMILES for the functional groups
 	 */
@@ -50,5 +50,5 @@ public class StandardSubstructureSets {
         return smarts;
 
     }
-	
+
 }

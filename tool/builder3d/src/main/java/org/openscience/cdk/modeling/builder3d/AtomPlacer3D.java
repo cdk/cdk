@@ -66,12 +66,12 @@ public class AtomPlacer3D {
 	private final static double DEFAULT_SP3_ANGLE = 109.471;
 	private final static double DEFAULT_SP2_ANGLE = 120.000;
 	private final static double DEFAULT_SP_ANGLE = 180.000;
-	
+
 	AtomPlacer3D(){}
-	
+
 	/**
 	 *  Initialize the atomPlacer class.
-	 * 
+	 *
 	 * @param  parameterSet  Force Field parameter as Hashtable
 	 */
 	public void initilize(Map parameterSet) {
@@ -81,7 +81,7 @@ public class AtomPlacer3D {
 	/**
 	 *  Count and find first heavy atom(s) (non Hydrogens) in a chain.
 	 *
-	 * @param  molecule the reference molecule for searching the chain 
+	 * @param  molecule the reference molecule for searching the chain
 	 * @param  chain  chain to be searched
 	 * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
 	 */
@@ -114,7 +114,7 @@ public class AtomPlacer3D {
 		return ac;
 	}
 
-	
+
 	/**
 	 *  Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
 	 *
@@ -147,10 +147,10 @@ public class AtomPlacer3D {
                     nextAtomNr = molecule.getAtomNumber(chain.getAtom(i));
                     id2 = molecule.getAtom(firstAtoms[counter - 1]).getAtomTypeName();
                     id1 = molecule.getAtom(nextAtomNr).getAtomTypeName();
-                    
+
                     if (molecule.getBond(molecule.getAtom(firstAtoms[counter - 1]), molecule.getAtom(nextAtomNr)) == null)
                         throw new CDKException("atoms do not form a chain, please use ModelBuilder3D");
-                    
+
                     distances[counter] = getBondLengthValue(id1, id2);
                     //logger.debug(" Distance:" + distances[counter]);
                     firstAtoms[counter] = nextAtomNr;
@@ -201,7 +201,7 @@ public class AtomPlacer3D {
 	 * The first Atom end up in the origin, the second on on the x axis, and the third
 	 * one in the XY plane. The rest is added by applying the Zmatrix distances, angles
 	 * and dihedrals. Assign coordinates directly to the atoms.
-	 * 
+	 *
 	 * @param  molecule  the molecule to be placed in 3D
 	 * @param  flagBranched  marks branched chain
 	 * author: egonw,cho
@@ -285,8 +285,8 @@ public class AtomPlacer3D {
 		}
 		return -1;
 	}
-	
-	
+
+
 	/**
 	 *  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
      *  using existing 2D coordinates.
@@ -558,12 +558,12 @@ public class AtomPlacer3D {
         }
 		return connectedAtoms;
 	}
-	
+
 	/**
 	 *  Gets numberOfUnplacedHeavyAtoms (no Flag ISPLACED, no Hydrogens)
 	 *
 	 * @param  ac AtomContainer
-	 * @return int #UnplacedAtoms 
+	 * @return int #UnplacedAtoms
 	 */
 	public int numberOfUnplacedHeavyAtoms(IAtomContainer ac) {
 		int nUnplacedHeavyAtoms=0;
@@ -574,7 +574,7 @@ public class AtomPlacer3D {
 		}
 		return nUnplacedHeavyAtoms;
 	}
-	
+
 	/**
 	 *  Gets the allPlacedAtoms attribute of the AtomPlacer3D object.
 	 *
@@ -604,7 +604,7 @@ public class AtomPlacer3D {
 		}
 		return true;
 	}
-    
+
     /**
 	 *  Determine if the atom is non-hydrogen and has not been placed.
 	 *
@@ -614,7 +614,7 @@ public class AtomPlacer3D {
     boolean isUnplacedHeavyAtom(IAtom atom) {
         return (!atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom));
     }
-    
+
     /**
 	 *  Determine if the atom is non-hydrogen and has been placed.
 	 *
@@ -624,7 +624,7 @@ public class AtomPlacer3D {
     boolean isPlacedHeavyAtom(IAtom atom) {
         return atom.getFlag(CDKConstants.ISPLACED) && isHeavyAtom(atom);
     }
-    
+
     /**
 	 *  Determine if the atom is non-hydrogen and is aliphatic.
 	 *
@@ -634,7 +634,7 @@ public class AtomPlacer3D {
     boolean isAliphaticHeavyAtom(IAtom atom) {
         return atom.getFlag(CDKConstants.ISALIPHATIC) && isHeavyAtom(atom);
     }
-    
+
     /**
 	 * Determine if the atom is non-hydrogen and is in a ring.
      * Ring membership is determined from a property flag only, rather than a ring
@@ -646,7 +646,7 @@ public class AtomPlacer3D {
     boolean isRingHeavyAtom(IAtom atom) {
         return atom.getFlag(CDKConstants.ISINRING) && isHeavyAtom(atom);
     }
-    
+
     /**
 	 * Determine if the atom is heavy (non-hydrogen).
      *

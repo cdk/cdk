@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -291,7 +291,7 @@ final class ConvexHull {
 
             if (deltaY1 >= 0 && deltaY2 < 0) return -1;
             else if (deltaY2 >= 0 && deltaY1 < 0) return +1;
-            else if (deltaY1 == 0 && deltaY2 == 0) { // corner case        
+            else if (deltaY1 == 0 && deltaY2 == 0) { // corner case
                 if (deltaX1 >= 0 && deltaX2 < 0) return -1;
                 else if (deltaX2 >= 0 && deltaX1 < 0) return +1;
                 else return 0;

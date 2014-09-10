@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2009,2011  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,15 +10,15 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -56,14 +56,14 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
     public void testFingerprint() throws Exception {
 		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
 		IFingerprinter printer = new GraphOnlyFingerprinter();
-		
+
 		IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
 		System.out.println("----");
 		IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("CCCN"));
-		
+
 		Assert.assertEquals(bs1, bs2);
 	}
-	
+
     /* ethanolamine */
 	private static final String ethanolamine = "\n\n\n  4  3  0     0  0  0  0  0  0  1 V2000\n    2.5187   -0.3500    0.0000 N   0  0  0  0  0  0  0  0  0  0\n    0.0938   -0.3500    0.0000 C   0  0  0  0  0  0  0  0  0  0\n    1.3062    0.3500    0.0000 C   0  0  0  0  0  0  0  0  0  0\n   -1.1187    0.3500    0.0000 O   0  0  0  0  0  0  0  0  0  0\n  2  3  1  0  0  0  0\n  2  4  1  0  0  0  0\n  1  3  1  0  0  0  0\nM  END\n";
 
@@ -80,7 +80,7 @@ public class GraphOnlyFingerprinterTest extends AbstractFixedLengthFingerprinter
 	 *
 	 * @throws  CloneNotSupportedException
 	 * @throws  Exception
-	 * 
+	 *
 	 * @cdk.bug 1626894
 	 *
 	 */

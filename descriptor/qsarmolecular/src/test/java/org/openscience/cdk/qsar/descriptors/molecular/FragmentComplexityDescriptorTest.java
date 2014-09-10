@@ -19,13 +19,13 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.module  test-qsarmolecular
  */
 public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
-	
+
 	public  FragmentComplexityDescriptorTest() {}
 
     @Before public void setup() throws Exception {
         setDescriptor(FragmentComplexityDescriptor.class);
     }
-	   
+
 	@Test public void test1FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
 		String filename = "data/mdl/murckoTest1.mol";
@@ -44,7 +44,7 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         	}
     	 Assert.assertEquals(659.00,Complexity , 0.01);
 	}
-	
+
 	@Test
     public void test2FragmentComplexityDescriptor() throws Exception {
 		IMolecularDescriptor descriptor = new FragmentComplexityDescriptor();
@@ -62,8 +62,8 @@ public class FragmentComplexityDescriptorTest extends MolecularDescriptorTest {
         }
     	Assert.assertEquals(544.01,Complexity , 0.01);
 	}
-	
-	
+
+
 }
 
- 
+

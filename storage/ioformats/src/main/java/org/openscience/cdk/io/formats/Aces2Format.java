@@ -31,9 +31,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class Aces2Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public Aces2Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Aces2Format();
@@ -80,7 +80,7 @@ public class Aces2Format extends SimpleChemFormatMatcher implements IChemFormatM
         }
         return false;
     }
-    
+
     /** {@inheritDoc} */ @Override
 	@TestMethod("testIsXMLBased")
     public boolean isXMLBased() {

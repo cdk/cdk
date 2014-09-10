@@ -140,7 +140,7 @@ public class GraphUtil {
                 graph[v] = copyOf(graph[v], degree[v] * 2);
             if (degree[w] == graph[w].length)
                 graph[w] = copyOf(graph[w], degree[w] * 2);
-            
+
             bondMap.put(v, w, bond);
         }
 
@@ -306,7 +306,7 @@ public class GraphUtil {
         /**
          * Access the bond store at the end points v and w. If no bond is
          * store, null is returned.
-         * 
+         *
          * @param v an endpoint
          * @param w another endpoint
          * @return the bond stored for the endpoints
@@ -316,9 +316,9 @@ public class GraphUtil {
         }
 
         /**
-         * Create a map with enough space for all the bonds in the molecule, 
+         * Create a map with enough space for all the bonds in the molecule,
          * {@code container}. Note - the map is not filled by this method.
-         * 
+         *
          * @param container the container
          * @return a map with enough space for the container
          */
@@ -328,8 +328,8 @@ public class GraphUtil {
     }
 
     /**
-     * Unordered storage of two int values. Mainly useful to index bonds by 
-     * it's vertex end points. 
+     * Unordered storage of two int values. Mainly useful to index bonds by
+     * it's vertex end points.
      */
     private static final class Tuple {
         private final int u, v;

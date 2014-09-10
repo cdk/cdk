@@ -49,12 +49,12 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
 
     private Properties props;
     private PrintWriter out;
-    
+
     public PropertiesListener(Properties props) {
         this.props = props;
         this.setOutputWriter(new OutputStreamWriter(System.out));
     }
-    
+
     /**
      * Overwrites the default writer to which the output is directed.
      */
@@ -67,9 +67,9 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
             this.out = new PrintWriter(writer);
         }
     }
-    
+
     public void frameRead(ReaderEvent event) {}
-    
+
     /**
      * Processes the IOSettings by listing the question, giving the options
      * and asking the user to provide their choice.
@@ -89,7 +89,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
             }
         }
     }
-  
+
 }
 
 

@@ -38,7 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  *   IAtomContainer permutedContainer = permutor.next();
  *   ...
  * }</pre>
- * 
+ *
  * @author maclean
  * @cdk.created 2009-09-09
  * @cdk.keyword permutation
@@ -46,30 +46,30 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  */
 @TestClass("AtomContainerAtomPermutorTest")
-public class AtomContainerAtomPermutor extends AtomContainerPermutor { 
-    
+public class AtomContainerAtomPermutor extends AtomContainerPermutor {
+
     /**
      * A permutor wraps the original atom container, and produces cloned
      * (and permuted!) copies on demand.
-     * 
+     *
      * @param atomContainer the atom container to permute
      */
     @TestMethod("constructorTest")
     public AtomContainerAtomPermutor(IAtomContainer atomContainer) {
         super(atomContainer.getAtomCount(), atomContainer);
     }
-    
+
     /**
      * Generate the atom container with this permutation of the atoms.
-     * 
+     *
      * @param permutation the permutation to use
-     * @return the 
+     * @return the
      */
     @TestMethod("containerFromPermutationTest")
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
-            IAtomContainer permutedContainer = 
-                (IAtomContainer) atomContainer.clone(); 
+            IAtomContainer permutedContainer =
+                (IAtomContainer) atomContainer.clone();
             IAtom[] atoms = new IAtom[atomContainer.getAtomCount()];
             for (int i = 0; i < atomContainer.getAtomCount(); i++) {
                 atoms[permutation[i]] = permutedContainer.getAtom(i);
@@ -80,6 +80,6 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
             return null;
         }
     }
-	
+
 }
 

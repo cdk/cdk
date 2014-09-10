@@ -59,12 +59,12 @@ public class OverlapResolver
 	    LoggingToolFactory.createLoggingTool(OverlapResolver.class);
 
 	int maxSteps = 10000;
-	
+
 	public OverlapResolver()
 	{
 	}
-	
-	
+
+
 	/**
 	 * Main method to be called to resolve overlap situations.
 	 *
@@ -80,7 +80,7 @@ public class OverlapResolver
 		double overlapScore = getOverlapScore(ac, overlappingAtoms, overlappingBonds);
 		if (overlapScore > 0)
 		{
-			overlapScore = displace(ac, overlappingAtoms, overlappingBonds);	
+			overlapScore = displace(ac, overlappingAtoms, overlappingBonds);
 		}
 		logger.debug("overlapScore = " + overlapScore);
 		logger.debug("End of resolveOverlap");
@@ -110,9 +110,9 @@ public class OverlapResolver
 		logger.debug("We are here because of an overlap situation.");
 		//logger.debug("Overlap score: " + overlapScore);
 
-		
+
 		do{
-			/* we take a random overlapping 
+			/* we take a random overlapping
 			 * pair of atoms
 			 */
 			 p = (int)(Math.random() * overlappingAtoms.size());
@@ -120,7 +120,7 @@ public class OverlapResolver
 			op = (OverlapPair)overlappingAtoms.elementAt(p);
 			/* Now we have an overlapping pair of atoms
 			*  We calculate the 2D vector formed by the
-			* positions of both and translate one of the atoms by 
+			* positions of both and translate one of the atoms by
 			* one tenth of a bond length
 			*/
 			a1 = (IAtom)op.chemObject1;
@@ -134,7 +134,7 @@ public class OverlapResolver
 	       v2.x=0.01;
 	    if(Double.isNaN(v2.y))
 	       v2.y=0.01;
-    
+
   		v2.scale(bondLength / 20.0);
 			logger.debug("Calculation translation vector " + v2);
 			choice = Math.random();
@@ -169,7 +169,7 @@ public class OverlapResolver
 	}
 
 
-	
+
 	/**
 	 *  Calculates a score based on the overlap of atoms and intersection of bonds.
 	 *  The overlap is calculated by summing up the distances between all pairs of
@@ -184,7 +184,7 @@ public class OverlapResolver
 	{
 		double overlapScore = 0;
 		overlapScore = getAtomOverlapScore(ac, overlappingAtoms);
-		//overlapScore += getBondOverlapScore(ac, overlappingBonds);		
+		//overlapScore += getBondOverlapScore(ac, overlappingBonds);
 		return overlapScore;
 	}
 
@@ -270,7 +270,7 @@ public class OverlapResolver
 
 
 	/**
-	 *  Checks if two bonds cross each other. 
+	 *  Checks if two bonds cross each other.
 	 *
 	 *@param  bond1  Description of the Parameter
 	 *@param  bond2  Description of the Parameter
@@ -281,17 +281,17 @@ public class OverlapResolver
 		double x1 = 0, x2 = 0, x3 = 0, x4 = 0;
 		double y1 = 0, y2 = 0, y3 = 0, y4 = 0;
 		//Point2D.Double p1 = null, p2 = null, p3 = null, p4 = null;
-		
+
 		x1 = bond1.getAtom(0).getPoint2d().x;
 		x2 = bond1.getAtom(1).getPoint2d().x;
 		x3 = bond2.getAtom(0).getPoint2d().x;
 		x4 = bond2.getAtom(1).getPoint2d().x;
-		
+
 		y1 = bond1.getAtom(0).getPoint2d().y;
 		y2 = bond1.getAtom(1).getPoint2d().y;
 		y3 = bond2.getAtom(0).getPoint2d().y;
 		y4 = bond2.getAtom(1).getPoint2d().y;
-		
+
 		Line2D.Double line1 = new Line2D.Double(new Point2D.Double(x1, y1), new Point2D.Double(x2, y2));
 		Line2D.Double line2 = new Line2D.Double(new Point2D.Double(x3, y3), new Point2D.Double(x4, y4));
 

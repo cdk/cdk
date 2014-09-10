@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class PDBFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public PDBFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PDBFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,13 +68,13 @@ public class PDBFormat extends SimpleChemFormatMatcher implements IChemFormatMat
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.PDBReader";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return "org.openscience.cdk.io.PDBWriter";
     }
 

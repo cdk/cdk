@@ -44,7 +44,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Iterating SMILES file reader. It allows to iterate over all molecules
  * in the SMILES file, without being read into memory all. Suitable
- * for very large SMILES files. These SMILES files are expected to have one 
+ * for very large SMILES files. These SMILES files are expected to have one
  * molecule on each line. If a line could not be parsed and empty molecule is
  * returned and the property {@link #BAD_SMILES_INPUT} is set to the attempted
  * input. The error is also logged.
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.iooptions
  *
  * @see org.openscience.cdk.io.SMILESReader
- * 
+ *
  * @author     Egon Willighagen <egonw@sci.kun.nl>
  * @cdk.created    2004-12-16
  *
@@ -70,15 +70,15 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(IteratingSMILESReader.class);
     private SmilesParser sp = null;
-    
+
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IAtomContainer nextMolecule;
     private final IChemObjectBuilder builder;
-    
+
     /** Store the problem input as a property. */
     public static final String BAD_SMILES_INPUT = "bad.smiles.input";
-    
+
     /**
      * Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
      *
@@ -123,23 +123,23 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
-            
+
             // now try to parse the next Molecule
             try {
 
                 final String line = input.readLine();
-                
+
                 if (line == null) {
                     nextAvailableIsKnown = true;
                     return false;
                 }
-                
+
                 hasNext = true;
                 final String suffix = suffix(line);
 
                 nextMolecule = readSmiles(line);
                 nextMolecule.setProperty(CDKConstants.TITLE, suffix);
-                
+
             } catch (Exception exception) {
                 logger.error("Unexpeced problem: ", exception.getMessage());
                 logger.debug(exception);
@@ -154,7 +154,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     /**
      * Obtain the suffix after a line containing SMILES. The suffix follows
      * any ' ' or '\t' termination characters.
-     * 
+     *
      * @param line input line
      * @return the suffix - or an empty line
      */
@@ -169,7 +169,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     /**
      * Read the SMILES given in the input line - or return an empty container.
-     * 
+     *
      * @param line input line
      * @return the read container (or an empty one)
      */
@@ -178,7 +178,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
             return sp.parseSmiles(line);
         } catch (CDKException e) {
             logger.error("Error while reading the SMILES from: " + line + ", ", e);
-            final IAtomContainer empty = builder.newInstance(IAtomContainer.class, 
+            final IAtomContainer empty = builder.newInstance(IAtomContainer.class,
                                                              0, 0, 0, 0);
             empty.setProperty(BAD_SMILES_INPUT, line);
             return empty;

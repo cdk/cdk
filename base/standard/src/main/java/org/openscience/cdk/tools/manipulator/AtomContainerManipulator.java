@@ -78,14 +78,14 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerManipulatorTest")
 public class AtomContainerManipulator {
-    
+
     /**
-     * Extract a substructure from an atom container, in the form of a new 
+     * Extract a substructure from an atom container, in the form of a new
      * cloned atom container with only the atoms with indices in atomIndices and
      * bonds that connect these atoms.
      * <p/>
-     * Note that this may result in a disconnected atom container. 
-     * 
+     * Note that this may result in a disconnected atom container.
+     *
      * @param atomContainer the source container to extract from
      * @param atomIndices the indices of the substructure
      * @return a cloned atom container with a substructure of the source
@@ -100,7 +100,7 @@ public class AtomContainerManipulator {
         for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
             atoms[atomIndex] = substructure.getAtom(atomIndex);
         }
-        
+
         Arrays.sort(atomIndices);
         for (int index = 0; index < numberOfAtoms; index++) {
             if (Arrays.binarySearch(atomIndices, index) < 0) {
@@ -196,15 +196,15 @@ public class AtomContainerManipulator {
     @TestMethod("testGetTotalExactMass_IAtomContainer")
     public static double getTotalExactMass(IAtomContainer atomContainer) {
         try {
-            
+
             Isotopes isotopes = Isotopes.getInstance();
             double mass = 0.0;
             double hExactMass = isotopes.getMajorIsotope(1).getExactMass();
             for (IAtom atom : atomContainer.atoms()) {
                 if (atom.getImplicitHydrogenCount() == null)
-                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");                
+                    throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
                 mass += atom.getExactMass();
-                mass += atom.getImplicitHydrogenCount() * hExactMass; 
+                mass += atom.getImplicitHydrogenCount() * hExactMass;
             }
             return mass;
         } catch (IOException e) {
@@ -220,7 +220,7 @@ public class AtomContainerManipulator {
      * @cdk.keyword mass, molecular
      */
     @TestMethod("testGetNaturalExactMass_IAtomContainer")
-    public static double getNaturalExactMass(IAtomContainer atomContainer) {           
+    public static double getNaturalExactMass(IAtomContainer atomContainer) {
         try {
             Isotopes isotopes      = Isotopes.getInstance();
             double   hydgrogenMass = isotopes.getNaturalMass(Elements.HYDROGEN);
@@ -232,17 +232,17 @@ public class AtomContainerManipulator {
                     throw new IllegalArgumentException("an atom had with unknown (null) atomic number");
                 if (atom.getImplicitHydrogenCount() == null)
                     throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
-                
+
                 mass += isotopes.getNaturalMass(Elements.ofNumber(atom.getAtomicNumber()).toIElement());
                 mass += hydgrogenMass * atom.getImplicitHydrogenCount();
             }
             return mass;
-            
+
         } catch (IOException e) {
             throw new RuntimeException("Isotopes definitions could not be loaded", e);
         }
     }
-    
+
     /**
      * Get the summed natural abundance of all atoms in an AtomContainer
      *
@@ -255,9 +255,9 @@ public class AtomContainerManipulator {
             Isotopes isotopes = Isotopes.getInstance();
             double abundance  = 1.0;
             double hAbundance = isotopes.getMajorIsotope(1).getNaturalAbundance();
-            
+
             int nImplH = 0;
-            
+
             for (IAtom atom : atomContainer.atoms()) {
                 if (atom.getImplicitHydrogenCount() == null)
                     throw new IllegalArgumentException("an atom had with unknown (null) implicit hydrogens");
@@ -410,7 +410,7 @@ public class AtomContainerManipulator {
     public static void convertImplicitToExplicitHydrogens(IAtomContainer atomContainer) {
         List<IAtom> hydrogens = new ArrayList<IAtom>();
         List<IBond> newBonds = new ArrayList<IBond>();
-        
+
         // store a single explicit hydrogen of each original neighbor
         Map<IAtom,IAtom> hNeighbor = Maps.newHashMapWithExpectedSize(atomContainer.getAtomCount());
 
@@ -427,7 +427,7 @@ public class AtomContainerManipulator {
                         newBonds.add(atom.getBuilder().newInstance(IBond.class,
                                 atom, hydrogen, CDKConstants.BONDORDER_SINGLE
                         ));
-                        
+
                         if (hNeighbor.get(atom) == null)
                             hNeighbor.put(atom, hydrogen);
 
@@ -438,30 +438,30 @@ public class AtomContainerManipulator {
         }
         for (IAtom atom : hydrogens) atomContainer.addAtom(atom);
         for (IBond bond : newBonds) atomContainer.addBond(bond);
-        
+
         // update tetrahedral elements with an implicit part
         for (IStereoElement se : atomContainer.stereoElements()) {
             if (se instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tc = (ITetrahedralChirality) se;
-                
+
                 IAtom   focus     = tc.getChiralAtom();
                 IAtom[] neighbors = tc.getLigands();
                 IAtom   hydrogen  = hNeighbor.get(focus);
-                
+
                 // in sulfoxide - the implicit part of the tetrahedral centre
                 // is a lone pair
                 if (hydrogen == null)
                     continue;
-                
+
                 for (int i = 0; i < tc.getLigands().length; i++) {
                     if (neighbors[i] == focus) {
                         neighbors[i] = hydrogen;
-                        break;        
+                        break;
                     }
                 }
             }
         }
-        
+
     }
 
     /**
@@ -642,17 +642,17 @@ public class AtomContainerManipulator {
             throw new IllegalStateException("atom container could not be cloned");
         }
     }
-    
+
     /**
      * Suppress any explicit hydrogens in the provided container. Only hydrogens
      * that can be represented as a hydrogen count value on the atom are
      * suppressed. The container is updated and no elements are copied, please
      * use either {@link #copyAndSuppressedHydrogens} if you would to preserve
      * the old instance.
-     * 
+     *
      * @param org the container from which to remove hydrogens
      * @return the input for convenience
-     * @see #copyAndSuppressedHydrogens 
+     * @see #copyAndSuppressedHydrogens
      */
     public static IAtomContainer suppressHydrogens(IAtomContainer org) {
 
@@ -663,23 +663,23 @@ public class AtomContainerManipulator {
                 break;
             }
         }
-        
+
         if (!anyHydrogenPresent)
             return org;
-        
-        // we need fast adjacency checks (to check for suppression and 
+
+        // we need fast adjacency checks (to check for suppression and
         // update hydrogen counts)
         final int[][] graph = GraphUtil.toAdjList(org);
-        
+
         final int nOrgAtoms = org.getAtomCount();
         final int nOrgBonds = org.getBondCount();
-        
+
         int nCpyAtoms = 0;
         int nCpyBonds = 0;
-        
-        final Set<IAtom> hydrogens = new HashSet<IAtom>(nOrgAtoms); 
+
+        final Set<IAtom> hydrogens = new HashSet<IAtom>(nOrgAtoms);
         final IAtom[]    cpyAtoms  = new IAtom[nOrgAtoms];
-        
+
         // filter the original container atoms for those that can/can't
         // be suppressed
         for (int v = 0; v < nOrgAtoms; v++) {
@@ -691,18 +691,18 @@ public class AtomContainerManipulator {
                 cpyAtoms[nCpyAtoms++] = atom;
             }
         }
-        
+
         // none of the hydrogens could be suppressed - no changes need to be made
         if (hydrogens.isEmpty())
             return org;
 
         org.setAtoms(Arrays.copyOf(cpyAtoms, nCpyAtoms));
-        
+
         // we now update the bonds - we have auxiliary variable remaining that
-        // bypasses the set membership checks if all suppressed bonds are found  
+        // bypasses the set membership checks if all suppressed bonds are found
         IBond[] cpyBonds  = new IBond[nOrgBonds - hydrogens.size()];
-        int     remaining = hydrogens.size(); 
-        
+        int     remaining = hydrogens.size();
+
         for (final IBond bond : org.bonds()) {
             if (remaining > 0 &&
                     (hydrogens.contains(bond.getAtom(0))
@@ -712,17 +712,17 @@ public class AtomContainerManipulator {
             }
             cpyBonds[nCpyBonds++] = bond;
         }
-        
+
         // we know how many hydrogens we removed and we should have removed the
         // same number of bonds otherwise the containers is a strange
         if (nCpyBonds != cpyBonds.length)
             throw new IllegalArgumentException("number of removed bonds was less than the number of removed hydrogens");
 
         org.setBonds(cpyBonds);
-        
+
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
-        
+
         for (IStereoElement se : org.stereoElements()) {
             if (se instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tc = (ITetrahedralChirality) se;
@@ -735,7 +735,7 @@ public class AtomContainerManipulator {
                         updated      = true;
                     }
                 }
-                
+
                 // no changes
                 if (!updated) {
                     elements.add(tc);
@@ -754,13 +754,13 @@ public class AtomContainerManipulator {
                 // double bond atoms and substituents
                 // x       y
                 //  \     /
-                //   u = v 
+                //   u = v
 
                 IAtom u = orgStereo.getAtom(0);
                 IAtom v = orgStereo.getAtom(1);
                 IAtom x = orgLeft.getConnectedAtom(u);
                 IAtom y = orgRight.getConnectedAtom(v);
-                
+
                 // if xNew == x and yNew == y we don't need to find the
                 // connecting bonds
                 IAtom xNew = x;
@@ -779,7 +779,7 @@ public class AtomContainerManipulator {
                 // no other atoms connected, invalid double-bond configuration?
                 if (x == null || y == null)
                     continue;
-                
+
                 // no changes
                 if (x == xNew && y == yNew) {
                     elements.add(db);
@@ -795,13 +795,13 @@ public class AtomContainerManipulator {
                                                            conformation));
             }
         }
-        
+
         org.setStereoElements(elements);
-        
-        // single electron and lone pairs are not really used but we update 
+
+        // single electron and lone pairs are not really used but we update
         // them just in-case but we just use the inefficient AtomContainer
         // methods
-        
+
         if (org.getSingleElectronCount() > 0) {
             Set<ISingleElectron> remove = new HashSet<ISingleElectron>();
             for (ISingleElectron se : org.singleElectrons()) {
@@ -823,7 +823,7 @@ public class AtomContainerManipulator {
                 org.removeLonePair(lp);
             }
         }
-        
+
         return org;
     }
 
@@ -835,7 +835,7 @@ public class AtomContainerManipulator {
      * @param org The AtomContainer from which to remove the hydrogens
      * @return The molecule without hydrogens.
      * @cdk.keyword hydrogens, removal, suppress
-     * @see #copyAndSuppressedHydrogens 
+     * @see #copyAndSuppressedHydrogens
      */
     @TestMethod("testRemoveHydrogens_IAtomContainer")
     public static IAtomContainer removeHydrogens(IAtomContainer org)
@@ -879,21 +879,21 @@ public class AtomContainerManipulator {
      * Increment the implicit hydrogen count of the provided atom. If the atom
      * was a non-pseudo atom and had an unset hydrogen count an exception is
      * thrown.
-     * 
+     *
      * @param atom an atom to increment the hydrogen count of
      */
     private static void incrementImplHydrogenCount(final IAtom atom) {
         Integer hCount = atom.getImplicitHydrogenCount();
-        
+
         if (hCount == null) {
             if (!(atom instanceof IPseudoAtom))
                 throw new IllegalArgumentException("a non-pseudo atom had an unset hydrogen count");
             hCount = 0;
         }
-        
+
         atom.setImplicitHydrogenCount(hCount + 1);
     }
-    
+
     /**
      * Is the {@code atom} a suppressible hydrogen and can be represented as
      * implicit. A hydrogen is suppressible if it is not an ion, not the major
@@ -908,9 +908,9 @@ public class AtomContainerManipulator {
     private static boolean suppressibleHydrogen(final IAtomContainer container,
                                                 final int[][] graph,
                                                 final int v) {
-        
+
         IAtom atom = container.getAtom(v);
-        
+
         // is the atom a hydrogen
         if (!"H".equals(atom.getSymbol()))
             return false;
@@ -924,19 +924,19 @@ public class AtomContainerManipulator {
         if (graph[v].length != 1)
             return false;
 
-        // okay the hydrogen has one neighbor, if that neighbor is not a 
+        // okay the hydrogen has one neighbor, if that neighbor is not a
         // hydrogen (i.e. molecular hydrogen) then we can suppress it
         return !"H".equals(container.getAtom(graph[v][0]).getSymbol());
     }
 
     /**
-     * Finds an neighbor connected to 'atom' which is not 'exclude1' 
+     * Finds an neighbor connected to 'atom' which is not 'exclude1'
      * or 'exclude2'. If no neighbor exists - null is returned.
-     * 
+     *
      * @param container structure
      * @param atom      atom to find a neighbor of
      * @param exclude1  the neighbor should not be this atom
-     * @param exclude2  the neighbor should also not be this atom  
+     * @param exclude2  the neighbor should also not be this atom
      * @return a neighbor of 'atom', null if not found
      */
     private static IAtom findOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2) {
@@ -953,7 +953,7 @@ public class AtomContainerManipulator {
 	 *
 	 * @return         The mol without Hs.
 	 * @cdk.keyword    hydrogens, removal
-     * @deprecated {@link #suppressHydrogens} will now not removed bridging hydrogens by default 
+     * @deprecated {@link #suppressHydrogens} will now not removed bridging hydrogens by default
 	 */
     @TestMethod("testRemoveHydrogensPreserveMultiplyBonded")
     @Deprecated
@@ -1206,7 +1206,7 @@ public class AtomContainerManipulator {
 		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
         for (IAtom atom : container.atoms()) {
             IAtomType matched = matcher.findMatchingAtomType(container, atom);
-            if (matched != null) AtomTypeManipulator.configure(atom, matched);            
+            if (matched != null) AtomTypeManipulator.configure(atom, matched);
         }
 	}
 
@@ -1370,8 +1370,8 @@ public class AtomContainerManipulator {
      * elements are preserved. All bonds are converted to single bonds and a
      * 'clean' atom is created for the input elements. The 'clean' atom has
      * unset charge, mass, and hydrogen count.
-     * 
-     * @param src input structure 
+     *
+     * @param src input structure
      * @return the skeleton copy
      */
     public static IAtomContainer skeleton(IAtomContainer src) {
@@ -1416,7 +1416,7 @@ public class AtomContainerManipulator {
             }
         }
 		return count;
-	}    
+	}
 
     /**
      * Assigns {@link CDKConstants#SINGLE_OR_DOUBLE} flags to the bonds of
@@ -1424,18 +1424,18 @@ public class AtomContainerManipulator {
      * order and in this case is assigned to all aromatic bonds (and atoms)
      * which occur in rings. If any such bonds are found the flag is also set
      * on the container.
-     * 
+     *
      * <blockquote><pre>
      *     SmilesParser parser = new SmilesParser(...);
      *     parser.setPreservingAromaticity(true);
-     *                                                                    
+     *
      *     IAtomContainer biphenyl = parser.parseSmiles("c1cccc(c1)c1ccccc1");
-     *     
+     *
      *     AtomContainerManipulator.setSingleOrDoubleFlags(biphenyl);
      * </pre></blockquote>
-     * 
+     *
      * @param ac container to which the flags are assigned
-     * @return the input for convenience            
+     * @return the input for convenience
      */
     @TestMethod("setSingleOrDoubleFlags")
     public static IAtomContainer setSingleOrDoubleFlags(IAtomContainer ac) {
@@ -1451,7 +1451,7 @@ public class AtomContainerManipulator {
                 bond.getAtom(1).setFlag(SINGLE_OR_DOUBLE, true);
                 singleOrDouble = singleOrDouble | true;
             }
-        } 
+        }
         if (singleOrDouble) {
             ac.setFlag(CDKConstants.SINGLE_OR_DOUBLE, true);
         }

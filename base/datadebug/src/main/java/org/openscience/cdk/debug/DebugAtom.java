@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -44,29 +44,29 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class DebugAtom extends Atom implements IAtom {
 
     private static final long serialVersionUID = 188945429187084868L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtom.class);
-	
+
 	public DebugAtom() {
 		super();
 	}
-	
+
 	public DebugAtom(String symbol) {
 		super(symbol);
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol);
 	}
-	
+
 	public DebugAtom(String symbol, Point2d point2d) {
 		super(symbol, point2d);
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point2d=" + point2d);
 	}
-	
+
 	public DebugAtom(String symbol, Point3d point3d) {
 		super(symbol, point3d);
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point3d=" + point3d);
 	}
-	
+
 	public DebugAtom(IElement element) {
 		super(element);
 		logger.debug("Instantiated a DebugAtom: element= ", element);
@@ -98,21 +98,21 @@ public class DebugAtom extends Atom implements IAtom {
 
     /** {@inheritDoc} */ @Override
 	public void setPoint2d(Point2d point2d) {
-		logger.debug("Setting point2d: x=" + point2d.x + 
+		logger.debug("Setting point2d: x=" + point2d.x +
 				     ", y=" + point2d.y);
 		super.setPoint2d(point2d);
 	}
 
     /** {@inheritDoc} */ @Override
 	public void setPoint3d(Point3d point3d) {
-		logger.debug("Setting point3d: x=" + point3d.x + 
+		logger.debug("Setting point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		super.setPoint3d(point3d);
 	}
 
     /** {@inheritDoc} */ @Override
 	public void setFractionalPoint3d(Point3d point3d) {
-		logger.debug("Setting fractional point3d: x=" + point3d.x + 
+		logger.debug("Setting fractional point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		super.setFractionalPoint3d(point3d);
 	}
@@ -129,7 +129,7 @@ public class DebugAtom extends Atom implements IAtom {
 		if (point2d == null) {
 			logger.debug("Getting point2d: null");
 		} else {
-			logger.debug("Getting point2d: x=" + point2d.x + 
+			logger.debug("Getting point2d: x=" + point2d.x +
 			     ", y=" + point2d.y);
 		}
 		return point2d;
@@ -141,7 +141,7 @@ public class DebugAtom extends Atom implements IAtom {
 		if (point3d == null) {
 			logger.debug("Getting point3d: null");
 		} else {
-			logger.debug("Getting point3d: x=" + point3d.x + 
+			logger.debug("Getting point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		}
 		return point3d;
@@ -153,7 +153,7 @@ public class DebugAtom extends Atom implements IAtom {
 		if (point3d == null) {
 			logger.debug("Getting fractional point3d: null");
 		} else {
-			logger.debug("Getting fractional point3d: x=" + point3d.x + 
+			logger.debug("Getting fractional point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		}
 		return point3d;
@@ -271,7 +271,7 @@ public class DebugAtom extends Atom implements IAtom {
 	public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
-		
+
 	}
 
     /** {@inheritDoc} */ @Override

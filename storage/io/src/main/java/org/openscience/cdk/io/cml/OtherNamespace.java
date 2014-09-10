@@ -27,7 +27,7 @@ import org.xml.sax.Attributes;
 
 /**
  * Modules that ignore all content, for use in XML in namespaces other than CML.
- * 
+ *
  * @author egonw
  */
 final class OtherNamespace implements ICMLModule {

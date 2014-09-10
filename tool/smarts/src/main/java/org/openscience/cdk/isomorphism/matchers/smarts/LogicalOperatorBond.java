@@ -74,7 +74,7 @@ public class LogicalOperatorBond extends SMARTSBond {
     public void setRight(IQueryBond right) {
         this.right = right;
     }
-    
+
     public boolean matches(IBond bond) {
     	boolean matchesLeft = left.matches(bond);
     	if (right != null) {
@@ -94,7 +94,7 @@ public class LogicalOperatorBond extends SMARTSBond {
     		}
     	}
     }
-    
+
     public void setAtoms(IAtom[] atoms) {
     	super.setAtoms(atoms);
     	((IBond)left).setAtoms(atoms);

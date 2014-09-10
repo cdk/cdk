@@ -88,11 +88,11 @@ public class ShelXReader extends DefaultChemObjectReader {
     public ShelXReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public ShelXReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return ShelXFormat.getInstance();
@@ -106,7 +106,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             this.input = new BufferedReader(input);
         }
     }
-    
+
     @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
@@ -222,7 +222,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                 double alpha = FortranFormat.atof(salpha);
                 double beta  = FortranFormat.atof(sbeta);
                 double gamma = FortranFormat.atof(sgamma);
-                
+
                 Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
 
                 crystal.setA(axes[0]);
@@ -366,7 +366,7 @@ public class ShelXReader extends DefaultChemObjectReader {
         }
         return crystal;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,7 +40,7 @@ public class DebugLonePair extends LonePair
     implements ILonePair {
 
     private static final long serialVersionUID = 5683399496728893341L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugLonePair.class);
 
@@ -53,7 +53,7 @@ public class DebugLonePair extends LonePair
     	super(atom);
     	logger.debug("Instantiated LonePair for atom: ", atom);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public IAtom getAtom() {
 		logger.debug("Getting atom: ", super.getAtom());
@@ -196,5 +196,5 @@ public class DebugLonePair extends LonePair
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
-	
+
 }

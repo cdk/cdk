@@ -1,9 +1,9 @@
 /* IMatrix.java
- * 
+ *
  * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -12,24 +12,24 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 
 package org.openscience.cdk.math;
- 
+
 import java.text.DecimalFormat;
 
 /**
  * This class contains a complex matrix.
- * 
+ *
  * @cdk.module qm
  */
 public class IMatrix
@@ -149,7 +149,7 @@ public class IMatrix
     if ((b==null) ||
         (rows!=b.rows) || (columns!=b.columns))
       return;
-      
+
     if ((result.rows!=rows) || (result.columns!=columns))
       result.reshape(rows,columns);
 
@@ -161,7 +161,7 @@ public class IMatrix
         result.imagmatrix[i][j] = imagmatrix[i][j]+b.imagmatrix[i][j];
       }
   }
-  
+
   /**
    *  Subtraktion from two matrices
    */
@@ -180,12 +180,12 @@ public class IMatrix
     if ((b==null) ||
         (rows!=b.rows) || (columns!=b.columns))
       return;
-      
+
     if ((result.rows!=rows) || (result.columns!=columns))
       result.reshape(rows,columns);
 
     int i, j;
-    for(i=0; i<rows; i++) 
+    for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
       {
         result.realmatrix[i][j] = realmatrix[i][j]-b.realmatrix[i][j];
@@ -197,12 +197,12 @@ public class IMatrix
    *  Multiplikation from two matrices
    */
   public IMatrix mul(IMatrix b)
-  { 
+  {
     IMatrix result = new IMatrix(rows,columns);
     mul(b, result);
     return result;
   }
-  
+
   /**
    *  Multiplikation from two matrices
    */
@@ -229,17 +229,17 @@ public class IMatrix
         result.imagmatrix[i][k] = imagsum;
       }
   }
-  
+
   /**
    *  Multiplikation from a vector and a matrix
    */
   public IVector mul(IVector a)
-  { 
+  {
     IVector result = new IVector(rows);
-    mul(a, result); 
+    mul(a, result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Multiplikation from a vector and a matrix
    */
@@ -300,10 +300,10 @@ public class IMatrix
   public IMatrix duplicate()
   {
     IMatrix result = new IMatrix(rows,columns);
-    duplicate(result); 
+    duplicate(result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Copy a matrix
    */
@@ -327,20 +327,20 @@ public class IMatrix
   public IMatrix transpose()
   {
     IMatrix result = new IMatrix(rows,columns);
-    transpose(result);  
+    transpose(result);
     return result;
-  } 
-  
+  }
+
   /**
    *  Transpose a matrix
    */
   public void transpose(IMatrix result)
-  { 
+  {
     if ((result.rows!=rows) || (result.columns!=columns))
       result.reshape(rows,columns);
 
-    int i,j; 
-    for(i=0; i<rows; i++) 
+    int i,j;
+    for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
       {
         result.realmatrix[j][i] = realmatrix[i][j];
@@ -355,10 +355,10 @@ public class IMatrix
   public IMatrix similar(IMatrix U)
   {
     IMatrix result = new IMatrix(rows,columns);
-    similar(U, result);  
+    similar(U, result);
     return result;
-  } 
-  
+  }
+
   /**
    * Similar transformation
    * Ut * M * U
@@ -387,7 +387,7 @@ public class IMatrix
         result.realmatrix[i][j] = realsum;
         result.imagmatrix[i][j] = imagsum;
       }
-  }      
+  }
 
   /**
    * Calculates the contraction from a matrix
@@ -403,8 +403,8 @@ public class IMatrix
         result.imag += imagmatrix[i][j];
       }
     return result;
-  }  
-  
+  }
+
   /**
    *  Return a matrix as a string
    */
@@ -434,7 +434,7 @@ public class IMatrix
         str.append(format.format(realmatrix[rows-1][j])+"+i*"+format.format(imagmatrix[rows-1][j])+" ");
       else
           str.append("--------+i*-------- ");
-    if ((Math.round(realmatrix[rows-1][columns-1]*10000)!=0) && 
+    if ((Math.round(realmatrix[rows-1][columns-1]*10000)!=0) &&
         (Math.round(imagmatrix[rows-1][columns-1]*10000)!=0))
       str.append(format.format(realmatrix[rows-1][columns-1])+
                   "+i*"+format.format(imagmatrix[rows-1][columns-1]));
@@ -448,7 +448,7 @@ public class IMatrix
    */
   public void reshape(int newrows, int newcolumns)
   {
-    if (((newrows==rows) && (newcolumns==columns)) || 
+    if (((newrows==rows) && (newcolumns==columns)) ||
         (newrows<=0) || (newcolumns<=0))
       return;
 

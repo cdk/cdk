@@ -31,7 +31,7 @@ import org.openscience.cdk.interfaces.IIsotope;
 
 /**
  * Used to store and return data of a particular isotope. As this class is a
- * singleton class, one gets an instance with: 
+ * singleton class, one gets an instance with:
  * <pre>
  * IsotopeFactory ifac = IsotopFactory.getInstance(new IChemObject().getNewBuilder());
  * </pre>
@@ -41,12 +41,12 @@ import org.openscience.cdk.interfaces.IIsotope;
  * module. Part of the data in this file was collected from
  * the website <a href="http://www.webelements.org">webelements.org</a>.
  *
- * <p>The use of this class is exemplified as follows. To get information 
+ * <p>The use of this class is exemplified as follows. To get information
  * about the major isotope of hydrogen, one can use this code:
  * <pre>
  *   IsotopeFactory factory = XMLIsotopeFactory.getInstance(DefaultChemObjectBuilder.getInstance());
  *   Isotope major = factory.getMajorIsotope("H");
- * </pre> 
+ * </pre>
  *
  * @cdk.module     extra
  * @cdk.githash

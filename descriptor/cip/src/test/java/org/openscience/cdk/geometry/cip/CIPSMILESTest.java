@@ -59,7 +59,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     /**
-     * Test case that tests sequence recursing of the atomic number rule. 
+     * Test case that tests sequence recursing of the atomic number rule.
      *
      * @cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m1/s1
      *
@@ -75,7 +75,7 @@ public class CIPSMILESTest extends CDKTestCase {
     }
 
     /**
-     * Test case that tests sequence recursing of the atomic number rule. 
+     * Test case that tests sequence recursing of the atomic number rule.
      *
      * @cdk.inchi InChI=1S/C5H12O/c1-3-5(2)4-6/h5-6H,3-4H2,1-2H3/t5-/m0/s1
      *
@@ -164,7 +164,7 @@ public class CIPSMILESTest extends CDKTestCase {
             CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo)
         );
     }
-    
+
     /**
      * @cdk.inchi InChI=1S/C20H20BrN3O3S/c1-23(2)9-10-24(20-22-14-8-7-13(21)11-18(14)28-20)19(25)17-12-26-15-5-3-4-6-16(15)27-17/h3-8,11,17H,9-10,12H2,1-2H3/p+1/t17+/m1/s1
      */
@@ -194,7 +194,7 @@ public class CIPSMILESTest extends CDKTestCase {
         Assert.assertTrue(stereo instanceof ITetrahedralChirality);
         Assert.assertEquals(
                 CIP_CHIRALITY.R,
-                CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo));    
+                CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo));
     }
 
     /**
@@ -210,9 +210,9 @@ public class CIPSMILESTest extends CDKTestCase {
         Assert.assertEquals(
                 CIP_CHIRALITY.S,
                 CIPTool.getCIPChirality(mol, (ITetrahedralChirality)stereo)
-                           );   
+                           );
     }
-    
+
     @Test public void e_butene() throws Exception {
         assertThat(label("C/C=C/C"), is(CIP_CHIRALITY.E));
         assertThat(label("C\\C=C\\C"), is(CIP_CHIRALITY.E));
@@ -227,7 +227,7 @@ public class CIPSMILESTest extends CDKTestCase {
         assertThat(label("C/C=C(/C)C"), is(CIP_CHIRALITY.NONE));
         assertThat(label("C/C(C)=C/C"), is(CIP_CHIRALITY.NONE));
     }
-    
+
     @Test public void e_depth2() throws Exception {
         assertThat(label("CC/C(CO)=C(/CC)CO"), is(CIP_CHIRALITY.E));
         assertThat(label("OC\\C(CC)=C(/CC)CO"), is(CIP_CHIRALITY.E));
@@ -262,21 +262,21 @@ public class CIPSMILESTest extends CDKTestCase {
 
     /**
      * Get the CIP labelling for a container with a single stereo element.
-     * 
+     *
      * @param container input container
      * @return the labelling
      */
     CIP_CHIRALITY label(IAtomContainer container) {
-        
+
         List<IStereoElement> elements = new ArrayList<IStereoElement>();
 
         for (IStereoElement element : container.stereoElements()) {
             elements.add(element);
         }
-        
+
         if (elements.size() != 1)
             Assert.fail("expected 1 stereo-element, found - " + elements.size());
-        
+
         for (IStereoElement element : elements) {
             if (element instanceof ITetrahedralChirality) {
                 return CIPTool.getCIPChirality(container, (ITetrahedralChirality) element);
@@ -285,7 +285,7 @@ public class CIPSMILESTest extends CDKTestCase {
                 return CIPTool.getCIPChirality(container, (IDoubleBondStereochemistry) element);
             }
         }
-        
+
         throw new IllegalStateException();
     }
 }

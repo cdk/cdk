@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -43,29 +43,29 @@ import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 
 /**
  * Assign a Kekulé representation to the aromatic systems of a compound. Input
- * from some file-formats provides some bonds as aromatic / delocalised bond 
+ * from some file-formats provides some bonds as aromatic / delocalised bond
  * types. This method localises the electrons and assigns single and double
  * bonds. Different atom and bond orderings may produce distinct but valid
  * Kekulé forms. Only bond orders are adjusted and any aromatic flags will
  * remain untouched.
  * <p/>
- * 
+ *
  * The procedure requires that all atoms have defined implicit hydrogens counts
  * and formal charges. If this information is not present it should be assigned
  * first. <p/>
- * 
+ *
  * For some inputs it may not be possible to assign a Kekulé form. In general
- * theses cases are rare but usually occur for one of two reasons. 
- * 1) Missing / ambiguous implicit hydrogens, this is fundamental to determining the 
+ * theses cases are rare but usually occur for one of two reasons.
+ * 1) Missing / ambiguous implicit hydrogens, this is fundamental to determining the
  * Kekulé form and if guessed may be wrong. Some formats (e.g. molfile) can not
  * include the exact number of implicit hydrogens attached to atom whilst others
- * may omit it or optionally skip encoding. The typical example is found in the 
+ * may omit it or optionally skip encoding. The typical example is found in the
  * example for 1H-pyrrole, a correct SMILES encoding should include the hydrogen
- * on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1'). 
- * 2) The aromaticity perception algorithm has allowed atoms with abnormal 
- * valence. This usually happens when a non-convalent bond has be <i>upgraded</i> 
+ * on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1').
+ * 2) The aromaticity perception algorithm has allowed atoms with abnormal
+ * valence. This usually happens when a non-convalent bond has be <i>upgraded</i>
  * to a sigma bond during format conversion. <p/>
- * 
+ *
  * @author John May
  * @cdk.keyword kekule
  * @cdk.keyword kekulize
@@ -77,8 +77,8 @@ import static org.openscience.cdk.interfaces.IBond.Order.UNSET;
 public final class Kekulization {
 
     /**
-     * Assign a Kekulé representation to the aromatic systems of a compound. 
-     * 
+     * Assign a Kekulé representation to the aromatic systems of a compound.
+     *
      * @param ac structural representation
      * @throws CDKException a Kekulé form could not be assigned
      */
@@ -92,14 +92,14 @@ public final class Kekulization {
         final EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(ac);
         final int[][]       graph = GraphUtil.toAdjList(ac, bonds);
 
-        // determine which atoms are available to have a pi bond placed 
+        // determine which atoms are available to have a pi bond placed
         final BitSet available = available(graph, atoms, bonds);
 
         // attempt to find a perfect matching such that a pi bond is placed
         // next to each available atom. if not found the solution is ambiguous
         if (!matching.perfect(graph, available))
             throw new CDKException("Cannot assign Kekulé structure without randomly creating radicals.");
-        
+
         // propegate bond order information from the matching
         for (final IBond bond : ac.bonds()) {
             if (bond.getOrder() == UNSET && bond.getFlag(ISAROMATIC))
@@ -108,11 +108,11 @@ public final class Kekulization {
         for (int v = available.nextSetBit(0); v >= 0; v = available.nextSetBit(v + 1)) {
             final int w = matching.other(v);
             final IBond bond = bonds.get(v, w);
-            
+
             // sanity check, something wrong if this happens
             if (bond.getOrder().numeric() > 1)
                 throw new CDKException("Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
-            
+
             bond.setOrder(IBond.Order.DOUBLE);
             available.clear(w);
         }
@@ -148,7 +148,7 @@ public final class Kekulization {
             if (!atom.getFlag(ISAROMATIC))
                 continue;
 
-            // count preexisting pi-bonds, a higher bond order causes a skip  
+            // count preexisting pi-bonds, a higher bond order causes a skip
             int nPiBonds = 0;
             for (final int w : graph[i]) {
                 IBond.Order order = bonds.get(i, w).getOrder();
@@ -174,7 +174,7 @@ public final class Kekulization {
 
     /**
      * Determine if the specified element with the provided charge and valance
-     * requires a pi bond? 
+     * requires a pi bond?
      *
      * @param element atomic number >= 0
      * @param charge  formal charge
@@ -184,8 +184,8 @@ public final class Kekulization {
     private static boolean available(final int element, final int charge, final int valence) {
 
         // higher atomic number elements aren't likely to be found but
-        // we have them for rare corner cases (tellurium). 
-        // Germanium, Silicon, Tin and Antimony are a bit bonkers... 
+        // we have them for rare corner cases (tellurium).
+        // Germanium, Silicon, Tin and Antimony are a bit bonkers...
         switch (Elements.ofNumber(element)) {
             case Boron:
                 if (charge == 0 && valence <= 2)

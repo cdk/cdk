@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -61,7 +61,7 @@ final class StateStream implements Iterator<int[]> {
     StateStream(final State state) {
         this.state = state;
         this.stack = new CandidateStack(state.nMax());
-        this.next  = state.nMax() == 0 || state.mMax() == 0 ? null 
+        this.next  = state.nMax() == 0 || state.mMax() == 0 ? null
                                                             : findNext(); // first-mapping
     }
 
@@ -105,7 +105,7 @@ final class StateStream implements Iterator<int[]> {
      */
     private boolean map() {
 
-        // backtrack - we've tried all possible n or m, remove the last mapping 
+        // backtrack - we've tried all possible n or m, remove the last mapping
         if ((n == state.nMax() || m == state.mMax()) && !stack.empty())
             state.remove(n = stack.popN(),
                          m = stack.popM());

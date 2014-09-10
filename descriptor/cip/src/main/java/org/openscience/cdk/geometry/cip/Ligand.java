@@ -63,7 +63,7 @@ public class Ligand implements ILigand {
     public IAtomContainer getAtomContainer() {
         return container;
     }
-    
+
     /**
      * The central {@link IAtom} to which this ligand is connected via one {@link IBond}.
      *
@@ -73,7 +73,7 @@ public class Ligand implements ILigand {
     public IAtom getCentralAtom() {
         return centralAtom;
     }
-    
+
     /**
      * {@link IAtom} of the ligand that is connected to the chiral {@link IAtom} via
      * one {@link IBond}.

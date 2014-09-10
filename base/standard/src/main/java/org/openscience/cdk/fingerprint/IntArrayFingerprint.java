@@ -38,11 +38,11 @@ import java.util.Set;
 public class IntArrayFingerprint implements IBitFingerprint {
 
 	/**
-     * 
+     *
      */
     private static final long serialVersionUID = 5175105019921245323L;
     private volatile int[] trueBits;
-	
+
 	public IntArrayFingerprint(Map<String, Integer> rawFingerPrint) {
 		trueBits = new int[rawFingerPrint.size()];
 		int i = 0;
@@ -51,15 +51,15 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		}
 		Arrays.sort(trueBits);
 	}
-	
+
 	public IntArrayFingerprint(int[] setBits) {
 	    this.trueBits = setBits;
 	}
-	
+
 	public IntArrayFingerprint() {
 		trueBits = new int[0];
 	}
-	
+
 	public IntArrayFingerprint(IBitFingerprint fingerprint) {
 		// if it is an IntArrayFingerprint we can do faster (System.arraycopy)
 		if ( fingerprint instanceof IntArrayFingerprint ) {
@@ -100,12 +100,12 @@ public class IntArrayFingerprint implements IBitFingerprint {
 				"IntArrayFingerPrints for the moment" );
 		}
 	}
-	
+
 	public void and(IntArrayFingerprint fingerprint) {
 		List<Integer> tmp = new ArrayList<Integer>();
 		int i=0;
 		int j=0;
-		while ( i<trueBits.length && 
+		while ( i<trueBits.length &&
 			    j<fingerprint.trueBits.length ) {
 			int local = trueBits[i];
 			int remote = fingerprint.trueBits[j];
@@ -140,7 +140,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 				"IntArrayFingerPrints for the moment" );
 		}
 	}
-	
+
 	public void or(IntArrayFingerprint fingerprint) {
 		Set<Integer> tmp = new HashSet<Integer>();
 		for (int i = 0; i < trueBits.length; i++) {
@@ -162,10 +162,10 @@ public class IntArrayFingerprint implements IBitFingerprint {
 		return ( Arrays.binarySearch(trueBits, index) >= 0 );
 	}
 
-	/* 
-	 * This method is VERY INNEFICIENT when called multiple times. It is the 
-	 * cost of keeping down the memory footprint. Avoid using it for building 
-	 * up IntArrayFingerprints -- instead use the constructor taking a so 
+	/*
+	 * This method is VERY INNEFICIENT when called multiple times. It is the
+	 * cost of keeping down the memory footprint. Avoid using it for building
+	 * up IntArrayFingerprints -- instead use the constructor taking a so
 	 * called raw fingerprint.
 	 */
 	@Override
@@ -191,7 +191,7 @@ public class IntArrayFingerprint implements IBitFingerprint {
 	@Override
 	public BitSet asBitSet() {
 		//TODO support this?
-		throw new UnsupportedOperationException();		
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -224,5 +224,5 @@ public class IntArrayFingerprint implements IBitFingerprint {
         System.arraycopy( trueBits, 0, copy, 0, trueBits.length );
         return copy;
     }
-	
+
 }

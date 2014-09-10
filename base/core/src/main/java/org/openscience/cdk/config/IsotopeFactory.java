@@ -71,7 +71,7 @@ public abstract class IsotopeFactory {
     	}
     	isotopesForSymbol.add(isotope);
     }
-    
+
 	/**
 	 * Gets an array of all isotopes known to the IsotopeFactory for the given
 	 * element symbol.
@@ -116,7 +116,7 @@ public abstract class IsotopeFactory {
     	}
     	return list.toArray(new IIsotope[list.size()]);
     }
-    
+
     /**
 	 * Gets an array of all isotopes matching the searched exact mass within
 	 * a certain difference.
@@ -143,7 +143,7 @@ public abstract class IsotopeFactory {
     	}
     	return list.toArray(new IIsotope[list.size()]);
     }
-    
+
     /**
      * Get isotope based on element symbol and mass number.
      *
@@ -238,7 +238,7 @@ public abstract class IsotopeFactory {
     public boolean isElement(String elementName) {
         return (getElement(elementName) != null);
     }
-    
+
     /**
      *  Returns the most abundant (major) isotope whose symbol equals element.
      *
@@ -360,7 +360,7 @@ public abstract class IsotopeFactory {
 
 
 	/**
-	 *  Configures atoms in an AtomContainer to 
+	 *  Configures atoms in an AtomContainer to
 	 *  carry all the correct data according to their element type.
 	 *
 	 *@param  container  The AtomContainer to be configured
@@ -374,7 +374,7 @@ public abstract class IsotopeFactory {
 		}
 	}
     /**
-	 *  Gets the natural mass of this element, defined as average of masses of isotopes, 
+	 *  Gets the natural mass of this element, defined as average of masses of isotopes,
 	 *  weighted by abundance.
 	 *
 	 * @param  element                     the element in question

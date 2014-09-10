@@ -100,7 +100,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /**
      *{@inheritDoc}
      *
-     * @param bondTypeMatch 
+     * @param bondTypeMatch
      */
     @Override
     @TestMethod("testSearchMCS")
@@ -314,7 +314,7 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     qIndex = getReactantMol().getAtomNumber(qAtom);
                     tIndex = getProductMol().getAtomNumber(tAtom);
                 }
-                
+
                 if (qIndex != -1 && tIndex != -1) {
                     atomatomMapping.put(qAtom, tAtom);
                     indexindexMapping.put(qIndex, tIndex);

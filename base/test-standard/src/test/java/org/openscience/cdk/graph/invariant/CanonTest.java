@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -40,7 +40,7 @@ import static org.openscience.cdk.graph.GraphUtil.toAdjList;
  * @cdk.module test-standard
  */
 public class CanonTest {
-    
+
     @Test public void phenol_symmetry() throws Exception {
         IAtomContainer m = smi("OC1=CC=CC=C1");
         long[] symmetry = Canon.symmetry(m, GraphUtil.toAdjList(m));
@@ -56,9 +56,9 @@ public class CanonTest {
     /**
      * Ensure we consider the previous rank when we shatter ranks. This molecule
      * has a carbons/sulphurs which experience the same environment. We must
-     * consider that they are different (due to their initial label) but not 
+     * consider that they are different (due to their initial label) but not
      * their environment.
-     * 
+     *
      * @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
      */
     @Test public void lenthionine_symmetry() throws Exception {
@@ -123,19 +123,19 @@ public class CanonTest {
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
         Assert.assertThat(labels, is(new long[]{2, 3, 1}));
     }
-    
+
     @Test public void canonicallyLabelEthaneWithInConsistentHydrogenRepresentation2() throws Exception {
         IAtomContainer m = smi("CC([H])([H])");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
         Assert.assertThat(labels, is(new long[]{3, 4, 1, 2}));
     }
-    
+
     @Test public void canonicallyLabelCaffeineWithExplicitHydrogenRepresentation() throws Exception {
         IAtomContainer m = smi("[H]C1=NC2=C(N1C([H])([H])[H])C(=O)N(C(=O)N2C([H])([H])[H])C([H])([H])[H]");
         long[] labels = Canon.label(m, GraphUtil.toAdjList(m));
         Assert.assertThat(labels, is(new long[]{1, 14, 13, 16, 18, 19, 22, 2, 3, 4, 15, 11, 20, 17, 12, 21, 24, 8, 9, 10, 23, 5, 6, 7}));
     }
-    
+
     static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     static IAtomContainer smi(String smi) throws Exception {

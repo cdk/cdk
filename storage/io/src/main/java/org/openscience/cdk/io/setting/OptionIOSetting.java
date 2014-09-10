@@ -23,7 +23,7 @@ import java.util.List;
 import org.openscience.cdk.exception.CDKException;
 
 /**
- * An class for a reader setting which must be found in the list 
+ * An class for a reader setting which must be found in the list
  * of possible settings.
  *
  * @cdk.module io
@@ -34,13 +34,13 @@ import org.openscience.cdk.exception.CDKException;
 public class OptionIOSetting extends IOSetting {
 
     private List<String> settings;
-    
+
     /**
      * OptionIOSetting is IOSetting for which the value must be
      * in the list of possible options.
      */
-    public OptionIOSetting(String name, Importance level, 
-                           String question, List<String> settings, 
+    public OptionIOSetting(String name, Importance level,
+                           String question, List<String> settings,
                            String defaultSetting) {
         super(name, level, question, defaultSetting);
         this.settings = settings;
@@ -48,10 +48,10 @@ public class OptionIOSetting extends IOSetting {
             this.settings.add(defaultSetting);
         }
     }
-    
+
     /**
      * Sets the setting for a certain question. It will throw
-     * a CDKException when the setting is not valid.    
+     * a CDKException when the setting is not valid.
      *
      */
     public void setSetting(String setting) throws CDKException {
@@ -75,12 +75,12 @@ public class OptionIOSetting extends IOSetting {
             throw new CDKException("Setting " + setting + " does not exist.");
         }
     }
-    
+
     /**
      * Returns a Vector of Strings containing all possible options.
      */
     public List<String> getOptions() {
         return settings;
     }
-    
+
 }

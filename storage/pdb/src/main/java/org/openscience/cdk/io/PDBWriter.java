@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 /**
  * Saves small molecules in a rudimentary PDB format. It does not allow
  * writing of PDBProtein data structures.
- * 
+ *
  * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
  * @cdk.module pdb
  * @cdk.iooptions
@@ -66,22 +66,22 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public final String ATOM_NAME_FORMAT = "%-5s";
     public final String POSITION_FORMAT = "%8.3f";
     public final String RESIDUE_FORMAT = "%s";
-    
+
     private BooleanIOSetting writeAsHET;
     private BooleanIOSetting useElementSymbolAsAtomName;
     private BooleanIOSetting writeCONECTRecords;
     private BooleanIOSetting writeTERRecord;
     private BooleanIOSetting writeENDRecord;
-	
+
     private BufferedWriter writer;
-    
+
 	public PDBWriter() {
 		this(new StringWriter());
 	}
-	
+
     /**
      * Creates a PDB writer.
-     * 
+     *
      * @param out the stream to write the PDB file to.
      */
     public PDBWriter(Writer out) {
@@ -96,7 +96,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
         writeAsHET = addSetting(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.LOW,
                         "Should the output file use HETATM", "false"));
         useElementSymbolAsAtomName = addSetting(new BooleanIOSetting(
-                "UseElementSymbolAsAtomName", IOSetting.Importance.LOW, 
+                "UseElementSymbolAsAtomName", IOSetting.Importance.LOW,
                 "Should the element symbol be written as the atom name", "false"));
         writeCONECTRecords = addSetting(new BooleanIOSetting("WriteCONECT", IOSetting.Importance.LOW,
                 "Should the bonds be written as CONECT records?", "true"));
@@ -109,12 +109,12 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public PDBWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return PDBFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -126,7 +126,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
@@ -171,23 +171,23 @@ public class PDBWriter extends DefaultChemObjectWriter {
             throw new CDKException("Only supported is writing of Molecule, Crystal and ChemFile objects.");
         }
     }
-    
+
    /**
     * Writes a single frame in PDB format to the Writer.
     *
     * @param molecule the Molecule to write
     */
    public void writeMolecule(IAtomContainer molecule) throws CDKException {
-       
+
        try {
            writeHeader();
            int atomNumber = 1;
-           
+
            String hetatmRecordName = (writeAsHET.isSet())? "HETATM" : "ATOM  ";
            String id = molecule.getID();
            String residueName = (id == null || id.equals(""))? "MOL" : id;
            String terRecordName = "TER";
-           
+
            // Loop through the atoms and write them out:
            StringBuffer buffer = new StringBuffer();
            Iterator<IAtom> atoms = molecule.atoms().iterator();
@@ -224,7 +224,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
                buffer.append(fsb.toString());
                fsb.reset(POSITION_FORMAT).format(position.z);
                buffer.append(fsb.toString());
-               
+
                buffer.append("  1.00"); // occupancy
                buffer.append("  0.00"); // temperature factor
                buffer.append("           ");
@@ -239,14 +239,14 @@ public class PDBWriter extends DefaultChemObjectWriter {
                        buffer.append('+').append(formalCharge);
                    }
                }
-               
+
                if (connectRecords != null && writeCONECTRecords.isSet()) {
                    List<IAtom> neighbours = molecule.getConnectedAtomsList(atom);
                    if (neighbours.size() != 0) {
                        StringBuffer connectBuffer = new StringBuffer("CONECT");
                        connectBuffer.append(String.format("%5d", atomNumber));
                        for (IAtom neighbour : neighbours) {
-                           int neighbourNumber = 
+                           int neighbourNumber =
                                molecule.getAtomNumber(neighbour) + 1;
                            connectBuffer.append(
                                    String.format("%5d", neighbourNumber));
@@ -256,17 +256,17 @@ public class PDBWriter extends DefaultChemObjectWriter {
                        connectRecords[atomNumber - 1] = null;
                    }
                }
-               
+
                writer.write(buffer.toString(), 0, buffer.length());
                writer.newLine();
                ++atomNumber;
            }
-           
+
            if (writeTERRecord.isSet()) {
                writer.write(terRecordName, 0, terRecordName.length());
                writer.newLine();
            }
-           
+
            if (connectRecords != null && writeCONECTRecords.isSet()) {
                for (String connectRecord : connectRecords) {
                    if (connectRecord != null) {
@@ -275,22 +275,22 @@ public class PDBWriter extends DefaultChemObjectWriter {
                    }
                }
            }
-           
+
            if (writeENDRecord.isSet()) {
                writer.write("END   ");
                writer.newLine();
            }
-           
+
        } catch (IOException exception) {
            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
        }
    }
-   
+
    private void writeHeader() throws IOException {
        writer.write("HEADER created with the CDK (http://cdk.sf.net/)");
        writer.newLine();
    }
-    
+
    public void writeCrystal(ICrystal crystal) throws CDKException {
        try {
            writeHeader();
@@ -314,7 +314,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
            fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
            writer.write(fsb.toString());
            writer.newLine();
-                                                                                                 
+
            // before saving the atoms, we need to create cartesian coordinates
            Iterator<IAtom> atoms = crystal.atoms().iterator();
            while (atoms.hasNext()) {

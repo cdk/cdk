@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://dx.doi.org/10.1021/ci034207y">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class SybylDescriptorFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public SybylDescriptorFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new SybylDescriptorFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,13 +68,13 @@ public class SybylDescriptorFormat extends AbstractResourceFormat implements ICh
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return null;
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return null;
     }
 

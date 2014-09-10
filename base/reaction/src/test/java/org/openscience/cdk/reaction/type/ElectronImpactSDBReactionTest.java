@@ -1,20 +1,20 @@
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.type;
 
@@ -46,7 +46,7 @@ import java.util.List;
  *
  * @cdk.module test-reaction
  */
- 
+
 public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
 	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
@@ -56,7 +56,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	public  ElectronImpactSDBReactionTest()  throws Exception {
 			setReaction(ElectronImpactSDBReaction.class);
 	 }
-	 
+
 	 /**
 	  *  The JUnit setup method
 	  */
@@ -66,14 +66,14 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 	 }
 	/**
 	 *  A unit test for JUnit.
-	 *  
+	 *
 	 *  FIXME REAC: not recognized IAtomType =C*
 	 *
 	 * @return    Description of the Return Value
 	 */
 	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		/* ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center*/
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer reactant = setOfReactants.getAtomContainer(0);
 
@@ -90,9 +90,9 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 				atom2.setFlag(CDKConstants.REACTIVE_CENTER,true);
 			}
 		}
-		
+
 		Assert.assertEquals(0, reactant.getSingleElectronCount());
-		
+
 		/* initiate */
 		IReactionProcess type  = new ElectronImpactSDBReaction();
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
@@ -101,21 +101,21 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
         paramList.add(param);
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         Assert.assertEquals(2, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
-        
+
         IAtomContainer molecule1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);//[H][C+]=C([H])[H]
 
         Assert.assertEquals(1, molecule1.getAtom(1).getFormalCharge().intValue());
         Assert.assertEquals(0, molecule1.getSingleElectronCount());
-        
+
         IAtomContainer molecule2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);//[H][C*]([H])[H]
 
         Assert.assertEquals(1, molecule2.getSingleElectronCount());
         Assert.assertEquals(1, molecule2.getConnectedSingleElectronsCount(molecule2.getAtom(0)));
-        
+
         Assert.assertTrue(setOfReactions.getReaction(0).mappings().iterator().hasNext());
 
         Assert.assertEquals(2, setOfReactions.getReaction(1).getProductCount());
@@ -127,12 +127,12 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
         Assert.assertEquals(0, molecule2.getSingleElectronCount());
         Assert.assertEquals(1, molecule2.getAtom(0).getFormalCharge().intValue());
-        
-        
+
+
 	}
 	/**
 	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-	 * 
+	 *
 	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
@@ -143,7 +143,7 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
+					"Missing atom type for: " + nextAtom,
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}
@@ -151,12 +151,12 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 
 	/**
 	 * Get the example set of molecules.
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
 		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-		
+
 		IAtomContainer reactant = builder.newInstance(IAtomContainer.class);//Smiles("C=CC")
 		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
 		reactant.addAtom(builder.newInstance(IAtom.class,"C"));
@@ -169,15 +169,15 @@ public class ElectronImpactSDBReactionTest extends ReactionProcessTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        
-		
+
+
 		setOfReactants.addAtomContainer(reactant);
 		return setOfReactants;
 	}
 	/**
 	 * Get the expected set of molecules.
 	 * TODO:reaction. Set the products
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExpectedProducts() {

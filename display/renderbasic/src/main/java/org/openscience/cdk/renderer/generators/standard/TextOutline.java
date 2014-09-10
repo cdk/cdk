@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -36,7 +36,7 @@ import java.awt.geom.Rectangle2D;
  * Immutable outline of text. The outline is maintained as a Java 2D shape
  * instance and can be transformed. As an immutable instance, transforming the
  * outline creates a new instance.
- * 
+ *
  * @author John May
  */
 final class TextOutline {
@@ -63,7 +63,7 @@ final class TextOutline {
 
     /**
      * Create an outline of text in provided font.
-     * 
+     *
      * @param text the text to create an outline of
      * @param font the font style, size, and shape that defines the outline
      */
@@ -73,7 +73,7 @@ final class TextOutline {
 
     /**
      * Create an outline of text and the glyphs for that text.
-     * 
+     *
      * @param text the text to create an outline of
      * @param glyphs the glyphs for the provided outlined
      */
@@ -83,7 +83,7 @@ final class TextOutline {
 
     /**
      * Internal constructor, requires all attributes.
-     * 
+     *
      * @param text the text
      * @param glyphs glyphs of the text
      * @param outline the outline of the glyphs
@@ -95,7 +95,7 @@ final class TextOutline {
         this.outline = outline;
         this.transform = transform;
     }
-    
+
     /**
      * The text which the outline displays.
      * @return the text
@@ -106,7 +106,7 @@ final class TextOutline {
 
     /**
      * Access the transformed outline of the text.
-     * 
+     *
      * @return transformed outline
      */
     Shape getOutline() {
@@ -115,7 +115,7 @@ final class TextOutline {
 
     /**
      * Access the transformed bounds of the outline text.
-     * 
+     *
      * @return transformed bounds
      */
     Rectangle2D getBounds() {
@@ -124,7 +124,7 @@ final class TextOutline {
 
     /**
      * Access the bounds of a shape that have been transformed.
-     * 
+     *
      * @param shape any shape
      * @return the bounds of the shape transformed
      */
@@ -142,7 +142,7 @@ final class TextOutline {
 
     /**
      * Access the transformed center of the whole outline.
-     * 
+     *
      * @return center of outline
      */
     Point2D getCenter() {
@@ -152,7 +152,7 @@ final class TextOutline {
 
     /**
      * Access the transformed center of the first glyph outline.
-     * 
+     *
      * @return center of first glyph outline
      */
     Point2D getFirstGlyphCenter() {
@@ -161,7 +161,7 @@ final class TextOutline {
 
     /**
      * Access the transformed center of the last glyph outline.
-     * 
+     *
      * @return center of last glyph outline
      */
     Point2D getLastGlyphCenter() {
@@ -170,7 +170,7 @@ final class TextOutline {
 
     /**
      * Determines the transformed centre of a specified glyph.
-     * 
+     *
      * @param index glyph index
      * @return center point
      */
@@ -186,7 +186,7 @@ final class TextOutline {
 
     /**
      * Add a transformation to the outline.
-     * 
+     *
      * @param nextTransform new transformation
      * @return new text outline
      */
@@ -200,7 +200,7 @@ final class TextOutline {
     /**
      * Convenience function to resize the outline and maintain the existing
      * center point.
-     * 
+     *
      * @param scaleX scale x-axis
      * @param scaleY scale y-axis
      * @return resized outline
@@ -216,7 +216,7 @@ final class TextOutline {
 
     /**
      * Convenience function to translate the outline.
-     * 
+     *
      * @param translateX x-axis translation
      * @param translateY y-axis translation
      * @return translated outline
@@ -243,11 +243,11 @@ final class TextOutline {
 
     /**
      * Format a double - displayed as two decimal places.
-     * 
+     *
      * @param value number value
-     * @return string of formatted double 
+     * @return string of formatted double
      */
     static String formatDouble(double value) {
-        return String.format("%.2f", value);    
+        return String.format("%.2f", value);
     }
 }

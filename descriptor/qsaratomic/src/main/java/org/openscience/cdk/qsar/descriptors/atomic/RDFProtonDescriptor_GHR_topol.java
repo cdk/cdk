@@ -85,7 +85,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
     private IAtomContainer acold = null;
     private IRingSet varRingSet = null;
     private IAtomContainerSet varAtomContainerSet = null;
-    
+
     private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RDFProtonDescriptor_GHR_topol.class);
     private final int ghr_topol_desc_length = 15;
@@ -397,7 +397,7 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 	if(atoms.size() > 0) {
 		//ArrayList gHr_topol_function = new ArrayList(15);
         ShortestPaths shortestPaths = new ShortestPaths(mol, startVertex);
-		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {  
+		for(double ghrt = limitInf; ghrt < limitSup; ghrt = ghrt + step) {
 			sum = 0;
 			for( int at = 0; at < atoms.size(); at++ ) {
 				distance = 0;
@@ -421,12 +421,12 @@ public class RDFProtonDescriptor_GHR_topol extends AbstractAtomicDescriptor impl
 		return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
 	}
 	return new DescriptorValue(
-		getSpecification(), getParameterNames(), 
+		getSpecification(), getParameterNames(),
 		getParameters(), rdfProtonCalculatedValues,
 		getDescriptorNames());
 	}
-	
-    
+
+
 
 
 //Others definitions

@@ -30,10 +30,10 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * Utility that helps determine which data features are present.
- * 
+ *
  * @author egonw
  * @cdk.githash
- * 
+ *
  * @see    DataFeatures
  */
 public class MoleculeFeaturesTool {
@@ -59,7 +59,7 @@ public class MoleculeFeaturesTool {
     /**
      * Checks whether all bonds have exactly two atoms.
      */
-    public static boolean hasGraphRepresentation(IAtomContainer molecule) {        
+    public static boolean hasGraphRepresentation(IAtomContainer molecule) {
         for (IBond bond : molecule.bonds()) if (bond.getAtomCount() != 2) return false;
         return true;
     }

@@ -33,7 +33,7 @@ package org.openscience.cdk.io;
 public interface IChemObjectReaderErrorHandler {
 
     /**
-     * Method that should react on an error message send by an 
+     * Method that should react on an error message send by an
      * {@link IChemObjectReader}.
      *
      * @param message Error found while reading.
@@ -41,7 +41,7 @@ public interface IChemObjectReaderErrorHandler {
     public void handleError(String message);
 
     /**
-     * Method that should react on an error message send by an 
+     * Method that should react on an error message send by an
      * {@link IChemObjectReader}.
      *
      * @param message   Error found while reading.
@@ -50,7 +50,7 @@ public interface IChemObjectReaderErrorHandler {
     public void handleError(String message, Exception exception);
 
     /**
-     * Method that should react on an error message send by an 
+     * Method that should react on an error message send by an
      * {@link IChemObjectReader}.
      *
      * @param message  Error found while reading.
@@ -61,7 +61,7 @@ public interface IChemObjectReaderErrorHandler {
     public void handleError(String message, int row, int colStart, int colEnd);
 
     /**
-     * Method that should react on an error message send by an 
+     * Method that should react on an error message send by an
      * {@link IChemObjectReader}.
      *
      * @param message   Error found while reading.

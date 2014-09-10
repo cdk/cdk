@@ -77,7 +77,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @see           #atoms
 	 */
 	public void setAtoms(IAtom[] atoms);
-	
+
 	/**
 	 * Sets the array of bonds of this AtomContainer.
 	 *
@@ -86,7 +86,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @see  #bonds
 	 */
 	public void setBonds(IBond[] bonds);
-	
+
 	/**
 	 * Set the atom at position <code>number</code> in [0,..].
 	 *
@@ -120,7 +120,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return         The lone pair number
 	 */
 	public ILonePair getLonePair(int number);
-	
+
 	/**
 	 *  Get the single electron at position <code>number</code> in [0,..].
 	 *
@@ -142,28 +142,28 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return    An Iterable with the bonds in this container
 	 */
 	public Iterable<IBond> bonds();
-	
+
 	/**
 	 *  Returns an Iterable for looping over all lone pairs in this container.
 	 *
 	 *@return    An Iterable with the lone pairs in this container
 	 */
 	public Iterable<ILonePair> lonePairs();
-	
+
 	/**
 	 *  Returns an Iterable for looping over all single electrons in this container.
 	 *
 	 *@return    An Iterable with the single electrons in this container
 	 */
 	public Iterable<ISingleElectron> singleElectrons();
-	
+
 	/**
 	 *  Returns an Iterable for looping over all electron containers in this container.
 	 *
 	 *@return    An Iterable with the electron containers in this container
 	 */
 	public Iterable<IElectronContainer> electronContainers();
-	
+
 	/**
 	 *  Returns the atom at position 0 in the container.
 	 *
@@ -212,30 +212,30 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	public int getBondNumber(IBond bond);
 
 	/**
-	 * Returns the position of a given lone pair in the lone pair array. 
+	 * Returns the position of a given lone pair in the lone pair array.
 	 * It returns -1 if the lone pair does not exist.
 	 *
 	 * @param  lonePair The lone pair to be sought
 	 * @return          The Position of the lone pair in the array..
 	 */
 	public int getLonePairNumber(ILonePair lonePair);
-	
+
 	/**
-	 * Returns the position of a given single electron in the single electron array. 
+	 * Returns the position of a given single electron in the single electron array.
 	 * It returns -1 if the single electron does not exist.
 	 *
 	 * @param  singleElectron The single electron to be sought
 	 * @return                The Position of the single electron in the array.
 	 */
 	public int getSingleElectronNumber(ISingleElectron singleElectron);
-	
+
 	/**
 	 *  Returns the ElectronContainer at position <code>number</code> in the
 	 *  container.
 	 *
 	 *@param  number  The position of the ElectronContainer to be returned.
 	 *@return         The ElectronContainer at position <code>number</code>.
-	 *@see            #addElectronContainer(IElectronContainer) 
+	 *@see            #addElectronContainer(IElectronContainer)
 	 */
 	public IElectronContainer getElectronContainer(int number);
 
@@ -278,14 +278,14 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @return       The number of SingleElectron objects of this AtomContainer
 	 */
 	public int getSingleElectronCount();
-	
+
 	/**
 	 * Returns the number of ElectronContainers in this Container.
 	 *
 	 * @return    The number of ElectronContainers in this Container
 	 */
 	public int getElectronContainerCount();
-	
+
 	/**
 	 *  Returns an ArrayList of all atoms connected to the given atom.
 	 *
@@ -317,7 +317,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
 	public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom);
-	
+
 	/**
 	 *  Returns an ArrayList of all electronContainers connected to the given atom.
 	 *
@@ -326,7 +326,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 */
 	public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom);
 
-	
+
 	/**
 	 *  Returns the number of atoms connected to the given atom.
 	 *
@@ -334,7 +334,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       The the size of connected atoms
 	 */
 	public int getConnectedAtomsCount(IAtom atom);
-	
+
 	/**
 	 *  Returns the number of Bonds for a given Atom.
 	 *
@@ -358,7 +358,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       The number of LonePairs for this atom
 	 */
 	public int getConnectedLonePairsCount(IAtom atom);
-	
+
 	/**
 	 *  Returns the sum of the SingleElectron for a given Atom.
 	 *
@@ -366,7 +366,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       The array of SingleElectron of this AtomContainer
 	 */
 	public int getConnectedSingleElectronsCount(IAtom atom);
-	
+
 	/**
 	 * Returns the sum of the bond orders for a given Atom.
 	 *
@@ -424,7 +424,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  lonePair  The LonePair to added to this container
 	 */
 	public void addLonePair(ILonePair lonePair);
-	
+
 	/**
 	 *  Adds a single electron to this AtomContainer.
 	 *
@@ -465,7 +465,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atom  The atom to be removed
 	 */
 	public void removeAtom(IAtom atom);
-	
+
 	/**
 	 *  Removes the bond at the given position from the AtomContainer.
 	 *
@@ -473,7 +473,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
      * @return the bond at the given position
 	 */
 	public IBond removeBond(int position);
-	
+
 	/**
 	 * Removes the bond that connects the two given atoms.
 	 *
@@ -489,7 +489,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @param  bond   The bond to be removed.
 	 */
 	public void removeBond(IBond bond);
-	
+
 	/**
 	 * Removes the lone pair at the given position from the AtomContainer.
 	 *
@@ -497,14 +497,14 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @return           The removed ILonePair.
 	 */
 	public ILonePair removeLonePair(int position);
-	
+
 	/**
 	 * Removes the lone pair from the AtomContainer.
 	 *
 	 * @param  lonePair  The LonePair to be removed.
 	 */
 	public void removeLonePair(ILonePair lonePair);
-	
+
 	/**
 	 * Removes the single electron at the given position from the AtomContainer.
 	 *
@@ -512,14 +512,14 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 * @return           The removed ISingleElectron
 	 */
 	public ISingleElectron removeSingleElectron(int position);
-	
+
 	/**
 	 * Removes the single electron from the AtomContainer.
 	 *
 	 * @param  singleElectron  The SingleElectron to be removed.
 	 */
 	public void removeSingleElectron(ISingleElectron singleElectron);
-	
+
 	/**
 	 * Removes the bond at the given position from this container.
 	 *
@@ -599,7 +599,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@param  atomID  The atom number to which the SingleElectron is added in [0,..]
 	 */
 	public void addSingleElectron(int atomID);
-	
+
 	/**
 	 *  True, if the AtomContainer contains the given atom object.
 	 *
@@ -615,7 +615,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return       True, if the AtomContainer contains the given bond object
 	 */
 	public boolean contains(IBond bond);
-	
+
 	/**
 	 *  True, if the AtomContainer contains the given LonePair object.
 	 *
@@ -623,7 +623,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return           True, if the AtomContainer contains the given LonePair object
 	 */
 	public boolean contains(ILonePair lonePair);
-	
+
 	/**
 	 *  True, if the AtomContainer contains the given SingleElectron object.
 	 *
@@ -631,7 +631,7 @@ public interface IAtomContainer extends IChemObject, IChemObjectListener {
 	 *@return                 True, if the AtomContainer contains the given SingleElectron object
 	 */
 	public boolean contains(ISingleElectron singleElectron);
-	
+
 	/**
 	 *  True, if the AtomContainer contains the given ElectronContainer object.
 	 *

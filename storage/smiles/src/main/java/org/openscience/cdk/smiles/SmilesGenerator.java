@@ -39,7 +39,7 @@ import java.lang.reflect.Method;
 
 /**
  * Generate a SMILES {@cdk.cite WEI88, WEI89} string for a provided structure.
- * The generator can produce several <i>flavour</i> of SMILES. 
+ * The generator can produce several <i>flavour</i> of SMILES.
  * <p/>
  * <ul>
  *     <li>generic - non-canonical SMILES string, different atom ordering
@@ -54,29 +54,29 @@ import java.lang.reflect.Method;
  *     <li>absolute - canonical SMILES string, different atom ordering
  *         produces the same SMILES. Isotope and stereochemistry is encoded.</li>
  * </ul>
- * 
+ *
  * <p/>
  * A generator instance is created using one of the static methods, the SMILES
  * are then created by invoking {@link #create(IAtomContainer)}.
  * <blockquote><pre>
  * IAtomContainer  ethanol = ...;
  * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(ethanol); // CCO or OCC 
- * 
+ * String          smi     = sg.create(ethanol); // CCO or OCC
+ *
  * SmilesGenerator sg      = SmilesGenerator.unique();
- * String          smi     = sg.create(ethanol); // only CCO 
+ * String          smi     = sg.create(ethanol); // only CCO
  * </pre></blockquote>
- * 
+ *
  * <p/>
- * 
+ *
  * The isomeric and absolute generator encode tetrahedral and double bond
  * stereochemistry using {@link org.openscience.cdk.interfaces.IStereoElement}s
  * provided on the {@link IAtomContainer}. If stereochemistry is not being
  * written it may need to be determined from 2D/3D coordinates using
- * {@link org.openscience.cdk.stereo.StereoElementFactory}. 
- * 
+ * {@link org.openscience.cdk.stereo.StereoElementFactory}.
+ *
  * <p/>
- * 
+ *
  * By default the generator will not write aromatic SMILES. Kekulé SMILES are
  * generally preferred for compatibility and aromaticity can easily be
  * reperceived. Modifying a generator to produce {@link #aromatic()} SMILES
@@ -85,23 +85,23 @@ import java.lang.reflect.Method;
  * {@link org.openscience.cdk.aromaticity.Aromaticity} utility.
  * <blockquote><pre>
  * IAtomContainer  benzene = ...;
- * 
+ *
  * // with no flags set the output is always kekule
  * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
  * SmilesGenerator sg      = SmilesGenerator.generic()
  *                                          .aromatic();
- * String          smi     = sg.create(ethanol); // C1=CC=CC=C1 
- * 
+ * String          smi     = sg.create(ethanol); // C1=CC=CC=C1
+ *
  * for (IAtom a : benzene.atoms())
  *     a.setFlag(CDKConstants.ISAROMATIC, true);
  * for (IBond b : benzene.bond())
  *     b.setFlag(CDKConstants.ISAROMATIC, true);
- * 
+ *
  * // with flags set, the aromatic generator encodes this information
  * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
  * SmilesGenerator sg      = SmilesGenerator.generic()
  *                                          .aromatic();
@@ -110,26 +110,26 @@ import java.lang.reflect.Method;
  * <p/>
  * By default atom classes are not written. Atom classes can be written but
  * creating a generator {@link #withAtomClasses()}.
- * 
+ *
  * <blockquote><pre>
  * IAtomContainer  benzene = ...;
- * 
+ *
  * // see CDKConstants for property key
  * benzene.getAtom(3)
  *        .setProperty(ATOM_ATOM_MAPPING, 42);
  *
  * SmilesGenerator sg      = SmilesGenerator.generic();
- * String          smi     = sg.create(benzene); // C1=CC=CC=C1 
+ * String          smi     = sg.create(benzene); // C1=CC=CC=C1
  *
  * SmilesGenerator sg      = SmilesGenerator.generic()
  *                                          .withAtomClasses();
- * String          smi     = sg.create(ethanol); // C1=CC=[CH:42]C=C1 
+ * String          smi     = sg.create(ethanol); // C1=CC=[CH:42]C=C1
  * </pre></blockquote>
  * <p/>
- * 
+ *
  * Auxiliary data can be stored with SMILES by knowing the output order of
  * atoms. The following example demonstrates the storage of 2D coordinates.
- * 
+ *
  * <blockquote><pre>
  * IAtomContainer  mol = ...;
  * SmilesGenerator sg  = SmilesGenerator.generic();
@@ -150,11 +150,11 @@ import java.lang.reflect.Method;
  * String smi2d = smi + " " + Arrays.toString(coords);
  *
  * </pre></blockquote>
- * 
- * * the unique SMILES generation uses a fast equitable labelling procedure 
+ *
+ * * the unique SMILES generation uses a fast equitable labelling procedure
  *   and as such there are some structures which may not be unique. The number
- *   of such structures is generally minimal. 
- *   
+ *   of such structures is generally minimal.
+ *
  * @author         Oliver Horlacher
  * @author         Stefan Kuhn (chiral smiles)
  * @author         John May
@@ -162,7 +162,7 @@ import java.lang.reflect.Method;
  * @cdk.module     smiles
  * @cdk.githash
  * @cdk.bug        1793446
- * 
+ *
  * @see org.openscience.cdk.aromaticity.Aromaticity
  * @see org.openscience.cdk.stereo.Stereocenters
  * @see org.openscience.cdk.stereo.StereoElementFactory
@@ -179,7 +179,7 @@ public final class SmilesGenerator {
 
     /**
      * Create the generic SMILES generator.
-     * @see #generic() 
+     * @see #generic()
      */
     public SmilesGenerator() {
         this(false, false, false, false);
@@ -193,7 +193,7 @@ public final class SmilesGenerator {
      */
     private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic, boolean classes) {
         this.isomeric  = isomeric;
-        this.canonical = canonical;    
+        this.canonical = canonical;
         this.aromatic  = aromatic;
         this.classes   = classes;
         this.converter = new CDKToBeam(isomeric, aromatic, classes);
@@ -202,16 +202,16 @@ public final class SmilesGenerator {
     /**
      * The generator should write aromatic (lower-case) SMILES. This option is
      * not recommended as different parsers can interpret where bonds should be
-     * placed. 
-     * 
+     * placed.
+     *
      * <blockquote><pre>
      * IAtomContainer  container = ...;
      * SmilesGenerator smilesGen = SmilesGenerator.unique()
      *                                            .aromatic();
-     * smilesGen.createSMILES(container);                                            
+     * smilesGen.createSMILES(container);
      * </pre></blockquote>
-     * 
-     * @return a generator for aromatic SMILES 
+     *
+     * @return a generator for aromatic SMILES
      */
     public SmilesGenerator aromatic() {
         return new SmilesGenerator(isomeric, canonical, true, classes);
@@ -226,32 +226,32 @@ public final class SmilesGenerator {
      * IAtomContainer  container = ...;
      * SmilesGenerator smilesGen = SmilesGenerator.unique()
      *                                            .atomClasses();
-     * smilesGen.createSMILES(container); // C[CH2:4]O second atom has class = 4                                            
+     * smilesGen.createSMILES(container); // C[CH2:4]O second atom has class = 4
      * </pre></blockquote>
      *
-     * @return a generator for SMILES with atom classes 
+     * @return a generator for SMILES with atom classes
      */
     public SmilesGenerator withAtomClasses() {
         return new SmilesGenerator(isomeric, canonical, aromatic, true);
     }
 
     /**
-     * Create a generator for generic SMILES. Generic SMILES are 
+     * Create a generator for generic SMILES. Generic SMILES are
      * non-canonical and useful for storing information when it is not used
      * as an index (i.e. unique keys). The generated SMILES is dependant on
      * the input order of the atoms.
-     * 
+     *
      * @return a new arbitrary SMILES generator
      */
     public static SmilesGenerator generic() {
         return new SmilesGenerator(false, false, false, false);
     }
-    
+
     /**
      * Convenience method for creating an isomeric generator. Isomeric SMILES
-     * are non-unique but contain isotope numbers (e.g. {@code [13C]}) and 
+     * are non-unique but contain isotope numbers (e.g. {@code [13C]}) and
      * stereo-chemistry.
-     * 
+     *
      * @return a new isomeric SMILES generator
      */
     public static SmilesGenerator isomeric() {
@@ -261,19 +261,19 @@ public final class SmilesGenerator {
     /**
      * Create a unique SMILES generator. Unique SMILES use a fast canonisation
      * algorithm but does not encode isotope or stereo-chemistry.
-     * 
+     *
      * @return a new unique SMILES generator
      */
     public static SmilesGenerator unique() {
         return new SmilesGenerator(false, true, false, false);
-    } 
-    
+    }
+
     /**
      * Create a absolute SMILES generator. Unique SMILES uses the InChI to
      * canonise SMILES and encodes isotope or stereo-chemistry. The InChI
      * module is not a dependency of the SMILES module but should be present
      * on the classpath when generation absolute SMILES.
-     * 
+     *
      * @return a new absolute SMILES generator
      */
     public static SmilesGenerator absolute() {
@@ -282,7 +282,7 @@ public final class SmilesGenerator {
 
     /**
      * Create a SMILES string for the provided molecule.
-     * 
+     *
      * @param molecule the molecule to create the SMILES of
      * @return a SMILES string
      * @throws CDKException SMILES could not be generated
@@ -317,7 +317,7 @@ public final class SmilesGenerator {
                                                e);
         }
     }
-    
+
     /**
      * Generate SMILES for the provided {@code molecule}.
      *
@@ -331,34 +331,34 @@ public final class SmilesGenerator {
     }
 
     /**
-     * Create a SMILES string and obtain the order which the atoms were 
+     * Create a SMILES string and obtain the order which the atoms were
      * written. The output order allows one to arrange auxiliary atom data in the
      * order that a SMILES string will be read. A simple example is seen below
      * where 2D coordinates are stored with a SMILES string. In reality a more
      * compact binary encoding would be used instead of printing the coordinates
      * as a string.
-     * 
+     *
      * <blockquote><pre>
      * IAtomContainer  mol = ...;
      * SmilesGenerator sg  = SmilesGenerator.generic();
-     * 
+     *
      * int   n     = mol.getAtomCount();
      * int[] order = new int[n];
      *
      * // the order array is filled up as the SMILES is generated
      * String smi = sg.create(mol, order);
-     * 
+     *
      * // load the coordinates array such that they are in the order the atoms
      * // are read when parsing the SMILES
      * Point2d[] coords = new Point2d[mol.getAtomCount()];
      * for (int i = 0; i < coords.length; i++)
      *     coords[order[i]] = container.getAtom(i).getPoint2d();
-     * 
+     *
      * // SMILES string suffixed by the coordinates
      * String smi2d = smi + " " + Arrays.toString(coords);
-     * 
+     *
      * </pre></blockquote>
-     * 
+     *
      * @param molecule the molecule to write
      * @param order    array to store the output order of atoms
      * @return the SMILES string
@@ -387,7 +387,7 @@ public final class SmilesGenerator {
 
                     // FIXME: required to ensure canonical double bond labelling
                     g.sort(new Graph.VisitHighOrderFirst());
-                    
+
                     // canonical double-bond stereo, output be C/C=C/C or C\C=C\C
                     // and we need to normalise to one
                     g = Functions.normaliseDirectionalLabels(g);
@@ -419,7 +419,7 @@ public final class SmilesGenerator {
 
     /**
      * Generate a SMILES for the given <code>Reaction</code>.
-     * 
+     *
      * @param reaction the reaction in question
      * @return the SMILES representation of the reaction
      * @throws org.openscience.cdk.exception.CDKException if there is an error during SMILES generation
@@ -458,46 +458,46 @@ public final class SmilesGenerator {
      * @param useAromaticityFlag if false only SP2-hybridized atoms will be lower case (default),
      * true=SP2 or aromaticity trigger lower case
      * @deprecated since 1.5.6, use {@link #aromatic} - invoking this method
-     *             does nothing                           
+     *             does nothing
      */
     @TestMethod("testSFBug956923")
     @Deprecated
     public void setUseAromaticityFlag(boolean useAromaticityFlag) {
-    
+
     }
 
     /**
      * Given a molecule (possibly disconnected) compute the labels which
      * would order the atoms by increasing canonical labelling. If the SMILES
-     * are isomeric (i.e. stereo and isotope specific) the InChI numbers are 
+     * are isomeric (i.e. stereo and isotope specific) the InChI numbers are
      * used. These numbers are loaded via reflection and the 'cdk-inchi' module
      * should be present on the classpath.
-     * 
-     * @param molecule the molecule to 
+     *
+     * @param molecule the molecule to
      * @return the permutation
      * @see Canon
      */
     private int[] labels(final IAtomContainer molecule) throws CDKException {
-        long[] labels = isomeric ? inchiNumbers(molecule) 
+        long[] labels = isomeric ? inchiNumbers(molecule)
                                  : Canon.label(molecule, GraphUtil.toAdjList(molecule));
         int[]  cpy    = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
-            cpy[i] = (int) labels[i] - 1;              
+            cpy[i] = (int) labels[i] - 1;
         return cpy;
     }
 
     /**
      * Obtain the InChI numbering for canonising SMILES. The cdk-smiles module
      * does not and should not depend on cdk-inchi and so the numbers are loaded
-     * via reflection. If the class cannot be found on the classpath an 
+     * via reflection. If the class cannot be found on the classpath an
      * exception is thrown.
-     * 
+     *
      * @param container a structure
      * @return the inchi numbers
      * @throws CDKException the inchi numbers could not be obtained
      */
     private long[] inchiNumbers(IAtomContainer container) throws CDKException {
-        // TODO: create an interface so we don't have to dynamically load the 
+        // TODO: create an interface so we don't have to dynamically load the
         // class each time
         String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
         String mname = "getUSmilesNumbers";

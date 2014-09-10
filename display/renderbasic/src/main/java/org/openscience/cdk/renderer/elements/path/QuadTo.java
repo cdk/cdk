@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Make a quadratic curve in the path.
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -43,7 +43,7 @@ public class QuadTo extends PathElement {
 
     /**
      * Make a quad curve.
-     * 
+     *
      * @param cp control point of the curve
      * @param ep end point of the curve
      */
@@ -73,13 +73,13 @@ public class QuadTo extends PathElement {
      *
      * @param cpx control point in the cubic x coord
      * @param cpy control point in the cubic y coord
-     * @param epx end point of the cubic x coord 
-     * @param epy end point of the cubic y coord 
+     * @param epx end point of the cubic x coord
+     * @param epy end point of the cubic y coord
      */
     public QuadTo(double cpx, double cpy, double epx, double epy) {
         this(new double[]{cpx, cpy, epx, epy});
     }
-    
+
     /** {@inheritDoc} **/
     @Override
     @TestMethod("testPoints")

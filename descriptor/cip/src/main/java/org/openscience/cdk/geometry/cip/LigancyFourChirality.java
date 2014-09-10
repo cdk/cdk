@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 
 /**
  * Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
- * 
+ *
  * <p>The data model defines the central, chiral {@link IAtom},
  * and its four {@link ILigand}s, each of which has an ligand {@link IAtom}, directly bonded to the chiral atom via
  * an {@link IBond}. The ordering of the four ligands is important, and defines together with the {@link STEREO}
@@ -80,7 +80,7 @@ class LigancyFourChirality {
         this.ligands = new ILigand[ligandAtoms.length];
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         for (int i=0; i<ligandAtoms.length; i++) {
-            // ITetrahedralChirality stores a impl hydrogen as the central atom 
+            // ITetrahedralChirality stores a impl hydrogen as the central atom
             if (ligandAtoms[i] == chiralAtom) {
                 this.ligands[i] = new ImplicitHydrogenLigand(container, visitedAtoms, chiralAtom);
             } else {

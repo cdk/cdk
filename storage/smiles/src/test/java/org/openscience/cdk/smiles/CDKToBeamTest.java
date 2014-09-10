@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -156,7 +156,7 @@ public class CDKToBeamTest {
         assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
                    is(13));
     }
-    
+
     @Test public void defaultIsotope() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
@@ -164,7 +164,7 @@ public class CDKToBeamTest {
         assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
                    is(-1));
     }
-    
+
     // special check that a CDK pseudo atom will default to 0 hydrogens if
     // the hydrogens are set to null
     @Test public void pseudoAtom_nullH() throws Exception {
@@ -496,7 +496,7 @@ public class CDKToBeamTest {
     /**
      * This is a mock test where we don't want aromatic bonds to have a
      * configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
-     * example would be porphyrins. 
+     * example would be porphyrins.
      *
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
      */
@@ -512,7 +512,7 @@ public class CDKToBeamTest {
         ac.addBond(2, 3, SINGLE);
 
         ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
-        
+
         ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1),
                                                           new IBond[]{
                                                                   ac.getBond(0),
@@ -523,11 +523,11 @@ public class CDKToBeamTest {
         assertThat(g.toSmiles(),
                    is("F[CH]:[CH]F"));
     }
-    
+
     @Test public void propadiene() throws Exception {
-            
+
     }
-    
+
     @Test public void writeAtomClass() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
@@ -566,7 +566,7 @@ public class CDKToBeamTest {
         assertThat(convert(m).toSmiles(),
                    is("CC=[C@]=CC"));
     }
-    
+
     @Test public void s_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(new Atom("C"));
@@ -690,7 +690,7 @@ public class CDKToBeamTest {
 
         }
     }
-    
+
     static Graph convert(IAtomContainer ac) throws Exception {
         return convert(ac, false, true);
     }

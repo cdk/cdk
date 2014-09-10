@@ -461,7 +461,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     		// nothing to store the results into
     		return;
     	} // otherwise insert in the first AC
-    	
+
         IAtomContainer ac = containers.get(0);
         // Determine label for properties
         String label;

@@ -24,9 +24,9 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,15 +35,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class ZindoFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public ZindoFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ZindoFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -87,7 +87,7 @@ public class ZindoFormat extends AbstractResourceFormat implements IChemFormat {
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
-	
+
     /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {

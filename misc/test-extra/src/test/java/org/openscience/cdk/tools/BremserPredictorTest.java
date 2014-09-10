@@ -42,7 +42,7 @@ import org.openscience.cdk.io.MDLV2000Reader;
  * @cdk.created    2002-11-16
  */
 public class BremserPredictorTest extends CDKTestCase {
-	
+
 	static boolean standAlone = false;
 
 	/**
@@ -62,7 +62,7 @@ public class BremserPredictorTest extends CDKTestCase {
 	 */
 	@Test public void testPrediction() throws Exception
 	{
-		String[] data = { 
+		String[] data = {
      "=C(//)",
      "=OCC(//)",
      "CC(//)",
@@ -87,8 +87,8 @@ public class BremserPredictorTest extends CDKTestCase {
      "CCC(//)",
      "CCC(//)"
 		};
-		
-			double[] result = { 
+
+			double[] result = {
      112.6,
      198.6,
      29.6,
@@ -113,16 +113,16 @@ public class BremserPredictorTest extends CDKTestCase {
      40.1,
      40.1
 		};
-		
+
 		double prediction;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		for (int f = 0; f < data.length; f++)
 		{
 			prediction = bp.predict(data[f]);
 			//logger.debug("\"" + prediction + "\",");
-			Assert.assertEquals(result[f], prediction, 0.001);	
+			Assert.assertEquals(result[f], prediction, 0.001);
 		}
-		
+
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class BremserPredictorTest extends CDKTestCase {
 	 */
 	@Test public void testGetConfidenceLimit() throws Exception
 	{
-double[] result = { 
+double[] result = {
      28.5,
      25.7,
      28.5,
@@ -191,13 +191,13 @@ double[] result = {
 			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
 			prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
 			//logger.debug("\"" + prediction + "\",");
-			Assert.assertEquals(result[f], prediction, 0.001);	
+			Assert.assertEquals(result[f], prediction, 0.001);
 		}
-		
+
 	}
 
 	@Test public void testFailure1()
-	{	
+	{
 		boolean correct = false;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		try
@@ -208,14 +208,14 @@ double[] result = {
 		{
 			if (exc instanceof org.openscience.cdk.exception.CDKException)
 			{
-				correct = true;	
+				correct = true;
 			}
 		}
 		Assert.assertTrue(correct);
 	}
 
 	@Test public void testFailure2()
-	{	
+	{
 		boolean correct = false;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
 		try
@@ -226,14 +226,14 @@ double[] result = {
 		{
 			if (exc instanceof org.openscience.cdk.exception.CDKException)
 			{
-				correct = true;	
+				correct = true;
 			}
 		}
 		Assert.assertTrue(correct);
 	}
 
 	@Test public void testFailure3()
-	{	
+	{
 		boolean correct = false;
 		String test = null;
 		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
@@ -245,18 +245,18 @@ double[] result = {
 		{
 			if (exc instanceof org.openscience.cdk.exception.CDKException)
 			{
-				correct = true;	
+				correct = true;
 			}
 		}
 		Assert.assertTrue(correct);
 	}
 
-	
+
 	private void removeHydrogens(IAtomContainer ac)
 	{
 		org.openscience.cdk.interfaces.IAtom atom = null;
 		int f = ac.getAtomCount() - 1;
-		
+
 		do{
 			atom = ac.getAtom(f);
 			if (atom.getSymbol().equals("H"))
@@ -267,6 +267,6 @@ double[] result = {
 		}
 		while(f >= 0);
 	}
-	
+
 }
 

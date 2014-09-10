@@ -33,10 +33,10 @@ import java.util.List;
  * @cdk.githash
  */
 public interface IReactionProcess {
-	
+
 	/**
 	 * Returns a <code>Map</code> which specifies which reaction
-	 * is implemented by this class. 
+	 * is implemented by this class.
 	 *
 	 * These fields are used in the map:
 	 * <ul>
@@ -50,32 +50,32 @@ public interface IReactionProcess {
 	 * @return An object containing the reaction specification
 	 */
     public ReactionSpecification getSpecification();
-    
-    /** 
-     * Sets the parameters for this reaction. 
+
+    /**
+     * Sets the parameters for this reaction.
      *
      * Must be done before calling
      * calculate as the parameters influence the calculation outcome.
      *
-     * @param params A List of Objects containing the parameters for this reaction. 
+     * @param params A List of Objects containing the parameters for this reaction.
      * 				 The key must be included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
-     * 
+     *
      * @see #getParameterList
      */
     public void setParameterList(List<IParameterReact> params) throws CDKException;
-    
-    /** 
+
+    /**
      * Returns the current parameter values.
      *
      * @return A List of Object containing the name and the type of the parameter
      * @see #setParameterList
      * */
     public List<IParameterReact> getParameterList();
-    
-    /** 
+
+    /**
      * Initiates the process for the given Reaction.
-     * 
+     *
      * Optionally, parameters may be set which can affect the course of the process.
      *
      *
@@ -88,10 +88,10 @@ public interface IReactionProcess {
 
     /**
      * Return the IParameterReact if it exists given the class.
-     * 
+     *
      * @param paramClass The class
      * @return           The IParameterReact
      */
     public IParameterReact getParameterClass(Class<?> paramClass);
-    
+
 }

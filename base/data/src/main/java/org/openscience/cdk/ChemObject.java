@@ -97,7 +97,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 	/**
 	 * Constructs a new IChemObject by copying the flags, and the
 	 * identifier. It does not copy the listeners and properties.
-	 * 
+	 *
 	 * @param chemObject the object to copy
 	 */
 	public ChemObject(IChemObject chemObject) {
@@ -106,7 +106,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		flags = chemObject.getFlagValue().shortValue();
 		// copy the identifier
 		identifier = chemObject.getID();
-	}	
+	}
 
 	/**
 	 *  Lazy creation of chemObjectListeners List.
@@ -166,7 +166,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
         if (chemObjectListeners == null) {
 			return;
 		}
-        
+
         List<IChemObjectListener> listeners = lazyChemObjectListeners();
 		if (listeners.contains(col)) {
 			listeners.remove(col);
@@ -435,8 +435,8 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		lazyProperties().putAll(properties);
 		notifyChanged();
 	}
-  
-  
+
+
 	/**
 	 * Sets the whole set of flags.
 	 *
@@ -481,13 +481,13 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
 		}
 		return copy;
 	}
-	
+
     public IChemObjectBuilder getBuilder() {
         return DefaultChemObjectBuilder.getInstance();
     }
 
 	private boolean doNotification = true;
-	
+
 	public void setNotification(boolean bool) {
 		this.doNotification = bool;
 	}

@@ -7,9 +7,9 @@ import org.openscience.cdk.interfaces.IReaction;
  * @cdk.githash
  */
 
-public class SignatureReactionCanoniser 
+public class SignatureReactionCanoniser
     extends AbstractReactionLabeller implements ICanonicalReactionLabeller {
-    
+
     private MoleculeSignatureLabellingAdaptor labeller =
         new MoleculeSignatureLabellingAdaptor();
 
@@ -17,6 +17,6 @@ public class SignatureReactionCanoniser
 	 * {@inheritDoc}
 	 */
     public IReaction getCanonicalReaction(IReaction reaction) {
-        return super.labelReaction(reaction, labeller); 
+        return super.labelReaction(reaction, labeller);
     }
 }

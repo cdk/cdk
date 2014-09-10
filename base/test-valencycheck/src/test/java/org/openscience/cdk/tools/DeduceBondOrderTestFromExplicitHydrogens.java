@@ -37,13 +37,13 @@ import org.openscience.cdk.silent.Bond;
  * This suite tests deduction from hybridization rich starting
  * points, excluding, but optional, implicit or explicit
  * hydrogen counts.
- * 
+ *
  * @author      egonw
  * @cdk.module  test-valencycheck
  * @cdk.created 2006-08-16
  */
 public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
-	
+
 	private IDeduceBondOrderTool dboTool;
 
     @Before
@@ -52,68 +52,68 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
     }
 
 	/**
-	 * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>. 
+	 * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.
 	 */
 	@Test public void testAcetylene() throws Exception {
 		IAtomContainer keto = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom1, 1);
 		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom2, 1);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
-		
+
 		keto.addAtom(atom1);
 		keto.addAtom(atom2);
 		keto.addBond(bond1);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(keto);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_TRIPLE, bond1.getOrder());
 	}
 
 	/**
-	 * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>. 
+	 * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>.
 	 */
 	@Test public void testKeto() throws Exception {
 	    IAtomContainer keto = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom1, 3);
 		IAtom atom2 = new Atom(Elements.CARBON);
 		addHydrogens(keto, atom2, 1);
 		IAtom atom3 = new Atom(Elements.OXYGEN);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
-		
+
 		keto.addAtom(atom1);
 		keto.addAtom(atom2);
 		keto.addAtom(atom3);
 		keto.addBond(bond1);
 		keto.addBond(bond2);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(keto);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
 	}
-	
+
 	/**
-	 * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>. 
+	 * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>.
 	 */
 	@Test public void testEnol() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 2);
@@ -121,31 +121,31 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		addHydrogens(enol, atom2, 1);
 		IAtom atom3 = new Atom(Elements.OXYGEN);
 		addHydrogens(enol, atom3, 1);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
 		enol.addBond(bond1);
 		enol.addBond(bond2);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
 	}
-	
+
 	/**
-	 * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>. 
+	 * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>.
 	 */
 	@Test public void xtestButadiene() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 2);
@@ -155,12 +155,12 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		addHydrogens(enol, atom3, 1);
 		IAtom atom4 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom4, 2);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
 		IBond bond3 = new Bond(atom3, atom4);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
@@ -168,10 +168,10 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		enol.addBond(bond1);
 		enol.addBond(bond2);
 		enol.addBond(bond3);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
@@ -179,11 +179,11 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 	}
 
 	/**
-	 * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>. 
+	 * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>.
 	 */
 	@Test public void testQuinone() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		IAtom atom2 = new Atom(Elements.CARBON);
@@ -197,7 +197,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		addHydrogens(enol, atom6, 1);
 		IAtom atom7 = new Atom(Elements.OXYGEN);
 		IAtom atom8 = new Atom(Elements.OXYGEN);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
@@ -207,7 +207,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		IBond bond6 = new Bond(atom6, atom1);
 		IBond bond7 = new Bond(atom7, atom1);
 		IBond bond8 = new Bond(atom8, atom4);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
@@ -224,10 +224,10 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		enol.addBond(bond6);
 		enol.addBond(bond7);
 		enol.addBond(bond8);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond2.getOrder());
@@ -238,13 +238,13 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond7.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond8.getOrder());
 	}
-	
+
 	/**
-	 * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>. 
+	 * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>.
 	 */
 	@Test public void testBenzene() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
@@ -258,7 +258,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		addHydrogens(enol, atom5, 1);
 		IAtom atom6 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom6, 1);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
@@ -266,7 +266,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		IBond bond4 = new Bond(atom4, atom5);
 		IBond bond5 = new Bond(atom5, atom6);
 		IBond bond6 = new Bond(atom6, atom1);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
@@ -279,10 +279,10 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		enol.addBond(bond4);
 		enol.addBond(bond5);
 		enol.addBond(bond6);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
 				bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
@@ -297,13 +297,13 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
 				bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
 	}
-	
+
 	/**
-	 * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>. 
+	 * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>.
 	 */
 	@Test public void testPyrrole() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
@@ -315,14 +315,14 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		addHydrogens(enol, atom4, 1);
 		IAtom atom5 = new Atom(Elements.NITROGEN);
 		addHydrogens(enol, atom5, 1);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
 		IBond bond3 = new Bond(atom3, atom4);
 		IBond bond4 = new Bond(atom4, atom5);
 		IBond bond5 = new Bond(atom5, atom1);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
@@ -333,10 +333,10 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		enol.addBond(bond3);
 		enol.addBond(bond4);
 		enol.addBond(bond5);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_DOUBLE, bond1.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond2.getOrder());
@@ -344,14 +344,14 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond4.getOrder());
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond5.getOrder());
 	}
-	
+
 	/**
-	 * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>. 
+	 * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
 	 */
 	@Ignore("previously disabled 'xtest'")
     public void xtestPyridine() throws Exception {
 	    IAtomContainer enol = new AtomContainer();
-		
+
 		// atom block
 		IAtom atom1 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom1, 1);
@@ -364,7 +364,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		IAtom atom5 = new Atom(Elements.NITROGEN);
 		IAtom atom6 = new Atom(Elements.CARBON);
 		addHydrogens(enol, atom6, 1);
-		
+
 		// bond block
 		IBond bond1 = new Bond(atom1, atom2);
 		IBond bond2 = new Bond(atom2, atom3);
@@ -372,7 +372,7 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		IBond bond4 = new Bond(atom4, atom5);
 		IBond bond5 = new Bond(atom5, atom6);
 		IBond bond6 = new Bond(atom6, atom1);
-		
+
 		enol.addAtom(atom1);
 		enol.addAtom(atom2);
 		enol.addAtom(atom3);
@@ -385,10 +385,10 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		enol.addBond(bond4);
 		enol.addBond(bond5);
 		enol.addBond(bond6);
-		
+
 		// now have the algorithm have a go at it
 		dboTool.saturate(enol);
-		
+
 		// now check whether it did the right thing
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
 				bond1.getOrder().numeric() + bond6.getOrder().numeric()); // around atom1
@@ -403,11 +403,11 @@ public class DeduceBondOrderTestFromExplicitHydrogens extends CDKTestCase {
 		Assert.assertEquals(CDKConstants.BONDORDER_SINGLE.numeric() + CDKConstants.BONDORDER_DOUBLE.numeric(),
 				bond5.getOrder().numeric() + bond6.getOrder().numeric()); // around atom6
 	}
-	
+
 	private void addHydrogens(IAtomContainer container, IAtom atom, int numberOfHydrogens) {
-		for (int i=0; i<numberOfHydrogens; i++) 
+		for (int i=0; i<numberOfHydrogens; i++)
 			container.addBond(atom.getBuilder().newInstance(IBond.class,atom, atom.getBuilder().newInstance(IAtom.class,"H")));
 	}
-	
+
 }
 

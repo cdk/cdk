@@ -35,7 +35,7 @@ import org.openscience.cdk.annotations.TestMethod;
  *   }
  * }
  * </pre>
- * 
+ *
  * @cdk.module core
  * @cdk.githash
  */
@@ -77,7 +77,7 @@ public class LoggingToolFactory {
     /**
      * Dynamically create a {@link ILoggingTool} for the given
      * <code>sourceClass</code>.
-     * 
+     *
      * @param  sourceClass Class for which the {@link ILoggingTool} should be
      *                     constructed.
      * @return             An {@link ILoggingTool} implementation.

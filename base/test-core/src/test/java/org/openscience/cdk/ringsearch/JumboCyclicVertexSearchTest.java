@@ -57,8 +57,8 @@ public class JumboCyclicVertexSearchTest {
         for (int v = 0; v < g.length; v++)
             assertTrue(search.cyclic(v));
     }
-    
-    @Test public void testCyclic_IntInt() {        
+
+    @Test public void testCyclic_IntInt() {
         int[][] g = new int[][]{{5, 1}, {0, 2}, {1, 3}, {2, 4}, {3, 5}, {4, 0, 6}, {5}};
         CyclicVertexSearch search = new JumboCyclicVertexSearch(g);
         assertTrue(search.cyclic(0, 1));
@@ -68,8 +68,8 @@ public class JumboCyclicVertexSearchTest {
         assertTrue(search.cyclic(4, 5));
         assertTrue(search.cyclic(5, 0));
         assertFalse(search.cyclic(5, 6));
-    } 
-    
+    }
+
     @Test public void vertexColor() {
         // medium size spiro cyclo hexane like
         int[][] g = new int[][]{{1, 5}, {0, 2}, {1, 3}, {2, 4}, {3, 5},

@@ -31,18 +31,18 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 
 	protected IBitFingerprint bitsetFP;
 	private Class<? extends IBitFingerprint> C;
-	
-	public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C) 
+
+	public AbstractBitFingerprintTest(Class<? extends IBitFingerprint> C)
 	       throws Exception {
 		this.C = C;
 		bitsetFP = C.newInstance();
 	}
-	
+
 	@Test
 	public void testCreate() {
 		assertFalse( bitsetFP.get(0) );
 	}
-	
+
 	@Test
 	public void testGetAndSet() {
 		testCreate();
@@ -52,14 +52,14 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 		bitsetFP.set(3, true);
 		assertTrue( bitsetFP.get(3) );
 	}
-	
+
 	private IBitFingerprint createFP2() throws Exception {
 		IBitFingerprint fp = C.newInstance();
 		fp.set(2, true);
 		fp.set(3, true);
 		return fp;
 	}
-	
+
 	@Test
 	public void testAnd() throws Exception {
 		testGetAndSet();
@@ -69,7 +69,7 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 		assertFalse( bitsetFP.get(2) );
 		assertTrue(  bitsetFP.get(3) );
 	}
-	
+
 	@Test
 	public void testOr() throws Exception {
 		testGetAndSet();
@@ -79,20 +79,20 @@ public abstract class AbstractBitFingerprintTest extends CDKTestCase {
 		assertTrue(  bitsetFP.get(2) );
 		assertTrue(  bitsetFP.get(3) );
 	}
-	
+
 	@Test
 	public void testEquals() throws Exception {
 		IBitFingerprint fp1 = C.newInstance();
 		IBitFingerprint fp2 = C.newInstance();
-		
+
 		for ( IBitFingerprint fp : new IBitFingerprint[] {fp1, fp2}) {
 			fp.set(0, true);
 			fp.set(1, false);
 			fp.set(2, true);
 		}
-		assertTrue( "identical fingerprints should be equal", 
+		assertTrue( "identical fingerprints should be equal",
 				    fp1.equals(fp2) );
-		assertFalse( "different fingerprints should not be equal", 
+		assertFalse( "different fingerprints should not be equal",
 				     bitsetFP.equals(fp1) );
 		assertTrue( "equal fingerprints must have same hashcode",
 				    fp1.hashCode() == fp2.hashCode() );

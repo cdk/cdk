@@ -36,7 +36,7 @@ import org.openscience.cdk.renderer.elements.TextElement;
 
 /**
  * Generate the arrow for a reaction.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -58,17 +58,17 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 		// only draw + signs when there are more than one reactant
 		if (reactants.getAtomContainerCount() > 1) {
 			Rectangle2D totalBoundsReactants = BoundsCalculator.calculateBounds(reactants);
-			Rectangle2D bounds1 = 
+			Rectangle2D bounds1 =
 				BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
 			double axis = totalBoundsReactants.getCenterY();
 			for (int i = 1; i < reaction.getReactantCount(); i++) {
-				Rectangle2D bounds2 = 
+				Rectangle2D bounds2 =
 					BoundsCalculator.calculateBounds(reactants.getAtomContainer(i));
 				diagram.add(makePlus(bounds1, bounds2, axis, color));
 				bounds1 = bounds2;
 			}
 		}
-        
+
 		// only draw + signs when there are more than one products
 		IAtomContainerSet products = reaction.getProducts();
 		if (products.getAtomContainerCount() > 1) {
@@ -76,7 +76,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 			double axis = totalBoundsProducts.getCenterY();
 			Rectangle2D bounds1 = BoundsCalculator.calculateBounds(reactants.getAtomContainer(0));
 			for (int i = 1; i < reaction.getProductCount(); i++) {
-				Rectangle2D bounds2 = 
+				Rectangle2D bounds2 =
 					BoundsCalculator.calculateBounds(products.getAtomContainer(i));
 
 				diagram.add(makePlus(bounds1, bounds2, axis, color));
@@ -85,7 +85,7 @@ public class ReactionPlusGenerator implements IGenerator<IReaction> {
 		}
         return diagram;
 	}
-	
+
 	/** Place a '+' sign between two molecules. */
 	private TextElement makePlus(
 	        Rectangle2D moleculeBox1, Rectangle2D moleculeBox2, double axis, Color color) {

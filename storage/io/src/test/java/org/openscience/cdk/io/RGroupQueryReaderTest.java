@@ -74,8 +74,8 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
     }
 
-    @Test 
-    @Override 
+    @Test
+    @Override
     public void testAcceptsAtLeastOneChemObjectClass() {
         RGroupQueryReader reader = new RGroupQueryReader();
         Assert.assertTrue(reader.accepts(RGroupQuery.class));
@@ -88,9 +88,9 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
     }
 
     /**
-     * Test that the format factory guesses the correct IChemFormat 
+     * Test that the format factory guesses the correct IChemFormat
      * based on the file content.
-     * 
+     *
      * @throws Exception
      */
     @Test
@@ -153,7 +153,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         List<IAtomContainer> configurations = rGroupQuery.getAllConfigurations();
         Assert.assertEquals(configurations.size(), 4);
 
-        //RestH is set to true for R1, so with zero substitutes, the phosphor should get the restH flag set to true.        
+        //RestH is set to true for R1, so with zero substitutes, the phosphor should get the restH flag set to true.
         boolean restH_Identified=false;
         for(IAtomContainer atc : configurations){
             if (atc.getAtomCount()==6)  {
@@ -243,7 +243,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
         List<IAtomContainer> configurations = rGroupQuery.getAllConfigurations();
         Assert.assertEquals(configurations.size(), 12);
-        
+
         //Test restH values
         int countRestHForSmallestConfigurations=0;
         for(IAtomContainer atc : configurations){
@@ -251,14 +251,14 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
                 for (IAtom atom : atc.atoms() )  {
                     if (atom.getProperty(CDKConstants.REST_H)!=null)  {
                         countRestHForSmallestConfigurations++;
-                        if (atom.getSymbol().equals("P")) 
+                        if (atom.getSymbol().equals("P"))
                             Assert.assertEquals(atom.getProperty(CDKConstants.REST_H),true);
                     }
                 }
             }
         }
         Assert.assertEquals(countRestHForSmallestConfigurations,6);
-        
+
     }
 
     /**
@@ -362,7 +362,7 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Test parsing of RGFile rgfile.6.mol.
-     * This RGFile is incomplete, RGP lines are missing. We still want to 
+     * This RGFile is incomplete, RGP lines are missing. We still want to
      * accept it (Symyx/ChemAxon software accepts it too).
      */
     @Test (expected=CDKException.class)
@@ -380,16 +380,16 @@ public class RGroupQueryReaderTest extends SimpleChemObjectReaderTest {
         // This file has missing $RGP blocks. You could argue that this is
         // thus not a legal query (ie missing query specifications)
         Assert.assertFalse(rGroupQuery.areSubstituentsDefined());
-        
+
         //Getting for all configurations won't happen, because not all groups were set
         rGroupQuery.getAllConfigurations(); // Will raise exception
- 
+
     }
 
     /**
      * Test parsing of RGFile rgfile.7.mol.
      * This RGFile has APO lines with value 3: both attachment points.<P>
-     * 
+     *
      * Also, R32 appears twice, but with different numbers of attachment.
      * The parser should not trip over this, and make nice configurations.
      */

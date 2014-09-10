@@ -91,11 +91,11 @@ public class IsomorphismTester implements java.io.Serializable
 
 
 	/**
-	 *  Checks whether a given molecule is isomorphic with the one 
+	 *  Checks whether a given molecule is isomorphic with the one
 	 *  that has been assigned to this IsomorphismTester at construction time.
 	 *
-	 * @param  mol2                     A molecule to check 
-	 * @return                          True, if the two molecules are isomorphic 
+	 * @param  mol2                     A molecule to check
+	 * @return                          True, if the two molecules are isomorphic
 	 */
     @TestMethod("testIsIsomorphic_IMolecule")
     public boolean isIsomorphic(IAtomContainer mol2) {
@@ -120,7 +120,7 @@ public class IsomorphismTester implements java.io.Serializable
 				{
 					atom1 = base.getAtom(f);
 					atom2 = compare.getAtom(g);
-					if (!(atom1.getSymbol().equals(atom2.getSymbol())) && 
+					if (!(atom1.getSymbol().equals(atom2.getSymbol())) &&
                           atom1.getImplicitHydrogenCount() == atom2.getImplicitHydrogenCount())
 					{
 						return false;

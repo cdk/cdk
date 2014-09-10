@@ -111,9 +111,9 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
   implements IRenderer<IChemModel> {
 
 	private IRenderer<IAtomContainerSet> moleculeSetRenderer;
-	
+
 	private IRenderer<IReactionSet> reactionSetRenderer;
-	
+
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -134,9 +134,9 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         reactionSetRenderer = new ReactionSetRenderer(rendererModel,generators, fontManager);
         this.setup();
     }
-	
-	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, 
-	                List<IGenerator<IReaction>> reactionGenerators, 
+
+	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators,
+	                List<IGenerator<IReaction>> reactionGenerators,
 	                IFontManager fontManager) {
 		super(new RendererModel());
 	    this.fontManager = fontManager;
@@ -146,11 +146,11 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
 	    for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
         }
-        reactionSetRenderer = 
+        reactionSetRenderer =
             new ReactionSetRenderer(rendererModel,generators, reactionGenerators, fontManager);
         this.setup();
 	}
-	
+
 	/**
 	 * Setup the transformations necessary to draw this Chem Model.
 	 *
@@ -268,7 +268,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
 //        return this.convertToDiagramBounds(modelBounds);
 //    }
 
-	
+
 
 	/**
      * Paint a ChemModel.

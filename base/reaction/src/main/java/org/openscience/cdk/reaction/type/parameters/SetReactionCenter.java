@@ -23,7 +23,7 @@ import org.openscience.cdk.annotations.TestClass;
 /**
  * Class extension of ParameterReact class which defines if a reaction is set already the reaction center
  * in the reactants.
- * 
+ *
  * @author      miguelrojasch
  * @cdk.module  reaction
  * @cdk.githash
@@ -31,5 +31,5 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass(value="org.openscience.cdk.reaction.type.parameters.SetReactionCenterTest")
 public class SetReactionCenter extends ParameterReact{
 
-	
+
 }

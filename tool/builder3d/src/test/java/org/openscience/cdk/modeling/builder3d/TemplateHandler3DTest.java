@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.created 2004-11-04
  */
 public class TemplateHandler3DTest extends CDKTestCase {
-		
+
 	@Test
 	public void testGetInstance() throws Exception {
 		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
@@ -75,7 +75,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
                 parseBitSet("{4, 17, 51, 52, 58, 110, 114, 162, 177, 182, 208, 224, 230, 231, 242, 259, 262, 266, 270, 277, 289, 307, 309, 325, 335, 339, 349, 351, 354, 363, 371, 376, 387, 406, 433, 437, 489, 491, 500, 504, 513, 522, 533, 539, 545, 561, 573, 588, 601, 603, 611, 614, 618, 665, 686, 735, 746, 747, 752, 755, 764, 776, 777, 784, 795, 798, 801, 808, 822, 823, 851, 876, 882, 886, 944, 969, 987}"),
                 parseBitSet("{4, 14, 50, 61, 65, 67, 83, 86, 91, 103, 104, 120, 133, 154, 162, 166, 188, 192, 222, 300, 308, 317, 320, 398, 426, 429, 432, 465, 468, 473, 475, 490, 505, 506, 510, 515, 522, 671, 682, 689, 704, 739, 747, 770, 782, 834, 921, 922, 925, 944, 952, 953, 960, 963, 998, 1020}")
         };
-        
+
 		String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         List<IBitFingerprint> data= new TemplateExtractor().makeFingerprintsFromSdf(
@@ -90,7 +90,7 @@ public class TemplateHandler3DTest extends CDKTestCase {
         	Assert.assertEquals(expected[i], bs.asBitSet());
         }
 	}
-	
+
 	@Test
 	public void testMapTemplates_IAtomContainer_double() throws Exception{
 	    IAtomContainer ac = MoleculeFactory.makeBicycloRings();

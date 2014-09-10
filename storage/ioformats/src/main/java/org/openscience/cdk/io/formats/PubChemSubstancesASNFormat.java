@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class PubChemSubstancesASNFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public PubChemSubstancesASNFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PubChemSubstancesASNFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,13 +66,13 @@ public class PubChemSubstancesASNFormat extends SimpleChemFormatMatcher implemen
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
     	return null;
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
     	return null;
     }
 

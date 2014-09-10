@@ -70,12 +70,12 @@ public class CrystClustReader extends DefaultChemObjectReader {
     public CrystClustReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
@@ -115,10 +115,10 @@ public class CrystClustReader extends DefaultChemObjectReader {
         IChemSequence seq = file.getBuilder().newInstance(IChemSequence.class);
         IChemModel model = file.getBuilder().newInstance(IChemModel.class);
         ICrystal crystal = null;
-        
+
         int lineNumber = 0;
         Vector3d a, b, c;
-        
+
         try {
             String line = input.readLine();
             while (input.ready() && line != null) {
@@ -127,14 +127,14 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     logger.debug("found new frame");
                     model = file.getBuilder().newInstance(IChemModel.class);
                     crystal = file.getBuilder().newInstance(ICrystal.class);
-                    
+
                     // assume the file format is correct
-                    
+
                     logger.debug("reading spacegroup");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
                     crystal.setSpaceGroup(line);
-                    
+
                     logger.debug("reading unit cell axes");
                     Vector3d axis = new Vector3d();
                     logger.debug("parsing A: ");
@@ -176,18 +176,18 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     a = crystal.getA();
                     b = crystal.getB();
                     c = crystal.getC();
-                    
+
                     logger.debug("Reading number of atoms");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
                     int atomsToRead = Integer.parseInt(line);
-                    
+
                     logger.debug("Reading no molecules in assym unit cell");
                     line = input.readLine();
                     logger.debug((lineNumber++) + ": ", line);
                     int Z = Integer.parseInt(line);
                     crystal.setZ(Z);
-                    
+
                     String symbol;
                     double charge;
                     Point3d cart;
@@ -214,12 +214,12 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         crystal.addAtom(atom);
                         logger.debug("Added atom: ", atom);
                     }
-                    
+
                     model.setCrystal(crystal);
                     seq.addChemModel(model);
                 } else {
                     logger.debug("Format seems broken. Skipping these lines:");
-                    while (!line.startsWith("frame:") && 
+                    while (!line.startsWith("frame:") &&
                     input.ready() && line != null) {
                         line = input.readLine();
                         logger.debug(lineNumber++ + ": ", line);
@@ -236,7 +236,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
         }
         return file;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

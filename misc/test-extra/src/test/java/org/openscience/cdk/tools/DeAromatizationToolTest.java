@@ -40,7 +40,7 @@ import java.util.Iterator;
  * @cdk.module test-extra
  */
 public class DeAromatizationToolTest extends CDKTestCase {
-	
+
 	public DeAromatizationToolTest() {
 		super();
 	}
@@ -74,6 +74,6 @@ public class DeAromatizationToolTest extends CDKTestCase {
 		boolean success = DeAromatizationTool.deAromatize(butadiene);
 		Assert.assertFalse(success);
 	}
-	
+
 }
 

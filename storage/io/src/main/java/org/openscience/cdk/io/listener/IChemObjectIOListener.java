@@ -39,7 +39,7 @@ public interface IChemObjectIOListener extends EventListener {
    * or answer it itself.
    */
   public void processIOSettingQuestion(IOSetting setting);
-  
+
 }
 
 

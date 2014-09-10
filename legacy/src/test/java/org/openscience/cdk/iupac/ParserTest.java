@@ -13,7 +13,7 @@
  *
  *   You should have received a copy of the GNU Lesser General Public
  *   License along with this library; if not, write to the Free Software
- *   Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *   Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.iupac;
 
@@ -40,7 +40,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
 public class ParserTest extends CDKTestCase
 {
     IsomorphismTester comparer = new IsomorphismTester();
-    
+
     // Add test methods here, they have to start with 'test' name.
     // for example:
     // @Test public void testHello() {}
@@ -52,9 +52,9 @@ public class ParserTest extends CDKTestCase
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(2);   
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(2);
 
-        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
+        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
 
@@ -66,9 +66,9 @@ public class ParserTest extends CDKTestCase
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(5);  
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(5);
 
-        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
+        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
 
@@ -80,21 +80,21 @@ public class ParserTest extends CDKTestCase
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
         }
-        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(7);  
+        IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(7);
 
-        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
+        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
-    }    
-    
+    }
+
     @Test public void testEicosane() throws Exception
     {
         IAtomContainer parserMolecule = NomParser.generate("Eicosane", SilentChemObjectBuilder.getInstance());
         IAtomContainer correctMolecule = MoleculeFactory.makeAlkane(20);
 
-        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one", 
+        Assert.assertTrue("The molecule built by the parser isn't the same as the expected one",
                    comparer.isIsomorphic(parserMolecule, correctMolecule));
     }
-    
+
     @Test public void testTokenMgrErrorCharacterName() throws Exception
     {
         try
@@ -109,7 +109,7 @@ public class ParserTest extends CDKTestCase
             Assert.assertTrue (true);
         }
     }
-    
+
     @Test public void testParseExceptionNoName()
     {
         try
@@ -122,7 +122,7 @@ public class ParserTest extends CDKTestCase
             Assert.fail(exception.getMessage());
         }
     }
-        
+
     @Test public void testParseExceptionMissingToken()
     {
         try
@@ -135,7 +135,7 @@ public class ParserTest extends CDKTestCase
             Assert.fail(exception.getMessage());
         }
     }
-    
+
     @Test public void testUnconnectingGroup()
     {
         try
@@ -146,9 +146,9 @@ public class ParserTest extends CDKTestCase
             Assert.assertTrue (true);
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
-        }        
+        }
     }
-    
+
     @Test public void testUnconnectingSubChain()
     {
         try
@@ -159,6 +159,6 @@ public class ParserTest extends CDKTestCase
             Assert.assertTrue (true);
         } catch (CDKException exception) {
             Assert.fail(exception.getMessage());
-        }        
+        }
     }
 }

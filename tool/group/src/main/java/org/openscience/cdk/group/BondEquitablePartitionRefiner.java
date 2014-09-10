@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Refiner for atom containers, which refines partitions of the bonds to
  * equitable partitions. Used by the {@link BondDiscretePartitionRefiner}.
- * 
+ *
  * @author maclean
  * @cdk.module group
  *
@@ -43,10 +43,10 @@ public class BondEquitablePartitionRefiner extends
      * A reference to the discrete refiner, which has the connectivity info.
      */
     private BondDiscretePartitionRefiner discreteRefiner;
-    
+
     /**
      * Make an equitable partition refiner using the supplied connection table.
-     * 
+     *
      * @param discreteRefiner the connections between vertices
      */
     @TestMethod("constructorTest")
@@ -68,7 +68,7 @@ public class BondEquitablePartitionRefiner extends
         }
         return neighbours;
     }
-    
+
     /**
      * @inheritDoc
      */

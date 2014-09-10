@@ -24,9 +24,9 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,9 +35,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class ChemtoolFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public ChemtoolFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ChemtoolFormat();

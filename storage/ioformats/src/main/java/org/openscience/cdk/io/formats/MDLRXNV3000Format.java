@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -37,13 +37,13 @@ public class MDLRXNV3000Format extends AbstractResourceFormat implements IChemFo
 	private static IResourceFormat myself = null;
 
     public MDLRXNV3000Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MDLRXNV3000Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -70,7 +70,7 @@ public class MDLRXNV3000Format extends AbstractResourceFormat implements IChemFo
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.MDLRXNV3000Reader";
     }
 

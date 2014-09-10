@@ -49,7 +49,7 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
     RGroupListTest.class,
     SymbolSetQueryAtomTest.class,
     QueryAtomContainerCreatorTest.class,
-    
+
     AtomMatcherTest.class,
     BondMatcherTest.class,
     AbstractVFStateTest.class,

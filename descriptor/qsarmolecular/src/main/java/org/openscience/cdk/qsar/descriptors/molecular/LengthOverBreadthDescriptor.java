@@ -132,7 +132,7 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
      *
      * @param atomContainer AtomContainer
      * @return A {@link org.openscience.cdk.qsar.result.DoubleArrayResult} containing LOBMAX and LOBMIN in that
-     *         order     
+     *         order
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {

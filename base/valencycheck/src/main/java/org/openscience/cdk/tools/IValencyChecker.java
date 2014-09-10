@@ -33,7 +33,7 @@ import org.openscience.cdk.exception.CDKException;
  *
  * @author         Egon Willighagen
  * @cdk.created    2004-01-08
- * 
+ *
  * @cdk.module     valencycheck
  * @cdk.githash
  */

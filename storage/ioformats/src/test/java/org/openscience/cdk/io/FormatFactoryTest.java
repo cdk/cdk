@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -74,13 +74,13 @@ import org.openscience.cdk.io.formats.XYZFormat;
 public class FormatFactoryTest extends CDKTestCase {
 
     private static FormatFactory factory;
-    
+
     @BeforeClass public static void setup() {
         factory = new FormatFactory();
     }
-    
+
     @Test public void testGaussian94() throws Exception {
-        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", 
+        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out",
                      Gaussian94Format.getInstance());
     }
     @Test public void testGaussian98() throws Exception {
@@ -137,7 +137,7 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test public void testShelX() throws Exception {
         expectFormat("data/shelx/frame_1.res", ShelXFormat.getInstance());
     }
-    
+
     @Test public void testMDLMol() throws Exception {
         expectFormat("data/mdl/bug1014344-1.mol", MDLFormat.getInstance());
     }
@@ -145,7 +145,7 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test public void testMDLMolV2000() throws Exception {
         expectFormat("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance());
     }
-    
+
     @Test public void testDetection() throws Exception {
     	expectFormat("data/mdl/withcharges.mol", MDLV2000Format.getInstance());
     }
@@ -157,15 +157,15 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test public void testPDB() throws Exception {
         expectFormat("data/pdb/coffeine.pdb", PDBFormat.getInstance());
     }
-    
+
     @Test public void testMol2() throws Exception {
     	expectFormat("data/mol2/fromWebsite.mol2", Mol2Format.getInstance());
     }
-    
+
     @Test public void testCTX() throws Exception {
     	expectFormat("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance());
     }
-    
+
     @Test public void testPubChemCompoundASN() throws Exception {
         expectFormat("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance());
     }
@@ -177,19 +177,19 @@ public class FormatFactoryTest extends CDKTestCase {
     @Test public void testPubChemCompoundsXML() throws Exception {
         expectFormat("data/asn/pubchem/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
     }
-    
+
     @Test public void testPubChemSubstancesXML() throws Exception {
         expectFormat("data/asn/pubchem/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
     }
-    
+
     @Test public void testPubChemSubstanceXML() throws Exception {
         expectFormat("data/asn/pubchem/sid577309.xml", PubChemSubstanceXMLFormat.getInstance());
     }
-    
+
     @Test public void testPubChemCompoundXML() throws Exception {
         expectFormat("data/asn/pubchem/cid1145.xml", PubChemCompoundXMLFormat.getInstance());
     }
-    
+
     private void expectFormat(String filename, IResourceFormat expectedFormat) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Assert.assertNotNull("Cannot find file: " + filename, ins);

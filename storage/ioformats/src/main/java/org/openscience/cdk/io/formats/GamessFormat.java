@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,9 +33,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public GamessFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GamessFormat();
@@ -68,7 +68,7 @@ public class GamessFormat extends SimpleChemFormatMatcher implements IChemFormat
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.GamessReader";
     }
 

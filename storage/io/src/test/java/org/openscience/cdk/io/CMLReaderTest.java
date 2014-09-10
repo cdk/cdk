@@ -1,7 +1,7 @@
 /* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -316,7 +316,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     			"      </atom>" +
     			"    </atomArray>" +
     			"  </molecule>" +
-    			"</molecule>";    	      
+    			"</molecule>";
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlContent.getBytes()));
         try {
             IChemFile cfile = reader.read(DefaultChemObjectBuilder.getInstance().newInstance(IChemFile.class));
@@ -325,7 +325,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
             Assert.assertEquals("expected a single atom container", 1, containers.size());
             IAtomContainer container = containers.get(0);
             Assert.assertNotNull("null atom container read", container);
-            
+
             // OK, now test that the residue identifier is properly read
             Assert.assertEquals("ALAA116", container.getID());
             System.out.println("" + container);
@@ -333,7 +333,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
             reader.close();
         }
     }
-    
+
     @Test
     public void testMixedNamespaces() throws Exception {
         InputStream in = getClass().getResourceAsStream("US06358966-20020319-C00001-enr.cml");

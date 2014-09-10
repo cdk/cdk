@@ -34,7 +34,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy 
+ *  <p>The calculation of pi partial charges in pi-bonded systems of an heavy
  *  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
  *  implemented with the Partial Equalization of Pi-Electronegativity (PEPE).</p>
  * <p>This descriptor uses these parameters:
@@ -77,7 +77,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     /**
      *  Constructor for the PartialPiChargeDescriptor object
      */
-    public PartialPiChargeDescriptor() { 
+    public PartialPiChargeDescriptor() {
     	pepe = new GasteigerPEPEPartialCharges();
     }
 
@@ -101,25 +101,25 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
      *  Sets the parameters attribute of the PartialPiChargeDescriptor
      *  object
      *
-     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons, 3: 
+     *@param  params            1:Number of maximum iterations, 2: checking lone pair electrons, 3:
      *							number of maximum resonance structures to be searched.
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 3) 
+        if (params.length > 3)
             throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-        
+
         if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
 	        maxIterations = (Integer) params[0];
-	        
+
 	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
         	lpeChecker = (Boolean) params[1];
         }
-	    
+
 	    if(params.length > 2 && params[2] != null){
         	if (!(params[2] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
@@ -189,7 +189,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
                     return getDummyDescriptorValue(e);
                 }
             }
-        	
+
     		if(maxIterations != -1)
     			pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)
@@ -215,7 +215,7 @@ public class PartialPiChargeDescriptor extends AbstractAtomicDescriptor {
     	atom.setMaxBondOrder(originalMaxBondOrder);
     	atom.setBondOrderSum(originalBondOrderSum);
 
-    	return getCachedDescriptorValue(atom) != null 
+    	return getCachedDescriptorValue(atom) != null
         	? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), getCachedDescriptorValue(atom),
                 names)
             : null;

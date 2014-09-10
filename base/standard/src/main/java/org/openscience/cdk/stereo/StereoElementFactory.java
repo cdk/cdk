@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -50,23 +50,23 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * for this functionality use {@link Stereocenters}. The factory will not create
  * stereo elements if there is missing information (wedge/hatch bonds, undefined
  * coordinates) or the layout indicates unspecified configuration.
- * 
+ *
  * Stereocenters specified with inverse down (hatch) bond style are created if
  * the configuration is unambiguous and the bond does not connect to another
  * stereocenter.
- * 
+ *
  * <blockquote><pre>
  * IAtomContainer       container = ...;
  * StereoElementFactory stereo    = StereoElementFactory.using2DCoordinates();
- * 
+ *
  * // set the elements replacing any existing elements (recommended)
  * container.setStereoElements(stereo.createAll());
- * 
+ *
  * // adding elements individually is no recommended as the AtomContainer
  * // does not check for duplicate or contradicting elements
  * for (IStereoElement element : stereo.createAll())
  *     container.addStereoElement(element); // bad, there may already be elements
- * 
+ *
  * </pre></blockquote>
  *
  * @author John May
@@ -87,7 +87,7 @@ public abstract class StereoElementFactory {
 
     /**
      * Internal constructor.
-     * 
+     *
      * @param container an atom container
      * @param graph     adjacency list representation
      * @param bondMap   lookup bonds by atom index
@@ -132,7 +132,7 @@ public abstract class StereoElementFactory {
                         if (w > v && bondMap.get(v, w).getOrder() == IBond.Order.DOUBLE) {
                             if (centers.isStereocenter(w)) {
                                 IStereoElement element = createGeometric(v, w, centers);
-                                if (element != null) 
+                                if (element != null)
                                     elements.add(element);
                             }
                             break;
@@ -243,12 +243,12 @@ public abstract class StereoElementFactory {
     abstract IDoubleBondStereochemistry createGeometric(IBond bond, Stereocenters stereocenters);
 
     /**
-     * Create an extended tetrahedral element for the atom at index {@code v}. 
-     * If an extended  tetrahedral element could not be created then null is 
-     * returned. An element can not be created if, one or more atoms was 
+     * Create an extended tetrahedral element for the atom at index {@code v}.
+     * If an extended  tetrahedral element could not be created then null is
+     * returned. An element can not be created if, one or more atoms was
      * missing coordinates, the atom has an unspecified (wavy) bond, the atom
-     * is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not 
-     * check if tetrahedral chirality is supported - for this functionality 
+     * is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not
+     * check if tetrahedral chirality is supported - for this functionality
      * use {@link * Stereocenters}.
      *
      * <blockquote><pre>
@@ -293,7 +293,7 @@ public abstract class StereoElementFactory {
         int[][] graph = GraphUtil.toAdjList(container, bondMap);
         return new StereoElementFactory3D(container, graph, bondMap);
     }
-    
+
     private static boolean hasUnspecifiedParity(IAtom atom) {
         return atom.getStereoParity() != null && atom.getStereoParity() == 3;
     }
@@ -336,7 +336,7 @@ public abstract class StereoElementFactory {
         @Override ITetrahedralChirality createTetrahedral(int v, Stereocenters stereocenters) {
 
             IAtom focus = container.getAtom(v);
-            
+
             if (hasUnspecifiedParity(focus))
                 return null;
 
@@ -370,30 +370,30 @@ public abstract class StereoElementFactory {
 
             // TODO: verify valid wedge/hatch configurations using similar procedure
             // to NonPlanarBonds in the cdk-sdg package.
-            
+
             // no up/down bonds present - check for inverted down/hatch
             if (!nonplanar) {
                 int[] ws = graph[v];
                 for (int i = 0; i < ws.length; i++) {
                     int w = ws[i];
                     IBond bond = bondMap.get(v, w);
-                    
+
                     // we have already previously checked whether 'v' is at the
                     // 'point' and so these must be inverse (fat-end @
                     // stereocenter) ala Daylight
                     if (bond.getStereo() == DOWN || bond.getStereo() == DOWN_INVERTED) {
-                       
-                       // we stick to the 'point' end convention but can 
+
+                       // we stick to the 'point' end convention but can
                        // interpret if the bond isn't connected to another
                        // stereocenter - otherwise it's ambiguous!
                        if (stereocenters.isStereocenter(w))
                             continue;
-                        
+
                         elevation[i] = -1;
                         nonplanar = true;
                     }
                 }
-                
+
                 // still no bonds to use
                 if (!nonplanar)
                     return null;
@@ -413,10 +413,10 @@ public abstract class StereoElementFactory {
         /** @inheritDoc */
         @Override IDoubleBondStereochemistry createGeometric(int u, int v, Stereocenters stereocenters) {
 
-            if (hasUnspecifiedParity(container.getAtom(u)) 
+            if (hasUnspecifiedParity(container.getAtom(u))
                     || hasUnspecifiedParity(container.getAtom(v)))
                 return null;
-            
+
             int[] us = graph[u];
             int[] vs = graph[v];
 
@@ -461,7 +461,7 @@ public abstract class StereoElementFactory {
             // put the bond in to v is the first neighbor
             bond.setAtoms(new IAtom[]{container.getAtom(u),
                                       container.getAtom(v)});
-            
+
             return new DoubleBondStereochemistry(bond,
                                                  new IBond[]{bondMap.get(u, us[0]),
                                                              bondMap.get(v, vs[0])
@@ -478,18 +478,18 @@ public abstract class StereoElementFactory {
                 return null;
 
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
-            
+
             int t0 = container.getAtomNumber(terminals[0]);
             int t1 = container.getAtomNumber(terminals[1]);
-            
+
             // check the focus is cumulated
             if (bondMap.get(v, t0).getOrder() != IBond.Order.DOUBLE
                     || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE)
                 return null;
-            
+
             IAtom[] neighbors = new IAtom[4];
             int[]   elevation = new int[4];
-            
+
             neighbors[1] = terminals[0];
             neighbors[3] = terminals[1];
 
@@ -726,12 +726,12 @@ public abstract class StereoElementFactory {
 
             if (!stereocenters.isStereocenter(v))
                 return null;
-            
+
             IAtom focus = container.getAtom(v);
-            
+
             if (hasUnspecifiedParity(focus))
                 return null;
-            
+
             IAtom[] neighbors = new IAtom[4];
 
             neighbors[3] = focus;
@@ -762,7 +762,7 @@ public abstract class StereoElementFactory {
             if (hasUnspecifiedParity(container.getAtom(u))
                     || hasUnspecifiedParity(container.getAtom(v)))
                 return null;
-            
+
             int[] us = graph[u];
             int[] vs = graph[v];
 
@@ -806,7 +806,7 @@ public abstract class StereoElementFactory {
 
             if (hasUnspecifiedParity(focus))
                 return null;
-            
+
             IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(container, focus);
             IAtom[] neighbors = new IAtom[4];
 
@@ -818,7 +818,7 @@ public abstract class StereoElementFactory {
                     || bondMap.get(v, t1).getOrder() != IBond.Order.DOUBLE)
                 return null;
 
-            
+
             neighbors[1] = terminals[0];
             neighbors[3] = terminals[1];
 

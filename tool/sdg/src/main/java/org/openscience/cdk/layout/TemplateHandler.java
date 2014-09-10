@@ -173,7 +173,7 @@ public class TemplateHandler
 		return null;
 	}
 
-	
+
 	/**
 	 * Checks if one of the loaded templates is isomorph to the given
 	 * Molecule. If so, it assigns the coordinates from the template to the
@@ -189,7 +189,7 @@ public class TemplateHandler
 		RMap map = null;
 		IAtom atom1 = null;
 		IAtom atom2 = null;
-        
+
         // We could also use any atom/bond query container but would required
         // depending on 'cdk-isomorphism'. Instead we can anonymise the
         // container to all singly bonded carbons.
@@ -297,7 +297,7 @@ public class TemplateHandler
 	{
 		return templates.get(position);
 	}
-	
+
 
 	/**
 	 * Checks if one of the loaded templates is a substructure in the given
@@ -320,7 +320,7 @@ public class TemplateHandler
 			if (universalIsomorphismTester.isSubgraph(molecule, template))
 			{
 				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newInstance(IAtomContainer.class,molecule), 
+						molecule.getBuilder().newInstance(IAtomContainer.class,molecule),
 						molecule.getBuilder().newInstance(IAtomContainer.class,template)
 				);
 				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
@@ -350,12 +350,12 @@ public class TemplateHandler
 					}
 					matchedSubstructures.addAtomContainer(matchedSubstructure);
 				}
-				
+
 			} else {
 				logger.debug("Structure does not match template: ", template.getID());
 			}
 		}
-		
+
 		/*
 		 * Uniquify matchedSubstructures
 		 */
@@ -365,9 +365,9 @@ public class TemplateHandler
 					matchedSubstructures.removeAtomContainer(j--);
 			}
 		}
-		
+
 		logger.debug("Found " + matchedSubstructures.getAtomContainerCount() + " unique matched subgraphs");
-		
+
 		return matchedSubstructures;
 	}
 
@@ -387,6 +387,6 @@ public class TemplateHandler
 				return false;
 		return true;
 	}
-	
+
 }
 

@@ -44085,7 +44085,7 @@ public abstract class AbstractMmffAtomTypeValidationSuiteTest {
         assertMatchingTypes(container, assign(container), expected);
     }
 
-    // helper method for creating atoms 
+    // helper method for creating atoms
     static IAtom newAtm(String symbol, int charge) {
         IAtom atom = new org.openscience.cdk.silent.Atom(symbol);
         atom.setImplicitHydrogenCount(0);

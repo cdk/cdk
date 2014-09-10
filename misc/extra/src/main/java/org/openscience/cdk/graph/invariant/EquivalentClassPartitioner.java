@@ -34,9 +34,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * An algorithm for topological symmetry. This algorithm derived from the
  * algorithm {@cdk.cite Hu94}.
- * 
+ *
  * @cdk.githash
- * 
+ *
  * @author Junfeng Hao
  * @author Luis F. de Figueiredo
  * @cdk.created 2003-09-24
@@ -96,7 +96,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Get the topological equivalent class of the molecule.
-     * 
+     *
      * @param atomContainer
      *            atoms and bonds of the molecule
      * @return an array contains the automorphism partition of the molecule
@@ -114,7 +114,7 @@ public class EquivalentClassPartitioner {
      * Prepare the node identifier. The purpose of this is to increase the
      * differentiatation of the nodes. Detailed information please see the
      * corresponding literature.
-     * 
+     *
      * @param atomContainer
      *            atoms and bonds of the molecule
      * @return an array of node identifier
@@ -183,14 +183,14 @@ public class EquivalentClassPartitioner {
                     else if (order0 == IBond.Order.DOUBLE
                             && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 10;// =C=
-                    else if ((order0 == IBond.Order.SINGLE 
+                    else if ((order0 == IBond.Order.SINGLE
                             || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.DOUBLE 
+                            && (order0 == IBond.Order.DOUBLE
                             || bond1.getOrder() == IBond.Order.DOUBLE))
                         nodeSequence[i] = 5;// -CH=
-                    else if ((order0 == IBond.Order.SINGLE 
+                    else if ((order0 == IBond.Order.SINGLE
                             || bond1.getOrder() == IBond.Order.TRIPLE)
-                            && (order0 == IBond.Order.TRIPLE 
+                            && (order0 == IBond.Order.TRIPLE
                             || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 9;// -C#
                     // case 3 would not allow to reach this statement as there
@@ -205,19 +205,19 @@ public class EquivalentClassPartitioner {
                     else if (order0 == IBond.Order.DOUBLE
                             && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 28;// =N= with charge=-1
-                    else if ((order0 == IBond.Order.SINGLE 
+                    else if ((order0 == IBond.Order.SINGLE
                             || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.DOUBLE 
+                            && (order0 == IBond.Order.DOUBLE
                             || bond1.getOrder() == IBond.Order.DOUBLE))
                         nodeSequence[i] = 22;// -N=
-                    else if ((order0 == IBond.Order.DOUBLE 
+                    else if ((order0 == IBond.Order.DOUBLE
                             || bond1.getOrder() == IBond.Order.DOUBLE)
-                            && (order0 == IBond.Order.TRIPLE 
+                            && (order0 == IBond.Order.TRIPLE
                             || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 26;// =N#
-                    else if ((order0 == IBond.Order.SINGLE 
+                    else if ((order0 == IBond.Order.SINGLE
                             || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.TRIPLE 
+                            && (order0 == IBond.Order.TRIPLE
                             || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 29;// -N# with charge=+1
                     // case 3 would not allow to reach this statement as there
@@ -273,10 +273,10 @@ public class EquivalentClassPartitioner {
                     // there is always a double bond (pi system) around an
                     // aromatic atom
                     if ((bond0.getFlag(CDKConstants.ISAROMATIC)
-                            || bond1.getFlag(CDKConstants.ISAROMATIC) 
+                            || bond1.getFlag(CDKConstants.ISAROMATIC)
                             || bond2.getFlag(CDKConstants.ISAROMATIC))
                             && (order0 == IBond.Order.SINGLE
-                                    || order1 == IBond.Order.SINGLE 
+                                    || order1 == IBond.Order.SINGLE
                                     || bond2.getOrder() == IBond.Order.SINGLE))
                         nodeSequence[i] = 12;// ArC-
                     // case 3 would not allow to reach this statement
@@ -328,7 +328,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Build node Matrix.
-     * 
+     *
      * @param nodeSequence an array contains node number for each atom
      * @return node Matrix
      */
@@ -350,7 +350,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Build trial node Matrix.
-     * 
+     *
      * @param weight an array contains the weight of atom
      * @return trial node matrix.
      */
@@ -372,7 +372,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Build bond matrix.
-     * 
+     *
      * @return bond matrix.
      */
     public double[][] buildBondMatrix() {
@@ -402,7 +402,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Build weight array for the given node matrix and bond matrix.
-     * 
+     *
      * @param nodeMatrix array contains node information
      * @param bondMatrix array contains bond information
      * @return weight array for the node
@@ -422,7 +422,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Get different number of the given number.
-     * 
+     *
      * @param weight array contains weight of the nodes
      * @return number of different weight
      */
@@ -451,7 +451,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Get the final equivalent class.
-     * 
+     *
      * @param weight array contains weight of the nodes
      * @return an array contains the automorphism partition
      */
@@ -495,7 +495,7 @@ public class EquivalentClassPartitioner {
 
     /**
      * Find the topological equivalent class for the given weight.
-     * 
+     *
      * @param weight array contains weight of the nodes
      * @return an array contains the automorphism partition
      */
@@ -514,7 +514,7 @@ public class EquivalentClassPartitioner {
         do {
             count = trialCount;
             double[][] trialNodeMatrix = buildTrialNodeMatrix(weight);
-            double[] trialWeight = 
+            double[] trialWeight =
                     buildWeightMatrix(trialNodeMatrix, bondMatrix);
             trialCount = checkDiffNumber(trialWeight);
             if (trialCount == nodeNumber) {

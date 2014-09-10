@@ -81,16 +81,16 @@ public class INChIReader extends DefaultChemObjectReader {
         this.input = input;
         init();
     }
-    
+
     public INChIReader() {
         this(new ByteArrayInputStream(new byte[0]));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return INChIFormat.getInstance();
     }
-    
+
     /**
      * This method must not be used; XML reading requires the use of an InputStream.
      * Use setReader(InputStream) instead.

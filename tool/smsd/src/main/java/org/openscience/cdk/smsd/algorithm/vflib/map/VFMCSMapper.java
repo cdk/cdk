@@ -116,7 +116,7 @@ public class VFMCSMapper implements IMapper {
     /**
      *
      * @param queryMolecule
-     * @param bondMatcher 
+     * @param bondMatcher
      */
     public VFMCSMapper(IAtomContainer queryMolecule, boolean bondMatcher) {
         setTimeManager(new TimeManager());

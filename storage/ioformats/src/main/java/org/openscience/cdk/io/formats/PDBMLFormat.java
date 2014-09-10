@@ -25,7 +25,7 @@ import org.openscience.cdk.tools.DataFeatures;
 /**
  * XML version of the PDB format.
  * See <a href="http://pdbml.rcsb.org/">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -34,15 +34,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class PDBMLFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public PDBMLFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new PDBMLFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -69,13 +69,13 @@ public class PDBMLFormat extends AbstractResourceFormat implements IChemFormat {
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return null;
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return null;
     }
 

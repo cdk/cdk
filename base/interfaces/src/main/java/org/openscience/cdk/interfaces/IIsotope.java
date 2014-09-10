@@ -79,7 +79,7 @@ public interface IIsotope extends IElement {
      * @see    #setMassNumber(Integer)
      */
     public Integer getMassNumber();
-    
+
     /**
      * Sets the atomic mass of this element.
      *
@@ -88,6 +88,6 @@ public interface IIsotope extends IElement {
      * @see    #getMassNumber
      */
     public void setMassNumber(Integer massNumber);
-    
+
 }
 

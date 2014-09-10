@@ -99,7 +99,7 @@ public class SubStructureSearchAlgorithmsTest {
 
     /**
      * Test of init method, of class SubStructureSearchAlgorithms.
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void testInit_3args_3() throws Exception {
@@ -266,7 +266,7 @@ public class SubStructureSearchAlgorithmsTest {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         sp.kekulise(false);
         IAtomContainer target = sp.parseSmiles("C\\C=C/Nc1cccc(c1)N(O)\\C=C\\C\\C=C\\C=C/C");
-        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");        
+        IAtomContainer queryac = sp.parseSmiles("Nc1ccccc1");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
         Aromaticity.cdkLegacy().apply(target);

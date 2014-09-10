@@ -36,12 +36,12 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
      * An event to be sent to listeners when a frame is read.
      */
     private ReaderEvent frameReadEvent = null;
-    
+
     protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 
     /* Extra convenience methods */
-    
+
     /**
      * Sends a frame read event to the registered ReaderListeners.
      */

@@ -28,5 +28,5 @@ package org.openscience.cdk.io.listener;
  * @author Egon Willighagen <egonw@sci.kun.nl>
  */
 public interface IWriterListener extends IChemObjectIOListener {
-  
+
 }

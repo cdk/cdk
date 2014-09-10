@@ -84,7 +84,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
     private IAtomContainer acold = null;
     private IRingSet varRingSet = null;
     private IAtomContainerSet varAtomContainerSet = null;
-    
+
     private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RDFProtonDescriptor_GDR.class);
     private final int gdr_desc_length = 7;
@@ -171,7 +171,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
-        
+
         IAtomContainer varAtomContainer;
         try {
             varAtomContainer = (IAtomContainer) atomContainer.clone();
@@ -381,14 +381,14 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
         double step;
 
 ////////////////////////THE THIRD DESCRIPTOR IS gD(r) WITH DISTANCE AND RADIAN ANGLE BTW THE PROTON AND THE MIDDLE POINT OF DOUBLE BOND
-	
+
 	Vector3d a_a = new Vector3d();
 	Vector3d a_b = new Vector3d();
 	Vector3d b_a = new Vector3d();
 	Vector3d b_b = new Vector3d();
 	Point3d middlePoint = new Point3d();
 	double angle;
-	
+
 
 	if(doubles.size() > -0.0001) {
 		IAtom goodAtom0;
@@ -412,13 +412,13 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 				goodBond = mol.getBond(goodPosition);
 				goodAtom0 = goodBond.getAtom(0);
 				goodAtom1 = goodBond.getAtom(1);
-				
+
 				//System.out.println("GOOD POS IS "+mol.getAtomNumber(goodAtoms[0])+" "+mol.getAtomNumber(goodAtoms[1]));
-				
+
 				middlePoint = theDoubleBond.get3DCenter();
 				values = calculateDistanceBetweenAtomAndBond(atom, theDoubleBond );
-				
-				if(theDoubleBond.contains(goodAtom0)) {						
+
+				if(theDoubleBond.contains(goodAtom0)) {
 					a_a.set(goodAtom0.getPoint3d().x, goodAtom0.getPoint3d().y, goodAtom0.getPoint3d().z);
 					a_b.set(goodAtom1.getPoint3d().x, goodAtom1.getPoint3d().y, goodAtom1.getPoint3d().z);
 				}
@@ -441,12 +441,12 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
 		return getDummyDescriptorValue(new CDKException("Some error occured. Please report"));
 	}
 	return new DescriptorValue(
-		getSpecification(), getParameterNames(), 
+		getSpecification(), getParameterNames(),
 		getParameters(), rdfProtonCalculatedValues,
 		getDescriptorNames());
-	
+
 	}
-	
+
 
 //Others definitions
 

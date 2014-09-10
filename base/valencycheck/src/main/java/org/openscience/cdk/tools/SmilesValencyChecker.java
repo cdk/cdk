@@ -103,7 +103,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                 bondsAreFullySaturated = saturate(leftBonds, atomContainer);
             } else if (isUnsaturated(bond, atomContainer)) {
                 logger.debug("Ok, this bond is unsaturated, and can be saturated");
-                // two options now: 
+                // two options now:
                 // 1. saturate this one directly
                 // 2. saturate this one by saturating the rest
                 logger.debug("Option 1: Saturating this bond directly, then trying to saturate rest");
@@ -141,9 +141,9 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             return false;
         }
     }
-    
+
     /**
-     * Returns whether a bond is unsaturated. A bond is unsaturated if 
+     * Returns whether a bond is unsaturated. A bond is unsaturated if
      * <b>all</b> Atoms in the bond are unsaturated.
      */
     public boolean isUnsaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -193,7 +193,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
     /**
-     * Returns whether a bond is saturated. A bond is saturated if 
+     * Returns whether a bond is saturated. A bond is saturated if
      * <b>both</b> Atoms in the bond are saturated.
      */
     public boolean isSaturated(IBond bond, IAtomContainer atomContainer) throws CDKException {
@@ -243,7 +243,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                         return true;
                     }
                 } else {
-                    logger.debug("couldMatchAtomType:      no match", "" + 
+                    logger.debug("couldMatchAtomType:      no match", "" +
                         (bondOrderSum + hcount), " > ", "" + type.getBondOrderSum());
                 }
 //            }
@@ -254,12 +254,12 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         return false;
     }
 
-    /** 
+    /**
      * Calculates the number of hydrogens that can be added to the given atom to fullfil
      * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
      * does not have an entry in the configuration file.
      */
-	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, int neighbourCount) 
+	public int calculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, IBond.Order maxBondOrder, int neighbourCount)
         throws CDKException {
 
         int missingHydrogens = 0;
@@ -267,7 +267,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
             logger.debug("don't figure it out... it simply does not lack H's");
             return 0;
         }
-        
+
         logger.debug("Calculating number of missing hydrogen atoms");
         // get default atom
         IAtomType[] atomTypes = getAtomTypeFactory(atom.getBuilder()).getAtomTypes(atom.getSymbol());
@@ -296,7 +296,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                 break;
             }
         }
-        
+
         logger.debug("missing hydrogens: ", missingHydrogens);
         return missingHydrogens;
     }
@@ -331,7 +331,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
         for (int f = 0; f < atomTypes.length; f++) {
             IAtomType type = atomTypes[f];
             if (couldMatchAtomType(atom, bondOrderSum, maxBondOrder, type)) {
-                if (bondOrderSum + hcount == type.getBondOrderSum() && 
+                if (bondOrderSum + hcount == type.getBondOrderSum() &&
                     !BondManipulator.isHigherOrder(maxBondOrder, type.getMaxBondOrder())) {
                     logger.debug("We have a match: ", type);
                     logger.debug("Atom is saturated: ", atom.getSymbol());
@@ -342,12 +342,12 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
                 }
             } // else: formal charges don't match
         }
-        
+
         if (elementPlusChargeMatches) {
             logger.debug("No, atom is not saturated.");
             return false;
         }
-        
+
         // ok, the found atom was not in the list
         logger.error("Could not find atom type!");
         throw new CDKException("The atom with element " + atom.getSymbol() +
@@ -355,7 +355,7 @@ public class SmilesValencyChecker implements IValencyChecker, IDeduceBondOrderTo
     }
 
 	public int calculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container) throws CDKException {
-        return this.calculateNumberOfImplicitHydrogens(atom, 
+        return this.calculateNumberOfImplicitHydrogens(atom,
             container.getBondOrderSum(atom),
             container.getMaximumBondOrder(atom),
             container.getConnectedAtomsCount(atom)

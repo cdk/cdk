@@ -1,21 +1,21 @@
 /* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.interfaces;
 
@@ -49,12 +49,12 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        
+
         crystal.add(acetone);
         Assert.assertEquals(4, crystal.getAtomCount());
         Assert.assertEquals(3, crystal.getBondCount());
     }
-    
+
     @Test public void testAddAtom_IAtom() {
         ICrystal crystal = (ICrystal)newChemObject();
         IAtom c1 = crystal.getBuilder().newInstance(IAtom.class,"C");
@@ -64,58 +64,58 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
 
     @Test public void testSetA_Vector3d() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
         Assert.assertEquals(1.0, a.x, 0.001);
         Assert.assertEquals(2.0, a.y, 0.001);
         Assert.assertEquals(3.0, a.z, 0.001);
     }
-    
+
     @Test public void testGetA() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
         Assert.assertNotNull(a);
     }
-    
+
     @Test public void testGetB() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getB();
 	Assert.assertNotNull(a);
     }
-    
+
     @Test public void testGetC() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getC();
 	Assert.assertNotNull(a);
     }
-    
+
     @Test public void testSetB_Vector3d() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setB(new Vector3d(1.0, 2.0, 3.0));
         Vector3d b = crystal.getB();
         Assert.assertEquals(1.0, b.x, 0.001);
         Assert.assertEquals(2.0, b.y, 0.001);
         Assert.assertEquals(3.0, b.z, 0.001);
     }
-    
+
     @Test public void testSetC_Vector3d() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setC(new Vector3d(1.0, 2.0, 3.0));
         Vector3d c = crystal.getC();
         Assert.assertEquals(1.0, c.x, 0.001);
         Assert.assertEquals(2.0, c.y, 0.001);
         Assert.assertEquals(3.0, c.z, 0.001);
     }
-    
+
     @Test public void testSetSpaceGroup_String() {
         ICrystal crystal = (ICrystal)newChemObject();
         String spacegroup = "P 2_1 2_1 2_1";
@@ -169,14 +169,14 @@ public abstract class AbstractCrystalTest extends AbstractAtomContainerTest {
         crystal1.getA().x = 5.0;
         Assert.assertEquals(1.0, crystal2.getA().x, 0.001);
     }
-    
+
     @Test public void testSetZeroAxes() {
         ICrystal crystal = (ICrystal)newChemObject();
-        
+
         crystal.setA(new Vector3d(1.0, 2.0, 3.0));
         Vector3d a = crystal.getA();
         Assert.assertNotNull(a);
     }
-    
-    
+
+
 }

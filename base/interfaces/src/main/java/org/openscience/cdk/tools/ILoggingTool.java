@@ -113,7 +113,7 @@ public interface ILoggingTool {
      * @see #DEFAULT_STACK_LENGTH
      */
     public void setStackLength(int length);
-    
+
     /**
      * Outputs the system property for java.class.path.
      */
@@ -127,7 +127,7 @@ public interface ILoggingTool {
      * @param object Object to apply toString() too and output
      */
     public void debug(Object object);
-    
+
     /**
      * Shows DEBUG output for the given Object's. It uses the
      * toString() method to concatenate the objects.
@@ -136,7 +136,7 @@ public interface ILoggingTool {
      * @param objects Object... to apply toString() too and output
      */
     public void debug(Object object, Object... objects);
-    
+
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
      *
@@ -175,14 +175,14 @@ public interface ILoggingTool {
      * @param objects Object... to apply toString() too and output
      */
     public void info(Object object, Object... objects);
-    
+
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
      * @param object Object to apply toString() too and output
      */
     public void warn(Object object);
-    
+
     /**
      * Shows WARN output for the given Object's. It uses the
      * toString() method to concatenate the objects.
@@ -191,7 +191,7 @@ public interface ILoggingTool {
      * @param objects Object... to apply toString() too and output
      */
     public void warn(Object object, Object... objects);
-    
+
     /**
      * Use this method for computational demanding debug info.
      * For example:

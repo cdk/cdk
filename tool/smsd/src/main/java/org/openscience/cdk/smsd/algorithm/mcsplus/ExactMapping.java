@@ -39,7 +39,7 @@ import org.openscience.cdk.annotations.TestClass;
 public class ExactMapping {
 
     /**
-     * 
+     *
      * Extract atom mapping from the cliques and stores it in a List
      * @param comp_graph_nodes
      * @param clique_List_org
@@ -65,7 +65,7 @@ public class ExactMapping {
 
     //extract atom mapping from the clique List and print it on the screen
     /**
-     * 
+     *
      * @param _mappings
      * @param comp_graph_nodes
      * @param clique_List_org

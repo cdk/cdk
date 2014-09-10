@@ -84,7 +84,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *  out of a paramter set if available. Angles are tetrahedral or trigonal
 	 *
 	 *@param  atomContainer  the set of atoms involved
-	 * @throws CDKException 
+	 * @throws CDKException
 	 *@cdk.keyword           coordinate calculation
 	 *@cdk.keyword           3D model
 	 */
@@ -124,7 +124,7 @@ public class AtomTetrahedralLigandPlacer3D {
 
 
 	/**
-	 *  Rescales Point2 so that length 1-2 is sum of covalent radii. 
+	 *  Rescales Point2 so that length 1-2 is sum of covalent radii.
 	 *  If covalent radii cannot be found, use bond length of 1.0
 	 *
 	 *@param  atom1          stationary atom
@@ -187,7 +187,7 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@return                Point3D[] points calculated. If request could not be
 	 *      fulfilled (e.g. too many atoms, or strange geometry, returns empty
 	 *      array (zero length, not null)
-	 * @throws CDKException 
+	 * @throws CDKException
 	 *@cdk.keyword           coordinate generation
 	 */
 
@@ -214,7 +214,7 @@ public class AtomTetrahedralLigandPlacer3D {
 				angle=SP_ANGLE;
 			}
 			newPoints[0] = get3DCoordinatesForSPLigands(refAtom, withCoords, length, angle);
-		} else if (refAtom.getFormalNeighbourCount() == 3 || 
+		} else if (refAtom.getFormalNeighbourCount() == 3 ||
 				   (refMaxBondOrder == IBond.Order.DOUBLE)) {
 			//sp2
 			if (angle == -1){
@@ -757,11 +757,11 @@ public class AtomTetrahedralLigandPlacer3D {
 	 *@param  ax            bond between stereocenter and unplaced atom
 	 *@param  atomB         neighbour of atomA (in plane created by atomA, atomB and atomC)
 	 *@param  atomC         neighbour of atomA
-	 *@param  branchPoints  the two possible placement points for unplaced atom (up and down) 
+	 *@param  branchPoints  the two possible placement points for unplaced atom (up and down)
 	 *@return               int value of branch point position
 	 */
 	public int makeStereocenter(Point3d atomA, IBond ax, Point3d atomB, Point3d atomC, Point3d[] branchPoints) {
-		
+
 		Vector3d b = new Vector3d((atomB.x - atomA.x), (atomB.y - atomA.y), (atomB.z - atomA.z));
 		Vector3d c = new Vector3d((atomC.x - atomA.x), (atomC.y - atomA.y), (atomC.z - atomA.z));
 		Vector3d n1 = new Vector3d();

@@ -107,7 +107,7 @@ public class SybylAtomTypeMatcher implements IAtomTypeMatcher {
      * Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived;
      * Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
      * required, please use findMatchingAtomType(IAtomContainer) instead.
-     * 
+     *
      * @param  atomContainer the {@link IAtomContainer} in which the atom is found
      * @param  atom          the {@link IAtom} to find the atom type of
      * @return               the atom type perceived from the given atom

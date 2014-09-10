@@ -28,7 +28,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -37,14 +37,14 @@ public class DebugRingSet extends RingSet
     implements IRingSet {
 
     private static final long serialVersionUID = -4144201128508373352L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugRingSet.class);
 
 	public DebugRingSet() {
 		super();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public IRingSet getRings(IBond bond) {
 		logger.debug("Getting rings for bond: ", bond);

@@ -10,7 +10,7 @@ import org.junit.Test;
  * @cdk.module test-standard
  */
 public class PermutorTest {
-    
+
     private int factorial(int n) {
         if (n <= 1) {
             return 1;
@@ -18,7 +18,7 @@ public class PermutorTest {
             return n * factorial(n - 1);
         }
     }
-    
+
     private int[] getIdentity(int size) {
         int[] identity = new int[size];
         for (int index = 0; index < size; index++) {
@@ -26,7 +26,7 @@ public class PermutorTest {
         }
         return identity;
     }
-    
+
     private boolean arrayElementsDistinct(int[] array) {
         BitSet bitSet = new BitSet(array.length);
         for (int index = 0; index < array.length; index++) {
@@ -38,7 +38,7 @@ public class PermutorTest {
         }
         return true;
     }
-    
+
     @Test
     public void constructorTest() {
         int size = 4;
@@ -46,14 +46,14 @@ public class PermutorTest {
         int[] current = permutor.getCurrentPermutation();
         Assert.assertArrayEquals(getIdentity(size), current);
     }
-    
+
     @Test
     public void hasNextTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         Assert.assertTrue(permutor.hasNext());
     }
-    
+
     @Test
     public void setRankTest() {
         int size = 4;
@@ -63,7 +63,7 @@ public class PermutorTest {
         permutor.setRank(23);
         Assert.assertArrayEquals(reverse, permutor.getCurrentPermutation());
     }
-    
+
     @Test
     public void getRankTest() {
         int size = 4;
@@ -72,7 +72,7 @@ public class PermutorTest {
         permutor.setRank(rank);
         Assert.assertEquals(rank, permutor.getRank());
     }
-    
+
     @Test
     public void setPermutationTest() {
         int size = 4;
@@ -81,7 +81,7 @@ public class PermutorTest {
         permutor.setPermutation(target);
         Assert.assertArrayEquals(target, permutor.getCurrentPermutation());
     }
-    
+
     @Test
     public void countGeneratedPermutations() {
         int size = 4;
@@ -93,7 +93,7 @@ public class PermutorTest {
         }
         Assert.assertEquals(factorial(size), count);
     }
-    
+
     @Test
     public void getCurrentPermutationTest() {
         int size = 4;
@@ -111,14 +111,14 @@ public class PermutorTest {
         }
         Assert.assertTrue(allOk);
     }
-    
+
     @Test
     public void maxRankTest() {
         int size = 4;
         Permutor permutor = new Permutor(size);
         Assert.assertEquals(factorial(size) - 1, permutor.calculateMaxRank());
     }
-    
+
     @Test
     public void getRandomNextTest() {
         int size = 4;

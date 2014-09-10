@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.ringsearch;
 
@@ -52,11 +52,11 @@ import static org.openscience.cdk.ringsearch.AllRingsFinder.Threshold.PubChem_99
 public class AllRingsFinderTest extends CDKTestCase
 {
 	boolean standAlone = false;
-	
+
 	public AllRingsFinderTest()
 	{
 		super();
-	}	
+	}
 
 	public void setStandAlone(boolean standAlone)
 	{
@@ -79,7 +79,7 @@ public class AllRingsFinderTest extends CDKTestCase
 
 		Assert.assertEquals(6, ringSet.getAtomContainerCount());
 	}
-	
+
 	/**
 	 * @cdk.bug 746067
 	 */
@@ -90,10 +90,10 @@ public class AllRingsFinderTest extends CDKTestCase
 		//display(molecule);
 
 		ringSet = arf.findAllRings(molecule);
-		for (int i = 0; i < ringSet.getAtomContainerCount(); i++) 
+		for (int i = 0; i < ringSet.getAtomContainerCount(); i++)
 		{
 			Ring ring = (Ring)ringSet.getAtomContainer(i);
-			for (int j = 0; j < ring.getBondCount(); j++) 
+			for (int j = 0; j < ring.getBondCount(); j++)
 			{
 				IBond ec = ring.getBond(j);
 
@@ -104,7 +104,7 @@ public class AllRingsFinderTest extends CDKTestCase
 			}
 		}
 	}
-	
+
 	@Test public void testFindAllRings_IAtomContainer_boolean() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
@@ -117,7 +117,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		IAtomContainer molecule = MoleculeFactory.makeEthylPropylPhenantren();
         arf.findAllRings(molecule);
     }
-	
+
 	@Ignore("timeout not longer used") public void testCheckTimeout() throws Exception {
 		AllRingsFinder arf = new AllRingsFinder();
 		arf.setTimeout(3);
@@ -130,7 +130,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		arf.setTimeout(3);
 		Assert.assertEquals(3, arf.getTimeout(), 0.01);
 	}
-	
+
 	@Test public void testPorphyrine() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
@@ -146,11 +146,11 @@ public class AllRingsFinderTest extends CDKTestCase
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(20, ringSet.getAtomContainerCount());
 	}
-	
+
 	@Test(timeout=500)
 	public void testBigRingSystem() throws Exception {
 	  Assume.assumeTrue(runSlowTests());
-		
+
 		IRingSet ringSet = null;
 		AllRingsFinder arf = AllRingsFinder.usingThreshold(PubChem_994);
 
@@ -166,7 +166,7 @@ public class AllRingsFinderTest extends CDKTestCase
 		// the 1976 value was empirically derived, and might not be accurate
 		Assert.assertEquals(1976, ringSet.getAtomContainerCount());
 	}
-	
+
 	@Test public void testCholoylCoA() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
@@ -182,11 +182,11 @@ public class AllRingsFinderTest extends CDKTestCase
 		ringSet = arf.findAllRings(molecule);
 		Assert.assertEquals(14, ringSet.getAtomContainerCount());
 	}
-	
+
 	@Test public void testAzulene() throws Exception {
 		IRingSet ringSet = null;
 		AllRingsFinder arf = new AllRingsFinder();
-		
+
 		String filename = "data/mdl/azulene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		MDLV2000Reader reader = new MDLV2000Reader(ins);
@@ -232,18 +232,18 @@ public class AllRingsFinderTest extends CDKTestCase
         assertThat(ringSize[6],  is(18));
         assertThat(ringSize[10], is(6));
     }
-    
+
 	/**
 	 * This test takes a very long time. It was to ensure that
 	 * AllRingsFinder actually stops for the given examples.
 	 * And it does, after a very long time.
 	 * So, the test is commented out because of its long runtime.
-	 * 
+	 *
 	 * @cdk.bug 777488
 	 */
 	@Test public void testBug777488() throws Exception {
 		Assume.assumeTrue(runSlowTests());
-		
+
 		//String filename = "data/Bug646.cml";
 		String filename = "data/cml/testBug777488-1-AllRingsFinder.cml";
 		//String filename = "data/NCI_diversity_528.mol.cml";
@@ -325,7 +325,7 @@ public class AllRingsFinderTest extends CDKTestCase
       IChemSequence seq = chemFile.getChemSequence(0);
       IChemModel model = seq.getChemModel(0);
       IAtomContainer molecule = model.getMoleculeSet().getAtomContainer(0);
-      // there are 5x10 squares (four-rings) in the 5x10 molecule 
+      // there are 5x10 squares (four-rings) in the 5x10 molecule
       ringSet = arf.findAllRings(molecule,4);
       Assert.assertEquals(50, ringSet.getAtomContainerCount());
     }

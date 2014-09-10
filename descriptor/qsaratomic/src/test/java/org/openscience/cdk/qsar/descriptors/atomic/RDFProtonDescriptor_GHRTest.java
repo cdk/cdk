@@ -32,13 +32,13 @@ public class RDFProtonDescriptor_GHRTest extends AtomicDescriptorTest {
     public void setUp() throws Exception {
     	setDescriptor(RDFProtonDescriptor_GHR.class);
     }
-    
+
 	/**
 	 *  @cdk.bug 1632419
 	 */
 	@Test
     public void testExample1() throws Exception {
-		//firstly read file to molecule		
+		//firstly read file to molecule
 		String filename = "data/mdl/hydroxyamino.mol" +
 				"";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -36,19 +36,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Maximum matching in general graphs using Edmond's Blossom Algorithm 
+ * Maximum matching in general graphs using Edmond's Blossom Algorithm
  * {@cdk.cite Edmonds65}. <p/>
  *
  * This implementation was adapted from D Eppstein's python implementation (<a
  * href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
  * providing efficient tree traversal and handling of blossoms. <p/>
- * 
+ *
  * @author John May
  * @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom
  * algorithm, Wikipedia</a>
  * @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation
  * from Vazirani on his and Micali O(|E| * sqrt(|V|)) algorithm</a>
- * 
+ *
  * @cdk.module standard
  */
 @TestClass("org.openscience.cdk.graph.EdmondsMaximumMatchingTest")
@@ -137,7 +137,7 @@ final class EdmondsMaximumMatching {
         queue.clear();
 
         // enqueue every unmatched vertex and place in the
-        // even level (level = 0)        
+        // even level (level = 0)
         for (int v = 0; v < graph.length; v++) {
             if (subset.get(v) && matching.unmatched(v)) {
                 even[v] = v;
@@ -154,7 +154,7 @@ final class EdmondsMaximumMatching {
                 if (!subset.get(w))
                     continue;
 
-                // the endpoints of the edge are both at even levels in the                
+                // the endpoints of the edge are both at even levels in the
                 // forest - this means it is either an augmenting path or
                 // a blossom
                 if (even[dsf.getRoot(w)] != nil) {
@@ -260,7 +260,7 @@ final class EdmondsMaximumMatching {
         ancestors.set(curr);
         int parent = dsf.getRoot(even[curr]);
         if (parent == curr)
-            return curr; // root of tree       
+            return curr; // root of tree
         ancestors.set(parent);
         return dsf.getRoot(odd[parent]);
     }
@@ -352,7 +352,7 @@ final class EdmondsMaximumMatching {
                 reverse(path, i, j - 1);
                 i = j;
 
-                // ... we travel down the other side of the bridge 
+                // ... we travel down the other side of the bridge
                 start = bridge.second;
             }
             path[i++] = start;
@@ -395,7 +395,7 @@ final class EdmondsMaximumMatching {
      * @param matching the independent edge set to maximise
      * @param graph    adjacency list graph representation
      * @param subset   subset of vertices
-     * @return the matching 
+     * @return the matching
      */
     @TestMethod("benzene,fullerene_C60")
     static Matching maxamise(Matching matching, int[][] graph, BitSet subset) {

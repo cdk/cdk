@@ -40,7 +40,7 @@ import java.io.Serializable;
  *   // make deuterium
  *   Isotope carbon = new Isotope(1, "H", 2, 2.01410179, 100.0);
  * </pre>
- * 
+ *
  * <p>Once instantiated all field not filled by passing parameters
  * to the constructor are null. Isotopes can be configured by using
  * the IsotopeFactory.configure() method:
@@ -58,7 +58,7 @@ import java.io.Serializable;
  *
  * @cdk.keyword     isotope
  */
-public class Isotope extends Element implements Serializable, IIsotope, Cloneable 
+public class Isotope extends Element implements Serializable, IIsotope, Cloneable
 {
 
     /**
@@ -87,7 +87,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 	public Isotope(String elementSymbol) {
 		super(elementSymbol);
 	}
-	
+
 	/**
 	 *  Constructor for the Isotope object.
 	 *
@@ -134,7 +134,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * not copy the listeners and properties. If the element is
      * an instanceof IIsotope, then the exact mass, natural
      * abundance and mass number are copied too.
-	 * 
+	 *
 	 * @param element IElement to copy information from
 	 */
 	public Isotope(IElement element) {
@@ -145,7 +145,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 			this.massNumber = ((IIsotope)element).getMassNumber();
 		}
 	}
-	
+
 	/**
 	 *  Sets the NaturalAbundance attribute of the Isotope object.
 	 *
@@ -172,7 +172,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 
 	/**
 	 *  Gets the NaturalAbundance attribute of the Isotope object.
-	 *  
+	 *
 	 *  <p>Once instantiated all field not filled by passing parameters
 	 * to the constructor are null. Isotopes can be configured by using
 	 * the IsotopeFactory.configure() method:
@@ -214,7 +214,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 
     /**
      * Returns the atomic mass of this element.
-     * 
+     *
      * <p>Once instantiated all field not filled by passing parameters
 	 * to the constructor are null. Isotopes can be configured by using
 	 * the IsotopeFactory.configure() method:
@@ -265,7 +265,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
         resultString.append(')');
 		return resultString.toString();
 	}
-    
+
     /**
      * Compares a atom type with this atom type.
      *
@@ -300,7 +300,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
 
         return true;
     }
-    
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

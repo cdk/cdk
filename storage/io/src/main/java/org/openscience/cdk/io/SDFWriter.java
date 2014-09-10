@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -93,7 +93,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     public SDFWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public SDFWriter() {
         this(new StringWriter());
     }
@@ -103,7 +103,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      *
      * @param out The {@link Writer} to write to
      */
-    public SDFWriter(Writer out, Set<String> propertiesToWrite) {        
+    public SDFWriter(Writer out, Set<String> propertiesToWrite) {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
         } else {
@@ -112,7 +112,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         initIOSettings();
         this.propertiesToWrite = propertiesToWrite;
     }
-	
+
 	/**
      * Constructs a new SdfWriter that can write to a given
      * {@link OutputStream}.
@@ -122,19 +122,19 @@ public class SDFWriter extends DefaultChemObjectWriter {
     public SDFWriter(OutputStream output, Set<String> propertiesToWrite) {
         this(new OutputStreamWriter(output), propertiesToWrite);
     }
-	
+
 	/**
      * Writes SD-File to a String including the given properties
      */
     public SDFWriter(Set<String> propertiesToWrite) {
         this(new StringWriter(), propertiesToWrite);
     }
-	
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return SDFFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -146,7 +146,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
     /**
      * Flushes the output and closes this object.
      */
@@ -178,7 +178,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * output IChemObjects of type {@link IChemFile}, {@link IAtomContainerSet}
      * and {@link IAtomContainerSet}.
      *
-     * @param object an acceptable {@link IChemObject} 
+     * @param object an acceptable {@link IChemObject}
      *
      * @see #accepts(Class)
      */
@@ -210,7 +210,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 		}
 		throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
 	}
-	
+
 	/**
 	 * Writes an {@link IAtomContainerSet}.
 	 *
@@ -221,7 +221,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 		    writeMolecule(mol);
 		}
 	}
-	
+
 	private void writeChemFile(IChemFile file) throws Exception {
 		for (IAtomContainer container :
 		     ChemFileManipulator.getAllAtomContainers(file)) {
@@ -241,7 +241,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
 
             // write the properties
             Map<Object,Object> sdFields = container.getProperties();
-			boolean writeAllProperties = propertiesToWrite == null;	
+			boolean writeAllProperties = propertiesToWrite == null;
             if(sdFields != null){
                 for (Object propKey : sdFields.keySet()) {
                     if (!isCDKInternalProperty(propKey)) {
@@ -284,7 +284,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
     private void initIOSettings() {
         writerProperties = addSetting(new BooleanIOSetting("writeProperties",
           IOSetting.Importance.LOW,
-          "Should molecular properties be written?", 
+          "Should molecular properties be written?",
           "true"
         ));
         addSettings(new MDLV2000Writer().getSettings());

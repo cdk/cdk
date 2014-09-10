@@ -65,12 +65,12 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  * @cdk.githash
  */
 public class TemplateHandler3D {
-	
+
 	private static final IChemObjectBuilder builder =
 	    SilentChemObjectBuilder.getInstance();
 	private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(TemplateHandler3D.class);
-	
+
 	IAtomContainer molecule;
     IRingSet sssr;
     IAtomContainerSet templates = null;
@@ -80,7 +80,7 @@ public class TemplateHandler3D {
     private static TemplateHandler3D self = null;
 
     private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-    
+
     private TemplateHandler3D() {
         templates = builder.newInstance(IAtomContainerSet.class);
         fingerprintData = new ArrayList<BitSet>();
@@ -94,7 +94,7 @@ public class TemplateHandler3D {
     }
 
     /**
-     * Loads all existing templates into memory. 
+     * Loads all existing templates into memory.
      * Template file is a mdl file. Creates a Object Set of Molecules
      * @throws CDKException The template file cannot be loaded
      */
@@ -158,12 +158,12 @@ public class TemplateHandler3D {
         }
         return bitSet;
     }
-    
+
 	/**
 	 * Returns the largest (number of atoms) ring set in a molecule.
 	 *
-	 *@param  ringSystems  RingSystems of a molecule 
-	 *@return              The largestRingSet 
+	 *@param  ringSystems  RingSystems of a molecule
+	 *@return              The largestRingSet
 	 */
 	public IRingSet getLargestRingSet(List<IRingSet> ringSystems) {
 		IRingSet largestRingSet = null;
@@ -187,7 +187,7 @@ public class TemplateHandler3D {
 		}
 		return resultContainer;
 	}
-    
+
     /**
      * @deprecated Use {@link #mapTemplates(org.openscience.cdk.interfaces.IAtomContainer, int)}
      */
@@ -195,7 +195,7 @@ public class TemplateHandler3D {
     public void mapTemplates(IAtomContainer ringSystems, double numberOfRingAtoms) throws CDKException, CloneNotSupportedException{
         mapTemplates(ringSystems, (int) numberOfRingAtoms);
     }
-    
+
     /**
      * Checks if one of the loaded templates is a substructure in the given
      * Molecule. If so, it assigns the coordinates from the template to the
@@ -239,7 +239,7 @@ public class TemplateHandler3D {
                     		flagwritefromsecondbest=true;
                     	}
                     }
-                    
+
                     if(!flagSecondbest || flagMaxSubstructure || flagwritefromsecondbest){
 	                    for (int j = 0; j < list.size(); j++) {
 	                        RMap map = (RMap) list.get(j);

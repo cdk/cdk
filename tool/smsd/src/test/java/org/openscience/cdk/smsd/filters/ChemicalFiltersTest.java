@@ -113,7 +113,7 @@ public class ChemicalFiltersTest {
 
     /**
      * Test of sortResultsByEnergies method, of class ChemicalFilters.
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void testSortResultsByEnergies() throws Exception {
@@ -179,7 +179,7 @@ public class ChemicalFiltersTest {
     /**
      * Test of getSortedEnergy method, of class ChemicalFilters.
      * @throws InvalidSmilesException
-     * @throws CDKException 
+     * @throws CDKException
      */
     @Test
     public void testGetSortedEnergy() throws InvalidSmilesException, CDKException {
@@ -198,7 +198,7 @@ public class ChemicalFiltersTest {
     /**
      * Test of getSortedFragment method, of class ChemicalFilters.
      * @throws InvalidSmilesException
-     * @throws CDKException 
+     * @throws CDKException
      */
     @Test
     public void testGetSortedFragment() throws InvalidSmilesException, CDKException {

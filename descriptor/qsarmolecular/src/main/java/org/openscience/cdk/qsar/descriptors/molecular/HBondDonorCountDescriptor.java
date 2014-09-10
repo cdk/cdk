@@ -60,7 +60,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *     <td>no parameters</td>
  *   </tr>
  * </table>
- * 
+ *
  * @author      ulif
  * @cdk.created 2005-22-07
  * @cdk.module  qsarmolecular

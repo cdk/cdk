@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Helper tool to create IChemObjectWriters.
- * 
+ *
  * @author Egon Willighagen <ewilligh@uni-koeln.de>
  * @cdk.module io
  * @cdk.githash
@@ -75,31 +75,31 @@ public class WriterFactory {
     /**
      * Finds IChemFormats that provide a container for serialization for the
      * given features. The syntax of the integer is explained in the DataFeatures class.
-     * 
+     *
      * @param  features the data features for which a IChemFormat is searched
      * @return          an array of IChemFormat's that can contain the given features
-     * 
+     *
      * @see    org.openscience.cdk.tools.DataFeatures
      */
     public IChemFormat[] findChemFormats(int features) {
     	if (formats == null) loadFormats();
-    	
+
         Iterator<IChemFormat> iter = formats.iterator();
         List<IChemFormat> matches = new ArrayList<IChemFormat>();
     	while (iter.hasNext()) {
     		IChemFormat format = (IChemFormat)iter.next();
     		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
     	}
-    	
+
     	return (IChemFormat[])matches.toArray(new IChemFormat[matches.size()]);
     }
-    
+
     public int formatCount() {
     	if (formats == null) loadFormats();
-    	
-    	return formats.size(); 
+
+    	return formats.size();
     }
-    
+
     private void loadFormats() {
         if (formats == null) {
             formats = new ArrayList<IChemFormat>();
@@ -136,7 +136,7 @@ public class WriterFactory {
             }
         }
     }
-    
+
     /**
      * Creates a new IChemObjectWriter based on the given IChemFormat.
      */
@@ -165,7 +165,7 @@ public class WriterFactory {
             }
         } else {
             logger.warn("ChemFormat is not recognized.");
-        } 
+        }
         return null;
     }
 }

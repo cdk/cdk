@@ -151,7 +151,7 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
                 offset,
                 atomColorer,
                 colorByType
-            } 
+            }
         );
     }
 

@@ -67,7 +67,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		return new ElementGroup();
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	@TestMethod("testGetParameters")

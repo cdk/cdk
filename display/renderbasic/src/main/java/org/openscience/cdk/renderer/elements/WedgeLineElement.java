@@ -26,7 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * A 'wedge' is a triangle aligned along a bond that indicates stereochemistry.
  * It can be dashed or not to indicate up and down.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -61,7 +61,7 @@ public class WedgeLineElement extends LineElement {
     /**
      * Make a wedge between the points (x1, y1) and (x2, y2) with a certain
      * width, direction, dash, and color.
-     * 
+     *
      * @param x1 the x-coordinate of the first point
      * @param y1 the y-coordinate of the first point
      * @param x2 the x-coordinate of the second point
@@ -81,7 +81,7 @@ public class WedgeLineElement extends LineElement {
 
     /**
      * Make a wedge along the given line element.
-     * 
+     *
      * @param element the line element to use as the basic geometry
      * @param type if the bond is dashed ,wedged, or "up_or_down", i.e., not defined
      * @param direction the direction of the thickness

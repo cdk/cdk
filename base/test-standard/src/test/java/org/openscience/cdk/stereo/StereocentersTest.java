@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -35,7 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Verifies the types of atoms accepted as exhibiting stereo chemistry.
- * 
+ *
  * @author John May
  * @cdk.module test-standard
  */
@@ -62,7 +62,7 @@ public class StereocentersTest {
 
     @Test public void carbon_v4_neutral() throws Exception {
 
-        // accept Sp3 Carbons with < 2 hydrogens 
+        // accept Sp3 Carbons with < 2 hydrogens
         tetrahedral("C(C)(N)(O)");
         tetrahedral("C(C)(N)(O)CC");
 
@@ -83,7 +83,7 @@ public class StereocentersTest {
 
     @Test public void carbon_anion() throws Exception {
         none("[C-](C)(N)(O)");
-        none("[C-](C)(N)(O)CC");  // nb abnormal valence         
+        none("[C-](C)(N)(O)CC");  // nb abnormal valence
     }
 
     @Test public void silicon_v4_neutral() throws Exception {
@@ -102,7 +102,7 @@ public class StereocentersTest {
 
     @Test public void silicon_anion() throws Exception {
         none("[Si-](C)(N)(O)");
-        none("[Si-](C)(N)(O)CC");  // nb abnormal valence         
+        none("[Si-](C)(N)(O)CC");  // nb abnormal valence
     }
 
     @Test public void germanium_v4_neutral() throws Exception {
@@ -121,7 +121,7 @@ public class StereocentersTest {
 
     @Test public void germanium_anion() throws Exception {
         none("[Ge-](C)(N)(O)");
-        none("[Ge-](C)(N)(O)CC");  // nb abnormal valence         
+        none("[Ge-](C)(N)(O)CC");  // nb abnormal valence
     }
 
     @Test public void tin_v4_neutral() throws Exception {
@@ -140,7 +140,7 @@ public class StereocentersTest {
 
     @Test public void tin_anion() throws Exception {
         none("[Sn-](C)(N)(O)");
-        none("[Sn-](C)(N)(O)CC");  // nb abnormal valence         
+        none("[Sn-](C)(N)(O)CC");  // nb abnormal valence
     }
 
 
@@ -672,47 +672,47 @@ public class StereocentersTest {
     /** Geometric. */
 
     @Test public void carbon_neutral_geometric() throws Exception {
-        geometric("C(=CC)C");    
-        geometric("[CH](=CC)C");    
-        geometric("C([H])(=CC)C");    
+        geometric("C(=CC)C");
+        geometric("[CH](=CC)C");
+        geometric("C([H])(=CC)C");
         none("[CH2](=CC)");
-        bicoordinate("C(=C)(=CC)");    
-        none("C(#CC)C");    
-    }  
-    
+        bicoordinate("C(=C)(=CC)");
+        none("C(#CC)C");
+    }
+
     @Test public void silicon_neutral_geometric() throws Exception {
-        geometric("[SiH](=[SiH]C)C");    
-        geometric("[Si]([H])(=[SiH]C)C");    
-        none("[Si](=C)(=CC)");    
-        none("[Si](#CC)C");    
-    }  
-     
+        geometric("[SiH](=[SiH]C)C");
+        geometric("[Si]([H])(=[SiH]C)C");
+        none("[Si](=C)(=CC)");
+        none("[Si](#CC)C");
+    }
+
     @Test public void germanium_neutral_geometric() throws Exception {
-        geometric("[GeH](=[GeH]C)C");    
-        geometric("[Ge]([H])(=[GeH]C)C");    
-        none("[Ge](=C)(=CC)");    
-        none("[Ge](#CC)C");    
-    }  
-    
+        geometric("[GeH](=[GeH]C)C");
+        geometric("[Ge]([H])(=[GeH]C)C");
+        none("[Ge](=C)(=CC)");
+        none("[Ge](#CC)C");
+    }
+
     @Test public void nitrogen_neutral_geometric() throws Exception {
-        geometric("N(=NC)C");    
-        none("N(=NC)");            
-        none("N(=N)C");            
-        none("N(=N)");            
-    }  
-    
+        geometric("N(=NC)C");
+        none("N(=NC)");
+        none("N(=N)C");
+        none("N(=N)");
+    }
+
     @Test public void nitrogen_cation_geometric() throws Exception {
-        geometric("[NH+](=[NH+]C)C");    
+        geometric("[NH+](=[NH+]C)C");
         geometric("[N+]([H])(=[NH+]C)C");
-        none("[NH2+](=[NH+]C)C");            
-    }   
+        none("[NH2+](=[NH+]C)C");
+    }
 
     // assert the first atom of the SMILES is accepted as a tetrahedral center
     void tetrahedral(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         test(sp.parseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted");
-    } 
-    
+    }
+
     // assert the first atom of the SMILES is accepted as a geometric center
     void geometric(String smi) throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -731,7 +731,7 @@ public class StereocentersTest {
         test(sp.parseSmiles(smi), Stereocenters.Type.None, smi + " was not rejected");
     }
 
-    // check if the first atom of the container is accepted 
+    // check if the first atom of the container is accepted
     void test(IAtomContainer container, Stereocenters.Type type, String mesg) {
         assertThat(mesg,
                    Stereocenters.of(container).elementType(0),

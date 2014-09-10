@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -87,7 +87,7 @@ public class SymbolVisibilityTest {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
-        
+
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0.5, -0.5));
         a3.setPoint2d(new Point2d(0.5, 0.5));
@@ -98,7 +98,7 @@ public class SymbolVisibilityTest {
         a1.setImplicitHydrogenCount(2);
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
-        
+
         assertFalse(SymbolVisibility.iupacRecommendations().visible(a1,
                                                                     Arrays.asList(bond1, bond2),
                                                                     new RendererModel()));
@@ -115,7 +115,7 @@ public class SymbolVisibilityTest {
 
         IBond bond1 = new Bond(a1, a2);
         IBond bond2 = new Bond(a1, a3);
-        
+
         a1.setFormalCharge(+1);
         a1.setImplicitHydrogenCount(1);
         a2.setImplicitHydrogenCount(3);
@@ -168,7 +168,7 @@ public class SymbolVisibilityTest {
                                                                    Arrays.asList(bond1, bond2),
                                                                    new RendererModel()));
     }
-    
+
     @Test public void carbonIsotope() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
@@ -182,14 +182,14 @@ public class SymbolVisibilityTest {
         IBond bond2 = new Bond(a1, a3);
 
         a1.setMassNumber(13);
-        
+
         a1.setImplicitHydrogenCount(2);
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
         assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
                                                                    Arrays.asList(bond1, bond2),
-                                                                   new RendererModel()));    
-    } 
+                                                                   new RendererModel()));
+    }
 
 }

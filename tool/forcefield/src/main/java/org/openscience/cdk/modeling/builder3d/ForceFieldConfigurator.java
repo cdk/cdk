@@ -53,8 +53,8 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *  Therefore, it uses the class {@link MM2BasedParameterSetReader}.
  *  private Hashtable parameterSet;
  *  key=nameofdatafield+atomid1+;atomid2;atomxid
- *  
- *  <p>MM2 and MMFF94 force field are implemented 
+ *
+ *  <p>MM2 and MMFF94 force field are implemented
  *  With force field data it configures the cdk atom (assign atomtype, van der Waals radius, charge...)
  *
  * @author     chhoppe
@@ -73,7 +73,7 @@ public class ForceFieldConfigurator {
 	private MMFF94BasedParameterSetReader mmff94= null;
 	private InputStream ins = null;
 	private String[] fftypes = {"mm2","mmff94"};
-	
+
 	/**
 	 *Constructor for the ForceFieldConfigurator object
 	 */
@@ -87,8 +87,8 @@ public class ForceFieldConfigurator {
 	public void setInputStream(InputStream ins) {
 		this.ins = ins;
 	}
-  
-  
+
+
 	/**
 	 *  gives a list of possible force field types
 	 *
@@ -103,7 +103,7 @@ public class ForceFieldConfigurator {
 	 *
 	 * @param  ffname  The new forceFieldType name
 	 */
-   
+
     @TestMethod("testCheckForceFieldType")
 	public boolean checkForceFieldType(String ffname) {
 		boolean check=false;
@@ -111,7 +111,7 @@ public class ForceFieldConfigurator {
 			if (fftypes[i].equals(ffname)) {
 				check=true;
 				break;
-			} 
+			}
 		}
 		if (!check) {
 //			logger.debug("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
@@ -129,7 +129,7 @@ public class ForceFieldConfigurator {
 	public void setForceFieldConfigurator(String ffname, IChemObjectBuilder builder) throws CDKException {
 		ffname=ffname.toLowerCase();
 		boolean check=false;
-		
+
 		if (ffname==ffName && parameterSet!=null){
 		}else{
 			check=this.checkForceFieldType(ffname);
@@ -146,7 +146,7 @@ public class ForceFieldConfigurator {
 				try{
 					this.setMM2Parameters(builder);
 				}catch (Exception ex1){
-					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);	
+					throw new CDKException("Problems with set MM2Parameters due to "+ex1.toString(), ex1);
 				}
 			}else if (ffName.equals("mmff94") || !check) {
 				//logger.debug("ForceFieldConfigurator: open Force Field mmff94");
@@ -154,12 +154,12 @@ public class ForceFieldConfigurator {
 				//readFile(f);
 				ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/modeling/forcefield/data/mmff94.prm");
 				mmff94= new MMFF94BasedParameterSetReader();
-				
+
 				mmff94.setInputStream(ins);
 				try{
 					this.setMMFF94Parameters(builder);
 				}catch (Exception ex2){
-					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString(), ex2);	
+					throw new CDKException("Problems with set MM2Parameters due to"+ex2.toString(), ex2);
 				}
 			}
 		}
@@ -170,7 +170,7 @@ public class ForceFieldConfigurator {
 	/**
 	 *  Sets the atomTypes attribute of the ForceFieldConfigurator object
 	 *
-	 * @param  atomtypes  The new atomTypes 
+	 * @param  atomtypes  The new atomTypes
 	 */
 	public void setAtomTypes(List<IAtomType> atomtypes) {
 		atomTypes = atomtypes;
@@ -208,7 +208,7 @@ public class ForceFieldConfigurator {
 		parameterSet = mmff94.getParamterSet();
 		atomTypes = mmff94.getAtomTypes();
 	}
-	
+
 	/**
 	 *  Gets the atomTypes attribute of the ForceFieldConfigurator object
 	 *
@@ -231,7 +231,7 @@ public class ForceFieldConfigurator {
 	 *  Find the atomType for a id
 	 *
 	 * @param  ID                           Atomtype id of the forcefield
-	 * @return                              The atomType 
+	 * @return                              The atomType
 	 * @exception  NoSuchAtomTypeException  atomType is not known.
 	 */
 	private IAtomType getAtomType(String ID) throws NoSuchAtomTypeException {
@@ -245,7 +245,7 @@ public class ForceFieldConfigurator {
 		throw new NoSuchAtomTypeException("AtomType " + ID + " could not be found");
 	}
 
-	
+
 	/**
 	 *  Method assigns atom types to atoms (calculates sssr and aromaticity)
 	 *
@@ -307,7 +307,7 @@ public class ForceFieldConfigurator {
 				throw new CDKException("Could not final configure atom due to problems with force field", ex2);
 			}
 		}
-		
+
 //		IBond[] bond = molecule.getBonds();
 		String bondType;
         for (IBond bond : molecule.bonds()) {
@@ -319,11 +319,11 @@ public class ForceFieldConfigurator {
 					((bond.getAtom(1).getAtomTypeName().equals("Csp2")) | (bond.getAtom(1).getAtomTypeName().equals("C=")))) {
 					bondType = "1";
 				}
-					
+
 				if ((bond.getAtom(0).getAtomTypeName().equals("C=")) &
 					((bond.getAtom(1).getAtomTypeName().equals("Csp2")) | (bond.getAtom(1).getAtomTypeName().equals("C=")))) {
 					bondType = "1";}
-					
+
 				if ((bond.getAtom(0).getAtomTypeName().equals("Csp")) &
 					(bond.getAtom(1).getAtomTypeName().equals("Csp"))) {
 					bondType = "1";}
@@ -335,7 +335,7 @@ public class ForceFieldConfigurator {
 
 		return ringSetMolecule;
 	}
-	
+
 
 	/**
 	 *  Returns true if atom is in hetero ring system
@@ -354,7 +354,7 @@ public class ForceFieldConfigurator {
 		return false;
 	}
 
-	
+
 	/**
 	 *  Assigns an atom type to an atom
 	 *
@@ -368,7 +368,7 @@ public class ForceFieldConfigurator {
 		String key = "";
 		List<?> data = null;
 		Double value = null;
-		
+
 		at = getAtomType(ID);
 		if (atom.getSymbol()==null){
 			atom.setSymbol(at.getSymbol());
@@ -390,13 +390,13 @@ public class ForceFieldConfigurator {
 		}
 		if (at.getAtomicNumber() != 0) {
 			atom.setAtomicNumber(at.getAtomicNumber());
-		} 
+		}
 		if (at.getExactMass() > 0.0) {
 			atom.setExactMass(at.getExactMass());
-		} 
+		}
 		return atom;
 	}
-	
+
 	public IAtom configureAtom(IAtom atom, String hoseCode, boolean _boolean) throws CDKException {
 		if (ffName.equals("mm2")){
 			return configureMM2BasedAtom(atom, hoseCode,_boolean);
@@ -405,7 +405,7 @@ public class ForceFieldConfigurator {
 		}
 		return atom;
 	}
-	
+
 	/**
 	 *  Configures an atom to a mm2 based atom type
 	 *
@@ -423,13 +423,13 @@ public class ForceFieldConfigurator {
 		Pattern p = null;
 		String ID = "";
 		boolean atomTypeFlag = false;
-		
+
 		if (atom instanceof IPseudoAtom) {
 			return atom;
 		}
-		
+
 		hoseCode=removeAromaticityFlagsFromHoseCode(hoseCode);
-		
+
 		String [] ids={"C","Csp2","C=","Csp","HC","O","O=","N","Nsp2","Nsp",
 				"F","CL","BR","I","S","S+",">SN","SO2","SI","LP","HO",
 				"CR3R","HN","HOCO","P","B","BTET","HN2","C.","C+","GE",
@@ -438,7 +438,7 @@ public class ForceFieldConfigurator {
 				"NE","AR","KR","XE","","","","MG","PTET","FE","FE","NI","NI","CO","CO",
 				"","","OX","OK","C++","N=C","NPD+","N+=","N2OX"
 		};
-		
+
 		for (int j = 0; j < atomTypePattern.size(); j++) {
 			p = (Pattern) atomTypePattern.get(j);
 			Matcher mat = p.matcher(hoseCode);
@@ -472,7 +472,7 @@ public class ForceFieldConfigurator {
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID=ids[2];
 					}
-						
+
 				} else if (j == 5) {
 					//OH/Ether
 					if (atom.getFlag(CDKConstants.ISINRING)) {
@@ -511,7 +511,7 @@ public class ForceFieldConfigurator {
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID=ids[36];
 					}
-						
+
 				} else if (j == 43) {
 					//h thiol
 					d_tmp = (Double) atom.getProperty("MAX_BOND_ORDER");
@@ -539,7 +539,7 @@ public class ForceFieldConfigurator {
 					if (mat.matches()) {
 						ID=ids[27];
 					}
-				} 
+				}
 
 				atomTypeFlag = true;
 				//logger.debug("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
@@ -553,7 +553,7 @@ public class ForceFieldConfigurator {
 			throw new NoSuchAtomTypeException("Atom is unkown: Symbol:" + atom.getSymbol() + " does not MATCH AtomType. HoseCode:" + hoseCode);
 		}
 	}
-	
+
 	@TestMethod("testRemoveAromaticityFlagsFromHoseCode")
 	public String removeAromaticityFlagsFromHoseCode(String hoseCode){
 		String hosecode="";
@@ -564,7 +564,7 @@ public class ForceFieldConfigurator {
 		}
 		return hosecode;
 	}
-	
+
 	/**
 	 *  Configures an atom to a mmff94 based atom type
 	 *
@@ -586,7 +586,7 @@ public class ForceFieldConfigurator {
 		Matcher mat=null;
 		Matcher mat2=null;
 		hoseCode=removeAromaticityFlagsFromHoseCode(hoseCode);
-		
+
 		String [] ids={"C","Csp2","C=","Csp","CO2M","CNN+","C%","CIM+","CR4R",
 				"CR3R","CE4R","Car","C5A","C5B","C5","HC","HO","HN","HOCO",
 				"HN=C","HN2","HOCC","HOH","HOS","HN+","HO+","HO=+","HP","O","O=",
@@ -597,11 +597,11 @@ public class ForceFieldConfigurator {
 				"I","SI","CL04","FE+2","FE+3","F-","CL-","BR-","LI+","NA+","K+","ZN+2","CA+2","CU+1",
 				"CU+2","MG+2","Du"
 		};
-		
+
 		if (atom instanceof IPseudoAtom) {
 			return atom;
 		}
-		
+
 		for (int j = 0; j < atomTypePattern.size(); j++) {
 			p = (Pattern) atomTypePattern.get(j);
 			mat = p.matcher(hoseCode);
@@ -639,12 +639,12 @@ public class ForceFieldConfigurator {
 							ID = ids[29];//C= in 4 ring
 						}
 					}
-					
+
 				} else if (j == 2) {//csp2 C=Hetatom
 					if (atom.getFlag(CDKConstants.ISINRING) && isInHetRing && atom.getFlag(CDKConstants.ISAROMATIC)) {
 						ID = ids[12];
 					}
-				
+
 				} else if (j == 36) {//n sp3
 					//Amid
 					p = (Pattern) atomTypePattern.get(48);
@@ -652,16 +652,16 @@ public class ForceFieldConfigurator {
 					if (mat.matches() & !atom.getFlag(CDKConstants.ISINRING)) {
 						ID = ids[48];
 					}
-					
+
 					p = (Pattern) atomTypePattern.get(44);//sp3 n-oxide
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[44];
 					}
-					
+
 					p = (Pattern) atomTypePattern.get(56);//npyd
 					mat = p.matcher(hoseCode);
-					
+
 					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						if(atom.getProperty("RING_SIZE").equals(Integer.valueOf(6)) && mat.matches()){
 							ID = ids[56];
@@ -671,7 +671,7 @@ public class ForceFieldConfigurator {
 							ID=ids[64];
 						}
 					}
-					
+
 					p = (Pattern) atomTypePattern.get(61);//npyd
 					mat = p.matcher(hoseCode);
 					if (atom.getFlag(CDKConstants.ISAROMATIC)){//id in pyridin, pyrol etc...						if (mat.matches() && atom.getFlag(CDKConstants.ISAROMATIC) && atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
@@ -683,13 +683,13 @@ public class ForceFieldConfigurator {
 							ID=ids[43];
 						}
 					}
-					
+
 					p = (Pattern) atomTypePattern.get(45);//NC#N
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
 						ID = ids[45];
 					}
-				
+
 				}else if (j == 37) {//N=C n in imine
 					p = (Pattern) atomTypePattern.get(59);//n beta heteroaromatic ring
 					mat = p.matcher(hoseCode);
@@ -702,7 +702,7 @@ public class ForceFieldConfigurator {
 							ID = ids[57];
 						}
 					}
-					
+
 					p = (Pattern) atomTypePattern.get(43);//N2OX
 					mat = p.matcher(hoseCode);
 					if (mat.matches()){
@@ -714,7 +714,7 @@ public class ForceFieldConfigurator {
 							ID = ids[43];
 						}
 					}
-				
+
 				}else if (j==43){//sp2 n oxide
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
 						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
@@ -728,7 +728,7 @@ public class ForceFieldConfigurator {
 						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						ID = ids[59];//aromatic N 5R alpha
 					}
-				}else if (j==50){//n+= 
+				}else if (j==50){//n+=
 					if (atom.getFlag(CDKConstants.ISINRING) && atom.getFlag(CDKConstants.ISAROMATIC)
 						&& atom.getProperty("RING_SIZE").equals(Integer.valueOf(5))){
 						ID = ids[63];//n5+
@@ -752,7 +752,7 @@ public class ForceFieldConfigurator {
 					if (mat.matches()){
 						ID = ids[18];
 					}
-					
+
 				}else if (j==74){//P
 					p = (Pattern) atomTypePattern.get(75);//-P=C
 					mat = p.matcher(hoseCode);
@@ -760,7 +760,7 @@ public class ForceFieldConfigurator {
 						ID = ids[75];
 					}
 				}
-				
+
 				atomTypeFlag = true;
 				//logger.debug("Atom Symbol:" + atom.getSymbol() + " MATCH AtomType> " + ID + " HoseCode>" + hoseCode + " ");
 				break;

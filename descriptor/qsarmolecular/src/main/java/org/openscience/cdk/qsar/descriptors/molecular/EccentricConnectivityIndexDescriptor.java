@@ -38,17 +38,17 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * A topological descriptor combining distance and adjacency information.
  * This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
  * to correlate well with a number of physical properties. The descriptor is also reported to
- * have good discriminatory ability. 
+ * have good discriminatory ability.
  * <p>
- * The eccentric connectivity index for a hydrogen supressed molecular graph is given by the 
+ * The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
  * expression
  * <center>
  * \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
  * </center>
- * where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the 
+ * where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
  * i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
  * i<sup>th</sup> atom.
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -149,7 +149,7 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
         int natom = local.getAtomCount();
         int[][] admat = AdjacencyMatrix.getMatrix(local);
         int[][] distmat = PathTools.computeFloydAPSP(admat);
-        
+
         int eccenindex = 0;
         for (int i = 0; i < natom; i++) {
             int max = -1;
@@ -180,5 +180,5 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
         return new IntegerResult(1);
     }
 }
-    
+
 

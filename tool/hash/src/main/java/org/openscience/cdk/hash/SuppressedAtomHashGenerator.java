@@ -36,9 +36,9 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * hydrogens but ignore any values for the explicit hydrogens. This particularly
  * useful for stereo-centres where by removing explicit hydrogens could affect
  * the configuration.
- * 
- * The suppress atom hashes are returned as '0'. 
- * 
+ *
+ * The suppress atom hashes are returned as '0'.
+ *
  * @author John May
  * @cdk.module hash
  * @see org.openscience.cdk.hash.SeedGenerator
@@ -153,7 +153,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
         for (int i : suppressed.toArray()) {
             current[i] = Long.MAX_VALUE;
         }
-        
+
         int    n        = graph.length;
         long[] next     = copy(current);
 
@@ -161,8 +161,8 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
         long[] unique   = new long[n];
         long[] included = new long[n];
 
-        
-        
+
+
         while (encoder.encode(current, next)) {
             copy(next, current);
         }
@@ -180,7 +180,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
             }
 
         }
-        
+
         // zero all suppressed values so they are not combined in any molecule
         // hash
         for (int i : suppressed.toArray()) {
@@ -203,7 +203,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
      * @param included   buffer for storing the rotated <i>unique</i> value, this
      *                   value is <i>rotated</i> each time the same value is
      *                   found.
-     * @param suppressed bit set indicates which atoms are 'suppressed'                
+     * @param suppressed bit set indicates which atoms are 'suppressed'
      * @return the next value for <i>v</i>
      */
     @TestMethod("testRotation") long next(int[][]    graph,
@@ -215,7 +215,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
 
         if (suppressed.contains(v))
             return current[v];
-        
+
         long invariant = distribute(current[v]);
         int  nUnique   = 0;
 
@@ -224,7 +224,7 @@ final class SuppressedAtomHashGenerator extends AbstractAtomHashGenerator
             // skip suppressed atom
             if (suppressed.contains(w))
                 continue;
-            
+
             long adjInv = current[w];
 
             // find index of already included neighbor

@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.silent;
 
@@ -23,7 +23,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.interfaces.IRing;
 
-/** 
+/**
  * Class representing a ring structure in a molecule.
  * A ring is a linear sequence of
  * N atoms interconnected to each other by covalent bonds,
@@ -54,7 +54,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 	public Ring() {
 		super();
 	}
-	
+
     /**
      * Constructs a ring from the atoms in an IAtomContainer object.
      *
@@ -64,7 +64,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 	{
 		super(atomContainer);
 	}
-	
+
 	/**
 	 * Constructs a ring that will have a certain number of atoms of the given elements.
 	 *
@@ -82,8 +82,8 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 		}
 		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
 	}
-	
-		
+
+
 	/**
 	 * Constructs an empty ring that will have a certain size.
 	 *
@@ -93,18 +93,18 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 	public Ring(int ringSize) {
 		super(ringSize, ringSize, 0, 0);
 	}
-	
+
 
 	/**
 	 * Returns the number of atoms\edges in this ring.
 	 *
-	 * @return   The number of atoms\edges in this ring   
+	 * @return   The number of atoms\edges in this ring
 	 */
 
 	public int getRingSize() {
 		return this.atomCount;
 	}
-	
+
 
 	/**
 	 * Returns the next bond in order, relative to a given bond and atom.
@@ -113,7 +113,7 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
 	 *
 	 * @param   bond  A bond for which an atom from a consecutive bond is sought
 	 * @param   atom  A atom from the bond above to assign a search direction
-	 * @return  The next bond in the order given by the above assignment   
+	 * @return  The next bond in the order given by the above assignment
 	 */
 	public IBond getNextBond(IBond bond, IAtom atom)
 	{

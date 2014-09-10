@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Federico
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * This class calculates ATS autocorrelation descriptor, where the weight equal
  * to the scaled atomic mass {@cdk.cite Moreau1980}.
- * 
+ *
  * @author      Federico
  * @cdk.created 2007-02-08
  * @cdk.module  qsarmolecular
@@ -50,7 +50,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
 
     private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
     private final static double CARBON_MASS = 12.010735896788;
-	
+
     private static double scaledAtomicMasses(IElement element)
             throws java.io.IOException, ClassNotFoundException {
 
@@ -71,7 +71,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
 		}
 		return scalated;
 	}
-	
+
 
 	/**
      * This method calculate the ATS Autocorrelation descriptor.
@@ -152,7 +152,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
                 this.getClass().getName(),
                 "The Chemistry Development Kit");
 	}
-	
+
 	@TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
@@ -160,7 +160,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
 
 	@TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-		
+
 		}
 
 }

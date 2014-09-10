@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *                    2010  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.isomorphism.matchers;
 
@@ -44,13 +44,13 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     protected Double charge = (Double) CDKConstants.UNSET;
 
     /**
-     *  A 2D point specifying the location of this atom in a 2D coordinate 
+     *  A 2D point specifying the location of this atom in a 2D coordinate
      *  space.
      */
     protected Point2d point2d = (Point2d) CDKConstants.UNSET;
 
     /**
-     *  A 3 point specifying the location of this atom in a 3D coordinate 
+     *  A 3 point specifying the location of this atom in a 3D coordinate
      *  space.
      */
     protected Point3d point3d = (Point3d) CDKConstants.UNSET;
@@ -83,10 +83,10 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * The covalent radius of this atom type.
      */
     Double covalentRadius = (Double) CDKConstants.UNSET;
-    
+
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
-     * 
+     *
      *  Note that some constructors ({@link #AtomType(String)} and
      * {@link #AtomType(String, String)} ) will explicitly set this field to 0
      */
@@ -380,7 +380,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
        this.formalCharge = charge;
        notifyChanged();
    }
-   
+
    /**
     *  Returns the formal charge of this atom.
     *
@@ -391,7 +391,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
    public Integer getFormalCharge() {
        return this.formalCharge;
    }
-   
+
    /**
     * Sets the formal neighbour count of this atom.
     *
@@ -403,7 +403,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
        this.formalNeighbourCount = count;
    notifyChanged();
    }
-   
+
    /**
     * Returns the formal neighbour count of this atom.
     *
@@ -414,7 +414,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
    public Integer getFormalNeighbourCount() {
        return this.formalNeighbourCount;
    }
-   
+
    /**
     *  Sets the hybridization of this atom.
     *
@@ -426,7 +426,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
        this.hybridization = hybridization;
        notifyChanged();
    }
-   
+
    /**
     *  Returns the hybridization of this atom.
     *
@@ -466,7 +466,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
 
    /**
     *  Gets the NaturalAbundance attribute of the Isotope object.
-    *  
+    *
     *  <p>Once instantiated all field not filled by passing parameters
     * to the constructor are null. Isotopes can be configured by using
     * the IsotopeFactory.configure() method:
@@ -508,7 +508,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
 
    /**
     * Returns the atomic mass of this element.
-    * 
+    *
     * <p>Once instantiated all field not filled by passing parameters
     * to the constructor are null. Isotopes can be configured by using
     * the IsotopeFactory.configure() method:
@@ -541,7 +541,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
 
    /**
     * Returns the atomic number of this element.
-    * 
+    *
     *  <p>Once instantiated all field not filled by passing parameters
     * to the constructor are null. Elements can be configured by using
     * the IsotopeFactory.configure() method:
@@ -550,9 +550,9 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
     *   if.configure(element);
     * </pre>
-    * </p>      
+    * </p>
     *
-    * @return The atomic number of this element    
+    * @return The atomic number of this element
     *
     * @see    #setAtomicNumber
     */

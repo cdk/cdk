@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -40,8 +40,8 @@ import java.util.List;
  * <p>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
  * It returns the reaction mechanism which has been cloned the IMolecule.</p>
  * <p>This reaction could be represented as A + [B+] => A-B</p>
- * 
- * 
+ *
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -50,9 +50,9 @@ import java.util.List;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.AdductionLPMechanismTest")
 public class AdductionLPMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
-     * reactants and products. 
+     * reactants and products.
      *
      *
      * @param atomContainerSet
@@ -60,7 +60,7 @@ public class AdductionLPMechanism implements IReactionMechanism{
      * @param bondList    The list of bonds taking part in the mechanism. not allowed bonds.
      *
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -76,7 +76,7 @@ public class AdductionLPMechanism implements IReactionMechanism{
 		}
 		IAtomContainer molecule1 = atomContainerSet.getAtomContainer(0);
 		IAtomContainer molecule2 = atomContainerSet.getAtomContainer(1);
-		
+
 		IAtomContainer reactantCloned;
 		try {
 			reactantCloned = (IAtomContainer) atomContainerSet.getAtomContainer(0).clone();
@@ -88,10 +88,10 @@ public class AdductionLPMechanism implements IReactionMechanism{
 		IAtom atom1C = reactantCloned.getAtom(molecule1.getAtomNumber(atom1));
 		IAtom atom2 = atomList.get(1);// Atom 2: deficient in charge
 		IAtom atom2C = reactantCloned.getAtom(molecule1.getAtomCount() + molecule2.getAtomNumber(atom2));
-		
+
 		IBond newBond = molecule1.getBuilder().newInstance(IBond.class,atom1C, atom2C, IBond.Order.SINGLE);
     	reactantCloned.addBond(newBond);
-    	
+
     	int charge = atom1C.getFormalCharge();
     	atom1C.setFormalCharge(charge+1);
     	List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(atom1C);
@@ -107,10 +107,10 @@ public class AdductionLPMechanism implements IReactionMechanism{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule1);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule1.atoms()){
 			IMapping mapping = atom1C.getBuilder().newInstance(
@@ -125,7 +125,7 @@ public class AdductionLPMechanism implements IReactionMechanism{
 			reaction.addMapping(mapping);
 	    }
     	reaction.addProduct(reactantCloned);
-    	
+
 		return reaction;
 	}
 

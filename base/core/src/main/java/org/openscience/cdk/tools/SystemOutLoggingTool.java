@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Implementation of the {@link ILoggingTool} interface that sends output to
  * the {@link System}.out channel.
- * 
+ *
  * @cdk.module core
  * @cdk.githash
  */
@@ -41,13 +41,13 @@ public class SystemOutLoggingTool implements ILoggingTool {
 
     /** Logger used to report internal problems. */
     private static ILoggingTool logger;
-    
+
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
     private String classname;
 
     /** Length of the stack to print for reported {@link Exception}s. */
     private int stackLength;
-    
+
     /**
      * Constructs a ILoggingTool which produces log lines indicating them to be
      * for the given Class.
@@ -79,7 +79,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void setStackLength(int length) {
         this.stackLength = length;
     }
-    
+
     /** {@inheritDoc} */
     @TestMethod("testDumpClasspath")
     public void dumpClasspath() {
@@ -97,11 +97,11 @@ public class SystemOutLoggingTool implements ILoggingTool {
             }
         }
     }
-    
+
     private void debugString(String string) {
         printToSTDOUT("DEBUG", string);
     }
-    
+
     /** {@inheritDoc} */
     @TestMethod("testDebug_Object_Object")
     public void debug(Object object, Object... objects) {
@@ -136,7 +136,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
                 if (reader.ready()) {
                     String traceLine = reader.readLine();
                     int counter = 0;
-                    while (reader.ready() && traceLine != null && 
+                    while (reader.ready() && traceLine != null &&
                     		(counter < stackLength)) {
                         debug(traceLine);
                         traceLine = reader.readLine();
@@ -148,7 +148,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
                       "stack trace: ", ioException.getMessage());
                 logger.debug(ioException);
             }
-            Throwable cause = problem.getCause(); 
+            Throwable cause = problem.getCause();
             if (cause != null) {
             	debug("Caused by: ");
             	debugThrowable(cause);
@@ -221,7 +221,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
             warnString("" + object);
         }
     }
-    
+
     private void warnString(String string) {
         printToSTDOUT("WARN", string);
     }
@@ -244,7 +244,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public boolean isDebugEnabled() {
         return doDebug;
     }
-    
+
     private void printToSTDOUT(String level, String message) {
         System.out.print(classname);
         System.out.print(" ");

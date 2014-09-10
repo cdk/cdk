@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CKD) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,16 +10,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 
 package org.openscience.cdk.similarity;
@@ -62,11 +62,11 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
 	    	Map<String, Integer> fp1 = fingerprinter.getRawFingerprint(mol1);
 	    	Map<String, Integer> fp2 = fingerprinter.getRawFingerprint(mol2);
 	    	float tanimoto = Tanimoto.calculate(fp1, fp2);
-	    	Assert.assertTrue( "Tanimoto expected to be between 0 and 1, was:" + tanimoto, 
+	    	Assert.assertTrue( "Tanimoto expected to be between 0 and 1, was:" + tanimoto,
 	    			           tanimoto > 0 && tanimoto < 1 );
     }
 
-    	
+
     @Test public void testICountFingerprintComparison() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeIndole();
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
@@ -77,7 +77,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
         Assert.assertEquals(1.0, tanimoto, 0.001);
 
     }
-    
+
     @Test public void compareCountFingerprintAndRawFingerprintTanimoto() throws CDKException {
     		IAtomContainer mol1 = MoleculeFactory.make123Triazole();
     		IAtomContainer mol2 = MoleculeFactory.makeImidazole();
@@ -90,7 +90,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
     		double countTanimoto = Tanimoto.calculate(countFp1, countFp2);
     		Assert.assertEquals(rawTanimoto, countTanimoto, 0.001);
     }
-    
+
     @Test
     public void testCountMethod1and2() throws CDKException {
     		ICountFingerprint fp1 = new IntArrayCountFingerprint(
@@ -105,7 +105,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
                                 );
 		Assert.assertEquals(0.923, Tanimoto.method1(fp1, fp2), 0.001 );
 		Assert.assertEquals(0.75, Tanimoto.method2(fp1, fp2), 0.001 );
-		
+
 		IAtomContainer mol1 = MoleculeFactory.makeIndole();
         IAtomContainer mol2 = MoleculeFactory.makeIndole();
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter();
@@ -114,13 +114,13 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
         Assert.assertEquals(1.0, Tanimoto.method1(fp1, fp2), 0.001);
         Assert.assertEquals(1.0, Tanimoto.method2(fp1, fp2), 0.001);
     }
-    
+
     @Test
-    public void testComparingBitFingerprintAndCountBehavingAsBit() 
+    public void testComparingBitFingerprintAndCountBehavingAsBit()
                 throws Exception {
     	IAtomContainer mol1 = MoleculeFactory.make123Triazole();
 		IAtomContainer mol2 = MoleculeFactory.makeImidazole();
-		
+
 		SignatureFingerprinter fingerprinter = new SignatureFingerprinter(1);
 		ICountFingerprint countFp1 = fingerprinter.getCountFingerprint(mol1);
 		ICountFingerprint countFp2 = fingerprinter.getCountFingerprint(mol2);
@@ -131,7 +131,7 @@ public class SignatureFingerprintTanimotoTest extends CDKTestCase
 		double bitTanimoto = Tanimoto.calculate(bitFp1, bitFp2);
 		double countTanimoto1 = Tanimoto.method1(countFp1, countFp2);
 		double countTanimoto2 = Tanimoto.method2(countFp1, countFp2);
-		
+
 		Assert.assertEquals(countTanimoto1, countTanimoto2, 0.001);
 		Assert.assertEquals(bitTanimoto, countTanimoto1, 0.001);
     }

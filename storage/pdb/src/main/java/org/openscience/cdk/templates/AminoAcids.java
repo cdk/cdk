@@ -1,20 +1,20 @@
 /* Copyright (C) 2005-2007  Martin Eklund <martin.eklund@farmbio.uu.se>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.templates;
 
@@ -51,7 +51,7 @@ public class AminoAcids {
 
 	private static final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AminoAcids.class);
-	
+
     /**
      * Creates matrix with info about the bonds in the amino acids.
      * 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
@@ -62,9 +62,9 @@ public class AminoAcids {
     	if (aminoAcids == null) {
             createAAs();
         }
-        
+
         int[][] info = new int[153][4];
-        
+
         int counter = 0;
         int total = 0;
         for (int aa=0; aa<aminoAcids.length; aa++) {
@@ -84,33 +84,33 @@ public class AminoAcids {
         		counter++;
         	}
         }
-        
+
         if (counter>153) {
         	logger.error("Error while creating AA info! Bond count is too large: ", counter);
         	return null;
         }
-        
+
         return info;
     }
-    
+
     private static AminoAcid[] aminoAcids = null;
-    
+
     public final static String RESIDUE_NAME = "residueName";
     public final static String RESIDUE_NAME_SHORT = "residueNameShort";
     public final static String NO_ATOMS = "noOfAtoms";
     public final static String NO_BONDS = "noOfBonds";
     public final static String ID = "id";
-    
+
     /**
      * Creates amino acid AminoAcid objects.
-     * 
+     *
      * @return aminoAcids, a HashMap containing the amino acids as AminoAcids.
      */
     public synchronized static AminoAcid[] createAAs() {
     	if (aminoAcids != null) {
             return aminoAcids;
         }
-    	
+
         // Create set of AtomContainers
         aminoAcids = new AminoAcid[20];
 
@@ -184,7 +184,7 @@ public class AminoAcids {
         	logger.error("Failed reading file: ", exception.getMessage());
         	logger.debug(exception);
         }
-        
+
         return aminoAcids;
     }
 
@@ -200,7 +200,7 @@ public class AminoAcids {
         }
         return map;
     }
-    
+
     /**
      * Returns a HashMap where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
      * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
@@ -213,7 +213,7 @@ public class AminoAcids {
         }
         return map;
     }
-    
+
     /**
      * Returns the one letter code of an amino acid given a three letter code.
      * For example, it will return "V" when "Val" was passed.

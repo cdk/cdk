@@ -1,20 +1,20 @@
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.type;
 
@@ -61,7 +61,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 	public  RadicalSiteRrAlphaReactionTest()  throws Exception {
 			setReaction(RadicalSiteRrAlphaReaction.class);
 	 }
-	 
+
 	 /**
 	  *  The JUnit setup method
 	  */
@@ -70,14 +70,14 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 			Assert.assertNotNull(type);
 	 }
 	/**
-	 * A unit test suite for JUnit. Reaction: 
+	 * A unit test suite for JUnit. Reaction:
 	 * Manually put of the center active.
 	 *
 	 * @return    The test suite
 	 */
 	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
 		IReactionProcess type = new RadicalSiteRrAlphaReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
@@ -87,27 +87,27 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-        
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
-        
+
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
-        
+
 	}
 	/**
 	 * create the compound.
-	 * 
+	 *
 	 * @return The IAtomContainer
 	 * @throws Exception
 	 */
@@ -129,7 +129,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.SINGLE);
-		
+
 		try {
 			addExplicitHydrogens(molecule);
 		} catch (Exception e) {
@@ -138,7 +138,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 
 		molecule.getAtom(3).setFormalCharge(0);
 		molecule.addSingleElectron(new SingleElectron(molecule.getAtom(3)));
-		
+
 		try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 			makeSureAtomTypesAreRecognized(molecule);
@@ -150,7 +150,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 	}
 	/**
 	 * Get the expected set of molecules.
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExpectedProducts() {
@@ -171,7 +171,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 		molecule.addBond(4, 5, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule.addBond(5, 6, IBond.Order.SINGLE);
-		
+
 		try {
 			addExplicitHydrogens(molecule);
 		} catch (Exception e) {
@@ -180,45 +180,45 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 
 		molecule.getAtom(0).setFormalCharge(0);
 		molecule.addSingleElectron(new SingleElectron(molecule.getAtom(0)));
-        
+
 		try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 			makeSureAtomTypesAreRecognized(molecule);
 		} catch (CDKException e) {
 			e.printStackTrace();
 		}
-		
+
         setOfProducts.addAtomContainer(molecule);
 		return setOfProducts;
 	}
 	/**
 	 * A unit test suite for JUnit.
-	 * 
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RadicalSiteRrAlphaReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-		
+
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
-        
+
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         Assert.assertEquals(1, setOfReactions.getReactionCount());
-        
+
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
 		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
 		Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
@@ -232,30 +232,30 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 
 	/**
 	 * A unit test suite for JUnit.
-	 *  
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type  = new RadicalSiteRrAlphaReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-        
+
 		/*automatic search of the center active*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(3).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
-        
+
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
         Assert.assertEquals(22,setOfReactions.getReaction(0).getMappingCount());
@@ -268,7 +268,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
     }
 	/**
 	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-	 * 
+	 *
 	 * @param molecule          The IAtomContainer to analyze
 	 * @throws CDKException
 	 */
@@ -279,7 +279,7 @@ public class RadicalSiteRrAlphaReactionTest extends ReactionProcessTest {
 		while (atoms.hasNext()) {
 				IAtom nextAtom = atoms.next();
 				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom, 
+					"Missing atom type for: " + nextAtom,
 					matcher.findMatchingAtomType(molecule, nextAtom)
 				);
 		}

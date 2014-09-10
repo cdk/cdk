@@ -212,7 +212,7 @@ public final class ShortestPaths {
 
                 if (dist > limit)
                     continue;
-                
+
                 // distance is less then the current closest distance
                 if (dist < distTo[w]) {
                     distTo[w]   = dist;

@@ -22,8 +22,8 @@ package org.openscience.cdk.interfaces;
  * The base class for atom types.
  *
  * Atom types are typically used to describe the
- * behaviour of an atom of a particular element in different environment like 
- * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling 
+ * behaviour of an atom of a particular element in different environment like
+ * sp<sup>3</sup> hybridized carbon C3, etc., in some molecular modelling
  * applications.
  *
  * @cdk.module  interfaces
@@ -39,7 +39,7 @@ public interface IAtomType extends IIsotope {
     /**
      *
      * An enum for the different hybridization states.
-     * 
+     *
      */
 	public enum Hybridization {
 	    S,
@@ -53,7 +53,7 @@ public interface IAtomType extends IIsotope {
 	    SP3D4,   // square antiprim??
 	    SP3D5    // tricapped trigonal prism
 	}
-	
+
 	/**
 	 * Sets the if attribute of the AtomType object.
 	 *
@@ -101,7 +101,7 @@ public interface IAtomType extends IIsotope {
      * @see       #setBondOrderSum
 	 */
 	public Double getBondOrderSum();
-	
+
     /**
      * Sets the formal charge of this atom.
      *
@@ -109,7 +109,7 @@ public interface IAtomType extends IIsotope {
      * @see    #getFormalCharge
      */
     public void setFormalCharge(Integer charge);
-    
+
     /**
      * Returns the formal charge of this atom.
      *
@@ -117,7 +117,7 @@ public interface IAtomType extends IIsotope {
      * @see    #setFormalCharge
      */
     public Integer getFormalCharge();
-    
+
     /**
      * Sets the formal neighbour count of this atom.
      *
@@ -125,7 +125,7 @@ public interface IAtomType extends IIsotope {
      * @see    #getFormalNeighbourCount
      */
     public void setFormalNeighbourCount(Integer count);
-    
+
     /**
      * Returns the formal neighbour count of this atom.
      *
@@ -133,7 +133,7 @@ public interface IAtomType extends IIsotope {
      * @see    #setFormalNeighbourCount
      */
     public Integer getFormalNeighbourCount();
-    
+
     /**
      * Sets the hybridization of this atom.
      *
@@ -141,7 +141,7 @@ public interface IAtomType extends IIsotope {
      * @see    #getHybridization
      */
     public void setHybridization(Hybridization hybridization);
-    
+
     /**
      * Returns the hybridization of this atom.
      *
@@ -157,7 +157,7 @@ public interface IAtomType extends IIsotope {
      * @see    #getCovalentRadius
      */
     public void setCovalentRadius(Double radius);
-    
+
     /**
      * Returns the covalent radius for this AtomType.
      *
@@ -165,7 +165,7 @@ public interface IAtomType extends IIsotope {
      * @see    #setCovalentRadius
      */
     public Double getCovalentRadius();
-    
+
 	/**
 	 * Sets the the exact electron valency of the AtomType object.
 	 *

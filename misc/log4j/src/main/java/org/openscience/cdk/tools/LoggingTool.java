@@ -96,7 +96,7 @@ public class LoggingTool implements ILoggingTool {
     private String classname;
 
     private int stackLength;  // NOPMD
-    
+
     /** Default number of StackTraceElements to be printed by debug(Exception). */
     public final int DEFAULT_STACK_LENGTH = 5;
 
@@ -119,7 +119,7 @@ public class LoggingTool implements ILoggingTool {
     public LoggingTool(Object object) {
         this(object.getClass());
     }
-    
+
     /**
      * Constructs a LoggingTool which produces log lines indicating them to be
      * for the given Class.
@@ -167,7 +167,7 @@ public class LoggingTool implements ILoggingTool {
           }
         }
     }
-    
+
     /**
      * Forces the <code>LoggingTool</code> to configurate the Log4J toolkit.
      * Normally this should be done by the application that uses the CDK library,
@@ -215,7 +215,7 @@ public class LoggingTool implements ILoggingTool {
     public void setStackLength(int length) {
         this.stackLength = length;
     }
-    
+
     /**
      * Outputs the system property for java.class.path.
      */
@@ -241,7 +241,7 @@ public class LoggingTool implements ILoggingTool {
             }
         }
     }
-    
+
     private void debugString(String string) {
         if (toSTDOUT) {
             printToSTDOUT("DEBUG", string);
@@ -249,7 +249,7 @@ public class LoggingTool implements ILoggingTool {
             log4jLogger.debug(string);
         }
     }
-    
+
     /**
      * Shows DEBUG output for the given Object's. It uses the
      * toString() method to concatenate the objects.
@@ -288,7 +288,7 @@ public class LoggingTool implements ILoggingTool {
                 if (reader.ready()) {
                     String traceLine = reader.readLine();
                     int counter = 0;
-                    while (reader.ready() && traceLine != null && 
+                    while (reader.ready() && traceLine != null &&
                     		(counter < stackLength)) {
                         debug(traceLine);
                         traceLine = reader.readLine();
@@ -296,18 +296,18 @@ public class LoggingTool implements ILoggingTool {
                     }
                 }
             } catch (Exception ioException) {
-                error("Serious error in LoggingTool while printing exception stack trace: " + 
+                error("Serious error in LoggingTool while printing exception stack trace: " +
                       ioException.getMessage());
                 logger.debug(ioException);
             }
-            Throwable cause = problem.getCause(); 
+            Throwable cause = problem.getCause();
             if (cause != null) {
             	debug("Caused by: ");
             	debugThrowable(cause);
             }
         }
     }
-    
+
     /**
      * Shows ERROR output for the Object. It uses the toString() method.
      *
@@ -338,7 +338,7 @@ public class LoggingTool implements ILoggingTool {
             errorString(result.toString());
         }
     }
-    
+
     private void errorString(String string) {
         if (toSTDOUT) {
             printToSTDOUT("ERROR", string);
@@ -346,7 +346,7 @@ public class LoggingTool implements ILoggingTool {
             log4jLogger.error(string);
         }
     }
-    
+
     /**
      * Shows FATAL output for the Object. It uses the toString() method.
      *
@@ -393,7 +393,7 @@ public class LoggingTool implements ILoggingTool {
             infoString(result.toString());
         }
     }
-    
+
     private void infoString(String string) {
         if (toSTDOUT) {
             printToSTDOUT("INFO", string);
@@ -401,7 +401,7 @@ public class LoggingTool implements ILoggingTool {
             log4jLogger.info(string);
         }
     }
-    
+
     /**
      * Shows WARN output for the Object. It uses the toString() method.
      *
@@ -413,7 +413,7 @@ public class LoggingTool implements ILoggingTool {
             warnString("" + object);
         }
     }
-    
+
     private void warnString(String string) {
         if (toSTDOUT) {
             printToSTDOUT("WARN", string);
@@ -421,7 +421,7 @@ public class LoggingTool implements ILoggingTool {
             log4jLogger.warn(string);
         }
     }
-    
+
     /**
      * Shows WARN output for the given Object's. It uses the
      * toString() method to concatenate the objects.
@@ -456,7 +456,7 @@ public class LoggingTool implements ILoggingTool {
     public boolean isDebugEnabled() {
         return doDebug;
     }
-    
+
     private void printToSTDOUT(String level, String message) {
         System.out.print(classname);
         System.out.print(" ");

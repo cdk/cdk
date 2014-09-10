@@ -140,7 +140,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Assert.assertTrue(satcheck.isSaturated(h3, m));
 		Assert.assertTrue(satcheck.isSaturated(o, m));
 	}
-    
+
     /**
      * Tests whether the saturation checker considers positive
      * charges.
@@ -314,7 +314,7 @@ public class SaturationCheckerTest extends CDKTestCase
 		Assert.assertTrue(satcheck.isSaturated(h1, m));
 		Assert.assertTrue(satcheck.isSaturated(h2, m));
     }
-    
+
     @Test public void testBug777529() throws Exception {
         IAtomContainer m = new AtomContainer();
       m.addAtom(new Atom("C"));
@@ -409,27 +409,27 @@ public class SaturationCheckerTest extends CDKTestCase
       Assert.assertTrue(m.getBond(9).getOrder() == IBond.Order.DOUBLE ^ m.getBond(5).getOrder() == IBond.Order.DOUBLE);
       Assert.assertTrue(m.getBond(13).getOrder() == IBond.Order.DOUBLE ^ m.getBond(3).getOrder() == IBond.Order.DOUBLE);
     }
-    
+
     @Test public void testCalculateNumberOfImplicitHydrogens() throws Exception {
     	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-    	
+
     	IAtomContainer proton = builder.newInstance(IAtomContainer.class);
     	IAtom hplus = builder.newInstance(IAtom.class,"H");
     	hplus.setFormalCharge(1);
     	proton.addAtom(hplus);
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hplus, proton));
-    	
+
     	IAtomContainer hydrogenRadical = builder.newInstance(IAtomContainer.class);
     	IAtom hradical = builder.newInstance(IAtom.class,"H");
     	hydrogenRadical.addAtom(hradical);
     	hydrogenRadical.addSingleElectron(builder.newInstance(ISingleElectron.class,hradical));
     	Assert.assertEquals(0, satcheck.calculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
-    	
+
     	IAtomContainer hydrogen = builder.newInstance(IAtomContainer.class);
     	IAtom h = builder.newInstance(IAtom.class,"H");
     	hydrogen.addAtom(h);
     	Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(h, hydrogen));
-    	
+
     	IAtomContainer coRad = builder.newInstance(IAtomContainer.class);
     	IAtom c = builder.newInstance(IAtom.class,"C");
     	IAtom o = builder.newInstance(IAtom.class,"O");
@@ -440,6 +440,6 @@ public class SaturationCheckerTest extends CDKTestCase
     	coRad.addSingleElectron(builder.newInstance(ISingleElectron.class,c));
     	Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(c, coRad));
     }
-    
+
 }
 

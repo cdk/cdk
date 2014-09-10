@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -62,7 +62,7 @@ public class OWLReact extends Dictionary {
     }
 
     /**
-     * 
+     *
      * @param reader The Reader
      * @return       The Dictionary
      */
@@ -75,21 +75,21 @@ public class OWLReact extends Dictionary {
             Document doc = parser.build(reader);
             Element root = doc.getRootElement();
             logger.debug("Found root element: ", root.getQualifiedName());
-            
+
             // Extract ownNS from root element
 //            final String ownNS = root.getBaseURI();
             final String ownNS = root.getBaseURI();
             dict.setNS(ownNS);
 
             logger.debug("Found ontology namespace: ", ownNS);
-            
+
             // process the defined facts
             Elements entries = root.getChildElements();
             logger.info("Found #elements in OWL dict:", entries.size());
             for (int i=0; i<entries.size(); i++) {
                 Element entry = entries.get(i);
                 if (entry.getNamespaceURI().equals(ownNS)) {
-                	EntryReact dbEntry = unmarshal(entry, ownNS); 
+                	EntryReact dbEntry = unmarshal(entry, ownNS);
                 	dict.addEntry(dbEntry);
                 	logger.debug("Added entry: ", dbEntry);
                 } else {
@@ -101,7 +101,7 @@ public class OWLReact extends Dictionary {
             logger.debug("Error at line " + ex.getLineNumber(),
                          ", column " + ex.getColumnNumber());
             dict = null;
-        } catch (IOException ex) { 
+        } catch (IOException ex) {
             logger.error("Due to an IOException, the parser could not check:",
                 ex.getMessage()
             );
@@ -145,7 +145,7 @@ public class OWLReact extends Dictionary {
 	        	String contentRepr = representations.get(i).getAttributeValue("content");
 		        dbEntry.setRepresentation(contentRepr);
 	        }
-        
+
         Elements params = entry.getChildElements("parameters", ownNS);
         if (params != null)
 	        for(int i = 0 ; i< params.size(); i++){
@@ -155,7 +155,7 @@ public class OWLReact extends Dictionary {
 	        	String value = params.get(i).getValue();
 	        	dbEntry.setParameters(nameParam,typeParam,value);
 	        }
-        
+
         Elements paramsList = entry.getChildElements("parameterList", ownNS);
         if (paramsList != null)
 	        for(int i = 0 ; i< paramsList.size(); i++){
@@ -165,7 +165,7 @@ public class OWLReact extends Dictionary {
 	    	        	String paramClass = params2.get(i).getAttribute(0).getValue();
 	    	        	paramClass = paramClass.substring(paramClass.indexOf('#')+1);
 	    	            logger.debug("parameter class: ", paramClass);
-	    	        	
+
 	    	        	String needsToSet = "";
 	    	        	String value = "";
 	    	        	String dataType = "";
@@ -188,7 +188,7 @@ public class OWLReact extends Dictionary {
 	    	        	dbEntry.addParameter(pp);
 	    	        }
 	        }
-        
+
         Elements mechanismDependence = entry.getChildElements("mechanismDependence", ownNS);
         String mechanism = "";
         if (mechanismDependence != null)
@@ -200,7 +200,7 @@ public class OWLReact extends Dictionary {
 
         dbEntry.setMechanism(mechanism);
 //        System.out.println("mechan: "+mechan);
-        
+
         Elements exampleReact = entry.getChildElements("example-Reactions", ownNS);
         if (exampleReact != null)
 	        for(int i = 0 ; i< exampleReact.size(); i++){
@@ -212,5 +212,5 @@ public class OWLReact extends Dictionary {
 	        }
         return dbEntry;
     }
-    
+
 }

@@ -53,7 +53,7 @@ public class CDKAtomColors implements IAtomColorer {
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
-    
+
     /**
      * Returns the CDK scheme color for the given atom's element, or
      * defaults to the given color if no color is defined.

@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Class implements methods to assign mmff94 atom types for a specific atom in an molecule. 
+ * Class implements methods to assign mmff94 atom types for a specific atom in an molecule.
  *
  * @author         cho
  * @cdk.created    2005-18-07
@@ -51,7 +51,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 	IBond.Order maxBondOrder = IBond.Order.SINGLE;
 	private AtomTypeFactory factory = null;
 	AtomTypeTools atomTypeTools=null;
-	
+
 	String [] atomTypeIds={"C","Csp2","C=","Csp","HC","O","O=","N","Nsp2","Nsp",
 			"F","CL","BR","I","S","S+",">SN","SO2","Sthi","SI","LP","HO",
 			"CR3R","HN","HOCO","P","B","BTET","HN2","C.","C+","GE",
@@ -95,7 +95,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 	 *   new Molecule(atomContainer)
 	 * );
 	 * </pre>
-	 * 
+	 *
 	 * @param  atomContainer   AtomContainer
 	 * @param  atomInterface   the target atom
 	 * @exception CDKException Description of the Exception
@@ -117,17 +117,17 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 		logger.debug("****** Configure MM2 AtomType via findMatching ******");
 		String atomSphericalMatcher = (String)atom.getProperty(CDKConstants.SPHERICAL_MATCHER);
 		int atomChemicalGroupConstant = (Integer) atom.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT);
-		int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default 
+		int atomRingSize = 0; // not all atom types have ring sizes define; 0 is default
 	    Object oRingSize = atom.getProperty(CDKConstants.PART_OF_RING_OF_SIZE);
 	    if (oRingSize != null) {
 	    	atomRingSize = (Integer) oRingSize;
 	    }
 		logger.debug(" Symbol:" + atom.getSymbol() +" HoseCode>" + atomSphericalMatcher + " ");
-					
+
 		if (atom instanceof IPseudoAtom) {
 				return factory.getAtomTypes("DU")[0];
 		}
-		
+
 		Pattern p1 = null;
 		String ID = "";
 		boolean atomTypeFlag = false;
@@ -147,16 +147,16 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 						if (atomRingSize==3) {
 							ID="CR3R";
 						}else if (atomChemicalGroupConstant==5){
-							ID="Car";	
+							ID="Car";
 						}else if (maxBondOrder != IBond.Order.SINGLE) {
 							ID="Csp2";
 						}
 					}
-										
+
 					if (atom.getSymbol().equals("S")){
 						if (atomChemicalGroupConstant==8){
 							ID="Sthi";
-						}else{						
+						}else{
 							p1 = Pattern.compile(getSphericalMatcher("S"));
 							mat1 = p1.matcher(atomSphericalMatcher);
 							if (mat1.matches()) {
@@ -164,7 +164,7 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 							}
 						}
 					}
-					
+
 				} else if (atomTypeIds[j].equals("Csp2")) {
 					if (atomChemicalGroupConstant!=-1) {
 						if (atomChemicalGroupConstant==5) {
@@ -192,12 +192,12 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 					if (mat1.matches() && atomChemicalGroupConstant==-1) {
 						ID="OX";
 					}
-					
+
 				} else if (atomTypeIds[j].equals("N")) {//n sp3
 					if (atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE){
 						ID="Nsp2";
 					}
-					
+
 					if (atomChemicalGroupConstant==4) {
 						ID="NPYL";//Pyrole
 					}else if (atomChemicalGroupConstant==10){
@@ -215,14 +215,14 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 							ID="Nsp2";
 						}else{
 							p1 = Pattern.compile(getSphericalMatcher("N2OX"));
-							mat1 = p1.matcher(atomSphericalMatcher);	
+							mat1 = p1.matcher(atomSphericalMatcher);
 							if (mat1.matches() && atomChemicalGroupConstant==-1) {
 								ID="N2OX";
 							}
 						}
 					}
-					
-					
+
+
 				} else if (atomTypeIds[j].equals("Nsp2")) {
 					if (atomChemicalGroupConstant==12) {
 							ID="=N-";//Pyridin
@@ -234,31 +234,31 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 						ID="-N=";
 					}else{
 						p1 = Pattern.compile(getSphericalMatcher("N=C"));
-						mat1 = p1.matcher(atomSphericalMatcher);	
+						mat1 = p1.matcher(atomSphericalMatcher);
 						if (mat1.matches()) {
 							ID="N=C";
 						}
-						
+
 						p1 = Pattern.compile(getSphericalMatcher("N2OX"));
-						mat1 = p1.matcher(atomSphericalMatcher);	
+						mat1 = p1.matcher(atomSphericalMatcher);
 						if (mat1.matches()) {
 							ID="N2OX";
 						}
-						
+
 						p1 = Pattern.compile(getSphericalMatcher("NO2"));
-						mat1 = p1.matcher(atomSphericalMatcher);	
+						mat1 = p1.matcher(atomSphericalMatcher);
 						if (mat1.matches()) {
 							ID="NO2";
 						}
-						
+
 						p1 = Pattern.compile(getSphericalMatcher("=N="));
-						mat1 = p1.matcher(atomSphericalMatcher);	
+						mat1 = p1.matcher(atomSphericalMatcher);
 						if (mat1.matches()) {
 							ID="=N=";
 						}
-						
+
 					}
-					
+
 				} else if (atomTypeIds[j].equals("HS")) {
 					if (atom.getMaxBondOrder() != null &&
 						atom.getMaxBondOrder() != IBond.Order.SINGLE) {
@@ -278,13 +278,13 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 						ID="HOCO";
 					}
 				} else if (atomTypeIds[j].equals("HN")) {
-					
+
 					p1 = Pattern.compile(getSphericalMatcher("HN2"));
 					mat1 = p1.matcher(atomSphericalMatcher);
 					if (mat1.matches()) {
 						ID="HN2";
 					}
-				} 
+				}
 				atomTypeFlag = true;
 				logger.debug(" MATCH AtomTypeID:"+j+ " " + ID);
 				break;
@@ -300,6 +300,6 @@ public class MM2AtomTypeMatcher implements IAtomTypeMatcher {
 			return factory.getAtomType("DU");
 		}
 	}
-	
+
 }
 

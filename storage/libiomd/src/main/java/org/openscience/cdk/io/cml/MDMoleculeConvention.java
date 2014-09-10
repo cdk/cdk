@@ -32,12 +32,12 @@ import org.openscience.cdk.libio.md.Residue;
 import org.xml.sax.Attributes;
 
 /**
- * 
+ *
  * Implements a Convention for parsing an MDMolecule from CML.
- * 
+ *
  * @cdk.module libiomd
  * @cdk.githash
- * 
+ *
  * @author Ola Spjuth <ola.spjuth@farmbio.uu.se>
  *
  */
@@ -45,7 +45,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 
 	private Residue currentResidue;
 	private ChargeGroup currentChargeGroup;
-	
+
 	public MDMoleculeConvention(IChemFile chemFile) {
 		super(chemFile);
 	}
@@ -56,7 +56,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 
 	/**
 	 * Add parsing of elements in mdmolecule:
-	 * 
+	 *
 	 * mdmolecule
 	 * 		chargeGroup
 	 * 			id
@@ -68,7 +68,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 	 * 			title
 	 * 			resNumber
 	 * 			atomArray
-	 * 
+	 *
 	 * @cdk.todo The JavaDoc of this class needs to be converted into HTML
 	 */
 	public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
@@ -118,8 +118,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
 						currentResidue.setName(atts.getValue("title"));
 				}
 			}
-		} else 
-		
+		} else
+
 		//We have a scalar element. Now check who it belongs to
 		if ("scalar".equals(local)) {
 			DICTREF = atts.getValue("dictRef");
@@ -132,7 +132,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				super.startElement(xpath, uri, local, raw, atts);
 			}
 		}
-		
+
 		else if ("atom".equals(local)) {
 			if (currentChargeGroup != null) {
 				String id = atts.getValue("ref");
@@ -142,7 +142,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
 					for (IAtom nextAtom : currentMolecule.atoms()) {
 						if (nextAtom.getID().equals(id)) {
-							currentAtom = nextAtom; 
+							currentAtom = nextAtom;
 						}
 					}
 					if (currentAtom == null) {
@@ -159,7 +159,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 //					System.out.println("#atoms: " + currentMolecule.getAtomCount());
                     for (IAtom nextAtom : currentMolecule.atoms()) {
 						if (nextAtom.getID().equals(id)) {
-							referencedAtom = nextAtom; 
+							referencedAtom = nextAtom;
 						}
 					}
 					if (referencedAtom == null) {
@@ -173,7 +173,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
 				super.startElement(xpath, uri, local, raw, atts);
 			}
 		}
-		
+
 		else {
 			super.startElement(xpath, uri, local, raw, atts);
 		}
@@ -194,8 +194,8 @@ public class MDMoleculeConvention extends CMLCoreModule {
 					logger.error("Need to store a charge group, but the current molecule is not a MDMolecule!");
 				}
 				currentChargeGroup = null;
-			} else 
-			
+			} else
+
 			// add chargeGroup, and then delete them
 			if (currentResidue != null) {
 				if (currentMolecule instanceof MDMolecule) {

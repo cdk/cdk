@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *  C=abs(B^2-A^2+A)+H/100
  *  </pre>
  *  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
- *  
+ *
  * <p>This descriptor uses no parameters.
  *
  * @author      chhoppe from EUROSCREEN
@@ -58,7 +58,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -84,7 +84,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      *  Sets the parameters attribute of the FragmentComplexityDescriptor object.
      *
      * This descriptor takes no parameter.
-     * 
+     *
      * @param  params            The new parameters value
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
@@ -112,11 +112,11 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
     @TestMethod(value="testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
-    }    
+    }
 
     /**
      * Calculate the complexity in the supplied {@link IAtomContainer}.
-     * 
+     *
      *@param  container  The {@link IAtomContainer} for which this descriptor is to be calculated
      *@return                   the complexity
      *@see #setParameters

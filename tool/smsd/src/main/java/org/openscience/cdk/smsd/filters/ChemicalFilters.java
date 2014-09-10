@@ -871,7 +871,7 @@ public class ChemicalFilters {
      * Get bond order value as {@link Order}.
      *
      * @param  srcOrder numerical bond order
-     * @return          the bond order type for the given numerical bond order 
+     * @return          the bond order type for the given numerical bond order
      */
     public static IBond.Order convertOrder(double srcOrder) {
         if (srcOrder > 3.5) {
@@ -891,7 +891,7 @@ public class ChemicalFilters {
 
     /**
      * Get bond order value as {@code int} value.
-     * 
+     *
      * @param  bond The {@link IBond} for which the order is returned.
      * @return      1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,
      *              and 0 for any other bond type.

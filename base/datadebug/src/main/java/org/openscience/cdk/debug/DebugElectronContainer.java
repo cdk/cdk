@@ -30,19 +30,19 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
  */
-public class DebugElectronContainer extends ElectronContainer 
+public class DebugElectronContainer extends ElectronContainer
     implements IElectronContainer{
 
     private static final long serialVersionUID = 5309193617982266230L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugElectronContainer.class);
-	
+
     /** {@inheritDoc} */ @Override
     public Integer getElectronCount() {
 		logger.debug("Getting electron count: ", super.getElectronCount());

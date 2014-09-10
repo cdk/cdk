@@ -33,7 +33,7 @@ import java.util.TreeSet;
  *
  * The similarity calculation is a variant of the Tanimoto coefficient and hence its
  * value ranges from 0 to 1
- * 
+ *
  * @author Rajarshi Guha
  * @cdk.githash
  * @cdk.keyword lingo
@@ -43,14 +43,14 @@ import java.util.TreeSet;
 @TestClass("org.openscience.cdk.similarity.LingoSimilarityTest")
 public class LingoSimilarity {
 
-    private LingoSimilarity() {        
+    private LingoSimilarity() {
     }
 
     /**
      * Evaluate the LINGO similarity between two key,value sty;e fingerprints.
      *
      * The value will range from 0.0 to 1.0.
-     * 
+     *
      * @param features1
      * @param features2
      * @return similarity

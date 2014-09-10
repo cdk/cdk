@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -55,11 +55,11 @@ public class Dictionary {
 
     private Map<String, Entry> entries;
     private String ownNS = null;
-    
+
     public Dictionary() {
         entries = new Hashtable<String, Entry>();
     }
-    
+
     public static Dictionary unmarshal(Reader reader) {
         ILoggingTool logger =
             LoggingToolFactory.createLoggingTool(Dictionary.class);
@@ -72,7 +72,7 @@ public class Dictionary {
             logger.error("Could not instantiate any JAXP parser!");
             logger.debug(e);
         }
-	
+
         try {
             if (parser == null) {
                 logger.debug("parser object was null!");
@@ -103,7 +103,7 @@ public class Dictionary {
     public void addEntry(Entry entry) {
         entries.put(entry.getID().toLowerCase(), entry);
     }
-    
+
     public Entry[] getEntries() {
         int size = entries.size();
         Entry[] entryArray = new Entry[size];
@@ -115,12 +115,12 @@ public class Dictionary {
         }
         return entryArray;
     }
-    
+
     @TestMethod("testAddEntry")
     public boolean hasEntry(String identifier) {
         return entries.containsKey(identifier);
     }
-    
+
     @TestMethod("testAddEntry")
     public Entry getEntry(String identifier) {
         return entries.get(identifier);

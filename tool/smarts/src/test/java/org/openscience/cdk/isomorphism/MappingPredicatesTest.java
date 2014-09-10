@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -52,13 +52,13 @@ public class MappingPredicatesTest {
     }
 
     @Test public void uniqueBonds() throws Exception {
-        
+
         IAtomContainer query  = smi("C1CCC1");
         IAtomContainer target = smi("C12C3C1C23");
-        
+
         Iterable<int[]> mappings = VentoFoggia.findSubstructure(query)
                                               .matchAll(target);
-        
+
         // using unique atoms we may think we only found 1 mapping
         assertThat(Iterables.size(Iterables.filter(mappings,
                                                    new UniqueAtomMatches())),
@@ -69,7 +69,7 @@ public class MappingPredicatesTest {
                                                    new UniqueBondMatches(GraphUtil.toAdjList(query)))),
                    is(3));
     }
-    
+
     @Test public void uniqueAtoms_multipleIterations() throws Exception {
         IAtomContainer ethane  = smi("CC");
         IAtomContainer ethanol = smi("CCO");
@@ -78,7 +78,7 @@ public class MappingPredicatesTest {
         assertThat(mappings.countUnique(), is(1));
         assertThat(mappings.countUnique(), is(1)); // re-iteration
     }
-    
+
     @Test public void uniqueBonds_multipleIterations() throws Exception {
         IAtomContainer ethane  = smi("CC");
         IAtomContainer ethanol = smi("CCO");
@@ -87,7 +87,7 @@ public class MappingPredicatesTest {
         assertThat(mappings.uniqueBonds().count(), is(1));
         assertThat(mappings.uniqueBonds().count(), is(1)); // re-iteration
     }
-    
+
     IChemObjectBuilder bldr   = SilentChemObjectBuilder.getInstance();
     SmilesParser       smipar = new SmilesParser(bldr);
 

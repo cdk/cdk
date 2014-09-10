@@ -70,7 +70,7 @@ public class LengthOverBreadthDescriptorTest extends MolecularDescriptorTest {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = (IAtomContainer) cList.get(2);
-        
+
         Isotopes.getInstance().configureAtoms(ac);
 
         DoubleArrayResult result = (DoubleArrayResult) descriptor.calculate(ac).getValue();

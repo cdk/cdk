@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -78,7 +78,7 @@ public class SMILESReader extends DefaultChemObjectReader {
      * @param input   The Reader object from which to read structures
      */
     public SMILESReader(Reader input) {
-        this.input = new BufferedReader(input);   
+        this.input = new BufferedReader(input);
     }
 
 
@@ -94,7 +94,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -195,7 +195,7 @@ public class SMILESReader extends DefaultChemObjectReader {
         }
         return som;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

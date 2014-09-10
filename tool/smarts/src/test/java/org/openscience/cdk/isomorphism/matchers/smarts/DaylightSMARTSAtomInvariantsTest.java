@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Sets the computation of SMARTSAtomInvariants using the Daylight ring
  * values.
- * 
+ *
  * @author John May
  * @cdk.module test-smarts
  */
@@ -29,7 +29,7 @@ public class DaylightSMARTSAtomInvariantsTest {
                        is(container));
         }
     }
-    
+
     @Test public void valence() throws Exception {
         assertThat(invariantOfFirstAtom("C").valence(), is(4));
         assertThat(invariantOfFirstAtom("N").valence(), is(3));
@@ -170,7 +170,7 @@ public class DaylightSMARTSAtomInvariantsTest {
             assertThat(inv.ringSize(), not(hasItem(12)));
         }
     }
-    
+
     @Test public void noRingInfo() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
         SMARTSAtomInvariants.configureDaylightWithoutRingInfo(container);

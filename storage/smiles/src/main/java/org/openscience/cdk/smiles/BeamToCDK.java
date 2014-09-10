@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -142,7 +142,7 @@ final class BeamToCDK {
                 IStereoElement se = newExtendedTetrahedral(u, g, atoms);
 
                 if (se != null)
-                    ac.addStereoElement(se);   
+                    ac.addStereoElement(se);
             }
         }
 
@@ -264,9 +264,9 @@ final class BeamToCDK {
                                         },
                                         stereo);
     }
-    
+
     private IStereoElement newExtendedTetrahedral(int u, Graph g, IAtom[] atoms) {
-        
+
         int[] terminals = g.neighbors(u);
         int[] xs        = new int[]{-1, terminals[0], -1, terminals[1]};
 
@@ -285,7 +285,7 @@ final class BeamToCDK {
 
         Stereo stereo = g.configurationOf(u).shorthand() == Configuration.CLOCKWISE ? Stereo.CLOCKWISE
                                                                                     : Stereo.ANTI_CLOCKWISE;
-        
+
         return new org.openscience.cdk.stereo.ExtendedTetrahedral(atoms[u],
                                                                   new IAtom[]{
                                                                           atoms[xs[0]],
@@ -308,7 +308,7 @@ final class BeamToCDK {
         final int   n  = vs.length;
         final int[] ws = Arrays.copyOf(vs, n + 1);
         ws[n] = v;
-        
+
         // insert 'u' in to sorted position
         for (int i = n; i > 0 && ws[i] < ws[i - 1]; i--) {
             int tmp   = ws[i];
@@ -323,7 +323,7 @@ final class BeamToCDK {
      * Create a new CDK {@link IAtom} from the Beam Atom.
      *
      * @param beamAtom an Atom from the Beam ChemicalGraph
-     * @param hCount   hydrogen count for the atom                
+     * @param hCount   hydrogen count for the atom
      * @return the CDK atom to have it's properties set
      */
     @TestMethod("methaneAtom,waterAtom,oxidanide,azaniumAtom")
@@ -421,7 +421,7 @@ final class BeamToCDK {
             case UP:
             case DOWN:
             case IMPLICIT:              // single/aromatic - aromatic ~ single atm.
-            case IMPLICIT_AROMATIC:  
+            case IMPLICIT_AROMATIC:
             case AROMATIC:              // we will also set the flag
                 return IBond.Order.SINGLE;
             case DOUBLE:
@@ -453,7 +453,7 @@ final class BeamToCDK {
      * Create a new atom for the provided symbol. The atom is created by cloning
      * an existing 'template'. Unfortunately IChemObjectBuilders really show a
      * slow down when SMILES processing.
-     * 
+     *
      * @param element Beam element
      * @return new atom with configured symbol and atomic number
      */
@@ -476,8 +476,8 @@ final class BeamToCDK {
      *
      * @param either an atom of the bond
      * @param other another atom of the bond
-     * @param order the order of the bond              
-     *               
+     * @param order the order of the bond
+     *
      * @return new bond instance
      */
     private IBond createBond(IAtom either, IAtom other, IBond.Order order) {
@@ -488,7 +488,7 @@ final class BeamToCDK {
             return bond;
         } catch (CloneNotSupportedException e) {
             // clone is always supported if overridden but just in case  :-)
-            return builder.newInstance(IBond.class, either, other, order);       
+            return builder.newInstance(IBond.class, either, other, order);
         }
     }
 }

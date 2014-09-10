@@ -29,26 +29,26 @@ import org.openscience.cdk.annotations.TestMethod;
 
 
 /**
- * Implementation of a union-find data structure, largely copied from 
+ * Implementation of a union-find data structure, largely copied from
  * code due to Derrick Stolee.
- * 
+ *
  * @author maclean
  * @cdk.module standard
  * @cdk.keyword union-find
  */
 @TestClass("DisjointSetForestTest")
 public class DisjointSetForest {
-    
+
     /**
      * The sets stored as pointers to their parents. The root of each
      * set is stored as the negated size of the set - ie a set of size
      * 5 with a root element 2 will mean forest[2] = -5.
      */
     private int[] forest;
-    
+
     /**
      * Initialize a disjoint set forest with a number of elements.
-     * 
+     *
      * @param numberOfElements the number of elements in the forest
      */
     @TestMethod("constructorTest")
@@ -58,12 +58,12 @@ public class DisjointSetForest {
             forest[i] = -1;
         }
     }
-    
+
     /**
      * Get the value of the forest at this index - note that this will <i>not</i>
      * necessarily give the set for that element : use {@link #getSets} after
      * union-ing elements.
-     *  
+     *
      * @param i the index in the forest
      * @return the value at this index
      */
@@ -71,11 +71,11 @@ public class DisjointSetForest {
     public int get(int i) {
         return forest[i];
     }
-    
+
     /**
      * Travel up the tree that this element is in, until the root of the set
      * is found, and return that root.
-     *  
+     *
      * @param element the starting point
      * @return the root of the set containing element
      */
@@ -87,10 +87,10 @@ public class DisjointSetForest {
             return getRoot(forest[element]);
         }
     }
-    
+
     /**
      * Union these two elements - in other words, put them in the same set.
-     * 
+     *
      * @param elementX an element
      * @param elementY an element
      */
@@ -98,11 +98,11 @@ public class DisjointSetForest {
     public void makeUnion(int elementX, int elementY) {
         int xRoot = getRoot(elementX);
         int yRoot = getRoot(elementY);
-        
+
         if (xRoot == yRoot) {
             return;
         }
-        
+
         if (forest[xRoot] < forest[yRoot]) {
             forest[yRoot] = forest[yRoot] + forest[xRoot];
             forest[xRoot] = yRoot;
@@ -111,10 +111,10 @@ public class DisjointSetForest {
             forest[yRoot] = xRoot;
         }
     }
-    
+
     /**
      * Retrieve the sets as 2D-array of ints.
-     *  
+     *
      * @return the sets
      */
     @TestMethod("getSetsTest")
@@ -143,7 +143,7 @@ public class DisjointSetForest {
         }
         return sets;
     }
-    
+
     public String toString() {
         return Arrays.toString(forest);
     }

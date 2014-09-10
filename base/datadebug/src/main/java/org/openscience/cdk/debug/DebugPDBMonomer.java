@@ -25,7 +25,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     Miguel Rojas
  * @cdk.module datadebug
  * @cdk.githash
@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
 
 	private static final long serialVersionUID = -5156111560946745699L;
-	
+
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
@@ -42,19 +42,19 @@ public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
     	logger.debug("Setting I Code: ", newICode);
 		super.setICode(newICode);
     }
-	
+
     /** {@inheritDoc} */ @Override
     public String getICode() {
     	logger.debug("Getting I Code: ", super.getICode());
 		return super.getICode();
     }
-    
+
     /** {@inheritDoc} */ @Override
     public void setChainID(String newChainID) {
     	logger.debug("Setting ChainID: ", newChainID);
 		super.setChainID(newChainID);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public String getChainID() {
     	logger.debug("Getting ChainID: ", super.getChainID());

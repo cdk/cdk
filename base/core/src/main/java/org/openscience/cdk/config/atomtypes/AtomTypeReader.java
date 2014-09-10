@@ -55,7 +55,7 @@ public class AtomTypeReader {
 
     /**
      * Instantiates the XML based AtomTypeReader.
-     * 
+     *
      * @param input The Reader to read the IAtomType's from.
      */
     @TestMethod("testAtomTypeReader_Reader")

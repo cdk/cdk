@@ -32,9 +32,9 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  The stabilization of the positive charge 
- *  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and 
- *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms 
+ *  The stabilization of the positive charge
+ *  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and
+ *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
  *  obtaining the charges. The method is based following {@cdk.cite Saller85}.
  *  The value is calculated looking for resonance structures which can stabilize the charge.
  *
@@ -61,9 +61,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.StabilizationPlusChargeDescriptorTest")
 public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
-	
+
     private static final String[] descriptorNames = {"stabilPlusC"};
-    
+
 	private StabilizationCharges stabil;
 
     /**
@@ -98,7 +98,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-        
+
     }
 
 
@@ -145,7 +145,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
         }
 
         double result = stabil.calculatePositive(clone, localAtom);
-	    
+
 	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(result),descriptorNames);
     }
@@ -172,7 +172,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return null; 
+        return null;
     }
 }
 

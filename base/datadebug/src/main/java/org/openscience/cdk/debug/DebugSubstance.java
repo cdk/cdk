@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -188,7 +188,7 @@ public class DebugSubstance extends AtomContainerSet
 		logger.debug("Replacing atom container at pos: ", position);
 		super.replaceAtomContainer(position, container);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean setMultiplier(IAtomContainer container, Double multiplier) {
 		logger.debug("Setting multiplier for atomcontainer: ", container, ""+multiplier);

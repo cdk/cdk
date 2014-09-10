@@ -126,7 +126,7 @@ public class SuppressedAtomHashGeneratorTest {
 
         // no suppression
         {
-            // first iteration, values are distributed and then neighbours xor'd        
+            // first iteration, values are distributed and then neighbours xor'd
             // in. when two neighbours have the same value the second should be
             // rotated
             long[] first = new long[]{
@@ -196,23 +196,23 @@ public class SuppressedAtomHashGeneratorTest {
         long[] rotated = new long[4];
 
         // non-suppressed
-        { 
+        {
           long value = generator.next(graph, 0, invs, unique, rotated, Suppressed.none());
 
           assertThat(unique, is(new long[]{31, 0, 0, 0}));
           assertThat(rotated, is(new long[]{generator.rotate(31, 2), 0, 0, 0}));
           assertThat(value, is(generator.distribute(21) ^ 31 ^ generator.rotate(31) ^ generator.rotate(31, 2)));
         }
-                
+
         // okay now suppress vertices 1
         {
             BitSet suppressed = new BitSet();
             suppressed.set(1);
-            
+
             long value = generator.next(graph, 0, invs, unique, rotated, Suppressed.fromBitSet(suppressed));
 
             assertThat(unique, is(new long[]{31, 0, 0, 0}));
-            assertThat(rotated, is(new long[]{generator.rotate(31, 1), 0, 0, 0})); // 31 only encountered twice 
+            assertThat(rotated, is(new long[]{generator.rotate(31, 1), 0, 0, 0})); // 31 only encountered twice
             assertThat(value, is(generator.distribute(21) ^ 31 ^ generator.rotate(31)));
         }
 
@@ -225,7 +225,7 @@ public class SuppressedAtomHashGeneratorTest {
             long value = generator.next(graph, 0, invs, unique, rotated, Suppressed.fromBitSet(suppressed));
 
             assertThat(unique, is(new long[]{31, 0, 0, 0}));
-            assertThat(rotated, is(new long[]{31, 0, 0, 0}));     // 31 only encountered once and is not rotated 
+            assertThat(rotated, is(new long[]{31, 0, 0, 0}));     // 31 only encountered once and is not rotated
             assertThat(value, is(generator.distribute(21) ^ 31)); // only encountered once
         }
 

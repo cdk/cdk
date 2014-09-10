@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors;
 
@@ -33,11 +33,11 @@ import org.openscience.cdk.qsar.IDescriptor;
  * @cdk.module test-qsar
  */
 public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase {
-	
+
 	protected T descriptor;
 
 	public DescriptorTest() {}
-	
+
     public void setDescriptor(Class<? extends T> descriptorClass) throws Exception {
 		if (descriptor == null) {
             Constructor<? extends T> defaultConstructor = descriptorClass.getConstructor();
@@ -45,7 +45,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
             this.descriptor.initialise(DefaultChemObjectBuilder.getInstance());
 		}
 	}
-	
+
 	/**
 	 * Makes sure that the extending class has set the super.descriptor.
 	 * Each extending class should have this bit of code (JUnit3 formalism):
@@ -54,20 +54,20 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
 	 *   // Pass a Class, not an Object!
 	 *   setDescriptor(SomeDescriptor.class);
 	 * }
-	 * 
+	 *
 	 * <p>The unit tests in the extending class may use this instance, but
 	 * are not required.
-	 * 
+	 *
 	 * </pre>
 	 */
 	@Test public void testHasSetSuperDotDescriptor() {
     	Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", descriptor);
 	}
-	
+
 	/**
 	 * Checks if the parameterization is consistent.
-	 * 
-	 * @throws Exception 
+	 *
+	 * @throws Exception
 	 */
     @Test public void testGetParameterNames() throws Exception {
         String[] paramNames = descriptor.getParameterNames();
@@ -83,7 +83,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
             );
         }
     }
-    
+
     /**
      * @cdk.bug 1862137
      */
@@ -91,7 +91,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
         Object[] params = descriptor.getParameters();
         if (params == null) {
         	Assert.assertEquals(
-        	    "For all parameters a default or actual value must be returned.",  
+        	    "For all parameters a default or actual value must be returned.",
         		0, descriptor.getParameterNames() == null ? 0 : descriptor.getParameterNames().length
         	);
         	params = new Object[0];
@@ -103,7 +103,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
             );
         }
     }
-    
+
     /**
      * @cdk.bug 1862137
      */
@@ -128,15 +128,15 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
         	);
         }
     }
-    
+
     @Test public void testParameterConsistency() {
         String[] paramNames = descriptor.getParameterNames();
-//      FIXME: see testGetParameterNames() comment on the same line 
+//      FIXME: see testGetParameterNames() comment on the same line
         if (paramNames == null) paramNames = new String[0];
         Object[] params = descriptor.getParameters();
 //      FIXME: see testGetParameters() comment on the same line
         if (params == null) params = new Object[0];
-        
+
         Assert.assertEquals(
         	"The number of returned parameter names must equate the number of returned parameters",
         	paramNames.length, params.length
@@ -186,7 +186,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     		0, spec.getSpecificationReference().length()
     	);
     }
-    
+
     /**
      * Tests that the specification no longer gives an empty CVS identifier,
      * but one based on a repository blob or commit.
@@ -195,7 +195,7 @@ public abstract class DescriptorTest<T extends IDescriptor> extends CDKTestCase 
     	IImplementationSpecification spec = descriptor.getSpecification();
         Assert.assertNotSame("$Id$", spec.getImplementationIdentifier());
     }
-    
+
     @Test public void testSetParameters_arrayObject() throws Exception {
     	Object[] defaultParams = descriptor.getParameters();
     	descriptor.setParameters(defaultParams);

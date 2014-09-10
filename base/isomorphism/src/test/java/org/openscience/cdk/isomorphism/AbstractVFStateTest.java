@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -56,7 +56,7 @@ public class AbstractVFStateTest {
         assertThat(state.nextN(-1), is(4));
     }
 
-    // no terminal mappings, select the first unmapped    
+    // no terminal mappings, select the first unmapped
     @Test public void nextNNonTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;
@@ -80,12 +80,12 @@ public class AbstractVFStateTest {
         state.size = 2;
         state.m2[0] = 1;
         state.m2[1] = 0;
-        state.t1[1] = 1; // query vertex is in terminal set 
+        state.t1[1] = 1; // query vertex is in terminal set
         state.t2[4] = 1; // <- first terminal (not kept returned for now - allow disconnected)
         assertThat(state.nextM(1, -1), is(4));
     }
 
-    // no terminal mappings, select the first unmapped    
+    // no terminal mappings, select the first unmapped
     @Test public void nextMNonTerminal() {
         AbstractVFState state = create(5, 10);
         state.size = 2;

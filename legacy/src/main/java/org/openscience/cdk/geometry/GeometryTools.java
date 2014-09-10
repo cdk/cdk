@@ -417,7 +417,7 @@ public class GeometryTools {
 		return new Point2d(xsum / (double) length, ysum / (double) length);
 	}
 
-	
+
 	/**
 	 *  Calculates the center of the given atoms and returns it as a Point2d.
 	 *  See comment for center(IAtomContainer atomCon, Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
@@ -440,7 +440,7 @@ public class GeometryTools {
 		}
 		return new Point2d(xsum / (double) length, ysum / (double) length);
 	}
-	
+
 
 	/**
 	 *  Returns the geometric center of all the rings in this ringset.
@@ -513,7 +513,7 @@ public class GeometryTools {
         return new Point2d(centerX / (counter), centerY / (counter));
 	}
 
-	
+
 	/**
 	 *  Translates the geometric 2DCenter of the given
 	 *  AtomContainer container to the specified Point2d p.
@@ -650,7 +650,7 @@ public class GeometryTools {
 
         return new int[]{begin1X, begin1Y, begin2X, begin2Y, end1X, end1Y, end2X, end2Y};
 	}
-	
+
 	public static double[] distanceCalculator(double[] coords, double dist) {
 		double angle;
 		if ((coords[2] - coords[0]) == 0) {
@@ -782,7 +782,7 @@ public class GeometryTools {
 		}
 		return closestAtom;
 	}
-	
+
 	/**
 	 *  Returns the atom of the given molecule that is closest to the given
 	 *  coordinates.
@@ -950,7 +950,7 @@ public class GeometryTools {
 
     /**
      * Calculate the median bond length of an atom container.
-     * 
+     *
      * @param container structure representation
      * @return median bond length
      * @throws java.lang.IllegalArgumentException unset coordinates or no bonds
@@ -1071,7 +1071,7 @@ public class GeometryTools {
 	@Deprecated
     public static int has2DCoordinatesNew(IAtomContainer container) {
 		if (container == null) return 0;
-		
+
 		boolean no2d=false;
 		boolean with2d=false;
         for (IAtom atom : container.atoms()) {
@@ -1328,7 +1328,7 @@ public class GeometryTools {
 	 *  Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
 	 *  AtomContainer) atomcontainer. It is recommend to sort the atomContainer due to their number of atoms before
 	 *  calling this function.
-	 *  
+	 *
 	 *  The molecules needs to be aligned before! (coordinates are needed)
 	 *
 	 *@param  firstAtomContainer                the (largest) first aligned AtomContainer which is the reference
@@ -1337,7 +1337,7 @@ public class GeometryTools {
 	 *@return                   				a Map of the mapped atoms
 	 *@exception  CDKException  Description of the Exception
 	 */
-	public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, 
+	public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,
 			double searchRadius, Map<Integer,Integer> mappedAtoms)throws CDKException {
 		//to return the mapping setProperty("MappedAtom",AtomNumber)
 		//logger.debug("**** MAP ATOMS ****");
@@ -1352,7 +1352,7 @@ public class GeometryTools {
 			}
 			//logger.debug(" Atoms from the secondAtomContainer");
 		}
-		
+
 		//logger.debug();
 		//logger.debug("\t");
 		//for (int j=0;j<secondAtomContainer.getAtomCount();j++){
@@ -1365,9 +1365,9 @@ public class GeometryTools {
 			for (int j=0;j<secondAtomContainer.getAtomCount();j++){
 				tmp=Math.floor(distanceMatrix[i][j]*10);
 				//logger.debug(tmp/10+"\t");
-			}			
+			}
 		}*/
-		
+
 		double minimumDistance;
         for(int i=0;i<firstAtomContainer.getAtomCount();i++){
             minimumDistance=searchRadius;
@@ -1405,27 +1405,27 @@ public class GeometryTools {
             }
         }
     }
-	
+
 	private static boolean checkAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom){
 		IAtom firstAtom=firstAC.getAtom(posFirstAtom);
 		IAtom secondAtom=secondAC.getAtom(posSecondAtom);
 		if (firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size() &&
 				firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum() &&
-				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder() 
+				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()
 		        ){
 			return true;
 		}else {
 			return false;
 		}
 	}
-	
+
 	private static IAtomContainer setVisitedFlagsToFalse(IAtomContainer atomContainer) {
         for (int i=0;i<atomContainer.getAtomCount();i++){
             atomContainer.getAtom(i).setFlag(CDKConstants.VISITED, false);
         }
         return atomContainer;
     }
-	
+
 	/**
 	 *  Return the RMSD of bonds length between the 2 aligned molecules.
 	 *
@@ -1521,30 +1521,30 @@ public class GeometryTools {
         }
         return Math.sqrt(sum/n);
     }
-	
+
 	private static double getAngle(IAtom atom1, IAtom atom2, IAtom atom3){
-		
+
 		Vector3d centerAtom = new Vector3d();
 		centerAtom.x=atom1.getPoint3d().x;
 		centerAtom.y=atom1.getPoint3d().y;
 		centerAtom.z=atom1.getPoint3d().z;
 		Vector3d firstAtom = new Vector3d();
 		Vector3d secondAtom = new Vector3d();
-			
+
 		firstAtom.x=atom2.getPoint3d().x;
 		firstAtom.y=atom2.getPoint3d().y;
 		firstAtom.z=atom2.getPoint3d().z;
-				
+
 		secondAtom.x=atom3.getPoint3d().x;
 		secondAtom.y=atom3.getPoint3d().y;
 		secondAtom.z=atom3.getPoint3d().z;
-				
+
 		firstAtom.sub(centerAtom);
 		secondAtom.sub(centerAtom);
-				
+
 		return firstAtom.angle(secondAtom);
 	}
-	
+
 	/**
 	 *  Return the RMSD between the 2 aligned molecules.
 	 *
@@ -1552,11 +1552,11 @@ public class GeometryTools {
 	 *@param  secondAtomContainer               the second aligned AtomContainer
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
 	 *@param  Coords3d            			    boolean: true if molecules has 3D coords, false if molecules has 2D coords
-	 *@return                   				double: the value of the RMSD 
+	 *@return                   				double: the value of the RMSD
 	 *@exception  CDKException  if there is an error in getting mapped atoms
 	 *
 	 **/
-	public static double getAllAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer, 
+	public static double getAllAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,
 		    Map<Integer,Integer> mappedAtoms, boolean Coords3d)throws CDKException {
 		//logger.debug("**** GT getAllAtomRMSD ****");
 		double sum=0;
@@ -1584,7 +1584,7 @@ public class GeometryTools {
 		RMSD=Math.sqrt(sum/n);
 		return RMSD;
 	}
-	
+
 	/**
 	 *  Return the RMSD of the heavy atoms between the 2 aligned molecules.
 	 *
@@ -1593,7 +1593,7 @@ public class GeometryTools {
 	 *@param  mappedAtoms             			Map: a Map of the mapped atoms
 	 *@param hetAtomOnly                        boolean: true if only hetero atoms should be considered
 	 *@param  Coords3d            			    boolean: true if molecules has 3D coords, false if molecules has 2D coords
-	 *@return                   				double: the value of the RMSD 
+	 *@return                   				double: the value of the RMSD
 	 *
 	 **/
 	public static double getHeavyAtomRMSD(IAtomContainer firstAtomContainer, IAtomContainer secondAtomContainer,

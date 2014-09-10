@@ -73,7 +73,7 @@ public class MM2BasedParameterSetReader {
 	public Map<String,Object> getParamterSet(){
 		return parameterSet;
 	}
-	
+
 	public List<IAtomType> getAtomTypes(){
 		return atomTypes;
 	}
@@ -886,7 +886,7 @@ public class MM2BasedParameterSetReader {
 				} else if (s.startsWith("pibond ") & nt == 5) {
 					setPiBond();
 					a[16]++;
-				} 
+				}
 			}// end while
 			ins.close();
 		} catch (IOException e) {

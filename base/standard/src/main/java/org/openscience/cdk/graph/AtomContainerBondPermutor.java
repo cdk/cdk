@@ -29,17 +29,17 @@ import org.openscience.cdk.interfaces.IBond;
 
 /**
  * This class allows the user to iterate through the set of all possible
- * permutations of the bond order in a given atom container. This provides a 
- * means to check the dependency of an algorithm's results on the bond order of 
+ * permutations of the bond order in a given atom container. This provides a
+ * means to check the dependency of an algorithm's results on the bond order of
  * the input atom container.
- * 
+ *
  * <p>Typical use:<pre>
  * AtomContainerBondPermutor permutor = new AtomContainerBondPermutor(container);
  * while (permutor.hasNext()) {
  *   IAtomContainer permutedContainer = permutor.next();
  *   ...
  * }</pre>
- * 
+ *
  *
  * @author         maclean
  * @cdk.githash
@@ -53,7 +53,7 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
     /**
      * A permutor wraps the original atom container, and produces cloned
      * (and permuted!) copies on demand.
-     * 
+     *
      * @param atomContainer the atom container to permute
      */
     @TestMethod("constructorTest")

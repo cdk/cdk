@@ -79,13 +79,13 @@ public class RGroupList {
      * List of substitute structures.
      */
     private List<RGroup> rGroups;
-    
+
     /**
      * The rGroup (say B) that is required when this one (say A) exists.<p>
      * This captures the "LOG" information 'IF A (this) THEN B'.
      */
     private int requiredRGroupNumber;
-    
+
 
     /**
      * Default constructor.
@@ -116,7 +116,7 @@ public class RGroupList {
     /**
      * Setter for rGroupNumber, checks for valid range.
      * Spec: "value from 1 to 32 *, labels position of Rgroup on root."
-     * @param rGroupNumber R-Group number 
+     * @param rGroupNumber R-Group number
      */
     public void setRGroupNumber(int rGroupNumber) {
 
@@ -163,7 +163,7 @@ public class RGroupList {
     }
 
     /**
-     * Picky setter for occurrence fields. Validates user input to be conform 
+     * Picky setter for occurrence fields. Validates user input to be conform
      * the (Symyx) specification.
      * @param occurrence occurence value
      */
@@ -197,15 +197,15 @@ public class RGroupList {
         StringTokenizer st = new StringTokenizer(occ, ",");
         while (st.hasMoreTokens()) {
             String cond = st.nextToken().trim().replaceAll(" ", "");
-            do {                                  
+            do {
                 //Number: "n"
-                if (match("^\\d+$", cond)) {       
-                    if (Integer.valueOf(cond)<0) // not allowed  
+                if (match("^\\d+$", cond)) {
+                    if (Integer.valueOf(cond)<0) // not allowed
                         return false;
                     break;
                 }
-                //Range: "n-m" 
-                if (match("^\\d+-\\d+$", cond)) {   
+                //Range: "n-m"
+                if (match("^\\d+-\\d+$", cond)) {
                     int from = Integer.valueOf(cond.substring(0,cond.indexOf('-')));
                     int to = Integer.valueOf(cond.substring(cond.indexOf('-')+1,cond.length()));
                     if (from<0 || to <0 || to<from) // not allowed
@@ -213,7 +213,7 @@ public class RGroupList {
                     break;
                 }
                 //Smaller than: "<n"
-                if (match("^<\\d+$", cond)){      
+                if (match("^<\\d+$", cond)){
                     int n = Integer.valueOf(cond.substring(cond.indexOf('<')+1,cond.length()));
                     if(n==0) // not allowed
                         return false;
@@ -240,7 +240,7 @@ public class RGroupList {
     private static boolean match(String regExp, String userInput) {
         Pattern pattern = Pattern.compile(regExp);
         Matcher matcher = pattern.matcher(userInput);
-        if (matcher.find()) 
+        if (matcher.find())
             return true;
         else
             return false;
@@ -260,7 +260,7 @@ public class RGroupList {
      * @return valid values by combining a max for R# with the occurrence cond.
      */
     public List<Integer> matchOccurence(int maxAttachments) {
-        
+
         List<Integer> validValues = new ArrayList<Integer>();
 
         for (int val = 0; val <= maxAttachments; val++) {
@@ -285,7 +285,7 @@ public class RGroupList {
                     if(val>n){
                         addVal=true;
                     }
-                } 
+                }
                 if (match("^<\\d+$", cond)) { // >n
                     int n = Integer.valueOf(cond.substring(cond.indexOf('<')+1,cond.length()));
                     if(val<n){
@@ -293,9 +293,9 @@ public class RGroupList {
                     }
                 }
                 if (addVal)  {
-                    validValues.add(val);    
+                    validValues.add(val);
                 }
-                
+
             }
         }
         return validValues;

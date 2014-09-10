@@ -95,7 +95,7 @@ import org.openscience.cdk.silent.StrandTest;
     StrandTest.class,
     MolecularFormulaTest.class,
     MolecularFormulaSetTest.class,
-        
+
     // tests from test.protein.data
     PDBAtomTest.class,
     PDBMonomerTest.class,

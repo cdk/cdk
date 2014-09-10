@@ -49,10 +49,10 @@ import java.util.Iterator;
 
 /**
  * <p>
- * This reaction could be represented as [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]. Due to 
+ * This reaction could be represented as [A*]-C1-C2-C3[H] => A([H])-C1-C2-[C3*]. Due to
  * the single electron of atom A the proton is moved.</p>
  * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
- * 
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
@@ -61,7 +61,7 @@ import java.util.Iterator;
     type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
- * 
+ *
  * <p>We have the possibility to localize the reactive center. Good method if you
  * want to localize the reaction in a fixed point</p>
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
@@ -69,14 +69,14 @@ import java.util.Iterator;
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the possible reactive center.</p>
  * <p>The rearrangements are not possible with the atomtype is inside of a ring</p>
- * 
+ *
  * @author         Miguel Rojas
- * 
+ *
  * @cdk.created    2006-10-20
  * @cdk.module     reaction
  * @cdk.githash
  * @cdk.set        reaction-types
- * 
+ *
  * @see RadicalSiteRearrangementMechanism
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.RadicalSiteHrGammaReactionTest")
@@ -103,7 +103,7 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 				"$Id$",
 				"The Chemistry Development Kit");
 	}
-	
+
 	/**
 	 *  Initiate process.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
@@ -119,14 +119,14 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RadicalSiteHrGammaReaction");
-		
+
 		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RadicalSiteHrGammaReaction only expects one reactant");
 		}
 		if (agents != null) {
 			throw new CDKException("RadicalSiteHrGammaReaction don't expects agents");
 		}
-		
+
 		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 
@@ -145,22 +145,22 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
 		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		
+
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
 		Iterator<IAtom> atomis = reactant.atoms().iterator();
 		while(atomis.hasNext()){
 			IAtom  atomi = atomis.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getSymbol().equals("C")
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
-				
+
 				hcg.getSpheres(reactant, atomi, 4, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
 					if(atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER) && !atoml.getFlag(CDKConstants.ISINRING) &&
-							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  && 
+							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  &&
 							reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE){
-						
+
 						Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
 						while(atomhs.hasNext()){
 							IAtom atomh = atomhs.next();
@@ -181,27 +181,27 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 									continue;
 								else
 									setOfReactions.addReaction(reaction);
-								
+
 							}
 
 						}
-						
+
 					}
 				}
 			}
 		}
-		return setOfReactions;	
+		return setOfReactions;
 	}
 	/**
-	 * set the active center for this molecule. 
-	 * The active center will be those which correspond with [A*]=B. 
+	 * set the active center for this molecule.
+	 * The active center will be those which correspond with [A*]=B.
 	 * <pre>
 	 * C: Atom with single electron
 	 * C3: Atom with Hydrogen
 	 *  </pre>
-	 * 
+	 *
 	 * @param reactant The molecule to set the activity
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
 	private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -210,15 +210,15 @@ public class RadicalSiteHrGammaReaction extends ReactionEngine implements IReact
 			IAtom  atomi = atomis.next();
 			if(atomi.getSymbol().equals("C")
 					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
-				
+
 				hcg.getSpheres(reactant, atomi, 4, true);
 				Iterator<IAtom> atomls = hcg.getNodesInSphere(4).iterator();
 				while(atomls.hasNext()){
 					IAtom atoml = atomls.next();
 					if(atoml != null && !atoml.getFlag(CDKConstants.ISINRING) &&
-							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  && 
+							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  &&
 							reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE){
-						
+
 						Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
 						while(atomhs.hasNext()){
 							IAtom atomh = atomhs.next();

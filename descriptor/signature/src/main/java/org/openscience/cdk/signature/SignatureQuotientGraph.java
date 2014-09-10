@@ -32,44 +32,44 @@ import signature.AbstractQuotientGraph;
 /**
  * A signature quotient graph has a vertex for every signature symmetry class
  * and an edge for each bond in the molecule between atoms in their class.
- * 
+ *
  * So a structure where all the atoms are in the same symmetry class will have a
  * quotient graph with one vertex and one loop edge. At the other extreme, a
  * structure where every atom is in a different class will have a quotient
- * graph the same as the molecule. 
- * 
+ * graph the same as the molecule.
+ *
  * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.SignatureQuotientGraphTest")
 public class SignatureQuotientGraph extends AbstractQuotientGraph {
-    
+
     /**
      * The atom container to work on
      */
     private IAtomContainer atomContainer;
-    
+
     /**
      * Construct a quotient graph from the symmetry classes generated from the
      * atom container.
-     * 
+     *
      * @param atomContainer the structure to use
      */
     public SignatureQuotientGraph(IAtomContainer atomContainer) {
         this(atomContainer, -1);
     }
-    
+
     /**
      * Construct a quotient graph using symmetry classes defined by signatures
      * of height <code>height</code>.
-     * 
+     *
      * @param atomContainer the structure to use
      * @param height the height of the signatures
      */
     public SignatureQuotientGraph(IAtomContainer atomContainer, int height) {
         this.atomContainer = atomContainer;
-        MoleculeSignature moleculeSignature = 
+        MoleculeSignature moleculeSignature =
             new MoleculeSignature(atomContainer);
         super.construct(moleculeSignature.getSymmetryClasses(height));
     }

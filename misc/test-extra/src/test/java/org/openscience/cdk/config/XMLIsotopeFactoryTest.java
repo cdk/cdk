@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.config;
 
@@ -65,10 +65,10 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 	    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
 	private static final String W3C_XML_SCHEMA =
-	    "http://www.w3.org/2001/XMLSchema"; 
-	
+	    "http://www.w3.org/2001/XMLSchema";
+
     static File tmpCMLSchema;
-    
+
     static {
     	try {
 			InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
@@ -136,35 +136,35 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("Br");
 		Assert.assertEquals(35, element.getAtomicNumber().intValue());
-	}    
+	}
 
     @Test
     public void testGetElement_Nonelement() throws Exception {
 		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement("E");
 		Assert.assertNull(element);
-	}    
+	}
 
     @Test
     public void testGetElement_int() throws Exception {
 		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IElement element = elfac.getElement(6);
 		Assert.assertEquals("C", element.getSymbol());
-	}    
+	}
 
     @Test
     public void testGetElementSymbol_int() throws Exception {
 		XMLIsotopeFactory elfac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         String symbol = elfac.getElementSymbol(8);
 		Assert.assertEquals("O", symbol);
-	}    
+	}
 
     @Test
     public void testGetIsotopes_String() throws Exception {
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes("He");
 		Assert.assertEquals(8, list.length);
-	}    
+	}
 
     @Test
     public void testGetIsotopes_Nonelement() throws Exception {
@@ -172,14 +172,14 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
         IIsotope[] list = isofac.getIsotopes("E");
 		Assert.assertNotNull(list);
 		Assert.assertEquals(0, list.length);
-	}    
+	}
 
     @Test
     public void testGetIsotopes() throws Exception {
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
         IIsotope[] list = isofac.getIsotopes();
 		Assert.assertTrue(list.length > 200);
-	}    
+	}
 
     @Test
     public void testGetIsotopes_double_double() throws Exception {
@@ -191,8 +191,8 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 		Assert.assertEquals(2, list.length);
 		Assert.assertEquals(88, list[0].getMassNumber().intValue());
 		Assert.assertEquals(88, list[1].getMassNumber().intValue());
-	}    
-    
+	}
+
     @Test
     public void testIsElement_String() throws Exception {
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());
@@ -267,22 +267,22 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 
     	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-    	// make sure the schema is read 
+    	// make sure the schema is read
     	Document schemaDoc = parser.parse(cmlSchema);
     	Assert.assertNotNull(schemaDoc.getFirstChild());
     	Assert.assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
     }
-    
+
     /**
      * Copies a file to TMP (whatever that is on your platform), and optionally
      * replaces a String on the fly. The temporary file will be named prefix+suffix
-     * 
+     *
      * @param prefix      Prefix of the temporary file name
      * @param suffix      Suffix of the temporary file name
      * @param in          InputStream to copy from
      * @param toReplace   String to replace. Null, if nothing needs to be replaced.
      * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
-     * 
+     *
      * @return            The temporary file/
      * @throws IOException
      */
@@ -312,11 +312,11 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
     class SAXValidityErrorHandler implements ErrorHandler {
 
     	private String atomTypeList;
-    	
+
     	public SAXValidityErrorHandler(String atomTypeList) {
 			this.atomTypeList = atomTypeList;
 		}
-    	
+
 		public void error(SAXParseException arg0) throws SAXException {
 			Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
 		}
@@ -326,9 +326,9 @@ public class XMLIsotopeFactoryTest extends CDKTestCase
 		}
 
 		public void warning(SAXParseException arg0) throws SAXException {
-			// warnings are fine			
+			// warnings are fine
 		}
-    	
+
     }
     @Test public void testGetNaturalMass_IElement() throws Exception {
 		XMLIsotopeFactory isofac = XMLIsotopeFactory.getInstance(new ChemObject().getBuilder());

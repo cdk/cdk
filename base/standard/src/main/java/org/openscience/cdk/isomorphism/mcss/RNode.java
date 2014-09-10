@@ -1,8 +1,8 @@
 /* Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
- *  
- * This code has been kindly provided by Stephane Werner 
+ *
+ * This code has been kindly provided by Stephane Werner
  * and Thierry Hanser from IXELIS mail@ixelis.net.
- *  
+ *
  * IXELIS sarl - Semantic Information Systems
  *               17 rue des C?dres 67200 Strasbourg, France
  *               Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net

@@ -55,5 +55,5 @@ public class MassAtom extends SMARTSAtom{
     public String toString(){
         return ("(MassAtom("+ this.getMassNumber() + ")");
     }
-    
+
 }

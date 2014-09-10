@@ -12,19 +12,19 @@ import java.util.Map;
  * @cdk.githash
  */
 public class MMFF94ParametersCall {
-	
+
 	private Map<String,List> pSet = null;
 	//private final static double DEFAULT_BOND_LENGTH = 1.5;
 	//private final static double DEFAULT_ANGLE = 90;			// Only to test
 	//private final static double DEFAULT_TORSION_ANGLE = 90;
 
-	
+
 	public MMFF94ParametersCall(){}
 
 
 	/**
 	 * Initialize the AtomOrder class.
-	 * 
+	 *
 	 * @param  parameterSet  Force Field parameter as Map
 	 */
 	public void initialize(Map<String,List> parameterSet) {
@@ -109,7 +109,7 @@ public class MMFF94ParametersCall {
 		//logger.debug("akey : " + akey);
 		return (List) pSet.get(akey);
 	}
-	
+
 
 	/**
 	 * Gets the bond-angle interaction parameter set.
@@ -130,8 +130,8 @@ public class MMFF94ParametersCall {
 		//logger.debug("dfsbkey : " + dfsbkey);
 		return (List) pSet.get(dfsbkey);
 	}
-	
-		
+
+
 	/**
 	 *  Gets the bond parameter set.
 	 *
@@ -161,7 +161,7 @@ public class MMFF94ParametersCall {
 		//logger.debug("dkey = " + dkey);
 		return (List) pSet.get(dkey);
 	}
-	
+
 }
 
 

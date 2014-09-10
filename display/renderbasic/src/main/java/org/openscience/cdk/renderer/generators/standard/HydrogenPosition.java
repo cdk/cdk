@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -43,7 +43,7 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUn
  * Enumeration of hydrogen label position for 2D depictions. The best placement of the
  * label can depend on a variety of factors. Currently, the {@link #position(IAtom, List)}
  * method decides the position based on the atom and neighbouring atom coordinates.
- * 
+ *
  * @author John May
  */
 enum HydrogenPosition {
@@ -94,7 +94,7 @@ enum HydrogenPosition {
 
     /**
      * Access the directional vector for this hydrogen position.
-     * 
+     *
      * @return the directional vector for this hydrogen position.
      */
     Vector2d vector() {
@@ -145,21 +145,21 @@ enum HydrogenPosition {
             final double after  = extents[(i + 1) % extents.length];
 
             for (final HydrogenPosition position : values()) {
-                
+
                 // adjust the extents such that this position is '0'
                 final double bias = TAU - position.direction;
                 double afterBias  = after + bias;
                 double beforeBias = before + bias;
-                
+
                 // ensure values are 0 <= x < Tau
                 if (beforeBias >= TAU) beforeBias -= TAU;
                 if (afterBias >= TAU) afterBias -= TAU;
-                
+
                 // we can now determine the extents before and after this
                 // hydrogen position
                 final double afterExtent = afterBias;
                 final double beforeExtent = TAU - beforeBias;
-                
+
                 // the total extent is amount of space between these two bonds
                 // when sweeping round. The offset is how close this hydrogen
                 // position is to the center of the extent.
@@ -182,7 +182,7 @@ enum HydrogenPosition {
             if (best == null || ExtentPriority.INSTANCE.compare(e, best) < 0)
                 best = e;
         }
-        
+
         assert best != null;
         return best.getKey();
     }
@@ -195,7 +195,7 @@ enum HydrogenPosition {
         private final double offset;
 
         /**
-         * Internal - create pairing of angular extent and offset. 
+         * Internal - create pairing of angular extent and offset.
          * @param extent the angular extent
          * @param offset offset from the centre of the extent
          */
@@ -211,33 +211,33 @@ enum HydrogenPosition {
     }
 
     /**
-     * Comparator to prioritise {@link OffsetExtent}s.  
+     * Comparator to prioritise {@link OffsetExtent}s.
      */
     private static enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
         INSTANCE;
         @Override public int compare(Map.Entry<HydrogenPosition, OffsetExtent> a,
                                      Map.Entry<HydrogenPosition, OffsetExtent> b) {
-            
+
             OffsetExtent aExtent = a.getValue();
             OffsetExtent bExtent = b.getValue();
-            
+
             // if difference in extents is noticeable, favour the one
             // with a larger extent
             double extentDiff = bExtent.extent - aExtent.extent;
             if (Math.abs(extentDiff) > 0.05)
                 return (int) Math.signum(extentDiff);
-            
-            // if the difference in offset is noticeable, favour the one 
+
+            // if the difference in offset is noticeable, favour the one
             // with the smaller offset (position is more centered)
             double offsetDiff = bExtent.offset - aExtent.offset;
             if (Math.abs(offsetDiff) > 0.05)
                 return (int) -Math.signum(offsetDiff);
-            
+
             // favour Right > Left > Above > Below
             return a.getKey().compareTo(b.getKey());
         }
     }
-    
+
     /**
      * By snapping to the cardinal direction (compass point) of the provided
      * vector, return the position opposite the 'snapped' coordinate.
@@ -272,7 +272,7 @@ enum HydrogenPosition {
     /**
      * Access the default position of the hydrogen label when the atom has no
      * bonds.
-     * 
+     *
      * @param atom hydrogens will be labelled
      * @return the position
      */

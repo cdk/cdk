@@ -33,11 +33,11 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- *  IDescriptor based on the weight of atoms of a certain element type. 
+ *  IDescriptor based on the weight of atoms of a certain element type.
  *
  *  If the wild-card symbol *
  *  is specified, the returned value is the molecular weight.
- *  If an invalid element symbol is specified, the return value is 
+ *  If an invalid element symbol is specified, the return value is
  *  0 and no exception is thrown
  *  <p>
  *
@@ -76,7 +76,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     public WeightDescriptor() { }
 
     /**
-     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class. 
+     * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>

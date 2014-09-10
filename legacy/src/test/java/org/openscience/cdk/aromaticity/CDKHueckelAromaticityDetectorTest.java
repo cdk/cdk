@@ -97,7 +97,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("c1ccn(C)c1");
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertTrue("Expected the molecule to be aromatic.", Aromaticity.cdkLegacy().apply(mol));
 
         IRingSet ringset = (new SSSRFinder(mol)).findSSSR();
@@ -335,7 +335,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
             r = (IRing) rings.next();
             isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 
-            if (isAromatic) aromacount++;            
+            if (isAromatic) aromacount++;
         }
         Assert.assertEquals(1, aromacount);
     }
@@ -349,7 +349,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         IAtomContainer mol = sp.parseSmiles("[cH+]1cccccc1"); // tropylium cation
-        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);        
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Assert.assertEquals(IAtomType.Hybridization.PLANAR3, mol.getAtom(0).getHybridization());
         for (int f = 1; f < mol.getAtomCount(); f++) {
             Assert.assertEquals(IAtomType.Hybridization.SP2, mol.getAtom(f).getHybridization());
@@ -787,7 +787,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
         adder.addImplicitHydrogens(aromaticForm);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(aromaticForm);
-        
+
 
         boolean isAromatic = Aromaticity.cdkLegacy().apply(kekuleForm);
         Assert.assertTrue(isAromatic);
@@ -823,7 +823,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(isAromatic);
 
         // all atoms are supposed to be aromatic
-        for (IAtom atom : aromaticForm.atoms()) {            
+        for (IAtom atom : aromaticForm.atoms()) {
             Assert.assertTrue(atom.toString()+" should be aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }
@@ -980,7 +980,7 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * Due to using iterators some Sp3 atoms in the oxaspirodeadiene example
      * would not be removed and the molcule would incorrectly be found to be
      * aromatic.
-     * 
+     *
      * @cdk.bug 1313
      */
     @Test public void ensureAtomsRemoved() throws Exception {
@@ -994,24 +994,24 @@ public class CDKHueckelAromaticityDetectorTest extends CDKTestCase {
      * Ensures atoms/bonds are marked as cyclic before being removed. Otherwise
      * this means changing an atom outside of an aromatic system can alter
      * perception (not good). It results in finding an aromatic ring in
-     * 'OC1=C2C=CC=CC2=CNC1=C' but not in 'OS1(=O)=C2C=CC=CC2=CNC1=C'. Whether 
-     * a pi bond is exocyclic should be invariant to the connected atom. 
-     * 
+     * 'OC1=C2C=CC=CC2=CNC1=C' but not in 'OS1(=O)=C2C=CC=CC2=CNC1=C'. Whether
+     * a pi bond is exocyclic should be invariant to the connected atom.
+     *
      * @cdk.bug 1313
      */
     @Test public void markCyclicBefore() throws Exception {
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-        
+
         IAtomContainer mol1 = sp.parseSmiles("OC1=C2C=CC=CC2=CNC1=C");
         IAtomContainer mol2 = sp.parseSmiles("OS1(=O)=C2C=CC=CC2=CNC1=C");
-        
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-        
+
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol1));
         Assert.assertTrue(Aromaticity.cdkLegacy().apply(mol2));
     }
-    
+
     /**
      * 8-oxaspiro[4.5]deca-6,9-diene
      * C1CCC2(C1)C=COC=C2

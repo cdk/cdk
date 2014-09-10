@@ -42,7 +42,7 @@ public class EdgeBuilder implements IEdge {
     private VFBondMatcher matcher;
 
     /**
-     * 
+     *
      * @param source
      * @param target
      * @param matcher

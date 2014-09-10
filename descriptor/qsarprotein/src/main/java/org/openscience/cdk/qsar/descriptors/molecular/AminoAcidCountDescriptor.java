@@ -39,7 +39,7 @@ import java.util.List;
 
 /**
  * Class that returns the number of each amino acid in an atom container.
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -87,7 +87,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -111,7 +111,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
 
     /**
      * Sets the parameters attribute of the AminoAcidsCountDescriptor object.
-     * 
+     *
      * @param  params            The new parameters value
      * @exception  CDKException  if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters

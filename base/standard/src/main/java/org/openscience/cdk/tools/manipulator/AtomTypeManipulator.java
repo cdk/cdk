@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 
 /**
  * Class with utilities for the <code>AtomType</code> class.
- * - changed 21/7/05 by cho: add properties for mmff94 atom type 
+ * - changed 21/7/05 by cho: add properties for mmff94 atom type
  *
  * @author     mfe4
  * @author     egonw
@@ -41,7 +41,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomTypeManipulatorTest")
 public class AtomTypeManipulator {
-	
+
 	/**
 	 * Method that assign properties to an atom given a particular atomType.
 	 * An <code>IllegalArgumentException</code> is thrown if the given <code>IAtomType</code>
@@ -126,7 +126,7 @@ public class AtomTypeManipulator {
         if (atom.getHybridization() == CDKConstants.UNSET && atomType.getHybridization() != CDKConstants.UNSET) atom.setHybridization(atomType.getHybridization());
         if (atom.getFormalNeighbourCount() == CDKConstants.UNSET && atomType.getFormalNeighbourCount() != CDKConstants.UNSET) atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
         if (atom.getAtomicNumber() == CDKConstants.UNSET && atomType.getAtomicNumber() != CDKConstants.UNSET) atom.setAtomicNumber(atomType.getAtomicNumber());
-        if (atom.getExactMass() == CDKConstants.UNSET && atomType.getExactMass() != CDKConstants.UNSET) atom.setExactMass(atomType.getExactMass());        
+        if (atom.getExactMass() == CDKConstants.UNSET && atomType.getExactMass() != CDKConstants.UNSET) atom.setExactMass(atomType.getExactMass());
     }
 
 }

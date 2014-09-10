@@ -58,7 +58,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * CIP_CHIRALITY cipChirality = CIPTool.getCIPChirality(mol, tetraStereo);
  * </pre>
  * The {@link org.openscience.cdk.interfaces.IBond.Stereo} value can be
- * reconstructed from 3D coordinates with the {@link StereoTool}. 
+ * reconstructed from 3D coordinates with the {@link StereoTool}.
  *
  * @cdk.module cip
  * @cdk.githash
@@ -70,7 +70,7 @@ public class CIPTool {
      * IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
      */
     public static final int HYDROGEN = -1;
-    
+
     private static CIPLigandRule cipRule = new CIPLigandRule();
 
     /**
@@ -86,7 +86,7 @@ public class CIPTool {
      * Returns the R or S chirality according to the CIP rules, based on the given
      * chirality information.
      *
-     * @param  stereoCenter Chiral center for which the CIP chirality is to be 
+     * @param  stereoCenter Chiral center for which the CIP chirality is to be
      *                      determined as {@link LigancyFourChirality} object.
      * @return A {@link CIP_CHIRALITY} value.
      */
@@ -128,7 +128,7 @@ public class CIPTool {
                                                 getCIPChirality(container, dbs).toString());
             }
         }
-        
+
     }
 
     /**
@@ -137,14 +137,14 @@ public class CIPTool {
      *
      * @param  container    {@link IAtomContainer} to which the <code>stereoCenter</code>
      *                      belongs.
-     * @param  stereoCenter Chiral center for which the CIP chirality is to be 
+     * @param  stereoCenter Chiral center for which the CIP chirality is to be
      *                      determined as {@link ITetrahedralChirality} object.
      * @return A {@link CIP_CHIRALITY} value.
      */
     @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")
     public static CIP_CHIRALITY getCIPChirality(IAtomContainer container,
                                                 ITetrahedralChirality stereoCenter) {
-        
+
         // the LigancyFourChirality is kind of redundant but we keep for an
         // easy way to get the ILigands array
         LigancyFourChirality tmp    = new LigancyFourChirality(container, stereoCenter);
@@ -156,23 +156,23 @@ public class CIPTool {
             return CIP_CHIRALITY.NONE;
         if (parity < 0)
             stereo = stereo.invert();
-        
+
         if (stereo == Stereo.CLOCKWISE)
             return CIP_CHIRALITY.R;
         if (stereo == Stereo.ANTI_CLOCKWISE)
             return CIP_CHIRALITY.S;
-        
+
         return CIP_CHIRALITY.NONE;
     }
-    
+
     @TestMethod("testGetCIPChirality_DoubleBond_Together,testGetCIPChirality_DoubleBond_Opposite")
     public static CIP_CHIRALITY getCIPChirality(IAtomContainer             container,
                                                 IDoubleBondStereochemistry stereoCenter) {
-        
+
         IBond stereoBond = stereoCenter.getStereoBond();
         IBond leftBond   = stereoCenter.getBonds()[0];
         IBond rightBond  = stereoCenter.getBonds()[1];
-        
+
         // the following variables are usd to label the atoms - makes things
         // a little more concise
         //
@@ -186,34 +186,34 @@ public class CIPTool {
         IAtom v = stereoBond.getAtom(1);
         IAtom x = leftBond.getConnectedAtom(u);
         IAtom y = rightBond.getConnectedAtom(v);
-        
+
         Conformation conformation = stereoCenter.getStereo();
-        
+
         ILigand[] leftLigands  = getLigands(u, container, v);
         ILigand[] rightLigands = getLigands(v, container, u);
-        
+
         if (leftLigands.length > 2 || rightLigands.length > 2)
             return CIP_CHIRALITY.NONE;
-        
+
         // invert if x/y aren't in the first position
         if (leftLigands[0].getLigandAtom() != x)
             conformation = conformation.invert();
         if (rightLigands[0].getLigandAtom() != y)
             conformation = conformation.invert();
-        
+
         int p = permParity(leftLigands) * permParity(rightLigands);
-        
+
         if (p == 0)
             return CIP_CHIRALITY.NONE;
-        
+
         if (p < 0)
             conformation = conformation.invert();
-        
+
         if (conformation == Conformation.TOGETHER)
             return CIP_CHIRALITY.Z;
         if (conformation == Conformation.OPPOSITE)
             return CIP_CHIRALITY.E;
-        
+
         return CIP_CHIRALITY.NONE;
     }
 
@@ -227,17 +227,17 @@ public class CIPTool {
      * @return the ligands
      */
     private static ILigand[] getLigands(IAtom atom, IAtomContainer container, IAtom exclude) {
-        
+
         List<IAtom> neighbors = container.getConnectedAtomsList(atom);
-        
+
         ILigand[] ligands = new ILigand[neighbors.size() - 1];
-        
+
         int i = 0;
         for (IAtom neighbor : neighbors) {
             if (neighbor != exclude)
                 ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
         }
-        
+
         return ligands;
     }
 
@@ -273,10 +273,10 @@ public class CIPTool {
     }
 
     /**
-     * Obtain the permutation parity (-1,0,+1) to put the ligands in descending 
+     * Obtain the permutation parity (-1,0,+1) to put the ligands in descending
      * order (highest first). A parity of 0 indicates two or more ligands were
      * equivalent.
-     * 
+     *
      * @param ligands the ligands to sort
      * @return parity, odd (-1), even (+1) or none (0)
      */
@@ -298,7 +298,7 @@ public class CIPTool {
                 return 0;
             ligands[i + 1] = ligand;
         }
-        
+
         // odd (-1) or even (+1)
         return (swaps & 0x1) == 0x1 ? -1 : +1;
     }
@@ -365,7 +365,7 @@ public class CIPTool {
     /**
      * Returns a CIP-expanded array of side chains of a ligand. If the ligand atom is only connected to
      * the chiral atom, the method will return an empty list. The expansion involves the CIP rules,
-     * so that a double bonded oxygen will be represented twice in the list. 
+     * so that a double bonded oxygen will be represented twice in the list.
      *
      * @param ligand     the {@link ILigand} for which to return the ILigands
      * @return           a {@link ILigand} array with the side chains of the ligand atom

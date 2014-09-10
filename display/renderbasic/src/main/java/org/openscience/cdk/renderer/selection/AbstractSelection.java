@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 
 /**
  * An abstract selection of {@link IChemObject}s.
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -68,11 +68,11 @@ public abstract class AbstractSelection implements IChemObjectSelection {
         // TODO Auto-generated method stub
 
     }
-    
+
     /**
      * Utility method to add an {@link IChemObject} to an {@link IAtomContainer}.
-     * 
-     * @param ac the {@link IAtomContainer} to add to 
+     *
+     * @param ac the {@link IAtomContainer} to add to
      * @param item the {@link IChemObject} to add
      */
     protected void addToAtomContainer(IAtomContainer ac, IChemObject item) {

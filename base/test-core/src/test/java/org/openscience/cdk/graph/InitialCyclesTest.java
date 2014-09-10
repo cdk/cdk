@@ -179,20 +179,20 @@ public class InitialCyclesTest {
         assertThat(cycles.get(1)
                          .path(), is(new int[]{3, 2, 1, 0, 10, 9, 8, 7, 6, 3}));
     }
-    
+
     @Test public void cycles_cyclophane_odd_limit_5() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 5);
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(0));
     }
-    
+
     @Test public void cycles_cyclophane_odd_limit_6() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 6);
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
         assertThat(cycles.size(), is(1));
         assertThat(cycles.get(0).path(), is(new int[]{3, 2, 1, 0, 5, 4, 3}));
-    }                  
-    
+    }
+
     @Test public void cycles_cyclophane_odd_limit_7() throws IOException {
         InitialCycles initial = new InitialCycles(cyclophane_odd(), 7);
         List<InitialCycles.Cycle> cycles =  Lists.newArrayList(initial.cycles());
@@ -221,19 +221,19 @@ public class InitialCyclesTest {
         assertThat(family[0], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3}));
         assertThat(family[1], is(new int[]{3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}));
     }
-    
+
     // ensure using the biconnected optimisation will still find the cycle in
     // a simple cycle, cylcohexane (there are no vertices with deg 3)
     @Test public void bioconnected_simpleCycle() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane());
         assertThat(ic.numberOfCycles(), is(1));
-    } 
-    
+    }
+
     @Test public void bioconnected_simpleCycle_limit_5() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane(), 5);
         assertThat(ic.numberOfCycles(), is(0));
     }
-    
+
     @Test public void bioconnected_simpleCycle_limit_6() {
         InitialCycles ic = InitialCycles.ofBiconnectedComponent(cyclohexane(), 6);
         assertThat(ic.numberOfCycles(), is(1));
@@ -308,7 +308,7 @@ public class InitialCyclesTest {
                 {0, 1, 2}
         };
     }
-    /** benzene/cyclohexane graph */ 
+    /** benzene/cyclohexane graph */
     static int[][] cyclohexane() {
         return new int[][]{
                 {1, 5},

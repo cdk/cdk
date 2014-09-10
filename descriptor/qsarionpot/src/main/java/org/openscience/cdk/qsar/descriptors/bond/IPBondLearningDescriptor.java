@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,10 +34,10 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  
+ *
  *  This class returns the ionization potential of a Bond. It is
- *  based on a function which is extracted from Weka(J48) from 
- *  experimental values (NIST data). 
+ *  based on a function which is extracted from Weka(J48) from
+ *  experimental values (NIST data).
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -63,7 +63,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
 	private static final String[] descriptorNames = {"ipBondLearning"};
-	
+
 	/**
 	 *  Constructor for the IPBondLearningDescriptor object
 	 */
@@ -168,7 +168,7 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
                 new DoubleResult(value),descriptorNames);
 	}
 
-	
+
 	 /**
      * Gets the parameterNames attribute of the IPBondLearningDescriptor object.
      *

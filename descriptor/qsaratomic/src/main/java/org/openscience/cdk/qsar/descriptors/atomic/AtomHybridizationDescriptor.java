@@ -63,7 +63,7 @@ public class AtomHybridizationDescriptor extends AbstractAtomicDescriptor implem
 	AtomTypeManipulator atman = null;
 	IAtom atom = null;
 	IAtomType matched = null;
-	
+
 	/**
 	 *  Gets the specification attribute of the AtomHybridizationDescriptor object
 	 *

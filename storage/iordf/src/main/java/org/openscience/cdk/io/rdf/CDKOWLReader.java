@@ -60,14 +60,14 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     public CDKOWLReader(Reader input) {
         this.input = input;
     }
-    
+
     /**
      * Creates a new CDKOWLReader with an undefined input.
      */
     public CDKOWLReader() {
         this.input = null;
     }
-    
+
     /**
      * Returns the {@link IResourceFormat} for this reader.
      *
@@ -83,7 +83,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
      * {@link InputStream}. Use {@link #setReader(InputStream)} instead.
      *
      * @param reader reader to which should be written.
-     * @deprecated 
+     * @deprecated
      */
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {

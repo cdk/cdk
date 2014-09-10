@@ -48,13 +48,13 @@ public class FortranFormat {
      * @param s a string denoting a double
      */
     @TestMethod("testAtof_String")
-    public static double atof(String s) {  
+    public static double atof(String s) {
         int i = 0;
         int sign = 1;
         double r = 0; // integer part
         double p = 1; // exponent of fractional part
         int state = 0; // 0 = int part, 1 = frac part
-        
+
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
         if (i < s.length() && s.charAt(i) == '-') { sign = -1; i++; }
         else if (i < s.length() && s.charAt(i) == '+') { i++; }
@@ -68,8 +68,8 @@ public class FortranFormat {
                     r = r + p * (ch - '0');
                     }
                 }
-            else if (ch == '.') 
-                {  if (state == 0) state = 1; 
+            else if (ch == '.')
+                {  if (state == 0) state = 1;
                 else return sign * r;
                 }
             else if (ch == 'e' || ch == 'E' || ch == 'd' || ch == 'D')
@@ -82,11 +82,11 @@ public class FortranFormat {
         return sign * r;
     }
 
-    private static long parseLong(String s, int base) {  
+    private static long parseLong(String s, int base) {
         int i = 0;
         int sign = 1;
         long r = 0;
-        
+
         while (i < s.length() && Character.isWhitespace(s.charAt(i))) i++;
         if (i < s.length() && s.charAt(i) == '-') { sign = -1; i++; }
         else if (i < s.length() && s.charAt(i) == '+') { i++; }
@@ -98,11 +98,11 @@ public class FortranFormat {
                 r = r * base + ch - 'A' + 10 ;
             else if ('a' <= ch && ch < 'a' + base - 10)
                 r = r * base + ch - 'a' + 10 ;
-            else 
+            else
                 return r * sign;
             i++;
             }
-        return r * sign;      
+        return r * sign;
     }
-    
+
 }

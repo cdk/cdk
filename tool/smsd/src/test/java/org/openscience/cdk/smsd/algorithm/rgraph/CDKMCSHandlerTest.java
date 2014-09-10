@@ -105,7 +105,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
     /**
      * Test of set method, of class CDKMCSHandler.
      * @throws CDKException
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public void testSet_String_String() throws CDKException, IOException {

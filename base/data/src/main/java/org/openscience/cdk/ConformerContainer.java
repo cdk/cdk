@@ -1,6 +1,6 @@
 /* Copyright (C) 2004-2008  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
- *  Contact: cdk-devel@lists.sourceforge.net 
+ *  Contact: cdk-devel@lists.sourceforge.net
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public License
@@ -243,7 +243,7 @@ public class ConformerContainer implements List<IAtomContainer> {
         }
         if (!title.equals(atomContainer.getProperty(CDKConstants.TITLE)))
             throw new IllegalArgumentException(
-            	"The input molecules does not have the same title ('" + title + 
+            	"The input molecules does not have the same title ('" + title +
             	"') as the other conformers ('" + atomContainer.getProperty(CDKConstants.TITLE) + "')");
 
         if (atomContainer.getAtomCount() != this.atomContainer.getAtomCount())

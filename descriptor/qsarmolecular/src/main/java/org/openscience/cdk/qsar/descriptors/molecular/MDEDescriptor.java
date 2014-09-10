@@ -134,7 +134,7 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
     private static final int N_3 = 3;
 
     public MDEDescriptor() {
-        
+
     }
 
     /**

@@ -35,7 +35,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 
 /**
  * Generate the arrow for a reaction.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -47,22 +47,22 @@ public class ReactionArrowGenerator implements IGenerator<IReaction> {
 	@Override
 	@TestMethod("testEmptyReaction")
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-        Rectangle2D totalBoundsReactants = 
+        Rectangle2D totalBoundsReactants =
         	BoundsCalculator.calculateBounds(reaction.getReactants());
-        Rectangle2D totalBoundsProducts = 
+        Rectangle2D totalBoundsProducts =
         	BoundsCalculator.calculateBounds(reaction.getProducts());
-        
+
         if (totalBoundsReactants == null || totalBoundsProducts == null)
         	return null;
-        
+
         double separation = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue();
         Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
         return new ArrowElement(
         	totalBoundsReactants.getMaxX() + separation,
-            totalBoundsReactants.getCenterY(), 
-            totalBoundsProducts.getMinX() - separation, 
+            totalBoundsReactants.getCenterY(),
+            totalBoundsProducts.getMinX() - separation,
             totalBoundsReactants.getCenterY(),
             1 / model.getParameter(Scale.class).getValue(), true,
             foregroundColor

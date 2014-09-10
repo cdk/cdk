@@ -197,7 +197,7 @@ import org.openscience.cdk.validate.ProblemMarkerTest;
     RingSearchTest_NonCyclic.class,
     RingSearchTest_SpiroRings.class,
 
-    // aromaticity models       
+    // aromaticity models
     AtomTypeModelTest.class,
     ExocyclicAtomTypeModelTest.class,
     PiBondModelTest.class,

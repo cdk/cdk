@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * NMR shift {@cdk.cite AiresDeSousa2002}. It only applies to (explicit) hydrogen atoms,
  * requires aromaticity to be perceived (possibly done via a parameter), and
  * needs 3D coordinates for all atoms.
- * 
+ *
  * <p>
  * This descriptor uses these parameters: <table border="1">
  * <tr>
@@ -68,7 +68,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * <td>True is the aromaticity has to be checked</td>
  * </tr>
  * </table>
- * 
+ *
  * @author      Federico
  * @cdk.created 2006-12-11
  * @cdk.module  qsaratomic
@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_G3RTest")
 public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final int g3r_desc_length = 13;    
+    private static final int g3r_desc_length = 13;
 
     private boolean checkAromaticity = false;
 
@@ -89,7 +89,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 	private IRingSet varRingSet = null;
 
 	private IAtomContainerSet varAtomContainerSet = null;
-	
+
     private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RDFProtonDescriptor_G3R.class);
 
@@ -108,7 +108,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
 	/**
 	 * Gets the specification attribute of the RDFProtonDescriptor_G3R object
-	 * 
+	 *
 	 * @return The specification value
 	 */
 	@TestMethod(value="testGetSpecification")
@@ -121,7 +121,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
 	/**
 	 * Sets the parameters attribute of the RDFProtonDescriptor object
-	 * 
+	 *
 	 * @param params
 	 *            Parameters are the proton position and a boolean (true if you
 	 *            need to detect aromaticity)
@@ -143,7 +143,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
 	/**
 	 * Gets the parameters attribute of the RDFProtonDescriptor object
-	 * 
+	 *
 	 * @return The parameters value
 	 */
 	@TestMethod(value="testGetParameters")
@@ -564,7 +564,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 			return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
 		}
 		return new DescriptorValue(
-			getSpecification(), getParameterNames(), 
+			getSpecification(), getParameterNames(),
 			getParameters(), rdfProtonCalculatedValues,
 			getDescriptorNames());
 	}
@@ -695,7 +695,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 				}
 				/*
 				 * XXX commented this out, because is has no effect
-				 * 
+				 *
 				 * else { nearestBond = nearestBond; }
 				 */
 			}
@@ -721,7 +721,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
 	/**
 	 * Gets the parameterNames attribute of the RDFProtonDescriptor object
-	 * 
+	 *
 	 * @return The parameterNames value
 	 */
 	@TestMethod(value="testGetParameterNames")
@@ -733,7 +733,7 @@ public class RDFProtonDescriptor_G3R extends AbstractAtomicDescriptor implements
 
 	/**
 	 * Gets the parameterType attribute of the RDFProtonDescriptor object
-	 * 
+	 *
 	 * @param name
 	 *            Description of the Parameter
 	 * @return The parameterType value

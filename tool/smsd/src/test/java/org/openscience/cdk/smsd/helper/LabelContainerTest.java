@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 
 /**
  * Unit testing for the {@link LabelContainer} class.
- * 
+ *
  * @author     Syed Asad Rahman
  * @cdk.module test-smsd
  */

@@ -18,7 +18,7 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents the total H count (H) in smarts. 
+ * An AST node. It represents the total H count (H) in smarts.
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -263,7 +263,7 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.UP));
         assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
     }
-    
+
     @Test public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -289,8 +289,8 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
                    is(IBond.Stereo.UP));
     }
-    
-    
+
+
     @Test public void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -316,7 +316,7 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
                    is(IBond.Stereo.DOWN));
     }
-    
+
     @Test public void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 4.50d, -14.84d));
@@ -345,12 +345,12 @@ public class NonPlanarBondsTest {
         NonplanarBonds.assign(m);
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
     }
-    
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);
         a.setPoint2d(new Point2d(x, y));
         return a;
     }
-    
+
 }

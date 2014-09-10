@@ -43,7 +43,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * Unit testing for the {@link SingleMappingHandler} class.
- * 
+ *
  * @author     egonw
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -59,7 +59,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     /**
      * Test of set method, of class SingleMappingHandler.
-     * @throws Exception 
+     * @throws Exception
      */
     @Test
     public void testSet_IAtomContainer_IAtomContainer() throws Exception {
@@ -81,7 +81,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
     /**
      * Test of set method, of class SingleMappingHandler.
      * @throws CDKException
-     * @throws IOException 
+     * @throws IOException
      */
     @Test
     public void testSet_String_String() throws CDKException, IOException {

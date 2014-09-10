@@ -91,29 +91,29 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
-		
+
 		IAtomContainer mol = new AtomContainer(); // molecule is CF
-		
-		Atom c = new Atom("C"); 
-		mol.addAtom(c); 
+
+		Atom c = new Atom("C");
+		mol.addAtom(c);
 		c.setPoint3d(c_coord);
-		
-		Atom f = new Atom("F"); 
-		mol.addAtom(f); 
+
+		Atom f = new Atom("F");
+		mol.addAtom(f);
 		f.setPoint3d(f_coord);
-		
-		Atom h1 = new Atom("H"); 
-		mol.addAtom(h1); 
+
+		Atom h1 = new Atom("H");
+		mol.addAtom(h1);
 		h1.setPoint3d(h1_coord);
-		
-		Atom h2 = new Atom("H"); 
-		mol.addAtom(h2); 
+
+		Atom h2 = new Atom("H");
+		mol.addAtom(h2);
 		h2.setPoint3d(h2_coord);
-		
-		Atom h3 = new Atom("H"); 
-		mol.addAtom(h3); 
+
+		Atom h3 = new Atom("H");
+		mol.addAtom(h3);
 		h3.setPoint3d(h3_coord);
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 1
@@ -137,29 +137,29 @@ public class InductivePartialChargesTest extends CDKTestCase {
 		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
 		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
 		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
-		
-		IAtomContainer mol = new AtomContainer(); // molecule is CF 
-		
-		Atom c = new Atom("C"); 
-		mol.addAtom(c); 
+
+		IAtomContainer mol = new AtomContainer(); // molecule is CF
+
+		Atom c = new Atom("C");
+		mol.addAtom(c);
 		c.setPoint3d(c_coord);
-		
-		Atom f = new Atom("F"); 
-		mol.addAtom(f); 
+
+		Atom f = new Atom("F");
+		mol.addAtom(f);
 		f.setPoint3d(f_coord);
-		
-		Atom h1 = new Atom("H"); 
-		mol.addAtom(h1); 
+
+		Atom h1 = new Atom("H");
+		mol.addAtom(h1);
 		h1.setPoint3d(h1_coord);
-		
-		Atom h2 = new Atom("H"); 
-		mol.addAtom(h2); 
+
+		Atom h2 = new Atom("H");
+		mol.addAtom(h2);
 		h2.setPoint3d(h2_coord);
-		
-		Atom h3 = new Atom("H"); 
-		mol.addAtom(h3); 
+
+		Atom h3 = new Atom("H");
+		mol.addAtom(h3);
 		h3.setPoint3d(h3_coord);
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 1

@@ -30,8 +30,8 @@ import org.openscience.cdk.interfaces.IReactionSet;
 
 /**
  * Utility class for calculating the average bond length for various
- * IChemObject subtypes : IReaction, IMoleculeSet, IChemModel, and IReactionSet.  
- * 
+ * IChemObject subtypes : IReaction, IMoleculeSet, IChemModel, and IReactionSet.
+ *
  * @author maclean
  * @cdk.module renderbasic
  * @cdk.githash
@@ -40,7 +40,7 @@ public class AverageBondLengthCalculator {
 
     /**
      * Calculate the average bond length for the bonds in a reaction.
-     * 
+     *
      * @param reaction the reaction to use
      * @return the average bond length
      */
@@ -71,7 +71,7 @@ public class AverageBondLengthCalculator {
 
     /**
      * Calculate the average bond length for the bonds in a molecule set.
-     * 
+     *
      * @param moleculeSet the molecule set to use
      * @return the average bond length
      */

@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  *
  *  <p>Standing problems:
  *  <ul>
- *    <li>condensed ring systems which are unknown for the template class 
+ *    <li>condensed ring systems which are unknown for the template class
  *    <li>vdWaals clashes
  *    <li>stereochemistry
  *    <li>chains running through ring systems
@@ -73,21 +73,21 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class ModelBuilder3D {
 
 	private static Map<String,ModelBuilder3D> memyselfandi = new HashMap<String,ModelBuilder3D>();
-	
+
 	private TemplateHandler3D templateHandler = null;
-		
+
 	private Map parameterSet = null;
 
 	private final ForceFieldConfigurator ffc = new ForceFieldConfigurator();
 
 	String forceFieldName = "mm2";
-	
+
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ModelBuilder3D.class);
-	
+
 	/**
 	 * Constructor for the ModelBuilder3D object.
-	 *	 
+	 *
 	 * @param  templateHandler  templateHandler Object
 	 * @param  ffname           name of force field
 	 */
@@ -99,7 +99,7 @@ public class ModelBuilder3D {
 	public static ModelBuilder3D getInstance(TemplateHandler3D templateHandler, String ffname, IChemObjectBuilder chemObjectBuilder) throws CDKException {
 		if (ffname == null || ffname.length() == 0) throw new CDKException("The given ffname is null or empty!");
 		if (templateHandler == null) throw new CDKException("The given template handler is null!");
-		
+
 		String builderCode = templateHandler.getClass().getName()+ "#" + ffname;
 		if (!memyselfandi.containsKey(builderCode)) {
 			ModelBuilder3D builder = new ModelBuilder3D(
@@ -167,17 +167,17 @@ public class ModelBuilder3D {
 		if (!ConnectivityChecker.isConnected(molecule)) {
 			throw new CDKException("Molecule is NOT connected, could not layout.");
 		}
-		
+
 		// setup helper classes
 		AtomPlacer atomPlacer = new AtomPlacer();
 		AtomPlacer3D ap3d = new AtomPlacer3D();
 		AtomTetrahedralLigandPlacer3D atlp3d = new AtomTetrahedralLigandPlacer3D();
 		ap3d.initilize(parameterSet);
 		atlp3d.setParameterSet(parameterSet);
-		
+
 		if (clone) molecule = (IAtomContainer)molecule.clone();
 		atomPlacer.setMolecule(molecule);
-		
+
 		if (ap3d.numberOfUnplacedHeavyAtoms(molecule) == 1) {
 			logger.debug("Only one Heavy Atom");
 			molecule.getAtom(0).setPoint3d(new Point3d(0.0, 0.0, 0.0));
@@ -314,7 +314,7 @@ public class ModelBuilder3D {
 	/**
 	 * Layout the ring system, rotate and translate the template.
 	 *
-	 *@param  originalCoord         coordinates of the placedRingAtom from the template 
+	 *@param  originalCoord         coordinates of the placedRingAtom from the template
 	 *@param  placedRingAtom        placedRingAtom
 	 *@param  ringSet               ring system which placedRingAtom is part of
 	 *@param  centerPlacedMolecule  the geometric center of the already placed molecule
@@ -400,7 +400,7 @@ public class ModelBuilder3D {
 	/**
 	 * Sets a branch atom to a ring or aliphatic chain.
 	 *
-	 *@param  unplacedAtom    The new branchAtom 
+	 *@param  unplacedAtom    The new branchAtom
 	 *@param  atomA           placed atom to which the unplaced satom is connected
 	 *@param  atomNeighbours  placed atomNeighbours of atomA
 	 */
@@ -458,7 +458,7 @@ public class ModelBuilder3D {
 	/**
 	 * Search and place branches of a chain or ring.
 	 *
-	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system 
+	 *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system
 	 */
 	private void searchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer) throws CDKException {
 		//logger.debug("****** SEARCH AND PLACE ****** Chain length: "+chain.getAtomCount());
@@ -516,7 +516,7 @@ public class ModelBuilder3D {
 
 				longestUnplacedChain.add(atomPlacer.getLongestUnplacedChain(molecule, startAtoms.getAtom(i)));
 				setAtomsToUnVisited(molecule);
-				
+
 				if (longestUnplacedChain.getAtomCount() < 4) {
 					//di,third,sec
 					//logger.debug("------ SINGLE BRANCH METHYLTYP ------");
@@ -540,7 +540,7 @@ public class ModelBuilder3D {
 	 *
 	 *@param  originalCoord  original coordinates of the placed ring atom from template
 	 *@param  newCoord       new coordinates from branch placement
-	 *@param  ac             AtomContainer contains atoms of ring system 
+	 *@param  ac             AtomContainer contains atoms of ring system
 	 */
 	private void translateStructure(Point3d originalCoord, Point3d newCoord, IAtomContainer ac) {
 		Point3d transVector = new Point3d(originalCoord);
@@ -610,19 +610,19 @@ public class ModelBuilder3D {
 	 */
 	private void setTemplateHandler(TemplateHandler3D templateHandler) throws CDKException {
 		if (templateHandler == null) throw new NullPointerException("The given template handler is null!");
-		
+
 		this.templateHandler = templateHandler;
 	}
 
 	/**
 	 * Returns the number of loaded templates. Note that it may return 0 because
 	 * templates are lazy loaded, that is upon the first ring being layed out.
-	 * 
+	 *
 	 * @return 0, if not templates are loaded
 	 */
 	public int getTemplateCount() {
 		return this.templateHandler.getTemplateCount();
 	}
-	
+
 }
 

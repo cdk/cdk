@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * A MoveTo path element moves the drawing 'pen' without making any lines or
  * curves and is commonly used to start a path or make gaps in the path.
- *  
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -44,7 +44,7 @@ public class MoveTo extends PathElement {
 
     /**
      * Make a move to path element.
-     * 
+     *
      * @param point the point to move to
      */
     @TestMethod("testConstructor")

@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -79,55 +79,55 @@ public class CMLRoundTripTest extends CDKTestCase {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getSymbol(), roundTrippedAtom.getSymbol());
     }
-    
+
     @Test public void testAtomId() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         atom.setID("N1");
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getID(), roundTrippedAtom.getID());
     }
-    
+
     @Test public void testAtom2D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point2d p2d = new Point2d(1.3, 1.4);
         atom.setPoint2d(p2d);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getPoint2d(), roundTrippedAtom.getPoint2d(), 0.00001);
     }
-    
+
     @Test public void testAtom3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
         atom.setPoint3d(p3d);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
-    
+
     @Test public void testAtom2DAnd3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
@@ -136,44 +136,44 @@ public class CMLRoundTripTest extends CDKTestCase {
         Point3d p3d = new Point3d(1.3, 1.4, 0.9);
         atom.setPoint3d(p3d);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getPoint2d(), roundTrippedAtom.getPoint2d(), 0.00001);
         assertEquals(atom.getPoint3d(), roundTrippedAtom.getPoint3d(), 0.00001);
     }
-    
+
     @Test public void testAtomFract3D() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         Point3d p3d = new Point3d(0.3, 0.4, 0.9);
         atom.setFractionalPoint3d(p3d);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         assertEquals(atom.getFractionalPoint3d(), roundTrippedAtom.getFractionalPoint3d(), 0.00001);
     }
-    
+
     @Test public void testPseudoAtom() throws Exception {
         IAtomContainer mol = new AtomContainer();
         PseudoAtom atom = new PseudoAtom("N");
         atom.setLabel("Glu55");
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertNotNull(roundTrippedAtom);
         Assert.assertTrue(roundTrippedAtom instanceof PseudoAtom);
         Assert.assertEquals("Glu55", ((PseudoAtom)roundTrippedAtom).getLabel());
     }
-    
+
     /**
      * @cdk.bug 1455346
      */
@@ -185,31 +185,31 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         moleculeSet.addAtomContainer(mol);
         model.setMoleculeSet(moleculeSet);
-        
+
         IChemModel roundTrippedModel = CMLRoundTripTool.roundTripChemModel(convertor, model);
-        
-        IAtomContainerSet roundTrippedMolSet = roundTrippedModel.getMoleculeSet(); 
+
+        IAtomContainerSet roundTrippedMolSet = roundTrippedModel.getMoleculeSet();
         Assert.assertNotNull(roundTrippedMolSet);
         Assert.assertEquals(1, roundTrippedMolSet.getAtomContainerCount());
         IAtomContainer roundTrippedMolecule = roundTrippedMolSet.getAtomContainer(0);
         Assert.assertNotNull(roundTrippedMolecule);
         Assert.assertEquals(1, roundTrippedMolecule.getAtomCount());
     }
-    
+
     @Test public void testAtomFormalCharge() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("N");
         int formalCharge = +1;
         atom.setFormalCharge(formalCharge);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getFormalCharge(), roundTrippedAtom.getFormalCharge());
     }
-    
+
     /**
      * @cdk.bug 1713398
      */
@@ -249,14 +249,14 @@ public class CMLRoundTripTest extends CDKTestCase {
         double partialCharge = 0.5;
         atom.setCharge(partialCharge);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getCharge(), roundTrippedAtom.getCharge(), 0.0001);
     }
-    
+
     @Ignore("Have to figure out how to store atom parity in CML2")
     public void testAtomStereoParity() throws Exception {
         IAtomContainer mol = new AtomContainer();
@@ -264,21 +264,21 @@ public class CMLRoundTripTest extends CDKTestCase {
         int stereo = CDKConstants.STEREO_ATOM_PARITY_PLUS;
         atom.setStereoParity(stereo);
         mol.addAtom(atom);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getStereoParity(), roundTrippedAtom.getStereoParity());
     }
-    
+
     @Test public void testIsotope() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setMassNumber(13);
         mol.addAtom(atom);
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
@@ -319,7 +319,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertNotNull(roundTrippedAtom.getNaturalAbundance());
         Assert.assertEquals(atom.getNaturalAbundance(), roundTrippedAtom.getNaturalAbundance(), 0.01);
     }
-    
+
     /**
      * Test roundtripping of MassNumber.
      * @throws Exception
@@ -330,15 +330,15 @@ public class CMLRoundTripTest extends CDKTestCase {
         atom.setMassNumber( new Integer(12) );
         mol.addAtom(atom);
         Assert.assertEquals( 12, atom.getMassNumber().intValue() );
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(atom.getMassNumber(), roundTrippedAtom.getMassNumber());
     }
 
-    
+
     @Test public void testBond() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -347,9 +347,9 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom2);
         Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         mol.addBond(bond);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(2, roundTrippedMol.getAtomCount());
         Assert.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
@@ -358,7 +358,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         Assert.assertEquals("O", roundTrippedBond.getAtom(1).getSymbol());
         Assert.assertEquals(bond.getOrder(), roundTrippedBond.getOrder());
     }
-    
+
     @Test public void testBondID() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -368,12 +368,12 @@ public class CMLRoundTripTest extends CDKTestCase {
         Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         bond.setID("b1");
         mol.addBond(bond);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
         Assert.assertEquals(bond.getID(), roundTrippedBond.getID());
     }
-    
+
     @Test public void testBondStereo() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
@@ -384,15 +384,15 @@ public class CMLRoundTripTest extends CDKTestCase {
         IBond.Stereo stereo = IBond.Stereo.DOWN;
         bond.setStereo(stereo);
         mol.addBond(bond);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(2, roundTrippedMol.getAtomCount());
         Assert.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
         Assert.assertEquals(bond.getStereo(), roundTrippedBond.getStereo());
     }
-    
+
     @Test public void testBondAromatic() throws Exception {
         IAtomContainer mol = new AtomContainer();
         // surely, this bond is not aromatic... but fortunately, file formats do not care about chemistry
@@ -403,9 +403,9 @@ public class CMLRoundTripTest extends CDKTestCase {
         Bond bond = new Bond(atom, atom2, IBond.Order.SINGLE);
         bond.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(bond);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(2, roundTrippedMol.getAtomCount());
         Assert.assertEquals(1, roundTrippedMol.getBondCount());
         IBond roundTrippedBond = roundTrippedMol.getBond(0);
@@ -442,9 +442,9 @@ public class CMLRoundTripTest extends CDKTestCase {
         mol.addAtom(atom);
         double charge = -0.267;
         atom.setCharge(charge);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
         Assert.assertEquals(charge, roundTrippedAtom.getCharge(), 0.0001);
@@ -454,10 +454,10 @@ public class CMLRoundTripTest extends CDKTestCase {
         IAtomContainer mol = new AtomContainer();
         String inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
         mol.setProperty(CDKConstants.INCHI, inchi);
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
         Assert.assertNotNull(roundTrippedMol);
-        
+
         Assert.assertEquals(inchi, roundTrippedMol.getProperty(CDKConstants.INCHI));
     }
 
@@ -466,9 +466,9 @@ public class CMLRoundTripTest extends CDKTestCase {
         Atom atom = new Atom("C");
         mol.addAtom(atom);
         mol.addSingleElectron(new SingleElectron(atom));
-        
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        
+
         Assert.assertEquals(1, roundTrippedMol.getAtomCount());
         Assert.assertEquals(1, roundTrippedMol.getElectronContainerCount());
         IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
@@ -484,23 +484,23 @@ public class CMLRoundTripTest extends CDKTestCase {
         IAtom atom = reaction.getBuilder().newInstance(IAtom.class,"C");
         reactant.addAtom(atom);
         reaction.addReactant(reactant);
-        
+
         IAtomContainer product = reaction.getBuilder().newInstance(IAtomContainer.class);
         product.setID("product");
         atom = reaction.getBuilder().newInstance(IAtom.class,"X");
         product.addAtom(atom);
         reaction.addProduct(product);
-        
+
         IAtomContainer agent = reaction.getBuilder().newInstance(IAtomContainer.class);
         agent.setID("water");
         atom = reaction.getBuilder().newInstance(IAtom.class,"H");
         agent.addAtom(atom);
         reaction.addAgent(agent);
-        
+
         IReaction roundTrippedReaction = CMLRoundTripTool.roundTripReaction(convertor, reaction);
         Assert.assertNotNull(roundTrippedReaction);
         Assert.assertEquals("reaction.1", roundTrippedReaction.getID());
-        
+
         Assert.assertNotNull(roundTrippedReaction);
         IAtomContainerSet reactants = roundTrippedReaction.getReactants();
         Assert.assertNotNull(reactants);
@@ -508,14 +508,14 @@ public class CMLRoundTripTest extends CDKTestCase {
         IAtomContainer roundTrippedReactant = reactants.getAtomContainer(0);
         Assert.assertEquals("react", roundTrippedReactant.getID());
         Assert.assertEquals(1, roundTrippedReactant.getAtomCount());
-        
+
         IAtomContainerSet products = roundTrippedReaction.getProducts();
         Assert.assertNotNull(products);
         Assert.assertEquals(1, products.getAtomContainerCount());
         IAtomContainer roundTrippedProduct = products.getAtomContainer(0);
         Assert.assertEquals("product", roundTrippedProduct.getID());
         Assert.assertEquals(1, roundTrippedProduct.getAtomCount());
-        
+
         IAtomContainerSet agents = roundTrippedReaction.getAgents();
         Assert.assertNotNull(agents);
         Assert.assertEquals(1, agents.getAtomContainerCount());
@@ -544,7 +544,7 @@ public class CMLRoundTripTest extends CDKTestCase {
 
     /**
      * Tests of bond order information is stored even when aromaticity is given.
-     * 
+     *
      * @throws Exception
      */
     @Test public void testAromaticity() throws Exception {
@@ -552,7 +552,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     	for (IBond bond : molecule.bonds()) {
     		bond.setFlag(CDKConstants.ISAROMATIC, true);
     	}
-    	
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, molecule);
         Iterator<IBond> bonds = roundTrippedMol.bonds().iterator();
         double orderSum = BondManipulator.getSingleBondEquivalentSum(bonds);
@@ -577,24 +577,24 @@ public class CMLRoundTripTest extends CDKTestCase {
     /**
      * Tests whether the custom atom properties survive the CML round-trip
      * @throws Exception
-     * 
-     * @cdk.bug 1930029 
+     *
+     * @cdk.bug 1930029
      */
     @Test public void testAtomProperty() throws Exception {
     	String[] key = {"customAtomProperty1","customAtomProperty2"};
     	String[] value = {"true","false"};
- 	   
+
     	IAtomContainer mol = TestMoleculeFactory.makeBenzene();
         for (Iterator<IAtom> it = mol.atoms().iterator(); it.hasNext();) {
            IAtom a = it.next();
            for (int i=0; i < key.length;i++)
         	   a.setProperty(key[i], value[i]);
-        }       
-        
+        }
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(),
      	//	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
-        
+
         for (Iterator<IAtom> it = roundTrippedMol.atoms().iterator(); it.hasNext();) {
             IAtom a = it.next();
             for (int i=0; i < key.length;i++) {
@@ -602,14 +602,14 @@ public class CMLRoundTripTest extends CDKTestCase {
             	Assert.assertNotNull(actual);
             	Assert.assertEquals(value[i], actual);
             }
-         }       
+         }
     }
-    
+
     /**
      * Tests whether the custom bond properties survive the CML round-trip
      * @throws Exception
-     * 
-     * @cdk.bug 1930029 
+     *
+     * @cdk.bug 1930029
      */
     @Test public void testBondProperty() throws Exception {
     	String[] key = {"customBondProperty1","customBondProperty2"};
@@ -619,12 +619,12 @@ public class CMLRoundTripTest extends CDKTestCase {
            IBond b = it.next();
            for (int i=0; i < key.length;i++)
         	   b.setProperty(key[i], value[i]);
-        }       
-        
+        }
+
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(),
         //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
-        
+
         for (Iterator<IBond> it = roundTrippedMol.bonds().iterator(); it.hasNext();) {
             IBond b = it.next();
             for (int i=0; i < key.length;i++) {
@@ -632,14 +632,14 @@ public class CMLRoundTripTest extends CDKTestCase {
             	Assert.assertNotNull(actual);
             	Assert.assertEquals(value[i], actual);
             }
-         }       
+         }
     }
-    
+
     /**
      * Tests whether the custom molecule properties survive the CML round-trip
      * @throws Exception
-     * 
-     * @cdk.bug 1930029 
+     *
+     * @cdk.bug 1930029
      */
     @Test public void testMoleculeProperty() throws Exception {
     	String[] key = {"customMoleculeProperty1","customMoleculeProperty2"};
@@ -650,7 +650,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     		mol.setProperty(key[i], value[i]);
     	}
         IAtomContainer roundTrippedMol = CMLRoundTripTool.roundTripMolecule(convertor, mol);
-        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(), 
+        //Assert.assertEquals(convertor.cdkMoleculeToCMLMolecule(mol).toXML(),
      	//	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).toXML());
         for (int i=0; i < key.length;i++) {
         	Object actual = roundTrippedMol.getProperty(key[i]);
@@ -665,7 +665,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     	list.addAtomContainer(new AtomContainer());
     	IChemModel model = new ChemModel();
     	model.setMoleculeSet(list);
-    	
+
     	IChemModel roundTripped = CMLRoundTripTool.roundTripChemModel(convertor, model);
     	IAtomContainerSet newList = roundTripped.getMoleculeSet();
     	Assert.assertNotNull(newList);
@@ -673,7 +673,7 @@ public class CMLRoundTripTest extends CDKTestCase {
     	Assert.assertNotNull(newList.getAtomContainer(0));
     	Assert.assertNotNull(newList.getAtomContainer(1));
     }
-    
+
     /**
      * @cdk.bug 1930029
      */
@@ -689,7 +689,7 @@ public class CMLRoundTripTest extends CDKTestCase {
         	Assert.assertEquals(2,container.getAtom(i).getProperties().size());
         }
     }
-    
+
     /**
      * Test roundtripping of Unset property (Hydrogencount).
      * @throws Exception
@@ -706,6 +706,6 @@ public class CMLRoundTripTest extends CDKTestCase {
     	IAtom roundTrippedAtom = roundTrippedMol.getAtom(0);
     	Assert.assertNull(roundTrippedAtom.getImplicitHydrogenCount());
     }
-    
+
 }
 

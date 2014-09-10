@@ -33,7 +33,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula
  *  correspond with other to compare.
- * 
+ *
  *
  * <p>This rule uses these parameters:
  * <table border="1">
@@ -48,7 +48,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *     <td>The Isotope Pattern to compare</td>
  *   </tr>
  * </table>
- * 
+ *
  * @cdk.module  formula
  * @author      Miguel Rojas Cherto
  * @cdk.created 2007-11-20
@@ -68,7 +68,7 @@ public class IsotopePatternRule implements IRule{
 	IsotopePatternGenerator isotopeGe;
 
 	private IsotopePatternSimilarity is;
-	
+
     /**
      *  Constructor for the IsotopePatternRule object.
      *
@@ -86,25 +86,25 @@ public class IsotopePatternRule implements IRule{
      *
      * @param params          The new parameters value
      * @throws CDKException   Description of the Exception
-     * 
+     *
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	 if (params.length != 2) 
+    	 if (params.length != 2)
              throw new CDKException("IsotopePatternRule expects two parameter");
-         
+
        	 if(!(params[0] instanceof List ))
        		 throw new CDKException("The parameter one must be of type List<Double[]>");
-       	 
+
 
        	 if(!(params[1] instanceof Double ))
        		 throw new CDKException("The parameter two must be of type Double");
-       	
+
        	 pattern = new IsotopePattern();
        	 for(double[] listISO:(List<double[]>) params[0]){
        		 pattern.addIsotope(new IsotopeContainer(listISO[0],listISO[1]));
        	 }
-       	 
+
          is.seTolerance((Double) params[1]);
     }
 
@@ -122,7 +122,7 @@ public class IsotopePatternRule implements IRule{
         return params;
     }
 
-    
+
     /**
      * Validate the isotope pattern of this IMolecularFormula. Important, first
      * you have to add with the {@link #setParameters(Object[])} a IMolecularFormulaSet
@@ -134,13 +134,13 @@ public class IsotopePatternRule implements IRule{
 
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
-    	
-    	
+
+
     	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
 		IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
 		IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
-		
+
     	return is.compare(pattern, patternIsoNormalize);
     }
-    
+
 }

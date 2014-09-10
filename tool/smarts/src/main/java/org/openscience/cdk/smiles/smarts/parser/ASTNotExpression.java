@@ -20,7 +20,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 /**
  * An AST node. It represents the NOT logical operator (!)
  * used before atomic primitives or recursive smarts in smarts.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts

@@ -1,5 +1,5 @@
 /* Copyright (C) 2004-2007  Rajarshi Guha <rajarshi.guha@gmail.com>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
@@ -53,7 +53,7 @@ import java.util.StringTokenizer;
  * @author  Rajarshi Guha <rajarshi.guha@gmail.com>
  * @cdk.created 2004-01-27
  *
- * @cdk.keyword file format, HIN 
+ * @cdk.keyword file format, HIN
  * @cdk.iooptions
  */
 @TestClass("org.openscience.cdk.io.HINReaderTest")
@@ -73,11 +73,11 @@ public class HINReader extends DefaultChemObjectReader {
     public HINReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public HINReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
@@ -141,13 +141,13 @@ public class HINReader extends DefaultChemObjectReader {
         if (toks.length == 3) return(toks[2]);
         else return("");
     }
-    
+
     /**
      *  Private method that actually parses the input to read a ChemFile
      *  object. In its current state it is able to read all the molecules
      *  (if more than one is present) in the specified HIN file. These are
      *  placed in a MoleculeSet object which in turn is placed in a ChemModel
-     *  which in turn is placed in a ChemSequence object and which is finally 
+     *  which in turn is placed in a ChemSequence object and which is finally
      *  placed in a ChemFile object and returned to the user.
      *
      * @return A ChemFile containing the data parsed from input.
@@ -189,7 +189,7 @@ public class HINReader extends DefaultChemObjectReader {
                 m.setProperty(CDKConstants.TITLE ,info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
-                // the start and end indices and bond order of each bond 
+                // the start and end indices and bond order of each bond
                 // found in the HIN file. Before adding bonds we need to reduce
                 // the number of bonds so as not to count the same bond twice
                 List<List<Object>> cons = new ArrayList<List<Object>>();
@@ -224,16 +224,16 @@ public class HINReader extends DefaultChemObjectReader {
                         int s = Integer.parseInt(toks[j]) - 1; // since atoms start from 1 in the file
                         char bt = toks[j+1].charAt(0);
                         switch(bt) {
-                            case 's': 
+                            case 's':
                                 bo = IBond.Order.SINGLE;
                                 break;
-                            case 'd': 
+                            case 'd':
                                 bo = IBond.Order.DOUBLE;
                                 break;
-                            case 't': 
+                            case 't':
                                 bo = IBond.Order.TRIPLE;
-                                break;      
-                            case 'a': 
+                                break;
+                            case 'a':
                                 bo = IBond.Order.QUADRUPLE;
                                 break;
                         }
@@ -247,7 +247,7 @@ public class HINReader extends DefaultChemObjectReader {
                     atomSerial++;
                     line = input.readLine();
                 }
-                
+
                 // now just store all the bonds we have
                 for (List<Object> ar : cons) {
                     IAtom s = m.getAtom((Integer) ar.get(0));
@@ -271,7 +271,7 @@ public class HINReader extends DefaultChemObjectReader {
                 while (true) {
                     line = input.readLine();
                     if (line == null || line.startsWith("mol")) break;
-                    if (line.startsWith("aromaticring")) aroringText.add(line.trim());                    
+                    if (line.startsWith("aromaticring")) aroringText.add(line.trim());
                 }
             }
 
@@ -312,5 +312,5 @@ public class HINReader extends DefaultChemObjectReader {
 }
 
 
-    
+
 

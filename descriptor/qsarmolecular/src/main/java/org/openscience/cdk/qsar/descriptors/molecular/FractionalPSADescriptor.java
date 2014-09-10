@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.manipulator.*;
 import org.openscience.cdk.annotations.*;
 
 /**
- * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is 
+ * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is
  * to {@link TPSADescriptor} / <b>molecular weight</b>, in units of square Angstroms per Dalton.
  *
  * Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
@@ -55,12 +55,12 @@ import org.openscience.cdk.annotations.*;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptorTest")
-public class FractionalPSADescriptor implements IMolecularDescriptor 
+public class FractionalPSADescriptor implements IMolecularDescriptor
 {
 	public FractionalPSADescriptor()
 	{
 	}
-	
+
     @TestMethod("nop")
     public void initialise(IChemObjectBuilder builder) {}
 
@@ -68,7 +68,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
      * {@inheritDoc}
      */
     @TestMethod("nop")
-    public DescriptorSpecification getSpecification() 
+    public DescriptorSpecification getSpecification()
     {
         return new DescriptorSpecification(
             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA",
@@ -79,9 +79,9 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public void setParameters(Object[] params) throws CDKException 
+    public void setParameters(Object[] params) throws CDKException
     {
-        if (params.length!=0) 
+        if (params.length!=0)
         {
             throw new CDKException("The FractionalPSADescriptor expects zero parameters");
         }
@@ -95,7 +95,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
     }
 
     @TestMethod("nop")
-    public String[] getDescriptorNames() 
+    public String[] getDescriptorNames()
     {
         return new String[]{"tpsaEfficiency"};
     }
@@ -116,7 +116,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
 
     /**
      * Calculates the topological polar surface area and expresses it as a ratio to molecule size.
-     * 
+     *
      * @param atomContainer The {@link IAtomContainer} whose volume is to be calculated
      * @return descriptor(s) retaining to polar surface area
      */
@@ -125,7 +125,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
     {
     	try {mol=mol.clone();} catch (CloneNotSupportedException ex) {}
         double polar=0,weight=0;
-        try 
+        try
         {
         	// type & assign implicit hydrogens
         	IChemObjectBuilder builder=mol.getBuilder();
@@ -137,12 +137,12 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
 			}
 			CDKHydrogenAdder adder=CDKHydrogenAdder.getInstance(builder);
 			adder.addImplicitHydrogens(mol);
-           	
+
         	// polar surface area: chain it off the TPSADescriptor
         	TPSADescriptor tpsa=new TPSADescriptor();
         	DescriptorValue value=tpsa.calculate(mol);
         	polar=((DoubleResult)value.getValue()).doubleValue();
-        	
+
         	//  molecular weight
             for (IAtom atom : mol.atoms())
             {
@@ -155,7 +155,7 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
         {
             return getDummyDescriptorValue(exception);
         }
-        
+
         return new DescriptorValue
         (
             getSpecification(),
@@ -175,14 +175,14 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public String[] getParameterNames() 
+    public String[] getParameterNames()
     {
         return new String[0];
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public Object getParameterType(String name) 
+    public Object getParameterType(String name)
     {
         return null;
     }

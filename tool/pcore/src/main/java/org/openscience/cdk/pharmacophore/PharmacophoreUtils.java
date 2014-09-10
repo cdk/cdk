@@ -396,7 +396,7 @@ public class PharmacophoreUtils {
         // now add the constraint as a bond
         IAtom a1 = null, a2 = null;
         IAtom a3 = null;
-        for (IAtom queryAtom : ret.atoms()) {            
+        for (IAtom queryAtom : ret.atoms()) {
             if (queryAtom.getSymbol().equals(id1)) a1 = queryAtom;
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
             if (queryAtom.getSymbol().equals(id3)) a3 = queryAtom;

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -38,7 +38,7 @@ import java.util.List;
 
 /**
  * A collection of static utilities for Java 3D javax.vecmath.* objects.
- * 
+ *
  * @author John May
  */
 final class VecmathUtil {
@@ -51,7 +51,7 @@ final class VecmathUtil {
     /**
      * Convert a Vecmath (javax.vecmath.*) point to an AWT (java.awt.geom.*)
      * point.
-     * 
+     *
      * @param point a Vecmath point
      * @return an AWT point
      */
@@ -62,7 +62,7 @@ final class VecmathUtil {
     /**
      * Convert a AWT (java.awt.geom.*) point to a Vecmath (javax.vecmath.*)
      * point.
-     * 
+     *
      * @param point an AWT point
      * @return a Vecmath point
      */
@@ -72,7 +72,7 @@ final class VecmathUtil {
 
     /**
      * Create a unit vector between two points.
-     * 
+     *
      * @param from start of vector
      * @param to end of vector
      * @return unit vector
@@ -82,10 +82,10 @@ final class VecmathUtil {
         vector.normalize();
         return vector;
     }
-    
+
     /**
      * Create a unit vector for a bond with the start point being the specified atom.
-     * 
+     *
      * @param atom start of vector
      * @param bond the bond used to create the vector
      * @return unit vector
@@ -96,7 +96,7 @@ final class VecmathUtil {
 
     /**
      * Create unit vectors from one atom to all other provided atoms.
-     * 
+     *
      * @param fromAtom reference atom (will become 0,0)
      * @param toAtoms list of to atoms
      * @return unit vectors
@@ -113,7 +113,7 @@ final class VecmathUtil {
      * Create a new vector perpendicular (at a right angle) to the provided
      * vector. In 2D, there are two perpendicular vectors, the other
      * perpendicular vector can be obtained by negation.
-     * 
+     *
      * @param vector reference to which a perpendicular vector is returned
      * @return perpendicular vector
      */
@@ -123,7 +123,7 @@ final class VecmathUtil {
 
     /**
      * Midpoint of a line described by two points, a and b.
-     * 
+     *
      * @param a first point
      * @param b second point
      * @return the midpoint
@@ -135,7 +135,7 @@ final class VecmathUtil {
 
     /**
      * Scale a vector by a given factor, the input vector is not modified.
-     * 
+     *
      * @param vector a vector to scale
      * @param factor how much the input vector should be scaled
      * @return scaled vector
@@ -148,7 +148,7 @@ final class VecmathUtil {
 
     /**
      * Sum the components of two vectors, the input is not modified.
-     * 
+     *
      * @param a first vector
      * @param b second vector
      * @return scaled vector
@@ -160,7 +160,7 @@ final class VecmathUtil {
     /**
      * Negate a vector, the input is not modified. Equivalent to
      * {@code scale(vector, -1)}
-     * 
+     *
      * @param vector a vector to negate
      * @return the negated vector
      */
@@ -171,7 +171,7 @@ final class VecmathUtil {
 
     /**
      * Calculate the intersection of two vectors given their starting positions.
-     * 
+     *
      * @param p1 position vector 1
      * @param d1 direction vector 1
      * @param p2 position vector 2
@@ -182,9 +182,9 @@ final class VecmathUtil {
         final Vector2d p1End = sum(p1, d1);
         final Vector2d p2End = sum(p2, d2);
         return intersection(p1.x, p1.y, p1End.x, p1End.y,
-                            p2.x, p2.y, p2End.x, p2End.y);    
+                            p2.x, p2.y, p2End.x, p2End.y);
     }
-    
+
     /**
      * Calculate the intersection of two lines described by the points (x1,y1 -> x2,y2) and (x3,y3
      * -> x4,y4).
@@ -211,12 +211,12 @@ final class VecmathUtil {
                 ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
         return new Point2d(x, y);
     }
-    
+
     /**
      * Given vectors for the hypotenuse and adjacent side of a right angled
      * triangle and the length of the opposite side, determine how long the
      * adjacent side size.
-     * 
+     *
      * @param hypotenuse vector for the hypotenuse
      * @param adjacent vector for the adjacent side
      * @param oppositeLength length of the opposite side of a triangle
@@ -228,7 +228,7 @@ final class VecmathUtil {
 
     /**
      * Average a collection of vectors.
-     * 
+     *
      * @param vectors one or more vectors
      * @return average vector
      */
@@ -244,7 +244,7 @@ final class VecmathUtil {
     /**
      * Given a list of unit vectors, find the vector which is nearest to a
      * provided reference.
-     * 
+     *
      * @param reference a target vector
      * @param vectors list of vectors
      * @return the nearest vector
@@ -274,7 +274,7 @@ final class VecmathUtil {
     /**
      * Given a list of bonds, find the bond which is nearest to a provided
      * reference and return the vector for this bond.
-     * 
+     *
      * @param reference a target vector
      * @param fromAtom an atom (will be 0,0)
      * @param bonds list of bonds containing 'fromAtom'
@@ -298,7 +298,7 @@ final class VecmathUtil {
     /**
      * Calculate the angular extent of a vector (0-2π radians) anti clockwise from
      * east {1,0}.
-     * 
+     *
      * @param vector a vector
      * @return the extent (radians)
      */
@@ -324,7 +324,7 @@ final class VecmathUtil {
 
     /**
      * Generate a 2D directional vector that is located in the middle of the largest angular extent
-     * (i.e. has the most space). For example if we have a two vectors, one pointing up and one 
+     * (i.e. has the most space). For example if we have a two vectors, one pointing up and one
      * pointing right we have to extents (.5π and 1.5π). The new vector would be pointing down and
      * to the left in the middle of the 1.5π extent.
      *
@@ -351,10 +351,10 @@ final class VecmathUtil {
         }
 
         assert index >= 0;
-        
-        double mid   = (max / 2); 
+
+        double mid   = (max / 2);
         double theta = extents[index] + mid;
-        
+
         return new Vector2d(Math.cos(theta), Math.sin(theta));
     }
 }

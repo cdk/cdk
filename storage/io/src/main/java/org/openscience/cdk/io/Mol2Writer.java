@@ -1,5 +1,5 @@
 /* Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
@@ -58,7 +58,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(Mol2Writer.class);
 	  private SybylAtomTypeMatcher matcher;
-    
+
     public Mol2Writer() {
     	this(new StringWriter());
     }
@@ -86,7 +86,7 @@ public class Mol2Writer extends DefaultChemObjectWriter {
     public IResourceFormat getFormat() {
         return Mol2Format.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -149,11 +149,11 @@ public class Mol2Writer extends DefaultChemObjectWriter {
             writer.newLine();
 
 /*
-@<TRIPOS>MOLECULE 
-benzene 
-12 12 1  0       0 
-SMALL 
-NO_CHARGES 
+@<TRIPOS>MOLECULE
+benzene
+12 12 1  0       0
+SMALL
+NO_CHARGES
 */
 
             logger.debug("Writing molecule block...");
@@ -165,7 +165,7 @@ NO_CHARGES
                 writer.write(mol.getID());
             }
             writer.newLine();
-            writer.write(mol.getAtomCount() + " " + 
+            writer.write(mol.getAtomCount() + " " +
                         mol.getBondCount()); // that's the minimum amount of info required the format
             writer.newLine();
             writer.write("SMALL"); // no biopolymer
@@ -174,19 +174,19 @@ NO_CHARGES
             writer.newLine();
 
 /*
-@<TRIPOS>ATOM 
-1       C1      1.207   2.091   0.000   C.ar    1       BENZENE 0.000 
-2       C2      2.414   1.394   0.000   C.ar    1       BENZENE 0.000 
-3       C3      2.414   0.000   0.000   C.ar    1       BENZENE 0.000 
-4       C4      1.207   -0.697  0.000   C.ar    1       BENZENE 0.000 
-5       C5      0.000   0.000   0.000   C.ar    1       BENZENE 0.000 
-6       C6      0.000   1.394   0.000   C.ar    1       BENZENE 0.000 
-7       H1      1.207   3.175   0.000   H       1       BENZENE 0.000 
-8       H2      3.353   1.936   0.000   H       1       BENZENE 0.000 
-9       H3      3.353   -0.542  0.000   H       1       BENZENE 0.000 
-10      H4      1.207   -1.781  0.000   H       1       BENZENE 0.000 
-11      H5      -0.939  -0.542  0.000   H       1       BENZENE 0.000 
-12      H6      -0.939  1.936   0.000   H       1       BENZENE 0.000 
+@<TRIPOS>ATOM
+1       C1      1.207   2.091   0.000   C.ar    1       BENZENE 0.000
+2       C2      2.414   1.394   0.000   C.ar    1       BENZENE 0.000
+3       C3      2.414   0.000   0.000   C.ar    1       BENZENE 0.000
+4       C4      1.207   -0.697  0.000   C.ar    1       BENZENE 0.000
+5       C5      0.000   0.000   0.000   C.ar    1       BENZENE 0.000
+6       C6      0.000   1.394   0.000   C.ar    1       BENZENE 0.000
+7       H1      1.207   3.175   0.000   H       1       BENZENE 0.000
+8       H2      3.353   1.936   0.000   H       1       BENZENE 0.000
+9       H3      3.353   -0.542  0.000   H       1       BENZENE 0.000
+10      H4      1.207   -1.781  0.000   H       1       BENZENE 0.000
+11      H5      -0.939  -0.542  0.000   H       1       BENZENE 0.000
+12      H6      -0.939  1.936   0.000   H       1       BENZENE 0.000
 */
 
             // write atom block
@@ -223,18 +223,18 @@ NO_CHARGES
             }
 
 /*
-@<TRIPOS>BOND 
-1       1       2       ar 
-2       1       6       ar 
-3       2       3       ar 
-4       3       4       ar 
-5       4       5       ar 
-6       5       6       ar 
-7       1       7       1 
-8       2       8       1 
-9       3       9       1 
-10      4       10      1 
-11      5       11      1 
+@<TRIPOS>BOND
+1       1       2       ar
+2       1       6       ar
+3       2       3       ar
+4       3       4       ar
+5       4       5       ar
+6       5       6       ar
+7       1       7       1
+8       2       8       1
+9       3       9       1
+10      4       10      1
+11      5       11      1
 12      6       12      1
 */
 
@@ -263,7 +263,7 @@ NO_CHARGES
                         sybylBondOrder = "am";
                     }
                 } catch (CDKException e) {
-                    e.printStackTrace(); 
+                    e.printStackTrace();
                 }
 
                 writer.write((counter+1) + " " +
@@ -272,7 +272,7 @@ NO_CHARGES
                         sybylBondOrder);
                 writer.newLine();
                 counter++;
-            } 
+            }
 
         } catch (IOException e) {
             throw e;

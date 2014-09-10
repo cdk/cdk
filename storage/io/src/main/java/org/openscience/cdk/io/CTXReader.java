@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 /**
  * Reader that extracts information from the IDENT, NAME, ATOMS and BONDS
  * blocks in CTX files.
- * 
+ *
  * @cdk.module io
  * @cdk.githash
  * @cdk.iooptions
@@ -57,7 +57,7 @@ public class CTXReader extends DefaultChemObjectReader {
     private BufferedReader input;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(CTXReader.class);
-    
+
     private IChemFile file;
 
     public CTXReader() {
@@ -76,7 +76,7 @@ public class CTXReader extends DefaultChemObjectReader {
     public CTXReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CTXFormat.getInstance();
@@ -122,15 +122,15 @@ public class CTXReader extends DefaultChemObjectReader {
         IChemModel model = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet containerSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainer container = file.getBuilder().newInstance(IAtomContainer.class);
-        
+
         int lineNumber = 0;
-        
+
         try {
             String line = input.readLine();
             while (input.ready() && line != null) {
                 logger.debug((lineNumber++) + ": ", line);
                 String command = null;
-                if (isCommand(line)) { 
+                if (isCommand(line)) {
                 	command = getCommand(line);
                 	int lineCount = getContentLinesCount(line);
             		if ("ATOMS".equals(command)) {
@@ -163,7 +163,7 @@ public class CTXReader extends DefaultChemObjectReader {
         }
         return file;
     }
-    
+
     private void processIdentBlock(int lineCount, IAtomContainer container) throws IOException {
     	String identifier = "";
     	for (int i=0; i<lineCount; i++) {
@@ -171,7 +171,7 @@ public class CTXReader extends DefaultChemObjectReader {
     	}
     	container.setID(identifier);
     }
-    
+
     private void processNameBlock(int lineCount, IAtomContainer container) throws IOException {
     	String name = "";
     	for (int i=0; i<lineCount; i++) {
@@ -179,7 +179,7 @@ public class CTXReader extends DefaultChemObjectReader {
     	}
     	container.setProperty(CDKConstants.TITLE, name);
     }
-    
+
 	private void processAtomsBlock(int lineCount, IAtomContainer container) throws IOException {
 		for (int i=0; i<lineCount; i++) {
 			String line = input.readLine();
@@ -198,7 +198,7 @@ public class CTXReader extends DefaultChemObjectReader {
 			int atom2 = Integer.parseInt(line.substring(16,19).trim())-1;
 			if (container.getBond(container.getAtom(atom1), container.getAtom(atom2)) == null) {
 				IBond bond = container.getBuilder().newInstance(IBond.class,
-					container.getAtom(atom1), 
+					container.getAtom(atom1),
 					container.getAtom(atom2)
 				);
 				int order = Integer.parseInt(line.substring(23).trim());

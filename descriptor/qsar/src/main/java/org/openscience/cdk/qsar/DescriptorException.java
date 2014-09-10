@@ -55,6 +55,6 @@ public class DescriptorException extends CDKException {
     public DescriptorException(String name, String message) {
         super( name + ": " + message );
     }
-        
+
 }
 

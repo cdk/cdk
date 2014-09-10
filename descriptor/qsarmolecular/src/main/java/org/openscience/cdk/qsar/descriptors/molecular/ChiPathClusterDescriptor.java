@@ -141,7 +141,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
                 AtomTypeManipulator.configure(atom, type);
             } catch (Exception e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + e.getMessage()));
-            }            
+            }
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         try {
@@ -176,7 +176,7 @@ public class ChiPathClusterDescriptor extends AbstractMolecularDescriptor implem
         retval.add(order5v);
         retval.add(order6v);
 
-      
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 retval, getDescriptorNames());
 

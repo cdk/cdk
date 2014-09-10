@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -35,40 +35,40 @@ import org.junit.Test;
  * @cdk.module test-interfaces
  */
 public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
-	
+
 	@Test public void testGetStrandName()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		oStrand.setStrandName("A");
-		
+
 		Assert.assertEquals("A", oStrand.getStrandName());
 	}
-	
+
 	@Test public void testGetStrandType()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		oStrand.setStrandType("DNA");
-		
+
 		Assert.assertEquals("DNA", oStrand.getStrandType());
 	}
-	
+
 	/** The methods above effectively test SetStrandName and
 	 * SetStrandType as well, but I include SetStrandName and
-	 * SetStrandType explicitly as well (for concinstency).  
+	 * SetStrandType explicitly as well (for concinstency).
 	 */
-	
+
 	@Test public void testSetStrandName_String()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		oStrand.setStrandName("A");
-		
+
 		Assert.assertEquals("A", oStrand.getStrandName());
 	}
-	
+
 	@Test public void testSetStrandType_String()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		oStrand.setStrandType("DNA");
-		
+
 		Assert.assertEquals("DNA", oStrand.getStrandType());
 	}
-	
+
 	@Test public void testAddAtom_IAtom() {
 		IStrand oStrand = (IStrand)newChemObject();
 		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
@@ -78,7 +78,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 
 		Assert.assertEquals(2, oStrand.getAtomCount());
 	}
-    
+
 	@Test public void testAddAtom_IAtom_IMonomer() {
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -93,7 +93,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 		Assert.assertEquals(2, oStrand.getMonomer("").getAtomCount());
 		Assert.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
 	}
-	
+
 	@Test public void testGetMonomerCount() {
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -107,7 +107,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 
 		Assert.assertEquals(2, oStrand.getMonomerCount());
 	}
-	 
+
 	@Test public void testGetMonomer_String() {
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -123,7 +123,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 		Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
 		Assert.assertNull(oStrand.getMonomer("TEST"));
 	}
-	
+
 	@Test public void testGetMonomerNames() {
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -141,28 +141,28 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 		monomers.put("", oMon);
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
-		
+
 		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
 /*
 		Assert.assertEquals(3, oStrand.getMonomerNames().size());
 		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono2.getMonomerName()));
-*/		
+*/
 	}
-	
+
 	@Test public void testRemoveMonomer_String()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
 		oMono1.setMonomerName(new String("TRP279"));
 		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
-		oStrand.addAtom(oAtom1, oMono1);		
+		oStrand.addAtom(oAtom1, oMono1);
 		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertEquals(1, oStrand.getAtomCount());
 		oStrand.removeMonomer("TRP279");
 		Assert.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
 		Assert.assertEquals(0, oStrand.getAtomCount());
 	}
-	
+
 	@Test public void testGetMonomers()	{
 		IStrand oStrand = (IStrand)newChemObject();
 		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
@@ -180,7 +180,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 		monomers.put("", oMon);
 		monomers.put("TRP279", oMono1);
 		monomers.put("HOH", oMono2);
-		
+
 		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
 	}
 
@@ -210,7 +210,7 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
             Assert.assertTrue('\r' != description.charAt(i));
         }
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -219,5 +219,5 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
         Object clone = strand.clone();
         Assert.assertTrue(clone instanceof IStrand);
     }
-    
+
 }

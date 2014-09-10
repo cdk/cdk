@@ -64,7 +64,7 @@ public class AbstractReaderFactoryTest {
             reader.getClass().getName()
         );
         // now try reading something from it
-        IChemObject[] objects = { 
+        IChemObject[] objects = {
         		new ChemFile(), new ChemModel(), new AtomContainer(),
         		new Reaction()
         };
@@ -87,7 +87,7 @@ public class AbstractReaderFactoryTest {
         	Assert.fail("Reading an IChemObject from the Reader did not work properly.");
         }
     }
-    
+
     void assertBondCount(int expectedBondCount, IChemObject chemObject) {
         if (expectedBondCount != -1) {
             if (chemObject instanceof IChemFile) {

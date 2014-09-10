@@ -20,7 +20,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 /**
  * An AST node. It represents the low precedence and logical operator (;) used
  * between atomic primitives or recursive smarts in smarts.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
@@ -48,7 +48,7 @@ class ASTLowAndExpression extends SimpleNode {
 	public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
 		return visitor.visit(this, data);
 	}
-	
+
 	public void insertLeafChild(Node node) {
 		Node firstNode = this.jjtGetChild(0);
 		while ( !(firstNode instanceof ASTImplicitHighAndExpression) ) {

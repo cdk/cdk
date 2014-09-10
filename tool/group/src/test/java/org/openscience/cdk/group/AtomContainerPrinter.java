@@ -23,28 +23,28 @@ public class AtomContainerPrinter {
     public static String toString(IAtomContainer atomContainer) {
         return AtomContainerPrinter.toString(atomContainer, new Permutation(atomContainer.getAtomCount()));
     }
-    
+
     public static String toString(IAtomContainer atomContainer, boolean sortEdges) {
         Permutation identity = new Permutation(atomContainer.getAtomCount());
         return toString(atomContainer, identity, sortEdges);
     }
-        
+
     public static String toString(IAtomContainer atomContainer, Permutation permutation) {
         return toString(atomContainer, permutation, false); // don't sort by default?
     }
-    
+
     public static String toString(IAtomContainer atomContainer, Permutation permutation, boolean sortEdges) {
         StringBuffer sb = new StringBuffer();
         int atomCount = atomContainer.getAtomCount();
         IAtom[] pAtoms = new IAtom[atomCount];
         for (int i = 0; i < atomCount; i++) {
-            pAtoms[permutation.get(i)] = atomContainer.getAtom(i); 
+            pAtoms[permutation.get(i)] = atomContainer.getAtom(i);
         }
         for (int i = 0; i < atomCount; i++) {
             sb.append(pAtoms[i].getSymbol()).append(i);
         }
         sb.append(" ");
-        
+
         int i = 0;
         List<String> edgeStrings = null;
         if (sortEdges) {
@@ -83,12 +83,12 @@ public class AtomContainerPrinter {
                 sb.append(edgeString);
                 if (i < atomContainer.getBondCount() - 1) {
                     sb.append(",");
-                }   
+                }
             }
         }
         return sb.toString();
     }
-    
+
     private static char bondOrderToChar(IBond.Order order) {
         switch (order) {
             case SINGLE:     return '1';
@@ -99,7 +99,7 @@ public class AtomContainerPrinter {
             default:         return '?';
         }
     }
-    
+
     private static IBond.Order charToBondOrder(char orderChar) {
         switch (orderChar) {
             case '1' :     return IBond.Order.SINGLE;
@@ -110,13 +110,13 @@ public class AtomContainerPrinter {
             default:       return IBond.Order.UNSET;
         }
     }
-    
+
     public static IAtomContainer fromString(String acpString, IChemObjectBuilder builder) {
         int gapIndex = acpString.indexOf(' ');
         if (gapIndex == -1) {
             gapIndex = acpString.length();
         }
-        
+
         IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
         String elementString = acpString.substring(0, gapIndex);
         // skip the atom number, as this is just a visual convenience
@@ -124,12 +124,12 @@ public class AtomContainerPrinter {
             String elementSymbol = String.valueOf(elementString.charAt(index));
             atomContainer.addAtom(builder.newInstance(IAtom.class, elementSymbol));
         }
-        
+
         // no bonds
         if (gapIndex >= acpString.length() - 1) {
             return atomContainer;
         }
-        
+
         String bondString = acpString.substring(gapIndex + 1);
         for (String bondPart : bondString.split(",")) {
             int colonIndex = bondPart.indexOf(':');

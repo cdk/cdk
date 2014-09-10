@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,7 +40,7 @@ public class DebugChemObject extends ChemObject
     implements IChemObject {
 
     private static final long serialVersionUID = -8547443535884526365L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugChemObject.class);
 
@@ -150,7 +150,7 @@ public class DebugChemObject extends ChemObject
         logger.debug("Setting properties: ", properties);
         super.setProperties(properties);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public void addProperties(Map<Object, Object> properties) {
 		logger.debug("Adding properties: ", properties);

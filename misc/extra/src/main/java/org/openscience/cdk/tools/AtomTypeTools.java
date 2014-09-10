@@ -41,26 +41,26 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 */
 
 public class AtomTypeTools {
-	
+
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(AtomTypeTools.class);
 	HOSECodeGenerator hcg=null;
 	SmilesGenerator sg=null;
-	
+
 	/**
 	 * Constructor for the MMFF94AtomTypeMatcher object.
 	 */
 	public AtomTypeTools() {
 		hcg = new HOSECodeGenerator();
 	}
-	
+
 	public IRingSet assignAtomTypePropertiesToAtom(IAtomContainer molecule) throws Exception{
 		return assignAtomTypePropertiesToAtom(molecule, true);
 	}
-	
-		
+
+
 	/**
-	 *  Method assigns certain properties to an atom. Necessary for the atom type matching 
+	 *  Method assigns certain properties to an atom. Necessary for the atom type matching
 	 *  Properties:
 	 *  <ul>
 	 *   <li>aromaticity)
@@ -69,7 +69,7 @@ public class AtomTypeTools {
 	 *	 <li>Ring/Group, ringSize, aromaticity
 	 *	 <li>SphericalMatcher (HoSe Code)
 	 *  </ul>
-	 *  
+	 *
 	 *@param aromaticity booelan true/false true if aromaticity should be calculated
 	 *@return                sssrf ringSetofTheMolecule
 	 *@exception  Exception  Description of the Exception
@@ -83,7 +83,7 @@ public class AtomTypeTools {
 		IRingSet ringSetA = null;
 		IRingSet ringSetMolecule = Cycles.sssr(molecule).toRingSet();
 		logger.debug(ringSetMolecule);
-		
+
 		if (aromaticity){
 			try {
                 Aromaticity.cdkLegacy().apply(molecule);
@@ -109,7 +109,7 @@ public class AtomTypeTools {
 				atom2.setFlag(CDKConstants.ISINRING, true);
 				atom2.setFlag(CDKConstants.ISALIPHATIC, false);
 			}else{
-				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, 
+				atom2.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT,
 					Integer.valueOf(CDKConstants.ISNOTINRING)
 				);
 				atom2.setFlag(CDKConstants.ISINRING, false);
@@ -125,47 +125,47 @@ public class AtomTypeTools {
 		}
 		return ringSetMolecule;
 	}
-	
+
 
 	/**
-	 *  Identifies ringSystem and returns a number which corresponds to 
+	 *  Identifies ringSystem and returns a number which corresponds to
 	 *  CDKChemicalRingConstant
 	 *
-	 *@param  ring	Ring class with the ring system  
+	 *@param  ring	Ring class with the ring system
 	 *@param  smile  smile of the ring system
 	 *@return     chemicalRingConstant
 	 */
 	private int ringSystemClassifier(IRing ring, String smile) {
 		/*System.out.println("IN AtomTypeTools Smile:"+smile);*/
 		logger.debug("Comparing ring systems: SMILES=", smile);
-		
+
 		if (smile.equals("c1ccnc1"))return 4;
 		else if (smile.equals("c1ccoc1"))return 6;
 		else if (smile.equals("c1ccsc1"))return 8;
 		else if (smile.equals("c1ccncc1"))return 10;
 		else if (smile.equals("c1cncnc1"))return 12;
 		else if (smile.equals("c1ccccc1"))return 5;
-		
+
 		int ncount=0;
 		for (int i=0; i<ring.getAtomCount();i++){
 			if (ring.getAtom(i).getSymbol().equals("N")){
 				ncount=ncount+1;
 			}
 		}
-			
+
 		if (ring.getAtomCount()==6 & ncount==1){
 			return 10;
 		}else if (ring.getAtomCount()==5 & ncount==1){
 			return 4;
 		}
-		
+
 		if (ncount==0){
 			return 3;
 		}else{
 			return 0;
 		}
 	}
-	
+
 	private String removeAromaticityFlagsFromHoseCode(String hoseCode){
 		String hosecode="";
 		for (int i=0;i<hoseCode.length();i++){

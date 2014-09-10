@@ -111,7 +111,7 @@ public class DefaultVFAtomMatcher implements VFAtomMatcher {
     /**
      * Constructor
      * @param smartQueryAtom query atom
-     * @param container 
+     * @param container
      */
     public DefaultVFAtomMatcher(IQueryAtom smartQueryAtom, IQueryAtomContainer container) {
         this();

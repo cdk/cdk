@@ -51,18 +51,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * This fingerprinter generates 166 bit MACCS keys.
  * <p/>
- * The SMARTS patterns for each of the features was taken from 
- * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no 
- * official and explicit listing of the original key definitions, the results 
+ * The SMARTS patterns for each of the features was taken from
+ * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
+ * official and explicit listing of the original key definitions, the results
  * of this implementation may differ from others.
  *
  * This class assumes that aromaticity perception, atom typing and adding of
  * implicit hydrogens have been performed prior to generating the fingerprint.
  *
- * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit 
- * defs do not provide a definition and I can't find an official description 
+ * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit
+ * defs do not provide a definition and I can't find an official description
  * of them.
- * 
+ *
  * <p/><b>Warning - MACCS substructure keys cannot be used for substructure
  * filtering. It is possible for some keys to match substructures and not match
  * the superstructures. Some keys check for hydrogen counts which may not be
@@ -83,7 +83,7 @@ public class MACCSFingerprinter implements IFingerprinter {
     private static final String KEY_DEFINITIONS = "data/maccs.txt";
 
     private volatile MaccsKey[] keys = null;
-    
+
     @TestMethod("testFingerprint")
     public MACCSFingerprinter() {
     }
@@ -107,7 +107,7 @@ public class MACCSFingerprinter implements IFingerprinter {
 
         // init SMARTS invariants (connectivity, degree, etc)
         SmartsMatchers.prepare(container, false);
-        
+
         for (int i = 0; i < keys.length; i++) {
             Pattern pattern = keys[i].pattern;
             if (pattern == null)
@@ -146,11 +146,11 @@ public class MACCSFingerprinter implements IFingerprinter {
             if (ring.getAtomCount() >= 8)
                 fp.set(100);
         }
-        
+
         // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
         // count the number of component
         ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(container));
-        if (cc.nComponents() > 1) 
+        if (cc.nComponents() > 1)
             fp.set(165);
 
 
@@ -187,8 +187,8 @@ public class MACCSFingerprinter implements IFingerprinter {
                                   createPattern(toks[1], builder),
                                   Integer.parseInt(toks[2])));
         }
-        if (keys.size() != 166) 
-            throw new CDKException("Found " + keys.size() 
+        if (keys.size() != 166)
+            throw new CDKException("Found " + keys.size()
                                    + " keys during setup. Should be 166");
         return keys.toArray(new MaccsKey[166]);
     }
@@ -220,12 +220,12 @@ public class MACCSFingerprinter implements IFingerprinter {
 			throws CDKException {
 		throw new UnsupportedOperationException();
 	}
-    
+
     private final Object lock = new Object();
 
     /**
      * Access MACCS keys definitions.
-     * 
+     *
      * @return array of MACCS keys.
      * @throws CDKException maccs keys could not be loaded
      */
@@ -249,7 +249,7 @@ public class MACCSFingerprinter implements IFingerprinter {
     /**
      * Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern
      * is not created.
-     * 
+     *
      * @param smarts  a smarts pattern
      * @param builder chem object builder
      * @return the pattern to match

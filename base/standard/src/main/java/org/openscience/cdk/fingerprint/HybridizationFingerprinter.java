@@ -65,7 +65,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * Furthermore, if pseudo atoms or atoms with malformed symbols are present,
  * their atomic number is taken as one more than the last element currently
  * supported in {@link PeriodicTable}.
- * 
+ *
  * <p>Unlike the {@link Fingerprinter}, this fingerprinter does not take into
  * account aromaticity. Instead, it takes into account SP2
  * {@link Hybridization}.
@@ -82,17 +82,17 @@ public class HybridizationFingerprinter implements IFingerprinter {
 	public final static int DEFAULT_SIZE = 1024;
 	/** The default search depth used to create the fingerprints. */
 	public final static int DEFAULT_SEARCH_DEPTH = 8;
-	
+
 	private int size;
 	private int searchDepth;
 
 	static int debugCounter = 0;
 
-	private static final Map<String, String> queryReplace 
+	private static final Map<String, String> queryReplace
 	        = new HashMap<String, String>() {
-        
+
 	    private static final long serialVersionUID = 1L;
-        
+
 	    {
 	        put("Cl", "X");    put("Br", "Z");
 	        put("Si", "Y");    put("As", "D");
@@ -101,7 +101,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
 	        put("Al", "A");
 	    }
 	};
-	
+
     /**
 	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
 	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
@@ -109,11 +109,11 @@ public class HybridizationFingerprinter implements IFingerprinter {
 	public HybridizationFingerprinter() {
 		this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
 	}
-	
+
 	public HybridizationFingerprinter(int size) {
 		this(size, DEFAULT_SEARCH_DEPTH);
 	}
-	
+
 	/**
 	 * Constructs a fingerprint generator that creates fingerprints of
 	 * the given size, using a generation algorithm with the given search
@@ -170,9 +170,9 @@ public class HybridizationFingerprinter implements IFingerprinter {
 
         List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
-        Map<IAtom,Map<IAtom, IBond>> cache 
+        Map<IAtom,Map<IAtom, IBond>> cache
             = new HashMap<IAtom, Map<IAtom,IBond>>();
-        
+
         for (IAtom startAtom : container.atoms()) {
                 List<List<IAtom>> p = PathTools.getPathsOfLengthUpto(
                     container, startAtom, searchDepth
@@ -199,7 +199,7 @@ public class HybridizationFingerprinter implements IFingerprinter {
                         if ( b[0] == null ) {
                             b[0] = container.getBond(x, y[0]);
                             cache.put(
-                                x, 
+                                x,
                                 new HashMap<IAtom, IBond>() {
                                   static final long serialVersionUID = 1L;
                                   { put(y[0], b[0]); }

@@ -149,7 +149,7 @@ public class DescriptorEngine {
         this.builder = builder;
         speclist = initializeSpecifications(descriptors);
         logger.debug("Found #descriptors: ", classNames.size());
-        
+
         // get the dictionary for the descriptors
         DictionaryDatabase dictDB = new DictionaryDatabase();
         dict = dictDB.getDictionary("descriptor-algorithms");

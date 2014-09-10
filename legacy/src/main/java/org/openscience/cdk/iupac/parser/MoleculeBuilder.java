@@ -13,7 +13,7 @@
  *
  *   You should have received a copy of the GNU Lesser General Public
  *   License along with this library; if not, write to the Free Software
- *   Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *   Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *   (or see http://www.gnu.org/copyleft/lesser.html)
  */
 
@@ -95,10 +95,10 @@ public class MoleculeBuilder
         {
             currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
         }
-        
+
         return currentChain;
     }
-    
+
     /**
      * Initiates the building of the molecules functional group(s).
      * Adds the functional group to atom 0 if only one group exists or runs
@@ -113,7 +113,7 @@ public class MoleculeBuilder
         while (groupsIterator.hasNext())
         {
             AttachedGroup attachedGroup = groupsIterator.next();
-            
+
             Iterator<Token> locationsIterator = attachedGroup.getLocations().iterator();
             while (locationsIterator.hasNext())
             {
@@ -122,7 +122,7 @@ public class MoleculeBuilder
             }
         }
     }
-    
+
     /**
      * Adds a functional group to a given atom in the current molecule.
      *
@@ -270,7 +270,7 @@ public class MoleculeBuilder
             {
                 addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
-            
+
             //Stuff which applied no matter where the N atom is:
             IAtom nitrogenAtom = currentMolecule.getLastAtom();
             nitrogenAtom.setFormalCharge(+1);
@@ -311,7 +311,7 @@ public class MoleculeBuilder
 //                logger.debug("No atom detected");
             }
             currentMolecule.add(benzene);
-            
+
             IBond joiningBond;
             //If functional group hasn't had a location specified:
             if (addPos < 0)
@@ -379,7 +379,7 @@ public class MoleculeBuilder
         //Amines
         else if ("amine".equals(funGroupToken))
         {
-            addAtom("N", endOfChain, IBond.Order.SINGLE, 1);            
+            addAtom("N", endOfChain, IBond.Order.SINGLE, 1);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
@@ -410,7 +410,7 @@ public class MoleculeBuilder
 //            "\nThe parser thinks this is valid but the molecule builder has no logic for it");
         }
     }
-    
+
     /**
      * Translates a metal's name into it's atomic symbol.
      *
@@ -462,11 +462,11 @@ public class MoleculeBuilder
         else if ("bismuth".equals(metalName))
         {
             return "Bi";
-        }        
+        }
 
         return null;
     }
-    
+
     /**
      * Adds an atom to the current molecule.
      *
@@ -484,12 +484,12 @@ public class MoleculeBuilder
         IBond newBond = currentMolecule.getBuilder().newInstance(
             IBond.class, newAtom, otherConnectingAtom, bondOrder
         );
-        
+
         //Add the new atom and bond to the molecule.
         currentMolecule.addAtom(newAtom);
         currentMolecule.addBond(newBond);
     }
-    
+
     /**
      * Adds other chains to the main chain connected at the specified atom.
      *
@@ -501,15 +501,15 @@ public class MoleculeBuilder
         while (substituentsIterator.hasNext())
         {
             AttachedGroup attachedSubstituent = substituentsIterator.next();
-            
+
             Iterator<Token> locationsIterator = attachedSubstituent.getLocations().iterator();
             while (locationsIterator.hasNext())
             {
                 Token locationToken = locationsIterator.next();
-                
+
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
                 IAtom connectingAtom;
-                
+
                 //If join location wasn't specified we must be dealing with the "hack" which makes
                 //mainchains a substituent if a real substituent has already been parsed and interpreted as a main chain
                 if (joinLocation < 0)
@@ -520,9 +520,9 @@ public class MoleculeBuilder
                 {
                     connectingAtom = currentMolecule.getAtom(joinLocation);
                 }
-                
+
                 IAtomContainer subChain = buildChain(attachedSubstituent.getLength(), false);
-                
+
                 IBond linkingBond = currentMolecule.getBuilder().newInstance(
                     IBond.class, subChain.getFirstAtom(), connectingAtom
                 );
@@ -531,7 +531,7 @@ public class MoleculeBuilder
             }
         }
     }
-    
+
     /**
      * Start of the process of building a molecule from the parsed data. Passes the parsed
      * tokens to other functions which build up the Molecule.
@@ -550,17 +550,17 @@ public class MoleculeBuilder
         currentMolecule.setID(name);
         //Build the main chain
         currentMolecule.add(buildChain(mainChain,isMainCyclic));
-        
-        //Set the last atom here if a main chain has been built, 
+
+        //Set the last atom here if a main chain has been built,
         //if not rely on the functional group setting one of it's atoms as last
         if (mainChain != 0) endOfChain = currentMolecule.getLastAtom();
-        
+
         //Add functional groups
         buildFunGroups(attachedGroups);
-        
+
         //Add on further sub chains
         addHeads(attachedSubstituents);
-        
+
         //Add the hydrogens to create a balanced molecule
     	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
     	Iterator<IAtom> atoms = currentMolecule.atoms().iterator();
@@ -571,7 +571,7 @@ public class MoleculeBuilder
     	}
     	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(currentMolecule.getBuilder());
     	hAdder.addImplicitHydrogens(currentMolecule);
-                
+
         return currentMolecule;
     }
 }

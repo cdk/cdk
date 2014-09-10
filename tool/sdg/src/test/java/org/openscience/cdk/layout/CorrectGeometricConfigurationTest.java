@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -43,7 +43,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * @cdk.module test-sdg
  */
 public class CorrectGeometricConfigurationTest {
-    
+
     // C/C=C/CCC
     @Test public void cis() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
@@ -67,7 +67,7 @@ public class CorrectGeometricConfigurationTest {
         assertPoint(m.getAtom(3), 0.76, 2.4, 0.1);
         assertPoint(m.getAtom(4), 1.51, 1.10, 0.1);
     }
-    
+
     // C/C=C\CCC
     @Test public void trans() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
@@ -91,13 +91,13 @@ public class CorrectGeometricConfigurationTest {
         assertPoint(m.getAtom(3), -1.49d, 1.10d, 0.1);
         assertPoint(m.getAtom(4), -0.74d, -0.20d, 0.1);
     }
-    
+
     static void assertPoint(IAtom a, double x, double y, double epsilon) {
         Point2d p = a.getPoint2d();
         assertEquals(p.x, x, epsilon);
         assertEquals(p.y, y, epsilon);
     }
-    
+
     static IAtom atom(String symbol, int hCount, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(hCount);

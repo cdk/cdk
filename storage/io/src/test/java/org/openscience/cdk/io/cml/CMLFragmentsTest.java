@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -50,7 +50,7 @@ public class CMLFragmentsTest extends CDKTestCase {
 
     @Test public void testAtomId() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -59,10 +59,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals("a1", atom.getID());
     }
 
-    
+
     @Test public void testAtomId2() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -70,10 +70,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("a1", atom.getID());
     }
-    
+
     @Test public void testAtomId3() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -82,10 +82,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals("a2", atom.getID());
     }
 
-    
+
     @Test public void testAtomElementType() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='elementType'>C</stringArray></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -93,10 +93,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
     }
-    
+
     @Test public void testAtomElementType2() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'><string builtin='elementType'>C</string></atom></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -104,10 +104,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
     }
-    
+
     @Test public void testAtomElementType3() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -115,10 +115,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         IAtom atom = mol.getAtom(0);
         Assert.assertEquals("C", atom.getSymbol());
     }
-    
+
     @Test public void test2dCoord() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'><coordinate2 builtin='xy2'>84 138</coordinate2></atom></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -129,10 +129,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(84, (int)atom.getPoint2d().x);
         Assert.assertEquals(138, (int)atom.getPoint2d().y);
     }
-    
+
     @Test public void test2dCoord2() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray><floatArray builtin='x2'>2.0833</floatArray><floatArray builtin='y2'>4.9704</floatArray></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -143,10 +143,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertTrue(2.0833 == atom.getPoint2d().x);
         Assert.assertTrue(4.9704 == atom.getPoint2d().y);
     }
-    
+
     @Test public void testBond() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -162,7 +162,7 @@ public class CMLFragmentsTest extends CDKTestCase {
 
     @Test public void testBond2() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray><bondArray><stringArray builtin='atomRefs'>a1</stringArray><stringArray builtin='atomRefs'>a2</stringArray></bondArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -175,10 +175,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());
     }
-    
+
     @Test public void testBond3() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray><bondArray><bond id='b1'><string builtin='atomRef'>a1</string><string builtin='atomRef'>a2</string></bond></bondArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -191,10 +191,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals("a1", atom1.getID());
         Assert.assertEquals("a2", atom2.getID());
     }
-    
+
     @Test public void testBond4() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -211,7 +211,7 @@ public class CMLFragmentsTest extends CDKTestCase {
 
     @Test public void testBond5() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2 a3'/><bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -236,10 +236,10 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(CDKConstants.BONDORDER_SINGLE, bond.getOrder());
         Assert.assertTrue(bond.getFlag(CDKConstants.ISAROMATIC));
     }
-    
+
     @Test public void testBondId() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
@@ -248,91 +248,91 @@ public class CMLFragmentsTest extends CDKTestCase {
         org.openscience.cdk.interfaces.IBond bond = mol.getBond(0);
         Assert.assertEquals("b1", bond.getID());
     }
-    
+
     @Test public void testList() throws Exception {
-        String cmlString = 
-          "<list>" + 
+        String cmlString =
+          "<list>" +
           "<molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>" +
           "<molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>" +
           "</list>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         checkForXMoleculeFile(chemFile, 2);
     }
 
     @Test public void testCoordinates2D() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
-        
+
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNotNull(mol.getAtom(0).getPoint2d());
         Assert.assertNotNull(mol.getAtom(1).getPoint2d());
         Assert.assertNull(mol.getAtom(0).getPoint3d());
         Assert.assertNull(mol.getAtom(1).getPoint3d());
     }
-  
+
     @Test public void testCoordinates3D() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
-        
+
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNull(mol.getAtom(0).getPoint2d());
         Assert.assertNull(mol.getAtom(1).getPoint2d());
         Assert.assertNotNull(mol.getAtom(0).getPoint3d());
         Assert.assertNotNull(mol.getAtom(1).getPoint3d());
     }
-    
+
     @Test public void testFractional3D() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
-        
+
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertNull(mol.getAtom(0).getPoint3d());
         Assert.assertNull(mol.getAtom(1).getPoint3d());
         Assert.assertNotNull(mol.getAtom(0).getFractionalPoint3d());
         Assert.assertNotNull(mol.getAtom(1).getFractionalPoint3d());
     }
-    
+
     @Test public void testMissing2DCoordinates() throws Exception {
-        String cmlString = 
+        String cmlString =
           "<molecule id='m1'><atomArray><atom id='a1' xy2='0.0 0.1'/><atom id='a2'/><atom id='a3' xy2='0.1 0.0'/></atomArray></molecule>";
-          
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
-        
+
         Assert.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
         IAtom atom2 = mol.getAtom(1);
         IAtom atom3 = mol.getAtom(2);
-        
+
         Assert.assertNotNull(atom1.getPoint2d());
         Assert.assertNull   (atom2.getPoint2d());
         Assert.assertNotNull(atom3.getPoint2d());
     }
 
     @Test public void testMissing3DCoordinates() throws Exception {
-        String cmlString = 
+        String cmlString =
           "<molecule id='m1'><atomArray><atom id='a1' xyz3='0.0 0.1 0.2'/><atom id='a2'/><atom id='a3' xyz3='0.1 0.0 0.2'/></atomArray></molecule>";
-          
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
-        
+
         Assert.assertEquals(3, mol.getAtomCount());
         IAtom atom1 = mol.getAtom(0);
         IAtom atom2 = mol.getAtom(1);
         IAtom atom3 = mol.getAtom(2);
-        
+
         Assert.assertNotNull(atom1.getPoint3d());
         Assert.assertNull   (atom2.getPoint3d());
         Assert.assertNotNull(atom3.getPoint3d());
     }
-    
+
     @Test public void testCrystal() throws Exception {
         StringBuffer cmlStringB = new StringBuffer("  <molecule id=\"m1\">\n");
         cmlStringB.append("    <crystal z=\"4\">\n");
@@ -350,7 +350,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         cmlStringB.append("      <atom id=\"a2\" elementType=\"Cl\" formalCharge=\"-1\" xyzFract=\"0.5 0.0 0.0\"></atom>\n");
         cmlStringB.append("    </atomArray>\n");
         cmlStringB.append("  </molecule>\n");
-        
+
         IChemFile chemFile = parseCMLString(cmlStringB.toString());
         org.openscience.cdk.interfaces.ICrystal crystal = checkForCrystalFile(chemFile);
         Assert.assertEquals(4, crystal.getZ().intValue());
@@ -372,15 +372,15 @@ public class CMLFragmentsTest extends CDKTestCase {
 
     @Test public void testMoleculeId() throws Exception {
         String cmlString = "<molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>";
-        
+
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
 
         Assert.assertEquals("m1", mol.getID());
     }
-    
+
     @Test public void testBondArrayCML1() throws Exception {
-        String cml1String = 
+        String cml1String =
 "  <molecule title=\"NSC 25\">\n" +
 "   <atomArray>\n" +
 "    <stringArray builtin=\"atomId\">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13</stringArray>\n" +
@@ -402,7 +402,7 @@ public class CMLFragmentsTest extends CDKTestCase {
         Assert.assertEquals(13, mol.getAtomCount());
         Assert.assertEquals(12, mol.getBondCount());
     }
-    
+
     private IChemFile parseCMLString(String cmlString) throws Exception {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
@@ -417,21 +417,21 @@ public class CMLFragmentsTest extends CDKTestCase {
     private IAtomContainer checkForSingleMoleculeFile(IChemFile chemFile) {
         return checkForXMoleculeFile(chemFile, 1);
     }
-    
+
     private IAtomContainer checkForXMoleculeFile(IChemFile chemFile, int numberOfMolecules) {
         Assert.assertNotNull(chemFile);
-        
+
         Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
-        
+
         Assert.assertEquals(seq.getChemModelCount(), 1);
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         IAtomContainerSet moleculeSet = model.getMoleculeSet();
         Assert.assertNotNull(moleculeSet);
-        
+
         Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
         IAtomContainer mol = null;
         for (int i=0; i<numberOfMolecules; i++) {
@@ -443,15 +443,15 @@ public class CMLFragmentsTest extends CDKTestCase {
 
     private org.openscience.cdk.interfaces.ICrystal checkForCrystalFile(IChemFile chemFile) {
         Assert.assertNotNull(chemFile);
-        
+
         Assert.assertEquals(chemFile.getChemSequenceCount(), 1);
         org.openscience.cdk.interfaces.IChemSequence seq = chemFile.getChemSequence(0);
         Assert.assertNotNull(seq);
-        
+
         Assert.assertEquals(seq.getChemModelCount(), 1);
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         org.openscience.cdk.interfaces.ICrystal crystal = model.getCrystal();
         if(crystal != null)
             return crystal;

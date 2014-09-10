@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2008  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -45,26 +45,26 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
-public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{ 
+public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 
 	private static final long serialVersionUID = 4173552834313952358L;
 
 	List<String> sequentialListOfMonomers;
 	List<IPDBStructure> secondaryStructures;
-	
+
 	/**
 	 * Constructs a new Polymer to store the {@link IMonomer}s.
-	 */	
+	 */
 	public PDBPolymer() {
 		super();
 		sequentialListOfMonomers = new ArrayList<String>();
 		secondaryStructures = new ArrayList<IPDBStructure>();
 	}
-	
+
 	public void addStructure(IPDBStructure structure) {
 		secondaryStructures.add(structure);
 	}
-	
+
 	public Collection<IPDBStructure> getStructures() {
 //		don't return the original
 		return new ArrayList<IPDBStructure>(secondaryStructures);
@@ -105,10 +105,10 @@ public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
 		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
 			sequentialListOfMonomers.add(oMonomer.getMonomerName());
 	}
-	
+
 	/**
 	 * Returns the monomer names in the order in which they were added.
-	 * 
+	 *
 	 * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
 	 */
 	public Collection<String> getMonomerNamesInSequentialOrder() {

@@ -74,7 +74,7 @@ public interface RingFinder {
      * Returns CDK object Ring set based on Hanser Ring Finding method
      * @param molecule
      * @return report collected the rings
-     * @throws CDKException 
+     * @throws CDKException
      */
     public IRingSet getRingSet(IAtomContainer molecule) throws CDKException;
 }

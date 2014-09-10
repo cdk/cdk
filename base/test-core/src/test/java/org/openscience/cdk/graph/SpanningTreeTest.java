@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.graph;
 
@@ -44,10 +44,10 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.module test-core
  */
 public class SpanningTreeTest extends CDKTestCase {
-    
+
 	private static SpanningTree azulene = null;
 	private static SpanningTree ethane = null;
-	
+
     @Before
     public void setUp() throws Exception {
     	if (azulene == null) {
@@ -73,7 +73,7 @@ public class SpanningTreeTest extends CDKTestCase {
     		ethane = new SpanningTree(ethaneMolecule);
     	}
     }
-    
+
 
     @Test
 	public void testSpanningTree_IAtomContainer() {
@@ -126,7 +126,7 @@ public class SpanningTreeTest extends CDKTestCase {
     @Test
     public void testIsDisconnected() {
     	Assert.assertFalse(azulene.isDisconnected());
-    	
+
     	IChemObjectBuilder builder = azulene.getSpanningTree().getBuilder();
     	IAtomContainer disconnectedStructure = builder.newInstance(IAtomContainer.class);
     	disconnectedStructure.addAtom(builder.newInstance(IAtom.class,"Na"));
@@ -150,7 +150,7 @@ public class SpanningTreeTest extends CDKTestCase {
     public void testGetBasicRings() throws Exception {
 		IRingSet ringSet = azulene.getBasicRings();
 		Assert.assertEquals(2, ringSet.getAtomContainerCount());
-		
+
 		ringSet = ethane.getBasicRings();
 		Assert.assertEquals(0, ringSet.getAtomContainerCount());
 	}
@@ -158,7 +158,7 @@ public class SpanningTreeTest extends CDKTestCase {
     public void testGetAllRings() throws Exception {
 		IRingSet ringSet = azulene.getAllRings();
 		Assert.assertEquals(3, ringSet.getAtomContainerCount());
-		
+
 		ringSet = ethane.getAllRings();
 		Assert.assertEquals(0, ringSet.getAtomContainerCount());
 	}
@@ -176,5 +176,5 @@ public class SpanningTreeTest extends CDKTestCase {
         Assert.assertEquals(6, spanningTree.getCyclicFragmentsContainer().getAtomCount());
         Assert.assertEquals(0, spanningTree.getBondsAcyclicCount());
     }
-	
+
 }

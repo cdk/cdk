@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.config;
 
@@ -57,10 +57,10 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 	    "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
 	private static final String W3C_XML_SCHEMA =
-	    "http://www.w3.org/2001/XMLSchema"; 
-	
+	    "http://www.w3.org/2001/XMLSchema";
+
     static File tmpCMLSchema;
-    
+
     static {
     	try {
 			InputStream in = AtomTypeFactoryTest.class.getClassLoader().getResourceAsStream(
@@ -71,13 +71,13 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 			e.printStackTrace();
 		}
     }
-    	
+
     @Test
 	public void testAtomTypeFactory() {
         Assert.assertNotNull(atf);
         Assert.assertNotSame(atf.getSize(), 0);
     }
-    
+
     @Test
 	public void testGetInstance_InputStream_String_IChemObjectBuilder() throws Exception {
     	String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
@@ -86,7 +86,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	Assert.assertNotNull(atf);
     	Assert.assertNotSame(0, atf.getSize());
     }
-    
+
     @Test
 	public void testGetInstance_String_IChemObjectBuilder() throws Exception {
     	String configFile = "org/openscience/cdk/config/data/structgen_atomtypes.xml";
@@ -94,19 +94,19 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	Assert.assertNotNull(atf);
     	Assert.assertNotSame(0, atf.getSize());
     }
-    
+
     @Test
 	public void testGetInstance_IChemObjectBuilder() throws Exception {
     	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
     	Assert.assertNotNull(atf);
     }
-    
+
     @Test
 	public void testGetSize() throws Exception {
     	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
     	Assert.assertNotSame(0, atf.getSize());
     }
-    
+
     @Test
 	public void testGetAllAtomTypes() throws Exception {
     	AtomTypeFactory atf = AtomTypeFactory.getInstance(new ChemObject().getBuilder());
@@ -114,7 +114,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	Assert.assertNotNull(types);
     	Assert.assertNotSame(0, types.length);
     }
-    
+
     @Test
 	public void testGetAtomType_String() throws Exception {
 		IAtomType atomType = atf.getAtomType("C4");
@@ -128,7 +128,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     @Test
 	public void testGetAtomTypes_String() throws Exception {
 		IAtomType[] atomTypes = atf.getAtomTypes("C");
-		
+
         Assert.assertNotNull(atomTypes);
         Assert.assertTrue(0 < atomTypes.length);
         Assert.assertEquals("C", atomTypes[0].getSymbol());
@@ -136,10 +136,10 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
 	public void testGetAtomTypeFromPDB() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml", 
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/pdb_atomtypes.xml",
                 new ChemObject().getBuilder());
 		IAtomType atomType = factory.getAtomType("ALA.CA");
-		
+
         Assert.assertNotNull(atomType);
         Assert.assertEquals("C", atomType.getSymbol());
         Assert.assertEquals("ALA.CA", atomType.getAtomTypeName());
@@ -147,7 +147,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
 	public void testGetAtomTypeFromOWL() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", 
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
             new ChemObject().getBuilder()
         );
 		IAtomType atomType = factory.getAtomType("C.sp3");
@@ -165,7 +165,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         Assert.assertEquals(0, ((Integer)atomType.getProperty(CDKConstants.PI_BOND_COUNT)).intValue());
         Assert.assertEquals(Order.SINGLE, atomType.getMaxBondOrder());
         Assert.assertEquals(4.0, atomType.getBondOrderSum(), 0.1);
-        
+
         atomType = factory.getAtomType("N.sp2.radical");
         Assert.assertNotNull(atomType);
         Assert.assertEquals("N", atomType.getSymbol());
@@ -201,11 +201,11 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
 	public void testGetAtomTypeFromOWL_Sybyl() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/sybyl-atom-types.owl", 
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/sybyl-atom-types.owl",
             new ChemObject().getBuilder()
         );
 		IAtomType atomType = factory.getAtomType("C.3");
-		
+
         Assert.assertNotNull(atomType);
         Assert.assertEquals("C", atomType.getSymbol());
         Assert.assertEquals("C.3", atomType.getAtomTypeName());
@@ -222,10 +222,10 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     @Test
 	public void testGetAtomTypeFromJmol() throws Exception {
-        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+        AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
                 new ChemObject().getBuilder());
 		IAtomType atomType = factory.getAtomType("H");
-		
+
         Assert.assertNotNull(atomType);
         Assert.assertEquals("H", atomType.getSymbol());
         Assert.assertEquals("H", atomType.getAtomTypeName());
@@ -239,10 +239,10 @@ public class AtomTypeFactoryTest extends CDKTestCase {
         AtomTypeFactory factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml", new ChemObject().getBuilder());
         atomType = factory.configure(atom);
         Assert.assertNotNull(atomType);
-		
+
         Assert.assertEquals("C", atom.getSymbol());
 	}
-    
+
     /**
      * Test reading from a XML config file with content like:
      * <pre>
@@ -260,12 +260,12 @@ public class AtomTypeFactoryTest extends CDKTestCase {
      *  </atomType>
      * </pre>
      *
-     * @throws Exception if the atom typ info cannot be loaded  
+     * @throws Exception if the atom typ info cannot be loaded
      */
     @Test
 	public void testGetAtomTypeFromMM2() throws Exception {
     	AtomTypeFactory factory;
-    	factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml", 
+    	factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mm2_atomtypes.xml",
     			new ChemObject().getBuilder());
 
     	IAtomType atomType = factory.getAtomType("C");
@@ -292,7 +292,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 
     	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-    	// make sure the schema is read 
+    	// make sure the schema is read
     	Document schemaDoc = parser.parse(cmlSchema);
     	Assert.assertNotNull(schemaDoc.getFirstChild());
     	Assert.assertEquals("xsd:schema", schemaDoc.getFirstChild().getNodeName());
@@ -302,27 +302,27 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 	public void testXMLValidityMM2() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/mm2_atomtypes.xml", "MM2");
     }
-        
+
     @Test
 	public void testXMLValidityMMFF94() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/mmff94_atomtypes.xml", "MMFF94");
     }
-        
+
     @Test
 	public void testXMLValidityMol2() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/mol2_atomtypes.xml", "Mol2");
     }
-        
+
     @Test
 	public void testXMLValidityPDB() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/pdb_atomtypes.xml", "PDB");
     }
-        
+
     @Test
 	public void testXMLValidityStructGen() throws Exception {
     	assertValidCML("org/openscience/cdk/config/data/structgen_atomtypes.xml", "StructGen");
     }
-        
+
     private void assertValidCML(String atomTypeList, String shortcut) throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
             atomTypeList
@@ -344,7 +344,7 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	    factory.setAttribute(JAXP_SCHEMA_LANGUAGE, W3C_XML_SCHEMA);
     	    factory.setAttribute(JAXP_SCHEMA_LANGUAGE, cmlSchema);
             factory.setFeature("http://apache.org/xml/features/validation/schema", true);
-    	
+
     	    DocumentBuilder parser = factory.newDocumentBuilder();
     	    parser.setErrorHandler(new SAXValidityErrorHandler(shortcut));
     	    parser.parse(new FileInputStream(tmpInput));
@@ -362,17 +362,17 @@ public class AtomTypeFactoryTest extends CDKTestCase {
             Assert.fail("Don't know how to validate with Java version: " + System.getProperty("java.version"));
         }
     }
-    
+
     /**
      * Copies a file to TMP (whatever that is on your platform), and optionally
      * replaces a String on the fly. The temporary file will be named prefix+suffix
-     * 
+     *
      * @param prefix      Prefix of the temporary file name
      * @param suffix      Suffix of the temporary file name
      * @param in          InputStream to copy from
      * @param toReplace   String to replace. Null, if nothing needs to be replaced.
      * @param replaceWith String that replaces the toReplace. Null, if nothing needs to be replaced.
-     * 
+     *
      * @return            The temporary file/
      * @throws IOException   if the temp file cannot be created
      */
@@ -398,15 +398,15 @@ public class AtomTypeFactoryTest extends CDKTestCase {
     	tmpFile.deleteOnExit();
     	return tmpFile;
     }
-        
+
     class SAXValidityErrorHandler implements ErrorHandler {
 
     	private String atomTypeList;
-    	
+
     	public SAXValidityErrorHandler(String atomTypeList) {
 			this.atomTypeList = atomTypeList;
 		}
-    	
+
 		public void error(SAXParseException arg0) throws SAXException {
 			Assert.fail(atomTypeList + " is not valid on line " + arg0.getLineNumber() + ": " + arg0.getMessage());
 		}
@@ -416,9 +416,9 @@ public class AtomTypeFactoryTest extends CDKTestCase {
 		}
 
 		public void warning(SAXParseException arg0) throws SAXException {
-			// warnings are fine			
+			// warnings are fine
 		}
-    	
+
     }
-    
+
 }

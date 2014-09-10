@@ -1,7 +1,7 @@
 /*
  *
  *
- *  Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com> 
+ *  Copyright (C) 2010 Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -62,7 +62,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     /**
      * Returns a {@link DescriptorSpecification} which specifies which descriptor is implemented by this class.
      *
-     * @inheritDoc     
+     * @inheritDoc
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
@@ -107,7 +107,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * @inheritDoc
-     * 
+     *
      * @param e the exception
      * @return a dummy value
      */
@@ -142,7 +142,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
             return getDummyDescriptorValue(e);
         } catch (CDKException e) {
             return getDummyDescriptorValue(e);
-        }       
+        }
     }
 
     /**

@@ -46,7 +46,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * This class calculates ALOGP (Ghose-Crippen LogKow) and the 
+ * This class calculates ALOGP (Ghose-Crippen LogKow) and the
  * Ghose-Crippen molar refractivity {@cdk.cite GHOSE1986,GHOSE1987}.
  *
  * <b>Note</b> The code assumes that aromaticity has been detected before
@@ -54,12 +54,12 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * will have hydrogens explicitly set. For SD files, this is usually not
  * a problem since hydrogens are explicit. But for the case of molecules
  * obtained from SMILES, hydrogens must be made explicit.
- * 
+ *
  * <p>TODO: what should sub return if have missing fragment?
- * Just report sum for other fragments? Or report as -9999 and 
- * then do not use descriptor if have this  value for any 
+ * Just report sum for other fragments? Or report as -9999 and
+ * then do not use descriptor if have this  value for any
  * chemicals in cluster?
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -80,7 +80,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * <li>ALogP2
  * <li>AMR  - molar refractivity
  * </ol>
- * 
+ *
  * @author     Todd Martin
  * @cdk.module qsarmolecular
  * @cdk.githash
@@ -352,7 +352,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
         refracval[119]=10.0101;
         refracval[120]=5.2806;
     }
-    
+
     String UnassignedAtoms="";
 
     double ALOGP = 0.0;

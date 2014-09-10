@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -31,7 +31,7 @@ import nu.xom.Serializer;
 /**
  * Custom {@link Serializer} with the sole purpose and functionality to not
  * output the XML declaration.
- * 
+ *
  * @author     egonw
  * @cdk.module libiocml
  * @cdk.githash
@@ -41,7 +41,7 @@ public class CustomSerializer extends Serializer {
     /**
      * Instantiates a new {@link CustomSerializer} using the matching
      * {@link Serializer#Serializer(OutputStream)}.
-     * 
+     *
      * @param out the output stream to write the document on
      */
     public CustomSerializer(OutputStream out) {
@@ -51,7 +51,7 @@ public class CustomSerializer extends Serializer {
     /**
      * Instantiates a new {@link CustomSerializer} using the matching
      * {@link Serializer#Serializer(OutputStream, String)}.
-     * 
+     *
      * @param out      the output stream to write the document on
      * @param encoding the character encoding for the serialization
      */
@@ -67,5 +67,5 @@ public class CustomSerializer extends Serializer {
     protected void writeXMLDeclaration() throws IOException {
         // do nothing
     }
-    
+
 }

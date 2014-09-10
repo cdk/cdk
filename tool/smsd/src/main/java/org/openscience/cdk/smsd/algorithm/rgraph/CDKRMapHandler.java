@@ -54,7 +54,7 @@ public class CDKRMapHandler {
 
 
     public CDKRMapHandler(){
-        
+
     }
     /**
      * Returns source molecule

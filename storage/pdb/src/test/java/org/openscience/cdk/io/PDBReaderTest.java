@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -61,25 +61,25 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     @BeforeClass public static void setup() throws Exception {
         setSimpleChemObjectReader(new PDBReader(), "data/pdb/coffeine.pdb");
     }
-    
+
     /**
      * Test to see if PDB files with CONECT records are handled properly.
-     *  
+     *
      * @throws Exception
      * @cdk.bug 2046633
      */
     @Test public void testConnectRecords() throws Exception {
         String data =
             "SEQRES    111111111111111111111111111111111111111111111111111111111111111     \n" +
-            "ATOM      1  N   SER A 326     103.777  74.304  20.170  1.00 21.58           N\n" + 
+            "ATOM      1  N   SER A 326     103.777  74.304  20.170  1.00 21.58           N\n" +
             "ATOM      2  CA  SER A 326     102.613  74.991  20.586  1.00 18.59           C\n" +
-            "ATOM      3  C   SER A 326     101.631  74.211  21.431  1.00 17.75           C\n" +  
+            "ATOM      3  C   SER A 326     101.631  74.211  21.431  1.00 17.75           C\n" +
             "ATOM      4  O   SER A 326     101.653  74.549  22.634  1.00 18.51           O\n" +
             "CONECT    1    4\n" +
             "CONECT    4    1\n" +
             "END    \n";
-        
-        StringReader stringReader = new StringReader(data); 
+
+        StringReader stringReader = new StringReader(data);
         PDBReader reader = new PDBReader(stringReader);
         reader.getSetting("UseRebondTool").setSetting("false");      // UseRebondTool
         reader.getSetting("ReadConnectSection").setSetting("true");  // ReadConnectSection
@@ -113,12 +113,12 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer atomContainer = getFirstAtomContainer(chemFile, 1, 1, 1);
         Assert.assertEquals(new Double(2.0), atomContainer.getAtom(0).getCharge());
     }
-    
+
     @Test
     public void oldFormatNewFormatTest() throws Exception {
         String oldFormat = "ATOM      1 1HA  UNK A   1      20.662  36.632  23.475  1.00 10.00      114D  45\nEND";
         String newFormat = "ATOM      1 1HA  UNK A   1      20.662  36.632  23.475  1.00 10.00           H\nEND";
-        
+
         IChemFile oldFormatFile = getChemFileFromString(oldFormat);
         IChemFile newFormatFile = getChemFileFromString(newFormat);
         IAtomContainer acOld = getFirstAtomContainer(oldFormatFile, 1, 1, 1);
@@ -241,37 +241,37 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 		Assert.assertEquals(6.84, atom.getTempFactor(), 0.001);
 
 	}
-	
+
 	public IChemFile getChemFileFromString(String data) throws Exception {
 	    StringReader stringReader = new StringReader(data);
 	    PDBReader reader = new PDBReader(stringReader);
 	    Assert.assertNotNull(reader);
 	    return getChemFile(reader);
 	}
-	
+
 	public IChemFile getChemFile(String filename) throws Exception {
 	    return getChemFile(filename, false);
 	}
-	
+
 	public IChemFile getChemFile(ISimpleChemObjectReader reader) throws Exception {
 	    return getChemFile(reader, false);
 	}
-        
+
 	public IChemFile getChemFile(String filename, boolean useRebond) throws Exception {
 	       InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 	       return getChemFile(new PDBReader(ins), useRebond);
 	}
-	
+
 	public IChemFile getChemFile(ISimpleChemObjectReader reader, boolean useRebond) throws Exception {
         Assert.assertNotNull(reader);
-        
+
         reader.getSetting("UseRebondTool").setSetting(String.valueOf(useRebond));
 
         IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         return chemFile;
 	}
-	
+
 	public IAtomContainer getFirstAtomContainer(IChemFile chemFile,
                                     	        int chemSequenceCount,
                                                 int chemModelCount,
@@ -288,8 +288,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(moleculeCount, model.getMoleculeSet().getAtomContainerCount());
         return model.getMoleculeSet().getAtomContainer(0);
 	}
-	
-	public void testObjectCountsChemFile(IChemFile chemFile, 
+
+	public void testObjectCountsChemFile(IChemFile chemFile,
 	                                    int chemSequenceCount,
 	                                    int chemModelCount,
 	                                    int moleculeCount,
@@ -301,7 +301,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	            chemFile, chemSequenceCount, chemModelCount, moleculeCount);
         Assert.assertTrue(container instanceof IBioPolymer);
         IBioPolymer polymer = (IBioPolymer)container;
-        
+
         // chemical validation
         Assert.assertEquals(atomCount, ChemFileManipulator.getAtomCount(chemFile));
         Assert.assertEquals(strandCount, polymer.getStrandCount());
@@ -313,7 +313,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         // PDB validation
         Assert.assertEquals(structureCount, pdb.getStructures().size());
 	}
-  
+
     @Test public void test114D() throws Exception {
 	    String filename = "data/pdb/114D.pdb";
 	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -362,8 +362,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 		    	);
 	    PDBMonomer pdbMonomer2=(PDBMonomer)mono2;
 	    Assert.assertEquals(pdbMonomer2.getResSeq(), "2");
-	    
-	    
+
+
 	    // chemical validation
 	    Assert.assertEquals(552, ChemFileManipulator.getAtomCount(chemFile));
 	    Assert.assertEquals(2, polymer.getStrandCount());
@@ -373,15 +373,15 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	      Assert.assertTrue(polymer.getStrandNames().contains("B"));
 	      Assert.assertFalse(polymer.getStrandNames().contains("C"));
 	      Assert.assertEquals(24, polymer.getMonomerCount());
-	      
+
 	    Assert.assertTrue(polymer instanceof PDBPolymer);
 	    PDBPolymer pdb = (PDBPolymer)polymer;
 
 	    // PDB validation
 	    Assert.assertEquals(0, pdb.getStructures().size());
-	      
+
     }
-    
+
     @Test
     public void testUnk() throws Exception {
         String filename = "data/pdb/unk.pdb";
@@ -390,11 +390,11 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(5, atomContainer.getAtomCount());
         for (IAtom atom : atomContainer.atoms()) {
             Assert.assertFalse(
-                    "Improper element symbol " + atom.getSymbol(), 
+                    "Improper element symbol " + atom.getSymbol(),
                     atom.getSymbol().equalsIgnoreCase("1h"));
         }
     }
-    
+
     @Test
     public void testHetatmOnly() throws Exception {
         String filename = "data/pdb/hetatm_only.pdb";
@@ -404,7 +404,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(14, atomContainer.getAtomCount());
         Assert.assertEquals(15, atomContainer.getBondCount());
     }
-  
+
     @Test public void test1SPX() throws Exception {
 	    String filename = "data/pdb/1SPX.pdb";
         IChemFile chemFile = getChemFile(filename);
@@ -420,7 +420,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
     @Test public void test1A00() throws Exception {
 	    String filename = "data/pdb/1A00.pdb";
 	    IChemFile chemFile = getChemFile(filename);
-        testObjectCountsChemFile(chemFile, 1, 1, 1, 4770, 4, 574, 35);  
+        testObjectCountsChemFile(chemFile, 1, 1, 1, 4770, 4, 574, 35);
     }
 
     @Test public void test1BOQ() throws Exception {
@@ -434,14 +434,14 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 1, 1, 2804, 1, 325, 23);
     }
-    
+
     @Category(SlowTest.class)
     @Test public void test1CKV() throws Exception {
 	    String filename = "data/pdb/1CKV.pdb";
 	    IChemFile chemFile = getChemFile(filename);
         testObjectCountsChemFile(chemFile, 1, 14, 1, 31066, 1, 141, 9);
     }
-    
+
     @Test
     public void test1D66() throws Exception {
 	    String filename = "data/pdb/1D66.pdb";
@@ -501,11 +501,11 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    //Strand A
 	    PDBStrand strandA= (PDBStrand)polymer.getStrand("A");
 	    Collection<String> lst= strandA.getMonomerNamesInSequentialOrder();
-	    
+
 	    //Should be 57 monomers in strand A
 	    Assert.assertEquals(57, lst.size());
 	    Iterator<String> lstIter = lst.iterator();
-	    
+
 	    String monomer1 = lstIter.next();
 	    IMonomer mono1=strandA.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
@@ -533,11 +533,11 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    //Strand B
 	    PDBStrand strandB=(PDBStrand)polymer.getStrand("B");
 	    lst = strandB.getMonomerNamesInSequentialOrder();
-	    
+
 	    //Should be 57 monomers in strand B
 	    Assert.assertEquals(57, lst.size());
 	    lstIter = lst.iterator();
-	    
+
 	    monomer1 = lstIter.next();
 	    mono1=strandB.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
@@ -566,11 +566,11 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    //Strand E
 	    PDBStrand strandE=(PDBStrand)polymer.getStrand("E");
 	    lst = strandE.getMonomerNamesInSequentialOrder();
-	    
+
 	    //Should be 19 monomers in strand E
 	    Assert.assertEquals(19, lst.size());
 	    lstIter = lst.iterator();
-	    
+
 	    monomer1 = lstIter.next();
 	    mono1=strandE.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
@@ -596,7 +596,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    Assert.assertEquals("22",pdbMonomer.getResSeq());
 
 
-	    
+
 	    //Chain D should be 1,2,3...19
 	    PDBStrand strandD=(PDBStrand)polymer.getStrand("D");
 	    lst = strandD.getMonomerNamesInSequentialOrder();
@@ -604,7 +604,7 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    //Should be 19 monomers in strand D
 	    Assert.assertEquals(19, lst.size());
 	    lstIter = lst.iterator();
-	    
+
 	    monomer1 = lstIter.next();
 	    mono1=strandD.getMonomer(monomer1);
 	    Assert.assertNotNull(mono1);
@@ -632,8 +632,8 @@ public class PDBReaderTest extends SimpleChemObjectReaderTest {
 	    // PDB Structures validation
 	    //Should have 6 helices
 	    Assert.assertEquals(6, pdb.getStructures().size());
-	      
+
     }
-  
-    
+
+
 }

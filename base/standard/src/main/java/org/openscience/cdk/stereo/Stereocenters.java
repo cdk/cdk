@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -41,16 +41,16 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 /**
  * Find atoms which can support stereo chemistry based on the connectivity.
  * Stereocenters are classified as <i>True</i> when they have constitutionally
- * different ligands and <i>Para</i> ("resemble") stereo centers with 
+ * different ligands and <i>Para</i> ("resemble") stereo centers with
  * constitutionally identical ligands. Some examples of para-centers
  * are listed below. Non and potential stereogenic atoms are also indicated. The
  * method partially implements the rules described by {@cdk.cite Razinger93}.
  * Para centers are identified in isolated rings (more common) but are not
- * currently found in fused systems (e.g. decalin), spiro linked 'assemblages' 
+ * currently found in fused systems (e.g. decalin), spiro linked 'assemblages'
  * or acyclic interdependent centers. <p/>
- * 
+ *
  * <b>Accepted Stereo Atoms</b> <p/>
- * 
+ *
  * This atoms accepted as being potentially stereogenic are those defined
  * in the InChI Technical Manual {@cdk.cite InChITechManual}. These are: <p/>
  *
@@ -73,15 +73,15 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     <li>Selenium - 4 valent, 2 sigma and 1 pi bond</li>
  *     <li>Selenium - 6 valent, 2 sigma and 2 pi bonds</li>
  *     <li>Selenium Cation - 3 valent, 3 sigma bonds</li>
- *     <li>Selenium cation - 5 valent, 3 sigma and 1 pi bond</li> 
+ *     <li>Selenium cation - 5 valent, 3 sigma and 1 pi bond</li>
  *     <li>Nitrogen - 3 valent, 3 sigma bonds and in a 3 member ring</li>
- * </ul> 
+ * </ul>
  * <i>N, P, As, S or Se are not stereogenic if they have a terminal H neighbor
  * or if they have 2 neighbors of the same element (O, S, Se, Te, N) which
  * have at least one hydrogen. Consider: {@code P(O)(=O)(OC)OCCC}. Phosphines and
- * arsines are always stereogenic regardless of H neighbors</i> 
+ * arsines are always stereogenic regardless of H neighbors</i>
  * <p/>
- * 
+ *
  * <b>Double Bond Stereochemistry:</b>
  * The following atoms can appear at either end of a double bond.
  * <ul>
@@ -89,7 +89,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *     <li>Silicon - 4 valent, 2 sigma and 1 pi bond</li>
  *     <li>Germanium - 4 valent, 2 sigma and 1 pi bond</li>
  *     <li>Nitrogen - 3 valent, 1 sigma and 1 pi bond</li>
- *     <li>Nitrogen cation - 4 valent, 2 sigma and 1 pi bond</li>    
+ *     <li>Nitrogen cation - 4 valent, 2 sigma and 1 pi bond</li>
  * </ul><p/>
  *
  * <p/> <b>Examples of Para Stereocenters</b> <ul> <li>inositol - has 9 stereo
@@ -100,7 +100,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * (not currently identified)</li> <li>An example of a para-center not in a
  * cycle {@code C[C@@H](O)[C@H](C)[C@H](C)O} (not currently identified)</li>
  * </ul>
- * 
+ *
  * It should be noted that para-centers may not actually have a configuration. A
  * simple example of this is seen that by changing the configuration of one
  * center in {@code C[C@@H](O)[C@H:1](C)[C@H](C)O} removes the central
@@ -132,7 +132,7 @@ public final class Stereocenters {
     private final RingSearch ringSearch;
 
     /**
-     * Determine the stereocenter atoms in the provided container based on 
+     * Determine the stereocenter atoms in the provided container based on
      * connectivity.
      *
      * <blockquote><pre>
@@ -251,7 +251,7 @@ public final class Stereocenters {
         VERTICES:
         for (int i = 0; i < g.length; i++) {
 
-            // determine hydrogen count, connectivity and valence 
+            // determine hydrogen count, connectivity and valence
             int h = container.getAtom(i).getImplicitHydrogenCount();
             int x = g[i].length + h;
             int v = h;
@@ -287,13 +287,13 @@ public final class Stereocenters {
                     int w = g[i][1];
                     if (tricoordinate[u]) {
                         stereocenters[u] = Stereocenter.Potential;
-                        elements[u] = new Tricoordinate(u, i, g[u]);    
+                        elements[u] = new Tricoordinate(u, i, g[u]);
                     }
                     if (tricoordinate[w]) {
                         stereocenters[w] = Stereocenter.Potential;
                         elements[w] = new Tricoordinate(w, i, g[w]);
                     }
-                    break; 
+                    break;
                 case Tricoordinate:
 
                     u = i;
@@ -304,12 +304,12 @@ public final class Stereocenters {
                     if (!tricoordinate[w]) {
                         if (elements[w] != null && elements[w].type == Type.Bicoordinate) {
                             stereocenters[u] = Stereocenter.Potential;
-                            elements[u]      = new Tricoordinate(u, w, g[u]);    
+                            elements[u]      = new Tricoordinate(u, w, g[u]);
                         }
                         continue;
                     }
 
-                    // TODO: we reject all cyclic double bonds but could 
+                    // TODO: we reject all cyclic double bonds but could
                     // TODO: allow flexible rings (> 7 atoms)
                     if (ringSearch.cyclic(w, u))
                         continue;
@@ -331,16 +331,16 @@ public final class Stereocenters {
                     stereocenters[i] = Stereocenter.Non;
             }
         }
-        
+
         // link up tetracoordinate atoms accross cumulate systems
         for (int v = 0; v < g.length; v++) {
             if (elements[v] != null && elements[v].type == Type.Bicoordinate) {
                 int u = elements[v].neighbors[0];
                 int w = elements[v].neighbors[1];
-                if (elements[u] != null && elements[w] != null 
-                        && elements[u].type == Type.Tricoordinate 
+                if (elements[u] != null && elements[w] != null
+                        && elements[u].type == Type.Tricoordinate
                         && elements[w].type == Type.Tricoordinate) {
-                    ((Tricoordinate) elements[u]).other = w;     
+                    ((Tricoordinate) elements[u]).other = w;
                     ((Tricoordinate) elements[w]).other = u;
                 }
             }
@@ -423,7 +423,7 @@ public final class Stereocenters {
             }
 
             // there is only 1 potential and 0 true stereocenters in this cycle
-            // the element is not a stereocenter 
+            // the element is not a stereocenter
             if (potential.size() + trueCentres.size() < 2) {
                 for (StereoElement element : potential)
                     stereocenters[element.focus] = Stereocenter.Non;
@@ -499,21 +499,21 @@ public final class Stereocenters {
         // the encoding a bit daunting and to be concise short variable names
         // are used. these parameters make no distinction between implicit/
         // explicit values and allow complete (and fast) characterisation of
-        // the type of stereo atom 
+        // the type of stereo atom
         //
         // i: atom index
         // v: valence (bond order sum)
         // h: total hydrogen count
         // x: connected atoms
         // q: formal charge
-        
-        
+
+
         int q = charge(atom);
 
         // more than one hydrogen
         if (h > 1)
             return Type.None;
-        
+
         switch (atomicNumber(atom)) {
             case 0: // stop the nulls on pseudo atoms messing up anything else
                 return Type.None;
@@ -551,7 +551,7 @@ public final class Stereocenters {
             case 15: // phosphorus
                 if (x == 4 && (q == 0 && v == 5 && h == 0 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
-                // note 3 valent phosphorus not documented as accepted 
+                // note 3 valent phosphorus not documented as accepted
                 // by InChI tech manual but tests show it is
                 if (x == 3 && q == 0 && v == 3 && h == 0)
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
@@ -830,7 +830,7 @@ public final class Stereocenters {
             this.type = Type.Tricoordinate;
             this.neighbors = new int[neighbors.length - 1];
             int n = 0;
-            
+
             // remove the other neighbor from neighbors when checking
             // equivalence
             for (int i = 0; i < neighbors.length; i++) {

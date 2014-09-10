@@ -42,7 +42,7 @@ import org.xml.sax.Attributes;
  *
  * @cdk.module io
  * @cdk.githash
- * 
+ *
  * @author egonw
  */
 public class QSARConvention extends CMLCoreModule {
@@ -54,7 +54,7 @@ public class QSARConvention extends CMLCoreModule {
     private String currentDescriptorDataType;
     private String currentDescriptorResult;
     private boolean currentDescriptorDataIsArray;
-	
+
     public QSARConvention(IChemFile chemFile) {
         super(chemFile);
     }
@@ -62,7 +62,7 @@ public class QSARConvention extends CMLCoreModule {
     public QSARConvention(ICMLModule conv) {
         super(conv);
     }
-    
+
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
 //        <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
 //            convention="qsar:DescriptorValue">
@@ -77,7 +77,7 @@ public class QSARConvention extends CMLCoreModule {
 //            </metadataList>
 //            <scalar dataType="xsd:double" dictRef="qsar:weight">72.0</scalar>
 //          </property>
-        
+
     	if (xpath.endsWith("molecule", "propertyList", "property")) {
 //    		cdo.startObject("MolecularDescriptor");
     		currentDescriptorDataIsArray = false;
@@ -120,7 +120,7 @@ public class QSARConvention extends CMLCoreModule {
     	    	currentDescriptorImplementationIdentifier,
     	    	currentDescriptorImplementationVendor
     		);
-    		currentMolecule.setProperty(descriptorSpecification, 
+    		currentMolecule.setProperty(descriptorSpecification,
     	        new DescriptorValue(
     	        	descriptorSpecification,
     	    		new String[0], new Object[0],
@@ -140,7 +140,7 @@ public class QSARConvention extends CMLCoreModule {
     private IDescriptorResult newDescriptorResult(String descriptorValue) {
     	IDescriptorResult result = null;
     	if ("xsd:double".equals(currentDescriptorDataType)) {
-    		result = new DoubleResult(Double.parseDouble(descriptorValue));    		
+    		result = new DoubleResult(Double.parseDouble(descriptorValue));
     	} else if ("xsd:integer".equals(currentDescriptorDataType)) {
     		result = new IntegerResult(Integer.parseInt(descriptorValue));
     	} else if ("xsd:boolean".equals(currentDescriptorDataType)) {

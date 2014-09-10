@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MDLV2000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public MDLV2000Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MDLV2000Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,20 +66,20 @@ public class MDLV2000Format extends SimpleChemFormatMatcher implements IChemForm
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
     	return "org.openscience.cdk.io.MDLV2000Reader";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
     	return "org.openscience.cdk.io.MDLV2000Writer";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && 
+        if (lineNumber == 4 &&
             (line.indexOf("v2000") >= 0 ||
              line.indexOf("V2000") >= 0)) {
             return true;

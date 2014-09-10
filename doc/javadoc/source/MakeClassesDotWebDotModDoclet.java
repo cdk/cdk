@@ -50,7 +50,7 @@ public class MakeClassesDotWebDotModDoclet {
                     webUrl + "api/" +
                     apiPath + "\">" + className + "</ulink>'>");
     }
-    
+
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
             ClassDoc doc = classes[i];

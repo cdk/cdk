@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -125,7 +125,7 @@ public class MDLV2000AtomBlockTest {
                                          1);
         assertThat(atom.getFormalCharge(), is(2));
     }
-    
+
     @Test public void charge_trication() throws Exception {
         IAtom atom = reader.readAtomFast("    7.8089   -1.3194    0.0000 C   0  3  0  0  0  0  0  0  0  0  0  0",
                                          builder,
@@ -161,14 +161,14 @@ public class MDLV2000AtomBlockTest {
                                          1);
         assertThat(atom.getFormalCharge(), is(-3));
     }
-    
+
     @Test public void charge_invalid() throws Exception {
         IAtom atom = reader.readAtomFast("    7.8089   -1.3194    0.0000 C   0  8  0  0  0  0  0  0  0  0  0  0",
                                          builder,
                                          1);
         assertThat(atom.getFormalCharge(), is(0));
     }
-    
+
     @Test public void valence_0() throws Exception {
         IAtom atom = reader.readAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0 15  0  0  0  0  0  0",
                                          builder,
@@ -210,7 +210,7 @@ public class MDLV2000AtomBlockTest {
                                          1);
         assertThat(atom.getProperty(CDKConstants.ATOM_ATOM_MAPPING, Integer.class), is(1));
     }
-    
+
     @Test public void mapping_42() throws Exception {
         IAtom atom = reader.readAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0 42  0  0",
                                          builder,
@@ -258,7 +258,7 @@ public class MDLV2000AtomBlockTest {
         assertFalse(MDLV2000Reader.isPseudoElement("DNA"));
         assertFalse(MDLV2000Reader.isPseudoElement("ACP"));
     }
-    
+
     @Test public void readMDLCoordinate() throws Exception {
         assertThat(MDLV2000Reader.readMDLCoordinate("    7.8089", 0),
                    is(closeTo(7.8089, 0.1)));

@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.config.atomtypes;
 
@@ -37,9 +37,9 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
 	private final String NS_ATOMTYPE_MAPPING = "http://cdk.sf.net/ontologies/atomtypemappings#";
 	private final String NS_OWL = "http://www.w3.org/2002/07/owl#";
-	
+
     private Map<String,String> atomTypeMappings;
-    
+
     private String fromType;
     private String toType;
 
@@ -51,7 +51,7 @@ public class OWLAtomTypeMappingHandler extends DefaultHandler {
 
     /**
      * Returns a {@link Map} with atom type mappings.
-     * 
+     *
      * @return a {@link Map} with the atom type name of the source schema as key, and the atom type name of
      *         the target schema as values.
      */

@@ -42,12 +42,12 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
 public class CMLHandler extends DefaultHandler {
-    
+
     private ICMLModule conv;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(CMLHandler.class);
     private boolean debug = true;
-    
+
     private Map<String,ICMLModule> userConventions;
 
     private CMLStack xpath;
@@ -119,7 +119,7 @@ public class CMLHandler extends DefaultHandler {
         } else if (uri == null || uri.length() == 0 ||
         		   uri.startsWith("http://www.xml-cml.org/")) {
             // assume CML Core
-                
+
             // Detect conventions
             String convName = "";
             for (int i = 0; i < atts.getLength(); i++) {

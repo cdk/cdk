@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,19 +10,19 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
 package org.openscience.cdk.math;
- 
+
 import java.text.DecimalFormat;
 
 /**
@@ -46,7 +46,7 @@ public class Matrix
 
   /**
    * Creates a new Matrix.
-   */ 
+   */
   public Matrix(int rows, int columns)
   {
     this.rows = rows;
@@ -64,7 +64,7 @@ public class Matrix
     columns = array[0].length;
     for(i=1; i<rows; i++)
       columns = Math.min(columns,array[i].length);
-    
+
     matrix = new double[rows][columns];
     for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
@@ -73,7 +73,7 @@ public class Matrix
 
   /**
    * Returns the number of rows.
-   */ 
+   */
   public int getRows()
   {
     return rows;
@@ -129,7 +129,7 @@ public class Matrix
     if ((b==null) ||
         (rows!=b.rows) || (columns!=b.columns))
       return null;
-      
+
     int i, j;
     Matrix result = new Matrix(rows, columns);
     for(i=0; i<rows; i++)
@@ -137,7 +137,7 @@ public class Matrix
         result.matrix[i][j] = matrix[i][j]+b.matrix[i][j];
     return result;
   }
-  
+
   /**
    * Subtracts from two matrices.
    */
@@ -146,10 +146,10 @@ public class Matrix
     if ((b==null) ||
         (rows!=b.rows) || (columns!=b.columns))
       return null;
-      
+
     int i, j;
     Matrix result = new Matrix(rows, columns);
-    for(i=0; i<rows; i++) 
+    for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
         result.matrix[i][j] = matrix[i][j]-b.matrix[i][j];
     return result;
@@ -178,7 +178,7 @@ public class Matrix
 
     return result;
   }
-  
+
   /**
    *  Multiplies a Vector with this Matrix.
    */
@@ -232,10 +232,10 @@ public class Matrix
    * Transposes a matrix.
    */
   public Matrix transpose()
-  { 
+  {
     Matrix result = new Matrix(columns, rows);
-    int i,j; 
-    for(i=0; i<rows; i++) 
+    int i,j;
+    for(i=0; i<rows; i++)
       for(j=0; j<columns; j++)
         result.matrix[j][i] = matrix[i][j];
     return result;
@@ -263,7 +263,7 @@ public class Matrix
         result.matrix[i][j] = sum;
       }
     return result;
-  }      
+  }
 
   public double contraction()
   {
@@ -273,8 +273,8 @@ public class Matrix
       for(j=0; j<columns; j++)
         result += matrix[i][j];
     return result;
-  }  
-  
+  }
+
   /**
    *  Return a matrix as a String.
    */
@@ -312,7 +312,7 @@ public class Matrix
   }
 
 
-  /** 
+  /**
    * Diagonalize this matrix with the Jacobi algorithm.
    *
    * @param nrot Count of max. rotations
@@ -325,7 +325,7 @@ public class Matrix
   {
     Matrix m = duplicate();
     if (m.rows!=m.columns)
-        
+
     {
       System.err.println("Matrix.diagonal: Sizes mismatched");
       return null;
@@ -333,13 +333,13 @@ public class Matrix
     int n = m.rows;
 
     int j,iq,ip,i;
-    
+
     double tresh,theta,tau,t,sm,s,h,g,c;
     double[] b,z;
 
     Matrix v = new Matrix(columns,columns);
     Vector d = new Vector(columns);
-    
+
     b = new double[n+1];
     z = new double[n+1];
     for (ip=0;ip<n;ip++)
@@ -347,8 +347,8 @@ public class Matrix
       for (iq=0;iq<n;iq++)
         v.matrix[ip][iq]=0.0;
       v.matrix[ip][ip]=1.0;
-    } 
-    
+    }
+
     for (ip=0;ip<n;ip++)
     {
       b[ip]=d.vector[ip]=m.matrix[ip][ip];
@@ -363,7 +363,7 @@ public class Matrix
       {
         for (iq=ip+1;iq<n;iq++)
           sm += Math.abs(m.matrix[ip][iq]);
-      }   
+      }
 
       // Ready ??
       if (sm == 0.0)
@@ -387,12 +387,12 @@ public class Matrix
             h = d.vector[iq]-d.vector[ip];
             if (Math.abs(h)+g == Math.abs(h))
               t = (m.matrix[ip][iq])/h;
-            else 
+            else
             {
               theta = 0.5*h/(m.matrix[ip][iq]);
               t = 1.0/(Math.abs(theta)+Math.sqrt(1.0+theta*theta));
               if (theta < 0.0) t = -t;
-            } 
+            }
             c = 1.0/Math.sqrt(1+t*t);
             s = t*c;
             tau = s/(1.0+c);
@@ -410,23 +410,23 @@ public class Matrix
               h=m.matrix[j][iq];
               m.matrix[j][ip]=g-s*(h+g*tau);
               m.matrix[j][iq]=h+s*(g-h*tau);
-            } 
+            }
             // Case of rotaions p<j<q
-            for (j=ip+1;j<iq;j++) 
+            for (j=ip+1;j<iq;j++)
             {
               g=m.matrix[ip][j];
               h=m.matrix[j][iq];
               m.matrix[ip][j]=g-s*(h+g*tau);
               m.matrix[j][iq]=h+s*(g-h*tau);
-            } 
+            }
             // Case of rotaions q<j<=n
-            for (j=iq+1;j<n;j++) 
+            for (j=iq+1;j<n;j++)
             {
               g=m.matrix[ip][j];
               h=m.matrix[iq][j];
               m.matrix[ip][j]=g-s*(h+g*tau);
               m.matrix[iq][j]=h+s*(g-h*tau);
-            } 
+            }
 
 
             for (j=0;j<n;j++)
@@ -435,19 +435,19 @@ public class Matrix
               h=v.matrix[j][iq];
               v.matrix[j][ip]=g-s*(h+g*tau);
               v.matrix[j][iq]=h+s*(g-h*tau);
-            } 
+            }
             ++nrot;
-          } 
-        } 
-      } 
+          }
+        }
+      }
 
       for (ip=0;ip<n;ip++)
       {
         b[ip] += z[ip];
         d.vector[ip]=b[ip];
         z[ip]=0.0;
-      } 
-    } 
+      }
+    }
     System.out.println("Too many iterations in routine JACOBI");
     return v;
   }
@@ -467,7 +467,7 @@ public class Matrix
     Vector result = new Vector(n);
     Matrix a = matrix.duplicate();
     Vector b = vector.duplicate();
-    
+
     for(j=0; j<(n-1); j++)
     {
       c = Math.abs(a.matrix[j][j]);
@@ -478,8 +478,8 @@ public class Matrix
         {
           c = Math.abs(a.matrix[i][j]);
           ipvt = i;
-        } 
-        
+        }
+
       // Exchanges rows when necessary
       if (pivot[j]!=ipvt)
       {
@@ -490,28 +490,28 @@ public class Matrix
           temp = a.matrix[j][k];
           a.matrix[j][k] = a.matrix[pivot[j]][k];
           a.matrix[pivot[j]][k] = temp;
-        } 
-        
+        }
+
         temp = b.vector[j];
         b.vector[j] = b.vector[pivot[j]];
         b.vector[pivot[j]] = temp;
-      } 
-      
+      }
+
       // Store multipliers
       for(i=j+1; i<n; i++)
         a.matrix[i][j] = a.matrix[i][j] / a.matrix[j][j];
-        
+
       // Give elements below the diagonal a zero value
       for(i=j+1; i<n; i++)
       {
         for(k=j+1; k<n; k++)
           a.matrix[i][k] = a.matrix[i][k] - a.matrix[i][j]*a.matrix[j][k];
         b.vector[i] = b.vector[i] - a.matrix[i][j]*b.vector[j];
-        
+
         a.matrix[i][j] = 0; // Not necessary
-      } 
-    } 
-    
+      }
+    }
+
     // Rueckwaertseinsetzen (which is?)
     result.vector[n-1] = b.vector[n-1]/a.matrix[n-1][n-1];
     for(j=n-2; j>=0; j--)
@@ -520,8 +520,8 @@ public class Matrix
       for(k=n-1; k>j; k--)
         result.vector[j] = result.vector[j] - result.vector[k]*a.matrix[j][k];
       result.vector[j] = result.vector[j]/a.matrix[j][j];
-    } 
-    
+    }
+
     return result;
   }
 
@@ -543,19 +543,19 @@ public class Matrix
       for(i=0; i<rows; i++)
         result.matrix[i][p] = matrix[i][p];
 
-      for(k=0; k<p; k++)  // Substracts the previous vector 
+      for(k=0; k<p; k++)  // Substracts the previous vector
       {
         // First the calculation of the product <phi_p|phi_k>=length
         length = 0;
         for(i=0; i<rows; i++) // Loops over all vectors
-        { 
+        {
           innersum = 0;
           for(j=0; j<rows; j++)
           {
             innersum += result.matrix[j][p]*S.matrix[i][j];
           }
           length += result.matrix[i][k]*innersum;
-        } 
+        }
 
         // Then the substraction of  phi_k*length
         for(q=0; q<rows; q++)
@@ -595,9 +595,9 @@ public class Matrix
       for(i=0; i<rows; i++)
         for(j=0; j<rows; j++)
           length += result.matrix[i][p]*result.matrix[j][p]*S.matrix[i][j];
-          
+
       length = Math.sqrt(length);
-      
+
       // Normalizes the vector
       if (length!=0d)
         for(q=0; q<rows; q++)

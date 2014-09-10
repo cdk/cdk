@@ -1,21 +1,21 @@
 /* Copyright (C) 2005-2009  Egon Willighagen <egonw@users.sf.net>
  *                    2007  Rajarshi Guha <rajarshi@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools;
 
@@ -27,9 +27,9 @@ import org.openscience.cdk.CDKTestCase;
  * @cdk.module test
  */
 public abstract class AbstractLoggingToolTest extends CDKTestCase {
-	
+
     public abstract ILoggingTool getLoggingTool();
-    
+
 	@Test public void testLoggingTool_Object() throws Exception {
 		ILoggingTool logger = getLoggingTool();
 		Assert.assertNotNull(logger);
@@ -221,6 +221,6 @@ public abstract class AbstractLoggingToolTest extends CDKTestCase {
 		ILoggingTool logger = getLoggingTool();
 		logger.isDebugEnabled();
 	}
-	
+
 }
 

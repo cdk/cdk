@@ -41,19 +41,19 @@ import org.openscience.cdk.annotations.TestMethod;
 public class IntArrayCountFingerprint implements ICountFingerprint {
 
 	/**
-     * 
+     *
      */
     private static final long serialVersionUID = 8656072054328822795L;
     int[] hitHashes;
 	int[] numOfHits;
 	private boolean behaveAsBitFingerprint;
-	
+
 	public IntArrayCountFingerprint() {
 		hitHashes = new int[0];
 		numOfHits = new int[0];
 		behaveAsBitFingerprint = false;
 	}
-	
+
 	public IntArrayCountFingerprint(Map<String, Integer> rawFingerprint) {
 		Map<Integer, Integer> hashedFP = new HashMap<Integer, Integer>();
 		for ( String key : rawFingerprint.keySet() ) {
@@ -75,12 +75,12 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 			i++;
 		}
 	}
-	
+
 	/**
-	 * Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint 
-	 * and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1 
+	 * Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint
+	 * and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1
 	 * as count thus behaving like a bit finger print.
-	 * 
+	 *
 	 * @param rawFingerprint
 	 * @param behaveAsBitFingerprint
 	 */
@@ -89,7 +89,7 @@ public class IntArrayCountFingerprint implements ICountFingerprint {
 		this(rawFingerprint);
 		this.behaveAsBitFingerprint = behaveAsBitFingerprint;
 	}
-	
+
 	@Override
 	public long size() {
 		return 4294967296l;

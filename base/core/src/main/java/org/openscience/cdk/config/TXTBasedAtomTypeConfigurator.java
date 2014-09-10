@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * AtomType list configurator that uses the AtomTypes originally
  * defined in Jmol v5. This class was added to be able to port
  * Jmol to CDK. The AtomType's themselves seems have a computational
- * background, but this is not clear. 
+ * background, but this is not clear.
  *
  * @cdk.module core
  * @cdk.githash
@@ -49,7 +49,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
     private InputStream ins = null;
-    
+
     @TestMethod("testTXTBasedAtomTypeConfigurator")
 	public TXTBasedAtomTypeConfigurator() {
 	}
@@ -59,10 +59,10 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
-    
+
     /**
      * Reads a text based configuration file.
-     * 
+     *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
      * @throws        IOException when a problem occured with reading from the InputStream
      * @return        A List with read IAtomType's.
@@ -77,14 +77,14 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
             //                   + configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         }
-        if (ins == null) 
+        if (ins == null)
             throw new IOException("There was a problem getting the default stream: " + configFile);
 
         // read the contents from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins), 1024);
         StringTokenizer tokenizer;
         String string;
-        
+
             while (true) {
                 string = reader.readLine();
                 if (string == null) {
@@ -97,7 +97,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                     double mass, covalent;
                     tokenizer = new StringTokenizer(string, "\t ,;");
                     int tokenCount = tokenizer.countTokens();
-                    
+
                     if (tokenCount == 9) {
                         name = tokenizer.nextToken();
                         rootType = tokenizer.nextToken();
@@ -108,7 +108,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                         String sColorR = tokenizer.nextToken();
                         String sColorG = tokenizer.nextToken();
                         String sColorB = tokenizer.nextToken();
-                        
+
                         try {
                             mass = new Double(sam);
                             covalent = new Double(scovalent);
@@ -120,13 +120,13 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                             throw new IOException("AtomTypeTable.ReadAtypes: " +
                             "Malformed Number");
                         }
-                        
+
                         IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
                         atomType.setAtomicNumber(atomicNumber);
                         atomType.setExactMass(mass);
                         atomType.setCovalentRadius(covalent);
-                        
-                        // pack the RGB color space components into a single int. Note we 
+
+                        // pack the RGB color space components into a single int. Note we
                         // avoid java.awt.Color (not available on some JREs)
                         atomType.setProperty("org.openscience.cdk.renderer.color",
                                              ((colorR << 16) & 0xff0000) |
@@ -134,13 +134,13 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
                                              (colorB         & 0x0000ff));
                         atomTypes.add(atomType);
                     } else {
-                        throw new IOException("AtomTypeTable.ReadAtypes: " + 
+                        throw new IOException("AtomTypeTable.ReadAtypes: " +
                         "Wrong Number of fields");
                     }
                 }
             }    // end while
             ins.close();
-        
+
         return atomTypes;
     }
 }

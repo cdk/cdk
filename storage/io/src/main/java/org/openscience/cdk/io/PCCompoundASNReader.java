@@ -1,7 +1,7 @@
 /* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -65,7 +65,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     private BufferedReader input;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
-    
+
     IAtomContainer molecule = null;
     Map<String,IAtom> atomIDs = null;
 
@@ -81,16 +81,16 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     public PCCompoundASNReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public PCCompoundASNReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return PubChemASNFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
@@ -146,13 +146,13 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IAtomContainer.class);
         atomIDs = new HashMap<String,IAtom>();
-        
+
         String line = input.readLine();
         while (input.ready() && line != null) {
         	if (line.indexOf('{') != -1) {
         		processBlock(line);
         	} else {
-        		logger.warn("Skipping non-block: " + line); 
+        		logger.warn("Skipping non-block: " + line);
         	}
         	line = input.readLine();
         }
@@ -163,7 +163,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         return file;
     }
 
-    
+
 	private void processBlock(String line) throws Exception {
     	String command = getCommand(line);
     	if (command.equals("atoms")) {
@@ -195,7 +195,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf('}')!= -1) {
     			return;
     		} else {
-    			logger.warn("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line);
         	}
         	line = input.readLine();
         }
@@ -224,7 +224,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf('}')!= -1) {
     			return;
     		} else {
-    			logger.warn("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line);
         	}
         	line = input.readLine();
         }
@@ -242,7 +242,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         		// ok, don't return if it also has a "
     			return urn;
     		} else {
-    			logger.warn("Ignoring URN statement: " + line); 
+    			logger.warn("Ignoring URN statement: " + line);
         	}
         	line = input.readLine();
         }
@@ -257,7 +257,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf('}')!= -1) {
     			return;
     		} else {
-    			logger.warn("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line);
         	}
         	line = input.readLine();
         }
@@ -271,7 +271,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         	} else if (line.indexOf('}')!= -1) {
     			return;
     		} else {
-    			logger.warn("Skipping non-block: " + line); 
+    			logger.warn("Skipping non-block: " + line);
         	}
         	line = input.readLine();
         }
@@ -283,14 +283,14 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 		}
 		return molecule.getAtom(i);
 	}
-	
+
 	private IBond getBond(int i) {
 		if (molecule.getBondCount() <= i) {
 			molecule.addBond(molecule.getBuilder().newInstance(IBond.class));
 		}
 		return molecule.getBond(i);
 	}
-	
+
 	private void processAtomBlockBlock(String line) throws Exception {
 		String command = getCommand(line);
 		if (command.equals("aid")) {
@@ -306,7 +306,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 			skipBlock();
 		}
 	}
-	
+
 	private void processBondBlockBlock(String line) throws Exception {
 		String command = getCommand(line);
 		if (command.equals("aid1")) {
@@ -322,7 +322,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
 			skipBlock();
 		}
 	}
-	
+
 	private void processAtomAIDs() throws Exception {
 		String line = input.readLine();
 		int atomIndex = 0;
@@ -421,7 +421,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	}
     	return foundBracket ? buffer.toString().trim() : null;
     }
-    
+
     private String getValue(String line) {
     	StringBuffer buffer = new StringBuffer();
     	int i = 0;
@@ -451,7 +451,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     		while (i<line.length()) {
     			char currentChar = line.charAt(i);
     			if (currentChar == '"') {
-    				if (startQuoteFound) { 
+    				if (startQuoteFound) {
     					return buffer.toString();
     				} else {
     					startQuoteFound = true;
@@ -466,7 +466,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     	}
     	return null;
     }
-    
+
     class URN {
     	String name = null;
     	String label = null;

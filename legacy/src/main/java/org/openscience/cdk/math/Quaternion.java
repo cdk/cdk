@@ -1,9 +1,9 @@
 /* Quaternion.java
- * 
+ *
  * Copyright (C) 1997-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -12,12 +12,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -28,9 +28,9 @@ package org.openscience.cdk.math;
 /**
  * This class handles quaternions.
  * Quaternion are 2*2 complex matrices.
- * 
+ *
  * @cdk.module qm
- */ 
+ */
 public class Quaternion
 {
   /** The content of the quaternion */
@@ -108,7 +108,7 @@ public class Quaternion
 
   public Quaternion mul(Quaternion q)
   {
-    return new Quaternion(a*q.a - b*q.b - c*q.c - d*q.d, 
+    return new Quaternion(a*q.a - b*q.b - c*q.c - d*q.d,
                           a*q.b + b*q.a + c*q.d - d*q.c,
                           a*q.c + c*q.a + d*q.b - b*q.d,
                           a*q.d + d*q.a + a*q.c - c*q.b);
@@ -140,8 +140,8 @@ public class Quaternion
   public Quaternion sqrt()
   {
     double temp = 2*a;
-    return new Quaternion(a*a - b*b - c*c - d*d, 
-                          temp*b, 
+    return new Quaternion(a*a - b*b - c*c - d*d,
+                          temp*b,
                           temp*c,
                           temp*d);
   }
@@ -184,7 +184,7 @@ public class Quaternion
     result.matrix[2][1]  =     2 * ( yz + xw );
     result.matrix[2][2] = 1 - 2 * ( xx + yy );
 
-    result.matrix[3][0] = result.matrix[3][1] = result.matrix[3][2] = 
+    result.matrix[3][0] = result.matrix[3][1] = result.matrix[3][2] =
     result.matrix[0][3] = result.matrix[1][3] = result.matrix[2][3] = 0d;
     result.matrix[3][3] = 1d;
 
@@ -197,7 +197,7 @@ public class Quaternion
       return null;
 
     double trace = m.matrix[0][0] + m.matrix[1][1] + m.matrix[2][2] + 1d;
- 
+
     double S,a,b,c,d;
     if (trace>0)
     {
@@ -207,7 +207,7 @@ public class Quaternion
       b = ( m.matrix[0][2] - m.matrix[2][0] ) * S;
       c = ( m.matrix[1][0] - m.matrix[0][1] ) * S;
       d = 0.25 / S;
-      
+
       return new Quaternion(a,b,c,d);
     }
     else if ((m.matrix[0][0]>m.matrix[1][1]) && (m.matrix[0][0]>m.matrix[2][2]))

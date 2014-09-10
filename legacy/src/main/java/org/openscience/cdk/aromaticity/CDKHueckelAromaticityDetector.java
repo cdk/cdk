@@ -53,7 +53,7 @@ import java.util.Set;
  * AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
  * Aromaticity.cdkLegacy().apply(molecule);
  * </pre>
- * 
+ *
  * <p>Important to note is that this aromaticity detector does not allow aromatic
  * ring atoms to have double bonds pointing outwards from the ring, and thus not
  * having pi electrons shared with other ring atoms. If such double bonds are not
@@ -63,7 +63,7 @@ import java.util.Set;
  * @cdk.module     standard
  * @cdk.githash
  * @cdk.created    2007-10-05
- * 
+ *
  * @see org.openscience.cdk.CDKConstants
  * @see DoubleBondAcceptingAromaticityDetector
  * @deprecated use {@link Aromaticity} with the {@link ElectronDonation#cdk()} model
@@ -94,11 +94,11 @@ public class CDKHueckelAromaticityDetector {
         for (IAtom atom : ringSystems.atoms())
             if (!atomIsPotentiallyAromatic(atom))
                 disregard.add(atom);
-        
+
         for (IAtom atom : disregard)
             ringSystems.removeAtomAndConnectedElectronContainers(atom);
-                
-		
+
+
 		boolean foundSomeAromaticity = false;
 		Iterator<IAtomContainer> isolatedRingSystems =
 		    ConnectivityChecker.partitionIntoMolecules(ringSystems).atomContainers().iterator();
@@ -143,7 +143,7 @@ public class CDKHueckelAromaticityDetector {
 				}
 			}
 		}
-		
+
 		return foundSomeAromaticity;
 	}
 
@@ -229,7 +229,7 @@ public class CDKHueckelAromaticityDetector {
 		}
 		return false;
 	}
-	
+
 	private static int getLonePairCount(IAtom atom) {
 		Integer count = (Integer)atom.getProperty(CDKConstants.LONE_PAIR_COUNT);
 		if (count == null) {
@@ -238,7 +238,7 @@ public class CDKHueckelAromaticityDetector {
 			return count;
 		}
 	}
-	
+
 	private static void markRingAtomsAndBondsAromatic(IAtomContainer container) {
 	    for (IAtom atom : container.atoms()) atom.setFlag(CDKConstants.ISAROMATIC, true);
 		  for (IBond bond : container.bonds()) bond.setFlag(CDKConstants.ISAROMATIC, true);

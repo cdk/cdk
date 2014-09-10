@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public INChIPlainTextFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new INChIPlainTextFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,7 +66,7 @@ public class INChIPlainTextFormat extends SimpleChemFormatMatcher implements ICh
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.INChIPlainTextReader";
     }
 

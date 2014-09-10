@@ -44,7 +44,7 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 
 /**
  * This class acts as a handler class for {@link CDKMCS} algorithm.
- * 
+ *
  * @cdk.module smsd
  * @cdk.githash
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
@@ -132,12 +132,12 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     /**
-     * 
+     *
      * @param mol
      * @param mcss
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      * @return IMolecule Set
-     * @throws CDKException 
+     * @throws CDKException
      */
     protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds) throws CDKException {
         ArrayList<Integer> atomSerialsToDelete = new ArrayList<Integer>();

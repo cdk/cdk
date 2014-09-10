@@ -36,22 +36,22 @@ import org.openscience.cdk.tools.SaturationChecker;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Randomly generates a single, connected, correctly bonded structure for 
+ * Randomly generates a single, connected, correctly bonded structure for
  * a given molecular formula.
- * To see it working run the graphical 
+ * To see it working run the graphical
  * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
- * and add more structures to the panel using the "More" button. 
- * In order to use this class, use MFAnalyser to get an AtomContainer from 
+ * and add more structures to the panel using the "More" button.
+ * In order to use this class, use MFAnalyser to get an AtomContainer from
  * a molecular formula string.
  *
  * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
- * in the atom pool but should be assigned implicitly to the heavy atoms in 
+ * in the atom pool but should be assigned implicitly to the heavy atoms in
  * order to reduce computational cost.
- * Assign this AtomContainer to the  
+ * Assign this AtomContainer to the
  * SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
  * structure by using the generate() method. You can then repeatedly call
- * the generate() method in order to retrieve further structures. 
- * 
+ * the generate() method in order to retrieve further structures.
+ *
  * <p>Agenda:
  * <ul>
  *  <li>add a method for randomly adding hydrogens to the atoms
@@ -64,10 +64,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.githash
  */
 public class SingleStructureRandomGenerator {
-	
+
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
-	
+
 	IAtomContainer atomContainer;
 	SaturationChecker satCheck;
 	Random random = null;
@@ -89,7 +89,7 @@ public class SingleStructureRandomGenerator {
 		this((long)11000);
 	}
 
-	
+
 	/**
 	 * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
 	 *
@@ -129,7 +129,7 @@ public class SingleStructureRandomGenerator {
 						if (partner != null)
 						{
 							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
-				
+
 							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
 							max = Math.min(cmax1, cmax2);
 							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
@@ -150,11 +150,11 @@ public class SingleStructureRandomGenerator {
 				structureFound = true;
 			}
 		} while (!structureFound && iteration < 20);
-		logger.debug("Structure found after #iterations: ", iteration);	
+		logger.debug("Structure found after #iterations: ", iteration);
 		return atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
 	}
 
-	
+
 	/**
 	 * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
 	 *
@@ -169,7 +169,7 @@ public class SingleStructureRandomGenerator {
 		{
 			atom = atomContainer.getAtom(f);
 			if (!satCheck.isSaturated(atom, atomContainer)
-					&& exclusionAtom != atom 
+					&& exclusionAtom != atom
 					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
 			{
 				return atom;
@@ -178,8 +178,8 @@ public class SingleStructureRandomGenerator {
 		for (int f = 0; f < next; f++)
 		{
 			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer) 
-					&& exclusionAtom != atom 
+			if (!satCheck.isSaturated(atom, atomContainer)
+					&& exclusionAtom != atom
 					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
 			{
 				return atom;

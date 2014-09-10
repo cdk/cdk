@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 /**
  * Interface definition for Rgroup query classes. These must provide a root
  * structure, root attachment points and Rgroup definitions.
- * 
+ *
  * @cdk.module  isomorphism
  * @cdk.githash
  * @cdk.keyword Rgroup
@@ -50,7 +50,7 @@ public interface IRGroupQuery extends IChemObject {
      * Setter for the root structure of this R-Group.
 	 * @see #getRootStructure
 	 * @param rootStructure the root structure (or scaffold) container
-	 * 
+	 *
 	 */
 	public void setRootStructure(IAtomContainer rootStructure);
 
@@ -69,23 +69,23 @@ public interface IRGroupQuery extends IChemObject {
 	public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints);
 
     /**
-     * Getter for root attachment points = bonds that connect R pseudo-atoms to the scaffold. 
+     * Getter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
      * @see #setRootAttachmentPoints(Map)
-     * @return Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment. 
+     * @return Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment.
      */
     public Map<IAtom, Map<Integer, IBond>> getRootAttachmentPoints();
 
     /**
      * Setter for the R-group definitions (substituents).
      * @see #getRGroupDefinitions
-     * @param rGroupDefinitions map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32). 
+     * @param rGroupDefinitions map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
     public void setRGroupDefinitions(Map<Integer, RGroupList> rGroupDefinitions);
 
     /**
      * Getter for the R-group definitions (substituents).
      * @see #setRGroupDefinitions
-     * @return rGroupDefinitions Map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32). 
+     * @return rGroupDefinitions Map with an Integer and an RGroupList (substituent list), the Integer being the R-Group number (1..32).
      */
     public Map<Integer, RGroupList> getRGroupDefinitions();
 
@@ -103,7 +103,7 @@ public interface IRGroupQuery extends IChemObject {
     public List<IAtomContainer> getSubstituents();
 
     /**
-     * Checks validity of the RGroupQuery. 
+     * Checks validity of the RGroupQuery.
      * Each distinct R# in the root must have a
      * a corresponding {@link RGroupList} definition.<br>
      * In file terms: $RGP blocks must be defined for each R-group number.
@@ -113,7 +113,7 @@ public interface IRGroupQuery extends IChemObject {
 
 
     /**
-     * Checks validity of RGroupQuery. 
+     * Checks validity of RGroupQuery.
      * Each {@link RGroupList} definition must have one or more corresponding
      * R# atoms in the root block.
      * @return true when valid
@@ -121,7 +121,7 @@ public interface IRGroupQuery extends IChemObject {
     public boolean areRootAtomsDefined();
 
     /**
-     * Produces all combinations of the root structure (scaffold) with the R-groups 
+     * Produces all combinations of the root structure (scaffold) with the R-groups
      * substituted in valid ways, using each R-group's definitions and conditions.
      * @return all valid combinations of the root structure (scaffold) with the
      *         R-groups substituted.

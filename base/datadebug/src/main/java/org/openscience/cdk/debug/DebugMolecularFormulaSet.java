@@ -29,7 +29,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging implementation of {@link IMolecularFormulaSet}.
- * 
+ *
  * @cdk.module datadebug
  * @cdk.githash tag
  */
@@ -41,11 +41,11 @@ public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMo
     public DebugMolecularFormulaSet() {
     	super();
     }
-    
+
     public DebugMolecularFormulaSet(IMolecularFormula formula) {
     	super(formula);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public void add(IMolecularFormulaSet formulaSet) {
 	    logger.debug("Adding formula set: ", formulaSet);

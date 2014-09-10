@@ -1,20 +1,20 @@
 /* Copyright (C) 2005-2007  Egon Willighagen <egonw@sci.kun.nl>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.io.iterator.event;
 
@@ -43,30 +43,30 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.module io
  * @cdk.githash
- * 
+ *
  * @author Egon Willighagen <egonw@sci.kun.nl>
-*/ 
+*/
 public class EventCMLHandler extends CMLHandler {
-    
+
 	private IChemObjectBuilder builder;
     private IAtomContainer currentMolecule;
     private IAtom currentAtom;
-    
+
     private Map<String,Integer> atomEnumeration;
-    
+
     private int numberOfAtoms = 0;
-    
+
     private int bond_a1;
     private int bond_a2;
     private IBond.Order bond_order;
     private IBond.Stereo bond_stereo;
     private String bond_id;
-    
+
     protected static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
-    
+
     private DefaultEventChemObjectReader eventReader;
-    
+
     /**
     * Constructs an iterating-abled CDO. After reading one molecule it
     * fires a frameRead event.
@@ -78,19 +78,19 @@ public class EventCMLHandler extends CMLHandler {
         this.builder = builder;
         clearData();
     }
-    
+
     private void clearData() {
         currentMolecule = null;
         atomEnumeration = null;
         currentAtom = null;
     }
-    
+
     public IAtomContainer getAtomContainer() {
         return currentMolecule;
     }
-    
+
     // procedures required by CDOInterface
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
@@ -98,7 +98,7 @@ public class EventCMLHandler extends CMLHandler {
     public void startDocument() {
         logger.info("New CDO Object");
     }
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
@@ -107,13 +107,13 @@ public class EventCMLHandler extends CMLHandler {
         logger.debug("Closing document");
         logger.info("End CDO Object");
     }
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
     */
     public void setDocumentProperty(String type, String value) {}
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
@@ -132,7 +132,7 @@ public class EventCMLHandler extends CMLHandler {
             bond_stereo = (IBond.Stereo)CDKConstants.UNSET;
         }
     }
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
@@ -162,7 +162,7 @@ public class EventCMLHandler extends CMLHandler {
             }
         }
     }
-    
+
     /**
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
@@ -172,7 +172,7 @@ public class EventCMLHandler extends CMLHandler {
         logger.debug("objectType: " + objectType);
         logger.debug("propType: " + propertyType);
         logger.debug("property: " + propertyValue);
-        
+
         if (objectType == null) {
             logger.error("Cannot add property for null object");
             return;
@@ -185,7 +185,7 @@ public class EventCMLHandler extends CMLHandler {
             logger.warn("Will not add null property");
             return;
         }
-        
+
         if (objectType.equals("Molecule")) {
             if (propertyType.equals("id")) {
                 currentMolecule.setID(propertyValue);
@@ -299,6 +299,6 @@ public class EventCMLHandler extends CMLHandler {
         }
         logger.debug("Object property set...");
     }
-    
+
 }
 

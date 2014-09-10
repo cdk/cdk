@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.result.DoubleResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 
 /**
- * Volume descriptor using the method implemented in the {@link VABCVolume} class. 
+ * Volume descriptor using the method implemented in the {@link VABCVolume} class.
  *
  * @cdk.module qsarmolecular
  * @cdk.githash
@@ -84,7 +84,7 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /**
      * Calculates the descriptor value using the {@link VABCVolume} class.
-     * 
+     *
      * @param atomContainer The {@link IAtomContainer} whose volume is to be calculated
      * @return A double containing the volume
      */
@@ -96,7 +96,7 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
         } catch (CDKException exception) {
             return getDummyDescriptorValue(exception);
         }
-        
+
         return new DescriptorValue(
             getSpecification(), getParameterNames(), getParameters(),
             new DoubleResult(volume), getDescriptorNames()

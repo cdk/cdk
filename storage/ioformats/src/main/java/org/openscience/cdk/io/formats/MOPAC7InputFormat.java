@@ -31,9 +31,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MOPAC7InputFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public MOPAC7InputFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MOPAC7InputFormat();

@@ -32,9 +32,9 @@ public class StereoBond extends SMARTSBond {
 
     private final boolean unspecified;
     private final Direction direction;
-    
+
     public enum Direction {UP, DOWN}
-    
+
     public StereoBond(IChemObjectBuilder builder,
                       Direction          direction,
                       boolean            unspecified){
@@ -46,11 +46,11 @@ public class StereoBond extends SMARTSBond {
 	public boolean matches(IBond bond) {
         return Order.SINGLE.equals(bond.getOrder());
     }
-    
+
     public boolean unspecified() {
         return unspecified;
     }
-    
+
     public Direction direction(IAtom atom) {
         if (atom == getAtom(0))
             return direction;
@@ -58,7 +58,7 @@ public class StereoBond extends SMARTSBond {
             return inv(direction);
         throw new IllegalArgumentException("atom is not a memeber of this bond");
     }
-    
+
     private Direction inv(Direction direction) {
         return direction == Direction.UP ? Direction.DOWN : Direction.UP;
     }

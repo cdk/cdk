@@ -82,7 +82,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
             "C1SP2", "C2SP2", "C3SP2",
             "C1SP3", "C2SP3", "C3SP3", "C4SP3"
     };
-    
+
     public CarbonTypesDescriptor() {
     }
 

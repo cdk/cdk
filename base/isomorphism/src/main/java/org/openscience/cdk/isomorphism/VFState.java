@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -116,10 +116,10 @@ final class VFState extends AbstractVFState {
 
         // unmapped terminal vertices n and m are adjacent to
         int nTerminal1 = 0, nTerminal2 = 0;
-        // unmapped non-terminal (remaining) vertices n and m are adjacent to  
+        // unmapped non-terminal (remaining) vertices n and m are adjacent to
         int nRemain1 = 0, nRemain2 = 0;
 
-        // 0-look-ahead: check each adjacent edge for being mapped, and count 
+        // 0-look-ahead: check each adjacent edge for being mapped, and count
         // terminal or remaining
         for (int n_prime : g1[n]) {
             int m_prime = m1[n_prime];
@@ -142,7 +142,7 @@ final class VFState extends AbstractVFState {
             }
         }
 
-        // 0-look-ahead: check each adjacent edge for being mapped, and count 
+        // 0-look-ahead: check each adjacent edge for being mapped, and count
         // terminal or remaining
         for (int m_prime : g2[m]) {
             int n_prime = m2[m_prime];
@@ -166,12 +166,12 @@ final class VFState extends AbstractVFState {
 
         // 1-look-ahead : the mapping {n, m} is feasible iff the number of
         // terminal vertices (t1) adjacent to n is equal to the
-        // number of terminal vertices (t2) adjacent to m. 
-        // 
+        // number of terminal vertices (t2) adjacent to m.
+        //
         // 2-look-ahead: the mapping {n, m} is feasible iff the number of
         // vertices adjacent to n that are neither in m1 or t1 is equal to
         // the number of the number of vertices adjacent to m that are neither
-        // in m2 or t2. 
+        // in m2 or t2.
         return nTerminal1 == nTerminal2 && nRemain1 == nRemain2;
     }
 }

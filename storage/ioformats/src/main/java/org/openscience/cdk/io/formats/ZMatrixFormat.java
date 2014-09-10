@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class ZMatrixFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public ZMatrixFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ZMatrixFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,7 +66,7 @@ public class ZMatrixFormat extends SimpleChemFormatMatcher implements IChemForma
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.ZMatrixReader";
     }
 
@@ -94,7 +94,7 @@ public class ZMatrixFormat extends SimpleChemFormatMatcher implements IChemForma
 	public int getSupportedDataFeatures() {
 		return DataFeatures.NONE;
 	}
-	
+
     /** {@inheritDoc} */ @Override
 	@TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {

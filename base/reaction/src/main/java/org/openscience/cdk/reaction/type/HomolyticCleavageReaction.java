@@ -43,7 +43,7 @@ import java.util.Iterator;
 
 /**
  * <p>IReactionProcess which breaks the bond homogeneously leading to radical ions.
- * It is also called homogeneous bond-breaking.Depending of the bond order, 
+ * It is also called homogeneous bond-breaking.Depending of the bond order,
  * the bond will be removed or simply the order decreased.</p>
  * <pre>A-B => [A*] + [B*]</pre>
  * <p>It is processed by the HomolyticCleavageMechanism class</p>
@@ -138,7 +138,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
 					&& (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
 					&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
 	 				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
-            	
+
                 ArrayList<IAtom> atomList = new ArrayList<IAtom>();
             	atomList.add(atom1);
             	atomList.add(atom2);
@@ -151,7 +151,7 @@ public class HomolyticCleavageReaction extends ReactionEngine implements IReacti
 					continue;
 				else
 					setOfReactions.addReaction(reaction);
-				
+
             }
 
         }

@@ -26,7 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * AWT-specific font manager.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -45,7 +45,7 @@ public class AWTFontManager extends AbstractFontManager {
     @TestMethod("testConstructor")
     public AWTFontManager() {
         // apparently 9 pixels per em is the minimum
-        // but I don't know if (size 9 == 9 px.em-1)... 
+        // but I don't know if (size 9 == 9 px.em-1)...
         this.minFontSize = 9;
         this.makeFonts();
         this.toMiddle();
@@ -76,13 +76,13 @@ public class AWTFontManager extends AbstractFontManager {
     public void setFontForZoom(double zoom) {
         int size = this.getFontSizeForZoom(zoom);
         if (size != -1) {
-            this.currentFont = this.fontSizeToFontMap.get(size); 
+            this.currentFont = this.fontSizeToFontMap.get(size);
         }
     }
 
     /**
      * Get the current font.
-     * 
+     *
      * @return the font at this zoom level
      */
     public Font getFont() {

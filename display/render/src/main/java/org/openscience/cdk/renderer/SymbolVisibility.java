@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -41,7 +41,7 @@ import java.util.List;
  * <pre>{@code
  * SymbolVisibility visibility = SymbolVisibility.iupacRecommendations();
  * }</pre>
- * 
+ *
  * @author John May
  */
 public abstract class SymbolVisibility {
@@ -111,11 +111,11 @@ public abstract class SymbolVisibility {
             // all non-carbons are displayed
             if (element != Elements.Carbon)
                 return true;
-            
+
             // methane
             if (bonds.size() == 0)
                 return true;
-            
+
             // methyl (optional)
             if (bonds.size() == 1 && terminal)
                 return true;
@@ -123,7 +123,7 @@ public abstract class SymbolVisibility {
             // abnormal valence, could be due to charge or unpaired electrons
             if (!isFourValent(atom, bonds))
                 return true;
-            
+
             // carbon isotopes are displayed
             Integer mass = atom.getMassNumber();
             if (mass != null && !isMajorIsotope(element.number(), mass))

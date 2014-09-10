@@ -1,5 +1,5 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
@@ -163,7 +163,7 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                 // Loop through the atoms and write them out:
                 Iterator<IAtom> atoms = mol.atoms().iterator();
-                
+
                 int i = 0;
                 while (atoms.hasNext()) {
                 	IAtom atom = atoms.next();

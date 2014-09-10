@@ -1,8 +1,8 @@
 /* Copyright (C) 2005-2006  Ideaconsult Ltd.
  *               2012       Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -11,12 +11,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -45,11 +45,11 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
 /**
  * Reads MOPAC output, extracts several electronic parameters and assigns them as a molecule
  * properties.<p>
- * 
+ *
  * Parameters: "NO. OF FILLED LEVELS",	"TOTAL ENERGY","FINAL HEAT OF FORMATION",
  * "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
  * Doesn't update structure coordinates ! (TODO fix)
- * 
+ *
  * @author      Nina Jeliazkova <nina@acad.bg>
  * @cdk.githash
  * @cdk.module  io
@@ -76,10 +76,10 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     	"EV",
     	"",
     	"EV",
-    	"EV"};    
+    	"EV"};
     private static String eigenvalues = "EIGENVALUES";
     private static String filledLevels = "NO. OF FILLED LEVELS";
-    
+
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.
      *
@@ -115,13 +115,13 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 
 
           TOTAL ENERGY          =      -1618.31024 EV
-          ELECTRONIC ENERGY       =      -6569.42640 EV  POINT GROUP:     C1  
+          ELECTRONIC ENERGY       =      -6569.42640 EV  POINT GROUP:     C1
           CORE-CORE REPULSION     =       4951.11615 EV
 
           IONIZATION POTENTIAL    =         10.76839
           NO. OF FILLED LEVELS    =         23
           MOLECULAR WEIGHT        =    122.123
- 
+
      */
 
     @Override /** {@inheritDoc} */
@@ -134,7 +134,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	         try {
 	            String line = input.readLine();
 	            while (line != null) {
-	            	if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED")> -1) 
+	            	if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED")> -1)
 	            		throw new CDKException(line);
 	            	if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"")> -1)
 	            		throw new CDKException(line);
@@ -143,7 +143,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	            		IAtomContainer atomcontainer = ((IAtomContainer)object);
 	            		input.readLine(); //reads blank line
 	            		line = input.readLine();
-	            		
+
 	            		String[] columns = line.trim().split(" +");
 	            		int okCols = 0;
 	            		if (columns.length==expected_columns.length)
@@ -169,7 +169,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	                        		atomIndex = Integer.parseInt(tokenStr)-1;
 	                        		if (atomIndex < atomcontainer.getAtomCount()) {
 	                        			atom = atomcontainer.getAtom(atomIndex);
-	                        		} else 
+	                        		} else
 	                        			atom = null;
 	                        		break;
 	                        	}
@@ -199,9 +199,9 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	                        }
 	                        if ((atom == null) || ( (atomIndex+1) >= atomcontainer.getAtomCount()))
 	                        	break;
-	                        
+
 	                    }
-	            		
+
 	            	} else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
 	                    line = input.readLine();
 	                    line = input.readLine();
@@ -214,7 +214,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	                    for (int i=0; i < parameters.length;i++)
 	    		            if (line.indexOf(parameters[i]) >= 0) {
 	    		            	String value = line.substring(line.lastIndexOf('=')+1).trim();
-	    		            	
+
 	    		            	/*
 	    		            	v = v.replaceAll("EV","");
 	    		            	v = v.replaceAll("KCAL","");
@@ -222,11 +222,11 @@ public class Mopac7Reader extends DefaultChemObjectReader {
 	    		            	*/
 	    		            	value = value.replaceAll(Mopac7Reader.units[i],"").trim();
 	    		            	int pos = value.indexOf(' ');
-	    		            	if (pos >= 0) 
+	    		            	if (pos >= 0)
 	    		            		value = value.substring(0,pos-1);
 			                    container.setProperty(parameters[i],value.trim());
 			                    break;
-	    		            }    
+	    		            }
 	                line = input.readLine();
 	            }
 	            calcHomoLumo(container);
@@ -253,7 +253,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         int levelCounter = 0;
         for (int i=0; i < eigenVals.length;i++) {
             if (eigenVals[i].trim().isEmpty()) continue;
-            else 
+            else
                 try {
                 	// check if the value is an proper double:
                     Double.parseDouble(eigenVals[i]);
@@ -262,7 +262,7 @@ public class Mopac7Reader extends DefaultChemObjectReader {
                     else if (levelCounter==(nFilledLevels+1)) {  mol.setProperty("ELUMO",eigenVals[i]); }
                 } catch (NumberFormatException exception) {
                     return;
-                }                
+                }
         }
     }
 

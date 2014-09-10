@@ -39,12 +39,12 @@ public interface IRenderingVisitor {
 	 *                chemical drawing.
 	 */
     public abstract void visit(IRenderingElement element);
-    
+
     /**
      * Sets the affine transformations used.
      *
      * @param transform the affine transformation used.
      */
     public abstract void setTransform(AffineTransform transform);
-    
+
 }

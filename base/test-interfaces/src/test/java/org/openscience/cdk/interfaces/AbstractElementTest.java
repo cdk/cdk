@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.interfaces;
 
@@ -32,19 +32,19 @@ import org.openscience.cdk.tools.diff.ElementDiff;
 public abstract class AbstractElementTest extends AbstractChemObjectTest {
 
     // test methods
-    
+
     @Test public void testSetSymbol_String() {
         IElement e = (IElement)newChemObject();
         e.setSymbol("C");
         Assert.assertEquals("C", e.getSymbol());
     }
-        
+
     @Test public void testGetSymbol() {
         IElement e = (IElement)newChemObject();
         e.setSymbol("X");
         Assert.assertEquals("X", e.getSymbol());
     }
-        
+
     @Test public void testSetAtomicNumber_Integer() {
         IElement e = (IElement)newChemObject();
         e.setAtomicNumber(1);
@@ -67,7 +67,7 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
         Assert.assertNotNull(diff);
         Assert.assertEquals(0, diff.length());
     }
-    
+
     @Test public void testCloneDiff() throws Exception {
         IElement elem = (IElement)newChemObject();
         IElement clone = (IElement)elem.clone();
@@ -78,22 +78,22 @@ public abstract class AbstractElementTest extends AbstractChemObjectTest {
         IElement elem = (IElement)newChemObject();
         elem.setSymbol("C");
         IElement clone = (IElement)elem.clone();
-        
+
         // test cloning of symbol
         elem.setSymbol("H");
         Assert.assertEquals("C", clone.getSymbol());
     }
-    
+
     @Test public void testClone_IAtomicNumber() throws Exception {
         IElement elem = (IElement)newChemObject();
         elem.setAtomicNumber(6);
         IElement clone = (IElement)elem.clone();
-        
+
         // test cloning of atomic number
         elem.setAtomicNumber(5); // don't care about symbol
         Assert.assertEquals(6, clone.getAtomicNumber().intValue());
     }
-    
+
     /** Test for RFC #9 */
     @Test public void testToString() {
         IElement elem = (IElement)newChemObject();

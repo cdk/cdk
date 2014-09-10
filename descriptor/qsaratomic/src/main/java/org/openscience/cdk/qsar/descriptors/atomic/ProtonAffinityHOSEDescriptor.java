@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  This class returns the proton affinity of an atom containing. 
+ *  This class returns the proton affinity of an atom containing.
  *
  * <p>This descriptor uses these parameters:
  * <table border="1">
@@ -68,12 +68,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] descriptorNames = {"protonAffiHOSE"};
-    
+
 	/** Maximum spheres to use by the HoseCode model.*/
 	int maxSpheresToUse = 10;
-	
+
 	private Affinitydb db = new Affinitydb();
-	
+
 	/**
 	 *  Constructor for the ProtonAffinityDescriptor object.
 	 */
@@ -126,16 +126,16 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
 
-        
+
         try {
             int i = container.getAtomNumber(atom);
             if (i < 0)
                 throw new CDKException("atom was not a memeber of the provided container");
-            
+
             // don't modify the original
             container = container.clone();
             atom      = container.getAtom(i);
-            
+
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
             LonePairElectronChecker lpcheck = new LonePairElectronChecker();
             lpcheck.saturate(container);
@@ -151,12 +151,12 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
         value = db.extractAffinity(container, atom);
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value), descriptorNames);
-		
+
 	}
 	/**
 	 * Looking if the Atom belongs to the halogen family.
-	 * 
-	 * @param  atom  The IAtom 
+	 *
+	 * @param  atom  The IAtom
 	 * @return       True, if it belongs
 	 */
 	private boolean familyHalogen(IAtom atom) {
@@ -187,29 +187,29 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
     public Object getParameterType(String name) {
         return null;
     }
-    
+
     /**
-     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode 
+     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode
      * fingerprints
-     * 
+     *
      * @author Miguel Rojas
      *
      */
 	private class Affinitydb {
-		
+
 		HashMap<String, HashMap<String,Double>> listGroup = new HashMap<String, HashMap<String,Double>>();
 		HashMap<String, HashMap<String,Double>> listGroupS = new HashMap<String, HashMap<String,Double>>();
 		/**
 		 * The constructor of the IPdb.
-		 * 
+		 *
 		 */
 		public Affinitydb(){
-			
+
 		}
-		
+
 		/**
 		 * extract from the db the proton affinity.
-		 * 
+		 *
 		 * @param container  The IAtomContainer
 		 * @param atom       The IAtom
 		 * @return           The energy value
@@ -238,10 +238,10 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 					hoseVSenergyS = extractAttributes(insr);
 				}
 			} else return 0;
-			
+
 			try {
 				HOSECodeGenerator hcg = new HOSECodeGenerator();
-				//Check starting from the exact sphere hose code and maximal a value of 10 
+				//Check starting from the exact sphere hose code and maximal a value of 10
 				int exactSphere = 0;
 				String hoseCode = "";
 				 for(int spheres = maxSpheresToUse; spheres > 0; spheres--){
@@ -266,7 +266,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 						int sign = -1;
 						if(plusMinus== 1)
 							sign = 1;
-							
+
 						StringTokenizer st = new StringTokenizer(hoseCode, "()/");
 						StringBuilder hoseCodeBuffer = new StringBuilder();
 						  int sum = exactSphere+sign*(i+1);
@@ -284,7 +284,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 						    }
 						  }
 						  String hoseCodeBU = hoseCodeBuffer.toString();
-						  
+
 						  if(hoseVSenergyS.containsKey(hoseCodeBU)){
 							  return hoseVSenergyS.get(hoseCodeBU);
 						  }
@@ -295,9 +295,9 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 			}
 			return 0;
 		}
-		/** 
+		/**
 		 * Extract the Hose code and energy
-		 * 
+		 *
 		 * @param input  The BufferedReader
 		 * @return       HashMap with the Hose vs energy attributes
 		 */
@@ -322,35 +322,35 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 	}
 	/**
 	 * Extract the information from a line which contains HOSE_ID & energy.
-	 * 
+	 *
 	 * @param str  String with the information
 	 * @return     List with String = HOSECode and String = energy
 	 */
 	private static List<String> extractInfo(String str){
-		
+
 		StringBuffer idEdited = new StringBuffer();
 		StringBuffer valEdited = new StringBuffer();
-		
+
 		int strlen = str.length();
 
 		boolean foundSpace = false;
 		int countSpace = 0;
 		boolean foundDigit = false;
-		for (int i = 0; i < strlen; i++) 
+		for (int i = 0; i < strlen; i++)
 		{
 			if(!foundDigit)
 				if(Character.isLetter(str.charAt(i)))
 					foundDigit = true;
-			
+
 			if(foundDigit){
-				if (Character.isWhitespace(str.charAt(i))) 
+				if (Character.isWhitespace(str.charAt(i)))
 				{
 					if(countSpace == 0){
 						foundSpace = true;
 					}else
 						break;
 				}
-				else 
+				else
 				{
 					if(foundSpace){
 						valEdited.append(str.charAt(i));
@@ -365,7 +365,7 @@ public class ProtonAffinityHOSEDescriptor extends AbstractAtomicDescriptor {
 		objec.add(idEdited.toString());
 		objec.add(valEdited.toString());
 		return objec;
-		
+
 	}
 }
 

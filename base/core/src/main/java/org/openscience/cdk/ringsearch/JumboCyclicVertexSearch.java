@@ -56,7 +56,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
 
     /* the vertices in our path at a given vertex index */
     private BitSet[] state;
-    
+
     /** vertex colored by each component. */
     private int[] colors;
 
@@ -197,16 +197,16 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
      */
     @TestMethod("testCyclic_IntInt")
     @Override public boolean cyclic(int u, int v) {
-        
+
         final int[] colors = vertexColor();
-        
+
         // if either vertex has no color then the edge can not
         // be cyclic
         if (colors[u] < 0 || colors[v] < 0)
             return false;
-        
+
         // if the vertex color is 0 it is shared between
-        // two components (i.e. spiro-rings) we need to 
+        // two components (i.e. spiro-rings) we need to
         // check each component
         if (colors[u] == 0 || colors[v] == 0) {
             // either vertices are shared - need to do the expensive check
@@ -216,7 +216,7 @@ class JumboCyclicVertexSearch implements CyclicVertexSearch {
             }
             return false;
         }
-        
+
         // vertex is not shared between components
         return colors[u] == colors[v];
     }

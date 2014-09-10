@@ -1,8 +1,8 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *                    2010  Stefan Kuhn <Stefan.Kuhn@ebi.ac.uk>
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -11,12 +11,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -136,7 +136,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         Assert.assertTrue(output.indexOf("0  0  0  0  0  1  0  0  0  0  0  0") != -1);
         Assert.assertTrue(output.indexOf("0  0  0  0  0 15  0  0  0  0  0  0") != -1);
     }
-    
+
     @Test public void nonDefaultValence_fe_iii() throws Exception {
         IAtomContainer container = new AtomContainer();
         IAtom fe1 = new Atom("Fe");
@@ -197,7 +197,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 		Matcher m = p.matcher(output);
 		Assert.assertTrue(m.matches());
 	}
-    
+
     /**
      * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
      * When a molecule contains an IPseudoAtom without specifying the atom label
@@ -206,7 +206,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
      * This was fixed with letting PseudoAtom have a default label of '*'.
      *
      * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-     * 
+     *
      * @cdk.bug 1778479
      */
     @Test public void testBug1778479() throws Exception {
@@ -218,7 +218,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(atom1);
         molecule.addAtom(atom2);
         molecule.addBond(bond);
-            
+
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         mdlWriter.close();
@@ -332,7 +332,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         String output = writer.toString();
         Assert.assertTrue(output.contains("title1; title2"));
     }
-    
+
     /**
      * Test correct output of R-groups, using the hash (#) and a separate RGP line.
      */
@@ -356,19 +356,19 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(atom3);
         molecule.addBond(bond);
         molecule.addBond(bond2);
-            
+
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         mdlWriter.close();
         String output = writer.toString();
-        
+
         Assert.assertTrue("Test for R#", -1 != output.indexOf("R#"));
         Assert.assertTrue("Test for RGP line", -1 != output.indexOf("M  RGP  1   1  12"));
     }
 
 
     /**
-     * Test writing of comments made on individual atoms into an Atom Value lines. 
+     * Test writing of comments made on individual atoms into an Atom Value lines.
      */
     @Test public void testAtomValueLine() throws Exception {
         IAtom carbon = builder.newInstance(IAtom.class, "C");
@@ -381,17 +381,17 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         molecule.addAtom(oxygen);
         molecule.addAtom(carbon);
         molecule.addBond(bond);
-        
+
         StringWriter writer = new StringWriter();
         MDLV2000Writer mdlWriter = new MDLV2000Writer(writer);
         mdlWriter.write(molecule);
         mdlWriter.close();
-        
+
         Assert.assertTrue(writer.toString().indexOf("V    1 Oxygen comment") != -1);
         Assert.assertTrue(writer.toString().indexOf("V    2 Carbon comment") != -1);
-        
+
     }
-    
+
     /**
      * Test option to write aromatic bonds with bond type "4".
      * Please note: bond type values 4 through 8 are for SSS queries only.
@@ -425,24 +425,24 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
         mdlWriter.close();
         Assert.assertTrue(writer.toString().indexOf("1  2  4  0  0  0  0") != -1);
     }
-    
+
     @Test
     public void testAtomParity() throws CDKException, IOException{
-        
+
         InputStream in = ClassLoader.getSystemResourceAsStream("data/mdl/mol_testAtomParity.mol");
         MDLV2000Reader reader = new MDLV2000Reader(in);
         IAtomContainer molecule = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         molecule = reader.read(molecule);
         reader.close();
-        
+
         StringWriter sw =new StringWriter();
         MDLV2000Writer writer = new MDLV2000Writer(sw);
         writer.write(molecule);
         writer.close();
-       
-        Assert.assertTrue(sw.toString().contains("   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));              
-        
-        
+
+        Assert.assertTrue(sw.toString().contains("   -1.1749    0.1436    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0"));
+
+
     }
 
     @Test
@@ -617,7 +617,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
 	}
 
-    // XXX: information loss, CDK does not distinquish between divalence 
+    // XXX: information loss, CDK does not distinquish between divalence
     //      singlet and triplet and only stores the unpaired electrons
 	@Test
 	public void testSingleTripletRadical() throws Exception {
@@ -635,7 +635,7 @@ public class MDLV2000WriterTest extends ChemObjectIOTest {
 
         String[] lines = sw.toString().split(System.getProperty("line.separator"));
 
-        
+
         assertThat("incorrect file length",
                    lines.length, is(9));
         assertThat("incorrect radical output",

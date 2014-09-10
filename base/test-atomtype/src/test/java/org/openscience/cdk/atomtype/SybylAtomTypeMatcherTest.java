@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -77,7 +77,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 		    SilentChemObjectBuilder.getInstance());
 		Assert.assertNotNull(matcher);
 	}
-	
+
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom() throws Exception {
 		IAtomTypeMatcher matcher = SybylAtomTypeMatcher.getInstance(
 		    SilentChemObjectBuilder.getInstance());
@@ -110,7 +110,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
         IAtomContainer reference = (IAtomContainer)molecule.clone();
-        
+
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
@@ -175,7 +175,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
         IAtomContainer reference = (IAtomContainer)molecule.clone();
-        
+
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
@@ -200,7 +200,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 	    mol.addAtom(atom);
 	    SybylAtomTypeMatcher matcher =
 	        SybylAtomTypeMatcher.getInstance(mol.getBuilder());
-        IAtomType type = matcher.findMatchingAtomType(mol, atom); 
+        IAtomType type = matcher.findMatchingAtomType(mol, atom);
 	    Assert.assertNotNull(type);
 	    Assert.assertThat(type.getAtomTypeName(), is("X"));
 	}
@@ -235,7 +235,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
         IAtomContainer reference = (IAtomContainer)molecule.clone();
-        
+
         // test if the perceived atom types match that
         percieveAtomTypesAndConfigureAtoms(molecule);
         Iterator<IAtom> refAtoms = reference.atoms().iterator();
@@ -404,7 +404,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"N.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testMethylNitro_Charged() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C"); mol.addAtom(atom);
@@ -454,7 +454,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"O.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testDMSO() throws Exception {
     	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
@@ -472,7 +472,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"O.2", "S.O", "C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testDMSOO() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
@@ -493,7 +493,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
         String[] expectedTypes = {"O.2", "O.2", "S.O2", "C.3", "C.3"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
-    
+
     @Test public void testCarbokation() throws Exception {
     	IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("H");
@@ -548,7 +548,7 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
     	IBond b16 = mol.getBuilder().newInstance(IBond.class,a1, a17, IBond.Order.SINGLE); mol.addBond(b16);
 
     	String[] expectedTypes = {"Si", "O.3", "O.3", "O.3", "C.3", "C.3", "C.3",
-    			"H", "H", "H", "H", "H", "H", "H", "H", "H", "H"}; 
+    			"H", "H", "H", "H", "H", "H", "H", "H", "H", "H"};
     	assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
@@ -569,34 +569,34 @@ public class SybylAtomTypeMatcherTest extends AbstractSybylAtomTypeTest {
 
     @Test public void testSalts() throws Exception {
         IAtomContainer mol = new AtomContainer();
-          
+
           IAtom atom = new Atom("Na");
           atom.setFormalCharge(+1);
           mol.addAtom(atom);
           String[] expectedTypes = new String[]{"Na"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
-          
+
           mol = new AtomContainer();
           atom = new Atom("K");
           atom.setFormalCharge(+1);
           mol.addAtom(atom);
           expectedTypes = new String[]{"K"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
-          
+
           mol = new AtomContainer();
           atom = new Atom("Ca");
           atom.setFormalCharge(+2);
           mol.addAtom(atom);
           expectedTypes = new String[]{"Ca"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
-          
+
           mol = new AtomContainer();
           atom = new Atom("Mg");
           atom.setFormalCharge(+2);
           mol.addAtom(atom);
           expectedTypes = new String[]{"Mg"};
           assertAtomTypes(testedAtomTypes, expectedTypes, mol);
-          
+
           mol = new AtomContainer();
           atom = new Atom("Cu");
           atom.setFormalCharge(+2);

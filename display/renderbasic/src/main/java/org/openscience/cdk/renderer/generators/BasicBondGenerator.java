@@ -1,5 +1,5 @@
 /* Copyright (C) 2008-2009  Arvid Berg <goglepox@users.sf.net>
- *               2008-2009  Gilleain Torrance <gilleain@users.sf.net> 
+ *               2008-2009  Gilleain Torrance <gilleain@users.sf.net>
  *                    2009  Mark Rijnbeek <markr@ebi.ac.uk>
  *
  *  Contact: cdk-devel@list.sourceforge.net
@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 /**
  * Generator for elements from bonds. Only two-atom bonds are supported
  * by this generator.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -165,7 +165,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Set the color to use for all bonds, overriding the standard bond colors.
-     * 
+     *
      * @param color the override color
      */
     public void setOverrideColor(Color color) {
@@ -174,7 +174,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Set the width to use for all bonds, overriding any standard bond widths.
-     * 
+     *
      * @param bondWidth
      */
     public void setOverrideBondWidth(double bondWidth) {
@@ -182,8 +182,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Determine the ring set for this atom container. 
-     * 
+     * Determine the ring set for this atom container.
+     *
      * @param atomContainer the atom container to find rings in.
      * @return the rings of the molecule
      */
@@ -263,7 +263,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     /**
      * Generate rendering element(s) for the current bond, including ring
      * elements if this bond is part of a ring.
-     *  
+     *
      * @param currentBond the bond to use when generating elements
      * @param model the renderer model
      * @return one or more rendering elements
@@ -280,7 +280,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     /**
      * Generate rendering elements for a bond, without ring elements but
      * considering the type of the bond (single, double, triple).
-     * 
+     *
      * @param bond the bond to use when generating elements
      * @param model the renderer model
      * @return one or more rendering elements
@@ -365,14 +365,14 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         line2p1.add(point1, normal);
         line2p2.add(point2, normal);
 
-        return new double[] { 
+        return new double[] {
                 line1p1.x, line1p1.y, line2p1.x, line2p1.y,
                 line1p2.x, line1p2.y, line2p2.x, line2p2.y };
     }
 
     /**
      * Generate ring elements, such as inner-ring bonds or ring stereo elements.
-     * 
+     *
      * @param bond the ring bond to use when generating elements
      * @param ring the ring that the bond is in
      * @param model the renderer model
@@ -393,8 +393,8 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
     }
 
     /**
-     * Make the inner ring bond, which is slightly shorter than the outer bond. 
-     * 
+     * Make the inner ring bond, which is slightly shorter than the outer bond.
+     *
      * @param bond the ring bond
      * @param ring the ring that the bond is in
      * @param model the renderer model
@@ -421,9 +421,9 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
         ww.interpolate(w, u, alpha);
         Point2d uu = new Point2d();
         uu.interpolate(u, w, alpha);
-        
+
         double width = getWidthForBond(bond, model);
-        Color color = getColorForBond(bond, model); 
+        Color color = getColorForBond(bond, model);
 
         return new LineElement(u.x, u.y, w.x, w.y, width, color);
     }
@@ -453,7 +453,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Check to see if a bond is a double bond.
-     * 
+     *
      * @param bond the bond to check
      * @return true if its order is double
      */
@@ -463,7 +463,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Check to see if a bond is a single bond.
-     * 
+     *
      * @param bond the bond to check
      * @return true if its order is single
      */
@@ -473,7 +473,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Check to see if a bond is a stereo bond.
-     * 
+     *
      * @param bond the bond to check
      * @return true if the bond has stero information
      */
@@ -485,7 +485,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Check to see if any of the atoms in this bond are hydrogen atoms.
-     * 
+     *
      * @param bond the bond to check
      * @return true if any atom has an element symbol of "H"
      */
@@ -500,7 +500,7 @@ public class BasicBondGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Generate stereo or bond elements for this bond.
-     * 
+     *
      * @param bond the bond to use when generating elements
      * @param model the renderer model
      * @return one or more rendering elements

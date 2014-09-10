@@ -25,10 +25,10 @@ package org.openscience.cdk.smsd.interfaces;
 import org.openscience.cdk.annotations.TestClass;
 
 /**
- * 
+ *
  * This class represents various algorithm type supported by SMSD.
  * Presently SMSD supports 5 different kinds of algorithms:
- * 
+ *
  * <OL>
  * <lI>0: default,
  * <lI>1: MCSPlus,

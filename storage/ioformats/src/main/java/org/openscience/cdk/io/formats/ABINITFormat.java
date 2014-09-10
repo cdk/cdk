@@ -31,9 +31,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class ABINITFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public ABINITFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new ABINITFormat();

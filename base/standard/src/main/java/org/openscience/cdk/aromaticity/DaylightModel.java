@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -65,7 +65,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  *
  * @author John May
  * @cdk.module standard
- * @cdk.githash 
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.aromaticity.DaylightModelTest")
 final class DaylightModel extends ElectronDonation {
@@ -86,7 +86,7 @@ final class DaylightModel extends ElectronDonation {
 
         // we compute values we need for all atoms and then make the decisions
         // - this avoids costly operations such as looking up connected
-        // bonds on each atom at the cost of memory 
+        // bonds on each atom at the cost of memory
         int[] degree          = new int[n];
         int[] bondOrderSum    = new int[n];
         int[] nCyclicPiBonds  = new int[n];
@@ -157,8 +157,8 @@ final class DaylightModel extends ElectronDonation {
             else if (!aromaticElement(element) || !ringSearch.cyclic(i) || degree[i] > 3 || nCyclicPiBonds[i] > 1) {
                 electrons[i] = -1;
             }
-            
-            
+
+
             // exocyclic bond contributes 0 or 1 electrons depending on
             // preset electronegativity - check the exocyclicContribution method
             else if (exocyclicPiBond[i] >= 0) {
@@ -167,8 +167,8 @@ final class DaylightModel extends ElectronDonation {
                                                      charge,
                                                      nCyclicPiBonds[i]);
             }
-            
-            
+
+
             // any atom (except arsenic) with one cyclic pi bond contributes a
             // single electron
             else if (nCyclicPiBonds[i] == 1) {
@@ -184,12 +184,12 @@ final class DaylightModel extends ElectronDonation {
                 else
                     electrons[i] = -1;
             }
-                        
+
             else {
                 // cation with no double bonds - single exception?
                 if (element == CARBON && charge > 0)
-                    electrons[i] = 0; 
-                else 
+                    electrons[i] = 0;
+                else
                     electrons[i] = -1;
             }
         }
@@ -285,7 +285,7 @@ final class DaylightModel extends ElectronDonation {
                     return valence == 2;
                 if (charge == +1)
                     return valence == 4;
-                return charge == 0 
+                return charge == 0
                         && (valence == 3 || (valence == 5 && element == NITROGEN));
             case OXYGEN:
             case SULPHUR:
@@ -294,7 +294,7 @@ final class DaylightModel extends ElectronDonation {
                     return valence == 3;
                 return charge == 0 && valence == 2;
         }
-        return false;    
+        return false;
     }
 
     /**

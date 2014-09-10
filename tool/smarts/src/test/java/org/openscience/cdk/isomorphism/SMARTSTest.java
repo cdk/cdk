@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,15 +10,15 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.isomorphism;
 
@@ -49,7 +49,7 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @cdk.require java1.4+
  */
 public class SMARTSTest extends CDKTestCase {
-	
+
 	private UniversalIsomorphismTester uiTester;
 
 	@Before
@@ -70,10 +70,10 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom1);
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE, builder));
-        
+
         Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));
     }
-	
+
 	@Test public void testSMARTS() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 		SmilesParser sp = new SmilesParser(builder);
@@ -85,10 +85,10 @@ public class SMARTSTest extends CDKTestCase {
         query.addAtom(atom1);
         query.addAtom(atom2);
         query.addBond(new OrderQueryBond(atom1, atom2, IBond.Order.DOUBLE, builder));
-        
+
         Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
     }
-	
+
     private IAtomContainer createEthane() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
         IAtom carbon = new org.openscience.cdk.Atom("C");
@@ -100,7 +100,7 @@ public class SMARTSTest extends CDKTestCase {
         container.addBond(carbon.getBuilder().newInstance(IBond.class,carbon, carbon2, IBond.Order.SINGLE));
         return container;
     }
-    
+
 	@Test public void testImplicitHCountAtom() throws Exception {
         IAtomContainer container = createEthane();
 
@@ -138,15 +138,15 @@ public class SMARTSTest extends CDKTestCase {
 			);
 			SymbolAndChargeQueryAtom c2 = new
 			SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
-			
+
 			IAtomContainer c = MoleculeFactory.makeAlkane(2);
-			
+
 			QueryAtomContainer query1 = new QueryAtomContainer(builder);
 			query1.addAtom(c1);
 			query1.addAtom(c2);
 			query1.addBond(new OrderQueryBond(c1,c2,CDKConstants.BONDORDER_SINGLE, builder));
 			Assert.assertTrue(uiTester.isSubgraph(c,query1));
-			
+
 			QueryAtomContainer query = new
 			QueryAtomContainer(builder);
 			query.addAtom(c1);
@@ -155,11 +155,11 @@ public class SMARTSTest extends CDKTestCase {
 				CDKConstants.BONDORDER_SINGLE, builder)
 			);
 			Assert.assertTrue(uiTester.isSubgraph(c,query));
-			
+
 		} catch (CDKException exception) {
 			Assert.fail(exception.getMessage());
 		}
-		
+
 	}
 }
 

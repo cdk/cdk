@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sf.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,16 +10,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
+ *
  */
 package org.openscience.cdk.math.qm;
 
@@ -69,32 +69,32 @@ public class FourierGridBasis implements IBasis
   }
 
   public double getMinX()
-  { 
+  {
     return minx;
   }
-  
+
   public double getMaxX()
-  { 
+  {
     return maxx;
   }
-  
+
   public double getMinY()
-  { 
+  {
     return -1d;
   }
-  
+
   public double getMaxY()
-  { 
+  {
     return +1d;
   }
-  
+
   public double getMinZ()
-  { 
+  {
     return -1d;
   }
-  
+
   public double getMaxZ()
-  { 
+  {
     return +1d;
   }
 
@@ -150,13 +150,13 @@ public class FourierGridBasis implements IBasis
 
   /*public Matrix calcT()
   {
-    int i,j,l; 
+    int i,j,l;
     Matrix T = new Matrix(N,N);
     double Tl = (2/m)*(hdash*Math.PI/(N*dx))*(hdash*Math.PI/(N*dx));
     int n = (N-1)/2;
 
     for(i=0; i<N; i++)
-      for(j=0; j<N; j++) 
+      for(j=0; j<N; j++)
       {
         T.matrix[i][j] = 0d;
         for(l=1; l<=n; l++)
@@ -167,7 +167,7 @@ public class FourierGridBasis implements IBasis
   }*/
 
   public double calcV(int i, int j)
-  { 
+  {
     if (i==j)
       return potential.getValue(minx+dx*i, 0d, 0d);
     return 0d;

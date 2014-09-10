@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction;
 
@@ -46,7 +46,7 @@ import java.util.List;
  * @cdk.module test-reaction
  */
 public abstract class ReactionProcessTest extends CDKTestCase {
-	
+
 	private IReactionProcess reaction;
 	private Dictionary dictionary;
 	private String entryString = "";
@@ -54,14 +54,14 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 
 	/**
 	 * Set the IReactionProcess to analyzed
-	 * 
+	 *
 	 * @param reactionClass   The IReactionProcess class
 	 * @throws Exception
 	 */
 	public void setReaction(Class<?> reactionClass) throws Exception {
 		if(dictionary == null)
 			dictionary = openingDictionary();
-		
+
 		Object object = (Object)reactionClass.newInstance();
 		if (!(object instanceof IReactionProcess)) {
 			throw new CDKException("The passed reaction class must be a IReactionProcess");
@@ -72,10 +72,10 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 			entryString = entryString.substring(entryString.indexOf("#")+1, entryString.length());
 		}
 	}
-	
+
 	/**
 	 * Open the Dictionary OWLReact.
-	 * 
+	 *
 	 * @return The dictionary reaction-processes
 	 */
 	private Dictionary openingDictionary() {
@@ -92,69 +92,69 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	 *   // Pass a Class, not an Object!
 	 *   setReaction(SomeReaction.class);
 	 * }
-	 * 
+	 *
 	 * <p>The unit tests in the extending class may use this instance, but
 	 * are not required.
-	 * 
+	 *
 	 * </pre>
 	 */
 	@Test public void testHasSetSuperDotDescriptor() {
-		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reaction);    	
+		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reaction);
 	}
 
 	/**
 	 * Test if the reaction process is contained in the Dictionary as a entry.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test public void testGetEntryFromReaction() throws Exception {
 
 		entryString = reaction.getSpecification().getSpecificationReference();
 		entryString = entryString.substring(entryString.indexOf("#")+1, entryString.length());
-		
+
 		Assert.assertNotSame("The Entry ID from  ["+reaction.getClass()+"] doesn't exist.",
     			"nothing",entryString);
-    } 
-	
+    }
+
 	/**
 	 * Test if the reaction process is contained in the Dictionary as a entry.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test public void testGetDictionaryEntry() throws Exception {
-		
+
     	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
     	Assert.assertNotNull(
     			"The Entry ["+entryString+"] doesn't exist in OWL Dictionary.",
     			entry);
-    	
-    }    
-	
+
+    }
+
 	/**
 	 * Test if this entry has a definition schema in the Dictionary.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test public void testGetEntryDefinition() throws Exception {
-		
+
 		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-    	
+
     	Assert.assertNotNull(
     			"The definition entry for ["+entryString+"] must not be null.",
     			entry.getDefinition());
-    	
-    }   
+
+    }
 	/**
 	 * Checks if the parameterization key is consistent with those coming from the dictionary.
-	 * 
-	 * @throws Exception 
+	 *
+	 * @throws Exception
 	 */
 	@Test public void testGetParameterList() throws Exception {
         List<IParameterReact> paramObj = reaction.getParameterList();
-    	
+
 		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
         List<List<String>> paramDic = entry.getParameterClass();
-        
+
         Assert.assertNotNull("The parameters entry for ["+entryString+"]  must contain at least one parameter.",
         		paramObj);
         Assert.assertNotNull("The parameters entry for ["+entryString+"]  must contain at least one parameter.",
@@ -165,7 +165,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 	}
 	/**
 	 * Test the specification of the IReactionProcess.
-	 * 
+	 *
 	 */
 	@Test public void testGetSpecification() {
     	ReactionSpecification spec = reaction.getSpecification();
@@ -210,43 +210,43 @@ public abstract class ReactionProcessTest extends CDKTestCase {
     		0, spec.getSpecificationReference().length()
     	);
     }
-      
-	
+
+
 	/**
 	 * Test if this entry has a definition schema in the Dictionary.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test public void testGetEntryDescription() throws Exception {
-    	
+
 		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-    	
+
     	Assert.assertNotNull(
     			"The description entry for ["+entryString+"] must not be null.",
     			entry.getDescription());
-    }  
-	
+    }
+
 	/**
 	 * Test if this entry has at least one representation schema in the Dictionary.
-	 * 
+	 *
 	 * @throws Exception
 	 */
 	@Test public void testGetEntryRepresentation() throws Exception {
-    	
+
     	EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-    	
+
     	Assert.assertNotSame(
     			"The representation entry for ["+entryString+"]  must contain at least one representation.",
     			0,entry.getRepresentations().size());
-    }  
+    }
 	/**
-	 * Test reactive center parameter 
-	 * 
+	 * Test reactive center parameter
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testCentreActive() throws Exception {
 		IReactionProcess type = reaction;
-		
+
 		IParameterReact ipr = type.getParameterClass(SetReactionCenter.class);
 		Assert.assertNotNull(ipr);
 		Assert.assertFalse(ipr.isSetParameter());
@@ -256,14 +256,14 @@ public abstract class ReactionProcessTest extends CDKTestCase {
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
-        
+
         IParameterReact ipr2 = type.getParameterClass(SetReactionCenter.class);
 		Assert.assertTrue(ipr2.isSetParameter());
 	}
 
 	/**
 	 * Test extracting a reaction as example.
-	 * 
+	 *
 	 * TODO: REACT: One example for each reaction should be set in owl dictionary.
 	 * @return    The test suite
 	 */
@@ -285,15 +285,15 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //	        			molecule.getProperty(CDKConstants.INCHI));
 //	        	Assert.assertNotSame("The representation entry for ["+entryString+"]  must contain the InChI id for each reactant.",
 //	        			"",molecule.getProperty(CDKConstants.INCHI));
-//	        	
+//
 //	        }
 //    	}
 	}
 	/**
 	 * Test extracting a reaction as example and comparing with the initiated.
-	 * 
+	 *
 	 * TODO: REACT: How to comparing two reaction?
-	 * 
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
@@ -308,27 +308,27 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
 	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
-	        
+
 	        IAtomContainerSet reactants = reactionDict.getReactants();
 	        IAtomContainerSet agents = reactionDict.getAgents();
 	        IAtomContainerSet products = reactionDict.getProducts();
 	        if(agents.getAtomContainerCount() == 0)
 	        	agents = null;
-	        
+
 	        IReactionSet reactions = reaction.initiate(reactants, agents);
-	        
+
 	        Assert.assertTrue("The products for ["+entryString+"] reaction is at least one reaction expected.",
 	        		reactions.getReactionCount() > 0);
-	        	
+
 	        Assert.assertSame("The products for ["+entryString+"] reaction is not the expected.",
 	        		products.getAtomContainer(0).getAtomCount(),reactions.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
-	        	
-	        
+
+
     	}
 	}
 //	/**
 //	 * Test the reaction center
-//	 * 
+//	 *
 //	 * @return    The test suite
 //	 */
 //	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
@@ -336,21 +336,21 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //
 //	/**
 //	 * Test mapping in reaction process.
-//	 *  
+//	 *
 //	 * @return    The test suite
 //	 */
 //	@Test public void testMapping() throws Exception {
-//        
-//		
+//
+//
 //	}
-//	
+//
 //	/**
 //	 * Set reaction center and generates the product.
 //	 *
 //	 * @return    The test suite
 //	 */
 //	@Test public void testManuallyCentreActive() throws Exception {
-//        
+//
 //	}
 //
 //	/**
@@ -359,13 +359,13 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //	 * @return    The test suite
 //	 */
 //	@Test public void testAutomaticallyCentreActive() throws Exception {
-//        
+//
 //	}
 //
 //
 //	/**
 //	 * Control that the reactant is the not modified during the process.
-//	 * 
+//	 *
 //	 * @return    The test suite
 //	 */
 //	@Test public void testCalculate_Results() throws Exception {
@@ -377,7 +377,7 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //			CMLReader reader = new CMLReader(new ByteArrayInputStream(xml.getBytes()));
 //	        IChemFile chemFile = (IChemFile)reader.read(builder.newInstance(IChemFile.class));
 //	        IReaction reactionDict = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
-//	        
+//
 //	        IReaction reactionTest = builder.newInstance(IReaction.class);
 //	        for(Iterator<IAtomContainer> itM = reactionDict.getReactants().molecules(); itM.hasNext();){
 //	        	reactionTest.addReactant((IAtomContainer) itM.next());
@@ -394,25 +394,25 @@ public abstract class ReactionProcessTest extends CDKTestCase {
 //	        	agents = null;
 //	        System.out.println(agents);
 //	        IReactionSet setOfReactions = reaction.initiate(reactants, agents);
-//	        
-//	        
-//	        
+//
+//
+//
 //		}
 //	}
-//	
+//
 //	/**
 //	 * Control that the reactant is the not modified during the process.
-//	 * 
+//	 *
 //	 * @return    The test suite
 //	 */
 //	@Test public void testGetMechanism() throws Exception {
 //		EntryReact entry = (EntryReact) dictionary.getEntry(entryString.toLowerCase());
-//    	
+//
 //		String mechanismName = "org.openscience.cdk.reaction.mechanism."+entry.getMechanism();
-//		
+//
 //		Assert.assertNotNull(
 //    			"The representation entry for ["+entryString+"]  must contain at least one mechanism coming from.",
 //    			this.getClass().getClassLoader().loadClass(mechanismName).newInstance());
-//    
+//
 //	}
 }

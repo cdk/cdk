@@ -101,7 +101,7 @@ public class TimeManagerTest extends CDKTestCase {
         try {
             thisThread.sleep(timeMillis);
         } catch (Throwable t) {
-            
+
             throw new OutOfMemoryError("An Error has occured");
         }
         System.out.println("Ending......");

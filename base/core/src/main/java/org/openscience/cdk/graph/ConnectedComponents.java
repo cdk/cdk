@@ -72,7 +72,7 @@ public final class ConnectedComponents {
     public int[] components() {
         return Arrays.copyOf(component, component.length);
     }
-    
+
     @TestMethod("connected,disconnected")
     public int nComponents() {
         return components;

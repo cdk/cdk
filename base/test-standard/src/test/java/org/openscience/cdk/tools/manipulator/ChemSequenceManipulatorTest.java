@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.manipulator;
 
@@ -49,7 +49,7 @@ import org.openscience.cdk.tools.IDCreator;
  * @cdk.module test-standard
  */
 public class ChemSequenceManipulatorTest extends CDKTestCase {
-    
+
 	IAtomContainer molecule1 = null;
 	IAtomContainer molecule2 = null;
 	IAtom atomInMol1 = null;
@@ -62,7 +62,7 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
 	IChemModel chemModel2 = null;
 	IChemSequence chemSequence = null;
 
-	
+
     public ChemSequenceManipulatorTest() {
         super();
     }
@@ -101,19 +101,19 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
 		int count = ChemSequenceManipulator.getAtomCount(chemSequence);
     	Assert.assertEquals(6, count);
 	}
-	
+
 	@Test public void testGetBondCount_IChemSequence()
 	{
 		int count = ChemSequenceManipulator.getBondCount(chemSequence);
     	Assert.assertEquals(2, count);
 	}
-	
+
 	@Test public void testGetAllAtomContainers_IChemSequence()
 	{
 		List<IAtomContainer> list = ChemSequenceManipulator.getAllAtomContainers(chemSequence);
 		Assert.assertEquals(4, list.size());
 	}
-	
+
 	@Test public void testGetAllChemObjects_IChemSequence()
 	{
 		List<IChemObject> list = ChemSequenceManipulator.getAllChemObjects(chemSequence);
@@ -150,8 +150,8 @@ public class ChemSequenceManipulatorTest extends CDKTestCase {
         Set<String> uniq = new HashSet<String>(allIDs);
         Assert.assertEquals(12, uniq.size());
     }
-	
-	
+
+
 }
 
 

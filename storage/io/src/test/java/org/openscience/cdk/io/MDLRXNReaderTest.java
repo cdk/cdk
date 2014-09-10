@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -99,7 +99,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
         // Check Atom symbols of first product
         IAtomContainerSet products = reaction1.getProducts();
-        String[] atomSymbolsOfProduct1 = { 
+        String[] atomSymbolsOfProduct1 = {
         		"C",
         		"C",
         		"C",
@@ -128,7 +128,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 		Assert.assertEquals(2, reaction2.getReactantCount());
 		Assert.assertEquals(2, reaction2.getProductCount());
     }
-    
+
     @Test public void testReadMapping() throws Exception {
 		String filename2 = "data/mdl/mappingTest.rxn";
 		logger.info("Testing: " + filename2);
@@ -144,7 +144,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 		Assert.assertTrue(maps.hasNext());
     }
     /**
-     * 
+     *
      */
     @Test public void testRDFChemFile() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
@@ -154,8 +154,8 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
         reader.close();
         Assert.assertNotNull(chemFile);
-        
-        
+
+
 		Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReactionCount());
         Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactantCount());
         Assert.assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
@@ -163,17 +163,17 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProductCount());
         Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0).getProducts().getAtomContainer(1).getAtomCount());
-        
+
 
         Assert.assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactantCount());
         Assert.assertEquals(3, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getReactants().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(1, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProductCount());
         Assert.assertEquals(2, chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(1).getProducts().getAtomContainer(0).getAtomCount());
-        
+
     }
 
     /**
-     * 
+     *
      */
     @Test public void testRDFModel() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
@@ -183,8 +183,8 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         IChemModel chemModel = (IChemModel)reader.read(new ChemModel());
         reader.close();
         Assert.assertNotNull(chemModel);
-        
-        
+
+
 		Assert.assertEquals(2, chemModel.getReactionSet().getReactionCount());
         Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getReactantCount());
         Assert.assertEquals(3, chemModel.getReactionSet().getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
@@ -192,16 +192,16 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProductCount());
         Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(2, chemModel.getReactionSet().getReaction(0).getProducts().getAtomContainer(1).getAtomCount());
-        
+
 
         Assert.assertEquals(1, chemModel.getReactionSet().getReaction(1).getReactantCount());
         Assert.assertEquals(3, chemModel.getReactionSet().getReaction(1).getReactants().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(1, chemModel.getReactionSet().getReaction(1).getProductCount());
         Assert.assertEquals(2, chemModel.getReactionSet().getReaction(1).getProducts().getAtomContainer(0).getAtomCount());
-        
+
     }
     /**
-     * 
+     *
      */
     @Test public void testRDFReactioniSet() throws Exception {
         String filename = "data/mdl/qsar-reaction-test.rdf";
@@ -211,8 +211,8 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         IReactionSet reactionSet = (IReactionSet)reader.read(new ReactionSet());
         reader.close();
         Assert.assertNotNull(reactionSet);
-        
-        
+
+
 		Assert.assertEquals(2, reactionSet.getReactionCount());
         Assert.assertEquals(2, reactionSet.getReaction(0).getReactantCount());
         Assert.assertEquals(3, reactionSet.getReaction(0).getReactants().getAtomContainer(0).getAtomCount());
@@ -220,17 +220,17 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(2, reactionSet.getReaction(0).getProductCount());
         Assert.assertEquals(2, reactionSet.getReaction(0).getProducts().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(2, reactionSet.getReaction(0).getProducts().getAtomContainer(1).getAtomCount());
-        
+
 
         Assert.assertEquals(1, reactionSet.getReaction(1).getReactantCount());
         Assert.assertEquals(3, reactionSet.getReaction(1).getReactants().getAtomContainer(0).getAtomCount());
         Assert.assertEquals(1, reactionSet.getReaction(1).getProductCount());
         Assert.assertEquals(2, reactionSet.getReaction(1).getProducts().getAtomContainer(0).getAtomCount());
     }
-       
-        
+
+
     /**
-     * This test checks of different numbering for the same mapping gives the same result. 
+     * This test checks of different numbering for the same mapping gives the same result.
      */
     @Test public void testAsadExamples() throws Exception{
         String filename = "data/mdl/output.rxn";
@@ -260,7 +260,7 @@ public class MDLRXNReaderTest extends SimpleChemObjectReaderTest {
 
     /**
      * Tells the position of an atom in a reaction. Format is "reaction/product:numberofreaction/product_atomnumber".
-     * 
+     *
      * @param reactionSet The reactionSet in which to search.
      * @param chemObject  The atom to search for.
      * @return The position in the said format.

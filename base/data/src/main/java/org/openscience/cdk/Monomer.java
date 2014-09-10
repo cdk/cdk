@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Edgar Luttmann <edgar@uni-paderborn.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,14 +27,14 @@ import java.io.Serializable;
 import org.openscience.cdk.interfaces.IMonomer;
 
 /**
- * A Monomer is an AtomContainer which stores additional monomer specific 
+ * A Monomer is an AtomContainer which stores additional monomer specific
  * informations for a group of Atoms.
  *
  * @cdk.module data
  * @cdk.githash
  *
  * @author     Edgar Luttmann <edgar@uni-paderborn.de>
- * @cdk.created    2001-08-06 
+ * @cdk.created    2001-08-06
  *
  * @cdk.keyword    monomer
  *
@@ -61,11 +61,11 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	 *
 	 * Constructs a new Monomer.
 	 *
-	 */	
+	 */
 	public Monomer () {
 		super();
 	}
-	
+
 	/**
 	 *
 	 * Retrieves the monomer name.
@@ -89,7 +89,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 	public String getMonomerType() {
 		return monomerType;
 	}
-	
+
 	/**
 	 *
 	 * Sets the name of the Monomer object.
@@ -102,7 +102,7 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 		monomerName = cMonomerName;
 		notifyChanged();
 	}
-	
+
 	/**
 	 *
 	 * Sets the type of the Monomer object.
@@ -136,5 +136,5 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
 		buffer.append('}');
 		return buffer.toString();
 	}
-	
+
 }

@@ -94,11 +94,11 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
     public MDLRXNV2000Reader(InputStream input, Mode mode) {
         this(new InputStreamReader(input), mode);
     }
-    
+
     public MDLRXNV2000Reader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLRXNFormat.getInstance();
@@ -112,7 +112,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             this.input = new BufferedReader(input);
         }
     }
-    
+
     @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
@@ -169,7 +169,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
              );
          }
      }
-     
+
      @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
          if (object instanceof IReaction) {
@@ -217,7 +217,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while counts line of RXN file", exception);
         }
-        
+
         // now read the reactants
         try {
             for (int i=1; i<=reactantCount; i++) {
@@ -229,7 +229,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                     molFile.append(molFileLine);
                     molFile.append(System.getProperty("line.separator"));
                 } while (!molFileLine.equals("M  END"));
-                
+
                 // read MDL molfile content
                 // Changed this to mdlv2000 reader
                 MDLV2000Reader reader = new MDLV2000Reader(
@@ -240,7 +240,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
                   builder.newInstance(IAtomContainer.class)
                 );
                 reader.close();
-                  
+
                 // add reactant
                 reaction.addReactant(reactant);
             }
@@ -251,26 +251,26 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while reading reactant", exception);
         }
-        
+
         // now read the products
         try {
             for (int i=1; i<=productCount; i++) {
                 StringBuffer molFile = new StringBuffer();
-                input.readLine(); // String announceMDLFileLine = 
+                input.readLine(); // String announceMDLFileLine =
                 String molFileLine = "";
                 do {
                     molFileLine = input.readLine();
                     molFile.append(molFileLine);
                     molFile.append(System.getProperty("line.separator"));
                 } while (!molFileLine.equals("M  END"));
-                
+
                 // read MDL molfile content
                 MDLV2000Reader reader = new MDLV2000Reader(
                   new StringReader(molFile.toString()));
                 IAtomContainer product = (IAtomContainer)reader.read(
                   builder.newInstance(IAtomContainer.class));
                 reader.close();
-                  
+
                 // add reactant
                 reaction.addProduct(product);
             }
@@ -281,7 +281,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             logger.debug(exception);
             throw new CDKException("Error while reading products", exception);
         }
-        
+
         // now try to map things, if wanted
         logger.info("Reading atom-atom mapping from file");
         // distribute all atoms over two AtomContainer's
@@ -295,7 +295,7 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
         while (molecules.hasNext()) {
             producedSide.add(molecules.next());
         }
-        
+
         // map the atoms
         int mappingCount = 0;
 //        IAtom[] reactantAtoms = reactingSide.getAtoms();
@@ -315,10 +315,10 @@ public class MDLRXNV2000Reader extends DefaultChemObjectReader {
             }
         }
         logger.info("Mapped atom pairs: " + mappingCount);
-        
+
         return reaction;
     }
-    
+
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();

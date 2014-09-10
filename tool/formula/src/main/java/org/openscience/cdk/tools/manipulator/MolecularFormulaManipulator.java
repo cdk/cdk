@@ -1,7 +1,7 @@
 /* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -46,7 +46,7 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Class with convenience methods that provide methods to manipulate
  * {@link IMolecularFormula}'s. For example:
- * 
+ *
  *
  * @cdk.module  formula
  * @author      miguelrojasch
@@ -95,23 +95,23 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Occurrences of a given element from an isotope in a molecular formula.
-	 * 
+	 *
 	 * @param  formula the formula
 	 * @param  isotope isotope of an element
 	 * @return         number of the times the element occurs
-	 * @see #getElementCount(IMolecularFormula, IElement)  
+	 * @see #getElementCount(IMolecularFormula, IElement)
 	 */
     public static int getElementCount(IMolecularFormula formula, IIsotope isotope) {
         return getElementCount(formula, formula.getBuilder().newInstance(IElement.class, isotope));
 	}
-    
+
     /**
 	 * Occurrences of a given element in a molecular formula.
-	 * 
+	 *
 	 * @param  formula the formula
 	 * @param  symbol  element symbol (e.g. C for carbon)
 	 * @return         number of the times the element occurs
-	 * @see #getElementCount(IMolecularFormula, IElement)  
+	 * @see #getElementCount(IMolecularFormula, IElement)
 	 */
     public static int getElementCount(IMolecularFormula formula, String symbol) {
         return getElementCount(formula, formula.getBuilder().newInstance(IElement.class, symbol));
@@ -178,7 +178,7 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Removes all isotopes from a given element in the MolecularFormula.
-	 * 
+	 *
 	 * @param  formula   IMolecularFormula molecularFormula
 	 * @param  element   The IElement of the IIsotopes to be removed
 	 * @return           The molecularFormula with the isotopes removed
@@ -193,18 +193,18 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Returns the string representation of the molecule formula.
-	 * 
+	 *
 	 * @param formula       The IMolecularFormula Object
 	 * @param orderElements The order of Elements
 	 * @param setOne        True, when must be set the value 1 for elements with
 	 * 					    one atom
 	 * @return              A String containing the molecular formula
-	 * 
+	 *
 	 * @see #getHTML(IMolecularFormula)
 	 * @see #generateOrderEle()
 	 * @see #generateOrderEle_Hill_NoCarbons()
 	 * @see #generateOrderEle_Hill_WithCarbons()
-	 * 
+	 *
 	 */
 	@TestMethod("testGetString_IMolecularFormula_arrayString_boolean")
 	public static String getString(IMolecularFormula formula, String[] orderElements, boolean setOne) {
@@ -242,7 +242,7 @@ public class MolecularFormulaManipulator {
 	 *
 	 * @param  formula  The IMolecularFormula Object
 	 * @return          A String containing the molecular formula
-	 * 
+	 *
 	 * @see #getHTML(IMolecularFormula)
 	 */
 	@TestMethod("testGetString_IMolecularFormula")
@@ -264,7 +264,7 @@ public class MolecularFormulaManipulator {
 	 * @param  setOne   True, when must be set the value 1 for elements with
 	 * 					one atom
 	 * @return          A String containing the molecular formula
-	 * 
+	 *
 	 * @see #getHTML(IMolecularFormula)
 	 */
 	@TestMethod("testGetString_IMolecularFormula_boolean")
@@ -294,7 +294,7 @@ public class MolecularFormulaManipulator {
 	 * @deprecated  Use {@link #getString(org.openscience.cdk.interfaces.IMolecularFormula)}
 	 */
 	@TestMethod("testGetHillString_IMolecularFormula")
-	@Deprecated 
+	@Deprecated
 	public static String getHillString(IMolecularFormula formula) {
 		StringBuffer hillString = new StringBuffer();
 
@@ -335,12 +335,12 @@ public class MolecularFormulaManipulator {
 	 * Returns the string representation of the molecule formula based on Hill
 	 * System with numbers wrapped in &lt;sub&gt;&lt;/sub&gt; tags. Useful for
 	 * displaying formulae in Swing components or on the web.
-	 * 
+	 *
 	 *
 	 * @param   formula  The IMolecularFormula object
 	 * @return           A HTML representation of the molecular formula
 	 * @see              #getHTML(IMolecularFormula, boolean, boolean)
-	 * 
+	 *
 	 */
 	@TestMethod("testGetHTML_IMolecularFormula")
 	public static String getHTML(IMolecularFormula formula) {
@@ -353,14 +353,14 @@ public class MolecularFormulaManipulator {
 	 * isotope of each Element in &lt;sup&gt;&lt;/sup&gt; tags and the total
 	 * charge of IMolecularFormula in &lt;sup&gt;&lt;/sup&gt; tags. Useful for
 	 * displaying formulae in Swing components or on the web.
-	 * 
+	 *
 	 *
 	 * @param   formula  The IMolecularFormula object
 	 * @param   chargeB  True, If it has to show the charge
 	 * @param   isotopeB True, If it has to show the Isotope mass
 	 * @return           A HTML representation of the molecular formula
 	 * @see              #getHTML(IMolecularFormula)
-	 * 
+	 *
 	 */
 	@TestMethod("testGetHTML_IMolecularFormula_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, boolean chargeB, boolean isotopeB) {
@@ -371,14 +371,14 @@ public class MolecularFormulaManipulator {
 			orderElements = generateOrderEle_Hill_NoCarbons();
 		return getHTML(formula, orderElements, chargeB, isotopeB);
 	}
-	
+
 	/**
-	 * Returns the string representation of the molecule formula with numbers 
+	 * Returns the string representation of the molecule formula with numbers
 	 * wrapped in &lt;sub&gt;&lt;/sub&gt; tags and the isotope of each Element
 	 * in &lt;sup&gt;&lt;/sup&gt; tags and the total charge of IMolecularFormula
 	 * in &lt;sup&gt;&lt;/sup&gt; tags. Useful for displaying formulae in Swing
 	 * components or on the web.
-	 * 
+	 *
 	 *
 	 * @param   formula  The IMolecularFormula object
 	 * @param   orderElements The order of Elements
@@ -386,7 +386,7 @@ public class MolecularFormulaManipulator {
 	 * @param   isotopeB True, If it has to show the Isotope mass
 	 * @return           A HTML representation of the molecular formula
 	 * @see              #getHTML(IMolecularFormula)
-	 * 
+	 *
 	 */
 	@TestMethod("testGetHTML_IMolecularFormula_arrayString_boolean_boolean")
 	public static String getHTML(IMolecularFormula formula, String[] orderElements, boolean chargeB, boolean isotopeB) {
@@ -412,7 +412,7 @@ public class MolecularFormulaManipulator {
 				}
 			}
 		}
-        
+
 		if (chargeB) {
 			Integer charge = formula.getCharge();
 			if (charge == CDKConstants.UNSET || charge == 0) {
@@ -576,7 +576,7 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Extract the molecular formula when it is defined with charge. e.g. [O3S]2-.
-	 * 
+	 *
 	 * @param formula  The formula to inspect
 	 * @return         The corrected formula
 	 */
@@ -600,7 +600,7 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Extract the charge given a molecular formula format [O3S]2-.
-	 * 
+	 *
 	 * @param formula The formula to inspect
 	 * @return        The charge
 	 */
@@ -634,7 +634,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Get the summed exact mass of all isotopes from an MolecularFormula. It
 	 * assumes isotope masses to be preset, and returns 0.0 if not.
-	 * 
+	 *
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed exact mass of all atoms in this MolecularFormula
 	 */
@@ -661,7 +661,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Correct the mass according the charge of the IMmoleculeFormula.
 	 * Negative charge will add the mass of one electron to the mass.
-	 * 
+	 *
 	 * @param mass      The mass to correct
 	 * @param charge    The charge
 	 * @return          The mass with the correction
@@ -678,7 +678,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Get the summed mass number of all isotopes from an MolecularFormula. It
 	 * assumes isotope masses to be preset, and returns 0.0 if not.
-	 * 
+	 *
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed nominal mass of all atoms in this MolecularFormula
 	 */
@@ -698,7 +698,7 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Get the summed natural mass of all elements from an MolecularFormula.
-	 * 
+	 *
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed exact mass of all atoms in this MolecularFormula
 	 */
@@ -743,7 +743,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Get the summed natural abundance of all isotopes from an MolecularFormula. Assumes
 	 * abundances to be preset, and will return 0.0 if not.
-	 * 
+	 *
 	 * @param  formula The IMolecularFormula to calculate
 	 * @return         The summed natural abundance of all isotopes in this MolecularFormula
 	 */
@@ -763,7 +763,7 @@ public class MolecularFormulaManipulator {
 	 * @param  formula  The IMolecularFormula to calculate
 	 * @return          The number of DBEs
 	 * @throws          CDKException if DBE cannot be be evaluated
-	 * 
+	 *
 	 * @cdk.keyword DBE
 	 * @cdk.keyword double bond equivalent
 	 */
@@ -871,7 +871,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Converts a formula string (like "C2H4") into an atom container with atoms
 	 * but no bonds.
-	 * 
+	 *
 	 * @param formulaString the formula to convert
 	 * @param builder a chem object builder
 	 * @return atoms wrapped in an atom container
@@ -883,14 +883,14 @@ public class MolecularFormulaManipulator {
 	}
 	/**
 	 * Returns the Elements ordered according to (approximate) probability of occurrence.
-	 * 
+	 *
 	 * <p>This begins with the "elements of life" C, H, O, N, (Si, P, S, F, Cl),
 	 * then continues with the "common" chemical synthesis ingredients, closing off
 	 * with the tail-end of the periodic table in atom-number order and finally
 	 * the generic R-group.
-	 * 
+	 *
 	 * @return  fixed-order array
-	 * 
+	 *
 	 */
 	public static String[] generateOrderEle(){
 		return new String[]{
@@ -955,7 +955,7 @@ public class MolecularFormulaManipulator {
 	 * (i.e. first carbon and hydrogen, and then the rest of the elements in strict
 	 * alphabetical order, with one-letter elements preceding two-letter elements.)
 	 * The generic R-group is treated specially and comes last.
-	 * 
+	 *
 	 * @return  Elements in Hill system order with carbons and hydrogens
 	 * 		first (and generic R-groups last).
 	 */
@@ -989,7 +989,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * Compare two IMolecularFormula looking at type and number of IIsotope and
 	 * charge of the formula.
-	 * 
+	 *
 	 * @param formula1   The first IMolecularFormula
 	 * @param formula2   The second IMolecularFormula
 	 * @return           True, if the both IMolecularFormula are the same
@@ -1024,10 +1024,10 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * Returns a set of nodes excluding all the hydrogens.
-	 * 
+	 *
 	 * @param   formula The IMolecularFormula
 	 * @return          The heavyElements value into a List
-	 * 
+	 *
 	 * @cdk.keyword    hydrogen, removal
 	 */
 	@TestMethod("testGetHeavyElements_IMolecularFormula")
@@ -1045,7 +1045,7 @@ public class MolecularFormulaManipulator {
 	 * Simplify the molecular formula. E.g the dot '.' character convention is
 	 * used when dividing a formula into parts. In this case any numeral following a dot refers
 	 * to all the elements within that part of the formula that follow it.
-	 * 
+	 *
 	 * @param formula  The molecular formula
 	 * @return         The simplified molecular formula
 	 */
@@ -1145,7 +1145,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * The parenthesis convention is used to show a quantity by which a formula is multiplied.
 	 * For example: (C12H20O11)2 really means that a C24H40O22 unit.
-	 * 
+	 *
 	 * @param formula Formula to correct
 	 * @return        Formula with the correction
 	 */
@@ -1174,7 +1174,7 @@ public class MolecularFormulaManipulator {
 	/**
 	 * The starting with numeric value is used to show a quantity by which a formula is multiplied.
 	 * For example: 2H2O really means that a H4O2 unit.
-	 * 
+	 *
 	 * @param formula Formula to correct
 	 * @return        Formula with the correction
 	 */
@@ -1201,7 +1201,7 @@ public class MolecularFormulaManipulator {
 
 	/**
 	 * This method multiply all the element over a value.
-	 * 
+	 *
 	 * @param formula Formula to correct
 	 * @param factor  Factor to multiply
 	 * @return        Formula with the correction

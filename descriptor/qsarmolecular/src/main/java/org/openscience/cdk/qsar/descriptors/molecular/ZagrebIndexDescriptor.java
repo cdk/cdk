@@ -41,7 +41,7 @@ import java.util.List;
  * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:zagrebIndex
- * 
+ *
  * @cdk.keyword Zagreb index
  * @cdk.keyword descriptor
  */
@@ -104,11 +104,11 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
      *  Evaluate the Zagreb Index for a molecule.
      *
      *@param  atomContainer                AtomContainer
-     *@return                   zagreb index     
+     *@return                   zagreb index
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-        double zagreb = 0;        
+        double zagreb = 0;
         for (IAtom atom : atomContainer.atoms()) {
             if (atom.getSymbol().equals("H")) continue;
             int atomDegree = 0;

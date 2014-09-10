@@ -179,7 +179,7 @@ public final class GeometryUtil {
      * Dimension areaDim, HashMap renderingCoordinates) for details on coordinate sets
      *
      * @param atomCon molecule to be centered
-     * @param areaDim dimension in which the molecule is to be centered, array containing 
+     * @param areaDim dimension in which the molecule is to be centered, array containing
      *                {width, height}
      */
     public static void center(IAtomContainer atomCon, double[] areaDim) {
@@ -1614,10 +1614,10 @@ public final class GeometryUtil {
             Vector2d shift = new Vector2d(xShift, 0.0);
             GeometryUtil.translate2D(container, shift);
             return new double[]{
-                boundsMinX + xShift,        
-                boundsMinY,        
-                boundsMaxX + xShift,        
-                boundsMaxY        
+                boundsMinX + xShift,
+                boundsMinY,
+                boundsMaxX + xShift,
+                boundsMaxY
             };
         }
         else {
@@ -1692,7 +1692,7 @@ public final class GeometryUtil {
     /**
      * Shift the containers in a reaction vertically upwards to not overlap with the reference
      * rectangle. The shift is such that the given gap is realized, but only if the reactions are
-     * actually overlapping. To avoid dependence on Java AWT, rectangles are described by 
+     * actually overlapping. To avoid dependence on Java AWT, rectangles are described by
      * arrays of double. Each rectangle is specified by {minX, minY, maxX, maxY}.
      *
      * @param reaction the reaction to shift
@@ -1703,18 +1703,18 @@ public final class GeometryUtil {
     public static double[] shiftReactionVertical(IReaction reaction, double[] bounds, double[] last, double gap) {
         assert bounds.length == 4;
         assert last.length == 4;
-        
+
         final double boundsMinX = bounds[0];
         final double boundsMinY = bounds[1];
         final double boundsMaxX = bounds[2];
         final double boundsMaxY = bounds[3];
-        
+
         final double lastMinY = last[1];
         final double lastMaxY = last[3];
 
         final double boundsHeight = boundsMaxY - boundsMinY;
         final double lastHeight = lastMaxY - lastMinY;
-        
+
         // determine if the reactions are overlapping
         if (lastMaxY + gap >= boundsMinY) {
             double yShift = boundsHeight + lastHeight + gap;

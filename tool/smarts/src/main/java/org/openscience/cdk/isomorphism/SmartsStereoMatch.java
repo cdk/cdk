@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -49,7 +49,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKW
 /**
  * Filters SMARTS matches for those that have valid stereochemistry
  * configuration.
- * 
+ *
  * Note: This class is internal and will be private in future.
  *
  * @author John May
@@ -77,12 +77,12 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
     /**
      * Create a predicate for checking mappings between a provided
      * {@code query} and {@code target}.
-     * 
+     *
      * @param query query container
      * @param target target container
      */
     public SmartsStereoMatch(IAtomContainer query, IAtomContainer target) {
-        
+
         if (!(query instanceof IQueryAtomContainer))
             throw new IllegalArgumentException("match predicate is for SMARTS only");
         if (!(query.getAtom(0) instanceof SMARTSAtom))
@@ -134,16 +134,16 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
      * @param mapping mapping of vertices
      * @return the tetrahedral configuration is preserved
      */
-    private boolean checkTetrahedral(int u, int[] mapping) {             
-        
+    private boolean checkTetrahedral(int u, int[] mapping) {
+
         int v = mapping[u];
 
         ITetrahedralChirality queryElement  = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
-        
+
         SMARTSAtom queryAtom  = (SMARTSAtom) query.getAtom(u);
         IAtom      targetAtom = target.getAtom(v);
-        
+
         int[] us = neighbors(queryElement, queryMap);
         us = map(u, v, us, mapping);
         int p = permutationParity(us);
@@ -151,15 +151,15 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         // check if unspecified was allowed
         if (targetTypes[v] == null)
             return queryAtom.chiralityMatches(targetAtom, 0, p);
-        
-        // target was non-tetrahedral 
+
+        // target was non-tetrahedral
         if (targetTypes[v] != Type.Tetrahedral)
-            return false;       
+            return false;
 
         int[] vs = neighbors(targetElement, targetMap);
         int   q  = permutationParity(vs) * parity(targetElement.getStereo());
-        
-        return queryAtom.chiralityMatches(targetAtom, q, p); 
+
+        return queryAtom.chiralityMatches(targetAtom, q, p);
     }
 
     /**
@@ -197,22 +197,22 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
 
         IDoubleBondStereochemistry queryElement = (IDoubleBondStereochemistry) queryElements[u1];
         IBond[] queryBonds = queryElement.getBonds();
-        
-        boolean unspecified = ((StereoBond)queryBonds[0]).unspecified() 
+
+        boolean unspecified = ((StereoBond)queryBonds[0]).unspecified()
                               || ((StereoBond)queryBonds[1]).unspecified();
 
         if (unspecified && (targetTypes[v1] == null || targetTypes[v2] == null))
             return true;
-        
+
         // no configuration in target
         if (targetTypes[v1] != Type.Geometric || targetTypes[v2] != Type.Geometric)
             return false;
-        
+
 
         IDoubleBondStereochemistry targetElement = (IDoubleBondStereochemistry) targetElements[v1];
 
         // although the atoms were mapped and 'v1' and 'v2' are bond in double-bond
-        // elements they are not in the same element 
+        // elements they are not in the same element
         if (!targetElement.getStereoBond().contains(target.getAtom(v1))
                 || !targetElement.getStereoBond().contains(target.getAtom(v2)))
             return false;
@@ -227,7 +227,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
             swap = true;
         }
 
-        
+
         IBond[] targetBonds = targetElement.getBonds();
 
         int p = parity(queryElement.getStereo());
@@ -266,7 +266,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
             vs[i] = map.get(atoms[i]);
         return vs;
     }
-    
+
     /**
      * Compute the permutation parity of the values {@code vs}. The parity is
      * whether we need to do an odd or even number of swaps to put the values in

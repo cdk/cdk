@@ -1,21 +1,21 @@
 /* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.silent;
 
@@ -51,7 +51,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
 	private static final long serialVersionUID = -6541914644492043503L;
 
 	private IChemObject[] relation;
-    
+
     /**
      * Constructs an unconnected lone pair.
      *
@@ -77,7 +77,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
             }
         };
     }
-    
+
     /**
      * The inner Iterator class.
      *
@@ -85,7 +85,7 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
     private class ChemObjectIterator implements Iterator<IChemObject> {
 
         private int pointer = 0;
-    	
+
         public boolean hasNext() {
             return pointer < 2;
         }
@@ -95,19 +95,19 @@ public class Mapping extends ChemObject implements java.io.Serializable, Cloneab
         }
 
         public void remove() {}
-    	
+
     }
-    
+
     /**
      * Retrieves the first or second of the related IChemObjects.
-     * 
+     *
      * @param   pos  The position of the IChemObject.
      * @return  The IChemObject to retrieve.
      */
     public IChemObject getChemObject(int pos) {
     	return relation[pos];
     }
-    
+
 	/**
 	 * Clones this <code>Mapping</code> and the mapped <code>IChemObject</code>s.
 	 *

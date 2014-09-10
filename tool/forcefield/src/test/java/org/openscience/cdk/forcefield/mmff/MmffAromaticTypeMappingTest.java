@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *   
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -259,15 +259,15 @@ public class MmffAromaticTypeMappingTest {
         int[] dbs   = new int[]{1, 0, 3, -1, 5, 4};
         assertFalse(MmffAromaticTypeMapping.isAromaticRing(cycle, contr, dbs, new boolean[contr.length]));
     }
-    
+
     @Test public void intractableNumberOfCycles() throws Exception {
-        
+
         // to ensure intractable cycles are handled we create a complete graph
         // where every vertex is attached to every other vertex. K8 is sufficient
         // to trigger an abort when finding cycles
         IAtomContainer container = Mockito.mock(IAtomContainer.class);
-        int[][] graphK8 = new int[8][7]; 
-        
+        int[][] graphK8 = new int[8][7];
+
         for (int i = 0; i < graphK8.length; i++) {
             int n = 0;
             for (int j = 0; j < graphK8.length; j++) {
@@ -275,11 +275,11 @@ public class MmffAromaticTypeMappingTest {
                 graphK8[i][n++] = j;
             }
         }
-        
+
         assertThat(MmffAromaticTypeMapping.cyclesOfSizeFiveOrSix(container, graphK8).length,
                    is(0));
     }
-    
+
     @Test public void contributionOfThreeValentCarbon() {
         assertThat(MmffAromaticTypeMapping.contribution(6, 3, 3), is(-1));
     }

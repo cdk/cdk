@@ -1,17 +1,17 @@
 /* Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -27,8 +27,8 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * Classes that implement this interface are QSAR descriptor calculators.
  * The architecture provides a few subinterfaces such as the
  * <code>IMolecularDescriptor</code>, <code>IAtomicDescriptor</code> and
- * <code>IBondDescriptor</code>. 
- * 
+ * <code>IBondDescriptor</code>.
+ *
  * <p><b>Calculated results</b><br />
  * The results calculated by the descriptor can have various types, which
  * extend the IDescriptorResult, and is embedded in a
@@ -49,29 +49,29 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *   <li>DoubleArrayResult</li>
  *   <li>IntegerArrayResult</li>
  * </ul>
- * 
+ *
  * <p>The length of the first of these three result types is fixed at
  * 1. However, the length of the array result types varies, depending
  * on the used descriptor parameters. The length must not depend on the
  * IAtomContainer, but only on the parameters.
- * 
+ *
  * <p><b>Parameters</b><br />
  * A descriptor may have parameters that specify how the descriptor
  * is calculated, or to what level of detail. For example, the atom
  * count descriptor may calculate counts for all elements, or just
  * the specified element. As an effect, the DescriptorValue results
  * may vary in length too.
- * 
+ *
  * <p>Each descriptor <b>must</b> provide default parameters, which
  * allow descriptors to be calculated without having to set parameter
  * values.
- * 
+ *
  * <p>To interactively query which parameters are available, one can
  * use the methods <code>getParameterNames()</code> to see how many
  * and which parameters are available. To determine what object is
  * used to set the parameter, the method <code>getParameterType(String)</code>
  * is used, where the parameter name is used as identifier.
- * 
+ *
  * <p>The default values are retrieved using the <code>getParameters()</code>
  * method of a freshly instantiated <code>IDescriptor</code>. After use
  * of <code>setParameters()</code>, the current parameter values are
@@ -79,7 +79,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  *
  * @cdk.module qsar
  * @cdk.githash
- * 
+ *
  * @see        DescriptorValue
  * @see        IDescriptorResult
  */
@@ -97,7 +97,7 @@ public interface IDescriptor {
 
    /**
    * Returns a <code>IImplementationSpecification</code> which specifies which descriptor
-   * is implemented by this class. 
+   * is implemented by this class.
    *
    * These fields are used in the map:
    * <ul>
@@ -111,18 +111,18 @@ public interface IDescriptor {
    * @return An object containing the descriptor specification
    */
     public IImplementationSpecification getSpecification();
-    
-    /** 
+
+    /**
      * Returns the names of the parameters for this descriptor. The method
      * returns null or a zero-length Object[] array if the descriptor
      *  does not have any parameters.
      *
-     * @return An array of String containing the names of the parameters 
+     * @return An array of String containing the names of the parameters
      *         that this descriptor can accept.
      */
     public String[] getParameterNames();
-    
-    /** 
+
+    /**
      * Returns a class matching that of the parameter with the given name. May
      * only return null for when 'name' does not match any parameters returned
      * by the getParameters() method.
@@ -131,9 +131,9 @@ public interface IDescriptor {
      * @return An Object of the class corresponding to the parameter with the supplied name
      */
     public Object getParameterType(String name);
-    
-    /** 
-     * Sets the parameters for this descriptor. 
+
+    /**
+     * Sets the parameters for this descriptor.
      *
      * Must be done before calling
      * calculate as the parameters influence the calculation outcome.
@@ -143,8 +143,8 @@ public interface IDescriptor {
      * @see #getParameters
      */
     public void setParameters(Object[] params) throws CDKException;
-    
-    /** 
+
+    /**
      * Returns the current parameter values. If not parameters have been set,
      * it must return the default parameters. The method returns null or a
      * zero-length Object[] array if the descriptor does not have any
@@ -176,6 +176,6 @@ public interface IDescriptor {
      * in length to the number of descriptor calculated..
      */
     public String[] getDescriptorNames();
-    
+
 }
 

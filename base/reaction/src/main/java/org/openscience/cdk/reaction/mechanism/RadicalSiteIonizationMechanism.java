@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -39,10 +39,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <p>This mechanism extracts an atom because of the stabilization of a radical. 
+ * <p>This mechanism extracts an atom because of the stabilization of a radical.
  * It returns the reaction mechanism which has been cloned the IMolecule.</p>
  * <p>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</p>
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -51,9 +51,9 @@ import java.util.List;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.RadicalSiteIonizationMechanismTest")
 public class RadicalSiteIonizationMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
-     * reactants and products. 
+     * reactants and products.
      *
      *
      * @param atomContainerSet
@@ -64,7 +64,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism{
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond.
      * 					  It is the bond which is moved
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -87,7 +87,7 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism{
 		}
 		IAtom atom1 = atomList.get(0);// Atom containing the ISingleElectron
 		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
-		IAtom atom2 = atomList.get(1);// Atom 
+		IAtom atom2 = atomList.get(1);// Atom
 		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
 		IAtom atom3 = atomList.get(2);// Atom to be saved
 		IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
@@ -95,41 +95,41 @@ public class RadicalSiteIonizationMechanism implements IReactionMechanism{
 		int posBond1 = molecule.getBondNumber(bond1);
 		IBond bond2 = bondList.get(1);// Bond to remove
 		int posBond2 = molecule.getBondNumber(bond2);
-		
+
 		BondManipulator.increaseBondOrder(reactantCloned.getBond(posBond1));
 		reactantCloned.removeBond(reactantCloned.getBond(posBond2));
-		
+
     	List<ISingleElectron> selectron = reactantCloned.getConnectedSingleElectronsList(atom1C);
-		reactantCloned.removeSingleElectron(selectron.get(selectron.size() -1));		
+		reactantCloned.removeSingleElectron(selectron.get(selectron.size() -1));
 		atom1C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		atom2C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		reactantCloned.addSingleElectron(atom2C.getBuilder().newInstance(ISingleElectron.class, atom3C));
 		atom3C.setHybridization(null);
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
-		
+
 		IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
 		for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++)
 			reaction.addProduct((IAtomContainer)moleculeSetP.getAtomContainer(z));
-    	
+
 		return reaction;
 	}
 

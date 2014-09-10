@@ -1,7 +1,7 @@
 /* Copyright (C) 2007  Ola Spjuth <ospjuth@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class MDMolecule extends AtomContainer {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3129626782945020908L;
 
@@ -44,7 +44,7 @@ public class MDMolecule extends AtomContainer {
 
    	//List of ChargeGroups
    	private List chargeGroups;
-	
+
 	public MDMolecule() {
 		super();
 	}
@@ -73,11 +73,11 @@ public class MDMolecule extends AtomContainer {
 			System.out.println("Residue: " + residue.getName() + " already present in molecule: " + getID());
 			return;
 		}
-		
+
 		residues.add(residue);
 	}
 
-	
+
 	public List getChargeGroups() {
 		return chargeGroups;
 	}
@@ -88,7 +88,7 @@ public class MDMolecule extends AtomContainer {
 
 	/**
 	 * Add a ChargeGroup to the MDMolecule if not already present.
-	 * 
+	 *
 	 * @param chargeGroup {@link ChargeGroup} to add
 	 */
 	public void addChargeGroup(ChargeGroup chargeGroup){
@@ -99,8 +99,8 @@ public class MDMolecule extends AtomContainer {
 			System.out.println("Charge group: " + chargeGroup.getNumber() + " already present in molecule: " + getID());
 			return;
 		}
-		
+
 		chargeGroups.add(chargeGroup);
 	}
-	
+
 }

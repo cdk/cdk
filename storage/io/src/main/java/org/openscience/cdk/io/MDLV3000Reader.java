@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * Class that implements the MDL mol V3000 format. This reader reads the 
+ * Class that implements the MDL mol V3000 format. This reader reads the
  * element symbol and 2D or 3D coordinates from the ATOM block.
  *
  * @cdk.module io
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  *
  * @author      Egon Willighagen <egonw@users.sf.net>
  * @cdk.created 2006
- * 
+ *
  * @cdk.keyword MDL molfile V3000
  * @cdk.require java1.4+
  */
@@ -75,7 +75,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
 
     private Pattern keyValueTuple;
     private Pattern keyValueTuple2;
-    
+
     private int lineNumber;
 
     public MDLV3000Reader(Reader in) {
@@ -97,11 +97,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public MDLV3000Reader(InputStream input, Mode mode) {
         this(new InputStreamReader(input), mode);
     }
-    
+
     public MDLV3000Reader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MDLV3000Format.getInstance();
@@ -140,11 +140,11 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
         return null;
     }
-    
+
     public IAtomContainer readMolecule(IChemObjectBuilder builder) throws CDKException {
         return builder.newInstance(IAtomContainer.class,readConnectionTable(builder));
     }
-    
+
     public IAtomContainer readConnectionTable(IChemObjectBuilder builder) throws CDKException {
     	logger.info("Reading CTAB block");
         IAtomContainer readData = builder.newInstance(IAtomContainer.class);
@@ -172,7 +172,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
         return readData;
     }
-    
+
     /**
      * @throws CDKException when no file content is detected
      * @return Last line read
@@ -213,7 +213,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         } catch (IOException exception) {
 	        throw new CDKException("Could not initiate the IsotopeFactory.", exception);
         }
-        
+
         int RGroupCounter = 1;
         int Rnumber = 0;
         String[] rGroup = null;
@@ -295,7 +295,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 if (!mapping.equals("0")) {
                     logger.warn("Skipping atom-atom mapping: " + mapping);
                 } // else: default 0 is no mapping defined
-                
+
                 // the rest are key value things
                 if (command.indexOf('=') != -1) {
                     Map<String,String> options = parseOptions(exhaustStringTokenizer(tokenizer));
@@ -321,14 +321,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         }
                     }
                 }
-                
+
                 // store atom
                 readData.addAtom(atom);
                 logger.debug("Added atom: " + atom);
             }
         }
     }
-    
+
     /**
      * Reads the bond atoms, order and stereo configuration.
      */
@@ -423,14 +423,14 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         }
                     }
                 }
-                
+
                 // storing bond
                 readData.addBond(bond);
                 logger.debug("Added bond: " + bond);
             }
         }
     }
-    
+
     /**
      * Reads labels.
      */
@@ -451,7 +451,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                 // parse the external index
                 String externalIndexString = tokenizer.nextToken();
                 logger.warn("Skipping external index: " + externalIndexString);
-                
+
                 // the rest are key=value fields
                 Map<String,String> options = new Hashtable<String,String>();
                 if (command.indexOf('=') != -1) {
@@ -469,7 +469,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
                         try {
                             if (key.equals("ATOMS")) {
                                 StringTokenizer atomsTokenizer = new StringTokenizer(value);
-                                Integer.parseInt(atomsTokenizer.nextToken()); // should be 1, int atomCount = 
+                                Integer.parseInt(atomsTokenizer.nextToken()); // should be 1, int atomCount =
                                 atomID = Integer.parseInt(atomsTokenizer.nextToken());
                             } else if (key.equals("LABEL")) {
                                 label = value;
@@ -499,7 +499,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
     }
 
-            
+
     /**
      * Reads the command on this line. If the line is continued on the next, that
      * part is added.
@@ -518,7 +518,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
             throw new CDKException("Could not read MDL file: unexpected line: " + line);
         }
     }
-    
+
     private Map<String,String> parseOptions(String string) throws CDKException {
         Map<String,String> keyValueTuples = new Hashtable<String,String>();
         while (string.length() >= 3) {
@@ -548,7 +548,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
         return keyValueTuples;
     }
-    
+
     public String exhaustStringTokenizer(StringTokenizer tokenizer) {
         StringBuffer buffer = new StringBuffer();
         buffer.append(' ');
@@ -558,7 +558,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
         return buffer.toString();
     }
-    
+
     public String readLine() throws CDKException {
         String line = null;
         try {
@@ -573,7 +573,7 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
         }
         return line;
     }
-    
+
     public boolean isReady() throws CDKException {
         try {
             return input.ready();
@@ -589,9 +589,9 @@ public class MDLV3000Reader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-    
+
     private void initIOSettings() {
     }
 
-    
+
 }

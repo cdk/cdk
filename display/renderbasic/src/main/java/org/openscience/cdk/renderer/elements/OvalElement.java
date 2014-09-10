@@ -25,7 +25,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * An oval element (should) have both a width and a height.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -49,7 +49,7 @@ public class OvalElement implements IRenderingElement {
 
     /**
      * Make an oval with a default radius of 10.
-     * 
+     *
      * @param xCoord the x-coordinate of the center of the oval
      * @param yCoord the y-coordinate of the center of the oval
      * @param color the color of the oval
@@ -61,7 +61,7 @@ public class OvalElement implements IRenderingElement {
 
     /**
      * Make an oval with the supplied radius.
-     * 
+     *
      * @param xCoord the x-coordinate of the center of the oval
      * @param yCoord the y-coordinate of the center of the oval
      * @param radius the radius of the oval
@@ -73,7 +73,7 @@ public class OvalElement implements IRenderingElement {
 
     /**
      * Make an oval with a particular fill and color.
-     * 
+     *
      * @param xCoord the x-coordinate of the center of the oval
      * @param yCoord the y-coordinate of the center of the oval
      * @param radius the radius of the oval

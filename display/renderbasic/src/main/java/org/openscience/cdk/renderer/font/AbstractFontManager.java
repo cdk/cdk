@@ -23,7 +23,7 @@ import java.util.TreeMap;
 
 /**
  * Implements the common parts of the {@link IFontManager} interface.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -60,7 +60,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Get the font family name used in this font manager.
-     * 
+     *
      * @return the font name
      */
     public String getFontName() {
@@ -89,7 +89,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Get the font style, defined in the {@link IFontManager} interface.
-     *  
+     *
      * @return the font style
      */
     public IFontManager.FontStyle getFontStyle() {
@@ -98,8 +98,8 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * For a particular zoom level, register a font point-size so that this
-     * size of font will be used when the zoom is at this level. 
-     * 
+     * size of font will be used when the zoom is at this level.
+     *
      * @param zoom the zoom level
      * @param size the font size
      */
@@ -109,7 +109,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * For a particular zoom, get the appropriate font size.
-     *  
+     *
      * @param zoom the zoom level
      * @return an integer font size
      */
@@ -133,7 +133,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Get the number of font sizes used.
-     * 
+     *
      * @return the size of the zoom to font map
      */
     public int getNumberOfFontSizes() {
@@ -149,7 +149,7 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * Set the font size pointer to the middle of the range. 
+     * Set the font size pointer to the middle of the range.
      */
     public void toMiddle() {
         this.currentFontIndex = this.getNumberOfFontSizes() / 2;
@@ -186,19 +186,19 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /**
-     * Check that the font pointer is in the range (0, numberOfFonts - 1). 
-     * 
+     * Check that the font pointer is in the range (0, numberOfFonts - 1).
+     *
      * @return true if the current font index is between 0 and |fonts| - 1
      */
     public boolean inRange() {
-        return currentFontIndex > 0 
+        return currentFontIndex > 0
             && currentFontIndex < getNumberOfFontSizes() - 1;
     }
 
     /**
      * Test the virtual font pointer to see if it is at the lower boundary of
      * the font size range (0).
-     *  
+     *
      * @return true if the lower virtual count is zero
      */
     public boolean atLowerBoundary() {
@@ -208,7 +208,7 @@ public abstract class AbstractFontManager implements IFontManager {
     /**
      * Test the virtual font pointer to see if it is at the upper boundary of
      * the font size range (|fonts| - 1).
-     * 
+     *
      * @return true if the upper virtual count is |fonts| - 1
      */
     public boolean atUpperBoundary() {
@@ -217,7 +217,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Test to see if the lower virtual pointer is in use.
-     * 
+     *
      * @return true if the lower virtual count is less than zero
      */
     public boolean inLower() {
@@ -226,7 +226,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Test to see if the upper virtual pointer is in use.
-     * 
+     *
      * @return true if the upper virtual count is greater than |fonts| - 1
      */
     public boolean inUpper() {
@@ -235,7 +235,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Check if the font pointer is as the maximum value.
-     * 
+     *
      * @return true if the current font index is equal to |fonts| - 1
      */
     public boolean atMax() {
@@ -244,7 +244,7 @@ public abstract class AbstractFontManager implements IFontManager {
 
     /**
      * Check if the font pointer is as the minimum value.
-     * 
+     *
      * @return true if the current font index is equal to zero
      */
     public boolean atMin() {

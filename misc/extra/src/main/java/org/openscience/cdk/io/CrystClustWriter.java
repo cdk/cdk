@@ -78,16 +78,16 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     public CrystClustWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public CrystClustWriter() {
         this(new StringWriter());
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CrystClustFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -99,8 +99,8 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
-    
+
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
 		Class<?>[] interfaces = classObject.getInterfaces();
@@ -204,7 +204,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
             writeln(Double.toString(atom.getPoint3d().y));
             writeln(Double.toString(atom.getPoint3d().z));
         }
-    
+
     }
 
     private void write(String s) {
@@ -215,7 +215,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
                                 s + "\":" + e.toString());
         }
     }
-    
+
     private void writeln(String s) {
         try {
         	writer.write(s);
@@ -225,7 +225,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
                                 s + "\":" + e.toString());
         }
     }
-    
+
     private void writeVector3d(Vector3d vector) {
         write(Double.toString(vector.x));
         writeln("");

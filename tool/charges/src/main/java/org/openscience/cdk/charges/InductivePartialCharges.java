@@ -89,7 +89,7 @@ public class InductivePartialCharges implements IChargeCalculator {
     @TestMethod("testInductivePartialCharges")
     public IAtomContainer assignInductivePartialCharges(IAtomContainer ac) throws Exception {
         if (factory == null) {
-            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/jmol_atomtypes.txt",
                 ac.getBuilder());
         }
 
@@ -202,7 +202,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 	}
 
 
-	
+
 	/**
 	 *  Gets the atomicSoftnessCore attribute of the InductivePartialCharges object.
 	 *
@@ -239,7 +239,7 @@ public class InductivePartialCharges implements IChargeCalculator {
 
 		} catch (Exception ex1) {
 			logger.debug(ex1);
-			throw new CDKException("Problems with AtomTypeFactory due to " + 
+			throw new CDKException("Problems with AtomTypeFactory due to " +
 				ex1.getMessage(), ex1
 			);
 		}

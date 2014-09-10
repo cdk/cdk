@@ -1,5 +1,5 @@
 /* Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
- *           
+ *
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -35,12 +35,12 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * symbol and hybridization states. This will aid in finding a deterministic
  * path rather than Stochastic one. </P>
  *
- * @author Syed Asad Rahman (2012) 
- * @cdk.keyword fingerprint 
- * @cdk.keyword similarity 
+ * @author Syed Asad Rahman (2012)
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
- * 
+ *
  */
 @TestClass("org.openscience.cdk.fingerprint.SimpleAtomCanonicalizerTest")
 public class SimpleAtomCanonicalizer {
@@ -51,7 +51,7 @@ public class SimpleAtomCanonicalizer {
 	 */
     @TestMethod("testCanonicalizeAtoms")
 	public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
-		
+
 		List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
         for (IAtom atom : container.atoms()) {
             canonicalizedVertexList.add(atom);

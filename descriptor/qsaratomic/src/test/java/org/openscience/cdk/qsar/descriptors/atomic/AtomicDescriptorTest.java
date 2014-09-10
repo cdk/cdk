@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.qsar.descriptors.atomic;
 
@@ -38,11 +38,11 @@ import org.openscience.cdk.tools.diff.AtomDiff;
  * @cdk.module test-qsaratomic
  */
 public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescriptor> {
-	
+
 	protected IAtomicDescriptor descriptor;
 
 	public AtomicDescriptorTest() {}
-	
+
 	public void setDescriptor(Class<? extends IAtomicDescriptor> descriptorClass) throws Exception {
 		if (descriptor == null) {
 			Object descriptor = descriptorClass.newInstance();
@@ -74,12 +74,12 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
 
     /**
 	 * Checks if the given labels are consistent.
-	 * 
+	 *
 	 * @throws Exception Passed on from calculate.
 	 */
     @Test public void testLabels() throws Exception {
         IAtomContainer mol = someoneBringMeSomeWater();
-        
+
         DescriptorValue v = descriptor.calculate(mol.getAtom(1), mol);
         Assert.assertNotNull(v);
         String[] names = v.getNames();
@@ -127,7 +127,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         Assert.assertArrayEquals(names1, names2);
 
         int valueCount = v.getValue().length();
-        Assert.assertEquals(valueCount, names1.length);        
+        Assert.assertEquals(valueCount, names1.length);
     }
 
     @Test public void testCalculate_NoModifications() throws Exception {
@@ -135,7 +135,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         IAtom atom = mol.getAtom(1);
         IAtom clone = (IAtom)mol.getAtom(1).clone();
         descriptor.calculate(atom, mol);
-        String diff = AtomDiff.diff(clone, atom); 
+        String diff = AtomDiff.diff(clone, atom);
         Assert.assertEquals(
           "The descriptor must not change the passed atom in any respect, but found this diff: " + diff,
           0, diff.length()
@@ -157,5 +157,5 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
         mol.addBond(0,2,IBond.Order.SINGLE);
         return mol;
     }
-    
+
 }

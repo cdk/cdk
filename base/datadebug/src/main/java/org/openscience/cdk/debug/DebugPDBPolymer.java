@@ -28,7 +28,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     Miguel Rojas
  * @cdk.module datadebug
  * @cdk.githash
@@ -36,10 +36,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class DebugPDBPolymer extends PDBPolymer  implements IBioPolymer {
 
 	private static final long serialVersionUID = -8485559594520919850L;
-	
+
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
-	
+
     /** {@inheritDoc} */ @Override
     public Collection<IPDBStructure> getStructures() {
     	logger.debug("Getting Structure: ", super.getStructures());
@@ -51,6 +51,6 @@ public class DebugPDBPolymer extends PDBPolymer  implements IBioPolymer {
     	logger.debug("Adding Structure: ", structure);
 		super.addStructure(structure);
     }
-	
-	
+
+
 }

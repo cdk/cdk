@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.HOSECodeGenerator;
  */
 @TestClass("org.openscience.cdk.charges.AtomTypeChargesTest")
 public class AtomTypeCharges implements IChargeCalculator {
-	
+
 	HOSECodeGenerator hcg = new HOSECodeGenerator();
 	Pattern pOC = Pattern.compile("O-[1][-];=?+C[(]=?+O.*+");
 	Pattern pOP = Pattern.compile("O-[1][-];=?+P.*+");
@@ -69,7 +69,7 @@ public class AtomTypeCharges implements IChargeCalculator {
 	 */
 	@TestMethod("testCharges_pOC,testCharges_pOP,testCharges_pOS,testCharges_p_p,testCharges_p_n")
 	public IAtomContainer setCharges(IAtomContainer atomContainer) throws Exception {
-		
+
 		atomContainer = setInitialCharges(atomContainer);
 		return atomContainer;
 	}
@@ -86,7 +86,7 @@ public class AtomTypeCharges implements IChargeCalculator {
 		}
 		return hosecode;
 	}
-	
+
 	/**
 	 *  Sets the initialCharges attribute of the AtomTypeCharges object.
 	 *

@@ -37,7 +37,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
 	@Ignore @Test public void testCharges_pOC() throws Exception {
 		Assert.fail("Not tested yet");
 	}
-	
+
 	/**
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOP atom types.
@@ -45,7 +45,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
 	@Ignore @Test public void testCharges_pOP() throws Exception {
 		Assert.fail("Not tested yet");
 	}
-	
+
 	/**
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for pOS atom types.
@@ -53,7 +53,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
 	@Ignore @Test public void testCharges_pOS() throws Exception {
 		Assert.fail("Not tested yet");
 	}
-	
+
 	/**
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_p atom types.
@@ -61,7 +61,7 @@ public class AtomTypeChargesTest extends CDKTestCase {
 	@Ignore @Test public void testCharges_p_p() throws Exception {
 		Assert.fail("Not tested yet");
 	}
-	
+
 	/**
 	 * Tests the initial assignment of partial charges of
 	 * atom types matching the HOSE code for p_n atom types.
@@ -69,5 +69,5 @@ public class AtomTypeChargesTest extends CDKTestCase {
 	@Ignore @Test public void testCharges_p_n() throws Exception {
 		Assert.fail("Not tested yet");
 	}
-	
+
 }

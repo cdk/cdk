@@ -50,7 +50,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @author  Bradley A. Smith <bradley@baysmith.com>
  */
 public class ReaderFactory {
-    
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ReaderFactory.class);
     private FormatFactory formatFactory = null;
@@ -81,7 +81,7 @@ public class ReaderFactory {
     public void registerFormat(IChemFormatMatcher format) {
         formatFactory.registerFormat(format);
     }
-    
+
     public List<IChemFormatMatcher> getFormats(){
     	return formatFactory.getFormats();
     }
@@ -139,7 +139,7 @@ public class ReaderFactory {
         }
         return reader;
     }
-    
+
     /**
      * Creates a new IChemObjectReader based on the given IChemFormat.
      *
@@ -165,14 +165,14 @@ public class ReaderFactory {
             }
         } else {
             logger.warn("ChemFormat is not recognized.");
-        } 
+        }
         return null;
     }
-    
+
     /**
      * Detects the format of the Reader input, and if known, it will return
-     * a CDK Reader to read the format. This method is not able to detect the 
-     * format of gziped files. Use createReader(InputStream) instead for such 
+     * a CDK Reader to read the format. This method is not able to detect the
+     * format of gziped files. Use createReader(InputStream) instead for such
      * files.
      *
      * @see #createReader(InputStream)
@@ -183,7 +183,7 @@ public class ReaderFactory {
         }
         IChemFormat chemFormat = formatFactory.guessFormat((BufferedReader)input);
         ISimpleChemObjectReader coReader = createReader(chemFormat);
-        try {        	
+        try {
         	coReader.setReader(input);
         } catch (Exception exception) {
         	logger.error("Could not set the Reader source: ", exception.getMessage());

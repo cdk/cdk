@@ -7,7 +7,7 @@
  *    http://collaborativedrug.com
  *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -16,15 +16,15 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -70,39 +70,39 @@ public class CircularFingerprinterTest extends CDKTestCase
 
     @Test
     @Category(SlowTest.class)
-    public void testFingerprints() throws Exception 
+    public void testFingerprints() throws Exception
     {
     	logger.info("CircularFingerprinter test: loading source materials");
-    	
+
         String fnzip="data/cdd/circular_validation.zip";
         logger.info("Loading source content: "+fnzip);
         InputStream in=this.getClass().getClassLoader().getResourceAsStream(fnzip);
     	validate(in);
     	in.close();
-		
+
 		logger.info("CircularFingerprinter test: completed without any problems");
 	}
-	
+
 	@Test
 	public void testGetBitFingerprint() throws Exception
 	{
 		assert(trivialMol!=null);
 		CircularFingerprinter circ=new CircularFingerprinter();
 		IBitFingerprint result=circ.getBitFingerprint(trivialMol);
-		
+
 		BitSet wantBits=new BitSet(),gotBits=result.asBitSet();
 		final int[] REQUIRE_BITS={19,152,293,340,439,480,507,726,762,947,993};
 		for (int b : REQUIRE_BITS) wantBits.set(b);
 		if (!wantBits.equals(gotBits)) throw new CDKException("Got "+gotBits+", wanted "+wantBits);
 	}
-	
+
 	@Test
 	public void testGetCountFingerprint() throws Exception
 	{
 		assert(trivialMol!=null);
 		CircularFingerprinter circ=new CircularFingerprinter();
 		ICountFingerprint result=circ.getCountFingerprint(trivialMol);
-		
+
 		final int[] ANSWER_KEY=
 		{
             -414937772,		1,
@@ -117,7 +117,7 @@ public class CircularFingerprinterTest extends CDKTestCase
             -1650154758,	1,
             1286833445,		1
 		};
-		
+
 		int wantBits=ANSWER_KEY.length>>1;
 		boolean fail=result.numOfPopulatedbins()!=wantBits;
 		for (int n=0;!fail && n<result.numOfPopulatedbins();n++)
@@ -137,17 +137,17 @@ public class CircularFingerprinterTest extends CDKTestCase
 		}
 		if (fail) throw new CDKException("Hash values do not match.");
 	}
-	
+
 	@Test
 	public void testGetRawFingerprint() throws Exception
 	{
 		// currently no-op
 	}
-	
+
 	private void validate(InputStream in) throws Exception
 	{
 		ZipInputStream zip=new ZipInputStream(in);
-		
+
 		// stream the contents form the zipfile: these are all short
 		HashMap<String,byte[]> content=new HashMap<String,byte[]>();
 		while (true)
@@ -164,7 +164,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 			}
 			content.put(fn,buff.toByteArray());
 		}
-		
+
 		zip.close();
 
 		for (int idx=1;;idx++)
@@ -173,18 +173,18 @@ public class CircularFingerprinterTest extends CDKTestCase
 			while (basefn.length()<6) basefn="0"+basefn;
 			byte[] molBytes=content.get(basefn+".mol");
 			if (molBytes==null) break;
-			
+
     		AtomContainer mol=new AtomContainer();
     		MDLV2000Reader mdl=new MDLV2000Reader(new ByteArrayInputStream(molBytes));
     		mdl.read(mol);
     		mdl.close();
-    		
+
     		CircularFingerprinter.FP[] validateECFP=parseValidation(content.get(basefn+".ecfp"));
     		CircularFingerprinter.FP[] validateFCFP=parseValidation(content.get(basefn+".fcfp"));
-    		
+
     		logger.info("FN="+basefn+" MOL="+mol.getAtomCount()+","+mol.getBondCount()+
 	    		   		" Requires ECFP="+validateECFP.length+" FCFP="+validateFCFP.length);
-    		   
+
 			validateFingerprints("ECFP6",mol,CircularFingerprinter.CLASS_ECFP6,validateECFP);
 			validateFingerprints("FCFP6",mol,CircularFingerprinter.CLASS_FCFP6,validateFCFP);
 		}
@@ -194,7 +194,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 		InputStream in=new ByteArrayInputStream(raw);
 		BufferedReader rdr=new BufferedReader(new InputStreamReader(in));
 		ArrayList<CircularFingerprinter.FP> list=new ArrayList<CircularFingerprinter.FP>();
-		
+
 		while (true)
 		{
 			String line=rdr.readLine();
@@ -206,7 +206,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 			for (int n=0;n<atoms.length;n++) atoms[n]=Integer.parseInt(bits[n+2])-1; // note: atom#'s are 1-based in reference file
 			list.add(new CircularFingerprinter.FP(hashCode,iteration,atoms));
 		}
-		
+
 		rdr.close();
 		return list.toArray(new CircularFingerprinter.FP[list.size()]);
 	}
@@ -215,7 +215,7 @@ public class CircularFingerprinterTest extends CDKTestCase
 	{
 		CircularFingerprinter circ=new CircularFingerprinter(classType);
 		try {circ.calculate(mol);}
-		catch (Exception ex) 
+		catch (Exception ex)
 		{
 			System.out.println("Fingerprint calculation failed for molecule:");
     		MDLV2000Writer molwr=new MDLV2000Writer(System.out);
@@ -223,10 +223,10 @@ public class CircularFingerprinterTest extends CDKTestCase
     		molwr.close();
 			throw ex;
 		}
-		
+
 		CircularFingerprinter.FP[] obtained=new CircularFingerprinter.FP[circ.getFPCount()];
 		for (int n=0;n<circ.getFPCount();n++) obtained[n]=circ.getFP(n);
-		
+
 		boolean same=obtained.length==validate.length;
 		for (int i=0;i<obtained.length && same;i++)
 		{
@@ -234,24 +234,24 @@ public class CircularFingerprinterTest extends CDKTestCase
 			for (int j=0;j<validate.length;j++) if (equalFingerprints(obtained[i],validate[j])) {hit=true; break;}
 			if (!hit) same=false;
 		}
-		for (int i=0;i<validate.length && same;i++) 
+		for (int i=0;i<validate.length && same;i++)
 		{
 			boolean hit=false;
 			for (int j=0;j<obtained.length;j++) if (equalFingerprints(validate[i],obtained[j])) {hit=true; break;}
 			if (!hit) same=false;
 		}
 		if (same) return;
-		
+
 		System.out.println("Fingerprint mismatch, validation failed.\nMolecular structure");
 		MDLV2000Writer molwr=new MDLV2000Writer(System.out);
 		molwr.write(mol);
 		molwr.close();
-		
+
 		System.out.println("Obtained fingerprints:");
 		for (int n=0;n<obtained.length;n++) System.out.println((n+1)+"/"+obtained.length+": "+formatFP(obtained[n]));
 		System.out.println("Validation fingerprints:");
 		for (int n=0;n<validate.length;n++) System.out.println((n+1)+"/"+validate.length+": "+formatFP(validate[n]));
-		
+
 		throw new CDKException("Fingerprint comparison failed.");
 	}
 
@@ -267,14 +267,14 @@ public class CircularFingerprinterTest extends CDKTestCase
 		for (int n=0;n<fp.atoms.length;n++) str+=(n>0 ? "," : "")+fp.atoms[n];
 		return str+"}";
 	}
-    
+
     @Test public void protonsDontCauseNPE() throws Exception {
         IAtomContainer proton = new AtomContainer(1, 0, 0, 0);
         proton.addAtom(atom("H", +1, 0));
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
         assertThat(circ.getBitFingerprint(proton).cardinality(), is(0));
     }
-    
+
     @Test public void iminesDetectionDoesntCauseNPE() throws Exception {
         IAtomContainer pyrazole = new AtomContainer(6, 6, 0, 0);
         pyrazole.addAtom(atom("H", 0, 0));
@@ -292,13 +292,13 @@ public class CircularFingerprinterTest extends CDKTestCase
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
         assertNotNull(circ.getBitFingerprint(pyrazole));
     }
-    
+
     static IAtom atom(String symbol, int q, int h) {
         IAtom a = new Atom(symbol);
         a.setFormalCharge(q);
         a.setImplicitHydrogenCount(h);
         return a;
     }
-    
+
 }
 

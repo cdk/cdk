@@ -46,7 +46,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
     @BeforeClass public static void setup() {
         setChemObjectIO(new CDKSourceCodeWriter());
     }
-    
+
     @Test public void testAccepts() throws Exception {
     	Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
@@ -57,7 +57,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
         Atom atom = new Atom("C");
         atom.setMassNumber(14);
         molecule.addAtom(atom);
-        
+
         CDKSourceCodeWriter sourceWriter = new CDKSourceCodeWriter(writer);
         sourceWriter.write(molecule);
         sourceWriter.close();
@@ -70,7 +70,7 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
             "import org.openscience.cdk.interfaces.*;" +
             "import org.openscience.cdk.*;" +
             // compensate for the write to wrap the output in { ... }
-            "if (true) " + 
+            "if (true) " +
             output
         );
     }

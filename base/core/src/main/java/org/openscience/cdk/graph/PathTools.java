@@ -171,7 +171,7 @@ public class PathTools {
         IAtom nextAtom;
         root.setFlag(CDKConstants.VISITED, true);
         for (IBond bond : bonds) {
-            nextAtom = bond.getConnectedAtom(root);            
+            nextAtom = bond.getConnectedAtom(root);
             if (!nextAtom.getFlag(CDKConstants.VISITED)) {
                 path.addAtom(nextAtom);
                 path.addBond(bond);
@@ -251,7 +251,7 @@ public class PathTools {
      * atoms that have been visited are put into a molecule container. This
      * breadthFirstSearch does thus find the connected graph for a given start
      * atom.
-     * 
+     *
      * <p>IMPORTANT: this method does not reset the VISITED flags, which must be
      * done if calling this method twice!
      *

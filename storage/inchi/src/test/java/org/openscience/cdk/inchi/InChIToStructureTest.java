@@ -169,7 +169,7 @@ public class InChIToStructureTest extends CDKTestCase {
 		// OK, this is not typical use, but maybe the above generate method should be private
 		assertTrue(container instanceof AtomContainer);
 	}
-    
+
     @Test public void atomicOxygen() throws CDKException {
         InChIToStructure parser = new InChIToStructure(
                 "InChI=1S/O", DefaultChemObjectBuilder.getInstance()
@@ -179,8 +179,8 @@ public class InChIToStructureTest extends CDKTestCase {
         Assert.assertThat(container, is(instanceOf(AtomContainer.class)));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(notNullValue()));
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(0));
-    }  
-    
+    }
+
     @Test public void heavyOxygenWater() throws CDKException {
         InChIToStructure parser = new InChIToStructure(
                 "InChI=1S/H2O/h1H2/i1+2", DefaultChemObjectBuilder.getInstance()
@@ -192,7 +192,7 @@ public class InChIToStructureTest extends CDKTestCase {
         Assert.assertThat(container.getAtom(0).getImplicitHydrogenCount(), is(2));
         Assert.assertThat(container.getAtom(0).getMassNumber(), is(18));
     }
-    
+
     @Test public void e_bute_2_ene() throws Exception {
         InChIToStructure parser = new InChIToStructure(
                 "InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+", DefaultChemObjectBuilder.getInstance()
@@ -204,10 +204,10 @@ public class InChIToStructureTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
-        assertThat(((IDoubleBondStereochemistry)se).getStereo(), 
+        assertThat(((IDoubleBondStereochemistry)se).getStereo(),
                    is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
     }
-    
+
     @Test public void z_bute_2_ene() throws Exception {
         InChIToStructure parser = new InChIToStructure(
                 "InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-", DefaultChemObjectBuilder.getInstance()
@@ -219,7 +219,7 @@ public class InChIToStructureTest extends CDKTestCase {
         assertTrue(ses.hasNext());
         IStereoElement se = ses.next();
         assertThat(se, is(instanceOf(IDoubleBondStereochemistry.class)));
-        assertThat(((IDoubleBondStereochemistry)se).getStereo(), 
+        assertThat(((IDoubleBondStereochemistry)se).getStereo(),
                    is(IDoubleBondStereochemistry.Conformation.TOGETHER));
     }
 

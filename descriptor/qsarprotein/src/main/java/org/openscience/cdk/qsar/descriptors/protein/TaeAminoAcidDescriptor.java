@@ -280,7 +280,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      * Calculates the 147 TAE descriptors for amino acids.
      *
      * @param container Parameter is the atom container which should implement {@link IBioPolymer}.
-     * @return A DoubleArrayResult value representing the 147 TAE descriptors     
+     * @return A DoubleArrayResult value representing the 147 TAE descriptors
      */
     @TestMethod("testTaeAminoAcidDescriptor")
     public DescriptorValue calculate(IAtomContainer container) {

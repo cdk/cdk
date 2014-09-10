@@ -40,7 +40,7 @@ import java.io.StringReader;
  * @cdk.require ant1.6
  */
 public class ParserTest extends CDKTestCase {
- 
+
     private void parse(String smarts) throws Exception {
         //SMARTSParser.parse(smarts);
         SMARTSParser parser = new SMARTSParser(new StringReader(smarts));

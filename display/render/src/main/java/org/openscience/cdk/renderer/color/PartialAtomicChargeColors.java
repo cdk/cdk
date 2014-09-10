@@ -49,7 +49,7 @@ public class PartialAtomicChargeColors implements IAtomColorer {
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, Color.white);
     }
-    
+
     /**
      * Returns the a color reflecting the given atom's partial charge, or
      * defaults to the given color if no color is defined.

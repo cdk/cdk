@@ -1,21 +1,21 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.interfaces;
 
@@ -92,7 +92,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         atom.setFractionalPoint3d(fract);
         atom.setPoint3d(threeD);
         atom.setPoint2d(twoD);
-        
+
         IPseudoAtom a = object.getBuilder().newInstance(IPseudoAtom.class,atom);
         assertEquals(fract, a.getFractionalPoint3d(), 0.0001);
         assertEquals(threeD, a.getPoint3d(), 0.0001);
@@ -107,7 +107,7 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
         Object clone = atom.clone();
         Assert.assertTrue(clone instanceof IPseudoAtom);
     }
-    
+
     /**
      * Method to test whether the class complies with RFC #9.
      */
@@ -119,13 +119,13 @@ public abstract class AbstractPseudoAtomTest extends AbstractAtomTest {
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
-    
+
     /**
      * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
      * We decided to let the pseudo atoms have a default label of '*'.
      *
      * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-     * 
+     *
      * @cdk.bug 1778479
      */
     @Test public void testBug1778479DefaultLabel() {

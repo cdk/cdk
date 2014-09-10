@@ -134,7 +134,7 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
     private class ChemSequenceIterator implements Iterator<IChemSequence> {
 
         private int pointer = 0;
-    	
+
         public boolean hasNext() {
             return pointer < chemSequenceCount;
         }
@@ -146,9 +146,9 @@ public class ChemFile extends ChemObject implements Serializable, Cloneable,
         public void remove() {
             removeChemSequence(--pointer);
         }
-    	
+
     }
-	
+
 	/**
 	 *  Returns the ChemSequence at position <code>number</code> in the container.
 	 *

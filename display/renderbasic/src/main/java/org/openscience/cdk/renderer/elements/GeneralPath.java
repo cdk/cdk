@@ -41,7 +41,7 @@ import org.openscience.cdk.renderer.elements.path.QuadTo;
 
 /**
  * A path of rendering elements from the elements.path package.
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -51,7 +51,7 @@ public class GeneralPath implements IRenderingElement{
 
     /** The color of the path. */
     public final Color color;
-    
+
     /** The width of the stroke. */
     public final double stroke;
 
@@ -83,7 +83,7 @@ public class GeneralPath implements IRenderingElement{
     @TestMethod("testConstructor")
     public GeneralPath(List<PathElement> elements, Color color) {
         this(elements, color, WIND_EVEN_ODD, 1, true);
-        
+
     }
 
     /**
@@ -102,7 +102,7 @@ public class GeneralPath implements IRenderingElement{
 
     /**
      * Recolor the path with the specified color.
-     * 
+     *
      * @param newColor new path color
      * @return the recolored path
      */
@@ -127,8 +127,8 @@ public class GeneralPath implements IRenderingElement{
     }
 
     /**
-     * Create a filled path of the specified Java 2D Shape and color. 
-     * 
+     * Create a filled path of the specified Java 2D Shape and color.
+     *
      * @param shape Java 2D shape
      * @param color the color to fill the shape with
      * @return a new general path
@@ -161,7 +161,7 @@ public class GeneralPath implements IRenderingElement{
     }
 
     /**
-     * Create an outline path of the specified Java 2D Shape and color. 
+     * Create an outline path of the specified Java 2D Shape and color.
      *
      * @param shape Java 2D shape
      * @param color the color to draw the outline with

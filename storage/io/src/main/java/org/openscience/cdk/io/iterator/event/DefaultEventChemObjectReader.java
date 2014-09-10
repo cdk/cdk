@@ -45,16 +45,16 @@ public abstract class DefaultEventChemObjectReader extends ChemObjectIO implemen
         // leave it up the read(IChemObject) to decide by default
         return true;
     }
-    
+
     /* Extra convenience methods */
-    
+
     /**
      * File IO generally does not support removing of entries.
      */
     public void remove() {
         throw new UnsupportedOperationException();
     }
-    
+
     /**
      * Sends a frame read event to the registered ReaderListeners.
      */

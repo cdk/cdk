@@ -38,7 +38,7 @@ public class LigandTest extends CDKTestCase {
     public void testConstructorAndGetMethods() throws Exception {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
-        
+
         ILigand ligand = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );
@@ -52,7 +52,7 @@ public class LigandTest extends CDKTestCase {
     public void testVisitedTracking() throws Exception {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
-        
+
         ILigand ligand = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
         );

@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -92,7 +92,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals("1", m.getProperty("E_NSC"));
         Assert.assertEquals("553-97-9", m.getProperty("E_CAS"));
     }
-    
+
     @Test public void testMultipleDataFields() throws Exception {
         String filename = "data/mdl/bug1587283.mol";
         InputStream ins = this.getClass().getClassLoader().
@@ -162,7 +162,7 @@ public class SDFReaderTest extends SimpleChemObjectReaderTest {
         	Assert.assertNotNull(sequence.getChemModel(i));
         }
     }
-    
+
     /**
      * Test for bug 1974826.
      *

@@ -82,7 +82,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 			writer = new BufferedWriter(out);
 		}
 	}
-	
+
 	/**
 	 * Zero argument constructor.
 	 */
@@ -114,7 +114,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * Produces a CTAB block for an atomContainer, without the header lines. 
+	 * Produces a CTAB block for an atomContainer, without the header lines.
 	 * @param atomContainer
 	 * @return CTAB block
 	 * @throws CDKException
@@ -130,14 +130,14 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
         }
 		String ctab =  strWriter.toString();
 		//strip of the individual header, as we have one super header instead.
-		for (int line=1; line <=3; line++ ){ 
+		for (int line=1; line <=3; line++ ){
 			ctab = ctab.substring(ctab.indexOf(LSEP)+(LSEP.length()));
 		}
 		return ctab;
 	}
 
 	/**
-	 * Returns output format. 
+	 * Returns output format.
 	 */
 	@TestMethod("testGetFormat")
 	public IResourceFormat getFormat() {
@@ -164,8 +164,8 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
 	/**
 	 * The actual writing of the output.
-	 * @throws CDKException 
-	 * @throws IOException 
+	 * @throws CDKException
+	 * @throws IOException
 	 */
 	public void write(IChemObject object) throws CDKException {
 		if (!(object instanceof IRGroupQuery)) {
@@ -179,7 +179,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 
 			//Construct header
 			StringBuffer rootBlock=new StringBuffer();
-			String header = 
+			String header =
 				"$MDL  REV  1   "+now+LSEP+
 				"$MOL"+LSEP+
 				"$HDR"+LSEP+
@@ -195,10 +195,10 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 			rootBlock.append(rootCTAB).append(LSEP);
 
 			//Write the root's LOG lines
-			for(Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) { 
+			for(Integer rgrpNum : rGroupQuery.getRGroupDefinitions().keySet()) {
 				RGroupList rgList = rGroupQuery.getRGroupDefinitions().get(rgrpNum);
 				int restH = rgList.isRestH()?1:0;
-				String logLine = 
+				String logLine =
 					"M  LOG"+
 					MDLV2000Writer.formatMDLInt(1, 3)+
 					MDLV2000Writer.formatMDLInt(rgrpNum, 4)+
@@ -208,11 +208,11 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 					;
 				rootBlock.append(logLine).append(LSEP);
 			}
-			
+
 			//AAL lines are optional, they are needed for R-atoms with multiple bonds to the root
-			//for which the order of the attachment points can not be implicitly derived 
+			//for which the order of the attachment points can not be implicitly derived
 			//from the order in the atom block. See CT spec for more on that.
-			for (IAtom rgroupAtom : rGroupQuery.getRootAttachmentPoints().keySet()) {	
+			for (IAtom rgroupAtom : rGroupQuery.getRootAttachmentPoints().keySet()) {
 				Map<Integer, IBond> rApo= rGroupQuery.getRootAttachmentPoints().get(rgroupAtom);
 				if (rApo.size()>1) {
 					int prevPos=-1;
@@ -255,7 +255,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 					}
 				}
 			}
-			
+
 			rootBlock.append("M  END").append(LSEP).append("$END CTAB").append(LSEP);
 
 			//Construct each R-group block
@@ -283,7 +283,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
 								if (rgroup.getGroup().getAtom(atIdx).equals(firstAttachmentPoint)) {
 									apoLine.append(MDLV2000Writer.formatMDLInt((atIdx+1), 4));
 									apoCount++;
-									if (secondAttachmentPoint!=null && 
+									if (secondAttachmentPoint!=null &&
 											secondAttachmentPoint.equals(firstAttachmentPoint)) {
 										apoLine.append(MDLV2000Writer.formatMDLInt(3, 4));
 									}

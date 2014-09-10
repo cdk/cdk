@@ -35,7 +35,7 @@ import javax.vecmath.Point2d;
 import java.awt.geom.Rectangle2D;
 
 /**
- * Utility class for calculating the 2D bounding rectangles (bounds) 
+ * Utility class for calculating the 2D bounding rectangles (bounds)
  * of various IChemObject subtypes - IChemModel, IReactionSet, IReaction,
  * IMoleculeSet, and IAtomContainer.
  *
@@ -48,7 +48,7 @@ public class BoundsCalculator {
 
     /**
      * Calculate the bounding rectangle for a chem model.
-     * 
+     *
      * @param chemModel the chem model to use
      * @return the bounding rectangle of the chem model
      */
@@ -72,7 +72,7 @@ public class BoundsCalculator {
 
     /**
      * Calculate the bounding rectangle for a reaction set.
-     * 
+     *
      * @param reactionSet the reaction set to use
      * @return the bounding rectangle of the reaction set
      */
@@ -92,7 +92,7 @@ public class BoundsCalculator {
 
     /**
      * Calculate the bounding rectangle for a reaction.
-     * 
+     *
      * @param reaction the reaction to use
      * @return the bounding rectangle of the reaction
      */
@@ -110,7 +110,7 @@ public class BoundsCalculator {
 
     /**
      * Calculate the bounding rectangle for a molecule set.
-     * 
+     *
      * @param moleculeSet the molecule set to use
      * @return the bounding rectangle of the molecule set
      */
@@ -131,7 +131,7 @@ public class BoundsCalculator {
 
     /**
      * Calculate the bounding rectangle for an atom container.
-     * 
+     *
      * @param atomContainer the atom container to use
      * @return the bounding rectangle of the atom container
      */

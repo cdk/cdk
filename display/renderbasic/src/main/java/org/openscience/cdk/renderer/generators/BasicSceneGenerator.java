@@ -36,7 +36,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * This generator does not create any elements, but acts as a holding place
  * for various generator parameters used by most drawings, such as the zoom,
  * background color, margin, etc.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -62,7 +62,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 	/**
 	 * Determines if tooltips are to be shown.
 	 */
-    public static class ShowTooltip extends 
+    public static class ShowTooltip extends
     AbstractGeneratorParameter<Boolean> {
     	/** Returns the default value.
     	 * @return {@link Boolean}.FALSE */
@@ -75,7 +75,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     /**
      * Determines if the molecule's title is depicted.
      */
-    public static class ShowMoleculeTitle extends 
+    public static class ShowMoleculeTitle extends
     AbstractGeneratorParameter<Boolean> {
     	/** Returns the default value.
     	 * @return {@link Boolean}.FALSE */
@@ -88,7 +88,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     /**
      * If true, the scale is set such that the diagram
      * fills the whole screen. */
-    public static class FitToScreen extends 
+    public static class FitToScreen extends
     AbstractGeneratorParameter<Boolean> {
     	/** Returns the default value.
     	 * @return {@link Boolean}.FALSE */
@@ -111,7 +111,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
             return 1.0;
         }
     }
-    private IGeneratorParameter<Double> scale = new Scale();	
+    private IGeneratorParameter<Double> scale = new Scale();
 
     /**
      * The background color of the drawn image.
@@ -210,7 +210,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
      * The zoom factor which is a user oriented parameter allowing the
      * user to zoom in on parts of the molecule. When the zoom is 1.0,
      * then the molecule is depicted in its normal coordinates.
-     * 
+     *
      * @see Scale
      */
     public static class ZoomFactor extends

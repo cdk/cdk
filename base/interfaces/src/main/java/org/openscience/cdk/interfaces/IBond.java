@@ -38,7 +38,7 @@ public interface IBond extends IElectronContainer {
 
     /**
      * A list of permissible bond orders.
-     * 
+     *
      */
 	public enum Order {
 		SINGLE(1),
@@ -120,7 +120,7 @@ public interface IBond extends IElectronContainer {
 		 */
 		E_Z_BY_COORDINATES
 	}
-	
+
 	/**
 	 *  Returns the Iterable to atoms making up this bond.
 	 *
@@ -235,7 +235,7 @@ public interface IBond extends IElectronContainer {
 	 * @return    The geometric 3D center of the bond
 	 */
 	public Point3d get3DCenter();
-	
+
 	/**
 	 * Compares a bond with this bond.
 	 *

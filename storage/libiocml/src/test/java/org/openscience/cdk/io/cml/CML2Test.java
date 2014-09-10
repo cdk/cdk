@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -125,8 +125,8 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-        	if (atom.getSymbol().equals("Na")) 
-        		Assert.assertEquals(+1, atom.getFormalCharge().intValue()); 
+        	if (atom.getSymbol().equals("Na"))
+        		Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 
@@ -159,8 +159,8 @@ public class CML2Test extends CDKTestCase {
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	org.openscience.cdk.interfaces.IAtom atom = atoms.next();
-        	if (atom.getSymbol().equals("N")) 
-        		Assert.assertEquals(+1, atom.getFormalCharge().intValue()); 
+        	if (atom.getSymbol().equals("N"))
+        		Assert.assertEquals(+1, atom.getFormalCharge().intValue());
         }
     }
 
@@ -664,7 +664,7 @@ public class CML2Test extends CDKTestCase {
 
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
-        
+
         // FIXME: REACT: It should return two different formulas
         Assert.assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1]", mol.getProperty(CDKConstants.FORMULA).toString());
     }
@@ -690,7 +690,7 @@ public class CML2Test extends CDKTestCase {
 
         IAtomContainer mol = model.getMoleculeSet().getAtomContainer(0);
         Assert.assertNotNull(mol);
-        
+
         // FIXME: REACT: It should return two different formulas
         Assert.assertEquals("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", mol.getProperty(CDKConstants.FORMULA).toString());
     }
@@ -715,7 +715,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(1,seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         // test reaction
         Assert.assertEquals(4,model.getReactionSet().getReactionCount());
         String[] idReaction = {"r1","r2","r3","r4"};
@@ -727,7 +727,7 @@ public class CML2Test extends CDKTestCase {
         	// test molecule
         	Assert.assertEquals(1, reaction.getProducts().getAtomContainerCount());
         	Assert.assertEquals(idProducts[i],reaction.getProducts().getAtomContainer(0).getID());
-        	
+
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
             Assert.assertEquals(idReactants[i],reaction.getReactants().getAtomContainer(0).getID());
         }
@@ -753,7 +753,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(1,seq.getChemModelCount());
         IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         // test reaction
         Assert.assertEquals(2,model.getReactionSet().getReactionCount());
         String[] idReaction = {"r1","r2"};
@@ -765,7 +765,7 @@ public class CML2Test extends CDKTestCase {
         	// test molecule
         	Assert.assertEquals(1, reaction.getProducts().getAtomContainerCount());
         	Assert.assertEquals(idProducts[i],reaction.getProducts().getAtomContainer(0).getID());
-        	
+
             Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
             Assert.assertEquals(idReactants[i],reaction.getReactants().getAtomContainer(0).getID());
         }
@@ -791,7 +791,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(1,seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         // test reaction
         Assert.assertEquals(4,model.getReactionSet().getReactionCount());
         String[] idReaction = {"r1.1","r1.2","r2.1","r2.2"};
@@ -803,11 +803,11 @@ public class CML2Test extends CDKTestCase {
         	// test molecule
         	Assert.assertEquals(1, reaction.getProducts().getAtomContainerCount());
         	Assert.assertEquals(idProducts[i],reaction.getProducts().getAtomContainer(0).getID());
-        	
+
         	Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
         	Assert.assertEquals(idReactants[i],reaction.getReactants().getAtomContainer(0).getID());
         }
-        
+
     }
 
     /**
@@ -830,7 +830,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(1,seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         // test reaction
         Assert.assertEquals(3,model.getReactionSet().getReactionCount());
         String[] idReaction = {"r1","r2","r3"};
@@ -842,14 +842,14 @@ public class CML2Test extends CDKTestCase {
         	// test molecule
         	Assert.assertEquals(1, reaction.getProducts().getAtomContainerCount());
         	Assert.assertEquals(idProducts[i],reaction.getProducts().getAtomContainer(0).getID());
-        	
+
         	Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
         	Assert.assertEquals(idReactants[i],reaction.getReactants().getAtomContainer(0).getID());
         }
-        
+
     }
     /**
-     * This test tests whether the CMLReader is able to read a reactionscheme object with 
+     * This test tests whether the CMLReader is able to read a reactionscheme object with
      * references to list of molecules.
      */
     @Test public void testCMLSchemeMoleculeSet() throws Exception {
@@ -868,13 +868,13 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(1,seq.getChemModelCount());
         org.openscience.cdk.interfaces.IChemModel model = seq.getChemModel(0);
         Assert.assertNotNull(model);
-        
+
         // test reaction
         Assert.assertEquals(1,model.getReactionSet().getReactionCount());
         String[] idReaction = {"react_1"};
         String[] idReactants = {"A"};
         String[] idProducts = {"B","C"};
-        
+
         IReaction reaction = model.getReactionSet().getReaction(0);
         Assert.assertEquals(idReaction[0],reaction.getID());
         	// test molecule
@@ -882,7 +882,7 @@ public class CML2Test extends CDKTestCase {
         Assert.assertEquals(idProducts[0],reaction.getProducts().getAtomContainer(0).getID());
         Assert.assertEquals("C 9 H 20 N 1",((ArrayList<String>)reaction.getProducts().getAtomContainer(0).getProperty(CDKConstants.FORMULA)).get(0));
         Assert.assertEquals(idProducts[1],reaction.getProducts().getAtomContainer(1).getID());
-        	
+
         Assert.assertEquals(1, reaction.getReactants().getAtomContainerCount());
         Assert.assertEquals(idReactants[0],reaction.getReactants().getAtomContainer(0).getID());
         Assert.assertEquals("C 28 H 60 N 1",((ArrayList<String>)reaction.getReactants().getAtomContainer(0).getProperty(CDKConstants.FORMULA)).get(0));
@@ -924,7 +924,7 @@ public class CML2Test extends CDKTestCase {
         chemFile = (IChemFile) reader.read(chemFile);
         reader.close();
         IReaction reaction = chemFile.getChemSequence(0).getChemModel(0).getReactionSet().getReaction(0);
-     
+
         Assert.assertEquals("3",(String)reaction.getProperty("Ka"));
     }
 }

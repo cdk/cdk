@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -39,9 +39,9 @@ import java.util.ArrayList;
 
 /**
  * This mechanism displaces the chemical bond to an Atom. Generating one with
- * excess charge and the other with deficiency. 
+ * excess charge and the other with deficiency.
  * It returns the reaction mechanism which has been cloned the IMolecule.
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -50,9 +50,9 @@ import java.util.ArrayList;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest")
 public class HeterolyticCleavageMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
-     * reactants and products. 
+     * reactants and products.
      *
      *
      * @param atomContainerSet
@@ -61,7 +61,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      *                    negative charge
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -90,7 +90,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 		int posBond1 = molecule.getBondNumber(bond1);
 
 		if(bond1.getOrder() == IBond.Order.SINGLE)
-			reactantCloned.removeBond(reactantCloned.getBond(posBond1));    
+			reactantCloned.removeBond(reactantCloned.getBond(posBond1));
 		else
         	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
 
@@ -101,7 +101,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		charge = atom2C.getFormalCharge();
 		atom2C.setFormalCharge(charge-1);
 		reactantCloned.addLonePair(atom1C.getBuilder().newInstance(ILonePair.class, atom2C));
@@ -110,10 +110,10 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X")) return null;
-		
+
 		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
@@ -127,7 +127,7 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
 				reaction.addProduct((IAtomContainer)moleculeSetP.getAtomContainer(z));
 			}
         }
-		
+
 		return reaction;
 	}
 

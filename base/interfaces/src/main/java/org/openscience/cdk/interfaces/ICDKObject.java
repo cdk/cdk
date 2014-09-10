@@ -30,7 +30,7 @@ public interface ICDKObject extends Cloneable {
     /**
      * Returns a {@link IChemObjectBuilder} for the data classes that extend
      * this class.
-     * 
+     *
      * @return The {@link IChemObjectBuilder} matching this {@link ICDKObject}
      */
     public IChemObjectBuilder getBuilder();

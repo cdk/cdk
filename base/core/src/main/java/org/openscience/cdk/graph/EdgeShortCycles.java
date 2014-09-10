@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Determine the set of cycles which are the shortest through each edge. 
- * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of 
- * each cycle does not need to be verified. 
+ * Determine the set of cycles which are the shortest through each edge.
+ * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of
+ * each cycle does not need to be verified.
  *
  * @author John May
  * @cdk.module core
@@ -61,8 +61,8 @@ final class EdgeShortCycles {
         // cycles are returned ordered by length
         for (final InitialCycles.Cycle cycle : initialCycles.cycles()) {
 
-            
-            
+
+
             final int length = cycle.length();
             final int[] path = cycle.path();
 
@@ -88,14 +88,14 @@ final class EdgeShortCycles {
     /**
      * The paths of the shortest cycles, that paths are closed walks such that
      * the first and last vertex is the same.
-     * 
+     *
      * @return the paths
      */
     @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
                         "paths_cyclophane_even")
     int[][] paths() {
         int[][] paths = new int[this.paths.size()][0];
-        for (int i = 0; i < this.paths.size(); i++) {            
+        for (int i = 0; i < this.paths.size(); i++) {
             paths[i] = this.paths.get(i);
         }
         return paths;

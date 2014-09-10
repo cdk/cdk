@@ -67,7 +67,7 @@ public class CMLReader extends DefaultChemObjectReader {
     private XMLReader parser;
     private InputStream input;
     private String url;
-    
+
     private Map<String,ICMLModule> userConventions = new HashMap<String,ICMLModule>();
 
     private static ILoggingTool logger =
@@ -82,11 +82,11 @@ public class CMLReader extends DefaultChemObjectReader {
         this.input = input;
         init();
     }
-    
+
     public CMLReader() {
         this(new ByteArrayInputStream(new byte[0]));
     }
-    
+
     public void registerConvention(String convention, ICMLModule conv) {
     	userConventions.put(convention, conv);
     }
@@ -176,7 +176,7 @@ public class CMLReader extends DefaultChemObjectReader {
 		for (int i=0; i<interfaces.length; i++) {
 			if (IChemFile.class.equals(interfaces[i])) return true;
 		}
-		
+
 		if (IChemFile.class.equals(classObject))
 			return true;
 	    Class superClass = classObject.getSuperclass();

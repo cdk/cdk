@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
- *           
+ *
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -34,9 +34,9 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Generates pseudorandom numbers using the MersenneTwister method from commons-math.
  *
- * @author Syed Asad Rahman (2012) 
- * @cdk.keyword fingerprint 
- * @cdk.keyword similarity 
+ * @author Syed Asad Rahman (2012)
+ * @cdk.keyword fingerprint
+ * @cdk.keyword similarity
  * @cdk.module fingerprint
  * @cdk.githash
  */

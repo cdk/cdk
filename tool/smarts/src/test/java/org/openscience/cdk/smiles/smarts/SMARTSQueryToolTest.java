@@ -183,9 +183,9 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         addImplicitHydrogens(indole);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(indole);
         Aromaticity.cdkLegacy().apply(indole);
-        SmilesGenerator generator = new SmilesGenerator().aromatic();        
+        SmilesGenerator generator = new SmilesGenerator().aromatic();
         String indoleSmiles = generator.create(indole);
-        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());        
+        SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         indole = smilesParser.parseSmiles(indoleSmiles);
 
         SMARTSQueryTool querytool = new SMARTSQueryTool(indoleSmiles, DefaultChemObjectBuilder.getInstance());
@@ -208,30 +208,30 @@ public class SMARTSQueryToolTest extends CDKTestCase {
         assertFalse(matches);
 
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void nullAromaticity() {
         SMARTSQueryTool sqt = new SMARTSQueryTool("CC", DefaultChemObjectBuilder.getInstance());
         sqt.setAromaticity(null);
     }
-    
+
     @Test
     public void setAromaticity() throws Exception {
         SMARTSQueryTool sqt = new SMARTSQueryTool("[a]", DefaultChemObjectBuilder.getInstance());
-        
+
         IAtomContainer furan = smiles("O1C=CC=C1");
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(furan);
-        
+
         sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.mcb()));         
+                                           Cycles.mcb()));
         assertTrue(sqt.matches(furan, true));
 
         sqt.setAromaticity(new Aromaticity(ElectronDonation.piBonds(),
                                            Cycles.mcb()));
         assertFalse(sqt.matches(furan, true));
     }
-    
+
     static IAtomContainer smiles(String smi) throws Exception {
         return new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles(smi);
     }

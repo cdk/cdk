@@ -1,20 +1,20 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk;
 
@@ -39,24 +39,24 @@ import java.util.Iterator;
  * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
  *
  * @cdk.module test
- * 
+ *
  * @see        CDKTestCase
  */
 public class CDKTestCase {
 
     /**
      * Determines if slow JUnit tests are to be run. You can set this
-     * from the command line when running Ant: 
+     * from the command line when running Ant:
      * <pre>
      *   ant -f build.xml -DrunSlowTests=false test-all
      * </pre>
-     * 
+     *
      * @return
      */
     public boolean runSlowTests() {
-    	if (System.getProperty("runSlowTests", "true").equals("false")) 
+    	if (System.getProperty("runSlowTests", "true").equals("false"))
     		return false;
-    	
+
     	// else
     	return true;
     }
@@ -66,22 +66,22 @@ public class CDKTestCase {
      * This is to aid the 'Open Source JVM Test Suite', so that all bugs that
      * show up in the report are caused by the JVM or the Java library is
      * uses (mostly a Classpath version).
-     *  
-     * <p>You can set this from the command line when running Ant: 
+     *
+     * <p>You can set this from the command line when running Ant:
      * <pre>
      *   ant -f build.xml -DrunKnownBugs=false test-all
      * </pre>
-     * 
+     *
      * <p><b>This method may only be used in JUnit classes, if the bug is reported
      * on SourceForge, and both the test <i>and</i> the affected Class are marked
      * with a JavaDoc @cdk.bug taglet!</b>
-     * 
+     *
      * @return a boolean indicating whether known bugs should be tested
      */
     public boolean runKnownBugs() {
-    	if (System.getProperty("runKnownBugs", "true").equals("false")) 
+    	if (System.getProperty("runKnownBugs", "true").equals("false"))
     		return false;
-    	
+
     	// else
     	return true;
     }
@@ -89,7 +89,7 @@ public class CDKTestCase {
     /**
      * Compares two Point2d objects, and asserts that the XY coordinates
      * are identical within the given error.
-     * 
+     *
      * @param p1    first Point2d
      * @param p2    second Point2d
      * @param error maximal allowed error
@@ -104,7 +104,7 @@ public class CDKTestCase {
     /**
      * Compares two Point3d objects, and asserts that the XY coordinates
      * are identical within the given error.
-     * 
+     *
      * @param p1    first Point3d
      * @param p2    second Point3d
      * @param error maximal allowed error
@@ -136,7 +136,7 @@ public class CDKTestCase {
     /**
      * Tests method that asserts that for all atoms an reasonable CDK atom
      * type can be perceived.
-     * 
+     *
      * @param container IAtomContainer to test atom types of
      */
     public void assertAtomTypesPerceived(IAtomContainer container) throws Exception {
@@ -156,7 +156,7 @@ public class CDKTestCase {
      * Convenience method that perceives atom types (CDK scheme) and
      * adds explicit hydrogens accordingly. It does not create 2D or 3D
      * coordinates for the new hydrogens.
-     * 
+     *
      * @param container to which explicit hydrogens are added.
      */
     protected void addExplicitHydrogens(IAtomContainer container) throws Exception {
@@ -168,7 +168,7 @@ public class CDKTestCase {
      * Convenience method that perceives atom types (CDK scheme) and
      * adds implicit hydrogens accordingly. It does not create 2D or 3D
      * coordinates for the new hydrogens.
-     * 
+     *
      * @param container to which implicit hydrogens are added.
      */
     protected void addImplicitHydrogens(IAtomContainer container) throws Exception {
@@ -200,8 +200,8 @@ public class CDKTestCase {
 	protected void assertAllSingleAndAromatic(IAtomContainer container) throws Exception {
 		for (Iterator<IBond> bonds = container.bonds().iterator(); bonds.hasNext();)
 			Assert.assertEquals(IBond.Order.SINGLE, bonds.next().getOrder());
-		
-		for (IAtom atom : container.atoms()) {			
+
+		for (IAtom atom : container.atoms()) {
 			if (atom.getSymbol().equals("H"))
 				Assert.assertFalse(atom.getSymbol() + container.getAtomNumber(atom) + " was aromatic",
                                    atom.getFlag(CDKConstants.ISAROMATIC));
@@ -283,7 +283,7 @@ public class CDKTestCase {
 	 * methods that are testing in other classes than identified with {@link TestClass}.
 	 * Bit of a workaround for the current set up, but useful in situations where
 	 * a methods is rather untestable, such as SAXHandler's endElement() methods.
-	 * 
+	 *
 	 * <p>Should be used only in these rare cases.
 	 */
     @Test
@@ -291,12 +291,12 @@ public class CDKTestCase {
     	// several methods, like endElement() are not directly tested
     	Assert.assertTrue(true);
     }
-	
+
   /**
    * Asserts that the given subString is present in the fullString.
    *
    * @param fullString String which should contain the subString
-   * @param subString String that must be present in the fullString 
+   * @param subString String that must be present in the fullString
    */
   public void assertContains(String fullString, String subString) {
       Assert.assertNotNull("Expected a non-null String to test contains against.", fullString);

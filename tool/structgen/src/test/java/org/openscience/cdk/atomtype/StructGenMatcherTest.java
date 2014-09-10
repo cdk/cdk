@@ -1,20 +1,20 @@
 /* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -749,7 +749,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
         assertAtomType(testedAtomTypes, "F1", matched);
     }
 
-  
+
     @Test public void testSe2() throws Exception {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom se = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"Se");
@@ -767,7 +767,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
 
 
         matched = matcher.findMatchingAtomType(mol, mol.getAtom(1));
-        assertAtomType(testedAtomTypes, "O2", matched);        
+        assertAtomType(testedAtomTypes, "O2", matched);
 
     }
 
@@ -775,8 +775,8 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
      * The test seems to be run by JUnit in order in which they found
      * in the source. Ugly, but @AfterClass does not work because that
      * methods does cannot assert anything.
-     * 
-     * ...not anymore. Bad idea to do have such a test in the first place 
+     *
+     * ...not anymore. Bad idea to do have such a test in the first place
      * but we can hack it by sorting by test name (see fix method order
      * annotation).
      */
@@ -786,7 +786,7 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
             SilentChemObjectBuilder.getInstance()
         );
 
-   	    IAtomType[] expectedTypes = factory.getAllAtomTypes();        
+   	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
         if (expectedTypes.length != testedAtomTypes.size()) {
        	    String errorMessage = "Atom types not tested:";
             for (IAtomType expectedType : expectedTypes) {

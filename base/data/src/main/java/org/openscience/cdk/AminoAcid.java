@@ -1,7 +1,7 @@
 /* Copyright (C) 2005-2007  Egon Willighagen <e.willighagen@science.ru.nl>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -28,7 +28,7 @@ import org.openscience.cdk.interfaces.IAminoAcid;
 import org.openscience.cdk.interfaces.IAtom;
 
 /**
- * A AminoAcid is Monomer which stores additional amino acid specific 
+ * A AminoAcid is Monomer which stores additional amino acid specific
  * informations, like the N-terminus atom.
  *
  * @cdk.module data
@@ -49,7 +49,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -5032283549467862509L;
-	
+
 	/** The atom that constitutes the N-terminus. */
     private IAtom nTerminus;
     /** The atom that constitutes the C-terminus. */
@@ -61,7 +61,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     public AminoAcid() {
         super();
     }
-    
+
     /**
      * Retrieves the N-terminus atom.
      *
@@ -84,7 +84,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         super.addAtom(atom);
         nTerminus = atom;
     }
-    
+
     /**
      * Marks an Atom as being the N-terminus atom. It assumes that the Atom
      * is already added to the AminoAcid.
@@ -146,7 +146,7 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         	clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
         return clone;
     }
-    
+
     public String toString() {
         StringBuffer stringContent = new StringBuffer(32);
         stringContent.append("AminoAcid(");

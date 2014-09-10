@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -118,16 +118,16 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainer reference = (IAtomContainer)molecule.clone();
         Assert.assertEquals("C1", reference.getAtom(0).getID());
     }
-    
+
     /**
      * Tests the Mol2Reader with about 30% of the NCI molecules.
-     * 
+     *
      * @throws Exception if an error occurs
      */
      @Category(SlowTest.class)
      @Test public void testNCIfeb03_2D() throws Exception {
         Assume.assumeTrue(runSlowTests());
-    	
+
         String filename = "data/mol2/NCI_feb03_2D.mol2.gz";
         InputStream in = new GZIPInputStream(Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename));
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
@@ -175,7 +175,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
-    
+
     @Test public void testIAtomContainer() throws Exception {
         String filename = "data/mol2/fromWebsite.mol2";
         InputStream in = Mol2ReaderTest.class.getClassLoader().getResourceAsStream(filename);
@@ -186,7 +186,7 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(12, mol.getAtomCount());
         Assert.assertEquals(12, mol.getBondCount());
     }
-    
+
     @Test public void testBug1714794() throws Exception {
         String problematicMol2 = "@<TRIPOS>MOLECULE\n"
             + "mol_197219.smi\n"
@@ -479,8 +479,8 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         	Assert.assertNotNull(atom.getAtomTypeName());
         }
     }
-    
-    
+
+
     private void checkMol(StringBuilder buf) throws Exception {
         StringReader sr = new StringReader(buf.toString());
         Mol2Reader reader = new Mol2Reader(sr);
@@ -491,19 +491,19 @@ public class Mol2ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertTrue(mol.getChemSequenceCount() > 0);
         Assert.assertTrue(mol.getChemSequence(0).getChemModelCount() > 0);
         Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainerCount() > 0);
-        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);        
+        Assert.assertTrue(mol.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0).getAtomCount() > 0);
     }
-    
+
     // CL --> Cl, NA --> Na etc.. /cdk/bug/1346
     @Test public void unrecognisedAtomTypes() throws Exception {
-        Mol2Reader mol2Reader = null; 
+        Mol2Reader mol2Reader = null;
         try {
             mol2Reader = new Mol2Reader(getClass().getResourceAsStream("CLMW1.mol2"));
             IAtomContainer container = mol2Reader.read(new AtomContainer());
             for (IAtom atom : container.atoms())
                 Assert.assertNotNull(atom.getAtomicNumber());
         }finally {
-            if (mol2Reader != null) 
+            if (mol2Reader != null)
                 mol2Reader.close();
         }
     }

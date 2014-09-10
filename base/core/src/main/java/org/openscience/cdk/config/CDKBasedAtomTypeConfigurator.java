@@ -44,7 +44,7 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
     private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
     private InputStream ins = null;
-    
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
 
@@ -57,10 +57,10 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
-    
+
     /**
      * Reads the atom types from the CDK based atom type list.
-     * 
+     *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
      * @throws        IOException when a problem occured with reading from the InputStream
      * @return        A List with read IAtomType's.
@@ -98,5 +98,5 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         }
         return atomTypes;
     }
-   
+
 }

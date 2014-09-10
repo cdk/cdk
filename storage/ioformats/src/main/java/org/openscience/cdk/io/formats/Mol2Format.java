@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public Mol2Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Mol2Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,14 +68,14 @@ public class Mol2Format extends SimpleChemFormatMatcher implements IChemFormatMa
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.Mol2Reader";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
-      return "org.openscience.cdk.io.Mol2Writer"; 
+    public String getWriterClassName() {
+      return "org.openscience.cdk.io.Mol2Writer";
     }
 
     /** {@inheritDoc} */ @Override

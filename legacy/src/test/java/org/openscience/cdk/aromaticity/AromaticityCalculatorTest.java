@@ -47,6 +47,6 @@ public class AromaticityCalculatorTest extends CDKTestCase {
 		Assert.assertEquals(1, rs.getAtomContainerCount());
 		Assert.assertTrue(AromaticityCalculator.isAromatic((IRing)rs.getAtomContainer(0), mol));
 	}
-	
+
 }
 

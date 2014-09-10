@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -48,7 +48,7 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.BondManipulatorTest")
 public class BondManipulator {
-	
+
 	/**
 	 * Constructs an array of Atom objects from Bond.
 	 * @param  container The Bond object.
@@ -60,13 +60,13 @@ public class BondManipulator {
 		for (int i = 0; i < ret.length; ++i) ret[i] = container.getAtom(i);
 		return ret;
 	}
-	
+
 	/**
 	 * Returns true if the first bond has a lower bond order than the second bond.
 	 * It returns false if the bond order is equal, and if the order of the first
 	 * bond is larger than that of the second. Also returns false if either bond
 	 * order is unset.
-	 * 
+	 *
 	 * @param first  The first bond order object
 	 * @param second The second bond order object
 	 * @return true if the first bond order is lower than the second one, false othrwise
@@ -75,7 +75,7 @@ public class BondManipulator {
     @TestMethod("testIsLowerOrder_IBond_Order_IBond_Order")
     public static boolean isLowerOrder(IBond.Order first, IBond.Order second) {
 		if (first == null || second == null) return false;
-		
+
 		if (second == IBond.Order.QUADRUPLE) {
 			if (first !=  IBond.Order.QUADRUPLE) return true;
 		}
@@ -87,13 +87,13 @@ public class BondManipulator {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if the first bond has a higher bond order than the second bond.
 	 * It returns false if the bond order is equal, and if the order of the first
 	 * bond is lower than that of the second. Also returns false if either bond
 	 * order is unset.
-	 * 
+	 *
 	 * @param first  The first bond order object
 	 * @param second  The second bond order object
 	 * @return true if the first bond order is higher than the second one, false othrwise
@@ -102,7 +102,7 @@ public class BondManipulator {
     @TestMethod("testIsHigherOrder_IBond_Order_IBond_Order")
     public static boolean isHigherOrder(IBond.Order first, IBond.Order second) {
 		if (first == null || second == null) return false;
-		
+
 		if (second == IBond.Order.QUADRUPLE) {
 			return false;
 		}
@@ -116,7 +116,7 @@ public class BondManipulator {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the IBond.Order one higher. Does not increase the bond order
 	 * beyond the QUADRUPLE bond order.
@@ -227,10 +227,10 @@ public class BondManipulator {
 		}
 		return 4.0;
 	}
-	
+
 	/**
 	 * Returns the maximum bond order for a List of bonds.
-	 * 
+	 *
 	 * @param bonds The list of bonds to search through
 	 * @return  The maximum bond order found
      * @see #getMaximumBondOrder(java.util.Iterator)
@@ -359,6 +359,6 @@ public class BondManipulator {
 		return sum;
 	}
 
-	
+
 }
 

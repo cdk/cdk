@@ -42,13 +42,13 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
     private final static Color DEFAULT        = new Color(255,20,147);
 
     private static Map<String,Color> colorMap;
-    
+
     /*
      * Color map with RasMol/Chime Color RGB Values.
      * Excepted H and C (too light).
      */
     static {
-       colorMap = new HashMap<String,Color>(); 
+       colorMap = new HashMap<String,Color>();
 
        colorMap.put("C" , new Color(144,144,144 ));
        colorMap.put("H" , new Color(144,144,144 ));
@@ -78,12 +78,12 @@ public class RasmolColors implements IAtomColorer, java.io.Serializable {
        colorMap.put("I" , new Color(160,32,240  ));
        colorMap.put("Li", new Color(178,34,34   ));
        colorMap.put("He", new Color(255,192,203 ));
-       
+
     }
-    
+
     /**
      * Returns the Rasmol color for the given atom's element.
-     * 
+     *
      * @param atom IAtom to get a color for
      * @return     the atom's color according to this coloring scheme.
      */

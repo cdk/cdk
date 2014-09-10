@@ -159,7 +159,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                     new IntegerResult(bondCount), getDescriptorNames(), null);
         }
-    	
+
         int bondCount = 0;
         for (IBond bond : container.bonds()) {
             if (bondMatch(bond.getOrder(), order)) {

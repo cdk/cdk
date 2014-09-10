@@ -7,7 +7,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Class to manipulate IsotopePattern objects.
- * 
+ *
  * @author Miguel Rojas Cherto
  *
  * @cdk.module  formula
@@ -18,14 +18,14 @@ public class IsotopePatternManipulator {
 
 	/**
 	 * Return the isotope pattern normalized to the highest abundance.
-	 * 
+	 *
 	 * @param isotopeP  The IsotopePattern object to normalize
 	 * @return          The IsotopePattern normalized
 	 */
 	@TestMethod("testNormalize_IsotopePattern")
 	public static IsotopePattern normalize(IsotopePattern isotopeP){
 		IsotopeContainer isoHighest = null;
-		
+
 		double biggestAbundance = 0;
 		/*Extraction of the isoContainer with the highest abundance*/
 		for(IsotopeContainer isoContainer: isotopeP.getIsotopes()){
@@ -47,11 +47,11 @@ public class IsotopePatternManipulator {
 					isoNormalized.setMonoIsotope(icClone);
 				else
 					isoNormalized.addIsotope(icClone);
-					
+
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 		isoNormalized.setCharge(isotopeP.getCharge());
 		return isoNormalized;
@@ -59,7 +59,7 @@ public class IsotopePatternManipulator {
 	/**
 	 * Return the isotope pattern sorted and normalized by intensity
 	 * to the highest abundance.
-	 * 
+	 *
 	 * @param isotopeP  The IsotopePattern object to sort
 	 * @return          The IsotopePattern sorted
 	 */
@@ -71,7 +71,7 @@ public class IsotopePatternManipulator {
 	/**
 	 * Return the isotope pattern sorted by intensity
 	 * to the highest abundance.
-	 * 
+	 *
 	 * @param isotopeP  The IsotopePattern object to sort
 	 * @return          The IsotopePattern sorted
 	 */
@@ -98,22 +98,22 @@ public class IsotopePatternManipulator {
 						isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
 				}
 				listISO.remove(isoHighest);
-				
+
 			}
 			isoSort.setCharge(isotopeP.getCharge());
 			return isoSort;
-			
+
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
 	/**
 	 * Return the isotope pattern sorted by mass
 	 * to the highest abundance.
-	 * 
+	 *
 	 * @param isotopeP  The IsotopePattern object to sort
 	 * @return          The IsotopePattern sorted
 	 */
@@ -137,17 +137,17 @@ public class IsotopePatternManipulator {
 					isoSort.setMonoIsotope((IsotopeContainer) isoHighest.clone());
 				else
 					isoSort.addIsotope((IsotopeContainer) isoHighest.clone());
-				
+
 				listISO.remove(isoHighest);
-				
+
 			}
 			isoSort.setCharge(isotopeP.getCharge());
 			return isoSort;
-			
+
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 }

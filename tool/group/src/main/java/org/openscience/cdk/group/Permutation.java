@@ -31,9 +31,9 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A permutation with some associated methods to multiply, invert, and convert
- * to cycle strings. Much of the code in this was implemented from the 
+ * to cycle strings. Much of the code in this was implemented from the
  * C.A.G.E.S. book {@cdk.cite Kreher98}.
- * 
+ *
  * @author maclean
  * @cdk.module group
  *
@@ -48,7 +48,7 @@ public final class Permutation {
 
     /**
      * Constructs an identity permutation with <code>size</code> elements.
-     * 
+     *
      * @param size the number of elements in the permutation
      */
     @TestMethod("sizeNConstructor")
@@ -58,21 +58,21 @@ public final class Permutation {
             this.values[i] = i;
         }
     }
-    
+
     /**
-     * Make a permutation from a set of values such that p[i] = x for 
-     * the value x at position i. 
-     * 
+     * Make a permutation from a set of values such that p[i] = x for
+     * the value x at position i.
+     *
      * @param values the elements of the permutation
      */
     @TestMethod("valuesConstructor")
     public Permutation(int... values) {
         this.values = values;
     }
-    
+
     /**
      * Construct a permutation from another one by cloning the values.
-     * 
+     *
      * @param other the other permutation
      */
     @TestMethod("cloneConstructor")
@@ -101,10 +101,10 @@ public final class Permutation {
     public int hashCode() {
     	return Arrays.hashCode(values);
     }
-    
+
     /**
      * Check to see if this permutation is the identity permutation.
-     * 
+     *
      * @return true if for all i, p[i] = i
      */
     @TestMethod("isIdentityTest")
@@ -116,20 +116,20 @@ public final class Permutation {
         }
         return true;
     }
-    
+
     /**
      * Get the number of elements in the permutation.
-     * 
+     *
      * @return the number of elements
      */
     @TestMethod("sizeTest")
     public int size() {
         return this.values.length;
     }
-    
+
     /**
      * Get the value at this index.
-     *  
+     *
      * @param index the permutation value at this index.
      * @return the value at this index
      */
@@ -137,17 +137,17 @@ public final class Permutation {
     public int get(int index) {
         return this.values[index];
     }
-    
+
     /**
      * Get all the values as an array.
-     * 
+     *
      * @return the values of the permutation
      */
     @TestMethod("getValuesTest")
     public int[] getValues() {
         return this.values;
     }
-    
+
     /**
      * Find an r such that this[r] != other[r].
      * @param other the other permutation to compare with
@@ -161,10 +161,10 @@ public final class Permutation {
         }
         return r;
     }
-    
+
     /**
      * Get all the elements in the same orbit in the permutation (unsorted).
-     * 
+     *
      * @param element any element in the orbit
      * @return the list of elements reachable in this permutation
      */
@@ -179,10 +179,10 @@ public final class Permutation {
 		}
 		return orbit;
 	}
-    
+
     /**
      * Set the value at the specified index.
-     * 
+     *
      * @param index the index to set the value
      * @param value the value to set at this index
      */
@@ -193,7 +193,7 @@ public final class Permutation {
 
     /**
      * Alter a permutation by setting it to the values in the other permutation.
-     * 
+     *
      * @param other the other permutation to use
      * @throws IllegalArgumentException thrown if the permutations are of different
      *                                  size
@@ -210,9 +210,9 @@ public final class Permutation {
     }
 
     /**
-     * Multiply this permutation by another such that for all i, 
+     * Multiply this permutation by another such that for all i,
      * this[i] = this[other[i]].
-     * 
+     *
      * @param other the other permutation to use
      * @return a new permutation with the result of multiplying the permutations
      */
@@ -224,10 +224,10 @@ public final class Permutation {
         }
         return newPermutation;
     }
-    
+
     /**
      * Invert the permutation, so that for all i : inv[p[i]] = i.
-     *  
+     *
      * @return the inverse of this permutation
      */
     @TestMethod("invertTest")
@@ -238,10 +238,10 @@ public final class Permutation {
         }
         return inversion;
     }
-    
+
     /**
      * An easily-readable version of the permutation as a product of cycles.
-     * 
+     *
      * @return the cycle form of the permutation as a string
      */
     @TestMethod("toCycleStringTest")

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -94,10 +94,10 @@ final class CDKToBeam {
      * Isomeric SMILES.
      */
     private final boolean isomeric;
-    
+
     /** Use aromatic flags. */
     private final boolean aromatic;
-    
+
     /** Set atom class data. */
     private final boolean atomClasses;
 
@@ -190,18 +190,18 @@ final class CDKToBeam {
         Element element = Element.ofSymbol(symbol);
         if (element == null)
             element = Element.Unknown;
-        
+
         AtomBuilder ab = aromatic ? AtomBuilder.aromatic(element)
                                   : AtomBuilder.aliphatic(element);
-            
-        
+
+
         // CDK leaves nulls on pseudo atoms - we need to check this special case
         Integer hCount = a.getImplicitHydrogenCount();
         if (element == Element.Unknown) {
             ab.hydrogens(hCount != null ? hCount : 0);
         } else {
             ab.hydrogens(checkNotNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
-        }        
+        }
 
         if (charge != null)
             ab.charge(charge);
@@ -215,7 +215,7 @@ final class CDKToBeam {
                     IsotopeFactory isotopes = Isotopes.getInstance();
                     IIsotope       isotope  = isotopes.getMajorIsotope(a.getSymbol());
                     if (isotope == null || !isotope.getMassNumber().equals(massNumber))
-                        ab.isotope(massNumber);        
+                        ab.isotope(massNumber);
                 } catch (IOException e) {
                     throw new InternalError("Isotope factory wouldn't load: " + e.getMessage());
                 }
@@ -224,7 +224,7 @@ final class CDKToBeam {
 
         Integer atomClass = a.getProperty(ATOM_ATOM_MAPPING);
         if (atomClasses && atomClass != null) {
-            ab.atomClass(atomClass);    
+            ab.atomClass(atomClass);
         }
 
         return ab.build();
@@ -268,7 +268,7 @@ final class CDKToBeam {
 
         if (b.getOrder() == null)
             throw new CDKException("A bond had undefined order, possible query bond?");
-        
+
         IBond.Order order = b.getOrder();
 
         switch (order) {
@@ -298,7 +298,7 @@ final class CDKToBeam {
 
         IBond   db = dbs.getStereoBond();
         IBond[] bs = dbs.getBonds();
-        
+
         // don't try to set a configuration on aromatic bonds
         if (this.aromatic && db.getFlag(CDKConstants.ISAROMATIC))
             return;
@@ -345,7 +345,7 @@ final class CDKToBeam {
                                                : Configuration.ANTI_CLOCKWISE)
           .build();
     }
-    
+
     /**
      * Add extended tetrahedral stereo configuration to the Beam GraphBuilder.
      *

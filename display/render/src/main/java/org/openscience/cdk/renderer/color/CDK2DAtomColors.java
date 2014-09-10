@@ -34,7 +34,7 @@ import java.awt.*;
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
     private static final long serialVersionUID = 6712994043820219426L;
-    
+
     private final static Color HYDROGEN       = Color.black;
     private final static Color CARBON         = Color.black;
     private final static Color NITROGEN       = Color.blue;
@@ -43,7 +43,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     private final static Color SULPHUR        = Color.yellow.darker();
 
     private final static Color DEFAULT        = Color.black;
-    
+
     /**
      * Returns the CDK 2D color for the given atom's element.
      *
@@ -54,7 +54,7 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     public Color getAtomColor(IAtom atom) {
         return getAtomColor(atom, DEFAULT);
     }
-    
+
     /**
      * Returns the CDK 2D color for the given atom's element, or
      * defaults to the given color if no color is defined.

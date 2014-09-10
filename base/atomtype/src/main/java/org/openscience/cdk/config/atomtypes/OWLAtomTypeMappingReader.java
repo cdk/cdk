@@ -52,7 +52,7 @@ public class OWLAtomTypeMappingReader {
 
     /**
      * Instantiates the XML based AtomTypeReader.
-     * 
+     *
      * @param input The Reader to read the IAtomType's from.
      */
     @TestMethod("testOWLAtomTypeMappingReader_Reader")

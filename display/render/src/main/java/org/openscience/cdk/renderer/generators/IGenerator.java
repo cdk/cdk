@@ -25,14 +25,14 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.renderer.elements.IRenderingElement;
 
 /**
- * An {@link IGenerator} converts chemical entities into parts of the 
+ * An {@link IGenerator} converts chemical entities into parts of the
  * chemical drawing expressed as {@link IRenderingElement}s.
- * 
+ *
  * Note that some generators have explicit empty constructors (like:
  * "public MyGenerator() {}") which can be useful in some situations where
  * reflection is required. It is not, however, necessary for most normal
  * drawing situations.
- * 
+ *
  * @cdk.module  render
  * @cdk.githash
  */
@@ -41,7 +41,7 @@ public interface IGenerator<T extends IChemObject>  {
 	/**
 	 * Returns the list of {@link IGeneratorParameter} for this particular
 	 * generator.
-	 * 
+	 *
 	 * @return a {@link List} of {@link IGeneratorParameter}s
 	 */
 	public List<IGeneratorParameter<?>> getParameters();
@@ -49,11 +49,11 @@ public interface IGenerator<T extends IChemObject>  {
 	/**
 	 * Converts a {@link IChemObject} from the chemical data model into
 	 * something that can be drawn in the chemical drawing.
-	 * 
+	 *
 	 * @param object the chemical entity to be depicted
 	 * @param model  the rendering parameters
 	 * @return       a drawable chemical depiction component
 	 */
-	public IRenderingElement generate(T object, RendererModel model); 
+	public IRenderingElement generate(T object, RendererModel model);
 
 }

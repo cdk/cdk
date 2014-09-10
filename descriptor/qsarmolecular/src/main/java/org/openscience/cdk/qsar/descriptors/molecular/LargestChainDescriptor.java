@@ -200,7 +200,7 @@ public class LargestChainDescriptor extends AbstractMolecularDescriptor implemen
     			}
     		}
     	}
-        
+
         if (checkAromaticity) {
             try {
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);

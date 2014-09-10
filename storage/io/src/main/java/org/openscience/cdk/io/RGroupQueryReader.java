@@ -276,20 +276,20 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                         IBond bond = root.getBond(rGroup, partner);
                         int order = Integer.valueOf(stAAL.nextToken());
                         bondMap.put(order, bond);
-                        logger.info("AAL " + order + " " + ((IPseudoAtom)rGroup).getLabel() + 
+                        logger.info("AAL " + order + " " + ((IPseudoAtom)rGroup).getLabel() +
                                            "-" + partner.getSymbol());
                     }
                     if (bondMap.size()!=0)  {
                         attachmentPoints.put(rGroup, bondMap);
                     }
-                    
+
                 }
             }
             //Deal with remaining attachment points (non AAL)
             for (IAtom atom : root.atoms()) {
                 if (atom instanceof IPseudoAtom) {
                     IPseudoAtom rGroup = (IPseudoAtom)atom;
-                    if (rGroup.getLabel().startsWith("R") && 
+                    if (rGroup.getLabel().startsWith("R") &&
                         !rGroup.getLabel().equals("R") && // only numbered ones
                         !attachmentPoints.containsKey(rGroup)) {
                         //Order reflects the order of atoms in the Atom Block
@@ -395,10 +395,10 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
                                 int apo = Integer.valueOf(stAPO.nextToken());
                                 IAtom at = group.getAtom(pos - 1);
                                 switch (apo)  {
-                                    case 1: 
+                                    case 1:
                                         rGroup.setFirstAttachmentPoint(at);
                                         break;
-                                    case 2: 
+                                    case 2:
                                         rGroup.setSecondAttachmentPoint(at);
                                         break;
                                     case 3: {

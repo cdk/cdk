@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -43,7 +43,7 @@ public class ChemFileManipulator {
 
 	/**
 	 * Get the total number of atoms inside an IChemFile.
-	 * 
+	 *
 	 * @param file       The IChemFile object.
 	 * @return           The number of Atom object inside.
 	 */
@@ -59,7 +59,7 @@ public class ChemFileManipulator {
 
     /**
 	 * Get the total number of bonds inside an IChemFile.
-	 * 
+	 *
 	 * @param file       The IChemFile object.
 	 * @return           The number of Bond object inside.
 	 */
@@ -113,10 +113,10 @@ public class ChemFileManipulator {
         }
         return acList;
     }
-    
+
     /**
      * Get a list of all ChemModels inside an IChemFile.
-     * 
+     *
      * @param file  The IChemFile object.
      * @return      The List of IChemModel objects inside.
      */
@@ -131,10 +131,10 @@ public class ChemFileManipulator {
 	    }
 	    return modelsList;
     }
-    
+
     /**
      * Get a list of all IReaction inside an IChemFile.
-     * 
+     *
      * @param file  The IChemFile object.
      * @return      The List of IReaction objects inside.
      */
@@ -142,7 +142,7 @@ public class ChemFileManipulator {
     public static List<IReaction> getAllReactions(IChemFile file) {
         List<IReaction> reactonList = new ArrayList<IReaction>();
         List<IChemModel> chemModel = getAllChemModels(file);
-	    for (int f = 0; f < chemModel.size(); f++){		    
+	    for (int f = 0; f < chemModel.size(); f++){
 		    for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
 		    	reactonList.add(reaction);
 		    }

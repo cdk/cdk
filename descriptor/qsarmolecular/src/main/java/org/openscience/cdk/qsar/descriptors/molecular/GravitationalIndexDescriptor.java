@@ -114,7 +114,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
                 this.getClass().getName(),
                 "The Chemistry Development Kit");
-    }    
+    }
 
     /**
      * Sets the parameters attribute of the GravitationalIndexDescriptor object.
@@ -240,7 +240,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
 
             Point3d point0 = b.getAtom(0).getPoint3d();
             Point3d point1 = b.getAtom(1).getPoint3d();
-           
+
             double x1 = point0.x;
             double y1 = point0.y;
             double z1 = point0.z;
@@ -330,5 +330,5 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
     }
 
 }
-    
+
 

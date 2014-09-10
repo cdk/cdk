@@ -33,7 +33,7 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * Combination generator for basic drawing of molecules. It only creates drawing
  * elements for atoms and bonds, using the {@link BasicAtomGenerator} and
  * {@link BasicBondGenerator}.
- * 
+ *
  * @author maclean
  * @cdk.module renderbasic
  * @cdk.githash

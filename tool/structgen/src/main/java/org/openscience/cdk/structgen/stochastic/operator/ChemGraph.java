@@ -46,7 +46,7 @@ public class ChemGraph
 	protected boolean[] visited;
 	/*Depth first traversal of the graph*/
 	protected List<Integer> subGraph;
-		
+
 	public ChemGraph(IAtomContainer chrom)
 	{
 		dim = chrom.getAtomCount();
@@ -54,18 +54,18 @@ public class ChemGraph
 		contab = new double[dim][dim];
 		contab = ConnectionMatrix.getMatrix(chrom);
 	}
-	
+
 	public List<Integer> pickDFgraph()
 	{
 		//depth first search from a randomly selected atom
-		
+
 		travIndex = 0;
-		subGraph = new ArrayList<Integer>();		
-		visited = new boolean[dim];			 		
+		subGraph = new ArrayList<Integer>();
+		visited = new boolean[dim];
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
 		recursiveDFT(seedAtom);
-	
+
 		return subGraph;
 	}
 
@@ -76,7 +76,7 @@ public class ChemGraph
 			subGraph.add(Integer.valueOf(atom));
 			travIndex++;
 			visited[atom] = true;
-			
+
 //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
 //				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
             List<Integer> adjSet = new ArrayList<Integer>();
@@ -93,31 +93,31 @@ public class ChemGraph
 				recursiveDFT(((Integer)adjSet.get(adjIndex)).intValue());
 				adjSet.remove(adjIndex);
 			}
-			
+
 		}
 	}
-	
+
 	public List<Integer> pickBFgraph()
 	{
 		//breadth first search from a randomly selected atom
-		
+
 		travIndex = 0;
-		subGraph = new ArrayList<Integer>();		
-		visited = new boolean[dim];			 		
+		subGraph = new ArrayList<Integer>();
+		visited = new boolean[dim];
 		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
         int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
-		
+
 		List<Integer> atomQueue = new ArrayList<Integer>();
 		atomQueue.add(Integer.valueOf(seedAtom));
-		visited[seedAtom] = true;		
-		
+		visited[seedAtom] = true;
+
 		while (!atomQueue.isEmpty()&&(subGraph.size()<numAtoms))
 		{
 			int foreAtom = ((Integer)atomQueue.get(0)).intValue();
 			subGraph.add(Integer.valueOf(foreAtom));
 			atomQueue.remove(0);
 			travIndex++;
-			
+
 			List<Integer> adjSet = new ArrayList<Integer>();
             for (int nextAtom = 0; nextAtom < dim; nextAtom++)
             {
@@ -135,24 +135,24 @@ public class ChemGraph
 			}
 
 		}
-		return subGraph;	
+		return subGraph;
 	}
-	
+
 	public List<Integer> getSubgraph()
 	{
 		return subGraph;
 	}
-	
+
 	public void setSubgraph(List<Integer> subgraph)
 	{
 		subGraph = subgraph;
 	}
-	
+
 	public int getNumAtoms()
 	{
 		return numAtoms;
 	}
-	
+
 	public void setNumAtoms(int numatoms)
 	{
 		numAtoms = numatoms;

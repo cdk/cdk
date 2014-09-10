@@ -37,7 +37,7 @@ public class INChIContentProcessorTool {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(INChIContentProcessorTool.class);;
-    
+
     public INChIContentProcessorTool() {
     }
 
@@ -91,7 +91,7 @@ public class INChIContentProcessorTool {
      *
      * @see   #processFormula
      */
-    public void processConnections(String bondsEncoding, 
+    public void processConnections(String bondsEncoding,
                      IAtomContainer container, int source){
         logger.debug("Parsing bond data: ", bondsEncoding);
 

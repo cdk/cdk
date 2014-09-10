@@ -159,7 +159,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
                 AtomTypeManipulator.configure(atom, type);
             } catch (Exception e) {
                 return getDummyDescriptorValue(new CDKException("Error in atom typing: " + atom));
-            }            
+            }
         }
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(container.getBuilder());
         try {

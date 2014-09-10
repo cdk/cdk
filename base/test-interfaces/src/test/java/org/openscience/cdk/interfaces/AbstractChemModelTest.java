@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.interfaces;
 
@@ -38,7 +38,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     @Test public void testGetMoleculeSet() {
     	testSetMoleculeSet_IAtomContainerSet();
     }
-    
+
     @Test public void testSetReactionSet_IReactionSet() {
 	    IChemModel chemModel = (IChemModel)newChemObject();
 	    IReactionSet crystal = chemModel.getBuilder().newInstance(IReactionSet.class);
@@ -48,7 +48,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     @Test public void testGetReactionSet() {
     	testSetReactionSet_IReactionSet();
     }
-    
+
     @Test public void testSetRingSet_IRingSet() {
 	    IChemModel chemModel = (IChemModel)newChemObject();
 	    IRingSet crystal = chemModel.getBuilder().newInstance(IRingSet.class);
@@ -58,7 +58,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     @Test public void testGetRingSet() {
         testSetRingSet_IRingSet();
     }
-    
+
     @Test public void testSetCrystal_ICrystal() {
 	    IChemModel chemModel = (IChemModel)newChemObject();
 	    ICrystal crystal = chemModel.getBuilder().newInstance(ICrystal.class);
@@ -68,7 +68,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
     @Test public void testGetCrystal() {
         testSetCrystal_ICrystal();
     }
-    
+
     @Test public void testToString() {
         IChemModel model = (IChemModel)newChemObject();
         String description = model.toString();
@@ -83,13 +83,13 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         Object clone = model.clone();
         Assert.assertNotNull(clone);
         Assert.assertTrue(clone instanceof IChemModel);
-    }    
-        
+    }
+
     @Test public void testClone_IAtomContainerSet() throws Exception {
         IChemModel model = (IChemModel)newChemObject();
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getMoleculeSet());
-        
+
 		model.setMoleculeSet(model.getBuilder().newInstance(IAtomContainerSet.class));
         clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getMoleculeSet());
@@ -100,7 +100,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel model = (IChemModel)newChemObject();
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getReactionSet());
-        
+
 		model.setReactionSet(model.getBuilder().newInstance(IReactionSet.class));
         clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getReactionSet());
@@ -111,7 +111,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
 		IChemModel model = (IChemModel)newChemObject();
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getCrystal());
-        
+
 		model.setCrystal(model.getBuilder().newInstance(ICrystal.class));
         clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getCrystal());
@@ -122,7 +122,7 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         IChemModel model = (IChemModel)newChemObject();
         IChemModel clone = (IChemModel)model.clone();
         Assert.assertNull(clone.getRingSet());
-        
+
 		model.setRingSet(model.getBuilder().newInstance(IRingSet.class));
         clone = (IChemModel)model.clone();
         Assert.assertNotNull(clone.getRingSet());
@@ -133,20 +133,20 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemModel chemObject = (IChemModel)newChemObject();
         chemObject.addListener(listener);
-        
+
         chemObject.setMoleculeSet(chemObject.getBuilder().newInstance(IAtomContainerSet.class));
         Assert.assertTrue(listener.changed);
-        
+
         listener.reset();
         Assert.assertFalse(listener.changed);
         chemObject.setReactionSet(chemObject.getBuilder().newInstance(IReactionSet.class));
         Assert.assertTrue(listener.changed);
-        
+
         listener.reset();
         Assert.assertFalse(listener.changed);
         chemObject.setCrystal(chemObject.getBuilder().newInstance(ICrystal.class));
         Assert.assertTrue(listener.changed);
-        
+
         listener.reset();
         Assert.assertFalse(listener.changed);
         chemObject.setRingSet(chemObject.getBuilder().newInstance(IRingSet.class));
@@ -283,15 +283,15 @@ public abstract class AbstractChemModelTest extends AbstractChemObjectTest {
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
-        
+
         private ChemObjectListenerImpl() {
             changed = false;
         }
-        
+
         @Test public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
-        
+
         @Test public void reset() {
             changed = false;
         }

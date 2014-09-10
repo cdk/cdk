@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.graph.invariant;
 
@@ -56,7 +56,7 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 {
 	private static IChemObjectBuilder builder;
 	private static LonePairElectronChecker lpcheck;
-	
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ConjugatedPiSystemsDetectorTest.class);
 
@@ -76,18 +76,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac.getAtomCount());
         Assert.assertEquals(3, ac.getBondCount());
-        
+
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getBond(i)));
         }
@@ -106,18 +106,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
         Assert.assertEquals(10, ac.getAtomCount());
         Assert.assertEquals(11, ac.getBondCount());
-        
+
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getBond(i)));
         }
@@ -136,18 +136,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac = acSet.getAtomContainer(0);
         Assert.assertEquals(6, ac.getAtomCount());
         Assert.assertEquals(6, ac.getBondCount());
-        
+
         for (int i = 0; i < ac.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac.getBond(i)));
         }
@@ -168,37 +168,37 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
-        
+
         IAtomContainer ac2 = acSet.getAtomContainer(1);
         Assert.assertEquals(4, ac2.getAtomCount());
         Assert.assertEquals(3, ac2.getBondCount());
-        
+
         for (int i = 0; i < ac2.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac2.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac2.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac2.getBond(i)));
         }
 	}
     /**
 	 *  A unit test for JUnit
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void testPiSystemWithCarbokation() throws Exception
@@ -210,33 +210,33 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
-        
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++)
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++)
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
-        
+
         IAtomContainer ac2 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac2.getAtomCount());
         Assert.assertEquals(3, ac2.getBondCount());
-        
+
         for (int i = 0; i < ac2.getAtomCount(); i++)
             Assert.assertTrue(mol.contains(ac2.getAtom(i)));
-        
+
         for (int i = 0; i < ac2.getBondCount(); i++)
             Assert.assertTrue(mol.contains(ac2.getBond(i)));
-        
+
 	}
     /**
 	 *  A unit test for JUnit
@@ -251,45 +251,45 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLReader reader = new MDLReader(ins);
         IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-        
+
         mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         Aromaticity.cdkLegacy().apply(mol);
-        
+
         IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(2, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
-        
+
         IAtomContainer ac2 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac2.getAtomCount());
         Assert.assertEquals(3, ac2.getBondCount());
-        
+
         for (int i = 0; i < ac2.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac2.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
-        
+
 	}
 
     /**
 	 *  A unit test for JUnit
 	 *
 	 *  @cdk.inchi InChI=1/C2H4O2/c1-2(3)4/h1H3,(H,3,4)/f/h3
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void testAceticAcid() throws Exception
@@ -300,22 +300,22 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-    	
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(3, ac1.getAtomCount());
         Assert.assertEquals(2, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
-        
+
 	}
     /**
 	 *  A unit test for JUnit
@@ -329,25 +329,25 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
     	MDLV2000Reader reader = new MDLV2000Reader(ins);
     	IChemFile chemFile = (IChemFile)reader.read((ChemObject)new ChemFile());
-    	mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);  
-    	
+    	mol = chemFile.getChemSequence(0).getChemModel(0).getMoleculeSet().getAtomContainer(0);
+
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-        
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(6, ac1.getAtomCount());
         Assert.assertEquals(5, ac1.getBondCount());
-        
+
 	}
 
     /**
 	 *  A unit test for JUnit
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void test1_fluorobutadienene() throws Exception
@@ -357,20 +357,20 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-    	
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(5, ac1.getAtomCount());
         Assert.assertEquals(4, ac1.getBondCount());
-        
+
 	}
     /**
 	 *  A unit test for JUnit
 	 *
 	 *  @cdk.inchi  InChI=1/C2F2/c3-1-2-4
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void testEthyne_difluoro() throws Exception
@@ -381,20 +381,20 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-    	
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
+
 	}
     /**
 	 *  A unit test for JUnit
 	 *
 	 *  @cdk.inchi  InChI=1/C7H19N3/c1-8(2)7(9(3)4)10(5)6/h7H,1-6H3
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void test3Aminomethane_cation() throws Exception
@@ -420,27 +420,27 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	mol.addBond(7, 8, Order.SINGLE);
     	mol.addAtom(builder.newInstance(IAtom.class,"C"));
     	mol.addBond(7, 8, Order.SINGLE);
-    	
+
     	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-    	
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
-        
-        
+
+
+
 	}
     /**
 	 *  A unit test for JUnit
 	 *
-	 *  @cdk.inchi  
-	 *  
+	 *  @cdk.inchi
+	 *
 	 *@return    Description of the Return Value
 	 */
     private IAtomContainer readCMLMolecule(String filename) throws Exception {
@@ -462,16 +462,16 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	Assert.assertEquals(1, moleculeSet.getAtomContainerCount());
     	mol = moleculeSet.getAtomContainer(0);
     	Assert.assertNotNull(mol);
-        
+
         return mol;
-    	
+
     }
-    
+
     /**
 	 *  A unit test for JUnit: Cyanoallene
 	 *
 	 *  @cdk.inchi  InChI=1/C4H3N/c1-2-3-4-5/h3H,1H2
-	 *  
+	 *
 	 *@return    Description of the Return Value
 	 */
     @Test public void testCyanoallene() throws Exception
@@ -482,22 +482,22 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
     	addImplicitHydrogens(mol);
     	lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-        
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(4, ac1.getAtomCount());
         Assert.assertEquals(3, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
-        
+
 	}
     /**
 	 *  A unit test for JUnit with [H]C([H])=C([H])[C+]([H])[H]
@@ -508,18 +508,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-        
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(3, ac1.getAtomCount());
         Assert.assertEquals(2, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }
@@ -533,18 +533,18 @@ public class ConjugatedPiSystemsDetectorTest extends CDKTestCase
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
 		lpcheck.saturate(mol);
     	Aromaticity.cdkLegacy().apply(mol);
-        
+
     	IAtomContainerSet acSet = ConjugatedPiSystemsDetector.detect(mol);
-        
+
         Assert.assertEquals(1, acSet.getAtomContainerCount());
         IAtomContainer ac1 = acSet.getAtomContainer(0);
         Assert.assertEquals(3, ac1.getAtomCount());
         Assert.assertEquals(2, ac1.getBondCount());
-        
+
         for (int i = 0; i < ac1.getAtomCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getAtom(i)));
         }
-        
+
         for (int i = 0; i < ac1.getBondCount(); i++) {
             Assert.assertTrue(mol.contains(ac1.getBond(i)));
         }

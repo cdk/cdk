@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.closeTo;
  * @cdk.module test-sdg
  */
 public class AtomPlacerTest extends CDKTestCase {
-    
+
     @Test
     public void emptyAtomsListTest() {
         List<IAtom> atoms = new ArrayList<IAtom>();
@@ -62,7 +62,7 @@ public class AtomPlacerTest extends CDKTestCase {
         }
         Assert.assertFalse("Null pointer for empty atoms list", npeThrown);
     }
-    
+
     @Test
     public void triangleTest() {
         List<IAtom> atoms = new ArrayList<IAtom>();
@@ -75,7 +75,7 @@ public class AtomPlacerTest extends CDKTestCase {
             Assert.assertNotNull(atom.getPoint2d());
         }
     }
-    
+
     @Test public void cumulated_x2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3));
@@ -89,7 +89,7 @@ public class AtomPlacerTest extends CDKTestCase {
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.getAtom(0).setPoint2d(new Point2d(0, 0));
         m.getAtom(0).setFlag(CDKConstants.ISPLACED, true);
-        
+
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(m);
         atomPlacer.placeLinearChain(m, new Vector2d(0, 1.5), 1.5);
@@ -102,7 +102,7 @@ public class AtomPlacerTest extends CDKTestCase {
                                    p1.y - p2.y);
         Vector2d p2p3 = new Vector2d(p3.x - p2.x,
                                    p3.y - p2.y);
-        
+
         p2p1.normalize();
         p2p3.normalize();
 

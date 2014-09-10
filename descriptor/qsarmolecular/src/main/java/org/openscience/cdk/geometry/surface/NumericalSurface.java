@@ -1,21 +1,21 @@
 /*
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package org.openscience.cdk.geometry.surface;
@@ -38,19 +38,19 @@ import java.util.Iterator;
  * <p>This class is based on the Python implementation of the DCLM method
  * ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
  * representing the solvent accessible surface area of a molecule.
- * 
+ *
  * <p>The neighbor list is a simplified version of that
  * described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
  * (compared to analytical calculations). The tessellation is slightly different from
  * that described by McCluskey and uses recursive subdivision starting from an icosahedral
  * representation.
- * 
+ *
  * <p>The default solvent radius used is 1.4A and setting this to 0 will give the
- * Van der Waals surface. The accuracy can be increased by increasing the tessellation 
+ * Van der Waals surface. The accuracy can be increased by increasing the tessellation
  * level, though the default of 4 is a good balance between accuracy and speed.
  *
  * @author      Rajarshi Guha
- * @cdk.created 2005-05-08  
+ * @cdk.created 2005-05-08
  * @cdk.module  qsarmolecular
  * @cdk.githash
  * @cdk.bug     1846421
@@ -180,9 +180,9 @@ public class NumericalSurface {
     /**
      * Get an array of the points on the accessible surface of a specific atom.
      *
-     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the 
+     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
      * number of atoms in the AtomContainer that the surface was calculated for
-     * @return  An array of Point3d objects 
+     * @return  An array of Point3d objects
      * @throws CDKException if the atom index is outside the range of allowable indices
      */
     public Point3d[] getSurfacePoints(int atomIdx) throws CDKException {
@@ -197,7 +197,7 @@ public class NumericalSurface {
     /**
      * Get the surface area for the specified atom.
      *
-     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the 
+     * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
      * number of atoms in the AtomContainer that the surface was calculated for
      * @return A double representing the accessible surface area of the atom
      * @throws CDKException if the atom index is outside the range of allowable indices

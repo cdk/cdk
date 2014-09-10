@@ -71,7 +71,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -98,7 +98,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
      *
      * This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
-     * 
+     *
      * @param  params            The new parameters value
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
@@ -138,7 +138,7 @@ public class AromaticAtomsCountDescriptor extends AbstractMolecularDescriptor im
 
     /**
      * Calculate the count of aromatic atoms in the supplied {@link IAtomContainer}.
-     * 
+     *
      *  The method require one parameter:
      *  if checkAromaticity is true, the method check the aromaticity,
      *  if false, means that the aromaticity has already been checked

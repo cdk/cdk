@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  miguel rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.debug;
 
@@ -49,7 +49,7 @@ public class DebugPDBPolymerTest extends AbstractPDBPolymerTest {
 		IPDBPolymer pdbPolymer = new DebugPDBPolymer();
 		Assert.assertNotNull(pdbPolymer);
 		Assert.assertEquals(pdbPolymer.getMonomerCount(), 0);
-		
+
 		IStrand oStrand1 = pdbPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
 		IStrand oStrand2 = pdbPolymer.getBuilder().newInstance(IStrand.class);
@@ -65,7 +65,7 @@ public class DebugPDBPolymerTest extends AbstractPDBPolymerTest {
 		IPDBAtom oPDBAtom3 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C3");
 		IPDBAtom oPDBAtom4 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C4");
 		IPDBAtom oPDBAtom5 = pdbPolymer.getBuilder().newInstance(IPDBAtom.class,"C5");
-		
+
 		pdbPolymer.addAtom(oPDBAtom1);
 		pdbPolymer.addAtom(oPDBAtom2, oStrand1);
 		pdbPolymer.addAtom(oPDBAtom3, oMono1, oStrand1);

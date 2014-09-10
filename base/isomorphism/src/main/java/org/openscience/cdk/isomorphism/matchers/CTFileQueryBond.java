@@ -29,7 +29,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
 /**
  * Captures query bond types defined in the CTFile.
- * 
+ *
  * @cdk.module  isomorphism
  * @cdk.githash
  */
@@ -85,7 +85,7 @@ public class CTFileQueryBond extends QueryBond implements IQueryBond {
      * Create a CTFileQueryBond of the specified type (from the MDL spec). The
      * bond copies the atoms and sets the type using the value 'type', 5 = single
      * or double, 8 = any, etc.
-     * 
+     *
      * @param bond an existing bond
      * @param type the specified type
      * @return a new CTFileQueryBond

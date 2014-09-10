@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -67,14 +67,14 @@ public class StereoElementFactoryTest {
         m.addBond(0, 1, IBond.Order.DOUBLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
-        
+
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
-        
+
         assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
-    } 
-    
+    }
+
     @Test public void z_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 3, -2.46d, 1.99d));
@@ -87,11 +87,11 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(1), null);
-        
+
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
-    }     
-    
+    }
+
     @Test public void unspec_but2ene_byCoordinates() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.37d, 1.64d));
@@ -105,10 +105,10 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
-        
+
         assertNull(element);
-    } 
-    
+    }
+
     @Test public void unspec_but2ene_wavyBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
@@ -121,10 +121,10 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
-        
+
         assertNull(element);
-    }   
-    
+    }
+
     @Test public void unspec_but2ene_crossBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
@@ -137,10 +137,10 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
-        
+
         assertNull(element);
-    }   
-    
+    }
+
     @Test public void r_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
@@ -174,7 +174,7 @@ public class StereoElementFactoryTest {
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
-    
+
     @Test public void r_butan2ol_3d() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, 0.56d, 0.05d, 0.71d));
@@ -227,7 +227,7 @@ public class StereoElementFactoryTest {
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
-    
+
     @Test public void s_butan2ol_3d_expH() {
         IAtomContainer m = new AtomContainer(6, 5, 0, 0);
         m.addAtom(atom("C", 0, -0.17d, -0.12d, -0.89d));
@@ -246,7 +246,7 @@ public class StereoElementFactoryTest {
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
-    
+
     @Test public void unspec_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
@@ -261,7 +261,7 @@ public class StereoElementFactoryTest {
 
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
-        assertNull(element);        
+        assertNull(element);
     }
 
     /**
@@ -337,7 +337,7 @@ public class StereoElementFactoryTest {
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
     }
-    
+
     @Test public void inverse_style_downbond() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
@@ -352,10 +352,10 @@ public class StereoElementFactoryTest {
         StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
         assertNotNull(element);
-        assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));    
+        assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
-    
-    
+
+
     // this example mocks a case where the down bond is inverse but is shared
     // between two stereo-centres - we can't create an element for atom 1 as
     // this bond is used to specify atom '2'
@@ -388,18 +388,18 @@ public class StereoElementFactoryTest {
         try {
             mdl = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/CPD-7272.mol"));
             IAtomContainer ac = mdl.read(new AtomContainer());
-            
+
             // MDL reader currently adds stereo automatically
             IStereoElement[] ses = Iterables.toArray(ac.stereoElements(), IStereoElement.class);
-            
+
             assertThat(ses.length, is(1));
-            assertNotNull(ses[0]);            
+            assertNotNull(ses[0]);
         } finally {
             if (mdl != null)
                 mdl.close();
         }
     }
-    
+
     @Test public void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -423,7 +423,7 @@ public class StereoElementFactoryTest {
                                                     m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
-    
+
     @Test public void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -467,7 +467,7 @@ public class StereoElementFactoryTest {
                                                     m.getAtom(4), m.getAtom(3)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
-    
+
     @Test public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -533,7 +533,7 @@ public class StereoElementFactoryTest {
                                                     m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
-    
+
     @Test public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, 1.3810, -0.7495, -1.4012));
@@ -557,7 +557,7 @@ public class StereoElementFactoryTest {
                                                     m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
-    
+
     @Test public void createExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
@@ -592,7 +592,7 @@ public class StereoElementFactoryTest {
     }
 
     /**
-     * The embedding of 3D depictions may cause bonds of abnormal length 
+     * The embedding of 3D depictions may cause bonds of abnormal length
      * (e.g. CHEBI:7621). The parity computation should consider this, here
      * we check we get the correct (anti-clockwise) configuration.
      */
@@ -607,12 +607,12 @@ public class StereoElementFactoryTest {
         m.addBond(2, 1, IBond.Order.SINGLE);
         m.addBond(3, 2, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE, IBond.Stereo.DOWN);
-        
+
         StereoElementFactory  sef     = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = sef.createTetrahedral(2, Stereocenters.of(m));
 
         assertThat(element.getChiralAtom(), is(m.getAtom(2)));
-        
+
         IAtom[] ligands = element.getLigands();
         assertThat(ligands[0], is(m.getAtom(0)));
         assertThat(ligands[1], is(m.getAtom(1)));
@@ -622,7 +622,7 @@ public class StereoElementFactoryTest {
         assertThat(element.getStereo(),
                    is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
-    
+
     @Test public void always2DTetrahedralElements() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, 0.34d, 2.28d));
@@ -640,12 +640,12 @@ public class StereoElementFactoryTest {
         m.addBond(3, 5, IBond.Order.SINGLE, IBond.Stereo.DOWN);
         m.addBond(2, 6, IBond.Order.SINGLE);
         m.addBond(3, 7, IBond.Order.SINGLE);
-        
+
         List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m)
                                                             .createAll();
         assertThat(elements.size(), is(3));
     }
-    
+
     @Test public void onlyCreateStereoForConsitionalDifferencesIn3D() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, -1.00d, -0.25d, 1.22d));
@@ -663,12 +663,12 @@ public class StereoElementFactoryTest {
         m.addBond(3, 5, IBond.Order.SINGLE);
         m.addBond(2, 6, IBond.Order.SINGLE);
         m.addBond(3, 7, IBond.Order.SINGLE);
-        
+
         List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m)
                                                             .createAll();
         // XXX: really 3 but we can't tell the middle centre is one ATM, see
         //      'dontCreateStereoForNonStereogenicIn3D'
-        assertThat(elements.size(), is(2)); 
+        assertThat(elements.size(), is(2));
     }
 
     @Test public void dontCreateStereoForNonStereogenicIn3D() {
@@ -682,21 +682,21 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
-        
+
         List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m)
                                                             .createAll();
-        
+
         // methane carbon is of course non-stereogenic
         assertThat(elements.size(), is(0));
     }
-    
+
     static IAtom atom(String symbol, int h, double x, double y) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);
         a.setPoint2d(new Point2d(x, y));
         return a;
-    } 
-    
+    }
+
     static IAtom atom(String symbol, int h, double x, double y, double z) {
         IAtom a = new Atom(symbol);
         a.setImplicitHydrogenCount(h);

@@ -80,14 +80,14 @@ import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
  * TestSuite that runs all the sample tests.
  *
  * @cdk.module  test-qsarmolecular
- * 
+ *
  * @cdk.bug     1860497
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
     QsarmolecularCoverageTest.class,
-        
-        // Individual Tests - Please add correlatively  
+
+        // Individual Tests - Please add correlatively
     ChiIndexUtilsTest.class,
     DescriptorEngineTest.class,
     DescriptorNamesTest.class,

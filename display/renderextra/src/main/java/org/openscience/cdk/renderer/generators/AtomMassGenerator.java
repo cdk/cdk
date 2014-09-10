@@ -44,7 +44,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 	/**
 	 * Returns true if the mass number of this element is set and not
 	 * equal the mass number of the most abundant isotope of this element.
-	 * 
+	 *
 	 * @param  atom      {@link IAtom} which is being examined
 	 * @param  container {@link IAtomContainer} of which the atom is part
 	 * @param  model     the {@link RendererModel}
@@ -54,13 +54,13 @@ public class AtomMassGenerator extends BasicAtomGenerator {
 	public boolean showCarbon(
 	        IAtom atom, IAtomContainer container, RendererModel model) {
 
-		Integer massNumber = atom.getMassNumber(); 
+		Integer massNumber = atom.getMassNumber();
 		if (massNumber != null) {
 			try {
-				Integer expectedMassNumber 
+				Integer expectedMassNumber
 						= Isotopes.getInstance()
 							.getMajorIsotope(atom.getSymbol())
-								.getMassNumber(); 
+								.getMassNumber();
 				if (massNumber != expectedMassNumber)
 					return true;
 			} catch (IOException e) {

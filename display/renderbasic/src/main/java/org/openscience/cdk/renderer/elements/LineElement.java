@@ -1,5 +1,5 @@
-/* Copyright (C) 2008 Arvid Berg <goglepox@users.sf.net> 
- * Contact: cdk-devel@list.sourceforge.net 
+/* Copyright (C) 2008 Arvid Berg <goglepox@users.sf.net>
+ * Contact: cdk-devel@list.sourceforge.net
  * This program
  * is free software; you can redistribute it and/or modify it under the terms of
  * the GNU Lesser General Public License as published by the Free Software
@@ -20,7 +20,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A line between two points.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -29,25 +29,25 @@ public class LineElement implements IRenderingElement {
 
     /** The x-coordinate of the first point. **/
     public final double firstPointX;
-    
+
     /** The y-coordinate of the first point. **/
     public final double firstPointY;
-    
+
     /** The x-coordinate of the second point. **/
     public final double secondPointX;
-    
+
     /** The y-coordinate of the second point. **/
     public final double secondPointY;
-    
+
     /** The width of the line. **/
     public final double width;
-    
+
     /** The color of the line. **/
     public final Color color;
 
     /**
-     * Make a line element. 
-     * 
+     * Make a line element.
+     *
      * @param firstPointX x-coordinate of the first point
      * @param firstPointY y-coordinate of the first point
      * @param secondPointX x-coordinate of the second point

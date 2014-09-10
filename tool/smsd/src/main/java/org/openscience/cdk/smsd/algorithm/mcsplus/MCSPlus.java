@@ -46,10 +46,10 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 public class MCSPlus {
 
     /**
-    * Default constructor added 
+    * Default constructor added
     */
     public MCSPlus(){
-        
+
     }
 
     private static TimeManager timeManager = null;
@@ -77,10 +77,10 @@ public class MCSPlus {
     }
 
     /**
-     * 
+     *
      * @param ac1
      * @param ac2
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      * @return
      * @throws CDKException
      */

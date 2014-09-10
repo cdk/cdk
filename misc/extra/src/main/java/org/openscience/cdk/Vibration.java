@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk;
 
@@ -38,12 +38,12 @@ public class Vibration {
      * frequency in reciprocal centimeters could be used.
      */
     private String label;
-    
+
     /**
      * List of atom vectors of type double[3]
      */
     private List<double[]> atomVectors = new ArrayList<double[]>();
-    
+
     /**
      * Create a vibration identified by the label.
      *
@@ -52,7 +52,7 @@ public class Vibration {
     public Vibration(String label) {
         this.label = label;
     }
-    
+
     /**
      * Gets the label identifying this vibration.
      *
@@ -61,7 +61,7 @@ public class Vibration {
     public String getLabel() {
         return label;
     }
-    
+
     /**
      * Adds a atom vector to the vibration.
      *
@@ -70,7 +70,7 @@ public class Vibration {
     public void addAtomVector(double[] atomVector) {
         atomVectors.add(atomVector);
     }
-    
+
     /**
      * Gets a atom vector at index given.
      *
@@ -80,7 +80,7 @@ public class Vibration {
     public double[] getAtomVector(int index) {
         return atomVectors.get(index);
     }
-    
+
     /**
      * Gets the number of atom vectors in the vibration.
      *
@@ -89,7 +89,7 @@ public class Vibration {
     public int getAtomVectorCount() {
         return atomVectors.size();
     }
-    
+
     /**
      * Returns an Enumeration of the atom vectors of this vibration.
      *
@@ -98,7 +98,7 @@ public class Vibration {
     public Iterator<double[]> getAtomVectors() {
         return atomVectors.iterator();
     }
-    
+
     /**
      * Removes all atom vectors from this vibration.
      */

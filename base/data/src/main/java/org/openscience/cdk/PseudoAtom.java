@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -37,8 +37,8 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @see  Atom
  */
-public class PseudoAtom extends Atom 
-  implements java.io.Serializable, Cloneable, IPseudoAtom 
+public class PseudoAtom extends Atom
+  implements java.io.Serializable, Cloneable, IPseudoAtom
 {
 
     /**
@@ -52,14 +52,14 @@ public class PseudoAtom extends Atom
 	private static final long serialVersionUID = 1L;
 
 	private String label;
-    
+
     /**
      * Constructs an empty PseudoAtom.
      */
     public PseudoAtom() {
         this("*");
     }
-    
+
     /**
      * Constructs an Atom from a String containing an element symbol.
      *
@@ -84,7 +84,7 @@ public class PseudoAtom extends Atom
     public PseudoAtom(IElement element) {
         super(element);
         if (element instanceof IPseudoAtom) {
-            this.label = ((IPseudoAtom)element).getLabel();   	
+            this.label = ((IPseudoAtom)element).getLabel();
         } else {
         	super.symbol = "R";
         	this.label = element.getSymbol();
@@ -134,7 +134,7 @@ public class PseudoAtom extends Atom
 	notifyChanged();
     }
 
-  
+
     /**
      * Dummy method: the stereo parity is undefined, final.
      */

@@ -26,7 +26,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A text element with added information.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */

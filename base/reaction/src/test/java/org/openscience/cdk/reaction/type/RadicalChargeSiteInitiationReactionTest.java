@@ -1,20 +1,20 @@
 /* Copyright (C) 2004-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.type;
 
@@ -58,7 +58,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	public  RadicalChargeSiteInitiationReactionTest()  throws Exception {
 			setReaction(RadicalChargeSiteInitiationReaction.class);
 	 }
-	 
+
 	 /**
 	  *  The JUnit setup method
 	  */
@@ -74,62 +74,62 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	 */
 	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
         IReactionProcess type = new RadicalChargeSiteInitiationReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
 
 		/* initiate */
-		
+
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(2, setOfReactions.getReaction(0).getProductCount());
 
-        
+
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-		
+
         IAtomContainer molecule1 = getExpectedProducts().getAtomContainer(0);
-        
+
         QueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(molecule1);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(product1,queryAtom));
-		
+
 		IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
-		
+
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(1);
 
 
         queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product2);
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
-       
+
 	}
 	/**
 	 * A unit test suite for JUnit.
-	 * 
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
 		IReactionProcess type  = new RadicalChargeSiteInitiationReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
-		
+
 		/*manually put the reactive center*/
 		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
-        
+
         /* initiate */
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
@@ -147,12 +147,12 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 	}
 	/**
 	 * A unit test suite for JUnit.
-	 *  
+	 *
 	 * @return    The test suite
 	 */
 	@Test public void testMapping() throws Exception {
 		IReactionProcess type = new RadicalChargeSiteInitiationReaction();
-		
+
 		IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
@@ -161,16 +161,16 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule.getAtom(2).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
 		molecule.getBond(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		
+
 		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
 		IParameterReact param = new SetReactionCenter();
 	    param.setParameter(Boolean.TRUE);
 	    paramList.add(param);
 	    type.setParameterList(paramList);
 		/* initiate */
-		
+
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
-        
+
         IAtomContainer product1 = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer product2 = setOfReactions.getReaction(0).getProducts().getAtomContainer(1);
 
@@ -181,11 +181,11 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
         Assert.assertEquals(mappedProductA2, product2.getAtom(0));
         IAtom mappedProductA3 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
         Assert.assertEquals(mappedProductA3, product1.getAtom(0));
-        
+
 	}
 	/**
 	 * Get the IAtomContainer
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExampleReactants() {
@@ -208,17 +208,17 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule.addBond(2, 7, IBond.Order.SINGLE);
 		molecule.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule.addBond(0, 8, IBond.Order.SINGLE);
-		
+
 		IAtom atom =  molecule.getAtom(0);
 		atom.setFormalCharge(1);
         molecule.addSingleElectron(new SingleElectron(atom));
-        
+
         setOfReactants.addAtomContainer(molecule);
 		return setOfReactants;
 	}
 	/**
 	 * Get the expected set of molecules.
-	 * 
+	 *
 	 * @return The IAtomContainerSet
 	 */
 	private IAtomContainerSet getExpectedProducts() {
@@ -235,7 +235,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule1.addAtom(builder.newInstance(IAtom.class,"H"));
 		molecule1.addBond(0, 4, IBond.Order.SINGLE);
         setOfProducts.addAtomContainer(molecule1);
-        
+
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
 		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
 		molecule2.addAtom(builder.newInstance(IAtom.class,"H"));
@@ -246,7 +246,7 @@ public class RadicalChargeSiteInitiationReactionTest extends ReactionProcessTest
 		molecule2.addBond(0, 3, IBond.Order.SINGLE);
         molecule2.addSingleElectron(new SingleElectron(molecule2.getAtom(0)));
         setOfProducts.addAtomContainer(molecule2);
-        
+
         return setOfProducts;
 	}
 }

@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.manipulator;
 
@@ -44,10 +44,10 @@ import org.openscience.cdk.io.MDLRXNReader;
  * @cdk.module test-standard
  */
 public class ReactionSetManipulatorTest extends CDKTestCase {
-    
+
     private IChemObjectBuilder builder;
     private ReactionSet set;
-    
+
     public ReactionSetManipulatorTest() {
         super();
     }
@@ -67,11 +67,11 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		IReactionSet reactionSet = builder.newInstance(IReactionSet.class);
 		reactionSet.addReaction(builder.newInstance(IReaction.class)); // 1
 		reactionSet.addReaction(builder.newInstance(IReaction.class)); // 2
-		
+
 		Assert.assertEquals(0, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
-		
+
 	}
-    
+
     @Test public void testGetAllMolecules_IReactionSet2() {
 		IReactionSet reactionSet = builder.newInstance(IReactionSet.class);
 		IReaction reaction1 = builder.newInstance(IReaction.class);
@@ -83,43 +83,43 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction2.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction2.addReactant(molecule);
 		reactionSet.addReaction(reaction2);
-		
+
 		Assert.assertEquals(3, ReactionSetManipulator.getAllMolecules(reactionSet).getAtomContainerCount());
-		
+
 	}
-	
+
     @Test
     public void testGetAtomCount_IReactionSet() throws Exception {
         Assert.assertEquals(19, ReactionSetManipulator.getAtomCount(set));
 	}
-	
+
 	@Test public void testGetBondCount_IReactionSet() throws Exception {
         Assert.assertEquals(18, ReactionSetManipulator.getBondCount(set));
 	}
-	
+
 	@Test public void testGetAllAtomContainers_IReactionSet() throws Exception {
 		Assert.assertEquals(3, ReactionSetManipulator.getAllAtomContainers(set).size());
 	}
-	
+
 	@Test public void testGetRelevantReaction_IReactionSet_IAtom() {
 		Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
 		while (atomContainers.hasNext()) {
 			IAtomContainer container = atomContainers.next();
 			IAtom anAtom = container.getAtom(0);
 			Assert.assertEquals(
-				set.getReaction(0), 
+				set.getReaction(0),
 				ReactionSetManipulator.getRelevantReaction(set, anAtom)
 			);
 		}
 	}
-	
+
 	@Test public void testGetRelevantReaction_IReactionSet_IBond() {
 		Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
 		while (atomContainers.hasNext()) {
 			IAtomContainer container = atomContainers.next();
 			IBond aBond = container.getBond(0);
 			Assert.assertEquals(
-				set.getReaction(0), 
+				set.getReaction(0),
 				ReactionSetManipulator.getRelevantReaction(set, aBond)
 			);
 		}
@@ -131,24 +131,24 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 			IAtomContainer container = atomContainers.next();
 			IAtom anAtom = container.getAtom(0);
 			Assert.assertEquals(
-				container, 
+				container,
 				ReactionSetManipulator.getRelevantAtomContainer(set, anAtom)
 			);
 		}
 	}
-	
+
 	@Test public void testGetRelevantAtomContainer_IReactionSet_IBond() {
 		Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
 		while (atomContainers.hasNext()) {
 			IAtomContainer container = atomContainers.next();
 			IBond aBond = container.getBond(0);
 			Assert.assertEquals(
-				container, 
+				container,
 				ReactionSetManipulator.getRelevantAtomContainer(set, aBond)
 			);
 		}
 	}
-	
+
 	@Test public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
 		ReactionSetManipulator.setAtomProperties(set, "test", "ok");
 		Iterator<IAtomContainer> atomContainers = ReactionSetManipulator.getAllAtomContainers(set).iterator();
@@ -191,9 +191,9 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 
 		Assert.assertEquals(2,mol.getAtomCount());
 		Assert.assertEquals(0,mol.getBondCount());
-		
+
 	}
-	
+
 	@Test public void testRemoveAtomAndConnectedElectronContainers_IReactionSet_IAtom() {
 		IReactionSet set = builder.newInstance(IReactionSet.class);
 		IReaction reaction = builder.newInstance(IReaction.class);
@@ -215,7 +215,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		Assert.assertEquals(0,mol.getBondCount());
 	}
 
-    
+
     @Test public void testGetAllIDs_IReactionSet() {
     	IReactionSet set = builder.newInstance(IReactionSet.class);
 		IReaction reaction1 = builder.newInstance(IReaction.class);
@@ -231,12 +231,12 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
         IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.setID("r2");
 		set.addReaction(reaction2);
-		
+
         List<String> ids = ReactionSetManipulator.getAllIDs(set);
         Assert.assertNotNull(ids);
         Assert.assertEquals(6, ids.size());
     }
-    
+
     @Test public void testGetRelevantReactions_IReactionSet_IAtomContainer() {
 		IReactionSet set = builder.newInstance(IReactionSet.class);
 		IReaction reaction1 = builder.newInstance(IReaction.class);
@@ -247,17 +247,17 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction1.addReactant(mol1b);
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
-		
+
 		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.addReactant(mol1b);
 		reaction2.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction2);
-		
+
 		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction3.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction3);
-		
+
 		Assert.assertEquals(3,set.getReactionCount());
 		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactions(set, mol1b);
 		Assert.assertEquals(2,reactionSet2.getReactionCount());
@@ -266,7 +266,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactions(set, mol1a);
 		Assert.assertEquals(1,reactionSet1.getReactionCount());
 		Assert.assertEquals(reaction1,reactionSet1.getReaction(0));
-		
+
 	}
     @Test public void testGetRelevantReactionsAsReactant_IReactionSet_IAtomContainer() {
 		IReactionSet set = builder.newInstance(IReactionSet.class);
@@ -278,17 +278,17 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction1.addReactant(mol1b);
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
-		
+
 		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.addReactant(mol1b);
 		reaction2.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction2);
-		
+
 		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction3.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction3);
-		
+
 		Assert.assertEquals(3,set.getReactionCount());
 		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1b);
 		Assert.assertEquals(2,reactionSet2.getReactionCount());
@@ -297,7 +297,7 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsReactant(set, mol1a);
 		Assert.assertEquals(1,reactionSet1.getReactionCount());
 		Assert.assertEquals(reaction1,reactionSet1.getReaction(0));
-		
+
 	}
 
     @Test public void testGetRelevantReactionsAsProduct_IReactionSet_IAtomContainer() {
@@ -310,26 +310,26 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction1.addReactant(mol1b);
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
-		
+
 		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.addReactant(mol1b);
 		reaction2.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction2);
-		
+
 		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction3.addProduct(mol1a);
 		set.addReaction(reaction3);
-		
+
 		Assert.assertEquals(3,set.getReactionCount());
 		IReactionSet reactionSet2 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1b);
 		Assert.assertEquals(0,reactionSet2.getReactionCount());
 		IReactionSet reactionSet1 = ReactionSetManipulator.getRelevantReactionsAsProduct(set, mol1a);
 		Assert.assertEquals(1,reactionSet1.getReactionCount());
 		Assert.assertEquals(reaction3,reactionSet1.getReaction(0));
-		
+
 	}
-    
+
     @Test public void testGetReactionByReactionID_IReactionSet_String(){
 		IReactionSet set = builder.newInstance(IReactionSet.class);
 		IReaction reaction1 = builder.newInstance(IReaction.class);
@@ -341,13 +341,13 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction1.addReactant(mol1b);
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
-		
+
 		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.setID("2");
 		reaction2.addReactant(mol1b);
 		reaction2.addProduct(builder.newInstance(IAtomContainer.class));
 		set.addReaction(reaction2);
-		
+
 		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.setID("3");
 		reaction3.addReactant(builder.newInstance(IAtomContainer.class));
@@ -369,12 +369,12 @@ public class ReactionSetManipulatorTest extends CDKTestCase {
 		reaction1.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
 		reaction1.addProduct(builder.newInstance(IAtomContainer.class));
-		
+
 		IReaction reaction2 = builder.newInstance(IReaction.class);
 		reaction2.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction2.addProduct(mol1b);
 		set.addReaction(reaction2);
-		
+
 		IReaction reaction3 = builder.newInstance(IReaction.class);
 		reaction3.addReactant(builder.newInstance(IAtomContainer.class));
 		reaction3.addProduct(builder.newInstance(IAtomContainer.class));

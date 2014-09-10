@@ -14,7 +14,7 @@ import org.openscience.cdk.interfaces.IBond;
  */
 
 public class AtomContainerPrinter {
-    
+
     private class Edge implements Comparable<Edge> {
         public String firstString;
         public String lastString;
@@ -39,13 +39,13 @@ public class AtomContainerPrinter {
                 return 1;
             }
         }
-        
+
         @Override
 		public String toString() {
             return firstString + first + ":" + lastString + last + "(" + order + ")";
         }
     }
-    
+
     public String toString(IAtomContainer atomContainer) {
         StringBuilder sb = new StringBuilder();
         for (IAtom atom : atomContainer.atoms()) {

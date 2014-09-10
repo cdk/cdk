@@ -138,7 +138,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
         }
 
         distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
-        
+
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(distanceToAtom),
                 getDescriptorNames());
@@ -147,10 +147,10 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
 
     /**
      * generic method for calculation of distance btw 2 atoms
-     * 
+     *
      * @param atom1 The IAtom 1
      * @param atom2 The IAtom 2
-     * 
+     *
      * @return distance between atom1 and atom2
      */
     private double calculateDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {

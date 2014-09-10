@@ -36,8 +36,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.Iterator;
 
 /**
- *  The calculation of bond-pi Partial charge is calculated 
- *  determining the difference the Partial Pi Charge on atoms 
+ *  The calculation of bond-pi Partial charge is calculated
+ *  determining the difference the Partial Pi Charge on atoms
  *  A and B of a bond. Based in Gasteiger Charge.
  *  <p>This descriptor uses these parameters:
  * <table border="1">
@@ -78,7 +78,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     /**
      *  Constructor for the BondPartialPiChargeDescriptor object.
      */
-    public BondPartialPiChargeDescriptor() {  
+    public BondPartialPiChargeDescriptor() {
     	pepe = new GasteigerPEPEPartialCharges();
     }
 
@@ -102,19 +102,19 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-        if (params.length > 3) 
+        if (params.length > 3)
             throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-        
+
         if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
 	        maxIterations = (Integer) params[0];
-	        
+
 	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
         	lpeChecker = (Boolean) params[1];
         }
-	    
+
 	    if(params.length > 2 && params[2] != null){
         	if (!(params[2] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
@@ -191,7 +191,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
 	    	try {
 	    		for (int i=0; i<ac.getAtomCount(); i++)
 	    			ac.getAtom(i).setCharge(0.0);
-	    		
+
 	        	pepe.assignGasteigerPiPartialCharges(ac, true);
 				for(Iterator<IBond> it = ac.bonds().iterator() ; it.hasNext(); ) {
 					IBond bondi = it.next();
@@ -216,7 +216,7 @@ public class BondPartialPiChargeDescriptor extends AbstractBondDescriptor {
     	bond.getAtom(0).setBondOrderSum(originalBondOrderSum1);
     	bond.getAtom(1).setMaxBondOrder(originalMaxBondOrder2);
     	bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
-	    
+
         return getCachedDescriptorValue(bond) != null
                 ? new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 getCachedDescriptorValue(bond), descriptorNames)

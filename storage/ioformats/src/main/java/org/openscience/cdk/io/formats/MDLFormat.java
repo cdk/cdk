@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public MDLFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MDLFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,22 +68,22 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.MDLReader";
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return null;
     }
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && line.length()>7 && 
-        		   (line.indexOf("2000") == -1) && // MDL Mol V2000 format 
-        		   (line.indexOf("3000") == -1))    // MDL Mol V3000 format 
+        if (lineNumber == 4 && line.length()>7 &&
+        		   (line.indexOf("2000") == -1) && // MDL Mol V2000 format
+        		   (line.indexOf("3000") == -1))    // MDL Mol V3000 format
         {
             // possibly a MDL mol file
             try {

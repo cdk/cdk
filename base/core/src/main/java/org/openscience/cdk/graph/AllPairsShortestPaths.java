@@ -529,7 +529,7 @@ public final class AllPairsShortestPaths {
 
         public void setProperties(Map<Object, Object> properties) {
         }
-        
+
         public void addProperties(Map<Object, Object> properties) {
         }
 

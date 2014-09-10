@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sf.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,16 +10,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
+ *
  */
 package org.openscience.cdk.math.qm;
 
@@ -27,11 +27,11 @@ import org.openscience.cdk.math.Matrix;
 import org.openscience.cdk.math.Vector;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
- 
-/** 
+
+/**
  * Calculates the orbitals and orbital energies of electron systems
  * without electron electron interactions
- * 
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.githash
  * @cdk.created 2001-09-03
@@ -49,7 +49,7 @@ public class OneElectronJob
    * Constructs a one electron job
    */
   public OneElectronJob(Orbitals orbitals)
-  { 
+  {
     this.orbitals = orbitals;
   }
 
@@ -111,7 +111,7 @@ public class OneElectronJob
   {
     int size = basis.getSize();
     Matrix J = new Matrix(size,size);
-    int i,j; 
+    int i,j;
     for(i=0; i<size; i++)
       for(j=0; j<size; j++)
         // (1/2) * -<d^2/dx^2 chi_i | chi_j>
@@ -166,7 +166,7 @@ public class OneElectronJob
 
     HAO = T.add(V);
     log.debug("HAO = \n"+HAO+"\n");
- 
+
     H = HAO.similar(C);
     log.debug("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
 

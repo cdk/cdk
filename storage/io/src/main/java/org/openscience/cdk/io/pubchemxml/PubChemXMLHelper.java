@@ -57,7 +57,7 @@ public class PubChemXMLHelper {
 
 	private IChemObjectBuilder builder;
 	private IsotopeFactory factory;
-	
+
 	/**
      * @throws java.io.IOException if there is error in getting the {@link IsotopeFactory}
      */
@@ -83,7 +83,7 @@ public class PubChemXMLHelper {
 	public final static String EL_ATOMINT_AID = "PC-AtomInt_aid";
 	public final static String EL_ATOMINT_VALUE = "PC-AtomInt_value";
 	public final static String EL_ELEMENT = "PC-Element";
-	
+
     // coordinate block elements
     public final static String EL_COORDINATESBLOCK = "PC-Compound_coords";
     public final static String EL_COORDINATES_AID = "PC-Coordinates_aid";
@@ -101,7 +101,7 @@ public class PubChemXMLHelper {
 	public final static String EL_BONDID1 = "PC-Bonds_aid1";
 	public final static String EL_BONDID2 = "PC-Bonds_aid2";
 	public final static String EL_BONDORDER = "PC-Bonds_order";
-	
+
   // property block elements
   public final static String EL_PROPSBLOCK = "PC-Compound_props";
   public final static String EL_PROPS_INFODATA = "PC-InfoData";
@@ -160,7 +160,7 @@ public class PubChemXMLHelper {
     	}
 		return model;
     }
-	
+
 	public String getSID(XmlPullParser parser) throws Exception {
 		String sid = "unknown";
 		while (parser.next() != XmlPullParser.END_DOCUMENT) {
@@ -215,7 +215,7 @@ public class PubChemXMLHelper {
     		}
 		}
 	}
-	
+
 	public void parserAtomBlock(XmlPullParser parser, IAtomContainer molecule) throws Exception {
 		while (parser.next() != XmlPullParser.END_DOCUMENT) {
 			if (parser.getEventType() == XmlPullParser.END_TAG) {
@@ -231,7 +231,7 @@ public class PubChemXMLHelper {
     		}
 		}
 	}
-	
+
     public void parserCompoundInfoData(XmlPullParser parser, IAtomContainer molecule) throws Exception {
         String urn_label = null;
         String urn_name = null;
@@ -433,5 +433,5 @@ public class PubChemXMLHelper {
 		}
 		return values;
 	}
-	
+
 }

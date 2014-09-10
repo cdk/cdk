@@ -1,7 +1,7 @@
 /* Copyright (C) 2010  Gilleain Torrance <gilleain.torrance@gmail.com>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
@@ -9,12 +9,12 @@
  * which includes - but is not limited to - adding the above copyright notice to
  * the beginning of your source code files, and to any copyright notice that you
  * may distribute with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -37,20 +37,20 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 
 /**
  * Utility class for testing.
- * 
+ *
  * @author     maclean
  * @cdk.module test-renderbasic
  */
 public class ElementUtility implements IDrawVisitor {
-	
+
 	private List<IRenderingElement> elements = new ArrayList<IRenderingElement>();
-	
+
 	private AffineTransform transform;
-	
+
 	private RendererModel model;
-	
+
 	private boolean getElementGroups = false;
-	
+
 	public int numberOfElements() {
 		return this.elements.size();
 	}
@@ -69,18 +69,18 @@ public class ElementUtility implements IDrawVisitor {
 			this.elements.add(element);
 		}
 	}
-	
+
 	public List<IRenderingElement> getElements() {
 		return this.elements;
 	}
-	
+
 	public List<IRenderingElement> getAllSimpleElements(IRenderingElement root) {
 	    elements.clear();
 		getElementGroups = false;
 		root.accept(this);
 		return new ArrayList<IRenderingElement>(elements);
 	}
-	
+
 	public int[] transformPoint(double x, double y) {
         double[] src = new double[] {x, y};
         double[] dest = new double[2];
@@ -90,29 +90,29 @@ public class ElementUtility implements IDrawVisitor {
 
 	public void setFontManager(IFontManager fontManager) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void setRendererModel(RendererModel rendererModel) {
 		this.model = rendererModel;
 	}
-	
+
 	public RendererModel getModel() {
 		return this.model;
 	}
-	
+
 	public String toString(int[] p) {
 		return String.format("(%d, %d)", p[0], p[1]);
 	}
-	
+
 	public String toString(double x, double y) {
 		return String.format("(%+3.1f, %+3.1f)", x, y);
 	}
-	
+
 	public String toString(double x, double y, double r) {
 		return String.format("(%+3.1f, %+3.1f, %+3.1f)", x, y, r);
 	}
-	
+
 	public String toString(IRenderingElement element) {
 		if (element instanceof LineElement) {
 			LineElement e = (LineElement) element;
@@ -138,12 +138,12 @@ public class ElementUtility implements IDrawVisitor {
 			return "Unknown element\n";
 		}
 	}
-	
+
 	public void printToStream(IRenderingElement root, PrintStream stream) {
 		root.accept(this);
 		for (IRenderingElement element : this.elements) {
 			stream.print(toString(element));
 		}
 	}
-	
+
 }

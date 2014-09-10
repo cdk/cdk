@@ -38,20 +38,20 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  *    Valence Shell Electron Pair Repulsion or VSEPR model and at the same time its
  *    hybridization of atoms in a molecule.
  *
- *  <p>The basic premise of the model is that the electrons are paired in a molecule 
- *    and that the molecule geometry is determined only by the repulsion between the pairs. 
+ *  <p>The basic premise of the model is that the electrons are paired in a molecule
+ *    and that the molecule geometry is determined only by the repulsion between the pairs.
  *    The geometry adopted by a molecule is then the one in which the repulsions are minimized.
  *
  *  <p>It counts the number of electron pairs in the Lewis dot diagram which
  *   are attached to an atom. Then uses the following table.
  * <pre>
  * <table border="1">
- *   <tr>  
+ *   <tr>
  * 	  <td>pairs on an atom</td>
  *    <td>hybridization of the atom</td>
  *    <td>geometry</td>
- *    <td>number for CDK.Constants</td> 
- *   </tr>   
+ *    <td>number for CDK.Constants</td>
+ *   </tr>
  *   <tr><td>2</td><td>sp</td><td>linear</td><td>1</td></tr>
  *   <tr><td>3</td><td>sp^2</td><td>trigonal planar</td><td>2</td></tr>
  *   <tr><td>4</td><td>sp^3</td><td>tetrahedral</td><td>3</td></tr>
@@ -63,7 +63,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * </table>
  * </pre>
  *
- *  <p>This table only works if the central atom is a p-block element 
+ *  <p>This table only works if the central atom is a p-block element
  *   (groups IIA through VIIIA), not a transition metal.
  *
  *

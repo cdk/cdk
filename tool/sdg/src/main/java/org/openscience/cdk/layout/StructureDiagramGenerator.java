@@ -106,7 +106,7 @@ public class StructureDiagramGenerator
 
     /** Identity templates - for laying out primary ring system. */
     private IdentityTemplateLibrary identityLibrary = IdentityTemplateLibrary.loadFromResource("chebi-ring-templates.smi");
-    
+
 	/**
 	 *  The empty constructor.
 	 */
@@ -182,7 +182,7 @@ public class StructureDiagramGenerator
      * Set whether identity templates are used. Identity templates use an exact match
      * are are very fast. They are used for layout of the 'primary' ring system
      * in de facto orientation.
-     * 
+     *
      * @param use whether to use identity templates
      */
     public void setUseIdentityTemplates(boolean use) {
@@ -363,7 +363,7 @@ public class StructureDiagramGenerator
 			/*
 			 *  Get the smallest set of smallest rings on this molecule
 			 */
-												
+
 
 			sssr = Cycles.sssr(molecule).toRingSet();
 			if (sssr.getAtomContainerCount() < 1)
@@ -416,17 +416,17 @@ public class StructureDiagramGenerator
 			logger.debug("Largest RingSystem is at RingSet collection's position " + largest);
 			logger.debug("Size of Largest RingSystem: " + largestSize);
 
-            
+
             IAtomContainer ringSystem = molecule.getBuilder().newInstance(IAtomContainer.class);
             for (IAtomContainer container : ringSystems.get(largest).atomContainers())
                 ringSystem.add(container);
-            
+
             // This is the primary ring system of the molecule, we lookup an identity template
-            // that helps us orientate in de factor conformation.  
+            // that helps us orientate in de factor conformation.
             if (lookupRingSystem(ringSystem, molecule)) {
                 for (IAtomContainer container : ringSystems.get(largest).atomContainers())
                     container.setFlag(CDKConstants.ISPLACED, true);
-                ringSystems.get(largest).setFlag(CDKConstants.ISPLACED, true); 
+                ringSystems.get(largest).setFlag(CDKConstants.ISPLACED, true);
             } else {
                 layoutRingSet(firstBondVector, (IRingSet) ringSystems.get(largest));
             }
@@ -486,14 +486,14 @@ public class StructureDiagramGenerator
 
 		fixRest();
 
-        // correct double-bond stereo, this changes the layout and in reality 
+        // correct double-bond stereo, this changes the layout and in reality
         // should be done during the initial placement
         CorrectGeometricConfiguration.correct(molecule);
 
         // assign up/down labels, this doesn't not alter layout and could be
         // done on-demand (e.g. when writing a MDL Molfile)
         NonplanarBonds.assign(molecule);
-        
+
 	}
 
 
@@ -512,7 +512,7 @@ public class StructureDiagramGenerator
     /**
      * Using a fast identity template library, lookup the the ring system and assign coordinates.
      * The method indicates whether a match was found.
-     * 
+     *
      * @param ringSystem the ring system (may be fused, bridged, etc.)
      * @param molecule the rest of the compound
      * @return coordinates were assigned
@@ -522,9 +522,9 @@ public class StructureDiagramGenerator
         // identity templates are disabled
         if (!useIdentTemplates)
             return false;
-        
+
         final IChemObjectBuilder bldr = molecule.getBuilder();
-        
+
         final Set<IAtom> ringAtoms = new HashSet<IAtom>();
         for (IAtom atom : ringSystem.atoms())
             ringAtoms.add(atom);
@@ -536,14 +536,14 @@ public class StructureDiagramGenerator
             IAtom atom1 = bond.getAtom(0);
             IAtom atom2 = bond.getAtom(1);
             if (isHydrogen(atom1) || isHydrogen(atom2))
-                continue;            
+                continue;
             if (ringAtoms.contains(atom1) ^ ringAtoms.contains(atom2)) {
                 ringWithStubs.addBond(bond);
                 ringWithStubs.addAtom(atom1);
                 ringWithStubs.addAtom(atom2);
             }
         }
-          
+
         // Three levels of identity to check are as follows:
         //   Level 1 - check for a skeleton ring system and attached substituents
         //   Level 2 - check for a skeleton ring system
@@ -553,7 +553,7 @@ public class StructureDiagramGenerator
         final IAtomContainer skeletonStub = clearHydrogenCounts(AtomContainerManipulator.skeleton(ringWithStubs));
         final IAtomContainer skeleton     = clearHydrogenCounts(AtomContainerManipulator.skeleton(ringSystem));
         final IAtomContainer anonymous    = clearHydrogenCounts(AtomContainerManipulator.anonymise(ringSystem));
-        
+
         for (IAtomContainer container : Arrays.asList(skeletonStub, skeleton, anonymous)) {
 
             // assign the atoms 0 to |ring|, the stubs are added at the end of the container
@@ -573,7 +573,7 @@ public class StructureDiagramGenerator
 
     /**
      * Is an atom a hydrogen atom.
-     * 
+     *
      * @param atom an atom
      * @return the atom is a hydrogen
      */
@@ -585,7 +585,7 @@ public class StructureDiagramGenerator
 
     /**
      * Simple helper function that sets all hydrogen counts to 0.
-     * 
+     *
      * @param container a structure representation
      * @return the input container
      */
@@ -1217,10 +1217,10 @@ public class StructureDiagramGenerator
 	{
 		this.bondLength = bondLength;
 	}
-	
+
 	/**
 	 *  Returns the bond length used for laying out the molecule.
-	 *  
+	 *
 	 *  @return The current bond length
 	 */
 	public double getBondLength()

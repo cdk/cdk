@@ -19,7 +19,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * An AST node. It represents a reaction in smarts.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts

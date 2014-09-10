@@ -1,22 +1,22 @@
 /*
  * Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.graph.invariant;
 
@@ -50,8 +50,8 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 	AtomContainer C40C3V = null;
 	AtomContainer C24D6D = null;
 	AtomContainer  C28TD = null;
-	
-	@Test public void testEquivalent() throws Exception 
+
+	@Test public void testEquivalent() throws Exception
 	{
 		AtomContainer C40C3V = new org.openscience.cdk.AtomContainer();
 		C40C3V.addAtom(new Atom("C")); // 1
@@ -62,7 +62,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		C40C3V.addAtom(new Atom("C")); // 6
 		C40C3V.addAtom(new Atom("C")); // 7
 		C40C3V.addAtom(new Atom("C")); // 8
-		C40C3V.addAtom(new Atom("C")); // 9 
+		C40C3V.addAtom(new Atom("C")); // 9
 		C40C3V.addAtom(new Atom("C")); // 10
 		C40C3V.addAtom(new Atom("C")); // 11
 		C40C3V.addAtom(new Atom("C")); // 12
@@ -72,7 +72,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		C40C3V.addAtom(new Atom("C")); // 16
 		C40C3V.addAtom(new Atom("C")); // 17
 		C40C3V.addAtom(new Atom("C")); // 18
-		C40C3V.addAtom(new Atom("C")); // 19 
+		C40C3V.addAtom(new Atom("C")); // 19
 		C40C3V.addAtom(new Atom("C")); // 20
 		C40C3V.addAtom(new Atom("C")); // 21
 		C40C3V.addAtom(new Atom("C")); // 22
@@ -178,7 +178,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		C24D6D.addAtom(new Atom("C")); // 6
 		C24D6D.addAtom(new Atom("C")); // 7
 		C24D6D.addAtom(new Atom("C")); // 8
-		C24D6D.addAtom(new Atom("C")); // 9 
+		C24D6D.addAtom(new Atom("C")); // 9
 		C24D6D.addAtom(new Atom("C")); // 10
 		C24D6D.addAtom(new Atom("C")); // 11
 		C24D6D.addAtom(new Atom("C")); // 12
@@ -188,7 +188,7 @@ public class EquivalentClassPartitionerTest extends CDKTestCase
 		C24D6D.addAtom(new Atom("C")); // 16
 		C24D6D.addAtom(new Atom("C")); // 17
 		C24D6D.addAtom(new Atom("C")); // 18
-		C24D6D.addAtom(new Atom("C")); // 19 
+		C24D6D.addAtom(new Atom("C")); // 19
 		C24D6D.addAtom(new Atom("C")); // 20
 		C24D6D.addAtom(new Atom("C")); // 21
 		C24D6D.addAtom(new Atom("C")); // 22

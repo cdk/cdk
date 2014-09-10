@@ -250,9 +250,9 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                 	atomRingSet = rs.getBuilder().newInstance(IRingSet.class);
                 	while (containers.hasNext()) {
                         // XXX: we're already in the SSSR, but then get the esential cycles
-                        // of this atomRingSet... this code doesn't seem to make sense as 
+                        // of this atomRingSet... this code doesn't seem to make sense as
                         // essential cycles are a subset of SSSR and can be found directly
-                		atomRingSet.add(Cycles.essential(containers.next()).toRingSet()); 
+                		atomRingSet.add(Cycles.essential(containers.next()).toRingSet());
                 	}
                     //logger.debug(" SSSRatomRingSet.size "+atomRingSet.size());
                 }
@@ -511,7 +511,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
 
             if (symbol.equals("N")) {
                 //NO2
-                if (ac.getBondOrderSum(atomi) >= 3.0 && getOxygenCount(ac, atomi) >= 2 && 
+                if (ac.getBondOrderSum(atomi) >= 3.0 && getOxygenCount(ac, atomi) >= 2 &&
                     maxBondOrder==IBond.Order.DOUBLE) {
                     xlogP += 1.178;
                     //logger.debug("XLOGP: 66		 1.178");
@@ -731,7 +731,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
                 }
             }
             if (symbol.equals("S")) {
-                if ((bondCount == 1 && maxBondOrder==IBond.Order.DOUBLE) || 
+                if ((bondCount == 1 && maxBondOrder==IBond.Order.DOUBLE) ||
                 	(bondCount == 1 && atomi.getFormalCharge()==-1)) {
                     xlogP -= 0.148;
                     //logger.debug("XLOGP: 78	A=S	-0.148");
@@ -1089,7 +1089,7 @@ public class XLogPDescriptor extends AbstractMolecularDescriptor implements IMol
     private int getAromaticCarbonsCount(IAtomContainer ac, IAtom atom) {
         List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
         int carocounter = 0;
-        for (IAtom neighbour : neighbours) {            
+        for (IAtom neighbour : neighbours) {
             if (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)) {
                 carocounter += 1;
             }

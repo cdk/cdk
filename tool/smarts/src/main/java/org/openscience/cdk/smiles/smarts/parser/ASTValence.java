@@ -18,7 +18,7 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It represents valence (v) in smarts 
+ * An AST node. It represents valence (v) in smarts
  *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24

@@ -35,7 +35,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  * Effective polarizability of an heavy atom
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>

@@ -65,11 +65,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *    <tr>
  *
  *      <td>
- *        
+ *
  *      </td>
  *
  *      <td>
- *        
+ *
  *      </td>
  *
  *      <td>

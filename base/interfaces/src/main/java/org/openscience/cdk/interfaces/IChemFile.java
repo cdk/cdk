@@ -44,7 +44,7 @@ public interface IChemFile extends IChemObject {
 	 * @see        #chemSequences
 	 */
 	public void removeChemSequence(int pos);
-	
+
 	/**
 	 *  Returns the {@link Iterable} to ChemSequences of this container.
 	 *

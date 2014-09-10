@@ -35,7 +35,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  *@cdk.created    2004-11-04
  */
 public class PolarizabilityTest extends CDKTestCase {
-	
+
     /**
 	 *  A unit test for JUnit
 	 */
@@ -49,7 +49,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		result=pol.getPolarizabilitiyFactorForAtom(mol,mol.getAtom(3));
 		Assert.assertNotNull(result);
 	}
-    
+
 	/**
 	 *  A unit test for JUnit with n,n-dimethyl ethylendiamine
 	 */
@@ -82,7 +82,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		double result=pol.calculateBondPolarizability((IAtomContainer)mol,mol.getBond(0));
 		Assert.assertNotNull(result);
 	}
-	
+
 	/**
 	 *  A unit test for JUnit with methane
 	 */
@@ -108,7 +108,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
-	
+
 	/**
 	 *  A unit test for JUnit with Allyl bromide
 	 */
@@ -121,7 +121,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(3),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
-	
+
 	/**
 	 *  A unit test for JUnit with Isopentyl iodide
 	 */
@@ -134,7 +134,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(5),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
-	
+
 	/**
 	 *  A unit test for JUnit with Ethoxy ethane
 	 */
@@ -147,7 +147,7 @@ public class PolarizabilityTest extends CDKTestCase {
 		double result=pol.calculateGHEffectiveAtomPolarizability(mol,mol.getAtom(2),100, true);
 		Assert.assertEquals(testResult,result,0.01);
 	}
-	
+
 	/**
 	 *  A unit test for JUnit with Ethanolamine
 	 */

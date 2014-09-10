@@ -33,7 +33,7 @@ import java.util.Map;
  * <p/>
  * If the tetrahedral centre has an implicit hydrogen or lone pair then the
  * chiral atom is also stored as one of the ligands. This serves as a
- * placeholder to indicate where the implicit hydrogen or lone pair would be. 
+ * placeholder to indicate where the implicit hydrogen or lone pair would be.
  *
  * @cdk.module interfaces
  * @cdk.githash

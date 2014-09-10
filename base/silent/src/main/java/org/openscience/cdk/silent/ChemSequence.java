@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package org.openscience.cdk.silent;
@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IChemSequence;
 import java.io.Serializable;
 import java.util.Iterator;
 
-/** 
+/**
  * A sequence of ChemModels, which can, for example, be used to
  * store the course of a reaction. Each state of the reaction would be
  * stored in one ChemModel.
@@ -55,15 +55,15 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	 *  Array of ChemModels.
 	 */
 	protected IChemModel[] chemModels;
-	
+
 	/**
 	 *  Number of ChemModels contained by this container.
 	 */
 	protected int chemModelCount;
-	
+
 	/**
 	 *  Amount by which the chemModels array grows when elements are added and
-	 *  the array is not large enough for that. 
+	 *  the array is not large enough for that.
 	 */
 	protected int growArraySize = 4;
 
@@ -72,14 +72,14 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	/**
 	 *  Constructs an empty ChemSequence.
 	 */
-	public ChemSequence()   
+	public ChemSequence()
 	{
 		chemModelCount = 0;
 		chemModels = new ChemModel[growArraySize];
 	}
 
 
-	
+
 	/**
 	 *  Adds an chemModel to this container.
 	 *
@@ -97,7 +97,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		chemModelCount++;
 	}
 
-	
+
 	/**
 	 * Remove a ChemModel from this ChemSequence.
 	 *
@@ -132,7 +132,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
      private class ChemModelIterator implements Iterator<IChemModel> {
 
          private int pointer = 0;
-     	
+
          public boolean hasNext() {
              return pointer < chemModelCount;
          }
@@ -144,10 +144,10 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
          public void remove() {
              removeChemModel(--pointer);
          }
-     	
+
      }
-     
-     
+
+
 	/**
 	 *
 	 * Returns the ChemModel at position <code>number</code> in the
@@ -162,7 +162,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 	{
 		return chemModels[number];
 	}
-	
+
 	/**
 	 *  Grows the chemModel array by a given size.
 	 *
@@ -174,7 +174,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		System.arraycopy(chemModels, 0, newchemModels, 0, chemModels.length);
 		chemModels = newchemModels;
 	}
-	
+
 
 	/**
 	 * Returns the number of ChemModels in this Container.
@@ -199,7 +199,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
         buffer.append(')');
         return buffer.toString();
     }
-	
+
 	public Object clone() throws CloneNotSupportedException {
 		ChemSequence clone = (ChemSequence)super.clone();
         // clone the chemModels
@@ -210,7 +210,7 @@ public class ChemSequence extends ChemObject implements Serializable, IChemSeque
 		}
 		return clone;
 	}
-	
+
 	/**
 	 *  Called by objects to which this object has
 	 *  registered as a listener.

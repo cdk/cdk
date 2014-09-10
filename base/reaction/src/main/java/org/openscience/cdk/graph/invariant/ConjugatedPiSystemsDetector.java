@@ -42,7 +42,7 @@ public class ConjugatedPiSystemsDetector {
 
     /**
      *  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
-     *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known 
+     *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
      *  before calling this method.
      *
      *  <p>An example for detection of Radical Allyl:
@@ -154,11 +154,11 @@ public class ConjugatedPiSystemsDetector {
                 }
             }
 		    if(counterOfPi > 0) check = 0;
-        }else { 
+        }else {
 			int se = ac.getConnectedSingleElectronsCount(currentAtom);
 			if (se == 1) {
 				check = 0;  //// DETECTION of radicals
-			}else if (ac.getConnectedLonePairsCount(currentAtom) > 0 
+			}else if (ac.getConnectedLonePairsCount(currentAtom) > 0
 				/*&& (currentAtom.getSymbol().equals("N")*/) {
 				check = 0;  //// DETECTION of  lone pair
 			}else {

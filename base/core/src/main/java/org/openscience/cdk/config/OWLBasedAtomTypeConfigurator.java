@@ -53,10 +53,10 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
     public void setInputStream(InputStream ins) {
         this.ins = ins;
     }
-    
+
     /**
      * Reads the atom types from the OWL based atom type list.
-     * 
+     *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
      * @throws        IOException when a problem occurred with reading from the InputStream
      * @return        A List with read IAtomType's.
@@ -74,5 +74,5 @@ public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         }
         return atomTypes;
     }
-   
+
 }

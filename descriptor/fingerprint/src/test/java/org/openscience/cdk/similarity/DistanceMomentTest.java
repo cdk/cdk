@@ -14,7 +14,7 @@ import org.openscience.cdk.io.IChemObjectReader.Mode;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 /**
- * @cdk.module test-fingerprint                     
+ * @cdk.module test-fingerprint
  */
 public class DistanceMomentTest extends CDKTestCase {
 

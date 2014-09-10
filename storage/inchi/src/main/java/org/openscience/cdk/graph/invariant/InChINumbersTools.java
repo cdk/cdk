@@ -55,60 +55,60 @@ public class InChINumbersTools {
         String aux =  auxInfo(atomContainer);
         aux = aux.substring(aux.indexOf("/N:") + 3);
         String numberStringAux = aux.substring(0, aux.indexOf('/'));
-        int i = 1; 
+        int i = 1;
         long[] numbers = new long[atomContainer.getAtomCount()];
         for (String numberString : numberStringAux.split("\\,"))
             numbers[Integer.valueOf(numberString)-1] = i++;
-        return numbers;        
+        return numbers;
     }
 
     /**
      * Obtain the InChI numbers for the input container to be used to order
-     * atoms in Universal SMILES {@cdk.cite OBoyle12}. The numbers are obtained 
+     * atoms in Universal SMILES {@cdk.cite OBoyle12}. The numbers are obtained
      * using the fixedH and RecMet options of the InChI. All non-bridged
      * hydrogens are labelled as 0.
-     * 
+     *
      * @param container the structure to obtain the numbers of
      * @return the atom numbers
      * @throws CDKException
      */
     @TestMethod("testGlycine_uSmiles")
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
-        String aux     = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);        
+        String aux     = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
         return parseUSmilesNumbers(aux, container);
     }
 
     /**
      * Parse the InChI canonical atom numbers (from the AuxInfo) to use in
-     * Universal SMILES. 
-     * 
+     * Universal SMILES.
+     *
      * The parsing follows: "Rule A: The correspondence between the input atom
      * order and the InChI canonical labels should be obtained from the
      * reconnected metal layer (/R:) in preference to the initial layer, and
      * then from the fixed hydrogen labels (/F:) in preference to the standard
      * labels (/N:)." <p/>
-     * 
+     *
      * The labels are also adjust for "Rule E: If the start atom is a negatively
      * charged oxygen atom, start instead at any carbonyl oxygen attached to the
      * same neighbour." <p/>
-     * 
+     *
      * All unlabelled atoms (e.g. hydrogens) are assigned the same label which
      * is different but larger then all other labels. The hydrogen
-     * labelling then needs to be adjusted externally as universal SMILES 
+     * labelling then needs to be adjusted externally as universal SMILES
      * suggests hydrogens should be visited first.
-     * 
+     *
      * @param aux       inchi AuxInfo
-     * @param container the structure to obtain the numbering of           
+     * @param container the structure to obtain the numbering of
      * @return the numbers string to use
      */
     @TestMethod("parseStandard,parseRecMet,parseFixedH")
     static long[] parseUSmilesNumbers(String aux, IAtomContainer container) {
-        
+
         int index;
         long[] numbers = new long[container.getAtomCount()];
         int[]  first   = null;
         int    label   = 1;
-                
+
         if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers
             String[] baseNumbers = aux.substring(index + 8, aux.indexOf('/', index + 8)).split(";");
             first = new int[baseNumbers.length];
@@ -121,12 +121,12 @@ public class InChINumbersTools {
                 }
             }
         } else if ((index = aux.indexOf("/N:")) >= 0) { // standard numbers
-            
+
             // read the standard numbers first (need to reference back for some structures)
             String[] baseNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
             first = new int[baseNumbers.length];
             Arrays.fill(first, -1);
-            
+
             if ((index = aux.indexOf("/F:")) >= 0) {
                 String[] fixedHNumbers = aux.substring(index + 3, aux.indexOf('/', index + 3)).split(";");
                 for (int i = 0; i < fixedHNumbers.length; i++) {
@@ -147,7 +147,7 @@ public class InChINumbersTools {
                     else {
                         String[] numbering = component.split(",");
                         first[i] = Integer.parseInt(numbering[0]) - 1;
-                        for (String number : numbering) 
+                        for (String number : numbering)
                             numbers[Integer.parseInt(number) - 1] = label++;
                     }
                 }
@@ -163,7 +163,7 @@ public class InChINumbersTools {
             throw new IllegalArgumentException("AuxInfo did not contain extractable base numbers (/N: or /R:).");
         }
 
-        
+
         // Rule E: swap any oxygen anion for a double bonded oxygen (InChI sees
         // them as equivalent)
         for (int v : first) {
@@ -181,7 +181,7 @@ public class InChINumbersTools {
                 }
             }
         }
-        
+
         // assign unlabelled atoms
         for (int i = 0; i < numbers.length; i++)
             if (numbers[i] == 0)
@@ -204,11 +204,11 @@ public class InChINumbersTools {
     }
 
     /**
-     * Find a neutral oxygen bonded to the {@code atom} with a pi bond. 
-     * 
+     * Find a neutral oxygen bonded to the {@code atom} with a pi bond.
+     *
      * @param container the container
      * @param atom      an atom from the container
-     * @return a pi bonded oxygen (or null if not found) 
+     * @return a pi bonded oxygen (or null if not found)
      */
     private static IAtom findPiBondedOxygen(IAtomContainer container, IAtom atom) {
         for (IBond bond : container.getConnectedBondsList(atom)) {
@@ -222,9 +222,9 @@ public class InChINumbersTools {
         }
         return null;
     }
-    
+
     /**
-     * Obtain the InChI auxiliary info for the provided structure using 
+     * Obtain the InChI auxiliary info for the provided structure using
      * using the specified InChI options.
      *
      * @param  container the structure to obtain the numbers of

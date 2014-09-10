@@ -81,8 +81,8 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
  */
 @RunWith(value=Suite.class)
 @SuiteClasses(value={
-    ReactionCoverageTest.class, 
-        
+    ReactionCoverageTest.class,
+
     // Individual Tests
     ReactionEngineTest.class,
     ReactionSpecificationTest.class,
@@ -99,7 +99,7 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
     SharingElectronMechanismTest.class,
     TautomerizationMechanismTest.class,
     ConjugatedPiSystemsDetectorTest.class,
-              
+
     // from cdk.test.reaction.type
     AdductionProtonLPReactionTest.class,
     AdductionProtonPBReactionTest.class,
@@ -138,7 +138,7 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
     // parameters test
     ParameterReactTest.class,
     SetReactionCenterTest.class,
-        
+
     // tools test
     StructureResonanceGeneratorTest.class,
     ResonanceStructuresTest.class

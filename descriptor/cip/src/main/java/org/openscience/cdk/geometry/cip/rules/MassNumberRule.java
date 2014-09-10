@@ -67,5 +67,5 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
         if (factory == null) return 0;
         return factory.getMajorIsotope(ligand.getLigandAtom().getSymbol()).getMassNumber();
     }
-    
+
 }

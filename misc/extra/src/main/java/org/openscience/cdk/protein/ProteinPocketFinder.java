@@ -1,17 +1,17 @@
 /* Copyright (C) 2005-2007  Christian Hoppe <chhoppe@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -49,10 +49,10 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.periodictable.PeriodicTable;
 
 /**
- * The detection of pocket and cavities in a bioPolymer is done similar to the program 
+ * The detection of pocket and cavities in a bioPolymer is done similar to the program
  * LIGSITE {@cdk.cite MH1997}.
- * 
- * <p>TODO: Optimisation of the cubic grid placement 
+ *
+ * <p>TODO: Optimisation of the cubic grid placement
  *
  * @author      cho
  * @cdk.created 2005-09-30
@@ -62,7 +62,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * @cdk.keyword    pocket
  */
 public class ProteinPocketFinder {
-	
+
 	private final ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(ProteinPocketFinder.class);
 
@@ -103,7 +103,7 @@ public class ProteinPocketFinder {
 		if (cubicGrid) {
 			createCubicGrid();
 		} else {
-			
+
 		}
 	}
 
@@ -142,11 +142,11 @@ public class ProteinPocketFinder {
 		}
 	}
 
-	
+
 	/**
-	 * Method determines the minimum and maximum values of a coordinate space 
+	 * Method determines the minimum and maximum values of a coordinate space
 	 * up to 3D space.
-	 * 
+	 *
 	 * @return double[] stores min,max,min,max,min,max
 	 */
 	public double[] findGridBoundaries() {
@@ -468,7 +468,7 @@ public class ProteinPocketFinder {
 	 *
 	 * @param minMax with minMax values
 	 * @param dim    dimension
-	 * @return new minMax values between 0 and dim	
+	 * @return new minMax values between 0 and dim
 	 */
 	private int[] checkBoundaries(int[] minMax, int[] dim) {
 		if (minMax[0] < 0) {
@@ -497,7 +497,7 @@ public class ProteinPocketFinder {
 	 */
 	private void firePSPEvent(List<Point3d> line) {
 		for (int i = 0; i < line.size(); i++) {
-			this.grid[(int)line.get(i).x][(int)line.get(i).y][(int)line.get(i).z] = 
+			this.grid[(int)line.get(i).x][(int)line.get(i).y][(int)line.get(i).z] =
 			    this.grid[(int)line.get(i).x][(int)line.get(i).y][(int)line.get(i).z] + 1;
 		}
 
@@ -506,8 +506,8 @@ public class ProteinPocketFinder {
 	/**
 	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param dimK first dimension 
-	 * @param dimL second dimension 
+	 * @param dimK first dimension
+	 * @param dimL second dimension
 	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanXZY(int dimK, int dimL, int dimM) {
@@ -555,8 +555,8 @@ public class ProteinPocketFinder {
 	/**
 	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param dimK first dimension 
-	 * @param dimL second dimension 
+	 * @param dimK first dimension
+	 * @param dimL second dimension
 	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanYZX(int dimK, int dimL, int dimM) {
@@ -604,8 +604,8 @@ public class ProteinPocketFinder {
 	/**
 	 * Method performs a scan; works only for cubic grids!
 	 *
-	 * @param dimK first dimension 
-	 * @param dimL second dimension 
+	 * @param dimK first dimension
+	 * @param dimL second dimension
 	 * @param dimM third dimension
 	 */
 	public void diagonalAxisScanYXZ(int dimK, int dimL, int dimM) {

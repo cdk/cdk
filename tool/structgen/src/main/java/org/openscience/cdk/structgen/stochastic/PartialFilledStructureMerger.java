@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * Randomly generates a single, connected, correctly bonded structure from
  * a number of fragments.
  * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
- * in the atom pool but should be assigned implicitly to the heavy atoms in 
+ * in the atom pool but should be assigned implicitly to the heavy atoms in
  * order to reduce computational cost.
  *
  * @author     steinbeck
@@ -47,10 +47,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.githash
  */
 public class PartialFilledStructureMerger {
-	
+
 	private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(PartialFilledStructureMerger.class);
-	
+
 	SaturationChecker satCheck;
 
 	/**
@@ -64,9 +64,9 @@ public class PartialFilledStructureMerger {
 
 	/**
 	 * Randomly generates a single, connected, correctly bonded structure from
-	 * a number of fragments.  IMPORTANT: The AtomContainers in the set must be 
-	 * connected. If an AtomContainer is disconnected, no valid result will 
-	 * be formed 
+	 * a number of fragments.  IMPORTANT: The AtomContainers in the set must be
+	 * connected. If an AtomContainer is disconnected, no valid result will
+	 * be formed
 	 * @param atomContainers The fragments to generate for.
 	 * @return The newly formed structure.
 	 * @throws CDKException No valid result could be formed.
@@ -93,7 +93,7 @@ public class PartialFilledStructureMerger {
 								double cmax2 = satCheck.getCurrentMaxBondOrder(partner, toadd);
 								double max = Math.min(cmax1, cmax2);
 								double order = Math.min(Math.max(1.0, max), 3.0);//(double)Math.round(Math.random() * max)
-								logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);	
+								logger.debug("cmax1, cmax2, max, order: " + cmax1 + ", " + cmax2 + ", "  + max + ", " + order);
 								if(toadd!=ac){
 									atomContainers.removeAtomContainer(toadd);
 									ac.add(toadd);
@@ -105,7 +105,7 @@ public class PartialFilledStructureMerger {
 								);
 								bondFormed = true;
 							}
-						}				
+						}
 					}
 				}
 			}while(bondFormed);
@@ -123,7 +123,7 @@ public class PartialFilledStructureMerger {
 		return atomContainers.getAtomContainer(0);
 	}
 
-	
+
 	/**
 	 *  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
 	 *  container than exclusionAtom.

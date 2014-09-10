@@ -120,7 +120,7 @@ public class IsotopeReader {
     }
 
     /**
-     * Triggers the XML parsing of the data file and returns the read Isotopes. 
+     * Triggers the XML parsing of the data file and returns the read Isotopes.
      * It turns of XML validation before parsing.
      *
      * @return a List of Isotope's. Returns an empty list is some reading error

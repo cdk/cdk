@@ -23,7 +23,7 @@ public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescri
     public void setUp() throws Exception {
 		setDescriptor(AutocorrelationDescriptorPolarizability.class);
 	}
-	
+
 	public void ignoreCalculate_IAtomContainer() throws Exception {
 		String filename = "data/mdl/clorobenzene.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(

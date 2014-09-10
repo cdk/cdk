@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -55,7 +55,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  *
  * Finding the matching to molecules which contain the query substructure. It is
  * more efficient to obtain the {@link #match} and check it's size rather than
- * test if it {@link #matches} first. These methods automatically verify 
+ * test if it {@link #matches} first. These methods automatically verify
  * stereochemistry.
  *
  * <blockquote><pre>
@@ -124,8 +124,8 @@ public final class Ullmann extends Pattern {
         Iterable<int[]> iterable = new UllmannIterable(query, target,
                                                        g1, g2,
                                                        bonds1, bonds2,
-                                                       atomMatcher, bondMatcher);    
-        return new Mappings(query, target, iterable);       
+                                                       atomMatcher, bondMatcher);
+        return new Mappings(query, target, iterable);
     }
 
     /**

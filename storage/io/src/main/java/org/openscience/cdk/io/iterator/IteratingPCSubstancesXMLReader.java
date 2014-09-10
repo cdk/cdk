@@ -46,7 +46,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
  * @cdk.module   io
  * @cdk.githash
  * @cdk.iooptions
- * 
+ *
  * @author       Egon Willighagen <egonw@users.sf.net>
  * @cdk.created  2008-05-05
  *
@@ -59,11 +59,11 @@ extends DefaultIteratingChemObjectReader<IChemModel> {
 	private Reader primarySource;
     private XmlPullParser parser;
     private PubChemXMLHelper parserHelper;
-    
+
     private boolean nextAvailableIsKnown;
     private boolean hasNext;
     private IChemModel nextSubstance;
-    
+
     /**
      * Constructs a new IteratingPCSubstancesXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
      *
@@ -74,7 +74,7 @@ extends DefaultIteratingChemObjectReader<IChemModel> {
      */
     public IteratingPCSubstancesXMLReader(Reader in, IChemObjectBuilder builder) throws IOException, XmlPullParserException {
         parserHelper = new PubChemXMLHelper(builder);
-        
+
         // initiate the pull parser
         XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
                 System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null
@@ -109,10 +109,10 @@ extends DefaultIteratingChemObjectReader<IChemModel> {
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
-            
+
             try {
                 if (parser.next() == XmlPullParser.END_DOCUMENT) return false;
-                
+
             	while (parser.next() != XmlPullParser.END_DOCUMENT) {
             		if (parser.getEventType() == XmlPullParser.START_TAG) {
             			if (PubChemXMLHelper.EL_PCSUBSTANCE.equals(parser.getName())) {
@@ -122,22 +122,22 @@ extends DefaultIteratingChemObjectReader<IChemModel> {
             		}
             	}
             	if (hasNext) {
-            		nextSubstance = parserHelper.parseSubstance(parser); 
+            		nextSubstance = parserHelper.parseSubstance(parser);
             	}
-            	
+
 			} catch (Exception e) {
 				if (mode == Mode.STRICT) {
 					throw new RuntimeException("Error while parsing the XML: " + e.getMessage(), e);
 				}
 				hasNext = false;
 			}
-            
+
             if (!hasNext) nextSubstance = null;
             nextAvailableIsKnown = true;
         }
         return hasNext;
     }
-    
+
 	public IChemModel next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -148,12 +148,12 @@ extends DefaultIteratingChemObjectReader<IChemModel> {
         }
         return nextSubstance;
     }
-    
+
 	@TestMethod("testClose")
   public void close() throws IOException {
     	primarySource.close();
     }
-    
+
     public void remove() {
         throw new UnsupportedOperationException();
     }

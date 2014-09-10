@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -56,9 +56,9 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(MMFF94AtomTypeMatcherTest.class);
 	private final IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-	
+
 	private static IAtomContainer testMolecule = null;
-	
+
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
 	@BeforeClass public static void setUpTestMolecule() throws Exception {
@@ -69,14 +69,14 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
             InputStream ins = MMFF94AtomTypeMatcherTest.class.getClassLoader().getResourceAsStream("data/mdl/mmff94AtomTypeTest_molecule.mol");
             MDLV2000Reader mdl=new MDLV2000Reader(new InputStreamReader(ins));
             testMolecule = mdl.read(new AtomContainer());
-           
+
             att.assignAtomTypePropertiesToAtom(testMolecule);
             for (int i=0;i<testMolecule.getAtomCount();i++){
             	logger.debug("atomNr:" + testMolecule.getAtom(i).toString());
             	IAtomType matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
-            	AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);       
+            	AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);
             }
-            
+
             logger.debug("MMFF94 Atom 0:"+testMolecule.getAtom(0).getAtomTypeName());
     	}
     }
@@ -84,9 +84,9 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test public void testMMFF94AtomTypeMatcher() throws Exception {
     	MMFF94AtomTypeMatcher matcher = new MMFF94AtomTypeMatcher();
 	    Assert.assertNotNull(matcher);
-	    
+
     }
-    
+
     @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
@@ -110,9 +110,9 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     		Assert.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
     	}
     }
-    
+
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
-    
+
     @Test public void testSthi() throws Exception {
     	setUpTestMolecule();
     	assertAtomType(testedAtomTypes, "Sthi",testMolecule.getAtom(0));
@@ -141,23 +141,23 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	setUpTestMolecule();
     	assertAtomType(testedAtomTypes, "NAZT",testMolecule.getAtom(256));
     }
-    
+
     // Other tests
-    
+
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Methanol() throws Exception {
 
 //		logger.debug("**** START ATOMTYPE Methanol TEST ******");
-		//System.out.println("**** START ATOMTYPE Methanol TEST ******");  
+		//System.out.println("**** START ATOMTYPE Methanol TEST ******");
 	    IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		// making sure the order matches the test results
-		mol.addAtom(carbon); 
+		mol.addAtom(carbon);
 		mol.addAtom(oxygen);
 		mol.addBond(builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
-		
+
 		addExplicitHydrogens(mol);
-        
+
 		String [] testResult={"C","O","HC","HC","HC","HO"};
 		AtomTypeTools att=new AtomTypeTools();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
@@ -166,27 +166,27 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-        
-        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());       
+
+        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
 	/**
 	 *  A unit test for JUnit with Methylamine
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Methylamine() throws Exception {
-		//System.out.println("**** START ATOMTYPE Methylamine TEST ******");	
+		//System.out.println("**** START ATOMTYPE Methylamine TEST ******");
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom nitrogen = builder.newInstance(IAtom.class,Elements.NITROGEN);
 		// making sure the order matches the test results
-		mol.addAtom(carbon); 
+		mol.addAtom(carbon);
 		mol.addAtom(nitrogen);
 		mol.addBond(builder.newInstance(IBond.class,carbon, nitrogen, CDKConstants.BONDORDER_SINGLE));
-		
+
 		addExplicitHydrogens(mol);
 
 		String [] testResult={"C","N","HC","HC","HC","HN","HN"};
@@ -197,31 +197,31 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());    
+        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
 	/**
 	 *  A unit test for JUnit with ethoxyethane
 	 */
 	@Test public void testFindMatchingAtomType_IAtomContainer_IAtom_Ethoxyethane() throws Exception {
-		//System.out.println("**** START ATOMTYPE Ethoxyethane TEST ******");	   
+		//System.out.println("**** START ATOMTYPE Ethoxyethane TEST ******");
 		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom oxygen = builder.newInstance(IAtom.class,Elements.OXYGEN);
 		IAtom carbon2 = builder.newInstance(IAtom.class,Elements.CARBON);
 		// making sure the order matches the test results
-		mol.addAtom(carbon); 
+		mol.addAtom(carbon);
 		mol.addAtom(oxygen);
-		mol.addAtom(carbon2); 
+		mol.addAtom(carbon2);
 		mol.addBond(builder.newInstance(IBond.class,carbon, oxygen, CDKConstants.BONDORDER_SINGLE));
 		mol.addBond(builder.newInstance(IBond.class,carbon2, oxygen, CDKConstants.BONDORDER_SINGLE));
-		
+
 		addExplicitHydrogens(mol);
-		
+
 		String [] testResult={"C","O","C","HC","HC","HC","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
@@ -230,7 +230,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
@@ -246,10 +246,10 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom sulfur = builder.newInstance(IAtom.class,Elements.SULFUR);
 		// making sure the order matches the test results
-		mol.addAtom(carbon); 
+		mol.addAtom(carbon);
 		mol.addAtom(sulfur);
 		mol.addBond(builder.newInstance(IBond.class,carbon, sulfur, CDKConstants.BONDORDER_SINGLE));
-		
+
 		addExplicitHydrogens(mol);
 
 		String [] testResult={"C","S","HC","HC","HC","HP"};
@@ -260,12 +260,12 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());		
+        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
 	/**
 	 *  A unit test for JUnit with Chloromethane
@@ -276,12 +276,12 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 		IAtom chlorine = builder.newInstance(IAtom.class,Elements.CHLORINE);
 		// making sure the order matches the test results
-		mol.addAtom(carbon); 
+		mol.addAtom(carbon);
 		mol.addAtom(chlorine);
 		mol.addBond(builder.newInstance(IBond.class,carbon, chlorine, CDKConstants.BONDORDER_SINGLE));
-		
+
 		addExplicitHydrogens(mol);
-		
+
 		String [] testResult={"C","CL","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
@@ -290,12 +290,12 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-       //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());			
+       //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
 	/**
 	 *  A unit test for JUnit with Benzene
@@ -307,7 +307,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 			IAtom carbon = builder.newInstance(IAtom.class,Elements.CARBON);
 			carbon.setFlag(CDKConstants.ISAROMATIC, true);
 			// making sure the order matches the test results
-			mol.addAtom(carbon);			
+			mol.addAtom(carbon);
 		}
 		IBond ringBond = builder.newInstance(IBond.class,mol.getAtom(0), mol.getAtom(1), CDKConstants.BONDORDER_DOUBLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
@@ -327,9 +327,9 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
 		ringBond = builder.newInstance(IBond.class,mol.getAtom(5), mol.getAtom(0), CDKConstants.BONDORDER_SINGLE);
 		ringBond.setFlag(CDKConstants.ISAROMATIC, true);
 		mol.addBond(ringBond);
-			
-		addExplicitHydrogens(mol);		
-		
+
+		addExplicitHydrogens(mol);
+
 		String [] testResult={"Car","Car","Car","Car","Car","Car","HC","HC","HC","HC","HC","HC"};
 		AtomTypeTools att=new AtomTypeTools();
         MMFF94AtomTypeMatcher atm= new MMFF94AtomTypeMatcher();
@@ -339,12 +339,12 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
         	//System.out.println("MatchedTypeID:"+matched.getID()+" "+matched.getSymbol()+" "+matched.getAtomTypeName());
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-        
+
         //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
         //System.out.println(mol.toString());
 	}
@@ -367,14 +367,14 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
         	logger.debug("atomNr:" + mol.getAtom(i).toString());
         	IAtomType matched = atm.findMatchingAtomType(mol, mol.getAtom(i));
         	Assert.assertNotNull(matched);
-        	AtomTypeManipulator.configure(mol.getAtom(i), matched);       
+        	AtomTypeManipulator.configure(mol.getAtom(i), matched);
         }
         for (int i=0; i<testResult.length;i++){
         	assertAtomType(testedAtomTypes, testResult[i],mol.getAtom(i));
         }
-        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());		
+        //System.out.println("MMFF94 Atom 0:"+mol.getAtom(0).getAtomTypeName());
 	}
-	
+
     /**
      * The test seems to be run by JUnit in the order in which they are found
      * in the source. Ugly, but @AfterClass does not work because that
@@ -385,7 +385,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
     		"org/openscience/cdk/config/data/mmff94_atomtypes.xml",
             SilentChemObjectBuilder.getInstance()
         );
-    	
+
    	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
     	if (expectedTypes.length != testedAtomTypes.size()) {
        	    String errorMessage = "Atom types not tested:";
@@ -394,7 +394,7 @@ public class MMFF94AtomTypeMatcherTest extends AbstractAtomTypeTest {
        	    		errorMessage += " " + expectedTypes[i].getAtomTypeName();
        	    }
     		Assert.assertEquals(errorMessage,
-    			factory.getAllAtomTypes().length, 
+    			factory.getAllAtomTypes().length,
     			testedAtomTypes.size()
     		);
     	}

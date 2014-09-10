@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.config.atomtypes;
 
@@ -45,7 +45,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class AtomTypeHandler extends DefaultHandler {
 
     private final int SCALAR_UNSET = 0;
-    private final int SCALAR_MAXBONDORDER = 1; 
+    private final int SCALAR_MAXBONDORDER = 1;
     private final int SCALAR_BONDORDERSUM = 2;
     private final int SCALAR_HYBRIDIZATION = 3;
     private final int SCALAR_FORMALNEIGHBOURCOUNT = 4;
@@ -59,7 +59,7 @@ public class AtomTypeHandler extends DefaultHandler {
     private final int SCALAR_VANDERWAALSRADIUS=12;
     private final int SCALAR_PIBONDCOUNT=13;
     private final int SCALAR_LONEPAIRCOUNT=14;
-    
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AtomTypeHandler.class);
     private String currentChars;
@@ -72,7 +72,7 @@ public class AtomTypeHandler extends DefaultHandler {
     /**
      * Constructs a new AtomTypeHandler and will create IAtomType
      * implementations using the given IChemObjectBuilder.
-     * 
+     *
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
     @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
@@ -82,7 +82,7 @@ public class AtomTypeHandler extends DefaultHandler {
 
     /**
      * Returns a List with read IAtomType's.
-     * 
+     *
      * @return The read IAtomType's.
      */
     @TestMethod("testGetAtomTypes")
@@ -131,13 +131,13 @@ public class AtomTypeHandler extends DefaultHandler {
                 		atomType.setMaxBondOrder(IBond.Order.TRIPLE);
                 	} else if (scalarValue == 4.0) {
                 		atomType.setMaxBondOrder(IBond.Order.QUADRUPLE);
-                	} 
+                	}
                 } else if (scalarType == SCALAR_FORMALNEIGHBOURCOUNT) {
                     atomType.setFormalNeighbourCount(Integer.parseInt(currentChars));
                 }else if (scalarType == SCALAR_VALENCY) {
                     atomType.setValency(Integer.parseInt(currentChars));
                 }else if (scalarType == SCALAR_FORMALCHARGE) {
-                    atomType.setFormalCharge(Integer.parseInt(currentChars)); 
+                    atomType.setFormalCharge(Integer.parseInt(currentChars));
                 } else if (scalarType == SCALAR_HYBRIDIZATION) {
                     if ("sp1".equals(currentChars)) {
                         atomType.setHybridization(Hybridization.SP1);
@@ -158,11 +158,11 @@ public class AtomTypeHandler extends DefaultHandler {
                     } else {
                     	logger.warn("Unrecognized H-bond donor/acceptor pattern in config file: ", currentChars);
                     }
-                } else if (scalarType == SCALAR_SPHERICALMATCHER){	
+                } else if (scalarType == SCALAR_SPHERICALMATCHER){
                     atomType.setProperty(CDKConstants.SPHERICAL_MATCHER, currentChars);
-                } else if (scalarType == SCALAR_RINGSIZE){	
+                } else if (scalarType == SCALAR_RINGSIZE){
                     atomType.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, Integer.valueOf(currentChars));
-                } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT){	
+                } else if (scalarType == SCALAR_CHEMICALGROUPCONSTANT){
                     atomType.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, Integer.valueOf(currentChars));
                 } else if (scalarType == SCALAR_ISAROMATIC){
                     atomType.setFlag(CDKConstants.ISAROMATIC, true);
@@ -171,7 +171,7 @@ public class AtomTypeHandler extends DefaultHandler {
                 } else if (scalarType == SCALAR_LONEPAIRCOUNT){
                     atomType.setProperty(CDKConstants.LONE_PAIR_COUNT, Integer.valueOf(currentChars));
                 }
-                
+
             } catch (Exception exception) {
                 logger.error("Value (", currentChars, ") is not off the expected type: ", exception.getMessage());
                 logger.debug(exception);
@@ -190,7 +190,7 @@ public class AtomTypeHandler extends DefaultHandler {
         logger.debug("  uri: ", uri);
         logger.debug("  local: ", local);
         logger.debug("  raw: ", raw);
-        
+
         if ("atomType".equals(local)) {
             atomType = builder.newInstance(IAtomType.class, "R");
             for (int i = 0; i < atts.getLength(); i++) {
@@ -198,7 +198,7 @@ public class AtomTypeHandler extends DefaultHandler {
                     atomType.setAtomTypeName(atts.getValue(i));
                }
             }
-        
+
         } else if ("atom".equals(local)) {
             for (int i = 0; i < atts.getLength(); i++) {
                 if ("elementType".equals(atts.getQName(i))) {
@@ -236,17 +236,17 @@ public class AtomTypeHandler extends DefaultHandler {
                     } else if ("cdk:valency".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_VALENCY;
                     } else if ("cdk:formalCharge".equals(atts.getValue(i))) {
-                    	scalarType = SCALAR_FORMALCHARGE;	
+                    	scalarType = SCALAR_FORMALCHARGE;
                     } else if ("cdk:DA".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_DA;
                     } else if ("cdk:sphericalMatcher".equals(atts.getValue(i))) {
-                    	scalarType = SCALAR_SPHERICALMATCHER;	
+                    	scalarType = SCALAR_SPHERICALMATCHER;
                     } else if ("cdk:ringSize".equals(atts.getValue(i))) {
-                    	scalarType = SCALAR_RINGSIZE;	
+                    	scalarType = SCALAR_RINGSIZE;
                     } else if ("cdk:ringConstant".equals(atts.getValue(i))) {
-                    	scalarType = SCALAR_CHEMICALGROUPCONSTANT;	
+                    	scalarType = SCALAR_CHEMICALGROUPCONSTANT;
                     } else if ("cdk:aromaticAtom".equals(atts.getValue(i))) {
-                    	scalarType = SCALAR_ISAROMATIC;	
+                    	scalarType = SCALAR_ISAROMATIC;
                     } else if ("emboss:vdwrad".equals(atts.getValue(i))) {
                     	scalarType = SCALAR_VANDERWAALSRADIUS;
                     } else if ("cdk:piBondCount".equals(atts.getValue(i))) {

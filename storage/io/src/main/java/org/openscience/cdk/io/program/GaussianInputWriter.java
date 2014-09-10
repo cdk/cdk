@@ -1,5 +1,5 @@
 /* Copyright (C) 2003-2008  Egon Willighagen <egonw@sci.kun.nl>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  *  This library is free software; you can redistribute it and/or
@@ -58,9 +58,9 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 @TestClass("org.openscience.cdk.io.program.GaussianInputWriterTest")
 public class GaussianInputWriter extends DefaultChemObjectWriter {
-  
+
     static BufferedWriter writer;
-    
+
     IOSetting method;
     IOSetting basis;
     IOSetting comment;
@@ -69,7 +69,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     BooleanIOSetting shell;
     IntegerIOSetting proccount;
     BooleanIOSetting usecheckpoint;
-    
+
     /**
     * Constructs a new writer that produces input files to run a
     * Gaussian QM job.
@@ -85,11 +85,11 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         }
         initIOSettings();
     }
-    
+
     public GaussianInputWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public GaussianInputWriter() {
         this(new StringWriter());
     }
@@ -98,7 +98,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     public IResourceFormat getFormat() {
         return GaussianInputFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -115,7 +115,7 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     public void close() throws IOException {
         writer.close();
     }
-    
+
 	@TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
@@ -133,14 +133,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             throw new CDKException("GaussianInputWriter only supports output of Molecule classes.");
         }
     }
-    
+
     /**
      * Writes a molecule for input for Gaussian.
      */
     public void writeMolecule(IAtomContainer mol) throws IOException {
-        
+
         customizeJob();
-        
+
         // write extra statements
         if (proccount.getSettingValue() > 1) {
             writer.write("%nprocl=" + proccount.getSettingValue());
@@ -159,10 +159,10 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             }
             writer.newLine();
         }
-        
+
         // write the command line
-        writer.write("# " + method.getSetting() + 
-                     "/" + basis.getSetting() +  
+        writer.write("# " + method.getSetting() +
+                     "/" + basis.getSetting() +
                      " ");
         String commandString = command.getSetting();
         if (commandString.equals("energy calculation")) {
@@ -178,14 +178,14 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             writer.write(commandString);
         }
         writer.newLine();
-        
+
         // next line is empty
         writer.newLine();
-        
+
         // next line is comment
         writer.write(comment.getSetting());
         writer.newLine();
-        
+
         // next line is empty
         writer.newLine();
 
@@ -202,17 +202,17 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
             writer.write("1");
         }
         writer.newLine();
-        
-        // then come all the atoms. 
+
+        // then come all the atoms.
         // Loop through the atoms and write them out:
         Iterator<IAtom> atoms = mol.atoms().iterator();
         while (atoms.hasNext()) {
         	IAtom a = atoms.next();
             String st = a.getSymbol();
-            
+
             // export Eucledian coordinates (indicated by the 0)
             st = st + " 0 ";
-            
+
             // export the 3D coordinates
             Point3d p3 = a.getPoint3d();
             if (p3 != null) {
@@ -220,15 +220,15 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
                         + new Double(p3.y).toString() + " "
                         + new Double(p3.z).toString();
             }
-            
+
             writer.write(st, 0, st.length());
             writer.newLine();
         }
-        
+
         // G98 expects an empty line at the end
         writer.newLine();
     }
-    
+
     private void initIOSettings() {
         List<String> basisOptions = new ArrayList<String>();
         basisOptions.add("6-31g");
@@ -245,37 +245,37 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         methodOptions.add("rhf");
         method = new OptionIOSetting("Method", IOSetting.Importance.MEDIUM,
           "Which method do you want to use?", methodOptions, "b3lyp");
-        
+
         List<String> commandOptions = new ArrayList<String>();
         commandOptions.add("energy calculation");
         commandOptions.add("geometry optimization");
         commandOptions.add("IR frequency calculation");
         commandOptions.add("IR frequency calculation (with Raman)");
         command = addSetting(new OptionIOSetting("Command", IOSetting.Importance.HIGH,
-          "What kind of job do you want to perform?", commandOptions, 
+          "What kind of job do you want to perform?", commandOptions,
           "energy calculation"));
-        
+
         comment = addSetting(new StringIOSetting("Comment", IOSetting.Importance.LOW,
-          "What comment should be put in the file?", 
+          "What comment should be put in the file?",
           "Created with CDK (http://cdk.sf.net/)"));
-        
+
         memory = addSetting(new StringIOSetting("Memory", IOSetting.Importance.LOW,
-          "How much memory do you want to use?", 
+          "How much memory do you want to use?",
           "unset"));
-        
+
         shell = addSetting(new BooleanIOSetting("OpenShell", IOSetting.Importance.MEDIUM,
-          "Should the calculation be open shell?", 
+          "Should the calculation be open shell?",
           "false"));
 
         proccount = addSetting(new IntegerIOSetting("ProcessorCount", IOSetting.Importance.LOW,
-          "How many processors should be used by Gaussian?", 
+          "How many processors should be used by Gaussian?",
           "1"));
 
         usecheckpoint = new BooleanIOSetting("UseCheckPointFile", IOSetting.Importance.LOW,
-          "Should a check point file be saved?", 
+          "Should a check point file be saved?",
           "false");
     }
-    
+
     private void customizeJob() {
         for(IOSetting setting : getSettings()){
             fireIOSettingQuestion(setting);

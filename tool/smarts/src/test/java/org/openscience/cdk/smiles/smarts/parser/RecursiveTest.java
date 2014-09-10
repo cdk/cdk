@@ -357,7 +357,7 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
     }
-    
+
     @Test public void nestedRecursion() throws Exception {
         assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"),
                    is(new int[]{2, 2}));
@@ -394,7 +394,7 @@ public class RecursiveTest extends CDKTestCase {
         while (reader.hasNext()) {
             IAtomContainer container = reader.next();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
-            
+
             // skip un-typed atoms, they can't be run through the CDK aromatic
             // model
             for (IAtom atom : container.atoms()) {
@@ -402,7 +402,7 @@ public class RecursiveTest extends CDKTestCase {
                     continue READ;
                 }
             }
-            
+
             if (sqt.matches(container)) {
                 nmatch++;
             }

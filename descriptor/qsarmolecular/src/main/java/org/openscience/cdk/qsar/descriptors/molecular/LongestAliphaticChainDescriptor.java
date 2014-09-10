@@ -79,7 +79,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -106,7 +106,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
      *
      * This descriptor takes one parameter, which should be Boolean to indicate whether
      * aromaticity has been checked (TRUE) or not (FALSE).
-     * 
+     *
      * @param  params            The new parameters value
      * @exception  CDKException if more than one parameter or a non-Boolean parameter is specified
      * @see #getParameters
@@ -151,7 +151,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
 
     /**
      * Calculate the count of atoms of the longest aliphatic chain in the supplied {@link IAtomContainer}.
-     * 
+     *
      *  The method require one parameter:
      *  if checkRingSyste is true the CDKConstant.ISINRING will be set
      *
@@ -199,7 +199,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
             if (atomi.getSymbol().equals("H")) continue;
 
             if ((!atomi.getFlag(CDKConstants.ISAROMATIC) && !atomi.getFlag(CDKConstants.ISINRING) & atomi.getSymbol().equals("C")) & !atomi.getFlag(CDKConstants.VISITED)){
-                
+
                 startSphere = new ArrayList<IAtom>();
     			path = new ArrayList<IAtom>();
     			startSphere.add(atomi);
@@ -217,7 +217,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
      					longestChainAtomsCount=tmpLongestChainAtomCount;
      				}
      			}
-     		}    		
+     		}
     	}
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
@@ -252,9 +252,9 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
         }
         return longestPath;
     }
-    
-    
-    
+
+
+
     private IAtomContainer createAtomContainerFromPath(IAtomContainer container, List<IAtom> path){
     	IAtomContainer aliphaticChain = container.getBuilder().newInstance(IAtomContainer.class);
         for (int i=0;i<path.size()-1;i++){
@@ -270,7 +270,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
     			}
     		}
     	}
-    	
+
     	//for (int i=0;i<aliphaticChain.getAtomCount();i++){
     	//	logger.debug("container-->atom:"+i+" Nr: "+container.getAtomNumber(aliphaticChain.getAtomAt(i))+" maxBondOrder:"+aliphaticChain.getMaximumBondOrder(aliphaticChain.getAtomAt(i))+" Aromatic:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISAROMATIC)+" Ring:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.ISINRING)+" FormalCharge:"+aliphaticChain.getAtomAt(i).getFormalCharge()+" Charge:"+aliphaticChain.getAtomAt(i).getCharge()+" Flag:"+aliphaticChain.getAtomAt(i).getFlag(CDKConstants.VISITED));
     	//}
@@ -280,11 +280,11 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
     	}
     	return aliphaticChain;
     }
-    
+
 	/**
 	 *  Performs a breadthFirstSearch in an AtomContainer starting with a
 	 *  particular sphere, which usually consists of one start atom, and searches
-	 *  for a pi system. 
+	 *  for a pi system.
 	 *
 	 *@param  container                                              The AtomContainer to
 	 *      be searched
@@ -317,7 +317,7 @@ public class LongestAliphaticChainDescriptor extends AbstractMolecularDescriptor
 		}
 	}
 
-    
+
     /**
      *  Gets the parameterNames attribute of the LongestAliphaticChainDescriptor object.
      *

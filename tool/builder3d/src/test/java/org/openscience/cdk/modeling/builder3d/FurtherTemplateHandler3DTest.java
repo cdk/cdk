@@ -1,5 +1,5 @@
-/* Copyright (C) 2012 Daniel Szisz 
- *             
+/* Copyright (C) 2012 Daniel Szisz
+ *
  * Contact: orlando@caesar.elte.hu
  *
  * This program is free software; you can redistribute it and/or
@@ -38,13 +38,13 @@ import java.util.List;
 
 /**
  * Test class for {@link TemplateHandler3D}.
- * 
+ *
  * @author danielszisz
  * @created 05/14/2012
  * @cdk.module test-builder3d
  */
 public class FurtherTemplateHandler3DTest {
-	
+
 	@Test public void testLoadTemplates() throws Exception {
         // test order is not guaranteed so the templates may have already been loaded,
         // to avoid this we create a new instance using reflection. This is a hack and
@@ -62,7 +62,7 @@ public class FurtherTemplateHandler3DTest {
         loadTemplates.invoke(tmphandler3d);
         assertEquals(10751, tmphandler3d.getTemplateCount());
 	}
-	
+
 	@Test public void testMapTemplates_cyclicMol1() throws Exception {
 		TemplateHandler3D tmphandler3d = TemplateHandler3D.getInstance();
 		String cyclicMolSmi = "O(CC(O)CN1CCN(CC1)CC(=O)Nc1c(cccc1C)C)c1c(cccc1)OC";
@@ -81,7 +81,7 @@ public class FurtherTemplateHandler3DTest {
 			assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
 		}
 	}
-	
+
 
 	@Test public void testMapTemplates_cyclicMol2() throws Exception {
 		TemplateHandler3D tmphandler3d = TemplateHandler3D.getInstance();
@@ -101,7 +101,7 @@ public class FurtherTemplateHandler3DTest {
 			assertNotNull(allAtomsInOneContainer.getAtom(j).getPoint3d());
 		}
 	}
-	
-	
+
+
 
 }

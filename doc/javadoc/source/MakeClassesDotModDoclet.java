@@ -48,7 +48,7 @@ public class MakeClassesDotModDoclet {
         out.println("<!ENTITY " + className + " '<ulink url=\"api/" +
                     apiPath + "\">" + className + "</ulink>'>");
     }
-    
+
     private void processClasses(ClassDoc[] classes) throws IOException {
         for (int i=0; i<classes.length; i++) {
             ClassDoc doc = classes[i];

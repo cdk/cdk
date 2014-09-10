@@ -139,7 +139,7 @@ public class CMLReactionModule extends CMLCoreModule {
 
                 	super.currentMolecule = atomC;
                 }
-            }            
+            }
         } else {
             super.startElement(xpath, uri, local, raw, atts);
         }
@@ -153,7 +153,7 @@ public class CMLReactionModule extends CMLCoreModule {
         } else if ("reactionList".equals(local)) {
 //            cdo.endObject("ReactionSet");
         	currentChemModel.setReactionSet(currentReactionSet);
-            /* FIXME: this should be when document is closed! */ 
+            /* FIXME: this should be when document is closed! */
         } else if ("reactant".equals(local)) {
 //            cdo.endObject("Reactant");
         	currentReaction.addReactant(currentMolecule);
@@ -173,10 +173,10 @@ public class CMLReactionModule extends CMLCoreModule {
             super.endElement(xpath, uri, local, raw);
         }
     }
-    
+
     /**
      * Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
-     * 
+     *
      * @param molSet   The IAtomContainerSet
      * @param id       The ID the look
      * @return         The IAtomContainer with the ID

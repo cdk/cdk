@@ -34,11 +34,11 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * <p>The base class for all chemical reactions objects in this cdk. 
+ * <p>The base class for all chemical reactions objects in this cdk.
  * It provides methods for adding parameters</p>
- * 
+ *
  * @author         Miguel Rojas
- * 
+ *
  * @cdk.created    2008-02-01
  * @cdk.module     reaction
  * @cdk.set        reaction-types
@@ -59,7 +59,7 @@ public class ReactionEngine{
 	 * Constructor of the ReactionEngine object.
 	 */
 	public ReactionEngine(){
-		
+
 		try {
 			IReactionProcess reaction = (IReactionProcess) this;
 	    	EntryReact entry = initiateDictionary("reaction-processes",(IReactionProcess)reaction);
@@ -68,12 +68,12 @@ public class ReactionEngine{
 	    	extractMechanism(entry);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
     }
 	/**
 	 * Extract the mechanism necessary for this reaction.
-	 * 
+	 *
 	 * @param entry  The EntryReact object
 	 */
 	private void extractMechanism(EntryReact entry) {
@@ -91,7 +91,7 @@ public class ReactionEngine{
 	}
 	/**
 	 * Open the Dictionary OWLReact.
-	 * 
+	 *
 	 * @param nameDict  Name of the Dictionary
 	 * @param reaction  The IReactionProcess
 	 * @return          The entry for this reaction
@@ -101,7 +101,7 @@ public class ReactionEngine{
 		dictionary = db.getDictionary(nameDict);
     	String entryString = reaction.getSpecification().getSpecificationReference();
 		entryString = entryString.substring(entryString.indexOf('#')+1, entryString.length());
-    	
+
     	return (EntryReact) dictionary.getEntry(entryString.toLowerCase());
 	}
 	/**
@@ -118,7 +118,7 @@ public class ReactionEngine{
 				IParameterReact ipc = (IParameterReact) this.getClass().getClassLoader().loadClass(paramName).newInstance();
 			    ipc.setParameter(Boolean.parseBoolean(param.get(1)));
 	            ipc.setValue(param.get(2));
-	            
+
 				logger.info("Loaded parameter class: ", paramName);
 	            paramsMap2.add(ipc);
 	    	} catch (ClassNotFoundException exception) {
@@ -130,24 +130,24 @@ public class ReactionEngine{
 	        }
 		}
 	}
-	/** 
+	/**
      * Returns the current parameter Map for this reaction.
      *
      * Must be done before calling
      * calculate as the parameters influence the calculation outcome.
      *
-     * @param params A List of Objects containing the parameters for this reaction. 
+     * @param params A List of Objects containing the parameters for this reaction.
      * 				 The key must be included into the Dictionary reacton-processes
      * @throws CDKException if invalid number of type of parameters are passed to it
-     * 
+     *
      * @see #getParameterList
      */
     @TestMethod(value="testSetParameterList_List")
     public void setParameterList(List<IParameterReact> params) throws CDKException{
     	paramsMap2 = params;
     }
-    
-    /** 
+
+    /**
      * Returns the current parameter values.
      *
      * @return A List of Object containing the name and the type of the parameter
@@ -159,7 +159,7 @@ public class ReactionEngine{
     }
     /**
      * Return the IParameterReact if it exists given the class.
-     * 
+     *
      * @param paramClass The class
      * @return           The IParameterReact
      */
@@ -170,8 +170,8 @@ public class ReactionEngine{
     		if(ipr.getClass().equals(paramClass))
     			return ipr;
     	}
-    	
+
     	return null;
     }
-    
+
 }

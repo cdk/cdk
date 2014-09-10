@@ -69,7 +69,7 @@ import java.util.List;
  * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:rotatableBondsCount
- * 
+ *
  * @cdk.keyword bond count, rotatable
  * @cdk.keyword descriptor
  */
@@ -169,7 +169,7 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 			IAtom atom1 = bond.getAtom(1);
             if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
             if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) && 
+				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) &&
 					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
 					if (!bond.getFlag(CDKConstants.ISINRING)) {
 

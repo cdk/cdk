@@ -59,7 +59,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
 
     private XMLReader parser;
     private Reader input;
-    private IChemObjectBuilder builder;    
+    private IChemObjectBuilder builder;
     private EventCMLHandler cdo;
 
     private static ILoggingTool logger =
@@ -72,7 +72,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
      * a new molecule is read.
      *
      * @param input    Reader type input
-     * @param listener ReaderListener that listens to newMolecule events. 
+     * @param listener ReaderListener that listens to newMolecule events.
      */
     public EventCMLReader(Reader input, IReaderListener listener,
     		              IChemObjectBuilder builder) {
@@ -82,7 +82,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         this.builder = builder;
         this.addChemObjectIOListener(listener);
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
@@ -91,7 +91,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     public IAtomContainer getAtomContainer() {
         return cdo.getAtomContainer();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;

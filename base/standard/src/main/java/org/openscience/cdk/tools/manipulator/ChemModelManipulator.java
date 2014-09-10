@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -55,10 +55,10 @@ import org.openscience.cdk.interfaces.IReactionSet;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.ChemModelManipulatorTest")
 public class ChemModelManipulator {
-    
+
 	/**
 	 * Get the total number of atoms inside an IChemModel.
-	 * 
+	 *
 	 * @param chemModel  The IChemModel object.
 	 * @return           The number of Atom object inside.
 	 */
@@ -79,10 +79,10 @@ public class ChemModelManipulator {
         }
         return count;
     }
-    
+
     /**
 	 * Get the total number of bonds inside an IChemModel.
-	 * 
+	 *
 	 * @param chemModel  The IChemModel object.
 	 * @return           The number of Bond object inside.
 	 */
@@ -103,11 +103,11 @@ public class ChemModelManipulator {
         }
         return count;
     }
-    
+
     /**
      * Remove an Atom and the connected ElectronContainers from all AtomContainers
      * inside an IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @param atom       The Atom object to remove.
      */
@@ -130,11 +130,11 @@ public class ChemModelManipulator {
             ReactionSetManipulator.removeAtomAndConnectedElectronContainers(reactionSet, atom);
         }
     }
-    
+
     /**
      * Remove an ElectronContainer from all AtomContainers
      * inside an IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @param electrons  The ElectronContainer to remove.
      */
@@ -156,11 +156,11 @@ public class ChemModelManipulator {
             ReactionSetManipulator.removeElectronContainer(reactionSet, electrons);
         }
     }
-    
+
     /**
      * Adds a new Molecule to the MoleculeSet inside a given ChemModel.
      * Creates a MoleculeSet if none is contained.
-     * 
+     *
      * @param chemModel  The ChemModel object.
      * @return           The created Molecule object.
      */
@@ -189,7 +189,7 @@ public class ChemModelManipulator {
      * Create a new ChemModel containing an IAtomContainer. It will create an
      * IMolecule from the passed IAtomContainer when needed, which may cause
      * information loss.
-     * 
+     *
      * @param  atomContainer  The AtomContainer to have inside the ChemModel.
      * @return                The new IChemModel object.
      */
@@ -232,7 +232,7 @@ public class ChemModelManipulator {
     /**
      * Retrieves the first IAtomContainer containing a given IBond from an
      * IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @param bond       The IBond object to search.
      * @return           The IAtomContainer object found, null if none is found.
@@ -254,11 +254,11 @@ public class ChemModelManipulator {
         // This should never happen.
         return null;
     }
-    
+
     /**
      * Retrieves the first IReaction containing a given IAtom from an
      * IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @param atom       The IAtom object to search.
      * @return           The IAtomContainer object found, null if none is found.
@@ -294,7 +294,7 @@ public class ChemModelManipulator {
 
     /**
      * Sets the AtomProperties of all Atoms inside an IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @param propKey    The key of the property.
      * @param propVal    The value of the property.
@@ -317,10 +317,10 @@ public class ChemModelManipulator {
             );
         }
     }
-    
+
     /**
      * Retrieve a List of all ChemObject objects within an IChemModel.
-     * 
+     *
      * @param chemModel  The IChemModel object.
      * @return           A List of all ChemObjects inside.
      */
@@ -346,7 +346,7 @@ public class ChemModelManipulator {
             List<IChemObject> current = ReactionSetManipulator.getAllChemObjects(reactionSet);
             for (IChemObject chemObject : current) {
                 if (!list.contains(chemObject)) list.add(chemObject);
-            }            
+            }
         }
 		return list;
 	}

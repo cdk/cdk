@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 
 /**
  * Generate the symbols for radicals.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -53,7 +53,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
 	public IRenderingElement generate(IReaction reaction, RendererModel model) {
 		if(!model.getParameter(ShowReactionBoxes.class).getValue())
 			return null;
-	    if (reaction.getProductCount() == 0) 
+	    if (reaction.getProductCount() == 0)
 	    	return new ElementGroup();
 		double distance = model.getParameter(BondLength.class)
     		.getValue() / model.getParameter(Scale.class).getValue() / 2;
@@ -67,7 +67,7 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
             }
         }
         if (totalBounds == null) return null;
-        
+
         ElementGroup diagram = new ElementGroup();
         Color foregroundColor = model.getParameter(
         	BasicSceneGenerator.ForegroundColor.class).getValue();

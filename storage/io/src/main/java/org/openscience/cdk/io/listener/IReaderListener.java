@@ -36,7 +36,7 @@ public interface IReaderListener extends IChemObjectIOListener {
    * @param event information about the event.
    */
   public void frameRead(ReaderEvent event);
-  
+
 }
 
 

@@ -56,7 +56,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 
 /**
  * Helper class that help setup a template library of CDK's Builder3D.
- * 
+ *
  * @author      Christian Hoppe
  * @cdk.module  builder3dtools
  * @cdk.githash
@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
 public class TemplateExtractor {
 
 	static final String usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";
-	
+
 	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
 	public TemplateExtractor() {
@@ -240,7 +240,7 @@ public class TemplateExtractor {
                         LoggingToolFactory.createLoggingTool(getClass()).error(e);
                         return;
                     }
-                    
+
 					// System.out.println("OrgKey:"+key+" For
 					// Molecule:"+counter);
 					if (hashRingSystems.containsKey(key)) {
@@ -429,7 +429,7 @@ public class TemplateExtractor {
 			}catch(Exception exc1){
 				System.out.println("QueryFingerprintError: from molecule:"
 						+ moleculeCounter + " due to:" + exc1.getMessage());
-				
+
 				// OK, just adds a fingerprint with all ones, so that any
 				// structure will match this template, and leave it up
 				// to substructure match to figure things out
@@ -440,20 +440,20 @@ public class TemplateExtractor {
 				data.add(allOnesFingerprint);
 				fingerprintCounter = fingerprintCounter + 1;
 			}
-			
+
 			if (fingerprintCounter % 2 == 0)
 				System.out.print("\b" + "/");
 			else
 				System.out.print("\b" + "\\");
 
-			
+
 			if (fingerprintCounter % 100 == 0)
 				System.out.print("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b" + "Generated Fingerprints: " + fingerprintCounter + "   \n");
 
-		}// while 
+		}// while
 		try {
 			imdl.close();
-		} catch (Exception exc2) 
+		} catch (Exception exc2)
 		{
 			exc2.printStackTrace();
 		}
@@ -463,7 +463,7 @@ public class TemplateExtractor {
 
 		return data;
 	}
-	
+
 	public void makeFingerprintFromRingSystems(String dataFileIn,
 			String dataFileOut, boolean anyAtom, boolean anyAtomAnyBond)
 	throws Exception {
@@ -517,8 +517,8 @@ public class TemplateExtractor {
 			query.getAtom(i).setSymbol("C");
 		}
 		return query;
-	}	
-	
+	}
+
 	public IAtomContainer resetFlags(IAtomContainer ac) {
 		for (int f = 0; f < ac.getAtomCount(); f++) {
 			ac.getAtom(f).setFlag(CDKConstants.VISITED, false);

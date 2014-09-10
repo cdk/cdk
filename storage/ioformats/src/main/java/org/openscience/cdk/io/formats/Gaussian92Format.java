@@ -32,9 +32,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class Gaussian92Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public Gaussian92Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new Gaussian92Format();

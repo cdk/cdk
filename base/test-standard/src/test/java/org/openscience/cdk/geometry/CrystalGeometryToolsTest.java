@@ -45,10 +45,10 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         super();
     }
 
-    
+
     /**
-     * This method tests the conversion of notional coordinates to 
-     * cartesian coordinates. The test assumes that the 
+     * This method tests the conversion of notional coordinates to
+     * cartesian coordinates. The test assumes that the
      * <code>CrystalGeometryTools.notionalToCartesian()</code> methods
      * places the a axis on the x axis and the b axis in the xy plane.
      */
@@ -86,7 +86,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
     }
 
     /**
-     * This method tests the conversion of cartesian coordinates to 
+     * This method tests the conversion of cartesian coordinates to
      * notional coordinates.
      */
     @Test public void testCartesianToNotional_Vector3d_Vector3d_Vector3d() {
@@ -103,7 +103,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(90.0, notionalCoords[4], 0.001);
         Assert.assertEquals(90.0, notionalCoords[5], 0.001);
     }
-    
+
     /**
      * This method tests the conversion of atomic fractional coordinates to
      * cartesian coordinates.
@@ -132,7 +132,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Vector3d a = cardAxes[0];
         Vector3d b = cardAxes[1];
         Vector3d c = cardAxes[2];
-        
+
         Point3d cartCoords = CrystalGeometryTools.fractionalToCartesian(
             a, b, c, new Point3d(0.517879, 0.258121, 0.698477)
         );
@@ -192,7 +192,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         double angle = b.angle(c)*180.0/Math.PI;
         Assert.assertEquals(90.0, angle, 0.001);
     }
-    
+
     /**
      * This method tests the calculation of the angle between two axes too.
      */
@@ -202,7 +202,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         double angle = b.angle(c)*180.0/Math.PI;
         Assert.assertEquals(45.0, angle, 0.001);
     }
-    
+
     /**
      * This method tests the calculation of the angle between one axis
      * and itself, which should be zero by definition.
@@ -212,7 +212,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         double angle = b.angle(b)*180.0/Math.PI;
         Assert.assertEquals(0.0, angle, 0.001);
     }
-    
+
     /**
      * This method tests the conversion of notional coordinates to
      * cartesian and back to notional.
@@ -234,7 +234,7 @@ public class CrystalGeometryToolsTest extends CDKTestCase {
         Assert.assertEquals(91.2, notionalCoords[4], 0.001);
         Assert.assertEquals(110.5, notionalCoords[5], 0.001);
     }
-    
+
     /**
      * This method tests whether two times inversion of the axes
      * gives back the original axes.

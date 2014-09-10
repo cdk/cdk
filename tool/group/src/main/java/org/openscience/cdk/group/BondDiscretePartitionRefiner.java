@@ -39,14 +39,14 @@ import org.openscience.cdk.interfaces.IBond;
 /**
  * A tool for determining the automorphism group of the atoms in a molecule, or
  * for checking for a canonical form of a molecule.
- * 
+ *
  * If two bonds are equivalent under an automorphism in the group, then
  * roughly speaking they are in symmetric positions in the molecule. For
- * example, the C-C bonds attaching two methyl groups to a benzene ring 
- * are 'equivalent' in this sense. 
- * 
+ * example, the C-C bonds attaching two methyl groups to a benzene ring
+ * are 'equivalent' in this sense.
+ *
  * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
- * 
+ *
  * <pre>
  *     IAtomContainer ac = ... // get an atom container somehow
  *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
@@ -55,9 +55,9 @@ import org.openscience.cdk.interfaces.IBond;
  *         ... // do something with the permutation
  *     }
  * </pre>
- * 
+ *
  * <p>Another is to check an atom container to see if it is canonical:</p>
- *  
+ *
  * <pre>
  *     IAtomContainer ac = ... // get an atom container somehow
  *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
@@ -65,56 +65,56 @@ import org.openscience.cdk.interfaces.IBond;
  *         ... // do something with the atom container
  *     }
  * </pre>
- * 
+ *
  * Note that it is not necessary to call {@link #refine(IAtomContainer)} before
- * either of these methods. However if both the group and the canonical check 
+ * either of these methods. However if both the group and the canonical check
  * are required, then the code should be:
- * 
+ *
  * <pre>
  *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
  *     refiner.refine(ac);
  *     boolean isCanon = refiner.isCanonical();
  *     PermutationGroup autG = refiner.getAutomorphismGroup();
  * </pre>
- * 
+ *
  * This way, the refinement is not carried out multiple times. Finally, remember
- * to call {@link #reset} if the refiner is re-used on multiple structures. 
- * 
+ * to call {@link #reset} if the refiner is re-used on multiple structures.
+ *
  * @author maclean
  * @cdk.module group
  */
 @TestClass("BondDiscretePartitionRefinerTest")
 public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefiner {
-    
+
     /**
-     * The connectivity between bonds; two bonds are connected 
+     * The connectivity between bonds; two bonds are connected
      * if they share an atom.
      */
     private int[][] connectionTable;
-    
+
     /**
      * Specialised option to allow generating automorphisms that ignore the bond order.
      */
     private boolean ignoreBondOrders;
-    
+
     /**
      * Make a bond partition refiner that takes bond-orders into account.
      */
     public BondDiscretePartitionRefiner() {
         this(false);
     }
-    
+
     /**
      * Make a bond partition refiner and specify whether bonds-orders should be
      * considered when calculating the automorphisms.
-     * 
+     *
      * @param ignoreBondOrders if true, ignore the bond orders
      */
     public BondDiscretePartitionRefiner(boolean ignoreBondOrders) {
         this.ignoreBondOrders = ignoreBondOrders;
     }
-    
-    /** 
+
+    /**
      * @inheritDoc
      */
     @Override
@@ -123,7 +123,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         return connectionTable.length;
     }
 
-    /** 
+    /**
      * @inheritDoc
      */
     @Override
@@ -138,11 +138,11 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         }
         return 0;
     }
-    
+
     /**
      * Used by the equitable refiner to get the indices of bonds connected to
      * the bond at <code>bondIndex</code>.
-     * 
+     *
      * @param bondIndex the index of the incident bond
      * @return an array of bond indices
      */
@@ -154,14 +154,14 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * Get the bond partition, based on the element types of the atoms at either end
      * of the bond, and the bond order.
-     * 
+     *
      * @param atomContainer the container with the bonds to partition
      * @return a partition of the bonds based on the element types and bond order
      */
     @TestMethod("getBondPartitionTest")
     public Partition getBondPartition(IAtomContainer atomContainer) {
         int bondCount = atomContainer.getBondCount();
-        Map<String, SortedSet<Integer>> cellMap = 
+        Map<String, SortedSet<Integer>> cellMap =
                 new HashMap<String, SortedSet<Integer>>();
 
         // make mini-'descriptors' for bonds like "C=O" or "C#N" etc
@@ -172,9 +172,9 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
             String boS;
             if (ignoreBondOrders) {
                 // doesn't matter what it is, so long as it's constant
-                boS = "1"; 
+                boS = "1";
             } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC); 
+                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
                 int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
                 boS = String.valueOf(orderNumber);
             }
@@ -182,7 +182,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
             if (el0.compareTo(el1) < 0) {
                 bondString = el0 + boS + el1;
             } else {
-                bondString = el1 + boS + el0;                
+                bondString = el1 + boS + el0;
             }
             SortedSet<Integer> cell;
             if (cellMap.containsKey(bondString)) {
@@ -207,7 +207,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         bondPartition.order();
         return bondPartition;
     }
-    
+
     /**
      * Reset the connection table.
      */
@@ -219,11 +219,11 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * Refine an atom container, which has the side effect of calculating
      * the automorphism group.
-     * 
+     *
      * If the group is needed afterwards, call {@link #getAutomorphismGroup()}
      * instead of {@link #getAutomorphismGroup(IAtomContainer)} otherwise the
      * refine method will be called twice.
-     * 
+     *
      * @param atomContainer the atomContainer to refine
      */
     @TestMethod("refineTest")
@@ -233,7 +233,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
 
     /**
      * Refine a bond partition based on the connectivity in the atom container.
-     * 
+     *
      * @param partition the initial partition of the bonds
      * @param atomContainer the atom container to use
      */
@@ -242,11 +242,11 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         setup(atomContainer);
         super.refine(partition);
     }
-    
+
     /**
-     * Checks if the atom container is canonical. Note that this calls 
-     * {@link #refine} first. 
-     * 
+     * Checks if the atom container is canonical. Note that this calls
+     * {@link #refine} first.
+     *
      * @param atomContainer the atom container to check
      * @return true if the atom container is canonical
      */
@@ -260,9 +260,9 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
     /**
      * Gets the automorphism group of the atom container. By default it uses an
      * initial partition based on the bond 'types' (so all the C-C bonds are in
-     * one cell, all the C=N in another, etc). If this behaviour is not 
+     * one cell, all the C=N in another, etc). If this behaviour is not
      * desired, then use the {@link #ignoreBondOrders} flag in the constructor.
-     * 
+     *
      * @param atomContainer the atom container to use
      * @return the automorphism group of the atom container
      */
@@ -272,12 +272,12 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(getBondPartition(atomContainer));
         return super.getAutomorphismGroup();
     }
-    
+
     /**
      * Speed up the search for the automorphism group using the automorphisms in
      * the supplied group. Note that the behaviour of this method is unknown if
      * the group does not contain automorphisms...
-     * 
+     *
      * @param atomContainer the atom container to use
      * @param group the group of known automorphisms
      * @return the full automorphism group
@@ -289,10 +289,10 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(getBondPartition(atomContainer));
         return getAutomorphismGroup();
     }
-    
+
     /**
      * Get the automorphism group of the molecule given an initial partition.
-     * 
+     *
      * @param atomContainer the atom container to use
      * @param initialPartition an initial partition of the bonds
      * @return the automorphism group starting with this partition
@@ -304,10 +304,10 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(initialPartition);
         return super.getAutomorphismGroup();
     }
-    
+
     /**
      * Get the automorphism partition (equivalence classes) of the bonds.
-     * 
+     *
      * @param atomContainer the molecule to calculate equivalence classes for
      * @return a partition of the bonds into equivalence classes
      */
@@ -317,40 +317,40 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         super.refine(getBondPartition(atomContainer));
         return super.getAutomorphismPartition();
     }
-    
+
     private void setup(IAtomContainer atomContainer) {
-        // have to setup the connection table before making the group 
+        // have to setup the connection table before making the group
         // otherwise the size may be wrong
         if (connectionTable == null) {
             setupConnectionTable(atomContainer);
         }
-        
+
         int size = getVertexCount();
         PermutationGroup group = new PermutationGroup(new Permutation(size));
         super.setup(group, new BondEquitablePartitionRefiner(this));
     }
-    
+
     private void setup(IAtomContainer atomContainer, PermutationGroup group) {
         setupConnectionTable(atomContainer);
         super.setup(group, new BondEquitablePartitionRefiner(this));
     }
-    
+
     private void setupConnectionTable(IAtomContainer atomContainer) {
         int bondCount = atomContainer.getBondCount();
         // unfortunately, we have to sort the bonds
         List<IBond> bonds = new ArrayList<IBond>();
         Map<String, IBond> bondMap = new HashMap<String, IBond>();
         for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
-            IBond bond = atomContainer.getBond(bondIndexI); 
+            IBond bond = atomContainer.getBond(bondIndexI);
             bonds.add(bond);
             int a0 = atomContainer.getAtomNumber(bond.getAtom(0));
             int a1 = atomContainer.getAtomNumber(bond.getAtom(1));
             String boS;
             if (ignoreBondOrders) {
                 // doesn't matter what it is, so long as it's constant
-                boS = "1"; 
+                boS = "1";
             } else {
-                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC); 
+                boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
                 int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
                 boS = String.valueOf(orderNumber);
             }
@@ -368,7 +368,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
         for (String key : keys) {
             bonds.add(bondMap.get(key));
         }
-        
+
         connectionTable = new int[bondCount][];
         for (int bondIndexI = 0; bondIndexI < bondCount; bondIndexI++) {
             IBond bondI = bonds.get(bondIndexI);
@@ -383,7 +383,7 @@ public class BondDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
             int connBondCount = connectedBondIndices.size();
             connectionTable[bondIndexI] = new int[connBondCount];
             for (int index = 0; index < connBondCount; index++) {
-                connectionTable[bondIndexI][index] = connectedBondIndices.get(index); 
+                connectionTable[bondIndexI][index] = connectedBondIndices.get(index);
             }
         }
     }

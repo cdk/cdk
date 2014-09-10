@@ -34,7 +34,7 @@ import org.xml.sax.Attributes;
  *
  * @cdk.module io
  * @cdk.githash
- * 
+ *
  * @author egonw
  */
 public class CDKConvention extends CMLCoreModule {
@@ -48,7 +48,7 @@ public class CDKConvention extends CMLCoreModule {
     public CDKConvention(ICMLModule conv) {
         super(conv);
     }
-    
+
     public void startDocument() {
         super.startDocument();
         isBond = false;

@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -52,8 +52,8 @@ public class MDLV2000PropertiesBlockTest {
 
     private final MDLV2000Reader     reader  = new MDLV2000Reader();
     private final IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-   
-    
+
+
     @Test public void m_end() throws Exception {
         assertThat(MDLV2000Reader.PropertyKey.of("M  END"),
                    is(MDLV2000Reader.PropertyKey.M_END));
@@ -93,7 +93,7 @@ public class MDLV2000PropertiesBlockTest {
         assertThat(MDLV2000Reader.PropertyKey.of("S  SKP  5"),
                    is(MDLV2000Reader.PropertyKey.SKIP));
     }
-    
+
     @Test public void anion() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  CHG  1   1  -1", mock);
@@ -105,12 +105,12 @@ public class MDLV2000PropertiesBlockTest {
         read("M  CHG  1   1   1", mock);
         verify(mock.getAtom(0)).setFormalCharge(+1);
     }
-    
+
     @Test public void multipleCharges() throws Exception {
         IAtomContainer mock = mock(6);
         read("M  CHG  2   2   1   5  -2", mock);
-        verify(mock.getAtom(1)).setFormalCharge(+1);        
-        verify(mock.getAtom(4)).setFormalCharge(-2);        
+        verify(mock.getAtom(1)).setFormalCharge(+1);
+        verify(mock.getAtom(4)).setFormalCharge(-2);
     }
 
     @Test public void multipleChargesTruncated() throws Exception {
@@ -118,11 +118,11 @@ public class MDLV2000PropertiesBlockTest {
         read("M  CHG  2   2  -3", mock);
         verify(mock.getAtom(1)).setFormalCharge(-3);
     }
-    
+
     @Test public void c13() throws Exception {
         IAtomContainer mock = mock(3);
         read("M  ISO  1   1  13", mock);
-        verify(mock.getAtom(0)).setMassNumber(13);    
+        verify(mock.getAtom(0)).setMassNumber(13);
     }
 
     @Test public void c13n14() throws Exception {
@@ -131,7 +131,7 @@ public class MDLV2000PropertiesBlockTest {
         verify(mock.getAtom(0)).setMassNumber(13);
         verify(mock.getAtom(2)).setMassNumber(14);
     }
-    
+
     @Test public void atomValue() throws Exception {
         IAtomContainer mock = mock(3);
         read("V    1 A Comment", mock);
@@ -146,18 +146,18 @@ public class MDLV2000PropertiesBlockTest {
         assertThat(mock.getAtom(3), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) mock.getAtom(3)).getLabel(), is("Gly"));
     }
-    
+
     static IAtomContainer mock(int n) {
         IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
         for (int i = 0; i < n; i++)
             mock.addAtom(Mockito.mock(IAtom.class));
         return mock;
     }
-    
+
     void read(String input, IAtomContainer container) throws IOException, CDKException {
         reader.readPropertiesFast(new BufferedReader(new StringReader(input)),
                                   container,
                                   container.getAtomCount());
     }
-   
+
 }

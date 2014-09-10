@@ -1,21 +1,21 @@
 /*
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package org.openscience.cdk.geometry.surface;
@@ -31,7 +31,7 @@ import java.util.List;
  *
  * <p>The routine is a simplified version of the neighbor list described
  * in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
- * Due to the fact that it divides the cube into a fixed number of sub cubes, 
+ * Due to the fact that it divides the cube into a fixed number of sub cubes,
  * some accuracy may be lost.
  *
  * @author Rajarshi Guha
@@ -72,8 +72,8 @@ public class NeighborList {
         k2 = (int)(Math.floor(y/ boxSize));
         k3 = (int)(Math.floor(z/ boxSize));
 
-        String key = 
-            Integer.toString(k1) + " " + 
+        String key =
+            Integer.toString(k1) + " " +
             Integer.toString(k2) + " " +
             Integer.toString(k3) + " " ;
         return(key);
@@ -112,8 +112,8 @@ public class NeighborList {
                 for (int k = 0; k < bval.length; k++) {
                     int z = bval[k];
 
-                    String keyj = 
-                        Integer.toString(key[0]+x) + " " + 
+                    String keyj =
+                        Integer.toString(key[0]+x) + " " +
                         Integer.toString(key[1]+y) + " " +
                         Integer.toString(key[2]+z) + " " ;
                     if (boxes.containsKey(keyj)) {

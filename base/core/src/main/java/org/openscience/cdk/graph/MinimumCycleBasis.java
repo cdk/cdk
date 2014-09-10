@@ -111,8 +111,8 @@ public final class MinimumCycleBasis {
      * connected which allows an optimisation to be used.
      *
      * @param initial set of initial cycles.
-     * @param connected the graph is known to be connected                
-     *                
+     * @param connected the graph is known to be connected
+     *
      * @throws NullPointerException null InitialCycles provided
      */
     @TestMethod("noInitialCycles")
@@ -128,7 +128,7 @@ public final class MinimumCycleBasis {
         // cycles in the minimum basis
         int lim = connected ? initial.numberOfEdges() - graph.length + 1
                             : Integer.MAX_VALUE;
-        
+
         // processing by size add cycles which are independent of smaller cycles
         for (final Cycle cycle : initial.cycles()) {
             if (basis.size() < lim && basis.isIndependent(cycle))

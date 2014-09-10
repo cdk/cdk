@@ -58,12 +58,12 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  *@cdk.created    2004-11-04
  */
 public class ModelBuilder3DTest extends CDKTestCase {
-	
+
 	boolean standAlone = false;
 
 
     /**
-	 *  Sets the standAlone attribute 
+	 *  Sets the standAlone attribute
 	 *
 	 *@param  standAlone  The new standAlone value
 	 */
@@ -71,8 +71,8 @@ public class ModelBuilder3DTest extends CDKTestCase {
 	{
 		this.standAlone = standAlone;
 	}
-	
-	
+
+
 
 	 //  A unit test for JUnit with methylenfluoride\
     @Test
@@ -131,7 +131,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     @Test
     public void testModelBuilder3D_Konstanz() throws Exception {
         Assume.assumeTrue(runSlowTests());
-    	
+
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -147,7 +147,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     @Test
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
         Assume.assumeTrue(runSlowTests());
-    	
+
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -178,13 +178,13 @@ public class ModelBuilder3DTest extends CDKTestCase {
 
     /**
      * Bug #1610997 says the modelbuilder does not work if 2d coordinates exist before - we test this here
-     * 
+     *
      * @cdk.bug 1610997
      */
     @Test
     public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
         Assume.assumeTrue(runSlowTests());
-    	
+
 		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 		String smile="CCCCCCCCCC";
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -199,7 +199,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	}
     	checkAverageBondLength(mol);
 	}
-    
+
     /**
      * @cdk.bug 1315823
      */
@@ -220,7 +220,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	Assert.assertNotNull(ac.getAtom(0).getPoint3d());
     	checkAverageBondLength(ac);
     }
-    
+
     public static void checkAverageBondLength(IAtomContainer ac){
     	double avlength= GeometryUtil.getBondLengthAverage3D(ac);
     	for(int i=0;i<ac.getBondCount();i++){
@@ -247,10 +247,10 @@ public class ModelBuilder3DTest extends CDKTestCase {
     	for(int i=0;i<ac.getAtomCount();i++){
     		Assert.assertNotNull(ac.getAtom(i).getPoint3d());
     	}
-    	checkAverageBondLength(ac);    	
+    	checkAverageBondLength(ac);
     }
 
-    
+
     /**
      * Test for SF bug #1309731.
      * @cdk.bug 1309731
@@ -300,7 +300,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
 		List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
 
 		////////////////////////////////////////////////////////////////////////////////////////////
-		//generate the input molecules. This are molecules without x, y, z coordinats 
+		//generate the input molecules. This are molecules without x, y, z coordinats
 
 		String[] smiles = new String[] {"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C","OCC=CCc1ccccc1(C=C)", "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
 		SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -356,7 +356,7 @@ public class ModelBuilder3DTest extends CDKTestCase {
             }
 		}
 	}
-	
+
     /*
 	 *  @cdk.bug 1241421
 	 */

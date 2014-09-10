@@ -47,18 +47,18 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  * A reader for Gaussian03 output.
  * Gaussian 03 is a quantum chemistry program
  * by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
- * 
+ *
  * <p>Molecular coordinates, energies, and normal coordinates of
  * vibrations are read. Each set of coordinates is added to the
  * ChemFile in the order they are found. Energies and vibrations
  * are associated with the previously read set of coordinates.
- * 
+ *
  * <p>This reader was developed from a small set of
  * example output files, and therefore, is not guaranteed to
  * properly read all Gaussian03 output. If you have problems,
  * please contact the author of this code, not the developers
  * of Gaussian03.
- * 
+ *
  * <p>This code was adaptated by Jonathan from Gaussian98Reader written by
  * Bradley, and ported to CDK by Egon.
  *
@@ -340,10 +340,10 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 StringReader vectorRead = new StringReader(line);
                 token = new StreamTokenizer(vectorRead);
                 token.nextToken();
-                
+
                 // ignore first token
                 token.nextToken();
-                
+
                 // ignore second token
                 for (int j = 0; j < currentVibs.size(); ++j) {
                     double[] v = new double[3];
@@ -398,14 +398,14 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
                 line = input.readLine().trim();
             }
             StringTokenizer st1 = new StringTokenizer(line);
-            
+
             // Find Isotropic label
             while (st1.hasMoreTokens()) {
                 if (st1.nextToken().equals("Isotropic")) {
                     break;
                 }
             }
-            
+
             // Find Isotropic value
             while (st1.hasMoreTokens()) {
                 if (st1.nextToken().equals("=")) {
@@ -423,14 +423,14 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
      * Select the theory and basis set from the first archive line.
      */
     /*private String parseLevelOfTheory(String line) {
-        
+
         StringTokenizer st1 = new StringTokenizer(line, "\\");
-        
+
         // Must contain at least 6 tokens
         if (st1.countTokens() < 6) {
             return null;
         }
-        
+
         // Skip first four tokens
         for (int i = 0; i < 4; ++i) {
             st1.nextToken();

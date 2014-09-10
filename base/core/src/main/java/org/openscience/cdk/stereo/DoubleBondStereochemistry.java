@@ -59,7 +59,7 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 		this.ligandBonds = ligandBonds;
 		this.stereo = stereo;
 	}
-	
+
     /**
      * Sets a new {@link IChemObjectBuilder}.
      *
@@ -106,8 +106,8 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
      */
     @TestMethod("contains")
     @Override public boolean contains(IAtom atom) {
-        return stereoBond.contains(atom) 
-                || ligandBonds[0].contains(atom) 
+        return stereoBond.contains(atom)
+                || ligandBonds[0].contains(atom)
                 || ligandBonds[1].contains(atom);
     }
 

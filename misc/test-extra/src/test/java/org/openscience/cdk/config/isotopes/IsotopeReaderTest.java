@@ -1,21 +1,21 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.config.isotopes;
 
@@ -38,7 +38,7 @@ public class IsotopeReaderTest extends CDKTestCase {
     @Test
     public void testIsotopeReader_InputStream_IChemObjectBuilder() {
         IsotopeReader reader = new IsotopeReader(
-            new ByteArrayInputStream(new byte[0]), 
+            new ByteArrayInputStream(new byte[0]),
             new ChemObject().getBuilder()
         );
         Assert.assertNotNull(reader);
@@ -47,7 +47,7 @@ public class IsotopeReaderTest extends CDKTestCase {
     @Test
     public void testReadIsotopes() {
         IsotopeReader reader = new IsotopeReader(
-        	new ByteArrayInputStream(new byte[0]), 
+        	new ByteArrayInputStream(new byte[0]),
         	new ChemObject().getBuilder()
         );
         Assert.assertNotNull(reader);
@@ -58,7 +58,7 @@ public class IsotopeReaderTest extends CDKTestCase {
 
     @Test
     public void testReadIsotopes2() {
-        String isotopeData = 
+        String isotopeData =
             "<?xml version=\"1.0\"?>" +
             "<list xmlns=\"http://www.xml-cml.org/schema/cml2/core\"" +
             "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
@@ -82,9 +82,9 @@ public class IsotopeReaderTest extends CDKTestCase {
             "        </isotope>" +
             "    </isotopeList>" +
             "</list>";
-        
+
         IsotopeReader reader = new IsotopeReader(
-        	new ByteArrayInputStream(isotopeData.getBytes()), 
+        	new ByteArrayInputStream(isotopeData.getBytes()),
             new ChemObject().getBuilder()
         );
         Assert.assertNotNull(reader);
@@ -92,5 +92,5 @@ public class IsotopeReaderTest extends CDKTestCase {
         Assert.assertNotNull(isotopes);
         Assert.assertEquals(3, isotopes.size());
     }
-    
+
 }

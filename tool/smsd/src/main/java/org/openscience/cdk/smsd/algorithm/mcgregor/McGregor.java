@@ -77,7 +77,7 @@ public final class McGregor {
      * @param source
      * @param target
      * @param _mappings
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      */
     public McGregor(IAtomContainer source, IAtomContainer target, List<List<Integer>> _mappings, boolean shouldMatchBonds) {
 

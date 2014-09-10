@@ -45,7 +45,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class RGroup {
 
 	/**
-	 * Standard label/title to be used for the root atom container.  
+	 * Standard label/title to be used for the root atom container.
 	 */
 	public final static String ROOT_LABEL="Root structure";
 
@@ -57,7 +57,7 @@ public class RGroup {
 	public static String makeLabel(int rgroupNum ) {
 		return "(R"+rgroupNum+")";
 	}
-	
+
     IAtom firstAttachmentPoint;
     IAtom secondAttachmentPoint;
     IAtomContainer group;

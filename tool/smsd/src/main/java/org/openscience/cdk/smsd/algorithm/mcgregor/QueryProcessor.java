@@ -61,7 +61,7 @@ public class QueryProcessor {
      * @param c_bond_neighborsA
      * @param mappingSize
      * @param i_bond_setA
-     * @param c_bond_setA 
+     * @param c_bond_setA
      */
     protected QueryProcessor(
             List<String> cTab1Copy,
@@ -90,7 +90,7 @@ public class QueryProcessor {
     /**
      *
      * @param query
-     * @param target 
+     * @param target
      * @param unmapped_atoms_molA
      * @param mapped_atoms
      * @param counter
@@ -189,7 +189,7 @@ public class QueryProcessor {
     }
 
     /**
-     * 
+     *
      * @param setNumA
      * @param setNumB
      * @param i_bond_setA

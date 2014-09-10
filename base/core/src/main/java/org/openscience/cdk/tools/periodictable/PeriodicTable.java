@@ -15,7 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.periodictable;
 
@@ -31,8 +31,8 @@ import java.util.Set;
 import static org.openscience.cdk.config.Elements.*;
 
 /**
- * Represents elements of the Periodic Table. <p/> This utility class was 
- * previously useful when one wants generic properties of elements such as 
+ * Represents elements of the Periodic Table. <p/> This utility class was
+ * previously useful when one wants generic properties of elements such as
  * atomic number, VdW radius etc. The new approach to this is to use the
  * {@link Elements} enumeration.
  *

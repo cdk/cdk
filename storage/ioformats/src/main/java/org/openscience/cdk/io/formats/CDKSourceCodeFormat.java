@@ -31,9 +31,9 @@ import org.openscience.cdk.tools.DataFeatures;
 public class CDKSourceCodeFormat extends AbstractResourceFormat implements IChemFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public CDKSourceCodeFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new CDKSourceCodeFormat();
@@ -70,7 +70,7 @@ public class CDKSourceCodeFormat extends AbstractResourceFormat implements IChem
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { 
+    public String getWriterClassName() {
       return "org.openscience.cdk.io.CDKSourceCodeWriter";
     }
 

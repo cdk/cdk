@@ -24,14 +24,14 @@ import java.util.Map;
 /**
  *  Class defining a molecular formula object. It maintains
  *   a list of IISotope.<p>
- *   
+ *
  *  Examples:
  * <ul>
  *   <li><code>[C5H5]-</code></li>
  *   <li><code>C6H6</code></li>
  *   <li><code><sup>12</sup>C5</sup><sup>13</sup>CH6</code></li>
  * </ul>
- * 
+ *
  * @cdk.module  interfaces
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
@@ -47,7 +47,7 @@ public interface IMolecularFormula extends ICDKObject {
      * @return the new molecular formula
 	 */
 	public IMolecularFormula add(IMolecularFormula formula);
-	
+
 	/**
 	 *  Adds an Isotope to this MolecularFormula one time.
 	 *
@@ -55,8 +55,8 @@ public interface IMolecularFormula extends ICDKObject {
 	 * @see             #addIsotope(IIsotope, int)
      * @return the new molecular formula
 	 */
-	public IMolecularFormula addIsotope(IIsotope isotope); 
-	
+	public IMolecularFormula addIsotope(IIsotope isotope);
+
 	/**
 	 *  Adds an Isotope to this MolecularFormula in a number of occurrences.
 	 *
@@ -66,9 +66,9 @@ public interface IMolecularFormula extends ICDKObject {
      * @return the new molecular formula
 	 */
 	public IMolecularFormula addIsotope(IIsotope isotope, int count);
-	
+
 	/**
-	 *  Checks a set of Nodes for the occurrence of the isotope in the 
+	 *  Checks a set of Nodes for the occurrence of the isotope in the
 	 *  IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
 	 *
 	 * @param   isotope          The IIsotope to look for
@@ -76,23 +76,23 @@ public interface IMolecularFormula extends ICDKObject {
 	 * @see                      #getIsotopeCount()
 	 */
 	public int getIsotopeCount(IIsotope isotope);
-	
+
 	/**
 	 *  Returns an {@link Iterable} for looping over all isotopes in this IMolecularFormula.
 	 *
 	 * @return    An {@link Iterable} with the isotopes in this IMolecularFormula
 	 */
 	public Iterable<IIsotope> isotopes();
-	
+
 	/**
-	 *  Checks a set of Nodes for the number of different isotopes in the 
+	 *  Checks a set of Nodes for the number of different isotopes in the
 	 *  IMolecularFormula.
 	 *
 	 * @return        The the number of different isotopes in this IMolecularFormula
 	 * @see           #getIsotopeCount(IIsotope)
 	 */
 	public int getIsotopeCount();
-    
+
 	/**
 	 *  True, if the MolecularFormula contains the given IIsotope object. Not
 	 *  the instance. The method looks for other isotopes which has the same
@@ -102,7 +102,7 @@ public interface IMolecularFormula extends ICDKObject {
 	 * @return          True, if the IMolecularFormula contains the given isotope object
 	 */
 	public boolean contains(IIsotope isotope);
-	
+
 	/**
 	 *  Removes the given isotope from the MolecularFormula.
 	 *
@@ -114,7 +114,7 @@ public interface IMolecularFormula extends ICDKObject {
 	 * Removes all isotopes of this molecular formula.
 	 */
 	public void removeAllIsotopes();
-	
+
 	/**
      *  Sets the partial charge of this IMolecularFormula.
      *
@@ -125,7 +125,7 @@ public interface IMolecularFormula extends ICDKObject {
     public void setCharge(Integer charge) ;
 
     /**
-     *  Returns the partial charge of this IMolecularFormula. If the charge 
+     *  Returns the partial charge of this IMolecularFormula. If the charge
      *  has not been set the return value is Double.NaN.
      *
      * @return the charge of this IMolecularFormula
@@ -139,8 +139,8 @@ public interface IMolecularFormula extends ICDKObject {
 	 * @return    The cloned object
 	 */
 	public Object clone() throws CloneNotSupportedException ;
-	
-	
+
+
 	/**
 	 *  Sets a property for a IChemObject. I should
 	 * integrate into ChemObject.
@@ -249,5 +249,5 @@ public interface IMolecularFormula extends ICDKObject {
 	 *@see                #getProperties
 	 */
 	public void setProperties(Map<Object, Object> properties);
-	
+
 }

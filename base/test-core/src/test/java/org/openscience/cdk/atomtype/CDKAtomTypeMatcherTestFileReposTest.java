@@ -1,20 +1,20 @@
 /* Copyright (C) 2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -44,7 +44,7 @@ import java.util.List;
  * cdk atom type list, using the test files in <code>src/test/data</code>.
  *
  * @cdk.module test-core
- * 
+ *
  * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
  */
 public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
@@ -67,7 +67,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             failed += results.failed;
         }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
-    }    
+    }
 
     @Test public void testMOL2files() throws Exception {
     	final String DIRNAME = "data/mol2/";
@@ -83,7 +83,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             failed += results.failed;
         }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
-    }    
+    }
 
     @Test public void testASNfiles() throws Exception {
     	final String DIRNAME = "data/asn/pubchem/";
@@ -99,7 +99,7 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
             failed += results.failed;
         }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
-    }    
+    }
 
     @Test public void testMDLMolfiles() throws Exception {
     	final String DIRNAME = "data/mdl/";
@@ -219,8 +219,8 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         }
     	Assert.assertEquals("Could not match all atom types!", tested, (tested - failed));
     }
-    
-    private TestResults testFile(String dir, String filename, ISimpleChemObjectReader reader) throws Exception {    	
+
+    private TestResults testFile(String dir, String filename, ISimpleChemObjectReader reader) throws Exception {
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(
             DefaultChemObjectBuilder.getInstance());
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(dir+filename);
@@ -234,9 +234,9 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
         	List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cf);
         	for (IAtomContainer container : containers) mol.add(container);
         }
-        
+
         Assert.assertNotNull("Could not read the file into a IAtomContainer: " + filename, mol);
-        
+
         TestResults results = new TestResults();
         assert mol != null;
         for (IAtom atom : mol.atoms()) {
@@ -285,24 +285,24 @@ public class CDKAtomTypeMatcherTestFileReposTest extends CDKTestCase {
 //        		if (piBondsFound > matched.getXXXX()) {
 //            		results.failed++;
 //            		System.out.println("Number of neighbors is too high: " + results.tested + " in file " + filename);
-//            		System.out.println("Found: " + atom.getFormalNeighbourCount() + 
+//            		System.out.println("Found: " + atom.getFormalNeighbourCount() +
 //            				           ", expected (max): " + matched.getFormalNeighbourCount());
 //        		}
                 }
         }
         return results;
     }
-    
+
     class TestResults {
-    	
+
     	int tested;
     	int failed;
-    	
+
     	TestResults() {
     		tested = 0;
     		failed = 0;
     	}
-    	
+
     }
 
 }

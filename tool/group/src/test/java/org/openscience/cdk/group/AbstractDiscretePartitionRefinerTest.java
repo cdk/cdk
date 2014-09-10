@@ -43,8 +43,8 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
 
     }
 
-    public class MockEqRefiner 
-           extends AbstractEquitablePartitionRefiner 
+    public class MockEqRefiner
+           extends AbstractEquitablePartitionRefiner
            implements IEquitablePartitionRefiner {
 
         public Graph graph;
@@ -119,7 +119,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Assert.assertTrue(refiner.firstIsIdentity());
     }
-    
+
     @Test
     public void getAutomorphismPartitionTest() {
         int n = 3;
@@ -133,7 +133,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         Partition expected = Partition.fromString("0|1,2");
         Assert.assertEquals(expected, autPartition);
     }
-    
+
     @Test
     public void getHalfMatrixStringTest() {
         int n = 3;
@@ -144,7 +144,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         String expected = "110";
         Assert.assertEquals(expected, hms);
     }
-    
+
     @Test
     public void getBestHalfMatrixStringTest() {
         int n = 3;
@@ -158,7 +158,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         String expected = "110";
         Assert.assertEquals(expected, hms);
     }
-    
+
     @Test
     public void getFirstHalfMatrixStringTest() {
         int n = 3;
@@ -172,7 +172,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         String expected = "110";
         Assert.assertEquals(expected, hms);
     }
-    
+
     @Test
     public void getGroupTest() {
         int n = 3;
@@ -183,7 +183,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.setup(group, new MockEqRefiner(g));
         Assert.assertNotNull(refiner.getAutomorphismGroup());
     }
-    
+
     @Test
     public void getBestTest() {
         int n = 3;
@@ -197,7 +197,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         Permutation expected = new Permutation(1, 0, 2);
         Assert.assertEquals(expected, best);
     }
-    
+
     @Test
     public void getFirstTest() {
         int n = 3;
@@ -211,7 +211,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         Permutation expected = new Permutation(1, 0, 2);
         Assert.assertEquals(expected, first);
     }
-    
+
     @Test
     public void isCanonical_TrueTest() {
         int n = 3;
@@ -223,7 +223,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Assert.assertTrue(refiner.isCanonical());
     }
-    
+
     @Test
     public void isCanonical_FalseTest() {
         int n = 3;
@@ -235,7 +235,7 @@ public class AbstractDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(Partition.unit(n));
         Assert.assertFalse(refiner.isCanonical());
     }
-    
+
     @Test
     public void refineTest() {
         int n = 3;

@@ -27,7 +27,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * This class validate if the charge in the IMolecularFormula correspond with
  * a specific value. As default it is defined as neutral == 0.0.
- * 
+ *
  *
  * <p>This rule uses these parameters:
  * <table border="1">
@@ -42,7 +42,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *     <td>The Charge of MolecularFormula</td>
  *   </tr>
  * </table>
- * 
+ *
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
@@ -52,7 +52,7 @@ public class ChargeRule implements IRule{
 
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(ChargeRule.class);
-	
+
 	private double charge = 0.0;
 
     /**
@@ -69,16 +69,16 @@ public class ChargeRule implements IRule{
      *
      * @param params          The new parameters value
      * @throws CDKException   Description of the Exception
-     * 
+     *
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	 if (params.length != 1) 
+    	 if (params.length != 1)
              throw new CDKException("ChargeRule expects only one parameter");
-         
+
        	 if(!(params[0] instanceof Double))
        		 throw new CDKException("The parameter must be of type Double");
-       	 
+
        	 charge = (Double) params[0];
     }
 
@@ -95,7 +95,7 @@ public class ChargeRule implements IRule{
         return params;
     }
 
-    
+
     /**
      * Validate the charge of this IMolecularFormula.
      *
@@ -105,7 +105,7 @@ public class ChargeRule implements IRule{
 
     public double validate(IMolecularFormula formula) throws CDKException {
     	logger.info("Start validation of ",formula);
-    	
+
     	if (formula.getCharge() == null) {
     		return 0.0;
     	} else if(formula.getCharge() == charge) {
@@ -114,5 +114,5 @@ public class ChargeRule implements IRule{
     		return 0.0;
     	}
     }
-    
+
 }

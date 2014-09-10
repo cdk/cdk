@@ -53,7 +53,7 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
     ExtraCoverageTest.class,
     XMLIsotopeFactoryTest.class,
     IsotopeReaderTest.class,
-    IsotopeHandlerTest.class,        
+    IsotopeHandlerTest.class,
     CloneAtomContainerTest.class,
     RDFCalculatorTest.class,
     KabschAlignmentTest.class,

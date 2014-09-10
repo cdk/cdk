@@ -39,13 +39,13 @@ import org.openscience.cdk.annotations.TestMethod;
  * </pre>
  * where the number to the left of each permutation is the <i>rank</i> - really
  * just the index in this ordered list. The list is created on demand, by a
- * process called <i>unranking</i> where the rank is converted to the 
+ * process called <i>unranking</i> where the rank is converted to the
  * permutation that appears at that point in the list.
- * 
- * <p>The algorithms used are from the book "Combinatorial Generation : 
+ *
+ * <p>The algorithms used are from the book "Combinatorial Generation :
  * Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
  * Stinson. CRC Press (18 Dec 1998). ISBN-13 : 978-0849339882.</p>
- * 
+ *
  * @author         maclean
  * @cdk.created    2009-09-09
  * @cdk.keyword    permutation
@@ -54,31 +54,31 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 @TestClass("PermutorTest")
 public class Permutor {
-    
+
     /**
-     * The current rank of the permutation to use 
+     * The current rank of the permutation to use
      */
     private int currentRank;
-    
+
     /**
      * The maximum rank possible, given the size
      */
     private int maxRank;
-    
+
     /**
      * The number of objects to permute
      */
     private int size;
-    
+
     /**
      * For accessing part of the permutation space
      */
     private Random random;
-    
+
     /**
      * Create a permutor that will generate permutations of numbers up to
      * <code>size</code>.
-     * 
+     *
      * @param size the size of the permutations to generate
      */
     @TestMethod("constructorTest")
@@ -88,45 +88,45 @@ public class Permutor {
         this.maxRank = this.calculateMaxRank();
         this.random = new Random();
     }
-    
+
     @TestMethod("hasNextTest")
     public boolean hasNext() {
         return this.currentRank < this.maxRank;
     }
-    
+
     /**
      * Set the permutation to use, given its rank.
-     * 
+     *
      * @param rank the order of the permutation in the list
      */
     @TestMethod("setRankTest")
     public void setRank(int rank) {
         this.currentRank = rank;
     }
-    
+
     /**
      * Set the currently used permutation.
-     * 
+     *
      * @param permutation the permutation to use, as an int array
      */
     @TestMethod("setPermutationTest")
     public void setPermutation(int[] permutation) {
         this.currentRank = this.rankPermutationLexicographically(permutation);
     }
-    
+
     /**
      * Get the current rank.
-     * 
+     *
      * @return the current rank
      */
     @TestMethod("getRankTest")
     public int getRank() {
         return currentRank;
     }
-    
+
     /**
      * Randomly skip ahead in the list of permutations.
-     *  
+     *
      * @return a permutation in the range (current, N!)
      */
     public int[] getRandomNextPermutation() {
@@ -135,10 +135,10 @@ public class Permutor {
         this.currentRank += Math.max(1, r);
         return this.getCurrentPermutation();
     }
-    
+
     /**
      * Get the next permutation in the list.
-     * 
+     *
      * @return the next permutation
      */
     @TestMethod("countGeneratedPermutations")
@@ -146,27 +146,27 @@ public class Permutor {
         this.currentRank++;
         return this.getCurrentPermutation();
     }
-    
+
     /**
      * Get the permutation that is currently being used.
-     * 
+     *
      * @return the permutation as an int array
      */
     @TestMethod("getCurrentPermutationTest")
     public int[] getCurrentPermutation() {
         return this.unrankPermutationLexicographically(currentRank, size);
     }
-    
+
     /**
      * Calculate the max possible rank for permutations of N numbers.
-     *  
+     *
      * @return the maximum number of permutations
      */
     @TestMethod("maxRankTest")
     public int calculateMaxRank() {
         return factorial(size) - 1;
     }
-    
+
     // much much more efficient to pre-calculate this (or lazily calculate)
     // and store in an array, at the cost of memory.
     private int factorial(int i) {
@@ -176,12 +176,12 @@ public class Permutor {
             return 1;
         }
     }
-    
+
     /**
      * Convert a permutation (in the form of an int array) into a 'rank' - which
      * is just a single number that is the order of the permutation in a lexico-
      * graphically ordered list.
-     * 
+     *
      * @param permutation the permutation to use
      * @return the rank as a number
      */
@@ -202,16 +202,16 @@ public class Permutor {
         }
         return rank + 1;
     }
-    
+
     /**
      * Performs the opposite to the rank method, producing the permutation that
      * has the order <code>rank</code> in the lexicographically ordered list.
-     * 
+     *
      * As an implementation note, the algorithm assumes that the permutation is
      * in the form [1,...N] not the more usual [0,...N-1] for a list of size N.
      * This is why there is the final step of 'shifting' the permutation. The
      * shift also reduces the numbers by one to make them array indices.
-     * 
+     *
      * @param rank the order of the permutation to generate
      * @param size the length/size of the permutation
      * @return a permutation as an int array
@@ -229,7 +229,7 @@ public class Permutor {
                 }
             }
         }
-        
+
         // convert an array of numbers like [1...n] to [0...n-1]
         int[] shiftedPermutation = new int[size];
         for (int i = 1; i < permutation.length; i++) {

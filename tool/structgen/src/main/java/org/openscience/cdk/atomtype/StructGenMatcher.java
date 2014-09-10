@@ -33,8 +33,8 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * This atom type matcher takes into account formal charge and number of
  * implicit hydrogens, and requires bond orders to be given.
  *
- * <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b> 
- * list. If there is not an atom type defined for the tested atom, then null 
+ * <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b>
+ * list. If there is not an atom type defined for the tested atom, then null
  * is returned.
  *
  * @author         egonw
@@ -47,7 +47,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
 	private static AtomTypeFactory factory = null;
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(StructGenMatcher.class);
-    
+
 	/**
 	 * Constructor for the StructGenMatcher object.
 	 */
@@ -66,7 +66,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
 	}
 
 	/**
-	 * Finds the AtomType matching the Atom's element symbol, formal charge and 
+	 * Finds the AtomType matching the Atom's element symbol, formal charge and
      * hybridization state.
 	 *
 	 * @param  atomContainer  AtomContainer
@@ -100,7 +100,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
             }
         }
         logger.debug("    No Match");
-        
+
         return null;
 	}
 }

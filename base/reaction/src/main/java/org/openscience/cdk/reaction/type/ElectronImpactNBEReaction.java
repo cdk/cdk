@@ -40,10 +40,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * <p>IReactionProcess which make an electron impact for for Non-Bonding Electron Lost. 
+ * <p>IReactionProcess which make an electron impact for for Non-Bonding Electron Lost.
  * This reaction type is a representation of the processes which occurs in the mass spectrometer.</p>
  * <p>It is processed by the RemovingSEofNBMechanism class</p>
- * 
+ *
  *<pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
@@ -52,25 +52,25 @@ import java.util.Iterator;
     type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
- * 
+ *
  * <p>We have the possibility to localize the reactive center. Good method if you
  * want to localize the reaction in a fixed point</p>
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter Boolean.TRUE</p>
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the possible reactive center.</p>
- * 
- * 
+ *
+ *
  * @author         Miguel Rojas
- * 
+ *
  * @cdk.created    2006-04-01
  * @cdk.module     reaction
  * @cdk.githash
  * @cdk.set        reaction-types
  * @cdk.dictref    reaction-types:electronImpact
- * 
+ *
  * @see RemovingSEofNBMechanism
- * 
+ *
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.ElectronImpactNBEReactionTest")
 public class ElectronImpactNBEReaction extends ReactionEngine implements IReactionProcess{
@@ -97,7 +97,7 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 				"$Id$",
 				"The Chemistry Development Kit");
 	}
-	
+
 	/**
 	 *  Initiate process.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
@@ -113,29 +113,29 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: ElectronImpactNBEReaction");
-		
+
 		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("ElectronImpactNBEReaction only expects one reactant");
 		}
 		if (agents != null) {
 			throw new CDKException("ElectronImpactNBEReaction don't expects agents");
 		}
-		
+
 		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
-		
+
 		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
 		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		
-		
+
+
 		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
             if(atom.getFlag(CDKConstants.REACTIVE_CENTER) &&
 				reactant.getConnectedLonePairsCount(atom) > 0 && reactant.getConnectedSingleElectronsCount(atom) == 0){
-				
+
 				ArrayList<IAtom> atomList = new ArrayList<IAtom>();
 				atomList.add(atom);
 				IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
@@ -147,26 +147,26 @@ public class ElectronImpactNBEReaction extends ReactionEngine implements IReacti
 					setOfReactions.addReaction(reaction);
 			}
         }
-		return setOfReactions;	
-		
-		
+		return setOfReactions;
+
+
 	}
 	/**
-	 * set the active center for this molecule. The active center 
+	 * set the active center for this molecule. The active center
 	 * will be heteroatoms which contain at least one group of
 	 * lone pair electrons.
-	 * 
+	 *
 	 * @param reactant The molecule to set the activity
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
 	private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
             IAtom atom = atoms.next();
-            if(reactant.getConnectedLonePairsCount(atom) > 0 && 
+            if(reactant.getConnectedLonePairsCount(atom) > 0 &&
             		reactant.getConnectedSingleElectronsCount(atom) == 0)
             	atom.setFlag(CDKConstants.REACTIVE_CENTER,true);
-			
+
 		}
 	}
 }

@@ -97,12 +97,12 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 public class SmartsQueryVisitor implements SMARTSParserVisitor {
 
 
-    // current atoms with a ring identifier 
+    // current atoms with a ring identifier
     private RingIdentifierAtom[] ringAtoms;
 
     private Multimap<IAtom, RingIdentifierAtom> ringAtomLookup = HashMultimap.create(10, 2);
 
-    // query 
+    // query
     private IQueryAtomContainer query;
 
     private final IChemObjectBuilder builder;
@@ -125,7 +125,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
     private List<IBond> stereoBonds = new ArrayList<IBond>();
 
     /**
-     * Stores the double bonds in the query. 
+     * Stores the double bonds in the query.
      */
     private List<IBond> doubleBonds = new ArrayList<IBond>();
 
@@ -154,7 +154,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             ASTRingIdentifier ringIdentifier = (ASTRingIdentifier) node.jjtGetChild(i);
             RingIdentifierAtom ringIdAtom = (RingIdentifierAtom) ringIdentifier.jjtAccept(this, atom);
 
-            // if there is already a RingIdentifierAtom, create a bond between 
+            // if there is already a RingIdentifierAtom, create a bond between
             // them and add the bond to the query
             int ringId = ringIdentifier.getRingId();
 
@@ -275,13 +275,13 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                                                                     ITetrahedralChirality.Stereo.CLOCKWISE)); // <- to be modified later
             }
         }
-        
+
         // for each double bond, find the stereo bonds. currently doesn't
         // handle logical bonds i.e. C/C-,=C/C
         for (IBond bond : doubleBonds) {
-            IAtom left  = bond.getAtom(0);    
+            IAtom left  = bond.getAtom(0);
             IAtom right = bond.getAtom(1);
-            StereoBond leftBond  = findStereoBond(left); 
+            StereoBond leftBond  = findStereoBond(left);
             StereoBond rightBond = findStereoBond(right);
             if (leftBond == null || rightBond == null)
                 continue;
@@ -292,15 +292,15 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                                                                      new IBond[]{leftBond, rightBond},
                                                                      conformation));
         }
-        
+
         return fullQuery;
     }
 
     /**
      * Locate a stereo bond adjacent to the {@code atom}.
-     * 
+     *
      * @param atom an atom
-     * @return a stereo bond or null if non found 
+     * @return a stereo bond or null if non found
      */
     private StereoBond findStereoBond(IAtom atom) {
         for (IBond bond : stereoBonds)
@@ -332,7 +332,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
             bond = null;
         }
         query.addAtom(atom);
-        
+
         if (tetrahedral.get(query.getAtomCount() - 1)) {
             List<IAtom> localNeighbors = new ArrayList<IAtom>(query.getConnectedAtomsList(atom));
             localNeighbors.add(atom);
@@ -355,7 +355,7 @@ public class SmartsQueryVisitor implements SMARTSParserVisitor {
                 bond.setAtoms(new IAtom[]{atom, newAtom});
                 query.addBond(bond);
                 query.addAtom(newAtom);
-                
+
                 if (neighbors.containsKey(atom)) {
                     neighbors.get(atom).add(newAtom);
                 }

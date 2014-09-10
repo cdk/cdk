@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.graph;
 
@@ -77,9 +77,9 @@ public class PathToolsTest extends CDKTestCase {
     	atomContainer.addAtom(atom1);
     	atomContainer.addAtom(atom2);
     	atomContainer.addBond(bond1);
-    	
+
     	PathTools.resetFlags(atomContainer);
-    	
+
     	// now assume that no VISITED is set
     	Iterator<IAtom> atoms = atomContainer.atoms().iterator();
     	while (atoms.hasNext()) {
@@ -90,7 +90,7 @@ public class PathToolsTest extends CDKTestCase {
     		Assert.assertNull(bonds.next().getProperty(CDKConstants.VISITED));
     	}
     }
-    
+
     @Test
     public void testGetShortestPath_IAtomContainer_IAtom_IAtom() throws Exception {
         IAtomContainer atomContainer = null;
@@ -125,12 +125,12 @@ public class PathToolsTest extends CDKTestCase {
     	IAtomContainer testMolecule = new AtomContainer();
     	reader.read(testMolecule);
 
-    	List<IAtom> path = PathTools.getShortestPath(testMolecule, 
+    	List<IAtom> path = PathTools.getShortestPath(testMolecule,
     		testMolecule.getAtom(0), testMolecule.getAtom(9)
     	);
     	Assert.assertEquals(10, path.size());
 
-    	path = PathTools.getShortestPath(testMolecule, 
+    	path = PathTools.getShortestPath(testMolecule,
     		testMolecule.getAtom(1), testMolecule.getAtom(9)
     	);
     	Assert.assertEquals(9, path.size());
@@ -197,7 +197,7 @@ public class PathToolsTest extends CDKTestCase {
     	start[0][1] = 3;
     	start[1][0] = 1;
     	start[1][1] = 2;
-    	
+
     	Assert.assertEquals(8, PathTools.getInt2DColumnSum(start)[0]);
     	Assert.assertEquals(3, PathTools.getInt2DColumnSum(start)[1]);
     }
@@ -233,11 +233,11 @@ public class PathToolsTest extends CDKTestCase {
     	start[2][1] = 1;
     	start[4][1] = 1;
     	start[4][3] = 1;
-    	
+
     	int[][] floydAPSP = PathTools.computeFloydAPSP(start);
     	Assert.assertEquals(5, floydAPSP.length);
     	Assert.assertEquals(5, floydAPSP[0].length);
-    	
+
     	Assert.assertEquals(1, floydAPSP[0][1]);
     	Assert.assertEquals(2, floydAPSP[0][2]);
     	Assert.assertEquals(3, floydAPSP[0][3]);
@@ -260,11 +260,11 @@ public class PathToolsTest extends CDKTestCase {
     	start[2][1] = 1.0;
     	start[4][1] = 2.0;
     	start[4][3] = 1.0;
-    	
+
     	int[][] floydAPSP = PathTools.computeFloydAPSP(start);
     	Assert.assertEquals(5, floydAPSP.length);
     	Assert.assertEquals(5, floydAPSP[0].length);
-    	
+
     	Assert.assertEquals(1, floydAPSP[0][1]);
     	Assert.assertEquals(2, floydAPSP[0][2]);
     	Assert.assertEquals(3, floydAPSP[0][3]);
@@ -276,7 +276,7 @@ public class PathToolsTest extends CDKTestCase {
     	Assert.assertEquals(2, floydAPSP[2][4]);
     	Assert.assertEquals(1, floydAPSP[3][4]);
     }
-    
+
     @Test
     public void testDepthFirstTargetSearch_IAtomContainer_IAtom_IAtom_IAtomContainer() throws Exception {
     	IAtomContainer molecule = sp.parseSmiles("C(COF)(Br)NC");
@@ -304,7 +304,7 @@ public class PathToolsTest extends CDKTestCase {
         Assert.assertEquals(3, paths.getAtomCount());
         Assert.assertEquals(target, paths.getAtom(2));
     }
-    
+
     @Test
     public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer() throws Exception {
         IAtomContainer atomContainer;
@@ -318,7 +318,7 @@ public class PathToolsTest extends CDKTestCase {
         PathTools.breadthFirstSearch(atomContainer, sphere, result);
         Assert.assertEquals(4, result.getAtomCount());
     }
-    
+
     @Test
     public void testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int() throws Exception {
         IAtomContainer atomContainer;

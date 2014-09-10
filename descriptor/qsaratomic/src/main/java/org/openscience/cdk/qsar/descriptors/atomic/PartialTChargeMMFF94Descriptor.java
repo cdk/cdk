@@ -32,7 +32,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 
 /**
  *  The calculation of total partial charges of an heavy atom is based on MMFF94 model.
- *  
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -68,7 +68,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
     /**
      *  Constructor for the PartialTChargeMMFF94Descriptor object
      */
-    public PartialTChargeMMFF94Descriptor() { 
+    public PartialTChargeMMFF94Descriptor() {
     	mmff = new MMFF94PartialCharges();
     }
 

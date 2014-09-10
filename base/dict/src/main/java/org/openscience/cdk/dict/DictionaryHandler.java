@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.dict;
 
@@ -23,7 +23,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Class for unmarshalling a dictionary schema file.
- * 
+ *
  * @cdk.module     dict
  * @cdk.githash
  */
@@ -37,7 +37,7 @@ public class DictionaryHandler extends DefaultHandler {
     private String currentChars;
 
     Dictionary dict;
-    
+
     public DictionaryHandler() {}
 
     public void doctypeDecl(String name, String publicId, String systemId)
@@ -57,7 +57,7 @@ public class DictionaryHandler extends DefaultHandler {
         }
     }
 
-    public void startElement(String uri, String local, 
+    public void startElement(String uri, String local,
                              String raw, Attributes atts) {
         currentChars = "";
         if ("entry".equals(local) && !"bibtex:entry".equals(raw) && !inEntry) {
@@ -70,14 +70,14 @@ public class DictionaryHandler extends DefaultHandler {
                     entry.setLabel(atts.getValue(i));
                 }
             }
-        } 
+        }
         if ("metadataList".equals(local) && !inMetadataList) {
             inMetadataList = true;
         }
 
         // if we're in a metadataList then look at individual
         // metadata nodes and check for any whose content refers
-        // to QSAR metadata and save that. Currently it does'nt 
+        // to QSAR metadata and save that. Currently it does'nt
         // differentiate between descriptorType or descriptorClass.
         // Do we need to differentiate?
         //
@@ -99,7 +99,7 @@ public class DictionaryHandler extends DefaultHandler {
             }
         }
     }
-    
+
 
     public void characters(char character[], int start, int length) {
         currentChars += new String(character, start, length);

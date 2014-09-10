@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -39,10 +39,10 @@ import java.util.ArrayList;
 
 /**
  * This mechanism extracts a single electron from a bonding orbital which located in
- * an bond. It could have single, double as triple order. It returns the 
- * reaction mechanism which has been cloned the IMolecule with a decrease 
+ * an bond. It could have single, double as triple order. It returns the
+ * reaction mechanism which has been cloned the IMolecule with a decrease
  * of the order of the bond and a ISingleElectron more.
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -51,7 +51,7 @@ import java.util.ArrayList;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.RemovingSEofBMechanismTest")
 public class RemovingSEofBMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -61,7 +61,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
      *                    The first atom receives the charge and the second the single electron
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -82,19 +82,19 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IMolecule!", e);
 		}
-		
+
 		IAtom atom1 = atomList.get(0);
 		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
 		IAtom atom2 = atomList.get(1);
 		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
 		IBond bond1 = bondList.get(0);
 		int posBond1 = molecule.getBondNumber(bond1);
-		
+
 		if(bond1.getOrder() == IBond.Order.SINGLE)
-			reactantCloned.removeBond(reactantCloned.getBond(posBond1));    
+			reactantCloned.removeBond(reactantCloned.getBond(posBond1));
         else
         	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
-		
+
 		int charge = atom1C.getFormalCharge();
 		atom1C.setFormalCharge(charge+1);
 		reactantCloned.addSingleElectron(atom1C.getBuilder().newInstance(ISingleElectron.class, atom2C));
@@ -108,10 +108,10 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
 		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
 		if (type == null || type.getAtomTypeName().equals("X"))return null;
-		
+
 		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
@@ -125,7 +125,7 @@ public class RemovingSEofBMechanism implements IReactionMechanism{
 				reaction.addProduct((IAtomContainer)moleculeSetP.getAtomContainer(z));
 			}
         }
-        
+
 		return reaction;
 	}
 

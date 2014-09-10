@@ -70,7 +70,7 @@ import java.util.List;
  * <p>
  * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
  * hydrogens</b>.
- * 
+ *
  * @author      ulif
  * @cdk.created 2005-22-07
  * @cdk.module  qsarmolecular
@@ -147,7 +147,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
      *  Calculates the number of H bond acceptors.
      *
      * @param  atomContainer             AtomContainer
-     * @return                   number of H bond acceptors     
+     * @return                   number of H bond acceptors
      */
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
@@ -177,7 +177,7 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     for (IAtom atom : ac.atoms()) {
         // looking for suitable nitrogen atoms
         if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
-            
+
             // excluding nitrogens that are adjacent to an oxygen
             List<IBond> bonds = ac.getConnectedBondsList(atom);
             int nPiBonds = 0;
@@ -187,12 +187,12 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
                 if (IBond.Order.DOUBLE.equals(bond.getOrder()))
                     nPiBonds++;
             }
-            
+
             // if the nitrogen is aromatic and there are no pi bonds then it's
             // lone pair cannot accept any hydrogen bonds
             if (atom.getFlag(CDKConstants.ISAROMATIC) && nPiBonds == 0)
                 continue;
-            
+
             hBondAcceptors++;
         }
         // looking for suitable oxygen atoms

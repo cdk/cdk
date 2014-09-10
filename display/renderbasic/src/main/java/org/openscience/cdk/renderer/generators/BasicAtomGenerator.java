@@ -44,7 +44,7 @@ import org.openscience.cdk.validate.ProblemMarker;
 
 /**
  * Generates basic {@link IRenderingElement}s for atoms in an atom container.
- *  
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -198,7 +198,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     private IGeneratorParameter<Boolean> showEndCarbons = new ShowEndCarbons();
 
     /**
-     * An empty constructor necessary for reflection. 
+     * An empty constructor necessary for reflection.
      */
     public BasicAtomGenerator() {}
 
@@ -214,13 +214,13 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Checks an atom to see if it has 2D coordinates.
-     * 
+     *
      * @param atom the atom to check
      * @return true if the atom is not null, and it has non-null coordinates
      */
     @TestMethod("hasCoordinatesTest")
     protected boolean hasCoordinates(IAtom atom) {
-        return atom != null && atom.getPoint2d() != null;   
+        return atom != null && atom.getPoint2d() != null;
     }
 
     /**
@@ -246,7 +246,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     /**
      * Checks an atom to see if it is an 'invisible hydrogen' - that is, it
      * is a) an (explicit) hydrogen, and b) explicit hydrogens are set to off.
-     * 
+     *
      * @param atom the atom to check
      * @param model the renderer model
      * @return true if this atom should not be shown
@@ -259,9 +259,9 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     /**
      * Checks an atom to see if it is an 'invisible carbon' - that is, it is:
      * a) a carbon atom and b) this carbon should not be shown.
-     * 
+     *
      * @param atom the atom to check
-     * @param atomContainer the atom container the atom is part of 
+     * @param atomContainer the atom container the atom is part of
      * @param model the renderer model
      * @return true if this atom should not be shown
      */
@@ -293,7 +293,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
             return false;
         }
 
-        // don't draw invisible carbons 
+        // don't draw invisible carbons
         if (invisibleCarbon(atom, container, model)) {
             return false;
         }
@@ -303,7 +303,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Generate the rendering element(s) for a particular atom.
-     * 
+     *
      * @param atomContainer the atom container that the atom is from
      * @param atom the atom to generate the rendering element for
      * @param model the renderer model
@@ -319,10 +319,10 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         } else {
             int alignment = 0;
             if (atom.getSymbol().equals("C")) {
-                alignment = 
+                alignment =
                   GeometryUtil.getBestAlignmentForLabel(atomContainer, atom);
             } else {
-                alignment = 
+                alignment =
                   GeometryUtil.getBestAlignmentForLabelXY(atomContainer, atom);
             }
 
@@ -333,7 +333,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
     /**
      * Generate a compact element for an atom, such as a circle or a square,
      * rather than text element.
-     *  
+     *
      * @param atom the atom to generate the compact element for
      * @param model the renderer model
      * @return a compact rendering element
@@ -357,7 +357,7 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Generate an atom symbol element.
-     * 
+     *
      * @param atom the atom to use
      * @param alignment the alignment of the atom's label
      * @param model the renderer model
@@ -383,11 +383,11 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
 
     /**
      * Checks a carbon atom to see if it should be shown.
-     * 
+     *
      * @param carbonAtom the carbon atom to check
      * @param container the atom container
      * @param model the renderer model
-     * @return true if the carbon should be shown 
+     * @return true if the carbon should be shown
      */
     @TestMethod("showCarbon_KekuleTest,showCarbon_FormalChargeTest," +
                 "showCarbon_SingleCarbonTest,showCarbon_ShowEndCarbonsTest," +
@@ -401,8 +401,8 @@ public class BasicAtomGenerator implements IGenerator<IAtomContainer> {
         if (carbonAtom.getFormalCharge() != 0)
             return true;
 
-        int connectedBondCount = container.getConnectedBondsList(carbonAtom).size(); 
-        
+        int connectedBondCount = container.getConnectedBondsList(carbonAtom).size();
+
         if (connectedBondCount < 1)
             return true;
 

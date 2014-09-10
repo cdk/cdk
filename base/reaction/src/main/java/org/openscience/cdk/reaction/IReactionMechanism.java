@@ -34,9 +34,9 @@ import java.util.ArrayList;
  * @cdk.githash
  */
 public interface IReactionMechanism {
-	
-    
-    /** 
+
+
+    /**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -45,8 +45,8 @@ public interface IReactionMechanism {
      * @param atomList    The list of atoms taking part in the mechanism
      * @param bondList    The list of bonds taking part in the mechanism
      * @return            The Reaction mechanism
-     * 
-     * @throws CDKException if an error occurs during the reaction process. 
+     *
+     * @throws CDKException if an error occurs during the reaction process.
      * See documentation for individual reaction processes
      */
     public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList) throws CDKException;

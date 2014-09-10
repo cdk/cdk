@@ -28,7 +28,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     Miguel Rojas
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,17 +40,17 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 
 	ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugPDBAtom.class);
-	
+
 	public DebugPDBAtom(IElement element) {
 		super(element);
 		logger.debug("Instantiated a DebugPDBAtom: element= ", element);
 	}
-	
+
 	public DebugPDBAtom(String symbol) {
 		super(symbol);
 		logger.debug("Instantiated a DebugPDBAtom: symbol= ", symbol);
 	}
-	
+
 	public DebugPDBAtom(String symbol, Point3d point3d) {
 		super(symbol, point3d);
 		logger.debug("Instantiated a DebugAtom: symbol= ", symbol + " point3d=" + point3d);
@@ -175,25 +175,25 @@ public class DebugPDBAtom extends PDBAtom implements IPDBAtom {
 		logger.debug("Getting Res Seq: ", super.getResSeq());
 		return super.getResSeq();
     }
-    
+
     /** {@inheritDoc} */ @Override
     public void setOxt(Boolean newOxt) {
 		logger.debug("Setting Oxt: ", newOxt);
 		super.setOxt(newOxt);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public Boolean getOxt() {
 		logger.debug("Getting Oxt: ", super.getOxt());
 		return super.getOxt();
     }
-    
+
     /** {@inheritDoc} */ @Override
     public void setHetAtom(Boolean newHetAtom) {
 		logger.debug("Setting Het Atom: ", newHetAtom);
 		super.setHetAtom(newHetAtom);
     }
-    
+
     /** {@inheritDoc} */ @Override
     public Boolean getHetAtom() {
 		logger.debug("Getting Het Atom: ", super.getHetAtom());

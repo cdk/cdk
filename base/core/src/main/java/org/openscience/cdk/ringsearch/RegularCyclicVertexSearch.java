@@ -248,7 +248,7 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
         }
         return result;
     }
-    
+
     /**
      * Build an indexed lookup of vertex color. The vertex color indicates which
      * cycle a given vertex belongs. If a vertex belongs to more then one cycle
@@ -268,8 +268,8 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
                 cycle >>= 1;
             }
             n++;
-        }          
-        
+        }
+
         return color;
     }
 
@@ -288,19 +288,19 @@ class RegularCyclicVertexSearch implements CyclicVertexSearch {
     @Override public boolean cyclic(int u, int v) {
 
         final int[] colors = vertexColor();
-        
+
         // if either vertex has no color then the edge can not
         // be cyclic
         if (colors[u] < 0 || colors[v] < 0)
             return false;
 
         // if the vertex color is 0 it is shared between
-        // two components (i.e. spiro-rings) we need to 
+        // two components (i.e. spiro-rings) we need to
         // check each component
         if (colors[u] == 0 || colors[v] == 0) {
             // either vertices are shared - need to do the expensive check
             for (final long cycle : cycles) {
-                if (isBitSet(cycle, u) && isBitSet(cycle, v)) {                    
+                if (isBitSet(cycle, u) && isBitSet(cycle, v)) {
                     return true;
                 }
             }

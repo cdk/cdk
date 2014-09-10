@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -48,30 +48,30 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * both a chemical property indicating stronger stabilisation and as a way to
  * treat different resonance forms as equivalent. Each has its own implications
  * the first in physicochemical attributes and the second in similarity,
- * depiction and storage. 
+ * depiction and storage.
  * <p/>
  * To address the resonance forms, several simplified (sometimes conflicting)
  * models have arisen. Generally the models <b>loosely</b> follow
  * <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a>
- * for determining aromaticity. A common omission being that planarity is not 
+ * for determining aromaticity. A common omission being that planarity is not
  * tested and chemical compounds which are non-planar can be perceived
  * as aromatic. An example of one such compound is, cyclodeca-1,3,5,7,9-pentaene.
- * <p/> 
+ * <p/>
  * Although there is not a single universally accepted model there are models
  * which may better suited for a specific use (<a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>).
  * The different models are often ill-defined or unpublished but it is important
  * to acknowledge that there are differences (see. <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>).
  * <p/>
- * Although models may get more complicated (e.g. considering tautomers) 
- * normally the reasons for differences are: 
- * <ul> 
+ * Although models may get more complicated (e.g. considering tautomers)
+ * normally the reasons for differences are:
+ * <ul>
  *     <li>the atoms allowed and how many electrons each contributes</li>
  *     <li>the rings/cycles are tested</li>
  * </ul>
  * <p/>
- * This implementation allows configuration of these via an {@link 
+ * This implementation allows configuration of these via an {@link
  * ElectronDonation} model and {@link CycleFinder}. To obtain an instance
- * of the electron donation model use one of the factory methods, 
+ * of the electron donation model use one of the factory methods,
  * {@link ElectronDonation#cdk()}, {@link ElectronDonation#cdkAllowingExocyclic()},
  * {@link ElectronDonation#daylight()} or {@link ElectronDonation#piBonds()}.
  *
@@ -94,8 +94,8 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @cdk.githash
  * @see <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's
  *      rule</a>
- * @see <a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>     
- * @see <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>     
+ * @see <a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>
+ * @see <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>
  */
 @TestClass("org.openscience.cdk.aromaticity.AromaticityTest")
 public final class Aromaticity {
@@ -185,20 +185,20 @@ public final class Aromaticity {
         final EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(molecule);
         final int[][]       graph   = GraphUtil.toAdjList(molecule, bondMap);
 
-        // initial ring/cycle search and get the contribution from each atom 
+        // initial ring/cycle search and get the contribution from each atom
         final RingSearch ringSearch = new RingSearch(molecule, graph);
         final int[]      electrons  = model.contribution(molecule, ringSearch);
 
         final Set<IBond> bonds = Sets.newHashSetWithExpectedSize(molecule.getBondCount());
 
-        // obtain the subset of electron contributions which are >= 0 (i.e. 
+        // obtain the subset of electron contributions which are >= 0 (i.e.
         // allowed to be aromatic) - we then find the cycles in this subgraph
         // and 'lift' the indices back to the original graph using the subset
         // as a lookup
         final int[]   subset   = subset(electrons);
         final int[][] subgraph = GraphUtil.subgraph(graph, subset);
-        
-        // for each cycle if the electron sum is valid add the bonds of the 
+
+        // for each cycle if the electron sum is valid add the bonds of the
         // cycle to the set or aromatic bonds
         for (final int[] cycle : cycles.find(molecule, subgraph, subgraph.length).paths()) {
             if (checkElectronSum(cycle, electrons, subset)) {
@@ -311,16 +311,16 @@ public final class Aromaticity {
      * and are allowed to be involved in an aromatic system.
      *
      * @param electrons electron contribution
-     * @return vertices which can be involved in an aromatic system 
+     * @return vertices which can be involved in an aromatic system
      */
     private static int[] subset(final int[] electrons) {
         int[] vs = new int[electrons.length];
         int   n  = 0;
-        
+
         for (int i = 0; i < electrons.length; i++)
             if (electrons[i] >= 0)
                 vs[n++] = i;
-        
+
         return Arrays.copyOf(vs, n);
     }
 
@@ -331,19 +331,19 @@ public final class Aromaticity {
     /**
      * Access an aromaticity instance that replicates the previously utilised -
      * CDKHueckelAromaticityDetector. It has the following configuration:
-     * 
+     *
      * <pre>{@code
      * new Aromaticity(ElectronDonation.cdk(),
      *                 Cycles.cdkAromaticSet());
      * }</pre>
-     * 
+     *
      * <p>
      * This model is not necessarily bad (or really considered legacy) but
      * should <b>not</b> be considered a gold standard model that covers all
-     * possible cases. It was however the primary method used in previous 
+     * possible cases. It was however the primary method used in previous
      * versions of the CDK (1.4).
      * </p>
-     * 
+     *
      * <p>
      * This factory method is provided for convenience for
      * those wishing to replicate aromaticity perception used in previous
@@ -351,14 +351,14 @@ public final class Aromaticity {
      * aromaticity of more cycles. For instance, the following configuration
      * will identify more bonds in a some structures as aromatic:
      * </p>
-     * 
+     *
      * <pre>{@code
      * new Aromaticity(ElectronDonation.cdk(),
      *                 Cycles.or(Cycles.all(), Cycles.relevant()));
      * }</pre>
-     * 
+     *
      * @return aromaticity instance that is configured to perform identically
-     *         to the primary aromaticity model in version 1.4. 
+     *         to the primary aromaticity model in version 1.4.
      */
     public static Aromaticity cdkLegacy() {
         return CDK_LEGACY;

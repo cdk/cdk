@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
@@ -182,13 +182,13 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
         }
         for(Iterator<IBond> itB = container.bonds().iterator(); itB.hasNext();){
             IBond bond = itB.next();
-            if(bond.getOrder() == IBond.Order.DOUBLE 
+            if(bond.getOrder() == IBond.Order.DOUBLE
             		& bond.getAtom(0).getSymbol().equals("C")
             		& bond.getAtom(1).getSymbol().equals("C")){
             	double value = IonizationPotentialTool.predictIP(container,bond);
                 if(value != 0)
             		dar.add(value);
-                
+
             }
         }
 
@@ -196,7 +196,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
 
         return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
                 getDescriptorNames(), null);
-   
+
     }
 
     /**
@@ -240,7 +240,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
-    
+
     /**
      *  Gets the parameterNames attribute of the IPMolecularLearningDescriptor object
      *
@@ -263,7 +263,7 @@ public class IPMolecularLearningDescriptor extends AbstractMolecularDescriptor i
     public Object getParameterType(String name) {
         return addlp;
     }
-    
-    
+
+
 }
 

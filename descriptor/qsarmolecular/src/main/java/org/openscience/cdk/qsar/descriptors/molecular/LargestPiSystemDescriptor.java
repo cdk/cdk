@@ -188,9 +188,9 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
             //logger.debug("atom:"+i+" maxBondOrder:"+container.getMaximumBondOrder(atoms[i])+" Aromatic:"+atoms[i].getFlag(CDKConstants.ISAROMATIC)+" FormalCharge:"+atoms[i].getFormalCharge()+" Charge:"+atoms[i].getCharge()+" Flag:"+atoms[i].getFlag(CDKConstants.VISITED));
             if ((container.getMaximumBondOrder(container.getAtom(i)) != IBond.Order.SINGLE ||
             	Math.abs(container.getAtom(i).getFormalCharge()) >= 1 ||
-            	container.getAtom(i).getFlag(CDKConstants.ISAROMATIC) || 
-            	container.getAtom(i).getSymbol().equals("N") || 
-            	container.getAtom(i).getSymbol().equals("O")) & 
+            	container.getAtom(i).getFlag(CDKConstants.ISAROMATIC) ||
+            	container.getAtom(i).getSymbol().equals("N") ||
+            	container.getAtom(i).getSymbol().equals("O")) &
             	!container.getAtom(i).getFlag(CDKConstants.VISITED))
             {
                 //logger.debug("...... -> Accepted");

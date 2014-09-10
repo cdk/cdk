@@ -1,17 +1,17 @@
 /* Copyright (C) 2008 Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,7 +40,7 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
     public OrderQueryBondOrderOnly(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
         super(atom1, atom2, order, builder);
     }
-    
+
 	public boolean matches(IBond bond) {
         if (this.getOrder() == bond.getOrder()) {
             // bond orders match
@@ -56,7 +56,7 @@ public class OrderQueryBondOrderOnly extends QueryBond implements IQueryBond {
             throw new IllegalArgumentException("Array is not of type QueryAtom[]");
         }
 	}
-    
+
 	public void setAtomAt(IAtom atom, int position) {
         if (atom instanceof IQueryAtom) {
             super.setAtom(atom, position);

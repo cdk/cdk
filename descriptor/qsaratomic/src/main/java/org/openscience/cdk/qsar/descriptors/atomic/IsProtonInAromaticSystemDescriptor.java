@@ -36,7 +36,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  *  This descriptor returns 1 if the protons is directly bonded to an aromatic system,
- *  it returns 2 if the distance between aromatic system and proton is 2 bonds, 
+ *  it returns 2 if the distance between aromatic system and proton is 2 bonds,
  *  and it return 0 for other positions. It is needed to use addExplicitHydrogensToSatisfyValency method.
  *
  * <p>This descriptor uses these parameters:
@@ -51,7 +51,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *     <td>false</td>
  *     <td>True is the aromaticity has to be checked</td>
  *   </tr>
- *   
+ *
  * </table>
  *
  * @author      mfe4

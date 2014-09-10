@@ -1,20 +1,20 @@
 /* Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools;
 
@@ -52,29 +52,29 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  *  from the class tools.HydrogenAdder.</p>
  * <p>It is based on rearrangements of electrons and charge</p>
  * <p>The method is based on call by reactions which occur in a resonance.</p>
- * 
+ *
  * <pre>
  * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
  * MoleculeSet setOf = srG.getResonances(new Molecule());
  * </pre>
- * 
+ *
  * <p>We have the possibility to localize the reactive center. Good method if you
  * want to localize the reaction in a fixed point</p>
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter as true</p>
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the possible reactive center.</p>
- *  
+ *
  * @author       Miguel Rojas
  * @cdk.created  2006-5-05
  * @cdk.module   reaction
  * @cdk.githash
- * 
+ *
  * @see org.openscience.cdk.reaction.IReactionProcess
  */
 @TestClass("org.openscience.cdk.tools.StructureResonanceGeneratorTest")
 public class StructureResonanceGenerator {
-	
+
 	private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(StructureResonanceGenerator.class);
 	private List<IReactionProcess> reactionsList = new ArrayList<IReactionProcess>();
@@ -83,32 +83,32 @@ public class StructureResonanceGenerator {
 	/** TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
 	private int maxStructures = 50;
 	/**
-	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
+	 * Construct an instance of StructureResonanceGenerator. Default restrictions
 	 * are initiated.
-	 * 
+	 *
 	 * @see #setDefaultReactions()
 	 */
 	public StructureResonanceGenerator(){
-		this(false);	
+		this(false);
 	}
 	/**
-	 * Construct an instance of StructureResonanceGenerator. Default restrictions 
+	 * Construct an instance of StructureResonanceGenerator. Default restrictions
 	 * are initiated.
-	 * 
-	 * @param lookingSymmetry  Specify if the resonance generation is based looking at the symmetry     
+	 *
+	 * @param lookingSymmetry  Specify if the resonance generation is based looking at the symmetry
 	 * @see #setDefaultReactions()
 	 */
 	public StructureResonanceGenerator(boolean lookingSymmetry){
         logger.info("Initiate StructureResonanceGenerator");
         this.lookingSymmetry = lookingSymmetry;
 		setDefaultReactions();
-		
+
 	}
 	/**
 	 * Set the reactions that must be used in the generation of the resonance.
-	 * 
+	 *
 	 * @param newReactionsList  The IReactionsProcess's to use
-	 * 
+	 *
 	 * @see #getReactions()
 	 * @see #setReactions(java.util.List)
 	 * @see IReactionProcess
@@ -119,9 +119,9 @@ public class StructureResonanceGenerator {
 	}
 	/**
 	 * Get the reactions that must be presents in the generation of the resonance.
-	 * 
+	 *
 	 * @return The reactions to be imposed
-	 * 
+	 *
 	 *
 	 * @see #setDefaultReactions()
 	 */
@@ -130,9 +130,9 @@ public class StructureResonanceGenerator {
 		return this.reactionsList;
 	}
 	/**
-	 * Set the number maximal of resonance structures to be found. The 
+	 * Set the number maximal of resonance structures to be found. The
 	 * algorithm breaks the process when is came to this number.
-	 * 
+	 *
 	 * @param maxStruct The maximal number
 	 */
 	@TestMethod("testSetMaximalStructures_int")
@@ -141,7 +141,7 @@ public class StructureResonanceGenerator {
 	}
 	/**
 	 * Get the number maximal of resonance structures to be found.
-	 * 
+	 *
 	 * @return The maximal number
 	 */
 	@TestMethod("testGetMaximalStructures")
@@ -156,7 +156,7 @@ public class StructureResonanceGenerator {
 	@TestMethod("testSetDefaultReactions")
 	public void setDefaultReactions(){
 		callDefaultReactions();
-		
+
 	}
 
 	private void callDefaultReactions() {
@@ -164,7 +164,7 @@ public class StructureResonanceGenerator {
 	    IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
-        
+
 		IReactionProcess type  = new SharingLonePairReaction();
         try {
 			type.setParameterList(paramList);
@@ -172,7 +172,7 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 		type  = new PiBondingMovementReaction();
 		List<IParameterReact> paramList2 = new ArrayList<IParameterReact>();
 	    IParameterReact param2 = new SetReactionCenter();
@@ -184,7 +184,7 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 		type  = new RearrangementAnionReaction();
 		try {
 			type.setParameterList(paramList);
@@ -192,7 +192,7 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 		type  = new RearrangementCationReaction();
 		try {
 			type.setParameterList(paramList);
@@ -200,7 +200,7 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 		type  = new RearrangementLonePairReaction();
 		try {
 			type.setParameterList(paramList);
@@ -208,7 +208,7 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 		type  = new RearrangementRadicalReaction();
 		try {
 			type.setParameterList(paramList);
@@ -216,11 +216,11 @@ public class StructureResonanceGenerator {
 			e.printStackTrace();
 		}
 		reactionsList.add(type);
-		
+
 	}
 	/**
 	 * <p>Get the resonance structures from an IMolecule. </p>
-	 * 
+	 *
 	 * @param molecule The IMolecule to analyze
 	 * @return         The different resonance structures
 	 */
@@ -229,7 +229,7 @@ public class StructureResonanceGenerator {
     	int countStructure = 0;
     	IAtomContainerSet setOfMol = molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		setOfMol.addAtomContainer(molecule);
-		
+
 		for(int i = 0 ; i < setOfMol.getAtomContainerCount() ; i++){
 			IAtomContainer mol = setOfMol.getAtomContainer(i);
             for (IReactionProcess aReactionsList : reactionsList) {
@@ -259,9 +259,9 @@ public class StructureResonanceGenerator {
 	}
 
 	/**
-	 * <p>Get the container which is found resonance from a IMolecule. 
+	 * <p>Get the container which is found resonance from a IMolecule.
 	 * It is based on looking if the order of the bond changes.</p>
-	 * 
+	 *
 	 * @param molecule The IMolecule to analyze
 	 * @return         The different containers
 	 */
@@ -269,7 +269,7 @@ public class StructureResonanceGenerator {
 	public IAtomContainerSet getContainers(IAtomContainer molecule) {
     	IAtomContainerSet setOfCont = molecule.getBuilder().newInstance(IAtomContainerSet.class);
 		IAtomContainerSet setOfMol = getStructures(molecule);
-		
+
 		if(setOfMol.getAtomContainerCount() == 0)
 			return setOfCont;
 
@@ -285,23 +285,23 @@ public class StructureResonanceGenerator {
 				}
 			}
 		}
-    	
+
     	if(bondList.size() == 0)
     		return null;
-    	
+
     	int[] flagBelonging = new int[bondList.size()];
     	for(int i = 0; i < flagBelonging.length; i++)
     		flagBelonging[i] = 0;
     	int[] position = new int[bondList.size()];
     	int maxGroup = 1;
-    	
+
     	/*Analysis if the bond are linked together*/
     	List<IBond> newBondList = new ArrayList<IBond>();
     	newBondList.add(bondList.get(0));
-    	
+
     	int pos = 0;
     	for(int i = 0 ; i < newBondList.size(); i ++){
-    	
+
     		if(i==0)
     			flagBelonging[i] = maxGroup;
     		else{
@@ -310,7 +310,7 @@ public class StructureResonanceGenerator {
     				flagBelonging[position[i]] = maxGroup;
     			}
     		}
-    		
+
     		IBond bondA = newBondList.get(i);
     		for(int ato = 0; ato < 2; ato++){
     	    	IAtom atomA1 = bondA.getAtom(ato);
@@ -325,8 +325,8 @@ public class StructureResonanceGenerator {
 	                			pos++;
 	                			newBondList.add(bondB);
 	                			position[pos] = k;
-	                				
-	                		}	
+
+	                		}
 	    		}
     		}
     		//if it is final size and not all are added
@@ -358,10 +358,10 @@ public class StructureResonanceGenerator {
 		return setOfCont;
 	}
     /**
-	 * <p>Get the container which the atom is found on resonance from a IMolecule. 
+	 * <p>Get the container which the atom is found on resonance from a IMolecule.
 	 * It is based on looking if the order of the bond changes. Return null
 	 * is any is found.</p>
-	 * 
+	 *
 	 * @param molecule The IMolecule to analyze
 	 * @param atom     The IAtom
 	 * @return         The container with the atom
@@ -376,14 +376,14 @@ public class StructureResonanceGenerator {
             if (container.contains(atom))
                 return container;
         }
-    	
+
     	return null;
 	}
     /**
-	 * <p>Get the container which the bond is found on resonance from a IMolecule. 
+	 * <p>Get the container which the bond is found on resonance from a IMolecule.
 	 * It is based on looking if the order of the bond changes. Return null
 	 * is any is found.</p>
-	 * 
+	 *
 	 * @param molecule The IMolecule to analyze
 	 * @param bond     The IBond
 	 * @return         The container with the bond
@@ -398,13 +398,13 @@ public class StructureResonanceGenerator {
             if (container.contains(bond))
                 return container;
         }
-    	
+
     	return null;
 	}
 	/**
 	 * Search if the setOfAtomContainer contains the atomContainer
-	 *  
-	 * 
+	 *
+	 *
 	 * @param set            ISetOfAtomContainer object where to search
 	 * @param atomContainer  IAtomContainer to search
 	 * @return   			 True, if the atomContainer is contained
@@ -421,11 +421,11 @@ public class StructureResonanceGenerator {
 		} catch (CloneNotSupportedException e1) {
 			e1.printStackTrace();
 		}
-    	
+
 		for(int i = 0 ; i < acClone.getAtomCount(); i++)
 //			if(acClone.getAtom(i).getID() == null)
 				acClone.getAtom(i).setID(""+acClone.getAtomNumber(acClone.getAtom(i)));
-			
+
 		if(lookingSymmetry){
 			try {
                 Aromaticity.cdkLegacy().apply(acClone);
@@ -443,9 +443,9 @@ public class StructureResonanceGenerator {
 			for(int j = 0 ; j < ss.getAtomCount(); j++)
 //				if(ss.getAtom(j).getID() == null)
 					ss.getAtom(j).setID(""+ss.getAtomNumber(ss.getAtom(j)));
-				
+
 			try {
-				
+
 				if(!lookingSymmetry ){
 					QueryAtomContainer qAC = QueryAtomContainerCreator.createSymbolChargeIDQueryContainer(acClone);
 					if(new UniversalIsomorphismTester().isIsomorph(ss,qAC)){
@@ -459,7 +459,7 @@ public class StructureResonanceGenerator {
 					if(new UniversalIsomorphismTester().isIsomorph(ss,qAC))
 						return true;
 				}
-				
+
 			} catch (CDKException e1) {
 				System.err.println(e1);
 				logger.error(e1.getMessage());

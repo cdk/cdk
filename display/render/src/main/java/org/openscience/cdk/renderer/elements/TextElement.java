@@ -34,13 +34,13 @@ public class TextElement implements IRenderingElement {
 
     /** The x coordinate where the text should be displayed. */
     public final double xCoord;
-    
+
     /** The y coordinate where the text should be displayed. */
     public final double yCoord;
-    
+
     /** The text to be displayed. */
     public final String text;
-    
+
     /** The color of the text. */
     public final Color color;
 

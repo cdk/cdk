@@ -9,9 +9,9 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 /**
  * This class defines a isotope container. It contains in principle a
  * IMolecularFormula, a mass and intensity/abundance value.
- * 
+ *
  * @author Miguel Rojas Cherto
- * 
+ *
  * @cdk.module  formula
  * @cdk.githash
  */
@@ -20,17 +20,17 @@ public class IsotopeContainer{
 	private IMolecularFormula form;
 	private double masOs;
 	private double inte;
-	
+
 	/**
 	 * Constructor of the IsotopeContainer object.
 	 */
 	public IsotopeContainer(){
-		
+
 	}
 	/**
 	 * Constructor of the IsotopeContainer object setting a IMolecularFormula
 	 * object and intensity value.
-	 * 
+	 *
 	 * @param formula        The formula of this container
 	 * @param intensity      The intensity of this container
 	 */
@@ -44,7 +44,7 @@ public class IsotopeContainer{
 	/**
 	 * Constructor of the IsotopeContainer object setting a mass
 	 *  and intensity value.
-	 * 
+	 *
 	 * @param mass           The mass of this container
 	 * @param intensity      The intensity of this container
 	 */
@@ -55,7 +55,7 @@ public class IsotopeContainer{
 	}
 	/**
 	 * Set IMolecularFormula object of this container.
-	 * 
+	 *
 	 * @param formula The IMolecularFormula of the this container
 	 */
 	@TestMethod("testSetFormula_IMolecularFormula")
@@ -64,17 +64,17 @@ public class IsotopeContainer{
 	}
 	/**
 	 * Set the mass value of this container.
-	 * 
+	 *
 	 * @param mass The mass of the this container
 	 */
 	@TestMethod("testSetMass_double")
 	public void setMass(double mass){
 		masOs = mass;
 	}
-	
+
 	/**
 	 * Set the intensity value of this container.
-	 * 
+	 *
 	 * @param intensity The intensity of the this container
 	 */
 	@TestMethod("testSetIntensity_double")
@@ -83,7 +83,7 @@ public class IsotopeContainer{
 	}
 	/**
 	 * Get the IMolecularFormula object of this container.
-	 * 
+	 *
 	 * @return The IMolecularformula of the this container
 	 */
 	@TestMethod("testGetFormula")
@@ -92,17 +92,17 @@ public class IsotopeContainer{
 	}
 	/**
 	 * Get the mass value of this container.
-	 * 
+	 *
 	 * @return The mass of the this container
 	 */
 	@TestMethod("testGetMass")
 	public double getMass(){
 		return masOs;
 	}
-	
+
 	/**
 	 * Get the intensity value of this container.
-	 * 
+	 *
 	 * @return The intensity of the this container
 	 */
 	@TestMethod("testGetIntensity")
@@ -110,7 +110,7 @@ public class IsotopeContainer{
 		return inte;
 	}
 	/**
-	 * Clones this IsotopeContainer object and its content. 
+	 * Clones this IsotopeContainer object and its content.
 	 *
 	 * @return    The cloned object
 	 */
@@ -122,5 +122,5 @@ public class IsotopeContainer{
 		isoClone.setMass(getMass());
 		return isoClone;
 	}
-   
+
 }

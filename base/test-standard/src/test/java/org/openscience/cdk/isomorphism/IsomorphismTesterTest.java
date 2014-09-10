@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.isomorphism;
 
@@ -58,9 +58,9 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_1.addAtom(new Atom("C")); // 6
 		pinene_1.addAtom(new Atom("C")); // 7
 		pinene_1.addAtom(new Atom("C")); // 8
-		pinene_1.addAtom(new Atom("C")); // 9 
+		pinene_1.addAtom(new Atom("C")); // 9
 		pinene_1.addAtom(new Atom("C")); // 10
-		
+
 		pinene_1.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		pinene_1.addBond(1, 2, IBond.Order.SINGLE); // 2
 		pinene_1.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -82,9 +82,9 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_2.addAtom(new Atom("C")); // 6
 		pinene_2.addAtom(new Atom("C")); // 7
 		pinene_2.addAtom(new Atom("C")); // 8
-		pinene_2.addAtom(new Atom("C")); // 9 
+		pinene_2.addAtom(new Atom("C")); // 9
 		pinene_2.addAtom(new Atom("C")); // 10
-		
+
 		pinene_2.addBond(0, 4, IBond.Order.SINGLE); // 1
 		pinene_2.addBond(0, 5, IBond.Order.SINGLE); // 2
 		pinene_2.addBond(0, 8, IBond.Order.SINGLE); // 3
@@ -96,7 +96,7 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_2.addBond(8, 7, IBond.Order.SINGLE); // 9
 		pinene_2.addBond(7, 9, IBond.Order.DOUBLE); // 10
 		pinene_2.addBond(7, 6, IBond.Order.SINGLE); // 11
-		
+
 		pinene_non = new AtomContainer();
 		pinene_non.addAtom(new Atom("C")); // 1
 		pinene_non.addAtom(new Atom("C")); // 2
@@ -106,9 +106,9 @@ public class IsomorphismTesterTest extends CDKTestCase
 		pinene_non.addAtom(new Atom("C")); // 6
 		pinene_non.addAtom(new Atom("C")); // 7
 		pinene_non.addAtom(new Atom("C")); // 8
-		pinene_non.addAtom(new Atom("C")); // 9 
+		pinene_non.addAtom(new Atom("C")); // 9
 		pinene_non.addAtom(new Atom("C")); // 10
-		
+
 		pinene_non.addBond(0, 5, IBond.Order.SINGLE); // 1
 		pinene_non.addBond(0, 7, IBond.Order.SINGLE); // 2
 		pinene_non.addBond(0, 8, IBond.Order.SINGLE); // 3
@@ -170,6 +170,6 @@ public class IsomorphismTesterTest extends CDKTestCase
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
 
 
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));      
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
     }
 }

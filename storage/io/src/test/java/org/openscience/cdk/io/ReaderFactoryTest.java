@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -59,7 +59,7 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 public class ReaderFactoryTest extends AbstractReaderFactoryTest {
 
     private ReaderFactory factory = new ReaderFactory();
-    
+
     @Test public void testCreateReader_IChemFormat() {
     	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
         ISimpleChemObjectReader reader = factory.createReader(format);
@@ -86,7 +86,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     @Test public void testShelX() throws Exception {
         expectReader("data/shelx/frame_1.res", ShelXFormat.getInstance(), -1, -1);
     }
-    
+
     @Test public void testMDLMol() throws Exception {
         expectReader("data/mdl/bug1014344-1.mol", MDLFormat.getInstance(), 21, 21);
     }
@@ -94,7 +94,7 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     @Test public void testMDLMolV2000() throws Exception {
         expectReader("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance(), 15, 15);
     }
-    
+
     @Test public void testDetection() throws Exception {
     	expectReader("data/mdl/withcharges.mol", MDLV2000Format.getInstance(), 9, 9);
     }
@@ -111,11 +111,11 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     @Test public void testMol2() throws Exception {
     	expectReader("data/mol2/fromWebsite.mol2", Mol2Format.getInstance(), -1, -1);
     }
-    
+
     @Test public void testCTX() throws Exception {
     	expectReader("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance(), -1, -1);
     }
-    
+
     @Test public void testPubChemCompoundASN() throws Exception {
         expectReader("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance(), -1, -1);
     }
@@ -123,11 +123,11 @@ public class ReaderFactoryTest extends AbstractReaderFactoryTest {
     @Test public void testPubChemSubstanceXML() throws Exception {
         expectReader("data/asn/pubchem/sid577309.xml", PubChemSubstanceXMLFormat.getInstance(), -1, -1);
     }
-    
+
     @Test public void testPubChemCompoundXML() throws Exception {
         expectReader("data/asn/pubchem/cid1145.xml", PubChemCompoundXMLFormat.getInstance(), -1, -1);
     }
-    
+
     @Test public void testSmiles() throws Exception {
     	InputStream is=this.getClass().getClassLoader().getResourceAsStream("data/smiles/drugs.smi");
         Object reader = factory.createReader( is );

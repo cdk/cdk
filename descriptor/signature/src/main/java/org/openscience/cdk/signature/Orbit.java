@@ -34,29 +34,29 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A list of atom indices, and the label of the orbit.
- * 
+ *
  * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.OrbitTest")
 public class Orbit implements Iterable<Integer>, Cloneable {
-    
+
     /**
      * The atom indices in this orbit
      */
     private List<Integer> atomIndices;
-    
+
     /**
      * The label that all the atoms in the orbit share
      */
     private String label;
-    
+
     /**
      * The maximum height of the signature string
      */
     private int height;
-    
+
     /**
      * @param label
      * @param height
@@ -66,13 +66,13 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         this.atomIndices = new ArrayList<Integer>();
         this.height = height;
     }
-    
+
     /** {@inheritDoc} */
     @TestMethod("iteratorTest")
     public Iterator<Integer> iterator() {
         return this.atomIndices.iterator();
     }
-    
+
     /** {@inheritDoc} */
     @TestMethod("testClone")
     public Object clone() {
@@ -82,7 +82,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         }
         return orbit;
     }
-    
+
     /**
      * Sorts the atom indices in this orbit.
      */
@@ -91,40 +91,40 @@ public class Orbit implements Iterable<Integer>, Cloneable {
         // TODO : change the list to a sorted set?
         Collections.sort(this.atomIndices);
     }
-    
+
     /**
      * Gets the height of the signature label.
-     * 
+     *
      * @return the height of the signature of this orbit
      */
     @TestMethod("getHeightTest")
     public int getHeight() {
         return this.height;
     }
-    
+
     /**
      * Gets all the atom indices as a list.
-     * 
+     *
      * @return the atom indices
      */
     @TestMethod("getAtomIndicesTest")
     public List<Integer> getAtomIndices() {
         return this.atomIndices;
     }
-    
+
     /**
      * Adds an atom index to the orbit.
-     * 
+     *
      * @param atomIndex the atom index
      */
     @TestMethod("addAtomTest")
     public void addAtom(int atomIndex) {
         this.atomIndices.add(atomIndex);
     }
-    
+
     /**
      * Checks to see if the orbit has this string as a label.
-     * 
+     *
      * @param otherLabel the label to compare with
      * @return true if it has this label
      */
@@ -132,10 +132,10 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     public boolean hasLabel(String otherLabel) {
         return this.label.equals(otherLabel);
     }
-    
+
     /**
      * Checks to see if the orbit is empty.
-     * 
+     *
      * @return true if there are no atom indices in the orbit
      */
     @TestMethod("isEmptyTest")
@@ -145,28 +145,28 @@ public class Orbit implements Iterable<Integer>, Cloneable {
 
     /**
      * Gets the first atom index of the orbit.
-     * 
+     *
      * @return the first atom index
      */
     @TestMethod("getFirstAtomTest")
     public int getFirstAtom() {
         return this.atomIndices.get(0);
     }
-    
+
     /**
      * Removes an atom index from the orbit.
-     * 
+     *
      * @param atomIndex the atom index to remove
      */
     @TestMethod("removeTest")
     public void remove(int atomIndex) {
         this.atomIndices.remove(this.atomIndices.indexOf(atomIndex));
     }
-    
+
 
     /**
      * Gets the label of the orbit.
-     * 
+     *
      * @return the orbit's string label
      */
     @TestMethod("getLabelTest")
@@ -176,7 +176,7 @@ public class Orbit implements Iterable<Integer>, Cloneable {
 
     /**
      * Checks to see if the orbit contains this atom index.
-     * 
+     *
      * @param atomIndex the atom index to look for
      * @return true if the orbit contains this atom index
      */
@@ -184,12 +184,12 @@ public class Orbit implements Iterable<Integer>, Cloneable {
     public boolean contains(int atomIndex) {
         return this.atomIndices.contains(atomIndex);
     }
-    
+
     /** {@inheritDoc} */
     @TestMethod("toStringTest")
     public String toString() {
         return label + " " +
-        Arrays.deepToString(atomIndices.toArray()); 
+        Arrays.deepToString(atomIndices.toArray());
     }
 
 }

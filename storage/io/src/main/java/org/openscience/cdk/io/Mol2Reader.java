@@ -1,5 +1,5 @@
 /* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
@@ -216,7 +216,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
 
         // reset it to false so that other read methods called later do not get confused
         firstLineisMolecule = false;
-        
+
         return chemFile;
     }
 
@@ -324,7 +324,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                         // replace unrecognised atom type
                         if (ATOM_TYPE_ALIASES.containsKey(atomTypeStr))
                             atomTypeStr = ATOM_TYPE_ALIASES.get(atomTypeStr);
-                        
+
                         IAtom atom = molecule.getBuilder().newInstance(IAtom.class, "X");
                         IAtomType atomType;
                         try {

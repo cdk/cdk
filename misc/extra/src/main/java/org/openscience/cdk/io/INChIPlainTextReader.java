@@ -45,12 +45,12 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 
 /**
- * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text 
+ * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text
  * document. This reader parses output generated with INChI 1.12beta like:
  * <pre>
- * 
+ *
  * Input_File: "E:\Program Files\INChI\inchi-samples\Figure04.mol"
- * 
+ *
  * Structure: 1
  * INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
  * AuxInfo=1.12Beta/0/N:1,2,3,4,5,6/E:(1,2,3,4,5,6)/rA:6CCCCCC/rB:s1;d1;d2;s3;s4d5;/rC:5.6378,-4.0013,0;5.6378,-5.3313,0;4.4859,-3.3363,0;4.4859,-5.9963,0;3.3341,-4.0013,0;3.3341,-5.3313,0;
@@ -89,16 +89,16 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     public INChIPlainTextReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public INChIPlainTextReader() {
         this(new StringReader(""));
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return INChIPlainTextFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) {
         if (input instanceof BufferedReader) {
@@ -169,12 +169,12 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     final String formula = tokenizer.nextToken(); // C6H6
                     final String connections = tokenizer.nextToken().substring(1); // 1-2-4-6-5-3-1
                     //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
-                    
+
                     IAtomContainer parsedContent = inchiTool.processFormula(
                     		cf.getBuilder().newInstance(IAtomContainer.class), formula
                     );
                     inchiTool.processConnections(connections, parsedContent, -1);
-                    
+
                     IAtomContainerSet moleculeSet = cf.getBuilder().newInstance(IAtomContainerSet.class);
                     moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class,parsedContent));
                     IChemModel model = cf.getBuilder().newInstance(IChemModel.class);

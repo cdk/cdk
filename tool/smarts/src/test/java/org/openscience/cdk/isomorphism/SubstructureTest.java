@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -80,7 +80,7 @@ public abstract class SubstructureTest {
     @Test public void disconnected() throws Exception {
         assertMatch(smi("C1CC1.C1CC1"), smi("C1CC1.C1CC1"), 72);
     }
-                                                      
+
     // original VF algorithm can't find both of these
     @Test public void disconnected2() throws Exception {
         assertMatch(smi("O.O"), smi("OO"), 2);
@@ -246,14 +246,14 @@ public abstract class SubstructureTest {
         assertMismatch(smi("F\\C=C/F"), smi("F/C=C/F"));
         assertMismatch(smi("F\\C=C/F"), smi("F\\C=C\\F"));
     }
-    
+
     @Test public void geometric_missing_in_query() throws Exception {
         assertMatch(smi("FC=CF"), smi("F/C=C/F"));
         assertMatch(smi("FC=CF"), smi("F\\C=C\\F"));
         assertMatch(smi("FC=CF"), smi("F\\C=C/F"));
         assertMatch(smi("FC=CF"), smi("F/C=C\\F"));
     }
-    
+
     @Test public void geometric_missing_in_target() throws Exception {
         assertMismatch(smi("F/C=C/F"), smi("FC=CF"));
         assertMismatch(smi("F/C=C\\F"), smi("FC=CF"));
@@ -310,7 +310,7 @@ public abstract class SubstructureTest {
                     smi("CCC(Br)(CC)C(=O)NC(=O)NC(C)=O"),
                     2);
     }
-    
+
     @Test public void upgradeHydrogen() throws Exception {
         assertMatch(smi("CC[C@@H](C)O"),
                     smi("CC[C@](C)([H])O"),
@@ -328,12 +328,12 @@ public abstract class SubstructureTest {
         assertMismatch(smi("CCCC"),
                        smi("CC"));
     }
-    
+
     @Test public void emptyQuery() throws Exception {
         assertMismatch(smi(""),
                        smi("[H][H]"));
     }
-    
+
     @Test public void emptyTarget() throws Exception {
         assertMismatch(smi("[H][H]"),
                        smi(""));
@@ -373,7 +373,7 @@ public abstract class SubstructureTest {
     }
 
     // create a query container from a smarts pattern
-    // Note: only use simple constructs! the target properties will not 
+    // Note: only use simple constructs! the target properties will not
     // currently be initialised. avoid aromaticity, rings etc.
     IAtomContainer sma(String sma) throws Exception {
         IAtomContainer container = SMARTSParser.parse(sma, SilentChemObjectBuilder.getInstance());

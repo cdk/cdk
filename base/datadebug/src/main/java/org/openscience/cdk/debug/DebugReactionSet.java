@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -41,7 +41,7 @@ public class DebugReactionSet extends ReactionSet
     implements IReactionSet {
 
     private static final long serialVersionUID = 1620489912540131959L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugReactionSet.class);
 
@@ -187,7 +187,7 @@ public class DebugReactionSet extends ReactionSet
 		logger.debug("Removing all reactions");
 		super.removeAllReactions();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeReaction(IReaction reaction){
 		logger.debug("Removing reaction "+reaction.getID());

@@ -109,8 +109,8 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		//MoleculeViewer2D.display(mol, true, false, JFrame.DO_NOTHING_ON_CLOSE,"");
 
 	}
-	
-	
+
+
 
 	/**
 	 *  A unit test for JUnit
@@ -124,7 +124,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 		//IAtomContainer mol = sp.parseSmiles("Oc1nc(nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
 		IAtomContainer mol = sp.parseSmiles("O=C(N1CCN(CC1)CCCN(C)C)C3(C=2C=CC(=CC=2)C)(CCCCC3)");
-		
+
 		//IAtomContainer mol = sp.parseSmiles("C1CCC1CCCCCCCC1CC1");
 
 		IAtomContainer ac = generateCoordinates(mol);
@@ -132,7 +132,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		assertTrue(GeometryUtil.has2DCoordinates(ac));
 	}
 
-	
+
 	/**
 	 *  A unit test for JUnit
 	 */
@@ -246,7 +246,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IAtomContainer ac = generateCoordinates(m);
 		assertTrue(GeometryUtil.has2DCoordinates(ac));
 	}
-	
+
 
 	/**
 	 *  A unit test for JUnit
@@ -289,7 +289,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		assertTrue(GeometryUtil.has2DCoordinates(ac));
 	}
 
-	
+
 	/**
 	 *  A unit test for JUnit
 	 */
@@ -309,7 +309,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IAtomContainer mol = sp.parseSmiles("CCC3C1CC23(CC12)");
 		return mol;
 	}
-	
+
 	/**
 	 *  A unit test for JUnit
 	 */
@@ -334,7 +334,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IAtomContainer ac = generateCoordinates(mol);
 		assertTrue(GeometryUtil.has2DCoordinates(ac));
 	}
-	
+
 	/**
 	 * @cdk.bug 1598409
 	 */
@@ -348,9 +348,9 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		Aromaticity.cdkLegacy().apply(cdkMol);
 		new StructureDiagramGenerator(cdkMol).generateCoordinates();
 	}
-	
 
-	
+
+
 	/**
 	 * @cdk.bug 1572062
 	 */
@@ -366,7 +366,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		IAtomContainer molecule = molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
 //		rebuild 2D coordinates
-		StructureDiagramGenerator structureDiagramGenerator = 
+		StructureDiagramGenerator structureDiagramGenerator =
 			new StructureDiagramGenerator();
 		for (int i = 0; i < 10; i++) {
 			structureDiagramGenerator.setMolecule(molecule);
@@ -374,7 +374,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		}
 
 	}
-	
+
 	/**
 	 * @cdk.bug 884993
 	 */
@@ -392,7 +392,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			if (!(exc.toString().indexOf("Molecule not connected")>= 0)) fail();
 		}
 	}
-	
+
 	/**
 	 * Test for bug #1677912 "SDG JUnit test hangs"
 	 * The SMILES parsing takes hence a longer timeout.
@@ -423,7 +423,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 				IAtomContainer cdkMol = parser.parseSmiles(problematicMol2AsSmiles);
 				new StructureDiagramGenerator(cdkMol).generateCoordinates();
 				assertTrue(GeometryUtil.has2DCoordinates(cdkMol));
-				
+
 				String problematicMol2 = "@<TRIPOS>MOLECULE\n"
 						+ "mol_197219.smi\n"
 						+ " 129 135 0 0 0\n"
@@ -720,7 +720,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -732,7 +732,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		return mol;
 	}
 
-	
+
 	IAtomContainer makeJhao1()
 	{
 		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -745,7 +745,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("O")); // 8
 		mol.addAtom(new Atom("C")); // 9
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 2
 		mol.addBond(0, 4, IBond.Order.SINGLE); // 3
@@ -773,7 +773,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("O")); // 8
 		mol.addAtom(new Atom("C")); // 9
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(0, 3, IBond.Order.SINGLE); // 2
 		mol.addBond(0, 4, IBond.Order.SINGLE); // 3
@@ -788,7 +788,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		mol.addBond(3, 8, IBond.Order.SINGLE); // 12
 		return mol;
 	}
-	
+
 	/**
 	 * @cdk.bug 1750968
 	 */
@@ -802,7 +802,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 //		read molecule
 		return molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 	}
-	
+
 	/**
 	 * Test for StructureDiagramGenerator bug #1772609 "NPE with bridged rings in SDG/RingPlacer".
 	 * In method RingPlacer.placeBridgedRing(...) it could happen, that not all atoms of an unplaced
@@ -828,7 +828,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		String filename = "data/mdl/bug1772609.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
-		
+
 		// read molecule
 		IAtomContainer molecule = (IAtomContainer) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
 
@@ -844,7 +844,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 			ex.printStackTrace();
 			fail("Test failed trying to layout bridged ring systems.");
 		}
-	} 
+	}
 
 	/**
 	 * Test for bug #1784850 "SDG hangs in infinite loop".
@@ -860,10 +860,10 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 		String filename = "data/mdl/bug1784850.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, Mode.STRICT);
-		
+
 		// read molecule
 		IAtomContainer molecule = molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
-		
+
 		// rebuild 2D coordinates
 		StructureDiagramGenerator structureDiagramGenerator = new StructureDiagramGenerator();
 		structureDiagramGenerator.setMolecule(molecule);
@@ -875,16 +875,16 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 	  /**
      * For the SMILES compound below (the largest molecule in Chembl) a
      * handful of atoms had invalid (NaN) Double coordinates.
-     * 
+     *
      * @throws Exception if the test failed
      * @cdk.bug 2842445
      */
   @Test (timeout=5000)
   public void testBug2843445NaNCoords() throws Exception {
-        
-        SmilesParser sp = 
+
+        SmilesParser sp =
             new SmilesParser(SilentChemObjectBuilder.getInstance());
-        String smiles = 
+        String smiles =
             "CCCC[C@H](NC(=O)[C@H](CCC(O)=O)NC(=O)[C@@H](NC(=O)[C@@H](CCCC)NC" +
             "(=O)[C@H](CC(N)=O)NC(=O)[C@H](CCC\\N=C(\\N)N)NC(=O)[C@H](CC(C)C)NC" +
             "(=O)[C@H](CC(C)C)NC(=O)[C@H](CC1=CNC=N1)NC(=O)[C@H](CC1=CC=CC=C1" +
@@ -905,7 +905,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
         sdg.setMolecule(mol);
         sdg.generateCoordinates(new Vector2d(0, 1));
         mol = sdg.getMolecule();
-        
+
         int invalidCoordCount=0;
         for (IAtom atom: mol.atoms()) {
             if (Double.isNaN(atom.getPoint2d().x) || Double.isNaN(atom.getPoint2d().y)) {
@@ -968,40 +968,40 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
   /**
    * Does the SDG handle non-connected molecules?
-   * 
+   *
    * @cdk.bug 1279
    */
   @Test (timeout=5000,expected=Exception.class)
   public void testBug1279() throws Exception {
-      
-      SmilesParser sp = 
+
+      SmilesParser sp =
           new SmilesParser(SilentChemObjectBuilder.getInstance());
-      String smiles = 
+      String smiles =
           "[NH4+].CP(=O)(O)CCC(N)C(=O)[O-]";
-        
+
       IAtomContainer mol = sp.parseSmiles(smiles);
 
       StructureDiagramGenerator sdg = new StructureDiagramGenerator();
       sdg.setMolecule(mol);
       sdg.generateCoordinates(new Vector2d(0, 1));
   }
-    
+
     @Test public void pyrroleWithIdentityTemplate() throws Exception {
 
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         String smiles = "C1=CNC=C1";
-        
+
         StructureDiagramGenerator generator = new StructureDiagramGenerator();
         generator.setUseIdentityTemplates(true);
         generator.setUseTemplates(false);
 
         IAtomContainer mol = sp.parseSmiles(smiles);
-        
+
         generator.setMolecule(mol, false);
         generator.generateCoordinates();
-        
+
         IAtom nitrogen = mol.getAtom(2);
-        
+
         // nitrogen is lowest point
         assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(0).getPoint2d().y));
         assertThat(nitrogen.getPoint2d().y, lessThan(mol.getAtom(1).getPoint2d().y));
@@ -1025,7 +1025,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
 
         double minY = Double.MAX_VALUE;
         int i = -1;
-        
+
         // note if the SDG changes the nitrogen might be at
         // the bottom by chance when generated ab initio
         for (int j = 0; j < mol.getAtomCount(); j++) {
@@ -1035,7 +1035,7 @@ public class StructureDiagramGeneratorTest extends CDKTestCase
                 i = j;
             }
         }
-                      
+
         // N is at index 2
         assertThat(i, not(2));
     }

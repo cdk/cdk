@@ -1128,7 +1128,7 @@ public class ShortestPathsTest {
         assertThat(paths.distanceTo(5), is(1));
 
     }
-    
+
     @Test public void testDistanceTo_Int_Benzene_limited() {
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
 
@@ -1139,7 +1139,7 @@ public class ShortestPathsTest {
         assertThat(paths.distanceTo(2), is(2));
         assertThat(paths.distanceTo(3), is(Integer.MAX_VALUE)); // dist > 2 (our limit)
         assertThat(paths.distanceTo(4), is(2));
-        assertThat(paths.distanceTo(5), is(1));    
+        assertThat(paths.distanceTo(5), is(1));
     }
 
     @Test

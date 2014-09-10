@@ -310,7 +310,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
             r = (IRing) rings.next();
             isAromatic = r.getFlag(CDKConstants.ISAROMATIC);
 
-            if (isAromatic) aromacount++;            
+            if (isAromatic) aromacount++;
         }
         Assert.assertEquals(1, aromacount);
     }
@@ -716,7 +716,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(aromaticForm);
         adder.addImplicitHydrogens(aromaticForm);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(aromaticForm);
-        
+
 
         boolean isAromatic = DoubleBondAcceptingAromaticityDetector.detectAromaticity(kekuleForm);
         Assert.assertTrue(isAromatic);
@@ -752,7 +752,7 @@ public class DoubleBondAcceptingAromaticityDetectorTest extends CDKTestCase {
         Assert.assertTrue(isAromatic);
 
         // all atoms are supposed to be aromatic
-        for (IAtom atom : aromaticForm.atoms()) {            
+        for (IAtom atom : aromaticForm.atoms()) {
             Assert.assertTrue(atom.toString()+" should be aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }
     }

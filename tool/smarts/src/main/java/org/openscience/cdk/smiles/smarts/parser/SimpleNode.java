@@ -95,9 +95,9 @@ class SimpleNode implements Node, Cloneable {
 		}
 		children[i] = n;
 	}
-	
-	
-	
+
+
+
 	public void jjtRemoveChild(int i) {
 		if (i >= children.length) return;
 		Node[] c = new Node[children.length - 1];

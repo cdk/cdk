@@ -39,7 +39,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
  * Returns the number of acidic groups. The list of acidic groups is defined
- * by these SMARTS "$([O;H1]-[C,S,P]=O)", "$([*;-;!$(*~[*;+])])", 
+ * by these SMARTS "$([O;H1]-[C,S,P]=O)", "$([*;-;!$(*~[*;+])])",
  * "$([NH](S(=O)=O)C(F)(F)F)", and "$(n1nnnc1)" originally presented in
  * JOELib {@cdk.cite WEGNER2006}.
  *

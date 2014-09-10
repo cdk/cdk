@@ -47,7 +47,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
 
     private Component frame = null;
     private Importance level = Importance.HIGH;
-    
+
     /**
      * 0 = ask no questions
      * 3 = ask all questions
@@ -56,14 +56,14 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
         this.level = level;
         this.frame = frame;
     }
-    
+
     public void setLevel(Importance level) {
         this.level = level;
     }
-        
+
     public void frameRead(ReaderEvent event) {
     }
-    
+
     /**
      * Processes the IOSettings by listing the question, giving the options
      * and asking the user to provide their choice.
@@ -75,7 +75,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
         // post the question
         if (setting.getLevel().ordinal() <= this.level.ordinal()) {
             String answer = setting.getSetting();
-            
+
             if (setting instanceof BooleanIOSetting) {
                 int n = JOptionPane.showConfirmDialog(frame,
                     setting.getQuestion(),
@@ -117,11 +117,11 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
             } catch (CDKException exception) {
             }
         } // else skip question
-        
+
     }
- 
-    
- 
+
+
+
 }
 
 

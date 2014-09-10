@@ -82,7 +82,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, MDL molfile
  * @cdk.keyword    file format, SDF
  *
- * @see        org.openscience.cdk.io.MDLV2000Reader 
+ * @see        org.openscience.cdk.io.MDLV2000Reader
  */
 @TestClass("org.openscience.cdk.io.MDLReaderTest")
 public class MDLReader extends DefaultChemObjectReader {
@@ -93,11 +93,11 @@ public class MDLReader extends DefaultChemObjectReader {
 
     private BooleanIOSetting forceReadAs3DCoords;
     private static final Pattern TRAILING_SPACE = Pattern.compile("\\s+$");
-    
+
     public MDLReader() {
         this(new StringReader(""));
     }
-    
+
 	/**
 	 *  Constructs a new MDLReader that can read Molecule from a given InputStream.
 	 *
@@ -106,7 +106,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	public MDLReader(InputStream in) {
 		this(in, Mode.RELAXED);
 	}
-		
+
 	public MDLReader(InputStream in, Mode mode) {
 		this(new InputStreamReader(in));
 		super.mode = mode;
@@ -204,7 +204,7 @@ public class MDLReader extends DefaultChemObjectReader {
 	 */
     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
-        
+
         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
 		IAtomContainerSet setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
 		IAtomContainer m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
@@ -213,7 +213,7 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
-        
+
         setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
         chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
 		String str;
@@ -221,21 +221,21 @@ public class MDLReader extends DefaultChemObjectReader {
             String line;
             while ((line = input.readLine()) != null) {
                 logger.debug("line: ", line);
-                // apparently, this is a SDF file, continue with 
+                // apparently, this is a SDF file, continue with
                 // reading mol files
 		str = line;
 		if (str.equals("$$$$")) {
 		    m = readMolecule(chemFile.getBuilder().newInstance(IAtomContainer.class));
-		    
+
 		    if (m != null) {
 			setOfMolecules.addAtomContainer(m);
-			
+
 			chemModel.setMoleculeSet(setOfMolecules);
 			chemSequence.addChemModel(chemModel);
-			
+
 			setOfMolecules = chemFile.getBuilder().newInstance(IAtomContainerSet.class);
 			chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-			
+
 		    }
 		} else {
 		    // here the stuff between 'M  END' and '$$$$'
@@ -244,7 +244,7 @@ public class MDLReader extends DefaultChemObjectReader {
 			String fieldName = null;
 			if (str.startsWith("> ")) {
 			    // ok, should extract the field name
-			    str.substring(2); // String content = 
+			    str.substring(2); // String content =
 			    int index = str.indexOf('<');
 			    if (index != -1) {
 				int index2 = str.substring(index).indexOf('>');
@@ -332,10 +332,10 @@ public class MDLReader extends DefaultChemObjectReader {
         //String help;
         IAtom atom;
         String line = "";
-        
+
         try {
         	IsotopeFactory isotopeFactory = Isotopes.getInstance();
-        	
+
             logger.info("Reading header");
             line = input.readLine(); linecount++;
             if (line == null) {
@@ -357,7 +357,7 @@ public class MDLReader extends DefaultChemObjectReader {
             if (line.length() > 0) {
                 molecule.setProperty(CDKConstants.REMARK, line);
             }
-            
+
             logger.info("Reading rest of file");
             line = input.readLine(); linecount++;
             logger.debug("Line " + linecount + ": " + line);
@@ -373,7 +373,7 @@ public class MDLReader extends DefaultChemObjectReader {
             logger.debug("Atomcount: " + atoms);
             bonds = Integer.valueOf(line.substring(3,6).trim()).intValue();
             logger.debug("Bondcount: " + bonds);
-            
+
             // read ATOM block
             logger.info("Reading atom block");
             for (int f = 0; f < atoms; f++) {
@@ -437,7 +437,7 @@ public class MDLReader extends DefaultChemObjectReader {
 
                 // store as 3D for now, convert to 2D (if totalZ == 0.0) later
                 atom.setPoint3d(new Point3d(x, y, z));
-                
+
                 // parse further fields
                 if(line.length() >= 36) {
                 String massDiffString = line.substring(34,36).trim();
@@ -458,8 +458,8 @@ public class MDLReader extends DefaultChemObjectReader {
                 } else {
                     handleError("Mass difference is missing", linecount, 34, 36);
                 }
-                
-                
+
+
                 if(line.length() >= 39){
                 String chargeCodeString = line.substring(36,39).trim();
                 logger.debug("Atom charge code: ", chargeCodeString);
@@ -483,7 +483,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 } else{
                     handleError("Atom charge count is empty", linecount, 35, 39);
                 }
-                
+
                 try {
                     // read the mmm field as position 61-63
                     String reactionAtomIDString = line.substring(60,63).trim();
@@ -501,7 +501,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     // older mol files don't have all these fields...
                     logger.warn("A few fields are missing. Older MDL MOL file?");
                 }
-                
+
                 //shk3: This reads shifts from after the molecule. I don't think this is an official format, but I saw it frequently 80=>78 for alk
                 if(line.length()>=78){
                 	double shift=Double.parseDouble(line.substring(69,80).trim());
@@ -511,10 +511,10 @@ public class MDLReader extends DefaultChemObjectReader {
                 	double shift=Double.parseDouble(line.substring(79,87).trim());
                 	atom.setProperty("second shift",new Double(shift));
                 }
-                
+
                 molecule.addAtom(atom);
             }
-            
+
             // convert to 2D, if totalZ == 0
             if (totalX == 0.0 && totalY == 0.0 && totalZ == 0.0) {
                 logger.info("All coordinates are 0.0");
@@ -531,7 +531,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     atomToUpdate.setPoint3d(null);
                 }
             }
-            
+
             // read BOND block
             logger.info("Reading bond block");
             for (int f = 0; f < bonds; f++) {
@@ -576,7 +576,7 @@ public class MDLReader extends DefaultChemObjectReader {
                     } else {
                         newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, cdkOrder);
                     }
-                } else if (order == 4) {                
+                } else if (order == 4) {
                     // aromatic bond
                     if (stereo != null) {
                         newBond = molecule.getBuilder().newInstance(IBond.class,a1, a2, IBond.Order.SINGLE, stereo);
@@ -590,7 +590,7 @@ public class MDLReader extends DefaultChemObjectReader {
                 }
                 molecule.addBond(newBond);
             }
-            
+
 		} catch (Exception exception) {
 			exception.printStackTrace();
             String error = "Error while parsing line " + linecount + ": " + line + " -> " + exception.getMessage();
@@ -600,18 +600,18 @@ public class MDLReader extends DefaultChemObjectReader {
 		}
 		return molecule;
 	}
-    
+
 	@TestMethod("testClose")
   public void close() throws IOException {
         input.close();
     }
-    
+
     private void initIOSettings() {
         forceReadAs3DCoords = addSetting(new BooleanIOSetting("ForceReadAs3DCoordinates", IOSetting.Importance.LOW,
-          "Should coordinates always be read as 3D?", 
+          "Should coordinates always be read as 3D?",
           "false"));
     }
-    
+
     public void customizeJob() {
         fireIOSettingQuestion(forceReadAs3DCoords);
     }

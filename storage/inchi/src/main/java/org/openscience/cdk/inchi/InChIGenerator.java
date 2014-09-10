@@ -267,10 +267,10 @@ public class InChIGenerator {
             // total number
             // Ref: Posting to cdk-devel list by Egon Willighagen 2005-09-17
             Integer implicitH = atom.getImplicitHydrogenCount();
-            
-            // set implicit hydrogen count, -1 tells the inchi to determine it 
+
+            // set implicit hydrogen count, -1 tells the inchi to determine it
             iatom.setImplicitH(implicitH != null ? implicitH : -1);
-            
+
             // Check if radical
             int count = atomContainer.getConnectedSingleElectronsCount(atom);
             if (count == 0) {
@@ -427,14 +427,14 @@ public class InChIGenerator {
                 );
                 input.addStereo0D(jniStereo);
         	} else if (stereoElem instanceof ExtendedTetrahedral) {
-                
-                
+
+
                 ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) stereoElem;
                 Stereo              winding             = extendedTetrahedral.winding();
-                
+
                 // The periphals (p<i>) and terminals (t<i>) are refering to
                 // the following atoms. The focus (f) is also shown.
-                //                
+                //
                 //   p0          p2
                 //    \          /
                 //     t0 = f = t1
@@ -442,17 +442,17 @@ public class InChIGenerator {
                 //   p1         p3
                 IAtom[] terminals   = extendedTetrahedral.findTerminalAtoms(atomContainer);
                 IAtom[] peripherals = extendedTetrahedral.peripherals();
-                
-                // InChI API is particualar about the input, each terminal atom 
+
+                // InChI API is particualar about the input, each terminal atom
                 // needs to be present in the list of neighbors and they must
                 // be at index 1 and 2 (i.e. in the middle). This is true even
                 // of explict atoms. For the implicit atoms, the terminals may
                 // be in the peripherals allready and so we correct the winding
                 // and reposition as needed.
-                
+
                 List<IBond> t0Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[0]));
                 List<IBond> t1Bonds = onlySingleBonded(atomContainer.getConnectedBondsList(terminals[1]));
-                
+
                 // first if there are two explicit atoms we need to replace one
                 // with the terminal atom - the configuration does not change
                 if (t0Bonds.size() == 2) {
@@ -468,12 +468,12 @@ public class InChIGenerator {
                         if (replace == peripherals[i])
                             peripherals[i] = terminals[1];
                 }
-                
-                // the neighbor attached to each terminal atom that we will 
+
+                // the neighbor attached to each terminal atom that we will
                 // define the configuration of
                 IAtom t0Neighbor = t0Bonds.get(0).getConnectedAtom(terminals[0]);
                 IAtom t1Neighbor = t1Bonds.get(0).getConnectedAtom(terminals[1]);
-                
+
                 // we now need to move all the atoms into the correct positions
                 // everytime we exchange atoms the configuration inverts
                 for (int i = 0; i < peripherals.length; i++) {
@@ -494,7 +494,7 @@ public class InChIGenerator {
                         winding = winding.invert();
                     }
                 }
-                
+
                 INCHI_PARITY parity = INCHI_PARITY.UNKNOWN;
                 if (winding == Stereo.ANTI_CLOCKWISE)
                     parity = INCHI_PARITY.ODD;
@@ -502,7 +502,7 @@ public class InChIGenerator {
                     parity = INCHI_PARITY.EVEN;
                 else
                     throw new CDKException("Unknown extended tetrahedral chirality");
-                
+
                 JniInchiStereo0D jniStereo = new JniInchiStereo0D(atomMap.get(extendedTetrahedral.focus()),
                                                                   atomMap.get(peripherals[0]),
                                                                   atomMap.get(peripherals[1]),
@@ -519,7 +519,7 @@ public class InChIGenerator {
             throw new CDKException("Failed to generate InChI: " + jie.getMessage(), jie);
         }
     }
-    
+
     private static List<IBond> onlySingleBonded(List<IBond> bonds) {
         List<IBond> filtered = new ArrayList<IBond>();
         for (IBond bond : bonds) {
@@ -528,11 +528,11 @@ public class InChIGenerator {
         }
         return filtered;
     }
-    
+
     private static void swap(Object[] objs, int i, int j) {
         final Object tmp = objs[i];
         objs[i] = objs[j];
-        objs[j] = tmp;    
+        objs[j] = tmp;
     }
 
     /**

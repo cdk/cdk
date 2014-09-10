@@ -40,8 +40,8 @@ import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
  * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.
  * Idea: read the test RGfiles into an object model, then writes the
  * same model out as an RGfile again without changing anything. Then
- * check that the original inputfile and the outputfile have the same content. 
- * 
+ * check that the original inputfile and the outputfile have the same content.
+ *
  * @cdk.module test-io
  * @author Mark Rijnbeek
  */
@@ -61,8 +61,8 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-	public void testRgroupQueryFile_1() throws Exception { 
-		String rgFile =recreate("data/mdl/rgfile.1.mol"); 
+	public void testRgroupQueryFile_1() throws Exception {
+		String rgFile =recreate("data/mdl/rgfile.1.mol");
 
 		Assert.assertEquals("AAL lines", 0, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
@@ -72,8 +72,8 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	}
 
 	@Test
-	public void testRgroupQueryFile_2() throws Exception { 
-		String rgFile =recreate("data/mdl/rgfile.2.mol"); 
+	public void testRgroupQueryFile_2() throws Exception {
+		String rgFile =recreate("data/mdl/rgfile.2.mol");
 
 		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
@@ -83,8 +83,8 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	}
 
 	@Test
-	public void testRgroupQueryFile_3() throws Exception { 
-		String rgFile =recreate("data/mdl/rgfile.3.mol"); 
+	public void testRgroupQueryFile_3() throws Exception {
+		String rgFile =recreate("data/mdl/rgfile.3.mol");
 		Assert.assertEquals("AAL lines", 2, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
 		Assert.assertEquals("APO lines", 2, countSubstring("APO",rgFile));
@@ -93,18 +93,18 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	}
 
 	@Test
-	public void testRgroupQueryFile_4() throws Exception { 
+	public void testRgroupQueryFile_4() throws Exception {
 		String rgFile =recreate("data/mdl/rgfile.4.mol");
 		Assert.assertEquals("AAL lines", 0, countSubstring("AAL",rgFile));
 		Assert.assertEquals("\\$CTAB lines", 3, countSubstring("\\$CTAB",rgFile));
 		// the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
-		Assert.assertEquals("APO lines", 0, countSubstring("APO",rgFile)); 
+		Assert.assertEquals("APO lines", 0, countSubstring("APO",rgFile));
 		Assert.assertEquals("Total #lines", 46, countSubstring("\n",rgFile));
 		Assert.assertTrue (rgFile.contains("M  RGP  1   6   1"));
 	}
 
 	@Test
-	public void testRgroupQueryFile_5() throws Exception { 
+	public void testRgroupQueryFile_5() throws Exception {
 		String rgFile =recreate("data/mdl/rgfile.5.mol");
 		Assert.assertEquals("LOG lines", 4, countSubstring("LOG",rgFile));
 		Assert.assertEquals("APO lines", 0, countSubstring("APO",rgFile));
@@ -113,7 +113,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	}
 
 	@Test
-	public void testRgroupQueryFile_6() throws Exception { 
+	public void testRgroupQueryFile_6() throws Exception {
 		String rgFile =recreate("data/mdl/rgfile.6.mol");
 		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
 		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
@@ -122,7 +122,7 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
 	}
 
 	@Test
-	public void testRgroupQueryFile_7() throws Exception { 
+	public void testRgroupQueryFile_7() throws Exception {
 		String rgFile =recreate("data/mdl/rgfile.7.mol");
 		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
 		Assert.assertEquals("APO lines", 2, countSubstring("APO",rgFile));

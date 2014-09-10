@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.interfaces;
 
@@ -42,7 +42,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         at.setAtomTypeName("C4");
         Assert.assertEquals("C4", at.getAtomTypeName());
     }
-    
+
     @Test public void testSetMaxBondOrder_IBond_Order() {
         IAtomType at = (IAtomType)newChemObject();
         at.setMaxBondOrder(IBond.Order.TRIPLE);
@@ -58,11 +58,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         at.setBondOrderSum(4.0);
         Assert.assertEquals(4.0, at.getBondOrderSum(), 0.001);
     }
-    
+
     @Test public void testGetBondOrderSum() {
         testSetBondOrderSum_Double();
     }
-    
+
     @Test public void testSetCovalentRadius_Double() {
         IAtomType at = (IAtomType)newChemObject();
         at.setCovalentRadius(1.0);
@@ -71,7 +71,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     @Test public void testGetCovalentRadius() {
         testSetCovalentRadius_Double();
     }
-    
+
     @Test public void testSetFormalCharge_Integer() {
         int charge = 1;
 
@@ -133,61 +133,61 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     	boolean acceptor=true;
     	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, acceptor);
-        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));    	
+        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
     }
     @Test public void testGetAcceptor(){
     	testSetAcceptor_boolean();
     }
-    
+
     @Test public void testSetDonor_boolean(){
     	boolean donor=true;
     	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.IS_HYDROGENBOND_DONOR, donor);
-        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));    	
+        Assert.assertTrue(a.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));
     }
     @Test public void testGetDonor(){
-    	testSetDonor_boolean();    	
+    	testSetDonor_boolean();
     }
-    
+
     @Test public void testSetChemicalGroupConstant_int(){
     	int benzol=6;
     	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, benzol);
-        Assert.assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());    	
-    }    
+        Assert.assertEquals(benzol,((Integer)a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT)).intValue());
+    }
     @Test public void testGetChemicalGroupConstant(){
     	testSetChemicalGroupConstant_int();
     }
-    
+
     @Test public void  testSetRingSize_int(){
     	int five=5;
     	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.PART_OF_RING_OF_SIZE, five);
-        Assert.assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());    	
-    }    
+        Assert.assertEquals(five,((Integer)a.getProperty(CDKConstants.PART_OF_RING_OF_SIZE)).intValue());
+    }
     @Test public void  testGetRingSize(){
     	 testSetRingSize_int();
     }
-    
+
     @Test public void testSetIsAromatic_boolean(){
     	IAtomType a = (IAtomType)newChemObject();
         a.setFlag(CDKConstants.ISAROMATIC, true);
         Assert.assertTrue(a.getFlag(CDKConstants.ISAROMATIC));
-    }    
+    }
     @Test public void  testGetIsAromatic(){
     	testSetIsAromatic_boolean();
     }
-    
+
     @Test public void testSetSphericalMatcher_String(){
     	String hoseCode="C-4;HHHC(;///***)";
     	IAtomType a = (IAtomType)newChemObject();
         a.setProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT, hoseCode);
-        Assert.assertEquals(hoseCode,a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));    	
-    }    
+        Assert.assertEquals(hoseCode,a.getProperty(CDKConstants.CHEMICAL_GROUP_CONSTANT));
+    }
     @Test public void testGetSphericalMatcher(){
     	testSetSphericalMatcher_String();
     }
-    
+
     /**
      * Test for bug #1309731.
      */
@@ -197,7 +197,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
     	a.setAtomTypeName("C.sp3");
     	Assert.assertEquals("carbon1", a.getID());
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -211,7 +211,7 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         Assert.assertNotNull(diff);
         Assert.assertEquals(0, diff.length());
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -219,11 +219,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setMaxBondOrder(IBond.Order.SINGLE);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setMaxBondOrder(IBond.Order.DOUBLE);
         Assert.assertEquals(IBond.Order.SINGLE, clone.getMaxBondOrder());
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -231,13 +231,13 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setBondOrderSum(1.0);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setBondOrderSum(2.0);
         Assert.assertEquals(1.0, clone.getBondOrderSum(), 0.001);
     }
 
-   
-    
+
+
     /**
      * Method to test the clone() method
      */
@@ -245,11 +245,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setCovalentRadius(1.0);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setCovalentRadius(2.0);
         Assert.assertEquals(1.0, clone.getCovalentRadius(), 0.001);
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -257,11 +257,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setFormalCharge(1);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setFormalCharge(2);
         Assert.assertEquals(1, clone.getFormalCharge().intValue());
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -269,11 +269,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setFormalNeighbourCount(1);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setFormalNeighbourCount(2);
         Assert.assertEquals(1, (int) clone.getFormalNeighbourCount());
     }
-    
+
     /**
      * Method to test the clone() method
      */
@@ -281,11 +281,11 @@ public abstract class AbstractAtomTypeTest extends AbstractIsotopeTest {
         IAtomType at = (IAtomType)newChemObject();
         at.setHybridization(Hybridization.PLANAR3);
         IAtomType clone = (IAtomType)at.clone();
-        
+
         at.setHybridization(Hybridization.SP1);
         Assert.assertEquals(Hybridization.PLANAR3, clone.getHybridization());
     }
-    
+
     /**
      * Method to test whether the class complies with RFC #9.
      */

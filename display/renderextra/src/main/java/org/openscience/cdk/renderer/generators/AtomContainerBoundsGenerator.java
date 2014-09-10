@@ -46,7 +46,7 @@ public class AtomContainerBoundsGenerator implements IGenerator<IAtomContainer> 
         double[] minMax = GeometryUtil.getMinMax(container);
         return new RectangleElement(minMax[0], minMax[1], minMax[2], minMax[3],
                 new Color(.7f, .7f, 1.0f));
-        
+
     }
 
 	/** {@inheritDoc} */

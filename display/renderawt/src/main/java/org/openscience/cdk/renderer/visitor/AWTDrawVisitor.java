@@ -76,7 +76,7 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasi
  */
 @TestClass("org.openscience.cdk.renderer.visitor.AWTDrawVisitorTest")
 public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
-	
+
     /**
      * The font manager cannot be set by the constructor as it needs to
      * be managed by the Renderer.
@@ -88,8 +88,8 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      * be managed by the Renderer.
      */
 	private RendererModel rendererModel;
-	
-	private final Map<Integer, BasicStroke> strokeMap = 
+
+	private final Map<Integer, BasicStroke> strokeMap =
 	    new HashMap<Integer, BasicStroke>();
 
 	/**
@@ -112,13 +112,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 		return strokeMap;
 	}
 
-	private final Map<TextAttribute, Object> map = 
+	private final Map<TextAttribute, Object> map =
         new Hashtable<TextAttribute, Object>();
-    
+
     private final float minStroke;
-    
+
     private final boolean strokeCache;
-	
+
 	private final Graphics2D graphics;
 
 	/**
@@ -130,7 +130,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 	public Graphics2D getGraphics() {
 		return graphics;
 	}
-	
+
 	/**
      * Constructs a new {@link IDrawVisitor} using the AWT widget toolkit,
      * taking a {@link Graphics2D} object to which the chemical content
@@ -145,7 +145,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     /**
      * Internal constructor.
-     * 
+     *
      * @param graphics the graphics instance
      * @param strokeCache cache strokes internally, only sizes at 0.25 increments are stored
      * @param minStroke the minimum stroke, strokes smaller than this are automatically resized
@@ -162,28 +162,28 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     /**
      * Create a draw visitor that will be rendering to a vector graphics output. This disables
-     * the minimum stroke size and stroke caching when drawing lines. 
-     * 
+     * the minimum stroke size and stroke caching when drawing lines.
+     *
      * @param g2 graphics environment
      * @return draw visitor
      */
     public static AWTDrawVisitor forVectorGraphics(Graphics2D g2) {
         return new AWTDrawVisitor(g2, false, Float.NEGATIVE_INFINITY);
     }
-	
+
     private void visit(ElementGroup elementGroup) {
         elementGroup.visitChildren(this);
     }
 
     private void visit(LineElement line) {
         Stroke savedStroke = this.graphics.getStroke();
-        
-        // scale the stroke by zoom + scale (both included in the AffineTransform) 
+
+        // scale the stroke by zoom + scale (both included in the AffineTransform)
         float width = (float) (line.width * transform.getScaleX());
         if (width < minStroke) width = minStroke;
 
         int key   = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
-        
+
         if (strokeCache && strokeMap.containsKey(key)) {
             this.graphics.setStroke(strokeMap.get(key));
         } else {
@@ -191,12 +191,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.setStroke(stroke);
             strokeMap.put(key, stroke);
         }
-        
+
         double[] coordinates = new double[]{
                 line.firstPointX, line.firstPointY,
                 line.secondPointX, line.secondPointY
         };
-        
+
         graphics.setColor(line.color);
         transform.transform(coordinates, 0, coordinates, 0, 2);
         graphics.draw(new Line2D.Double(coordinates[0], coordinates[1],
@@ -208,20 +208,20 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.setColor(oval.color);
         int radius = scaleX(oval.radius);
         int diameter = scaleX(oval.radius * 2);
- 
+
         if (oval.fill) {
         	this.graphics.fillOval(transformX(oval.xCoord) - radius,
                         transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
-        } else { 
+        } else {
         	this.graphics.drawOval(transformX(oval.xCoord) - radius,
                         transformY(oval.yCoord) - radius,
                         diameter,
                         diameter );
         }
     }
-    
+
     private int scaleX(double xCoord) {
         return (int) (xCoord*transform.getScaleX());
     }
@@ -229,15 +229,15 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private int scaleY(double yCoord) {
         return (int) (yCoord*-transform.getScaleY());
     }
-    
+
     private int transformX(double xCoord) {
         return (int) transform( xCoord, 1 )[0];
     }
- 
+
     private int transformY(double yCoord) {
         return (int) transform( 1, yCoord )[1];
     }
- 
+
     private double[] transform(double xCoord, double yCoord) {
         double [] result = new double[2];
         transform.transform( new double[] {xCoord,yCoord}, 0, result, 0, 1 );
@@ -247,7 +247,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     private Color getBackgroundColor() {
         if (rendererModel == null)
             return new BasicSceneGenerator.BackgroundColor().getDefault();
-        
+
         return rendererModel.getParameter(BasicSceneGenerator.BackgroundColor.class).getValue();
     }
 
@@ -263,16 +263,16 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.setColor(textElement.color);
         this.graphics.drawString(textElement.text, point.x, point.y);
     }
-    
+
     private void visit(WedgeLineElement wedge) {
         // make the vector normal to the wedge axis
-        Vector2d normal = 
+        Vector2d normal =
             new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
         normal.normalize();
         normal.scale(
-                rendererModel.getParameter(WedgeWidth.class).getValue() 
-                / rendererModel.getParameter(Scale.class).getValue());  
-        
+                rendererModel.getParameter(WedgeWidth.class).getValue()
+                / rendererModel.getParameter(Scale.class).getValue());
+
         // make the triangle corners
         Point2d vertexA = new Point2d(wedge.firstPointX, wedge.firstPointY);
         Point2d vertexB = new Point2d(wedge.secondPointX, wedge.secondPointY);
@@ -288,31 +288,31 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 			this.drawIndiffWedge(vertexA, vertexB, vertexC);
 		}
     }
-    
+
     private void drawFilledWedge(
             Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         int[] pointB = this.transformPoint(vertexB.x, vertexB.y);
         int[] pointC = this.transformPoint(vertexC.x, vertexC.y);
         int[] pointA = this.transformPoint(vertexA.x, vertexA.y);
-        
+
         int[] xCoords = new int[] { pointB[0], pointC[0], pointA[0] };
         int[] yCoords = new int[] { pointB[1], pointC[1], pointA[1] };
         this.graphics.fillPolygon(xCoords, yCoords, 3);
     }
-    
+
     private void drawDashedWedge(
             Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke
         Stroke storedStroke = this.graphics.getStroke();
         this.graphics.setStroke(new BasicStroke(1));
-        
+
         // calculate the distances between lines
         double distance = vertexB.distance(vertexA);
         double gapFactor = 0.1;
         double gap = distance * gapFactor;
         double numberOfDashes = distance / gap;
         double displacement = 0;
-        
+
         // draw by interpolating along the edges of the triangle
         for (int i = 0; i < numberOfDashes; i++) {
             Point2d point1 = new Point2d();
@@ -368,26 +368,26 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 		}
 		this.graphics.setStroke(storedStroke);
 	}
-    
+
     private void visit(AtomSymbolElement atomSymbol) {
         this.graphics.setFont(this.fontManager.getFont());
 
         double[] xy = {atomSymbol.xCoord, atomSymbol.yCoord};
 
         this.transformPoint(xy);
-        
+
         Rectangle2D bounds = getTextBounds(atomSymbol.text, graphics);
 
         double w = bounds.getWidth();
         double h = bounds.getHeight();
-        
+
         double xOffset = bounds.getX();
         double yOffset = bounds.getY() + bounds.getHeight();
-        
+
         bounds.setRect(xy[0] - (w/2),
                        xy[1] - (h/2),
                        w, h);
-        
+
         double padding = h / 4;
         Shape  shape   = new RoundRectangle2D.Double(bounds.getX() - (padding / 2),
                                                      bounds.getY() - (padding / 2),
@@ -402,7 +402,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.drawString(atomSymbol.text,
                                  (int) (bounds.getX() - xOffset),
                                  (int) (bounds.getY() + h - yOffset));
-        
+
         int offset = 10;    // XXX
         String chargeString;
         if (atomSymbol.formalCharge == 0) {
@@ -419,7 +419,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         } else {
             return;
         }
-       
+
         int xCoord = (int) bounds.getCenterX();
         int yCoord = (int) bounds.getCenterY();
         if (atomSymbol.alignment == 1) {           // RIGHT
@@ -435,9 +435,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.drawString(
                     chargeString, xCoord, yCoord + offset);
         }
-        
+
     }
-    
+
     private void visit(RectangleElement rectangle) {
         this.graphics.setColor(rectangle.color);
         int width  = scaleX(rectangle.width);
@@ -454,7 +454,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                                    height);
         }
     }
-    
+
     private void visit(PathElement path) {
         this.graphics.setColor(path.color);
         for (int i = 1; i < path.points.size(); i++) {
@@ -465,12 +465,12 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.drawLine(lineStart[0], lineStart[1], lineEnd[0], lineEnd[1]);
         }
     }
-    
+
     private void visit(GeneralPath path) {
         this.graphics.setColor(path.color);
         Path2D cpy = new Path2D.Double();
         cpy.append(getPathIterator(path, transform), false);
-        
+
         if (path.fill) {
             this.graphics.fill(cpy);
         } else {
@@ -554,22 +554,22 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     		int[] d = this.transformPoint(line.endX+aW, line.endY+aW);
     		graphics.drawLine(b[0], b[1], c[0], c[1]);
     		graphics.drawLine(b[0], b[1], d[0], d[1]);
-    	}        
+    	}
     	graphics.setStroke(savedStroke);
     }
 
     private void visit(TextGroupElement textGroup) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point = 
+        Point point =
             super.getTextBasePoint(
                     textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
-        Rectangle2D textBounds = 
+        Rectangle2D textBounds =
             this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
         this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textGroup.color);
         this.graphics.drawString(textGroup.text, point.x, point.y);
-        
+
         int xCoord = (int) textBounds.getCenterX();
         int yCoord = (int) textBounds.getCenterY();
         int xCoord1 = (int) textBounds.getMinX();
@@ -582,7 +582,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         for (TextGroupElement.Child child : textGroup.children) {
             int childx;
             int childy;
-            
+
             switch (child.position) {
                 case NE:
                     childx = xCoord2;
@@ -621,17 +621,17 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                     childy = yCoord;
                     break;
             }
-            
+
             this.graphics.drawString(child.text, childx, childy);
             if (child.subscript != null) {
                 Rectangle2D childBounds = getTextBounds(child.text, childx, childy, graphics);
                 int scx = (int)(childx + (childBounds.getWidth() * 0.75));
                 int scy = (int)(childy + (childBounds.getHeight() / 3));
                 Font font = this.graphics.getFont();   // TODO : move to font manager
-                Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2); 
+                Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2);
                 this.graphics.setFont(subscriptFont);
                 this.graphics.drawString(child.subscript, scx, scy);
-            } 
+            }
         }
     }
 
@@ -662,7 +662,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         else if (element instanceof ArrowElement)
             visit((ArrowElement) element);
         else if (element instanceof Bounds) {
-            // ignore  
+            // ignore
         } else
             System.err.println("Visitor method for "
                     + element.getClass().getName() + " is not implemented");

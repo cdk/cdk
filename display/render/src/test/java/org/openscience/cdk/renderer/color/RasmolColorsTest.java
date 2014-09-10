@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2009  Mark Rijnbeek <mark_rynbeek@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -33,15 +33,15 @@ import org.openscience.cdk.interfaces.IAtom;
  * @cdk.module test-render
  */
 public class RasmolColorsTest extends CDKTestCase {
-	
+
 	@Test public void testGetAtomColor() {
 		RasmolColors colors = new RasmolColors();
 
 		Assert.assertNotNull(colors);
-		IAtom sulfur = new Atom("S"); 
+		IAtom sulfur = new Atom("S");
 		Assert.assertEquals(new Color(255,200,50), colors.getAtomColor(sulfur));
 
-		IAtom helium = new Atom("He"); 
+		IAtom helium = new Atom("He");
 		Assert.assertEquals(new Color(255,192,203 ), colors.getAtomColor(helium));
 	}
 

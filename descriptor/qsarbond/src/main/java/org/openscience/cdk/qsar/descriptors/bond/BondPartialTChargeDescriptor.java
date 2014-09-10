@@ -40,8 +40,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *  The calculation of bond total Partial charge is calculated 
- *  determining the difference the Partial Total Charge on atoms 
+ *  The calculation of bond total Partial charge is calculated
+ *  determining the difference the Partial Total Charge on atoms
  *  A and B of a bond. Based in Gasteiger Charge.
  *  <p>This descriptor uses these parameters:
  * <table border="1">
@@ -73,7 +73,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 
     private GasteigerMarsiliPartialCharges peoe = null;
     private GasteigerPEPEPartialCharges pepe = null;
-    
+
 	/**Number of maximum iterations*/
 	private int maxIterations = -1;
     /**Number of maximum resonance structures*/
@@ -82,11 +82,11 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 	private boolean lpeChecker = true;
 
     private static final String[] descriptorNames = {"pCB"};
-    
+
     /**
      *  Constructor for the BondPartialTChargeDescriptor object.
      */
-    public BondPartialTChargeDescriptor() {  
+    public BondPartialTChargeDescriptor() {
         peoe = new GasteigerMarsiliPartialCharges();
     	pepe = new GasteigerPEPEPartialCharges();
     }
@@ -110,19 +110,19 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
      */
     @TestMethod(value="testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-    	if (params.length > 3) 
+    	if (params.length > 3)
             throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
-        
+
         if (!(params[0] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
 	        maxIterations = (Integer) params[0];
-	        
+
 	    if(params.length > 1 && params[1] != null){
         	if (!(params[1] instanceof Boolean) )
                 throw new CDKException("The parameter must be of type Boolean");
         	lpeChecker = (Boolean) params[1];
         }
-	    
+
 	    if(params.length > 2 && params[2] != null){
         	if (!(params[2] instanceof Integer) )
                 throw new CDKException("The parameter must be of type Integer");
@@ -195,7 +195,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
             if(maxIterations != -1) peoe.setMaxGasteigerIters(maxIterations);
         	if(maxIterations != -1)	pepe.setMaxGasteigerIters(maxIterations);
     		if(maxResonStruc != -1)	pepe.setMaxResoStruc(maxResonStruc);
-    		
+
 	        try {
 				peoe.assignGasteigerMarsiliSigmaPartialCharges(ac, true);
 				List<Double> peoeBond = new ArrayList<Double>();
@@ -204,7 +204,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
 					double result = Math.abs(bondi.getAtom(0).getCharge()-bondi.getAtom(1).getCharge());
 					peoeBond.add(result);
 				}
-				
+
 				for(Iterator<IAtom> it = ac.atoms().iterator(); it.hasNext();)
 					it.next().setCharge(0.0);
 
@@ -238,7 +238,7 @@ public class BondPartialTChargeDescriptor extends AbstractBondDescriptor {
                 getCachedDescriptorValue(bond), descriptorNames)
                 : null;
     }
-    
+
 	 /**
      * Gets the parameterNames attribute of the BondPartialTChargeDescriptor object.
      *

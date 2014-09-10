@@ -185,7 +185,7 @@ public class Convertor {
         serializeIsotopeFields(model, rdfObject, type);
         if (type.getHybridization() != null) {
             Hybridization hybrid = type.getHybridization();
-            if (HYBRID_TO_RESOURCE.containsKey(hybrid)) 
+            if (HYBRID_TO_RESOURCE.containsKey(hybrid))
                 model.add(rdfObject, CDK.HASHYBRIDIZATION, HYBRID_TO_RESOURCE.get(hybrid));
         }
         if (type.getAtomTypeName() != null) {

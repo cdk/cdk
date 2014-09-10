@@ -47,12 +47,12 @@ public class AromaticityCalculator
 {
 
 	/**
-	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the 
-     *  H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non 
-     *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in 
-     *  or anything else in a ring and d electron elements get to complicated) 
+	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the
+     *  H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non
+     *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in
+     *  or anything else in a ring and d electron elements get to complicated)
      *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
-     *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed 
+     *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed
      *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
 	 *
 	 * @param  ring      the ring to test
@@ -62,13 +62,13 @@ public class AromaticityCalculator
     @TestMethod("testIsAromatic_IRing_IAtomContainer")
     public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
 	{
-		
+
 		java.util.Iterator<IAtom> ringAtoms = ring.atoms().iterator();
 		int eCount = 0;
 		java.util.List<IBond> conectedBonds;
 		int numDoubleBond = 0;
 		boolean allConnectedBondsSingle;
-		
+
 		while (ringAtoms.hasNext())
 		{
 			IAtom atom = ringAtoms.next();
@@ -103,18 +103,18 @@ public class AromaticityCalculator
 			{
 				eCount++;
 			}
-			else if (allConnectedBondsSingle 
-					&& atom.getSymbol().equals("C") 
+			else if (allConnectedBondsSingle
+					&& atom.getSymbol().equals("C")
 					&& atom.getFormalCharge() == 1.0)
 			{
-				// This is for tropylium and kinds. 
+				// This is for tropylium and kinds.
 				// Dependence on hybridisation would be better:
 				// empty p-orbital is needed
 				continue;
 			}
 			else
 			{
-				return false;	
+				return false;
 			}
 		}
         return eCount - 2 != 0 && (eCount - 2) % 4 == 0;

@@ -45,7 +45,7 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.graph.BFSShortestPathTest")
 public final class BFSShortestPath {
-    
+
     private BFSShortestPath(  ) {} // ensure non-instantiability.
 
     @TestMethod("testFindPathBetween_Graph_Object_Object")
@@ -83,14 +83,14 @@ public final class BFSShortestPath {
 
         return path;
     }
-    
-    
+
+
 	private static class MyBreadthFirstIterator extends BreadthFirstIterator {
 
 		public MyBreadthFirstIterator(Graph g, Object startVertex) {
 			super(g, startVertex);
 		}
-		
+
 	    protected void encounterVertex( Object vertex, Edge edge ) {
 	        super.encounterVertex( vertex, edge );
 	        putSeenData( vertex, edge );
@@ -99,6 +99,6 @@ public final class BFSShortestPath {
 	    public Edge getSpanningTreeEdge( Object vertex ) {
 	        return (Edge) getSeenData( vertex );
 	    }
-		
+
 	}
 }

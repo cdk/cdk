@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -72,7 +72,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
             }
         }
 
-        return encoders.isEmpty() ? StereoEncoder.EMPTY 
+        return encoders.isEmpty() ? StereoEncoder.EMPTY
                                   : new MultiStereoEncoder(encoders);
     }
 
@@ -81,7 +81,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
      *
      * @param dbs          stereo element from an atom container
      * @param atomToIndex  map of atoms to indices
-     * @param graph        adjacency list of connected vertices                    
+     * @param graph        adjacency list of connected vertices
      * @return a new geometry encoder
      */
     private static GeometryEncoder encoder(IDoubleBondStereochemistry dbs,
@@ -95,34 +95,34 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         // we now need to expand our view of the environment - the vertex arrays
         // 'us' and 'vs' hold the neighbors of each end point of the double bond
         // ('u' or 'v'). The first neighbor is always the one stored in the
-        // stereo element. The second is the other non-double bonded vertex 
+        // stereo element. The second is the other non-double bonded vertex
         // which we must find from the neighbors list (findOther). If there is
-        // no additional atom attached (or perhaps it is an implicit Hydrogen) 
-        // we use either double bond end point.  
+        // no additional atom attached (or perhaps it is an implicit Hydrogen)
+        // we use either double bond end point.
         IBond[] bs = dbs.getBonds();
-        int[] us = new int[2];        
+        int[] us = new int[2];
         int[] vs = new int[2];
-                
+
         us[0] = atomToIndex.get(bs[0].getConnectedAtom(db.getAtom(0)));
         us[1] = graph[u].length == 2 ? u : findOther(graph[u], v, us[0]);
-        
+
         vs[0] = atomToIndex.get(bs[1].getConnectedAtom(db.getAtom(1)));
         vs[1] = graph[v].length == 2 ? v : findOther(graph[v], u, vs[0]);
-        
+
         int parity = dbs.getStereo() == OPPOSITE ? +1 : -1;
-        
+
         GeometricParity   geomParity = GeometricParity.valueOf(parity);
-        
+
         // the permutation parity is combined - but note we only use this if we
         // haven't used 'u' or 'v' as place holders (i.e. implicit hydrogens)
         // otherwise there is only '1' and the parity is just '1' (identity)
-        PermutationParity permParity = new CombinedPermutationParity(us[1] == u ? BasicPermutationParity.IDENTITY 
+        PermutationParity permParity = new CombinedPermutationParity(us[1] == u ? BasicPermutationParity.IDENTITY
                                                                                 : new BasicPermutationParity(us),
-                                                                     vs[1] == v ? BasicPermutationParity.IDENTITY 
+                                                                     vs[1] == v ? BasicPermutationParity.IDENTITY
                                                                                 : new BasicPermutationParity(vs));
         return new GeometryEncoder(new int[]{u, v},
                                    permParity,
-                                   geomParity);                
+                                   geomParity);
     }
 
     /**
@@ -138,7 +138,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
             if (v != u && v != x)
                 return v;
         }
-        throw new IllegalArgumentException("vs[] did not contain another vertex");    
+        throw new IllegalArgumentException("vs[] did not contain another vertex");
     }
 
     /**

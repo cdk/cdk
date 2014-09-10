@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -48,17 +48,17 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 public class DictionaryDatabase {
 
     public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
-    
+
     private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DictionaryDatabase.class);
-    
+
     private String[] dictionaryNames = {
         "chemical", "elements", "descriptor-algorithms","reaction-processes"
     };
     private String[] dictionaryTypes = {
         "xml", "owl", "owl", "owl_React"
     };
-    
+
     private Map<String, Dictionary> dictionaries;
 
     @TestMethod("testDictionaryDatabase")
@@ -139,7 +139,7 @@ public class DictionaryDatabase {
     public Dictionary getDictionary(String dictionaryName) {
     	return dictionaries.get(dictionaryName);
     }
-    
+
     /**
      * Returns a String[] with the id's of all entries in the specified database.
      * @return The entry names for the specified dictionary
@@ -154,7 +154,7 @@ public class DictionaryDatabase {
             // FIXME: dummy method that needs an implementation
             Entry[] entries = dictionary.getEntries();
             String[] entryNames = new String[entries.length];
-            logger.info("Found ", "" + entryNames.length, " entries in dictionary ", 
+            logger.info("Found ", "" + entryNames.length, " entries in dictionary ",
               dictionaryName);
             for (int i=0; i<entries.length; i++) {
                 entryNames[i] = entries[i].getLabel();
@@ -167,7 +167,7 @@ public class DictionaryDatabase {
         Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
         return dictionary.getEntries();
     }
-    
+
     /**
      * Returns true if the database contains the dictionary.
      */
@@ -175,7 +175,7 @@ public class DictionaryDatabase {
     public boolean hasDictionary(String name) {
         return dictionaries.containsKey(name.toLowerCase());
     }
-    
+
     /**
      * Returns true if the database contains the dictionary.
      */
@@ -183,7 +183,7 @@ public class DictionaryDatabase {
     public Iterator<String> listDictionaries() {
         return dictionaries.keySet().iterator();
     }
-    
+
     /**
      * Returns true if the given dictionary contains the given
      * entry.
@@ -196,5 +196,5 @@ public class DictionaryDatabase {
             return false;
         }
     }
-    
+
 }

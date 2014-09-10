@@ -64,7 +64,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * The best way to get a feel for the way the RGroup objects are populated is to
  * run the RGroupQueryReaderTest and look at the sample
  * input RGroup query files contained in the CDK and how they translate into
- * RGroupXX objects. The JChempaint application can visualize the input files for you. 
+ * RGroupXX objects. The JChempaint application can visualize the input files for you.
  *
  * @cdk.module  isomorphism
  * @cdk.githash
@@ -179,7 +179,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 			rootLoop:
     		for (IAtom rootAtom : this.getRootStructure().atoms()) {
 				if (rootAtom instanceof IPseudoAtom && rootAtom.getSymbol().startsWith("R")) {
-	    			IPseudoAtom pseudo = (IPseudoAtom) rootAtom; 
+	    			IPseudoAtom pseudo = (IPseudoAtom) rootAtom;
 	    			if(pseudo.getLabel().length()>1) {
 	    				int rootAtomRgrpNumber = Integer.valueOf(pseudo.getLabel().substring(1));
 	    				if (rootAtomRgrpNumber==rgpNum) {
@@ -195,7 +195,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
 		}
     	return true;
     }
-    
+
 
     public List<IAtomContainer> getAllConfigurations() throws CDKException {
 
@@ -286,7 +286,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (RGroup substitute : mapped) {
                     IAtom rAtom = this.getRgroupQueryAtoms(rNum).get(pos);
                     if (substitute !=null) {
-                    	
+
                         IAtomContainer rgrpClone = null;
                         try {
                             rgrpClone = (IAtomContainer)(substitute.getGroup().clone());
@@ -408,8 +408,8 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
                 for (Integer[] distribution : rgrpDistributions) {
                     distributions.set(level, distribution);
 
-                    
-                    RGroup[] mapping = new RGroup[distribution.length]; 
+
+                    RGroup[] mapping = new RGroup[distribution.length];
                     List<List<RGroup>> mappedSubstitutes = new ArrayList<List<RGroup>>();
                     mapSubstitutes(this.getRGroupDefinitions().get(rGroupNumbers.get(level)),0, distribution, mapping, mappedSubstitutes);
 
@@ -454,7 +454,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
         }
     }
 
-    
+
     /**
      * Maps the distribution of an R-group to all possible substitute combinations.
      * This is best illustrated by an example.<br>
@@ -464,13 +464,13 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
      * solutions: [0,1], [1,0], [1,1]   <br>
      * To start with [1,1], assume two possible substitutes have been
      * defined for R2, namely *C=O and *C-N. Then the distribution [1,1]
-     * should lead to four mappings:   <br>  
-     * [*C=O,*C=O], [*C-N,*C-N], [*C=O,*C-N], [*C-N,*C=O].    <br> 
-     * These mappings are generated in this function, as well as the other valid mappings 
+     * should lead to four mappings:   <br>
+     * [*C=O,*C=O], [*C-N,*C-N], [*C=O,*C-N], [*C-N,*C=O].    <br>
+     * These mappings are generated in this function, as well as the other valid mappings
      * for [0,1] and [1,0]: <br>
      * [*C=O,null], [*C-N,null], [null,*C=O], [null,*C-N].   <br>
      * So the example would have this function produce eight mappings (result list size==8).
-     * 
+     *
      * @param rgpList
      * @param listOffset
      * @param distribution
@@ -480,7 +480,7 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     private void mapSubstitutes(RGroupList rgpList, int listOffset, Integer[] distribution, RGroup[] mapping, List<List<RGroup>> result) {
     	if(listOffset==distribution.length) {
     		List<RGroup> mapped= new ArrayList<RGroup>();
-    		for(RGroup rgrp : mapping) 
+    		for(RGroup rgrp : mapping)
     			mapped.add(rgrp);
     		result.add(mapped);
     	}
@@ -497,8 +497,8 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     		}
     	}
     }
-    
-    
+
+
     /**
      * Helper method, used to help construct a configuration.
      * @param atom
@@ -589,19 +589,19 @@ public class RGroupQuery extends QueryChemObject implements IChemObject, Seriali
     	return retVal;
     }
 
-    
+
     public List<IAtomContainer> getSubstituents() {
     	List<IAtomContainer> substitutes = new ArrayList<IAtomContainer>();
     	for(Integer r : rGroupDefinitions.keySet()) {
      		for (RGroup rgrp : rGroupDefinitions.get(r).getRGroups()) {
-     			IAtomContainer subst =rgrp.getGroup(); 
+     			IAtomContainer subst =rgrp.getGroup();
     			if (subst!=null)
     				substitutes.add(subst);
     		}
     	}
     	return substitutes;
     }
-    
+
     public void setRootStructure(IAtomContainer rootStructure) {
         this.rootStructure = rootStructure;
     }

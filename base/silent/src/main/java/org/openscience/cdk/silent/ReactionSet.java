@@ -1,20 +1,20 @@
 /* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.silent;
 
@@ -27,7 +27,7 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.interfaces.IReactionSet;
 
-/** 
+/**
  * A set of reactions, for example those taking part in a reaction.
  *
  * To retrieve the reactions from the set, there are two options:
@@ -69,7 +69,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	 *  Array of Reactions.
 	 */
 	private IReaction[] reactions;
-	
+
 	/**
 	 *  Number of Reactions contained by this container.
 	 */
@@ -77,7 +77,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 
 	/**
 	 *  Amount by which the Reactions array grows when elements are added and
-	 *  the array is not large enough for that. 
+	 *  the array is not large enough for that.
 	 */
 	private int growArraySize = 5;
 
@@ -91,11 +91,11 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 	}
 
 
-	
+
 	/**
 	 *  Adds an reaction to this container.
 	 *
-	 * @param  reaction  The reaction to be added to this container 
+	 * @param  reaction  The reaction to be added to this container
 	 */
 	public void addReaction(IReaction reaction) {
 		if (reactionCount + 1 >= reactions.length) growReactionArray();
@@ -115,10 +115,10 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		reactions[reactionCount - 1] = null;
 		reactionCount--;
 	}
-	
-    
+
+
     /**
-	 *  
+	 *
 	 * Returns the Reaction at position <code>number</code> in the
 	 * container.
 	 *
@@ -128,11 +128,11 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     public IReaction getReaction(int number) {
         return (IReaction)reactions[number];
     }
-    
+
 
     /**
      * Get an iterator for this reaction set.
-     * 
+     *
      * @return A new Iterator for this ReactionSet.
      */
     public Iterable<IReaction> reactions() {
@@ -142,7 +142,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         	}
         };
     }
-    
+
     /**
      * The inner Iterator class.
      *
@@ -150,7 +150,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
     private class ReactionIterator implements Iterator<IReaction> {
 
         private int pointer = 0;
-    	
+
         public boolean hasNext() {
             if (pointer < reactionCount) return true;
 	    return false;
@@ -163,9 +163,9 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
         public void remove() {
             removeReaction(--pointer);
         }
-    	
+
     }
-    
+
 	/**
 	 *  Grows the reaction array by a given size.
 	 *
@@ -177,7 +177,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		System.arraycopy(reactions, 0, newreactions, 0, reactions.length);
 		reactions = newreactions;
 	}
-	
+
 
 	/**
 	 * Returns the number of Reactions in this Container.
@@ -227,7 +227,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 		}
 		this.reactionCount = 0;
 	}
-	
+
 	public void stateChanged(IChemObjectChangeEvent event) {
 		notifyChanged(event);
 	}
@@ -238,7 +238,7 @@ public class ReactionSet extends ChemObject implements Serializable, IReactionSe
 				removeReaction(i);
 		}
 	}
-	
+
     /**
      * @inheritDoc
      */

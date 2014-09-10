@@ -1,20 +1,20 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.config.atomtypes;
 
@@ -35,7 +35,7 @@ import java.util.List;
  * @cdk.module test-core
  */
 public class AtomTypeReaderTest extends CDKTestCase {
-     
+
 
     @Test
     public void testAtomTypeReader_Reader() {
@@ -72,7 +72,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
 
     @Test
     public void testReadAtomTypes2() {
-        String data = 
+        String data =
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              " +
             "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    " +
             "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"" +
@@ -87,7 +87,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp2</scalar>               " +
             "  </atomType>                                                                                " +
             "</atomTypeList>";
-        
+
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(data)
         );
@@ -99,7 +99,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
 
     @Test
   public void testReadAtomTypes_CDK() {
-      String data = 
+      String data =
           "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
           "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n" +
           "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n" +
@@ -114,7 +114,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
           "    <scalar dataType=\"xsd:string\" dictRef=\"cdk:hybridization\">sp1</scalar>\n" +
           "  </atomType>                                                                                " +
           "</atomTypeList>";
-      
+
       AtomTypeReader reader = new AtomTypeReader(
           new StringReader(data)
       );
@@ -122,12 +122,12 @@ public class AtomTypeReaderTest extends CDKTestCase {
       List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
       Assert.assertNotNull(types);
       Assert.assertEquals(1, types.size());
-      
+
       Object object = types.get(0);
       Assert.assertNotNull(object);
       Assert.assertTrue(object instanceof IAtomType);
       IAtomType atomType = (IAtomType)object;
-      
+
       Assert.assertEquals(0, atomType.getFormalCharge().intValue());
       Assert.assertEquals(IAtomType.Hybridization.SP1, atomType.getHybridization());
       Assert.assertEquals(0, atomType.getProperty(CDKConstants.LONE_PAIR_COUNT));
@@ -136,7 +136,7 @@ public class AtomTypeReaderTest extends CDKTestCase {
 
     @Test
     public void testReadAtomTypes_FF() {
-        String data = 
+        String data =
             "<atomTypeList xmlns=\"http://www.xml-cml.org/schema/cml2/core\"                              \n" +
             "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"                                    \n" +
             "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n" +
@@ -155,9 +155,9 @@ public class AtomTypeReaderTest extends CDKTestCase {
             "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringSize\">3</scalar>\n" +
             "     <scalar dataType=\"xsd:integer\" dictRef=\"cdk:ringConstant\">3</scalar>\n" +
             "   </atom>\n" +
-            " </atomType>\n" + 
+            " </atomType>\n" +
             "</atomTypeList>\n";
-        
+
         AtomTypeReader reader = new AtomTypeReader(
             new StringReader(data)
         );
@@ -165,12 +165,12 @@ public class AtomTypeReaderTest extends CDKTestCase {
         List<IAtomType> types = reader.readAtomTypes(new ChemObject().getBuilder());
         Assert.assertNotNull(types);
         Assert.assertEquals(1, types.size());
-        
+
         Object object = types.get(0);
         Assert.assertNotNull(object);
         Assert.assertTrue(object instanceof IAtomType);
         IAtomType atomType = (IAtomType)object;
-        
+
         Assert.assertEquals("[CSP]-[0-4][-]?+;", atomType.getProperty(CDKConstants.SPHERICAL_MATCHER));
         Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
         Assert.assertFalse(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_DONOR));

@@ -46,7 +46,7 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test public void testInvalidCheckDigits() {
-		// invalid R value		
+		// invalid R value
 		Assert.assertFalse(CASNumber.isValid("50-00-1"));
 		Assert.assertFalse(CASNumber.isValid("50-00-2"));
 		Assert.assertFalse(CASNumber.isValid("50-00-3"));
@@ -57,14 +57,14 @@ public class CASNumberTest extends CDKTestCase {
 		Assert.assertFalse(CASNumber.isValid("50-00-8"));
 		Assert.assertFalse(CASNumber.isValid("50-00-9"));
     }
-    
+
     @Test public void testLargerThanFirst() {
-		// valid format, but wrong number, the first is 50-00-0 
+		// valid format, but wrong number, the first is 50-00-0
 	Assert.assertFalse(CASNumber.isValid("3-21-4"));
     }
 
     @Test public void testWrongHyphenPositions() {
-		// invalid format due to invalid hyphen positions 
+		// invalid format due to invalid hyphen positions
 		Assert.assertFalse(CASNumber.isValid("3-21-40"));
 		Assert.assertFalse(CASNumber.isValid("3-210-4"));
 		Assert.assertFalse(CASNumber.isValid("03-1-4"));
@@ -86,7 +86,7 @@ public class CASNumberTest extends CDKTestCase {
     }
 
     @Test public void testCharacterSet() {
-		// invalid value even with the '0' unicode character '\u0030' 
+		// invalid value even with the '0' unicode character '\u0030'
 		Assert.assertFalse(CASNumber.isValid("\u0030-21-4"));
     }
 }

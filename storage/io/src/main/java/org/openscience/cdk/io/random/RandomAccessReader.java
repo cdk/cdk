@@ -46,12 +46,12 @@ import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
- * Random access to text files of compounds. 
+ * Random access to text files of compounds.
  * Reads the file as a text and builds an index file, if the index file doesn't already exist.
  * The index stores offset, length and a third field reserved for future use.
  * Subsequent access for a record N uses this index to seek the record and return the molecule.
  * Useful for very big files.
- *  
+ *
  * @author     Nina Jeliazkova <nina@acad.bg>
  * @cdk.module io
  * @cdk.githash
@@ -78,10 +78,10 @@ public abstract class RandomAccessReader
     protected byte[] b;
     protected IChemObjectBuilder builder;
     protected boolean indexCreated = false;
-    
+
     /**
      * Reads the file and builds an index file, if the index file doesn't already exist.
-     * 
+     *
      * @param file the file object containg the molecules to be indexed
      * @param builder a chem object builder
      * @throws IOException if there is an error during reading
@@ -89,16 +89,16 @@ public abstract class RandomAccessReader
     public RandomAccessReader(File file,IChemObjectBuilder builder) throws IOException {
         this(file,builder,null);
     }
-    
+
     /**
     * Reads the file and builds an index file, if the index file doesn't already exist.
      *
      * @param file file the file object containg the molecules to be indexed
      * @param builder builder a chem object builder
-     * @param listener listen for read event 
+     * @param listener listen for read event
      * @throws IOException if there is an error during reading
      */
-    public RandomAccessReader(File file,IChemObjectBuilder builder,IReaderListener listener) throws IOException {        
+    public RandomAccessReader(File file,IChemObjectBuilder builder,IReaderListener listener) throws IOException {
         super();
         this.filename = file.getAbsolutePath();
         this.builder = builder;
@@ -127,9 +127,9 @@ public abstract class RandomAccessReader
     public synchronized IChemObject readRecord(int record) throws Exception {
     	String buffer = readContent(record);
         if (chemObjectReader == null) throw new CDKException("No chemobject reader!");
-        else { 
+        else {
             chemObjectReader.setReader(new StringReader(buffer));
-            currentRecord = record;            
+            currentRecord = record;
             return  processContent();
         }
     }
@@ -151,11 +151,11 @@ public abstract class RandomAccessReader
 
         raFile.seek(index[record][0]);
         int length = (int)index[record][1];
-        raFile.read(b,0,length);    	
+        raFile.read(b,0,length);
         return new String(b,0,length);
     }
     /**
-     * The reader is already set to read the record buffer. 
+     * The reader is already set to read the record buffer.
      * @return the read IChemObject
      * @throws CDKException an error occurred whilst reading the file
      */
@@ -172,10 +172,10 @@ public abstract class RandomAccessReader
             newIndex[i][2] = index[i][2];
         }
         return newIndex;
-                                      
-    }    
+
+    }
     protected abstract boolean isRecordEnd(String line);
-        
+
     protected synchronized void saveIndex(File file) throws Exception {
     	if (records == 0) {file.delete(); return;}
         FileWriter out = new FileWriter(file);
@@ -201,7 +201,7 @@ public abstract class RandomAccessReader
         out.write('\n');
         out.close();
     }
-    
+
     protected synchronized void loadIndex(File file) throws Exception {
     	BufferedReader in = new BufferedReader(new FileReader(file));
         String version = in.readLine();
@@ -212,7 +212,7 @@ public abstract class RandomAccessReader
 	        }
         } catch (Exception x) {
         	in.close();
-        	throw new Exception("Invalid index version "+version);        	
+        	throw new Exception("Invalid index version "+version);
         }
         String fileIndexed = in.readLine();
         if (!filename.equals(fileIndexed)) {
@@ -237,7 +237,7 @@ public abstract class RandomAccessReader
         for (int i=0; i < index.length;i++) {
         	line = in.readLine();
         	String[] result = line.split("\t");
-        	for (int j=0;j<3;j++) 
+        	for (int j=0;j<3;j++)
         		try {
         			index[i][j] = Long.parseLong(result[j]);
 
@@ -245,12 +245,12 @@ public abstract class RandomAccessReader
         			in.close();
         			throw new Exception("Error reading index! "+result[j],x);
         		}
-    		        		
-            if (maxRecordLength < index[records][1]) 
+
+            if (maxRecordLength < index[records][1])
                 maxRecordLength = (int) index[records][1];
             records++;
         }
-        
+
         line = in.readLine();
         int indexLength2 = Integer.parseInt(line);
         if (indexLength2 <= 0 ) {in.close(); throw new Exception("Index of zero lenght!");}
@@ -258,7 +258,7 @@ public abstract class RandomAccessReader
         line = in.readLine();
         if (!line.equals(filename)) {in.close(); throw new Exception("Index for " + line + " found instead of "+filename);}
         in.close();
-        
+
         b = new byte[maxRecordLength];
         //fireFrameRead();
     }
@@ -268,7 +268,7 @@ public abstract class RandomAccessReader
      */
     protected synchronized void makeIndex() throws Exception {
     	File indexFile = getIndexFile(filename);
-    	if (indexFile.exists()) 
+    	if (indexFile.exists())
     		try {
     			loadIndex(indexFile);
     			setIndexCreated(true);
@@ -276,7 +276,7 @@ public abstract class RandomAccessReader
     		} catch (Exception x) {
     			logger.warn(x.getMessage());
     		}
-    	indexCreated = false;    		
+    	indexCreated = false;
         long now = System.currentTimeMillis();
         int recordLength = 1000;
         int maxRecords = 1;
@@ -292,27 +292,27 @@ public abstract class RandomAccessReader
         records = 0;
         recordLength = 0;
         while ((s = raFile.readLine()) != null) {
-            if (start == -1) start = raFile.getFilePointer(); 
+            if (start == -1) start = raFile.getFilePointer();
             if (isRecordEnd(s)) {
                 //fireFrameRead();
                 if (records >= maxRecords) {
-                    index = resize(index,records + 
+                    index = resize(index,records +
                             (int) (records + (raFile.length()-records*raFile.getFilePointer())/recordLength));
             	}
                 end += 4;
                 index[records][0] = start;
                 index[records][1] = end - start;
                 index[records][2] = -1;
-                if (maxRecordLength < index[records][1]) 
+                if (maxRecordLength < index[records][1])
                     maxRecordLength = (int) index[records][1];
                 records++;
-                recordLength += end-start; 
-               
+                recordLength += end-start;
+
                 start = raFile.getFilePointer();
             } else {
-                end = raFile.getFilePointer(); 
+                end = raFile.getFilePointer();
             }
-            
+
         }
         b = new byte[maxRecordLength];
         //fireFrameRead();
@@ -326,7 +326,7 @@ public abstract class RandomAccessReader
 
     /**
      * Opens the file index <filename>_cdk.index</filename> in a temporary folder, as specified by "java.io.tmpdir" property.
-     * 
+     *
      * @param filename the name of the file for which the index was generated
      * @return a file object representing the index file
      */
@@ -353,7 +353,7 @@ public abstract class RandomAccessReader
         return chemObjectReader;
     }
     public abstract ISimpleChemObjectReader createChemObjectReader();
-    
+
     public synchronized void setChemObjectReader(
     		ISimpleChemObjectReader chemObjectReader) {
         this.chemObjectReader = chemObjectReader;
@@ -385,7 +385,7 @@ public abstract class RandomAccessReader
             return null;
         }
     }
-    
+
     /* (non-Javadoc)
      * @see java.util.Iterator#next()
      */
@@ -408,19 +408,19 @@ public abstract class RandomAccessReader
         }
     }
     public void set(IChemObject arg0) {
-    	
-    	
+
+
     }
     public void add(IChemObject arg0) {
-    	
-    	
+
+
     }
     public int previousIndex() {
     	return currentRecord-1;
     }
     public int nextIndex() {
     	return currentRecord+1;
-    }    
+    }
     public int size() {
         return records;
     }
@@ -463,13 +463,13 @@ public abstract class RandomAccessReader
     public String toString() {
         return filename;
     }
-    
-   
+
+
 }
 
 class RecordReaderEvent extends ReaderEvent {
     /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 572155905623474487L;
 	protected int record = 0;

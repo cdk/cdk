@@ -24,7 +24,7 @@ import org.openscience.cdk.tools.DataFeatures;
 
 /**
  * See <a href="http://www.uku.fi/~thassine/ghemical/">here</a>.
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -33,15 +33,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class GhemicalMMFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public GhemicalMMFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new GhemicalMMFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -68,8 +68,8 @@ public class GhemicalMMFormat extends SimpleChemFormatMatcher implements IChemFo
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
-        return "org.openscience.cdk.io.GhemicalMMReader"; 
+    public String getReaderClassName() {
+        return "org.openscience.cdk.io.GhemicalMMReader";
     }
 
     /** {@inheritDoc} */ @Override

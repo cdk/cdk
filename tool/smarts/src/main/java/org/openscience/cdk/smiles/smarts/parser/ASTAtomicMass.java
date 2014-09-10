@@ -56,7 +56,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
     /**
      * Sets the mass value.
-     * 
+     *
      * @param mass new mass value
      */
     public void setMass(int mass) {

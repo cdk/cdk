@@ -107,7 +107,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
 @TestClass("org.openscience.cdk.renderer.ReactionRendererTest")
 public class ReactionRenderer extends AbstractRenderer<IReaction>
   implements IRenderer<IReaction> {
-    
+
     private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
     /**
@@ -143,8 +143,8 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, 
-	                List<IGenerator<IReaction>> reactionGenerators, 
+	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators,
+	                List<IGenerator<IReaction>> reactionGenerators,
 	                IFontManager fontManager) {
 	    this(generators, fontManager);
         for (IGenerator<IReaction> generator : reactionGenerators) {
@@ -153,7 +153,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         this.generators = reactionGenerators;
         this.setup();
 	}
-	
+
 	/**
 	 * Setup the transformations necessary to draw this Reaction.
 	 *
@@ -247,7 +247,7 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
     /** {@inheritDoc} */ @Override
     public IRenderingElement generateDiagram(IReaction reaction) {
 	    ElementGroup diagram = new ElementGroup();
-	    
+
 	    for (IGenerator<IReaction> generator : this.generators) {
 	        diagram.add(generator.generate(reaction, rendererModel));
 	    }

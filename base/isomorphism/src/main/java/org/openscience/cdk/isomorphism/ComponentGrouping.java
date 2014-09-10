@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -39,15 +39,15 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * indicated by an {@code int[]} array of length (|V(query)| + 1). The final
  * index indicates the maximum component group (in the query). A specification
  * of '0' indicates there are no grouping restrictions.
- * 
+ *
  * <blockquote><pre>
  * // grouping is actually set by SMARTS parser but this shows how it's stored
- * query.setProperty(ComponentGrouping.KEY, grouping); 
- * 
+ * query.setProperty(ComponentGrouping.KEY, grouping);
+ *
  * IAtomContainer query, target;
  * Pattern        pattern = ...; // create pattern for query
- * 
- * // filter for mappings which respect component grouping in the query 
+ *
+ * // filter for mappings which respect component grouping in the query
  * Iterables.filter(pattern.matchAll(target),
  *                  new ComponentGrouping(query, target));
  * </pre></blockquote>

@@ -140,7 +140,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
             Assert.assertEquals(ligands[i], stereo.getBonds()[i]);
         }
     }
-    
+
     @Test public void contains() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -162,7 +162,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         assertTrue(element.contains(c2));
         assertTrue(element.contains(o3));
         assertTrue(element.contains(o4));
-        
+
         assertFalse(element.contains(builder.newInstance(IAtom.class)));
         assertFalse(element.contains(null));
     }

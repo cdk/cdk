@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 
 /**
  * Produce a bounding rectangle for various chem objects.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -71,19 +71,19 @@ public class BoundsGenerator implements IGenerator<IReaction> {
         if (reactants != null) {
             elementGroup.add(this.generate(reactants));
         }
-        
+
         IAtomContainerSet products = reaction.getProducts();
         if (products != null) {
             elementGroup.add(this.generate(products));
         }
-        
+
         return elementGroup;
     }
 
     private IRenderingElement generate(
     		IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
-        
+
         return new RectangleElement(totalBounds.getMinX(),
                                     totalBounds.getMinY(),
                                     totalBounds.getMaxX(),

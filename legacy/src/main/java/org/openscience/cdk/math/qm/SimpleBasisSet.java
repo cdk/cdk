@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Stephan Michels <stephan@vern.chem.tu-berlin.de>
- * 
+ *
  * Contact: cdk-devel@lists.sf.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,16 +10,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  
+ *
  */
 package org.openscience.cdk.math.qm;
 
@@ -28,12 +28,12 @@ import org.openscience.cdk.math.Vector;
 
 /**
  * This class will generate a simple base set for a atom container.
- * 
+ *
  * @author  Stephan Michels <stephan@vern.chem.tu-berlin.de>
  * @cdk.githash
  * @cdk.created 2001-07-11
  * @cdk.module  qm
- */ 
+ */
 public class SimpleBasisSet extends GaussiansBasis
 {
   private final static double f1 = 0.1;
@@ -56,7 +56,7 @@ public class SimpleBasisSet extends GaussiansBasis
         size += 4;
       else if (atomicnumber<=18)
         size += 4+12;
-      else 
+      else
         size += 4+12+12;
     }
 
@@ -102,23 +102,23 @@ public class SimpleBasisSet extends GaussiansBasis
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
       }
-      else 
+      else
       {
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
-        
+
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
-        
+
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
-        
+
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
@@ -128,12 +128,12 @@ public class SimpleBasisSet extends GaussiansBasis
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 1; nz[j] = 0; alpha[j] = f4; r[j] = rN; j++;
-        
+
         nx[j] = 0; ny[j] = 1; nz[j] = 1; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 1; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;
         nx[j] = 0; ny[j] = 1; nz[j] = 1; alpha[j] = f4; r[j] = rN; j++;
-        
+
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f1; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f2; r[j] = rN; j++;
         nx[j] = 1; ny[j] = 0; nz[j] = 1; alpha[j] = f3; r[j] = rN; j++;

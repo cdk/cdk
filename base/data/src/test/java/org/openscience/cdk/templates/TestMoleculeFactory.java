@@ -1072,7 +1072,7 @@ public class TestMoleculeFactory {
 //		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 //		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
 //		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
-//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11		
+//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11
 
 
         return mol;
@@ -1661,8 +1661,8 @@ public class TestMoleculeFactory {
         IBond b42 = builder.newInstance(IBond.class,a19, a35, IBond.Order.SINGLE);
         mol.addBond(b42);
         return mol;
-    } 
-    
+    }
+
     /**
      * octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
      * @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2

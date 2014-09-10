@@ -41,8 +41,8 @@ import org.openscience.cdk.interfaces.IBond;
  */
 @TestClass("org.openscience.cdk.CDKConstantsTest")
 public class CDKConstants {
-	
-	public final static Object UNSET = null;	
+
+	public final static Object UNSET = null;
 
 	/** A bond of degree 1.0. */
 	public final static IBond.Order BONDORDER_SINGLE = IBond.Order.SINGLE;
@@ -88,7 +88,7 @@ public class CDKConstants {
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with five d orbitals. */
     public final static int HYBRIDIZATION_SP3D5 = 8;
-    /** 
+    /**
      * Carbon NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
@@ -122,7 +122,7 @@ public class CDKConstants {
      * @see org.openscience.cdk.ChemObject
      */
     public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
-    
+
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The
      * label is a string.
@@ -164,7 +164,7 @@ public class CDKConstants {
     public final static int IS_HYDROGENBOND_DONOR    = 0x0100;  // 1 << 8
     /** Sets to true if the atom is an hydrogen bond acceptor. */
     public final static int IS_HYDROGENBOND_ACCEPTOR = 0x0200;  // 1 << 9
-        
+
     /** Flag is set if a chemobject has reactive center.
      *  It is used for example in reaction.
      */
@@ -177,11 +177,11 @@ public class CDKConstants {
      * Flag used for marking uncertainty of the bond order.
      * If used on an
      * <ul>
-     *  <li>IMolecule it means that one or several of the bonds have 
+     *  <li>IMolecule it means that one or several of the bonds have
      * 		this flag raised (which may indicate aromaticity).</li>
      *  <li>IBond it means that it's unclear whether the bond is a single or
      * 		double bond.</li>
-     *  <li>IAtom it is a way for the Smiles parser to indicate that this atom was 
+     *  <li>IAtom it is a way for the Smiles parser to indicate that this atom was
      * 		written with a lowercase letter, e.g. 'c' rather than 'C'</li>
      * </ul>
      */
@@ -210,7 +210,7 @@ public class CDKConstants {
      * Maximum pointers array index.
      */
     public final static int MAX_POINTER_INDEX = 1;
-    
+
     /* **************************************
      * Some predefined property names for    *
      * ChemObjects                           *
@@ -242,13 +242,13 @@ public class CDKConstants {
 
     /** The Daylight SMILES. */
 	public static final String SMILES = "cdk:SMILES";
-    
+
     /** The IUPAC International Chemical Identifier. */
 	public static final String INCHI = "cdk:InChI";
-    
+
 	/** The Molecular Formula Identifier. */
 	public static final String FORMULA = "cdk:Formula";
-    
+
     /** The IUPAC compatible name generated with AutoNom. */
     public static final String AUTONOMNAME = "cdk:AutonomName";
 
@@ -257,26 +257,26 @@ public class CDKConstants {
 
     /** The CAS Registry Number. */
     public static final String CASRN = "cdk:CasRN";
-    
+
     /** A set of all rings computed for this molecule. */
     public static final String ALL_RINGS = "cdk:AllRings";
 
     /** A smallest set of smallest rings computed for this molecule. */
     public static final String SMALLEST_RINGS = "cdk:SmallestRings";
 
-    /** The essential rings computed for this molecule. 
-     *  The concept of Essential Rings is defined in 
+    /** The essential rings computed for this molecule.
+     *  The concept of Essential Rings is defined in
      *  SSSRFinder
      */
     public static final String ESSENTIAL_RINGS = "cdk:EssentialRings";
-    
-    /** The relevant rings computed for this molecule. 
-     *  The concept of relevant Rings is defined in 
+
+    /** The relevant rings computed for this molecule.
+     *  The concept of relevant Rings is defined in
      *  SSSRFinder
      */
     public static final String RELEVANT_RINGS = "cdk:RelevantRings";
 
-    
+
     /* **************************************
     * Some predefined property names for    *
     * Atoms                                 *
@@ -294,7 +294,7 @@ public class CDKConstants {
      * the given atom.
      */
     public static final String RING_CONNECTIONS = "cdk:RingConnections";
-    
+
      /*
      *This property indicate how many bond are present on the atom.
      *
@@ -309,14 +309,14 @@ public class CDKConstants {
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
       * This is a property used for calculating NMR chemical
-      * shifts by subtracting the value from the 
+      * shifts by subtracting the value from the
       * isotropic shielding value of a standard (e.g. TMS).
       */
     public static final String ISOTROPIC_SHIELDING = "cdk:IsotropicShielding";
 
     /**
      * A property to indicate RestH being true or false. RestH is a term
-     * used in RGroup queries: "if this property is applied ('on'), sites labeled 
+     * used in RGroup queries: "if this property is applied ('on'), sites labeled
      * with Rgroup rrr may only be substituted with a member of the Rgroup or with H"
      */
     public static final String REST_H = "cdk:RestH";

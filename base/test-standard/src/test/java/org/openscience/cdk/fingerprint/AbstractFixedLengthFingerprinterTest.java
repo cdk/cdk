@@ -18,7 +18,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.fingerprint;
 
@@ -55,7 +55,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         c.and(b);
         return c;
     }
-    
+
     /**
      * @cdk.bug 706786
      */
@@ -74,7 +74,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
         BitSet subBS   = fingerprinter.getBitFingerprint(subStructure).asBitSet();
-        
+
         Assert.assertThat(and(superBS, subBS), is(subBS));
     }
 
@@ -99,7 +99,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superstructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(substructure);
         Aromaticity.cdkLegacy().apply(superstructure);
-        Aromaticity.cdkLegacy().apply(substructure);        
+        Aromaticity.cdkLegacy().apply(substructure);
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superstructure).asBitSet();
@@ -127,7 +127,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
         BitSet subBS   = fingerprinter.getBitFingerprint(subStructure).asBitSet();
-        
+
         Assert.assertThat(and(superBS, subBS), is(subBS));
     }
 
@@ -161,7 +161,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         FixBondOrdersTool fbot = new FixBondOrdersTool();
         structure1 = fbot.kekuliseAromaticRings(structure1);
         structure2 = fbot.kekuliseAromaticRings(structure2);
-        
+
         // hydrogens loaded from MDL mol files if non-query. Structure 2 has
         // query aromatic bonds and the hydrogen counts are not assigned - ensure
         // this is done here.
@@ -544,7 +544,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
         mol.addBond(b21);
         return mol;
     }
-    
+
     static BitSet asBitSet(int ... xs) {
         BitSet bs = new BitSet();
         for (int x : xs)

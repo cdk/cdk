@@ -63,14 +63,14 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
 
 	/**Number of maximum iterations*/
     private int maxIterations = 6;
-    
+
 	private Electronegativity electronegativity;
 
     private static final String[] descriptorNames = {"elecSigB"};
     /**
      *  Constructor for the BondSigmaElectronegativityDescriptor object.
      */
-    public BondSigmaElectronegativityDescriptor() { 
+    public BondSigmaElectronegativityDescriptor() {
     	electronegativity = new Electronegativity();
     }
 
@@ -152,13 +152,13 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         }
 
         if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
-	    
+
 	    double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(0));
 	    double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
 
 	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(Math.abs(electroAtom1 - electroAtom2)),descriptorNames);
-	    
+
     }
 	 /**
      * Gets the parameterNames attribute of the BondSigmaElectronegativityDescriptor object.
@@ -181,7 +181,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return 0; 
+        return 0;
     }
 }
 

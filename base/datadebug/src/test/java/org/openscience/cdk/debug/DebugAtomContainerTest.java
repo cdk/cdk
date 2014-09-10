@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.debug;
 
@@ -48,7 +48,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         // create an empty container with predefined
         // array lengths
         IAtomContainer ac = new DebugAtomContainer(5,6,1,2);
-        
+
         Assert.assertEquals(0, ac.getAtomCount());
         Assert.assertEquals(0, ac.getElectronContainerCount());
 
@@ -60,10 +60,10 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
     @Test public void testDebugAtomContainer() {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new DebugAtomContainer();
-        
+
         Assert.assertEquals(0, container.getAtomCount());
         Assert.assertEquals(0, container.getBondCount());
-        
+
         // test whether the ElectronContainer is correctly initialized
         container.addBond(container.getBuilder().newInstance(IBond.class,container.getBuilder().newInstance(IAtom.class,"C"), container.getBuilder().newInstance(IAtom.class,"C"), IBond.Order.DOUBLE));
         container.addLonePair(container.getBuilder().newInstance(ILonePair.class,container.getBuilder().newInstance(IAtom.class,"N")));
@@ -86,7 +86,7 @@ public class DebugAtomContainerTest extends AbstractAtomContainerTest {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        
+
         IAtomContainer container = new DebugAtomContainer(acetone);
         Assert.assertEquals(4, container.getAtomCount());
         Assert.assertEquals(3, container.getBondCount());

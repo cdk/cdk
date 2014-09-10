@@ -30,7 +30,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -39,7 +39,7 @@ public class DebugElement extends Element
     implements IElement {
 
     private static final long serialVersionUID = -8520499563841667066L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugElement.class);
 
@@ -47,17 +47,17 @@ public class DebugElement extends Element
 		super();
 		logger.debug("Instantiated a DebugElement");
 	}
-	
+
 	public DebugElement(String symbol) {
 		super(symbol);
 		logger.debug("Instantiated a DebugElement: symbol= ", symbol);
 	}
-	
+
 	public DebugElement(String symbol, int atomicNumber) {
 		super(symbol, atomicNumber);
 		logger.debug("Instantiated a DebugElement: symbol= ", symbol + " atomic number= " + atomicNumber);
 	}
-	
+
 	public DebugElement(IElement element) {
 		super(element);
 		logger.debug("Instantiated a DebugElement: element= ", element);

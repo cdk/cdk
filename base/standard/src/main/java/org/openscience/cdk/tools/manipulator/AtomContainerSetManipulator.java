@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -96,7 +96,7 @@ public class AtomContainerSetManipulator {
             }
         }
     }
-    
+
 	/**
      * Returns all the AtomContainer's of a MoleculeSet.
      *
@@ -111,7 +111,7 @@ public class AtomContainerSetManipulator {
         }
     	return atomContainerList;
     }
-	
+
 	/**
 	 * @param set The collection of IAtomContainer objects
      * @return The summed charges of all atoms in this set.
@@ -126,7 +126,7 @@ public class AtomContainerSetManipulator {
 		}
 		return charge;
 	}
-	
+
 	/**
 	 * @param set The collection of IAtomContainer objects
      * @return The summed formal charges of all atoms in this set.
@@ -141,7 +141,7 @@ public class AtomContainerSetManipulator {
 		}
 		return charge;
 	}
-	
+
 	/**
 	 * @param set  The collection of IAtomContainer objects
      * @return The summed implicit hydrogens of all atoms in this set.
@@ -195,10 +195,10 @@ public class AtomContainerSetManipulator {
         }
         return null;
     }
-    
+
     /**
      * Does not recursively return the contents of the AtomContainer.
-     * 
+     *
      * @param set The collection of IAtomContainer objects
      * @return a list of individual ChemObject's
      */
@@ -211,7 +211,7 @@ public class AtomContainerSetManipulator {
         }
         return list;
     }
-        
+
     /**
      * <p>Sorts the IAtomContainers in the given IAtomContainerSet by the following
      * criteria with decreasing priority:</p>
@@ -233,11 +233,11 @@ public class AtomContainerSetManipulator {
         for (Object anAtomContainerList : atomContainerList)
             atomContainerSet.addAtomContainer((IAtomContainer) anAtomContainerList);
     }
-    
+
     /**
      * Tells if an AtomContainerSet contains at least one AtomContainer with the
      * same ID as atomContainer. Note this checks getID() for equality, not pointers.
-     * 
+     *
      * @param id The IAtomContainer to look for
      * @param atomContainerSet The collection of IAtomContainer objects
      */
@@ -250,6 +250,6 @@ public class AtomContainerSetManipulator {
 		}
 		return false;
 	}
-    
+
 }
 

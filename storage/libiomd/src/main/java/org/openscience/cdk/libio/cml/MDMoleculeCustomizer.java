@@ -1,7 +1,7 @@
 /* Copyright (C) 2007  Ola Spjuth <ospjuth@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,11 +40,11 @@ import org.xmlcml.cml.element.CMLScalar;
 
 /**
  * Customize persistence of MDMolecule by adding support for residues and charge groups.
- * 
+ *
  * @author ola
  * @cdk.module libiomd
  * @cdk.githash
- * 
+ *
  * @cdk.set       libio-cml-customizers
  */
 public class MDMoleculeCustomizer implements ICMLCustomizer {
@@ -55,14 +55,14 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
 	public void customize(IBond bond, Object nodeToAdd) throws Exception {
 		// nothing to do
 	}
-	
+
 	/**
 	 * Customize Atom.
 	 */
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
     	// nothing to do
     }
-    
+
 	/**
 	 * Customize Molecule.
 	 */
@@ -103,7 +103,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
 //            			System.out.println("atom ID: "+ residue.getAtom(i).getID());
 //            			cmlAtom.addAttribute(new Attribute("ref", residue.getAtom(i).getID()));
             			// the next thing is better, but throws an exception
-            			// 
+            			//
             			// setRef to keep consistent usage
             			// setId to satisfy Jumbo 54. need for all atoms to have id
             			cmlAtom.setRef(residue.getAtom(i).getID());
@@ -111,7 +111,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             			ar.addAtom(cmlAtom);
             		}
             		resMol.addAtomArray(ar);
-            		
+
             		molToCustomize.appendChild(resMol);
             	}
         	}
@@ -132,7 +132,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             		CMLScalar cgNo=new CMLScalar(number);
             		cgNo.addAttribute(new Attribute("dictRef", "md:cgNumber"));
             		cgMol.appendChild(cgNo);
- 
+
             		// prefix for residue atom id
             		String cprefix = "cg" + number;
 
@@ -154,12 +154,12 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
             			ar.addAtom(cmlAtom);
             		}
             		cgMol.addAtomArray(ar);
-            		
+
 
             		molToCustomize.appendChild(cgMol);
             	}
         	}
     	}
     }
-  	
+
 }

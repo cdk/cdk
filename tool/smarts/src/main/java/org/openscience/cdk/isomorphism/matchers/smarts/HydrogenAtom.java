@@ -31,7 +31,7 @@ import java.util.List;
  * @cdk.keyword SMARTS
  */
 public class HydrogenAtom extends SMARTSAtom {
-    
+
     /** Creates a new instance. */
     public HydrogenAtom(IChemObjectBuilder builder) {
         super(builder);

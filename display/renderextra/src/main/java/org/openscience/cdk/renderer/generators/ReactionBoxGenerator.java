@@ -38,7 +38,7 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 
 /**
  * Generate the symbols for radicals.
- * 
+ *
  * @author maclean
  * @cdk.module renderextra
  * @cdk.githash
@@ -56,7 +56,7 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
     		.getValue() / model.getParameter(Scale.class).getValue();
 		Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction);
         if (totalBounds == null) return null;
-        
+
         ElementGroup diagram = new ElementGroup();
         Color foregroundColor = model.getParameter(
             BasicSceneGenerator.ForegroundColor.class).getValue();
@@ -69,9 +69,9 @@ public class ReactionBoxGenerator implements IGenerator<IReaction> {
         ));
         if (reaction.getID() != null) {
         	diagram.add(new TextElement(
-        		(totalBounds.getMinX()+totalBounds.getMaxX())/2, 
-        		totalBounds.getMinY()-separation, 
-        		reaction.getID(), 
+        		(totalBounds.getMinX()+totalBounds.getMaxX())/2,
+        		totalBounds.getMinY()-separation,
+        		reaction.getID(),
         		foregroundColor
         	));
         }

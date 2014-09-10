@@ -59,7 +59,7 @@ public class McGregorChecks {
      * @param i_bond_neighbor_atoms_B
      * @param cBondNeighborsA
      * @param cBondNeighborsB
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      * @return
      */
     protected static boolean isFurtherMappingPossible(
@@ -438,7 +438,7 @@ public class McGregorChecks {
      * @param cBondNeighborsA
      * @param cBondNeighborsB
      * @param modifiedARCS
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      * @return
      */
     protected static List<Integer> setArcs(IAtomContainer source,

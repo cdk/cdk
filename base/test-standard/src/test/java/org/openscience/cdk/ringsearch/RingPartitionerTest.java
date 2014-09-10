@@ -53,7 +53,7 @@ public class RingPartitionerTest extends CDKTestCase
     public void testConvertToAtomContainer_IRingSet()
 	{
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
-		
+
 		IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
 		IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
         Assert.assertEquals(7, ac.getAtomCount());

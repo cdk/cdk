@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -35,9 +35,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * The VicinitySampler is a generator of constitutional isomers. It needs to be 
- * provided with a starting constitution and it makes random moves in 
- * constitutional space from there. This generator was first suggested by 
+ * The VicinitySampler is a generator of constitutional isomers. It needs to be
+ * provided with a starting constitution and it makes random moves in
+ * constitutional space from there. This generator was first suggested by
  * Faulon {@cdk.cite FAU96}.
  *
  * @cdk.keyword  structure generator
@@ -46,28 +46,28 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  * @cdk.bug      1632610
  */
 public class VicinitySampler {
-	
+
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(VicinitySampler.class);
-	
+
 	int molCounter = 0;
 
 	/**
-	 * Choose any possible quadruple of the set of atoms 
-	 * in ac and establish all of the possible bonding schemes according to 
+	 * Choose any possible quadruple of the set of atoms
+	 * in ac and establish all of the possible bonding schemes according to
 	 * Faulon's equations.
 	 */
 	public static List<IAtomContainer> sample(IAtomContainer ac) {
 		logger.debug("RandomGenerator->mutate() Start");
 		List<IAtomContainer> structures = new ArrayList<IAtomContainer>();
-		
+
 		int nrOfAtoms = ac.getAtomCount();
 		double a11 = 0, a12 = 0, a22 = 0, a21 = 0;
 		double b11 = 0, lowerborder = 0, upperborder = 0;
-		double b12 = 0; 
-		double b21 = 0; 
+		double b12 = 0;
+		double b21 = 0;
 		double b22 = 0;
-		double[] cmax = new double[4]; 
+		double[] cmax = new double[4];
 		double[] cmin = new double[4];
 		IAtomContainer newAc = null;
 
@@ -89,43 +89,43 @@ public class VicinitySampler {
 						ay1 = ac.getAtom(y1);
 						ax2 = ac.getAtom(x2);
 						ay2 = ac.getAtom(y2);
-												
+
 						/* Get four bonds for these four atoms */
-						
+
 						b1 = ac.getBond(ax1, ay1);
 						if (b1 != null)
 						{
 							a11 = BondManipulator.destroyBondOrder(b1.getOrder());
-							nonZeroBondsCounter ++;				
+							nonZeroBondsCounter ++;
 						}
 						else
 						{
 							a11 = 0;
 						}
-						
+
 						b2 = ac.getBond(ax1, ay2);
 						if (b2 != null)
 						{
 							a12 = BondManipulator.destroyBondOrder(b2.getOrder());
-							nonZeroBondsCounter ++;				
+							nonZeroBondsCounter ++;
 						}
 						else
 						{
 							a12 = 0;
 						}
-		
+
 						b3 = ac.getBond(ax2, ay1);
 						if (b3 != null)
 						{
 							a21 = BondManipulator.destroyBondOrder(b3.getOrder());
-							nonZeroBondsCounter ++;				
+							nonZeroBondsCounter ++;
 						}
 						else
 						{
 							a21 = 0;
 						}
-						
-						b4 = ac.getBond(ax2, ay2);									
+
+						b4 = ac.getBond(ax2, ay2);
 						if (b4 != null)
 						{
 							a22 = BondManipulator.destroyBondOrder(b4.getOrder());
@@ -138,7 +138,7 @@ public class VicinitySampler {
 						if (nonZeroBondsCounter > 1)
 						{
 							/* Compute the range for b11 (see Faulons formulae for details) */
-							
+
 							cmax[0] = 0;
 							cmax[1] = a11 - a22;
 							cmax[2] = a11 + a12 - 3;
@@ -153,7 +153,7 @@ public class VicinitySampler {
 							{
 								if (b11 != a11)
 								{
-									
+
 									b12 = a11 + a12 - b11;
 									b21 = a11 + a21 - b11;
 									b22 = a22 - a11 + b11;
@@ -167,7 +167,7 @@ public class VicinitySampler {
 										}
 										else
 										{
-											logger.debug("not connected");	
+											logger.debug("not connected");
 										}
 									} catch (CloneNotSupportedException e) {
 										logger.error("Cloning exception: " + e.getMessage());
@@ -193,12 +193,12 @@ public class VicinitySampler {
 			ay1 = ac.getAtom(y1);
 			ay2 = ac.getAtom(y2);
 		} catch(Exception exc) {
-			logger.debug(exc);	
+			logger.debug(exc);
 		}
 		b1 = ac.getBond(ax1, ay1);
 		b2 = ac.getBond(ax1, ay2);
 		b3 = ac.getBond(ax2, ay1);
-		b4 = ac.getBond(ax2, ay2);									
+		b4 = ac.getBond(ax2, ay2);
 		if (b11 > 0)
 		{
 			if (b1 == null)
@@ -216,14 +216,14 @@ public class VicinitySampler {
 		else if (b1 != null)
 		{
 			ac.removeBond(b1);
-			logger.debug("removing bond " + x1 + "-" + y1);			
+			logger.debug("removing bond " + x1 + "-" + y1);
 		}
-		
-		if (b12 > 0) 
+
+		if (b12 > 0)
 		{
 			if (b2 == null)
 			{
-				logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);				
+				logger.debug("no bond " + x1 + "-" + y2 + ". Adding it with order " + b12);
 				b2 = ac.getBuilder().newInstance(IBond.class,
 					ax1, ay2, BondManipulator.createBondOrder(b12)
 				);
@@ -238,10 +238,10 @@ public class VicinitySampler {
 		else if (b2 != null)
 		{
 			ac.removeBond(b2);
-			logger.debug("removing bond " + x1 + "-" + y2);			
+			logger.debug("removing bond " + x1 + "-" + y2);
 		}
-		
-		if (b21 > 0) 
+
+		if (b21 > 0)
 		{
 			if (b3 == null)
 			{
@@ -261,7 +261,7 @@ public class VicinitySampler {
 			logger.debug("removing bond " + x2 + "-" + y1);
 		}
 
-		if (b22 > 0) 
+		if (b22 > 0)
 		{
 			if (b4 == null)
 			{
@@ -282,5 +282,5 @@ public class VicinitySampler {
 		}
 		return ac;
 	}
-	
+
 }

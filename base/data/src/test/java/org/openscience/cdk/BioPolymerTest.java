@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk;
 
@@ -51,7 +51,7 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
 		IBioPolymer oBioPolymer = new BioPolymer();
 		Assert.assertNotNull(oBioPolymer);
 		Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
-		
+
 		IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
 		oStrand1.setStrandName("A");
 		IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
@@ -67,7 +67,7 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
 		IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C3");
 		IAtom oAtom4 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C4");
 		IAtom oAtom5 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C5");
-		
+
 		oBioPolymer.addAtom(oAtom1);
 		oBioPolymer.addAtom(oAtom2, oStrand1);
 		oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
@@ -99,5 +99,5 @@ public class BioPolymerTest extends AbstractBioPolymerTest {
 		Assert.assertNull(oBioPolymer.getStrand("C"));
 		Assert.assertNotNull(oBioPolymer.getStrand("B"));
 	}
-	
+
 }

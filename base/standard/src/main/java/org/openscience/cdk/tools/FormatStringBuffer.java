@@ -2,7 +2,7 @@
  *
  *  FormatStringBuffer: printf style output formatter for Java
  *  All rights reserved.
- *  
+ *
  *  Downloaded from: http://www.cs.helsinki.fi/u/abrax/HACK/JAVA/PRINTF.html
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -163,25 +163,25 @@ public class FormatStringBuffer {
      * <tt>index</tt> and the next format token.
      */
     private Format getFormat() {
-    	
+
     	char ch;
-    	
+
     	while (index < format.length()) {
     		if ((ch = format.charAt(index)) != '%') {
     			buffer.append(ch);
     			index++;
     			continue;
     		}
-    		
+
     		Format fmt = new Format();
-    		
+
     		// Process flags.
     		boolean repeat = true;
     		while (repeat) {
-    			
+
     			if (index + 1 >= format.length())
     				throw new IllegalArgumentException("Malformed format");
-    			
+
     			switch (ch = format.charAt(++index)) { // Skip the first '%'
     			    case '-': fmt.flags |= LEFT; break;
     			    case '+': fmt.flags |= PLUS; break;
@@ -192,31 +192,31 @@ public class FormatStringBuffer {
     			    default: repeat = false; break;
     			}
     		}
-    		
+
     		// Get field width.
     		if (Character.isDigit(ch)) {
     			// Explicit number.
     			fmt.fieldWidth = skipDigits();
     		}
-    		
+
     		if (index >= format.length())
     			throw new IllegalArgumentException("Malformed format");
-    		
+
     		// Get precision.
     		if ((ch = format.charAt(index)) == '.') {
-    			
+
     			if (++index >= format.length())
     				throw new IllegalArgumentException("Malformed format");
-    			
+
     			fmt.precision = skipDigits();
     			if (fmt.precision < 0) {
     				fmt.precision = 0;
     			}
     		}
-    		
+
     		if (index >= format.length())
     			throw new IllegalArgumentException("Malformed format");
-    		
+
     		switch (ch = format.charAt(index++)) {
     		    case 'c':
     		    	fmt.type = CHAR;
@@ -227,9 +227,9 @@ public class FormatStringBuffer {
     		    case '%':
     		    	buffer.append('%');
     		    	continue;
-    		    	
+
     		    	// Octal, hexadecimal and decimal.
-    		    	
+
     		    case 'o':
     		    	fmt.type = DECIMAL;
     		    	fmt.base = 8;
@@ -244,9 +244,9 @@ public class FormatStringBuffer {
     		    case 'i':
     		    	fmt.type = DECIMAL;
     		    	return fmt;
-    		    	
+
     		    	// Floating point
-    		    	
+
     		    case 'f':
     		    case 'g':
     		    	fmt.type = FLOAT;
@@ -266,17 +266,17 @@ public class FormatStringBuffer {
     		    continue;
     		}
     	}
-    	
+
     	return null;
     }
-    
+
     /**
      * Skip digits and return the number they form.
      */
     private int skipDigits() {
     	char ch;
     	int i = 0;
-    	
+
     	while (index < format.length()) {
     		if (Character.isDigit(ch = format.charAt(index))) {
     			index++;
@@ -287,51 +287,51 @@ public class FormatStringBuffer {
     	}
     	return i;
     }
-    
+
     // ==================================================================== //
-    
+
     /**
      * Format a <tt>char</tt>.
      */
     @TestMethod("testFormat_char")
     public FormatStringBuffer format(char ch) {
-    	
+
     	Format fmt = getFormat();
-    	
+
     	if (fmt.type != CHAR)
     		throw new IllegalArgumentException("Expected a char format");
-    	
+
     	if ((fmt.flags & LEFT) != LEFT)
     		while (--fmt.fieldWidth > 0)
     			buffer.append(' ');
     	buffer.append(ch);
     	while (--fmt.fieldWidth > 0)
     		buffer.append(' ');
-    	
+
     	return this;
     }
-    
+
     /**
      * Format a <tt>float</tt>.
      */
     @TestMethod("testFormat_floatr")
     public FormatStringBuffer format(float flt) {
-    	
+
     	return format((double)flt);
-    	
+
     }
-    
+
     /**
      * Format a <tt>double</tt>.
      */
     @TestMethod("testFormat_double")
     public FormatStringBuffer format(double dbl) {
-    	
+
     	Format fmt = getFormat();
-    	
+
     	if (fmt.type != FLOAT)
     		throw new IllegalArgumentException("Expected a float format");
-    	
+
     	NumberFormat nf;
     	if ((fmt.flags & SCI) > 0) {
     		nf = new DecimalFormat("0.#E00");
@@ -352,48 +352,48 @@ public class FormatStringBuffer {
     	}
     	if ((fmt.flags & PLUS) == PLUS && dbl >= 0.0)
     		str = "+" + str;
-    	
+
     	int len = str.length();
     	if ((fmt.flags & LEFT) != LEFT)
     		while (len < fmt.fieldWidth--)
     			buffer.append(' ');
-    	
+
     	for (int i = 0; i < len; ++i)
     		buffer.append(str.charAt(i));
-    	
+
     	while (len < fmt.fieldWidth--)
     		buffer.append(' ');
-    	
+
     	return this;
     }
-    
+
     /**
      * Format a <tt>float</tt>.
      */
     @TestMethod("testFormat_int")
     public FormatStringBuffer format(int i) {
-    	
+
     	return format((long)i);
-    	
+
     }
-    
+
     /**
      * Format a <tt>float</tt>.
      */
     @TestMethod("testFormat_long")
     public FormatStringBuffer format(long l) {
-    	
+
     	Format fmt = getFormat();
-    	
+
     	if (fmt.type != DECIMAL)
     		throw new IllegalArgumentException("Expected a float format");
-    	
+
     	// Decide padding character.
     	char pad = ' ';
     	if ((fmt.flags & ZEROPAD) == ZEROPAD) {
     		pad = '0';
     	}
-    	
+
     	// Convert number to String.
     	String str;
     	String prefix = "";
@@ -416,18 +416,18 @@ public class FormatStringBuffer {
     	    	str = String.valueOf(Math.abs(l));
     	    break;
     	}
-    	
+
     	if ((fmt.flags & LARGE) == LARGE) {
     		str = str.toUpperCase();
     		prefix = prefix.toUpperCase();
     	}
-    	
+
     	int len = str.length();
-    	
+
     	if (l < 0 || (fmt.flags & PLUS) == PLUS) {
     		fmt.fieldWidth--;
     	}
-    	
+
     	// Place the sign character first if zero padding.
     	if ((fmt.flags & ZEROPAD) == ZEROPAD) {
     		if (l < 0 && fmt.base == 10) {
@@ -437,12 +437,12 @@ public class FormatStringBuffer {
     		}
     		buffer.append(prefix);
     	}
-    	
+
     	// Pad.
     	if ((fmt.flags & LEFT) != LEFT)
     		while (len < fmt.fieldWidth--)
     			buffer.append(pad);
-    	
+
     	// Place the sign character now if not zero padding.
     	if ((fmt.flags & ZEROPAD) != ZEROPAD) {
     		if (l < 0 && fmt.base == 10) {
@@ -452,67 +452,67 @@ public class FormatStringBuffer {
     		}
     		buffer.append(prefix);
     	}
-    	
+
     	for (int i = 0; i < len; ++i)
     		buffer.append(str.charAt(i));
-    	
+
     	while (len < fmt.fieldWidth--)
     		buffer.append(' ');
-    	
+
     	return this;
     }
-    
+
     /**
      * Format a <tt>String</tt>.
      */
     @TestMethod("testFormat_String")
     public FormatStringBuffer format(String str) {
-    	
+
     	if (str == null)
     		str = "<NULL>";
-    	
+
     	Format fmt = getFormat();
-    	
+
     	if (fmt.type != STRING)
     		throw new IllegalArgumentException("Expected a String format");
-    	
+
     	int len = str.length();
     	if (fmt.precision != -1 && len > fmt.precision)
     		len = fmt.precision;
-    	
+
     	if ((fmt.flags & LEFT) != LEFT)
     		while (len < fmt.fieldWidth--)
     			buffer.append(' ');
-    	
+
     	for (int i = 0; i < len; ++i)
     		buffer.append(str.charAt(i));
-    	
+
     	while (len < fmt.fieldWidth--)
     		buffer.append(' ');
-    	
+
     	return this;
     }
-    
+
     // ==================================================================== //
-    
+
     /**
      * Get the result of the formatting. <tt>reset()</tt> is automatically
      * called from this method.
      */
     @TestMethod("testToString")
     public String toString() {
-    	
+
     	if (index < format.length())
     		buffer.append(format.substring(index));
-    	
+
     	String str = buffer.toString();
     	this.reset();
-    	
+
     	return str;
     }
-    
+
     // ==================================================================== //
-    
+
     /**
      * A container class for several format parameters.
      */

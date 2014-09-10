@@ -114,7 +114,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 3));
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 2));
         ligands.add(CIPTool.defineLigand(molecule, visitedAtoms, 1, 0));
-        
+
         Collections.sort(ligands, new CIPLigandRule());
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
         Assert.assertEquals("C", ligands.get(1).getLigandAtom().getSymbol());
@@ -183,7 +183,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
-        ); 
+        );
         ILigand ligand2 = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
         );
@@ -197,7 +197,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([2H])[H]");
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
-        ); 
+        );
         ILigand ligand2 = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
         );

@@ -112,7 +112,7 @@ public class CrystalGeometryTools {
      * <p>To calculate Cartesian coordinates, it places the a axis on the x axes,
      * the b axis in the xy plane, making an angle gamma with the a axis, and places
      * the c axis to fulfill the remaining constraints. (See also
-     * <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the 
+     * <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the
      * CCL archive</a>.)
      *
      * @param alength   length of the a axis
@@ -132,7 +132,7 @@ public class CrystalGeometryTools {
                                                  double clength, double alpha,
                                                  double beta, double gamma) {
         Vector3d[] axes = new Vector3d[3];
-        
+
         /* 1. align the a axis with x axis */
         axes[0] = new Vector3d();
         axes[0].x = alength;
@@ -140,7 +140,7 @@ public class CrystalGeometryTools {
         axes[0].z = 0.0;
 
         double toRadians = Math.PI/180.0;
-        
+
         /* some intermediate variables */
         double cosalpha = Math.cos(toRadians*alpha);
         double cosbeta = Math.cos(toRadians*beta);
@@ -163,10 +163,10 @@ public class CrystalGeometryTools {
         axes[2].x = clength*cosbeta;
         axes[2].y = clength*(cosalpha-cosbeta*cosgamma)/singamma;
         axes[2].z = volume/(alength*blength*singamma);
-        
+
         return axes;
     }
-    
+
     /**
      * @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
      */
@@ -181,11 +181,11 @@ public class CrystalGeometryTools {
         notionalCoords[5] = aAxis.angle(bAxis)*180.0/Math.PI;
         return notionalCoords;
     }
-                               
+
 	/**
      * Determines if this model contains fractional (crystal) coordinates.
 	 *
-	 * @return  boolean indication that 3D coordinates are available 
+	 * @return  boolean indication that 3D coordinates are available
 	 */
     public static boolean hasCrystalCoordinates(IAtomContainer container) {
     	Iterator<IAtom> atoms = container.atoms().iterator();

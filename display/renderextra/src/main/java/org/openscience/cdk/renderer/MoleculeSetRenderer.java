@@ -110,7 +110,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
   implements IRenderer<IAtomContainerSet> {
 
     private IRenderer<IAtomContainer> atomContainerRenderer;
-    
+
     /**
      * A renderer that generates diagrams using the specified
      * generators and manages fonts with the supplied font manager.
@@ -134,7 +134,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
         this.generators = Collections.emptyList();
         this.setup();
     }
-	
+
 	/**
 	 * Setup the transformations necessary to draw this {@link IAtomContainerSet}.
 	 *
@@ -205,7 +205,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
      * Set the scale for an IMoleculeSet. It calculates the average bond length
      * of the model and calculates the multiplication factor to transform this
      * to the bond length that is set in the RendererModel.
-     * 
+     *
      * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
      */
     public void setScale(IAtomContainerSet moleculeSet) {
@@ -290,5 +290,5 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
     public List<IGenerator<IAtomContainerSet>> getGenerators() {
         return new ArrayList<IGenerator<IAtomContainerSet>>(generators);
     }
-   
+
 }

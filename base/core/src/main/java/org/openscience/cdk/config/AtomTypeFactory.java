@@ -54,7 +54,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *  </pre>
  *  For each atom type list a separate AtomTypeFactory is instantiated.
  *
- *  <p>To get all the atom types of an element from a specific list, this 
+ *  <p>To get all the atom types of an element from a specific list, this
  *  code can be used:
  *  <pre>
  *  AtomTypeFactory factory = AtomTypeFactory.getInstance(
@@ -88,11 +88,11 @@ public class AtomTypeFactory {
      *  Used as an ID to describe the atom type.
      */
     public final static String ATOMTYPE_ID_JMOL = "jmol";
-    
+
     private final static String TXT_EXTENSION = "txt";
     private final static String XML_EXTENSION = "xml";
     private final static String OWL_EXTENSION = "owl";
-    
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AtomTypeFactory.class);
     private static Map<String, AtomTypeFactory> tables = null;
@@ -213,7 +213,7 @@ public class AtomTypeFactory {
         }
         readConfiguration(ins, format, builder);
     }
-    
+
     private IAtomTypeConfigurator constructConfigurator(String format) {
         try {
             if (format.equals(TXT_EXTENSION)) {
@@ -235,7 +235,7 @@ public class AtomTypeFactory {
 		}
         return null;
     }
-    
+
     private void readConfiguration(InputStream ins, String format, IChemObjectBuilder builder) {
     	IAtomTypeConfigurator atc = constructConfigurator(format);
 		if (atc != null) {
@@ -354,7 +354,7 @@ public class AtomTypeFactory {
 	 *
 	 * @param  atom  The atom to be configured
 	 * @return       The configured atom
-	 * @throws       CDKException when it could not recognize and configure the 
+	 * @throws       CDKException when it could not recognize and configure the
 	 *               IAtom
 	 */
     @TestMethod("testConfigure_IAtom")

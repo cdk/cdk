@@ -44,10 +44,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
-	
+
 	private final static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
-	
+
 	/**
 	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
 	 *  so, the molecular structure from which bs2 was generated is a possible
@@ -84,7 +84,7 @@ public class FingerprinterTool {
 	 * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
      * See. {@link #differences(java.util.BitSet, java.util.BitSet)} for a method to list all differences,
      * including those missing present in bs2 but not bs1.
-	 * 
+	 *
 	 * @param bs1 First bitset
 	 * @param bs2 Second bitset
 	 * @return An arrayList of Integers

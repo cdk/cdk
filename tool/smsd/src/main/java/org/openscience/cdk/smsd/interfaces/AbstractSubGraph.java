@@ -33,7 +33,7 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.smsd.interfaces.AbstractSubGraphTest")
 public abstract class AbstractSubGraph {
 
-    /** 
+    /**
      * Initialise the Subgraph search algorithm. Each Subgraph algorithm
      * should contain this method.
      * @return true if Query/reactant is a subgraph of Target/product

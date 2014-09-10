@@ -108,8 +108,8 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 		}
 		atomContainerCount = 0;
 	}
-	
-	
+
+
 	/**
 	 * Removes an AtomContainer from this container.
 	 *
@@ -126,14 +126,14 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 	/**
 	 * Replace the AtomContainer at a specific position (array has to be large enough).
-	 * 
+	 *
 	 * @param position   position in array for AtomContainer
 	 * @param container  the replacement AtomContainer
 	 */
 	public void replaceAtomContainer(int position, IAtomContainer container) {
 		atomContainers[position] = container;
 	}
-	
+
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *
@@ -229,7 +229,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
 
 	/**
 	 *  Get an iterator for this AtomContainerSet.
-     * 
+     *
      * @return A new Iterator for this AtomContainerSet.
 	 */
 	public Iterable<IAtomContainer> atomContainers() {
@@ -246,7 +246,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
      */
 	private class AtomContainerIterator implements Iterator<IAtomContainer> {
 		private int pointer = 0;
-    	
+
         public boolean hasNext() {
             return pointer < atomContainerCount;
         }
@@ -259,7 +259,7 @@ public class AtomContainerSet extends ChemObject implements Serializable, IAtomC
             removeAtomContainer(--pointer);
         }
 	}
-	
+
 
 	/**
 	 * Returns the AtomContainer at position <code>number</code> in the

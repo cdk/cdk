@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.tools.manipulator;
 
@@ -77,7 +77,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test
     public void testExtractSubstructure() throws CloneNotSupportedException {
         IAtomContainer source = MoleculeFactory.makeEthylCyclohexane();
-        IAtomContainer ringSubstructure = 
+        IAtomContainer ringSubstructure =
             AtomContainerManipulator.extractSubstructure(source, 0, 1, 2, 3, 4, 5);
         Assert.assertEquals(6, ringSubstructure.getAtomCount());
         Assert.assertEquals(6, ringSubstructure.getBondCount());
@@ -105,7 +105,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         // total includes explicit and implicit (we don't have any implicit to 4 is expected)
         Assert.assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
-        
+
     @Test public void testConvertImplicitToExplicitHydrogens_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
@@ -115,7 +115,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0,1, CDKConstants.BONDORDER_DOUBLE);
         Assert.assertEquals(2, mol.getAtomCount());
         Assert.assertEquals(1, mol.getBondCount());
-        
+
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(mol);
         Assert.assertEquals(6, mol.getAtomCount());
         Assert.assertEquals(5, mol.getBondCount());
@@ -138,7 +138,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
 
-        
+
     @Test public void testGetTotalHydrogenCount_IAtomContainer_zeroImplicit() throws IOException, ClassNotFoundException, CDKException {
         IAtomContainer mol = new AtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
@@ -192,7 +192,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(carbon);
         Assert.assertEquals(4, AtomContainerManipulator.getTotalHydrogenCount(mol));
     }
-        
+
     @Test public void testRemoveHydrogens_IAtomContainer() throws IOException, ClassNotFoundException, CDKException{
         IAtomContainer mol = new AtomContainer(); // ethene
         mol.addAtom(new Atom("C"));
@@ -207,9 +207,9 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         for (IAtom atom : mol.atoms())
-            atom.setImplicitHydrogenCount(0);        
+            atom.setImplicitHydrogenCount(0);
         mol.setFlag(CDKConstants.ISAROMATIC,true);
-        
+
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(2, ac.getAtomCount());
@@ -309,14 +309,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(0, 3, IBond.Order.SINGLE);
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
-        
+
         mol.getAtom(0).setImplicitHydrogenCount(0);
         mol.getAtom(1).setImplicitHydrogenCount(0);
         mol.getAtom(2).setImplicitHydrogenCount(0);
         mol.getAtom(3).setImplicitHydrogenCount(0);
         mol.getAtom(4).setImplicitHydrogenCount(0);
         mol.getAtom(5).setImplicitHydrogenCount(0);
-        
+
         Assert.assertEquals(6, mol.getAtomCount());
         IAtomContainer ac = AtomContainerManipulator.removeHydrogens(mol);
         Assert.assertEquals(4, ac.getAtomCount());
@@ -329,7 +329,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(0, ac.getAtom(2).getImplicitHydrogenCount().intValue());
         Assert.assertEquals(0, ac.getAtom(3).getImplicitHydrogenCount().intValue());
     }
-    
+
     @Test public void testGetAllIDs_IAtomContainer() {
         IAtomContainer mol = new AtomContainer(); // ethene
         mol.addAtom(new Atom("C")); mol.getAtom(0).setID("a1");
@@ -338,7 +338,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H")); mol.getAtom(3).setID("a4");
         mol.addAtom(new Atom("H")); mol.getAtom(4).setID("a5");
         mol.addAtom(new Atom("H")); mol.getAtom(5).setID("a6");
-        
+
         List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(6, ids.size());
         Assert.assertTrue(ids.contains("a1"));
@@ -357,7 +357,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
         mol.addAtom(new Atom("H"));
-        
+
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(mol);
         Assert.assertEquals(6, atoms.length);
         Assert.assertEquals(mol.getAtom(0), atoms[0]);
@@ -382,7 +382,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(CDKConstants.ISAROMATIC,true);
-        
+
         IAtom[] atoms = AtomContainerManipulator.getAtomArray(
         	mol.getConnectedAtomsList(mol.getAtom(0))
         );
@@ -406,7 +406,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(CDKConstants.ISAROMATIC,true);
-        
+
         IBond[] bonds = AtomContainerManipulator.getBondArray(
         	mol.getConnectedBondsList(mol.getAtom(0))
         );
@@ -430,7 +430,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(CDKConstants.ISAROMATIC,true);
-        
+
         IBond[] bonds = AtomContainerManipulator.getBondArray(mol);
         Assert.assertEquals(5, bonds.length);
         Assert.assertEquals(mol.getBond(0), bonds[0]);
@@ -454,7 +454,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.addBond(1, 4, IBond.Order.DOUBLE);
         mol.addBond(1, 5, IBond.Order.DOUBLE);
         mol.setFlag(CDKConstants.ISAROMATIC,true);
-        
+
         Assert.assertEquals(mol.getAtom(0), AtomContainerManipulator.getAtomById(mol, "a1"));
         Assert.assertEquals(mol.getAtom(1), AtomContainerManipulator.getAtomById(mol, "a2"));
         Assert.assertEquals(mol.getAtom(2), AtomContainerManipulator.getAtomById(mol, "a3"));
@@ -464,7 +464,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     }
 
     /**
-     * Test removeHydrogens for B2H6, which contains two multiply bonded H. 
+     * Test removeHydrogens for B2H6, which contains two multiply bonded H.
      * The old behaviour would removed these but now the bridged hydrogens are
      * kept.
      */
@@ -512,13 +512,13 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(1,totalCharge);
     }
-    
+
     /**
      * Test total Exact Mass.
      *
      */
     @Test public void testGetTotalExactMass_IAtomContainer() throws Exception{
-    	
+
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = parser.parseSmiles("CCl");
         mol.getAtom(0).setExactMass(12.00);
@@ -532,7 +532,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     public void getNaturalExactMassNeedsHydrogens() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C"));
-        AtomContainerManipulator.getNaturalExactMass(mol);    
+        AtomContainerManipulator.getNaturalExactMass(mol);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -542,32 +542,32 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         mol.getAtom(0).setAtomicNumber(null);
         AtomContainerManipulator.getNaturalExactMass(mol);
     }
-    
+
     @Test public void testGetNaturalExactMass_IAtomContainer() throws Exception {
-    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance(); 
+    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("Cl"));
-        
+
         mol.getAtom(0).setImplicitHydrogenCount(4);
         mol.getAtom(1).setImplicitHydrogenCount(1);
-    	
+
         double expectedMass = 0.0;
         expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"C"));
         expectedMass += Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"Cl"));
         expectedMass += 5 * Isotopes.getInstance().getNaturalMass(builder.newInstance(IElement.class,"H"));
-        
+
     	double totalExactMass = AtomContainerManipulator.getNaturalExactMass(mol);
 
         Assert.assertEquals(expectedMass, totalExactMass, 0.000001);
     }
-    
+
     /**
      * Test total natural abundance.
      *
      */
     @Test public void testGetTotalNaturalAbundance_IAtomContainer() throws Exception{
-    	
+
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = parser.parseSmiles("CCl");
         mol.getAtom(0).setNaturalAbundance(98.93);
@@ -576,7 +576,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(0.749432,totalAbudance,0.000001);
     }
-    
+
     /**
      * Test total positive formal charge.
      *
@@ -589,7 +589,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         Assert.assertEquals(2,totalCharge);
     }
-    
+
     /**
      * Test total negative formal charge.
      *
@@ -609,11 +609,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         IAtom o = builder.newInstance(IAtom.class,"O");
         IAtom c2 = builder.newInstance(IAtom.class,"C");
         IAtom c3 = builder.newInstance(IAtom.class,"C");
-        
+
         IBond b1 = builder.newInstance(IBond.class,c1, o);
         IBond b2 = builder.newInstance(IBond.class,o, c2);
         IBond b3 = builder.newInstance(IBond.class,c2, c3);
-        
+
         IAtomContainer container1 = new org.openscience.cdk.AtomContainer();
         container1.addAtom(c1);
         container1.addAtom(o);
@@ -634,12 +634,12 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertTrue(intersection.contains(o));
         Assert.assertTrue(intersection.contains(c2));
     }
- 
+
     @Test
     public void testPerceiveAtomTypesAndConfigureAtoms() {
     	IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("R"));
-        
+
         // the next should not throw an exception
         try {
 			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
@@ -657,7 +657,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         IAtomType type = new AtomType("C");
         type.setAtomTypeName("C.sp3");
         type.setExactMass(12.0);
-        
+
         AtomContainerManipulator.percieveAtomTypesAndConfigureUnsetProperties(container);
         Assert.assertNotNull(atom.getExactMass());
         Assert.assertEquals(13.0, atom.getExactMass(), 0.1);
@@ -689,7 +689,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             Assert.assertTrue(atom.getHybridization() == CDKConstants.UNSET);
         }
     }
-    
+
     @Test public void atomicNumberIsNotCleared() throws Exception {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         IAtom atom1 = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"C");
@@ -704,7 +704,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         AtomContainerManipulator.clearAtomConfigurations(container);
         for (IAtom atom : container.atoms()) {
             Assert.assertNotNull(atom.getAtomicNumber());
-        }     
+        }
     }
 
     @Test
@@ -768,7 +768,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             container.addAtom(h);
             container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
         }
-        Assert.assertEquals(3, AtomContainerManipulator.countExplicitHydrogens(container, atom1));                
+        Assert.assertEquals(3, AtomContainerManipulator.countExplicitHydrogens(container, atom1));
     }
 
     @Test
@@ -793,14 +793,14 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(3, AtomContainerManipulator.countHydrogens(container, atom1));
         Assert.assertEquals(2, AtomContainerManipulator.countHydrogens(container, atom2));
 
-        
+
         for (int i = 0; i < 3; i++) {
             IAtom h = DefaultChemObjectBuilder.getInstance().newInstance(IAtom.class,"H");
             container.addAtom(h);
             container.addBond(new Bond(atom1, h, CDKConstants.BONDORDER_SINGLE));
         }
         Assert.assertEquals(6, AtomContainerManipulator.countHydrogens(container, atom1));
-        
+
     }
 
     /**
@@ -852,7 +852,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getAtom(1));
     }
-    
+
     @Test
     public void testReplaceAtom_lonePair() {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -870,7 +870,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         AtomContainerManipulator.replaceAtomByAtom(container, atom2, atom3);
         Assert.assertEquals(atom3, container.getLonePair(0).getAtom());
     }
-    
+
     @Test
     public void testReplaceAtom_singleElectron() {
         IAtomContainer container = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -898,7 +898,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         container.addAtom(builder.newInstance(IAtom.class,"O"));
         Assert.assertEquals(2, AtomContainerManipulator.getHeavyAtoms(container).size());
     }
-    
+
     /**
      * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
      *
@@ -955,7 +955,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals("incorrect no. Bs", 2, b);
         Assert.assertEquals("incorrect no. Hs", 2, h);
     }
-    
+
     @Test public void testCreateAnyAtomAnyBondAtomContainer_IAtomContainer() throws Exception {
         String smiles = "c1ccccc1";
         SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -995,17 +995,17 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
     @Test public void skeleton() throws Exception {
 
-        IAtomContainer adenine  = MoleculeFactory.makeAdenine();        
+        IAtomContainer adenine  = MoleculeFactory.makeAdenine();
         IAtomContainer skeleton = AtomContainerManipulator.skeleton(adenine);
 
         assertThat(skeleton, is(not(sameInstance(adenine))));
-        
+
         for (IBond bond : skeleton.bonds())
             assertThat(bond.getOrder(), is(IBond.Order.SINGLE));
-        
+
         for (int i = 0; i < skeleton.getAtomCount(); i++) {
             assertThat(skeleton.getAtom(i).getSymbol(),
-                       is(adenine.getAtom(i).getSymbol()));    
+                       is(adenine.getAtom(i).getSymbol()));
         }
     }
 
@@ -1020,7 +1020,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         ChemFile content = (ChemFile) reader.read(new ChemFile());
         List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
         IAtomContainer ac = cList.get(0);
-        
+
         Isotopes.getInstance().configureAtoms(ac);
 
         for (IAtom atom : ac.atoms()) {
@@ -1035,11 +1035,11 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
             Assert.assertTrue(atom.getExactMass() > 0);
         }
     }
-    
+
     @Test public void setSingleOrDoubleFlags() {
         IAtomContainer biphenyl = TestMoleculeFactory.makeBiphenyl();
         for (IBond bond : biphenyl.bonds()) {
-            bond.setFlag(CDKConstants.ISAROMATIC, true);            
+            bond.setFlag(CDKConstants.ISAROMATIC, true);
         }
         AtomContainerManipulator.setSingleOrDoubleFlags(biphenyl);
         assertTrue(biphenyl.getFlag(CDKConstants.SINGLE_OR_DOUBLE));
@@ -1052,16 +1052,16 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         }
         // 13 bonds - the one which joins the two rings is now marked as single
         // or double
-        assertThat(n, is(12)); 
+        assertThat(n, is(12));
     }
 
     /**
      * Molecular hydrogen is found in the first batch of PubChem entries, and
      * removal of hydrogen should simply return an empty IAtomContainer, not
      * throw an NullPointerException.
-     * 
-     * - note now molecular hydrogen is preserved to avoid information loss. 
-     * 
+     *
+     * - note now molecular hydrogen is preserved to avoid information loss.
+     *
      * @cdk.bug 2366528
      */
     @Test public void testRemoveHydrogensFromMolecularHydrogen() {
@@ -1087,33 +1087,33 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         Assert.assertEquals(1.0, bosum, 0.001);
 
     }
-    
+
     @Test public void convertExplicitHydrogen_chiralCarbon() throws Exception {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer m      = smipar.parseSmiles("C[C@H](CC)O");
 
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
-        
+
         assertThat(SmilesGenerator.isomeric().create(m), is("C([C@](C(C([H])([H])[H])([H])[H])(O[H])[H])([H])([H])[H]"));
     }
-    
+
     @Test public void convertExplicitHydrogen_sulfoxide() throws Exception {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer m      = smipar.parseSmiles("[S@](=O)(C)CC");
 
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(m);
-        
+
         assertThat(SmilesGenerator.isomeric().create(m), is("[S@](=O)(C([H])([H])[H])C(C([H])([H])[H])([H])[H]"));
     }
-    
+
     @Test public void removeHydrogens_chiralCarbon1() throws Exception {
         assertRemoveH("C[C@@](CC)([H])O", "C[C@H](CC)O");
     }
-    
+
     @Test public void removeHydrogens_chiralCarbon2() throws Exception {
         assertRemoveH("C[C@@]([H])(CC)O", "C[C@@H](CC)O");
     }
-    
+
     @Test public void removeHydrogens_chiralCarbon3() throws Exception {
         assertRemoveH("C[C@@](CC)(O)[H]", "C[C@@H](CC)O");
     }
@@ -1147,13 +1147,13 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
     @Test public void removeHydrogens_db_cis3() throws Exception {
         assertRemoveH("CC(\\[H])=C(\\[H])C", "C/C=C\\C");
     }
-    
+
     // hydrogen isotopes should not be removed
     @Test public void removeHydrogens_isotopes() throws Exception {
         assertRemoveH("C([H])([2H])([3H])[H]", "C([2H])[3H]");
     }
 
-    // hydrogens with charge should not be removed 
+    // hydrogens with charge should not be removed
     @Test public void removeHydrogens_ions() throws Exception {
         assertRemoveH("C([H])([H+])([H-])[H]", "C([H+])[H-]");
     }
@@ -1162,7 +1162,7 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
         assertRemoveH("[H][H]", "[H][H]");
         assertRemoveH("[HH]", "[HH]"); // note: illegal SMILES but works okay
     }
-    
+
     // util for testing hydrogen removal using SMILES
     static void assertRemoveH(String smiIn, String smiExp) throws Exception {
         SmilesParser   smipar = new SmilesParser(SilentChemObjectBuilder.getInstance());
@@ -1170,8 +1170,8 @@ public class AtomContainerManipulatorTest extends CDKTestCase {
 
         String         smiAct = SmilesGenerator.isomeric()
                                                .create(AtomContainerManipulator.removeHydrogens(m));
-        
-        assertThat(smiAct, is(smiExp));    
+
+        assertThat(smiAct, is(smiExp));
     }
 }
 

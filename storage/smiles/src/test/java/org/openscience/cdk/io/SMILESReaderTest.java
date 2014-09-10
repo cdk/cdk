@@ -1,7 +1,7 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -64,8 +64,8 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(8, som.getAtomContainerCount());
     }
-    
-    
+
+
     @Test public void testReadingSmiFile_1() throws Exception {
         String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
@@ -77,7 +77,7 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
 	    name = ( (String)thisMol.getProperty("SMIdbNAME") ).toString();
 	    Assert.assertEquals("benzene", name);
     }
-    
+
     @Test public void testReadingSmiFile_2() throws Exception {
         String filename = "data/smiles/smiles.smi";
         logger.info("Testing: " + filename);
@@ -96,5 +96,5 @@ public class SMILESReaderTest extends SimpleChemObjectReaderTest {
         IAtomContainerSet som = reader.read(new AtomContainerSet());
         Assert.assertEquals(5, som.getAtomContainerCount());
     }
-    
+
 }

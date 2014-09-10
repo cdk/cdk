@@ -1,9 +1,9 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
  *                    2009  Egon Willighagen <egonw@users.sf.net>
  *                    2010  Mark Rijnbeek <mark_rynbeek@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -12,12 +12,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -138,13 +138,13 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 		 *
 		 * @return the number of single electrons
 		 */
-		public int getSingleElectrons() {  
+		public int getSingleElectrons() {
 			return singleElectrons;
 		}
 
         /**
          * Create a SPIN_MULTIPLICITY instance for the specified value.
-         * 
+         *
          * @param value input value (in the property block)
          * @return instance
          * @throws CDKException unknown spin multiplicity value
@@ -162,7 +162,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                 default:
                     throw new CDKException("unknown spin multiplicity: " + value);
             }
-        } 
+        }
 	}
 
 	// number of entries on line; value = 1 to 8
@@ -171,11 +171,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 	private static final int WIDTH = 3;
 
     private BooleanIOSetting forceWriteAs2DCoords;
-    
+
     // The next two options are MDL Query format options, not really
     // belonging to the MDLV2000 format, and will be removed when
     // a MDLV2000QueryWriter is written.
-    
+
     /* Should aromatic bonds be written as bond type 4? If true, this makes the output a query file. */
     private BooleanIOSetting writeAromaticBondTypes;
 
@@ -184,7 +184,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     private BooleanIOSetting writeQueryFormatValencies;
 
     private BufferedWriter writer;
-    
+
     /**
      * Constructs a new MDLWriter that can write an {@link IAtomContainer}
      * to the MDL molfile format.
@@ -209,7 +209,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public MDLV2000Writer(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public MDLV2000Writer() {
         this(new StringWriter());
     }
@@ -218,7 +218,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -230,7 +230,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
     /**
      * Flushes the output and closes this object.
      */
@@ -256,7 +256,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 	}
 
     /**
-     * Writes a {@link IChemObject} to the MDL molfile formated output. 
+     * Writes a {@link IChemObject} to the MDL molfile formated output.
      * It can only output ChemObjects of type {@link IChemFile},
      * {@link IChemObject} and {@link IAtomContainer}.
      *
@@ -289,7 +289,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 		throw new CDKException("Only supported is writing of IChemFile, " +
 				"IChemModel, and IAtomContainer objects.");
 	}
-	
+
 	private void writeChemFile(IChemFile file) throws Exception {
 	    IAtomContainer bigPile = file.getBuilder().newInstance(IAtomContainer.class);
 		for (IAtomContainer container :
@@ -297,20 +297,20 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 		    bigPile.add(container);
 		    if(container.getProperty(CDKConstants.TITLE)!=null){
 		        if(bigPile.getProperty(CDKConstants.TITLE)!=null)
-		            bigPile.setProperty(CDKConstants.TITLE, 
+		            bigPile.setProperty(CDKConstants.TITLE,
 		                    bigPile.getProperty(CDKConstants.TITLE)+"; "
 		                    +container.getProperty(CDKConstants.TITLE));
 		        else
-		            bigPile.setProperty(CDKConstants.TITLE, 
+		            bigPile.setProperty(CDKConstants.TITLE,
 		                    container.getProperty(CDKConstants.TITLE));
 		    }
             if(container.getProperty(CDKConstants.REMARK)!=null){
                 if(bigPile.getProperty(CDKConstants.REMARK)!=null)
-                    bigPile.setProperty(CDKConstants.REMARK, 
+                    bigPile.setProperty(CDKConstants.REMARK,
                             bigPile.getProperty(CDKConstants.REMARK)+"; "
                             +container.getProperty(CDKConstants.REMARK));
                 else
-                    bigPile.setProperty(CDKConstants.REMARK, 
+                    bigPile.setProperty(CDKConstants.REMARK,
                             container.getProperty(CDKConstants.REMARK));
             }
 		}
@@ -334,28 +334,28 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
           title=title.substring(0,80);
         writer.write(title);
         writer.newLine();
-        
+
         /* From CTX spec
          * This line has the format:
          * IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR
          * (FORTRAN: A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> )
          * User's first and last initials (l), program name (P),
-         * date/time (M/D/Y,H:m), dimensional codes (d), scaling factors (S, s), 
-         * energy (E) if modeling program input, internal registry number (R) 
+         * date/time (M/D/Y,H:m), dimensional codes (d), scaling factors (S, s),
+         * energy (E) if modeling program input, internal registry number (R)
          * if input through MDL form.
          * A blank line can be substituted for line 2.
          */
         writer.write("  CDK     ");
         writer.write(new SimpleDateFormat("MMddyyHHmm").format(System.currentTimeMillis()));
         writer.newLine();
-        
+
         String comment = (String)container.getProperty(CDKConstants.REMARK);
         if (comment == null) comment = "";
         if(comment.length()>80)
           comment=comment.substring(0,80);
         writer.write(comment);
         writer.newLine();
-        
+
         // write Counts line
 		line += formatMDLInt(container.getAtomCount(), 3);
         line += formatMDLInt(container.getBondCount(), 3);
@@ -437,7 +437,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         		line += formatMDLString(container.getAtom(f).getSymbol(), 3);
         	}
         	line += String.format(" 0  0  %d  0  0", atom.getStereoParity() == null ? 0 : atom.getStereoParity());
-            
+
             // write valence - this is a bit of pain as the CDK has both
             // valence and implied hydrogen counts making life a lot more
             // difficult than it needs to be - we also have formal
@@ -449,18 +449,18 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                     int     explicitValence = (int) AtomContainerManipulator.getBondOrderSum(container, atom);
                     int     charge          = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
                     Integer element         = atom.getAtomicNumber();
-                    
+
                     if (element == null) {
                         line += formatMDLInt(0, 3);
                     } else {
-                        
+
                         int implied = MDLValence.implicitValence(element, charge, explicitValence);
-                        
+
                         if (atom.getValency() != null && atom.getImplicitHydrogenCount() != null) {
-                            
+
                             int valence = atom.getValency();
                             int actual  = explicitValence + atom.getImplicitHydrogenCount();
-                            
+
                             // valence from h count differs from field? we still
                             // set to default - which one has more merit?
                             if (valence != actual || implied == atom.getValency())
@@ -469,22 +469,22 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                 line += formatMDLInt(15, 3);
                             else if (valence > 0 && valence < 15)
                                 line += formatMDLInt(valence, 3);
-                            else                            
+                            else
                                 line += formatMDLInt(0, 3);
                         } else if(atom.getImplicitHydrogenCount() != null) {
-                            
+
                             int actual  = explicitValence + atom.getImplicitHydrogenCount();
-                            
+
                             if (implied == actual) {
                                 line += formatMDLInt(0, 3);
                             }
-                            else {                                               
-                                if (actual == 0) 
-                                    line += formatMDLInt(15, 3);                                
+                            else {
+                                if (actual == 0)
+                                    line += formatMDLInt(15, 3);
                                 else if (actual > 0 && actual < 15)
-                                    line += formatMDLInt(actual, 3);                                
-                                else 
-                                    line += formatMDLInt(0, 3);                                
+                                    line += formatMDLInt(actual, 3);
+                                else
+                                    line += formatMDLInt(0, 3);
                             }
                         } else {
                             int valence = atom.getValency();
@@ -501,10 +501,10 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                                 line += formatMDLInt(0, 3);
                         }
                     }
-                    
+
                 } catch (RuntimeException e) {
                     // null bond order, query bond order - who knows.. but
-                    line += formatMDLInt(0, 3);    
+                    line += formatMDLInt(0, 3);
                 }
         	}
             line += "  0  0  0";
@@ -541,7 +541,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         	if (bond.getAtomCount() != 2) {
         		logger.warn("Skipping bond with more/less than two atoms: " + bond);
         	} else {
-        		if (bond.getStereo() == IBond.Stereo.UP_INVERTED || 
+        		if (bond.getStereo() == IBond.Stereo.UP_INVERTED ||
         				bond.getStereo() == IBond.Stereo.DOWN_INVERTED ||
         				bond.getStereo() == IBond.Stereo.UP_OR_DOWN_INVERTED) {
         			// turn around atom coding to correct for inv stereo
@@ -559,7 +559,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
                         else
                             bondType = bond.getOrder().numeric();
                         line += formatMDLInt(bondType,3);
-                            
+
         		line += "  ";
         		switch(bond.getStereo()){
         		case UP:
@@ -591,11 +591,11 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         		writer.newLine();
         	}
         }
-        
+
         // Write Atom Value
         for (int i = 0; i < container.getAtomCount(); i++) {
         	IAtom atom = container.getAtom(i);
-        	if(atom.getProperty(CDKConstants.COMMENT)!=null 
+        	if(atom.getProperty(CDKConstants.COMMENT)!=null
         	&& atom.getProperty(CDKConstants.COMMENT) instanceof String
         	&& !((String)atom.getProperty(CDKConstants.COMMENT)).trim().equals("") ) {
                 writer.write("V  ");
@@ -719,7 +719,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 
             }
         }
-        
+
         // close molecule
         writer.write("M  END");
         writer.newLine();
@@ -740,7 +740,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
 	}
 
 	/**
-	 * Formats an integer to fit into the connection table and changes it 
+	 * Formats an integer to fit into the connection table and changes it
      * to a String.
 	 *
 	 * @param   i  The int to be formated
@@ -761,8 +761,8 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
         fs += s;
         return fs;
     }
-	
-	
+
+
 
 
 	/**
@@ -808,7 +808,7 @@ public class MDLV2000Writer extends DefaultChemObjectWriter {
             s += " ";
         return s;
     }
-    
+
     /**
      * Initializes IO settings.<br>
      * Please note with regards to "writeAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,

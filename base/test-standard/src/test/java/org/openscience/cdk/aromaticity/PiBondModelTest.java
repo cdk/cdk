@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version -1.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -167,13 +167,13 @@ public class PiBondModelTest {
         test(smiles("O=C1NC=CC=C1"),
              -1, -1, -1, 1, 1, 1, 1);
     }
-        
+
     // ensures atoms next to 2 cyclic pi bonds aren't allowed
     @Test public void cyclodecahexaene() throws Exception {
         test(smiles("C1=CC=C=CC=C=CC=C1"),
-             1, 1, 1, -1, 1, 1, -1, 1, 1, 1);    
+             1, 1, 1, -1, 1, 1, -1, 1, 1, 1);
     }
-    
+
     // similar to cyclodecahexaene but 5 pi bonds instead of 6
     @Test public void cyclodecapentaene() throws Exception {
         test(smiles("C1=CC=CC=CC=CC=C1"),

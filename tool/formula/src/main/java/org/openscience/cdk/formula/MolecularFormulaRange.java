@@ -30,12 +30,12 @@ import org.openscience.cdk.interfaces.IIsotope;
  *  a fix occurrence in the MolecularFormula but they have a range.<p>
  *  With this class man can define a MolecularFormula which contains certain IIsotope
  *  with a maximum and minimum occurrence.
- *   
+ *
  *  Examples:
  * <ul>
  *   <li><code>[C(1-5)H(4-10)]-</code></li>
  * </ul>
- * 
+ *
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
@@ -45,9 +45,9 @@ import org.openscience.cdk.interfaces.IIsotope;
 @TestClass("org.openscience.cdk.formula.MolecularFormulaRangeTest")
 public class MolecularFormulaRange implements Cloneable {
 
-	
+
 	private Map<IIsotope,Integer> isotopesMax;
-	private Map<IIsotope,Integer> isotopesMin;	
+	private Map<IIsotope,Integer> isotopesMin;
 	/**
 	 *  Constructs an empty MolecularFormulaExpand.
 	 */
@@ -55,7 +55,7 @@ public class MolecularFormulaRange implements Cloneable {
 		isotopesMax = new HashMap<IIsotope,Integer>();
 		isotopesMin = new HashMap<IIsotope,Integer>();
 	}
-	
+
 	/**
 	 *  Adds an Isotope to this MolecularFormulaExpand in a number of
 	 *  maximum and minimum occurrences allowed.
@@ -63,7 +63,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 * @param  isotope  The isotope to be added to this MolecularFormulaExpand
 	 * @param  countMax The maximal number of occurrences to add
 	 * @param  countMin The minimal number of occurrences to add
-	 * 
+	 *
 	 */
 	@TestMethod("testAddIsotope_IIsotope_int_int")
 	public void addIsotope(IIsotope isotope, int countMin, int countMax) {
@@ -80,11 +80,11 @@ public class MolecularFormulaRange implements Cloneable {
 		if(!flag){
 			isotopesMax.put(isotope, countMax);
 			isotopesMin.put(isotope, countMin);
-		}		
+		}
 	}
 
 	/**
-	 *  True, if the MolecularFormulaExpand contains the given IIsotope. 
+	 *  True, if the MolecularFormulaExpand contains the given IIsotope.
 	 *  The method looks for other isotopes which has the same
 	 *  symbol, natural abundance and exact mass.
 	 *
@@ -102,7 +102,7 @@ public class MolecularFormulaRange implements Cloneable {
 		return false;
 	}
 	/**
-	 *  Checks a set of Nodes for the maximal occurrence of the isotope in the 
+	 *  Checks a set of Nodes for the maximal occurrence of the isotope in the
 	 *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
 	 *  does not exist.
 	 *
@@ -114,7 +114,7 @@ public class MolecularFormulaRange implements Cloneable {
 		return !contains(isotope) ? -1 : isotopesMax.get(getIsotope(isotope));
 	}
 	/**
-	 *  Checks a set of Nodes for the minimal occurrence of the isotope in the 
+	 *  Checks a set of Nodes for the minimal occurrence of the isotope in the
 	 *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
 	 *  does not exist.
 	 *
@@ -127,7 +127,7 @@ public class MolecularFormulaRange implements Cloneable {
 	}
 
 	/**
-	 *  Checks a set of Nodes for the number of different isotopes in the 
+	 *  Checks a set of Nodes for the number of different isotopes in the
 	 *  MolecularFormulaExpand.
 	 *
 	 * @return        The the number of different isotopes in this MolecularFormulaExpand
@@ -136,7 +136,7 @@ public class MolecularFormulaRange implements Cloneable {
 	public int getIsotopeCount() {
 		return isotopesMax.size();
 	}
-	
+
 	/**
 	 *  Get the isotope instance given an IIsotope. The instance is those
 	 *  that has the isotope with the same symbol, natural abundance and
@@ -187,8 +187,8 @@ public class MolecularFormulaRange implements Cloneable {
 	    isotopesMax.remove(getIsotope(isotope));
 	    isotopesMin.remove(getIsotope(isotope));
     }
-    
-    
+
+
 
     /**
 	 * Clones this MolecularFormulaExpand object and its content. I should
@@ -198,7 +198,7 @@ public class MolecularFormulaRange implements Cloneable {
 	 */
 	@TestMethod("testClone")
 	public Object clone() throws CloneNotSupportedException {
-		
+
 		MolecularFormulaRange clone = new MolecularFormulaRange();
 		Iterator<IIsotope> iterIso = this.isotopes().iterator();
 		while(iterIso.hasNext()){
@@ -207,24 +207,24 @@ public class MolecularFormulaRange implements Cloneable {
 		}
 		return clone;
 	}
-	
+
 	/**
 	 * Compare to IIsotope. The method doesn't compare instance but if they
 	 * have the same symbol, natural abundance and exact mass.
-	 * 
+	 *
 	 * @param isotopeOne   The first Isotope to compare
 	 * @param isotopeTwo   The second Isotope to compare
 	 * @return             True, if both isotope are the same
 	 */
 	private boolean isTheSame(IIsotope isotopeOne, IIsotope isotopeTwo) {
-		
+
 		if(!isotopeOne.getSymbol().equals(isotopeTwo.getSymbol()) )
 			return false;
 		if(isotopeOne.getNaturalAbundance() != isotopeTwo.getNaturalAbundance() )
 			return false;
 		if(isotopeOne.getExactMass() != isotopeTwo.getExactMass() )
 			return false;
-		
+
 		return true;
 	}
 

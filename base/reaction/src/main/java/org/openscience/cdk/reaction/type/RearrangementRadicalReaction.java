@@ -43,14 +43,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * <p>IReactionProcess which participate in movement resonance. 
- * This reaction could be represented as [A*]-B=C => A=B-[c*]. Due to 
- * excess of charge of the atom B, the single electron of the atom A is 
+ * <p>IReactionProcess which participate in movement resonance.
+ * This reaction could be represented as [A*]-B=C => A=B-[c*]. Due to
+ * excess of charge of the atom B, the single electron of the atom A is
  * displaced through the double bond.</p>
  * <p>Make sure that the molecule has the correspond lone pair electrons
  * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
  * <p>It is processed by the RearrangementChargeMechanism class</p>
- * 
+ *
  * <pre>
  *  IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newAtomContainerSet();
  *  setOfReactants.addAtomContainer(new AtomContainer());
@@ -59,22 +59,22 @@ import java.util.Iterator;
     type.setParameters(params);
  *  IReactionSet setOfReactions = type.initiate(setOfReactants, null);
  *  </pre>
- * 
+ *
  * <p>We have the possibility to localize the reactive center. Good method if you
  * want to localize the reaction in a fixed point</p>
  * <pre>atoms[0].setFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
  * <p>Moreover you must put the parameter Boolean.TRUE</p>
  * <p>If the reactive center is not localized then the reaction process will
  * try to find automatically the possible reactive center.</p>
- * 
- * 
+ *
+ *
  * @author         Miguel Rojas
- * 
+ *
  * @cdk.created    2006-05-05
  * @cdk.module     reaction
  * @cdk.githash
  * @cdk.set        reaction-types
- * 
+ *
  * @see RearrangementChargeMechanism
  **/
 @TestClass(value="org.openscience.cdk.reaction.type.RearrangementRadicalReactionTest")
@@ -101,7 +101,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 				"$Id$",
 				"The Chemistry Development Kit");
 	}
-	
+
 	/**
 	 *  Initiate process.
 	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
@@ -117,14 +117,14 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
 
 		logger.debug("initiate reaction: RearrangementRadicalReaction");
-		
+
 		if (reactants.getAtomContainerCount() != 1) {
 			throw new CDKException("RearrangementRadicalReaction only expects one reactant");
 		}
 		if (agents != null) {
 			throw new CDKException("RearrangementRadicalReaction don't expects agents");
 		}
-		
+
 		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
 		IAtomContainer reactant = reactants.getAtomContainer(0);
 
@@ -132,38 +132,38 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
 		if( ipr != null && !ipr.isSetParameter())
 			setActiveCenters(reactant);
-		
+
 		Iterator<IAtom> atoms = reactants.getAtomContainer(0).atoms().iterator();
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)&& reactant.getConnectedSingleElectronsCount(atomi) == 1){
-				
+
 				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-				
+
 				while (bondis.hasNext()) {
 		            IBond bondi = bondis.next();
-		            
+
 					if(bondi.getFlag(CDKConstants.REACTIVE_CENTER)&& bondi.getOrder() == IBond.Order.SINGLE){
-						
+
 						IAtom atomj = bondi.getConnectedAtom(atomi);
-						if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) 
+						if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
 								&& (atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
 								&& reactant.getConnectedSingleElectronsCount(atomj) == 0){
-							
+
 							Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
 							while (bondjs.hasNext()) {
 					            IBond bondj = bondjs.next();
-					            
+
 					            if(bondj.equals(bondi))
 					            	continue;
-	
+
 					            if(bondj.getFlag(CDKConstants.REACTIVE_CENTER) && bondj.getOrder() == IBond.Order.DOUBLE){
-									
+
 					            	IAtom atomk = bondj.getConnectedAtom(atomj);
-									if(atomk.getFlag(CDKConstants.REACTIVE_CENTER) 
+									if(atomk.getFlag(CDKConstants.REACTIVE_CENTER)
 											&& (atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk.getFormalCharge()) == 0
 											&& reactant.getConnectedSingleElectronsCount(atomk) == 0){
-										
+
 										ArrayList<IAtom> atomList = new ArrayList<IAtom>();
 					                	atomList.add(atomi);
 					                	atomList.add(atomj);
@@ -171,7 +171,7 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 					                	ArrayList<IBond> bondList = new ArrayList<IBond>();
 					                	bondList.add(bondi);
 					                	bondList.add(bondj);
-	
+
 										IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
 										moleculeSet.addAtomContainer(reactant);
 										IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
@@ -187,23 +187,23 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
 				}
 			}
 		}
-		return setOfReactions;	
-		
-		
+		return setOfReactions;
+
+
 	}
 	/**
-	 * set the active center for this molecule. 
-	 * The active center will be those which correspond with  [A*]-B=C . 
+	 * set the active center for this molecule.
+	 * The active center will be those which correspond with  [A*]-B=C .
 	 * <pre>
 	 * A: Atom with single electron
 	 * -: Single bond
-	 * B: Atom 
+	 * B: Atom
 	 * =: Double bond
 	 * C: Atom
 	 *  </pre>
-	 * 
+	 *
 	 * @param reactant The molecule to set the activity
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
 	private void setActiveCenters(IAtomContainer reactant) throws CDKException {
 		if(AtomContainerManipulator.getTotalNegativeFormalCharge(reactant) != 0 /*|| AtomContainerManipulator.getTotalPositiveFormalCharge(reactant) != 0*/)
@@ -212,31 +212,31 @@ public class RearrangementRadicalReaction extends ReactionEngine implements IRea
         while (atoms.hasNext()) {
 			IAtom atomi = atoms.next();
 			if(reactant.getConnectedSingleElectronsCount(atomi) == 1){
-				
+
 				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-				
+
 				while (bondis.hasNext()) {
 		            IBond bondi = bondis.next();
-		            
+
 					if(bondi.getOrder() == IBond.Order.SINGLE){
-						
+
 						IAtom atomj = bondi.getConnectedAtom(atomi);
 						if((atomj.getFormalCharge() == CDKConstants.UNSET ? 0 : atomj.getFormalCharge()) == 0
 								&& reactant.getConnectedSingleElectronsCount(atomj) == 0){
-							
+
 							Iterator<IBond> bondjs = reactant.getConnectedBondsList(atomj).iterator();
 							while (bondjs.hasNext()) {
 					            IBond bondj = bondjs.next();
-					            
+
 					            if(bondj.equals(bondi))
 					            	continue;
-	
+
 					            if(bondj.getOrder() == IBond.Order.DOUBLE){
-									
+
 					            	IAtom atomk = bondj.getConnectedAtom(atomj);
 									if((atomk.getFormalCharge() == CDKConstants.UNSET ? 0 : atomk.getFormalCharge()) == 0
 											&& reactant.getConnectedSingleElectronsCount(atomk) == 0){
-										
+
 										atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
 										atomj.setFlag(CDKConstants.REACTIVE_CENTER,true);
 										atomk.setFlag(CDKConstants.REACTIVE_CENTER,true);

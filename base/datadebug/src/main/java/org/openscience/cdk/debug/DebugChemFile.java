@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,14 +40,14 @@ public class DebugChemFile extends ChemFile
     implements IChemFile {
 
     private static final long serialVersionUID = -5575043161897814279L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugChemFile.class);
 
 	public DebugChemFile() {
 		super();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void addListener(IChemObjectListener col) {
 		logger.debug("Adding listener: ", col);
@@ -172,7 +172,7 @@ public class DebugChemFile extends ChemFile
 		logger.debug("Removing sequence: ", pos);
 		super.removeChemSequence(pos);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public Iterable<IChemSequence> chemSequences() {
 		logger.debug("Getting chemSequences");

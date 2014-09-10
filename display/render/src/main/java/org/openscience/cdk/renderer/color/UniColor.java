@@ -3,12 +3,12 @@
  *                    John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
- *   
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -30,7 +30,7 @@ import java.awt.Color;
 
 /**
  * Defines an atom color that draws as a single uniform color.
- * 
+ *
  * @author John May
  */
 public class UniColor implements IAtomColorer {
@@ -39,7 +39,7 @@ public class UniColor implements IAtomColorer {
 
     /**
      * Create a uniform atom colorer.
-     * 
+     *
      * @param color the color
      */
     public UniColor(Color color) {

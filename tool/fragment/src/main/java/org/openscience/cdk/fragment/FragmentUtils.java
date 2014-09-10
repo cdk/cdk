@@ -49,7 +49,7 @@ public class FragmentUtils {
      *
      * Note that if a ring bond is specified, the resultant list will contain
      * teh opened ring twice.
-     * 
+     *
      * @param atomContainer The molecule to split
      * @param bond The bond to split at
      * @return A list containing the two parts of the molecule

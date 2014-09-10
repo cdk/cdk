@@ -60,8 +60,8 @@ final class SeedGenerator extends AbstractHashGenerator
 
     /* used to encode atom attributes */
     private final AtomEncoder encoder;
-    
-    /** Optional suppression of atoms. */ 
+
+    /** Optional suppression of atoms. */
     private final AtomSuppression suppression;
 
     /**
@@ -82,7 +82,7 @@ final class SeedGenerator extends AbstractHashGenerator
      * @param encoder a method for encoding atom invariant properties
      * @throws NullPointerException encoder was null
      * @see ConjugatedAtomEncoder
-     */ 
+     */
     public SeedGenerator(AtomEncoder encoder, AtomSuppression suppression) {
         this(encoder, new Xorshift(), suppression);
     }
@@ -93,7 +93,7 @@ final class SeedGenerator extends AbstractHashGenerator
      *
      * @param encoder      a method for encoding atom invariant properties
      * @param pseudorandom number generator to randomise initial invariants
-     * @param suppression  indicates which vertices should be suppressed                     
+     * @param suppression  indicates which vertices should be suppressed
      * @throws NullPointerException encoder or pseudorandom number generator was
      *                              null
      */
@@ -114,7 +114,7 @@ final class SeedGenerator extends AbstractHashGenerator
     @Override public long[] generate(IAtomContainer container) {
 
         Suppressed suppressed = suppression.suppress(container);
-        
+
         int n = container.getAtomCount();
         int m = n - suppressed.count();   // number of non-suppressed vertices
         int seed = m > 1 ? 9803 % m : 1;

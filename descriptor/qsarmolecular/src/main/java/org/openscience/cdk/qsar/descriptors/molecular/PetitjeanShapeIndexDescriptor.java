@@ -49,7 +49,7 @@ import javax.vecmath.Point3d;
  * <li>topoShape - topological shape index
  * <li>geomShape - geometric shape index
  * </ol>
- * 
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -214,5 +214,5 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
         return new DoubleArrayResultType(2);
     }
 }
-    
+
 

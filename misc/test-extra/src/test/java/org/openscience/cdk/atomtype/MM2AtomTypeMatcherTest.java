@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.atomtype;
 
@@ -52,7 +52,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
 	private static ILoggingTool logger =
 	    LoggingToolFactory.createLoggingTool(MM2AtomTypeMatcherTest.class);
 	private static IAtomContainer testMolecule = null;
-	
+
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
     @BeforeClass public static void setUp() throws Exception {
@@ -71,7 +71,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     			IAtomType matched = null;
     			matched = atm.findMatchingAtomType(testMolecule, testMolecule.getAtom(i));
     			logger.debug("Found AtomType: ", matched);
-    			AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);       
+    			AtomTypeManipulator.configure(testMolecule.getAtom(i), matched);
     		}
     	}
     }
@@ -80,7 +80,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     	MM2AtomTypeMatcher matcher = new MM2AtomTypeMatcher();
 	    Assert.assertNotNull(matcher);
     }
-    
+
     @Test public void testFindMatchingAtomType_IAtomContainer() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("C");
@@ -103,9 +103,9 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     		Assert.assertTrue(testMolecule.getAtom(i).getAtomTypeName().length() > 0);
     	}
     }
-    
+
     // FIXME: Below should be tests for *all* atom types in the MM2 atom type specificiation
-    
+
     @Test public void testSthi() {
         assertAtomType(testedAtomTypes, "Sthi",testMolecule.getAtom(0));
     }
@@ -127,7 +127,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     @Test public void testNsp2() {
         assertAtomType(testedAtomTypes, "Nsp2",testMolecule.getAtom(256));
     }
-    
+
     /**
      * The test seems to be run by JUnit in the order in which they are found
      * in the source. Ugly, but @AfterClass does not work because that
@@ -138,7 +138,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
     		"org/openscience/cdk/config/data/mm2_atomtypes.xml",
             SilentChemObjectBuilder.getInstance()
         );
-    	
+
    	    IAtomType[] expectedTypes = factory.getAllAtomTypes();
     	if (expectedTypes.length != testedAtomTypes.size()) {
        	    String errorMessage = "Atom types not tested:";
@@ -147,7 +147,7 @@ public class MM2AtomTypeMatcherTest extends AbstractAtomTypeTest {
        	    		errorMessage += " " + expectedTypes[i].getAtomTypeName();
        	    }
     		Assert.assertEquals(errorMessage,
-    			factory.getAllAtomTypes().length, 
+    			factory.getAllAtomTypes().length,
     			testedAtomTypes.size()
     		);
     	}

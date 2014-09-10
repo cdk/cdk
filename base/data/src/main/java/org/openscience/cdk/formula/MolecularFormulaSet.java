@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 /**
  *  Class defining an set object of MolecularFormulas. It maintains
  *   a list of list IMolecularFormula.<p>
- *   
+ *
  * @cdk.module  data
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
@@ -51,21 +51,21 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -2043178712150212550L;
-	
+
 	/**  Internal List of IMolecularFormula. */
 	private List<IMolecularFormula> components;
-	
+
 	/**
 	 *  Constructs an empty MolecularFormulaSet.
-	 *  
+	 *
 	 *  @see #MolecularFormulaSet(IMolecularFormula)
 	 */
 	public MolecularFormulaSet() {
 		components = new ArrayList<IMolecularFormula>();
 	}
-	
+
 	/**
-	 * Constructs a MolecularFormulaSet with a copy MolecularFormulaSet of another 
+	 * Constructs a MolecularFormulaSet with a copy MolecularFormulaSet of another
 	 * MolecularFormulaSet (A shallow copy, i.e., with the same objects as in
 	 * the original MolecularFormulaSet).
 	 *
@@ -79,7 +79,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	/**
      *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
      *
-     * @param  formulaSet  The MolecularFormulaSet 
+     * @param  formulaSet  The MolecularFormulaSet
      */
     @TestMethod("testAdd_IMolecularFormulaSet")
 	public void add(IMolecularFormulaSet formulaSet) {
@@ -99,7 +99,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	public void addMolecularFormula(IMolecularFormula formula) {
 		components.add(formula);
 	}
-	
+
 	/**
 	 *  Returns an Iterable for looping over all IMolecularFormula
 	 *   in this MolecularFormulaSet.
@@ -110,7 +110,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	public Iterable<IMolecularFormula> molecularFormulas() {
 		return components;
 	}
-	
+
 	/**
 	 *  Returns an Iterator for looping over all IMolecularFormula
 	 *   in this MolecularFormulaSet.
@@ -121,7 +121,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	public Iterator<IMolecularFormula> iterator() {
 		return components.iterator();
 	}
-	
+
 	/**
      * Returns the number of MolecularFormulas in this MolecularFormulaSet.
      *
@@ -142,21 +142,21 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     public boolean contains(IMolecularFormula formula) {
 	    return components.contains(formula);
     }
-    
+
     /**
-     *  
+     *
      * Returns the MolecularFormula at position <code>number</code> in the
      * chemObject.
      *
-     * @param  position The position of the IMolecularFormula to be returned. 
-     * @return          The IMolecularFormula at position <code>number</code> . 
+     * @param  position The position of the IMolecularFormula to be returned.
+     * @return          The IMolecularFormula at position <code>number</code> .
      */
     @TestMethod("testGetMolecularFormula_int")
     public  IMolecularFormula getMolecularFormula(int position) {
 	    return components.get(position);
     }
 
-    
+
     /**
 	 * Removes all IMolecularFormula from this chemObject.
 	 */
@@ -184,7 +184,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
     public void removeMolecularFormula(int position) {
 	    components.remove(position);
     }
-    
+
     /**
 	 * Clones this MolecularFormulaSet object and its content.
 	 *
@@ -192,7 +192,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 	 */
     @TestMethod("testClone")
 	public Object clone() throws CloneNotSupportedException {
-		
+
 //		/* it is not a super class of chemObject */
 //		MolecularFormulaSet clone = (MolecularFormulaSet) super.clone();
 //        // start from scratch
@@ -202,7 +202,7 @@ public class MolecularFormulaSet implements Iterable<IMolecularFormula>, IMolecu
 //		while(iterForm.hasNext()){
 //			clone.addMolecularFormula((IMolecularFormula) iterForm.next().clone());
 //		}
-		
+
 		MolecularFormulaSet clone = new MolecularFormulaSet();
 		for (IMolecularFormula mf : this.molecularFormulas()){
 			clone.addMolecularFormula((IMolecularFormula) mf.clone());

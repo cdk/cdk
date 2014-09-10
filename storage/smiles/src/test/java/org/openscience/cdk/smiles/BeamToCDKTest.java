@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -133,7 +133,7 @@ public class BeamToCDKTest {
         IAtom a = g2c.toCDKAtom(AtomBuilder.aliphatic(Element.Nitrogen)
                                            .hydrogens(4)
                                            .cation()
-                                           .build(),                
+                                           .build(),
                                 4);
         assertThat(a.getSymbol(), is("N"));
         assertThat(a.getImplicitHydrogenCount(), is(4));
@@ -421,17 +421,17 @@ public class BeamToCDKTest {
         assertThat(ses.length, is(2));
         assertThat(ses[0], is(instanceOf(ITetrahedralChirality.class)));
         assertThat(ses[1], is(instanceOf(ITetrahedralChirality.class)));
-        
+
         ITetrahedralChirality tc1 = (ITetrahedralChirality) ses[0];
         ITetrahedralChirality tc2 = (ITetrahedralChirality) ses[1];
-        
+
         // we want the second atom stereo as tc1
         if (ac.getAtomNumber(tc1.getChiralAtom()) > ac.getAtomNumber(tc2.getChiralAtom())) {
             ITetrahedralChirality swap = tc1;
             tc1 = tc2;
             tc2 = swap;
         }
-        
+
         assertThat(tc1.getChiralAtom(), is(ac.getAtom(1)));
         assertThat(tc1.getLigands(), is(new IAtom[]{
                 ac.getAtom(0),
@@ -447,7 +447,7 @@ public class BeamToCDKTest {
         // we order the atoms by their index the tetrahedral configuration goes
         // from clockwise in the SMILES to anti-clockwise ('@'). Writing out the
         // SMILES again one can see it will flip back clockwise ('@@').
-        
+
         assertThat(tc2.getChiralAtom(), is(ac.getAtom(6)));
         assertThat(tc2.getLigands(), is(new IAtom[]{
                 ac.getAtom(1),
@@ -560,20 +560,20 @@ public class BeamToCDKTest {
         assertThat(dbs.getStereo(),
                    is(IDoubleBondStereochemistry.Conformation.OPPOSITE));
     }
-    
+
     @Test public void readAtomClass() throws Exception {
         IAtomContainer ac = convert("CC[C:2]C");
         assertNotNull(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING));
         assertThat(ac.getAtom(2).getProperty(ATOM_ATOM_MAPPING, Integer.class), is(2));
     }
-    
+
     @Test public void erroneousLabels_tRNA() throws Exception {
         IAtomContainer ac = convert("[tRNA]CC");
         assertThat(ac.getAtom(0).getSymbol(), is("*"));
         assertThat(ac.getAtom(0), is(instanceOf(IPseudoAtom.class)));
         assertThat(((IPseudoAtom) ac.getAtom(0)).getLabel(), is("tRNA"));
     }
-    
+
     // believe it or not there are cases of this in the wild -checkout some
     // acyl-carrier-protein SMILES in MetaCyc
     @Test public void erroneousLabels_nested() throws Exception {
@@ -587,17 +587,17 @@ public class BeamToCDKTest {
     public void erroneousLabels_bad1() throws Exception {
         convert("[this]-is-not-okay]CC");
     }
-    
+
     @Test(expected = IOException.class)
     public void erroneousLabels_bad2() throws Exception {
         convert("[this-[is-not-okay]CC");
     }
-    
+
     @Test(expected = IOException.class)
     public void erroneousLabels_bad3() throws Exception {
         convert("[this-[is]-not]-okay]CC");
     }
-    
+
     @Test public void extendedTetrahedral_ccw() throws Exception {
         IAtomContainer ac = convert("CC=[C@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();
@@ -614,7 +614,7 @@ public class BeamToCDKTest {
                 ac.getAtom(4)
         }));
     }
-    
+
     @Test public void extendedTetrahedral_cw() throws Exception {
         IAtomContainer ac = convert("CC=[C@@]=CC");
         Iterator<IStereoElement> elements = ac.stereoElements().iterator();

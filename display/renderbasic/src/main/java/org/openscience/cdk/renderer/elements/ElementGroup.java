@@ -27,16 +27,16 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A group of rendering elements, of any type.
- * 
+ *
  * @cdk.module  renderbasic
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.ElementGroupTest")
-public class ElementGroup 
+public class ElementGroup
        implements IRenderingElement, Iterable<IRenderingElement> {
 
     /**
-     * The elements in the group. 
+     * The elements in the group.
      */
     private final List<IRenderingElement> elements;
 
@@ -54,7 +54,7 @@ public class ElementGroup
 
     /**
      * Add a new element to the group.
-     * 
+     *
      * @param element the element to add to the group
      */
     public void add(IRenderingElement element) {
@@ -64,7 +64,7 @@ public class ElementGroup
 
     /**
      * Visit the members of the group.
-     *  
+     *
      * @param visitor the class that will be visiting each element
      */
     public void visitChildren(IRenderingVisitor visitor) {

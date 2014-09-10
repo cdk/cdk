@@ -39,7 +39,7 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
  * <lI>1: Stereo match, bond type, ring etc,
  * <lI>2: Fragment size,
  * <lI>3: Bond breaking energy
- * 
+ *
  * </OL>
  * @cdk.module smsd
  * @cdk.githash
@@ -48,11 +48,11 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
 @TestClass("org.openscience.cdk.smsd.filters.PostFilterTest")
 public class PostFilter {
 
-    /** 
-     * 
+    /**
+     *
      * Creates a new instance of Post Filter and removes
      * redundant mapping(s).
-     * 
+     *
      * @param mappings
      * @return Filtered non-redundant mappings
      */

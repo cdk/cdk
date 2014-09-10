@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -50,7 +50,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * implementation different values for the ring information may be set. The
  * choice of ring set affects {@link #ringNumber()} and {@link #ringSize()}.
  * Some implementations store all ring sizes whilst others (Daylight) store only
- * the smallest. The {@link #degree()} also depends on whether hydrogens are                                                                          
+ * the smallest. The {@link #degree()} also depends on whether hydrogens are
  * suppressed or represented as explicit atoms. <p/> The {@link
  * #configureDaylightWithRingInfo(IAtomContainer)} and {@link
  * #configureDaylightWithoutRingInfo(IAtomContainer)} static utilities create
@@ -60,7 +60,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * @author John May
  * @cdk.module smarts
  */
-@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.DaylightSMARTSAtomInvariantsTest") 
+@TestClass("org.openscience.cdk.isomorphism.matchers.smarts.DaylightSMARTSAtomInvariantsTest")
 final class SMARTSAtomInvariants {
 
     /** Property key to index the class by. */
@@ -68,7 +68,7 @@ final class SMARTSAtomInvariants {
 
     /** the molecule which this atom belongs. */
     private final IAtomContainer target;
-    
+
     /** Total number of bonds formed - also refereed to as bond order sum. */
     private final int valence;
 
@@ -119,10 +119,10 @@ final class SMARTSAtomInvariants {
         this.ringConnectivity = ringConnectivity;
         this.degree = degree;
     }
-    
+
     @TestMethod("target") IAtomContainer target() {
         return target;
-    } 
+    }
 
     /**
      * Access the valence of this atom. The valence is matched by the {@code
@@ -212,7 +212,7 @@ final class SMARTSAtomInvariants {
      * Computes {@link SMARTSAtomInvariants} and stores on the {@link #KEY} or
      * each {@link IAtom} in the {@code container}. The {@link
      * CDKConstants#ISINRING} is also set for each bond. This configuration does
-     * not include ring information and values are left as unset. 
+     * not include ring information and values are left as unset.
      * Ring membership is still configured but not ring size.
      *
      * <blockquote><pre>
@@ -313,7 +313,7 @@ final class SMARTSAtomInvariants {
             int ringConnections = 0;
 
 
-            // traverse bonds 
+            // traverse bonds
             for (int w : graph[v]) {
                 IBond bond = bondMap.get(v, w);
                 IBond.Order order = bond.getOrder();

@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.templates;
 
@@ -47,7 +47,7 @@ public class MoleculeFactory {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(MoleculeFactory.class);
-    
+
 	public static IAtomContainer makeAlphaPinene() {
 	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C")); // 1
@@ -97,7 +97,7 @@ public class MoleculeFactory {
     for (int atomCount = 1; atomCount < chainLength; atomCount ++) {
         currentChain.addAtom(new Atom("C"));
         currentChain.addBond(atomCount, atomCount - 1, IBond.Order.SINGLE);
-    }  
+    }
 
     return currentChain;
   }
@@ -127,7 +127,7 @@ public class MoleculeFactory {
 
 	/**
 	 * Returns cyclohexene without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
 	 */
 	public static IAtomContainer makeCyclohexene()
@@ -151,7 +151,7 @@ public class MoleculeFactory {
 
 	/**
 	 * Returns cyclohexane without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
 	 */
 	public static IAtomContainer makeCyclohexane()
@@ -175,7 +175,7 @@ public class MoleculeFactory {
 
     /**
      * Returns cyclopentane without explicit hydrogens.
-     * 
+     *
      * @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
      */
     public static IAtomContainer makeCyclopentane()
@@ -195,10 +195,10 @@ public class MoleculeFactory {
         return mol;
     }
 
-    
+
     /**
 	 * Returns cyclobutane without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
 	 */
 	public static IAtomContainer makeCyclobutane()
@@ -251,20 +251,20 @@ public class MoleculeFactory {
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 4
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.SINGLE); // 4
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns biphenyl without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
 	 */
 	public static IAtomContainer makeBiphenyl()
 	{
 	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1		
+		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
@@ -275,15 +275,15 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 9
 		mol.addAtom(new Atom("C")); // 10
 		mol.addAtom(new Atom("C")); // 11
-	
-		
+
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-	
+
 		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
 		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 		mol.addBond(7, 8, IBond.Order.DOUBLE); // 5
@@ -293,13 +293,13 @@ public class MoleculeFactory {
 		mol.addBond(11, 6, IBond.Order.DOUBLE); // 5
 		return mol;
 	}
-	
+
 
 	public static IAtomContainer makePhenylEthylBenzene()
 	{
 	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1		
+		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
@@ -312,14 +312,14 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 11
 		mol.addAtom(new Atom("C")); // 12
 		mol.addAtom(new Atom("C")); // 13
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-	
+
 		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
 		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 		mol.addBond(7, 8, IBond.Order.SINGLE); // 5
@@ -337,25 +337,25 @@ public class MoleculeFactory {
 	{
 	    IAtomContainer mol = new AtomContainer();
 		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1		
+		mol.addAtom(new Atom("C")); // 1
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("N")); // 6
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-	
+
 		mol.addBond(0, 6, IBond.Order.SINGLE); // 7
 		return mol;
 	}
 
-	
+
 	/* build a molecule from 4 condensed triangles */
 	public static IAtomContainer make4x3CondensedRings()
 	{
@@ -366,7 +366,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 0, IBond.Order.SINGLE); // 3
@@ -376,10 +376,10 @@ public class MoleculeFactory {
 		mol.addBond(4, 2, IBond.Order.SINGLE); // 7
 		mol.addBond(4, 5, IBond.Order.SINGLE); // 8
 		mol.addBond(5, 3, IBond.Order.SINGLE); // 9
-		
+
 		return mol;
 	}
-	
+
 	public static IAtomContainer makeSpiroRings()
 	{
 	    IAtomContainer mol = new AtomContainer();
@@ -394,8 +394,8 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
 
-		
-		
+
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -409,7 +409,7 @@ public class MoleculeFactory {
 		mol.addBond(9, 6, IBond.Order.SINGLE); // 11
 		return mol;
 	}
-	
+
 
 	public static IAtomContainer makeBicycloRings()
 	{
@@ -479,7 +479,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 9
 		mol.addAtom(new Atom("C")); // 10
 
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -518,7 +518,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 16
 		mol.addAtom(new Atom("C")); // 17
 		mol.addAtom(new Atom("C")); // 18
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -528,7 +528,7 @@ public class MoleculeFactory {
 		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 		mol.addBond(7, 8, IBond.Order.DOUBLE); // 9
 		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
-		mol.addBond(9, 0, IBond.Order.DOUBLE); // 11		
+		mol.addBond(9, 0, IBond.Order.DOUBLE); // 11
 		mol.addBond(9, 4, IBond.Order.SINGLE); // 12
 		mol.addBond(8, 10, IBond.Order.SINGLE); // 12
 		mol.addBond(10, 11, IBond.Order.DOUBLE); // 12
@@ -537,9 +537,9 @@ public class MoleculeFactory {
 		mol.addBond(13, 7, IBond.Order.SINGLE); // 12
 		mol.addBond(3, 14, IBond.Order.SINGLE); // 12
 		mol.addBond(14, 15, IBond.Order.SINGLE); // 12
-		mol.addBond(12, 16, IBond.Order.SINGLE); // 12		
+		mol.addBond(12, 16, IBond.Order.SINGLE); // 12
 		mol.addBond(16, 17, IBond.Order.SINGLE); // 12
-		mol.addBond(17, 18, IBond.Order.SINGLE); // 12	
+		mol.addBond(17, 18, IBond.Order.SINGLE); // 12
 		configureAtoms(mol);
 		return mol;
 	}
@@ -564,8 +564,8 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 14
 		mol.addAtom(new Atom("C")); // 15
 		mol.addAtom(new Atom("C")); // 16
-		
-		
+
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -575,7 +575,7 @@ public class MoleculeFactory {
 		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
 		mol.addBond(8, 9, IBond.Order.SINGLE); // 10
-		mol.addBond(9, 0, IBond.Order.SINGLE); // 11		
+		mol.addBond(9, 0, IBond.Order.SINGLE); // 11
 		mol.addBond(9, 4, IBond.Order.SINGLE); // 12
 		mol.addBond(8, 10, IBond.Order.SINGLE); // 13
 		mol.addBond(10, 11, IBond.Order.SINGLE); // 14
@@ -586,14 +586,14 @@ public class MoleculeFactory {
 		mol.addBond(14, 15, IBond.Order.SINGLE); // 19
 		mol.addBond(15, 16, IBond.Order.SINGLE); // 20
 		mol.addBond(16, 12, IBond.Order.SINGLE); // 21
-		
+
 		configureAtoms(mol);
 		return mol;
 	}
 
 	/**
 	 * Returns azulene without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
 	 */
 	public static IAtomContainer makeAzulene()
@@ -609,7 +609,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("C")); // 8
 		mol.addAtom(new Atom("C")); // 9
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -621,13 +621,13 @@ public class MoleculeFactory {
 		mol.addBond(8, 9, IBond.Order.DOUBLE); // 10
 		mol.addBond(9, 5, IBond.Order.SINGLE); // 11
 		mol.addBond(9, 0, IBond.Order.SINGLE); // 12
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns indole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
 	 */
 	public static IAtomContainer makeIndole()
@@ -643,7 +643,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 7
 		mol.addAtom(new Atom("N")); // 8
 
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -654,13 +654,13 @@ public class MoleculeFactory {
 		mol.addBond(7, 8, IBond.Order.SINGLE); // 9
 		mol.addBond(0, 5, IBond.Order.SINGLE); // 11
 		mol.addBond(8, 0, IBond.Order.SINGLE); // 12
-		
+
 		return mol;
 	}
 
     /**
 	 * Returns pyrrole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
 	 */
 	public static IAtomContainer makePyrrole()
@@ -671,19 +671,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns pyrrole anion without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
 	 */
 	public static IAtomContainer makePyrroleAnion()
@@ -696,19 +696,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns imidazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
 	 */
 	public static IAtomContainer makeImidazole()
@@ -719,19 +719,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns pyrazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
 	 */
 	public static IAtomContainer makePyrazole()
@@ -742,19 +742,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns 1,2,4-triazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
 	 */
 	public static IAtomContainer make124Triazole()
@@ -765,19 +765,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("N")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns 1,2,3-triazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
 	 */
 	public static IAtomContainer make123Triazole()
@@ -788,19 +788,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns tetrazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
 	 */
 	public static IAtomContainer makeTetrazole()
@@ -811,19 +811,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns Oxazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
 	 */
 	public static IAtomContainer makeOxazole()
@@ -834,19 +834,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns Isoxazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
 	 */
 	public static IAtomContainer makeIsoxazole()
@@ -857,19 +857,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns isothiazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
 	 */
 	public static IAtomContainer makeIsothiazole()
@@ -880,19 +880,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 2
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns thiadiazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
 	 */
 	public static IAtomContainer makeThiadiazole()
@@ -903,19 +903,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("N")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns oxadiazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
 	 */
 	public static IAtomContainer makeOxadiazole()
@@ -926,19 +926,19 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("N")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
+
 		return mol;
 	}
-				
+
 	/**
 	 * Returns pyridine without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
 	 */
 	public static IAtomContainer makePyridine()
@@ -950,20 +950,20 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-		
+
 		return mol;
 	}
-	
+
 	/**
 	 * Returns pyridine oxide without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
 	 */
 	public static IAtomContainer makePyridineOxide()
@@ -978,7 +978,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("O")); // 6
 		mol.getAtom(6).setFormalCharge(-1);
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -986,13 +986,13 @@ public class MoleculeFactory {
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
 		mol.addBond(1, 6, IBond.Order.SINGLE); // 7
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns pyrimidine without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
 	 */
 	public static IAtomContainer makePyrimidine()
@@ -1004,20 +1004,20 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns pyridazine without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
 	 */
 	public static IAtomContainer makePyridazine()
@@ -1029,20 +1029,20 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns triazine without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
 	 */
 	public static IAtomContainer makeTriazine()
@@ -1054,20 +1054,20 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("N")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("N")); // 5
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 5, IBond.Order.DOUBLE); // 5
 		mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-		
+
 		return mol;
 	}
 
 	/**
 	 * Returns thiazole without explicit hydrogens.
-	 * 
+	 *
 	 * @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
 	 */
 	public static IAtomContainer makeThiazole()
@@ -1078,17 +1078,17 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 2
 		mol.addAtom(new Atom("S")); // 3
 		mol.addAtom(new Atom("C")); // 4
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
 		mol.addBond(3, 4, IBond.Order.SINGLE); // 4
 		mol.addBond(4, 0, IBond.Order.DOUBLE); // 5
-		
-		return mol;
-	}	
 
-	
+		return mol;
+	}
+
+
 	public static IAtomContainer makeSingleRing()
 	{
 		IAtomContainer mol = new AtomContainer();
@@ -1102,7 +1102,7 @@ public class MoleculeFactory {
 //		mol.addAtom(new Atom("C")); // 7
 //		mol.addAtom(new Atom("C")); // 8
 //		mol.addAtom(new Atom("C")); // 9
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -1113,12 +1113,12 @@ public class MoleculeFactory {
 //		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
 //		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
 //		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
-//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11		
-		
-			
+//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11
+
+
 		return mol;
 	}
-	
+
 
 	public static IAtomContainer makeDiamantane()
 	{
@@ -1137,8 +1137,8 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 11
 		mol.addAtom(new Atom("C")); // 12
 		mol.addAtom(new Atom("C")); // 13
-		
-		
+
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -1149,15 +1149,15 @@ public class MoleculeFactory {
 		mol.addBond(6, 9, IBond.Order.SINGLE); // 8
 		mol.addBond(1, 7, IBond.Order.SINGLE); // 9
 		mol.addBond(7, 9, IBond.Order.SINGLE); // 10
-		mol.addBond(3, 8, IBond.Order.SINGLE); // 11		
+		mol.addBond(3, 8, IBond.Order.SINGLE); // 11
 		mol.addBond(8, 9, IBond.Order.SINGLE); // 12
 		mol.addBond(0, 10, IBond.Order.SINGLE); // 13
 		mol.addBond(10, 13, IBond.Order.SINGLE); // 14
 		mol.addBond(2, 11, IBond.Order.SINGLE); // 15
 		mol.addBond(11, 13, IBond.Order.SINGLE); // 16
-		mol.addBond(4, 12, IBond.Order.SINGLE); // 17		
-		mol.addBond(12, 13, IBond.Order.SINGLE); // 18		
-				
+		mol.addBond(4, 12, IBond.Order.SINGLE); // 17
+		mol.addBond(12, 13, IBond.Order.SINGLE); // 18
+
 		return mol;
 	}
 
@@ -1184,7 +1184,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 16
 		mol.addAtom(new Atom("C")); // 17
 		mol.addAtom(new Atom("C")); // 18
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -1203,8 +1203,8 @@ public class MoleculeFactory {
 		mol.addBond(15, 16, IBond.Order.DOUBLE);
 		mol.addBond(16, 17, IBond.Order.DOUBLE);
 		mol.addBond(17, 18, IBond.Order.SINGLE);
-		
-		
+
+
 		return mol;
 	}
 
@@ -1217,7 +1217,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 3
 		mol.addAtom(new Atom("C")); // 4
 		mol.addAtom(new Atom("C")); // 5
-		
+
 		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
 		mol.addBond(1, 2, IBond.Order.DOUBLE); // 2
 		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -1226,7 +1226,7 @@ public class MoleculeFactory {
 		mol.addBond(5, 0, IBond.Order.DOUBLE); // 6
 		return mol;
 	}
-	
+
 	public static IAtomContainer makeQuinone()
 	{
 		IAtomContainer mol = new AtomContainer();
@@ -1238,7 +1238,7 @@ public class MoleculeFactory {
 		mol.addAtom(new Atom("C")); // 5
 		mol.addAtom(new Atom("C")); // 6
 		mol.addAtom(new Atom("O")); // 7
-		
+
 		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
 		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
 		mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -1323,7 +1323,7 @@ public class MoleculeFactory {
             logger.error("An exception occured while loading a molecule: " + inFile);
             logger.debug(exc);
 		}
-		
+
 		return molecule;
 	}
 
@@ -1374,10 +1374,10 @@ public class MoleculeFactory {
     	mol.addBond(b10);
     	IBond b11 = mol.getBuilder().newInstance(IBond.class,a7, a10, IBond.Order.SINGLE);
     	mol.addBond(b11);
-    	
+
     	return mol;
 	}
-	
+
 	private static void configureAtoms(IAtomContainer mol)
 	{
 		try

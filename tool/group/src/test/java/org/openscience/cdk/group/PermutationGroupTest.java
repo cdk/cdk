@@ -32,7 +32,7 @@ import org.openscience.cdk.CDKTestCase;
 /**
  * @author maclean
  * @cdk.module test-group
- * 
+ *
  */
 public class PermutationGroupTest extends CDKTestCase {
 
@@ -240,7 +240,7 @@ public class PermutationGroupTest extends CDKTestCase {
         // this means p is a member of G
         Assert.assertTrue(position == group.getSize());
     }
-    
+
     @Test
     public void test_FailureTest() {
         PermutationGroup group = getCubeGroup();
@@ -249,7 +249,7 @@ public class PermutationGroupTest extends CDKTestCase {
         // this means p is not in G
         Assert.assertTrue(position < group.getSize());
     }
-    
+
     @Test
     public void enterTest() {
         int size = 4;
@@ -257,7 +257,7 @@ public class PermutationGroupTest extends CDKTestCase {
         group.enter(new Permutation(1, 0, 3, 2));
         Assert.assertEquals(2, group.order());
     }
-    
+
     @Test
     public void changeBaseTest() {
         int size = 4;

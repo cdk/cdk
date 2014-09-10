@@ -24,9 +24,9 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * See <a href="http://www.povray.org/">here</a>.
- * 
+ *
  * @author Miguel Rojas
- * 
+ *
  * @cdk.module ioformats
  * @cdk.githash
  * @cdk.set    io-formats
@@ -35,15 +35,15 @@ import org.openscience.cdk.annotations.TestMethod;
 public class POVRayFormat extends AbstractResourceFormat implements IResourceFormat {
 
 	private static IResourceFormat myself = null;
-	
+
     public POVRayFormat() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new POVRayFormat();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -61,7 +61,7 @@ public class POVRayFormat extends AbstractResourceFormat implements IResourceFor
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {

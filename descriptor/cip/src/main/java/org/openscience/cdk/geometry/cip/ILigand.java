@@ -41,14 +41,14 @@ public interface ILigand {
      * @return the IAtomContainer
      */
     public IAtomContainer getAtomContainer();
-    
+
     /**
      * The central {@link IAtom} to which this ligand is connected via one {@link IBond}.
      *
      * @return the central atom
      */
     public IAtom getCentralAtom();
-    
+
     /**
      * {@link IAtom} of the ligand that is connected to the central {@link IAtom} via
      * one {@link IBond}.

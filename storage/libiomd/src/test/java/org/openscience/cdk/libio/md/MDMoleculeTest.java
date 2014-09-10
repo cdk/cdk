@@ -1,7 +1,7 @@
 /* Copyright (C) 2007  Ola Spjuth <ospjuth@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,16 +10,16 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
+ *
  */
 package org.openscience.cdk.libio.md;
 
@@ -83,7 +83,7 @@ public class MDMoleculeTest extends CDKTestCase {
      *
      */
     @Test public void testMDMolecule() {
-    	
+
     	MDMolecule mol=new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -115,7 +115,7 @@ public class MDMoleculeTest extends CDKTestCase {
         Residue res2=new Residue(ac2,1,mol);
         res2.setName("myResidue2");
         mol.addResidue(res2);
-                 
+
         //Test residue creation
         Assert.assertEquals(res1.getParentMolecule(),mol);
         Assert.assertEquals(res2.getParentMolecule(),mol);
@@ -186,7 +186,7 @@ public class MDMoleculeTest extends CDKTestCase {
 
         Assert.assertEquals(6, mdMol.getAtomCount());
         Assert.assertEquals(6, mdMol.getBondCount());
-        
+
         List residues = mdMol.getResidues();
         Assert.assertEquals(2, residues.size());
         Assert.assertEquals(3, ((Residue)residues.get(0)).getAtomCount());
@@ -195,7 +195,7 @@ public class MDMoleculeTest extends CDKTestCase {
         Assert.assertEquals("myResidue2", ((Residue)residues.get(1)).getName());
         Assert.assertEquals(0, ((Residue)residues.get(0)).getNumber());
         Assert.assertEquals(1, ((Residue)residues.get(1)).getNumber());
-        
+
         List chargeGroup = mdMol.getChargeGroups();
         Assert.assertEquals(2, chargeGroup.size());
         Assert.assertEquals(2, ((ChargeGroup)chargeGroup.get(0)).getAtomCount());
@@ -224,7 +224,7 @@ public class MDMoleculeTest extends CDKTestCase {
         logger.debug("******************************");
 
         Assert.assertEquals(serializedMol, serializedMDMol);
-        
+
     }
 
     @Test public void testMDMoleculeCustomization() {
@@ -256,15 +256,15 @@ public class MDMoleculeTest extends CDKTestCase {
         Assert.assertTrue(cmlContent.indexOf("md:cgNumber\"") != -1);
         Assert.assertTrue(cmlContent.indexOf("md:switchingAtom\"") != -1);
     }
-    
-    
-    
+
+
+
     /**
      * Create a benzene molecule with 2 residues and 2 charge groups
      * @return
      */
     public MDMolecule makeMDBenzene(){
-    	
+
     	MDMolecule mol=new MDMolecule();
         mol.addAtom(new Atom("C")); // 0
         mol.addAtom(new Atom("C")); // 1
@@ -296,7 +296,7 @@ public class MDMoleculeTest extends CDKTestCase {
         Residue res2=new Residue(ac2,1,mol);
         res2.setName("myResidue2");
         mol.addResidue(res2);
-         
+
         //Create 2 chargegroups
         AtomContainer ac3= new AtomContainer();
         ac3.addAtom(mol.getAtom(0));
@@ -315,7 +315,7 @@ public class MDMoleculeTest extends CDKTestCase {
         mol.addChargeGroup(chg2);
 
         return mol;
-        
+
     }
-    
+
 }

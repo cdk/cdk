@@ -69,7 +69,7 @@ public class SingleMapping {
      * @param target
      * @param removeHydrogen
      * @return Mappings
-     * @throws CDKException 
+     * @throws CDKException
      */
     @TestMethod("testGetOverLaps")
     protected List<Map<IAtom, IAtom>> getOverLaps(IAtomContainer source, IAtomContainer target, boolean removeHydrogen) throws CDKException {

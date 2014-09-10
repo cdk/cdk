@@ -44,7 +44,7 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 /**
  * Generates just the aromatic indicators for rings : circles, or light-gray
  * inner bonds, depending on the value of CDKStyleAromaticity.
- * 
+ *
  * @cdk.module renderbasic
  * @cdk.githash
  */
@@ -155,7 +155,7 @@ public class RingGenerator extends BasicBondGenerator {
         double height = minmax[3] - minmax[1];
         double radius = Math.min(width, height) * ringProportion.getValue();
         Color color = getColorForBond(bond, model);
-        
+
         return new OvalElement(c.x, c.y, radius, false, color);
     }
 

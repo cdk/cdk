@@ -202,7 +202,7 @@ public class VFLibTest extends CDKTestCase {
     }
 
     /**
-     * 
+     *
      */
     @Test
     public void testItShouldMatchHexaneToHexaneWhenUsingMolecule() {

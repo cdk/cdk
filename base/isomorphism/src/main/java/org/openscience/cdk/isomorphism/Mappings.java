@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -42,7 +42,7 @@ import java.util.Map;
 
 /**
  * A fluent interface for handling (sub)-graph mappings from a query to a target
- * structure. The utility allows one to modify the mappings and provides 
+ * structure. The utility allows one to modify the mappings and provides
  * convenience utilities. {@link Mappings} are obtained from a (sub)-graph
  * matching using {@link Pattern}.
  *
@@ -63,10 +63,10 @@ import java.util.Map;
  *         // query.getAtom(i) is mapped to target.getAtom(p[i]);
  * }
  * </pre></blockquote>
- * 
+ *
  * The matches can be filtered to provide only those that have valid
  * stereochemistry.
- * 
+ *
  * <blockquote><pre>
  * for (int[] p : mappings.stereochemistry()) {
  *     // ...
@@ -136,13 +136,13 @@ import java.util.Map;
  *                      .uniqueAtoms()
  *                      .limit(10);
  *
- * // number of unique atom matches 
+ * // number of unique atom matches
  * int n = mappings.countUnique();
  *
- * // number of unique atom matches with correct stereochemistry 
+ * // number of unique atom matches with correct stereochemistry
  * int n = mappings.stereochemistry()
  *                 .countUnique();
- * 
+ *
  * </pre></blockquote>
  *
  * @author John May
@@ -152,7 +152,7 @@ import java.util.Map;
  * @cdk.keyword structure search
  * @cdk.keyword mappings
  * @cdk.keyword matching
- * @cdk.githash 
+ * @cdk.githash
  */
 @TestClass("org.openscience.cdk.isomorphism.MappingsTest")
 public final class Mappings implements Iterable<int[]> {
@@ -184,7 +184,7 @@ public final class Mappings implements Iterable<int[]> {
      * predicate (Guava).
      *
      * <blockquote><pre>
-     * 
+     *
      *     final IAtomContainer query;
      *     final IAtomContainer target;
      *
@@ -213,7 +213,7 @@ public final class Mappings implements Iterable<int[]> {
      * provided function.
      *
      * <blockquote><pre>
-     * 
+     *
      *     final IAtomContainer query;
      *     final IAtomContainer target;
      *
@@ -281,8 +281,8 @@ public final class Mappings implements Iterable<int[]> {
      */
     @TestMethod("uniqueAtoms")
     public Mappings uniqueAtoms() {
-        // we need the unique predicate to be reset for each new iterator - 
-        // otherwise multiple iterations are always filtered (seen before) 
+        // we need the unique predicate to be reset for each new iterator -
+        // otherwise multiple iterations are always filtered (seen before)
         return new Mappings(query, target,
                             new Iterable<int[]>() {
                                 @Override public Iterator<int[]> iterator() {
@@ -301,7 +301,7 @@ public final class Mappings implements Iterable<int[]> {
      */
     @TestMethod("uniqueBonds")
     public Mappings uniqueBonds() {
-        // we need the unique predicate to be reset for each new iterator - 
+        // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
         final int[][] g = GraphUtil.toAdjList(query);
         return new Mappings(query, target,
@@ -366,7 +366,7 @@ public final class Mappings implements Iterable<int[]> {
     /**
      * Convert the permutations to a atom-atom map.
      *
-     * <blockquote><pre> 
+     * <blockquote><pre>
      * for (Map&lt;IAtom,IAtom&gt; map : mappings.toAtomMap()) {
      *     for (Map.Entry&lt;IAtom,IAtom&gt; e : map.entrySet()) {
      *         IAtom queryAtom  = e.getKey();
@@ -426,7 +426,7 @@ public final class Mappings implements Iterable<int[]> {
     /**
      * Obtain the first match - if there is no first match an empty array is
      * returned.
-     * 
+     *
      * @return first match
      */
     @TestMethod("first")

@@ -62,7 +62,7 @@ import java.util.Map;
  *
  *  <p>This algorithm derives from the algorithm described in
  *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
- *  
+ *
  *  <p>With the {@link #isSubgraph(IAtomContainer, IAtomContainer)} method,
  *  the second, and only the second argument <b>may</b> be a {@link IQueryAtomContainer},
  *  which allows one to do SMARTS or MQL like queries.
@@ -114,7 +114,7 @@ public class UniversalIsomorphismTester {
 
   public UniversalIsomorphismTester()
   {
-      
+
   }
 
   ///////////////////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
 	  if (g2.getAtomCount() != g1.getAtomCount()) return false;
       // check single atom case
       if (g2.getAtomCount() == 1) {
@@ -175,7 +175,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
     List<RMap> result = null;
 
     List<List<RMap>> rMapsList = search(g1, g2, getBitSet(g1), getBitSet(g2), false, false);
@@ -202,7 +202,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
       List<RMap> list = checkSingleAtomCases(g1, g2);
       if (list == null) {
           return makeAtomsMapOfBondsMap(getIsomorphMap(g1, g2), g1, g2);
@@ -333,7 +333,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
       if (g2.getAtomCount() > g1.getAtomCount()) return false;
       // test for single atom case
       if (g2.getAtomCount() == 1) {
@@ -445,7 +445,7 @@ public class UniversalIsomorphismTester {
 		  BitSet c2, boolean findAllStructure, boolean findAllMap)  throws CDKException{
 	  // remember start time
 	  start = System.currentTimeMillis();
-	  
+
       // handle single query atom case separately
       if (g2.getAtomCount() == 1) {
           List<List<RMap>> matches = new ArrayList<List<RMap>>();
@@ -477,7 +477,7 @@ public class UniversalIsomorphismTester {
 	  List<List<RMap>> rMapsList = new ArrayList<List<RMap>>();
 
 	  // build the RGraph corresponding to this problem
-	  RGraph rGraph = buildRGraph(g1, g2); 
+	  RGraph rGraph = buildRGraph(g1, g2);
 	  // Set time data
 	  rGraph.setTimeout(timeout);
 	  rGraph.setStart(start);
@@ -497,7 +497,7 @@ public class UniversalIsomorphismTester {
 
     /**
      * Checks that {@link IQueryAtom}'s correctly match consistently.
-     * 
+     *
      * @param bondmap bond mapping
      * @param g1 target graph
      * @param g2 query graph
@@ -516,7 +516,7 @@ public class UniversalIsomorphismTester {
           }
       }
       return true;
-  } 
+  }
 
   //////////////////////////////////////
   //    Manipulation tools
@@ -642,7 +642,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
 	  if (g2.getAtomCount() == 1) {
 		  List<RMap> arrayList = new ArrayList<RMap>();
 		  IAtom atom = g2.getAtom(0);
@@ -776,7 +776,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
     // resets the target graph.
     gr.clear();
 
@@ -962,7 +962,7 @@ public class UniversalIsomorphismTester {
       } else return atom1 == null && atom2 == null;
 
   }
-  
+
   /**
    *  Determines if 2 bond have 1 atom in common if second is a query AtomContainer
    *  and whether the order of the atoms is correct (atoms match).
@@ -1021,7 +1021,7 @@ public class UniversalIsomorphismTester {
 		  throw new CDKException(
 		      "The first IAtomContainer must not be an IQueryAtomContainer"
 		  );
-	  
+
 	  int ac1SingleBondCount = 0;
 	  int ac1DoubleBondCount = 0;
 	  int ac1TripleBondCount = 0;
@@ -1109,7 +1109,7 @@ public class UniversalIsomorphismTester {
       return ac1CCount >= ac2CCount;
 
   }
-  
+
   /**
    * Sets the time in milliseconds until the substructure search will be breaked.
    * @param timeout
@@ -1118,6 +1118,6 @@ public class UniversalIsomorphismTester {
   public void setTimeout(long timeout) {
 	  this.timeout = timeout;
   }
-  
+
 }
 

@@ -55,9 +55,9 @@ import org.openscience.cdk.tools.CDKHydrogenAdder;
  * <li>All choices made to match valency against bonds used (including implicit H atoms)
  * <li>Solves other bonds as possible - dependent on previous choices - makes free
  * (random) choices only where necessary and possible
- * <li>Makes assumption that where there is a choice in bond order 
+ * <li>Makes assumption that where there is a choice in bond order
  * (not forced by previous choices) - either choice is consistent with correct solution
- * 
+ *
  * <li>Requires molecule with all rings to be solved being marked aromatic
  * (SP2/Planar3 atoms). All bonds to non-ring atoms need to be fully defined
  * (including implicit H atoms)
@@ -142,7 +142,7 @@ public class FixBondOrdersTool {
  * kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
  * @param molecule The {@link IAtomContainer} to kekulise
  * @return The {@link IAtomContainer} with kekule structure
- * @throws CDKException 
+ * @throws CDKException
  */
     @TestMethod("testLargeRingSystem")
     public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
@@ -265,12 +265,12 @@ public class FixBondOrdersTool {
 
     /**
      * Stores an {@link IRingSet} corresponding to a molecule using the bond numbers.
-     * 
+     *
      * @param mol The IMolecule for which to store the IRingSet.
      * @param ringSet The IRingSet to store
      * @return The List of Integer arrays for the bond numbers of each ringSet
      */
-    
+
     private List<Integer[]> getRingSystem(IAtomContainer mol, IRingSet ringSet) {
         List<Integer[]> bondsArray;
         bondsArray = new ArrayList<Integer[]>();
@@ -372,7 +372,7 @@ public class FixBondOrdersTool {
 
     /**
      * Gets the List of atom nos corresponding to a particular set of fused rings.
-     * 
+     *
      * @param {@link IMolecule} molecule
      * @param ringGroup
      * @param {@link IRingSet} ringSet
@@ -396,7 +396,7 @@ public class FixBondOrdersTool {
 
     /**
      * Gets the List of bond nos corresponding to a particular set of fused rings.
-     * 
+     *
      * @param {@link IMolecule} molecule
      * @param ringGroup
      * @param {@link IRingSet} ringSet
@@ -420,7 +420,7 @@ public class FixBondOrdersTool {
 
     /**
      * Gets List of atom number pairs for each bond in a list of bonds for the molecule.
-     * 
+     *
      * @param {@link IMolecule} molecule
      * @param bondsToCheck
      * @return List of atom pairs
@@ -596,7 +596,7 @@ public class FixBondOrdersTool {
                 }
             }
 
-            // If we can't solve any bonds from the information we have so far, there must be a choice to make. 
+            // If we can't solve any bonds from the information we have so far, there must be a choice to make.
             // Pick a bond that is yet to be solved and set it as a single bond.
             if (thisRun == 0) {
                 int ring = 1;

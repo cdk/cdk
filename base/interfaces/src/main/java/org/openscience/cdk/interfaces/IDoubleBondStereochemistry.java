@@ -49,7 +49,7 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
         /**
          * Invert this conformation, inv(together) = opposite, inv(opposite)
          * = together.
-         * 
+         *
          * @return the inverse conformation
          */
         public Conformation invert() {

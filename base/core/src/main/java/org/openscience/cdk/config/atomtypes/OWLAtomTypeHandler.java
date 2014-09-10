@@ -14,7 +14,7 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.config.atomtypes;
 
@@ -43,7 +43,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class OWLAtomTypeHandler extends DefaultHandler {
 
 	private final String NS_ATOMTYPE = "http://cdk.sf.net/ontologies/atomtypes#";
-	
+
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(OWLAtomTypeHandler.class);
     private String currentChars;
@@ -59,7 +59,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     /**
      * Constructs a new AtomTypeHandler and will create IAtomType
      * implementations using the given IChemObjectBuilder.
-     * 
+     *
      * @param build The IChemObjectBuilder used to create the IAtomType's.
      */
     @TestMethod("testAtomTypeHandler_IChemObjectBuilder")
@@ -69,7 +69,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 
     /**
      * Returns a List with read IAtomType's.
-     * 
+     *
      * @return The read IAtomType's.
      */
     @TestMethod("testGetAtomTypes")
@@ -122,7 +122,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
 	@TestMethod("testedByOtherClass")
     public void startElement(String uri, String local,
                              String raw, Attributes atts) {
-        currentChars = "";        
+        currentChars = "";
         if (NS_ATOMTYPE.equals(uri)) {
         	startAtomTypeElement(local, atts);
         } // ignore other namespaces
@@ -159,7 +159,7 @@ public class OWLAtomTypeHandler extends DefaultHandler {
     			maxBondOrder = BondManipulator.getMaximumBondOrder(maxBondOrder, Order.QUADRUPLE);
     			piBondCount = piBondCount + 3;
     			bondOrderSum += 4.0;
-    		} // else: should throw an exception 
+    		} // else: should throw an exception
     	} else if ("hybridization".equals(local)) {
     		String attrValue = atts.getValue("rdf:resource");
     		String hybridization = attrValue.substring(attrValue.indexOf('#')+1);

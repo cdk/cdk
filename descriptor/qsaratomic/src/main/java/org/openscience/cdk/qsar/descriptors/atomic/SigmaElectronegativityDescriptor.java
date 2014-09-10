@@ -65,7 +65,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
     private int maxIterations = 0;
 
     private static final String[] descriptorNames = {"elecSigmA"};
-    
+
 	private Electronegativity electronegativity;
 
     /**
@@ -189,7 +189,7 @@ public class SigmaElectronegativityDescriptor extends AbstractAtomicDescriptor i
      */
     @TestMethod(value="testGetParameterType_String")
     public Object getParameterType(String name) {
-        return 0; 
+        return 0;
     }
 }
 

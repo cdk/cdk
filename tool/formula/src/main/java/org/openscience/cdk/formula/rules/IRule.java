@@ -22,18 +22,18 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 /**
  * Interface which groups all method that validate a IMolecularFormula.
- * 
+ *
  * @cdk.module  formula
  * @author      miguelrojasch
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
 public interface IRule {
-	    
-	    /** 
-	     * Sets the parameters for this rule. 
+
+	    /**
+	     * Sets the parameters for this rule.
 	     *
-	     * Must be done before calling calculate as 
+	     * Must be done before calling calculate as
 	     * the parameters influence the validation outcome.
 	     *
 	     * @param params An array of Object containing the parameters for this rule
@@ -41,15 +41,15 @@ public interface IRule {
 	     * @see          #getParameters
 	     */
 	    public void setParameters(Object[] params) throws CDKException;
-	    
-	    /** 
+
+	    /**
 	     * Returns the current parameter values.
 	     *
 	     * @return An array of Object containing the parameter values
 	     * @see    #setParameters
 	     * */
 	    public Object[] getParameters();
-	    
+
 	    /**
 	     * Analyze the validity for the given IMolecularFormula.
 	     *
@@ -62,5 +62,5 @@ public interface IRule {
 	     */
 	    public double validate(IMolecularFormula formula) throws CDKException;
 
-	    
+
 }

@@ -50,13 +50,13 @@ public interface ISimpleChemObjectReader extends IChemObjectReader {
      * Reads an IChemObject of type "object" from input. The constructor
      * of the actual implementation may take a Reader as input to get
      * a very flexible reader that can read from string, files, etc.
-     * 
+     *
      * @param  object    the type of object to return
-     * @return returns an object of that contains the content (or 
+     * @return returns an object of that contains the content (or
      *         part) of the input content
      *
      * @exception CDKException it is thrown if
-     *            the type of information is not available from 
+     *            the type of information is not available from
      *            the input
      **/
     public <T extends IChemObject> T read(T object) throws CDKException;

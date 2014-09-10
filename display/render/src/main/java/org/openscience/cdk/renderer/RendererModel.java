@@ -87,7 +87,7 @@ public class RendererModel implements Serializable, Cloneable {
             return new Color(0x49DFFF);
         }
     }
-    
+
     /**
      * The color used to highlight external selections.
      */
@@ -115,14 +115,14 @@ public class RendererModel implements Serializable, Cloneable {
         new ColorHash();
 
     /**
-     * A map of {@link IGeneratorParameter} class names to instances. 
+     * A map of {@link IGeneratorParameter} class names to instances.
      */
     private Map<String,IGeneratorParameter<?>> renderingParameters =
         new HashMap<String,IGeneratorParameter<?>>();
 
     /**
      * Construct a renderer model with no parameters. To put parameters into
-     * the model, use the registerParameters method. 
+     * the model, use the registerParameters method.
      */
     public RendererModel() {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
@@ -231,7 +231,7 @@ public class RendererModel implements Serializable, Cloneable {
     }
 
     /**
-     * Registers rendering parameters from {@link IGenerator}s 
+     * Registers rendering parameters from {@link IGenerator}s
      * with this model.
      *
      * @param generator
@@ -248,7 +248,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     /**
      * Set the selected {@link IChemObject}s.
-     * 
+     *
      * @param selection an {@link IChemObjectSelection} with selected
      *                  {@link IChemObject}s
      */
@@ -260,7 +260,7 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * Returns an {@link IChemObjectSelection} with the currently selected
      * {@link IChemObject}s.
-     * 
+     *
      * @return the current selected {@link IChemObject}s
      */
     @TestMethod("testSelection")
@@ -495,7 +495,7 @@ public class RendererModel implements Serializable, Cloneable {
 
     /**
      * Dis- or enables sending around change notifications.
-     * 
+     *
      * @param notification true if notifications should be sent, false otherwise.
      */
     @TestMethod("testGetSetNotification")

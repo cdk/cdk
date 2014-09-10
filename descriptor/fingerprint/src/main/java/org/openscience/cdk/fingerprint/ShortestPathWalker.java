@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2012   Syed Asad Rahman <asad@ebi.ac.uk>
  *               2013   John May         <jwmay@users.sf.net>
- *           
+ *
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

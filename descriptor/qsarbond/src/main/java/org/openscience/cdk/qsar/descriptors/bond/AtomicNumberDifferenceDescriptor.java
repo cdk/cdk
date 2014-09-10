@@ -49,12 +49,12 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
 	private static IsotopeFactory factory = null;
-	
+
 	private final static String[] descriptorName = {"MNDiff"};
-	
+
     public AtomicNumberDifferenceDescriptor() {
-    }	
-    
+    }
+
     private void ensureIsotopeFactory() {
     	if (factory == null) {
     		try {
@@ -100,14 +100,14 @@ public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor imp
     			descriptorName, new CDKException("Only 2-center bonds are considered")
     		);
     	}
-    	
+
     	IAtom[] atoms = BondManipulator.getAtomArray(bond);
 
     	return new DescriptorValue(
     		getSpecification(), getParameterNames(),
     		getParameters(),
     		new DoubleResult(
-    			Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber() - 
+    			Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber() -
     					 factory.getElement(atoms[1].getSymbol()).getAtomicNumber())
     		),
     		descriptorName);

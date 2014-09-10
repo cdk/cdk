@@ -39,11 +39,11 @@ import org.openscience.cdk.interfaces.IBond;
  *
  */
 public class AtomSignatureTest extends AbstractSignatureTest {
-    
+
     private IAtomContainer atomContainer;
-    
+
     private AtomSignature atomSignature;
-    
+
     @Before
     public void setUp() {
         atomContainer = builder.newInstance(IAtomContainer.class);
@@ -52,23 +52,23 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         atomContainer.addBond(0, 1, IBond.Order.DOUBLE);
         atomSignature = new AtomSignature(0, atomContainer);
     }
-    
+
     @Test
     public void getIntLabelTest() {
         atomContainer.getAtom(0).setMassNumber(12);
         Assert.assertEquals(12, atomSignature.getIntLabel(0));
     }
-    
+
     @Test
     public void getConnectedTest() {
         Assert.assertEquals(1, atomSignature.getConnected(0)[0]);
     }
-    
+
     @Test
     public void getEdgeLabelTest() {
         Assert.assertEquals("=", atomSignature.getEdgeLabel(0, 1));
     }
-    
+
     @Test
     public void getAromaticEdgeLabelTest() {
         IAtomContainer benzeneRing = builder.newInstance(IAtomContainer.class);
@@ -82,50 +82,50 @@ public class AtomSignatureTest extends AbstractSignatureTest {
             benzeneRing.addBond(bond);
             bond.setFlag(CDKConstants.ISAROMATIC, true);
         }
-        
+
         AtomSignature signature = new AtomSignature(0, benzeneRing);
         for (int i = 0; i < 6; i++) {
-            Assert.assertEquals("Failed for " + i, 
+            Assert.assertEquals("Failed for " + i,
                     "p", signature.getEdgeLabel(i, (i + 1) % 6));
         }
     }
-    
+
     @Test
     public void getVertexSymbolTest() {
         Assert.assertEquals("C", atomSignature.getVertexSymbol(0));
     }
-    
+
 //    @Test
 //    public void integerInvariantsTest() {
 //        IAtomContainer isotopeChiralMol = builder.newInstance(IAtomContainer.class);
 //        isotopeChiralMol.addAtom(builder.newInstance(IAtom.class, "C"));
-//        
+//
 //        IAtom s32 = builder.newInstance(IAtom.class, "S");
 //        s32.setMassNumber(32);
-//        
+//
 //        IAtom s33 = builder.newInstance(IAtom.class, "S");
 //        s33.setMassNumber(33);
-//        
+//
 //        IAtom s34 = builder.newInstance(IAtom.class, "S");
 //        s34.setMassNumber(34);
-//        
+//
 //        IAtom s36 = builder.newInstance(IAtom.class, "S");
 //        s36.setMassNumber(36);
-//        
+//
 //        isotopeChiralMol.addAtom(s36);
 //        isotopeChiralMol.addAtom(s34);
 //        isotopeChiralMol.addAtom(s33);
 //        isotopeChiralMol.addAtom(s32);
-//        
+//
 //        isotopeChiralMol.addBond(0, 1, IBond.Order.SINGLE);
 //        isotopeChiralMol.addBond(0, 2, IBond.Order.SINGLE);
 //        isotopeChiralMol.addBond(0, 3, IBond.Order.SINGLE);
 //        isotopeChiralMol.addBond(0, 4, IBond.Order.SINGLE);
-//        
+//
 //        MoleculeSignature molSig = new MoleculeSignature(isotopeChiralMol);
 //        System.out.println(molSig.toCanonicalString());
 //    }
-    
+
     @Test
     public void cuneaneCubaneHeightTest() {
         IAtomContainer cuneane = AbstractSignatureTest.makeCuneane();
@@ -137,7 +137,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         String cubaneSigString = cubaneSignature.toCanonicalString();
         Assert.assertEquals(cuneaneSigString, cubaneSigString);
     }
-    
+
     public void moleculeIsCarbon3Regular(IAtomContainer molecule) {
         int i = 0;
         for (IAtom a : molecule.atoms()) {
@@ -151,7 +151,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
             i++;
         }
     }
-    
+
     @Test
     public void dodecahedraneHeightTest() {
         IAtomContainer dodecahedrane = AbstractSignatureTest.makeDodecahedrane();
@@ -161,7 +161,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
             allEqualAtHeightTest(dodecahedrane, height);
         }
     }
-    
+
     @Test
     public void allHeightsOfASymmetricGraphAreEqualTest() {
         IAtomContainer cubane = makeCubane();
@@ -170,7 +170,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
             allEqualAtHeightTest(cubane, height);
         }
     }
-    
+
     public void allEqualAtHeightTest(IAtomContainer molecule, int height) {
         Map<String, Integer> sigfreq = new HashMap<String, Integer>();
         for (int i = 0; i < molecule.getAtomCount(); i++) {
@@ -184,7 +184,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         }
         Assert.assertEquals(1, sigfreq.keySet().size());
     }
-    
+
     @Test
     public void convertEdgeLabelToColorTest() {
         IAtomContainer ac = makeBenzene();  // doesn't really matter
@@ -197,5 +197,5 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         Assert.assertTrue(singleColor < doubleColor);
         Assert.assertTrue(doubleColor < tripleColor);
     }
-    
+
 }

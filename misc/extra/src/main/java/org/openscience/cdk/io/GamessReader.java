@@ -45,18 +45,18 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 
 /**
  * A reader for GAMESS log file.
- * 
- * <p><b>Expected behaviour</b>: 
- * <br>The "GamessReader" object is able to read GAMESS output log file format. 
- * 
- * <p><b>Limitations</b>: <br>This reader was developed from a small set of 
- * example log files, and therefore, is not guaranteed to properly read all 
- * GAMESS output. If you have problems, please contact the author of this code, 
+ *
+ * <p><b>Expected behaviour</b>:
+ * <br>The "GamessReader" object is able to read GAMESS output log file format.
+ *
+ * <p><b>Limitations</b>: <br>This reader was developed from a small set of
+ * example log files, and therefore, is not guaranteed to properly read all
+ * GAMESS output. If you have problems, please contact the author of this code,
  * not the developers of GAMESS.
- * 
+ *
  * <!-- <p><b>State information</b>: <br> [] -->
  * <!-- <p><b>Dependencies</b>: <br> [all OS/Software/Hardware dependencies] -->
- * 
+ *
  * <p><b>Implementation</b>
  * <br>Available feature(s):
  * <ul>
@@ -70,13 +70,13 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * 	<li><b>Energies</b>: They are associated with the previously read set of coordinates.</li>
  * 	<li><b>Normal coordinates of vibrations</b>: They are associated with the previously read set of coordinates.</li>
  * </ul>
- * 
+ *
  * <!-- <p><b>Security:</b> -->
- * 
- * <p><b>References</b>: 
- * <br><a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a 
+ *
+ * <p><b>References</b>:
+ * <br><a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a
  * quantum chemistry program by Gordon research group atIowa State University.
- * 
+ *
  * @cdk.module  extra
  * @cdk.githash
  * @cdk.keyword Gamess
@@ -84,9 +84,9 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * @cdk.keyword output
  * @cdk.keyword log file
  * @cdk.iooptions
- * 
+ *
  * @author Bradley A. Smith
- * 
+ *
  * <!-- @see #GamessWriter(Reader) -->
  */
 //TODO Update class comments with appropriate information.
@@ -94,70 +94,70 @@ import org.openscience.cdk.io.formats.IResourceFormat;
 //TODO Update "author" tag with appropriate information.
 @TestClass("org.openscience.cdk.io.GamessReaderTest")
 public class GamessReader extends DefaultChemObjectReader {
-	
+
 	/**
 	 * Boolean constant used to specify that the coordinates are given in Bohr units.
 	 */
 	public static final boolean BOHR_UNIT = true;
-	
+
 	/**
-	 * Double constant that contains the convertion factor from Bohr unit to 
+	 * Double constant that contains the convertion factor from Bohr unit to
 	 * &Aring;ngstrom unit.
 	 */
 	//TODO Check the accuracy of this comment.
 	public static final double BOHR_TO_ANGSTROM = 0.529177249;
-	
+
 	/**
 	 * Boolean constant used to specify that the coordinates are given in &Aring;ngstrom units.
 	 */
 	public static final boolean ANGSTROM_UNIT = false;
-	
+
 	/**
 	 * The "BufferedReader" object used to read data from the "file system" file.
-	 * 
+	 *
 	 * @see	org.openscience.cdk.io.GamessReader#GamessReader(Reader)
 	 */
 	//TODO Improve field comment.
 	//TODO Answer the question : When is it opened and when is it closed?
 	private BufferedReader input;
-	
+
 	/**
 	 * Constructs a new "GamessReader" object given a "Reader" object as input.
-	 * 
-	 * <p>The "Reader" object may be an instantiable object from the "Reader" 
+	 *
+	 * <p>The "Reader" object may be an instantiable object from the "Reader"
 	 * hierarchy.
-	 * <br>For more detail about the "Reader" objects that are really accepted 
+	 * <br>For more detail about the "Reader" objects that are really accepted
 	 * by this "GamessReader" see <code>accepts(IChemObject)</code> method
 	 * documentation.
-	 * 
+	 *
 	 * @param	inputReader		The "Reader" object given as input parameter.
-	 * 
+	 *
 	 * @see #accepts(Class)
 	 * @see	java.io.Reader
-	 *  
+	 *
 	 */
     public GamessReader(Reader inputReader) {
 		this.input = new BufferedReader(inputReader);
     }
-	
+
     public GamessReader(InputStream input) {
         this(new InputStreamReader(input));
     }
-    
+
     public GamessReader() {
         this(new StringReader(""));
     }
-    
+
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectIO#accepts(org.openscience.cdk.ChemObject)
 	 */
-	//TODO Update comment with appropriate information to comply Constructor's documentation. 
-	
+	//TODO Update comment with appropriate information to comply Constructor's documentation.
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return GamessFormat.getInstance();
     }
-    
+
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
@@ -194,38 +194,38 @@ public class GamessReader extends DefaultChemObjectReader {
 			throw new CDKException("Only supported is reading of ChemFile objects.");
 		}
 	}
-	
+
 	/**
-	 * Reads data from the "file system" file through the use of the "input" 
+	 * Reads data from the "file system" file through the use of the "input"
 	 * field, parses data and feeds the ChemFile object with the extracted data.
-	 * 
+	 *
 	 * @return A ChemFile containing the data parsed from input.
-	 * 
+	 *
 	 * @throws	IOException	may be thrown buy the <code>this.input.readLine()</code> instruction.
-	 * 
+	 *
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
-	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)? 
+	//TODO Answer the question : Is this method's name appropriate (given the fact that it do not read a ChemFile object, but return it)?
 	private IChemFile readChemFile(IChemFile file) throws IOException {
 		IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class); // TODO Answer the question : Is this line needed ?
 		IChemModel model = file.getBuilder().newInstance(IChemModel.class); // TODO Answer the question : Is this line needed ?
 		IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
-		
+
 		model.setMoleculeSet(moleculeSet); //TODO Answer the question : Should I do this?
 		sequence.addChemModel(model); //TODO Answer the question : Should I do this?
 		file.addChemSequence(sequence); //TODO Answer the question : Should I do this?
-		
+
 		String currentReadLine = this.input.readLine();
 		while (this.input.ready() == true && (currentReadLine != null)) {
-			
+
 			/*
-			 * There are 2 types of coordinate sets: 
+			 * There are 2 types of coordinate sets:
 			 * - bohr coordinates sets		(if statement)
 			 * - angstr???m coordinates sets	(else statement)
 			 */
 			if (currentReadLine.indexOf("COORDINATES (BOHR)") >= 0) {
-				
-				/* 
+
+				/*
 				 * The following line do no contain data, so it is ignored.
 				 */
 				this.input.readLine();
@@ -235,7 +235,7 @@ public class GamessReader extends DefaultChemObjectReader {
 				//break; //<- stops when the first set of coordinates is found.
 			} else if (currentReadLine.indexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0) {
 
-				/* 
+				/*
 				 * The following 2 lines do no contain data, so it are ignored.
 				 */
 				this.input.readLine();
@@ -250,58 +250,58 @@ public class GamessReader extends DefaultChemObjectReader {
 		}
 		return file;
 	}
-	
+
 	/**
-	 * Reads a set of coordinates from the "file system" file through the use of 
-	 * the "input" field, scales coordinate to angstr???m unit, builds each atom with 
+	 * Reads a set of coordinates from the "file system" file through the use of
+	 * the "input" field, scales coordinate to angstr???m unit, builds each atom with
 	 * the right associated coordinates, builds a new molecule with these atoms
 	 * and returns the complete molecule.
-	 * 
+	 *
 	 * <p><b>Implementation</b>:
 	 * <br>Dummy atoms are ignored.
-	 * 
+	 *
 	 * @param	coordinatesUnits	The unit in which coordinates are given.
-	 * 
+	 *
 	 * @throws	IOException	may be thrown by the "input" object.
-	 * 
+	 *
 	 * @see org.openscience.cdk.io.GamessReader#input
 	 */
 	//TODO Update method comments with appropriate information.
 	private IAtomContainer readCoordinates(IAtomContainer molecule, boolean coordinatesUnits) throws IOException {
-		
+
 		/*
 		 * Coordinates must all be given in angstr???ms.
-		 */ 
+		 */
 		double unitScaling = GamessReader.scalesCoordinatesUnits(coordinatesUnits);
-		
+
 		String retrievedLineFromFile;
-		
+
 		while (this.input.ready() == true) {
 			retrievedLineFromFile = this.input.readLine();
-			/* 
-			 * A coordinate set is followed by an empty line, so when this line 
+			/*
+			 * A coordinate set is followed by an empty line, so when this line
 			 * is reached, there are no more coordinates to add to the current set.
-			 */ 
+			 */
 			if ((retrievedLineFromFile == null) || (retrievedLineFromFile.trim().length() == 0)) {
 				break;
 			}
-			
+
 			int atomicNumber;
 			String atomicSymbol;
-			
+
 			//StringReader sr = new StringReader(retrievedLineFromFile);
 			StreamTokenizer token = new StreamTokenizer(new StringReader(retrievedLineFromFile));
-			
+
 			/*
-			 * The first token is ignored. It contains the atomic symbol and may 
+			 * The first token is ignored. It contains the atomic symbol and may
 			 * be concatenated with a number.
 			 */
 			token.nextToken();
-			
+
 			if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
 				atomicNumber = (int) token.nval;
 				atomicSymbol = this.identifyAtomicSymbol(atomicNumber);
-				/* 
+				/*
 				 * Dummy atoms are assumed to be given with an atomic number set
 				 * to zero. We will do not add them to the molecule.
 				 */
@@ -311,11 +311,11 @@ public class GamessReader extends DefaultChemObjectReader {
 			} else {
 				throw new IOException("Error reading coordinates");
 			}
-			
+
 			/*
 			 * Atom's coordinates are stored in an array.
 			 */
-			double[] coordinates = new double[3]; 
+			double[] coordinates = new double[3];
 			for (int i = 0; i < coordinates.length; i++) {
 				if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
 					coordinates[i] = token.nval * unitScaling;
@@ -328,17 +328,17 @@ public class GamessReader extends DefaultChemObjectReader {
 		}
 		return molecule;
 	}
-	
+
 	/**
 	 * Identifies the atomic symbol of an atom given its default atomic number.
-	 * 
+	 *
 	 * <p><b>Implementation</b>:
-	 * <br>This is not a definitive method. It will probably be replaced with a 
-	 * more appropriate one. Be advised that as it is not a definitive version, 
+	 * <br>This is not a definitive method. It will probably be replaced with a
+	 * more appropriate one. Be advised that as it is not a definitive version,
 	 * it only recognise atoms from Hydrogen (1) to Argon (18).
-	 * 
+	 *
 	 * @param	atomicNumber	The atomic number of an atom.
-	 * 
+	 *
 	 * @return	The Symbol corresponding to the atom or "null" is the atom was not recognised.
 	 */
 	//TODO Update method comments with appropriate information.
@@ -401,21 +401,21 @@ public class GamessReader extends DefaultChemObjectReader {
 				break;
 			default:
 				symbol = null;
-				break; 
+				break;
 		}
 		return symbol;
 	}
-	
+
 	/**
-	 * Scales coordinates to &Aring;ngstr&ouml;m unit if they are given in Bohr unit. 
+	 * Scales coordinates to &Aring;ngstr&ouml;m unit if they are given in Bohr unit.
 	 * If coordinates are already given in &Aring;ngstr&ouml;m unit, then no modifications
 	 * are performed.
-	 * 
-	 * @param	coordinatesUnits	<code>BOHR_UNIT</code> if coordinates are given in Bohr unit and <code>ANGSTROM_UNIT</code> 
+	 *
+	 * @param	coordinatesUnits	<code>BOHR_UNIT</code> if coordinates are given in Bohr unit and <code>ANGSTROM_UNIT</code>
      *                              if they are given in &Aring;ngstr&ouml;m unit.
-	 * 
+	 *
 	 * @return	The scaling convertion factor: 1 if no scaling is needed and <code>BOHR_TO_ANGSTROM</code> if scaling has to be performed.
-	 * 
+	 *
 	 * @see org.openscience.cdk.PhysicalConstants#BOHR_TO_ANGSTROM
 	 * @see org.openscience.cdk.io.GamessReader#BOHR_UNIT
 	 * @see org.openscience.cdk.io.GamessReader#ANGSTROM_UNIT
@@ -428,16 +428,16 @@ public class GamessReader extends DefaultChemObjectReader {
 			return (double) 1;
 		}
 	}
-	
+
 	/* (non-Javadoc) (Javadoc is automaticly inherited from the link below)
 	 * @see org.openscience.cdk.io.ChemObjectIO#close()
 	 */
-	//TODO Answer the question : What are all concerned ressources ? 
+	//TODO Answer the question : What are all concerned ressources ?
 	@TestMethod("testClose")
   public void close() throws IOException {
-		/* 
+		/*
 		 * Closes the BufferedReader used to read the file content.
-		 */ 
+		 */
 		input.close();
-	}    
+	}
 }

@@ -38,55 +38,55 @@ import signature.AbstractVertexSignature;
  * The signature {@cdk.cite FAU03, FAU04} for a molecule rooted at a particular
  * atom.
  * </p>
- * 
+ *
  * <p>
  * A signature is a description of the connectivity of a molecule, in the form
  * of a tree-like structure called a directed acyclic graph (DAG). This DAG can
  * be written out as a string, for example ethane:
  * </p>
- * 
+ *
  * <pre>
  *   [C]([C]([H][H][H])[H][H][H])
  * </pre>
- * 
+ *
  * <p>
  * where each atom is represented by an atom symbol in square brackets. The
  * branching of the tree is indicated by round brackets. When the molecule has a
  * cycle, the signature string will have numbers after the atom symbol, like:
  * </p>
- * 
+ *
  * <pre>
  * [C]([C]([C,0])[C]([C,0]))
  * </pre>
- * 
+ *
  * <p>
  * these are known as 'colors' and indicate ring closures, in a roughly similar
  * way to SMILES notation. Note that the colors start from 0 in this
  * implementation, in contrast to the examples in {@cdk.cite FAU04}.
  * </p>
- * 
+ *
  * <p>
  * Multiple bonds are represented by symbols in front of the opening square
  * bracket of an atom. Double bonds are '=', triple are '#'. Since there is a
  * defined direction for the signature tree, only the child node will have the
  * bond symbol, and the relevant bond is to the parent.
  * </p>
- * 
+ *
  * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.AtomSignatureTest")
 public class AtomSignature extends AbstractVertexSignature {
-    
+
     /**
      * The atom container to make signatures from.
      */
     private IAtomContainer molecule;
-    
+
     /**
      * Create an atom signature starting at <code>atomIndex</code>.
-     * 
+     *
      * @param atomIndex the index of the atom that roots this signature
      * @param molecule the molecule to create the signature from
      */
@@ -95,23 +95,23 @@ public class AtomSignature extends AbstractVertexSignature {
         this.molecule = molecule;
         super.createMaximumHeight(atomIndex, molecule.getAtomCount());
     }
-    
+
     /**
      * Create an atom signature for the atom <code>atom</code>.
-     * 
+     *
      * @param atom the atom to make the signature for
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, IAtomContainer molecule) {
         this(molecule.getAtomNumber(atom), molecule);
     }
-    
+
     /**
      * Create an atom signature starting at <code>atomIndex</code> and with a
      * maximum height of <code>height</code>.
-     * 
+     *
      * @param atomIndex the index of the atom that roots this signature
-     * @param height the maximum height of the signature 
+     * @param height the maximum height of the signature
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(int atomIndex, int height, IAtomContainer molecule) {
@@ -119,49 +119,49 @@ public class AtomSignature extends AbstractVertexSignature {
         this.molecule = molecule;
         super.create(atomIndex, molecule.getAtomCount(), height);
     }
-    
+
     /**
      * Create an atom signature for the atom <code>atom</code> and with a
      * maximum height of <code>height</code>.
-     * 
+     *
      * @param atom     the index of the atom that roots this signature
-     * @param height   the maximum height of the signature 
+     * @param height   the maximum height of the signature
      * @param molecule the molecule to create the signature from
      */
     public AtomSignature(IAtom atom, int height, IAtomContainer molecule) {
         this(molecule.getAtomNumber(atom), height, molecule);
     }
-    
+
     /**
      * Create an atom signature starting at <code>atomIndex</code>, with maximum
      * height of <code>height</code>, and using a particular invariant type.
-     * 
+     *
      * @param atomIndex the index of the atom that roots this signature
      * @param height the maximum height of the signature
      * @param invariantType the type of invariant (int, string, ...)
      * @param molecule the molecule to create the signature from
      */
-    public AtomSignature(int atomIndex, int height, 
+    public AtomSignature(int atomIndex, int height,
             InvariantType invariantType, IAtomContainer molecule) {
         super(invariantType);
         this.molecule = molecule;
         super.create(atomIndex, molecule.getAtomCount(), height);
     }
-    
+
     /**
      * Create an atom signature for the atom <code>atom</code>, with maximum
      * height of <code>height</code>, and using a particular invariant type.
-     * 
+     *
      * @param atom the index of the atom that roots this signature
      * @param height the maximum height of the signature
      * @param invariantType the type of invariant (int, string, ...)
      * @param molecule the molecule to create the signature from
      */
-    public AtomSignature(IAtom atom, int height, 
+    public AtomSignature(IAtom atom, int height,
             InvariantType invariantType, IAtomContainer molecule) {
         this(molecule.getAtomNumber(atom), height, invariantType, molecule);
     }
-    
+
     @Override /** {@inheritDoc} */
     @TestMethod("getIntLabelTest")
     protected int getIntLabel(int vertexIndex) {

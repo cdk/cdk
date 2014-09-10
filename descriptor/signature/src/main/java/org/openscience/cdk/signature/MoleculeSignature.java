@@ -41,78 +41,78 @@ import signature.SymmetryClass;
  * the canonical {@cdk.cite FAU04} signature string for a molecule. There are
  * several possible uses for a molecule signature.
  * </p>
- * 
+ *
  * <p>
  * Firstly, a signature with a height greater than the diameter of a molecule
  * can be used to reconstruct the molecule. In this sense, the signature string
  * is like a SMILES {@cdk.cite WEI88, WEI89} string. It is more verbose, but it
  * will work for all molecules.
  * </p>
- * 
+ *
  * <p>
  * Secondly, the set of signatures for a molecule partition the atoms into
  * equivalence classes (or 'orbits' - see the {@link Orbit} class). This is
  * similar to partitioning atoms by Morgan number {@cdk.cite MOR65} except that
  * it works for 3-regular graphs like fullerenes.
  * </p>
- * 
+ *
  * <p>
  * Thirdly, signatures can be calculated at different heights to give
  * descriptions of the connectivity around atoms. 'Height' is the same as the
  * idea of a 'sphere' in HOSE codes, and signatures are also path descriptors in
  * this sense.
  * </p>
- * 
+ *
  * So, for example, to get the canonical signature for a molecule:
- * 
+ *
  * <pre>
  * IMolecule diamantane = MoleculeFactory.makeBenzene();
  * MoleculeSignature moleculeSignature = new MoleculeSignature(diamantane);
  * String canonicalSignature = moleculeSignature.toCanonicalString();
  * </pre>
- * 
+ *
  * to get the orbits of this molecule:
- * 
+ *
  * <pre>
  * List&lt;Orbit&gt; orbits = moleculeSignature.calculateOrbits();
  * </pre>
- * 
+ *
  * and to get the height-2 signature string of just atom 5:
- * 
+ *
  * <pre>
  * String hSignatureForAtom5 = moleculeSignature.signatureStringForVertex(5, 2);
  * </pre>
- * 
+ *
  * it is also possible to get AtomSignatures using the signatureForVertex method
  * - which is just a convenience method equivalent to calling the constructor of
  * an AtomSignature class.
- * 
+ *
  * @cdk.module signature
  * @author maclean
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.signature.MoleculeSignatureTest")
 public class MoleculeSignature extends AbstractGraphSignature {
-    
+
     /**
      * The molecule to use when making atom signatures
      */
     private IAtomContainer molecule;
-    
+
     /**
      * Creates a signature that represents this molecule.
-     * 
+     *
      * @param molecule the molecule to convert to a signature
      */
     public MoleculeSignature(IAtomContainer molecule) {
         super();
         this.molecule = molecule;
     }
-    
+
     /**
      * Creates a signature with a maximum height of <code>height</code>
      * for molecule <code>molecule</code>.
-     *  
+     *
      * @param molecule the molecule to convert to a signature
      * @param height the maximum height of the signature
      */
@@ -135,7 +135,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
         if (height == -1) {
             atomSignature = new AtomSignature(vertexIndex, this.molecule);
         } else {
-            atomSignature = 
+            atomSignature =
                 new AtomSignature(vertexIndex, height, this.molecule);
         }
         return atomSignature.toCanonicalString();
@@ -144,7 +144,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
     @Override /** {@inheritDoc} */
     @TestMethod("getSignatureStringForVertexTest_height")
     public String signatureStringForVertex(int vertexIndex, int height) {
-        AtomSignature atomSignature = 
+        AtomSignature atomSignature =
             new AtomSignature(vertexIndex, height, this.molecule);
         return atomSignature.toCanonicalString();
     }
@@ -156,8 +156,8 @@ public class MoleculeSignature extends AbstractGraphSignature {
     }
 
     /**
-     * Calculates the orbits of the atoms of the molecule. 
-     * 
+     * Calculates the orbits of the atoms of the molecule.
+     *
      * @return a list of orbits
      */
     @TestMethod("calculateOrbitsTest")
@@ -173,11 +173,11 @@ public class MoleculeSignature extends AbstractGraphSignature {
         }
         return orbits;
     }
-    
+
     /**
-     * Builder for molecules (rather, for atom containers) from signature 
+     * Builder for molecules (rather, for atom containers) from signature
      * strings.
-     * 
+     *
      * @param signatureString the signature string to use
      * @param coBuilder {@link IChemObjectBuilder} to build the returned atom container from
      * @return an atom container
@@ -194,7 +194,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
 
     /**
      * Make a canonical signature string of a given height.
-     * 
+     *
      * @param height the maximum height to make signatures
      * @return the canonical signature string
      */
@@ -203,7 +203,7 @@ public class MoleculeSignature extends AbstractGraphSignature {
         String canonicalSignature = null;
         for (int i = 0; i < getVertexCount(); i++) {
             String signatureForI = signatureStringForVertex(i, height);
-            if (canonicalSignature == null || 
+            if (canonicalSignature == null ||
                     canonicalSignature.compareTo(signatureForI) < 0) {
                 canonicalSignature = signatureForI;
             }

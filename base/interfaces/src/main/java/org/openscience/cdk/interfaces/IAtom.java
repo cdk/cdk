@@ -32,7 +32,7 @@ import javax.vecmath.Point3d;
  * @cdk.githash
  */
 public interface IAtom extends IAtomType {
-    
+
 	/**
 	 * Sets the partial charge of this atom.
 	 *
@@ -73,7 +73,7 @@ public interface IAtom extends IAtomType {
 	 * @see    #getPoint2d
 	 */
 	public void setPoint2d(Point2d point2d);
-	
+
 	/**
 	 * Sets a point specifying the location of this
 	 * atom in 3D space.
@@ -82,7 +82,7 @@ public interface IAtom extends IAtomType {
 	 * @see    #getPoint3d
 	 */
 	public void setPoint3d(Point3d point3d);
-	
+
 	/**
 	 * Sets a point specifying the location of this
 	 * atom in a Crystal unit cell.
@@ -101,7 +101,7 @@ public interface IAtom extends IAtomType {
 	 * @see    #getStereoParity
 	 */
 	public void setStereoParity(Integer stereoParity);
-	
+
 	/**
 	 * Returns a point specifying the location of this
 	 * atom in a 2D space.
@@ -110,7 +110,7 @@ public interface IAtom extends IAtomType {
 	 * @see       #setPoint2d
 	 */
 	public Point2d getPoint2d();
-	
+
 	/**
 	 * Returns a point specifying the location of this
 	 * atom in a 3D space.
@@ -119,7 +119,7 @@ public interface IAtom extends IAtomType {
 	 * @see       #setPoint3d
 	 */
 	public Point3d getPoint3d();
-	
+
 	/**
 	 * Returns a point specifying the location of this
 	 * atom in a Crystal unit cell.
@@ -129,7 +129,7 @@ public interface IAtom extends IAtomType {
 	 * @see       org.openscience.cdk.CDKConstants for predefined values.
 	 */
 	public Point3d getFractionalPoint3d();
-	
+
 	/**
 	 * Returns the stereo parity of this atom. It uses the predefined values
 	 * found in CDKConstants.
@@ -144,7 +144,7 @@ public interface IAtom extends IAtomType {
      * @inheritDoc
      */
     public IAtom clone() throws CloneNotSupportedException;
-	
+
 }
 
 

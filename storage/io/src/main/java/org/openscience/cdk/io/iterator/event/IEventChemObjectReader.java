@@ -39,7 +39,7 @@ import org.openscience.cdk.io.IChemObjectIO;
  * @cdk.created 2005-01-25
  */
 public interface IEventChemObjectReader extends IChemObjectIO {
-    
+
     public IAtomContainer getAtomContainer();
 
 }

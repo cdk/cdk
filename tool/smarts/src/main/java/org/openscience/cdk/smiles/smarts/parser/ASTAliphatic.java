@@ -19,7 +19,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 
 /**
  * An AST node. It represents an aliphtic atom (A) in smarts.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts
@@ -29,7 +29,7 @@ package org.openscience.cdk.smiles.smarts.parser;
 class ASTAliphatic extends SimpleNode {
 	/**
 	 * Creates a new instance
-	 * 
+	 *
 	 * @param id
 	 */
 	public ASTAliphatic(int id) {
@@ -38,9 +38,9 @@ class ASTAliphatic extends SimpleNode {
 
 	/**
 	 * Creates a new instance
-	 * 
+	 *
 	 * @param p
-	 * @param id 
+	 * @param id
 	 */
 	public ASTAliphatic(SMARTSParser p, int id) {
 		super(p, id);

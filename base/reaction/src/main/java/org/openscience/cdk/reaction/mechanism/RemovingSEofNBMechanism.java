@@ -1,20 +1,20 @@
 /* Copyright (C) 2008  Miguel Rojas <miguelrojasch@yahoo.es>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.reaction.mechanism;
 
@@ -41,7 +41,7 @@ import java.util.List;
  * This mechanism extracts a single electron from a non-bonding orbital which located in
  * a ILonePair container. It returns the reaction mechanism which has been cloned the
  * IMolecule with an ILonPair electron less and an ISingleElectron more.
- * 
+ *
  * @author         miguelrojasch
  * @cdk.created    2008-02-10
  * @cdk.module     reaction
@@ -50,7 +50,7 @@ import java.util.List;
 @TestClass(value="org.openscience.cdk.reaction.mechanism.RemovingSEofNBMechanismTest")
 public class RemovingSEofNBMechanism implements IReactionMechanism{
 
-	/** 
+	/**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -59,7 +59,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
      * @param atomList    The list of atoms taking part in the mechanism. Only allowed one atom
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one Bond
      * @return            The Reaction mechanism
-     * 
+     *
 	 */
     @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
 	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
@@ -80,7 +80,7 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
 		} catch (CloneNotSupportedException e) {
 			throw new CDKException("Could not clone IMolecule!", e);
 		}
-		
+
 		// remove one lone pair electron and substitute with one single electron and charge 1.
 		int posAtom = molecule.getAtomNumber(atomList.get(0));
 		List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posAtom));
@@ -96,17 +96,17 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
 		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(posAtom));
 		if (type == null || type.getAtomTypeName().equals("X"))
 			return null;
-		
+
 		IReaction reaction = molecule.getBuilder().newInstance(IReaction.class);
 		reaction.addReactant(molecule);
-		
+
 		/* mapping */
 		for(IAtom atom:molecule.atoms()){
 			IMapping mapping = molecule.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
 			reaction.addMapping(mapping);
 	    }
 		reaction.addProduct(reactantCloned);
-		
+
 		return reaction;
 	}
 

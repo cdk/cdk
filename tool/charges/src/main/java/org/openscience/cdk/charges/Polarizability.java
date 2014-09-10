@@ -137,7 +137,7 @@ public class Polarizability {
 
         List<IAtom> startAtom = new ArrayList<IAtom>(1);
         startAtom.add(0, atom);
-        double bond;        
+        double bond;
 
         polarizabilitiy += getKJPolarizabilityFactor(acH, atom);
         for (int i = 0; i < acH.getAtomCount(); i++) {
@@ -158,7 +158,7 @@ public class Polarizability {
      * calculate effective atom polarizability.
      *
      * @param atomContainer         IAtomContainer
-     * @param atom                  atom for which effective atom polarizability should be calculated     
+     * @param atom                  atom for which effective atom polarizability should be calculated
      * @param addExplicitH          if set to true, then explicit H's will be added, otherwise it assumes that they have
      *                              been added to the molecule before being called
      * @param distanceMatrix        an n x n matrix of topological distances between all the atoms in the molecule.
@@ -269,7 +269,7 @@ public class Polarizability {
                 polarizabilitiyFactor = 0.460;
             }
         } else if (AtomSymbol.equals("P")) {
-            if (atomContainer.getConnectedBondsCount(atom) == 4 && 
+            if (atomContainer.getConnectedBondsCount(atom) == 4 &&
             	atomContainer.getMaximumBondOrder(atom) == IBond.Order.DOUBLE) {
                 polarizabilitiyFactor = 0;
             }

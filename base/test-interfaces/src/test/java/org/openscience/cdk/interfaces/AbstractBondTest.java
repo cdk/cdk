@@ -1,21 +1,21 @@
 /* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.interfaces;
 
@@ -42,7 +42,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
         IAtom c = b.getBuilder().newInstance(IAtom.class,"C");
         IAtom o = b.getBuilder().newInstance(IAtom.class,"O");
         b.setAtom(c, 0); b.setAtom(o, 1); b.setOrder(Order.SINGLE);
-        
+
         IBond b2 = (IBond)newChemObject();
         b2.setAtom(c, 0); b2.setAtom(o, 1); b2.setOrder(Order.SINGLE);
 
@@ -276,7 +276,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testGetStereo() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom c = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom o = object.getBuilder().newInstance(IAtom.class,"O");
 
@@ -286,7 +286,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testGet2DCenter() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom o = object.getBuilder().newInstance(IAtom.class,"O", new Point2d(0.0, 0.0));
         IAtom c = object.getBuilder().newInstance(IAtom.class,"C", new Point2d(1.0, 1.0));
         IBond b = object.getBuilder().newInstance(IBond.class,c, o);
@@ -297,7 +297,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testGet3DCenter() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom o = object.getBuilder().newInstance(IAtom.class,"O", new Point3d(0.0, 0.0, 0.0));
         IAtom c = object.getBuilder().newInstance(IAtom.class,"C", new Point3d(1.0, 1.0, 1.0));
         IBond b = object.getBuilder().newInstance(IBond.class,c, o);
@@ -317,7 +317,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testClone_IAtom() throws Exception {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IBond bond = object.getBuilder().newInstance(IBond.class,atom1, atom2);
@@ -330,7 +330,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testClone_Order() throws Exception {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IBond bond = object.getBuilder().newInstance(IBond.class,atom1, atom2, IBond.Order.SINGLE);
@@ -343,7 +343,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testClone_Stereo() throws Exception {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IBond bond = object.getBuilder().newInstance(IBond.class,
@@ -371,7 +371,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenter1() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");
@@ -387,7 +387,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenterCompare() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");
@@ -404,7 +404,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenterContains() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");
@@ -419,7 +419,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenterIterator() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");
@@ -438,7 +438,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenterConnectedAtoms() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");
@@ -472,7 +472,7 @@ public abstract class AbstractBondTest extends AbstractElectronContainerTest {
 
     @Test
     public void testMultiCenterIsConnectedTo() {
-    	IChemObject object = newChemObject(); 
+    	IChemObject object = newChemObject();
         IAtom atom1 = object.getBuilder().newInstance(IAtom.class,"C");
         IAtom atom2 = object.getBuilder().newInstance(IAtom.class,"O");
         IAtom atom3 = object.getBuilder().newInstance(IAtom.class,"C");

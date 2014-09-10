@@ -32,7 +32,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -41,7 +41,7 @@ public class DebugAtomType extends AtomType
     implements IAtomType {
 
     private static final long serialVersionUID = 1427549696666679540L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugAtomType.class);
 
@@ -56,7 +56,7 @@ public class DebugAtomType extends AtomType
 		this.setSymbol(elementSymbol);
 		this.setAtomTypeName(identifier);
 	}
-	
+
 	public DebugAtomType(IElement element) {
 		super(element);
 		logger.debug("Instantiated a DebugAtomType: element= ", element);
@@ -209,7 +209,7 @@ public class DebugAtomType extends AtomType
     public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
-		
+
 	}
 
     /** {@inheritDoc} */ @Override

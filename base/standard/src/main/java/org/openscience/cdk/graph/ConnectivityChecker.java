@@ -1,21 +1,21 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk.graph;
 
@@ -41,7 +41,7 @@ import java.util.Map;
  * <pre>
  *   MoleculeSet fragments = ConnectivityChecker.partitionIntoMolecules(disconnectedContainer);
  *   int fragmentCount = fragments.getAtomContainerCount();
- * </pre> 
+ * </pre>
  *
  * @cdk.module standard
  * @cdk.githash
@@ -49,13 +49,13 @@ import java.util.Map;
  * @cdk.keyword connectivity
  */
 @TestClass("org.openscience.cdk.graph.ConnectivityCheckerTest")
-public class ConnectivityChecker 
+public class ConnectivityChecker
 {
 	/**
 	 * Check whether a set of atoms in an {@link IAtomContainer} is connected.
 	 *
 	 * @param   atomContainer  The {@link IAtomContainer} to be check for connectedness
-	 * @return                 true if the {@link IAtomContainer} is connected   
+	 * @return                 true if the {@link IAtomContainer} is connected
 	 */
     @TestMethod("testIsConnected_IAtomContainer,testPartitionIntoMolecules_IsConnected_Consistency")
     public static boolean isConnected(IAtomContainer atomContainer)
@@ -67,7 +67,7 @@ public class ConnectivityChecker
 		ConnectedComponents cc = new ConnectedComponents(GraphUtil.toAdjList(atomContainer));
         return cc.nComponents() == 1;
     }
-	
+
 
 
 	/**
@@ -85,17 +85,17 @@ public class ConnectivityChecker
         int[]                      components    = cc.components();
         IAtomContainer[]           containers    = new IAtomContainer[cc.nComponents() + 1];
         Map<IAtom,IAtomContainer>  componentsMap = new HashMap<IAtom, IAtomContainer>(2 * container.getAtomCount());
-        
+
         for (int i = 1; i < containers.length; i++)
             containers[i] = container.getBuilder().newInstance(IAtomContainer.class);
-        
+
 		IAtomContainerSet containerSet = container.getBuilder().newInstance(IAtomContainerSet.class);
 
         for (int i = 0; i < container.getAtomCount(); i++) {
             componentsMap.put(container.getAtom(i), containers[components[i]]);
             containers[components[i]].addAtom(container.getAtom(i));
         }
-        
+
         for (IBond bond : container.bonds())
             componentsMap.get(bond.getAtom(0)).addBond(bond);
 
@@ -104,7 +104,7 @@ public class ConnectivityChecker
 
         for (ILonePair lonePair : container.lonePairs())
             componentsMap.get(lonePair.getAtom()).addLonePair(lonePair);
-        
+
         for (IStereoElement stereo : container.stereoElements()) {
             if (stereo instanceof ITetrahedralChirality) {
                 IAtom a = ((ITetrahedralChirality) stereo).getChiralAtom();
@@ -122,10 +122,10 @@ public class ConnectivityChecker
                 System.err.println("New stereochemistry element is not currently partitioned with ConnectivityChecker:" + stereo.getClass());
             }
         }
-        
+
         for (int i = 1; i < containers.length; i++)
             containerSet.addAtomContainer(containers[i]);
-        
+
 		return containerSet;
 	}
 }

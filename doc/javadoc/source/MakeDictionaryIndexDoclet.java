@@ -21,7 +21,7 @@ import java.util.*;
 import java.io.*;
 
 /**
- * This class makes an overview of which classes refer to which entry in 
+ * This class makes an overview of which classes refer to which entry in
  * which dictionary.
  */
 public class MakeDictionaryIndexDoclet {
@@ -94,10 +94,10 @@ public class MakeDictionaryIndexDoclet {
         }
         packageClasses.addElement(packageClass);
     }
-    
+
     private void processClass(ClassDoc classDoc) throws IOException {
         if (classDoc == null) return;
-        
+
         String className = classDoc.qualifiedName();
         // first deal with class tags
         Tag[] tags = classDoc.tags(javaDocDictRefTag);
@@ -107,7 +107,7 @@ public class MakeDictionaryIndexDoclet {
             }
         }
     }
-    
+
     private void processMethod(MethodDoc methodDoc, String className) throws IOException {
         // System.out.println("Processing: " + methodDoc.qualifiedName());
         Tag[] tags = methodDoc.tags(javaDocDictRefTag);

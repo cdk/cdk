@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 
 /**
  * Unit testing for the {@link TimeOut} class.
- * 
+ *
  * @author     egonw
  * @author Syed Asad Rahman <asad@ebi.ac.uk>
  *

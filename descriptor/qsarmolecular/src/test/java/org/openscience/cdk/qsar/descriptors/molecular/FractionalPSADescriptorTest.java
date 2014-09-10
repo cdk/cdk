@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Before;
@@ -43,7 +43,7 @@ import org.openscience.cdk.tools.*;
  * @cdk.module test-qsarmolecular
  */
 
-public class FractionalPSADescriptorTest extends MolecularDescriptorTest 
+public class FractionalPSADescriptorTest extends MolecularDescriptorTest
 {
 	private static ILoggingTool logger=LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
 
@@ -52,7 +52,7 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest
     }
 
     @Before
-    public void setUp() throws Exception 
+    public void setUp() throws Exception
     {
     	setDescriptor(FractionalPSADescriptor.class);
     }
@@ -80,7 +80,7 @@ public class FractionalPSADescriptorTest extends MolecularDescriptorTest
 			throw new CDKException("Got "+tpsaEfficiency+", expected "+ANSWER);
 		}
     }
-    
+
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
     public void nop() throws Exception {}

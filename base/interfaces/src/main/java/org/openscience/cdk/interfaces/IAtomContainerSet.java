@@ -46,23 +46,23 @@ public interface IAtomContainerSet extends IChemObject {
 	/**
 	 * Removes all AtomContainer from this container.
 	 */
-	public void removeAllAtomContainers();	
-	
+	public void removeAllAtomContainers();
+
 	/**
 	 * Removes an AtomContainer from this container.
 	 *
 	 * @param  pos  The position of the AtomContainer to be removed from this container
 	 */
 	public void removeAtomContainer(int pos);
-	
+
 	/**
 	 * Replace the AtomContainer at a specific position (array has to be large enough).
-	 * 
+	 *
 	 * @param position   position in array for AtomContainer
 	 * @param container  the replacement AtomContainer
 	 */
 	public void replaceAtomContainer(int position, IAtomContainer container);
-	
+
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *
@@ -72,7 +72,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @see                #getMultiplier(IAtomContainer)
 	 */
 	public boolean setMultiplier(IAtomContainer container, Double multiplier);
-	
+
 	/**
 	 * Sets the coefficient of a AtomContainer to a given value.
 	 *
@@ -101,7 +101,7 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @see                    #getMultipliers
 	 */
 	public boolean setMultipliers(Double[] newMultipliers);
-	
+
 	/**
 	 * Adds an atomContainer to this container with the given
 	 * multiplier.
@@ -117,10 +117,10 @@ public interface IAtomContainerSet extends IChemObject {
 	 * @param  atomContainerSet  The AtomContainerSet
 	 */
 	public void add(IAtomContainerSet atomContainerSet);
-	
+
 	/**
 	 *  Get an Iterable for this AtomContainerSet.
-     * 
+     *
      * @return A new Iterable for this AtomContainerSet.
 	 */
 	public Iterable<IAtomContainer> atomContainers();
@@ -162,7 +162,7 @@ public interface IAtomContainerSet extends IChemObject {
 
     /**
       * Sort the AtomContainers using a provided Comparator.
-      * 
+      *
       * @param comparator defines the sorting method
       */
     public void sortAtomContainers( Comparator<IAtomContainer> comparator);

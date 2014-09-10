@@ -1,21 +1,21 @@
 /*
  * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 package org.openscience.cdk.geometry.surface;
@@ -33,11 +33,11 @@ import javax.vecmath.Point3d;
  * depends on the level of subdivision. The default is 4 levels and with the
  * initial icoshedral representation this gives 1536 points.
  * <p>
- * The constants for the tetrahedral and icosahedral representations were 
+ * The constants for the tetrahedral and icosahedral representations were
  * taken from http://eeg.sourceforge.net/eegdoc/eeg_toolbox/sphere_tri.html
- * 
+ *
  * @author Rajarshi Guha
- * @cdk.created 2005-05-08  
+ * @cdk.created 2005-05-08
  * @cdk.module  qsarmolecular
  * @cdk.githash
  */
@@ -120,7 +120,7 @@ public class Tessellate {
 
     private Triangle[] repTet() {
         double sqrt3 = 0.5773502692;
-        Point3d[] v = { 
+        Point3d[] v = {
             new Point3d(sqrt3, sqrt3, sqrt3),
             new Point3d(-sqrt3, -sqrt3, sqrt3),
             new Point3d(-sqrt3,sqrt3,-sqrt3),
@@ -160,18 +160,18 @@ public class Tessellate {
         double tau = 0.8506508084;
         double one = 0.5257311121;
         Point3d[] v = {
-            new Point3d(  tau,  one,    0.0 ),  
-            new Point3d( -tau,  one,    0.0 ),  
-            new Point3d( -tau, -one,    0.0 ),  
-            new Point3d(  tau, -one,    0.0 ),  
-            new Point3d(  one,   0.0 ,  tau ),  
-            new Point3d(  one,   0.0 , -tau ),  
-            new Point3d( -one,   0.0 , -tau ),  
-            new Point3d( -one,   0.0 ,  tau ),  
-            new Point3d(   0.0 ,  tau,  one ),  
-            new Point3d(   0.0 , -tau,  one ),  
-            new Point3d(   0.0 , -tau, -one ),  
-            new Point3d(   0.0 ,  tau, -one ) 
+            new Point3d(  tau,  one,    0.0 ),
+            new Point3d( -tau,  one,    0.0 ),
+            new Point3d( -tau, -one,    0.0 ),
+            new Point3d(  tau, -one,    0.0 ),
+            new Point3d(  one,   0.0 ,  tau ),
+            new Point3d(  one,   0.0 , -tau ),
+            new Point3d( -one,   0.0 , -tau ),
+            new Point3d( -one,   0.0 ,  tau ),
+            new Point3d(   0.0 ,  tau,  one ),
+            new Point3d(   0.0 , -tau,  one ),
+            new Point3d(   0.0 , -tau, -one ),
+            new Point3d(   0.0 ,  tau, -one )
         };
         Triangle[] rep = {
             new Triangle( v[4], v[8], v[7] ),

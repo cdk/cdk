@@ -93,7 +93,7 @@ public class MassNumberRuleTest extends CDKTestCase {
         ligands.add(ligand2);
         ligands.add(ligand3);
         ligands.add(ligand4);
-        
+
         Collections.sort(ligands, new MassNumberRule());
         Assert.assertNotNull(ligands.get(0));
         Assert.assertEquals("H", ligands.get(0).getLigandAtom().getSymbol());
@@ -108,7 +108,7 @@ public class MassNumberRuleTest extends CDKTestCase {
     public void testImplicitHydrogen_Same() {
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
-        ); 
+        );
         ILigand ligand2 = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
         );
@@ -121,7 +121,7 @@ public class MassNumberRuleTest extends CDKTestCase {
     public void testImplicitHydrogen() {
         ILigand ligand1 = new ImplicitHydrogenLigand(
             molecule, new VisitedAtoms(), molecule.getAtom(1)
-        ); 
+        );
         ILigand ligand2 = new Ligand(
             molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
         );

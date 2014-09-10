@@ -51,7 +51,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
 
     /**
      * Constructor to create a new {@link ITetrahedralChirality} implementation instance.
-     * 
+     *
      * @param chiralAtom  The chiral {@link IAtom}.
      * @param ligandAtoms The ligand atoms around the chiral atom.
      * @param chirality   The {@link Stereo} chirality.
@@ -120,7 +120,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
         if (chiralAtom.equals(atom))
             return true;
         for (IAtom ligand : ligandAtoms)
-            if (ligand.equals(atom)) 
+            if (ligand.equals(atom))
                 return true;
         return false;
     }
@@ -152,7 +152,7 @@ public class TetrahedralChirality implements ITetrahedralChirality {
 
     /**
      * Returns a {@link String} representation of this chiral element.
-     * 
+     *
      * @return the String representation
      */
     @TestMethod("testToString")

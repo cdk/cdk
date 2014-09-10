@@ -1,8 +1,8 @@
 /*
  * MX - Essential Cheminformatics
- * 
+ *
  * Copyright (c) 2007-2009 Metamolecular, LLC
- * 
+ *
  * http://metamolecular.com/mx
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -86,7 +86,7 @@ public class VFMapperTest {
     public VFMapperTest(){
 
     }
-    
+
     @Before
     public void setUp() throws Exception {
         hexane = Molecules.createHexane();

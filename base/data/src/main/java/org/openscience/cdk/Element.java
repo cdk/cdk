@@ -1,26 +1,26 @@
-/* 
+/*
  * Copyright (C) 1997-2013  Christoph Steinbeck <steinbeck@users.sf.net>
  *                          Egon Willighagen <egonw@users.sourceforge.net>
  *                          John May <jwmay@users.sf.net>
  *                          Rajarshi Guha <rajarshi@users.sf.net>
  *                          miguelrojasch <miguelrojasch@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
- * 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
  */
 package org.openscience.cdk;
 
@@ -32,7 +32,7 @@ import java.io.Serializable;
 
 /**
  * Implements the idea of an element in the periodic table.
- * 
+ *
  * <p>Use the IsotopeFactory to get a ready-to-use elements
  * by symbol or atomic number:
  * <pre>
@@ -79,7 +79,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * Constructs an empty by copying the symbol, atomic number,
      * flags, and identifier from the given IElement. It does
      * not copy the listeners and properties.
-     * 
+     *
      * @param element IElement to copy information from
      */
     public Element(IElement element) {
@@ -87,19 +87,19 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
     	this.symbol = element.getSymbol();
     	this.atomicNumber = element.getAtomicNumber();
     }
-    
+
     /**
-     * Constructs an Element with a given 
+     * Constructs an Element with a given
      * element symbol.
      *
-     * @param   symbol The element symbol that this element should have.  
+     * @param   symbol The element symbol that this element should have.
      */
     public Element(String symbol) {
         this(symbol, PeriodicTable.getAtomicNumber(symbol));
     }
 
     /**
-     * Constructs an Element with a given element symbol, 
+     * Constructs an Element with a given element symbol,
      * atomic number and atomic mass.
      *
      * @param   symbol  The element symbol of this element.
@@ -112,7 +112,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
 
     /**
      * Returns the atomic number of this element.
-     * 
+     *
 	 *  <p>Once instantiated all field not filled by passing parameters
 	 * to the constructor are null. Elements can be configured by using
 	 * the IsotopeFactory.configure() method:
@@ -121,9 +121,9 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
 	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
 	 *   if.configure(element);
 	 * </pre>
-	 * </p>      
+	 * </p>
      *
-     * @return The atomic number of this element    
+     * @return The atomic number of this element
      *
      * @see    #setAtomicNumber
      */
@@ -181,7 +181,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         resultString.append(')');
         return resultString.toString();
     }
-    
+
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }

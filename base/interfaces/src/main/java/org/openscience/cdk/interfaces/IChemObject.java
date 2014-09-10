@@ -59,7 +59,7 @@ public interface IChemObject extends ICDKObject {
 	/**
 	 * Set a flag to use or not use notification. By default it should be set
 	 * to true.
-	 * 
+	 *
 	 * @param bool if true, then notification messages are sent.
 	 * @see        #getNotification()
 	 */
@@ -67,12 +67,12 @@ public interface IChemObject extends ICDKObject {
 
 	/**
 	 * Returns the flag that indicates whether notification messages are sent around.
-	 * 
+	 *
 	 * @return true if messages are sent.
 	 * @see    #setNotification(boolean)
 	 */
 	public boolean getNotification();
-	
+
 	/**
 	 * This should be triggered by an method that changes the content of an object
 	 * to that the registered listeners can react to it.
@@ -100,7 +100,7 @@ public interface IChemObject extends ICDKObject {
 	 * @see                 #removeProperty
 	 */
 	public void setProperty(Object description, Object property);
-	
+
 	/**
 	 * Removes a property for a IChemObject.
 	 *
@@ -248,7 +248,7 @@ public interface IChemObject extends ICDKObject {
      * @param properties map key-value pairs
      */
     public void setProperties(Map<Object,Object> properties);
-    
+
 	/**
 	 * Add properties to this object, duplicate keys will replace any existing
      * value.
@@ -257,7 +257,7 @@ public interface IChemObject extends ICDKObject {
 	 * @see                #getProperties
 	 */
 	public void addProperties(Map<Object, Object> properties);
-    
+
 	/**
 	 * Sets the whole set of flags. This set will iteratively invoke
      * {@link #setFlag(int, boolean)} for each value in the array and
@@ -297,7 +297,7 @@ public interface IChemObject extends ICDKObject {
      * @return a String representation of this object
      */
     public String toString();
-    
+
     /**
      * Returns a deep clone of this IChemObject.
      *

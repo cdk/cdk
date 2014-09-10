@@ -93,7 +93,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /** {@inheritDoc}
      * Function is called by the main program and serves as a starting point for the comparison procedure.
      *
-     * @param shouldMatchBonds 
+     * @param shouldMatchBonds
      */
     @Override
     @TestMethod("testSearchMCS")

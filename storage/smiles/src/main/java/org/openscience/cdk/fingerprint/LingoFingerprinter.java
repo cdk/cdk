@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2010  Rajarshi Guha <rajarshi.guha@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -96,7 +96,7 @@ public class LingoFingerprinter implements IFingerprinter {
 
     private String refactorSmiles(String smiles) {
         Matcher matcher = ringClosurePattern.matcher(smiles);
-        return matcher.replaceAll("0");        
+        return matcher.replaceAll("0");
     }
 
 	@Override

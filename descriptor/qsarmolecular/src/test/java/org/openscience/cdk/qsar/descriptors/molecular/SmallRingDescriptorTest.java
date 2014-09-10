@@ -25,7 +25,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Before;
@@ -47,7 +47,7 @@ import java.io.*;
  * @cdk.module test-qsarmolecular
  */
 
-public class SmallRingDescriptorTest extends MolecularDescriptorTest 
+public class SmallRingDescriptorTest extends MolecularDescriptorTest
 {
 	private static ILoggingTool logger=LoggingToolFactory.createLoggingTool(SmallRingDescriptorTest.class);
 
@@ -56,7 +56,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
     }
 
     @Before
-    public void setUp() throws Exception 
+    public void setUp() throws Exception
     {
     	setDescriptor(SmallRingDescriptor.class);
     }
@@ -65,25 +65,25 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
     public void testDescriptors() throws Exception
     {
     	logger.info("CircularFingerprinter test: loading source materials");
-    	
+
         String fnzip="data/cdd/aromring_validation.zip";
         logger.info("Loading source content: "+fnzip);
         InputStream in=this.getClass().getClassLoader().getResourceAsStream(fnzip);
     	validate(in);
     	in.close();
-		
+
 		logger.info("CircularFingerprinter test: completed without any problems");
     }
-    
+
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
     public void nop() throws Exception {}
-    
+
     // run through the cases
 	private void validate(InputStream in) throws Exception
 	{
 		ZipInputStream zip=new ZipInputStream(in);
-		
+
 		// stream the contents form the zipfile: these are all short
 		HashMap<String,byte[]> content=new HashMap<String,byte[]>();
 		while (true)
@@ -100,7 +100,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
 			}
 			content.put(fn,buff.toByteArray());
 		}
-		
+
 		zip.close();
 
 		for (int idx=1;;idx++)
@@ -109,7 +109,7 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
 			while (basefn.length()<6) basefn="0"+basefn;
 			byte[] molBytes=content.get(basefn+".mol");
 			if (molBytes==null) break;
-			
+
     		AtomContainer mol=new AtomContainer();
     		MDLV2000Reader mdl=new MDLV2000Reader(new ByteArrayInputStream(molBytes));
     		mdl.read(mol);
@@ -123,16 +123,16 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
     		int wantRingBlocks=Integer.parseInt(bits[1]);
     		int wantAromRings=Integer.parseInt(bits[2]);
     		int wantAromBlocks=Integer.parseInt(bits[3]);
-    		
+
     		logger.info("FN="+basefn+" MOL="+mol.getAtomCount()+","+mol.getBondCount()+
     		   " nSmallRings="+wantSmallRings+" nRingBlocks="+wantRingBlocks+
     		   " nAromRings="+wantAromRings+" nAromBlocks="+wantAromBlocks);
-    		   
+
 			SmallRingDescriptor descr=new SmallRingDescriptor();
 			DescriptorValue results=descr.calculate(mol);
 			String[] names=results.getNames();
 			IntegerArrayResult values=(IntegerArrayResult)results.getValue();
-			
+
 			int gotSmallRings=0,gotRingBlocks=0,gotAromRings=0,gotAromBlocks=0;
 			for (int n=0;n<names.length;n++)
 			{
@@ -159,6 +159,6 @@ public class SmallRingDescriptorTest extends MolecularDescriptorTest
 			}
 		}
 	}
-    
+
 }
 

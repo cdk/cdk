@@ -1,7 +1,7 @@
 /* Copyright (C) 2007  Andreas Schueller <archvile18@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -54,11 +54,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 @TestClass("org.openscience.cdk.tools.manipulator.AtomContainerComparatorTest")
 public class AtomContainerComparator implements Comparator<IAtomContainer> {
-  
+
   /** Configure LoggingTool */
   private ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AtomContainerComparator.class);
-  
+
   /** Creates a new instance of AtomContainerComparator */
   public AtomContainerComparator() {
   }
@@ -94,7 +94,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
 
     IAtomContainer atomContainer1 = o1;
     IAtomContainer atomContainer2 = o2;
-    
+
     // 1. Compare atom count
     if (atomContainer1.getAtomCount() > atomContainer2.getAtomCount())
       return 1;
@@ -136,7 +136,7 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
     // AtomContainers are equal in terms of this comparator
     return 0;
   }
-  
+
   /**
    * Returns the molecular weight (exact mass) of the major isotopes
    * of all heavy atoms of the given IAtomContainer.
@@ -164,5 +164,5 @@ public class AtomContainerComparator implements Comparator<IAtomContainer> {
       }
       return mw;
   }
-  
+
 }

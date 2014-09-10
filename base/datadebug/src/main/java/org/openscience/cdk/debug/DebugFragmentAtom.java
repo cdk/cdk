@@ -1,7 +1,7 @@
 /* Copyright (C) 2006-2008  Egon Willighagen <ewilligh@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -41,10 +41,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 /**
  * Class to represent an IPseudoAtom which embeds an IAtomContainer. Very much
  * like the MDL molfile <code>Group</code> concept.
- * 
+ *
  * @cdk.module datadebug
  * @cdk.githash
- * 
+ *
  * @author egonw
  */
 public class DebugFragmentAtom extends FragmentAtom {
@@ -58,13 +58,13 @@ public class DebugFragmentAtom extends FragmentAtom {
 		super();
 		logger.debug("Instantiated a DebugFragmentAtom");
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean isExpanded() {
 		logger.debug("Getting isExpanded state...");
 		return super.isExpanded();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void setExpanded(boolean bool) {
 		logger.debug("Setting the isExpanded state: " + bool);
@@ -82,7 +82,7 @@ public class DebugFragmentAtom extends FragmentAtom {
 		logger.debug("Setting the fragment: ", fragment);
 		super.setFragment(fragment);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void setCharge(Double charge) {
 		logger.debug("Setting charge: ", charge);
@@ -109,21 +109,21 @@ public class DebugFragmentAtom extends FragmentAtom {
 
     /** {@inheritDoc} */ @Override
     public void setPoint2d(Point2d point2d) {
-		logger.debug("Setting point2d: x=" + point2d.x + 
+		logger.debug("Setting point2d: x=" + point2d.x +
 				     ", y=" + point2d.y);
 		super.setPoint2d(point2d);
 	}
 
     /** {@inheritDoc} */ @Override
     public void setPoint3d(Point3d point3d) {
-		logger.debug("Setting point3d: x=" + point3d.x + 
+		logger.debug("Setting point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		super.setPoint3d(point3d);
 	}
 
     /** {@inheritDoc} */ @Override
     public void setFractionalPoint3d(Point3d point3d) {
-		logger.debug("Setting fractional point3d: x=" + point3d.x + 
+		logger.debug("Setting fractional point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		super.setFractionalPoint3d(point3d);
 	}
@@ -140,7 +140,7 @@ public class DebugFragmentAtom extends FragmentAtom {
 		if (point2d == null) {
 			logger.debug("Getting point2d: null");
 		} else {
-			logger.debug("Getting point2d: x=" + point2d.x + 
+			logger.debug("Getting point2d: x=" + point2d.x +
 			     ", y=" + point2d.y);
 		}
 		return point2d;
@@ -152,7 +152,7 @@ public class DebugFragmentAtom extends FragmentAtom {
 		if (point3d == null) {
 			logger.debug("Getting point3d: null");
 		} else {
-			logger.debug("Getting point3d: x=" + point3d.x + 
+			logger.debug("Getting point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		}
 		return point3d;
@@ -164,7 +164,7 @@ public class DebugFragmentAtom extends FragmentAtom {
 		if (point3d == null) {
 			logger.debug("Getting fractional point3d: null");
 		} else {
-			logger.debug("Getting fractional point3d: x=" + point3d.x + 
+			logger.debug("Getting fractional point3d: x=" + point3d.x +
 			     ", y=" + point3d.y, ", z=" + point3d.z);
 		}
 		return point3d;
@@ -282,7 +282,7 @@ public class DebugFragmentAtom extends FragmentAtom {
     public void setExactMass(Double exactMass) {
 		logger.debug("Setting exact mass: ", exactMass);
 		super.setExactMass(exactMass);
-		
+
 	}
 
     /** {@inheritDoc} */ @Override

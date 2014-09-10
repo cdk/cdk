@@ -302,7 +302,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
-    public Object getParameterType(String name) {        
+    public Object getParameterType(String name) {
         return ("");
     }
 
@@ -313,7 +313,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
          return new DescriptorValue(getSpecification(), getParameterNames(),
                  getParameters(), results, getDescriptorNames(), e);
      }
-    
+
 
     /**
      * Calculates 11 directional and 6 non-directional WHIM descriptors for.
@@ -343,7 +343,7 @@ public class WHIMDescriptor extends AbstractMolecularDescriptor implements IMole
         // get the coordinate matrix
         double[][] cmat = new double[ac.getAtomCount()][3];
         for (int i = 0; i < ac.getAtomCount(); i++) {
-            Point3d coords = ac.getAtom(i).getPoint3d();            
+            Point3d coords = ac.getAtom(i).getPoint3d();
             cmat[i][0] = coords.x;
             cmat[i][1] = coords.y;
             cmat[i][2] = coords.z;

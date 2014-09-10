@@ -41,7 +41,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomValence
- * 
+ *
  * @see         org.openscience.cdk.qsar.AtomValenceTool
  */
 @TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomValenceDescriptorTest")
@@ -94,7 +94,7 @@ public class AtomValenceDescriptor extends AbstractAtomicDescriptor implements I
      *
      * @param atom          The IAtom for which the DescriptorValue is requested
      * @param container      Parameter is the atom container.
-     * @return The valence of an atom     
+     * @return The valence of an atom
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")

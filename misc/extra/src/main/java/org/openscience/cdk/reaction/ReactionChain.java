@@ -30,11 +30,11 @@ import org.openscience.cdk.interfaces.IReaction;
 
 
 /**
- * Classes that extends the definition of reaction to a chain reaction. 
+ * Classes that extends the definition of reaction to a chain reaction.
  * This is designed to contains a set of reactions which are lineal linked as
  * chain. That would mean no exist branches or cycles and in this concept
  * you have a start reaction and final reaction. Each reaction is included
- * in a step of the chain. 
+ * in a step of the chain.
  *
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
  * @cdk.module  extra
@@ -53,10 +53,10 @@ public class ReactionChain extends ReactionSet{
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = 5006986269373043994L;
-	
+
 	/**
 	 * Added a IReaction for this chain in position.
-	 *  
+	 *
 	 * @param reaction  The IReaction
 	 * @param position  The position in this chain where the reaction is to be inserted
 	 */
@@ -72,35 +72,35 @@ public class ReactionChain extends ReactionSet{
 	 */
     @TestMethod(value="testGetReactionStep_IReaction")
 	public int getReactionStep(IReaction reaction){
-		
+
 		if(hashMapChain.containsKey(reaction))
 			return hashMapChain.get(reaction);
 		else
 			return -1;
 	}
-	
+
 
 	/**
 	 * Get the reaction of this chain reaction object at the position.
-	 * 
+	 *
 	 * @param  position The position of the IReaction in this chain to look for
 	 * @return          Reaction The IReaction to look at
-	 * 
+	 *
 	 */
     @TestMethod(value="testGetReaction_int")
 	public IReaction getReaction(int position){
 
 		if(hashMapChain.containsKey(position))
 			return null;
-		
+
 		Set<Entry<IReaction, Integer>> entries = hashMapChain.entrySet();
 		for(Iterator<Entry<IReaction, Integer>> it = entries.iterator(); it.hasNext();){
 			Entry<IReaction, Integer> entry = it.next();
 			if(entry.getValue().equals(position))
 				return entry.getKey();
 		}
-		
+
 		return null;
 	}
-	
+
 }

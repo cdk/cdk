@@ -1,5 +1,5 @@
 /* Copyright (C) 2006-2007  Miguel Rojas <miguel.rojas@uni-koeln.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or modify
@@ -43,10 +43,10 @@ import org.openscience.cdk.tools.LonePairElectronChecker;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 /**
- *  This class returns the ionization potential of an atom containg lone 
+ *  This class returns the ionization potential of an atom containg lone
  *  pair electrons. It is
- *  based on a decision tree which is extracted from Weka(J48) from 
- *  experimental values. Up to now is only possible predict for 
+ *  based on a decision tree which is extracted from Weka(J48) from
+ *  experimental values. Up to now is only possible predict for
  *  Cl,Br,I,N,P,O,S Atoms and they are not belong to
  *  conjugated system or not adjacent to an double bond.
  *
@@ -75,12 +75,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] descriptorNames = {"ipAtomicHOSE"};
-    
+
 	/** Maximum spheres to use by the HoseCode model.*/
 	int maxSpheresToUse = 10;
-	
+
 	private IPdb db = new IPdb();
-	
+
 	/**
 	 *  Constructor for the IPAtomicHOSEDescriptor object.
 	 */
@@ -163,12 +163,12 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
 		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
                 new DoubleResult(value),descriptorNames);
-		
+
 	}
 	/**
 	 * Looking if the Atom belongs to the halogen family.
-	 * 
-	 * @param  atom  The IAtom 
+	 *
+	 * @param  atom  The IAtom
 	 * @return       True, if it belongs
 	 */
 	private boolean familyHalogen(IAtom atom) {
@@ -199,29 +199,29 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
     public Object getParameterType(String name) {
         return null;
     }
-    
+
     /**
-     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode 
+     * Class defining the database containing the relation between the energy for ionizing and the HOSEcode
      * fingerprints
-     * 
+     *
      * @author Miguel Rojas
      *
      */
 	private class IPdb {
-		
+
 		HashMap<String, HashMap<String,Double>> listGroup = new HashMap<String, HashMap<String,Double>>();
 		HashMap<String, HashMap<String,Double>> listGroupS = new HashMap<String, HashMap<String,Double>>();
 		/**
 		 * The constructor of the IPdb.
-		 * 
+		 *
 		 */
 		public IPdb(){
-			
+
 		}
-		
+
 		/**
 		 * extract from the db the ionization energy.
-		 * 
+		 *
 		 * @param container  The IAtomContainer
 		 * @param atom       The IAtom
 		 * @return           The energy value
@@ -244,16 +244,16 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 					InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
 					BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
 					hoseVSenergy = extractAttributes(insr);
-					
+
 					ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
 					insr = new BufferedReader(new InputStreamReader(ins));
 					hoseVSenergyS = extractAttributes(insr);
 				}
 			} else return 0;
-			
+
 			try {
 				HOSECodeGenerator hcg = new HOSECodeGenerator();
-				//Check starting from the exact sphere hose code and maximal a value of 10 
+				//Check starting from the exact sphere hose code and maximal a value of 10
 				int exactSphere = 0;
 				String hoseCode = "";
 				for(int spheres = maxSpheresToUse; spheres > 0; spheres--){
@@ -278,7 +278,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 						int sign = -1;
 						if(plusMinus== 1)
 							sign = 1;
-							
+
 						StringTokenizer st = new StringTokenizer(hoseCode, "()/");
 						StringBuffer hoseCodeBuffer = new StringBuffer();
 						  int sum = exactSphere+sign*(i+1);
@@ -296,7 +296,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 						    }
 						  }
 						  String hoseCodeBU = hoseCodeBuffer.toString();
-						  
+
 						  if(hoseVSenergyS.containsKey(hoseCodeBU)){
 							  return hoseVSenergyS.get(hoseCodeBU);
 						  }
@@ -307,9 +307,9 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 			}
 			return 0;
 		}
-		/** 
+		/**
 		 * Extract the Hose code and energy
-		 * 
+		 *
 		 * @param input  The BufferedReader
 		 * @return       HashMap with the Hose vs energy attributes
 		 */
@@ -334,35 +334,35 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 	}
 	/**
 	 * Extract the information from a line which contains HOSE_ID & energy.
-	 * 
+	 *
 	 * @param str  String with the information
 	 * @return     List with String = HOSECode and String = energy
 	 */
 	private static List<String> extractInfo(String str){
-		
+
 		StringBuffer idEdited = new StringBuffer();
 		StringBuffer valEdited = new StringBuffer();
-		
+
 		int strlen = str.length();
 
 		boolean foundSpace = false;
 		int countSpace = 0;
 		boolean foundDigit = false;
-		for (int i = 0; i < strlen; i++) 
+		for (int i = 0; i < strlen; i++)
 		{
 			if(!foundDigit)
 				if(Character.isLetter(str.charAt(i)))
 					foundDigit = true;
-			
+
 			if(foundDigit){
-				if (Character.isWhitespace(str.charAt(i))) 
+				if (Character.isWhitespace(str.charAt(i)))
 				{
 					if(countSpace == 0){
 						foundSpace = true;
 					}else
 						break;
 				}
-				else 
+				else
 				{
 					if(foundSpace){
 						valEdited.append(str.charAt(i));
@@ -377,7 +377,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 		objec.add(idEdited.toString());
 		objec.add(valEdited.toString());
 		return objec;
-		
+
 	}
 }
 

@@ -1,7 +1,7 @@
 /* Copyright (C) 2000-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -59,7 +59,7 @@ import java.io.Serializable;
  * @see  org.openscience.cdk.config.XMLIsotopeFactory#getInstance(org.openscience.cdk.interfaces.IChemObjectBuilder)
  */
 public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
-    
+
 	/* Let's keep this exact specification
 	 * of what kind of point2d we're talking of here,
 	 * since there are so many around in the java standard api */
@@ -73,14 +73,14 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -3137373012494608794L;
-	
+
 		/**
-         *  A 2D point specifying the location of this atom in a 2D coordinate 
+         *  A 2D point specifying the location of this atom in a 2D coordinate
          *  space.
          */
         protected Point2d point2d = (Point2d) CDKConstants.UNSET;
         /**
-         *  A 3 point specifying the location of this atom in a 3D coordinate 
+         *  A 3 point specifying the location of this atom in a 3D coordinate
          *  space.
          */
         protected Point3d point3d = (Point3d) CDKConstants.UNSET;
@@ -103,7 +103,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
          * set or not
          */
         protected Double charge = (Double) CDKConstants.UNSET;
-        
+
         /**
          * Constructs an completely unset Atom.
          */
@@ -147,16 +147,16 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
 
     	/**
     	 * Constructs an isotope by copying the symbol, atomic number,
-    	 * flags, identifier, exact mass, natural abundance, mass 
+    	 * flags, identifier, exact mass, natural abundance, mass
     	 * number, maximum bond order, bond order sum, van der Waals
     	 * and covalent radii, formal charge, hybridization, electron
-    	 * valency, formal neighbour count and atom type name from the 
+    	 * valency, formal neighbour count and atom type name from the
     	 * given IAtomType. It does not copy the listeners and
     	 * properties. If the element is an instanceof
     	 * IAtom, then the 2D, 3D and fractional coordinates, partial
     	 * atomic charge, hydrogen count and stereo parity are copied
     	 * too.
-    	 * 
+    	 *
     	 * @param element IAtomType to copy information from
     	 */
     	public Atom(IElement element) {
@@ -391,12 +391,12 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
                 stringContent.append(')');
                 return stringContent.toString();
         }
-        
+
 
         /**
          * Clones this atom object and its content.
          *
-         * @return  The cloned object   
+         * @return  The cloned object
          */
         public IAtom clone() throws CloneNotSupportedException {
             Object clone = super.clone();
@@ -411,7 +411,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable  {
             }
             return (IAtom) clone;
         }
-        
+
 }
 
 

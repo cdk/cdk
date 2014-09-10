@@ -60,10 +60,10 @@ public final class GenerateCompatibilityGraph {
     private boolean shouldMatchBonds = false;
 
     /**
-    * Default constructor added 
+    * Default constructor added
     */
     public GenerateCompatibilityGraph(){
-        
+
     }
 
     /**

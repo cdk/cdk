@@ -18,10 +18,10 @@
 package org.openscience.cdk.smiles.smarts.parser;
 
 /**
- * An AST node. It can represent any element except for hydrogen. 
- * It also can represent the lower case aromatic notation "o", "c", "n", "s", 
+ * An AST node. It can represent any element except for hydrogen.
+ * It also can represent the lower case aromatic notation "o", "c", "n", "s",
  * etc.
- * 
+ *
  * @author Dazhi Jiao
  * @cdk.created 2007-04-24
  * @cdk.module smarts

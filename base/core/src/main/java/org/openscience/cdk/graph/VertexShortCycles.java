@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Determine the set of cycles which are the shortest through each vertex. 
- * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of 
- * each cycle does not need to be verified. 
+ * Determine the set of cycles which are the shortest through each vertex.
+ * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of
+ * each cycle does not need to be verified.
  *
  * @author John May
  * @cdk.module core
@@ -85,7 +85,7 @@ final class VertexShortCycles {
     /**
      * The paths of the shortest cycles, that paths are closed walks such that
      * the last and first vertex is the same.
-     * 
+     *
      * @return the paths
      */
     @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +

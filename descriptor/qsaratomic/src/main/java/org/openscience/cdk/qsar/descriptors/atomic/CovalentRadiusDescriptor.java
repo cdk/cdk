@@ -78,7 +78,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>
@@ -130,15 +130,15 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      *
      *@param  atom              The IAtom for which the DescriptorValue is requested
      *@param  container         The {@link IAtomContainer} for which the descriptor is to be calculated
-     *@return                   The Covalent radius of the atom     
+     *@return                   The Covalent radius of the atom
      */
 
     @TestMethod(value="testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-        if (factory == null) 
+        if (factory == null)
             try {
                 factory = AtomTypeFactory.getInstance(
-                    "org/openscience/cdk/config/data/jmol_atomtypes.txt", 
+                    "org/openscience/cdk/config/data/jmol_atomtypes.txt",
                     container.getBuilder()
                 );
             } catch (Exception exception) {

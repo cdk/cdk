@@ -60,7 +60,7 @@ public class MMFF94BasedAtomTypePattern {
 	 *  Creates the atom type pattern
 	 */
 	private void createPattern() {
-		
+
 		atomTypePatterns.add(Pattern.compile("C-[0-4][+]?+;[A-Za-z+-]{0,6}[(].*+"));
 		//Csp3
 		atomTypePatterns.add(Pattern.compile("[C]-[1-3];[H]{0,2}+[A-Za-z]*+=[C]{1}+.*+"));
@@ -76,7 +76,7 @@ public class MMFF94BasedAtomTypePattern {
 		atomTypePatterns.add(Pattern.compile("C-1[-]?+;%N[+]?+[(].*+"));
 		//c in isonitrile C%
 		atomTypePatterns.add(Pattern.compile("C-2;=N[+]?+N[(].*+"));
-		//imidazolium IM+ 
+		//imidazolium IM+
 		atomTypePatterns.add(Pattern.compile("C-[0-4];[A-Za-z+-]{1,6}[(].*+"));
 		//CR4R Csp3 in 4 member rings -> in configure atom type (20)
 		atomTypePatterns.add(Pattern.compile("C-[0-4];[A-Za-z+-]{1,6}[(].*+"));
@@ -84,7 +84,7 @@ public class MMFF94BasedAtomTypePattern {
 		atomTypePatterns.add(Pattern.compile("[C]-[0-3];[H]{0,2}+[A-Za-z]*+=[A-Z]{1,2}+.*+"));
 		//CE4R Csp2 ->configure atom 4mRing
 		atomTypePatterns.add(Pattern.compile("[C]-[0-3];[H]{0,2}+[A-Za-z]*+=[A-Z]{1,2}+.*+"));
-		//Car Csp2 aromatic 
+		//Car Csp2 aromatic
 		atomTypePatterns.add(Pattern.compile("C-[2-3];[H]?+[C]{1}+[A-Z&&[^C]]{1}+[(].*+"));
 		//C5A atom configure alpha carbon 5 mem. hetero ring
 		atomTypePatterns.add(Pattern.compile("C-[2-3];[H]?+[C]{2,3}+[(][HC]{0,2}+[,]?+[A-Z&&[^C]]{1}+.*+"));
@@ -112,12 +112,12 @@ public class MMFF94BasedAtomTypePattern {
 		atomTypePatterns.add(Pattern.compile("H-[0-1];[N][+][(].*+"));
 		//HN+
 		atomTypePatterns.add(Pattern.compile("H-[1];O[+][(][A-Za-z[^=]]{1,4}+.*+"));
-		//HO+ 
+		//HO+
 		atomTypePatterns.add(Pattern.compile("H-[1];O[+][(].*+"));
 		//HO=+
 		atomTypePatterns.add(Pattern.compile("H-[1];[SP].*+"));
 		//H on S or P (28)
-		
+
 		atomTypePatterns.add(Pattern.compile("O-[2];[HCSN]{1,2}+[+]?+[(].*+"));
 		//O Ether,Alcohol
 		atomTypePatterns.add(Pattern.compile("O-[1];=.*+"));
@@ -131,10 +131,10 @@ public class MMFF94BasedAtomTypePattern {
 		atomTypePatterns.add(Pattern.compile("O-[1-2][+];[A-Za-z]{0,2}+=.*+"));
 		//O=+
 		atomTypePatterns.add(Pattern.compile("O-[1-2];[H]{0,2}+.*"));
-		//O in water 
+		//O in water
 		atomTypePatterns.add(Pattern.compile("O-2;CC.=C.*+&.*+&.*+"));
 		//osp2furan (36)
-		
+
 		atomTypePatterns.add(Pattern.compile("N-[0-3];[A-Za-z &&[^=%]]{1,3}+.*+"));
 		//N nsp3
 		atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,2}+[A-Za-z]*+=[CN].*+"));
@@ -159,14 +159,14 @@ public class MMFF94BasedAtomTypePattern {
 		//n no2
 		atomTypePatterns.add(Pattern.compile("N-2;[A-Z[^O]]{0,1}=O[A-Z[^O]]{0,1}[(].*+"));
 		//n N=O
-		
+
 		//cdk.bug 3515122 fixed
 		atomTypePatterns.add(Pattern.compile("N-[1-3];[CHN]{1,3}.{1}+[A-Z]{0,3}+[,]?+=O[CNXO].*+"));
-		//NC=0 amid 
+		//NC=0 amid
 		atomTypePatterns.add(Pattern.compile("N-1-2];[CH]{1}+=S[(].*+"));
 		//NSO (50)
 		atomTypePatterns.add(Pattern.compile("N-[1-3][+];[H]{0,2}+=[A-Za-z]{1,3}+[(].*+"));
-		//n N+=  
+		//n N+=
 		atomTypePatterns.add(Pattern.compile("N-[0-3][+];[H]{0,2}+=C[(][A-Za-z[^=%N]]{0,7}[N]{1}+/.*+"));
 		//n NCN+
 		atomTypePatterns.add(Pattern.compile("N-[0-3][+];[H]{0,2}+=C[(][N]]{2}+/.*+"));
@@ -195,7 +195,7 @@ public class MMFF94BasedAtomTypePattern {
 		//N5+
 		atomTypePatterns.add(Pattern.compile("N-[1-3];[H]{0,1}+[A-Za-z]++[(].*+"));
 		//N5 (65)
-		
+
 		atomTypePatterns.add(Pattern.compile("S-[1-2];[HCNO]{1,2}+[+]?+[(].*+"));
 		//S thioether, mercaptane
 		atomTypePatterns.add(Pattern.compile("S-[1];[H]{0,2}+=C.*+"));
@@ -212,13 +212,13 @@ public class MMFF94BasedAtomTypePattern {
 		//=SO
 		atomTypePatterns.add(Pattern.compile("S-[2];[H]{0,3}+=C.*+"));
 		//Stringin thiophen (73)
-		
+
 		atomTypePatterns.add(Pattern.compile("P-[4];.*+"));
 		//P tetra ->configure Atom for P
 		atomTypePatterns.add(Pattern.compile("P-[0-3];.*+"));
 		//P tri -> configure atom for P=C
 		atomTypePatterns.add(Pattern.compile("P-[2];=C[A-Za-z]{1,2}+[(].*+"));
-		//P C=P-		
+		//P C=P-
 		atomTypePatterns.add(Pattern.compile("F-[0-7][+]?+;.*+"));
 		//F
 		atomTypePatterns.add(Pattern.compile("Cl-[0-7][+]?+;.*+"));
@@ -226,7 +226,7 @@ public class MMFF94BasedAtomTypePattern {
 		atomTypePatterns.add(Pattern.compile("Br-[0-7][+]?+;.*+"));
 		//Br
 		atomTypePatterns.add(Pattern.compile("I.*+"));
-		//I		
+		//I
 		atomTypePatterns.add(Pattern.compile("Si.*+"));
 		//Silane
 		atomTypePatterns.add(Pattern.compile("Cl[4];.*+"));

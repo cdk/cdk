@@ -33,27 +33,27 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
 
 /**
- * This class tries to figure out the bond order of the bonds that has the flag 
+ * This class tries to figure out the bond order of the bonds that has the flag
  * <code>SINGLE_OR_DOUBLE</code> raised (i.e. set to <code>true</code>).<br>
  * The code is written with the assumption that the properties of the atoms in
  * the molecule has configured with the help of {@link AtomContainerManipulator}.
  * This class uses the {@link SaturationChecker} internally.<br>
- * If it can't find a solution where all atoms in the molecule are saturated, 
- * it gives a "best guess", i.e. the solution with most saturated atoms. If not 
- * all atoms are saturated then it will be noticed as a warning in the log.   
- * 
+ * If it can't find a solution where all atoms in the molecule are saturated,
+ * it gives a "best guess", i.e. the solution with most saturated atoms. If not
+ * all atoms are saturated then it will be noticed as a warning in the log.
+ *
  * @author Klas J&ouml;nsson
  * @author Egon Willighagen
  * @cdk.created 2012-04-13
  * @cdk.githash
- * 
+ *
  * @cdk.keyword bond order
  * @cdk.module  valencycheck
  */
 @TestClass( "org.openscience.cdk.tools.ATASaturationCheckerTest" )
 public class AtomTypeAwareSaturationChecker implements IValencyChecker,
 IDeduceBondOrderTool {
-	
+
 	SaturationChecker staturationChecker;
 	private static ILoggingTool logger =
 			LoggingToolFactory.createLoggingTool(SaturationChecker.class);
@@ -66,17 +66,17 @@ IDeduceBondOrderTool {
 	public AtomTypeAwareSaturationChecker() {
 		staturationChecker = new SaturationChecker();
 	}
-	
+
 	/**
-	 * This method decides the bond order on bonds that has the 
-	 * <code>SINGLE_OR_DOUBLE</code>-flag raised. 
-	 *  
+	 * This method decides the bond order on bonds that has the
+	 * <code>SINGLE_OR_DOUBLE</code>-flag raised.
+	 *
 	 * @param atomContainer The molecule to investigate
-	 * @param atomsSaturated Set to true if you want to make sure that all 
+	 * @param atomsSaturated Set to true if you want to make sure that all
 	 * 		atoms are saturated.
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
-	public void decideBondOrder(IAtomContainer atomContainer, 
+	public void decideBondOrder(IAtomContainer atomContainer,
 			boolean atomsSaturated) throws CDKException {
 		if (atomContainer.getBondCount() == 0)
 			// In this case the atom only has implicit bonds, and then it wan't be aromatic
@@ -85,8 +85,8 @@ IDeduceBondOrderTool {
 		int saturnatedAtoms = 0;
 		int[] bestGuess = { startBond, saturnatedAtoms };
 		if (atomsSaturated) {
-			do {			
-				if (startBond == atomContainer.getBondCount() ) {					
+			do {
+				if (startBond == atomContainer.getBondCount() ) {
 					if (bestGuess[1] == 0)
 						throw new CDKException("Can't find any solution");
 					else {
@@ -104,7 +104,7 @@ IDeduceBondOrderTool {
 				}
 
 				decideBondOrder(atomContainer, startBond);
-				
+
 				saturnatedAtoms = 0;
 				for (IAtom atom : atomContainer.atoms()){
 					if (isSaturated(atom, atomContainer))
@@ -121,48 +121,48 @@ IDeduceBondOrderTool {
 		} else
 			decideBondOrder(atomContainer, startBond);
 	}
-	
+
 	/**
-	 * This method decides the bond order on bonds that has the 
-	 * <code>SINGLE_OR_DOUBLE</code>-flag raised. 
-	 *  
+	 * This method decides the bond order on bonds that has the
+	 * <code>SINGLE_OR_DOUBLE</code>-flag raised.
+	 *
 	 * @param atomContainer The molecule to investigate.
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
 	public void decideBondOrder(IAtomContainer atomContainer) throws CDKException {
 		this.decideBondOrder(atomContainer, true);
 	}
-	
+
 	/**
-	 * This method decides the bond order on bonds that has the 
+	 * This method decides the bond order on bonds that has the
 	 * <code>SINGLE_OR_DOUBLE</code>-flag raised.
-	 *  
+	 *
 	 * @param atomContainer The molecule to investigate
 	 * @param start The bond to start with
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
-	private void decideBondOrder(IAtomContainer atomContainer, int start) throws CDKException {	
+	private void decideBondOrder(IAtomContainer atomContainer, int start) throws CDKException {
 		for (int i = 0; i < atomContainer.getBondCount(); i++)
 			if (atomContainer.getBond(i).getFlag(CDKConstants.SINGLE_OR_DOUBLE))
 				atomContainer.getBond(i).setOrder(IBond.Order.SINGLE);
-		
+
 		for (int i = start; i < atomContainer.getBondCount(); i++) {
 			checkBond(atomContainer, i);
 		}
 		/* If we don't start with first bond, then we have to check the bonds
-		 * before the bond we started with. */ 
+		 * before the bond we started with. */
 		if (start > 0) {
 			for (int i = start - 1; i >= 0; i--) {
 				checkBond(atomContainer, i);
 			}
-		}		
+		}
 	}
-		
-	
-	
+
+
+
 	/**
 	 * This method tries to set the bond order on the current bond.
-	 * 
+	 *
 	 * @param atomContainer The molecule
 	 * @param index The index of the current bond
 	 * @throws CDKException when no suitable solution can be found
@@ -176,16 +176,16 @@ IDeduceBondOrderTool {
 				bond.setOrder(IBond.Order.SINGLE);
 				setMaxBondOrder(bond, atomContainer);
 			} catch (CDKException e) {
-				bond.setOrder(oldBondOrder);			
+				bond.setOrder(oldBondOrder);
 				logger.debug(e);
 			}
 		}
 	}
-	
+
 	/**
-	 * This method decides the highest bond order that the bond can have and set 
+	 * This method decides the highest bond order that the bond can have and set
 	 * it to that.
-	 * 
+	 *
 	 * @param bond The bond to be investigated
 	 * @param atomContainer The {@link IAtomContainer} that contains the bond
 	 * @throws CDKEXception when the bond cannot be further increased
@@ -196,36 +196,36 @@ IDeduceBondOrderTool {
 				bond.setOrder(BondManipulator.increaseBondOrder(bond.getOrder()));
 			else
 				throw new CDKException("Can't increase a quadruple bond!");
-			}	
+			}
 	}
-	
+
 	/**
-	 * Check if the bond order can be increased. This method assumes that the 
+	 * Check if the bond order can be increased. This method assumes that the
 	 * bond is between only two atoms.
-	 * 
+	 *
 	 * @param bond The bond to check
 	 * @param atomContainer The {@link IAtomContainer} that the bond belongs to
 	 * @return True if it is possibly to increase the bond order
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
-	public boolean bondOrderCanBeIncreased(IBond bond, 
+	public boolean bondOrderCanBeIncreased(IBond bond,
 			IAtomContainer atomContainer) throws CDKException {
 		boolean atom0isUnsaturated = false, atom1isUnsaturated = false;
 		double sum;
 		if (bond.getAtom(0).getBondOrderSum() == null) {
 			sum = getAtomBondordersum(bond.getAtom(1), atomContainer);
 		} else
-			sum = bond.getAtom(0).getBondOrderSum();		
+			sum = bond.getAtom(0).getBondOrderSum();
 		if (bondsUsed(bond.getAtom(0), atomContainer) < sum )
 			atom0isUnsaturated = true;
-		
+
 		if (bond.getAtom(1).getBondOrderSum() == null) {
 			sum = getAtomBondordersum(bond.getAtom(1), atomContainer);
 		} else
 			sum = bond.getAtom(1).getBondOrderSum();
 		if (bondsUsed(bond.getAtom(1), atomContainer) < sum )
 			atom1isUnsaturated = true;
-		
+
 		if (atom0isUnsaturated == atom1isUnsaturated)
 			return atom0isUnsaturated;
 		else {
@@ -237,17 +237,17 @@ IDeduceBondOrderTool {
 			// If it's the first bond, then just move on.
 			if (myIndex == 0)
 				return false;
-			/* If the previous bond is the reason it's no problem, 
+			/* If the previous bond is the reason it's no problem,
 			 * so just move on...*/
-			/* TODO instead check if the atom that are in both bonds are 
+			/* TODO instead check if the atom that are in both bonds are
 			 * saturated...?*/
 			if (atomContainer.getBond(myIndex-1).getOrder() == IBond.Order.DOUBLE)
 				return false;
 			/*
-			 * The only reason for trouble should now be that the next bond make 
-			 * one of the atoms saturated, so lets throw an exception and reveres 
-			 * until we can place a double bond and set it as single and continue  
-			 */			
+			 * The only reason for trouble should now be that the next bond make
+			 * one of the atoms saturated, so lets throw an exception and reveres
+			 * until we can place a double bond and set it as single and continue
+			 */
 			if (isConnected(atomContainer.getBond(myIndex), atomContainer.getBond(0)))
 				throw new CantDecideBondOrderException("Can't decide bond order of this bond");
 			else {
@@ -255,11 +255,11 @@ IDeduceBondOrderTool {
 			}
 		}
 	}
-	
+
 	/**
-	 * This method is used if, by some reason, the bond order sum is not set 
+	 * This method is used if, by some reason, the bond order sum is not set
 	 * for an atom.
-	 * 
+	 *
 	 * @param atom The atom in question
 	 * @param mol The molecule that the atom belongs to
 	 * @return The bond order sum
@@ -271,7 +271,7 @@ IDeduceBondOrderTool {
 		for (IBond bond:mol.bonds())
 			if (bond.contains(atom))
 				sum += BondManipulator.destroyBondOrder(bond.getOrder());
-		
+
 		return sum;
 	}
 	/**
@@ -279,7 +279,7 @@ IDeduceBondOrderTool {
 	 * and if so it conceder the bonds connected.
 	 * @param bond1 The first bond
 	 * @param bond2 The other bond
-	 * @return True if any of  the atoms in <code>bond1</code> also are in 
+	 * @return True if any of  the atoms in <code>bond1</code> also are in
 	 * 		<code>bond2</code>
 	 */
 	private boolean isConnected(IBond bond1, IBond bond2) {
@@ -288,17 +288,17 @@ IDeduceBondOrderTool {
 				return true;
 		return false;
 	}
-	
+
 	/**
 	 * This method calculates the number of bonds that an <code>IAtom</code>
 	 * can have.
-	 * 
+	 *
 	 * @param atom The <code>IAtom</code> to be investigated
 	 * @return The max number of bonds the <code>IAtom</code> can have
 	 * @throws CDKException when the atom's valency is not set
 	 */
 	public double getMaxNoOfBonds(IAtom atom) throws CDKException {
-		double noValenceElectrons = atom.getValency() == CDKConstants.UNSET ? -1 
+		double noValenceElectrons = atom.getValency() == CDKConstants.UNSET ? -1
 				: atom.getValency();
 		if (noValenceElectrons == -1) {
 			throw new CDKException("Atom property not set: Valency");
@@ -306,15 +306,15 @@ IDeduceBondOrderTool {
 		// This will probably only work for group 13-18, and not for helium...
 		return 8 - noValenceElectrons;
 	}
-	
+
 	/**
-	 * A small help method that count how many bonds an atom has, regarding 
+	 * A small help method that count how many bonds an atom has, regarding
 	 * bonds due to its charge and to implicit hydrogens.
-	 * 
+	 *
 	 * @param atom The atom to check
 	 * @param atomContainer The atomContainer containing the atom
 	 * @return The number of bonds that the atom has
-	 * @throws CDKException 
+	 * @throws CDKException
 	 */
 	private double bondsUsed(IAtom atom, IAtomContainer atomContainer) throws CDKException {
 		int bondsToAtom = 0;
@@ -329,17 +329,17 @@ IDeduceBondOrderTool {
 			if (atom.getFormalNeighbourCount() == CDKConstants.UNSET || atom.getFormalNeighbourCount() == null)
 				throw new CDKException("Atom "+atom.getAtomTypeName()+" has not got the formal neighbour count set.");
 			implicitHydrogens = (8 - atom.getValency()) - atom.getFormalNeighbourCount();
-			String warningMessage = "Number of implicite hydrogens not set for atom " + atom.getAtomTypeName() 
+			String warningMessage = "Number of implicite hydrogens not set for atom " + atom.getAtomTypeName()
 					+ ". Estimated it to: " + implicitHydrogens;
 			logger.warn(warningMessage);
-		} else 
+		} else
 			implicitHydrogens = atom.getImplicitHydrogenCount();
-	
+
 		double charge;
-		if (atom.getCharge() == CDKConstants.UNSET) 
+		if (atom.getCharge() == CDKConstants.UNSET)
 			if (atom.getFormalCharge() == CDKConstants.UNSET) {
 				charge = 0;
-				String warningMessage = "Neither charge nor formal charge is set for atom " + atom.getAtomTypeName() 
+				String warningMessage = "Neither charge nor formal charge is set for atom " + atom.getAtomTypeName()
 						+ ". Estimate it to: 0";
 				logger.warn(warningMessage);
 			} else
@@ -348,7 +348,7 @@ IDeduceBondOrderTool {
 			charge = atom.getCharge();
 		return bondsToAtom - charge + implicitHydrogens;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public void saturate(IAtomContainer container) throws CDKException {
@@ -367,13 +367,13 @@ IDeduceBondOrderTool {
 			throws CDKException {
 		return staturationChecker.isSaturated(atom, container);
 	}
-	
+
 	/**
-	 * This is a private exception thrown when it detects an error and needs to 
+	 * This is a private exception thrown when it detects an error and needs to
 	 * start to back-trace.
-	 * 
+	 *
 	 * @author Klas J&ouml;nsson
-	 * 
+	 *
 	 */
 	@SuppressWarnings("serial")
 	private class CantDecideBondOrderException extends CDKException {
@@ -386,7 +386,7 @@ IDeduceBondOrderTool {
 		public CantDecideBondOrderException(String message) {
 			super(message);
 		}
-		
+
 	}
-	
+
 }

@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class IntegerIOSetting extends IOSetting {
 
-    public IntegerIOSetting(String name, Importance level, 
+    public IntegerIOSetting(String name, Importance level,
                             String question, String defaultSetting) {
         super(name, level, question, defaultSetting);
     }
@@ -47,7 +47,7 @@ public class IntegerIOSetting extends IOSetting {
             throw new CDKException("Setting " + setting + " is not an integer.", exception);
         }
     }
-    
+
     public int getSettingValue() {
         return Integer.parseInt(this.setting);
     }

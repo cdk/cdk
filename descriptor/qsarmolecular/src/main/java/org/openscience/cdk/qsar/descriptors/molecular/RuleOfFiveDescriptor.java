@@ -57,7 +57,7 @@ import org.openscience.cdk.qsar.result.IntegerResult;
  * @cdk.githash
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:lipinskifailures
- * 
+ *
  * @cdk.keyword Lipinski
  * @cdk.keyword rule-of-five
  * @cdk.keyword descriptor
@@ -75,7 +75,7 @@ public class RuleOfFiveDescriptor extends AbstractMolecularDescriptor implements
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
-     * is implemented by this class. 
+     * is implemented by this class.
      *
      * These fields are used in the map:
      * <ul>

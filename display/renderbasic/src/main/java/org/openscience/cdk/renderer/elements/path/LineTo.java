@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A line element in the path.
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -43,7 +43,7 @@ public class LineTo extends PathElement {
 
     /**
      * Make a line to this point.
-     * 
+     *
      * @param point the endpoint of the line
      */
     @TestMethod("testConstructor")
@@ -72,7 +72,7 @@ public class LineTo extends PathElement {
     public LineTo(double x, double y) {
         this(new double[]{x, y});
     }
-    
+
     /** {@inheritDoc} **/
     @Override
     @TestMethod("testPoints")

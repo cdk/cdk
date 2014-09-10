@@ -30,7 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class BooleanIOSetting extends IOSetting {
 
-    public BooleanIOSetting(String name, Importance level, 
+    public BooleanIOSetting(String name, Importance level,
                             String question, String defaultSetting) {
         super(name, level, question, defaultSetting);
     }

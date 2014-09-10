@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -40,7 +40,7 @@ import static org.junit.Assert.assertTrue;
  * Maximum matching is not specific to kekulisation but it serves as a good
  * demonstration. The provission of a subset to the matching inicates the atom
  * indicies we know must be adjacent to a pi bond.
- * 
+ *
  * @author John May
  * @cdk.module test-standard
  */
@@ -64,7 +64,7 @@ public final class EdmondsMaximumMatchingTest {
         assertMatch(m, 6, 7);
         assertMatch(m, 8, 9);
     }
-    
+
     @Test public void quinone() throws Exception {
         Matching m = matching("oc1ccc(o)cc1");
         assertMatch(m, 0, 1);
@@ -95,14 +95,14 @@ public final class EdmondsMaximumMatchingTest {
         assertMatch(m, 1, 2);
         assertMatch(m, 3, 4);
     }
-    
+
     @Test public void acyclic() throws Exception {
         Matching m = matching("cccccc");
         assertMatch(m, 0, 1);
         assertMatch(m, 2, 3);
         assertMatch(m, 4, 5);
     }
-    
+
     @Test public void adenine() throws Exception {
         // the nitroges (index 0 and 6) do need any double bonds
         Matching m = matching("Nc1ncnc2[nH]cnc12", 1, 2, 3, 4, 5, 7, 8, 9);
@@ -111,7 +111,7 @@ public final class EdmondsMaximumMatchingTest {
         assertMatch(m, 5, 9);
         assertMatch(m, 7, 8);
     }
-    
+
     @Test public void caffeine() throws Exception {
         // 0, 1, 5, 9, 10 do not need any double bonds
         Matching m = matching("Cn1cnc2n(C)c(=O)n(C)c(=O)c12", 2, 3, 4, 7, 8, 11, 12, 13);

@@ -49,9 +49,9 @@ import java.util.TreeMap;
  */
 @TestClass("org.openscience.cdk.geometry.BondToolsTest")
 public class BondTools {
-	
+
 	// FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
-	
+
   /**
    *  Tells if a certain bond is center of a valid double bond configuration.
    *
@@ -189,7 +189,7 @@ public class BondTools {
 	      return (angle);
 	    }
   }
-	  
+
   /**
    *  Says if an atom is the end of a double bond configuration
    *
@@ -216,7 +216,7 @@ public class BondTools {
       else hcount = parent.getImplicitHydrogenCount();
 
     int lengthParent = container.getConnectedAtomsList(parent).size() + hcount;
-      
+
     if (container.getBond(atom, parent) != null) {
       if (container.getBond(atom, parent).getOrder() == CDKConstants.BONDORDER_DOUBLE && (lengthAtom == 3 || (lengthAtom == 2 && atom.getSymbol().equals("N"))) && (lengthParent == 3 || (lengthParent == 2 && parent.getSymbol().equals("N")))) {
         List<IAtom> atoms = container.getConnectedAtomsList(atom);
@@ -258,7 +258,7 @@ public class BondTools {
       else hcount = a.getImplicitHydrogenCount();
 
     int lengthAtom = container.getConnectedAtomsList(a).size() + hcount;
-      
+
     if (lengthAtom != 3 && (lengthAtom != 2 && !(a.getSymbol().equals("N")))) {
       return (false);
     }
@@ -285,8 +285,8 @@ public class BondTools {
     	return (false);
     }
   }
-  
-  
+
+
 	/**
 	 *  Says if an atom as a center of a tetrahedral chirality.
 	 *  This method uses wedge bonds. 3D coordinates are not taken into account. If there
@@ -581,7 +581,7 @@ public class BondTools {
 	{
 		return (giveAngleBothMethods(from, to1, to2, false));
 	}
-	
+
     @TestMethod("testMakeUpDownBonds_IAtomContainer")
     public static void  makeUpDownBonds(IAtomContainer container){
 	    for (int i = 0; i < container.getAtomCount(); i++) {

@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * A cubic curve in the path.
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -42,10 +42,10 @@ public class CubicTo extends PathElement {
 
     /**
      * Make a cubic curve path element.
-     * 
+     *
      * @param cp1 first control point in the cubic
      * @param cp2 second control point in the cubic
-     * @param ep end point of the cubic 
+     * @param ep end point of the cubic
      */
     @TestMethod("testConstructor")
     public CubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
@@ -76,8 +76,8 @@ public class CubicTo extends PathElement {
      * @param cp1y first control point in the cubic y coord
      * @param cp2x second control point in the cubic x coord
      * @param cp2y second control point in the cubic y coord
-     * @param epx end point of the cubic x coord 
-     * @param epy end point of the cubic y coord 
+     * @param epx end point of the cubic x coord
+     * @param epy end point of the cubic y coord
      */
     public CubicTo(double cp1x, double cp1y, double cp2x, double cp2y, double epx, double epy) {
         this(new double[]{cp1x, cp1y, cp2x, cp2y, epx, epy});

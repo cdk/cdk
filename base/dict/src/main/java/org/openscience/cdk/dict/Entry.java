@@ -1,7 +1,7 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
 
 /**
  * Entry in a Dictionary.
- * 
+ *
  * @author       Egon Willighagen <egonw@users.sf.net>
  * @cdk.githash
  * @cdk.created  2003-08-23
@@ -42,7 +42,7 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 @TestClass("org.openscience.cdk.dict.EntryTest")
 public class Entry {
-    
+
 	private String className;
     private String label;
     private String identifier;
@@ -57,7 +57,7 @@ public class Entry {
         this.label = term;
         this.descriptorInfo = new ArrayList<String>();
     }
-    
+
     @TestMethod("testConstructor_String")
     public Entry(String identifier) {
     	this(identifier, "");
@@ -67,22 +67,22 @@ public class Entry {
     public Entry() {
         this("", "");
     }
-    
+
     @TestMethod("testLabel")
     public void setLabel(String term) {
         this.label = term;
     }
-    
+
     @TestMethod("testLabel")
     public String getLabel() {
         return this.label;
     }
-    
+
     @TestMethod("testID")
     public void setID(String identifier) {
         this.identifier = identifier.toLowerCase();
     }
-    
+
     @TestMethod("testID")
     public String getID() {
         return this.identifier;
@@ -92,7 +92,7 @@ public class Entry {
     public String getDefinition() {
     	return this.definition;
     }
-    
+
     @TestMethod("testDefinition")
     public void setDefinition(String definition) {
     	this.definition = definition;

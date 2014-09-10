@@ -35,8 +35,8 @@ public class AtomMassSymbolElement extends AtomSymbolElement {
 
 	/**
 	 * Constructs a new {@link TextElement} displaying the atom's mass number information.
-	 * 
-	 * @param xCoord        screen x-coordinate of where the text is displayed 
+	 *
+	 * @param xCoord        screen x-coordinate of where the text is displayed
 	 * @param yCoord        screen y-coordinate of where the text is displayed
 	 * @param symbol        the element symbol of the atom
 	 * @param formalCharge  the formal charge of the atom

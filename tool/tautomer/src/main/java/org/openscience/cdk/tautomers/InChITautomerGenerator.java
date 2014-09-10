@@ -75,7 +75,7 @@ public class InChITautomerGenerator {
      * @throws CloneNotSupportedException
      */
     @TestMethod("test_withJniInchi,testAdenine")
-    public List<IAtomContainer> getTautomers(IAtomContainer molecule) throws CDKException, CloneNotSupportedException { 
+    public List<IAtomContainer> getTautomers(IAtomContainer molecule) throws CDKException, CloneNotSupportedException {
 
         InChIGenerator gen = InChIGeneratorFactory.getInstance().getInChIGenerator(molecule);
         String inchi = gen.getInchi();
@@ -95,7 +95,7 @@ public class InChITautomerGenerator {
      * @throws CloneNotSupportedException
      */
     @TestMethod("test1,test2,test3")
-    public List<IAtomContainer> getTautomers(IAtomContainer inputMolecule, String inchi) 
+    public List<IAtomContainer> getTautomers(IAtomContainer inputMolecule, String inchi)
     throws CDKException, CloneNotSupportedException {
 
         //Initial checks
@@ -116,7 +116,7 @@ public class InChITautomerGenerator {
         inputMolecule = mappedContainers.get(1);
         List<Integer> mobHydrAttachPositions= new ArrayList<Integer>();
         int totalMobHydrCount = parseMobileHydrogens(mobHydrAttachPositions, inchi);
-        
+
         tautomers = constructTautomers(inputMolecule,mobHydrAttachPositions,totalMobHydrCount);
         //Remove duplicates
         return removeDuplicates(tautomers);
@@ -139,10 +139,10 @@ public class InChITautomerGenerator {
         inchi = inchi.substring(inchi.indexOf('/') + 1);
         String formula = inchi.substring(0, inchi.indexOf('/'));
 
-        /* Test for dots in the formula. For now, bail out when encountered; 
+        /* Test for dots in the formula. For now, bail out when encountered;
          * it would require more sophisticated InChI connection table parsing.
-         * 
-         * Example: what happened to the platinum connectivity below? 
+         *
+         * Example: what happened to the platinum connectivity below?
          * N.N.O=C1O[Pt]OC(=O)C12CCC2<br>
          * InChI=1S/C6H8O4.2H3N.Pt/c7-4(8)6(5(9)10)2-1-3-6;;;/h1-3H2,(H,7,8)(H,9,10);2*1H3;/q;;;+2/p-2*/
         if (formula.contains("."))
@@ -159,7 +159,7 @@ public class InChITautomerGenerator {
                 if (!(elementSymbol.length() == symbolAndCount.length())) {
                     elementCnt = Integer.valueOf(symbolAndCount.substring(elementSymbol.length()));
                 }
-                
+
                 for (int i = 0; i < elementCnt; i++) {
                     position++;
                     IAtom atom = inputMolecule.getBuilder().newInstance(IAtom.class, elementSymbol);
@@ -233,7 +233,7 @@ public class InChITautomerGenerator {
                 }
             }
         }
-        //put any unconnected atoms in the output as well 
+        //put any unconnected atoms in the output as well
         for (IAtom at : inchiAtomsByPosition.values()) {
             if (!inchiMolGraph.contains(at))
                 inchiMolGraph.addAtom(at);
@@ -249,8 +249,8 @@ public class InChITautomerGenerator {
      * @param inputMolecule user input molecule
      * @throws CDKException
      */
-    private List<IAtomContainer> mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, 
-                                                                 IAtomContainer inputMolecule) 
+    private List<IAtomContainer> mapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph,
+                                                                 IAtomContainer inputMolecule)
     throws CDKException {
         List<IAtomContainer> mappedContainers = new ArrayList<IAtomContainer>();
         Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, false);
@@ -286,11 +286,11 @@ public class InChITautomerGenerator {
      *  <li>no two mobile H groups may have an atom (a canonical number) in common.</li>
      * </ul>
      * @param mobHydrAttachPositions list of positions where mobile H can attach
-     * @param inputInchi InChI input 
+     * @param inputInchi InChI input
      * @return overall count of hydrogens to be dispersed over the positions
      */
     private int parseMobileHydrogens(List<Integer> mobHydrAttachPositions,String inputInchi) {
-        
+
         int totalMobHydrCount = 0;
         String hydrogens = "";
         String inchi = inputInchi;
@@ -340,20 +340,20 @@ public class InChITautomerGenerator {
 
     /**
      * Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
-     * @param inputMolecule input molecule 
+     * @param inputMolecule input molecule
      * @param mobHydrAttachPositions mobile H positions
      * @param totalMobHydrCount count of mobile hydrogens in molecule
      * @return tautomers
      * @throws CloneNotSupportedException
      */
     private List<IAtomContainer> constructTautomers(IAtomContainer inputMolecule,List<Integer> mobHydrAttachPositions,
-                                                    int totalMobHydrCount) 
+                                                    int totalMobHydrCount)
     throws CloneNotSupportedException {
         List<IAtomContainer> tautomers = new ArrayList<IAtomContainer>();
-        
+
         //Tautomeric skeleton generation
         IAtomContainer skeleton = (IAtomContainer)inputMolecule.clone();
-        
+
         boolean atomsToRemove = true;
         List<IAtom> removedAtoms = new ArrayList<IAtom>();
         boolean atomRemoved=false;
@@ -424,10 +424,10 @@ public class InChITautomerGenerator {
                 doubleBondCount++;
             }
         }
-        
+
         for (int hPosition : mobHydrAttachPositions) {
             IAtom atom = findAtomByPosition (skeleton, hPosition);
-            atom.setImplicitHydrogenCount(0); 
+            atom.setImplicitHydrogenCount(0);
         }
 
         for (IBond bond : skeleton.bonds()) {
@@ -450,7 +450,7 @@ public class InChITautomerGenerator {
             }
             List<IAtom> atomsInNeedOfFix = new ArrayList<IAtom>();
             for (IAtom atom : tautomerSkeleton.atoms()) {
-                if (atom.getValency()  - atom.getFormalCharge() != 
+                if (atom.getValency()  - atom.getFormalCharge() !=
                     atom.getImplicitHydrogenCount() + getConnectivity(atom, tautomerSkeleton))
                     atomsInNeedOfFix.add(atom);
             }
@@ -474,7 +474,7 @@ public class InChITautomerGenerator {
                 IAtomContainer tautomer = (IAtomContainer)inputMolecule.clone();
                 for (IAtom skAtom1 : tautomerSkeleton.atoms()) {
                     for (IAtom atom1 :
-                         tautomer.atoms()) { 
+                         tautomer.atoms()) {
                         if (atom1.getID().equals(skAtom1.getID())) {
                             atom1.setImplicitHydrogenCount(skAtom1.getImplicitHydrogenCount());
                             for (int bondIdx = 0; bondIdx < tautomerSkeleton.getBondCount(); bondIdx++) {
@@ -512,7 +512,7 @@ public class InChITautomerGenerator {
      * Removes duplicates from a molecule set. Uses SMSD to detect identical molecules.
      * An example of pruning can be a case where double bonds are placed in different positions in
      * an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
-     * 
+     *
      * @param tautomers molecule set of tautomers with possible duplicates
      * @return tautomers same set with duplicates removed
      * @throws CDKException
@@ -563,7 +563,7 @@ public class InChITautomerGenerator {
                 IAtom atom = findAtomByPosition (skeleton,pos);
                 int conn = getConnectivity(atom, skeleton);
                 int hCnt=0;
-                for (int t : taken) 
+                for (int t : taken)
                     if (t==pos)
                         hCnt++;
                 if (atom.getValency() - atom.getFormalCharge()>(hCnt+conn)) {
@@ -603,13 +603,13 @@ public class InChITautomerGenerator {
     /**
      * Tries double bond combinations for a certain input container of which the double bonds have been stripped
      * around the mobile hydrogen positions. Recursively.
-     * 
+     *
      * @param container
      * @param dblBondsAdded counts double bonds added so far
      * @param bondOffSet offset for next double bond position to consider
      * @param doubleBondMax maximum number of double bonds to add
      * @param atomsInNeedOfFix atoms that require more bonds
-     * @return a list of double bond positions (index) that make a valid combination, null if none found 
+     * @return a list of double bond positions (index) that make a valid combination, null if none found
      */
     private List<Integer> tryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet,
                                                     int doubleBondMax, List<IAtom> atomsInNeedOfFix) {
@@ -657,7 +657,7 @@ public class InChITautomerGenerator {
      * Sums the number of bonds (counting order) an atom is hooked up with.
      * @param atom an atom in the container
      * @param container the container
-     * @return valence (bond order sum) of the atom 
+     * @return valence (bond order sum) of the atom
      */
     private int getConnectivity(IAtom atom, IAtomContainer container) {
         int connectivity = 0;

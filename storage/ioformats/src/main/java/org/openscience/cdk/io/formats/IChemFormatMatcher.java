@@ -26,7 +26,7 @@ package org.openscience.cdk.io.formats;
 import com.google.common.primitives.Ints;
 import java.util.List;
 /**
- * This interface is used for classes that are able to match a certain 
+ * This interface is used for classes that are able to match a certain
  * chemical file format. For example: Chemical Markup Language, PDB etc.
  *
  * @cdk.module ioformats

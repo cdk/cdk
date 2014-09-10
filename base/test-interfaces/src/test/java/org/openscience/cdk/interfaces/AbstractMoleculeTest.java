@@ -1,20 +1,20 @@
 /* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA. 
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.interfaces;
 
@@ -33,7 +33,7 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
         Object clone = molecule.clone();
         Assert.assertTrue(clone instanceof IAtomContainer);
 	Assert.assertNotSame(molecule, clone);
-    }    
+    }
 
     /** Test for RFC #9 */
     @Test public void testToString() {
@@ -61,13 +61,13 @@ public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
-        
+
         // add lone pairs on oxygen
         ILonePair lp1 = acetone.getBuilder().newInstance(ILonePair.class,o);
         ILonePair lp2 = acetone.getBuilder().newInstance(ILonePair.class,o);
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
-        
+
         Assert.assertEquals(2, acetone.getLonePairCount());
     }
 }

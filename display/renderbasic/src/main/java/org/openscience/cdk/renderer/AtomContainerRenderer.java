@@ -159,7 +159,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * Set the scale for an IAtomContainer. It calculates the average bond
      * length of the model and calculates the multiplication factor to transform
      * this to the bond length that is set in the RendererModel.
-     * 
+     *
      * @param atomContainer the atom container that will be drawn
      */
     public void setScale(IAtomContainer atomContainer) {
@@ -167,7 +167,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         rendererModel.getParameter(Scale.class).setValue(this.calculateScaleForBondLength(bondLength));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public Rectangle paint(
@@ -195,7 +195,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      *                                  two atoms
      */
     private static double estimatedBondLength(IAtomContainer container) {
-       
+
         if (container.getBondCount() > 0)
             throw new IllegalArgumentException("structure has at least one bond - disconnected scaling not need");
         if (container.getAtomCount() < 2)
@@ -203,7 +203,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
 
         int    nAtoms      = container.getAtomCount();
         double minDistance = Integer.MAX_VALUE;
-        
+
         for (int i = 0; i < nAtoms; i++)
             for (int j = i + 1; j < nAtoms; j++)
                 minDistance = min(container.getAtom(i).getPoint2d().distance(container.getAtom(j).getPoint2d()), minDistance);
@@ -226,27 +226,27 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         if (atomContainer.getBondCount() > 0 || atomContainer.getAtomCount() == 1) {
             rendererModel.getParameter(Scale.class)
                          .setValue(calculateScaleForBondLength(GeometryUtil.getBondLengthAverage(atomContainer)));
-        } else if (atomContainer.getAtomCount() > 1) {                                                     
+        } else if (atomContainer.getAtomCount() > 1) {
             rendererModel.getParameter(Scale.class)
                          .setValue(calculateScaleForBondLength(estimatedBondLength(atomContainer)));
         }
-        
+
         // the diagram to draw
         IRenderingElement diagram = generateDiagram(atomContainer);
 
         // the bounds of the model from 'Bounds' elements
         Rectangle2D modelBounds = getBounds(diagram);
-        
+
         // no bounding elements, use the atom coordinates
-        if (modelBounds == null) 
+        if (modelBounds == null)
             modelBounds = BoundsCalculator.calculateBounds(atomContainer);
-        
+
         setupTransformToFit(bounds, modelBounds, resetCenter);
 
         this.paint(drawVisitor, diagram);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
@@ -270,7 +270,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public List<IGenerator<IAtomContainer>> getGenerators(){

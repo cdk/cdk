@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  Edgar Luttmann <edgar@uni-paderborn.de>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -47,7 +47,7 @@ import java.util.Map;
  * @cdk.keyword polymer
  */
 public class Polymer extends AtomContainer implements java.io.Serializable, IPolymer
-{ 
+{
 	/**
      * Determines if a de-serialized object is compatible with this class.
      *
@@ -58,15 +58,15 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 	private static final long serialVersionUID = -2596790658835319339L;
 
     private Map<String, IMonomer> monomers;	// the list of all the contained Monomers.
-	
+
 	/**
 	 * Constructs a new Polymer to store the Monomers.
-	 */	
+	 */
 	public Polymer() {
 		super();
 		monomers = new Hashtable<String, IMonomer>();
 	}
-	
+
 	/**
 	 * Adds the atom oAtom to a specified Monomer.
 	 *
@@ -74,12 +74,12 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 	 * @param oMonomer  The monomer the atom belongs to
 	 */
 	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
-		
+
 		if(!contains(oAtom))	{
 			super.addAtom(oAtom);
-			
+
 			if(oMonomer != null)	{	// Not sure what's better here...throw nullpointer exception?
-				oMonomer.addAtom(oAtom);				
+				oMonomer.addAtom(oAtom);
 				if (! monomers.containsKey(oMonomer.getMonomerName())) {
 					monomers.put(oMonomer.getMonomerName(), oMonomer);
 				}
@@ -88,7 +88,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 		/* notifyChanged() is called by addAtom in
 		 AtomContainer */
 	}
-	
+
 	/**
 	 * Returns the number of monomers present in the Polymer.
 	 *
@@ -97,7 +97,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 	public int getMonomerCount() {
 		return monomers.size();
 	}
-	
+
 	/**
 	 * Retrieves a Monomer object by specifying its name.
 	 *
@@ -107,7 +107,7 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 	public IMonomer getMonomer(String cName) {
 		return monomers.get(cName);
 	}
-	
+
 	/**
 	 * Returns a collection of the names of all <code>Monomer</code>s in this
 	 * polymer.
@@ -117,10 +117,10 @@ public class Polymer extends AtomContainer implements java.io.Serializable, IPol
 	public Collection<String> getMonomerNames() {
 		return monomers.keySet();
 	}
-	
+
 	/**
 	 * Removes a particular monomer, specified by its name.
-	 * 
+	 *
 	 * @param name The name of the monomer to remove
 	 */
 	public void removeMonomer(String name)	{

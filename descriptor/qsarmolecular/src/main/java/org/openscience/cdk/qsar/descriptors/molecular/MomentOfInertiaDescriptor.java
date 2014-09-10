@@ -198,7 +198,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         double eps = 1e-5;
 
 
-        
+
         double[][] imat = new double[3][3];
         Point3d centerOfMass = GeometryUtil.get3DCentreOfMass(clone);
 
@@ -287,5 +287,5 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         return new DoubleArrayResultType(7);
     }
 }
-    
+
 

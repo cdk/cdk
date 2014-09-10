@@ -51,7 +51,7 @@ final class CMLStack {
     }
     stack[sp++] = item;
   }
-  
+
   int length() {
 	  return sp;
   }
@@ -94,7 +94,7 @@ final class CMLStack {
   }
 
   /**
-   * Convenience method to check the last added elements. 
+   * Convenience method to check the last added elements.
    */
   @TestMethod("testEndsWith_String")
   boolean endsWith(String lastElement) {
@@ -102,7 +102,7 @@ final class CMLStack {
   }
 
   /**
-   * Convenience method to check the last two added elements. 
+   * Convenience method to check the last two added elements.
    */
   @TestMethod("testEndsWith_String_String")
   boolean endsWith(String oneButLast, String lastElement) {
@@ -110,7 +110,7 @@ final class CMLStack {
   }
 
   /**
-   * Convenience method to check the last three added elements. 
+   * Convenience method to check the last three added elements.
    */
   @TestMethod("testEndsWith_String_String_String")
   boolean endsWith(String twoButLast, String oneButLast, String lastElement) {
@@ -124,5 +124,5 @@ final class CMLStack {
   @TestMethod("testSize")
   int size() {
       return sp;
-  }   
+  }
 }

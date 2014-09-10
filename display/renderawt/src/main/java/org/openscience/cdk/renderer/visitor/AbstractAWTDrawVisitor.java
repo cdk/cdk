@@ -39,7 +39,7 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 @TestClass("org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest")
 public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
-	
+
 	/**
 	 * This is initially null, and must be set in the setTransform method!
 	 */
@@ -79,10 +79,10 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
             Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D bounds = fontMetrics.getStringBounds(text, graphics);
-        
+
         double widthPad = 3;
         double heightPad = 1;
-        
+
         double width = bounds.getWidth() + widthPad;
         double height = bounds.getHeight() + heightPad;
         int[] point = this.transformPoint(xCoord, yCoord);
@@ -95,7 +95,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * However, because the Java coordinate system is inverted in the y-axis with
      * respect to scientific coordinate systems (Java has 0,0 in the top left
      * corner, while in science we have 0,0 in the lower left corner), some
-     * special action is needed, involving the size of the text. 
+     * special action is needed, involving the size of the text.
      *
      * @param text     the text string
      * @param xCoord   the world x-coordinate of where the text should be placed
@@ -104,15 +104,15 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @return         the screen coordinates
      */
 	@TestMethod("testGetTextBasePoint")
-    protected Point getTextBasePoint(String text, double xCoord, double yCoord, 
+    protected Point getTextBasePoint(String text, double xCoord, double yCoord,
             Graphics2D graphics) {
         FontMetrics fontMetrics = graphics.getFontMetrics();
         Rectangle2D stringBounds = fontMetrics.getStringBounds(text, graphics);
         int[] point = this.transformPoint(xCoord, yCoord);
         int baseX = (int) (point[0] - (stringBounds.getWidth() / 2));
-        
+
         // correct the baseline by the ascent
-        int baseY = (int) (point[1] + 
+        int baseY = (int) (point[1] +
                 (fontMetrics.getAscent() - stringBounds.getHeight() / 2));
         return new Point(baseX, baseY);
     }
@@ -120,7 +120,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
     /**
      * Obtain the exact bounding box of the {@code text} in the provided
      * graphics environment.
-     * 
+     *
      * @param text the text to obtain the bounds of
      * @param g2   the graphic environment
      * @return bounds of the text

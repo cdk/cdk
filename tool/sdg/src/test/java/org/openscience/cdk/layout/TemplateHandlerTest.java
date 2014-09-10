@@ -67,7 +67,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 	@Test public void testInit() throws Exception
 	{
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
-		
+
 		Assert.assertEquals(5, th.getTemplateCount());
 	}
 
@@ -134,7 +134,7 @@ public class TemplateHandlerTest extends CDKTestCase {
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		IAtomContainer mol = TestMoleculeFactory.makeAlphaPinene();
 		sdg.setMolecule(mol); sdg.generateCoordinates(); mol = sdg.getMolecule();
-		
+
 		String smiles = "C1=C(C)C2CC(C1)C2(C)(C)";
 		IAtomContainer smilesMol = sp.parseSmiles(smiles);
 		itIsInThere = th.mapTemplates(smilesMol);
@@ -150,10 +150,10 @@ public class TemplateHandlerTest extends CDKTestCase {
 		itIsInThere = th.mapTemplates(smilesMol);
 		logger.debug("Alpha-Pinene found by templateMapper: " + itIsInThere);
 		Assert.assertFalse(itIsInThere);
-		
+
 	}
 
-	
+
 	/**
 	 * Loads a molecule with two adamantanes and one cubane
 	 * substructure and tests whether all are found.
@@ -163,14 +163,14 @@ public class TemplateHandlerTest extends CDKTestCase {
 		String filename = "data/mdl/diadamantane-cubane.mol";
 		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
 		ISimpleChemObjectReader molReader = new MDLReader(ins, Mode.STRICT);
-		
+
 		// Read molecule
 		IAtomContainer molecule = (IAtomContainer) molReader.read(DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class));
-		
+
 		// Map templates
 		TemplateHandler th = new TemplateHandler(DefaultChemObjectBuilder.getInstance());
 		IAtomContainerSet mappedStructures = th.getMappedSubstructures(molecule);
-		
+
 		// Do the Assert.assertion
 		Assert.assertEquals("3 mapped templates", 3, mappedStructures.getAtomContainerCount());
 	}

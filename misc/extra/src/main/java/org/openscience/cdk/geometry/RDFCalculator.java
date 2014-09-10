@@ -1,8 +1,8 @@
 /* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  *                    2009  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -11,12 +11,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -65,14 +65,14 @@ public class RDFCalculator {
 
     private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(RDFCalculator.class);
-    
+
     private double startCutoff;
     private double cutoff;
     private double resolution;
     private double peakWidth;
-    
+
     private IRDFWeightFunction weightFunction;
-    
+
     /**
      * Constructs a RDF calculator that calculates a unweighted, digitized
      * RDF function.
@@ -82,7 +82,7 @@ public class RDFCalculator {
      * @param resolution  width of the bins
      * @param peakWidth   width of the gaussian applied to the peaks in &Aring;ngstrom
      */
-    public RDFCalculator(double startCutoff, double cutoff, double resolution, 
+    public RDFCalculator(double startCutoff, double cutoff, double resolution,
                          double peakWidth) {
         this(startCutoff, cutoff, resolution, peakWidth, null);
     }
@@ -98,7 +98,7 @@ public class RDFCalculator {
      * @param weightFunction the weight function. If null, then an unweighted RDF is
      *                       calculated
      */
-    public RDFCalculator(double startCutoff, double cutoff, double resolution, 
+    public RDFCalculator(double startCutoff, double cutoff, double resolution,
                          double peakWidth, IRDFWeightFunction weightFunction) {
          this.startCutoff = startCutoff;
          this.cutoff = cutoff;
@@ -106,7 +106,7 @@ public class RDFCalculator {
          this.peakWidth = peakWidth;
          this.weightFunction = weightFunction;
     }
-    
+
     /**
      * Calculates a RDF for <code>Atom</code> atom in the environment
      * of the atoms in the <code>AtomContainer</code>.
@@ -133,12 +133,12 @@ public class RDFCalculator {
                 factors[binCounter] = factors[binCounter] / totalArea;
             }
         }
-        
+
         // this we need always
         double[] rdf = new double[length];
         double distance = 0.0;
         int index = 0;
-        
+
         Point3d atomPoint = atom.getPoint3d();
         Iterator<IAtom> atomsInContainer = container.atoms().iterator();
         while (atomsInContainer.hasNext()) {
@@ -168,7 +168,7 @@ public class RDFCalculator {
         }
         return rdf;
     }
-    
+
 }
 
 

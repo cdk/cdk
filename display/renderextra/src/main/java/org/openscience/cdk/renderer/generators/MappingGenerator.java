@@ -83,7 +83,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
     }
     private IGeneratorParameter<Boolean> showAtomAtomMapping =
     	new ShowAtomAtomMapping();
-	
+
     public MappingGenerator() {}
 
 	/** {@inheritDoc} */
@@ -105,7 +105,7 @@ public class MappingGenerator implements IGenerator<IReaction> {
         }
         return elementGroup;
     }
-    
+
 	/**
 	 * Determine the width of an atom atom mapping, returning the width defined
 	 * in the model. Note that this will be scaled

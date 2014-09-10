@@ -84,16 +84,16 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     public ShelXWriter(OutputStream output) {
         this(new OutputStreamWriter(output));
     }
-    
+
     public ShelXWriter() {
         this(new StringWriter());
     }
-    
+
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return ShelXFormat.getInstance();
     }
-    
+
     public void setWriter(Writer out) throws CDKException {
     	if (out instanceof BufferedWriter) {
             writer = (BufferedWriter)out;
@@ -105,7 +105,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     public void setWriter(OutputStream output) throws CDKException {
     	setWriter(new OutputStreamWriter(output));
     }
-    
+
     /**
      * Flushes the output and closes this object.
      */
@@ -139,7 +139,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     // Private procedures
 
     private void writeCrystal(ICrystal crystal) {
-        
+
         Object title = crystal.getProperty(CDKConstants.TITLE);
         if (title != null && title.toString().trim().length() > 0) {
             writeln("TITL " + title.toString().trim());

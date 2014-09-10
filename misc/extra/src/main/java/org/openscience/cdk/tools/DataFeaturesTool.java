@@ -30,20 +30,20 @@ import org.openscience.cdk.tools.features.MoleculeFeaturesTool;
 
 /**
  * Utility that helps determine which data features are present.
- * 
+ *
  * @author egonw
  * @cdk.githash
- * 
+ *
  * @see    org.openscience.cdk.tools.DataFeatures
  */
 public class DataFeaturesTool {
 
 	/**
 	 * Determines the features present in the given IMolecule.
-	 *  
+	 *
 	 * @param molecule IMolecule to determine the features off
-	 * 
-	 * @return integer representation of the present features 
+	 *
+	 * @return integer representation of the present features
 	 */
 	public static int getSupportedDataFeatures(IAtomContainer molecule) {
 		int features = DataFeatures.NONE;
@@ -63,6 +63,6 @@ public class DataFeaturesTool {
 			features = features | DataFeatures.HAS_GRAPH_REPRESENTATION;
 		return features;
 	}
-	
-	
+
+
 }

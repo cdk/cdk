@@ -63,7 +63,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         tautomerGenerator = new InChITautomerGenerator();
     }
 
-    private List<IAtomContainer> unitTestWithInchiProvided(String smiles, String inchi, int tautCountExpected) 
+    private List<IAtomContainer> unitTestWithInchiProvided(String smiles, String inchi, int tautCountExpected)
     throws Exception {
         IAtomContainer container = smilesParser.parseSmiles(smiles);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
@@ -80,7 +80,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     @Test
     public void test2() throws Exception {
         unitTestWithInchiProvided(
-             "CCCN1C2=C(NC=N2)C(=O)NC1=O", 
+             "CCCN1C2=C(NC=N2)C(=O)NC1=O",
              "InChI=1S/C8H10N4O2/c1-2-3-12-6-5(9-4-10-6)7(13)11-8(12)14/h4H,2-3H2,1H3,(H,9,10)(H,11,13,14)",8);
     }
 
@@ -97,7 +97,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     @Test
     public void test5() throws Exception {
         unitTestWithInchiProvided(
-          "CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 
+          "CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
           "InChI=1S/C13H18N4O/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13/" +
           "h3-4,9H,2,5-8H2,1H3,(H2,14,15,16)",2);
     }
@@ -107,7 +107,7 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     @Category(SlowTest.class)
     public void test6() throws Exception {
         //Warfarin: not you need to create the InChI with option KET to get the ketone/hydroxyl tautomerism
-        unitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2", 
+        unitTestWithInchiProvided("CC(=O)CC(C1=CC=CC=C1)C1=C(O)C2=C(OC1=O)C=CC=C2",
         "InChI=1/C19H16O4/c1-12(20)11-15(13-7-3-2-4-8-13)17-18(21)14-9-5-6-10-16(14)23-19(17)22/" +
         "h2-10,15H,1H3,(H2,11,20)(H,17,21,22)",6);
     }
@@ -115,14 +115,14 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
 
     @Test (expected=CDKException.class) // bail out on dots in formula
     public void testFail1() throws Exception {
-        unitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12", 
+        unitTestWithInchiProvided("[I-].CCN1CCOC2=CC(NC3=NCCN3)=CC=C12",
         "InChI=1S/C13H18N4O.HI/c1-2-17-7-8-18-12-9-10(3-4-11(12)17)16-13-14-5-6-15-13;" +
         "/h3-4,9H,2,5-8H2,1H3,(H2,14,15,16);1H/p-1",2);
     }
 
     @Test (expected=CDKException.class) // bail out on dots in formula
     public void testFail2() throws Exception {
-        unitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]", 
+        unitTestWithInchiProvided("CN1C=C(C)C(=O)N2C1O[Pt]([NH3+])([NH3+])OC3N(C)C=C(C)C(=O)N3[Pt]2([NH3+])[NH3+]",
         "InChI=1S/2C6H9N2O2.4H3N.2Pt/c2*1-4-3-8(2)6(10)7-5(4)9;;;;;;" +
         "/h2*3,6H,1-2H3,(H,7,9);4*1H3;;/q2*-1;;;;;2*+4/p-2",10);
     }
@@ -131,28 +131,28 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
     @Test
     public void test_withJniInchi() throws Exception {
         String mdlInput = // same as NC1=CC(N)=NC(O)=N1
-            "\n" + 
-            "  Mrv0541 02151109592D\n" + 
-            "\n" + 
-            "  9  9  0  0  0  0            999 V2000\n" + 
-            "    2.1434   -0.4125    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    1.4289   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    0.7145   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    0.0000   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "   -0.7145   -0.4125    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    0.0000    0.8250    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    0.7145    1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    0.7145    2.0625    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "    1.4289    0.8250    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" + 
-            "  1  2  1  0  0  0  0\n" + 
-            "  2  3  2  0  0  0  0\n" + 
-            "  3  4  1  0  0  0  0\n" + 
-            "  4  5  1  0  0  0  0\n" + 
-            "  4  6  2  0  0  0  0\n" + 
-            "  6  7  1  0  0  0  0\n" + 
-            "  7  8  1  0  0  0  0\n" + 
-            "  7  9  2  0  0  0  0\n" + 
-            "  2  9  1  0  0  0  0\n" + 
+            "\n" +
+            "  Mrv0541 02151109592D\n" +
+            "\n" +
+            "  9  9  0  0  0  0            999 V2000\n" +
+            "    2.1434   -0.4125    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    1.4289   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    0.7145   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    0.0000   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "   -0.7145   -0.4125    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    0.0000    0.8250    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    0.7145    1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    0.7145    2.0625    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "    1.4289    0.8250    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n" +
+            "  1  2  1  0  0  0  0\n" +
+            "  2  3  2  0  0  0  0\n" +
+            "  3  4  1  0  0  0  0\n" +
+            "  4  5  1  0  0  0  0\n" +
+            "  4  6  2  0  0  0  0\n" +
+            "  6  7  1  0  0  0  0\n" +
+            "  7  8  1  0  0  0  0\n" +
+            "  7  9  2  0  0  0  0\n" +
+            "  2  9  1  0  0  0  0\n" +
             "M  END\n";
 
         MDLV2000Reader reader = new MDLV2000Reader(new StringReader(mdlInput));
@@ -160,8 +160,8 @@ public class InChITautomerGeneratorTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
         CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(molecule.getBuilder());
         hAdder.addImplicitHydrogens(molecule);
-        
-        List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(molecule); // InChI will be calculated      
+
+        List<IAtomContainer> tautomers = tautomerGenerator.getTautomers(molecule); // InChI will be calculated
         Assert.assertEquals(5, tautomers.size());
     }
 

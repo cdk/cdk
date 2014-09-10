@@ -40,7 +40,7 @@ public class AtomMappingTools {
 
 	private static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
-	
+
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
      * AtomContainer) atomContainer.
@@ -52,7 +52,7 @@ public class AtomMappingTools {
      * @return a Map of the mapped atoms
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
      */
-    public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer, 
+    public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
             IAtomContainer secondAtomContainer, Map<Integer,Integer> mappedAtoms) throws CDKException {
         //logger.debug("**** GT MAP ATOMS ****");
         //Map atoms onto each other
@@ -89,12 +89,12 @@ public class AtomMappingTools {
 		IAtom secondAtom=secondAC.getAtom(posSecondAtom);
 		if (firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size() &&
 				firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum() &&
-				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder() 
+				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()
 		        ){
 			return true;
 		}else {
 			return false;
 		}
 	}
-	
+
 }

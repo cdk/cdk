@@ -51,14 +51,14 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
       }
       return sb.toString();
     }
-    
+
     public Object visit(SimpleNode node, Object data) {
         System.out.println(indentString() + node +
         ": acceptor not unimplemented in subclass?");
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
-        return data;        
+        return data;
     }
     public Object visit(ASTStart node, Object data) {
         System.out.println(indentString() + node);
@@ -102,8 +102,8 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
-        
+    }
+
     public Object visit(ASTImplicitHighAndBond node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -111,7 +111,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }
-    
+
     public Object visit(ASTLowAndBond node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -119,7 +119,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }
-    
+
     public Object visit(ASTOrBond node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -127,14 +127,14 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }
-    
+
     public Object visit(ASTExplicitHighAndBond node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
 
     public Object visit(ASTElement node, Object data) {
         System.out.println(indentString() + node + " " + node.getSymbol());
@@ -143,7 +143,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         --indent;
         return data;
     }
-    
+
      public Object visit(ASTRecursiveSmartsExpression node, Object data) {
         System.out.println(indentString() + node);
         ++indent;
@@ -157,28 +157,28 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTTotalHCount node, Object data) {
         System.out.println(indentString() + node + " " + node.getCount());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTImplicitHCount node, Object data){
         System.out.println(indentString() + node + " " + node.getCount());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTExplicitConnectivity node, Object data){
         System.out.println(indentString() + node + " " + node.getNumOfConnection());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTAtomicNumber node, Object data){
         System.out.println(indentString() + node + " " + node.getNumber());
         ++indent;
@@ -201,7 +201,7 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTRingConnectivity node, Object data){
         System.out.println(indentString() + node + " " + node.getNumOfConnection());
         ++indent;
@@ -224,28 +224,28 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTValence node, Object data){
         System.out.println(indentString() + node + " " + node.getOrder());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTRingMembership node, Object data){
         System.out.println(indentString() + node + " " + node.getNumOfMembership());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTSmallestRingSize node, Object data){
         System.out.println(indentString() + node + " " + node.getSize());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTAliphatic node, Object data){
         System.out.println(indentString() +  node);
         ++indent;
@@ -268,68 +268,68 @@ public class SmartsDumpVisitor implements SMARTSParserVisitor {
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTAnyAtom node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTAtomicMass node, Object data){
         System.out.println(indentString() + node + " " + node.getMass());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTChirality node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTLowAndExpression node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTOrExpression node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }        
+    }
     public Object visit(ASTNotExpression node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTExplicitHighAndExpression node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }    
+    }
     public Object visit(ASTImplicitHighAndExpression node, Object data){
         System.out.println(indentString() + node);
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }  
+    }
     public Object visit(ASTExplicitAtom node, Object data){
         System.out.println(indentString() + node + " " + node.getSymbol());
         ++indent;
         data = node.childrenAccept(this, data);
         --indent;
         return data;
-    }     
+    }
 }

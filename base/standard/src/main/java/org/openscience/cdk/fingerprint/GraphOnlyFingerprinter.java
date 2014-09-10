@@ -40,12 +40,12 @@ import java.util.Random;
  * @cdk.keyword    similarity
  * @cdk.module     standard
  * @cdk.githash
- * 
+ *
  * @see            org.openscience.cdk.fingerprint.Fingerprinter
  */
 @TestClass("org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest")
 public class GraphOnlyFingerprinter extends Fingerprinter {
-	
+
 	/**
 	 * Creates a fingerprint generator of length <code>defaultSize</code>
 	 * and with a search depth of <code>defaultSearchDepth</code>.
@@ -53,11 +53,11 @@ public class GraphOnlyFingerprinter extends Fingerprinter {
 	public GraphOnlyFingerprinter() {
 		super(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
 	}
-	
+
 	public GraphOnlyFingerprinter(int size) {
 		super(size, DEFAULT_SEARCH_DEPTH);
 	}
-	
+
 	public GraphOnlyFingerprinter(int size, int searchDepth) {
 		super(size, searchDepth);
 	}

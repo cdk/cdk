@@ -22,7 +22,7 @@ public class MoleculeSignatureLabellingAdaptor implements ICanonicalMoleculeLabe
 	 * {@inheritDoc}
 	 */
     public int[] getCanonicalPermutation(IAtomContainer container) {
-        MoleculeSignature molSig = new MoleculeSignature(container); 
+        MoleculeSignature molSig = new MoleculeSignature(container);
         return molSig.getCanonicalLabels();
     }
 }

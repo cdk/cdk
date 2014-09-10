@@ -33,7 +33,7 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  *  The calculation of sigma partial charges in sigma-bonded systems of an heavy atom
  *  was made by Marsilli-Gasteiger. It is implemented with the Partial Equalization
  *  of Orbital Electronegativity (PEOE).
- *  
+ *
  * <p>This descriptor uses these parameters:
  * <table border="1">
  *   <tr>
@@ -69,10 +69,10 @@ public class PartialSigmaChargeDescriptor extends AbstractAtomicDescriptor {
     /**
      *  Constructor for the PartialSigmaChargeDescriptor object
      */
-    public PartialSigmaChargeDescriptor() { 
+    public PartialSigmaChargeDescriptor() {
         peoe = new GasteigerMarsiliPartialCharges();
     }
-    
+
     /**
      *  Gets the specification attribute of the PartialSigmaChargeDescriptor
      *  object

@@ -39,7 +39,7 @@ import org.openscience.cdk.renderer.elements.GeneralPath;
  *  builder.moveTo(p1).lineTo(p1).close();
  *  GeneralPath path = builder.createPath();
  * </pre>
- * 
+ *
  * @author Arvid
  * @cdk.module renderbasic
  * @cdk.githash
@@ -48,20 +48,20 @@ public class PathBuilder {
 
     /** The path that is being built */
     private List<PathElement> elements;
-    
+
     /** The color of the path */
     private Color color;
-    
+
     /**
      * Make a new path builder with a default color of black.
      */
     public PathBuilder() {
         this(Color.BLACK);
     }
-    
+
     /**
-     * Make a path builder that will make a path with a particular color.  
-     * 
+     * Make a path builder that will make a path with a particular color.
+     *
      * @param color the color of the path
      */
     public PathBuilder(Color color) {
@@ -71,7 +71,7 @@ public class PathBuilder {
 
     /**
      * Internal method that adds the element to the path.
-     * 
+     *
      * @param element the element to add to the path
      */
     private <T extends PathElement> void add( T element ) {
@@ -81,7 +81,7 @@ public class PathBuilder {
     /**
      * Make a move in the path, without drawing anything. This is usually used
      * to start a path.
-     * 
+     *
      * @param point the point to move to
      * @return a reference to this builder
      */
@@ -92,7 +92,7 @@ public class PathBuilder {
 
     /**
      * Make a line in the path, from the last point to the given point.
-     * 
+     *
      * @param point the point to make a line to
      * @return a reference to this builder
      */
@@ -103,7 +103,7 @@ public class PathBuilder {
 
     /**
      * Make a quadratic curve in the path, with one control point.
-     *  
+     *
      * @param cp the control point of the curve
      * @param ep the end point of the curve
      * @return a reference to this builder
@@ -115,7 +115,7 @@ public class PathBuilder {
 
     /**
      * Make a cubic curve in the path, with two control points.
-     * 
+     *
      * @param cp1 the first control point
      * @param cp2 the second control point
      * @param ep the end point of the curve
@@ -135,7 +135,7 @@ public class PathBuilder {
 
     /**
      * Sets the color if this path.
-     * 
+     *
      * @param  color the new {@link Color}.
      * @return       returns itself.
      */
@@ -146,7 +146,7 @@ public class PathBuilder {
 
     /**
      * Create and return the final path.
-     * 
+     *
      * @return the newly created path
      */
     public GeneralPath createPath() {

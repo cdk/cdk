@@ -385,7 +385,7 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
         double step = (limitSup - limitInf) / 15;
         IAtom atom2;
 
-///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:		
+///////////////////////THE FIRST CALCULATED DESCRIPTOR IS g(H)r	 WITH PARTIAL CHARGES:
 		if(atoms.size() > 0) {
 			for(double ghr = limitInf; ghr < limitSup; ghr = ghr + step) {
 				sum = 0;
@@ -400,15 +400,15 @@ public class RDFProtonDescriptor_GHR extends AbstractAtomicDescriptor implements
                     sum += partial;
                 }
                 rdfProtonCalculatedValues.add(sum);
-				
-				logger.debug("RDF gr distance prob.: "+sum+ " at distance "+ghr);				
+
+				logger.debug("RDF gr distance prob.: "+sum+ " at distance "+ghr);
 			}
 		}
 		else {
 			return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
 		}
 		return new DescriptorValue(
-			getSpecification(), getParameterNames(), 
+			getSpecification(), getParameterNames(),
 			getParameters(), rdfProtonCalculatedValues,
 			getDescriptorNames());
 	}

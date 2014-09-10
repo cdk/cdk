@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -65,9 +65,9 @@ public class TetrahedralElementEncoderFactoryTest {
         when(container.getAtom(2)).thenReturn(n3);
         when(container.getAtom(3)).thenReturn(c4);
         when(container.getAtom(4)).thenReturn(h5);
-        
+
         when(container.atoms()).thenReturn(Arrays.asList(c1, o2, n3, c4, h5));
-        
+
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
         when(tc.getLigands()).thenReturn(new IAtom[]{
@@ -78,12 +78,12 @@ public class TetrahedralElementEncoderFactoryTest {
         });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
         when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
-        
+
         StereoEncoder encoder = new TetrahedralElementEncoderFactory().create(container,
                                                                               new int[0][0]); // graph not used
-        
+
         assertThat(getGeometricParity(encoder).parity(),
-                   is(-1));  // clockwise                
+                   is(-1));  // clockwise
     }
 
     @Test
@@ -118,9 +118,9 @@ public class TetrahedralElementEncoderFactoryTest {
                                                                               new int[0][0]); // graph not used
 
         assertThat(getGeometricParity(encoder).parity(),
-                   is(-1));  // clockwise (we didn't have to move the implied H)               
+                   is(-1));  // clockwise (we didn't have to move the implied H)
     }
-    
+
     @Test
     public void createImplicitH_front() throws Exception {
 
@@ -144,7 +144,7 @@ public class TetrahedralElementEncoderFactoryTest {
                 c1, // <-- represents implicit H
                 o2,
                 n3,
-                c4,                
+                c4,
         });
         when(tc.getStereo()).thenReturn(ITetrahedralChirality.Stereo.CLOCKWISE);
         when(container.stereoElements()).thenReturn(Collections.<IStereoElement>singleton(tc));
@@ -155,7 +155,7 @@ public class TetrahedralElementEncoderFactoryTest {
         // anti-clockwise (inverted as we had to move the implicit H to the back
         // with an odd number of inversions)
         assertThat(getGeometricParity(encoder).parity(),
-                   is(1));                  
+                   is(1));
     }
 
     @Test
@@ -177,7 +177,7 @@ public class TetrahedralElementEncoderFactoryTest {
 
         ITetrahedralChirality tc = mock(ITetrahedralChirality.class);
         when(tc.getChiralAtom()).thenReturn(c1);
-        when(tc.getLigands()).thenReturn(new IAtom[]{                
+        when(tc.getLigands()).thenReturn(new IAtom[]{
                 o2,
                 c1, // <-- represents implicit H
                 n3,
@@ -194,7 +194,7 @@ public class TetrahedralElementEncoderFactoryTest {
         assertThat(getGeometricParity(encoder).parity(),
                    is(-1));
     }
-    
+
     private static GeometricParity getGeometricParity(StereoEncoder encoder) {
         if (encoder instanceof MultiStereoEncoder) {
             return getGeometricParity(extractEncoders(encoder).get(0));
@@ -228,5 +228,5 @@ public class TetrahedralElementEncoderFactoryTest {
             }
         }
         return Collections.emptyList();
-    }    
+    }
 }

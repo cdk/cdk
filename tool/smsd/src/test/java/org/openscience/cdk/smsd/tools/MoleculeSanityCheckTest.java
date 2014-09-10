@@ -63,7 +63,7 @@ public class MoleculeSanityCheckTest {
 
     /**
      * Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
      */
     @Test
     public void testCheckAndCleanMolecule() throws InvalidSmilesException {
@@ -78,7 +78,7 @@ public class MoleculeSanityCheckTest {
 
     /**
      * Test of fixAromaticity method, of class MoleculeSanityCheck.
-     * @throws InvalidSmilesException 
+     * @throws InvalidSmilesException
      */
     @Test
     public void testFixAromaticity() throws InvalidSmilesException {

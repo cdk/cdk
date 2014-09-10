@@ -44,18 +44,18 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 public interface IRenderer<T extends IChemObject> {
-    
+
     /**
-     * Internal method to generate the intermediate format. 
-     * 
+     * Internal method to generate the intermediate format.
+     *
      * @param obj the IChemObject to generate a diagram for
      * @return a tree of rendering elements
      */
     public IRenderingElement generateDiagram(T obj);
-    
+
     /**
      * Returns the drawing model, giving access to drawing parameters.
-     * 
+     *
      * @return the rendering model
      */
 	public RendererModel getRenderer2DModel();
@@ -81,7 +81,7 @@ public interface IRenderer<T extends IChemObject> {
      * @see #toModelCoordinates(double, double)
      */
 	public Point2d toScreenCoordinates(double screenXTo, double screenYTo);
-	
+
 	/**
 	 * Set a new zoom factor.
 	 *
@@ -92,29 +92,29 @@ public interface IRenderer<T extends IChemObject> {
     /**
      * Set a new drawing center in screen coordinates.
      *
-     * @param screenX the x screen coordinate of the drawing center 
-     * @param screenY the y screen coordinate of the drawing center 
+     * @param screenX the x screen coordinate of the drawing center
+     * @param screenY the y screen coordinate of the drawing center
      */
 	public void shiftDrawCenter(double screenX, double screenY);
 
 	/**
 	 * Paint an IChemObject.
-	 * 
+	 *
 	 * @param object the chem object to paint
-	 * @param drawVisitor the class that visits the generated elements  
+	 * @param drawVisitor the class that visits the generated elements
 	 * @return the rectangular area where was drawn
 	 */
 	public Rectangle paint(T object, IDrawVisitor drawVisitor);
-	
+
 	/**
 	 * Paint the chem object within the specified bounds.
-	 * 
+	 *
 	 * @param object       Object to draw
 	 * @param drawVisitor  the visitor to draw to
 	 * @param bounds       the screen bounds between which to draw
 	 * @param resetCenter  a boolean indicating the the drawing center needs to be reset
 	 */
-	public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds, 
+	public void paint(T object, IDrawVisitor drawVisitor, Rectangle2D bounds,
 	        boolean resetCenter);
 
 	/**
@@ -130,7 +130,7 @@ public interface IRenderer<T extends IChemObject> {
 	 * Set the scale for an {@link IChemObject}. It calculates the average bond
 	 * length of the model and calculates the multiplication factor to transform
 	 * this to the bond length that is set in the {@link RendererModel}.
-	 * 
+	 *
 	 * @param  object the {@link IChemObject} to draw.
 	 */
 	public void setScale(T object);

@@ -29,12 +29,12 @@ import org.openscience.cdk.annotations.TestMethod;
  */
 @TestClass("org.openscience.cdk.math.MathToolsTest")
 public class MathTools {
-	
+
 	/**
 	 * Analog of Math.max that returns the largest double value in an array of doubles.
 	 *
 	 * @param   values  the values to be searched for the largest value among them
-	 * @return   the largest value among a set of given values  
+	 * @return   the largest value among a set of given values
 	 */
     @TestMethod("testMax_arraydouble")
     public static double max(double[] values)
@@ -50,7 +50,7 @@ public class MathTools {
 	 * Analog of Math.min that returns the largest double value in an array of double.
 	 *
 	 * @param   values  the values to be searched for the smallest value among them
-	 * @return   the smallest value among a set of given values  
+	 * @return   the smallest value among a set of given values
 	 */
     @TestMethod("testMin_arraydouble")
     public static double min(double[] values)
@@ -61,7 +61,7 @@ public class MathTools {
                 min = value;
 			return min;
 	}
-	
+
 	/**
 	 * Analog of Math.max that returns the largest int value in an array of ints.
 	 **/
@@ -101,6 +101,6 @@ public class MathTools {
     public static boolean isEven(int intValue) {
         return intValue % 2 == 0;
     }
-    
+
 }
 

@@ -41,7 +41,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -50,14 +50,14 @@ public class DebugCrystal extends Crystal
     implements ICrystal {
 
     private static final long serialVersionUID = -1749989529794094087L;
-    
+
     static ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugCrystal.class);
 
 	public DebugCrystal() {
 		super();
 	}
-    
+
 	public DebugCrystal(IAtomContainer container) {
 		super(container);
 	}
@@ -108,13 +108,13 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting lone pair at: ", number);
 		return super.getLonePair(number);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public ISingleElectron getSingleElectron(int number) {
 		logger.debug("Getting single electron at: ", number);
 		return super.getSingleElectron(number);
 	}
-	
+
 //	public void setElectronContainer(int number, IElectronContainer electronContainer) {
 //		logger.debug("Setting electron container at: pos=" + number, " electron container=" +electronContainer);
 //		super.setElectronContainer(number, electronContainer);
@@ -141,25 +141,25 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting bonds iterator");
 		return super.bonds();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public Iterable<ILonePair> lonePairs() {
 		logger.debug("Getting lone pairs iterator");
 		return super.lonePairs();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public Iterable<ISingleElectron> singleElectrons() {
 		logger.debug("Getting single electrons iterator");
 		return super.singleElectrons();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public Iterable<IElectronContainer> electronContainers() {
 		logger.debug("Getting electron containers iterator");
 		return super.electronContainers();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public IAtom getFirstAtom() {
 		logger.debug("Getting first atom: ", super.getFirstAtom());
@@ -195,13 +195,13 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting lone pair number: ", bond);
 		return super.getLonePairNumber(bond);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getSingleElectronNumber(ISingleElectron bond) {
 		logger.debug("Getting single electron number: ", bond);
 		return super.getSingleElectronNumber(bond);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public IElectronContainer getElectronContainer(int number) {
 		logger.debug("Getting electron container at: ", number);
@@ -213,7 +213,7 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting bond for atoms: atom1=" + atom1, " atom2=" + atom2);
 		return super.getBond(atom1, atom2);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getAtomCount() {
 		logger.debug("Getting atom count");
@@ -225,7 +225,7 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting bond count");
 		return super.getBondCount();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getLonePairCount() {
 		logger.debug("Getting lone pair count");
@@ -237,14 +237,14 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting single electron count");
 		return super.getSingleElectronCount();
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getElectronContainerCount() {
 		logger.debug("Getting electron container count");
 		return super.getElectronContainerCount();
 	}
 
-	
+
 //	public IAtom[] getConnectedAtoms(IAtom atom) {
 //		logger.debug("Getting connected atoms for atom: ", atom);
 //		return super.getConnectedAtoms(atom);
@@ -272,13 +272,13 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting lone pairs at atom: atom=" + atom, " lone pairs=" + super.getConnectedLonePairsCount(atom));
 		return super.getConnectedLonePairsList(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
 		logger.debug("Getting single electrons at atom: atom=" + atom, " single electrons=" + super.getConnectedSingleElectronsCount(atom));
 		return super.getConnectedSingleElectronsList(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
 		logger.debug("Getting connected electron containers for atom: ", atom);
@@ -290,25 +290,25 @@ public class DebugCrystal extends Crystal
 		logger.debug("Getting connected atoms count for atom: ", atom);
 		return super.getConnectedAtomsCount(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getConnectedBondsCount(IAtom atom) {
 		logger.debug("Getting connected bonds count for atom: ", atom);
 		return super.getConnectedBondsCount(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getConnectedLonePairsCount(IAtom atom) {
 		logger.debug("Getting connected lone pairs count for atom: ", atom);
 		return super.getConnectedLonePairsCount(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public int getConnectedSingleElectronsCount(IAtom atom) {
 		logger.debug("Getting connected single electrons count for atom: ", atom);
 		return super.getConnectedSingleElectronsCount(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public double getBondOrderSum(IAtom atom) {
 		logger.debug("Getting bond order sum for atom: ", atom);
@@ -355,13 +355,13 @@ public class DebugCrystal extends Crystal
 		logger.debug("Adding lone pair: ", ec);
 		super.addLonePair(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void addSingleElectron(ISingleElectron ec) {
 		logger.debug("Adding single electron: ", ec);
 		super.addSingleElectron(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void addElectronContainer(IElectronContainer electronContainer) {
 		logger.debug("Adding electron container: ", electronContainer);
@@ -403,49 +403,49 @@ public class DebugCrystal extends Crystal
 		logger.debug("Removing bond at " + pos);
 		return super.removeBond(pos);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public IBond removeBond(IAtom atom1, IAtom atom2) {
 		logger.debug("Removing bond: atom1=" + atom1 + " atom2=" + atom2);
 		return super.removeBond(atom1, atom2);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeBond(IBond bond) {
 		logger.debug("Removing bond=" + bond);
 		super.removeBond(bond);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public ILonePair removeLonePair(int pos) {
 		logger.debug("Removing bond at " + pos);
 		return super.removeLonePair(pos);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeLonePair(ILonePair ec) {
 		logger.debug("Removing bond=" + ec);
 		super.removeLonePair(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public ISingleElectron removeSingleElectron(int pos) {
 		logger.debug("Removing bond at " + pos);
 		return super.removeSingleElectron(pos);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeSingleElectron(ISingleElectron ec) {
 		logger.debug("Removing bond=" + ec);
 		super.removeSingleElectron(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeAtomAndConnectedElectronContainers(IAtom atom) {
 		logger.debug("Removing atom and connected electron containers: ", atom);
-		super.removeAtomAndConnectedElectronContainers(atom);		
+		super.removeAtomAndConnectedElectronContainers(atom);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public void removeAllElements() {
 		logger.debug("Removing all elements");
@@ -488,7 +488,7 @@ public class DebugCrystal extends Crystal
 		logger.debug("Adding single electron: ", atomID);
 		super.addSingleElectron(atomID);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean contains(IAtom atom) {
 		logger.debug("Contains atom: ", atom);
@@ -500,19 +500,19 @@ public class DebugCrystal extends Crystal
 		logger.debug("Contains bond: ", bond);
 		return super.contains(bond);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean contains(ILonePair ec) {
 		logger.debug("Contains lone pair: ", ec);
 		return super.contains(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean contains(ISingleElectron ec) {
 		logger.debug("Contains single electron: ", ec);
 		return super.contains(ec);
 	}
-	
+
     /** {@inheritDoc} */ @Override
     public boolean contains(IElectronContainer electronContainer) {
 		logger.debug("Contains electron container: ", electronContainer);

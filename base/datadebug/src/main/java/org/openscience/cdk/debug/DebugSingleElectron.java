@@ -31,7 +31,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Debugging data class.
- * 
+ *
  * @author     egonw
  * @cdk.module datadebug
  * @cdk.githash
@@ -40,16 +40,16 @@ public class DebugSingleElectron extends SingleElectron
     implements ISingleElectron{
 
     private static final long serialVersionUID = -2895377834940311825L;
-    
+
     ILoggingTool logger =
         LoggingToolFactory.createLoggingTool(DebugSingleElectron.class);
-	
+
     public DebugSingleElectron() {
     	super();
     }
-    
+
     public DebugSingleElectron(IAtom atom) {
-    	super(atom);   
+    	super(atom);
     }
 
     /** {@inheritDoc} */ @Override

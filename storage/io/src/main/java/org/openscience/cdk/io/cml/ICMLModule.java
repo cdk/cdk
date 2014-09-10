@@ -42,9 +42,9 @@ public interface ICMLModule{
   void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
   void endElement(CMLStack xpath, String uri, String local, String raw);
   void characterData(CMLStack xpath, char ch[], int start, int length);
-  
+
   IChemFile returnChemFile();
 
   void inherit(ICMLModule conv);
-  
+
 }

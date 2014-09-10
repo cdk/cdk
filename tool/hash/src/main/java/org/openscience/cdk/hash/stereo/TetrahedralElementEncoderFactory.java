@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
- *  
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- *  
+ *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or (at
  * your option) any later version. All we ask is that proper credit is given
- * for our work, which includes - but is not limited to - adding the above 
+ * for our work, which includes - but is not limited to - adding the above
  * copyright notice to the beginning of your source code files, and to any
  * copyright notice that you may distribute with programs based on this work.
  *
@@ -40,10 +40,10 @@ import java.util.Map;
 import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo.CLOCKWISE;
 
 /**
- * Defines a stereo encoder factory for the hash code. The factory allows the 
+ * Defines a stereo encoder factory for the hash code. The factory allows the
  * generation of stereo hash codes for molecules with predefined
  * {@link ITetrahedralChirality} stereo elements.
- * 
+ *
  * @author John May
  * @cdk.module hash
  */
@@ -71,7 +71,7 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
             }
         }
 
-        return encoders.isEmpty() ? StereoEncoder.EMPTY 
+        return encoders.isEmpty() ? StereoEncoder.EMPTY
                                   : new MultiStereoEncoder(encoders);
     }
 
@@ -86,7 +86,7 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
                                            Map<IAtom,Integer> atomToIndex) {
 
         IAtom[] ligands = tc.getLigands();
-        
+
         int     centre  = atomToIndex.get(tc.getChiralAtom());
         int[]   indices = new int[4];
 
@@ -95,17 +95,17 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
         for (int i = 0; i < ligands.length; i++) {
             indices[i] = atomToIndex.get(ligands[i]);
             if (indices[i] == centre)
-                offset = i;            
+                offset = i;
         }
 
         // convert clockwise/anticlockwise to -1/+1
         int parity = tc.getStereo() == CLOCKWISE ? -1 : 1;
 
         // now if any atom is the centre (indicating an implicit
-        // hydrogen) we need to adjust the indicies and the parity 
+        // hydrogen) we need to adjust the indicies and the parity
         if (offset >= 0) {
 
-            // remove the 'implicit' central from the first 3 vertices 
+            // remove the 'implicit' central from the first 3 vertices
             for (int i = offset; i < indices.length - 1; i++) {
                 indices[i] = indices[i + 1];
             }
@@ -118,10 +118,10 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
                 parity *= -1;
 
             // trim the array to size we don't include the last (implicit)
-            // vertex when checking the invariants                    
+            // vertex when checking the invariants
             indices = Arrays.copyOf(indices, indices.length - 1);
         }
-        
+
         return new GeometryEncoder(centre,
                                    new BasicPermutationParity(indices),
                                    GeometricParity.valueOf(parity));

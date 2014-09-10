@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
 /**
  * Exception that may be thrown when an atom type is looked up or perceived
  * but no such atom type was found.
- * 
+ *
  * @cdk.module core
  * @cdk.githash
  */
@@ -40,7 +40,7 @@ public class NoSuchAtomTypeException extends CDKException {
 
 	/**
 	 * Constructs a new NoSuchAtomTypeException.
-	 * 
+	 *
 	 * @param message Message explaining why the atom type could not be found
 	 */
     @TestMethod("testNoSuchAtomTypeException_String")

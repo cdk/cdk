@@ -97,10 +97,10 @@ public class FormatFactory {
     public void registerFormat(IChemFormatMatcher format) {
         formats.add(format);
     }
-    
+
     /**
      * Returns the list of recognizable formats.
-     * 
+     *
      * @return {@link List} of {@link IChemFormat}s.
      */
     @TestMethod("testGetFormats")
@@ -122,7 +122,7 @@ public class FormatFactory {
      *
      * @throws IOException  if an I/O error occurs
      * @throws IllegalArgumentException if the input is null
-     * @return The guessed <code>IChemFormat</code> or <code>null</code> if the 
+     * @return The guessed <code>IChemFormat</code> or <code>null</code> if the
      *         file format is not recognized.
      *
      * @see #guessFormat(InputStream)
@@ -141,9 +141,9 @@ public class FormatFactory {
         input.mark(this.headerLength);
         input.read(header, 0, this.headerLength);
         input.reset();
-        
+
         BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
-        
+
         /* Search file for a line containing an identifying keyword */
         List<String>     lines   = Collections.unmodifiableList(CharStreams.readLines(buffer));
         Set<MatchResult> results = new TreeSet<MatchResult>();
@@ -160,7 +160,7 @@ public class FormatFactory {
         }
 
         buffer = new BufferedReader(new CharArrayReader(header));
-        
+
         String line = buffer.readLine();
         // is it a XYZ file?
         StringTokenizer tokenizer = new StringTokenizer(line.trim());
@@ -181,7 +181,7 @@ public class FormatFactory {
 
         return null;
     }
-    
+
     @TestMethod("testGuessFormat")
     public IChemFormat guessFormat(InputStream input) throws IOException {
         if (input == null) {
@@ -240,5 +240,5 @@ public class FormatFactory {
 
         return null;
     }
-    
+
 }

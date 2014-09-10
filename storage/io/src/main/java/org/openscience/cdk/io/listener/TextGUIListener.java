@@ -38,7 +38,7 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
  * Allows processing of IOSetting quesions which are passed to the user
  * by using the System.out and System.in by default.
  *
- * <p>This listener can also be used to list all the questions a ChemObjectWriter 
+ * <p>This listener can also be used to list all the questions a ChemObjectWriter
  * has, by using a dummy StringWriter, and a <code>null</code> Reader.
  *
  * @cdk.module io
@@ -50,19 +50,19 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
 
     private BufferedReader in;
     private PrintWriter out;
-    
+
     private Importance level = Importance.HIGH;
-    
+
     public TextGUIListener(Importance level) {
         this.level = level;
         this.setInputReader(new InputStreamReader(System.in));
         this.setOutputWriter(new OutputStreamWriter(System.out));
     }
-    
+
     public void setLevel(Importance level) {
         this.level = level;
     }
-    
+
     /**
      * Overwrites the default writer to which the output is directed.
      */
@@ -75,7 +75,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             this.out = new PrintWriter(writer);
         }
     }
-    
+
     /**
      * Overwrites the default reader from which the input is taken.
      */
@@ -88,9 +88,9 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             this.in = new BufferedReader(reader);
         }
     }
-    
+
     public void frameRead(ReaderEvent event) {}
-    
+
     /**
      * Processes the IOSettings by listing the question, giving the options
      * and asking the user to provide their choice.
@@ -129,10 +129,10 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             }
             this.out.println();
             this.out.flush();
-        
+
             // get the answer, only if input != null
             if (this.in == null) {
-                // don't really ask questions. This is intentional behaviour to 
+                // don't really ask questions. This is intentional behaviour to
                 // allow for listing all questions. The settings is now defaulted,
                 // which is the intention too.
             } else {
@@ -169,7 +169,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             }
         }
     }
-  
+
 }
 
 

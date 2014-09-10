@@ -30,8 +30,8 @@ import org.openscience.cdk.interfaces.IReactionScheme;
 
 
 /**
- * Classes that extends the definition of reaction to a scheme. 
- * This is designed to contain a set of reactions which are linked in 
+ * Classes that extends the definition of reaction to a scheme.
+ * This is designed to contain a set of reactions which are linked in
  * some way but without hard coded semantics.
  *
  * @author      miguelrojasch <miguelrojasch@yahoo.es>
@@ -39,7 +39,7 @@ import org.openscience.cdk.interfaces.IReactionScheme;
  * @cdk.keyword reaction
  */
 public class ReactionScheme extends ReactionSet implements IReactionScheme{
-	
+
 	/** A List of reaction schemes*/
 	private List<IReactionScheme> reactionScheme;
 	/**
@@ -51,23 +51,23 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
      * /serialization/spec/version.doc.html>details</a>.
 	 */
 	private static final long serialVersionUID = -3676327644698347260L;
-	
+
 	/**  Constructs an empty ReactionScheme.
 	 */
 	public ReactionScheme() {
 		reactionScheme = new ArrayList<IReactionScheme>();
 	}
-	
+
 	/**
 	 * Add a Scheme of Reactions.
-	 * 
+	 *
 	 * @param scheme The IReactionScheme to include
 	 */
 	@TestMethod("testAdd_IReactionScheme")
 	public void add(IReactionScheme scheme) {
 		reactionScheme.add(scheme);
 	}
-	
+
 	/**
 	 *  Returns an Iterable for looping over all IMolecularScheme
 	 *   in this ReactionScheme.
@@ -78,7 +78,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
 	public Iterable<IReactionScheme> reactionSchemes() {
 		return reactionScheme;
 	}
-    
+
     /**
 	 * Returns the number of ReactionScheme in this Scheme.
 	 *
@@ -88,7 +88,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
 	public int getReactionSchemeCount(){
     	return reactionScheme.size();
     }
-    
+
     /**
 	 * Removes all IReactionScheme from this chemObject.
 	 */
@@ -113,12 +113,12 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
 	 */
     @TestMethod("testClone")
 	public Object clone() throws CloneNotSupportedException {
-		
+
     	IReactionScheme clone = new ReactionScheme();
 		for (IReactionScheme scheme : this.reactionSchemes()){
 			clone.add((IReactionScheme) scheme.clone());
 		}
-		
+
 		for (IReaction reaction : reactions()) {
 			clone.addReaction((IReaction)reaction.clone());
 		}
@@ -134,7 +134,7 @@ public class ReactionScheme extends ReactionSet implements IReactionScheme{
             }
             clone.addProperties(clonedHashtable);
         }
-		
+
 		return clone;
 	}
 }

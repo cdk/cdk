@@ -89,6 +89,6 @@ public class KabschAlignmentTest extends CDKTestCase {
         rmsd = ka.getRMSD();
         Assert.assertEquals(0.13479726, rmsd, 0.00000001);
     }
-    
+
 }
 

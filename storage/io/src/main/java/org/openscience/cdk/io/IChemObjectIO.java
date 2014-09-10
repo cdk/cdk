@@ -61,7 +61,7 @@ public interface IChemObjectIO extends Closeable {
      * @return true, if the {@link IChemObject} can be handled.
      */
     public boolean accepts(Class<? extends IChemObject> classObject);
-    
+
     /**
      * Closes this IChemObjectIO's resources.
      *
@@ -76,7 +76,7 @@ public interface IChemObjectIO extends Closeable {
      * @return the {@link IOSetting}s for this class.
      */
     public IOSetting[] getIOSettings();
-    
+
     /**
      * Adds a {@link IChemObjectIOListener} to this IChemObjectIO.
      *

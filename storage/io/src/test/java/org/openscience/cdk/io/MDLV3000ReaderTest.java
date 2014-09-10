@@ -1,7 +1,7 @@
 /* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
- * 
+ *
  * Contact: cdk-devel@slists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -58,7 +58,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
     	MDLV3000Reader reader = new MDLV3000Reader();
     	Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
-    
+
     /**
      * @cdk.bug 1571207
      */
@@ -79,7 +79,7 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(10.4341, atom.getPoint2d().x, 0.0001);
         Assert.assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
     }
-    
+
     @Test public void testEmptyString() throws Exception {
     	String emptyString = "";
     	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));

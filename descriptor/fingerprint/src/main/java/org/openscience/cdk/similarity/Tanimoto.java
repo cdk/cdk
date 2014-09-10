@@ -38,12 +38,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- *  Calculates the Tanimoto coefficient for a given pair of two 
+ *  Calculates the Tanimoto coefficient for a given pair of two
  *  fingerprint bitsets or real valued feature vectors.
  *
- *  The Tanimoto coefficient is one way to 
- *  quantitatively measure the "distance" or similarity of 
- *  two chemical structures. 
+ *  The Tanimoto coefficient is one way to
+ *  quantitatively measure the "distance" or similarity of
+ *  two chemical structures.
  *
  *  <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
  *  We assume that you have two structures stored in cdk.Molecule objects.
@@ -54,8 +54,8 @@ import java.util.TreeSet;
  *   float tanimoto_coefficient = Tanimoto.calculate(fingerprint1, fingerprint2);
  *  </pre>
  *
- *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this 
- *  is desired! 
+ *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this
+ *  is desired!
  *  <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
  *
  *@author         steinbeck
@@ -66,12 +66,12 @@ import java.util.TreeSet;
  * @cdk.module fingerprint
  */
 @TestClass("org.openscience.cdk.similarity.TanimotoTest") // see also SignatureFingerprintTanimotoTest
-public class Tanimoto 
+public class Tanimoto
 {
 
     private Tanimoto() {
     }
-    
+
     /**
      * Evaluates Tanimoto coefficient for two bit sets.
      * <p>
@@ -93,8 +93,8 @@ public class Tanimoto
         float _common_bit_count = one_and_two.cardinality();
         return _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
     }
-    
-    
+
+
     /**
      * Evaluates Tanimoto coefficient for two <code>IBitFingerprint</code>.
      * <p>
@@ -104,7 +104,7 @@ public class Tanimoto
      * @throws IllegalArgumentException if bitsets are not of the same length
      */
     @TestMethod("testCalculate_BitFingerprint,testCompareBitSetandBitFingerprintTanimoto")
-    public static double calculate( IBitFingerprint fingerprint1, 
+    public static double calculate( IBitFingerprint fingerprint1,
                                    IBitFingerprint fingerprint2 ) {
         if (fingerprint1.size() != fingerprint2.size()) {
             throw new IllegalArgumentException(
@@ -112,19 +112,19 @@ public class Tanimoto
         }
         int cardinality1 = fingerprint1.cardinality();
         int cardinality2 = fingerprint2.cardinality();
-        // If the fingerprint is an IntArrayFingeprint that could mean a big 
-        // fingerprint so let's take the safe way out and create a 
+        // If the fingerprint is an IntArrayFingeprint that could mean a big
+        // fingerprint so let's take the safe way out and create a
         // new IntArrayfingerprint
-        IBitFingerprint one_and_two 
-            = fingerprint1 instanceof IntArrayFingerprint 
+        IBitFingerprint one_and_two
+            = fingerprint1 instanceof IntArrayFingerprint
                 ? new IntArrayFingerprint(fingerprint1)
                 : new BitSetFingerprint(fingerprint1);
         one_and_two.and(fingerprint2);
         double cardinalityCommon = one_and_two.cardinality();
-        return cardinalityCommon / 
+        return cardinalityCommon /
                (cardinality1 + cardinality2 - cardinalityCommon);
     }
-    
+
     /**
      * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
      * <p>
@@ -157,9 +157,9 @@ public class Tanimoto
      * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
      * <p>
      * Note that feature/count type fingerprints may be of different length.
-     * 
+     *
      * Uses Tanimoto method from 10.1021/ci800326z
-     * 
+     *
      * @param features1 The first feature map
      * @param features2 The second feature map
      * @return The Tanimoto coefficient
@@ -187,16 +187,16 @@ public class Tanimoto
      * <p>
      * Note that feature/count type fingerprints may be of different length.
      * Uses Tanimoto method from 10.1021/ci800326z
-     * 
+     *
      * @param fp1 The first fingerprint
      * @param fp2 The second fingerprint
      * @return The Tanimoto coefficient
      */
     @TestMethod("testICountFingerprintComparison")
-	public static double calculate( ICountFingerprint fp1, 
+	public static double calculate( ICountFingerprint fp1,
 			                       ICountFingerprint fp2 ) {
-		long xy=0, 
-		     x=0, 
+		long xy=0,
+		     x=0,
 		     y=0;
 		for ( int i= 0; i<fp1.numOfPopulatedbins(); i++ ) {
 			int hash = fp1.getHash(i);
@@ -212,23 +212,23 @@ public class Tanimoto
 		}
 	    return ( (double)xy / (x + y - xy) );
 	}
-    
+
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 1.
-     * 
+     *
      * @param fp1 count fingerprint 1
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
      */
     @TestMethod("method1")
-    public static double method1( ICountFingerprint fp1, 
+    public static double method1( ICountFingerprint fp1,
                                   ICountFingerprint fp2) {
     	return calculate(fp1, fp2);
     }
-    
+
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 2.
-     * 
+     *
      * @param fp1 count fingerprint 1
      * @param fp2 count fingerprint 2
      * @return a Tanimoto distance
@@ -236,22 +236,22 @@ public class Tanimoto
     @TestMethod("method2")
     public static double method2( ICountFingerprint fp1,
                                   ICountFingerprint fp2) {
-    	
+
     		long maxSum = 0,
     		     minSum = 0;
-    		int i = 0, 
+    		int i = 0,
     		    j = 0;
-    		while ( i < fp1.numOfPopulatedbins() 
+    		while ( i < fp1.numOfPopulatedbins()
     				|| j < fp2.numOfPopulatedbins() ) {
-    			Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i) 
+    			Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i)
     					                                     : null;
-    			Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j) 
+    			Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j)
     					                                     : null;
-    			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) 
+    			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i)
     					                                      : null;
-    			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) 
+    			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j)
     					                                      : null;
-    			
+
     			if ( count2 == null || (hash1 != null && hash1 < hash2) ) {
     			maxSum += count1;
     				i++;
@@ -262,7 +262,7 @@ public class Tanimoto
     				j++;
     				continue;
     			}
-    			
+
     			if ( hash1.equals(hash2) ) {
     				maxSum += Math.max(count1, count2);
     				minSum += Math.min(count1, count2);

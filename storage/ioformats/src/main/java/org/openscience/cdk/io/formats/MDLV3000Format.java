@@ -31,15 +31,15 @@ import org.openscience.cdk.tools.DataFeatures;
 public class MDLV3000Format extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
 	private static IResourceFormat myself = null;
-	
+
     public MDLV3000Format() {}
-    
+
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
     	if (myself == null) myself = new MDLV3000Format();
     	return myself;
     }
-    
+
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
@@ -66,7 +66,7 @@ public class MDLV3000Format extends SimpleChemFormatMatcher implements IChemForm
 
     /** {@inheritDoc} */ @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { 
+    public String getReaderClassName() {
       return "org.openscience.cdk.io.MDLV3000Reader";
     }
 
@@ -77,7 +77,7 @@ public class MDLV3000Format extends SimpleChemFormatMatcher implements IChemForm
     /** {@inheritDoc} */ @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && 
+        if (lineNumber == 4 &&
             (line.indexOf("v3000") >= 0 ||
              line.indexOf("V3000") >= 0)) {
             return true;

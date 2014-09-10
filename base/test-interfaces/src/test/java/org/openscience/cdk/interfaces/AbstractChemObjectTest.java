@@ -1,7 +1,7 @@
 /* Copyright (C) 2001-2007  The Chemistry Development Kit (CDK) project
- * 
+ *
  * Contact: cdk-devel@lists.sourceforge.net
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
  * as published by the Free Software Foundation; either version 2.1
@@ -10,12 +10,12 @@
  * - but is not limited to - adding the above copyright notice to the beginning
  * of your source code files, and to any copyright notice that you may distribute
  * with programs based on this work.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -56,7 +56,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertEquals("me", chemObject.getProperty("keep"));
         Assert.assertNull(chemObject.getProperty("remove"));
     }
-    
+
     @Test public void testAddProperties_Map() {
         IChemObject chemObject = newChemObject();
         Map<Object,Object> props = new Hashtable<Object,Object>();
@@ -112,12 +112,12 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setID(id);
         Assert.assertEquals(id, chemObject.getID());
     }
-    
+
     @Test public void testGetID() {
         IChemObject chemObject = newChemObject();
         Assert.assertNull(chemObject.getID());
     }
-    
+
     @Test public void testSetFlags_arrayboolean(){
       IChemObject chemObject=newChemObject();
       chemObject.setFlag(CDKConstants.ISINRING,true);
@@ -125,7 +125,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
       chemObject2.setFlags(chemObject.getFlags());
       Assert.assertTrue(chemObject2.getFlag(CDKConstants.ISINRING));
     }
-    
+
     @Test public void testGetFlags(){
       IChemObject chemObject=newChemObject();
       chemObject.setFlag(CDKConstants.ISINRING,true);
@@ -185,11 +185,11 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test public void testGetFlag_int() {
         testSetFlag_int_boolean();
     }
-    
+
     @Test public void testClone() throws Exception {
         IChemObject chemObject = newChemObject();
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
-        
+
         // test cloning of itself
         Object clone = chemObject.clone();
         Assert.assertTrue(clone instanceof IChemObject);
@@ -199,7 +199,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertNotNull(diff);
         Assert.assertEquals(0, diff.length());
     }
-    
+
     @Test public void testClone_Flags() throws Exception {
         IChemObject chemObject1 = newChemObject();
         chemObject1.setFlag(CDKConstants.ISALIPHATIC, true);
@@ -219,7 +219,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject2.setID("co2");
         Assert.assertEquals("co1", chemObject1.getID());
     }
-    
+
     @Test public void testClone_Properties() throws Exception {
         IChemObject chemObject1 = newChemObject();
         Map<Object,Object> props1 = new Hashtable<Object,Object>();
@@ -234,7 +234,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertEquals(1, chemObject2.getProperties().size());
         Assert.assertEquals(0, chemObject1.getProperties().size());
     }
-    
+
     @Test public void testClone_Properties2() throws Exception {
         IChemObject chemObject1 = newChemObject();
         Map<Object,Object> props1 = new Hashtable<Object,Object>();
@@ -273,18 +273,18 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         Assert.assertEquals(1, chemObject1.getListenerCount());
         Assert.assertEquals(0, chemObject2.getListenerCount());
     }
-    
+
     /** @cdk.bug 1838820 */
     @Test(timeout=100)
     public void testDontCloneIChemObjectProperties() throws Exception {
     	IChemObject chemObject1 = newChemObject();
     	chemObject1.setProperty("RecursiveBastard", chemObject1);
-    	
+
     	Object clone = chemObject1.clone();
     	Assert.assertNotNull(clone);
     	Assert.assertTrue(clone instanceof IChemObject);
     }
-    
+
     @Test public void testAddListener_IChemObjectListener() {
         IChemObject chemObject1 = newChemObject();
         Assert.assertEquals(0, chemObject1.getListenerCount());
@@ -292,7 +292,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject1.addListener(listener);
         Assert.assertEquals(1, chemObject1.getListenerCount());
     }
-    
+
     @Test public void testRemoveListener_IChemObjectListener() {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
@@ -301,7 +301,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject1.removeListener(listener);
         Assert.assertEquals(0, chemObject1.getListenerCount());
     }
-    
+
     @Test public void testGetListenerCount() {
         IChemObject chemObject1 = newChemObject();
         DummyChemObjectListener listener = new DummyChemObjectListener();
@@ -312,7 +312,7 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     class DummyChemObjectListener implements IChemObjectListener {
         @Test public void stateChanged(IChemObjectChangeEvent event) {};
     }
-    
+
    @Test public void testShallowCopy() throws Exception {
         IChemObject chemObject = newChemObject();
         Object clone = chemObject.clone();
@@ -324,10 +324,10 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertTrue(listener.changed);
-        
+
         listener.reset();
         Assert.assertFalse(listener.changed);
         chemObject.setProperty("Changed", "Again");
@@ -338,12 +338,12 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
         chemObject.setFlag(CDKConstants.ISALIPHATIC, true);
         Assert.assertTrue(listener.changed);
     }
-    
+
     @Test public void testNotifyChanged() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertTrue(listener.changed);
     }
@@ -356,32 +356,32 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     @Test public void testGetNotification() {
     	testSetNotification_boolean();
     }
-    
+
     @Test public void testSetNotification_false() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(false);
-        
+
         chemObject.setID("Changed");
         Assert.assertFalse(listener.changed);
     }
-    
+
     @Test public void testSetNotification_true() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
         chemObject.setNotification(true);
-        
+
         chemObject.setID("Changed");
         Assert.assertTrue(listener.changed);
     }
-    
+
     @Test public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
         IChemObject chemObject = newChemObject();
         chemObject.addListener(listener);
-        
+
         chemObject.setID("Changed");
         Assert.assertNotNull(listener.event);
     }
@@ -450,21 +450,21 @@ public abstract class AbstractChemObjectTest extends AbstractCDKObjectTest {
     private class ChemObjectListenerImpl implements IChemObjectListener {
         private boolean changed;
         private IChemObjectChangeEvent event;
-        
+
         private ChemObjectListenerImpl() {
             changed = false;
             event = null;
         }
-        
+
         @Test public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
             event = e;
         }
-        
+
         @Test public void reset() {
             changed = false;
             event = null;
         }
     }
-    
+
 }

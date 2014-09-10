@@ -94,7 +94,7 @@ public final class HashGeneratorMaker {
 
     /* whether we want to use perturbed hash generators */
     private EquivalentSetFinder equivSetFinder = null;
-    
+
     /* function determines whether any atoms are suppressed */
     private AtomSuppression suppression = AtomSuppression.unsuppressed();
 
@@ -350,11 +350,11 @@ public final class HashGeneratorMaker {
             encoders.add(encoder);
         }
         encoders.addAll(this.customEncoders);
-        
+
         // check if suppression of atoms is wanted - if not use a default value
         // we also use the 'Basic' generator (see below)
         boolean suppress = suppression != AtomSuppression.unsuppressed();
-        
+
         AtomEncoder   encoder = new ConjugatedAtomEncoder(encoders);
         SeedGenerator seeds   = new SeedGenerator(encoder, suppression);
 
@@ -378,7 +378,7 @@ public final class HashGeneratorMaker {
                                                   makeStereoEncoderFactory(),
                                                   equivSetFinder,
                                                   suppression);
-        } 
+        }
         else {
             // no equivalence set finder - just use the simple hash
             return simple;

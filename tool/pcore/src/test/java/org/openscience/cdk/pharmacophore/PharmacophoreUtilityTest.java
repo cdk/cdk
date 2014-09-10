@@ -72,7 +72,7 @@ public class PharmacophoreUtilityTest {
         Assert.assertEquals(3, def2.getAtomCount());
         Assert.assertEquals(3, def2.getBondCount());
         Assert.assertNull(def2.getProperty(CDKConstants.TITLE));
-        
+
         String[] ids = {"Aromatic", "Hydroxyl", "BasicAmine"};
         for (IAtom atom : def2.atoms()) {
             String sym = atom.getSymbol();
