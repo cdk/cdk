@@ -81,6 +81,7 @@ org.openscience.cdk.renderer.elements.path
 org.openscience.cdk.renderer.font
 org.openscience.cdk.renderer.generators
 org.openscience.cdk.renderer.generators.parameter
+org.openscience.cdk.renderer.generators.standard
 org.openscience.cdk.renderer.selection
 org.openscience.cdk.renderer.visitor
 org.openscience.cdk.ringsearch
