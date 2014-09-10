@@ -37,7 +37,6 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public interface IDeduceBondOrderTool {
 
-	public void saturate(IAtomContainer ac) throws CDKException;
+    public void saturate(IAtomContainer ac) throws CDKException;
 
 }
-

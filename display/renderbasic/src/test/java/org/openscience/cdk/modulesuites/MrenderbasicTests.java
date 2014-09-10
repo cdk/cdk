@@ -53,30 +53,11 @@ import org.openscience.cdk.renderer.generators.RingGeneratorTest;
  * @cdk.module  test-renderbasic
  */
 @RunWith(Suite.class)
-@SuiteClasses({
-	RenderbasicCoverageTest.class,
-	AtomContainerRendererTest.class,
-	BasicAtomGeneratorTest.class,
-	BasicBondGeneratorTest.class,
-	BasicSceneGeneratorTest.class,
-	BasicGeneratorTest.class,
-	RingGeneratorTest.class,
-	WedgeLineElementTest.class,
-	LineElementTest.class,
-	PathElementTest.class,
-	OvalElementTest.class,
-	RingElementTest.class,
-	ElementGroupTest.class,
-	TextGroupElementTest.class,
-	AtomSymbolElementTest.class,
-	RectangleElementTest.class,
-	ArrowElementTest.class,
-	GeneralPathTest.class,
-	AWTFontManagerTest.class,
-	LineToTest.class,
-	CubicToTest.class,
-	MoveToTest.class,
-	QuadToTest.class,
-	BoundsCalculatorTest.class
-})
-public class MrenderbasicTests {}
+@SuiteClasses({RenderbasicCoverageTest.class, AtomContainerRendererTest.class, BasicAtomGeneratorTest.class,
+        BasicBondGeneratorTest.class, BasicSceneGeneratorTest.class, BasicGeneratorTest.class, RingGeneratorTest.class,
+        WedgeLineElementTest.class, LineElementTest.class, PathElementTest.class, OvalElementTest.class,
+        RingElementTest.class, ElementGroupTest.class, TextGroupElementTest.class, AtomSymbolElementTest.class,
+        RectangleElementTest.class, ArrowElementTest.class, GeneralPathTest.class, AWTFontManagerTest.class,
+        LineToTest.class, CubicToTest.class, MoveToTest.class, QuadToTest.class, BoundsCalculatorTest.class})
+public class MrenderbasicTests {
+}

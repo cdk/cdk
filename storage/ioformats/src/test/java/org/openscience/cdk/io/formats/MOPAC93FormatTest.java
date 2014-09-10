@@ -31,11 +31,12 @@ import org.junit.Test;
 public class MOPAC93FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC93FormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC93Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MOPAC93Format.getInstance());
     }
 
-    @Test public void testMatchesMopac93() throws Exception {
-        Assert.assertTrue(((MOPAC93Format)MOPAC93Format.getInstance()).matches(0,
+    @Test
+    public void testMatchesMopac93() throws Exception {
+        Assert.assertTrue(((MOPAC93Format) MOPAC93Format.getInstance()).matches(0,
                 "*                   MOPAC  93.00               CALC'D. Mon May 31 20:29:07 2004"));
     }
 }

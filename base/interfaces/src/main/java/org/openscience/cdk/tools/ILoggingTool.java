@@ -206,4 +206,3 @@ public interface ILoggingTool {
      */
     public boolean isDebugEnabled();
 }
-

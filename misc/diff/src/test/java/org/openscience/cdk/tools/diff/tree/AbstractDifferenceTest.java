@@ -27,13 +27,14 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class AbstractDifferenceTest extends CDKTestCase {
 
-	@Test public void testConstructor() {
-		DifferenceClass diffClass = new DifferenceClass();
-		Assert.assertNotNull(diffClass);
-	}
+    @Test
+    public void testConstructor() {
+        DifferenceClass diffClass = new DifferenceClass();
+        Assert.assertNotNull(diffClass);
+    }
 
-	protected class DifferenceClass extends AbstractDifference {
+    protected class DifferenceClass extends AbstractDifference {
 
-	}
+    }
 
 }

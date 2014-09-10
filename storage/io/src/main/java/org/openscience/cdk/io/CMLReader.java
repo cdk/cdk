@@ -64,14 +64,13 @@ import org.xml.sax.XMLReader;
 @TestClass("org.openscience.cdk.io.CMLReaderTest")
 public class CMLReader extends DefaultChemObjectReader {
 
-    private XMLReader parser;
-    private InputStream input;
-    private String url;
+    private XMLReader               parser;
+    private InputStream             input;
+    private String                  url;
 
-    private Map<String,ICMLModule> userConventions = new HashMap<String,ICMLModule>();
+    private Map<String, ICMLModule> userConventions = new HashMap<String, ICMLModule>();
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CMLReader.class);
+    private static ILoggingTool     logger          = LoggingToolFactory.createLoggingTool(CMLReader.class);
 
     /**
      * Reads CML from an java.io.InputStream, for example the FileInputStream.
@@ -88,7 +87,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     public void registerConvention(String convention, ICMLModule conv) {
-    	userConventions.put(convention, conv);
+        userConventions.put(convention, conv);
     }
 
     /**
@@ -142,9 +141,8 @@ public class CMLReader extends DefaultChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("gnu.xml.aelfred2.XmlReader").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
+                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -155,9 +153,8 @@ public class CMLReader extends DefaultChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -170,31 +167,30 @@ public class CMLReader extends DefaultChemObjectReader {
         }
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
 
-		if (IChemFile.class.equals(classObject))
-			return true;
-	    Class superClass = classObject.getSuperclass();
-	    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        if (IChemFile.class.equals(classObject)) return true;
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	/**
+    /**
      * Read a IChemObject from input.
      *
      * @return the content in a ChemFile object
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
-      if (object instanceof IChemFile) {
-        return (T)readChemFile((IChemFile)object);
-      } else {
-        throw new CDKException("Only supported is reading of ChemFile objects.");
-      }
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (object instanceof IChemFile) {
+            return (T) readChemFile((IChemFile) object);
+        } else {
+            throw new CDKException("Only supported is reading of ChemFile objects.");
+        }
     }
 
     // private functions
@@ -211,7 +207,7 @@ public class CMLReader extends DefaultChemObjectReader {
         CMLHandler handler = new CMLHandler(file);
         // copy the manually added conventions
         for (String conv : userConventions.keySet()) {
-        	handler.registerConvention(conv, userConventions.get(conv));
+            handler.registerConvention(conv, userConventions.get(conv));
         }
         parser.setContentHandler(handler);
         parser.setEntityResolver(new CMLResolver());
@@ -230,7 +226,7 @@ public class CMLReader extends DefaultChemObjectReader {
             logger.debug(e);
             throw new CDKException(error, e);
         } catch (SAXParseException saxe) {
-            SAXParseException spe = (SAXParseException)saxe;
+            SAXParseException spe = (SAXParseException) saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
             logger.debug(saxe);
@@ -246,9 +242,7 @@ public class CMLReader extends DefaultChemObjectReader {
 
     @TestMethod("testClose")
     public void close() throws IOException {
-        if(input != null)
-            input.close();
+        if (input != null) input.close();
     }
 
 }
-

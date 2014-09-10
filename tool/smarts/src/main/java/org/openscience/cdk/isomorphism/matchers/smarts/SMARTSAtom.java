@@ -30,8 +30,7 @@ import org.openscience.cdk.isomorphism.matchers.QueryAtom;
  * @cdk.githash
  * @cdk.keyword SMARTS
  */
-public abstract class SMARTSAtom extends QueryAtom implements
-                                                   IQueryAtom {
+public abstract class SMARTSAtom extends QueryAtom implements IQueryAtom {
 
     public SMARTSAtom(IChemObjectBuilder builder) {
         super(builder);
@@ -48,7 +47,8 @@ public abstract class SMARTSAtom extends QueryAtom implements
     final SMARTSAtomInvariants invariants(final IAtom atom) {
         final SMARTSAtomInvariants inv = atom.getProperty(SMARTSAtomInvariants.KEY);
         if (inv == null)
-            throw new NullPointerException("Missing SMARTSAtomInvariants - please compute these values before matching.");
+            throw new NullPointerException(
+                    "Missing SMARTSAtomInvariants - please compute these values before matching.");
         return inv;
     }
 

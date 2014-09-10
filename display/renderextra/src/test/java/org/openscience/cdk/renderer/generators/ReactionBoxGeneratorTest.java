@@ -36,12 +36,12 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  */
 public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
 
-	private ReactionBoxGenerator generator;
+    private ReactionBoxGenerator generator;
 
-	@Override
-	public Rectangle getCustomCanvas() {
-		return null;
-	}
+    @Override
+    public Rectangle getCustomCanvas() {
+        return null;
+    }
 
     @Before
     public void setup() {
@@ -53,14 +53,14 @@ public class ReactionBoxGeneratorTest extends AbstractGeneratorTest {
         super.setTestedGenerator(generator);
     }
 
-	@Test
-	public void testEmptyReaction() {
-		IReaction singleReaction = super.builder.newInstance(IReaction.class);
+    @Test
+    public void testEmptyReaction() {
+        IReaction singleReaction = super.builder.newInstance(IReaction.class);
 
-		// nothing should be made
-		IRenderingElement root = generator.generate(singleReaction, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(1, elements.size());
-	}
+        // nothing should be made
+        IRenderingElement root = generator.generate(singleReaction, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(1, elements.size());
+    }
 
 }

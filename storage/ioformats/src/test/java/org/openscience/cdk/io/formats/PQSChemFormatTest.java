@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class PQSChemFormatTest extends ChemFormatTest {
 
     public PQSChemFormatTest() {
-        super.setChemFormat((IChemFormat)PQSChemFormat.getInstance());
+        super.setChemFormat((IChemFormat) PQSChemFormat.getInstance());
     }
 
 }

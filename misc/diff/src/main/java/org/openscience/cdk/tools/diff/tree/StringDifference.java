@@ -70,9 +70,6 @@ public class StringDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : first) +
-            "/" +
-            (second == null ? "NA" : second);
+        return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }
 }

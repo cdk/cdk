@@ -23,7 +23,6 @@ import java.awt.Color;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
-
 /**
  * A text element with added information.
  *
@@ -43,8 +42,8 @@ public class AtomSymbolElement extends TextElement {
     public final int alignment;
 
     @TestMethod("testConstructor")
-    public AtomSymbolElement(double x, double y, String symbol,
-            Integer formalCharge, Integer hydrogenCount, int alignment, Color color) {
+    public AtomSymbolElement(double x, double y, String symbol, Integer formalCharge, Integer hydrogenCount,
+            int alignment, Color color) {
         super(x, y, symbol, color);
         this.formalCharge = formalCharge != null ? formalCharge : -1;
         this.hydrogenCount = hydrogenCount != null ? hydrogenCount : -1;
@@ -55,7 +54,7 @@ public class AtomSymbolElement extends TextElement {
     @Override
     @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
-        v.visit( this );
+        v.visit(this);
     }
 
 }

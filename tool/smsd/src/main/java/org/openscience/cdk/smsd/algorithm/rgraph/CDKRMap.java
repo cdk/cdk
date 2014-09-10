@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
  *               2007-2009  Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -42,6 +41,7 @@ import org.openscience.cdk.annotations.TestClass;
 
 @TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKRMapTest")
 public class CDKRMap {
+
     private int id1 = 0;
     private int id2 = 0;
 
@@ -107,10 +107,10 @@ public class CDKRMap {
         }
     }
 
-     /**
-     * Returns a hash code for object comparison.
-     * @return    Returns a hash code for object comparison.
-     */
+    /**
+    * Returns a hash code for object comparison.
+    * @return    Returns a hash code for object comparison.
+    */
 
     @Override
     public int hashCode() {
@@ -120,4 +120,3 @@ public class CDKRMap {
         return hash;
     }
 }
-

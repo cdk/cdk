@@ -32,8 +32,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.ElementGroupTest")
-public class ElementGroup
-       implements IRenderingElement, Iterable<IRenderingElement> {
+public class ElementGroup implements IRenderingElement, Iterable<IRenderingElement> {
 
     /**
      * The elements in the group.
@@ -75,8 +74,8 @@ public class ElementGroup
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
-    public void accept( IRenderingVisitor v ) {
-        v.visit( this );
+    public void accept(IRenderingVisitor v) {
+        v.visit(this);
     }
 
 }

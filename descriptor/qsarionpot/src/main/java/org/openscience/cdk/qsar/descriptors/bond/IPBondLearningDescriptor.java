@@ -60,35 +60,33 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:ionizationPotential
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.IPBondLearningDescriptorTest")
 public class IPBondLearningDescriptor extends AbstractBondDescriptor {
-	private static final String[] descriptorNames = {"ipBondLearning"};
 
-	/**
-	 *  Constructor for the IPBondLearningDescriptor object
-	 */
-	public IPBondLearningDescriptor() {
-	}
-	/**
-	 *  Gets the specification attribute of the IPBondLearningDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod(value="testGetSpecification")
-	public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
-				this.getClass().getName(),
-				"The Chemistry Development Kit");
-	}
+    private static final String[] descriptorNames = {"ipBondLearning"};
+
+    /**
+     *  Constructor for the IPBondLearningDescriptor object
+     */
+    public IPBondLearningDescriptor() {}
+
+    /**
+     *  Gets the specification attribute of the IPBondLearningDescriptor object
+     *
+     *@return    The specification value
+     */
+    @TestMethod(value = "testGetSpecification")
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
+                        .getClass().getName(), "The Chemistry Development Kit");
+    }
 
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      *  Gets the parameters attribute of the IPBondLearningDescriptor object.
@@ -96,43 +94,43 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(Double.NaN), descriptorNames, e);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), descriptorNames, e);
     }
 
     /**
-	 *  This method calculates the ionization potential of a bond.
-	 *
-	 *@param  atomContainer         Parameter is the IAtomContainer.
-	 *@return                   The ionization potential
-	 */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer,testIPDescriptor_1,testIPDescriptor_2,testIPDescriptor_3")
-	public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
-		double value = 0;
-    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-    	String originalAtomtypeName1 = bond.getAtom(0).getAtomTypeName();
-    	Integer originalNeighborCount1 = bond.getAtom(0).getFormalNeighbourCount();
-    	IAtomType.Hybridization originalHybridization1 = bond.getAtom(0).getHybridization();
-    	Integer originalValency1 = bond.getAtom(0).getValency();
-    	String originalAtomtypeName2 = bond.getAtom(1).getAtomTypeName();
-    	Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
-    	IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
-    	Integer originalValency2 = bond.getAtom(1).getValency();
-    	Double originalBondOrderSum1 = bond.getAtom(0).getBondOrderSum();
-    	Order originalMaxBondOrder1 = bond.getAtom(0).getMaxBondOrder();
-    	Double originalBondOrderSum2 = bond.getAtom(1).getBondOrderSum();
-    	Order originalMaxBondOrder2 = bond.getAtom(1).getMaxBondOrder();
+     *  This method calculates the ionization potential of a bond.
+     *
+     *@param  atomContainer         Parameter is the IAtomContainer.
+     *@return                   The ionization potential
+     */
+    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testIPDescriptor_1,testIPDescriptor_2,testIPDescriptor_3")
+    public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer) {
+        double value = 0;
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        String originalAtomtypeName1 = bond.getAtom(0).getAtomTypeName();
+        Integer originalNeighborCount1 = bond.getAtom(0).getFormalNeighbourCount();
+        IAtomType.Hybridization originalHybridization1 = bond.getAtom(0).getHybridization();
+        Integer originalValency1 = bond.getAtom(0).getValency();
+        String originalAtomtypeName2 = bond.getAtom(1).getAtomTypeName();
+        Integer originalNeighborCount2 = bond.getAtom(1).getFormalNeighbourCount();
+        IAtomType.Hybridization originalHybridization2 = bond.getAtom(1).getHybridization();
+        Integer originalValency2 = bond.getAtom(1).getValency();
+        Double originalBondOrderSum1 = bond.getAtom(0).getBondOrderSum();
+        Order originalMaxBondOrder1 = bond.getAtom(0).getMaxBondOrder();
+        Double originalBondOrderSum2 = bond.getAtom(1).getBondOrderSum();
+        Order originalMaxBondOrder2 = bond.getAtom(1).getMaxBondOrder();
 
         if (!isCachedAtomContainer(atomContainer)) {
             try {
@@ -159,26 +157,24 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
         bond.getAtom(1).setHybridization(originalHybridization2);
         bond.getAtom(1).setValency(originalValency2);
         bond.getAtom(1).setFormalNeighbourCount(originalNeighborCount2);
-	    bond.getAtom(0).setMaxBondOrder(originalMaxBondOrder1);
-    	bond.getAtom(0).setBondOrderSum(originalBondOrderSum1);
-    	bond.getAtom(1).setMaxBondOrder(originalMaxBondOrder2);
-    	bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
+        bond.getAtom(0).setMaxBondOrder(originalMaxBondOrder1);
+        bond.getAtom(0).setBondOrderSum(originalBondOrderSum1);
+        bond.getAtom(1).setMaxBondOrder(originalMaxBondOrder2);
+        bond.getAtom(1).setBondOrderSum(originalBondOrderSum2);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(value),descriptorNames);
-	}
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
+                descriptorNames);
+    }
 
-
-	 /**
-     * Gets the parameterNames attribute of the IPBondLearningDescriptor object.
-     *
-     * @return    The parameterNames value
-     */
-    @TestMethod(value="testGetParameterNames")
+    /**
+    * Gets the parameterNames attribute of the IPBondLearningDescriptor object.
+    *
+    * @return    The parameterNames value
+    */
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      * Gets the parameterType attribute of the IPBondLearningDescriptor object.
@@ -186,9 +182,8 @@ public class IPBondLearningDescriptor extends AbstractBondDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-

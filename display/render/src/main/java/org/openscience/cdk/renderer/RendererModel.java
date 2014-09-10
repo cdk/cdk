@@ -56,32 +56,32 @@ import org.openscience.cdk.renderer.selection.IChemObjectSelection;
 @TestClass("org.openscience.cdk.renderer.RendererModelTest")
 public class RendererModel implements Serializable, Cloneable {
 
-    private static final long serialVersionUID = -4420308906715213445L;
+    private static final long                  serialVersionUID     = -4420308906715213445L;
 
     /* If true, the class will notify its listeners of changes */
-    private boolean notification = true;
+    private boolean                            notification         = true;
 
-    private transient List<ICDKChangeListener> listeners =
-        new ArrayList<ICDKChangeListener>();
+    private transient List<ICDKChangeListener> listeners            = new ArrayList<ICDKChangeListener>();
 
-    private Map<IAtom, String> toolTipTextMap = new HashMap<IAtom, String>();
+    private Map<IAtom, String>                 toolTipTextMap       = new HashMap<IAtom, String>();
 
-    private IAtom highlightedAtom = null;
+    private IAtom                              highlightedAtom      = null;
 
-    private IBond highlightedBond = null;
+    private IBond                              highlightedBond      = null;
 
-    private IAtomContainer externalSelectedPart = null;
+    private IAtomContainer                     externalSelectedPart = null;
 
-    private IAtomContainer clipboardContent = null;
+    private IAtomContainer                     clipboardContent     = null;
 
-    private IChemObjectSelection selection;
+    private IChemObjectSelection               selection;
 
-    private Map<IAtom, IAtom> merge=new HashMap<IAtom, IAtom>();
+    private Map<IAtom, IAtom>                  merge                = new HashMap<IAtom, IAtom>();
 
     /**
      * Color of a selection.
      */
     public static class SelectionColor extends AbstractGeneratorParameter<Color> {
+
         /** {@inheritDoc} */
         public Color getDefault() {
             return new Color(0x49DFFF);
@@ -91,34 +91,33 @@ public class RendererModel implements Serializable, Cloneable {
     /**
      * The color used to highlight external selections.
      */
-    public static class ExternalHighlightColor extends
-    AbstractGeneratorParameter<Color> {
+    public static class ExternalHighlightColor extends AbstractGeneratorParameter<Color> {
+
         /** {@inheritDoc} */
         public Color getDefault() {
             return Color.gray;
         }
     }
-    private IGeneratorParameter<Color> externalHighlightColor =
-        new ExternalHighlightColor();
+
+    private IGeneratorParameter<Color> externalHighlightColor = new ExternalHighlightColor();
 
     /**
      * The color hash is used to color substructures.
      */
-    public static class ColorHash extends
-    AbstractGeneratorParameter<Map<IChemObject, Color>> {
+    public static class ColorHash extends AbstractGeneratorParameter<Map<IChemObject, Color>> {
+
         /** {@inheritDoc} */
         public Map<IChemObject, Color> getDefault() {
             return new Hashtable<IChemObject, Color>();
         }
     }
-    private IGeneratorParameter<Map<IChemObject, Color>> colorHash =
-        new ColorHash();
+
+    private IGeneratorParameter<Map<IChemObject, Color>> colorHash           = new ColorHash();
 
     /**
      * A map of {@link IGeneratorParameter} class names to instances.
      */
-    private Map<String,IGeneratorParameter<?>> renderingParameters =
-        new HashMap<String,IGeneratorParameter<?>>();
+    private Map<String, IGeneratorParameter<?>>          renderingParameters = new HashMap<String, IGeneratorParameter<?>>();
 
     /**
      * Construct a renderer model with no parameters. To put parameters into
@@ -126,9 +125,7 @@ public class RendererModel implements Serializable, Cloneable {
      */
     public RendererModel() {
         renderingParameters.put(colorHash.getClass().getName(), colorHash);
-        renderingParameters.put(
-                externalHighlightColor.getClass().getName(), externalHighlightColor
-        );
+        renderingParameters.put(externalHighlightColor.getClass().getName(), externalHighlightColor);
         renderingParameters.put(SelectionColor.class.getName(), new SelectionColor());
     }
 
@@ -140,8 +137,7 @@ public class RendererModel implements Serializable, Cloneable {
      */
     @TestMethod("testGetRenderingParameters")
     public List<IGeneratorParameter<?>> getRenderingParameters() {
-        List<IGeneratorParameter<?>> parameters =
-            new ArrayList<IGeneratorParameter<?>>();
+        List<IGeneratorParameter<?>> parameters = new ArrayList<IGeneratorParameter<?>>();
         parameters.addAll(renderingParameters.values());
         return parameters;
     }
@@ -154,21 +150,15 @@ public class RendererModel implements Serializable, Cloneable {
      * @return the {@link IGeneratorParameter} instance with the active value.
      */
     @TestMethod("testGetRenderingParameter,testReturningTheRealParamaterValue")
-    public <T extends IGeneratorParameter<?> >T getParameter(Class<T> param) {
-        if (renderingParameters.containsKey(param.getName()))
-            return (T)renderingParameters.get(param.getName());
+    public <T extends IGeneratorParameter<?>> T getParameter(Class<T> param) {
+        if (renderingParameters.containsKey(param.getName())) return (T) renderingParameters.get(param.getName());
 
         // the parameter was not registered yet, so we throw an exception to
         // indicate that the API is not used correctly.
-        throw new IllegalAccessError(
-                "You requested the active parameter of type " +
-                param.getName() + ", but it " +
-                "has not been registered yet. Did you " +
-                "make sure the IGeneratorParameter is registered, by " +
-                "registring the appropriate IGenerator? Alternatively, " +
-                "you can use getDefault() to query the default value for " +
-                "any parameter on the classpath."
-        );
+        throw new IllegalAccessError("You requested the active parameter of type " + param.getName() + ", but it "
+                + "has not been registered yet. Did you " + "make sure the IGeneratorParameter is registered, by "
+                + "registring the appropriate IGenerator? Alternatively, "
+                + "you can use getDefault() to query the default value for " + "any parameter on the classpath.");
     }
 
     /**
@@ -182,24 +172,19 @@ public class RendererModel implements Serializable, Cloneable {
      * @see #get(Class)
      */
     @TestMethod("testGetDefaultRenderingParameter")
-    public <T extends IGeneratorParameter<S>,S> S getDefault(Class<T> param) {
-        if (renderingParameters.containsKey(param.getName()))
-            return getParameter(param).getDefault();
+    public <T extends IGeneratorParameter<S>, S> S getDefault(Class<T> param) {
+        if (renderingParameters.containsKey(param.getName())) return getParameter(param).getDefault();
 
         // OK, this parameter is not registered, but that's fine, as we are
         // only to return the default value anyway...
         try {
             return param.newInstance().getDefault();
         } catch (InstantiationException exception) {
-            throw new IllegalArgumentException(
-                    "Could not instantiate a default " +
-                    param.getClass().getName(), exception
-            );
+            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
+                    exception);
         } catch (IllegalAccessException exception) {
-            throw new IllegalArgumentException(
-                    "Could not instantiate a default " +
-                    param.getClass().getName(), exception
-            );
+            throw new IllegalArgumentException("Could not instantiate a default " + param.getClass().getName(),
+                    exception);
         }
     }
 
@@ -211,7 +196,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @param value     new {@link IGeneratorParameter} value
      */
     @TestMethod("testSetRenderingParameter")
-    public <T extends IGeneratorParameter<S>,S,U extends S> void set(Class<T> paramType, U value) {
+    public <T extends IGeneratorParameter<S>, S, U extends S> void set(Class<T> paramType, U value) {
         T parameter = getParameter(paramType);
         parameter.setValue(value);
     }
@@ -226,7 +211,7 @@ public class RendererModel implements Serializable, Cloneable {
      * @see #getParameter(Class)
      */
     @TestMethod("testSetRenderingParameter")
-    public <T extends IGeneratorParameter<S>,S> S get(Class<T> paramType) {
+    public <T extends IGeneratorParameter<S>, S> S get(Class<T> paramType) {
         return getParameter(paramType).getValue();
     }
 
@@ -239,10 +224,7 @@ public class RendererModel implements Serializable, Cloneable {
     @TestMethod("testGetRenderingParameter,testReturningTheRealParamaterValue")
     public void registerParameters(IGenerator<? extends IChemObject> generator) {
         for (IGeneratorParameter<?> param : generator.getParameters()) {
-            renderingParameters.put(
-                    param.getClass().getName(),
-                    param
-            );
+            renderingParameters.put(param.getClass().getName(), param);
         }
     }
 
@@ -453,19 +435,15 @@ public class RendererModel implements Serializable, Cloneable {
     @TestMethod("testExternalSelectedPart")
     public void setExternalSelectedPart(IAtomContainer externalSelectedPart) {
         this.externalSelectedPart = externalSelectedPart;
-        Map<IChemObject, Color> colorHash =
-            getParameter(ColorHash.class).getValue();
+        Map<IChemObject, Color> colorHash = getParameter(ColorHash.class).getValue();
         colorHash.clear();
         if (externalSelectedPart != null) {
             for (int i = 0; i < externalSelectedPart.getAtomCount(); i++) {
-                colorHash.put(externalSelectedPart.getAtom(i),
-                        getParameter(ExternalHighlightColor.class).getValue());
+                colorHash.put(externalSelectedPart.getAtom(i), getParameter(ExternalHighlightColor.class).getValue());
             }
             Iterator<IBond> bonds = externalSelectedPart.bonds().iterator();
             while (bonds.hasNext()) {
-                colorHash.put(bonds.next(),
-                        getParameter(ExternalHighlightColor.class).getValue()
-                );
+                colorHash.put(bonds.next(), getParameter(ExternalHighlightColor.class).getValue());
             }
         }
         fireChange();

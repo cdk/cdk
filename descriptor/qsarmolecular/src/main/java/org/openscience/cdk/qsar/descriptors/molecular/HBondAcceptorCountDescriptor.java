@@ -80,14 +80,15 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.HBondAcceptorCountDescriptorTest")
 public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
-    private boolean checkAromaticity = false;
-    private static final String[] names = {"nHBAcc"};
+    private boolean               checkAromaticity = false;
+    private static final String[] names            = {"nHBAcc"};
 
     /**
      *  Constructor for the HBondAcceptorCountDescriptor object
      */
-    public HBondAcceptorCountDescriptor() { }
+    public HBondAcceptorCountDescriptor() {}
 
     /**
      * Gets the specification attribute of the HBondAcceptorCountDescriptor object.
@@ -97,9 +98,8 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hBondacceptors", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -133,14 +133,14 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                (int) Double.NaN), getDescriptorNames(), e);
     }
 
     /**
@@ -172,44 +172,39 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         }
 
         //org.openscience.cdk.interfaces.IAtom[] atoms = ac.getAtoms();
-    // labelled for loop to allow for labelled continue statements within the loop
-    atomloop:
-    for (IAtom atom : ac.atoms()) {
-        // looking for suitable nitrogen atoms
-        if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
+        // labelled for loop to allow for labelled continue statements within the loop
+        atomloop: for (IAtom atom : ac.atoms()) {
+            // looking for suitable nitrogen atoms
+            if (atom.getSymbol().equals("N") && atom.getFormalCharge() <= 0) {
 
-            // excluding nitrogens that are adjacent to an oxygen
-            List<IBond> bonds = ac.getConnectedBondsList(atom);
-            int nPiBonds = 0;
-            for (IBond bond : bonds) {
-                if (bond.getConnectedAtom(atom).getSymbol().equals("O"))
-                    continue atomloop;
-                if (IBond.Order.DOUBLE.equals(bond.getOrder()))
-                    nPiBonds++;
+                // excluding nitrogens that are adjacent to an oxygen
+                List<IBond> bonds = ac.getConnectedBondsList(atom);
+                int nPiBonds = 0;
+                for (IBond bond : bonds) {
+                    if (bond.getConnectedAtom(atom).getSymbol().equals("O")) continue atomloop;
+                    if (IBond.Order.DOUBLE.equals(bond.getOrder())) nPiBonds++;
+                }
+
+                // if the nitrogen is aromatic and there are no pi bonds then it's
+                // lone pair cannot accept any hydrogen bonds
+                if (atom.getFlag(CDKConstants.ISAROMATIC) && nPiBonds == 0) continue;
+
+                hBondAcceptors++;
             }
-
-            // if the nitrogen is aromatic and there are no pi bonds then it's
-            // lone pair cannot accept any hydrogen bonds
-            if (atom.getFlag(CDKConstants.ISAROMATIC) && nPiBonds == 0)
-                continue;
-
-            hBondAcceptors++;
+            // looking for suitable oxygen atoms
+            else if (atom.getSymbol().equals("O") && atom.getFormalCharge() <= 0) {
+                //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
+                List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
+                for (IAtom neighbour : neighbours)
+                    if (neighbour.getSymbol().equals("N")
+                            || (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)))
+                        continue atomloop;
+                hBondAcceptors++;
+            }
         }
-        // looking for suitable oxygen atoms
-        else if (atom.getSymbol().equals("O") && atom.getFormalCharge() <= 0) {
-            //excluding oxygens that are adjacent to a nitrogen or to an aromatic carbon
-            List<IAtom> neighbours = ac.getConnectedAtomsList(atom);
-            for (IAtom neighbour : neighbours)
-                if (neighbour.getSymbol().equals("N") ||
-                        (neighbour.getSymbol().equals("C") && neighbour.getFlag(CDKConstants.ISAROMATIC)))
-                    continue atomloop;
-            hBondAcceptors++;
-        }
-    }
 
-    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-            new IntegerResult(hBondAcceptors),
-            getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                hBondAcceptors), getDescriptorNames());
     }
 
     /**
@@ -251,4 +246,3 @@ public class HBondAcceptorCountDescriptor extends AbstractMolecularDescriptor im
         return false;
     }
 }
-

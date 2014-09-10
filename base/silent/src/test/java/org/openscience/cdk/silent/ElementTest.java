@@ -36,31 +36,37 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class ElementTest extends AbstractElementTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Element();
             }
         });
     }
 
-    @Test public void testElement() {
+    @Test
+    public void testElement() {
         IElement e = new Element();
         Assert.assertTrue(e instanceof IChemObject);
     }
 
-    @Test public void testElement_IElement() {
-    	IElement element = new Element();
-        IElement e = element.getBuilder().newInstance(IElement.class,element);
+    @Test
+    public void testElement_IElement() {
+        IElement element = new Element();
+        IElement e = element.getBuilder().newInstance(IElement.class, element);
         Assert.assertTrue(e instanceof IChemObject);
     }
 
-    @Test public void testElement_String() {
+    @Test
+    public void testElement_String() {
         IElement e = new Element("C");
         Assert.assertEquals("C", e.getSymbol());
     }
 
-    @Test public void testElement_X() {
+    @Test
+    public void testElement_X() {
         IElement e = new Element("X");
         Assert.assertEquals("X", e.getSymbol());
         // and it should not throw exceptions
@@ -68,7 +74,8 @@ public class ElementTest extends AbstractElementTest {
         Assert.assertThat(e.getAtomicNumber(), is(0));
     }
 
-    @Test public void testElement_String_Integer() {
+    @Test
+    public void testElement_String_Integer() {
         IElement e = new Element("H", 1);
         Assert.assertEquals("H", e.getSymbol());
         Assert.assertEquals(1, e.getAtomicNumber().intValue());
@@ -76,61 +83,89 @@ public class ElementTest extends AbstractElementTest {
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    @Test public void compareSymbol() {
+
+    @Test
+    public void compareSymbol() {
         Element e1 = new Element(new String("H"), 1);
         Element e2 = new Element(new String("H"), 1);
         Assert.assertTrue(e1.compare(e2));
     }
 
-    @Test public void compareAtomicNumber() {
+    @Test
+    public void compareAtomicNumber() {
         Element e1 = new Element("H", new Integer(1));
         Element e2 = new Element("H", new Integer(1));
         Assert.assertTrue(e1.compare(e2));
     }
 
-    @Test public void compareDiffSymbol() {
+    @Test
+    public void compareDiffSymbol() {
         Element e1 = new Element(new String("H"), 1);
         Element e2 = new Element(new String("C"), 12);
         Assert.assertFalse(e1.compare(e2));
     }
 
-    @Test public void compareDiffAtomicNumber() {
+    @Test
+    public void compareDiffAtomicNumber() {
         Element e1 = new Element(new String("H"), 1);
         Element e2 = new Element(new String("H"), null);
         Assert.assertFalse(e1.compare(e2));

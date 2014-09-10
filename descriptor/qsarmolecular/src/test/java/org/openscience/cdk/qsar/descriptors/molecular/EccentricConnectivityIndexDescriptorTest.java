@@ -42,12 +42,11 @@ import java.util.List;
 
 public class EccentricConnectivityIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public EccentricConnectivityIndexDescriptorTest() {
-    }
+    public EccentricConnectivityIndexDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(EccentricConnectivityIndexDescriptor.class);
+        setDescriptor(EccentricConnectivityIndexDescriptor.class);
     }
 
     @Test
@@ -67,4 +66,3 @@ public class EccentricConnectivityIndexDescriptorTest extends MolecularDescripto
         Assert.assertEquals(254, retval.intValue(), 0);
     }
 }
-

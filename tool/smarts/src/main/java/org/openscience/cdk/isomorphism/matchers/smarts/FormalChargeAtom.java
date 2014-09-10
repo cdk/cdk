@@ -42,23 +42,26 @@ public class FormalChargeAtom extends SMARTSAtom {
         this.formalCharge = charge;
     }
 
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
-    	return atom.getFormalCharge() == this.formalCharge;
+        return atom.getFormalCharge() == this.formalCharge;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("FormalChargeAtom(");
+        StringBuilder s = new StringBuilder();
+        s.append("FormalChargeAtom(");
         s.append(this.hashCode()).append(", ");
-		s.append("C:").append(this.formalCharge);
-		s.append(')');
-		return s.toString();
+        s.append("C:").append(this.formalCharge);
+        s.append(')');
+        return s.toString();
     }
 }
-

@@ -41,27 +41,26 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.graph.matrix.AdjacencyMatrixTest")
 public class AdjacencyMatrix implements IGraphMatrix {
 
-	/**
-	 * Returns the adjacency matrix for the given AtomContainer.
-	 *
+    /**
+     * Returns the adjacency matrix for the given AtomContainer.
+     *
      * @param  container The AtomContainer for which the matrix is calculated
-	 * @return           A adjacency matrix representating this AtomContainer
-	 */
+     * @return           A adjacency matrix representating this AtomContainer
+     */
     @TestMethod("testGetMatrix_IAtomContainer")
     public static int[][] getMatrix(IAtomContainer container) {
-		IBond bond;
-		int indexAtom1;
-		int indexAtom2;
-		int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
-		for (int f = 0; f < container.getBondCount(); f++){
+        IBond bond;
+        int indexAtom1;
+        int indexAtom2;
+        int[][] conMat = new int[container.getAtomCount()][container.getAtomCount()];
+        for (int f = 0; f < container.getBondCount(); f++) {
             bond = container.getBond(f);
             indexAtom1 = container.getAtomNumber(bond.getAtom(0));
-			indexAtom2 = container.getAtomNumber(bond.getAtom(1));
-			conMat[indexAtom1][indexAtom2] = 1;
-			conMat[indexAtom2][indexAtom1] = 1;
-		}
-		return conMat;
-	}
+            indexAtom2 = container.getAtomNumber(bond.getAtom(1));
+            conMat[indexAtom1][indexAtom2] = 1;
+            conMat[indexAtom2][indexAtom1] = 1;
+        }
+        return conMat;
+    }
 
 }
-

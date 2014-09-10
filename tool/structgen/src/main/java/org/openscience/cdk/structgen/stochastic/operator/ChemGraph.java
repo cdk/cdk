@@ -33,128 +33,114 @@ import org.openscience.cdk.math.RandomNumbersTool;
  * @cdk.module     structgen
  * @cdk.githash
  */
-public class ChemGraph
-{
-	/*Number of atoms in this structure*/
-	protected int dim;
-	/*Number of atoms needed to form subgraph*/
-	protected int numAtoms;
-	protected double[][] contab;
-	/*Number of atoms that have been traversed */
-	protected int travIndex;
-	/*Flag: true if atom visited during a traversal*/
-	protected boolean[] visited;
-	/*Depth first traversal of the graph*/
-	protected List<Integer> subGraph;
+public class ChemGraph {
 
-	public ChemGraph(IAtomContainer chrom)
-	{
-		dim = chrom.getAtomCount();
-		numAtoms = (int)(dim/2);
-		contab = new double[dim][dim];
-		contab = ConnectionMatrix.getMatrix(chrom);
-	}
+    /* Number of atoms in this structure */
+    protected int           dim;
+    /* Number of atoms needed to form subgraph */
+    protected int           numAtoms;
+    protected double[][]    contab;
+    /* Number of atoms that have been traversed */
+    protected int           travIndex;
+    /* Flag: true if atom visited during a traversal */
+    protected boolean[]     visited;
+    /* Depth first traversal of the graph */
+    protected List<Integer> subGraph;
 
-	public List<Integer> pickDFgraph()
-	{
-		//depth first search from a randomly selected atom
+    public ChemGraph(IAtomContainer chrom) {
+        dim = chrom.getAtomCount();
+        numAtoms = (int) (dim / 2);
+        contab = new double[dim][dim];
+        contab = ConnectionMatrix.getMatrix(chrom);
+    }
 
-		travIndex = 0;
-		subGraph = new ArrayList<Integer>();
-		visited = new boolean[dim];
-		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
-        int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
-		recursiveDFT(seedAtom);
+    public List<Integer> pickDFgraph() {
+        //depth first search from a randomly selected atom
 
-		return subGraph;
-	}
+        travIndex = 0;
+        subGraph = new ArrayList<Integer>();
+        visited = new boolean[dim];
+        for (int atom = 0; atom < dim; atom++)
+            visited[atom] = false;
+        int seedAtom = RandomNumbersTool.randomInt(0, dim - 1);
+        recursiveDFT(seedAtom);
 
-	private void recursiveDFT(int atom)
-	{
-		if ((travIndex < numAtoms)&&(!visited[atom]))
-		{
-			subGraph.add(Integer.valueOf(atom));
-			travIndex++;
-			visited[atom] = true;
+        return subGraph;
+    }
 
-//			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
-//				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
+    private void recursiveDFT(int atom) {
+        if ((travIndex < numAtoms) && (!visited[atom])) {
+            subGraph.add(Integer.valueOf(atom));
+            travIndex++;
+            visited[atom] = true;
+
+            //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
+            //				if (contab[atom][nextAtom] != 0) recursiveDFT(nextAtom);
             List<Integer> adjSet = new ArrayList<Integer>();
-            for (int nextAtom = 0; nextAtom < dim; nextAtom++)
-            {
-				if ((int)contab[atom][nextAtom] != 0)
-				{
-					adjSet.add(Integer.valueOf(nextAtom));
-				}
+            for (int nextAtom = 0; nextAtom < dim; nextAtom++) {
+                if ((int) contab[atom][nextAtom] != 0) {
+                    adjSet.add(Integer.valueOf(nextAtom));
+                }
             }
-			while (adjSet.size() > 0)
-			{
-				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
-				recursiveDFT(((Integer)adjSet.get(adjIndex)).intValue());
-				adjSet.remove(adjIndex);
-			}
-
-		}
-	}
-
-	public List<Integer> pickBFgraph()
-	{
-		//breadth first search from a randomly selected atom
-
-		travIndex = 0;
-		subGraph = new ArrayList<Integer>();
-		visited = new boolean[dim];
-		for (int atom = 0; atom < dim; atom++)	visited[atom] = false;
-        int seedAtom = RandomNumbersTool.randomInt(0,dim-1);
-
-		List<Integer> atomQueue = new ArrayList<Integer>();
-		atomQueue.add(Integer.valueOf(seedAtom));
-		visited[seedAtom] = true;
-
-		while (!atomQueue.isEmpty()&&(subGraph.size()<numAtoms))
-		{
-			int foreAtom = ((Integer)atomQueue.get(0)).intValue();
-			subGraph.add(Integer.valueOf(foreAtom));
-			atomQueue.remove(0);
-			travIndex++;
-
-			List<Integer> adjSet = new ArrayList<Integer>();
-            for (int nextAtom = 0; nextAtom < dim; nextAtom++)
-            {
-				if (((int)contab[foreAtom][nextAtom] != 0)&&(!visited[nextAtom]))
-				{
-					adjSet.add(Integer.valueOf(nextAtom));
-				}
+            while (adjSet.size() > 0) {
+                int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
+                recursiveDFT(((Integer) adjSet.get(adjIndex)).intValue());
+                adjSet.remove(adjIndex);
             }
-			while (adjSet.size() > 0)
-			{
-				int adjIndex = RandomNumbersTool.randomInt(0,adjSet.size()-1);
-				atomQueue.add((Integer)adjSet.get(adjIndex));
-				visited[((Integer)adjSet.get(adjIndex)).intValue()] = true;
-				adjSet.remove(adjIndex);
-			}
 
-		}
-		return subGraph;
-	}
+        }
+    }
 
-	public List<Integer> getSubgraph()
-	{
-		return subGraph;
-	}
+    public List<Integer> pickBFgraph() {
+        //breadth first search from a randomly selected atom
 
-	public void setSubgraph(List<Integer> subgraph)
-	{
-		subGraph = subgraph;
-	}
+        travIndex = 0;
+        subGraph = new ArrayList<Integer>();
+        visited = new boolean[dim];
+        for (int atom = 0; atom < dim; atom++)
+            visited[atom] = false;
+        int seedAtom = RandomNumbersTool.randomInt(0, dim - 1);
 
-	public int getNumAtoms()
-	{
-		return numAtoms;
-	}
+        List<Integer> atomQueue = new ArrayList<Integer>();
+        atomQueue.add(Integer.valueOf(seedAtom));
+        visited[seedAtom] = true;
 
-	public void setNumAtoms(int numatoms)
-	{
-		numAtoms = numatoms;
-	}
+        while (!atomQueue.isEmpty() && (subGraph.size() < numAtoms)) {
+            int foreAtom = ((Integer) atomQueue.get(0)).intValue();
+            subGraph.add(Integer.valueOf(foreAtom));
+            atomQueue.remove(0);
+            travIndex++;
+
+            List<Integer> adjSet = new ArrayList<Integer>();
+            for (int nextAtom = 0; nextAtom < dim; nextAtom++) {
+                if (((int) contab[foreAtom][nextAtom] != 0) && (!visited[nextAtom])) {
+                    adjSet.add(Integer.valueOf(nextAtom));
+                }
+            }
+            while (adjSet.size() > 0) {
+                int adjIndex = RandomNumbersTool.randomInt(0, adjSet.size() - 1);
+                atomQueue.add((Integer) adjSet.get(adjIndex));
+                visited[((Integer) adjSet.get(adjIndex)).intValue()] = true;
+                adjSet.remove(adjIndex);
+            }
+
+        }
+        return subGraph;
+    }
+
+    public List<Integer> getSubgraph() {
+        return subGraph;
+    }
+
+    public void setSubgraph(List<Integer> subgraph) {
+        subGraph = subgraph;
+    }
+
+    public int getNumAtoms() {
+        return numAtoms;
+    }
+
+    public void setNumAtoms(int numatoms) {
+        numAtoms = numatoms;
+    }
 }

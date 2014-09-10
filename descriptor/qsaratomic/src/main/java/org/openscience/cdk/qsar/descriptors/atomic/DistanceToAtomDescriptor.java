@@ -55,7 +55,7 @@ import javax.vecmath.Point3d;
  *@cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:distanceToAtom
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.DistanceToAtomDescriptorTest")
 public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private int focusPosition = 0;
@@ -65,20 +65,17 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      */
     public DistanceToAtomDescriptor() {}
 
-
     /**
      *  Gets the specification attribute of the DistanceToAtomDescriptor object
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the DistanceToAtomDescriptor object
@@ -86,7 +83,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@param  params            The parameter is the position to focus
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("DistanceToAtomDescriptor only expects two parameters");
@@ -97,24 +94,22 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
         focusPosition = (Integer) params[0];
     }
 
-
     /**
      *  Gets the parameters attribute of the DistanceToAtomDescriptor object
      *
      *@return    The parameters value
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         Object[] params = new Object[1];
         params[0] = focusPosition;
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return new String[]{"distanceToAtom"};
     }
-
 
     /**
      *  This method calculate the 3D distance between two atoms.
@@ -124,24 +119,23 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@return                   The number of bonds on the shortest path between two atoms
      */
 
-    @TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double distanceToAtom;
 
         IAtom focus = container.getAtom(focusPosition);
 
         if (atom.getPoint3d() == null || focus.getPoint3d() == null) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(Double.NaN),
-                    getDescriptorNames(), new CDKException("Target or focus atom must have 3D coordinates."));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), getDescriptorNames(), new CDKException(
+                    "Target or focus atom must have 3D coordinates."));
 
         }
 
         distanceToAtom = calculateDistanceBetweenTwoAtoms(atom, focus);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(distanceToAtom),
-                getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                distanceToAtom), getDescriptorNames());
 
     }
 
@@ -166,13 +160,12 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "The position of the focus atom";
         return params;
     }
-
 
     /**
      *  Gets the parameterType attribute of the DistanceToAtomDescriptor object
@@ -180,9 +173,8 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0;
     }
 }
-

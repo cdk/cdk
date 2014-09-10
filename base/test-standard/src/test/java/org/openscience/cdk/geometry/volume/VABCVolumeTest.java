@@ -39,9 +39,7 @@ public class VABCVolumeTest {
 
     @BeforeClass
     public static void setup() {
-        smilesParser = new SmilesParser(
-            SilentChemObjectBuilder.getInstance()
-        );
+        smilesParser = new SmilesParser(SilentChemObjectBuilder.getInstance());
     }
 
     @Test
@@ -52,7 +50,7 @@ public class VABCVolumeTest {
         Assert.assertEquals(25.8524433266667, volume, 0.01);
     }
 
-    @Test(expected=CDKException.class)
+    @Test(expected = CDKException.class)
     public void testIronChloride() throws InvalidSmilesException, CDKException {
         IAtomContainer methane = smilesParser.parseSmiles("Cl[Fe]Cl");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(methane);

@@ -62,10 +62,10 @@ import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 @TestClass("org.openscience.cdk.io.PDBWriterTest")
 public class PDBWriter extends DefaultChemObjectWriter {
 
-    public final String SERIAL_FORMAT = "%5d";
-    public final String ATOM_NAME_FORMAT = "%-5s";
-    public final String POSITION_FORMAT = "%8.3f";
-    public final String RESIDUE_FORMAT = "%s";
+    public final String      SERIAL_FORMAT    = "%5d";
+    public final String      ATOM_NAME_FORMAT = "%-5s";
+    public final String      POSITION_FORMAT  = "%8.3f";
+    public final String      RESIDUE_FORMAT   = "%s";
 
     private BooleanIOSetting writeAsHET;
     private BooleanIOSetting useElementSymbolAsAtomName;
@@ -73,11 +73,11 @@ public class PDBWriter extends DefaultChemObjectWriter {
     private BooleanIOSetting writeTERRecord;
     private BooleanIOSetting writeENDRecord;
 
-    private BufferedWriter writer;
+    private BufferedWriter   writer;
 
-	public PDBWriter() {
-		this(new StringWriter());
-	}
+    public PDBWriter() {
+        this(new StringWriter());
+    }
 
     /**
      * Creates a PDB writer.
@@ -85,19 +85,18 @@ public class PDBWriter extends DefaultChemObjectWriter {
      * @param out the stream to write the PDB file to.
      */
     public PDBWriter(Writer out) {
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
+        try {
+            if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter) out;
             } else {
                 writer = new BufferedWriter(out);
             }
         } catch (Exception exc) {
         }
         writeAsHET = addSetting(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.LOW,
-                        "Should the output file use HETATM", "false"));
-        useElementSymbolAsAtomName = addSetting(new BooleanIOSetting(
-                "UseElementSymbolAsAtomName", IOSetting.Importance.LOW,
-                "Should the element symbol be written as the atom name", "false"));
+                "Should the output file use HETATM", "false"));
+        useElementSymbolAsAtomName = addSetting(new BooleanIOSetting("UseElementSymbolAsAtomName",
+                IOSetting.Importance.LOW, "Should the element symbol be written as the atom name", "false"));
         writeCONECTRecords = addSetting(new BooleanIOSetting("WriteCONECT", IOSetting.Importance.LOW,
                 "Should the bonds be written as CONECT records?", "true"));
         writeTERRecord = addSetting(new BooleanIOSetting("WriteTER", IOSetting.Importance.LOW,
@@ -116,54 +115,53 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
         if (IAtomContainer.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (ICrystal.class.equals(interfaces[i])) return true;
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (ICrystal.class.equals(interfaces[i])) return true;
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     public void write(IChemObject object) throws CDKException {
-        if (object instanceof ICrystal){
-            writeCrystal((ICrystal)object);
-        } else if (object instanceof IAtomContainer){
-            writeMolecule((IAtomContainer)object);
-        } else if (object instanceof IChemFile){
-            IChemFile chemFile = (IChemFile)object;
+        if (object instanceof ICrystal) {
+            writeCrystal((ICrystal) object);
+        } else if (object instanceof IAtomContainer) {
+            writeMolecule((IAtomContainer) object);
+        } else if (object instanceof IChemFile) {
+            IChemFile chemFile = (IChemFile) object;
             IChemSequence sequence = chemFile.getChemSequence(0);
             if (sequence != null) {
-            	IChemModel model = sequence.getChemModel(0);
+                IChemModel model = sequence.getChemModel(0);
                 if (model != null) {
-                	ICrystal crystal = model.getCrystal();
+                    ICrystal crystal = model.getCrystal();
                     if (crystal != null) {
                         write(crystal);
                     } else {
-                    	Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model).iterator();
-                    	while (containers.hasNext()) {
-                            writeMolecule(model.getBuilder().newInstance(IAtomContainer.class,
-                             	containers.next()
-                            ));
-                    	}
+                        Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model)
+                                .iterator();
+                        while (containers.hasNext()) {
+                            writeMolecule(model.getBuilder().newInstance(IAtomContainer.class, containers.next()));
+                        }
                     }
                 }
             }
@@ -172,174 +170,171 @@ public class PDBWriter extends DefaultChemObjectWriter {
         }
     }
 
-   /**
-    * Writes a single frame in PDB format to the Writer.
-    *
-    * @param molecule the Molecule to write
-    */
-   public void writeMolecule(IAtomContainer molecule) throws CDKException {
-
-       try {
-           writeHeader();
-           int atomNumber = 1;
-
-           String hetatmRecordName = (writeAsHET.isSet())? "HETATM" : "ATOM  ";
-           String id = molecule.getID();
-           String residueName = (id == null || id.equals(""))? "MOL" : id;
-           String terRecordName = "TER";
-
-           // Loop through the atoms and write them out:
-           StringBuffer buffer = new StringBuffer();
-           Iterator<IAtom> atoms = molecule.atoms().iterator();
-           FormatStringBuffer fsb = new FormatStringBuffer("");
-           String[] connectRecords = null;
-           if (writeCONECTRecords.isSet()) {
-               connectRecords = new String[molecule.getAtomCount()];
-           }
-           while (atoms.hasNext()) {
-               buffer.setLength(0);
-               buffer.append(hetatmRecordName);
-               fsb.reset(SERIAL_FORMAT).format(atomNumber);
-               buffer.append(fsb.toString());
-               buffer.append(' ');
-               IAtom atom = atoms.next();
-               String name;
-               if (useElementSymbolAsAtomName.isSet()) {
-                   name = atom.getSymbol();
-               } else {
-                   if (atom.getID() == null || atom.getID().equals("")) {
-                       name = atom.getSymbol();
-                   } else {
-                       name = atom.getID();
-                   }
-               }
-               fsb.reset(ATOM_NAME_FORMAT).format(name);
-               buffer.append(fsb.toString());
-               fsb.reset(RESIDUE_FORMAT).format(residueName);
-               buffer.append(fsb).append("     0    ");
-               Point3d position = atom.getPoint3d();
-               fsb.reset(POSITION_FORMAT).format(position.x);
-               buffer.append(fsb.toString());
-               fsb.reset(POSITION_FORMAT).format(position.y);
-               buffer.append(fsb.toString());
-               fsb.reset(POSITION_FORMAT).format(position.z);
-               buffer.append(fsb.toString());
-
-               buffer.append("  1.00"); // occupancy
-               buffer.append("  0.00"); // temperature factor
-               buffer.append("           ");
-               buffer.append(atom.getSymbol());
-               Integer formalCharge = atom.getFormalCharge();
-               if (formalCharge == CDKConstants.UNSET) {
-                   buffer.append("+0");
-               } else {
-                   if (formalCharge < 0) {
-                       buffer.append(formalCharge);
-                   } else {
-                       buffer.append('+').append(formalCharge);
-                   }
-               }
-
-               if (connectRecords != null && writeCONECTRecords.isSet()) {
-                   List<IAtom> neighbours = molecule.getConnectedAtomsList(atom);
-                   if (neighbours.size() != 0) {
-                       StringBuffer connectBuffer = new StringBuffer("CONECT");
-                       connectBuffer.append(String.format("%5d", atomNumber));
-                       for (IAtom neighbour : neighbours) {
-                           int neighbourNumber =
-                               molecule.getAtomNumber(neighbour) + 1;
-                           connectBuffer.append(
-                                   String.format("%5d", neighbourNumber));
-                       }
-                       connectRecords[atomNumber - 1] = connectBuffer.toString();
-                   } else {
-                       connectRecords[atomNumber - 1] = null;
-                   }
-               }
-
-               writer.write(buffer.toString(), 0, buffer.length());
-               writer.newLine();
-               ++atomNumber;
-           }
-
-           if (writeTERRecord.isSet()) {
-               writer.write(terRecordName, 0, terRecordName.length());
-               writer.newLine();
-           }
-
-           if (connectRecords != null && writeCONECTRecords.isSet()) {
-               for (String connectRecord : connectRecords) {
-                   if (connectRecord != null) {
-                       writer.write(connectRecord);
-                       writer.newLine();
-                   }
-               }
-           }
-
-           if (writeENDRecord.isSet()) {
-               writer.write("END   ");
-               writer.newLine();
-           }
-
-       } catch (IOException exception) {
-           throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
-       }
-   }
-
-   private void writeHeader() throws IOException {
-       writer.write("HEADER created with the CDK (http://cdk.sf.net/)");
-       writer.newLine();
-   }
-
-   public void writeCrystal(ICrystal crystal) throws CDKException {
-       try {
-           writeHeader();
-           Vector3d a = crystal.getA();
-           Vector3d b = crystal.getB();
-           Vector3d c = crystal.getC();
-           double[] ucParams = CrystalGeometryTools.cartesianToNotional(a,b,c);
-           final String LENGTH_FORMAT = "%4.3f";
-           final String ANGLE_FORMAT = "%3.3f";
-           FormatStringBuffer fsb = new FormatStringBuffer("");
-           fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
-           writer.write("CRYST1 " + fsb.toString());
-           fsb.reset(LENGTH_FORMAT).format(ucParams[1]);
-           writer.write(fsb.toString());
-           fsb.reset(LENGTH_FORMAT).format(ucParams[2]);
-           writer.write(fsb.toString());
-           fsb.reset(ANGLE_FORMAT).format(ucParams[3]);
-           writer.write(fsb.toString());
-           fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
-           writer.write(fsb.toString());
-           fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
-           writer.write(fsb.toString());
-           writer.newLine();
-
-           // before saving the atoms, we need to create cartesian coordinates
-           Iterator<IAtom> atoms = crystal.atoms().iterator();
-           while (atoms.hasNext()) {
-            	IAtom atom = atoms.next();
-//            	logger.debug("PDBWriter: atom -> " + atom);
-            	// if it got 3D coordinates, use that. If not, try fractional coordinates
-            	if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {
-            		Point3d frac = new Point3d(atom.getFractionalPoint3d());
-                	Point3d cart = CrystalGeometryTools.fractionalToCartesian(a,b,c, frac);
-                    atom.setPoint3d(cart);
-            	}
-            }
-           writeMolecule(crystal.getBuilder().newInstance(IAtomContainer.class,crystal));
-       } catch (IOException exception) {
-           throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
-       }
-   }
-
-   /**
-     * Flushes the output and closes this object.
+    /**
+     * Writes a single frame in PDB format to the Writer.
+     *
+     * @param molecule the Molecule to write
      */
-   @TestMethod("testClose")
-   public void close() throws IOException {
-        writer.close();
+    public void writeMolecule(IAtomContainer molecule) throws CDKException {
+
+        try {
+            writeHeader();
+            int atomNumber = 1;
+
+            String hetatmRecordName = (writeAsHET.isSet()) ? "HETATM" : "ATOM  ";
+            String id = molecule.getID();
+            String residueName = (id == null || id.equals("")) ? "MOL" : id;
+            String terRecordName = "TER";
+
+            // Loop through the atoms and write them out:
+            StringBuffer buffer = new StringBuffer();
+            Iterator<IAtom> atoms = molecule.atoms().iterator();
+            FormatStringBuffer fsb = new FormatStringBuffer("");
+            String[] connectRecords = null;
+            if (writeCONECTRecords.isSet()) {
+                connectRecords = new String[molecule.getAtomCount()];
+            }
+            while (atoms.hasNext()) {
+                buffer.setLength(0);
+                buffer.append(hetatmRecordName);
+                fsb.reset(SERIAL_FORMAT).format(atomNumber);
+                buffer.append(fsb.toString());
+                buffer.append(' ');
+                IAtom atom = atoms.next();
+                String name;
+                if (useElementSymbolAsAtomName.isSet()) {
+                    name = atom.getSymbol();
+                } else {
+                    if (atom.getID() == null || atom.getID().equals("")) {
+                        name = atom.getSymbol();
+                    } else {
+                        name = atom.getID();
+                    }
+                }
+                fsb.reset(ATOM_NAME_FORMAT).format(name);
+                buffer.append(fsb.toString());
+                fsb.reset(RESIDUE_FORMAT).format(residueName);
+                buffer.append(fsb).append("     0    ");
+                Point3d position = atom.getPoint3d();
+                fsb.reset(POSITION_FORMAT).format(position.x);
+                buffer.append(fsb.toString());
+                fsb.reset(POSITION_FORMAT).format(position.y);
+                buffer.append(fsb.toString());
+                fsb.reset(POSITION_FORMAT).format(position.z);
+                buffer.append(fsb.toString());
+
+                buffer.append("  1.00"); // occupancy
+                buffer.append("  0.00"); // temperature factor
+                buffer.append("           ");
+                buffer.append(atom.getSymbol());
+                Integer formalCharge = atom.getFormalCharge();
+                if (formalCharge == CDKConstants.UNSET) {
+                    buffer.append("+0");
+                } else {
+                    if (formalCharge < 0) {
+                        buffer.append(formalCharge);
+                    } else {
+                        buffer.append('+').append(formalCharge);
+                    }
+                }
+
+                if (connectRecords != null && writeCONECTRecords.isSet()) {
+                    List<IAtom> neighbours = molecule.getConnectedAtomsList(atom);
+                    if (neighbours.size() != 0) {
+                        StringBuffer connectBuffer = new StringBuffer("CONECT");
+                        connectBuffer.append(String.format("%5d", atomNumber));
+                        for (IAtom neighbour : neighbours) {
+                            int neighbourNumber = molecule.getAtomNumber(neighbour) + 1;
+                            connectBuffer.append(String.format("%5d", neighbourNumber));
+                        }
+                        connectRecords[atomNumber - 1] = connectBuffer.toString();
+                    } else {
+                        connectRecords[atomNumber - 1] = null;
+                    }
+                }
+
+                writer.write(buffer.toString(), 0, buffer.length());
+                writer.newLine();
+                ++atomNumber;
+            }
+
+            if (writeTERRecord.isSet()) {
+                writer.write(terRecordName, 0, terRecordName.length());
+                writer.newLine();
+            }
+
+            if (connectRecords != null && writeCONECTRecords.isSet()) {
+                for (String connectRecord : connectRecords) {
+                    if (connectRecord != null) {
+                        writer.write(connectRecord);
+                        writer.newLine();
+                    }
+                }
+            }
+
+            if (writeENDRecord.isSet()) {
+                writer.write("END   ");
+                writer.newLine();
+            }
+
+        } catch (IOException exception) {
+            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
+        }
     }
 
+    private void writeHeader() throws IOException {
+        writer.write("HEADER created with the CDK (http://cdk.sf.net/)");
+        writer.newLine();
+    }
+
+    public void writeCrystal(ICrystal crystal) throws CDKException {
+        try {
+            writeHeader();
+            Vector3d a = crystal.getA();
+            Vector3d b = crystal.getB();
+            Vector3d c = crystal.getC();
+            double[] ucParams = CrystalGeometryTools.cartesianToNotional(a, b, c);
+            final String LENGTH_FORMAT = "%4.3f";
+            final String ANGLE_FORMAT = "%3.3f";
+            FormatStringBuffer fsb = new FormatStringBuffer("");
+            fsb.reset(LENGTH_FORMAT).format(ucParams[0]);
+            writer.write("CRYST1 " + fsb.toString());
+            fsb.reset(LENGTH_FORMAT).format(ucParams[1]);
+            writer.write(fsb.toString());
+            fsb.reset(LENGTH_FORMAT).format(ucParams[2]);
+            writer.write(fsb.toString());
+            fsb.reset(ANGLE_FORMAT).format(ucParams[3]);
+            writer.write(fsb.toString());
+            fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
+            writer.write(fsb.toString());
+            fsb.reset(ANGLE_FORMAT).format(ucParams[4]);
+            writer.write(fsb.toString());
+            writer.newLine();
+
+            // before saving the atoms, we need to create cartesian coordinates
+            Iterator<IAtom> atoms = crystal.atoms().iterator();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                //            	logger.debug("PDBWriter: atom -> " + atom);
+                // if it got 3D coordinates, use that. If not, try fractional coordinates
+                if (atom.getPoint3d() == null && atom.getFractionalPoint3d() != null) {
+                    Point3d frac = new Point3d(atom.getFractionalPoint3d());
+                    Point3d cart = CrystalGeometryTools.fractionalToCartesian(a, b, c, frac);
+                    atom.setPoint3d(cart);
+                }
+            }
+            writeMolecule(crystal.getBuilder().newInstance(IAtomContainer.class, crystal));
+        } catch (IOException exception) {
+            throw new CDKException("Error while writing file: " + exception.getMessage(), exception);
+        }
+    }
+
+    /**
+      * Flushes the output and closes this object.
+      */
+    @TestMethod("testClose")
+    public void close() throws IOException {
+        writer.close();
+    }
 
 }

@@ -32,20 +32,21 @@ import org.junit.Test;
 public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormulaSetTest {
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testSize() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, mfS.size());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAddIMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -55,11 +56,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         Assert.assertEquals(3, mfS.size());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdd_IMolecularFormulaSet() {
         IAdductFormula adduct = getBuilder().newInstance(IAdductFormula.class);
@@ -71,11 +73,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         Assert.assertEquals(3, adduct.size());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testIterator() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -87,9 +90,9 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Iterator<IMolecularFormula> iter = mfS.molecularFormulas().iterator();
         int count = 0;
         while (iter.hasNext()) {
-        	iter.next();
-        	++count;
-        	iter.remove();
+            iter.next();
+            ++count;
+            iter.remove();
         }
         Assert.assertEquals(0, mfS.size());
         Assert.assertEquals(3, count);
@@ -97,10 +100,10 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testMolecularFormulas() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -110,18 +113,18 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         Assert.assertEquals(3, mfS.size());
         int count = 0;
-        for(IMolecularFormula formula : mfS.molecularFormulas()) {
-        	++count;
-        	Assert.assertNotNull(formula);
+        for (IMolecularFormula formula : mfS.molecularFormulas()) {
+            ++count;
+            Assert.assertNotNull(formula);
         }
         Assert.assertEquals(3, count);
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdd_IAdductFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -134,11 +137,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         tested.add(mfS);
         Assert.assertEquals(3, tested.size());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetMolecularFormula_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -148,11 +152,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
 
         Assert.assertNotNull(mfS.getMolecularFormula(2)); // third molecule should exist
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAddMolecularFormula_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -171,12 +176,11 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Assert.assertEquals(7, mfS.size());
     }
 
-
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetMolecularFormulas_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -194,23 +198,22 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testContains_IIsotope() {
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
 
-
-    	IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-        IIsotope carb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope h1 = getBuilder().newInstance(IIsotope.class,"H");
-        IIsotope h2 = getBuilder().newInstance(IIsotope.class,"H");
+        IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
+        IIsotope carb = getBuilder().newInstance(IIsotope.class, "C");
+        IIsotope h1 = getBuilder().newInstance(IIsotope.class, "H");
+        IIsotope h2 = getBuilder().newInstance(IIsotope.class, "H");
         h2.setExactMass(2.00055);
 
-        mf.addIsotope( carb );
-        mf.addIsotope( h1 );
+        mf.addIsotope(carb);
+        mf.addIsotope(h1);
 
         add.addMolecularFormula(mf);
 
@@ -219,61 +222,62 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Assert.assertFalse(mf.contains(h2));
     }
 
-
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testContains_IMolecularFormula() {
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
 
-
-    	IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-        IIsotope carb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope h1 = getBuilder().newInstance(IIsotope.class,"H");
-        IIsotope h2 = getBuilder().newInstance(IIsotope.class,"H");
+        IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
+        IIsotope carb = getBuilder().newInstance(IIsotope.class, "C");
+        IIsotope h1 = getBuilder().newInstance(IIsotope.class, "H");
+        IIsotope h2 = getBuilder().newInstance(IIsotope.class, "H");
         h2.setExactMass(2.00055);
 
-        mf.addIsotope( carb );
-        mf.addIsotope( h1 );
+        mf.addIsotope(carb);
+        mf.addIsotope(h1);
 
         add.addMolecularFormula(mf);
 
         Assert.assertTrue(add.contains(mf));
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetCharge() {
 
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-    	IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
-    	mf1.setCharge(1);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IMolecularFormula mf1 = getBuilder().newInstance(IMolecularFormula.class);
+        mf1.setCharge(1);
         add.addMolecularFormula(mf1);
 
-        Assert.assertEquals(1.0,add.getCharge(), 0.01);
+        Assert.assertEquals(1.0, add.getCharge(), 0.01);
 
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testSetCharge_Integer() {
-    	testGetCharge();
+        testGetCharge();
 
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testClone() throws Exception {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -281,11 +285,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Assert.assertTrue(clone instanceof IAdductFormula);
         Assert.assertNotSame(mfS, clone);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testRemoveMolecularFormula_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -297,11 +302,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Assert.assertEquals(1, mfS.size());
         Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testRemoveAllMolecularFormulas() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -314,11 +320,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         mfS.removeAllMolecularFormulas();
         Assert.assertEquals(0, mfS.size());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testRemoveMolecularFormula_int() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -330,11 +337,12 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
         Assert.assertEquals(1, mfS.size());
         Assert.assertEquals(mf2, mfS.getMolecularFormula(0));
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testReplaceMolecularFormula_int_IMolecularFormula() {
         IAdductFormula mfS = getBuilder().newInstance(IAdductFormula.class);
@@ -350,94 +358,95 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetIsotopeCount() {
 
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, add.getIsotopeCount());
 
-    	IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
-    	formula.addIsotope( getBuilder().newInstance(IIsotope.class,"C") );
-    	formula.addIsotope( getBuilder().newInstance(IIsotope.class,"H"),4 );
+        IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
+        formula.addIsotope(getBuilder().newInstance(IIsotope.class, "C"));
+        formula.addIsotope(getBuilder().newInstance(IIsotope.class, "H"), 4);
 
-	    add.addMolecularFormula(formula);
+        add.addMolecularFormula(formula);
 
         Assert.assertEquals(2, add.getIsotopeCount());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testIsotopes() {
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
 
-    	IMolecularFormula formula1 = getBuilder().newInstance(IMolecularFormula.class);
-    	formula1.addIsotope( getBuilder().newInstance(IIsotope.class,"C") );
-    	formula1.addIsotope( getBuilder().newInstance(IIsotope.class,"H"),4 );
+        IMolecularFormula formula1 = getBuilder().newInstance(IMolecularFormula.class);
+        formula1.addIsotope(getBuilder().newInstance(IIsotope.class, "C"));
+        formula1.addIsotope(getBuilder().newInstance(IIsotope.class, "H"), 4);
 
-    	IMolecularFormula formula2 = getBuilder().newInstance(IMolecularFormula.class);
-    	formula2.addIsotope( getBuilder().newInstance(IIsotope.class,"F"));
+        IMolecularFormula formula2 = getBuilder().newInstance(IMolecularFormula.class);
+        formula2.addIsotope(getBuilder().newInstance(IIsotope.class, "F"));
 
-    	add.addMolecularFormula(formula1);
-    	add.addMolecularFormula(formula2);
+        add.addMolecularFormula(formula1);
+        add.addMolecularFormula(formula2);
 
-    	int count = 0;
-		Iterator<IIsotope> it = add.isotopes().iterator();
-		while(it.hasNext()){
-         	it.next();
-         	++count;
-		}
-    	Assert.assertEquals(3, count);
+        int count = 0;
+        Iterator<IIsotope> it = add.isotopes().iterator();
+        while (it.hasNext()) {
+            it.next();
+            ++count;
+        }
+        Assert.assertEquals(3, count);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetIsotopeCount_Sum() {
 
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, add.getIsotopeCount());
 
-    	IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
-    	adduct1.addIsotope( getBuilder().newInstance(IIsotope.class,"C") );
-    	IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
-    	adduct1.addIsotope( h,4 );
-	    add.addMolecularFormula(adduct1);
+        IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
+        adduct1.addIsotope(getBuilder().newInstance(IIsotope.class, "C"));
+        IIsotope h = getBuilder().newInstance(IIsotope.class, "H");
+        adduct1.addIsotope(h, 4);
+        add.addMolecularFormula(adduct1);
 
-	    IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
-	    formula.addIsotope(  h );
-	    add.addMolecularFormula(adduct1);
-
+        IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
+        formula.addIsotope(h);
+        add.addMolecularFormula(adduct1);
 
         Assert.assertEquals(2, add.getIsotopeCount());
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetIsotopeCount_IIsotope() {
 
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, add.getIsotopeCount());
 
-    	IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
-    	IIsotope C = getBuilder().newInstance(IIsotope.class,"C");
-    	formula.addIsotope( C );
-    	IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
-    	formula.addIsotope( h,4 );
+        IMolecularFormula formula = getBuilder().newInstance(IMolecularFormula.class);
+        IIsotope C = getBuilder().newInstance(IIsotope.class, "C");
+        formula.addIsotope(C);
+        IIsotope h = getBuilder().newInstance(IIsotope.class, "H");
+        formula.addIsotope(h, 4);
 
-	    add.addMolecularFormula(formula);
+        add.addMolecularFormula(formula);
 
         Assert.assertEquals(2, formula.getIsotopeCount());
         Assert.assertEquals(2, add.getIsotopeCount());
@@ -446,36 +455,36 @@ public abstract class AbstractAdductFormulaTest extends AbstractMolecularFormula
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetIsotopeCount_Sum_Isotope() {
 
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
         Assert.assertEquals(0, add.getIsotopeCount());
 
-    	IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
-    	IIsotope C = getBuilder().newInstance(IIsotope.class,"C");
-    	adduct1.addIsotope( C );
-	    IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
-    	adduct1.addIsotope( h,4 );
-	    add.addMolecularFormula(adduct1);
+        IMolecularFormula adduct1 = getBuilder().newInstance(IMolecularFormula.class);
+        IIsotope C = getBuilder().newInstance(IIsotope.class, "C");
+        adduct1.addIsotope(C);
+        IIsotope h = getBuilder().newInstance(IIsotope.class, "H");
+        adduct1.addIsotope(h, 4);
+        add.addMolecularFormula(adduct1);
 
-	    IMolecularFormula adduct2 = getBuilder().newInstance(IMolecularFormula.class);
-	    adduct2.addIsotope(  h );
-	    add.addMolecularFormula(adduct2);
-
+        IMolecularFormula adduct2 = getBuilder().newInstance(IMolecularFormula.class);
+        adduct2.addIsotope(h);
+        add.addMolecularFormula(adduct2);
 
         Assert.assertEquals(1, add.getIsotopeCount(C));
         Assert.assertEquals(5, add.getIsotopeCount(h));
     }
 
-    @Test public void testGetBuilder() {
-    	IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
-    	IChemObjectBuilder builder = add.getBuilder();
-    	Assert.assertNotNull(builder);
-    	Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
+    @Test
+    public void testGetBuilder() {
+        IAdductFormula add = getBuilder().newInstance(IAdductFormula.class);
+        IChemObjectBuilder builder = add.getBuilder();
+        Assert.assertNotNull(builder);
+        Assert.assertEquals(getBuilder().getClass().getName(), builder.getClass().getName());
     }
 }

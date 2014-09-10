@@ -96,58 +96,61 @@ import java.util.Set;
 public class Fingerprinter implements IFingerprinter {
 
     /** Throw an exception if too many paths (per atom) are generated. */
-    private final static int PATH_LIMIT = 150;
+    private final static int                 PATH_LIMIT           = 150;
 
-	/** The default length of created fingerprints. */
-	public final static int DEFAULT_SIZE = 1024;
-	/** The default search depth used to create the fingerprints. */
-	public final static int DEFAULT_SEARCH_DEPTH = 8;
+    /** The default length of created fingerprints. */
+    public final static int                  DEFAULT_SIZE         = 1024;
+    /** The default search depth used to create the fingerprints. */
+    public final static int                  DEFAULT_SEARCH_DEPTH = 8;
 
-	private int size;
-	private int searchDepth;
+    private int                              size;
+    private int                              searchDepth;
 
-	static int debugCounter = 0;
+    static int                               debugCounter         = 0;
 
-	private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(Fingerprinter.class);
+    private static ILoggingTool              logger               = LoggingToolFactory
+                                                                          .createLoggingTool(Fingerprinter.class);
 
-	private static final Map<String, String> queryReplace
-	        = new HashMap<String, String>() {
+    private static final Map<String, String> queryReplace         = new HashMap<String, String>() {
 
-	    private static final long serialVersionUID = 1L;
+                                                                      private static final long serialVersionUID = 1L;
 
-	    {
-	        put("Cl", "X");    put("Br", "Z");
-	        put("Si", "Y");    put("As", "D");
-	        put("Li", "L");    put("Se", "E");
-	        put("Na", "G");    put("Ca", "J");
-	        put("Al", "A");
-	    }
-	};
+                                                                      {
+                                                                          put("Cl", "X");
+                                                                          put("Br", "Z");
+                                                                          put("Si", "Y");
+                                                                          put("As", "D");
+                                                                          put("Li", "L");
+                                                                          put("Se", "E");
+                                                                          put("Na", "G");
+                                                                          put("Ca", "J");
+                                                                          put("Al", "A");
+                                                                      }
+                                                                  };
 
     /**
-	 * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
-	 * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
-	 */
-	public Fingerprinter() {
-		this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
-	}
+     * Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
+     * and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
+     */
+    public Fingerprinter() {
+        this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
+    }
 
-	public Fingerprinter(int size) {
-		this(size, DEFAULT_SEARCH_DEPTH);
-	}
+    public Fingerprinter(int size) {
+        this(size, DEFAULT_SEARCH_DEPTH);
+    }
 
-	/**
-	 * Constructs a fingerprint generator that creates fingerprints of
-	 * the given size, using a generation algorithm with the given search
-	 * depth.
-	 *
-	 * @param  size        The desired size of the fingerprint
-	 * @param  searchDepth The desired depth of search
-	 */
-	public Fingerprinter(int size, int searchDepth) {
-		this.size = size;
-		this.searchDepth = searchDepth;
+    /**
+     * Constructs a fingerprint generator that creates fingerprints of
+     * the given size, using a generation algorithm with the given search
+     * depth.
+     *
+     * @param  size        The desired size of the fingerprint
+     * @param  searchDepth The desired depth of search
+     */
+    public Fingerprinter(int size, int searchDepth) {
+        this.size = size;
+        this.searchDepth = searchDepth;
 
     }
 
@@ -163,20 +166,17 @@ public class Fingerprinter implements IFingerprinter {
      */
 
     @TestMethod("testgetBitFingerprint_IAtomContainer")
-    public IBitFingerprint getBitFingerprint(IAtomContainer container,
-                                 AllRingsFinder ringFinder)
-                  throws CDKException {
-		int position = -1;
-		logger.debug("Entering Fingerprinter");
-		logger.debug("Starting Aromaticity Detection");
-		long before = System.currentTimeMillis();
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
+    public IBitFingerprint getBitFingerprint(IAtomContainer container, AllRingsFinder ringFinder) throws CDKException {
+        int position = -1;
+        logger.debug("Entering Fingerprinter");
+        logger.debug("Starting Aromaticity Detection");
+        long before = System.currentTimeMillis();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
         Aromaticity.cdkLegacy().apply(container);
-		long after = System.currentTimeMillis();
-		logger.debug("time for aromaticity calculation: "
-		             + (after - before) + " milliseconds");
-		logger.debug("Finished Aromaticity Detection");
-		BitSet bitSet = new BitSet(size);
+        long after = System.currentTimeMillis();
+        logger.debug("time for aromaticity calculation: " + (after - before) + " milliseconds");
+        logger.debug("Finished Aromaticity Detection");
+        BitSet bitSet = new BitSet(size);
 
         int[] hashes = findPathes(container, searchDepth);
         for (int hash : hashes) {
@@ -185,19 +185,17 @@ public class Fingerprinter implements IFingerprinter {
         }
 
         return new BitSetFingerprint(bitSet);
-	}
+    }
 
-
-	/**
-	 * Generates a fingerprint of the default size for the given AtomContainer.
-	 *
-	 *@param container The AtomContainer for which a Fingerprint is generated
-	 */
+    /**
+     * Generates a fingerprint of the default size for the given AtomContainer.
+     *
+     *@param container The AtomContainer for which a Fingerprint is generated
+     */
     @TestMethod("testgetBitFingerprint_IAtomContainer")
-    public IBitFingerprint getBitFingerprint(IAtomContainer container)
-                  throws CDKException {
-		return getBitFingerprint(container, null);
-	}
+    public IBitFingerprint getBitFingerprint(IAtomContainer container) throws CDKException {
+        return getBitFingerprint(container, null);
+    }
 
     /** {@inheritDoc} */
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
@@ -214,60 +212,59 @@ public class Fingerprinter implements IFingerprinter {
      * @param searchDepth The maximum path length desired
      * @return A Map of path strings, keyed on themselves
      */
-    protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException{
+    protected int[] findPathes(IAtomContainer container, int searchDepth) throws CDKException {
 
         List<StringBuffer> allPaths = new ArrayList<StringBuffer>();
 
-        Map<IAtom,Map<IAtom, IBond>> cache
-            = new HashMap<IAtom, Map<IAtom,IBond>>();
+        Map<IAtom, Map<IAtom, IBond>> cache = new HashMap<IAtom, Map<IAtom, IBond>>();
 
         for (IAtom startAtom : container.atoms()) {
-                List<List<IAtom>> p
-                    = PathTools.getLimitedPathsOfLengthUpto(container,
-                                                            startAtom,
-                                                            searchDepth,
-                                                            PATH_LIMIT);
-                for (List<IAtom> path : p) {
-                    StringBuffer sb = new StringBuffer();
-                    IAtom x = path.get(0);
+            List<List<IAtom>> p = PathTools.getLimitedPathsOfLengthUpto(container, startAtom, searchDepth, PATH_LIMIT);
+            for (List<IAtom> path : p) {
+                StringBuffer sb = new StringBuffer();
+                IAtom x = path.get(0);
 
-                    // TODO if we ever get more than 255 elements, this will
-                    // fail maybe we should use 0 for pseudo atoms and
-                    // malformed symbols? - nope a char 16 bit, up to 65,535
-                    // is okay :)
-                    if (x instanceof IPseudoAtom)
+                // TODO if we ever get more than 255 elements, this will
+                // fail maybe we should use 0 for pseudo atoms and
+                // malformed symbols? - nope a char 16 bit, up to 65,535
+                // is okay :)
+                if (x instanceof IPseudoAtom)
+                    sb.append((char) PeriodicTable.getElementCount() + 1);
+                else {
+                    Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
+                    if (atnum != null)
+                        sb.append(convertSymbol(x.getSymbol()));
+                    else
                         sb.append((char) PeriodicTable.getElementCount() + 1);
-                    else {
-                        Integer atnum = PeriodicTable.getAtomicNumber(x.getSymbol());
-                        if (atnum != null) sb.append(convertSymbol(x.getSymbol()));
-                        else sb.append((char)
-                                       PeriodicTable.getElementCount() + 1);
-                    }
-
-                    for (int i = 1; i < path.size(); i++) {
-                        final IAtom[] y = {path.get(i)};
-                        Map<IAtom, IBond> m = cache.get( x );
-                        final IBond[] b = { m != null ? m.get( y[0] ) : null };
-                        if ( b[0] == null ) {
-                            b[0] = container.getBond(x, y[0]);
-                            cache.put( x,
-                                       new HashMap<IAtom, IBond>() {
-                                {put(y[0], b[0]); }
-                            } );
-                                                }
-                     sb.append(getBondSymbol(b[0]));
-                     sb.append(convertSymbol(y[0].getSymbol()));
-                     x = y[0];
-                    }
-
-                    // we store the lexicographically lower one of the
-                    // string and its reverse
-                    StringBuffer revForm = new StringBuffer(sb);
-                    revForm.reverse();
-                    if (sb.toString().compareTo(revForm.toString()) <= 0)
-                        allPaths.add(sb);
-                    else allPaths.add(revForm);
                 }
+
+                for (int i = 1; i < path.size(); i++) {
+                    final IAtom[] y = {path.get(i)};
+                    Map<IAtom, IBond> m = cache.get(x);
+                    final IBond[] b = {m != null ? m.get(y[0]) : null};
+                    if (b[0] == null) {
+                        b[0] = container.getBond(x, y[0]);
+                        cache.put(x, new HashMap<IAtom, IBond>() {
+
+                            {
+                                put(y[0], b[0]);
+                            }
+                        });
+                    }
+                    sb.append(getBondSymbol(b[0]));
+                    sb.append(convertSymbol(y[0].getSymbol()));
+                    x = y[0];
+                }
+
+                // we store the lexicographically lower one of the
+                // string and its reverse
+                StringBuffer revForm = new StringBuffer(sb);
+                revForm.reverse();
+                if (sb.toString().compareTo(revForm.toString()) <= 0)
+                    allPaths.add(sb);
+                else
+                    allPaths.add(revForm);
+            }
         }
         // now lets clean stuff up
         Set<String> cleanPath = new HashSet<String>();
@@ -282,60 +279,52 @@ public class Fingerprinter implements IFingerprinter {
 
         // convert paths to hashes
         int[] hashes = new int[cleanPath.size()];
-        int i= 0;
-        for (String s: cleanPath) hashes[i++] = s.hashCode();
+        int i = 0;
+        for (String s : cleanPath)
+            hashes[i++] = s.hashCode();
 
         return hashes;
     }
 
     private String convertSymbol(String symbol) {
 
-        String returnSymbol = queryReplace.get( symbol );
-        return returnSymbol == null ? symbol
-                                    : returnSymbol;
+        String returnSymbol = queryReplace.get(symbol);
+        return returnSymbol == null ? symbol : returnSymbol;
     }
 
-
-	/**
-	 *  Gets the bondSymbol attribute of the Fingerprinter class
-	 *
-	 *@param  bond  Description of the Parameter
-	 *@return       The bondSymbol value
-	 */
-	protected String getBondSymbol(IBond bond)
-	{
-		String bondSymbol = "";
-		if (bond.getFlag(CDKConstants.ISAROMATIC))
-		{
-			bondSymbol = ":";
-		} else if (bond.getOrder() == IBond.Order.SINGLE)
-		{
-			bondSymbol = "-";
-		} else if (bond.getOrder() == IBond.Order.DOUBLE)
-		{
-			bondSymbol = "=";
-		} else if (bond.getOrder() == IBond.Order.TRIPLE)
-		{
-			bondSymbol = "#";
-		}
-		return bondSymbol;
-	}
+    /**
+     *  Gets the bondSymbol attribute of the Fingerprinter class
+     *
+     *@param  bond  Description of the Parameter
+     *@return       The bondSymbol value
+     */
+    protected String getBondSymbol(IBond bond) {
+        String bondSymbol = "";
+        if (bond.getFlag(CDKConstants.ISAROMATIC)) {
+            bondSymbol = ":";
+        } else if (bond.getOrder() == IBond.Order.SINGLE) {
+            bondSymbol = "-";
+        } else if (bond.getOrder() == IBond.Order.DOUBLE) {
+            bondSymbol = "=";
+        } else if (bond.getOrder() == IBond.Order.TRIPLE) {
+            bondSymbol = "#";
+        }
+        return bondSymbol;
+    }
 
     @TestMethod("testGetSearchDepth")
     public int getSearchDepth() {
-		return searchDepth;
-	}
+        return searchDepth;
+    }
 
     @TestMethod("testGetSize")
-	public int getSize() {
-		return size;
-	}
+    public int getSize() {
+        return size;
+    }
 
-	@Override
-	public ICountFingerprint getCountFingerprint(IAtomContainer container)
-			throws CDKException {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        throw new UnsupportedOperationException();
+    }
 
 }
-

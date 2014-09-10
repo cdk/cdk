@@ -33,58 +33,55 @@ import org.openscience.cdk.templates.MoleculeFactory;
 /**
  * @cdk.module test-standard
  */
-public class FingerprinterToolTest extends CDKTestCase
-{
+public class FingerprinterToolTest extends CDKTestCase {
 
-	public FingerprinterToolTest()
-	{
-		super();
-	}
-
-
-	@Test
-	public void testIsSubset_BitSet_BitSet() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter();
-
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-	}
+    public FingerprinterToolTest() {
+        super();
+    }
 
     @Test
-    public void testListDifferences_BitSet_BitSet() throws Exception{
+    public void testIsSubset_BitSet_BitSet() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter();
+
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
+        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+    }
+
+    @Test
+    public void testListDifferences_BitSet_BitSet() throws Exception {
         BitSet bs1 = new BitSet();
         BitSet bs2 = new BitSet();
 
-        bs1.set(0);   bs2.set(0);
+        bs1.set(0);
+        bs2.set(0);
         bs1.set(1);
-        bs1.set(2);   bs2.set(2);
+        bs1.set(2);
+        bs2.set(2);
         bs1.set(3);
-                      bs2.set(4);
+        bs2.set(4);
 
         // 2 bits set in bs1 which are clear in bs2
-        Assert.assertEquals(2,
-                            FingerprinterTool.listDifferences(bs2, bs1).size());
+        Assert.assertEquals(2, FingerprinterTool.listDifferences(bs2, bs1).size());
         // 2 bits set in bs2 which are clear in bs1
-        Assert.assertEquals(1,
-                            FingerprinterTool.listDifferences(bs1, bs2).size());
-	}
+        Assert.assertEquals(1, FingerprinterTool.listDifferences(bs1, bs2).size());
+    }
 
-    @Test public void testDifferences() throws Exception {
+    @Test
+    public void testDifferences() throws Exception {
         BitSet bs1 = new BitSet();
         BitSet bs2 = new BitSet();
 
-        bs1.set(0);   bs2.set(0);
+        bs1.set(0);
+        bs2.set(0);
         bs1.set(1);
-        bs1.set(2);   bs2.set(2);
+        bs1.set(2);
+        bs2.set(2);
         bs1.set(3);
-                      bs2.set(4);
+        bs2.set(4);
 
-        Assert.assertEquals(3,
-                            FingerprinterTool.differences(bs1, bs2).size());
+        Assert.assertEquals(3, FingerprinterTool.differences(bs1, bs2).size());
     }
 }
-

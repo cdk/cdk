@@ -30,21 +30,21 @@ import java.util.TreeMap;
 public abstract class AbstractFontManager implements IFontManager {
 
     /** The default font family */
-    private String fontName = "Arial";
+    private String                 fontName = "Arial";
 
     /** The font style - normal or bold */
     private IFontManager.FontStyle fontStyle;
 
     /** The mapping between zoom levels and font sizes */
-    private Map<Double, Integer> zoomToFontSizeMap;
+    private Map<Double, Integer>   zoomToFontSizeMap;
 
     // these two values track the font position if it falls
     // off the end of the array so that font and scale are always in synch
-    private int lowerVirtualCount;
+    private int                    lowerVirtualCount;
 
-    private int upperVirtualCount;
+    private int                    upperVirtualCount;
 
-    protected int currentFontIndex;
+    protected int                  currentFontIndex;
 
     /**
      * Call this in subclasses with the super() constructor.
@@ -118,8 +118,7 @@ public abstract class AbstractFontManager implements IFontManager {
         for (double upper : this.zoomToFontSizeMap.keySet()) {
             if (lower == -1) {
                 lower = upper;
-                if(zoom<=lower)
-                    return this.zoomToFontSizeMap.get(upper);
+                if (zoom <= lower) return this.zoomToFontSizeMap.get(upper);
                 continue;
             }
             if (zoom > lower && zoom <= upper) {
@@ -163,9 +162,9 @@ public abstract class AbstractFontManager implements IFontManager {
         // move INTO range if we have just moved OUT of lower virtual
         if (inRange() || (atMin() && atLowerBoundary())) {
             currentFontIndex++;
-        } else if (atMax()){
+        } else if (atMax()) {
             upperVirtualCount++;
-        } else if (atMin() && inLower()){
+        } else if (atMin() && inLower()) {
             lowerVirtualCount++;
         }
     }
@@ -191,8 +190,7 @@ public abstract class AbstractFontManager implements IFontManager {
      * @return true if the current font index is between 0 and |fonts| - 1
      */
     public boolean inRange() {
-        return currentFontIndex > 0
-            && currentFontIndex < getNumberOfFontSizes() - 1;
+        return currentFontIndex > 0 && currentFontIndex < getNumberOfFontSizes() - 1;
     }
 
     /**

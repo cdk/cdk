@@ -37,100 +37,91 @@ import org.openscience.cdk.math.Vector;
  * @cdk.module  qm
  */
 public class AngularMomentum {
-  private double J;
-  private int size;
-  private Matrix basis;
 
-  public AngularMomentum(double J)
-  {
-    this.J = J;
-    size = (int)Math.round(J*2.0+1.0);
-    basis = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        basis.matrix[i][j] = 0d;
-    for(i=0; i<size; i++)
-      basis.matrix[i][i] = 1d;
-  }
+    private double J;
+    private int    size;
+    private Matrix basis;
 
-  /**
-   * Calculates the Ix operator
-   */
-  public IMatrix getIx()
-  {
-    return (new IMatrix(getIplus().add(getIminus()))).mul(new Complex(0.5,0d));
-  }
-
-  /**
-   * Calculates the Iy operator
-   */
-  public IMatrix getIy()
-  {
-    return (new IMatrix(getIplus().sub(getIminus()))).mul(new Complex(0d,1d)).mul(new Complex(0.5,0d));
-  }
-
-  /**
-   * Calculates the Iz operator
-   */
-  public IMatrix getIz()
-  {
-    IMatrix Iz = new IMatrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-      {
-        Iz.realmatrix[i][j] = 0d;
-        Iz.imagmatrix[i][j] = 0d;
-      }
-    for(i=0; i<size; i++)
-    {
-      Iz.realmatrix[i][i] = J-i;
-      Iz.imagmatrix[i][i] = J-i;
+    public AngularMomentum(double J) {
+        this.J = J;
+        size = (int) Math.round(J * 2.0 + 1.0);
+        basis = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                basis.matrix[i][j] = 0d;
+        for (i = 0; i < size; i++)
+            basis.matrix[i][i] = 1d;
     }
-    return Iz;
-  }
 
-  /**
-   * Calculates the I+ operator
-   */
-  public Matrix getIplus()
-  {
-    Matrix Iplus = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        Iplus.matrix[i][j] = 0d;
-    for(i=1; i<size; i++)
-      Iplus.matrix[i-1][i] = Math.sqrt(J*J+J-(J-i+1)*(J-i+1)+(J-i+1));
-    return Iplus;
-  }
+    /**
+     * Calculates the Ix operator
+     */
+    public IMatrix getIx() {
+        return (new IMatrix(getIplus().add(getIminus()))).mul(new Complex(0.5, 0d));
+    }
 
-  /**
-   * Calculates the I- operator
-   */
-  public Matrix getIminus()
-  {
-    Matrix Iminus = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        Iminus.matrix[i][j] = 0d;
-    for(i=1; i<size; i++)
-      Iminus.matrix[i][i-1] = Math.sqrt(J*J+J-(J-i)*(J-i)-(J-i));
-    return Iminus;
-  }
+    /**
+     * Calculates the Iy operator
+     */
+    public IMatrix getIy() {
+        return (new IMatrix(getIplus().sub(getIminus()))).mul(new Complex(0d, 1d)).mul(new Complex(0.5, 0d));
+    }
 
-  /**
-   * Calculates a spin vector by a direction specified by theta and phi
-   */
-  public Vector getSpinVector(double theta, double phi)
-  {
-    Vector spinvector = new Vector(3);
-    spinvector.vector[0] = Math.sin(theta)*Math.cos(phi);
-    spinvector.vector[1] = Math.sin(theta)*Math.sin(phi);
-    spinvector.vector[2] = Math.cos(phi);
-    return spinvector;
-  }
+    /**
+     * Calculates the Iz operator
+     */
+    public IMatrix getIz() {
+        IMatrix Iz = new IMatrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++) {
+                Iz.realmatrix[i][j] = 0d;
+                Iz.imagmatrix[i][j] = 0d;
+            }
+        for (i = 0; i < size; i++) {
+            Iz.realmatrix[i][i] = J - i;
+            Iz.imagmatrix[i][i] = J - i;
+        }
+        return Iz;
+    }
+
+    /**
+     * Calculates the I+ operator
+     */
+    public Matrix getIplus() {
+        Matrix Iplus = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                Iplus.matrix[i][j] = 0d;
+        for (i = 1; i < size; i++)
+            Iplus.matrix[i - 1][i] = Math.sqrt(J * J + J - (J - i + 1) * (J - i + 1) + (J - i + 1));
+        return Iplus;
+    }
+
+    /**
+     * Calculates the I- operator
+     */
+    public Matrix getIminus() {
+        Matrix Iminus = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                Iminus.matrix[i][j] = 0d;
+        for (i = 1; i < size; i++)
+            Iminus.matrix[i][i - 1] = Math.sqrt(J * J + J - (J - i) * (J - i) - (J - i));
+        return Iminus;
+    }
+
+    /**
+     * Calculates a spin vector by a direction specified by theta and phi
+     */
+    public Vector getSpinVector(double theta, double phi) {
+        Vector spinvector = new Vector(3);
+        spinvector.vector[0] = Math.sin(theta) * Math.cos(phi);
+        spinvector.vector[1] = Math.sin(theta) * Math.sin(phi);
+        spinvector.vector[2] = Math.cos(phi);
+        return spinvector;
+    }
 }
-

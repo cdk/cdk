@@ -31,16 +31,16 @@ import org.junit.Test;
 public class PubChemSubstancesXMLFormatTest extends ChemFormatMatcherTest {
 
     public PubChemSubstancesXMLFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)PubChemSubstancesXMLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) PubChemSubstancesXMLFormat.getInstance());
     }
 
     /**
      * @cdk.bug 2832835
      */
-    @Test @Override
+    @Test
+    @Override
     public void testMatches() throws Exception {
-        String header =
-            "<?xml version=\"\"?><PC-Substances/>";
+        String header = "<?xml version=\"\"?><PC-Substances/>";
         Assert.assertTrue(matches(header));
     }
 

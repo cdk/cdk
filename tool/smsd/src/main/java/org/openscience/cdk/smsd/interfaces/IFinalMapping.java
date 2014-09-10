@@ -37,7 +37,6 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.smsd.interfaces.IFinalMappingTest")
 public interface IFinalMapping {
 
-
     /**
      * Adds mapping to the mapping list
      * @param mapping List of all MCS mapping between a given

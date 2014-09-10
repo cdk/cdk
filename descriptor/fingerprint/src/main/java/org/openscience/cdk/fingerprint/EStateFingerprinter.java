@@ -68,13 +68,11 @@ public class EStateFingerprinter implements IFingerprinter {
     private static final String[] PATTERNS = EStateFragments.getSmarts();
 
     @TestMethod("testFingerprint,testGetSize")
-    public EStateFingerprinter() {
-    }
+    public EStateFingerprinter() {}
 
     /** {@inheritDoc} */
     @TestMethod("testFingerprint")
-    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer)
-                  throws CDKException {
+    public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
 
         int bitsetLength = PATTERNS.length;
         BitSet fingerPrint = new BitSet(bitsetLength);
@@ -101,11 +99,10 @@ public class EStateFingerprinter implements IFingerprinter {
     }
 
     /** {@inheritDoc} */
-	@Override
+    @Override
     @TestMethod("testGetCountFingerprint")
-	public ICountFingerprint getCountFingerprint(IAtomContainer container)
-			throws CDKException {
-		throw new UnsupportedOperationException();
-	}
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        throw new UnsupportedOperationException();
+    }
 
 }

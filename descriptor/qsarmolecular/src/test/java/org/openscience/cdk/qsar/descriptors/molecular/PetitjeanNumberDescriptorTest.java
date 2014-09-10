@@ -34,12 +34,11 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
 
-    public PetitjeanNumberDescriptorTest() {
-    }
+    public PetitjeanNumberDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(PetitjeanNumberDescriptor.class);
+        setDescriptor(PetitjeanNumberDescriptor.class);
     }
 
     @Test
@@ -50,10 +49,10 @@ public class PetitjeanNumberDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.33333334, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 
-    @Test public void testSingleAtomCase() throws Exception {
+    @Test
+    public void testSingleAtomCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O");
         Assert.assertEquals(0, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }
-

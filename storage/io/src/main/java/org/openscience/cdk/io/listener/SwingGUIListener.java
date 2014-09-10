@@ -45,7 +45,7 @@ import org.openscience.cdk.io.setting.StringIOSetting;
  */
 public class SwingGUIListener implements IReaderListener, IWriterListener {
 
-    private Component frame = null;
+    private Component  frame = null;
     private Importance level = Importance.HIGH;
 
     /**
@@ -61,8 +61,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
         this.level = level;
     }
 
-    public void frameRead(ReaderEvent event) {
-    }
+    public void frameRead(ReaderEvent event) {}
 
     /**
      * Processes the IOSettings by listing the question, giving the options
@@ -77,10 +76,8 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
             String answer = setting.getSetting();
 
             if (setting instanceof BooleanIOSetting) {
-                int n = JOptionPane.showConfirmDialog(frame,
-                    setting.getQuestion(),
-                    setting.getName(),
-                    JOptionPane.YES_NO_OPTION);
+                int n = JOptionPane.showConfirmDialog(frame, setting.getQuestion(), setting.getName(),
+                        JOptionPane.YES_NO_OPTION);
                 if (n == JOptionPane.YES_OPTION) {
                     answer = "true";
                 } else if (n == JOptionPane.NO_OPTION) {
@@ -89,27 +86,22 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
                     // default of setting
                 }
             } else if (setting instanceof OptionIOSetting) {
-                OptionIOSetting optionSetting = (OptionIOSetting)setting;
+                OptionIOSetting optionSetting = (OptionIOSetting) setting;
                 List<String> settings = optionSetting.getOptions();
                 Iterator<String> elements = settings.iterator();
                 Object[] options = new Object[settings.size()];
-                for (int i=0; i<options.length; i++) {
+                for (int i = 0; i < options.length; i++) {
                     options[i] = elements.next();
                 }
                 int n = JOptionPane.showOptionDialog(frame, setting.getQuestion(), setting.getName(),
-                    JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, options, setting.getSetting());
-                answer = (String)options[n];
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, setting.getSetting());
+                answer = (String) options[n];
             } else if (setting instanceof StringIOSetting) {
-                answer = JOptionPane.showInputDialog(frame,
-                    setting.getQuestion(),
-                    setting.getName(), JOptionPane.QUESTION_MESSAGE, null, null,
-                    setting.getSetting()).toString();
+                answer = JOptionPane.showInputDialog(frame, setting.getQuestion(), setting.getName(),
+                        JOptionPane.QUESTION_MESSAGE, null, null, setting.getSetting()).toString();
             } else {
-                answer =  JOptionPane.showInputDialog(frame,
-                    setting.getQuestion(),
-                    setting.getName(), JOptionPane.QUESTION_MESSAGE, null, null,
-                    setting.getSetting()).toString();
+                answer = JOptionPane.showInputDialog(frame, setting.getQuestion(), setting.getName(),
+                        JOptionPane.QUESTION_MESSAGE, null, null, setting.getSetting()).toString();
             }
 
             try {
@@ -120,9 +112,4 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
 
     }
 
-
-
 }
-
-
-

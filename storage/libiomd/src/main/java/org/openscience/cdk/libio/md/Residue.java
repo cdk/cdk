@@ -34,52 +34,50 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module libiomd
  * @cdk.githash
  */
-public class Residue extends AtomContainer{
+public class Residue extends AtomContainer {
 
-	private static final long serialVersionUID = 6548353601272976798L;
+    private static final long serialVersionUID = 6548353601272976798L;
 
-	private int number;
-	private String name;
-	private MDMolecule parentMolecule;
+    private int               number;
+    private String            name;
+    private MDMolecule        parentMolecule;
 
-	/**
-	 * Empty constructor
-	 */
-	public Residue(){
-	}
+    /**
+     * Empty constructor
+     */
+    public Residue() {}
 
-	/**
-	 * Constructor to create a Residue based on an AC, a number, and a MDMolecule.
-	 */
-	public Residue(IAtomContainer container, int number, MDMolecule parentMolecule) {
-		super(container);
-		this.number=number;
-		this.parentMolecule=parentMolecule;
-	}
+    /**
+     * Constructor to create a Residue based on an AC, a number, and a MDMolecule.
+     */
+    public Residue(IAtomContainer container, int number, MDMolecule parentMolecule) {
+        super(container);
+        this.number = number;
+        this.parentMolecule = parentMolecule;
+    }
 
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public int getNumber() {
+        return number;
+    }
 
-	public int getNumber() {
-		return number;
-	}
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
-	public void setNumber(int number) {
-		this.number = number;
-	}
+    public MDMolecule getParentMolecule() {
+        return parentMolecule;
+    }
 
-	public MDMolecule getParentMolecule() {
-		return parentMolecule;
-	}
-
-	public void setParentMolecule(MDMolecule parentMolecule) {
-		this.parentMolecule = parentMolecule;
-	}
+    public void setParentMolecule(MDMolecule parentMolecule) {
+        this.parentMolecule = parentMolecule;
+    }
 
 }

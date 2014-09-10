@@ -30,53 +30,60 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.CTXFormatTest")
 public class CTXFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public CTXFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new CTXFormat();
-    	return myself;
+        if (myself == null) myself = new CTXFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CTX";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"ctx"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-      return "org.openscience.cdk.io.CTXReader";
+        return "org.openscience.cdk.io.CTXReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
-      return null;
+        return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
         if (lineNumber == 1 && line.startsWith(" /IDENT")) {
@@ -85,21 +92,24 @@ public class CTXFormat extends SimpleChemFormatMatcher implements IChemFormatMat
         return false;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.NONE;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

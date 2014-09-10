@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -40,10 +39,10 @@ import org.openscience.cdk.interfaces.IBond.Order;
 @TestClass("org.openscience.cdk.smsd.helper.BondEnergyTest")
 public class BondEnergy {
 
-    private String symbol1 = "";
-    private String symbol2 = "";
+    private String      symbol1   = "";
+    private String      symbol2   = "";
     private IBond.Order bondOrder = null;
-    private int energy = -1;
+    private int         energy    = -1;
 
     /**
      * Creates a new bond energy for the given elements and
@@ -55,8 +54,7 @@ public class BondEnergy {
      * @param energy  energy for this bond type
      */
     @TestMethod("BondEnergyTest")
-    public BondEnergy(String symbol1, String symbol2,
-            IBond.Order order, int energy) {
+    public BondEnergy(String symbol1, String symbol2, IBond.Order order, int energy) {
         this.symbol1 = symbol1;
         this.symbol2 = symbol2;
         this.bondOrder = order;

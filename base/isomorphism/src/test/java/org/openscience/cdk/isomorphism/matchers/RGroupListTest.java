@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.exception.CDKException;
 
-
 /**
  * Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList},
  * in particular setting valid 'occurrence' strings.
@@ -41,8 +40,7 @@ import org.openscience.cdk.exception.CDKException;
 public class RGroupListTest extends CDKTestCase {
 
     @BeforeClass
-    public static void setUp() {
-    }
+    public static void setUp() {}
 
     @Test
     public void testOccurrenceCorrect() throws CDKException {
@@ -52,29 +50,28 @@ public class RGroupListTest extends CDKTestCase {
     }
 
     @Test
-    public void testOccurrenceNull() throws CDKException{
+    public void testOccurrenceNull() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence(null);
         Assert.assertEquals(rgrLst.getOccurrence(), RGroupList.DEFAULT_OCCURRENCE);
     }
 
-    @Test (expected = CDKException.class)
-    public void testOccurrenceNumericValues() throws CDKException{
+    @Test(expected = CDKException.class)
+    public void testOccurrenceNumericValues() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("a,3,10");
     }
 
-    @Test (expected = CDKException.class)
-    public void testOccurrenceNoNegativeNumber() throws CDKException{
+    @Test(expected = CDKException.class)
+    public void testOccurrenceNoNegativeNumber() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("-10");
     }
 
-    @Test (expected = CDKException.class)
-    public void testOccurrenceNotSmallerThanZero() throws CDKException{
+    @Test(expected = CDKException.class)
+    public void testOccurrenceNotSmallerThanZero() throws CDKException {
         RGroupList rgrLst = new RGroupList(1);
         rgrLst.setOccurrence("<0");
     }
-
 
 }

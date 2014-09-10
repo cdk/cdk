@@ -38,13 +38,12 @@ import org.xml.sax.Attributes;
  */
 public class JMOLANIMATIONConvention extends CMLCoreModule {
 
-    private final int UNKNOWN = -1;
-    private final int ENERGY = 1;
+    private final int           UNKNOWN = -1;
+    private final int           ENERGY  = 1;
 
-    private int current;
-    private String frame_energy;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
+    private int                 current;
+    private String              frame_energy;
+    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(JMOLANIMATIONConvention.class);
 
     public JMOLANIMATIONConvention(IChemFile chemFile) {
         super(chemFile);
@@ -59,21 +58,20 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         String name = local;
         if (name.equals("list")) {
             logger.debug("Oke, JMOLANIMATION seems to be kicked in :)");
-//            cdo.startObject("Animation");
+            //            cdo.startObject("Animation");
             currentChemSequence = currentChemFile.getBuilder().newInstance(IChemSequence.class);
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("molecule")) {
-//            cdo.startObject("Frame");
-        	currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
+            //            cdo.startObject("Frame");
+            currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
             logger.debug("New frame being parsed.");
             super.startElement(xpath, uri, local, raw, atts);
         } else if (name.equals("float")) {
             boolean isEnergy = false;
             logger.debug("FLOAT found!");
             for (int i = 0; i < atts.getLength(); i++) {
-              logger.debug(" att: ", atts.getQName(i), " -> ", atts.getValue(i));
-                if (atts.getQName(i).equals("title")
-                        && atts.getValue(i).equals("FRAME_ENERGY")) {
+                logger.debug(" att: ", atts.getQName(i), " -> ", atts.getValue(i));
+                if (atts.getQName(i).equals("title") && atts.getValue(i).equals("FRAME_ENERGY")) {
                     isEnergy = true;
                 }
             }
@@ -91,18 +89,18 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = local;
         if (current == ENERGY) {
-//            cdo.setObjectProperty("Frame", "energy", frame_energy);
-                // + " " + units);
-        	// FIXME: does not have a ChemFileCDO equivalent
+            //            cdo.setObjectProperty("Frame", "energy", frame_energy);
+            // + " " + units);
+            // FIXME: does not have a ChemFileCDO equivalent
             current = UNKNOWN;
             frame_energy = "";
         } else if (name.equals("list")) {
             super.endElement(xpath, uri, local, raw);
-//            cdo.endObject("Animation");
+            //            cdo.endObject("Animation");
             currentChemFile.addChemSequence(currentChemSequence);
         } else if (name.equals("molecule")) {
             super.endElement(xpath, uri, local, raw);
-//            cdo.endObject("Frame");
+            //            cdo.endObject("Frame");
             // nothing done in the CD upon this event
         } else {
             super.endElement(xpath, uri, local, raw);

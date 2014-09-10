@@ -47,7 +47,7 @@ public class MDLMolConvention extends CMLCoreModule {
 
     public void startDocument() {
         super.startDocument();
-//        cdo.startObject("Frame");
+        //        cdo.startObject("Frame");
         currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
     }
 

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class JaguarFormatTest extends ChemFormatMatcherTest {
 
     public JaguarFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)JaguarFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) JaguarFormat.getInstance());
     }
 
 }

@@ -42,20 +42,23 @@ import org.openscience.cdk.interfaces.ICrystal;
  */
 public class PMPReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new PMPReader(), "data/pmp/aceticacid.pmp");
     }
 
-    @Test public void testAccepts() {
-    	PMPReader reader = new PMPReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        PMPReader reader = new PMPReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    @Test public void testAceticAcid() throws Exception {
+    @Test
+    public void testAceticAcid() throws Exception {
         String filename = "data/pmp/aceticacid.pmp";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -77,11 +80,12 @@ public class PMPReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(1.4922556, crystal.getAtom(7).getPoint3d().x, 0.00001);
     }
 
-    @Test public void testTwoAceticAcid() throws Exception {
+    @Test
+    public void testTwoAceticAcid() throws Exception {
         String filename = "data/pmp/two_aceticacid.pmp";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PMPReader reader = new PMPReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);

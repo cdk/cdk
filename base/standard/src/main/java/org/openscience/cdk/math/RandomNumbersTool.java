@@ -40,8 +40,8 @@ public class RandomNumbersTool extends Random {
 
     private static final long serialVersionUID = -8238833473383641882L;
 
-    private static Random random;
-    private static long randomSeed;
+    private static Random     random;
+    private static long       randomSeed;
 
     static {
         randomSeed = System.currentTimeMillis();
@@ -149,8 +149,7 @@ public class RandomNumbersTool extends Random {
      * @see <a href="http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range">Random Long Number in range, Stack Overflow</a>
      */
     private static long nextLong(Random rng, long n) {
-        if (n <= 0)
-            throw new IllegalArgumentException("n must be greater than 0");
+        if (n <= 0) throw new IllegalArgumentException("n must be greater than 0");
         long bits, val;
         do {
             bits = (rng.nextLong() << 1) >>> 1;
@@ -284,4 +283,3 @@ public class RandomNumbersTool extends Random {
         return -mean * Math.log(randomDouble());
     }
 }
-

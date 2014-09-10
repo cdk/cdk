@@ -62,7 +62,9 @@ public abstract class SymbolVisibility {
      */
     public static SymbolVisibility all() {
         return new SymbolVisibility() {
-            @Override public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
+
+            @Override
+            public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
                 return true;
             }
         };
@@ -104,30 +106,26 @@ public abstract class SymbolVisibility {
         /**
          * @inheritDoc
          */
-        @Override public boolean visible(IAtom atom, List<IBond> bonds, RendererModel model) {
+        @Override
+        public boolean visible(IAtom atom, List<IBond> bonds, RendererModel model) {
 
             final Elements element = Elements.ofNumber(atom.getAtomicNumber());
 
             // all non-carbons are displayed
-            if (element != Elements.Carbon)
-                return true;
+            if (element != Elements.Carbon) return true;
 
             // methane
-            if (bonds.size() == 0)
-                return true;
+            if (bonds.size() == 0) return true;
 
             // methyl (optional)
-            if (bonds.size() == 1 && terminal)
-                return true;
+            if (bonds.size() == 1 && terminal) return true;
 
             // abnormal valence, could be due to charge or unpaired electrons
-            if (!isFourValent(atom, bonds))
-                return true;
+            if (!isFourValent(atom, bonds)) return true;
 
             // carbon isotopes are displayed
             Integer mass = atom.getMassNumber();
-            if (mass != null && !isMajorIsotope(element.number(), mass))
-                return true;
+            if (mass != null && !isMajorIsotope(element.number(), mass)) return true;
 
             // no kink between bonds to imply the presence of a carbon and it must
             // be displayed
@@ -166,8 +164,7 @@ public abstract class SymbolVisibility {
          */
         private static boolean isFourValent(IAtom atom, List<IBond> bonds) {
             Integer valence = atom.getImplicitHydrogenCount();
-            if (valence == null)
-                return true;
+            if (valence == null) return true;
             for (final IBond bond : bonds) {
                 valence += bond.getOrder().numeric();
             }
@@ -201,10 +198,8 @@ public abstract class SymbolVisibility {
             final Point2d pA = atom.getPoint2d();
             final Point2d pB = bond1.getConnectedAtom(atom).getPoint2d();
             final Point2d pC = bond2.getConnectedAtom(atom).getPoint2d();
-            final Vector2d u = new Vector2d(pB.x - pA.x,
-                                            pB.y - pA.y);
-            final Vector2d v = new Vector2d(pC.x - pA.x,
-                                            pC.y - pA.y);
+            final Vector2d u = new Vector2d(pB.x - pA.x, pB.y - pA.y);
+            final Vector2d v = new Vector2d(pC.x - pA.x, pC.y - pA.y);
             return u.angle(v);
         }
     }

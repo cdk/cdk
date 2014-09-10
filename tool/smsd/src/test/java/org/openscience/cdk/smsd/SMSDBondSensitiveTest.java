@@ -133,11 +133,10 @@ public class SMSDBondSensitiveTest {
     @Test
     public void testSMSD() throws Exception {
 
-
-//        Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
-//        ebimcs.init(Cyclohexane, Benzene, true, true);
-//        ebimcs.setChemFilters(true, true, true);
-//        Assert.assertEquals(1, ebimcs.getFirstMapping().size());
+        //        Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
+        //        ebimcs.init(Cyclohexane, Benzene, true, true);
+        //        ebimcs.setChemFilters(true, true, true);
+        //        Assert.assertEquals(1, ebimcs.getFirstMapping().size());
 
         Isomorphism ebimcs1 = new Isomorphism(Algorithm.DEFAULT, true);
         ebimcs1.init(Benzene, Napthalene, true, true);
@@ -168,7 +167,7 @@ public class SMSDBondSensitiveTest {
     @Test
     public void testSMSDCyclohexaneBenzeneSubgraph() throws Exception {
 
-//        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(Cyclohexane);
+        //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(Cyclohexane);
 
         Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
         ebimcs.init(Cyclohexane, Benzene, true, true);
@@ -220,33 +219,33 @@ public class SMSDBondSensitiveTest {
         Assert.assertFalse(ebimcs1.isSubgraph());
     }
 
-//    @Test
-//    public void testSingleMappingTesting() throws Exception {
-//
-//        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-//        IAtomContainer atomContainer = sp.parseSmiles("C");
-//        IQueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
-//
-//        IAtomContainer mol2 = Molecules.create4Toluene();
-//
-//        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
-//        Aromaticity.cdkLegacy().apply(mol2);
-//
-//        boolean bondSensitive = true;
-//        boolean removeHydrogen = true;
-//        boolean stereoMatch = true;
-//        boolean fragmentMinimization = true;
-//        boolean energyMinimization = true;
-//
-//        Isomorphism comparison1 = new Isomorphism(Algorithm.DEFAULT, bondSensitive);
-//        comparison1.init(query, mol2, removeHydrogen, true);
-//        comparison1.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
-//
-//        Assert.assertEquals(true, comparison1.isSubgraph());
-//        Assert.assertEquals(1, comparison1.getAllMapping().size());
-//
-//
-//    }
+    //    @Test
+    //    public void testSingleMappingTesting() throws Exception {
+    //
+    //        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    //        IAtomContainer atomContainer = sp.parseSmiles("C");
+    //        IQueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(atomContainer);
+    //
+    //        IAtomContainer mol2 = Molecules.create4Toluene();
+    //
+    //        ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
+    //        Aromaticity.cdkLegacy().apply(mol2);
+    //
+    //        boolean bondSensitive = true;
+    //        boolean removeHydrogen = true;
+    //        boolean stereoMatch = true;
+    //        boolean fragmentMinimization = true;
+    //        boolean energyMinimization = true;
+    //
+    //        Isomorphism comparison1 = new Isomorphism(Algorithm.DEFAULT, bondSensitive);
+    //        comparison1.init(query, mol2, removeHydrogen, true);
+    //        comparison1.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
+    //
+    //        Assert.assertEquals(true, comparison1.isSubgraph());
+    //        Assert.assertEquals(1, comparison1.getAllMapping().size());
+    //
+    //
+    //    }
     /**
      * frag is a subgraph of the het mol
      * @throws Exception
@@ -262,7 +261,7 @@ public class SMSDBondSensitiveTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
 
-//	Calling the main algorithm to perform MCS cearch
+        //	Calling the main algorithm to perform MCS cearch
 
         Aromaticity.cdkLegacy().apply(mol1);
         Aromaticity.cdkLegacy().apply(mol2);
@@ -277,30 +276,22 @@ public class SMSDBondSensitiveTest {
         comparison.init(mol1, mol2, removeHydrogen, true);
         comparison.setChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
 
-//      Get modified Query and Target Molecules as Mappings will correspond to these molecules
+        //      Get modified Query and Target Molecules as Mappings will correspond to these molecules
         Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(2, comparison.getAllMapping().size());
         Assert.assertEquals(27, comparison.getFirstMapping().size());
-
 
     }
 
     @Test
     public void testSMSDLargeSubgraph() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        String c03374 = "CC1=C(C=C)\\C(NC1=O)=C"
-                + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
-                + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)"
-                + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)"
-                + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
+        String c03374 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
+                + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(O)=O)C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 
-        String c05787 = "CC1=C(C=C)\\C(NC1=O)=C"
-                + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
-                + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)"
-                + "=C(CC2=C(CCC(=O)O[C@@H]3O[C@@H]"
-                + "([C@@H](O)[C@H](O)[C@H]3O)C(O)=O)"
-                + "C(C)=C(N2)"
-                + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
+        String c05787 = "CC1=C(C=C)\\C(NC1=O)=C" + "\\C1=C(C)C(CCC(=O)O[C@@H]2O[C@@H]"
+                + "([C@@H](O)[C@H](O)[C@H]2O)C(O)=O)" + "=C(CC2=C(CCC(=O)O[C@@H]3O[C@@H]"
+                + "([C@@H](O)[C@H](O)[C@H]3O)C(O)=O)" + "C(C)=C(N2)" + "\\C=C2NC(=O)C(C=C)=C/2C)N1";
 
         IAtomContainer mol1 = sp.parseSmiles(c03374);
         IAtomContainer mol2 = sp.parseSmiles(c05787);
@@ -311,7 +302,7 @@ public class SMSDBondSensitiveTest {
         IAtomContainer source = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol1);
         IAtomContainer target = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(mol2);
 
-//	Calling the main algorithm to perform MCS cearch
+        //	Calling the main algorithm to perform MCS cearch
 
         Aromaticity.cdkLegacy().apply(source);
         Aromaticity.cdkLegacy().apply(target);
@@ -328,7 +319,6 @@ public class SMSDBondSensitiveTest {
 
         Assert.assertTrue(comparison.isSubgraph());
         Assert.assertEquals(55, comparison.getFirstMapping().size());
-
 
     }
 }

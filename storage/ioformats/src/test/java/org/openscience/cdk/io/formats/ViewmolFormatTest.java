@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class ViewmolFormatTest extends ChemFormatTest {
 
     public ViewmolFormatTest() {
-        super.setChemFormat((IChemFormat)ViewmolFormat.getInstance());
+        super.setChemFormat((IChemFormat) ViewmolFormat.getInstance());
     }
 
 }

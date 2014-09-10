@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.ChemFile;
@@ -42,13 +41,12 @@ import java.util.*;
  */
 public class DescriptorNamesTest extends CDKTestCase {
 
-    public DescriptorNamesTest() {
-    }
+    public DescriptorNamesTest() {}
 
     @Test
     public void checkUniqueMolecularDescriptorNames() throws Exception {
         DescriptorEngine engine = new DescriptorEngine(IMolecularDescriptor.class,
-                                                       DefaultChemObjectBuilder.getInstance());
+                DefaultChemObjectBuilder.getInstance());
         List<IImplementationSpecification> specs = engine.getDescriptorSpecifications();
 
         // we work with a simple molecule with 3D coordinates

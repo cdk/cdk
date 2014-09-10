@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class ZindoFormatTest extends ChemFormatTest {
 
     public ZindoFormatTest() {
-        super.setChemFormat((IChemFormat)ZindoFormat.getInstance());
+        super.setChemFormat((IChemFormat) ZindoFormat.getInstance());
     }
 
 }

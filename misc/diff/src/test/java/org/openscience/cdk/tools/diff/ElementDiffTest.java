@@ -32,26 +32,29 @@ import static org.mockito.Mockito.when;
  */
 public class ElementDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IElement element1 = mock(IElement.class);
         String result = ElementDiff.diff(element1, element1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IElement element1 = mock(IElement.class);
         IElement element2 = mock(IElement.class);
         when(element1.getSymbol()).thenReturn("H");
         when(element2.getSymbol()).thenReturn("C");
 
-        String result = ElementDiff.diff( element1, element2 );
+        String result = ElementDiff.diff(element1, element2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "ElementDiff");
         assertContains(result, "H/C");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IElement element1 = mock(IElement.class);
         IElement element2 = mock(IElement.class);
         when(element1.getSymbol()).thenReturn("H");

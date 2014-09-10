@@ -53,7 +53,7 @@ import static org.junit.Assert.assertTrue;
 public class DoubleBondStereochemistryTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
-    private static IBond[] ligands;
+    private static IBond[]        ligands;
 
     /**
      * This method creates <i>E</i>-but-2-ene.
@@ -68,10 +68,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         molecule.addBond(0, 1, Order.SINGLE);
         molecule.addBond(1, 2, Order.DOUBLE);
         molecule.addBond(2, 3, Order.SINGLE);
-        ligands = new IBond[] {
-            molecule.getBond(0),
-            molecule.getBond(2)
-        };
+        ligands = new IBond[]{molecule.getBond(0), molecule.getBond(2)};
     }
 
     /**
@@ -87,61 +84,53 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-        new DoubleBondStereochemistry(builder.newInstance(IBond.class),
-                                      new IBond[3], Conformation.OPPOSITE);
+        new DoubleBondStereochemistry(builder.newInstance(IBond.class), new IBond[3], Conformation.OPPOSITE);
     }
 
     @Test
     public void testConstructor() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-            molecule.getBond(1), ligands, Conformation.OPPOSITE
-        );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         Assert.assertNotNull(stereo);
     }
 
     @Test
     public void testBuilder() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-            molecule.getBond(1), ligands, Conformation.OPPOSITE
-        );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         Assert.assertNull(stereo.getBuilder());
         stereo.setBuilder(DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(
-            DefaultChemObjectBuilder.getInstance(),
-            stereo.getBuilder()
-        );
+        Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), stereo.getBuilder());
     }
 
     @Test
     public void testGetStereoBond() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-            molecule.getBond(1), ligands, Conformation.OPPOSITE
-        );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         Assert.assertNotNull(stereo);
         Assert.assertEquals(molecule.getBond(1), stereo.getStereoBond());
     }
 
     @Test
     public void testGetStereo() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-            molecule.getBond(1), ligands, Conformation.OPPOSITE
-        );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         Assert.assertNotNull(stereo);
         Assert.assertEquals(Conformation.OPPOSITE, stereo.getStereo());
     }
 
     @Test
     public void testGetBonds() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-                molecule.getBond(1), ligands, Conformation.OPPOSITE
-            );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         Assert.assertNotNull(stereo);
-        for (int i=0; i<ligands.length; i++) {
+        for (int i = 0; i < ligands.length; i++) {
             Assert.assertEquals(ligands[i], stereo.getBonds()[i]);
         }
     }
 
-    @Test public void contains() throws Exception {
+    @Test
+    public void contains() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -154,9 +143,8 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
 
         // new stereo element
-        DoubleBondStereochemistry element = new DoubleBondStereochemistry(c1c2,
-                                                                          new IBond[]{c1o3, c2o4},
-                                                                          Conformation.OPPOSITE);
+        DoubleBondStereochemistry element = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
+                Conformation.OPPOSITE);
 
         assertTrue(element.contains(c1));
         assertTrue(element.contains(c2));
@@ -167,7 +155,8 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         assertFalse(element.contains(null));
     }
 
-    @Test public void testMap_Map_Map() throws CloneNotSupportedException {
+    @Test
+    public void testMap_Map_Map() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -181,38 +170,36 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
 
         // new stereo element
-        DoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
-                                                                          new IBond[]{c1o3,c2o4},
-                                                                          Conformation.OPPOSITE);
+        DoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
+                Conformation.OPPOSITE);
 
         // clone the atoms and place in a map
-        Map<IBond,IBond> mapping = new HashMap<IBond,IBond>();
-        IBond c1c2clone = (IBond) c1c2.clone(); mapping.put(c1c2, c1c2clone);
-        IBond c1o3clone = (IBond) c1o3.clone(); mapping.put(c1o3, c1o3clone);
-        IBond c2o4clone = (IBond) c2o4.clone(); mapping.put(c2o4, c2o4clone);
+        Map<IBond, IBond> mapping = new HashMap<IBond, IBond>();
+        IBond c1c2clone = (IBond) c1c2.clone();
+        mapping.put(c1c2, c1c2clone);
+        IBond c1o3clone = (IBond) c1o3.clone();
+        mapping.put(c1o3, c1o3clone);
+        IBond c2o4clone = (IBond) c2o4.clone();
+        mapping.put(c2o4, c2o4clone);
 
         // map the existing element a new element
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, mapping);
 
-        Assert.assertThat("mapped chiral atom was the same as the original",
-                          mapped.getStereoBond(), is(not(sameInstance(original.getStereoBond()))));
-        Assert.assertThat("mapped chiral atom was not the clone",
-                          mapped.getStereoBond(), is(sameInstance(c1c2clone)));
+        Assert.assertThat("mapped chiral atom was the same as the original", mapped.getStereoBond(),
+                is(not(sameInstance(original.getStereoBond()))));
+        Assert.assertThat("mapped chiral atom was not the clone", mapped.getStereoBond(), is(sameInstance(c1c2clone)));
 
         IBond[] originalBonds = original.getBonds();
-        IBond[] mappedBonds   = mapped.getBonds();
+        IBond[] mappedBonds = mapped.getBonds();
 
-        Assert.assertThat("first bond was te same as the original",
-                          mappedBonds[0], is(not(sameInstance(originalBonds[0]))));
-        Assert.assertThat("first mapped bond was not the clone",
-                          mappedBonds[0], is(sameInstance(c1o3clone)));
-        Assert.assertThat("second bond was te same as the original",
-                          mappedBonds[1], is(not(sameInstance(originalBonds[1]))));
-        Assert.assertThat("second mapped bond was not the clone",
-                          mappedBonds[1], is(sameInstance(c2o4clone)));
+        Assert.assertThat("first bond was te same as the original", mappedBonds[0],
+                is(not(sameInstance(originalBonds[0]))));
+        Assert.assertThat("first mapped bond was not the clone", mappedBonds[0], is(sameInstance(c1o3clone)));
+        Assert.assertThat("second bond was te same as the original", mappedBonds[1],
+                is(not(sameInstance(originalBonds[1]))));
+        Assert.assertThat("second mapped bond was not the clone", mappedBonds[1], is(sameInstance(c2o4clone)));
 
-        Assert.assertThat("stereo was not mapped",
-                          mapped.getStereo(), is(original.getStereo()));
+        Assert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
 
     }
 
@@ -231,9 +218,8 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
 
         // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
-                                                                           new IBond[]{c1o3,c2o4},
-                                                                           Conformation.OPPOSITE);
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
+                Conformation.OPPOSITE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, null);
@@ -246,10 +232,7 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(null,
-                                                                            new IBond[2],
-                                                                            null);
-
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(null, new IBond[2], null);
 
         // map the existing element a new element
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
@@ -276,9 +259,8 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
         IBond c2o4 = builder.newInstance(IBond.class, c2, o4, Order.SINGLE);
 
         // new stereo element
-        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2,
-                                                                            new IBond[]{c1o3,c2o4},
-                                                                            Conformation.OPPOSITE);
+        IDoubleBondStereochemistry original = new DoubleBondStereochemistry(c1c2, new IBond[]{c1o3, c2o4},
+                Conformation.OPPOSITE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         IDoubleBondStereochemistry mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
@@ -292,13 +274,10 @@ public class DoubleBondStereochemistryTest extends CDKTestCase {
 
     @Test
     public void testToString() {
-        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(
-                molecule.getBond(1), ligands, Conformation.OPPOSITE
-            );
+        DoubleBondStereochemistry stereo = new DoubleBondStereochemistry(molecule.getBond(1), ligands,
+                Conformation.OPPOSITE);
         String stringRepr = stereo.toString();
         Assert.assertNotSame(0, stringRepr.length());
         assertFalse(stringRepr.contains("\n"));
     }
 }
-
-

@@ -43,15 +43,15 @@ public class Association extends ElectronContainer implements java.io.Serializab
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = -9138919895942850167L;
+     */
+    private static final long serialVersionUID = -9138919895942850167L;
 
-	/** Number of electrons in the association. */
-    protected final int electronCount = 0;
+    /** Number of electrons in the association. */
+    protected final int       electronCount    = 0;
 
     /** The atoms which take part in the association. */
-    protected IAtom[] atoms;
-    protected int atomCount;
+    protected IAtom[]         atoms;
+    protected int             atomCount;
 
     /**
      * Constructs an association between two Atom's.
@@ -79,13 +79,13 @@ public class Association extends ElectronContainer implements java.io.Serializab
         atomCount = 0;
     }
 
-	/**
-	 * Returns the array of atoms making up this Association.
-	 *
-	 * @return An array of atoms participating in this Association
+    /**
+     * Returns the array of atoms making up this Association.
+     *
+     * @return An array of atoms participating in this Association
      *
      * @see    #setAtoms
-	 */
+     */
     @TestMethod("testGetAtoms")
     public IAtom[] getAtoms() {
         IAtom[] returnAtoms = new Atom[atomCount];
@@ -93,29 +93,28 @@ public class Association extends ElectronContainer implements java.io.Serializab
         return returnAtoms;
     }
 
-	/**
-	 * Sets the array of atoms making up this Association.
-	 *
-	 * @param   atoms An array of atoms that forms this Association
+    /**
+     * Sets the array of atoms making up this Association.
+     *
+     * @param   atoms An array of atoms that forms this Association
      *
      * @see    #getAtoms
-	 */
+     */
     @TestMethod("testSetAtoms")
     public void setAtoms(IAtom[] atoms) {
-		this.atoms = atoms;
-		notifyChanged();
-	}
+        this.atoms = atoms;
+        notifyChanged();
+    }
 
-
-	/**
-	 * Returns the number of Atoms in this Association.
-	 *
-	 * @return The number of Atoms in this Association
-	 */
+    /**
+     * Returns the number of Atoms in this Association.
+     *
+     * @return The number of Atoms in this Association
+     */
     @TestMethod("testGetAtomCount")
     public int getAtomCount() {
-		return atomCount;
-	}
+        return atomCount;
+    }
 
     /**
      * Returns the number of electrons in a Association.
@@ -127,25 +126,25 @@ public class Association extends ElectronContainer implements java.io.Serializab
         return 0;
     }
 
-	/**
-	 * Returns an Atom from this Association.
-	 *
-	 * @param   position  The position in this bond where the atom is
+    /**
+     * Returns an Atom from this Association.
+     *
+     * @param   position  The position in this bond where the atom is
      * @return            The atom at the specified position
      *
      * @see     #setAtomAt
-	 */
+     */
     @TestMethod("testGetAtomAt")
     public IAtom getAtomAt(int position) {
-		return atoms[position];
-	}
+        return atoms[position];
+    }
 
-	/**
-	 * Returns true if the given atom participates in this Association.
-	 *
-	 * @param   atom  The atom to be tested if it participates in this Association
-	 * @return     true if the atom participates in this Association
-	 */
+    /**
+     * Returns true if the given atom participates in this Association.
+     *
+     * @param   atom  The atom to be tested if it participates in this Association
+     * @return     true if the atom participates in this Association
+     */
     @TestMethod("testContains")
     public boolean contains(IAtom atom) {
         for (IAtom atom1 : atoms) {
@@ -154,21 +153,21 @@ public class Association extends ElectronContainer implements java.io.Serializab
             }
         }
         return false;
-	}
+    }
 
-	/**
-	 * Sets an Atom in this Association.
-	 *
-	 * @param   atom  The atom to be set
-	 * @param   position  The position in this Association where the atom is to be inserted
+    /**
+     * Sets an Atom in this Association.
+     *
+     * @param   atom  The atom to be set
+     * @param   position  The position in this Association where the atom is to be inserted
      *
      * @see     #getAtomAt
-	 */
+     */
     @TestMethod("testSetAtomAt")
     public void setAtomAt(IAtom atom, int position) {
-		atoms[position] = atom;
-		notifyChanged();
-	}
+        atoms[position] = atom;
+        notifyChanged();
+    }
 
     /**
      * Returns a one line string representation of this Container.
@@ -181,12 +180,10 @@ public class Association extends ElectronContainer implements java.io.Serializab
         StringBuilder s = new StringBuilder();
         s.append("Association(");
         s.append(this.hashCode());
-        for (int i=0; i<atomCount; i++) {
+        for (int i = 0; i < atomCount; i++) {
             s.append(", ").append(atoms[i].toString());
         }
         s.append(')');
         return s.toString();
     }
 }
-
-

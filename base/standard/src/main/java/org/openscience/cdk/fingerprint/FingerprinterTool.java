@@ -45,64 +45,60 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.fingerprint.FingerprinterToolTest")
 public class FingerprinterTool {
 
-	private final static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
+    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FingerprinterTool.class);
 
-	/**
-	 *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
-	 *  so, the molecular structure from which bs2 was generated is a possible
-	 *  substructure of bs1. <p>
-	 *
-	 *  Example: <pre>
-	 *  Molecule mol = MoleculeFactory.makeIndole();
-	 *  BitSet bs = Fingerprinter.getBitFingerprint(mol);
-	 *  Molecule frag1 = MoleculeFactory.makePyrrole();
-	 *  BitSet bs1 = Fingerprinter.getBitFingerprint(frag1);
-	 *  if (Fingerprinter.isSubset(bs, bs1)) {
-	 *      System.out.println("Pyrrole is subset of Indole.");
-	 *  }
-	 *  </pre>
-	 *
-	 *@param  bs1     The reference BitSet
-	 *@param  bs2     The BitSet which is compared with bs1
-	 *@return         True, if bs2 is a subset of bs1
-	 *@cdk.keyword    substructure search
-	 */
+    /**
+     *  Checks whether all the positive bits in BitSet bs2 occur in BitSet bs1. If
+     *  so, the molecular structure from which bs2 was generated is a possible
+     *  substructure of bs1. <p>
+     *
+     *  Example: <pre>
+     *  Molecule mol = MoleculeFactory.makeIndole();
+     *  BitSet bs = Fingerprinter.getBitFingerprint(mol);
+     *  Molecule frag1 = MoleculeFactory.makePyrrole();
+     *  BitSet bs1 = Fingerprinter.getBitFingerprint(frag1);
+     *  if (Fingerprinter.isSubset(bs, bs1)) {
+     *      System.out.println("Pyrrole is subset of Indole.");
+     *  }
+     *  </pre>
+     *
+     *@param  bs1     The reference BitSet
+     *@param  bs2     The BitSet which is compared with bs1
+     *@return         True, if bs2 is a subset of bs1
+     *@cdk.keyword    substructure search
+     */
     @TestMethod("testIsSubset_BitSet_BitSet")
-    public static boolean isSubset(BitSet bs1, BitSet bs2)
-	{
-		BitSet clone = (BitSet) bs1.clone();
-		clone.and(bs2);
-		if (clone.equals(bs2))
-		{
-			return true;
-		}
-		return false;
-	}
+    public static boolean isSubset(BitSet bs1, BitSet bs2) {
+        BitSet clone = (BitSet) bs1.clone();
+        clone.and(bs2);
+        if (clone.equals(bs2)) {
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
+    /**
+     * This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
      * See. {@link #differences(java.util.BitSet, java.util.BitSet)} for a method to list all differences,
      * including those missing present in bs2 but not bs1.
-	 *
-	 * @param bs1 First bitset
-	 * @param bs2 Second bitset
-	 * @return An arrayList of Integers
+     *
+     * @param bs1 First bitset
+     * @param bs2 Second bitset
+     * @return An arrayList of Integers
      * @see #differences(java.util.BitSet, java.util.BitSet)
-	 */
+     */
     @TestMethod("testListDifferences_BitSet_BitSet")
-    public static List<Integer> listDifferences(BitSet bs1, BitSet bs2)
-	{
-		List<Integer> l=new ArrayList<Integer>();
-		logger.debug("Listing bit positions set in bs2 but not in bs1");
-		for (int f = 0; f < bs2.size(); f++) {
-			if (bs2.get(f) && !bs1.get(f)) {
-				l.add(f);
-				logger.debug("Bit " + f + " not set in bs1");
-			}
-		}
-		return l;
-	}
+    public static List<Integer> listDifferences(BitSet bs1, BitSet bs2) {
+        List<Integer> l = new ArrayList<Integer>();
+        logger.debug("Listing bit positions set in bs2 but not in bs1");
+        for (int f = 0; f < bs2.size(); f++) {
+            if (bs2.get(f) && !bs1.get(f)) {
+                l.add(f);
+                logger.debug("Bit " + f + " not set in bs1");
+            }
+        }
+        return l;
+    }
 
     /**
      * List all differences between the two bit vectors. Unlike {@link
@@ -128,4 +124,3 @@ public class FingerprinterTool {
     }
 
 }
-

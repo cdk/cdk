@@ -69,9 +69,9 @@ public class CIPTool {
     /**
      * IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
      */
-    public static final int HYDROGEN = -1;
+    public static final int      HYDROGEN = -1;
 
-    private static CIPLigandRule cipRule = new CIPLigandRule();
+    private static CIPLigandRule cipRule  = new CIPLigandRule();
 
     /**
      * Enumeration with the two tetrahedral chiralities defined by the CIP schema.
@@ -98,8 +98,7 @@ public class CIPTool {
         boolean allAreDifferent = checkIfAllLigandsAreDifferent(ligands);
         if (!allAreDifferent) return CIP_CHIRALITY.NONE;
 
-        if (rsChirality.getStereo() == Stereo.CLOCKWISE)
-            return CIP_CHIRALITY.R;
+        if (rsChirality.getStereo() == Stereo.CLOCKWISE) return CIP_CHIRALITY.R;
 
         return CIP_CHIRALITY.S;
     }
@@ -119,13 +118,11 @@ public class CIPTool {
         for (IStereoElement stereoElement : container.stereoElements()) {
             if (stereoElement instanceof ITetrahedralChirality) {
                 ITetrahedralChirality tc = (ITetrahedralChirality) stereoElement;
-                tc.getChiralAtom().setProperty(CDKConstants.CIP_DESCRIPTOR,
-                                               getCIPChirality(container, tc).toString());
-            }
-            else if (stereoElement instanceof IDoubleBondStereochemistry) {
+                tc.getChiralAtom().setProperty(CDKConstants.CIP_DESCRIPTOR, getCIPChirality(container, tc).toString());
+            } else if (stereoElement instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) stereoElement;
-                dbs.getStereoBond().setProperty(CDKConstants.CIP_DESCRIPTOR,
-                                                getCIPChirality(container, dbs).toString());
+                dbs.getStereoBond()
+                        .setProperty(CDKConstants.CIP_DESCRIPTOR, getCIPChirality(container, dbs).toString());
             }
         }
 
@@ -142,36 +139,30 @@ public class CIPTool {
      * @return A {@link CIP_CHIRALITY} value.
      */
     @TestMethod("testGetCIPChirality_ILigancyFourChirality,testGetCIPChirality_Anti_ILigancyFourChirality")
-    public static CIP_CHIRALITY getCIPChirality(IAtomContainer container,
-                                                ITetrahedralChirality stereoCenter) {
+    public static CIP_CHIRALITY getCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter) {
 
         // the LigancyFourChirality is kind of redundant but we keep for an
         // easy way to get the ILigands array
-        LigancyFourChirality tmp    = new LigancyFourChirality(container, stereoCenter);
-        Stereo               stereo = stereoCenter.getStereo();
+        LigancyFourChirality tmp = new LigancyFourChirality(container, stereoCenter);
+        Stereo stereo = stereoCenter.getStereo();
 
         int parity = permParity(tmp.getLigands());
 
-        if (parity == 0)
-            return CIP_CHIRALITY.NONE;
-        if (parity < 0)
-            stereo = stereo.invert();
+        if (parity == 0) return CIP_CHIRALITY.NONE;
+        if (parity < 0) stereo = stereo.invert();
 
-        if (stereo == Stereo.CLOCKWISE)
-            return CIP_CHIRALITY.R;
-        if (stereo == Stereo.ANTI_CLOCKWISE)
-            return CIP_CHIRALITY.S;
+        if (stereo == Stereo.CLOCKWISE) return CIP_CHIRALITY.R;
+        if (stereo == Stereo.ANTI_CLOCKWISE) return CIP_CHIRALITY.S;
 
         return CIP_CHIRALITY.NONE;
     }
 
     @TestMethod("testGetCIPChirality_DoubleBond_Together,testGetCIPChirality_DoubleBond_Opposite")
-    public static CIP_CHIRALITY getCIPChirality(IAtomContainer             container,
-                                                IDoubleBondStereochemistry stereoCenter) {
+    public static CIP_CHIRALITY getCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter) {
 
         IBond stereoBond = stereoCenter.getStereoBond();
-        IBond leftBond   = stereoCenter.getBonds()[0];
-        IBond rightBond  = stereoCenter.getBonds()[1];
+        IBond leftBond = stereoCenter.getBonds()[0];
+        IBond rightBond = stereoCenter.getBonds()[1];
 
         // the following variables are usd to label the atoms - makes things
         // a little more concise
@@ -189,30 +180,23 @@ public class CIPTool {
 
         Conformation conformation = stereoCenter.getStereo();
 
-        ILigand[] leftLigands  = getLigands(u, container, v);
+        ILigand[] leftLigands = getLigands(u, container, v);
         ILigand[] rightLigands = getLigands(v, container, u);
 
-        if (leftLigands.length > 2 || rightLigands.length > 2)
-            return CIP_CHIRALITY.NONE;
+        if (leftLigands.length > 2 || rightLigands.length > 2) return CIP_CHIRALITY.NONE;
 
         // invert if x/y aren't in the first position
-        if (leftLigands[0].getLigandAtom() != x)
-            conformation = conformation.invert();
-        if (rightLigands[0].getLigandAtom() != y)
-            conformation = conformation.invert();
+        if (leftLigands[0].getLigandAtom() != x) conformation = conformation.invert();
+        if (rightLigands[0].getLigandAtom() != y) conformation = conformation.invert();
 
         int p = permParity(leftLigands) * permParity(rightLigands);
 
-        if (p == 0)
-            return CIP_CHIRALITY.NONE;
+        if (p == 0) return CIP_CHIRALITY.NONE;
 
-        if (p < 0)
-            conformation = conformation.invert();
+        if (p < 0) conformation = conformation.invert();
 
-        if (conformation == Conformation.TOGETHER)
-            return CIP_CHIRALITY.Z;
-        if (conformation == Conformation.OPPOSITE)
-            return CIP_CHIRALITY.E;
+        if (conformation == Conformation.TOGETHER) return CIP_CHIRALITY.Z;
+        if (conformation == Conformation.OPPOSITE) return CIP_CHIRALITY.E;
 
         return CIP_CHIRALITY.NONE;
     }
@@ -234,8 +218,7 @@ public class CIPTool {
 
         int i = 0;
         for (IAtom neighbor : neighbors) {
-            if (neighbor != exclude)
-                ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
+            if (neighbor != exclude) ligands[i++] = new Ligand(container, new VisitedAtoms(), atom, neighbor);
         }
 
         return ligands;
@@ -251,8 +234,8 @@ public class CIPTool {
      */
     @TestMethod("testCheckIfAllLigandsAreDifferent,testCheckIfAllLigandsAreDifferent_False")
     public static boolean checkIfAllLigandsAreDifferent(ILigand[] ligands) {
-        for (int i=0; i<(ligands.length-1); i++) {
-            if (cipRule.compare(ligands[i], ligands[i+1]) == 0) return false;
+        for (int i = 0; i < (ligands.length - 1); i++) {
+            if (cipRule.compare(ligands[i], ligands[i + 1]) == 0) return false;
         }
         return true;
     }
@@ -288,7 +271,7 @@ public class CIPTool {
 
         for (int j = 1, hi = ligands.length; j < hi; j++) {
             ILigand ligand = ligands[j];
-            int i   = j - 1;
+            int i = j - 1;
             int cmp = 0;
             while ((i >= 0) && (cmp = cipRule.compare(ligand, ligands[i])) > 0) {
                 ligands[i + 1] = ligands[i--];
@@ -320,14 +303,12 @@ public class CIPTool {
      * @return           the created {@link LigancyFourChirality}
      */
     @TestMethod("testDefineLigancyFourChirality")
-    public static LigancyFourChirality defineLigancyFourChirality(
-        IAtomContainer container, int chiralAtom,
-        int ligand1, int ligand2, int ligand3, int ligand4,
-        Stereo stereo) {
+    public static LigancyFourChirality defineLigancyFourChirality(IAtomContainer container, int chiralAtom,
+            int ligand1, int ligand2, int ligand3, int ligand4, Stereo stereo) {
         int[] atomIndices = {ligand1, ligand2, ligand3, ligand4};
         VisitedAtoms visitedAtoms = new VisitedAtoms();
         ILigand[] ligands = new ILigand[4];
-        for (int i=0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
             ligands[i] = defineLigand(container, visitedAtoms, chiralAtom, atomIndices[i]);
         }
         return new LigancyFourChirality(container.getAtom(chiralAtom), ligands, stereo);
@@ -347,18 +328,12 @@ public class CIPTool {
      * @return           the created {@link ILigand}
      */
     @TestMethod("testDefineLigand")
-    public static ILigand defineLigand(IAtomContainer container,
-            VisitedAtoms visitedAtoms, int chiralAtom, int ligandAtom) {
+    public static ILigand defineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom,
+            int ligandAtom) {
         if (ligandAtom == HYDROGEN) {
-            return new ImplicitHydrogenLigand(
-                container, visitedAtoms,
-                container.getAtom(chiralAtom)
-            );
+            return new ImplicitHydrogenLigand(container, visitedAtoms, container.getAtom(chiralAtom));
         } else {
-            return new Ligand(
-                container, visitedAtoms,
-                container.getAtom(chiralAtom), container.getAtom(ligandAtom)
-            );
+            return new Ligand(container, visitedAtoms, container.getAtom(chiralAtom), container.getAtom(ligandAtom));
         }
     }
 
@@ -386,28 +361,20 @@ public class CIPTool {
                 if (Order.SINGLE == bond.getOrder()) continue;
                 int duplication = getDuplication(bond.getOrder()) - 1;
                 if (duplication > 0) {
-                    for (int i=1; i<=duplication; i++) {
-                        ligands.add(new TerminalLigand(
-                            container, visitedAtoms, ligandAtom, centralAtom
-                        ));
+                    for (int i = 1; i <= duplication; i++) {
+                        ligands.add(new TerminalLigand(container, visitedAtoms, ligandAtom, centralAtom));
                     }
                 }
             } else {
                 int duplication = getDuplication(bond.getOrder());
                 IAtom connectedAtom = bond.getConnectedAtom(ligandAtom);
                 if (visitedAtoms.isVisited(connectedAtom)) {
-                    ligands.add(new TerminalLigand(
-                        container, visitedAtoms, ligandAtom, connectedAtom
-                    ));
+                    ligands.add(new TerminalLigand(container, visitedAtoms, ligandAtom, connectedAtom));
                 } else {
-                    ligands.add(new Ligand(
-                        container, visitedAtoms, ligandAtom, connectedAtom
-                    ));
+                    ligands.add(new Ligand(container, visitedAtoms, ligandAtom, connectedAtom));
                 }
-                for (int i=2; i<=duplication; i++) {
-                    ligands.add(new TerminalLigand(
-                        container, visitedAtoms, ligandAtom, connectedAtom
-                    ));
+                for (int i = 2; i <= duplication; i++) {
+                    ligands.add(new TerminalLigand(container, visitedAtoms, ligandAtom, connectedAtom));
                 }
             }
         }

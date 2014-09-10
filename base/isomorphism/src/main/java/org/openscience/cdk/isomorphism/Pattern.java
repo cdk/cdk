@@ -108,7 +108,6 @@ public abstract class Pattern {
      */
     public abstract Mappings matchAll(IAtomContainer target);
 
-
     /**
      * Create a pattern which can be used to find molecules which contain the
      * {@code query} structure. The default structure search implementation is

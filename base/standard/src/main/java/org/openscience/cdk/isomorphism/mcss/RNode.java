@@ -41,108 +41,89 @@ import java.util.BitSet;
  * @cdk.module  standard
  * @cdk.githash
  */
-public class RNode
-{
-	// G1/G2 mapping
-	RMap rMap = null;
+public class RNode {
 
-	// set of neighbour nodes in the RGraph
-	BitSet extension = null;
+    // G1/G2 mapping
+    RMap   rMap      = null;
 
-	// set of incompatible nodes in the RGraph
-	BitSet forbidden = null;
+    // set of neighbour nodes in the RGraph
+    BitSet extension = null;
 
+    // set of incompatible nodes in the RGraph
+    BitSet forbidden = null;
 
-	/**
-	 *  Constructor for the RNode object.
-	 *
-	 *@param  id1  number of the bond in the graph 1
-	 *@param  id2  number of the bond in the graph 2
-	 */
-	public RNode(int id1, int id2)
-	{
-		rMap = new RMap(id1, id2);
-		extension = new BitSet();
-		forbidden = new BitSet();
-	}
+    /**
+     *  Constructor for the RNode object.
+     *
+     *@param  id1  number of the bond in the graph 1
+     *@param  id2  number of the bond in the graph 2
+     */
+    public RNode(int id1, int id2) {
+        rMap = new RMap(id1, id2);
+        extension = new BitSet();
+        forbidden = new BitSet();
+    }
 
+    /**
+     *  Sets the rMap attribute of the RNode object.
+     *
+     *@param  rMap  The new rMap value
+     */
+    public void setRMap(RMap rMap) {
+        this.rMap = rMap;
+    }
 
-	/**
-	 *  Sets the rMap attribute of the RNode object.
-	 *
-	 *@param  rMap  The new rMap value
-	 */
-	public void setRMap(RMap rMap)
-	{
-		this.rMap = rMap;
-	}
+    /**
+     *  Sets the extension attribute of the RNode object.
+     *
+     *@param  extension  The new extension value
+     */
+    public void setExtension(BitSet extension) {
+        this.extension = extension;
+    }
 
+    /**
+     *  Sets the forbidden attribute of the RNode object.
+     *
+     *@param  forbidden  The new forbidden value
+     */
+    public void setForbidden(BitSet forbidden) {
+        this.forbidden = forbidden;
+    }
 
-	/**
-	 *  Sets the extension attribute of the RNode object.
-	 *
-	 *@param  extension  The new extension value
-	 */
-	public void setExtension(BitSet extension)
-	{
-		this.extension = extension;
-	}
+    /**
+     *  Gets the rMap attribute of the RNode object.
+     *
+     *@return    The rMap value
+     */
+    public RMap getRMap() {
+        return rMap;
+    }
 
+    /**
+     *  Gets the extension attribute of the RNode object.
+     *
+     *@return    The extension value
+     */
+    public BitSet getExtension() {
+        return extension;
+    }
 
-	/**
-	 *  Sets the forbidden attribute of the RNode object.
-	 *
-	 *@param  forbidden  The new forbidden value
-	 */
-	public void setForbidden(BitSet forbidden)
-	{
-		this.forbidden = forbidden;
-	}
+    /**
+     *  Gets the forbidden attribute of the RNode object.
+     *
+     *@return    The forbidden value
+     */
+    public BitSet getForbidden() {
+        return forbidden;
+    }
 
-
-	/**
-	 *  Gets the rMap attribute of the RNode object.
-	 *
-	 *@return    The rMap value
-	 */
-	public RMap getRMap()
-	{
-		return rMap;
-	}
-
-
-	/**
-	 *  Gets the extension attribute of the RNode object.
-	 *
-	 *@return    The extension value
-	 */
-	public BitSet getExtension()
-	{
-		return extension;
-	}
-
-
-	/**
-	 *  Gets the forbidden attribute of the RNode object.
-	 *
-	 *@return    The forbidden value
-	 */
-	public BitSet getForbidden()
-	{
-		return forbidden;
-	}
-
-
-
-	/**
-	 *  Returns a string representation of the RNode.
-	 *
-	 *@return    the string representation of the RNode
-	 */
-	public String toString()
-	{
-		return ("id1 : " + rMap.id1 + ", id2 : " + rMap.id2 + "\n" + "extension : " + extension + "\n"
-				 + "forbiden : " + forbidden);
-	}
+    /**
+     *  Returns a string representation of the RNode.
+     *
+     *@return    the string representation of the RNode
+     */
+    public String toString() {
+        return ("id1 : " + rMap.id1 + ", id2 : " + rMap.id2 + "\n" + "extension : " + extension + "\n" + "forbiden : " + forbidden);
+    }
 }
-

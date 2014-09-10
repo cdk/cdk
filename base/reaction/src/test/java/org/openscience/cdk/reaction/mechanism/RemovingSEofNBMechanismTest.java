@@ -31,39 +31,42 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RemovingSEofNBMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(RemovingSEofNBMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(RemovingSEofNBMechanism.class);
+    }
 
-	/**
-	 *  Constructor for the RemovingSEofNBMechanismTest object.
-	 */
-	public RemovingSEofNBMechanismTest(){
+    /**
+     *  Constructor for the RemovingSEofNBMechanismTest object.
+     */
+    public RemovingSEofNBMechanismTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testRemovingSEofNBMechanism(){
-		IReactionMechanism mechanism = new RemovingSEofNBMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRemovingSEofNBMechanism() {
+        IReactionMechanism mechanism = new RemovingSEofNBMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new RemovingSEofNBMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new RemovingSEofNBMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

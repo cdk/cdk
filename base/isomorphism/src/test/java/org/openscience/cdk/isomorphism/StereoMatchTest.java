@@ -47,189 +47,136 @@ import static org.junit.Assert.assertTrue;
 public class StereoMatchTest {
 
     /* target does not have an element */
-    @Test public void tetrahedral_missingInTarget() {
+    @Test
+    public void tetrahedral_missingInTarget() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        query.addStereoElement(new TetrahedralChirality(query.getAtom(0),
-                                                        new IAtom[]{
-                                                                query.getAtom(1),
-                                                                query.getAtom(2),
-                                                                query.getAtom(3),
-                                                                query.getAtom(4)
-                                                        },
-                                                        ITetrahedralChirality.Stereo.CLOCKWISE));
+        query.addStereoElement(new TetrahedralChirality(query.getAtom(0), new IAtom[]{query.getAtom(1),
+                query.getAtom(2), query.getAtom(3), query.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    /* Query does not have an element but the target does - the query
-     * therefore is a valid mapping. */
-    @Test public void tetrahedral_missingInQuery() {
+    /*
+     * Query does not have an element but the target does - the query therefore
+     * is a valid mapping.
+     */
+    @Test
+    public void tetrahedral_missingInQuery() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_match() {
+    @Test
+    public void tetrahedral_match() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        query.addStereoElement(new TetrahedralChirality(query.getAtom(0),
-                                                        new IAtom[]{
-                                                                query.getAtom(1),
-                                                                query.getAtom(2),
-                                                                query.getAtom(3),
-                                                                query.getAtom(4)
-                                                        },
-                                                        ITetrahedralChirality.Stereo.CLOCKWISE));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        query.addStereoElement(new TetrahedralChirality(query.getAtom(0), new IAtom[]{query.getAtom(1),
+                query.getAtom(2), query.getAtom(3), query.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_mismatch() {
+    @Test
+    public void tetrahedral_mismatch() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        query.addStereoElement(new TetrahedralChirality(query.getAtom(0),
-                                                        new IAtom[]{
-                                                                query.getAtom(1),
-                                                                query.getAtom(2),
-                                                                query.getAtom(3),
-                                                                query.getAtom(4)
-                                                        },
-                                                        ITetrahedralChirality.Stereo.CLOCKWISE));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        query.addStereoElement(new TetrahedralChirality(query.getAtom(0), new IAtom[]{query.getAtom(1),
+                query.getAtom(2), query.getAtom(3), query.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    /* Map to different atom order which means the clockwise and anticlockwise match */
-    @Test public void tetrahedral_match_swap() {
+    /*
+     * Map to different atom order which means the clockwise and anticlockwise
+     * match
+     */
+    @Test
+    public void tetrahedral_match_swap() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        query.addStereoElement(new TetrahedralChirality(query.getAtom(0),
-                                                        new IAtom[]{
-                                                                query.getAtom(1),
-                                                                query.getAtom(2),
-                                                                query.getAtom(3),
-                                                                query.getAtom(4)
-                                                        },
-                                                        ITetrahedralChirality.Stereo.CLOCKWISE));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        query.addStereoElement(new TetrahedralChirality(query.getAtom(0), new IAtom[]{query.getAtom(1),
+                query.getAtom(2), query.getAtom(3), query.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
     /* These don't match because we don't map the atoms in order. */
-    @Test public void tetrahedral_mismatch_swap() {
+    @Test
+    public void tetrahedral_mismatch_swap() {
         IAtomContainer query = dimethylpropane();
         IAtomContainer target = dimethylpropane();
-        query.addStereoElement(new TetrahedralChirality(query.getAtom(0),
-                                                        new IAtom[]{
-                                                                query.getAtom(1),
-                                                                query.getAtom(2),
-                                                                query.getAtom(3),
-                                                                query.getAtom(4)
-                                                        },
-                                                        ITetrahedralChirality.Stereo.CLOCKWISE));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        query.addStereoElement(new TetrahedralChirality(query.getAtom(0), new IAtom[]{query.getAtom(1),
+                query.getAtom(2), query.getAtom(3), query.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
-    @Test public void geometric_match_together() {
+    @Test
+    public void geometric_match_together() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
-                                                             new IBond[]{query.getBond(1), query.getBond(2)},
-                                                             IDoubleBondStereochemistry.Conformation.TOGETHER));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0), new IBond[]{query.getBond(1),
+                query.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
-    @Test public void geometric_match_opposite() {
+    @Test
+    public void geometric_match_opposite() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
-                                                             new IBond[]{query.getBond(1), query.getBond(2)},
-                                                             IDoubleBondStereochemistry.Conformation.OPPOSITE));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0), new IBond[]{query.getBond(1),
+                query.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
-    @Test public void geometric_mismatch_together() {
+    @Test
+    public void geometric_mismatch_together() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
-                                                             new IBond[]{query.getBond(1), query.getBond(2)},
-                                                             IDoubleBondStereochemistry.Conformation.TOGETHER));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0), new IBond[]{query.getBond(1),
+                query.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
-    @Test public void geometric_mismatch_opposite() {
+    @Test
+    public void geometric_mismatch_opposite() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
-                                                             new IBond[]{query.getBond(1), query.getBond(2)},
-                                                             IDoubleBondStereochemistry.Conformation.OPPOSITE));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0), new IBond[]{query.getBond(1),
+                query.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
-    @Test public void geometric_missingInQuery() {
+    @Test
+    public void geometric_missingInQuery() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 
-    @Test public void geometric_missingInTarget() {
+    @Test
+    public void geometric_missingInTarget() {
         IAtomContainer query = but2ene();
         IAtomContainer target = but2ene();
-        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0),
-                                                             new IBond[]{query.getBond(1), query.getBond(2)},
-                                                             IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        query.addStereoElement(new DoubleBondStereochemistry(query.getBond(0), new IBond[]{query.getBond(1),
+                query.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new StereoMatch(query, target).apply(new int[]{0, 1, 2, 3}));
     }
 

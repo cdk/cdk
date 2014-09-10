@@ -36,15 +36,13 @@ public class BFSShortestPathTest extends CDKTestCase {
         super();
     }
 
-	@Test
-	public void testFindPathBetween_Graph_Object_Object() {
-	    IAtomContainer apinene = MoleculeFactory.makeAlphaPinene();
-		SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
-		Object startVertex = graph.vertexSet().toArray()[0];
-		Object endVertex = graph.vertexSet().toArray()[5];
-		List list = BFSShortestPath.findPathBetween(graph, startVertex, endVertex);
-		Assert.assertTrue(list.size() > 0);
-	}
+    @Test
+    public void testFindPathBetween_Graph_Object_Object() {
+        IAtomContainer apinene = MoleculeFactory.makeAlphaPinene();
+        SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
+        Object startVertex = graph.vertexSet().toArray()[0];
+        Object endVertex = graph.vertexSet().toArray()[5];
+        List list = BFSShortestPath.findPathBetween(graph, startVertex, endVertex);
+        Assert.assertTrue(list.size() > 0);
+    }
 }
-
-

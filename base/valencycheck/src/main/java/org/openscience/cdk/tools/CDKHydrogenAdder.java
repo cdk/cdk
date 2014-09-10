@@ -75,16 +75,14 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 @TestClass("org.openscience.cdk.tools.CDKHydrogenAdderTest")
 public class CDKHydrogenAdder {
 
-    private AtomTypeFactory atomTypeList;
-    private final static String ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
+    private AtomTypeFactory                      atomTypeList;
+    private final static String                  ATOM_TYPE_LIST = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
 
-    private static Map<String,CDKHydrogenAdder> tables = new Hashtable<String,CDKHydrogenAdder>(3);
+    private static Map<String, CDKHydrogenAdder> tables         = new Hashtable<String, CDKHydrogenAdder>(3);
 
     private CDKHydrogenAdder(IChemObjectBuilder builder) {
-        if (atomTypeList == null)
-            atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
+        if (atomTypeList == null) atomTypeList = AtomTypeFactory.getInstance(ATOM_TYPE_LIST, builder);
     }
-
 
     @TestMethod("testInstance")
     public static CDKHydrogenAdder getInstance(IChemObjectBuilder builder) {
@@ -93,53 +91,50 @@ public class CDKHydrogenAdder {
         return tables.get(builder.getClass().getName());
     }
 
-
-	/**
-	 * Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
-	 *
-	 * @param  container The molecule to which H's will be added
-	 * @throws CDKException Throws if insufficient information is present
-	 *
-	 * @cdk.keyword hydrogens, adding
-	 */
+    /**
+     * Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
+     *
+     * @param  container The molecule to which H's will be added
+     * @throws CDKException Throws if insufficient information is present
+     *
+     * @cdk.keyword hydrogens, adding
+     */
     @TestMethod("testMethane,testFormaldehyde,testHCN")
     public void addImplicitHydrogens(IAtomContainer container) throws CDKException {
         for (IAtom atom : container.atoms()) {
-            if ( !(atom instanceof IPseudoAtom) ){
+            if (!(atom instanceof IPseudoAtom)) {
                 addImplicitHydrogens(container, atom);
             }
         }
     }
 
-	/**
-	 * Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
-	 * If the atom type is "X", then the atom is assigned zero implicit hydrogens.
-	 *
-	 * @param  container  The molecule to which H's will be added
-	 * @param  atom         IAtom to set the implicit hydrogen count for
-	 * @throws CDKException Throws if insufficient information is present
-	 */
+    /**
+     * Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
+     * If the atom type is "X", then the atom is assigned zero implicit hydrogens.
+     *
+     * @param  container  The molecule to which H's will be added
+     * @param  atom         IAtom to set the implicit hydrogen count for
+     * @throws CDKException Throws if insufficient information is present
+     */
     @TestMethod("testImpHByAtom")
     public void addImplicitHydrogens(IAtomContainer container, IAtom atom) throws CDKException {
-		if (atom.getAtomTypeName() == null)
-			throw new CDKException("IAtom is not typed! " + atom.getSymbol());
+        if (atom.getAtomTypeName() == null) throw new CDKException("IAtom is not typed! " + atom.getSymbol());
 
-		if ("X".equals(atom.getAtomTypeName())) {
-            if (atom.getImplicitHydrogenCount() == null)
-			    atom.setImplicitHydrogenCount(0);
-			return;
-		}
+        if ("X".equals(atom.getAtomTypeName())) {
+            if (atom.getImplicitHydrogenCount() == null) atom.setImplicitHydrogenCount(0);
+            return;
+        }
 
-		IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
-		if (type == null)
-			throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
+        IAtomType type = atomTypeList.getAtomType(atom.getAtomTypeName());
+        if (type == null)
+            throw new CDKException("Atom type is not a recognized CDK atom type: " + atom.getAtomTypeName());
 
-		if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
-			throw new CDKException("Atom type is too general; cannot decide the number of implicit hydrogen to add for: " + atom.getAtomTypeName());
+        if (type.getFormalNeighbourCount() == CDKConstants.UNSET)
+            throw new CDKException(
+                    "Atom type is too general; cannot decide the number of implicit hydrogen to add for: "
+                            + atom.getAtomTypeName());
 
-		// very simply counting: each missing explicit neighbor is a missing hydrogen
-		atom.setImplicitHydrogenCount(
-			type.getFormalNeighbourCount() - container.getConnectedAtomsCount(atom)
-		);
-	}
+        // very simply counting: each missing explicit neighbor is a missing hydrogen
+        atom.setImplicitHydrogenCount(type.getFormalNeighbourCount() - container.getConnectedAtomsCount(atom));
+    }
 }

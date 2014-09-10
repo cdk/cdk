@@ -39,11 +39,11 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAngleBondTest")
 public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
+
     private double upper;
     private double lower;
 
-    public PharmacophoreQueryAngleBond() {
-    }
+    public PharmacophoreQueryAngleBond() {}
 
     /**
      * Create a query angle constraint between three query groups.
@@ -56,10 +56,8 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      * @param lower The lower bound of the angle between the three groups
      * @param upper The upper bound of the angle between the three groups
      */
-    public PharmacophoreQueryAngleBond(PharmacophoreQueryAtom atom1,
-                                       PharmacophoreQueryAtom atom2,
-                                       PharmacophoreQueryAtom atom3,
-                                       double lower, double upper) {
+    public PharmacophoreQueryAngleBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2,
+            PharmacophoreQueryAtom atom3, double lower, double upper) {
         super(new IAtom[]{atom1, atom2, atom3});
         this.upper = round(upper, 2);
         this.lower = round(lower, 2);
@@ -79,10 +77,8 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      * @param atom3 The third pharmacophore group
      * @param angle The exact angle between the two groups
      */
-    public PharmacophoreQueryAngleBond(PharmacophoreQueryAtom atom1,
-                                       PharmacophoreQueryAtom atom2,
-                                       PharmacophoreQueryAtom atom3,
-                                       double angle) {
+    public PharmacophoreQueryAngleBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2,
+            PharmacophoreQueryAtom atom3, double angle) {
         super(new PharmacophoreQueryAtom[]{atom1, atom2, atom3});
         this.upper = round(angle, 2);
         this.lower = round(angle, 2);
@@ -104,7 +100,8 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
             PharmacophoreAngleBond pbond = (PharmacophoreAngleBond) bond;
             double bondLength = round(pbond.getBondLength(), 2);
             return bondLength >= lower && bondLength <= upper;
-        } else return false;
+        } else
+            return false;
     }
 
     @TestMethod("testUpper")

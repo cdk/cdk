@@ -45,9 +45,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  * @cdk.keyword LogP
  * @cdk.keyword descriptor
  */
-@TestClass(
-    "org.openscience.cdk.qsar.descriptors.molecular.MannholdLogPDescriptorTest"
-)
+@TestClass("org.openscience.cdk.qsar.descriptors.molecular.MannholdLogPDescriptorTest")
 public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"MLogP"};
@@ -59,12 +57,9 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
      */
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/" +
-            "chemoinformatics-algorithms/#mannholdLogP",
-            this.getClass().getName(),
-            "The Chemistry Development Kit"
-        );
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/"
+                + "chemoinformatics-algorithms/#mannholdLogP", this.getClass().getName(),
+                "The Chemistry Development Kit");
     }
 
     /**
@@ -100,11 +95,9 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-         return new DescriptorValue(getSpecification(), getParameterNames(),
-             getParameters(), new DoubleResult(Double.NaN),
-             getDescriptorNames(), e
-         );
-     }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      *  Calculates the Mannhold LogP for an atom container.
@@ -117,7 +110,7 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer ac = null;
         try {
-            ac = (IAtomContainer)atomContainer.clone();
+            ac = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         }
@@ -133,12 +126,10 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
                 }
             }
         }
-        double mLogP = 1.46 + 0.11*carbonCount - 0.11*heteroCount;
+        double mLogP = 1.46 + 0.11 * carbonCount - 0.11 * heteroCount;
 
-        return new DescriptorValue(
-            getSpecification(), getParameterNames(), getParameters(),
-            new DoubleResult(mLogP), getDescriptorNames()
-        );
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(mLogP),
+                getDescriptorNames());
     }
 
     /**
@@ -174,4 +165,3 @@ public class MannholdLogPDescriptor extends AbstractMolecularDescriptor implemen
     }
 
 }
-

@@ -28,44 +28,44 @@ import org.junit.Test;
  */
 public class EntryTest extends AbstractEntryTest {
 
-	@Before
-	public void setTestClass() {
-		super.setTestClass(new Entry());
-	}
+    @Before
+    public void setTestClass() {
+        super.setTestClass(new Entry());
+    }
 
-	@After
-	public void testTestedClass() {
-		Assert.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
-	}
+    @After
+    public void testTestedClass() {
+        Assert.assertTrue(super.getTestClass().getClass().getName().endsWith(".Entry"));
+    }
 
-	@Test
-	public void testConstructor() {
-		Entry entry = new Entry();
-		Assert.assertNotNull(entry);
-	}
+    @Test
+    public void testConstructor() {
+        Entry entry = new Entry();
+        Assert.assertNotNull(entry);
+    }
 
-	@Test
-	public void testConstructor_String_String() {
-		Entry entry = new Entry("testid", "testTerm");
-		Assert.assertNotNull(entry);
-		Assert.assertEquals(entry.getID(), "testid");
-		Assert.assertEquals(entry.getLabel(), "testTerm");
-	}
+    @Test
+    public void testConstructor_String_String() {
+        Entry entry = new Entry("testid", "testTerm");
+        Assert.assertNotNull(entry);
+        Assert.assertEquals(entry.getID(), "testid");
+        Assert.assertEquals(entry.getLabel(), "testTerm");
+    }
 
-	@Test
-	public void testConstructor_String() {
-		Entry entry = new Entry("testid");
-		Assert.assertNotNull(entry);
-		Assert.assertEquals(entry.getID(), "testid");
-		Assert.assertEquals(entry.getLabel(), "");
-	}
+    @Test
+    public void testConstructor_String() {
+        Entry entry = new Entry("testid");
+        Assert.assertNotNull(entry);
+        Assert.assertEquals(entry.getID(), "testid");
+        Assert.assertEquals(entry.getLabel(), "");
+    }
 
-	@Test
-	public void testConstructor_IDLowerCasing() {
-		Entry entry = new Entry("testID", "testTerm");
-		Assert.assertNotNull(entry);
-		Assert.assertEquals(entry.getID(), "testid");
-		Assert.assertEquals(entry.getLabel(), "testTerm");
-	}
+    @Test
+    public void testConstructor_IDLowerCasing() {
+        Entry entry = new Entry("testID", "testTerm");
+        Assert.assertNotNull(entry);
+        Assert.assertEquals(entry.getID(), "testid");
+        Assert.assertEquals(entry.getLabel(), "testTerm");
+    }
 
 }

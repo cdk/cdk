@@ -35,66 +35,74 @@ import org.junit.Test;
  */
 public abstract class AbstractAminoAcidTest extends AbstractMonomerTest {
 
-    @Test public void testAddCTerminus_IAtom() {
-        IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class,"C");
+    @Test
+    public void testAddCTerminus_IAtom() {
+        IAminoAcid m = (IAminoAcid) newChemObject();
+        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class, "C");
         m.addCTerminus(cTerminus);
         Assert.assertEquals(cTerminus, m.getCTerminus());
     }
-    @Test public void testGetCTerminus() {
-        IAminoAcid m = (IAminoAcid)newChemObject();
+
+    @Test
+    public void testGetCTerminus() {
+        IAminoAcid m = (IAminoAcid) newChemObject();
         Assert.assertNull(m.getCTerminus());
     }
 
-    @Test public void testAddNTerminus_IAtom() {
-        IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class,"N");
+    @Test
+    public void testAddNTerminus_IAtom() {
+        IAminoAcid m = (IAminoAcid) newChemObject();
+        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class, "N");
         m.addNTerminus(nTerminus);
         Assert.assertEquals(nTerminus, m.getNTerminus());
     }
-    @Test public void testGetNTerminus() {
-        IAminoAcid m = (IAminoAcid)newChemObject();
+
+    @Test
+    public void testGetNTerminus() {
+        IAminoAcid m = (IAminoAcid) newChemObject();
         Assert.assertNull(m.getNTerminus());
     }
 
     /**
      * Method to test whether the class complies with RFC #9.
      */
-    @Test public void testToString() {
-        IAminoAcid m = (IAminoAcid)newChemObject();
-        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class,"N");
+    @Test
+    public void testToString() {
+        IAminoAcid m = (IAminoAcid) newChemObject();
+        IAtom nTerminus = m.getBuilder().newInstance(IAtom.class, "N");
         m.addNTerminus(nTerminus);
         String description = m.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
             Assert.assertTrue('\r' != description.charAt(i));
         }
 
-        m = (IAminoAcid)newChemObject();
-        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class,"C");
+        m = (IAminoAcid) newChemObject();
+        IAtom cTerminus = m.getBuilder().newInstance(IAtom.class, "C");
         m.addCTerminus(cTerminus);
         description = m.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
             Assert.assertTrue('\r' != description.charAt(i));
         }
-}
+    }
 
-    @Test public void testClone() throws Exception {
-        IAminoAcid aa = (IAminoAcid)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IAminoAcid aa = (IAminoAcid) newChemObject();
         Object clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);
         Assert.assertNotSame(aa, clone);
 
-        aa = (IAminoAcid)newChemObject();
-        IAtom nTerminus = aa.getBuilder().newInstance(IAtom.class,"N");
+        aa = (IAminoAcid) newChemObject();
+        IAtom nTerminus = aa.getBuilder().newInstance(IAtom.class, "N");
         aa.addNTerminus(nTerminus);
         clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);
         Assert.assertNotSame(aa, clone);
 
-        aa = (IAminoAcid)newChemObject();
-        IAtom cTerminus = aa.getBuilder().newInstance(IAtom.class,"C");
+        aa = (IAminoAcid) newChemObject();
+        IAtom cTerminus = aa.getBuilder().newInstance(IAtom.class, "C");
         aa.addCTerminus(cTerminus);
         clone = aa.clone();
         Assert.assertTrue(clone instanceof IAminoAcid);

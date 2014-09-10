@@ -54,8 +54,7 @@ class AbstractHashGenerator {
      */
     @TestMethod("testConstruction_Null")
     public AbstractHashGenerator(Pseudorandom pseudorandom) {
-        if (pseudorandom == null)
-            throw new NullPointerException("null pseduorandom number generator provided");
+        if (pseudorandom == null) throw new NullPointerException("null pseduorandom number generator provided");
         this.pseudorandom = pseudorandom;
     }
 
@@ -90,7 +89,8 @@ class AbstractHashGenerator {
      *             generator
      * @return next pseudorandom number
      */
-    @TestMethod("testRotate") long rotate(long seed) {
+    @TestMethod("testRotate")
+    long rotate(long seed) {
         return pseudorandom.next(seed);
     }
 
@@ -103,7 +103,8 @@ class AbstractHashGenerator {
      * @param n     the number of times to rotate the value
      * @return the {@literal long} value rotated the specified number of times
      */
-    @TestMethod("testRotate_N") long rotate(long value, int n) {
+    @TestMethod("testRotate_N")
+    long rotate(long value, int n) {
         while (n-- > 0)
             value = pseudorandom.next(value);
         return value;
@@ -127,7 +128,8 @@ class AbstractHashGenerator {
      * @param value a {@literal long} value to distribute
      * @return the {@literal long} value distributed a set amount
      */
-    @TestMethod("testDistribute") long distribute(long value) {
+    @TestMethod("testDistribute")
+    long distribute(long value) {
         // rotate 1-8 times
         return rotate(value, 1 + lowestThreeBits(value));
     }
@@ -141,8 +143,7 @@ class AbstractHashGenerator {
     @TestMethod("testToAdjList")
     static int[][] toAdjList(IAtomContainer container) {
 
-        if (container == null)
-            throw new IllegalArgumentException("atom container was null");
+        if (container == null) throw new IllegalArgumentException("atom container was null");
 
         int n = container.getAtomCount();
 
@@ -156,16 +157,14 @@ class AbstractHashGenerator {
 
             if (v < 0 || w < 0)
                 throw new IllegalArgumentException("bond at index " + container.getBondNumber(bond)
-                                                           + " contained an atom not pressent in molecule");
+                        + " contained an atom not pressent in molecule");
 
             graph[v][degree[v]++] = w;
             graph[w][degree[w]++] = v;
 
             // if the vertex degree of v or w reaches capacity, double the size
-            if (degree[v] == graph[v].length)
-                graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
-            if (degree[w] == graph[w].length)
-                graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
+            if (degree[v] == graph[v].length) graph[v] = Arrays.copyOf(graph[v], degree[v] * 2);
+            if (degree[w] == graph[w].length) graph[w] = Arrays.copyOf(graph[w], degree[w] * 2);
         }
 
         for (int v = 0; v < n; v++) {

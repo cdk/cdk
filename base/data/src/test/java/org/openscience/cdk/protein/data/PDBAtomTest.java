@@ -38,16 +38,19 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class PDBAtomTest extends AbstractPDBAtomTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new PDBAtom("C");
             }
         });
     }
 
-    @Test public void testPDBAtom_IElement() {
-    	IElement element = newChemObject().getBuilder().newInstance(IElement.class);
+    @Test
+    public void testPDBAtom_IElement() {
+        IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IAtom a = new PDBAtom(element);
         Assert.assertNotNull(a);
     }
@@ -55,8 +58,9 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     /**
      * Method to test the Atom(String symbol) method.
      */
-    @Test public void testPDBAtom_String() {
-    	IPDBAtom a = new PDBAtom("C");
+    @Test
+    public void testPDBAtom_String() {
+        IPDBAtom a = new PDBAtom("C");
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertNull(a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -66,7 +70,8 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    @Test public void testPDBAtom_String_Point3d() {
+    @Test
+    public void testPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = new PDBAtom("C", point3d);
@@ -79,14 +84,15 @@ public class PDBAtomTest extends AbstractPDBAtomTest {
     /**
      * Method to test the compare() method.
      */
-    @Test public void testCompare_Object() {
-    	IPDBAtom someAtom = new PDBAtom("C");
+    @Test
+    public void testCompare_Object() {
+        IPDBAtom someAtom = new PDBAtom("C");
         if (someAtom instanceof org.openscience.cdk.Atom) {
-        	org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom)someAtom;
-        	Assert.assertTrue(atom.compare(atom));
-        	IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class,"H");
-        	Assert.assertFalse(atom.compare(hydrogen));
-        	Assert.assertFalse(atom.compare("C"));
+            org.openscience.cdk.Atom atom = (org.openscience.cdk.Atom) someAtom;
+            Assert.assertTrue(atom.compare(atom));
+            IAtom hydrogen = atom.getBuilder().newInstance(IAtom.class, "H");
+            Assert.assertFalse(atom.compare(hydrogen));
+            Assert.assertFalse(atom.compare("C"));
         }
     }
 

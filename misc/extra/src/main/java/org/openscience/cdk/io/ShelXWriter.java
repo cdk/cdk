@@ -71,9 +71,9 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public ShelXWriter(Writer out) {
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
+        try {
+            if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter) out;
             } else {
                 writer = new BufferedWriter(out);
             }
@@ -95,15 +95,15 @@ public class ShelXWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
     /**
@@ -111,17 +111,17 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      */
     @TestMethod("testClose")
     public void close() throws IOException {
-    	writer.close();
+        writer.close();
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (ICrystal.class.equals(interfaces[i])) return true;
-		}
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (ICrystal.class.equals(interfaces[i])) return true;
+        }
+        return false;
+    }
 
     /**
      * Serializes the IChemObject to ShelX and redirects it to the output Writer.
@@ -130,7 +130,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof ICrystal) {
-            writeCrystal((ICrystal)object);
+            writeCrystal((ICrystal) object);
         } else {
             throw new CDKException("Only Crystal objects can be read.");
         }
@@ -153,7 +153,7 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         double blength = b.length();
         double clength = c.length();
         double alpha = Math.toDegrees(b.angle(c));
-        double beta  = Math.toDegrees(a.angle(c));
+        double beta = Math.toDegrees(a.angle(c));
         double gamma = Math.toDegrees(a.angle(b));
         FormatStringBuffer format = new FormatStringBuffer("%7.5lf");
         write("CELL " + format.reset("%7.5f").format(1.54184).toString() + "   ");
@@ -163,8 +163,8 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         write(format.reset("%8.4f").format(alpha) + " ");
         write(format.reset("%8.4f").format(beta) + " ");
         writeln(format.reset("%8.4f").format(gamma) + "");
-        writeln("ZERR " + format.reset("%1.5f").format((double)crystal.getZ()) +
-              "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
+        writeln("ZERR " + format.reset("%1.5f").format((double) crystal.getZ())
+                + "    0.01000  0.01000   0.01000   0.0100   0.0100   0.0100");
         String spaceGroup = crystal.getSpaceGroup();
         if ("P1".equals(spaceGroup)) {
             writeln("LATT  -1");
@@ -174,14 +174,14 @@ public class ShelXWriter extends DefaultChemObjectWriter {
             writeln("SYMM     -X   , 1/2+Y   , 1/2-Z");
             writeln("SYMM  1/2-X   ,    -Y   , 1/2+Z");
         }
-//        MFAnalyser mfa = new MFAnalyser(crystal);
+        //        MFAnalyser mfa = new MFAnalyser(crystal);
         String elemNames = "";
         String elemCounts = "";
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(crystal);
         List<IElement> asortedElements = MolecularFormulaManipulator.elements(formula);
         Iterator<IElement> elements = asortedElements.iterator();
         while (elements.hasNext()) {
-        	IElement element = elements.next();
+            IElement element = elements.next();
             String symbol = element.getSymbol();
             elemNames += symbol + "    ".substring(symbol.length());
             String countS = Integer.valueOf(MolecularFormulaManipulator.getElementCount(formula, element)).toString();
@@ -191,17 +191,17 @@ public class ShelXWriter extends DefaultChemObjectWriter {
         writeln("UNIT  " + elemCounts);
         /* write atoms */
         for (int i = 0; i < crystal.getAtomCount(); i++) {
-        	IAtom atom = crystal.getAtom(i);
+            IAtom atom = crystal.getAtom(i);
             Point3d cartCoord = atom.getPoint3d();
             Point3d fracCoord = CrystalGeometryTools.cartesianToFractional(a, b, c, cartCoord);
             String symbol = atom.getSymbol();
-            String output = symbol + (i+1);
+            String output = symbol + (i + 1);
             write(output);
-            for (int j=1; j<5 - output.length(); j++) {
+            for (int j = 1; j < 5 - output.length(); j++) {
                 write(" ");
             }
             write("     ");
-            String elemID = Integer.valueOf(asortedElements.indexOf(symbol)+1).toString();
+            String elemID = Integer.valueOf(asortedElements.indexOf(symbol) + 1).toString();
             write(elemID);
             write("    ".substring(elemID.length()));
             write(format.reset("%7.5f").format(fracCoord.x) + "   ");
@@ -213,20 +213,18 @@ public class ShelXWriter extends DefaultChemObjectWriter {
 
     private void write(String s) {
         try {
-        	writer.write(s);
+            writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 
     private void writeln(String s) {
         try {
-        	writer.write(s);
-        	writer.newLine();
+            writer.write(s);
+            writer.newLine();
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 

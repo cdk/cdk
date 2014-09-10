@@ -33,7 +33,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-
 /**
  * A topological descriptor combining distance and adjacency information.
  * This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
@@ -73,16 +72,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.EccentricConnectivityIndexDescriptorTest")
 public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     private static final String[] names = {"ECCEN"};
 
     public EccentricConnectivityIndexDescriptor() {}
 
-	@TestMethod("testGetSpecification")
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex",
-		    this.getClass().getName(),
-		    "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#eccentricConnectivityIndex", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -104,10 +103,10 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     @TestMethod("testGetParameters")
     public Object[] getParameters() {
         // no parameters to return
-        return(null);
+        return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -120,9 +119,8 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
     @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
         // no param names to return
-        return(null);
+        return (null);
     }
-
 
     /**
      *  Gets the parameterType attribute of the EccentricConnectivityIndexDescriptor object
@@ -132,7 +130,7 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
      */
     @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-         return (null);
+        return (null);
     }
 
     /**
@@ -160,8 +158,8 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
             eccenindex += max * degree;
         }
         IntegerResult retval = new IntegerResult(eccenindex);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames(), null);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames(), null);
     }
 
     /**
@@ -180,5 +178,3 @@ public class EccentricConnectivityIndexDescriptor extends AbstractMolecularDescr
         return new IntegerResult(1);
     }
 }
-
-

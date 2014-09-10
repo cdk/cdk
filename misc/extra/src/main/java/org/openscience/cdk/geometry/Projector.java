@@ -35,37 +35,28 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.keyword projection in 2D
  * @cdk.githash
  */
-public class Projector  {
+public class Projector {
 
-  public static void project2D(IAtomContainer container) {
-    for (int i = 0; i < container.getAtomCount(); i++) {
-      IAtom atom = container.getAtom(i);
-      if (atom.getPoint3d() != null) {
-    	  atom.setPoint2d(
-    		new Point2d(
-    			atom.getPoint3d().x,
-    			atom.getPoint3d().y
-    		)
-    	  );
-      } else {
-        // should throw an exception
-      }
+    public static void project2D(IAtomContainer container) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            IAtom atom = container.getAtom(i);
+            if (atom.getPoint3d() != null) {
+                atom.setPoint2d(new Point2d(atom.getPoint3d().x, atom.getPoint3d().y));
+            } else {
+                // should throw an exception
+            }
+        }
     }
-  }
-  public static void project2D(IAtomContainer container, HashMap<IAtom,Point2d> renderingCoordinates) {
-    for (int i = 0; i < container.getAtomCount(); i++) {
-      IAtom atom = container.getAtom(i);
-      if (atom.getPoint3d() != null) {
-    	  atom.setPoint2d(
-    	      new Point2d(
-    	    	  atom.getPoint3d().x,
-    	    	  atom.getPoint3d().y
-    	      )
-    	  );
-        renderingCoordinates.put(atom,new Point2d(atom.getPoint3d().x,atom.getPoint3d().y));
-      } else {
-        // should throw an exception
-      }
+
+    public static void project2D(IAtomContainer container, HashMap<IAtom, Point2d> renderingCoordinates) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
+            IAtom atom = container.getAtom(i);
+            if (atom.getPoint3d() != null) {
+                atom.setPoint2d(new Point2d(atom.getPoint3d().x, atom.getPoint3d().y));
+                renderingCoordinates.put(atom, new Point2d(atom.getPoint3d().x, atom.getPoint3d().y));
+            } else {
+                // should throw an exception
+            }
+        }
     }
-  }
 }

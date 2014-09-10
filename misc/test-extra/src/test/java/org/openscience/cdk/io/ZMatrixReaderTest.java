@@ -34,14 +34,15 @@ import org.openscience.cdk.ChemFile;
  */
 public class ZMatrixReaderTest extends ChemObjectIOTest {
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setChemObjectIO(new ZMatrixReader());
     }
 
-    @Test public void testAccepts() {
-    	ZMatrixReader reader = new ZMatrixReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        ZMatrixReader reader = new ZMatrixReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
 }
-

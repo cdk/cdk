@@ -50,14 +50,16 @@ public class SaturationCheckerTest extends CDKTestCase {
 
     private static SaturationChecker satcheck = null;
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         satcheck = new SaturationChecker();
     }
 
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturate_WithNitrate() throws Exception {
+    @Test
+    public void testSaturate_WithNitrate() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom a1 = new Atom("O");
         mol.addAtom(a1);
@@ -131,7 +133,8 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturation_S4AtomType() throws Exception {
+    @Test
+    public void testSaturation_S4AtomType() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom a1 = new Atom("N");
         mol.addAtom(a1);
@@ -237,7 +240,8 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests the method saturate().
      */
-    @Test public void testSaturate_NumberingProblem() throws Exception {
+    @Test
+    public void testSaturate_NumberingProblem() throws Exception {
         IAtomContainer mol = new AtomContainer();
         Atom a1 = new Atom("C");
         mol.addAtom(a1);
@@ -286,27 +290,27 @@ public class SaturationCheckerTest extends CDKTestCase {
     /**
      * Tests whether the saturation checker gets a proton right.
      */
-	@Test public void testIsSaturated_Proton() throws Exception {
-		// test H+
-	    IAtomContainer m = new AtomContainer();
-		Atom h = new Atom("H");
+    @Test
+    public void testIsSaturated_Proton() throws Exception {
+        // test H+
+        IAtomContainer m = new AtomContainer();
+        Atom h = new Atom("H");
         h.setFormalCharge(+1);
-		m.addAtom(h);
-		Assert.assertTrue(satcheck.isSaturated(h, m));
-	}
+        m.addAtom(h);
+        Assert.assertTrue(satcheck.isSaturated(h, m));
+    }
 
-    @Test public void testCalculateMissingHydrogens_Aromatic() throws Exception{
+    @Test
+    public void testCalculateMissingHydrogens_Aromatic() throws Exception {
         IAtomContainer pyrrole = MoleculeFactory.makePyrrole();
-	    IAtom n = pyrrole.getAtom(1);
-	    IRingSet rs = Cycles.sssr(pyrrole).toRingSet();
-	    IRing ring = (IRing) rs.getAtomContainer(0);
-	    for (int j=0 ; j<ring.getBondCount(); j++)
-	    {
-		    ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
-	    }
-	    Assert.assertEquals(5, ring.getBondCount());
-	    Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
+        IAtom n = pyrrole.getAtom(1);
+        IRingSet rs = Cycles.sssr(pyrrole).toRingSet();
+        IRing ring = (IRing) rs.getAtomContainer(0);
+        for (int j = 0; j < ring.getBondCount(); j++) {
+            ring.getBond(j).setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        Assert.assertEquals(5, ring.getBondCount());
+        Assert.assertEquals(1, satcheck.calculateNumberOfImplicitHydrogens(n, pyrrole));
     }
 
 }
-

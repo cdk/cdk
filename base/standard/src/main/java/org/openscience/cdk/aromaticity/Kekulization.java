@@ -88,9 +88,9 @@ public final class Kekulization {
         final Matching matching = Matching.withCapacity(ac.getAtomCount());
 
         // exract data structures for efficient access
-        final IAtom[]       atoms = AtomContainerManipulator.getAtomArray(ac);
+        final IAtom[] atoms = AtomContainerManipulator.getAtomArray(ac);
         final EdgeToBondMap bonds = EdgeToBondMap.withSpaceFor(ac);
-        final int[][]       graph = GraphUtil.toAdjList(ac, bonds);
+        final int[][] graph = GraphUtil.toAdjList(ac, bonds);
 
         // determine which atoms are available to have a pi bond placed
         final BitSet available = available(graph, atoms, bonds);
@@ -102,8 +102,7 @@ public final class Kekulization {
 
         // propegate bond order information from the matching
         for (final IBond bond : ac.bonds()) {
-            if (bond.getOrder() == UNSET && bond.getFlag(ISAROMATIC))
-                bond.setOrder(SINGLE);
+            if (bond.getOrder() == UNSET && bond.getFlag(ISAROMATIC)) bond.setOrder(SINGLE);
         }
         for (int v = available.nextSetBit(0); v >= 0; v = available.nextSetBit(v + 1)) {
             final int w = matching.other(v);
@@ -111,13 +110,13 @@ public final class Kekulization {
 
             // sanity check, something wrong if this happens
             if (bond.getOrder().numeric() > 1)
-                throw new CDKException("Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
+                throw new CDKException(
+                        "Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
 
             bond.setOrder(IBond.Order.DOUBLE);
             available.clear(w);
         }
     }
-
 
     /**
      * Determine the set of atoms that are available to have a double-bond.
@@ -132,8 +131,7 @@ public final class Kekulization {
         final BitSet available = new BitSet();
 
         // for all atoms, select those that require a double-bond
-        ATOMS:
-        for (int i = 0; i < atoms.length; i++) {
+        ATOMS: for (int i = 0; i < atoms.length; i++) {
 
             final IAtom atom = atoms[i];
 
@@ -145,8 +143,7 @@ public final class Kekulization {
             if (atom.getImplicitHydrogenCount() == null)
                 throw new IllegalArgumentException("atom " + (i + 1) + " had unset implicit hydrogen count");
 
-            if (!atom.getFlag(ISAROMATIC))
-                continue;
+            if (!atom.getFlag(ISAROMATIC)) continue;
 
             // count preexisting pi-bonds, a higher bond order causes a skip
             int nPiBonds = 0;
@@ -161,7 +158,7 @@ public final class Kekulization {
 
             // check if a pi bond can be assigned
             final int element = atom.getAtomicNumber();
-            final int charge  = atom.getFormalCharge();
+            final int charge = atom.getFormalCharge();
             final int valence = graph[i].length + atom.getImplicitHydrogenCount() + nPiBonds;
 
             if (available(element, charge, valence)) {
@@ -188,26 +185,21 @@ public final class Kekulization {
         // Germanium, Silicon, Tin and Antimony are a bit bonkers...
         switch (Elements.ofNumber(element)) {
             case Boron:
-                if (charge == 0 && valence <= 2)
-                    return true;
-                if (charge == -1 && valence <= 3)
-                    return true;
+                if (charge == 0 && valence <= 2) return true;
+                if (charge == -1 && valence <= 3) return true;
                 break;
             case Carbon:
             case Silicon:
             case Germanium:
             case Tin:
-                if (charge == 0 && valence <= 3)
-                    return true;
+                if (charge == 0 && valence <= 3) return true;
                 break;
             case Nitrogen:
             case Phosphorus:
             case Arsenic:
             case Antimony:
-                if (charge == 0)
-                    return valence <= 2 || valence == 4;
-                if (charge == 1)
-                    return valence <= 3;
+                if (charge == 0) return valence <= 2 || valence == 4;
+                if (charge == 1) return valence <= 3;
                 break;
             case Oxygen:
             case Sulfur:
@@ -215,10 +207,8 @@ public final class Kekulization {
             case Tellurium:
                 // valence of three or five are really only for sulphur but
                 // are applied generally to all of group eight for simplicity
-                if (charge == 0)
-                    return valence <= 1 || valence == 3 || valence == 5;
-                if (charge == 1)
-                    return valence <= 2 || valence == 4;
+                if (charge == 0) return valence <= 1 || valence == 3 || valence == 5;
+                if (charge == 1) return valence <= 2 || valence == 4;
                 break;
         }
 

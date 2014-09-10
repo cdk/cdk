@@ -56,37 +56,37 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
         super.setTestedGenerator(generator);
     }
 
-	@Test
-	public void testSingleAtom() {
-		IAtomContainer singleAtom = makeSingleAtom();
+    @Test
+    public void testSingleAtom() {
+        IAtomContainer singleAtom = makeSingleAtom();
 
-		// nothing should be made
-		IRenderingElement root = generator.generate(singleAtom, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
-	}
+        // nothing should be made
+        IRenderingElement root = generator.generate(singleAtom, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(0, elements.size());
+    }
 
-	@Test
-	public void testSingleBond() {
-		IAtomContainer container = makeSingleBond();
+    @Test
+    public void testSingleBond() {
+        IAtomContainer container = makeSingleBond();
 
-		// generate the single line element
-		IRenderingElement root = generator.generate(container, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
-	}
+        // generate the single line element
+        IRenderingElement root = generator.generate(container, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(0, elements.size());
+    }
 
-	@Test
-	public void testSquare() {
-		IAtomContainer square = makeSquare();
+    @Test
+    public void testSquare() {
+        IAtomContainer square = makeSquare();
 
-		// generate all four bonds
-		IRenderingElement root = generator.generate(square, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
+        // generate all four bonds
+        IRenderingElement root = generator.generate(square, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(0, elements.size());
 
-		// test that the center is at the origin
-		Assert.assertEquals(new Point2d(0,0), center(elements));
-	}
+        // test that the center is at the origin
+        Assert.assertEquals(new Point2d(0, 0), center(elements));
+    }
 
 }

@@ -59,25 +59,23 @@ import java.util.List;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:atomDegree
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.AtomDegreeDescriptorTest")
 public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomDegree", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
      * This descriptor does not have any parameter to be set.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-    	// no parameters
+        // no parameters
     }
-
 
     /**
      *  Gets the parameters attribute of the AtomDegreeDescriptor object.
@@ -85,16 +83,15 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return new String[]{"aNeg"};
     }
-
 
     /**
      * This method calculates the number of not-H substituents of an atom.
@@ -103,30 +100,26 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * @param  container         The {@link IAtomContainer} for which this descriptor is to be calculated for
      * @return   The number of bonds on the shortest path between two atoms
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         int atomDegree = 0;
         List<IAtom> neighboors = container.getConnectedAtomsList(atom);
         for (IAtom neighboor : neighboors) {
             if (!neighboor.getSymbol().equals("H")) atomDegree += 1;
         }
-        return new DescriptorValue(
-        	getSpecification(), getParameterNames(), getParameters(),
-        	new IntegerResult(atomDegree),
-        	getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                atomDegree), getDescriptorNames());
     }
-
 
     /**
      * Gets the parameterNames attribute of the AtomDegreeDescriptor object.
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      * Gets the parameterType attribute of the AtomDegreeDescriptor object.
@@ -134,9 +127,8 @@ public class AtomDegreeDescriptor extends AbstractAtomicDescriptor implements IA
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-

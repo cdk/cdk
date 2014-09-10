@@ -32,80 +32,86 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.PDBFormatTest")
 public class PDBFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public PDBFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new PDBFormat();
-    	return myself;
+        if (myself == null) myself = new PDBFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Protein Brookhave Database (PDB)";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-pdb";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"pdb", "ent"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-      return "org.openscience.cdk.io.PDBReader";
+        return "org.openscience.cdk.io.PDBReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
-      return "org.openscience.cdk.io.PDBWriter";
+        return "org.openscience.cdk.io.PDBWriter";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("HEADER") ||
-            line.startsWith("HETATM ") ||
-            line.startsWith("ATOM  ")) {
+        if (line.startsWith("HEADER") || line.startsWith("HETATM ") || line.startsWith("ATOM  ")) {
             return true;
         }
         return false;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES |
-        	   getRequiredDataFeatures();
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.HAS_FRACTIONAL_CRYSTAL_COORDINATES | getRequiredDataFeatures();
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.HAS_3D_COORDINATES |
-	           DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-	}
+        return DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+    }
 }

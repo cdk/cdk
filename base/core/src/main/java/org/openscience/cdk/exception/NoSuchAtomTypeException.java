@@ -36,15 +36,15 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.exception.NoSuchAtomTypeExceptionTest")
 public class NoSuchAtomTypeException extends CDKException {
 
-	private static final long serialVersionUID = 2689048410917221667L;
+    private static final long serialVersionUID = 2689048410917221667L;
 
-	/**
-	 * Constructs a new NoSuchAtomTypeException.
-	 *
-	 * @param message Message explaining why the atom type could not be found
-	 */
+    /**
+     * Constructs a new NoSuchAtomTypeException.
+     *
+     * @param message Message explaining why the atom type could not be found
+     */
     @TestMethod("testNoSuchAtomTypeException_String")
     public NoSuchAtomTypeException(String message) {
-        super( message );
+        super(message);
     }
 }

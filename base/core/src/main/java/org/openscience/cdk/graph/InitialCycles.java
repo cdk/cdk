@@ -52,16 +52,16 @@ import static java.util.Arrays.copyOf;
 final class InitialCycles {
 
     /** Adjacency list representation of a chemical graph. */
-    private final int[][] graph;
+    private final int[][]                  graph;
 
     /** Vertex ordering. */
-    private final int[] ordering;
+    private final int[]                    ordering;
 
     /** Cycle prototypes indexed by their length. */
-    private final Multimap<Integer, Cycle> cycles = TreeMultimap.create();
+    private final Multimap<Integer, Cycle> cycles         = TreeMultimap.create();
 
     /** Index of edges in the graph */
-    private final BiMap<Edge, Integer> edges;
+    private final BiMap<Edge, Integer>     edges;
 
     /**
      * Initial array size for 'ordering()'. This method sorts vertices by degree
@@ -72,19 +72,19 @@ final class InitialCycles {
      * @see <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix
      *      Sort</a>
      */
-    private final static int DEFAULT_DEGREE = 4;
+    private final static int               DEFAULT_DEGREE = 4;
 
     /** Number of vertices which have degree 2. */
-    private int nDeg2Vertices;
+    private int                            nDeg2Vertices;
 
     /** Limit the size of cycles discovered. */
-    private final int limit;
+    private final int                      limit;
 
     /**
      * Is the graph known to be a biconnected component. This allows a small
      * optimisation.
      */
-    private final boolean biconnected;
+    private final boolean                  biconnected;
 
     /**
      * Create a set of initial cycles for the provided graph.
@@ -120,8 +120,8 @@ final class InitialCycles {
 
         // ordering ensures the number of initial cycles is polynomial
         this.biconnected = biconnected;
-        this.limit       = limit;
-        this.ordering    = ordering(graph);
+        this.limit = limit;
+        this.ordering = ordering(graph);
 
         // index the edges to allow us to jump between edge and path representation
         // - edge representation: binary vector indicates whether an edge
@@ -147,7 +147,8 @@ final class InitialCycles {
      *
      * @return the graph
      */
-    @TestMethod("graph") int[][] graph() {
+    @TestMethod("graph")
+    int[][] graph() {
         return graph;
     }
 
@@ -156,8 +157,7 @@ final class InitialCycles {
      *
      * @return lengths of the discovered cycles
      */
-    @TestMethod("lengths_K4,lengths_naphthalene,lengths_anthracene," +
-                        "lengths_bicyclo,lengths_cyclophane")
+    @TestMethod("lengths_K4,lengths_naphthalene,lengths_anthracene," + "lengths_bicyclo,lengths_cyclophane")
     Iterable<Integer> lengths() {
         return cycles.keySet();
     }
@@ -180,8 +180,7 @@ final class InitialCycles {
      *
      * @return list of cycles
      */
-    @TestMethod("cycles_K4,cycles_naphthalene,cycles_anthracene," +
-                        "cycles_bicyclo,cycles_cyclophane")
+    @TestMethod("cycles_K4,cycles_naphthalene,cycles_anthracene," + "cycles_bicyclo,cycles_cyclophane")
     Collection<Cycle> cycles() {
         return cycles.values();
     }
@@ -191,7 +190,8 @@ final class InitialCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("numberOfCycles_K4") int numberOfCycles() {
+    @TestMethod("numberOfCycles_K4")
+    int numberOfCycles() {
         return cycles.size();
     }
 
@@ -200,7 +200,8 @@ final class InitialCycles {
      *
      * @return number of edges
      */
-    @TestMethod("numberOfEdges_K4") int numberOfEdges() {
+    @TestMethod("numberOfEdges_K4")
+    int numberOfEdges() {
         return edges.size();
     }
 
@@ -210,7 +211,8 @@ final class InitialCycles {
      * @param i index of edge
      * @return the edge at the given index
      */
-    @TestMethod("edge_K4") Edge edge(int i) {
+    @TestMethod("edge_K4")
+    Edge edge(int i) {
         return edges.inverse().get(i);
     }
 
@@ -222,7 +224,8 @@ final class InitialCycles {
      * @param v a vertex adjacent to <i>u</i>
      * @return the index of the edge
      */
-    @TestMethod("indexOfEdge_K4") int indexOfEdge(final int u, final int v) {
+    @TestMethod("indexOfEdge_K4")
+    int indexOfEdge(final int u, final int v) {
         return edges.get(new Edge(u, v));
     }
 
@@ -234,7 +237,8 @@ final class InitialCycles {
      * @return vector edges which make up the path
      * @see #indexOfEdge(int, int)
      */
-    @TestMethod("toEdgeVector_K4") BitSet toEdgeVector(final int[] path) {
+    @TestMethod("toEdgeVector_K4")
+    BitSet toEdgeVector(final int[] path) {
         final BitSet incidence = new BitSet(edges.size());
         int len = path.length - 1;
         for (int i = 0; i < len; i++) {
@@ -286,16 +290,14 @@ final class InitialCycles {
             // simple cycle there is only one vertex with a maximum ordering.
             for (int j = 0; j < i; j++) {
                 final int y = vertices[j];
-                if (!pathsFromR.isPrecedingPathTo(y))
-                    continue;
+                if (!pathsFromR.isPrecedingPathTo(y)) continue;
 
                 // start refilling set 's' by resetting it's size
                 sizeOfS = 0;
 
                 // z is adjacent to y and belong to Vr
                 for (final int z : graph[y]) {
-                    if (!pathsFromR.isPrecedingPathTo(z))
-                        continue;
+                    if (!pathsFromR.isPrecedingPathTo(z)) continue;
 
                     final int distToZ = pathsFromR.distanceTo(z);
                     final int distToY = pathsFromR.distanceTo(y);
@@ -336,9 +338,7 @@ final class InitialCycles {
                         final int[] pathToY = pathsFromR.pathTo(y);
                         final int[] pathToZ = pathsFromR.pathTo(z);
                         if (singletonIntersect(pathToZ, pathToY)) {
-                            Cycle cycle = new OddCycle(pathsFromR,
-                                                       pathToY,
-                                                       pathToZ);
+                            Cycle cycle = new OddCycle(pathsFromR, pathToY, pathToZ);
                             add(cycle);
                         }
                     }
@@ -357,9 +357,7 @@ final class InitialCycles {
                         int[] pathToP = pathsFromR.pathTo(s[k]);
                         int[] pathToQ = pathsFromR.pathTo(s[l]);
                         if (singletonIntersect(pathToP, pathToQ)) {
-                            Cycle cycle = new EvenCycle(pathsFromR,
-                                                        pathToP, y,
-                                                        pathToQ);
+                            Cycle cycle = new EvenCycle(pathsFromR, pathToP, y, pathToQ);
                             add(cycle);
                         }
                     }
@@ -374,8 +372,7 @@ final class InitialCycles {
      * @param cycle the cycle to add
      */
     private void add(Cycle cycle) {
-        if (cycle.length() <= limit)
-            cycles.put(cycle.length(), cycle);
+        if (cycle.length() <= limit) cycles.put(cycle.length(), cycle);
     }
 
     /**
@@ -396,8 +393,7 @@ final class InitialCycles {
         // count the occurrences of each key (degree)
         for (int v = 0; v < n; v++) {
             int key = graph[v].length + 1;
-            if (key >= count.length)
-                count = copyOf(count, key * 2);
+            if (key >= count.length) count = copyOf(count, key * 2);
             count[key]++;
         }
         // cumulated degree counts
@@ -501,11 +497,11 @@ final class InitialCycles {
 
         private int[] path;
         ShortestPaths paths;
-        BitSet edgeVector;
+        BitSet        edgeVector;
 
         Cycle(final ShortestPaths paths, final int[] path) {
-            this.path       = path;
-            this.paths      = paths;
+            this.path = path;
+            this.paths = paths;
             this.edgeVector = edges(path); // XXX allows static Cycle
         }
 
@@ -561,9 +557,9 @@ final class InitialCycles {
             return path.length - 1; // first/last vertex repeats
         }
 
-        @Override public int compareTo(Cycle that) {
-            return Ints.lexicographicalComparator().compare(this.path,
-                                                            that.path);
+        @Override
+        public int compareTo(Cycle that) {
+            return Ints.lexicographicalComparator().compare(this.path, that.path);
         }
     }
 
@@ -574,6 +570,7 @@ final class InitialCycles {
      * @see #compute()
      */
     class EvenCycle extends Cycle {
+
         int p, q, y;
 
         EvenCycle(ShortestPaths paths, int[] pathToP, int y, int[] pathToQ) {
@@ -584,13 +581,15 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @Override BitSet edges(int[] path) {
+        @Override
+        BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
         /** @inheritDoc */
         @TestMethod("cycles_family_even")
-        @Override int[][] family() {
+        @Override
+        int[][] family() {
 
             int[][] pathsToP = paths.pathsTo(p);
             int[][] pathsToQ = paths.pathsTo(q);
@@ -606,7 +605,8 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @Override int sizeOfFamily() {
+        @Override
+        int sizeOfFamily() {
             return paths.nPathsTo(p) * paths.nPathsTo(q);
         }
     }
@@ -618,6 +618,7 @@ final class InitialCycles {
      * @see #compute()
      */
     class OddCycle extends Cycle {
+
         int y, z;
 
         OddCycle(ShortestPaths paths, int[] pathToY, int[] pathToZ) {
@@ -627,13 +628,15 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @Override BitSet edges(int[] path) {
+        @Override
+        BitSet edges(int[] path) {
             return toEdgeVector(path);
         }
 
         /** @inheritDoc */
         @TestMethod("cycles_family_odd")
-        @Override int[][] family() {
+        @Override
+        int[][] family() {
             int[][] pathsToY = paths.pathsTo(y);
             int[][] pathsToZ = paths.pathsTo(z);
 
@@ -648,7 +651,8 @@ final class InitialCycles {
         }
 
         /** @inheritDoc */
-        @Override int sizeOfFamily() {
+        @Override
+        int sizeOfFamily() {
             return paths.nPathsTo(y) * paths.nPathsTo(z);
         }
     }
@@ -670,8 +674,7 @@ final class InitialCycles {
         @TestMethod("edgeIsTransitive")
         public boolean equals(Object o) {
             Edge that = (Edge) o;
-            return (this.v == that.v && this.w == that.w)
-                    || (this.v == that.w && this.w == that.v);
+            return (this.v == that.v && this.w == that.w) || (this.v == that.w && this.w == that.v);
         }
 
         @Override
@@ -681,7 +684,8 @@ final class InitialCycles {
         }
 
         @TestMethod("edgeToString")
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return "{" + v + ", " + w + "}";
         }
     }

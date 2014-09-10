@@ -121,7 +121,7 @@ public class Partition {
      */
     @Override
     public int hashCode() {
-    	return cells != null ? cells.hashCode() : 0;
+        return cells != null ? cells.hashCode() : 0;
     }
 
     /**
@@ -323,7 +323,7 @@ public class Partition {
         for (int i = 0; i < this.cells.size(); i++) {
             if (!isDiscreteCell(i)) return i;
         }
-        return -1;  // XXX
+        return -1; // XXX
     }
 
     /**
@@ -370,7 +370,7 @@ public class Partition {
      */
     @TestMethod("addCell_CollectionTest")
     public void addCell(Collection<Integer> elements) {
-    	cells.add(new TreeSet<Integer>(elements));
+        cells.add(new TreeSet<Integer>(elements));
     }
 
     /**
@@ -381,11 +381,11 @@ public class Partition {
      */
     @TestMethod("addToCellTest")
     public void addToCell(int index, int element) {
-    	if (cells.size() < index + 1) {
-    		addSingletonCell(element);
-    	} else {
-    		cells.get(index).add(element);
-    	}
+        if (cells.size() < index + 1) {
+            addSingletonCell(element);
+        } else {
+            cells.get(index).add(element);
+        }
     }
 
     /**
@@ -424,7 +424,6 @@ public class Partition {
 
         });
     }
-
 
     /**
      * Check that two elements are in the same cell of the partition.
@@ -469,7 +468,6 @@ public class Partition {
         return sb.toString();
     }
 
-
     /**
      * Parse a string like "[0,2|1,3]" to form the partition; cells are
      * separated by '|' characters and elements within the cell by commas.
@@ -482,8 +480,7 @@ public class Partition {
     @TestMethod("fromStringTest")
     public static Partition fromString(String strForm) {
 
-        if(strForm == null || strForm.isEmpty())
-            throw new IllegalArgumentException("null or empty string provided");
+        if (strForm == null || strForm.isEmpty()) throw new IllegalArgumentException("null or empty string provided");
 
         Partition p = new Partition();
         int index = 0;
@@ -505,8 +502,7 @@ public class Partition {
                     numStart = index;
                 }
             } else if (c == ',') {
-                int element = Integer.parseInt(
-                        strForm.substring(numStart, index));
+                int element = Integer.parseInt(strForm.substring(numStart, index));
                 if (currentCell == -1) {
                     p.addCell(element);
                     currentCell = 0;
@@ -515,8 +511,7 @@ public class Partition {
                 }
                 numStart = -1;
             } else if (c == '|') {
-                int element = Integer.parseInt(
-                        strForm.substring(numStart, index));
+                int element = Integer.parseInt(strForm.substring(numStart, index));
                 if (currentCell == -1) {
                     p.addCell(element);
                     currentCell = 0;
@@ -533,6 +528,5 @@ public class Partition {
         p.addToCell(currentCell, lastElement);
         return p;
     }
-
 
 }

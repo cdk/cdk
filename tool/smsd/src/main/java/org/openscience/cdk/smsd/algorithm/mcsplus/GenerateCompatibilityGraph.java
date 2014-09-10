@@ -49,20 +49,20 @@ import org.openscience.cdk.smsd.helper.LabelContainer;
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public final class GenerateCompatibilityGraph {
 
-    private List<Integer> compGraphNodes = null;
-    private List<Integer> compGraphNodesCZero = null;
-    private List<Integer> cEdges = null;
-    private List<Integer> dEdges = null;
-    private int cEdgesSize = 0;
-    private int dEdgesSize = 0;
-    private IAtomContainer source = null;
-    private IAtomContainer target = null;
-    private boolean shouldMatchBonds = false;
+    private List<Integer>  compGraphNodes      = null;
+    private List<Integer>  compGraphNodesCZero = null;
+    private List<Integer>  cEdges              = null;
+    private List<Integer>  dEdges              = null;
+    private int            cEdgesSize          = 0;
+    private int            dEdgesSize          = 0;
+    private IAtomContainer source              = null;
+    private IAtomContainer target              = null;
+    private boolean        shouldMatchBonds    = false;
 
     /**
     * Default constructor added
     */
-    public GenerateCompatibilityGraph(){
+    public GenerateCompatibilityGraph() {
 
     }
 
@@ -73,9 +73,8 @@ public final class GenerateCompatibilityGraph {
      * @param shouldMatchBonds
      * @throws java.io.IOException
      */
-    public GenerateCompatibilityGraph(IAtomContainer source,
-            IAtomContainer target,
-            boolean shouldMatchBonds) throws IOException {
+    public GenerateCompatibilityGraph(IAtomContainer source, IAtomContainer target, boolean shouldMatchBonds)
+            throws IOException {
         setMatchBond(shouldMatchBonds);
         this.source = source;
         this.target = target;
@@ -85,7 +84,6 @@ public final class GenerateCompatibilityGraph {
         dEdges = new ArrayList<Integer>();
         compatibilityGraphNodes();
         compatibilityGraph();
-
 
         if (getCEdgesSize() == 0) {
             clearCompGraphNodes();
@@ -108,7 +106,7 @@ public final class GenerateCompatibilityGraph {
         for (int i = 0; i < atomCont.getAtomCount(); i++) {
             LabelContainer labelContainer = LabelContainer.getInstance();
             ArrayList<Integer> label = new ArrayList<Integer>(7);
-//            label.setSize(7);
+            //            label.setSize(7);
 
             for (int a = 0; a < 7; a++) {
                 label.add(a, 0);
@@ -309,8 +307,7 @@ public final class GenerateCompatibilityGraph {
                 int index_bPlus1 = compGraphNodesCZero.get(b + 1);
 
                 // if element atomCont !=jIndex and atoms on the adjacent sides of the bonds are not equal
-                if ((a != b) && (index_a != index_b)
-                        && (index_aPlus1 != index_bPlus1)) {
+                if ((a != b) && (index_a != index_b) && (index_aPlus1 != index_bPlus1)) {
 
                     IBond reactantBond = null;
                     IBond productBond = null;
@@ -344,21 +341,15 @@ public final class GenerateCompatibilityGraph {
         }
     }
 
-    private static boolean isMatchFeasible(IAtomContainer ac1,
-            IBond bondA1,
-            IAtomContainer ac2,
-            IBond bondA2,
+    private static boolean isMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
             boolean shouldMatchBonds) {
 
         //Bond Matcher
-        BondMatcher bondMatcher =
-                new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
+        BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher1 =
-                new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
+        AtomMatcher atomMatcher1 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(0), shouldMatchBonds);
         //Atom Matcher
-        AtomMatcher atomMatcher2 =
-                new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
+        AtomMatcher atomMatcher2 = new DefaultMCSPlusAtomMatcher(ac1, bondA1.getAtom(1), shouldMatchBonds);
 
         if (DefaultMatcher.isBondMatch(bondMatcher, ac2, bondA2, shouldMatchBonds)
                 && DefaultMatcher.isAtomMatch(atomMatcher1, atomMatcher2, ac2, bondA2, shouldMatchBonds)) {

@@ -37,11 +37,13 @@ public class CipCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "cip.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, CipCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         Assert.assertTrue(super.runCoverageTest());
     }
 

@@ -51,14 +51,14 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 @TestClass("org.openscience.cdk.smsd.algorithm.single.SingleMappingHandlerTest")
 public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private static Map<IAtom, IAtom> atomsMCS = null;
-    private static Map<Integer, Integer> firstMCS = null;
-    private static List<Map<Integer, Integer>> allMCS = null;
-    private IAtomContainer source = null;
-    private IQueryAtomContainer smartSource = null;
-    private IAtomContainer target = null;
-    private boolean removeHydrogen = false;
+    private static List<Map<IAtom, IAtom>>     allAtomMCS     = null;
+    private static Map<IAtom, IAtom>           atomsMCS       = null;
+    private static Map<Integer, Integer>       firstMCS       = null;
+    private static List<Map<Integer, Integer>> allMCS         = null;
+    private IAtomContainer                     source         = null;
+    private IQueryAtomContainer                smartSource    = null;
+    private IAtomContainer                     target         = null;
+    private boolean                            removeHydrogen = false;
 
     /**
      *
@@ -97,6 +97,7 @@ public class SingleMappingHandler extends AbstractMCSAlgorithm implements IMCSBa
         this.source = source;
         this.target = target;
     }
+
     //Function is called by the main program and serves as a starting point for the comparision procedure.
 
     /** {@inheritDoc}

@@ -44,28 +44,33 @@ public class RingSearchTest_Fused {
 
     private final IAtomContainer fusedRings = MoleculeFactory.makeFusedRings();
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         for (int i = 0; i < fusedRings.getAtomCount(); i++)
             assertTrue(ringSearch.cyclic(i));
     }
 
-    @Test public void testCyclic() {
+    @Test
+    public void testCyclic() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.cyclic().length, is(fusedRings.getAtomCount()));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.fused().length, is(1));
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         assertThat(ringSearch.isolated().length, is(0));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         IAtomContainer fragment = ringSearch.ringFragments();
         for (IAtom atom : fusedRings.atoms()) {
@@ -76,7 +81,8 @@ public class RingSearchTest_Fused {
         }
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         List<IAtomContainer> fragments = ringSearch.fusedRingFragments();
         assertThat(fragments.size(), is(1));
@@ -89,11 +95,11 @@ public class RingSearchTest_Fused {
         }
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         RingSearch ringSearch = new RingSearch(fusedRings);
         List<IAtomContainer> fragments = ringSearch.isolatedRingFragments();
         assertThat(fragments.size(), is(0));
     }
-
 
 }

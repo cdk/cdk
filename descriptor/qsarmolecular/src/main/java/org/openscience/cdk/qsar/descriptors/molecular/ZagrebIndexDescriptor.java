@@ -47,13 +47,13 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest")
 public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     private static final String[] names = {"Zagreb"};
 
     /**
      *  Constructor for the ZagrebIndexDescriptor object.
      */
-    public ZagrebIndexDescriptor() { }
-
+    public ZagrebIndexDescriptor() {}
 
     /**
      *  Gets the specification attribute of the ZagrebIndexDescriptor object.
@@ -63,11 +63,9 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#zagrebIndex", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the ZagrebIndexDescriptor object.
@@ -81,7 +79,6 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
         // no parameters for this descriptor
     }
 
-
     /**
      *  Gets the parameters attribute of the ZagrebIndexDescriptor object.
      *
@@ -94,11 +91,10 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
         // no parameters to return
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      *  Evaluate the Zagreb Index for a molecule.
@@ -120,8 +116,8 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
             }
             zagreb += (atomDegree * atomDegree);
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(zagreb), getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(zagreb),
+                getDescriptorNames());
     }
 
     /**
@@ -140,7 +136,6 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
         return new DoubleResult(0.0);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the ZagrebIndexDescriptor object.
      *
@@ -151,8 +146,6 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
         // no param names to return
         return (null);
     }
-
-
 
     /**
      *  Gets the parameterType attribute of the ZagrebIndexDescriptor object.
@@ -165,4 +158,3 @@ public class ZagrebIndexDescriptor extends AbstractMolecularDescriptor implement
         return (null);
     }
 }
-

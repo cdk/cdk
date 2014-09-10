@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.io.setting;
 
-
 import org.openscience.cdk.interfaces.ISetting;
 
 import java.security.InvalidParameterException;
@@ -82,7 +81,7 @@ public class SettingManager<T extends ISetting> {
     /**
      * Settings are stored in a map of name -> instance.
      */
-    private Map<String, T> settings = new HashMap<String, T>(3);
+    private Map<String, T>       settings    = new HashMap<String, T>(3);
 
     /**
      * Generate a simple key for the given name. This method normalises the name by
@@ -136,9 +135,9 @@ public class SettingManager<T extends ISetting> {
 
         String key = key(setting);
 
-        if(settings.containsKey(key)){
+        if (settings.containsKey(key)) {
             T instance = settings.get(key);
-            if(instance.getClass() == setting.getClass()) {
+            if (instance.getClass() == setting.getClass()) {
                 return instance;
             }
         }
@@ -176,11 +175,10 @@ public class SettingManager<T extends ISetting> {
 
         String key = key(name);
 
-        if (settings.containsKey(key))
-            return (S) settings.get(key);
+        if (settings.containsKey(key)) return (S) settings.get(key);
 
         throw new InvalidParameterException("No setting found for name " + name + "(key=" + key + ") "
-                                                    + "available settings are: " + settings.keySet());
+                + "available settings are: " + settings.keySet());
 
     }
 
@@ -250,6 +248,5 @@ public class SettingManager<T extends ISetting> {
     public T[] toArray(T[] c) {
         return (T[]) getSettings().toArray(c);
     }
-
 
 }

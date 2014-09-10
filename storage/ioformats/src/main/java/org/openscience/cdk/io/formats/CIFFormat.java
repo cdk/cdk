@@ -30,76 +30,86 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.CIFFormatTest")
 public class CIFFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public CIFFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new CIFFormat();
-    	return myself;
+        if (myself == null) myself = new CIFFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Crystallographic Interchange Format";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cif";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cif"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-      return "org.openscience.cdk.io.CIFReader";
+        return "org.openscience.cdk.io.CIFReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { return null; }
+    public String getWriterClassName() {
+        return null;
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (line.startsWith("_cell_length_a") ||
-            line.startsWith("_audit_creation_date") ||
-            line.startsWith("loop_")) {
+        if (line.startsWith("_cell_length_a") || line.startsWith("_audit_creation_date") || line.startsWith("loop_")) {
             return true;
         }
         return false;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.NONE;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

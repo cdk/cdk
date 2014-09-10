@@ -23,13 +23,13 @@ public class RingElement extends OvalElement implements IRenderingElement {
      * @param radius the radius of the circle
      * @param color the color of the circle
      */
-	@TestMethod("testConstructor")
-	public RingElement(double x, double y, double radius, Color color) {
+    @TestMethod("testConstructor")
+    public RingElement(double x, double y, double radius, Color color) {
         super(x, y, radius, false, color);
     }
 
     /** {@inheritDoc} */
-	@TestMethod("testAccept")
+    @TestMethod("testAccept")
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

@@ -33,8 +33,7 @@ import org.openscience.cdk.io.cml.QSARCMLRoundTripTest;
  *
  * @cdk.module test-qsarcml
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QSARCMLRoundTripTest.class
-})
-public class MqsarcmlTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QSARCMLRoundTripTest.class})
+public class MqsarcmlTests {
+}

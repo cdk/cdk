@@ -38,11 +38,11 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryBondTest")
 public class PharmacophoreQueryBond extends Bond implements IQueryBond {
+
     private double upper;
     private double lower;
 
-    public PharmacophoreQueryBond() {
-    }
+    public PharmacophoreQueryBond() {}
 
     /**
      * Create a query distance constraint between two query groups.
@@ -55,11 +55,9 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param upper The upper bound of the distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)
      */
-    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
-                                  PharmacophoreQueryAtom atom2,
-                                  double lower, double upper) {
+    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double lower, double upper) {
         super(atom1, atom2);
-        this.upper = round(upper,2);
+        this.upper = round(upper, 2);
         this.lower = round(lower, 2);
     }
 
@@ -77,11 +75,9 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
      * @param distance The exact distance between the two groups
      * @see #PharmacophoreQueryBond(PharmacophoreQueryAtom, PharmacophoreQueryAtom, double, double)
      */
-    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1,
-                                  PharmacophoreQueryAtom atom2,
-                                  double distance) {
+    public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double distance) {
         super(atom1, atom2);
-        this.upper = round(distance,2);
+        this.upper = round(distance, 2);
         this.lower = round(distance, 2);
     }
 
@@ -98,10 +94,11 @@ public class PharmacophoreQueryBond extends Bond implements IQueryBond {
     @TestMethod("testMatches")
     public boolean matches(IBond bond) {
         if (bond instanceof PharmacophoreBond) {
-        PharmacophoreBond pbond = (PharmacophoreBond) bond;
-        double bondLength = round(pbond.getBondLength(), 2);
-        return bondLength >= lower && bondLength <= upper;
-        } else return false;
+            PharmacophoreBond pbond = (PharmacophoreBond) bond;
+            double bondLength = round(pbond.getBondLength(), 2);
+            return bondLength >= lower && bondLength <= upper;
+        } else
+            return false;
     }
 
     @TestMethod("testUpper")

@@ -33,16 +33,19 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  */
 public class DebugMolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
-    @Test public void testDebugMolecularFormulaSet() {
+    @Test
+    public void testDebugMolecularFormulaSet() {
         IMolecularFormulaSet mfS = new DebugMolecularFormulaSet();
         Assert.assertNotNull(mfS);
     }
 
-    @Test public void testDebugMolecularFormulaSet_IMolecularFormula() {
+    @Test
+    public void testDebugMolecularFormulaSet_IMolecularFormula() {
         IMolecularFormulaSet mfS = new DebugMolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }

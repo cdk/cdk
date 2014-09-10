@@ -48,9 +48,7 @@ public abstract class AbstractMCSAlgorithmTest {
      */
     @Test
     public void testIsMCSAlgorithmSet() {
-        Assert.assertNotNull(
-                "The extending class has not set an IMCSAlgorithm with the"
-                + "setMCSAlgorithm() method.",
+        Assert.assertNotNull("The extending class has not set an IMCSAlgorithm with the" + "setMCSAlgorithm() method.",
                 AbstractMCSAlgorithmTest.algorithm);
     }
 

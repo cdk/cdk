@@ -35,23 +35,20 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class CPKAtomColorsTest extends CDKTestCase {
 
-	@Test public void testGetAtomColor() {
-		CPKAtomColors colors = new CPKAtomColors();
-		Assert.assertNotNull(colors);
-		Assert.assertEquals(Color.WHITE, colors.getAtomColor(new Atom("H")));
-		Assert.assertEquals(
-			new Color(0xFFC0CB), colors.getAtomColor(new Atom("He"))
-		);
-	}
+    @Test
+    public void testGetAtomColor() {
+        CPKAtomColors colors = new CPKAtomColors();
+        Assert.assertNotNull(colors);
+        Assert.assertEquals(Color.WHITE, colors.getAtomColor(new Atom("H")));
+        Assert.assertEquals(new Color(0xFFC0CB), colors.getAtomColor(new Atom("He")));
+    }
 
-	@Test public void testGetDefaultAtomColor() {
-		CPKAtomColors colors = new CPKAtomColors();
+    @Test
+    public void testGetDefaultAtomColor() {
+        CPKAtomColors colors = new CPKAtomColors();
 
-		Assert.assertNotNull(colors);
-		IAtom imaginary = new Atom("Ix");
-		Assert.assertEquals(
-			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
-		);
-	}
+        Assert.assertNotNull(colors);
+        IAtom imaginary = new Atom("Ix");
+        Assert.assertEquals(Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE));
+    }
 }
-

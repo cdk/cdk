@@ -77,32 +77,31 @@ public class SMSDNormalizer extends AtomContainerManipulator {
 
         IAtomContainer newAtomContainer = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 
-
-
         int lonePairCount = container.getLonePairCount();
         int singleElectronCount = container.getSingleElectronCount();
-
 
         ILonePair[] lonePairs = new ILonePair[lonePairCount];
         ISingleElectron[] singleElectrons = new ISingleElectron[singleElectronCount];
 
-//      Deep copy of the Atoms
+        //      Deep copy of the Atoms
         IAtom[] atoms = copyAtoms(container, newAtomContainer);
 
-//      Deep copy of the bonds
+        //      Deep copy of the bonds
         copyBonds(atoms, container, newAtomContainer);
 
-//      Deep copy of the LonePairs
+        //      Deep copy of the LonePairs
         for (int index = 0; index < container.getLonePairCount(); index++) {
 
             if (container.getAtom(index).getSymbol().equalsIgnoreCase("R")) {
-                lonePairs[index] = DefaultChemObjectBuilder.getInstance().newInstance(ILonePair.class, container.getAtom(index));
+                lonePairs[index] = DefaultChemObjectBuilder.getInstance().newInstance(ILonePair.class,
+                        container.getAtom(index));
             }
             newAtomContainer.addLonePair(lonePairs[index]);
         }
 
         for (int index = 0; index < container.getSingleElectronCount(); index++) {
-            singleElectrons[index] = DefaultChemObjectBuilder.getInstance().newInstance(ISingleElectron.class, container.getAtom(index));
+            singleElectrons[index] = DefaultChemObjectBuilder.getInstance().newInstance(ISingleElectron.class,
+                    container.getAtom(index));
             newAtomContainer.addSingleElectron(singleElectrons[index]);
 
         }
@@ -140,20 +139,19 @@ public class SMSDNormalizer extends AtomContainerManipulator {
 
         try {
             // figure out which atoms are in aromatic rings:
-//            printAtoms(atomContainer);
+            //            printAtoms(atomContainer);
             SMSDNormalizer.percieveAtomTypesAndConfigureAtoms(mol);
-//            printAtoms(atomContainer);
+            //            printAtoms(atomContainer);
             Aromaticity.cdkLegacy().apply(mol);
-//            printAtoms(atomContainer);
+            //            printAtoms(atomContainer);
             // figure out which rings are aromatic:
             RingSetManipulator.markAromaticRings(ringSet);
-//            printAtoms(atomContainer);
+            //            printAtoms(atomContainer);
             // figure out which simple (non cycles) rings are aromatic:
             // HueckelAromaticityDetector.detectAromaticity(atomContainer, srs);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         // only atoms in 6 membered rings are aromatic
         // determine largest ring that each atom is atom part of
@@ -162,8 +160,7 @@ public class SMSDNormalizer extends AtomContainerManipulator {
 
             mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
 
-            jloop:
-            for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
+            jloop: for (int j = 0; j <= ringSet.getAtomContainerCount() - 1; j++) {
                 //logger.debug(i+"\t"+j);
                 IRing ring = (IRing) ringSet.getAtomContainer(j);
                 if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
@@ -230,8 +227,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
      */
     @TestMethod("testRemoveHydrogensAndPreserveAtomID")
     public static IAtomContainer removeHydrogensAndPreserveAtomID(IAtomContainer atomContainer) {
-        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>();        // maps original atoms to clones.
-        List<IAtom> remove = new ArrayList<IAtom>();  // lists removed Hs.
+        Map<IAtom, IAtom> map = new HashMap<IAtom, IAtom>(); // maps original atoms to clones.
+        List<IAtom> remove = new ArrayList<IAtom>(); // lists removed Hs.
         IAtomContainer mol = null;
         if (atomContainer.getBondCount() > 0) {
             // Clone atoms except those to be removed.
@@ -260,12 +257,12 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                     map.put(atom, clonedAtom);
 
                 } else {
-                    remove.add(atom);   // maintain list of removed H.
+                    remove.add(atom); // maintain list of removed H.
                 }
             }
-//            Clone bonds except those involving removed atoms.
+            //            Clone bonds except those involving removed atoms.
             mol = cloneAndMarkNonHBonds(mol, atomContainer, remove, map);
-//            Recompute hydrogen counts of neighbours of removed Hydrogens.
+            //            Recompute hydrogen counts of neighbours of removed Hydrogens.
             mol = reComputeHydrogens(mol, atomContainer, remove, map);
 
         } else {
@@ -394,11 +391,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         }
     }
 
-    private static IAtomContainer reComputeHydrogens(
-            IAtomContainer mol,
-            IAtomContainer atomContainer,
-            List<IAtom> remove,
-            Map<IAtom, IAtom> map) {
+    private static IAtomContainer reComputeHydrogens(IAtomContainer mol, IAtomContainer atomContainer,
+            List<IAtom> remove, Map<IAtom, IAtom> map) {
 
         // Recompute hydrogen counts of neighbours of removed Hydrogens.
         for (IAtom aRemove : remove) {
@@ -410,8 +404,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
                 }
                 //Added by Asad
                 if (!(neighb instanceof IPseudoAtom)) {
-                    neighb.setImplicitHydrogenCount(
-                            (neighb.getImplicitHydrogenCount() == null ? 0 : neighb.getImplicitHydrogenCount()) + 1);
+                    neighb.setImplicitHydrogenCount((neighb.getImplicitHydrogenCount() == null ? 0 : neighb
+                            .getImplicitHydrogenCount()) + 1);
                 } else {
                     neighb.setImplicitHydrogenCount(0);
                 }
@@ -425,11 +419,8 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         return mol;
     }
 
-    private static IAtomContainer cloneAndMarkNonHBonds(
-            IAtomContainer mol,
-            IAtomContainer atomContainer,
-            List<IAtom> remove,
-            Map<IAtom, IAtom> map) {
+    private static IAtomContainer cloneAndMarkNonHBonds(IAtomContainer mol, IAtomContainer atomContainer,
+            List<IAtom> remove, Map<IAtom, IAtom> map) {
         // Clone bonds except those involving removed atoms.
         int count = atomContainer.getBondCount();
         for (int i = 0; i < count; i++) {
@@ -508,6 +499,3 @@ public class SMSDNormalizer extends AtomContainerManipulator {
         }
     }
 }
-
-
-

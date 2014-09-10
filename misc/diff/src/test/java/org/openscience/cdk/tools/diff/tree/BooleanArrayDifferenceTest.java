@@ -27,22 +27,28 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class BooleanArrayDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
-        IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true, true}, new boolean[]{false, false});
+    @Test
+    public void testDiff() {
+        IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true, true}, new boolean[]{false,
+                false});
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
-        IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{false, false}, new boolean[]{false, false});
+    @Test
+    public void testSame() {
+        IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{false, false}, new boolean[]{false,
+                false});
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = BooleanArrayDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
+    @Test
+    public void testOneNull() {
         IDifference result = BooleanArrayDifference.construct("Foo", null, new boolean[]{false, false});
         Assert.assertNotNull(result);
 
@@ -50,7 +56,8 @@ public class BooleanArrayDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         IDifference result = BooleanArrayDifference.construct("Foo", new boolean[]{true}, new boolean[]{false});
         String diffString = result.toString();
         Assert.assertNotNull(diffString);

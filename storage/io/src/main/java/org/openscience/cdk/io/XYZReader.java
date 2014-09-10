@@ -63,9 +63,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.XYZReaderTest")
 public class XYZReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(XYZReader.class);
+    private BufferedReader      input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReader.class);
 
     /**
      * Construct a new reader from a Reader type object.
@@ -92,7 +91,7 @@ public class XYZReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -107,7 +106,7 @@ public class XYZReader extends DefaultChemObjectReader {
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
-        for (int i=0; i<interfaces.length; i++) {
+        for (int i = 0; i < interfaces.length; i++) {
             if (IChemFile.class.equals(interfaces[i])) return true;
         }
         Class superClass = classObject.getSuperclass();
@@ -126,7 +125,7 @@ public class XYZReader extends DefaultChemObjectReader {
     @TestMethod("testViagra")
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T)readChemFile((IChemFile)object);
+            return (T) readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -168,12 +167,12 @@ public class XYZReader extends DefaultChemObjectReader {
                     if (line.startsWith("#") && line.length() > 1) {
                         Object comment = m.getProperty(CDKConstants.COMMENT);
                         if (comment == null) {
-                        	comment = "";
+                            comment = "";
                         }
                         comment = comment.toString() + line.substring(1).trim();
                         m.setProperty(CDKConstants.COMMENT, comment);
-                    	logger.debug("Found and set comment: ", comment);
-                    	i--; // a comment line does not count as an atom
+                        logger.debug("Found and set comment: ", comment);
+                        i--; // a comment line does not count as an atom
                     } else {
                         double x = 0.0f, y = 0.0f, z = 0.0f;
                         double charge = 0.0f;
@@ -188,10 +187,9 @@ public class XYZReader extends DefaultChemObjectReader {
                             y = (new Double(tokenizer.nextToken())).doubleValue();
                             z = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            if (fields == 8)
-                                charge = (new Double(tokenizer.nextToken())).doubleValue();
+                            if (fields == 8) charge = (new Double(tokenizer.nextToken())).doubleValue();
 
-                            IAtom atom = file.getBuilder().newInstance(IAtom.class,atomtype, new Point3d(x,y,z));
+                            IAtom atom = file.getBuilder().newInstance(IAtom.class, atomtype, new Point3d(x, y, z));
                             atom.setCharge(charge);
                             m.addAtom(atom);
                         }

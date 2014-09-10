@@ -69,7 +69,8 @@ public enum Algorithm {
      * Substructure search will return first map.
      */
     TurboSubStructure(5, "Turbo Mode- Substructure search");
-    private final int type;
+
+    private final int    type;
     private final String description;
 
     Algorithm(int aStatus, String desc) {

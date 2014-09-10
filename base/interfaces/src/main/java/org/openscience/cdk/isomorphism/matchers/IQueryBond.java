@@ -28,15 +28,14 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.githash
  * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
  */
-public interface IQueryBond extends IBond{
+public interface IQueryBond extends IBond {
 
-	/**
-	 * Returns true of the given <code>bond</code> matches this IQueryBond.
-	 *
-	 * @param bond IBond to match against
-	 * @return     true, if this IQueryBond matches the given IBond
-	 */
-	public boolean matches(IBond bond);
+    /**
+     * Returns true of the given <code>bond</code> matches this IQueryBond.
+     *
+     * @param bond IBond to match against
+     * @return     true, if this IQueryBond matches the given IBond
+     */
+    public boolean matches(IBond bond);
 
 }
-

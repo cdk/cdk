@@ -48,8 +48,8 @@ public class RingPartitioner {
      *  Debugging on/off
      */
     public final static boolean debug = false;
-    // minimum details
 
+    // minimum details
 
     /**
      *  Partitions a RingSet into RingSets of connected rings. Rings which share
@@ -68,7 +68,7 @@ public class RingPartitioner {
     public static List<IRingSet> partitionRings(IRingSet ringSet) {
         List<IRingSet> ringSets = new ArrayList<IRingSet>();
         if (ringSet.getAtomContainerCount() == 0) return ringSets;
-        IRing ring = (IRing)ringSet.getAtomContainer(0);
+        IRing ring = (IRing) ringSet.getAtomContainer(0);
         if (ring == null) return ringSets;
         IRingSet rs = ring.getBuilder().newInstance(IRingSet.class);
         for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
@@ -85,7 +85,6 @@ public class RingPartitioner {
         return ringSets;
     }
 
-
     /**
      *  Converts a RingSet to an AtomContainer.
      *
@@ -94,13 +93,13 @@ public class RingPartitioner {
      */
     @TestMethod("testConvertToAtomContainer_IRingSet")
     public static IAtomContainer convertToAtomContainer(IRingSet ringSet) {
-    	IRing ring = (IRing) ringSet.getAtomContainer(0);
-    	if (ring == null) return null;
+        IRing ring = (IRing) ringSet.getAtomContainer(0);
+        if (ring == null) return null;
         IAtomContainer ac = ring.getBuilder().newInstance(IAtomContainer.class);
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             ring = (IRing) ringSet.getAtomContainer(i);
             for (int r = 0; r < ring.getBondCount(); r++) {
-            	IBond bond = ring.getBond(r);
+                IBond bond = ring.getBond(r);
                 if (!ac.contains(bond)) {
                     for (int j = 0; j < bond.getAtomCount(); j++) {
                         ac.addAtom(bond.getAtom(j));
@@ -111,7 +110,6 @@ public class RingPartitioner {
         }
         return ac;
     }
-
 
     /**
      *  Perform a walk in the given RingSet, starting at a given Ring and
@@ -127,10 +125,10 @@ public class RingPartitioner {
     private static IRingSet walkRingSystem(IRingSet rs, IRing ring, IRingSet newRs) {
         IRing tempRing;
         IRingSet tempRings = rs.getConnectedRings(ring);
-//        logger.debug("walkRingSystem -> tempRings.size(): " + tempRings.size());
+        //        logger.debug("walkRingSystem -> tempRings.size(): " + tempRings.size());
         rs.removeAtomContainer(ring);
         for (IAtomContainer container : tempRings.atomContainers()) {
-            tempRing = (IRing)container;
+            tempRing = (IRing) container;
             if (!newRs.contains(tempRing)) {
                 newRs.addAtomContainer(tempRing);
                 newRs.add(walkRingSystem(rs, tempRing, newRs));
@@ -140,8 +138,3 @@ public class RingPartitioner {
     }
 
 }
-
-
-
-
-

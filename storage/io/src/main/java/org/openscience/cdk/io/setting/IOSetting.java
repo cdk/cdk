@@ -32,16 +32,14 @@ import org.openscience.cdk.interfaces.ISetting;
  */
 public abstract class IOSetting implements ISetting {
 
-	public enum Importance {
-		HIGH,
-		MEDIUM,
-		LOW
-	}
+    public enum Importance {
+        HIGH, MEDIUM, LOW
+    }
 
-	protected Importance level;
-    protected String name;
-    protected String question;
-    protected String setting;
+    protected Importance level;
+    protected String     name;
+    protected String     question;
+    protected String     setting;
 
     /**
      * The default constructor that sets this field. All textual
@@ -55,10 +53,9 @@ public abstract class IOSetting implements ISetting {
      * @param defaultSetting The default setting, used if not overwritten
      *                       by a user
      */
-    public IOSetting(String name, Importance level,
-                         String question, String defaultSetting) {
+    public IOSetting(String name, Importance level, String question, String defaultSetting) {
         this.level = level;
-        this.name  = name;
+        this.name = name;
         this.question = question;
         this.setting = defaultSetting;
     }

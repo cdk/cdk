@@ -45,22 +45,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class EquivalentClassPartitioner {
 
-    private double[][] nodeMatrix;
-    private double[][] bondMatrix;
-    private double[] weight;
-    private double[][] adjaMatrix;
-    private int[][] apspMatrix;
-    private int layerNumber;
-    private int nodeNumber;
-    private static double LOST = 0.000000000001;
-    private static ILoggingTool logger = LoggingToolFactory
-            .createLoggingTool(EquivalentClassPartitioner.class);
+    private double[][]          nodeMatrix;
+    private double[][]          bondMatrix;
+    private double[]            weight;
+    private double[][]          adjaMatrix;
+    private int[][]             apspMatrix;
+    private int                 layerNumber;
+    private int                 nodeNumber;
+    private static double       LOST   = 0.000000000001;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EquivalentClassPartitioner.class);
 
     /**
      * Constructor for the TopologicalEquivalentClass object.
      */
-    public EquivalentClassPartitioner() {
-    }
+    public EquivalentClassPartitioner() {}
 
     /**
      * Constructor for the TopologicalEquivalentClass object.
@@ -80,8 +78,7 @@ public class EquivalentClassPartitioner {
                 }
                 // correct adjacency matrix to consider aromatic bonds as such
                 if (adjaMatrix[i][j] > 0) {
-                    IBond bond = atomContainer.getBond(
-                            atomContainer.getAtom(i), atomContainer.getAtom(j));
+                    IBond bond = atomContainer.getBond(atomContainer.getAtom(i), atomContainer.getAtom(j));
                     boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
                     adjaMatrix[i][j] = (isArom) ? 1.5 : adjaMatrix[i][j];
                     adjaMatrix[j][i] = adjaMatrix[i][j];
@@ -101,8 +98,7 @@ public class EquivalentClassPartitioner {
      *            atoms and bonds of the molecule
      * @return an array contains the automorphism partition of the molecule
      */
-    public int[] getTopoEquivClassbyHuXu(IAtomContainer atomContainer)
-            throws NoSuchAtomException {
+    public int[] getTopoEquivClassbyHuXu(IAtomContainer atomContainer) throws NoSuchAtomException {
         double nodeSequence[] = prepareNode(atomContainer);
         nodeMatrix = buildNodeMatrix(nodeSequence);
         bondMatrix = buildBondMatrix();
@@ -134,13 +130,11 @@ public class EquivalentClassPartitioner {
                         nodeSequence[i] = 1;// CH3-
                     else if (order == IBond.Order.DOUBLE)
                         nodeSequence[i] = 3;// CH2=
-                    else if (order == IBond.Order.TRIPLE)
-                        nodeSequence[i] = 6;// CH#
+                    else if (order == IBond.Order.TRIPLE) nodeSequence[i] = 6;// CH#
                 } else if (symbol.equals("O")) {
                     if (order == IBond.Order.SINGLE)
                         nodeSequence[i] = 14;// HO-
-                    else if (order == IBond.Order.DOUBLE)
-                        nodeSequence[i] = 16;// O=
+                    else if (order == IBond.Order.DOUBLE) nodeSequence[i] = 16;// O=
                     // missing the case of an aromatic double bond
                 } else if (symbol.equals("N")) {
                     if (order == IBond.Order.SINGLE)
@@ -150,13 +144,11 @@ public class EquivalentClassPartitioner {
                             nodeSequence[i] = 27;// N= contains -1 charge
                         else
                             nodeSequence[i] = 20;// NH=
-                    } else if (order == IBond.Order.TRIPLE)
-                        nodeSequence[i] = 23;// N#
+                    } else if (order == IBond.Order.TRIPLE) nodeSequence[i] = 23;// N#
                 } else if (symbol.equals("S")) {
                     if (order == IBond.Order.SINGLE)
                         nodeSequence[i] = 31;// HS-
-                    else if (order == IBond.Order.DOUBLE)
-                        nodeSequence[i] = 33;// S=
+                    else if (order == IBond.Order.DOUBLE) nodeSequence[i] = 33;// S=
                 } else if (symbol.equals("P"))
                     nodeSequence[i] = 38;// PH2-
                 else if (symbol.equals("F"))
@@ -168,8 +160,7 @@ public class EquivalentClassPartitioner {
                 else if (symbol.equals("I"))
                     nodeSequence[i] = 45;// I-
                 else {
-                    logger.debug("in case of a new node, please "
-                            + "report this bug to cdk-devel@lists.sf.net.");
+                    logger.debug("in case of a new node, please " + "report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 2) {
                 IBond bond0 = (IBond) bonds.get(0);
@@ -177,80 +168,56 @@ public class EquivalentClassPartitioner {
                 IBond.Order order0 = bond0.getOrder();
                 IBond.Order order1 = bond1.getOrder();
                 if (symbol.equals("C")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 2;// -CH2-
-                    else if (order0 == IBond.Order.DOUBLE
-                            && order1 == IBond.Order.DOUBLE)
+                    else if (order0 == IBond.Order.DOUBLE && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 10;// =C=
-                    else if ((order0 == IBond.Order.SINGLE
-                            || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.DOUBLE
-                            || bond1.getOrder() == IBond.Order.DOUBLE))
+                    else if ((order0 == IBond.Order.SINGLE || bond1.getOrder() == IBond.Order.SINGLE)
+                            && (order0 == IBond.Order.DOUBLE || bond1.getOrder() == IBond.Order.DOUBLE))
                         nodeSequence[i] = 5;// -CH=
-                    else if ((order0 == IBond.Order.SINGLE
-                            || bond1.getOrder() == IBond.Order.TRIPLE)
-                            && (order0 == IBond.Order.TRIPLE
-                            || bond1.getOrder() == IBond.Order.TRIPLE))
+                    else if ((order0 == IBond.Order.SINGLE || bond1.getOrder() == IBond.Order.TRIPLE)
+                            && (order0 == IBond.Order.TRIPLE || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 9;// -C#
                     // case 3 would not allow to reach this statement as there
                     // is no aromatic bond order
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC)
-                            && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
                         nodeSequence[i] = 11;// ArCH
                 } else if (symbol.equals("N")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 19;// -NH-
-                    else if (order0 == IBond.Order.DOUBLE
-                            && order1 == IBond.Order.DOUBLE)
+                    else if (order0 == IBond.Order.DOUBLE && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 28;// =N= with charge=-1
-                    else if ((order0 == IBond.Order.SINGLE
-                            || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.DOUBLE
-                            || bond1.getOrder() == IBond.Order.DOUBLE))
+                    else if ((order0 == IBond.Order.SINGLE || bond1.getOrder() == IBond.Order.SINGLE)
+                            && (order0 == IBond.Order.DOUBLE || bond1.getOrder() == IBond.Order.DOUBLE))
                         nodeSequence[i] = 22;// -N=
-                    else if ((order0 == IBond.Order.DOUBLE
-                            || bond1.getOrder() == IBond.Order.DOUBLE)
-                            && (order0 == IBond.Order.TRIPLE
-                            || bond1.getOrder() == IBond.Order.TRIPLE))
+                    else if ((order0 == IBond.Order.DOUBLE || bond1.getOrder() == IBond.Order.DOUBLE)
+                            && (order0 == IBond.Order.TRIPLE || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 26;// =N#
-                    else if ((order0 == IBond.Order.SINGLE
-                            || bond1.getOrder() == IBond.Order.SINGLE)
-                            && (order0 == IBond.Order.TRIPLE
-                            || bond1.getOrder() == IBond.Order.TRIPLE))
+                    else if ((order0 == IBond.Order.SINGLE || bond1.getOrder() == IBond.Order.SINGLE)
+                            && (order0 == IBond.Order.TRIPLE || bond1.getOrder() == IBond.Order.TRIPLE))
                         nodeSequence[i] = 29;// -N# with charge=+1
                     // case 3 would not allow to reach this statement as there
                     // is no aromatic bond order
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC)
-                            && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
                         nodeSequence[i] = 30;// ArN
                     // there is no way to distinguish between ArNH and ArN as
                     // bonds to protons are not considered
                 } else if (symbol.equals("O")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 15;// -O-
-                    else if (bond0.getFlag(CDKConstants.ISAROMATIC)
-                            && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    else if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
                         nodeSequence[i] = 17;// ArO
                 } else if (symbol.equals("S")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE)
                         nodeSequence[i] = 32;// -S-
-                    else if (order0 == IBond.Order.DOUBLE
-                            && order1 == IBond.Order.DOUBLE)
+                    else if (order0 == IBond.Order.DOUBLE && order1 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 35;// =S=
-                    else if (bond0.getFlag(CDKConstants.ISAROMATIC)
-                            && bond1.getFlag(CDKConstants.ISAROMATIC))
+                    else if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC))
                         nodeSequence[i] = 37;// ArS
                 } else if (symbol.equals("P")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE)
-                        nodeSequence[i] = 39;// -PH-
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE) nodeSequence[i] = 39;// -PH-
                 } else {
-                    logger.debug("in case of a new node, " +
-                    		"please report this bug to cdk-devel@lists.sf.net.");
+                    logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 3) {
                 IBond bond0 = (IBond) bonds.get(0);
@@ -261,51 +228,33 @@ public class EquivalentClassPartitioner {
                 IBond.Order order2 = bond2.getOrder();
 
                 if (symbol.equals("C")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE
-                            && order2 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE && order2 == IBond.Order.SINGLE)
                         nodeSequence[i] = 4;// >C-
-                    else if (order0 == IBond.Order.DOUBLE
-                            || order1 == IBond.Order.DOUBLE
-                            || order2 == IBond.Order.DOUBLE)
-                        nodeSequence[i] = 8;// >C=
+                    else if (order0 == IBond.Order.DOUBLE || order1 == IBond.Order.DOUBLE
+                            || order2 == IBond.Order.DOUBLE) nodeSequence[i] = 8;// >C=
                     // case 2 would not allow to reach this statement because
                     // there is always a double bond (pi system) around an
                     // aromatic atom
-                    if ((bond0.getFlag(CDKConstants.ISAROMATIC)
-                            || bond1.getFlag(CDKConstants.ISAROMATIC)
-                            || bond2.getFlag(CDKConstants.ISAROMATIC))
-                            && (order0 == IBond.Order.SINGLE
-                                    || order1 == IBond.Order.SINGLE
-                                    || bond2.getOrder() == IBond.Order.SINGLE))
+                    if ((bond0.getFlag(CDKConstants.ISAROMATIC) || bond1.getFlag(CDKConstants.ISAROMATIC) || bond2
+                            .getFlag(CDKConstants.ISAROMATIC))
+                            && (order0 == IBond.Order.SINGLE || order1 == IBond.Order.SINGLE || bond2.getOrder() == IBond.Order.SINGLE))
                         nodeSequence[i] = 12;// ArC-
                     // case 3 would not allow to reach this statement
-                    if (bond0.getFlag(CDKConstants.ISAROMATIC)
-                            && bond1.getFlag(CDKConstants.ISAROMATIC)
-                            && bond2.getFlag(CDKConstants.ISAROMATIC))
-                        nodeSequence[i] = 13;// ArC
+                    if (bond0.getFlag(CDKConstants.ISAROMATIC) && bond1.getFlag(CDKConstants.ISAROMATIC)
+                            && bond2.getFlag(CDKConstants.ISAROMATIC)) nodeSequence[i] = 13;// ArC
                 } else if (symbol.equals("N")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE
-                            && order2 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE && order2 == IBond.Order.SINGLE)
                         nodeSequence[i] = 21;// >N-
-                    else if (order0 == IBond.Order.SINGLE
-                            || order1 == IBond.Order.SINGLE
-                            || order2 == IBond.Order.SINGLE)
-                        nodeSequence[i] = 25;// -N(=)=
+                    else if (order0 == IBond.Order.SINGLE || order1 == IBond.Order.SINGLE
+                            || order2 == IBond.Order.SINGLE) nodeSequence[i] = 25;// -N(=)=
                 } else if (symbol.equals("S")) {
-                    if (order0 == IBond.Order.DOUBLE
-                            || order1 == IBond.Order.DOUBLE
-                            || order2 == IBond.Order.DOUBLE)
+                    if (order0 == IBond.Order.DOUBLE || order1 == IBond.Order.DOUBLE || order2 == IBond.Order.DOUBLE)
                         nodeSequence[i] = 34;// >S=
                 } else if (symbol.equals("P")) {
-                    if (order0 == IBond.Order.SINGLE
-                            && order1 == IBond.Order.SINGLE
-                            && order2 == IBond.Order.SINGLE)
+                    if (order0 == IBond.Order.SINGLE && order1 == IBond.Order.SINGLE && order2 == IBond.Order.SINGLE)
                         nodeSequence[i] = 40;// >P-
                 } else {
-                    logger.debug("in case of a new node, " +
-                    		"please report this bug to cdk-devel@lists.sf.net.");
+                    logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
                 }
             } else if (bonds.size() == 4) {
                 if (atom.getSymbol().equals("C"))
@@ -317,8 +266,7 @@ public class EquivalentClassPartitioner {
                 else if (atom.getSymbol().equals("P"))
                     nodeSequence[i] = 41;// =P<-
                 else {
-                    logger.debug("in case of a new node, " +
-                    		"please report this bug to cdk-devel@lists.sf.net.");
+                    logger.debug("in case of a new node, " + "please report this bug to cdk-devel@lists.sf.net.");
                 }
             }
             i++;
@@ -407,13 +355,11 @@ public class EquivalentClassPartitioner {
      * @param bondMatrix array contains bond information
      * @return weight array for the node
      */
-    public double[] buildWeightMatrix(double[][] nodeMatrix,
-            double[][] bondMatrix) {
+    public double[] buildWeightMatrix(double[][] nodeMatrix, double[][] bondMatrix) {
         for (int i = 0; i < nodeNumber; i++) {
             weight[i + 1] = nodeMatrix[i][0];
             for (int j = 0; j < layerNumber; j++) {
-                weight[i + 1] += nodeMatrix[i][j + 1] * bondMatrix[i][j]
-                        * Math.pow(10.0, (double) -(j + 1));
+                weight[i + 1] += nodeMatrix[i][j + 1] * bondMatrix[i][j] * Math.pow(10.0, (double) -(j + 1));
             }
         }
         weight[0] = 0.0;
@@ -436,10 +382,8 @@ public class EquivalentClassPartitioner {
         for (i = 2; i < weight.length; i++) {
             for (j = 1; j <= count; j++) {
                 t = weight[i] - category[j];
-                if (t < 0.0)
-                    t = -t;
-                if (t < LOST)
-                    break;
+                if (t < 0.0) t = -t;
+                if (t < LOST) break;
             }
             if (j > count) {
                 count += 1;
@@ -514,8 +458,7 @@ public class EquivalentClassPartitioner {
         do {
             count = trialCount;
             double[][] trialNodeMatrix = buildTrialNodeMatrix(weight);
-            double[] trialWeight =
-                    buildWeightMatrix(trialNodeMatrix, bondMatrix);
+            double[] trialWeight = buildWeightMatrix(trialNodeMatrix, bondMatrix);
             trialCount = checkDiffNumber(trialWeight);
             if (trialCount == nodeNumber) {
                 for (i = 1; i <= nodeNumber; i++) {

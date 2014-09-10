@@ -98,4 +98,3 @@ public class AtomicPropertiesTest extends CDKTestCase {
         Assert.assertTrue(eneg > 0);
     }
 }
-

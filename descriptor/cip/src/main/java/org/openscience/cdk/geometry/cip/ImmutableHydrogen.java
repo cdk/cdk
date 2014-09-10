@@ -437,7 +437,6 @@ class ImmutableHydrogen implements IAtom {
         return null;
     }
 
-
     /**
      * This field is not used by this immutable hydrogen.
      *

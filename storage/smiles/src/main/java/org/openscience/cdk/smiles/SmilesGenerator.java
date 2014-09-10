@@ -192,10 +192,10 @@ public final class SmilesGenerator {
      *                 SMILES
      */
     private SmilesGenerator(boolean isomeric, boolean canonical, boolean aromatic, boolean classes) {
-        this.isomeric  = isomeric;
+        this.isomeric = isomeric;
         this.canonical = canonical;
-        this.aromatic  = aromatic;
-        this.classes   = classes;
+        this.aromatic = aromatic;
+        this.classes = classes;
         this.converter = new CDKToBeam(isomeric, aromatic, classes);
     }
 
@@ -293,9 +293,9 @@ public final class SmilesGenerator {
         try {
             return create(molecule);
         } catch (CDKException e) {
-            throw new IllegalArgumentException("SMILES could not be generated, please use the new API method 'create()'" +
-                                                       "to catch the checked exception",
-                                               e);
+            throw new IllegalArgumentException(
+                    "SMILES could not be generated, please use the new API method 'create()'"
+                            + "to catch the checked exception", e);
         }
     }
 
@@ -308,13 +308,13 @@ public final class SmilesGenerator {
      * @deprecated use #createReactionSMILES
      */
     @Deprecated
-    public String createSMILES(IReaction reaction){
+    public String createSMILES(IReaction reaction) {
         try {
             return createReactionSMILES(reaction);
         } catch (CDKException e) {
-            throw new IllegalArgumentException("SMILES could not be generated, please use the new API method 'create()'" +
-                                                       "to catch the checked exception",
-                                               e);
+            throw new IllegalArgumentException(
+                    "SMILES could not be generated, please use the new API method 'create()'"
+                            + "to catch the checked exception", e);
         }
     }
 
@@ -368,11 +368,10 @@ public final class SmilesGenerator {
 
         try {
             if (order.length != molecule.getAtomCount())
-                throw new IllegalArgumentException("the array for storing output order should be" +
-                                                           "the same length as the number of atoms");
+                throw new IllegalArgumentException("the array for storing output order should be"
+                        + "the same length as the number of atoms");
 
             Graph g = converter.toBeamGraph(molecule);
-
 
             // apply the canonical labelling
             if (canonical) {
@@ -380,8 +379,7 @@ public final class SmilesGenerator {
                 // determine the output order
                 int[] labels = labels(molecule);
 
-                g = g.permute(labels)
-                     .resonate();
+                g = g.permute(labels).resonate();
 
                 if (isomeric) {
 
@@ -394,8 +392,7 @@ public final class SmilesGenerator {
 
                     // visit double bonds first, prefer C1=CC=C1 to C=1C=CC1
                     // visit hydrogens first
-                    g.sort(new Graph.VisitHighOrderFirst())
-                     .sort(new Graph.VisitHydrogenFirst());
+                    g.sort(new Graph.VisitHighOrderFirst()).sort(new Graph.VisitHydrogenFirst());
                 }
 
                 String smiles = g.toSmiles(order);
@@ -408,8 +405,7 @@ public final class SmilesGenerator {
                 System.arraycopy(canorder, 0, order, 0, order.length);
 
                 return smiles;
-            }
-            else {
+            } else {
                 return g.toSmiles(order);
             }
         } catch (IOException e) {
@@ -478,9 +474,8 @@ public final class SmilesGenerator {
      * @see Canon
      */
     private int[] labels(final IAtomContainer molecule) throws CDKException {
-        long[] labels = isomeric ? inchiNumbers(molecule)
-                                 : Canon.label(molecule, GraphUtil.toAdjList(molecule));
-        int[]  cpy    = new int[labels.length];
+        long[] labels = isomeric ? inchiNumbers(molecule) : Canon.label(molecule, GraphUtil.toAdjList(molecule));
+        int[] cpy = new int[labels.length];
         for (int i = 0; i < labels.length; i++)
             cpy[i] = (int) labels[i] - 1;
         return cpy;
@@ -502,17 +497,16 @@ public final class SmilesGenerator {
         String cname = "org.openscience.cdk.graph.invariant.InChINumbersTools";
         String mname = "getUSmilesNumbers";
         try {
-            Class<?>  c   = Class.forName(cname);
+            Class<?> c = Class.forName(cname);
             Method method = c.getDeclaredMethod("getUSmilesNumbers", IAtomContainer.class);
             return (long[]) method.invoke(c, container);
         } catch (ClassNotFoundException e) {
-            throw new CDKException("The cdk-inchi module is not loaded," +
-                                           " this module is need when gernating absolute SMILES.");
+            throw new CDKException("The cdk-inchi module is not loaded,"
+                    + " this module is need when gernating absolute SMILES.");
         } catch (NoSuchMethodException e) {
             throw new CDKException("The method " + mname + " was not found", e);
         } catch (InvocationTargetException e) {
-            throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(),
-                                   e);
+            throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.getMessage(), e);
         } catch (IllegalAccessException e) {
             throw new CDKException("Could not access method to obtain InChI numbers.");
         }

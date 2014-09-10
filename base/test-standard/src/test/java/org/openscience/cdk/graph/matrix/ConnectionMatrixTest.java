@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.graph.matrix;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKTestCase;
@@ -35,34 +34,31 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class ConnectionMatrixTest extends CDKTestCase {
 
-	private final static SmilesParser sp =
-	    new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private final static SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     public ConnectionMatrixTest() {
         super();
     }
 
     @Test
-	public void testGetMatrix_IAtomContainer() throws Exception {
+    public void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
-		double[][] matrix = ConnectionMatrix.getMatrix(container);
-		Assert.assertEquals(3,matrix.length);
-		Assert.assertEquals(3,matrix[0].length);
-	}
+        double[][] matrix = ConnectionMatrix.getMatrix(container);
+        Assert.assertEquals(3, matrix.length);
+        Assert.assertEquals(3, matrix[0].length);
+    }
 
     @Test
-	public void testLonePairs() throws Exception {
+    public void testLonePairs() throws Exception {
         IAtomContainer container = new AtomContainer();
-		container.addAtom(container.getBuilder().newInstance(IAtom.class,"I"));
-		container.addLonePair(container.getBuilder().newInstance(ILonePair.class,container.getAtom(0)));
-		container.addAtom(container.getBuilder().newInstance(IAtom.class,"H"));
-		container.getBuilder().newInstance(IBond.class,container.getAtom(0), container.getAtom(1), IBond.Order.SINGLE);
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "I"));
+        container.addLonePair(container.getBuilder().newInstance(ILonePair.class, container.getAtom(0)));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "H"));
+        container.getBuilder().newInstance(IBond.class, container.getAtom(0), container.getAtom(1), IBond.Order.SINGLE);
 
-		double[][] matrix = ConnectionMatrix.getMatrix(container);
-		Assert.assertEquals(2,matrix.length);
-		Assert.assertEquals(2,matrix[0].length);
-	}
+        double[][] matrix = ConnectionMatrix.getMatrix(container);
+        Assert.assertEquals(2, matrix.length);
+        Assert.assertEquals(2, matrix[0].length);
+    }
 
 }
-
-

@@ -33,34 +33,37 @@ public class MathToolsTest extends CDKTestCase {
         super();
     }
 
-
     public void testMax_arraydouble() {
-        double[] doubles = { 2.0, 1.0, 3.0, 5.0, 4.0};
+        double[] doubles = {2.0, 1.0, 3.0, 5.0, 4.0};
         Assert.assertEquals(5.0, MathTools.max(doubles), 0.001);
     }
 
-    @Test public void testMin_arraydouble() {
-    	double[] doubles = { 2.0, 1.0, 3.0, 5.0, 4.0};
+    @Test
+    public void testMin_arraydouble() {
+        double[] doubles = {2.0, 1.0, 3.0, 5.0, 4.0};
         Assert.assertEquals(1.0, MathTools.min(doubles), 0.001);
     }
 
     @Test
     public void testMax_arrayint() {
-        int[] ints = { 1, 2, 3, 4, 5};
+        int[] ints = {1, 2, 3, 4, 5};
         Assert.assertEquals(5, MathTools.max(ints));
     }
 
-    @Test public void testMin_arrayint() {
-        int[] ints = { 1, 2, 3, 4, 5};
+    @Test
+    public void testMin_arrayint() {
+        int[] ints = {1, 2, 3, 4, 5};
         Assert.assertEquals(1, MathTools.min(ints));
     }
 
-    @Test public void testIsEven_int() {
+    @Test
+    public void testIsEven_int() {
         Assert.assertTrue(MathTools.isEven(2));
         Assert.assertTrue(MathTools.isEven(208));
     }
 
-    @Test public void testIsOdd_int() {
+    @Test
+    public void testIsOdd_int() {
         Assert.assertTrue(MathTools.isOdd(1));
         Assert.assertTrue(MathTools.isOdd(3));
         Assert.assertTrue(MathTools.isOdd(209));

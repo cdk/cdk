@@ -26,5 +26,3 @@ import org.openscience.cdk.CDKTestCase;
 public class ChemGraphTest extends CDKTestCase {
 
 }
-
-

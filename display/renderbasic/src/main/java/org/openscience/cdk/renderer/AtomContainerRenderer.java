@@ -1,23 +1,23 @@
 /*  Copyright (C) 2008-2009  Gilleain Torrance <gilleain.torrance@gmail.com>
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                2009-2010  Egon Willighagen <egonw@users.sf.net>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
@@ -102,8 +102,7 @@ import static java.lang.Math.min;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.AtomContainerRendererTest")
-public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
-  implements IRenderer<IAtomContainer> {
+public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer> implements IRenderer<IAtomContainer> {
 
     /**
      * The default scale is used when the model is empty.
@@ -120,13 +119,15 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      *            a class that manages mappings between zoom and font sizes
      */
     public AtomContainerRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-    	this(new RendererModel(),generators,fontManager);
-    	for (IGenerator<IAtomContainer> generator : generators) {
+        this(new RendererModel(), generators, fontManager);
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
     }
-    public AtomContainerRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-    	super(rendererModel);
+
+    public AtomContainerRenderer(RendererModel rendererModel, List<IGenerator<IAtomContainer>> generators,
+            IFontManager fontManager) {
+        super(rendererModel);
         this.generators = generators;
         this.fontManager = fontManager;
     }
@@ -170,8 +171,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
     /**
      * {@inheritDoc}
      */
-    public Rectangle paint(
-            IAtomContainer atomContainer, IDrawVisitor drawVisitor) {
+    public Rectangle paint(IAtomContainer atomContainer, IDrawVisitor drawVisitor) {
         // the bounds of the model
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(atomContainer);
 
@@ -182,7 +182,6 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
 
         return this.convertToDiagramBounds(modelBounds);
     }
-
 
     /**
      * Determine an estimated bond length for disconnected structures. The
@@ -198,15 +197,15 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
 
         if (container.getBondCount() > 0)
             throw new IllegalArgumentException("structure has at least one bond - disconnected scaling not need");
-        if (container.getAtomCount() < 2)
-            throw new IllegalArgumentException("structure must have at least two atoms");
+        if (container.getAtomCount() < 2) throw new IllegalArgumentException("structure must have at least two atoms");
 
-        int    nAtoms      = container.getAtomCount();
+        int nAtoms = container.getAtomCount();
         double minDistance = Integer.MAX_VALUE;
 
         for (int i = 0; i < nAtoms; i++)
             for (int j = i + 1; j < nAtoms; j++)
-                minDistance = min(container.getAtom(i).getPoint2d().distance(container.getAtom(j).getPoint2d()), minDistance);
+                minDistance = min(container.getAtom(i).getPoint2d().distance(container.getAtom(j).getPoint2d()),
+                        minDistance);
 
         return minDistance / 1.5; // non-bonded, if they were they would be closer
     }
@@ -220,15 +219,14 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paint(IAtomContainer atomContainer,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
+    public void paint(IAtomContainer atomContainer, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         if (atomContainer.getBondCount() > 0 || atomContainer.getAtomCount() == 1) {
-            rendererModel.getParameter(Scale.class)
-                         .setValue(calculateScaleForBondLength(GeometryUtil.getBondLengthAverage(atomContainer)));
+            rendererModel.getParameter(Scale.class).setValue(
+                    calculateScaleForBondLength(GeometryUtil.getBondLengthAverage(atomContainer)));
         } else if (atomContainer.getAtomCount() > 1) {
-            rendererModel.getParameter(Scale.class)
-                         .setValue(calculateScaleForBondLength(estimatedBondLength(atomContainer)));
+            rendererModel.getParameter(Scale.class).setValue(
+                    calculateScaleForBondLength(estimatedBondLength(atomContainer)));
         }
 
         // the diagram to draw
@@ -238,8 +236,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         Rectangle2D modelBounds = getBounds(diagram);
 
         // no bounding elements, use the atom coordinates
-        if (modelBounds == null)
-            modelBounds = BoundsCalculator.calculateBounds(atomContainer);
+        if (modelBounds == null) modelBounds = BoundsCalculator.calculateBounds(atomContainer);
 
         setupTransformToFit(bounds, modelBounds, resetCenter);
 
@@ -250,8 +247,7 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
      * {@inheritDoc}
      */
     public Rectangle calculateDiagramBounds(IAtomContainer atomContainer) {
-        return calculateScreenBounds(
-                BoundsCalculator.calculateBounds(atomContainer));
+        return calculateScreenBounds(BoundsCalculator.calculateBounds(atomContainer));
     }
 
     /**
@@ -265,15 +261,14 @@ public class AtomContainerRenderer extends AbstractRenderer<IAtomContainer>
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return DEFAULT_SCALE;
         } else {
-            return rendererModel.getParameter(
-                    BondLength.class).getValue() / modelBondLength;
+            return rendererModel.getParameter(BondLength.class).getValue() / modelBondLength;
         }
     }
 
     /**
      * {@inheritDoc}
      */
-    public List<IGenerator<IAtomContainer>> getGenerators(){
+    public List<IGenerator<IAtomContainer>> getGenerators() {
         return new ArrayList<IGenerator<IAtomContainer>>(generators);
     }
 

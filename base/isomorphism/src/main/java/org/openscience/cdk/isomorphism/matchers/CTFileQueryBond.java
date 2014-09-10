@@ -35,27 +35,19 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class CTFileQueryBond extends QueryBond implements IQueryBond {
 
-    /* Bond types, as stated in the CTFile manual
-       1 = Single, 2 = Double,
-       3 = Triple, 4 = Aromatic,
-       5 = Single or Double,
-       6 = Single or Aromatic,
-       7 = Double or Aromatic, 8 = Any
-    */
+    /*
+     * Bond types, as stated in the CTFile manual 1 = Single, 2 = Double, 3 =
+     * Triple, 4 = Aromatic, 5 = Single or Double, 6 = Single or Aromatic, 7 =
+     * Double or Aromatic, 8 = Any
+     */
     public enum Type {
-        SINGLE,
-        DOUBLE,
-        TRIPLE,
-        AROMATIC,
-        SINGLE_OR_DOUBLE,
-        SINGLE_OR_AROMATIC,
-        DOUBLE_OR_AROMATIC,
-        ANY
+        SINGLE, DOUBLE, TRIPLE, AROMATIC, SINGLE_OR_DOUBLE, SINGLE_OR_AROMATIC, DOUBLE_OR_AROMATIC, ANY
     }
 
-    public CTFileQueryBond(IChemObjectBuilder builder){
+    public CTFileQueryBond(IChemObjectBuilder builder) {
         super(builder);
     }
+
     /**
      * The type of this bond.
      */

@@ -30,11 +30,13 @@ public class DatadebugCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "datadebug.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, DatadebugCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 }

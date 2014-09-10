@@ -43,11 +43,9 @@ import org.openscience.cdk.annotations.TestMethod;
 public class LoggingToolFactory {
 
     /** Default logging tool. Currently, the log4j based one. */
-    public final static String DEFAULT_LOGGING_TOOL_CLASS =
-        "org.openscience.cdk.tools.LoggingTool";
+    public final static String                   DEFAULT_LOGGING_TOOL_CLASS = "org.openscience.cdk.tools.LoggingTool";
     /** Back-up logging tool. Currently, a tool that outputs to System.out. */
-    public final static String STDOUT_LOGGING_TOOL_CLASS =
-        "org.openscience.cdk.tools.SystemOutLoggingTool";
+    public final static String                   STDOUT_LOGGING_TOOL_CLASS  = "org.openscience.cdk.tools.SystemOutLoggingTool";
 
     private static Class<? extends ILoggingTool> userSetILoggerTool;
 
@@ -58,8 +56,7 @@ public class LoggingToolFactory {
      * @see   #getLoggingToolClass()
      */
     @TestMethod("testSetGetLoggingToolClass,testCustomLogger")
-    public static void setLoggingToolClass(
-            Class<? extends ILoggingTool> loggingTool) {
+    public static void setLoggingToolClass(Class<? extends ILoggingTool> loggingTool) {
         LoggingToolFactory.userSetILoggerTool = loggingTool;
     }
 
@@ -87,31 +84,22 @@ public class LoggingToolFactory {
         ILoggingTool tool = null;
         // first attempt the user set ILoggingTool
         if (userSetILoggerTool != null) {
-            tool = instantiateWithCreateMethod(
-                sourceClass, userSetILoggerTool
-            );
+            tool = instantiateWithCreateMethod(sourceClass, userSetILoggerTool);
         }
         if (tool == null) {
-            tool = initializeLoggingTool(
-                sourceClass, DEFAULT_LOGGING_TOOL_CLASS
-            );
+            tool = initializeLoggingTool(sourceClass, DEFAULT_LOGGING_TOOL_CLASS);
         }
         if (tool == null) {
-            tool = initializeLoggingTool(
-                sourceClass, STDOUT_LOGGING_TOOL_CLASS
-            );
+            tool = initializeLoggingTool(sourceClass, STDOUT_LOGGING_TOOL_CLASS);
         }
         return tool;
     }
 
-    private static ILoggingTool initializeLoggingTool(
-        Class<?> sourceClass, String className) {
+    private static ILoggingTool initializeLoggingTool(Class<?> sourceClass, String className) {
         try {
-            Class<?> possibleLoggingToolClass = sourceClass.getClassLoader()
-               .loadClass(className);
+            Class<?> possibleLoggingToolClass = sourceClass.getClassLoader().loadClass(className);
             if (ILoggingTool.class.isAssignableFrom(possibleLoggingToolClass)) {
-                return instantiateWithCreateMethod(sourceClass,
-                        possibleLoggingToolClass);
+                return instantiateWithCreateMethod(sourceClass, possibleLoggingToolClass);
             }
         } catch (ClassNotFoundException e) {
         } catch (SecurityException e) {
@@ -120,21 +108,15 @@ public class LoggingToolFactory {
         return null;
     }
 
-    private static ILoggingTool instantiateWithCreateMethod(
-            Class<?> sourceClass, Class<?> loggingToolClass) {
+    private static ILoggingTool instantiateWithCreateMethod(Class<?> sourceClass, Class<?> loggingToolClass) {
         Method createMethod;
         try {
-            createMethod = loggingToolClass.getMethod(
-                "create", Class.class
-            );
-            Object createdLoggingTool = createMethod.invoke(
-                null, sourceClass
-            );
+            createMethod = loggingToolClass.getMethod("create", Class.class);
+            Object createdLoggingTool = createMethod.invoke(null, sourceClass);
             if (createdLoggingTool instanceof ILoggingTool) {
-                return (ILoggingTool)createdLoggingTool;
+                return (ILoggingTool) createdLoggingTool;
             } else {
-                System.out.println("Expected ILoggingTool, but found a:"
-                        + createdLoggingTool.getClass().getName());
+                System.out.println("Expected ILoggingTool, but found a:" + createdLoggingTool.getClass().getName());
             }
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {

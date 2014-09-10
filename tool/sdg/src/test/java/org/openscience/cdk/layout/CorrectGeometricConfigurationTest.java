@@ -45,7 +45,8 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 public class CorrectGeometricConfigurationTest {
 
     // C/C=C/CCC
-    @Test public void cis() {
+    @Test
+    public void cis() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));
@@ -56,10 +57,8 @@ public class CorrectGeometricConfigurationTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1),
-                                                         new IBond[]{m.getBond(0),
-                                                         m.getBond(2)},
-                                                         TOGETHER));
+        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1), new IBond[]{m.getBond(0), m.getBond(2)},
+                TOGETHER));
         CorrectGeometricConfiguration.correct(m);
         assertPoint(m.getAtom(0), -0.74, 5.0, 0.1);
         assertPoint(m.getAtom(1), -1.49, 3.7, 0.1);
@@ -69,7 +68,8 @@ public class CorrectGeometricConfigurationTest {
     }
 
     // C/C=C\CCC
-    @Test public void trans() {
+    @Test
+    public void trans() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3, -0.74d, 5.00d));
         m.addAtom(atom("C", 1, -1.49d, 3.70d));
@@ -80,10 +80,8 @@ public class CorrectGeometricConfigurationTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1),
-                                                         new IBond[]{m.getBond(0),
-                                                         m.getBond(2)},
-                                                         OPPOSITE));
+        m.addStereoElement(new DoubleBondStereochemistry(m.getBond(1), new IBond[]{m.getBond(0), m.getBond(2)},
+                OPPOSITE));
         CorrectGeometricConfiguration.correct(m);
         assertPoint(m.getAtom(0), -0.74, 5.0, 0.1);
         assertPoint(m.getAtom(1), -1.49, 3.7, 0.1);

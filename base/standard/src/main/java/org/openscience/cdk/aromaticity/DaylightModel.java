@@ -70,7 +70,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @TestClass("org.openscience.cdk.aromaticity.DaylightModelTest")
 final class DaylightModel extends ElectronDonation {
 
-    private static final int CARBON = 6;
+    private static final int CARBON     = 6;
     private static final int NITROGEN   = 7;
     private static final int OXYGEN     = 8;
     private static final int PHOSPHORUS = 15;
@@ -80,18 +80,19 @@ final class DaylightModel extends ElectronDonation {
 
     /** @inheritDoc */
     @TestMethod("benzene,furan,pyrrole")
-    @Override int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    @Override
+    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 
         int n = container.getAtomCount();
 
         // we compute values we need for all atoms and then make the decisions
         // - this avoids costly operations such as looking up connected
         // bonds on each atom at the cost of memory
-        int[] degree          = new int[n];
-        int[] bondOrderSum    = new int[n];
-        int[] nCyclicPiBonds  = new int[n];
+        int[] degree = new int[n];
+        int[] bondOrderSum = new int[n];
+        int[] nCyclicPiBonds = new int[n];
         int[] exocyclicPiBond = new int[n];
-        int[] electrons       = new int[n];
+        int[] electrons = new int[n];
 
         Arrays.fill(exocyclicPiBond, -1);
 
@@ -101,7 +102,7 @@ final class DaylightModel extends ElectronDonation {
             IAtom a = container.getAtom(i);
             atomIndex.put(a, i);
             degree[i] = checkNotNull(a.getImplicitHydrogenCount(),
-                                     "Aromaticity model requires implicit hydrogen count is set.");
+                    "Aromaticity model requires implicit hydrogen count is set.");
         }
 
         // for each bond we increase the degree count and check for cyclic and
@@ -114,8 +115,7 @@ final class DaylightModel extends ElectronDonation {
             degree[u]++;
             degree[v]++;
 
-            IBond.Order order = checkNotNull(bond.getOrder(),
-                                             "Aromaticity model requires that bond orders must be set");
+            IBond.Order order = checkNotNull(bond.getOrder(), "Aromaticity model requires that bond orders must be set");
 
             switch (order) {
                 case UNSET:
@@ -124,8 +124,7 @@ final class DaylightModel extends ElectronDonation {
                     if (ringSearch.cyclic(u, v)) {
                         nCyclicPiBonds[u]++;
                         nCyclicPiBonds[v]++;
-                    }
-                    else {
+                    } else {
                         exocyclicPiBond[u] = v;
                         exocyclicPiBond[v] = u;
                     }
@@ -142,7 +141,7 @@ final class DaylightModel extends ElectronDonation {
         for (int i = 0; i < n; i++) {
 
             int element = element(container.getAtom(i));
-            int charge  = charge(container.getAtom(i));
+            int charge = charge(container.getAtom(i));
 
             // abnormal valence, usually indicated a radical. these cause problems
             // with kekulisations
@@ -158,16 +157,12 @@ final class DaylightModel extends ElectronDonation {
                 electrons[i] = -1;
             }
 
-
             // exocyclic bond contributes 0 or 1 electrons depending on
             // preset electronegativity - check the exocyclicContribution method
             else if (exocyclicPiBond[i] >= 0) {
-                electrons[i] = exocyclicContribution(element,
-                                                     element(container.getAtom(exocyclicPiBond[i])),
-                                                     charge,
-                                                     nCyclicPiBonds[i]);
+                electrons[i] = exocyclicContribution(element, element(container.getAtom(exocyclicPiBond[i])), charge,
+                        nCyclicPiBonds[i]);
             }
-
 
             // any atom (except arsenic) with one cyclic pi bond contributes a
             // single electron
@@ -221,10 +216,7 @@ final class DaylightModel extends ElectronDonation {
      *                     atom
      * @return number of contributed electrons
      */
-    private static int exocyclicContribution(int element,
-                                             int otherElement,
-                                             int charge,
-                                             int nCyclic) {
+    private static int exocyclicContribution(int element, int otherElement, int charge, int nCyclic) {
         switch (element) {
             case CARBON:
                 return otherElement != CARBON ? 0 : 1;
@@ -232,8 +224,7 @@ final class DaylightModel extends ElectronDonation {
             case PHOSPHORUS:
                 if (charge == 1)
                     return 1;
-                else if (charge == 0 && otherElement == OXYGEN && nCyclic == 1)
-                    return 1;
+                else if (charge == 0 && otherElement == OXYGEN && nCyclic == 1) return 1;
                 return -1;
             case SULPHUR:
                 // quirky but try - O=C1C=CS(=O)C=C1
@@ -275,23 +266,18 @@ final class DaylightModel extends ElectronDonation {
     private static boolean normal(int element, int charge, int valence) {
         switch (element) {
             case CARBON:
-                if (charge == -1 || charge == +1)
-                    return valence == 3;
+                if (charge == -1 || charge == +1) return valence == 3;
                 return charge == 0 && valence == 4;
             case NITROGEN:
             case PHOSPHORUS:
             case ARSENIC:
-                if (charge == -1)
-                    return valence == 2;
-                if (charge == +1)
-                    return valence == 4;
-                return charge == 0
-                        && (valence == 3 || (valence == 5 && element == NITROGEN));
+                if (charge == -1) return valence == 2;
+                if (charge == +1) return valence == 4;
+                return charge == 0 && (valence == 3 || (valence == 5 && element == NITROGEN));
             case OXYGEN:
             case SULPHUR:
             case SELENIUM:
-                if (charge == +1)
-                    return valence == 3;
+                if (charge == +1) return valence == 3;
                 return charge == 0 && valence == 2;
         }
         return false;
@@ -323,13 +309,13 @@ final class DaylightModel extends ElectronDonation {
      */
     private int valence(int element) {
         switch (element) {
-            case 5:     // boron
-            case 13:    // aluminium
-            case 31:    // gallium
+            case 5: // boron
+            case 13: // aluminium
+            case 31: // gallium
                 return 3;
             case CARBON:
-            case 14:    // silicon
-            case 32:    // germanium
+            case 14: // silicon
+            case 32: // germanium
                 return 4;
             case NITROGEN:
             case PHOSPHORUS:
@@ -339,9 +325,9 @@ final class DaylightModel extends ElectronDonation {
             case SULPHUR:
             case SELENIUM:
                 return 6;
-            case 9:     // fluorine
-            case 17:    // chlorine
-            case 35:    // bromine
+            case 9: // fluorine
+            case 17: // chlorine
+            case 35: // bromine
                 return 7;
         }
         throw new UnsupportedOperationException("Valence not yet handled for element with atomic number " + element);
@@ -357,10 +343,8 @@ final class DaylightModel extends ElectronDonation {
      */
     private int element(IAtom atom) {
         Integer element = atom.getAtomicNumber();
-        if (element != null)
-            return element;
-        if (atom instanceof IPseudoAtom)
-            return 0;
+        if (element != null) return element;
+        if (atom instanceof IPseudoAtom) return 0;
         throw new IllegalArgumentException("Aromaiticty model requires atomic numbers to be set");
     }
 

@@ -51,17 +51,17 @@ import java.util.StringTokenizer;
 @TestClass("org.openscience.cdk.io.ZMatrixReaderTest")
 public class ZMatrixReader extends DefaultChemObjectReader {
 
-  private BufferedReader input;
+    private BufferedReader input;
 
-  /**
-   * Constructs a ZMatrixReader from a Reader that contains the
-   * data to be parsed.
-   *
-   * @param     input   Reader containing the data to read
-   */
-  public ZMatrixReader(Reader input) {
-    this.input = new BufferedReader(input);
-  }
+    /**
+     * Constructs a ZMatrixReader from a Reader that contains the
+     * data to be parsed.
+     *
+     * @param     input   Reader containing the data to read
+     */
+    public ZMatrixReader(Reader input) {
+        this.input = new BufferedReader(input);
+    }
 
     public ZMatrixReader(InputStream input) {
         this(new InputStreamReader(input));
@@ -79,7 +79,7 @@ public class ZMatrixReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -90,146 +90,138 @@ public class ZMatrixReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IChemFile.class.isAssignableFrom(classObject);
-	}
-
-  /**
-   *  Returns a IChemObject of type object bye reading from
-   *  the input.
-   *
-   *  The function supports only reading of ChemFile's.
-   *
-   * @param     object  IChemObject that types the class to return.
-   * @throws    CDKException when a IChemObject is requested that cannot be read.
-   */
-  public <T extends IChemObject> T read(T object) throws CDKException
-  {
-    if (object instanceof IChemFile)
-      return (T)readChemFile((IChemFile)object);
-    else
-      throw new CDKException("Only ChemFile objects can be read.");
-  }
-
-  /**
-   *  Private method that actually parses the input to read a ChemFile
-   *  object.
-   *
-   * @param file  the file to read from
-   * @return A ChemFile containing the data parsed from input.
-   */
-  private IChemFile readChemFile(IChemFile file) {
-    IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
-
-    int number_of_atoms;
-    StringTokenizer tokenizer;
-
-    try
-    {
-      String line = input.readLine();
-      while (line.startsWith("#"))
-        line = input.readLine();
-      /*while (input.ready() && line != null)
-      {*/
-//        logger.debug("lauf");
-        // parse frame by frame
-        tokenizer = new StringTokenizer(line, "\t ,;");
-
-        String token = tokenizer.nextToken();
-        number_of_atoms = Integer.parseInt(token);
-        String info = input.readLine();
-
-        IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-        IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
-
-        IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
-        m.setProperty(CDKConstants.TITLE ,info);
-
-        String[] types = new String[number_of_atoms];
-        double[] d = new double[number_of_atoms]; int[] d_atom = new int[number_of_atoms]; // Distances
-        double[] a = new double[number_of_atoms]; int[] a_atom = new int[number_of_atoms]; // Angles
-        double[] da = new double[number_of_atoms]; int[] da_atom = new int[number_of_atoms]; // Diederangles
-        //Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
-
-        int i = 0;
-        while(i < number_of_atoms)
-        {
-          line = input.readLine();
-//          logger.debug("line:\""+line+"\"");
-          if (line == null) break;
-          if (line.startsWith("#"))
-          {
-            // skip comment in file
-          } else
-          {
-            d[i] = 0d; d_atom[i] = -1;
-            a[i] = 0d; a_atom[i] = -1;
-            da[i] = 0d; da_atom[i] = -1;
-
-            tokenizer = new StringTokenizer(line, "\t ,;");
-            int fields = tokenizer.countTokens();
-
-            if (fields < Math.min(i*2+1,7))
-            {
-              // this is an error but cannot throw exception
-            }
-            else if (i==0)
-            {
-              types[i] = tokenizer.nextToken();
-              i++;
-            }
-            else if (i==1)
-            {
-              types[i] = tokenizer.nextToken();
-              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              d[i] = Double.valueOf(tokenizer.nextToken());
-              i++;
-            }
-            else if (i==2)
-            {
-              types[i] = tokenizer.nextToken();
-              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              d[i] = Double.valueOf(tokenizer.nextToken());
-              a_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              a[i] = Double.valueOf(tokenizer.nextToken());
-              i++;
-            }
-            else
-            {
-              types[i] = tokenizer.nextToken();
-              d_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              d[i] = Double.valueOf(tokenizer.nextToken());
-              a_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              a[i] = Double.valueOf(tokenizer.nextToken());
-              da_atom[i] = Integer.valueOf(tokenizer.nextToken()) -1;
-              da[i] = Double.valueOf(tokenizer.nextToken());
-              i++;
-            }
-          }
-        }
-
-        // calculate cartesian coordinates
-        Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
-
-        for (i=0; i<number_of_atoms; i++) {
-              m.addAtom(file.getBuilder().newInstance(IAtom.class,types[i], cartCoords[i]));
-        }
-
-//        logger.debug("molecule:"+m);
-
-        setOfMolecules.addAtomContainer(m);
-        chemModel.setMoleculeSet(setOfMolecules);
-        chemSequence.addChemModel(chemModel);
-        line = input.readLine();
-        file.addChemSequence(chemSequence);
-    } catch (IOException e)
-    {
-      // should make some noise now
-      file = null;
     }
-    return file;
-  }
+
+    /**
+     *  Returns a IChemObject of type object bye reading from
+     *  the input.
+     *
+     *  The function supports only reading of ChemFile's.
+     *
+     * @param     object  IChemObject that types the class to return.
+     * @throws    CDKException when a IChemObject is requested that cannot be read.
+     */
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (object instanceof IChemFile)
+            return (T) readChemFile((IChemFile) object);
+        else
+            throw new CDKException("Only ChemFile objects can be read.");
+    }
+
+    /**
+     *  Private method that actually parses the input to read a ChemFile
+     *  object.
+     *
+     * @param file  the file to read from
+     * @return A ChemFile containing the data parsed from input.
+     */
+    private IChemFile readChemFile(IChemFile file) {
+        IChemSequence chemSequence = file.getBuilder().newInstance(IChemSequence.class);
+
+        int number_of_atoms;
+        StringTokenizer tokenizer;
+
+        try {
+            String line = input.readLine();
+            while (line.startsWith("#"))
+                line = input.readLine();
+            /*
+             * while (input.ready() && line != null) {
+             */
+            //        logger.debug("lauf");
+            // parse frame by frame
+            tokenizer = new StringTokenizer(line, "\t ,;");
+
+            String token = tokenizer.nextToken();
+            number_of_atoms = Integer.parseInt(token);
+            String info = input.readLine();
+
+            IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
+            IAtomContainerSet setOfMolecules = file.getBuilder().newInstance(IAtomContainerSet.class);
+
+            IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
+            m.setProperty(CDKConstants.TITLE, info);
+
+            String[] types = new String[number_of_atoms];
+            double[] d = new double[number_of_atoms];
+            int[] d_atom = new int[number_of_atoms]; // Distances
+            double[] a = new double[number_of_atoms];
+            int[] a_atom = new int[number_of_atoms]; // Angles
+            double[] da = new double[number_of_atoms];
+            int[] da_atom = new int[number_of_atoms]; // Diederangles
+            //Point3d[] pos = new Point3d[number_of_atoms]; // calculated positions
+
+            int i = 0;
+            while (i < number_of_atoms) {
+                line = input.readLine();
+                //          logger.debug("line:\""+line+"\"");
+                if (line == null) break;
+                if (line.startsWith("#")) {
+                    // skip comment in file
+                } else {
+                    d[i] = 0d;
+                    d_atom[i] = -1;
+                    a[i] = 0d;
+                    a_atom[i] = -1;
+                    da[i] = 0d;
+                    da_atom[i] = -1;
+
+                    tokenizer = new StringTokenizer(line, "\t ,;");
+                    int fields = tokenizer.countTokens();
+
+                    if (fields < Math.min(i * 2 + 1, 7)) {
+                        // this is an error but cannot throw exception
+                    } else if (i == 0) {
+                        types[i] = tokenizer.nextToken();
+                        i++;
+                    } else if (i == 1) {
+                        types[i] = tokenizer.nextToken();
+                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d[i] = Double.valueOf(tokenizer.nextToken());
+                        i++;
+                    } else if (i == 2) {
+                        types[i] = tokenizer.nextToken();
+                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d[i] = Double.valueOf(tokenizer.nextToken());
+                        a_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        a[i] = Double.valueOf(tokenizer.nextToken());
+                        i++;
+                    } else {
+                        types[i] = tokenizer.nextToken();
+                        d_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        d[i] = Double.valueOf(tokenizer.nextToken());
+                        a_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        a[i] = Double.valueOf(tokenizer.nextToken());
+                        da_atom[i] = Integer.valueOf(tokenizer.nextToken()) - 1;
+                        da[i] = Double.valueOf(tokenizer.nextToken());
+                        i++;
+                    }
+                }
+            }
+
+            // calculate cartesian coordinates
+            Point3d[] cartCoords = ZMatrixTools.zmatrixToCartesian(d, d_atom, a, a_atom, da, da_atom);
+
+            for (i = 0; i < number_of_atoms; i++) {
+                m.addAtom(file.getBuilder().newInstance(IAtom.class, types[i], cartCoords[i]));
+            }
+
+            //        logger.debug("molecule:"+m);
+
+            setOfMolecules.addAtomContainer(m);
+            chemModel.setMoleculeSet(setOfMolecules);
+            chemSequence.addChemModel(chemModel);
+            line = input.readLine();
+            file.addChemSequence(chemSequence);
+        } catch (IOException e) {
+            // should make some noise now
+            file = null;
+        }
+        return file;
+    }
 
     @TestMethod("testClose")
     public void close() throws IOException {

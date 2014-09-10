@@ -34,21 +34,21 @@ import org.openscience.cdk.interfaces.IPDBMonomer;
  *
  * @see  PDBAtom
  */
-public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
+public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer {
 
-	private static final long serialVersionUID = -7236625816763776733L;
+    private static final long serialVersionUID = -7236625816763776733L;
 
-	private String iCode;
+    private String            iCode;
 
-	/**
-	 * Denotes which chain in the PDB file this monomer is in.
-	 */
-	private String chainID;
+    /**
+     * Denotes which chain in the PDB file this monomer is in.
+     */
+    private String            chainID;
 
-	/**
-	 * Denotes which residue sequence in the current chain that this monomer is in.
-	 */
-	private String resSeq;
+    /**
+     * Denotes which residue sequence in the current chain that this monomer is in.
+     */
+    private String            resSeq;
 
     public PDBMonomer() {
         super();
@@ -93,9 +93,9 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
         return description.toString();
     }
 
-	public String getResSeq() {
-		return resSeq;
-	}
+    public String getResSeq() {
+        return resSeq;
+    }
 
     /**
      * @inheritDoc
@@ -105,13 +105,8 @@ public class PDBMonomer extends Monomer implements Cloneable, IPDBMonomer{
         return (IPDBMonomer) super.clone();
     }
 
-	public void setResSeq(String resSeq) {
-		this.resSeq = resSeq;
-	}
+    public void setResSeq(String resSeq) {
+        this.resSeq = resSeq;
+    }
 
 }
-
-
-
-
-

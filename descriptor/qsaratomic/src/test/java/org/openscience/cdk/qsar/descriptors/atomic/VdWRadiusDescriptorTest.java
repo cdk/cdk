@@ -33,22 +33,21 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class VdWRadiusDescriptorTest extends AtomicDescriptorTest {
 
-	public  VdWRadiusDescriptorTest() {}
+    public VdWRadiusDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(VdWRadiusDescriptor.class);
+        setDescriptor(VdWRadiusDescriptor.class);
     }
 
-	@Test
+    @Test
     public void testVdWRadiusDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={1.7};
-		IAtomicDescriptor descriptor  = new VdWRadiusDescriptor();
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
-		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
+        double[] testResult = {1.7};
+        IAtomicDescriptor descriptor = new VdWRadiusDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("NCCN(C)(C)");
+        double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).doubleValue();
 
-		Assert.assertEquals(testResult[0], retval, 0.01);
-	}
+        Assert.assertEquals(testResult[0], retval, 0.01);
+    }
 }
-

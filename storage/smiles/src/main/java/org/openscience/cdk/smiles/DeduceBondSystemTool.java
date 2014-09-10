@@ -45,6 +45,7 @@ import org.openscience.cdk.tools.manipulator.RingManipulator;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 /**
  * Tool that tries to deduce bond orders based on connectivity and hybridization
  * for a number of common ring systems of up to seven-membered rings. It assumes
@@ -67,20 +68,19 @@ import java.util.List;
 @TestClass("org.openscience.cdk.smiles.DeduceBondSystemToolTest")
 public class DeduceBondSystemTool {
 
-	private AllRingsFinder allRingsFinder;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DeduceBondSystemTool.class);
+    private AllRingsFinder      allRingsFinder;
+    private static ILoggingTool logger      = LoggingToolFactory.createLoggingTool(DeduceBondSystemTool.class);
 
-    private List<Integer[]> listOfRings = null;
+    private List<Integer[]>     listOfRings = null;
 
-	private boolean interrupted;
+    private boolean             interrupted;
 
     /**
      * Constructor for the DeduceBondSystemTool object.
      */
     @TestMethod("testConstructors")
     public DeduceBondSystemTool() {
-    	allRingsFinder = new AllRingsFinder();
+        allRingsFinder = new AllRingsFinder();
     }
 
     /**
@@ -105,14 +105,14 @@ public class DeduceBondSystemTool {
     public boolean isOK(IAtomContainer m) throws CDKException {
         // OK, we take advantage here from the fact that this class does not take
         // into account rings larger than 7 atoms. See fixAromaticBondOrders().
-        IRingSet rs = allRingsFinder.findAllRings(m,7);
-    	storeRingSystem(m, rs);
-    	boolean StructureOK=this.isStructureOK(m);
-    	IRingSet irs=this.removeExtraRings(m);
+        IRingSet rs = allRingsFinder.findAllRings(m, 7);
+        storeRingSystem(m, rs);
+        boolean StructureOK = this.isStructureOK(m);
+        IRingSet irs = this.removeExtraRings(m);
 
-    	if (irs==null) throw new CDKException("error in AllRingsFinder.findAllRings");
+        if (irs == null) throw new CDKException("error in AllRingsFinder.findAllRings");
 
-    	int count=this.getBadCount(m,irs);
+        int count = this.getBadCount(m, irs);
 
         return StructureOK && count == 0;
     }
@@ -128,22 +128,21 @@ public class DeduceBondSystemTool {
     public IAtomContainer fixAromaticBondOrders(IAtomContainer atomContainer) throws CDKException {
         // OK, we take advantage here from the fact that this class does not take
         // into account rings larger than 7 atoms. See fixAromaticBondOrders().
-        IRingSet rs = allRingsFinder.findAllRings(atomContainer,7);
-    	storeRingSystem(atomContainer, rs);
+        IRingSet rs = allRingsFinder.findAllRings(atomContainer, 7);
+        storeRingSystem(atomContainer, rs);
 
         IRingSet ringSet;
 
         // TODO remove rings with nonsp2 carbons(?) and rings larger than 7 atoms
         ringSet = removeExtraRings(atomContainer);
 
-        if (ringSet==null) throw new CDKException("failure in AllRingsFinder.findAllRings");
+        if (ringSet == null) throw new CDKException("failure in AllRingsFinder.findAllRings");
 
         List<List<List<String>>> MasterList = new ArrayList<List<List<String>>>();
 
         //this.counter=0;// counter which keeps track of all current possibilities for placing double bonds
 
-        this.FixPyridineNOxides(atomContainer,ringSet);
-
+        this.FixPyridineNOxides(atomContainer, ringSet);
 
         for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
 
@@ -155,37 +154,35 @@ public class DeduceBondSystemTool {
                 fiveMemberedRingPossibilities(atomContainer, ring, MasterList);
             } else if (ring.getAtomCount() == 6) {
                 sixMemberedRingPossibilities(atomContainer, ring, MasterList);
-            } else if (ring.getAtomCount() == 7){
+            } else if (ring.getAtomCount() == 7) {
                 sevenMemberedRingPossibilities(atomContainer, ring, MasterList);
                 //TODO- add code for all 7 membered aromatic ring possibilities not just 3 bonds
             } else {
-            	//TODO: what about other rings systems?
-            	logger.debug("Found ring of size: " + ring.getAtomCount());
+                //TODO: what about other rings systems?
+                logger.debug("Found ring of size: " + ring.getAtomCount());
             }
         }
 
         IAtomContainerSet som = atomContainer.getBuilder().newInstance(IAtomContainerSet.class);
 
-//		int number=1; // total number of possibilities
-//
-//		for (int ii=0;ii<=MasterList.size()-1;ii++) {
-//		ArrayList ringlist=(ArrayList)MasterList.get(ii);
-//		number*=ringlist.size();
-//		}
-//		logger.debug("number= "+number);
+        //		int number=1; // total number of possibilities
+        //
+        //		for (int ii=0;ii<=MasterList.size()-1;ii++) {
+        //		ArrayList ringlist=(ArrayList)MasterList.get(ii);
+        //		number*=ringlist.size();
+        //		}
+        //		logger.debug("number= "+number);
 
-
-        int [] choices;
+        int[] choices;
 
         //if (number> 1000000) return null;
 
-        choices = new int [MasterList.size()];
+        choices = new int[MasterList.size()];
 
         if (MasterList.size() > 0) {
             IAtomContainer iAtomContainer = loop(System.currentTimeMillis(), atomContainer, 0, MasterList, choices, som);
             if (iAtomContainer != null) return iAtomContainer;
         }
-
 
         int mincount = 99999999;
 
@@ -199,7 +196,7 @@ public class DeduceBondSystemTool {
 
             ringSet = removeExtraRings(mol);
 
-            if (ringSet==null) continue;
+            if (ringSet == null) continue;
 
             int count = getBadCount(mol, ringSet);
 
@@ -216,33 +213,32 @@ public class DeduceBondSystemTool {
         return atomContainer;
     }
 
-    private void FixPyridineNOxides(IAtomContainer atomContainer,IRingSet ringSet) {
+    private void FixPyridineNOxides(IAtomContainer atomContainer, IRingSet ringSet) {
 
-    	//convert n(=O) to [n+][O-]
+        //convert n(=O) to [n+][O-]
 
-    	for (int i=0;i< atomContainer.getAtomCount();i++) {
-    		IAtom ai= atomContainer.getAtom(i);
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            IAtom ai = atomContainer.getAtom(i);
 
-    		if (ai.getSymbol().equals("N") &&
-    			(ai.getFormalCharge() == null || ai.getFormalCharge() == 0)) {
-    			if (inRingSet(ai,ringSet)) {
-    				List<IAtom> ca= atomContainer.getConnectedAtomsList(ai);
+            if (ai.getSymbol().equals("N") && (ai.getFormalCharge() == null || ai.getFormalCharge() == 0)) {
+                if (inRingSet(ai, ringSet)) {
+                    List<IAtom> ca = atomContainer.getConnectedAtomsList(ai);
                     for (IAtom caj : ca) {
-                        if (caj.getSymbol().equals("O") && atomContainer.getBond(ai, caj).getOrder() == IBond.Order.DOUBLE) {
+                        if (caj.getSymbol().equals("O")
+                                && atomContainer.getBond(ai, caj).getOrder() == IBond.Order.DOUBLE) {
                             ai.setFormalCharge(1);
                             caj.setFormalCharge(-1);
                             atomContainer.getBond(ai, caj).setOrder(IBond.Order.SINGLE);
                         }
                     }// end for (int j=0;j<ca.size();j++)
 
-    			} // end if (inRingSet(ai,ringSet)) {
-    		} // end if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0)
+                } // end if (inRingSet(ai,ringSet)) {
+            } // end if (ai.getSymbol().equals("N") && ai.getFormalCharge()==0)
 
-    	} // end for (int i=0;i<atomContainer.getAtomCount();i++)
-
-
+        } // end for (int i=0;i<atomContainer.getAtomCount();i++)
 
     }
+
     private void applyBonds(IAtomContainer m, List<String> al) {
 
         //logger.debug("");
@@ -261,7 +257,6 @@ public class DeduceBondSystemTool {
             IBond b = m.getBond(m.getAtom(i1), m.getAtom(i2));
             b.setOrder(IBond.Order.DOUBLE);
 
-
         }
 
     }
@@ -270,7 +265,7 @@ public class DeduceBondSystemTool {
         // 5 possibilities for placing 2 double bonds
         // 5 possibilities for placing 1 double bond
 
-        int [] num = new int [5]; // stores atom numbers based on atom numbers in AtomContainer instead of ring
+        int[] num = new int[5]; // stores atom numbers based on atom numbers in AtomContainer instead of ring
 
         for (int j = 0; j <= 4; j++) {
             num[j] = m.getAtomNumber(r.getAtom(j));
@@ -324,7 +319,7 @@ public class DeduceBondSystemTool {
         mal.add(al9);
         mal.add(al10);
 
-//		mal.add(al11);
+        //		mal.add(al11);
 
         MasterList.add(mal);
 
@@ -335,11 +330,11 @@ public class DeduceBondSystemTool {
         // 6 possibilities for placing 2 double bonds
         // 6 possibilities for placing 1 double bonds
 
-        IAtom [] ringatoms = new IAtom [6];
+        IAtom[] ringatoms = new IAtom[6];
 
         ringatoms[0] = r.getAtom(0);
 
-        int [] num = new int [6];
+        int[] num = new int[6];
 
         for (int j = 0; j <= 5; j++) {
             num[j] = m.getAtomNumber(r.getAtom(j));
@@ -374,7 +369,6 @@ public class DeduceBondSystemTool {
         List<String> al17 = new ArrayList<String>();
 
         List<String> al18 = new ArrayList<String>();
-
 
         al3.add(num[0] + "-" + num[1]);
         al3.add(num[2] + "-" + num[3]);
@@ -435,7 +429,6 @@ public class DeduceBondSystemTool {
 
         MasterList.add(mal);
 
-
     }
 
     private void sevenMemberedRingPossibilities(IAtomContainer m, IRing r, List<List<List<String>>> MasterList) {
@@ -487,9 +480,7 @@ public class DeduceBondSystemTool {
 
         MasterList.add(mal);
 
-
     }
-
 
     private int getBadCount(IAtomContainer atomContainer, IRingSet ringSet) {
         // finds count of nitrogens in the rings that have 4 bonds
@@ -497,7 +488,6 @@ public class DeduceBondSystemTool {
         // or nitrogens with 2 double bonds to atoms in the ringset
         // or have S atom with more than 2 bonds
         // these arent necessarily bad- just unlikely
-
 
         int count = 0;
 
@@ -511,7 +501,7 @@ public class DeduceBondSystemTool {
 
                 if (atom.getSymbol().equals("N")) {
                     if (atom.getFormalCharge() == 0) {
-//						logger.debug(mol.getBondOrderSum(a));
+                        //						logger.debug(mol.getBondOrderSum(a));
                         if (atomContainer.getBondOrderSum(atom) == 4) {
                             count++; //
                         } else if (atomContainer.getBondOrderSum(atom) == 5) {
@@ -531,7 +521,6 @@ public class DeduceBondSystemTool {
                                 count++;
                             }
 
-
                         }
                     } else if (atom.getFormalCharge() == 1) {
                         if (atomContainer.getBondOrderSum(atom) == 5) {
@@ -550,7 +539,6 @@ public class DeduceBondSystemTool {
         return count;
     }
 
-
     private boolean inRingSet(IAtom atom, IRingSet ringSet) {
         for (int i = 0; i < ringSet.getAtomContainerCount(); i++) {
             IRing ring = (IRing) ringSet.getAtomContainer(i);
@@ -560,7 +548,7 @@ public class DeduceBondSystemTool {
     }
 
     private IAtomContainer loop(long starttime, IAtomContainer atomContainer, int index,
-    		               List<List<List<String>>> MasterList, int [] choices, IAtomContainerSet som) throws CDKException {
+            List<List<List<String>>> MasterList, int[] choices, IAtomContainerSet som) throws CDKException {
 
         //logger.debug(System.currentTimeMillis());
 
@@ -569,12 +557,12 @@ public class DeduceBondSystemTool {
         long diff = time - starttime;
 
         if (diff > 100000) {
-        	//time out after 100 seconds
-        	throw new CDKException("Timed out after 100 seconds.");
+            //time out after 100 seconds
+            throw new CDKException("Timed out after 100 seconds.");
         } else if (this.interrupted) {
             // reset the interruption
             this.interrupted = false;
-        	throw new CDKException("Process was interrupted.");
+            throw new CDKException("Process was interrupted.");
         }
 
         List<List<String>> ringlist = MasterList.get(index);
@@ -599,10 +587,10 @@ public class DeduceBondSystemTool {
                 for (int j = 0; j <= MasterList.size() - 1; j++) {
                     List<List<String>> ringlist2 = MasterList.get(j);
                     List<String> bondlist = ringlist2.get(choices[j]);
-//					logger.debug(j+"\t"+choices[j]);
+                    //					logger.debug(j+"\t"+choices[j]);
                     applyBonds(mnew, bondlist);
                 }
-//				logger.debug("");
+                //				logger.debug("");
 
                 if (isStructureOK(mnew)) {
 
@@ -610,18 +598,18 @@ public class DeduceBondSystemTool {
 
                     if (rs != null) {
 
-						int count = this.getBadCount(mnew, rs);
-						// logger.debug("bad count="+count);
+                        int count = this.getBadCount(mnew, rs);
+                        // logger.debug("bad count="+count);
 
-						if (count == 0) {
-							// logger.debug("found match after "+counter+"
-							// iterations");
-							return mnew; // dont worry about adding to set
-											// just finish
-						} else {
-							som.addAtomContainer(mnew);
-						}
-					}
+                        if (count == 0) {
+                            // logger.debug("found match after "+counter+"
+                            // iterations");
+                            return mnew; // dont worry about adding to set
+                                         // just finish
+                        } else {
+                            som.addAtomContainer(mnew);
+                        }
+                    }
                 }
 
             }
@@ -630,7 +618,6 @@ public class DeduceBondSystemTool {
                 // logger.debug("here3="+counter);
                 mnew2 = loop(starttime, atomContainer, index + 1, MasterList, choices, som); //recursive def
             }
-
 
             if (mnew2 instanceof IAtomContainer) {
                 return mnew2;
@@ -642,18 +629,18 @@ public class DeduceBondSystemTool {
 
     private boolean isStructureOK(IAtomContainer atomContainer) {
         try {
-        	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(atomContainer.getBuilder());
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(atomContainer.getBuilder());
             Iterator<IAtom> atoms = atomContainer.atoms().iterator();
             while (atoms.hasNext()) {
-            	IAtom atom = atoms.next();
-            	IAtomType matched = matcher.findMatchingAtomType(atomContainer, atom);
-            	if (matched == null || matched.getAtomTypeName().equals("X")) return false;
+                IAtom atom = atoms.next();
+                IAtomType matched = matcher.findMatchingAtomType(atomContainer, atom);
+                if (matched == null || matched.getAtomTypeName().equals("X")) return false;
             }
 
-        	IRingSet ringSet = recoverRingSystem(atomContainer);
+            IRingSet ringSet = recoverRingSystem(atomContainer);
             //logger.debug("Rs size= "+rs.size());
 
-        	// clear aromaticity flags
+            // clear aromaticity flags
             for (int i = 0; i <= atomContainer.getAtomCount() - 1; i++) {
                 atomContainer.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
             }
@@ -664,16 +651,16 @@ public class DeduceBondSystemTool {
             // now, detect aromaticity from cratch, and mark rings as aromatic too (if ...)
             Aromaticity.cdkLegacy().apply(atomContainer);
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
-            	IRing ring = (IRing) ringSet.getAtomContainer(i);
-            	RingManipulator.markAromaticRings(ring);
+                IRing ring = (IRing) ringSet.getAtomContainer(i);
+                RingManipulator.markAromaticRings(ring);
             }
 
-//			Figure out which rings we want to make sure are aromatic:
-            boolean [] Check = this.findRingsToCheck(ringSet);
+            //			Figure out which rings we want to make sure are aromatic:
+            boolean[] Check = this.findRingsToCheck(ringSet);
 
-//			for (int i=0;i<=Check.length-1;i++) {
-//			logger.debug(i+"\t"+rs.getAtomContainer(i).getAtomCount()+"\t"+Check[i]);
-//			}
+            //			for (int i=0;i<=Check.length-1;i++) {
+            //			logger.debug(i+"\t"+rs.getAtomContainer(i).getAtomCount()+"\t"+Check[i]);
+            //			}
 
             for (int i = 0; i <= ringSet.getAtomContainerCount() - 1; i++) {
                 IRing ring = (IRing) ringSet.getAtomContainer(i);
@@ -682,13 +669,14 @@ public class DeduceBondSystemTool {
                 if (Check[i]) {
 
                     for (int j = 0; j <= ring.getAtomCount() - 1; j++) {
-                        if (ring.getAtom(j).getImplicitHydrogenCount() != CDKConstants.UNSET && ring.getAtom(j).getImplicitHydrogenCount() < 0) {
-                        	return false;
+                        if (ring.getAtom(j).getImplicitHydrogenCount() != CDKConstants.UNSET
+                                && ring.getAtom(j).getImplicitHydrogenCount() < 0) {
+                            return false;
                         }
                     }
 
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {
-//						logger.debug(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
+                        //						logger.debug(counter+"\t"+"ring not aromatic"+"\t"+r.getAtomCount());
                         return false;
                     }
                 }
@@ -719,11 +707,9 @@ public class DeduceBondSystemTool {
 
             //logger.debug("numrings="+rs.size());
 
-            iloop:
-            for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
+            iloop: for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
 
                 IRing r = (IRing) rs.getAtomContainer(i);
-
 
                 if (r.getAtomCount() > 7 || r.getAtomCount() < 5) {
                     rs.removeAtomContainer(i);
@@ -737,26 +723,26 @@ public class DeduceBondSystemTool {
 
                     //logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                    if (r.getAtom(j).getHybridization() == CDKConstants.UNSET ||
-                    	!(r.getAtom(j).getHybridization() == Hybridization.SP2 ||
-                    	r.getAtom(j).getHybridization() == Hybridization.PLANAR3)) {
-                    	rs.removeAtomContainer(i);
+                    if (r.getAtom(j).getHybridization() == CDKConstants.UNSET
+                            || !(r.getAtom(j).getHybridization() == Hybridization.SP2 || r.getAtom(j)
+                                    .getHybridization() == Hybridization.PLANAR3)) {
+                        rs.removeAtomContainer(i);
                         i--; // go back
                         continue iloop;
-//                        NonSP2Count++;
-//                        if (r.getAtom(j).getSymbol().equals("C")) {
-//                            rs.removeAtomContainer(i);
-//                            i--; // go back
-//                            continue iloop;
-//                        }
+                        //                        NonSP2Count++;
+                        //                        if (r.getAtom(j).getSymbol().equals("C")) {
+                        //                            rs.removeAtomContainer(i);
+                        //                            i--; // go back
+                        //                            continue iloop;
+                        //                        }
                     }
                 }
 
-//                if (NonSP2Count > 1) {
-//                    rs.removeAtomContainer(i);
-//                    i--; // go back
-//                    continue iloop;
-//                }
+                //                if (NonSP2Count > 1) {
+                //                    rs.removeAtomContainer(i);
+                //                    i--; // go back
+                //                    continue iloop;
+                //                }
 
             }
             return rs;
@@ -791,8 +777,8 @@ public class DeduceBondSystemTool {
 
                 // logger.debug(j+"\t"+r.getAtomAt(j).getSymbol()+"\t"+r.getAtomAt(j).getHybridization());
 
-                if (r.getAtom(j).getHybridization() == CDKConstants.UNSET ||
-                	r.getAtom(j).getHybridization() != Hybridization.SP2) {
+                if (r.getAtom(j).getHybridization() == CDKConstants.UNSET
+                        || r.getAtom(j).getHybridization() != Hybridization.SP2) {
                     NonSP2Count++;
                     if (r.getAtom(j).getSymbol().equals("C")) {
                         Check[i] = false;
@@ -802,8 +788,8 @@ public class DeduceBondSystemTool {
             }
 
             if (NonSP2Count > 1) {
-            	Check[i] = false;
-            	continue;
+                Check[i] = false;
+                continue;
             }
 
         }
@@ -818,14 +804,14 @@ public class DeduceBondSystemTool {
      * @param ringSet  The IRingSet to store
      */
     private void storeRingSystem(IAtomContainer mol, IRingSet ringSet) {
-    	listOfRings = new ArrayList<Integer[]>(); // this is a list of int arrays
-    	for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
-    		IRing ring = (IRing)ringSet.getAtomContainer(r);
-    		Integer[] bondNumbers = new Integer[ring.getBondCount()];
-    		for (int i = 0; i < ring.getBondCount(); ++i)
-    			bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
-    		listOfRings.add(bondNumbers);
-    	}
+        listOfRings = new ArrayList<Integer[]>(); // this is a list of int arrays
+        for (int r = 0; r < ringSet.getAtomContainerCount(); ++r) {
+            IRing ring = (IRing) ringSet.getAtomContainer(r);
+            Integer[] bondNumbers = new Integer[ring.getBondCount()];
+            for (int i = 0; i < ring.getBondCount(); ++i)
+                bondNumbers[i] = mol.getBondNumber(ring.getBond(i));
+            listOfRings.add(bondNumbers);
+        }
     }
 
     /**
@@ -835,9 +821,9 @@ public class DeduceBondSystemTool {
      * @param mol      The IAtomContainer for which to recover the IRingSet.
      */
     private IRingSet recoverRingSystem(IAtomContainer mol) {
-    	IRingSet ringSet = mol.getBuilder().newInstance(IRingSet.class);
+        IRingSet ringSet = mol.getBuilder().newInstance(IRingSet.class);
         for (Integer[] bondNumbers : listOfRings) {
-            IRing ring = mol.getBuilder().newInstance(IRing.class,bondNumbers.length);
+            IRing ring = mol.getBuilder().newInstance(IRing.class, bondNumbers.length);
             for (int bondNumber : bondNumbers) {
                 IBond bond = mol.getBond(bondNumber);
                 ring.addBond(bond);
@@ -846,7 +832,7 @@ public class DeduceBondSystemTool {
             }
             ringSet.addAtomContainer(ring);
         }
-    	return ringSet;
+        return ringSet;
     }
 
     /**
@@ -855,9 +841,9 @@ public class DeduceBondSystemTool {
      * @param interrupted true, if the calculation should be canceled
      */
     @TestMethod("testInterruption")
-	public void setInterrupted(boolean interrupted) {
-		this.interrupted = interrupted;
-	}
+    public void setInterrupted(boolean interrupted) {
+        this.interrupted = interrupted;
+    }
 
     /**
      * Returns if the next or running calculation should be interrupted.
@@ -865,8 +851,8 @@ public class DeduceBondSystemTool {
      * @return true or false
      */
     @TestMethod("testInterruption")
-	public boolean isInterrupted() {
-		return this.interrupted;
-	}
+    public boolean isInterrupted() {
+        return this.interrupted;
+    }
 
 }

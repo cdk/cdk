@@ -37,19 +37,17 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class CloneAtomContainerTest extends CDKTestCase {
 
-	@Test public void testClone() throws Exception
-	{
-	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
-		IAtomContainer clonedMol = (IAtomContainer)molecule.clone();
-		Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
-		for (int f = 0; f < molecule.getAtomCount(); f++)
-		{
-			for (int g = 0; g < clonedMol.getAtomCount(); g++)
-			{
-				Assert.assertNotNull(molecule.getAtom(f));
-				Assert.assertNotNull(clonedMol.getAtom(g));
-				Assert.assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
-			}
-		}
-	}
+    @Test
+    public void testClone() throws Exception {
+        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer clonedMol = (IAtomContainer) molecule.clone();
+        Assert.assertTrue(molecule.getAtomCount() == clonedMol.getAtomCount());
+        for (int f = 0; f < molecule.getAtomCount(); f++) {
+            for (int g = 0; g < clonedMol.getAtomCount(); g++) {
+                Assert.assertNotNull(molecule.getAtom(f));
+                Assert.assertNotNull(clonedMol.getAtom(g));
+                Assert.assertTrue(molecule.getAtom(f) != clonedMol.getAtom(g));
+            }
+        }
+    }
 }

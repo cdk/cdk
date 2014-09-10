@@ -1,4 +1,3 @@
-
 /* Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
  *
  * Implemented by Alex M. Clark, produced by Collaborative Drug Discovery, Inc.
@@ -55,11 +54,9 @@ import org.openscience.cdk.annotations.*;
  * @cdk.keyword descriptor
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FractionalPSADescriptorTest")
-public class FractionalPSADescriptor implements IMolecularDescriptor
-{
-	public FractionalPSADescriptor()
-	{
-	}
+public class FractionalPSADescriptor implements IMolecularDescriptor {
+
+    public FractionalPSADescriptor() {}
 
     @TestMethod("nop")
     public void initialise(IChemObjectBuilder builder) {}
@@ -68,50 +65,35 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
      * {@inheritDoc}
      */
     @TestMethod("nop")
-    public DescriptorSpecification getSpecification()
-    {
+    public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA",
-            this.getClass().getName(),
-            "The Chemistry Development Kit"
-        );
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public void setParameters(Object[] params) throws CDKException
-    {
-        if (params.length!=0)
-        {
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length != 0) {
             throw new CDKException("The FractionalPSADescriptor expects zero parameters");
         }
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public Object[] getParameters()
-    {
+    public Object[] getParameters() {
         return new Object[0];
     }
 
     @TestMethod("nop")
-    public String[] getDescriptorNames()
-    {
+    public String[] getDescriptorNames() {
         return new String[]{"tpsaEfficiency"};
     }
 
     @TestMethod("nop")
-    private DescriptorValue getDummyDescriptorValue(Exception e)
-    {
-        return new DescriptorValue
-        (
-        	getSpecification(),
-        	getParameterNames(),
-            getParameters(),
-            new DoubleResult(Double.NaN),
-            getDescriptorNames(),
-            e
-		);
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), getDescriptorNames(), e);
     }
 
     /**
@@ -121,69 +103,57 @@ public class FractionalPSADescriptor implements IMolecularDescriptor
      * @return descriptor(s) retaining to polar surface area
      */
     @TestMethod("testDescriptors")
-    public DescriptorValue calculate(IAtomContainer mol)
-    {
-    	try {mol=mol.clone();} catch (CloneNotSupportedException ex) {}
-        double polar=0,weight=0;
-        try
-        {
-        	// type & assign implicit hydrogens
-        	IChemObjectBuilder builder=mol.getBuilder();
-        	CDKAtomTypeMatcher matcher=CDKAtomTypeMatcher.getInstance(builder);
-		   	for (IAtom atom : mol.atoms())
-		   	{
-            	IAtomType type=matcher.findMatchingAtomType(mol, atom);
-            	AtomTypeManipulator.configure(atom,type);
-			}
-			CDKHydrogenAdder adder=CDKHydrogenAdder.getInstance(builder);
-			adder.addImplicitHydrogens(mol);
-
-        	// polar surface area: chain it off the TPSADescriptor
-        	TPSADescriptor tpsa=new TPSADescriptor();
-        	DescriptorValue value=tpsa.calculate(mol);
-        	polar=((DoubleResult)value.getValue()).doubleValue();
-
-        	//  molecular weight
-            for (IAtom atom : mol.atoms())
-            {
-                weight+=Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getExactMass();
-                Integer hcount=atom.getImplicitHydrogenCount();
-                if (hcount!=CDKConstants.UNSET) weight+=hcount*1.00782504;
-            }
+    public DescriptorValue calculate(IAtomContainer mol) {
+        try {
+            mol = mol.clone();
+        } catch (CloneNotSupportedException ex) {
         }
-        catch (Exception exception)
-        {
+        double polar = 0, weight = 0;
+        try {
+            // type & assign implicit hydrogens
+            IChemObjectBuilder builder = mol.getBuilder();
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(builder);
+            for (IAtom atom : mol.atoms()) {
+                IAtomType type = matcher.findMatchingAtomType(mol, atom);
+                AtomTypeManipulator.configure(atom, type);
+            }
+            CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(builder);
+            adder.addImplicitHydrogens(mol);
+
+            // polar surface area: chain it off the TPSADescriptor
+            TPSADescriptor tpsa = new TPSADescriptor();
+            DescriptorValue value = tpsa.calculate(mol);
+            polar = ((DoubleResult) value.getValue()).doubleValue();
+
+            //  molecular weight
+            for (IAtom atom : mol.atoms()) {
+                weight += Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getExactMass();
+                Integer hcount = atom.getImplicitHydrogenCount();
+                if (hcount != CDKConstants.UNSET) weight += hcount * 1.00782504;
+            }
+        } catch (Exception exception) {
             return getDummyDescriptorValue(exception);
         }
 
-        return new DescriptorValue
-        (
-            getSpecification(),
-            getParameterNames(),
-            getParameters(),
-            new DoubleResult(weight==0 ? 0 : polar/weight),
-            getDescriptorNames()
-        );
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                weight == 0 ? 0 : polar / weight), getDescriptorNames());
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public IDescriptorResult getDescriptorResultType()
-    {
+    public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public String[] getParameterNames()
-    {
+    public String[] getParameterNames() {
         return new String[0];
     }
 
     /** {@inheritDoc} */
     @TestMethod("nop")
-    public Object getParameterType(String name)
-    {
+    public Object getParameterType(String name) {
         return null;
     }
 }

@@ -41,19 +41,16 @@ public class StandardBondGeneratorTest {
     public void adenineRingPreference() throws Exception {
 
         IAtomContainer adenine = TestMoleculeFactory.makeAdenine();
-        Map<IBond,IAtomContainer> ringMap = StandardBondGenerator.ringPreferenceMap(adenine);
+        Map<IBond, IAtomContainer> ringMap = StandardBondGenerator.ringPreferenceMap(adenine);
 
         int nSize5 = 0, nSize6 = 0;
         for (IBond bond : adenine.bonds()) {
             IAtomContainer ring = ringMap.get(bond);
             // exocyclic bond
-            if (ring == null)
-                continue;
+            if (ring == null) continue;
             int size = ring.getAtomCount();
-            if (size == 5)
-                nSize5++;
-            if (size == 6)
-                nSize6++;
+            if (size == 5) nSize5++;
+            if (size == 6) nSize6++;
         }
 
         // 6 bonds should point to the six member ring
@@ -62,7 +59,8 @@ public class StandardBondGeneratorTest {
         assertThat(nSize6, is(6));
     }
 
-    @Test public void ringSizePriority() {
+    @Test
+    public void ringSizePriority() {
         assertThat(RingBondOffsetComparator.sizePreference(6), is(0));
         assertThat(RingBondOffsetComparator.sizePreference(5), is(1));
         assertThat(RingBondOffsetComparator.sizePreference(7), is(2));
@@ -75,28 +73,33 @@ public class StandardBondGeneratorTest {
         RingBondOffsetComparator.sizePreference(2);
     }
 
-    @Test public void macroCycle() {
+    @Test
+    public void macroCycle() {
         assertThat(RingBondOffsetComparator.sizePreference(8), is(8));
         assertThat(RingBondOffsetComparator.sizePreference(10), is(10));
         assertThat(RingBondOffsetComparator.sizePreference(20), is(20));
     }
 
-    @Test public void benzeneDoubleBondCount() {
+    @Test
+    public void benzeneDoubleBondCount() {
         assertThat(RingBondOffsetComparator.nDoubleBonds(TestMoleculeFactory.makeBenzene()), is(3));
     }
 
-    @Test public void benzeneElementCount() {
+    @Test
+    public void benzeneElementCount() {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeBenzene());
         assertThat(freq[6], is(6));
     }
 
-    @Test public void adenineElementCount() {
+    @Test
+    public void adenineElementCount() {
         int[] freq = RingBondOffsetComparator.countLightElements(TestMoleculeFactory.makeAdenine());
         assertThat(freq[6], is(5));
         assertThat(freq[7], is(5));
     }
 
-    @Test public void benzeneComparedToPyrrole() {
+    @Test
+    public void benzeneComparedToPyrrole() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer pyrrole = TestMoleculeFactory.makePyrrole();
 
@@ -104,7 +107,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(pyrrole, benzene), is(+1));
     }
 
-    @Test public void benzeneComparedToCycloHexane() {
+    @Test
+    public void benzeneComparedToCycloHexane() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer cyclohexane = TestMoleculeFactory.makeCyclohexane();
 
@@ -112,7 +116,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(cyclohexane, benzene), is(+1));
     }
 
-    @Test public void benzeneComparedToCycloHexene() {
+    @Test
+    public void benzeneComparedToCycloHexene() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer cyclohexene = TestMoleculeFactory.makeCyclohexene();
 
@@ -120,7 +125,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(cyclohexene, benzene), is(+1));
     }
 
-    @Test public void benzeneComparedToBenzene() {
+    @Test
+    public void benzeneComparedToBenzene() {
         IAtomContainer benzene1 = TestMoleculeFactory.makeBenzene();
         IAtomContainer benzene2 = TestMoleculeFactory.makeBenzene();
 
@@ -128,7 +134,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(benzene2, benzene1), is(0));
     }
 
-    @Test public void benzeneComparedToPyridine() {
+    @Test
+    public void benzeneComparedToPyridine() {
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         IAtomContainer pyridine = TestMoleculeFactory.makePyridine();
 
@@ -136,7 +143,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(pyridine, benzene), is(+1));
     }
 
-    @Test public void furaneComparedToPyrrole() {
+    @Test
+    public void furaneComparedToPyrrole() {
         IAtomContainer furane = TestMoleculeFactory.makePyrrole();
         IAtomContainer pyrrole = TestMoleculeFactory.makePyrrole();
 
@@ -148,7 +156,8 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(furane, pyrrole), is(+1));
     }
 
-    @Test public void furaneComparedToThiophene() {
+    @Test
+    public void furaneComparedToThiophene() {
         IAtomContainer furane = TestMoleculeFactory.makePyrrole();
         IAtomContainer thiophene = TestMoleculeFactory.makePyrrole();
 
@@ -162,6 +171,5 @@ public class StandardBondGeneratorTest {
         assertThat(new RingBondOffsetComparator().compare(furane, thiophene), is(-1));
         assertThat(new RingBondOffsetComparator().compare(thiophene, furane), is(+1));
     }
-
 
 }

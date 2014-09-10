@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class CacaoCartesianFormatTest extends ChemFormatTest {
 
     public CacaoCartesianFormatTest() {
-        super.setChemFormat((IChemFormat)CacaoCartesianFormat.getInstance());
+        super.setChemFormat((IChemFormat) CacaoCartesianFormat.getInstance());
     }
 
 }

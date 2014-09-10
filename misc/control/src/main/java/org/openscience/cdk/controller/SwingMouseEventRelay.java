@@ -29,64 +29,64 @@ import java.awt.event.MouseMotionListener;
 /**
  * @cdk.module control
  */
-public class SwingMouseEventRelay
- 	implements MouseMotionListener, MouseListener {
+public class SwingMouseEventRelay implements MouseMotionListener, MouseListener {
 
-	private IMouseEventRelay relay;
+    private IMouseEventRelay relay;
 
-	public SwingMouseEventRelay(IMouseEventRelay relay) {
-		this.relay = relay;
-	}
+    public SwingMouseEventRelay(IMouseEventRelay relay) {
+        this.relay = relay;
+    }
 
-	public void mouseMoved(MouseEvent event) {
-		relay.mouseMove(event.getX(), event.getY());
-	}
-	public void updateView() {
-		System.out.println("updating View now in SwingMouseEventRelay");
-	}
-	public void mouseDragged(MouseEvent event) {
-		//check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
-		relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
-		dragFromX = event.getX();
-		dragFromY = event.getY();
-	}
-	/** Position of mouse press for dragging. */
-	private int dragFromX = 0;
-	private int dragFromY = 0;
-	 /** true means mouse was pressed in ball and still in panel.*/
+    public void mouseMoved(MouseEvent event) {
+        relay.mouseMove(event.getX(), event.getY());
+    }
+
+    public void updateView() {
+        System.out.println("updating View now in SwingMouseEventRelay");
+    }
+
+    public void mouseDragged(MouseEvent event) {
+        //check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
+        relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
+        dragFromX = event.getX();
+        dragFromY = event.getY();
+    }
+
+    /** Position of mouse press for dragging. */
+    private int     dragFromX = 0;
+    private int     dragFromY = 0;
+    /** true means mouse was pressed in ball and still in panel.*/
     private boolean _canDrag  = false;
 
     public void mouseClicked(MouseEvent event) {
-		//normal mouseClicked is the same as mousePressed and mouseReleased after that
+        //normal mouseClicked is the same as mousePressed and mouseReleased after that
 
-		//Double click is a special case
-		if (event.getClickCount() > 1)
-			relay.mouseClickedDouble(event.getX(), event.getY());
-		System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY() + " event.getClickCount(): " + event.getClickCount());
+        //Double click is a special case
+        if (event.getClickCount() > 1) relay.mouseClickedDouble(event.getX(), event.getY());
+        System.out.println("mouseClicked at: " + event.getX() + "/" + event.getY() + " event.getClickCount(): "
+                + event.getClickCount());
 
+    }
 
-	}
+    public void mouseEntered(MouseEvent event) {
+        relay.mouseEnter(event.getX(), event.getY());
+    }
 
-	public void mouseEntered(MouseEvent event) {
-		relay.mouseEnter(event.getX(), event.getY());
-	}
+    public void mouseExited(MouseEvent event) {
+        relay.mouseExit(event.getX(), event.getY());
+    }
 
-	public void mouseExited(MouseEvent event) {
-		relay.mouseExit(event.getX(), event.getY());
-}
+    public void mousePressed(MouseEvent event) {
+        // TODO Auto-generated method stub
+        relay.mouseClickedDown(event.getX(), event.getY());
+        System.out.println("mousePressed at: " + event.getX() + "/" + event.getY());
+        dragFromX = event.getX();
+        dragFromY = event.getY();
+    }
 
-	public void mousePressed(MouseEvent event) {
-		// TODO Auto-generated method stub
-		relay.mouseClickedDown(event.getX(), event.getY());
-		System.out.println("mousePressed at: " + event.getX() + "/" + event.getY());
-		dragFromX = event.getX();
-		dragFromY = event.getY();
-	}
-
-	public void mouseReleased(MouseEvent event) {
-		// TODO Auto-generated method stub
-		relay.mouseClickedUp(event.getX(), event.getY());
-	}
-
+    public void mouseReleased(MouseEvent event) {
+        // TODO Auto-generated method stub
+        relay.mouseClickedUp(event.getX(), event.getY());
+    }
 
 }

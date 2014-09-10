@@ -91,8 +91,8 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     @Override
     public void addSettings(Collection<IOSetting> settings) {
         for (IOSetting setting : settings) {
-            if(hasSetting(setting.getName())){
-                try{
+            if (hasSetting(setting.getName())) {
+                try {
                     getSetting(setting.getName()).setSetting(setting.getSetting());
                 } catch (CDKException ex) {
                     // setting value was invalid (ignore as we already have a value for this setting
@@ -104,7 +104,6 @@ public abstract class ChemObjectIO implements IChemObjectIO {
         }
     }
 
-
     /**
      * @inheritDoc
      */
@@ -112,7 +111,6 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     public boolean hasSetting(String name) {
         return settings.has(name);
     }
-
 
     /**
      * @inheritDoc
@@ -122,7 +120,6 @@ public abstract class ChemObjectIO implements IChemObjectIO {
         return settings.get(name);
     }
 
-
     /**
      * @inheritDoc
      */
@@ -131,7 +128,6 @@ public abstract class ChemObjectIO implements IChemObjectIO {
         return settings.get(name, c);
     }
 
-
     /**
      * @inheritDoc
      */
@@ -139,7 +135,6 @@ public abstract class ChemObjectIO implements IChemObjectIO {
     public IOSetting[] getIOSettings() {
         return settings.toArray(new IOSetting[0]);
     }
-
 
     /**
      * @inheritDoc

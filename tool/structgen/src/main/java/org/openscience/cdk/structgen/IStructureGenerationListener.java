@@ -28,8 +28,8 @@ import java.util.List;
  * @cdk.module structgen
  * @cdk.githash
  */
-public interface IStructureGenerationListener{
+public interface IStructureGenerationListener {
 
-	public void stateChanged(List list) throws Exception;
+    public void stateChanged(List list) throws Exception;
 
 }

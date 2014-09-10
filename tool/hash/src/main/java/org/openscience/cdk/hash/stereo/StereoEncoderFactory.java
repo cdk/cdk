@@ -40,11 +40,12 @@ public interface StereoEncoderFactory {
      * Empty factory for when stereo encoding is not required
      */
     public static StereoEncoderFactory EMPTY = new StereoEncoderFactory() {
-        @Override
-        public StereoEncoder create(IAtomContainer container, int[][] graph) {
-            return StereoEncoder.EMPTY;
-        }
-    };
+
+                                                 @Override
+                                                 public StereoEncoder create(IAtomContainer container, int[][] graph) {
+                                                     return StereoEncoder.EMPTY;
+                                                 }
+                                             };
 
     /**
      * Create a stereo-encoder for possible stereo-chemical configurations.

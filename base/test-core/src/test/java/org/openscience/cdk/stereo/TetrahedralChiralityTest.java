@@ -52,7 +52,7 @@ import static org.junit.Assert.assertTrue;
 public class TetrahedralChiralityTest extends CDKTestCase {
 
     private static IAtomContainer molecule;
-    private static IAtom[] ligands;
+    private static IAtom[]        ligands;
 
     @BeforeClass
     public static void setup() throws Exception {
@@ -66,52 +66,36 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         molecule.addBond(1, 2, Order.SINGLE);
         molecule.addBond(1, 3, Order.SINGLE);
         molecule.addBond(1, 4, Order.SINGLE);
-        ligands = new IAtom[] {
-            molecule.getAtom(4),
-            molecule.getAtom(3),
-            molecule.getAtom(2),
-            molecule.getAtom(0)
-        };
+        ligands = new IAtom[]{molecule.getAtom(4), molecule.getAtom(3), molecule.getAtom(2), molecule.getAtom(0)};
     }
 
     @Test
     public void testTetrahedralChirality_IAtom_arrayIAtom_ITetrahedralChirality_Stereo() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
     }
 
     @Test
     public void testBuilder() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNull(chirality.getBuilder());
         chirality.setBuilder(DefaultChemObjectBuilder.getInstance());
-        Assert.assertEquals(
-            DefaultChemObjectBuilder.getInstance(),
-            chirality.getBuilder()
-        );
+        Assert.assertEquals(DefaultChemObjectBuilder.getInstance(), chirality.getBuilder());
     }
 
     @Test
     public void testGetChiralAtom() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
     }
 
     @Test
     public void testGetStereo() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(molecule.getAtom(1), chirality.getChiralAtom());
-        for (int i=0; i<ligands.length; i++) {
+        for (int i = 0; i < ligands.length; i++) {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
         }
         Assert.assertEquals(TetrahedralChirality.Stereo.CLOCKWISE, chirality.getStereo());
@@ -119,16 +103,15 @@ public class TetrahedralChiralityTest extends CDKTestCase {
 
     @Test
     public void testGetLigands() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
-        for (int i=0; i<ligands.length; i++) {
+        for (int i = 0; i < ligands.length; i++) {
             Assert.assertEquals(ligands[i], chirality.getLigands()[i]);
         }
     }
 
-    @Test public void testMap_Map_Map() throws CloneNotSupportedException {
+    @Test
+    public void testMap_Map_Map() throws CloneNotSupportedException {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
@@ -139,48 +122,45 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1,
-                                                                new IAtom[]{o2,n3,c4,h5},
-                                                                Stereo.CLOCKWISE);
+        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // clone the atoms and place in a map
-        Map<IAtom,IAtom> mapping = new HashMap<IAtom,IAtom>();
-        IAtom c1clone = (IAtom) c1.clone(); mapping.put(c1, c1clone);
-        IAtom o2clone = (IAtom) o2.clone(); mapping.put(o2, o2clone);
-        IAtom n3clone = (IAtom) n3.clone(); mapping.put(n3, n3clone);
-        IAtom c4clone = (IAtom) c4.clone(); mapping.put(c4, c4clone);
-        IAtom h5clone = (IAtom) h5.clone(); mapping.put(h5, h5clone);
+        Map<IAtom, IAtom> mapping = new HashMap<IAtom, IAtom>();
+        IAtom c1clone = (IAtom) c1.clone();
+        mapping.put(c1, c1clone);
+        IAtom o2clone = (IAtom) o2.clone();
+        mapping.put(o2, o2clone);
+        IAtom n3clone = (IAtom) n3.clone();
+        mapping.put(n3, n3clone);
+        IAtom c4clone = (IAtom) c4.clone();
+        mapping.put(c4, c4clone);
+        IAtom h5clone = (IAtom) h5.clone();
+        mapping.put(h5, h5clone);
 
         // map the existing element a new element
         ITetrahedralChirality mapped = original.map(mapping, Collections.EMPTY_MAP);
 
-        Assert.assertThat("mapped chiral atom was the same as the original",
-                          mapped.getChiralAtom(), is(not(sameInstance(original.getChiralAtom()))));
-        Assert.assertThat("mapped chiral atom was not the clone",
-                          mapped.getChiralAtom(), is(sameInstance(c1clone)));
+        Assert.assertThat("mapped chiral atom was the same as the original", mapped.getChiralAtom(),
+                is(not(sameInstance(original.getChiralAtom()))));
+        Assert.assertThat("mapped chiral atom was not the clone", mapped.getChiralAtom(), is(sameInstance(c1clone)));
 
         IAtom[] originalLigands = original.getLigands();
-        IAtom[] mappedLigands   = mapped.getLigands();
+        IAtom[] mappedLigands = mapped.getLigands();
 
-        Assert.assertThat("first ligand was te same as the original",
-                          mappedLigands[0], is(not(sameInstance(originalLigands[0]))));
-        Assert.assertThat("first mapped ligand was not the clone",
-                          mappedLigands[0], is(sameInstance(o2clone)));
-        Assert.assertThat("second ligand was te same as the original",
-                          mappedLigands[1], is(not(sameInstance(originalLigands[1]))));
-        Assert.assertThat("second mapped ligand was not the clone",
-                          mappedLigands[1], is(sameInstance(n3clone)));
-        Assert.assertThat("third ligand was te same as the original",
-                          mappedLigands[2], is(not(sameInstance(originalLigands[2]))));
-        Assert.assertThat("third mapped ligand was not the clone",
-                          mappedLigands[2], is(sameInstance(c4clone)));
-        Assert.assertThat("forth ligand was te same as the original",
-                          mappedLigands[3], is(not(sameInstance(originalLigands[3]))));
-        Assert.assertThat("forth mapped ligand was not the clone",
-                          mappedLigands[3], is(sameInstance(h5clone)));
+        Assert.assertThat("first ligand was te same as the original", mappedLigands[0],
+                is(not(sameInstance(originalLigands[0]))));
+        Assert.assertThat("first mapped ligand was not the clone", mappedLigands[0], is(sameInstance(o2clone)));
+        Assert.assertThat("second ligand was te same as the original", mappedLigands[1],
+                is(not(sameInstance(originalLigands[1]))));
+        Assert.assertThat("second mapped ligand was not the clone", mappedLigands[1], is(sameInstance(n3clone)));
+        Assert.assertThat("third ligand was te same as the original", mappedLigands[2],
+                is(not(sameInstance(originalLigands[2]))));
+        Assert.assertThat("third mapped ligand was not the clone", mappedLigands[2], is(sameInstance(c4clone)));
+        Assert.assertThat("forth ligand was te same as the original", mappedLigands[3],
+                is(not(sameInstance(originalLigands[3]))));
+        Assert.assertThat("forth mapped ligand was not the clone", mappedLigands[3], is(sameInstance(h5clone)));
 
-        Assert.assertThat("stereo was not mapped",
-                          mapped.getStereo(), is(original.getStereo()));
+        Assert.assertThat("stereo was not mapped", mapped.getStereo(), is(original.getStereo()));
 
     }
 
@@ -196,10 +176,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1,
-                                                                 new IAtom[]{o2,n3,c4,h5},
-                                                                 Stereo.CLOCKWISE);
-
+        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(null, Collections.EMPTY_MAP);
@@ -218,10 +195,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(null,
-                                                                 new IAtom[4],
-                                                                 null);
-
+        ITetrahedralChirality original = new TetrahedralChirality(null, new IAtom[4], null);
 
         // map the existing element a new element
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
@@ -247,10 +221,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality original = new TetrahedralChirality(c1,
-                                                                 new IAtom[]{o2,n3,c4,h5},
-                                                                 Stereo.CLOCKWISE);
-
+        ITetrahedralChirality original = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         // map the existing element a new element - should through an IllegalArgumentException
         ITetrahedralChirality mapped = original.map(Collections.EMPTY_MAP, Collections.EMPTY_MAP);
@@ -264,7 +235,8 @@ public class TetrahedralChiralityTest extends CDKTestCase {
 
     }
 
-    @Test public void contains() throws Exception {
+    @Test
+    public void contains() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         IAtom c1 = builder.newInstance(IAtom.class, "C");
@@ -274,9 +246,7 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         IAtom h5 = builder.newInstance(IAtom.class, "H");
 
         // new stereo element
-        ITetrahedralChirality element = new TetrahedralChirality(c1,
-                                                                  new IAtom[]{o2,n3,c4,h5},
-                                                                  Stereo.CLOCKWISE);
+        ITetrahedralChirality element = new TetrahedralChirality(c1, new IAtom[]{o2, n3, c4, h5}, Stereo.CLOCKWISE);
 
         assertTrue(element.contains(c1));
         assertTrue(element.contains(o2));
@@ -288,16 +258,11 @@ public class TetrahedralChiralityTest extends CDKTestCase {
         assertFalse(element.contains(null));
     }
 
-
     @Test
     public void testToString() {
-        TetrahedralChirality chirality = new TetrahedralChirality(
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        TetrahedralChirality chirality = new TetrahedralChirality(molecule.getAtom(1), ligands, Stereo.CLOCKWISE);
         String stringRepr = chirality.toString();
         Assert.assertNotSame(0, stringRepr.length());
         Assert.assertFalse(stringRepr.contains("\n"));
     }
 }
-
-

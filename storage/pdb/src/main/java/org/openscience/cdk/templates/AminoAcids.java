@@ -49,17 +49,16 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class AminoAcids {
 
-	private static final ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AminoAcids.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(AminoAcids.class);
 
     /**
      * Creates matrix with info about the bonds in the amino acids.
      * 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
      * @return info
      */
-    public static int[][] aaBondInfo()	{
+    public static int[][] aaBondInfo() {
 
-    	if (aminoAcids == null) {
+        if (aminoAcids == null) {
             createAAs();
         }
 
@@ -67,39 +66,39 @@ public class AminoAcids {
 
         int counter = 0;
         int total = 0;
-        for (int aa=0; aa<aminoAcids.length; aa++) {
-        	AminoAcid acid = aminoAcids[aa];
+        for (int aa = 0; aa < aminoAcids.length; aa++) {
+            AminoAcid acid = aminoAcids[aa];
 
-        	logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
-        	total += acid.getBondCount();
-        	logger.debug("total #bonds: ", total);
+            logger.debug("#bonds for ", acid.getProperty(RESIDUE_NAME).toString(), " = " + acid.getBondCount());
+            total += acid.getBondCount();
+            logger.debug("total #bonds: ", total);
 
             Iterator<IBond> bonds = acid.bonds().iterator();
             while (bonds.hasNext()) {
                 IBond bond = (IBond) bonds.next();
-        		info[counter][0] = counter;
-        		info[counter][1] = acid.getAtomNumber(bond.getAtom(0));
-        		info[counter][2] = acid.getAtomNumber(bond.getAtom(1));
-        		info[counter][3] = bond.getOrder().numeric();
-        		counter++;
-        	}
+                info[counter][0] = counter;
+                info[counter][1] = acid.getAtomNumber(bond.getAtom(0));
+                info[counter][2] = acid.getAtomNumber(bond.getAtom(1));
+                info[counter][3] = bond.getOrder().numeric();
+                counter++;
+            }
         }
 
-        if (counter>153) {
-        	logger.error("Error while creating AA info! Bond count is too large: ", counter);
-        	return null;
+        if (counter > 153) {
+            logger.error("Error while creating AA info! Bond count is too large: ", counter);
+            return null;
         }
 
         return info;
     }
 
-    private static AminoAcid[] aminoAcids = null;
+    private static AminoAcid[] aminoAcids         = null;
 
-    public final static String RESIDUE_NAME = "residueName";
+    public final static String RESIDUE_NAME       = "residueName";
     public final static String RESIDUE_NAME_SHORT = "residueNameShort";
-    public final static String NO_ATOMS = "noOfAtoms";
-    public final static String NO_BONDS = "noOfBonds";
-    public final static String ID = "id";
+    public final static String NO_ATOMS           = "noOfAtoms";
+    public final static String NO_BONDS           = "noOfBonds";
+    public final static String ID                 = "id";
 
     /**
      * Creates amino acid AminoAcid objects.
@@ -107,7 +106,7 @@ public class AminoAcids {
      * @return aminoAcids, a HashMap containing the amino acids as AminoAcids.
      */
     public synchronized static AminoAcid[] createAAs() {
-    	if (aminoAcids != null) {
+        if (aminoAcids != null) {
             return aminoAcids;
         }
 
@@ -115,74 +114,70 @@ public class AminoAcids {
         aminoAcids = new AminoAcid[20];
 
         IChemFile list = new ChemFile();
-        CMLReader reader = new CMLReader(
-        	AminoAcids.class.getClassLoader().getResourceAsStream(
-        			"org/openscience/cdk/templates/data/list_aminoacids.cml"
-        	)
-        );
+        CMLReader reader = new CMLReader(AminoAcids.class.getClassLoader().getResourceAsStream(
+                "org/openscience/cdk/templates/data/list_aminoacids.cml"));
         try {
-        	list = (IChemFile)reader.read(list);
-        	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(list);
-        	Iterator<IAtomContainer> iterator = containersList.iterator();
-        	int counter = 0;
-        	while(iterator.hasNext())
-        	{
-        		IAtomContainer ac = (IAtomContainer)iterator.next();
-        		logger.debug("Adding AA: ", ac);
-        		// convert into an AminoAcid
-        		AminoAcid aminoAcid = new AminoAcid();
-        		Iterator<IAtom> atoms = ac.atoms().iterator();
-        		Iterator<Object> props = ac.getProperties().keySet().iterator();
-        		while (props.hasNext()) {
-        			Object next = props.next();
-        			logger.debug("Prop class: " + next.getClass().getName());
-        			logger.debug("Prop: " + next.toString());
-        			if (next instanceof DictRef) {
-        				DictRef dictRef = (DictRef)next;
-        				// logger.debug("DictRef type: " + dictRef.getType());
-        				if (dictRef.getType().equals("pdb:residueName")) {
-        					aminoAcid.setProperty(RESIDUE_NAME, ac.getProperty(dictRef).toString().toUpperCase());
-        					aminoAcid.setMonomerName(ac.getProperty(dictRef).toString());
-        				} else if (dictRef.getType().equals("pdb:oneLetterCode")) {
-        					aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
-        				} else if (dictRef.getType().equals("pdb:id")) {
-        					aminoAcid.setProperty(ID, ac.getProperty(dictRef));
-        					logger.debug("Set AA ID to: ", ac.getProperty(dictRef));
-        				} else {
-        					logger.error("Cannot deal with dictRef!");
-        				}
-        			}
-        		}
-        		while (atoms.hasNext()) {
-        			IAtom atom = (IAtom)atoms.next();
-        			String dictRef = (String)atom.getProperty("org.openscience.cdk.dict");
-        			if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
-        				aminoAcid.addNTerminus(atom);
-        			} else if (dictRef != null && dictRef.equals("pdb:cTerminus")) {
-        				aminoAcid.addCTerminus(atom);
-        			} else {
-        				aminoAcid.addAtom(atom);
-        			}
-        		}
+            list = (IChemFile) reader.read(list);
+            List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(list);
+            Iterator<IAtomContainer> iterator = containersList.iterator();
+            int counter = 0;
+            while (iterator.hasNext()) {
+                IAtomContainer ac = (IAtomContainer) iterator.next();
+                logger.debug("Adding AA: ", ac);
+                // convert into an AminoAcid
+                AminoAcid aminoAcid = new AminoAcid();
+                Iterator<IAtom> atoms = ac.atoms().iterator();
+                Iterator<Object> props = ac.getProperties().keySet().iterator();
+                while (props.hasNext()) {
+                    Object next = props.next();
+                    logger.debug("Prop class: " + next.getClass().getName());
+                    logger.debug("Prop: " + next.toString());
+                    if (next instanceof DictRef) {
+                        DictRef dictRef = (DictRef) next;
+                        // logger.debug("DictRef type: " + dictRef.getType());
+                        if (dictRef.getType().equals("pdb:residueName")) {
+                            aminoAcid.setProperty(RESIDUE_NAME, ac.getProperty(dictRef).toString().toUpperCase());
+                            aminoAcid.setMonomerName(ac.getProperty(dictRef).toString());
+                        } else if (dictRef.getType().equals("pdb:oneLetterCode")) {
+                            aminoAcid.setProperty(RESIDUE_NAME_SHORT, ac.getProperty(dictRef));
+                        } else if (dictRef.getType().equals("pdb:id")) {
+                            aminoAcid.setProperty(ID, ac.getProperty(dictRef));
+                            logger.debug("Set AA ID to: ", ac.getProperty(dictRef));
+                        } else {
+                            logger.error("Cannot deal with dictRef!");
+                        }
+                    }
+                }
+                while (atoms.hasNext()) {
+                    IAtom atom = (IAtom) atoms.next();
+                    String dictRef = (String) atom.getProperty("org.openscience.cdk.dict");
+                    if (dictRef != null && dictRef.equals("pdb:nTerminus")) {
+                        aminoAcid.addNTerminus(atom);
+                    } else if (dictRef != null && dictRef.equals("pdb:cTerminus")) {
+                        aminoAcid.addCTerminus(atom);
+                    } else {
+                        aminoAcid.addAtom(atom);
+                    }
+                }
                 Iterator<IBond> bonds = ac.bonds().iterator();
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
-        			aminoAcid.addBond(bond);
-        		}
-        		AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
+                    aminoAcid.addBond(bond);
+                }
+                AminoAcidManipulator.removeAcidicOxygen(aminoAcid);
                 aminoAcid.setProperty(NO_ATOMS, "" + aminoAcid.getAtomCount());
                 aminoAcid.setProperty(NO_BONDS, "" + aminoAcid.getBondCount());
                 if (counter < aminoAcids.length) {
-                	aminoAcids[counter] = aminoAcid;
+                    aminoAcids[counter] = aminoAcid;
                 } else {
-                	logger.error("Could not store AminoAcid! Array too short!");
+                    logger.error("Could not store AminoAcid! Array too short!");
                 }
                 counter++;
-        	}
+            }
             reader.close();
         } catch (Exception exception) {
-        	logger.error("Failed reading file: ", exception.getMessage());
-        	logger.debug(exception);
+            logger.error("Failed reading file: ", exception.getMessage());
+            logger.debug(exception);
         }
 
         return aminoAcids;
@@ -192,11 +187,11 @@ public class AminoAcids {
      * Returns a HashMap where the key is one of G, A, V, L, I, S, T, C, M, D,
      * N, E, Q, R, K, H, F, Y, W and P.
      */
-    public static Map<String,IAminoAcid> getHashMapBySingleCharCode() {
+    public static Map<String, IAminoAcid> getHashMapBySingleCharCode() {
         IAminoAcid[] monomers = createAAs();
-        HashMap<String,IAminoAcid> map = new HashMap<String,IAminoAcid>();
-        for (int i=0; i<monomers.length; i++) {
-            map.put((String)monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
+        HashMap<String, IAminoAcid> map = new HashMap<String, IAminoAcid>();
+        for (int i = 0; i < monomers.length; i++) {
+            map.put((String) monomers[i].getProperty(RESIDUE_NAME_SHORT), monomers[i]);
         }
         return map;
     }
@@ -205,11 +200,11 @@ public class AminoAcids {
      * Returns a HashMap where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
      * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
      */
-    public static Map<String,IAminoAcid> getHashMapByThreeLetterCode() {
+    public static Map<String, IAminoAcid> getHashMapByThreeLetterCode() {
         AminoAcid[] monomers = createAAs();
-        Map<String,IAminoAcid> map = new HashMap<String,IAminoAcid>();
-        for (int i=0; i<monomers.length; i++) {
-            map.put((String)monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
+        Map<String, IAminoAcid> map = new HashMap<String, IAminoAcid>();
+        for (int i = 0; i < monomers.length; i++) {
+            map.put((String) monomers[i].getProperty(RESIDUE_NAME), monomers[i]);
         }
         return map;
     }
@@ -220,10 +215,10 @@ public class AminoAcids {
      */
     public static String convertThreeLetterCodeToOneLetterCode(String threeLetterCode) {
         AminoAcid[] monomers = createAAs();
-        for (int i=0; i<monomers.length; i++) {
-        	if (monomers[i].getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
-        		return (String)monomers[i].getProperty(RESIDUE_NAME_SHORT);
-        	}
+        for (int i = 0; i < monomers.length; i++) {
+            if (monomers[i].getProperty(RESIDUE_NAME).equals(threeLetterCode)) {
+                return (String) monomers[i].getProperty(RESIDUE_NAME_SHORT);
+            }
         }
         return null;
     }
@@ -234,10 +229,10 @@ public class AminoAcids {
      */
     public static String convertOneLetterCodeToThreeLetterCode(String oneLetterCode) {
         AminoAcid[] monomers = createAAs();
-        for (int i=0; i<monomers.length; i++) {
-        	if (monomers[i].getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
-        		return (String)monomers[i].getProperty(RESIDUE_NAME);
-        	}
+        for (int i = 0; i < monomers.length; i++) {
+            if (monomers[i].getProperty(RESIDUE_NAME_SHORT).equals(oneLetterCode)) {
+                return (String) monomers[i].getProperty(RESIDUE_NAME);
+            }
         }
         return null;
     }

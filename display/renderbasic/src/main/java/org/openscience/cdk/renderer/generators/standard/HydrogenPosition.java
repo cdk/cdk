@@ -47,20 +47,18 @@ import static org.openscience.cdk.renderer.generators.standard.VecmathUtil.newUn
  * @author John May
  */
 enum HydrogenPosition {
-    Right(0, new Vector2d(1, 0)),
-    Left(Math.PI, new Vector2d(-1, 0)),
-    Above(Math.PI / 2, new Vector2d(0, 1)),
-    Below(Math.PI + (Math.PI / 2), new Vector2d(0, -1));
+    Right(0, new Vector2d(1, 0)), Left(Math.PI, new Vector2d(-1, 0)), Above(Math.PI / 2, new Vector2d(0, 1)), Below(
+            Math.PI + (Math.PI / 2), new Vector2d(0, -1));
 
     /**
      * When a single atom is displayed in isolation the position defaults to the
      * right unless the element is listed here. This allows us to correctly
      * displayed H2O not OH2 and CH4 not H4C.
      */
-    private static final Set<Elements> PREFIXED_H = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
-                                                                                        Elements.Sulfur, Elements.Selenium,
-                                                                                        Elements.Tellurium, Elements.Fluorine,
-                                                                                        Elements.Chlorine, Elements.Bromine, Elements.Iodine));
+    private static final Set<Elements> PREFIXED_H         = new HashSet<Elements>(Arrays.asList(Elements.Oxygen,
+                                                                  Elements.Sulfur, Elements.Selenium,
+                                                                  Elements.Tellurium, Elements.Fluorine,
+                                                                  Elements.Chlorine, Elements.Bromine, Elements.Iodine));
 
     /**
      * When an atom has a single bond, the position is left or right depending
@@ -69,19 +67,18 @@ enum HydrogenPosition {
      * A positive value favours placing them on the right, a negative on the
      * left.
      */
-    private static final double VERTICAL_THRESHOLD = 0.1;
-
+    private static final double        VERTICAL_THRESHOLD = 0.1;
 
     /**
      * Tau = 2π.
      */
-    private static final double TAU = Math.PI + Math.PI;
+    private static final double        TAU                = Math.PI + Math.PI;
 
     /**
      * Direction this position is pointing in radians.
      */
-    private final double   direction;
-    private final Vector2d vector;
+    private final double               direction;
+    private final Vector2d             vector;
 
     /**
      * Internal - create a hydrogen position pointing int he specified direction.
@@ -142,13 +139,13 @@ enum HydrogenPosition {
 
         for (int i = 0; i < extents.length; i++) {
             final double before = extents[i];
-            final double after  = extents[(i + 1) % extents.length];
+            final double after = extents[(i + 1) % extents.length];
 
             for (final HydrogenPosition position : values()) {
 
                 // adjust the extents such that this position is '0'
                 final double bias = TAU - position.direction;
-                double afterBias  = after + bias;
+                double afterBias = after + bias;
                 double beforeBias = before + bias;
 
                 // ensure values are 0 <= x < Tau
@@ -164,7 +161,7 @@ enum HydrogenPosition {
                 // when sweeping round. The offset is how close this hydrogen
                 // position is to the center of the extent.
                 final double totalExtent = afterExtent + beforeExtent;
-                final double offset      = Math.abs(totalExtent / 2 - beforeExtent);
+                final double offset = Math.abs(totalExtent / 2 - beforeExtent);
 
                 // for each position keep the one with the smallest extent this is
                 // the most space available without another bond getting in the way
@@ -177,10 +174,9 @@ enum HydrogenPosition {
 
         // we now have the offset extent for each position that we can sort and prioritise
         Set<Map.Entry<HydrogenPosition, OffsetExtent>> extentEntries = extentMap.entrySet();
-        Map.Entry<HydrogenPosition,OffsetExtent> best = null;
-        for (Map.Entry<HydrogenPosition,OffsetExtent> e : extentEntries) {
-            if (best == null || ExtentPriority.INSTANCE.compare(e, best) < 0)
-                best = e;
+        Map.Entry<HydrogenPosition, OffsetExtent> best = null;
+        for (Map.Entry<HydrogenPosition, OffsetExtent> e : extentEntries) {
+            if (best == null || ExtentPriority.INSTANCE.compare(e, best) < 0) best = e;
         }
 
         assert best != null;
@@ -191,6 +187,7 @@ enum HydrogenPosition {
      * A simple value class that stores a tuple of an angular extent and an offset.
      */
     private static final class OffsetExtent {
+
         private final double extent;
         private final double offset;
 
@@ -205,7 +202,8 @@ enum HydrogenPosition {
         }
 
         /** @inheritDoc */
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return String.format("%.2f, %.2f", extent, offset);
         }
     }
@@ -215,8 +213,9 @@ enum HydrogenPosition {
      */
     private static enum ExtentPriority implements Comparator<Map.Entry<HydrogenPosition, OffsetExtent>> {
         INSTANCE;
-        @Override public int compare(Map.Entry<HydrogenPosition, OffsetExtent> a,
-                                     Map.Entry<HydrogenPosition, OffsetExtent> b) {
+
+        @Override
+        public int compare(Map.Entry<HydrogenPosition, OffsetExtent> a, Map.Entry<HydrogenPosition, OffsetExtent> b) {
 
             OffsetExtent aExtent = a.getValue();
             OffsetExtent bExtent = b.getValue();
@@ -224,14 +223,12 @@ enum HydrogenPosition {
             // if difference in extents is noticeable, favour the one
             // with a larger extent
             double extentDiff = bExtent.extent - aExtent.extent;
-            if (Math.abs(extentDiff) > 0.05)
-                return (int) Math.signum(extentDiff);
+            if (Math.abs(extentDiff) > 0.05) return (int) Math.signum(extentDiff);
 
             // if the difference in offset is noticeable, favour the one
             // with the smaller offset (position is more centered)
             double offsetDiff = bExtent.offset - aExtent.offset;
-            if (Math.abs(offsetDiff) > 0.05)
-                return (int) -Math.signum(offsetDiff);
+            if (Math.abs(offsetDiff) > 0.05) return (int) -Math.signum(offsetDiff);
 
             // favour Right > Left > Above > Below
             return a.getKey().compareTo(b.getKey());

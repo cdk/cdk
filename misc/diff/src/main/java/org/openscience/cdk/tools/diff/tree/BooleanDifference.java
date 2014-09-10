@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.tools.diff.tree.BooleanDifferenceTest")
 public class BooleanDifference implements IDifference {
 
-    private String name;
+    private String  name;
     private Boolean first;
     private Boolean second;
 
@@ -64,9 +64,7 @@ public class BooleanDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : (first == true ? "T" : "F")) +
-            "/" +
-            (second == null ? "NA" : (second == true ? "T" : "F"));
+        return name + ":" + (first == null ? "NA" : (first == true ? "T" : "F")) + "/"
+                + (second == null ? "NA" : (second == true ? "T" : "F"));
     }
 }

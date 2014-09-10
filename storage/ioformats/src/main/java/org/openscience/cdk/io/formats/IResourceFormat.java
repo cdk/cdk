@@ -64,4 +64,3 @@ public interface IResourceFormat {
      */
     public boolean isXMLBased();
 }
-

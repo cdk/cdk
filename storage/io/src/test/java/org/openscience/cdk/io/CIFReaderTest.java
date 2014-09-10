@@ -41,7 +41,8 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class CIFReaderTest extends ChemObjectIOTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setChemObjectIO(new CIFReader());
     }
 
@@ -49,17 +50,18 @@ public class CIFReaderTest extends ChemObjectIOTest {
      * Ensure a CIF file from the crystallography open database can be read.
      * Example input <a href="http://www.crystallography.net/1100784.cif">1100784</a>.
      */
-    @Test public void cod1100784() throws IOException, CDKException {
-        InputStream in        = getClass().getResourceAsStream("1100784.cif");
-        CIFReader   cifReader = new CIFReader(in);
-//        try {
-            IChemFile chemFile = cifReader.read(new ChemFile());
-            Assert.assertThat(chemFile.getChemSequenceCount(), is(1));
-            Assert.assertThat(chemFile.getChemSequence(0).getChemModelCount(), is(1));
-            Assert.assertNotNull(chemFile.getChemSequence(0).getChemModel(0).getCrystal());
-//        } finally {
-            cifReader.close();
-//        }
+    @Test
+    public void cod1100784() throws IOException, CDKException {
+        InputStream in = getClass().getResourceAsStream("1100784.cif");
+        CIFReader cifReader = new CIFReader(in);
+        //        try {
+        IChemFile chemFile = cifReader.read(new ChemFile());
+        Assert.assertThat(chemFile.getChemSequenceCount(), is(1));
+        Assert.assertThat(chemFile.getChemSequence(0).getChemModelCount(), is(1));
+        Assert.assertNotNull(chemFile.getChemSequence(0).getChemModel(0).getCrystal());
+        //        } finally {
+        cifReader.close();
+        //        }
     }
 
 }

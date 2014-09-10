@@ -33,28 +33,26 @@ public class IntegerResultTest extends CDKTestCase {
     }
 
     @Test
-	public void testIntegerResult_int() {
-		IntegerResult result = new IntegerResult(5);
-		Assert.assertNotNull(result);
-	}
+    public void testIntegerResult_int() {
+        IntegerResult result = new IntegerResult(5);
+        Assert.assertNotNull(result);
+    }
 
     @Test
     public void testToString() {
-		IntegerResult result = new IntegerResult(5);
-		Assert.assertEquals("5", result.toString());
-	}
+        IntegerResult result = new IntegerResult(5);
+        Assert.assertEquals("5", result.toString());
+    }
 
     @Test
     public void testIntValue() {
-		IntegerResult result = new IntegerResult(5);
-		Assert.assertEquals(5, result.intValue());
-	}
+        IntegerResult result = new IntegerResult(5);
+        Assert.assertEquals(5, result.intValue());
+    }
 
     @Test
     public void testLength() {
         IntegerResult result = new IntegerResult(5);
-		Assert.assertEquals(1, result.length());
+        Assert.assertEquals(1, result.length());
     }
 }
-
-

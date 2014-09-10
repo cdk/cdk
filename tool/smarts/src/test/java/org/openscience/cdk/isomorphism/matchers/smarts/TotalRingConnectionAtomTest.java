@@ -45,14 +45,10 @@ public class TotalRingConnectionAtomTest {
     public void matches() throws Exception {
         TotalRingConnectionAtom matcher = new TotalRingConnectionAtom(2, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
-                                                                                             0,
-                                                                                             0,
-                                                                                             Collections.<Integer>emptySet(),
-                                                                                             2,
-                                                                                             0,
-                                                                                             0,
-                                                                                             0));
+        when(atom.getProperty(SMARTSAtomInvariants.KEY))
+                .thenReturn(
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.<Integer> emptySet(), 2,
+                                0, 0, 0));
         assertTrue(matcher.matches(atom));
     }
 }

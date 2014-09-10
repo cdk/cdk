@@ -35,20 +35,18 @@ public class BooleanResultTypeTest extends CDKTestCase {
 
     @Test
     public void testBooleanResultType() {
-		IDescriptorResult type = new BooleanResultType();
-		Assert.assertNotNull(type);
-	}
+        IDescriptorResult type = new BooleanResultType();
+        Assert.assertNotNull(type);
+    }
 
     @Test
     public void testToString() {
-		Assert.assertEquals("BooleanResultType", new BooleanResultType().toString());
-	}
+        Assert.assertEquals("BooleanResultType", new BooleanResultType().toString());
+    }
 
     @Test
     public void testLength() {
-		Assert.assertEquals(1, new BooleanResultType().length());
-	}
+        Assert.assertEquals(1, new BooleanResultType().length());
+    }
 
 }
-
-

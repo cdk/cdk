@@ -54,11 +54,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.smsd.helper.MolHandlerTest")
 public class MolHandler {
 
-    private IAtomContainer atomContainer = null;
-    private boolean removeHydrogen = false;
-    private final ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(MolHandler.class);
-    private ICanonicalMoleculeLabeller canonLabeler = new CanonicalLabellingAdaptor();
+    private IAtomContainer             atomContainer  = null;
+    private boolean                    removeHydrogen = false;
+    private final ILoggingTool         logger         = LoggingToolFactory.createLoggingTool(MolHandler.class);
+    private ICanonicalMoleculeLabeller canonLabeler   = new CanonicalLabellingAdaptor();
 
     /**
      * Creates a new instance of MolHandler
@@ -80,7 +79,7 @@ public class MolHandler {
             this.atomContainer = (IAtomContainer) molRead.read(new AtomContainer());
             molRead.close();
             readMolecule.close();
-            /*Remove Hydrogen by Asad*/
+            /* Remove Hydrogen by Asad */
             if (removeHydrogen) {
                 atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
             }
@@ -127,7 +126,8 @@ public class MolHandler {
         this.atomContainer = container;
         if (removeHydrogen) {
             try {
-                this.atomContainer = ExtAtomContainerManipulator.removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
+                this.atomContainer = ExtAtomContainerManipulator
+                        .removeHydrogensExceptSingleAndPreserveAtomID(atomContainer);
             } catch (Exception ex) {
                 logger.error(ex);
             }

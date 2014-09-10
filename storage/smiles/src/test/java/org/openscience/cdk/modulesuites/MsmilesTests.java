@@ -41,21 +41,10 @@ import org.openscience.cdk.normalize.NormalizerTest;
  *
  * @cdk.module test-smiles
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SmilesCoverageTest.class,
-    SMILESReaderTest.class,
-    SMILESWriterTest.class,
-    IteratingSMILESReaderTest.class,
-    DeduceBondSystemToolTest.class,
-    MoSSOutputReaderTest.class,
-    SmilesParserTest.class,
-    SmilesGeneratorTest.class,
-    NormalizerTest.class,
-    LingoFingerprinterTest.class,
-    FixBondOrdersToolTest.class,
-    SMILES2Mol2WriterTest.class,
-    CDKToBeamTest.class,
-    BeamToCDKTest.class
-})
-public class MsmilesTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SmilesCoverageTest.class, SMILESReaderTest.class, SMILESWriterTest.class,
+        IteratingSMILESReaderTest.class, DeduceBondSystemToolTest.class, MoSSOutputReaderTest.class,
+        SmilesParserTest.class, SmilesGeneratorTest.class, NormalizerTest.class, LingoFingerprinterTest.class,
+        FixBondOrdersToolTest.class, SMILES2Mol2WriterTest.class, CDKToBeamTest.class, BeamToCDKTest.class})
+public class MsmilesTests {
+}

@@ -42,12 +42,13 @@ public final class RingSearchTest_Benzene {
 
     private final IAtomContainer benzene = MoleculeFactory.makeBenzene();
 
-    @Test public void testCyclic() {
-        assertThat(new RingSearch(benzene).cyclic().length,
-                   is(benzene.getAtomCount()));
+    @Test
+    public void testCyclic() {
+        assertThat(new RingSearch(benzene).cyclic().length, is(benzene.getAtomCount()));
     }
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         int n = benzene.getAtomCount();
         RingSearch ringSearch = new RingSearch(benzene);
         for (int i = 0; i < n; i++) {
@@ -55,24 +56,28 @@ public final class RingSearchTest_Benzene {
         }
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         RingSearch search = new RingSearch(benzene);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(1));
         assertThat(isolated[0].length, is(6));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         assertThat(new RingSearch(benzene).fused().length, is(0));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         IAtomContainer fragment = new RingSearch(benzene).ringFragments();
         assertThat(fragment.getAtomCount(), is(benzene.getAtomCount()));
         assertThat(fragment.getBondCount(), is(benzene.getBondCount()));
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(benzene);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(1));
@@ -80,7 +85,8 @@ public final class RingSearchTest_Benzene {
         assertThat(isolated.get(0).getBondCount(), is(6));
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         RingSearch search = new RingSearch(benzene);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));

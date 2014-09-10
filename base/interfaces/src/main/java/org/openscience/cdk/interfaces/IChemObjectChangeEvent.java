@@ -31,11 +31,11 @@ package org.openscience.cdk.interfaces;
  */
 public interface IChemObjectChangeEvent {
 
-	/**
-	 * IChemObject that fired the event.
-	 *
-	 * @return the source of the event
-	 */
+    /**
+     * IChemObject that fired the event.
+     *
+     * @return the source of the event
+     */
     public Object getSource();
 
 }

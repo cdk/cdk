@@ -55,5 +55,4 @@ public class LingoSimilarityTest extends CDKTestCase {
         Assert.assertEquals(1.0, lingosim, 0.01);
     }
 
-
 }

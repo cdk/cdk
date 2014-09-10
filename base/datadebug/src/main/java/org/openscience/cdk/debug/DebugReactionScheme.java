@@ -35,149 +35,169 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module datadebug
  * @cdk.githash
  */
-public class DebugReactionScheme extends ReactionScheme
-    implements IReactionScheme {
+public class DebugReactionScheme extends ReactionScheme implements IReactionScheme {
 
-	private static final long serialVersionUID = 705803374163613819L;
+    private static final long serialVersionUID = 705803374163613819L;
 
-	ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
+    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugReactionScheme.class);
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void addListener(IChemObjectListener col) {
-		logger.debug("Adding listener: ", col);
-		super.addListener(col);
-	}
+        logger.debug("Adding listener: ", col);
+        super.addListener(col);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public int getListenerCount() {
-		logger.debug("Getting listener count: ", super.getListenerCount());
-		return super.getListenerCount();
-	}
+        logger.debug("Getting listener count: ", super.getListenerCount());
+        return super.getListenerCount();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeListener(IChemObjectListener col) {
-		logger.debug("Removing listener: ", col);
-		super.removeListener(col);
-	}
+        logger.debug("Removing listener: ", col);
+        super.removeListener(col);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void notifyChanged() {
-		logger.debug("Notifying changed");
-		super.notifyChanged();
-	}
+        logger.debug("Notifying changed");
+        super.notifyChanged();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
-		logger.debug("Notifying changed event: ", evt);
-		super.notifyChanged(evt);
-	}
+        logger.debug("Notifying changed event: ", evt);
+        super.notifyChanged(evt);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setProperty(Object description, Object property) {
-		logger.debug("Setting property: ", description + "=" + property);
-		super.setProperty(description, property);
-	}
+        logger.debug("Setting property: ", description + "=" + property);
+        super.setProperty(description, property);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeProperty(Object description) {
-		logger.debug("Removing property: ", description);
-		super.removeProperty(description);
-	}
+        logger.debug("Removing property: ", description);
+        super.removeProperty(description);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public <T> T getProperty(Object description) {
-		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
-		return super.getProperty(description);
-	}
+        logger.debug("Getting property: ", description + "=" + super.getProperty(description));
+        return super.getProperty(description);
+    }
 
-    /** {@inheritDoc} */ @Override
-    public Map<Object,Object> getProperties() {
-		logger.debug("Getting properties");
-		return super.getProperties();
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Map<Object, Object> getProperties() {
+        logger.debug("Getting properties");
+        return super.getProperties();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public String getID() {
-		logger.debug("Getting ID: ", super.getID());
-		return super.getID();
-	}
+        logger.debug("Getting ID: ", super.getID());
+        return super.getID();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setID(String identifier) {
-		logger.debug("Setting ID: ", identifier);
-		super.setID(identifier);
-	}
+        logger.debug("Setting ID: ", identifier);
+        super.setID(identifier);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setFlag(int flag_type, boolean flag_value) {
-		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
-		super.setFlag(flag_type, flag_value);
-	}
+        logger.debug("Setting flag: ", flag_type + "=" + flag_value);
+        super.setFlag(flag_type, flag_value);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean getFlag(int flag_type) {
-		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
-		return super.getFlag(flag_type);
-	}
+        logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
+        return super.getFlag(flag_type);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void addProperties(Map<Object, Object> properties) {
-		logger.debug("Setting properties: ", properties);
-		super.addProperties(properties);
-	}
+        logger.debug("Setting properties: ", properties);
+        super.addProperties(properties);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setFlags(boolean[] flagsNew) {
-		logger.debug("Setting flags:", flagsNew.length);
-		super.setFlags(flagsNew);
-	}
+        logger.debug("Setting flags:", flagsNew.length);
+        super.setFlags(flagsNew);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean[] getFlags() {
-		logger.debug("Getting flags:", super.getFlags().length);
-		return super.getFlags();
-	}
+        logger.debug("Getting flags:", super.getFlags().length);
+        return super.getFlags();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
-        	clone = super.clone();
+            clone = super.clone();
         } catch (Exception exception) {
-        	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
-        	logger.debug(exception);
+            logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
+            logger.debug(exception);
         }
         return clone;
-	}
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IChemObjectBuilder getBuilder() {
-		return DebugChemObjectBuilder.getInstance();
-	}
+        return DebugChemObjectBuilder.getInstance();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void add(IReactionScheme scheme) {
-		logger.debug("Adding scheme: ", scheme);
-		super.add(scheme);
-	}
+        logger.debug("Adding scheme: ", scheme);
+        super.add(scheme);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public Iterable<IReactionScheme> reactionSchemes() {
-		logger.debug("Getting reactionSchemeIterator");
-		return super.reactionSchemes();
-	}
+        logger.debug("Getting reactionSchemeIterator");
+        return super.reactionSchemes();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public int getReactionSchemeCount() {
-		logger.debug("Getting reactionScheme count: ", super.getReactionSchemeCount());
-		return super.getReactionSchemeCount();
-	}
+        logger.debug("Getting reactionScheme count: ", super.getReactionSchemeCount());
+        return super.getReactionSchemeCount();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeAllReactionSchemes() {
-		logger.debug("Removing all reactionSchemes");
-		super.removeAllReactionSchemes();
-	}
+        logger.debug("Removing all reactionSchemes");
+        super.removeAllReactionSchemes();
+    }
 
 }

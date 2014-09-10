@@ -83,7 +83,7 @@ public class VFMapperTest {
     private IAtomContainer propane;
     private IAtomContainer cyclopropane;
 
-    public VFMapperTest(){
+    public VFMapperTest() {
 
     }
 
@@ -247,76 +247,76 @@ public class VFMapperTest {
 
         Assert.assertEquals(2, maps.size());
     }
-//    @Test
-//    public void testItMapsBlockedPropaneOntoPropane() throws CDKException {
-//        IAtomContainer blockedPropane = Molecules.createPropane();
-//        IAtom atom = blockedPropane.getBuilder().newInstance(IAtom.class, "H");
-//        blockedPropane.addAtom(atom);
-//        IBond bond = blockedPropane.getBuilder().newInstance(IBond.class, atom, blockedPropane.getAtom(1), IBond.Order.SINGLE);
-//
-//        blockedPropane.addBond(bond);
-//
-//        IMapper mapper = new VFMapper(blockedPropane, true);
-//
-//        assertTrue(mapper.hasMap(propane));
-//    }
-//    public void testItMapsBlockedBenzaldehydeOntoBenzaldehyde() {
-//        Molecule blockedBenzaldehyde = this.createBlockedBenzaldehyde();
-//        IMapper mapper = new VFMapper(blockedBenzaldehyde, true);
-//
-//        assertTrue(mapper.hasMap(createBenzaldehyde()));
-//    }
-//
-//    public void testItDoesntMapBlockedBenzaldehydeOntoBenzoicAcid() {
-//        Molecule blockedBenzaldehyde = this.createBlockedBenzaldehyde();
-//        IMapper mapper = new VFMapper(blockedBenzaldehyde, true);
-//
-//        assertFalse(mapper.hasMap(createBenzoicAcid()));
-//    }
-//
-//    public void testItMapsDimethylsulfideToChargelessDMSO() {
-//        IMapper mapper = new VFMapper(Molecules.createDimethylsulfide(), true);
-//
-//        assertTrue(mapper.hasMap(Molecules.createChargelessDMSO()));
-//    }
-//
-//    public void testItMapsDimethylsulfideToChargedDMSO() {
-//        IMapper mapper = new VFMapper(Molecules.createDimethylsulfide());
-//
-//        assertTrue(mapper.hasMap(Molecules.createChargedDMSO()));
-//    }
-//  public void testItMapsChargelessDMSOToChargeledDMSO()
-//  {
-//    Mapper mapper = new DefaultMapper(Molecules.createChargelessDMSO());
-//
-//    assertTrue(mapper.hasMap(Molecules.createChargedDMSO()));
-//  }
-//    @Test
-//    public void testItMapsPropaneToAcetone() throws CDKException {
-//        IAtomContainer mol = Molecules.createPropane();
-//        IQuery querComp = QueryCompiler.compile(mol, true);
-//        IMapper mapper = new VFMapper(querComp);
-//        assertTrue(mapper.hasMap(Molecules.createAcetone()));
-//    }
-//
-//    @Test
-//    public void testDoesntMapImineToAmine() throws CDKException {
-//        IAtomContainer mol = Molecules.createSimpleImine();
-//        IQuery querComp = QueryCompiler.compile(mol, true);
-//        IMapper mapper = new VFMapper(querComp);
-//        Map<INode, IAtom> map = mapper.getFirstMap(Molecules.createSimpleAmine());
-//        assertEquals(0, map.size());
-//    }
-//
-//    public void testItMapsBigmolToItself() {
-//        IMapper mapper = new VFMapper(bigmol, true);
-//
-//        assertEquals(bigmol.getAtomCount(), mapper.getFirstMap(bigmol).size());
-//    }
-//
-//    public void testBigmolHasOneMap() {
-//        IMapper mapper = new VFMapper(bigmol, true);
-//
-//        assertEquals(1, mapper.countMaps(bigmol));
-//    }
+    //    @Test
+    //    public void testItMapsBlockedPropaneOntoPropane() throws CDKException {
+    //        IAtomContainer blockedPropane = Molecules.createPropane();
+    //        IAtom atom = blockedPropane.getBuilder().newInstance(IAtom.class, "H");
+    //        blockedPropane.addAtom(atom);
+    //        IBond bond = blockedPropane.getBuilder().newInstance(IBond.class, atom, blockedPropane.getAtom(1), IBond.Order.SINGLE);
+    //
+    //        blockedPropane.addBond(bond);
+    //
+    //        IMapper mapper = new VFMapper(blockedPropane, true);
+    //
+    //        assertTrue(mapper.hasMap(propane));
+    //    }
+    //    public void testItMapsBlockedBenzaldehydeOntoBenzaldehyde() {
+    //        Molecule blockedBenzaldehyde = this.createBlockedBenzaldehyde();
+    //        IMapper mapper = new VFMapper(blockedBenzaldehyde, true);
+    //
+    //        assertTrue(mapper.hasMap(createBenzaldehyde()));
+    //    }
+    //
+    //    public void testItDoesntMapBlockedBenzaldehydeOntoBenzoicAcid() {
+    //        Molecule blockedBenzaldehyde = this.createBlockedBenzaldehyde();
+    //        IMapper mapper = new VFMapper(blockedBenzaldehyde, true);
+    //
+    //        assertFalse(mapper.hasMap(createBenzoicAcid()));
+    //    }
+    //
+    //    public void testItMapsDimethylsulfideToChargelessDMSO() {
+    //        IMapper mapper = new VFMapper(Molecules.createDimethylsulfide(), true);
+    //
+    //        assertTrue(mapper.hasMap(Molecules.createChargelessDMSO()));
+    //    }
+    //
+    //    public void testItMapsDimethylsulfideToChargedDMSO() {
+    //        IMapper mapper = new VFMapper(Molecules.createDimethylsulfide());
+    //
+    //        assertTrue(mapper.hasMap(Molecules.createChargedDMSO()));
+    //    }
+    //  public void testItMapsChargelessDMSOToChargeledDMSO()
+    //  {
+    //    Mapper mapper = new DefaultMapper(Molecules.createChargelessDMSO());
+    //
+    //    assertTrue(mapper.hasMap(Molecules.createChargedDMSO()));
+    //  }
+    //    @Test
+    //    public void testItMapsPropaneToAcetone() throws CDKException {
+    //        IAtomContainer mol = Molecules.createPropane();
+    //        IQuery querComp = QueryCompiler.compile(mol, true);
+    //        IMapper mapper = new VFMapper(querComp);
+    //        assertTrue(mapper.hasMap(Molecules.createAcetone()));
+    //    }
+    //
+    //    @Test
+    //    public void testDoesntMapImineToAmine() throws CDKException {
+    //        IAtomContainer mol = Molecules.createSimpleImine();
+    //        IQuery querComp = QueryCompiler.compile(mol, true);
+    //        IMapper mapper = new VFMapper(querComp);
+    //        Map<INode, IAtom> map = mapper.getFirstMap(Molecules.createSimpleAmine());
+    //        assertEquals(0, map.size());
+    //    }
+    //
+    //    public void testItMapsBigmolToItself() {
+    //        IMapper mapper = new VFMapper(bigmol, true);
+    //
+    //        assertEquals(bigmol.getAtomCount(), mapper.getFirstMap(bigmol).size());
+    //    }
+    //
+    //    public void testBigmolHasOneMap() {
+    //        IMapper mapper = new VFMapper(bigmol, true);
+    //
+    //        assertEquals(1, mapper.countMaps(bigmol));
+    //    }
 }

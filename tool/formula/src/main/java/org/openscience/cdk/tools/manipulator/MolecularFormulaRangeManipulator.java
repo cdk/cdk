@@ -42,18 +42,18 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 @TestClass("org.openscience.cdk.formula.MolecularFormulaRangeManipulatorTest")
 public class MolecularFormulaRangeManipulator {
 
-	/**
-	 * Extract from a set of MolecularFormula the range of each each element found and
-	 * put the element and occurrence in a new MolecularFormulaRange.
-	 *
-	 * @param mfSet    The set of molecularFormules to inspect
-	 * @return         A MolecularFormulaRange containing range occurrence of the elements
-	 */
+    /**
+     * Extract from a set of MolecularFormula the range of each each element found and
+     * put the element and occurrence in a new MolecularFormulaRange.
+     *
+     * @param mfSet    The set of molecularFormules to inspect
+     * @return         A MolecularFormulaRange containing range occurrence of the elements
+     */
     @TestMethod("testGetRange_IMolecularFormulaSet")
-	public static MolecularFormulaRange getRange(IMolecularFormulaSet mfSet){
-		MolecularFormulaRange mfRange = new MolecularFormulaRange();
+    public static MolecularFormulaRange getRange(IMolecularFormulaSet mfSet) {
+        MolecularFormulaRange mfRange = new MolecularFormulaRange();
 
-		for(IMolecularFormula mf: mfSet.molecularFormulas()){
+        for (IMolecularFormula mf : mfSet.molecularFormulas()) {
             for (IIsotope isotope : mf.isotopes()) {
                 int occur_new = mf.getIsotopeCount(isotope);
                 if (!mfRange.contains(isotope)) {
@@ -70,55 +70,55 @@ public class MolecularFormulaRangeManipulator {
                     }
                 }
             }
-		}
-		// looking for those Isotopes which are not contained which then should be 0.
-		for(IMolecularFormula mf: mfSet.molecularFormulas()){
-			if(mf.getIsotopeCount() != mfRange.getIsotopeCount()){
+        }
+        // looking for those Isotopes which are not contained which then should be 0.
+        for (IMolecularFormula mf : mfSet.molecularFormulas()) {
+            if (mf.getIsotopeCount() != mfRange.getIsotopeCount()) {
                 for (IIsotope isotope : mfRange.isotopes()) {
                     if (!mf.contains(isotope)) {
                         int occurMax = mfRange.getIsotopeCountMax(isotope);
                         mfRange.addIsotope(isotope, 0, occurMax);
                     }
                 }
-			}
-		}
-		return mfRange;
-	}
-	/**
-	 * Returns the maximal occurrence of the IIsotope into IMolecularFormula
-	 * from this MolelecularFormulaRange.
-	 *
-	 * @param   mfRange The MolecularFormulaRange to analyze
-	 * @return  A IMolecularFormula containing the maximal occurrence of each isotope
-	 */
+            }
+        }
+        return mfRange;
+    }
+
+    /**
+     * Returns the maximal occurrence of the IIsotope into IMolecularFormula
+     * from this MolelecularFormulaRange.
+     *
+     * @param   mfRange The MolecularFormulaRange to analyze
+     * @return  A IMolecularFormula containing the maximal occurrence of each isotope
+     */
     @TestMethod("testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder")
-	public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
-		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
+    public static IMolecularFormula getMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
+        IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
             formula.addIsotope(isotope, mfRange.getIsotopeCountMax(isotope));
         }
 
-		return formula;
-	}
+        return formula;
+    }
 
-	/**
-	 * Returns the minimal occurrence of the IIsotope into IMolecularFormula
-	 * from this MolelecularFormulaRange.
-	 *
-	 * @param   mfRange The MolecularFormulaRange to analyze
-	 * @return  A IMolecularFormula containing the minimal occurrence of each isotope
-	 */
+    /**
+     * Returns the minimal occurrence of the IIsotope into IMolecularFormula
+     * from this MolelecularFormulaRange.
+     *
+     * @param   mfRange The MolecularFormulaRange to analyze
+     * @return  A IMolecularFormula containing the minimal occurrence of each isotope
+     */
     @TestMethod("testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder")
-	public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder){
-		IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
+    public static IMolecularFormula getMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder) {
+        IMolecularFormula formula = builder.newInstance(IMolecularFormula.class);
 
         for (IIsotope isotope : mfRange.isotopes()) {
             formula.addIsotope(isotope, mfRange.getIsotopeCountMin(isotope));
         }
 
-		return formula;
-	}
+        return formula;
+    }
 
 }
-

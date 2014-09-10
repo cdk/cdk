@@ -81,7 +81,6 @@ import static org.openscience.cdk.renderer.generators.standard.HydrogenPosition.
  */
 public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
-
     /**
      * Defines that a chem object should be highlighted in a depiction. Only atom symbols that are
      * displayed are highlighted, the visibility of symbols can be modified with {@link
@@ -91,7 +90,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * atom.setProperty(CDKConstants.HIGHLIGHT_COLOR, Color.RED);
      * }</pre>
      */
-    public final static String HIGHLIGHT_COLOR = "stdgen.highlight.color";
+    public final static String          HIGHLIGHT_COLOR       = "stdgen.highlight.color";
 
     /**
      * Defines the annotation label(s) of a chem object in a depiction. The annotation
@@ -102,8 +101,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * atom.setProperty(CDKConstants.ANNOTATION_LABEL, number);
      * }</pre>
      */
-    public final static String ANNOTATION_LABEL = "stdgen.annotation.label";
-
+    public final static String          ANNOTATION_LABEL      = "stdgen.annotation.label";
 
     /**
      * A special markup for annotation labels that hints the generator to renderer
@@ -116,7 +114,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      *                  StandardGenerator.ITALIC_DISPLAY_PREFIX + cipLabel);
      * }</pre>
      */
-    public final static String ITALIC_DISPLAY_PREFIX = "std.itl:";
+    public final static String          ITALIC_DISPLAY_PREFIX = "std.itl:";
 
     private final Font                  font;
     private final StandardAtomGenerator atomGenerator;
@@ -144,22 +142,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         OuterGlow
     }
 
-    private final IGeneratorParameter<?> atomColor = new AtomColor(),
-            visibility                             = new Visibility(),
-            strokeRatio                            = new StrokeRatio(),
-            separationRatio                        = new BondSeparation(),
-            wedgeRatio                             = new WedgeRatio(),
-            marginRatio                            = new SymbolMarginRatio(),
-            hatchSections                          = new HashSpacing(),
-            dashSections                           = new DashSection(),
-            waveSections                           = new WaveSpacing(),
-            fancyBoldWedges                        = new FancyBoldWedges(),
-            fancyHashedWedges                      = new FancyHashedWedges(),
-            highlighting                           = new Highlighting(),
-            glowWidth                              = new OuterGlowWidth(),
-            annCol                                 = new AnnotationColor(),
-            annDist                                = new AnnotationDistance(),
-            annFontSize                            = new AnnotationFontScale();
+    private final IGeneratorParameter<?> atomColor = new AtomColor(), visibility = new Visibility(),
+            strokeRatio = new StrokeRatio(), separationRatio = new BondSeparation(), wedgeRatio = new WedgeRatio(),
+            marginRatio = new SymbolMarginRatio(), hatchSections = new HashSpacing(), dashSections = new DashSection(),
+            waveSections = new WaveSpacing(), fancyBoldWedges = new FancyBoldWedges(),
+            fancyHashedWedges = new FancyHashedWedges(), highlighting = new Highlighting(),
+            glowWidth = new OuterGlowWidth(), annCol = new AnnotationColor(), annDist = new AnnotationDistance(),
+            annFontSize = new AnnotationFontScale();
 
     /**
      * Create a new standard generator that utilises the specified font to display atom symbols.
@@ -174,10 +163,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
     /**
      * @inheritDoc
      */
-    @Override public IRenderingElement generate(IAtomContainer container, RendererModel parameters) {
+    @Override
+    public IRenderingElement generate(IAtomContainer container, RendererModel parameters) {
 
-        if (container.getAtomCount() == 0)
-            return new ElementGroup();
+        if (container.getAtomCount() == 0) return new ElementGroup();
 
         final double scale = parameters.get(BasicSceneGenerator.Scale.class);
 
@@ -190,15 +179,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
         final double fontStroke = new TextOutline("|", font).resize(1 / scale, 1 / scale).getBounds().getWidth();
         final double stroke = parameters.get(StrokeRatio.class) * fontStroke;
 
-
         ElementGroup annotations = new ElementGroup();
 
         AtomSymbol[] symbols = generateAtomSymbols(container, visibility, parameters, annotations, stroke);
-        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke, font, annotations);
+        IRenderingElement[] bondElements = StandardBondGenerator.generateBonds(container, symbols, parameters, stroke,
+                font, annotations);
 
-        Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x,
-                                                    container.getAtom(0).getPoint2d().y,
-                                                    0, 0);
+        Rectangle2D bounds = new Rectangle2D.Double(container.getAtom(0).getPoint2d().x, container.getAtom(0)
+                .getPoint2d().y, 0, 0);
 
         final HighlightStyle style = parameters.get(Highlighting.class);
         final double glowWidth = parameters.get(OuterGlowWidth.class);
@@ -218,8 +206,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
             if (highlight != null && style == HighlightStyle.Colored) {
                 frontLayer.add(recolor(bondElements[i], highlight));
-            }
-            else {
+            } else {
                 middleLayer.add(bondElements[i]);
             }
         }
@@ -234,8 +221,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
 
             Color highlight = getHighlightColor(atom, parameters);
-            Color color = highlight != null && style == HighlightStyle.Colored ? highlight
-                                                                               : coloring.getAtomColor(atom);
+            Color color = highlight != null && style == HighlightStyle.Colored ? highlight : coloring
+                    .getAtomColor(atom);
 
             ElementGroup symbolElements = new ElementGroup();
             for (Shape shape : symbols[i].getOutlines()) {
@@ -255,12 +242,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
             if (highlight != null && style == HighlightStyle.Colored) {
                 frontLayer.add(symbolElements);
-            }
-            else {
+            } else {
                 middleLayer.add(symbolElements);
             }
         }
-
 
         // ensure annotations are included in the bound calculation
         for (IRenderingElement element : annotations) {
@@ -275,8 +260,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         ElementGroup group = new ElementGroup();
 
-        group.add(new Bounds(bounds.getMinX(), bounds.getMinY(),
-                             bounds.getMaxX(), bounds.getMaxY()));
+        group.add(new Bounds(bounds.getMinX(), bounds.getMinY(), bounds.getMaxX(), bounds.getMaxY()));
         group.add(backLayer);
         group.add(middleLayer);
         group.add(frontLayer);
@@ -292,12 +276,14 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param parameters render model parameters
      * @return generated atom symbols (can contain null)
      */
-    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility, RendererModel parameters, ElementGroup annotations, double stroke) {
+    private AtomSymbol[] generateAtomSymbols(IAtomContainer container, SymbolVisibility visibility,
+            RendererModel parameters, ElementGroup annotations, double stroke) {
 
-        final double scale     = parameters.get(BasicSceneGenerator.Scale.class);
-        final double annDist   = parameters.get(AnnotationDistance.class) * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
-        final double annScale  = (1 / scale) * parameters.get(AnnotationFontScale.class);
-        final Color  annColor  = parameters.get(AnnotationColor.class);
+        final double scale = parameters.get(BasicSceneGenerator.Scale.class);
+        final double annDist = parameters.get(AnnotationDistance.class)
+                * (parameters.get(BasicSceneGenerator.BondLength.class) / scale);
+        final double annScale = (1 / scale) * parameters.get(AnnotationFontScale.class);
+        final Color annColor = parameters.get(AnnotationColor.class);
         final double halfStroke = stroke / 2;
 
         AtomSymbol[] symbols = new AtomSymbol[container.getAtomCount()];
@@ -331,13 +317,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
                 final Point2d p = atom.getPoint2d();
 
-                if (p == null)
-                    throw new IllegalArgumentException("Atom did not have 2D coordinates");
+                if (p == null) throw new IllegalArgumentException("Atom did not have 2D coordinates");
 
                 // center and scale the symbol, y-axis scale is inverted because CDK y-axis
                 // is inverse of Java 2D
-                symbols[i] = symbols[i].resize(1 / scale, 1 / -scale)
-                                       .center(p.x, p.y);
+                symbols[i] = symbols[i].resize(1 / scale, 1 / -scale).center(p.x, p.y);
             }
 
             final String label = getAnnotationLabel(atom);
@@ -348,13 +332,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 final double strokeAdjust = symbols[i] != null ? -halfStroke : 0;
 
                 final Vector2d vector = newAtomAnnotationVector(atom, bonds, auxVectors);
-                final TextOutline annOutline = generateAnnotation(atom.getPoint2d(),
-                                                                  label,
-                                                                  vector,
-                                                                  annDist + strokeAdjust,
-                                                                  annScale,
-                                                                  font,
-                                                                  symbols[i]);
+                final TextOutline annOutline = generateAnnotation(atom.getPoint2d(), label, vector, annDist
+                        + strokeAdjust, annScale, font, symbols[i]);
 
                 // the AtomSymbol may migrate during bond generation and therefore the annotation
                 // needs to be tied to the symbol. If no symbol is available the annotation is
@@ -362,8 +341,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 if (symbols[i] != null) {
                     symbols[i] = symbols[i].addAnnotation(annOutline);
                 } else {
-                    annotations.add(GeneralPath.shapeOf(annOutline.getOutline(),
-                                                        annColor));
+                    annotations.add(GeneralPath.shapeOf(annOutline.getOutline(), annColor));
                 }
             }
         }
@@ -384,59 +362,44 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @param symbol    the atom symbol to avoid overlap with
      * @return the position text outline for the annotation
      */
-    static TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance, double scale, Font font, AtomSymbol symbol) {
+    static TextOutline generateAnnotation(Point2d basePoint, String label, Vector2d direction, double distance,
+            double scale, Font font, AtomSymbol symbol) {
 
         boolean italicHint = label.startsWith(ITALIC_DISPLAY_PREFIX);
 
         label = italicHint ? label.substring(ITALIC_DISPLAY_PREFIX.length()) : label;
 
-        Font annFont = italicHint ? font.deriveFont(Font.ITALIC)
-                                  : font;
+        Font annFont = italicHint ? font.deriveFont(Font.ITALIC) : font;
 
         final TextOutline annOutline = new TextOutline(label, annFont).resize(scale, -scale);
 
         // align to the first or last character of the annotation depending on the direction
-        final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() :
-                               direction.x < -0.3 ? annOutline.getLastGlyphCenter() :
-                               annOutline.getCenter();
+        final Point2D center = direction.x > 0.3 ? annOutline.getFirstGlyphCenter() : direction.x < -0.3 ? annOutline
+                .getLastGlyphCenter() : annOutline.getCenter();
 
         // Avoid atom symbol
         if (symbol != null) {
             Point2D intersect = symbol.getConvexHull().intersect(VecmathUtil.toAwtPoint(basePoint),
-                                                                 VecmathUtil.toAwtPoint(new Point2d(VecmathUtil.sum(basePoint, direction))));
+                    VecmathUtil.toAwtPoint(new Point2d(VecmathUtil.sum(basePoint, direction))));
             // intersect should never be null be check against this
-            if (intersect != null)
-                basePoint = VecmathUtil.toVecmathPoint(intersect);
+            if (intersect != null) basePoint = VecmathUtil.toVecmathPoint(intersect);
         }
 
         direction.scale(distance);
         direction.add(basePoint);
 
         // move to position
-        return annOutline.translate(direction.x - center.getX(),
-                                    direction.y - center.getY());
+        return annOutline.translate(direction.x - center.getX(), direction.y - center.getY());
     }
 
     /**
      * @inheritDoc
      */
-    @Override public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(atomColor,
-                             visibility,
-                             strokeRatio,
-                             separationRatio,
-                             wedgeRatio,
-                             marginRatio,
-                             hatchSections,
-                             dashSections,
-                             waveSections,
-                             fancyBoldWedges,
-                             fancyHashedWedges,
-                             highlighting,
-                             glowWidth,
-                             annCol,
-                             annDist,
-                             annFontSize);
+    @Override
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(atomColor, visibility, strokeRatio, separationRatio, wedgeRatio, marginRatio,
+                hatchSections, dashSections, waveSections, fancyBoldWedges, fancyHashedWedges, highlighting, glowWidth,
+                annCol, annDist, annFontSize);
     }
 
     static String getAnnotationLabel(IChemObject chemObject) {
@@ -468,10 +431,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      */
     static Color getColorProperty(IChemObject object, String key) {
         Object value = object.getProperty(key);
-        if (value instanceof Color)
-            return (Color) value;
-        if (value != null)
-            throw new IllegalArgumentException(key + " property should be a java.awt.Color");
+        if (value instanceof Color) return (Color) value;
+        if (value != null) throw new IllegalArgumentException(key + " property should be a java.awt.Color");
         return null;
     }
 
@@ -491,17 +452,11 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 newGroup.add(recolor(child, color));
             }
             return newGroup;
-        }
-        else if (element instanceof LineElement) {
+        } else if (element instanceof LineElement) {
             LineElement lineElement = (LineElement) element;
-            return new LineElement(lineElement.firstPointX,
-                                   lineElement.firstPointY,
-                                   lineElement.secondPointX,
-                                   lineElement.secondPointY,
-                                   lineElement.width,
-                                   color);
-        }
-        else if (element instanceof GeneralPath) {
+            return new LineElement(lineElement.firstPointX, lineElement.firstPointY, lineElement.secondPointX,
+                    lineElement.secondPointY, lineElement.width, color);
+        } else if (element instanceof GeneralPath) {
             return ((GeneralPath) element).recolor(color);
         }
         throw new IllegalArgumentException("Cannot highlight rendering element, " + element.getClass());
@@ -525,22 +480,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 newGroup.add(outerGlow(child, color, glowWidth, stroke));
             }
             return newGroup;
-        }
-        else if (element instanceof LineElement) {
+        } else if (element instanceof LineElement) {
             LineElement lineElement = (LineElement) element;
-            return new LineElement(lineElement.firstPointX,
-                                   lineElement.firstPointY,
-                                   lineElement.secondPointX,
-                                   lineElement.secondPointY,
-                                   stroke + (2 * (glowWidth * stroke)),
-                                   color);
-        }
-        else if (element instanceof GeneralPath) {
+            return new LineElement(lineElement.firstPointX, lineElement.firstPointY, lineElement.secondPointX,
+                    lineElement.secondPointY, stroke + (2 * (glowWidth * stroke)), color);
+        } else if (element instanceof GeneralPath) {
             GeneralPath org = (GeneralPath) element;
             if (org.fill) {
                 return org.outline(2 * (glowWidth * stroke)).recolor(color);
-            }
-            else {
+            } else {
                 return org.outline(stroke + (2 * (glowWidth * stroke))).recolor(color);
             }
         }
@@ -570,22 +518,17 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
 
         if (vectors.size() == 0) {
             // no bonds, place below
-            if (auxVectors.size() == 0)
-                return new Vector2d(0, -1);
-            if (auxVectors.size() == 1)
-                return VecmathUtil.negate(auxVectors.get(0));
+            if (auxVectors.size() == 0) return new Vector2d(0, -1);
+            if (auxVectors.size() == 1) return VecmathUtil.negate(auxVectors.get(0));
             return VecmathUtil.newVectorInLargestGap(auxVectors);
-        }
-        else if (vectors.size() == 1) {
+        } else if (vectors.size() == 1) {
             // 1 bond connected
             // H0, then label simply appears on the opposite side
-            if (auxVectors.size() == 0)
-                return VecmathUtil.negate(vectors.get(0));
+            if (auxVectors.size() == 0) return VecmathUtil.negate(vectors.get(0));
             // !H0, then place it in the largest gap
             vectors.addAll(auxVectors);
             return VecmathUtil.newVectorInLargestGap(vectors);
-        }
-        else if (vectors.size() == 2 && auxVectors.size() == 0) {
+        } else if (vectors.size() == 2 && auxVectors.size() == 0) {
             // 2 bonds connected to an atom with no hydrogen labels
 
             // sum the vectors such that the label appears in the acute/nook of the two bonds
@@ -600,18 +543,15 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             // However - when both bonds are wedged (consider a bridging system) to
             // keep the label in the nook of the wedges
             else if ((!isPlainBond(bonds.get(0)) || !isPlainBond(bonds.get(1)))
-                    && !(isWedged(bonds.get(0)) && isWedged(bonds.get(1))))
-                combined.negate();
+                    && !(isWedged(bonds.get(0)) && isWedged(bonds.get(1)))) combined.negate();
 
             combined.normalize();
 
             // did we divide by 0? whoops - this happens when the bonds are collinear
-            if (Double.isNaN(combined.length()))
-                return VecmathUtil.newVectorInLargestGap(vectors);
+            if (Double.isNaN(combined.length())) return VecmathUtil.newVectorInLargestGap(vectors);
 
             return combined;
-        }
-        else {
+        } else {
             if (vectors.size() == 3 && auxVectors.size() == 0) {
                 // 3 bonds connected to an atom with no hydrogen label
 
@@ -623,10 +563,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
                 List<Vector2d> wedgeVectors = new ArrayList<Vector2d>();
 
                 for (IBond bond : bonds) {
-                    if (isPlainBond(bond))
-                        plainVectors.add(VecmathUtil.newUnitVector(atom, bond));
-                    if (isWedged(bond))
-                        wedgeVectors.add(VecmathUtil.newUnitVector(atom, bond));
+                    if (isPlainBond(bond)) plainVectors.add(VecmathUtil.newUnitVector(atom, bond));
+                    if (isWedged(bond)) wedgeVectors.add(VecmathUtil.newUnitVector(atom, bond));
                 }
 
                 if (plainVectors.size() == 2) {
@@ -638,8 +576,7 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
             }
 
             // the default option is to find the largest gap
-            if (auxVectors.size() > 0)
-                vectors.addAll(auxVectors);
+            if (auxVectors.size() > 0) vectors.addAll(auxVectors);
             return VecmathUtil.newVectorInLargestGap(vectors);
         }
     }
@@ -662,10 +599,8 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * @return the bond is wedge (bold or hashed)
      */
     static boolean isWedged(IBond bond) {
-        return (bond.getStereo() == IBond.Stereo.UP
-                || bond.getStereo() == IBond.Stereo.DOWN
-                || bond.getStereo() == IBond.Stereo.UP_INVERTED
-                || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
+        return (bond.getStereo() == IBond.Stereo.UP || bond.getStereo() == IBond.Stereo.DOWN
+                || bond.getStereo() == IBond.Stereo.UP_INVERTED || bond.getStereo() == IBond.Stereo.DOWN_INVERTED);
     }
 
     /**
@@ -731,10 +666,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * color. The default option is uniform black coloring as recommended by IUPAC.
      */
     public static final class AtomColor extends AbstractGeneratorParameter<IAtomColorer> {
+
         /**
          * @inheritDoc
          */
-        @Override public IAtomColorer getDefault() {
+        @Override
+        public IAtomColorer getDefault() {
             // off black
             return new UniColor(new Color(0x444444));
         }
@@ -746,10 +683,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * SelectionVisibility#disconnected(SymbolVisibility)}.
      */
     public static final class Visibility extends AbstractGeneratorParameter<SymbolVisibility> {
+
         /**
          * @inheritDoc
          */
-        @Override public SymbolVisibility getDefault() {
+        @Override
+        public SymbolVisibility getDefault() {
             return SelectionVisibility.disconnected(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon());
         }
     }
@@ -759,10 +698,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * symbols. Default = 1.
      */
     public static final class StrokeRatio extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 1d;
         }
     }
@@ -772,10 +713,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18).
      */
     public static final class BondSeparation extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 0.18;
         }
     }
@@ -785,10 +728,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Default = 2.
      */
     public static final class SymbolMarginRatio extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 2d;
         }
     }
@@ -797,10 +742,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Ratio of the wide end of wedge compared to the narrow end (stroke width). Default = 8.
      */
     public static final class WedgeRatio extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 6d;
         }
     }
@@ -810,10 +757,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * is then {@link BasicSceneGenerator.BondLength} / spacing. The default value is 5.
      */
     public static final class HashSpacing extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 5d;
         }
     }
@@ -822,10 +771,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * The spacing of waves (semi circles) drawn in wavy bonds with. Default = 5.
      */
     public static final class WaveSpacing extends AbstractGeneratorParameter<Double> {
+
         /**
          * @inheritDoc
          */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 5d;
         }
     }
@@ -834,10 +785,12 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * The number of sections to render in a dashed 'unknown' bond, default = 4;
      */
     public static final class DashSection extends AbstractGeneratorParameter<Integer> {
+
         /**
          * @inheritDoc
          */
-        @Override public Integer getDefault() {
+        @Override
+        public Integer getDefault() {
             return 8;
         }
     }
@@ -846,8 +799,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Modify bold wedges to be flush with adjacent bonds, default = true.
      */
     public static final class FancyBoldWedges extends AbstractGeneratorParameter<Boolean> {
+
         /** @inheritDoc */
-        @Override public Boolean getDefault() {
+        @Override
+        public Boolean getDefault() {
             return true;
         }
     }
@@ -856,12 +811,13 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Modify hashed wedges to be flush when there is a single adjacent bond, default = true.
      */
     public static final class FancyHashedWedges extends AbstractGeneratorParameter<Boolean> {
+
         /** @inheritDoc */
-        @Override public Boolean getDefault() {
+        @Override
+        public Boolean getDefault() {
             return true;
         }
     }
-
 
     /**
      * The width of outer glow as a percentage of stroke width. The default value is 200% (2.0d).
@@ -869,20 +825,23 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * on each side.
      */
     public static final class OuterGlowWidth extends AbstractGeneratorParameter<Double> {
+
         /** @inheritDoc */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 2d;
         }
     }
-
 
     /**
      * Parameter defines the style of highlight used to emphasis atoms and bonds. The default option
      * is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
      */
     public static final class Highlighting extends AbstractGeneratorParameter<HighlightStyle> {
+
         /** @inheritDoc */
-        @Override public HighlightStyle getDefault() {
+        @Override
+        public HighlightStyle getDefault() {
             return HighlightStyle.Colored;
         }
     }
@@ -892,8 +851,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * {@link AtomColor} is used. The default color is red to distinguish from normal atom symbols.
      */
     public static final class AnnotationColor extends AbstractGeneratorParameter<Color> {
+
         /** @inheritDoc */
-        @Override public Color getDefault() {
+        @Override
+        public Color getDefault() {
             return Color.RED;
         }
     }
@@ -903,8 +864,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * value is 0.25 (25%)
      */
     public static final class AnnotationDistance extends AbstractGeneratorParameter<Double> {
+
         /** @inheritDoc */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 0.25;
         }
     }
@@ -913,8 +876,10 @@ public final class StandardGenerator implements IGenerator<IAtomContainer> {
      * Annotation font size relative to element symbols, default = 0.4 (40%).
      */
     public static final class AnnotationFontScale extends AbstractGeneratorParameter<Double> {
+
         /** @inheritDoc */
-        @Override public Double getDefault() {
+        @Override
+        public Double getDefault() {
             return 0.5;
         }
     }

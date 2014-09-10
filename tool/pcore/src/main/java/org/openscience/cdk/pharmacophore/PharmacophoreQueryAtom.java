@@ -42,6 +42,7 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryAtomTest")
 public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
+
     private String smarts;
 
     /**

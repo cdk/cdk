@@ -52,44 +52,53 @@ public abstract class SubstructureTest {
     abstract Pattern create(IAtomContainer container);
 
     // ensure edges can be absent in the target
-    @Test public void monomorphism1() throws Exception {
+    @Test
+    public void monomorphism1() throws Exception {
         assertMatch(smi("CCC"), smi("C1CC1"), 6);
     }
 
-    @Test public void monomorphism2() throws Exception {
+    @Test
+    public void monomorphism2() throws Exception {
         assertMatch(smi("C1CCCCCCCCC1"), smi("C1CCC2CCCCC2C1"), 20);
     }
 
-    @Test public void cyclopropane() throws Exception {
+    @Test
+    public void cyclopropane() throws Exception {
         assertMismatch(smi("C1CC1"), smi("CC(C)C"));
     }
 
-    @Test public void symmetric() throws Exception {
+    @Test
+    public void symmetric() throws Exception {
         assertMatch(sma("C**C"), smi("CSSC"));
         assertMismatch(sma("C**C"), smi("SCCS"));
     }
 
-    @Test public void disconnectedQuery() throws Exception {
+    @Test
+    public void disconnectedQuery() throws Exception {
         assertMatch(smi("C.C"), smi("CC"), 2);
     }
 
-    @Test public void disconnectedTarget() throws Exception {
+    @Test
+    public void disconnectedTarget() throws Exception {
         assertMatch(smi("C1CC1"), smi("C1CC1.C1CC1"), 12);
     }
 
-    @Test public void disconnected() throws Exception {
+    @Test
+    public void disconnected() throws Exception {
         assertMatch(smi("C1CC1.C1CC1"), smi("C1CC1.C1CC1"), 72);
     }
 
     // original VF algorithm can't find both of these
-    @Test public void disconnected2() throws Exception {
+    @Test
+    public void disconnected2() throws Exception {
         assertMatch(smi("O.O"), smi("OO"), 2);
         assertMatch(smi("O.O"), smi("OCO"), 2);
         assertMatch(smi("O.O"), smi("OCCO"), 2);
         assertMatch(smi("O.O"), smi("OCCCO"), 2);
     }
 
-    @Test public void tetrahedral_match() throws Exception {
+    @Test
+    public void tetrahedral_match() throws Exception {
         assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(N)(O)CC"));
         assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(O)(CC)N"));
         assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@](C)(CC)(N)(O)"));
@@ -123,7 +132,8 @@ public abstract class SubstructureTest {
         assertMatch(smi("[C@](C)(N)(O)CC"), smi("[C@@](CC)(N)(O)C"));
     }
 
-    @Test public void tetrahedral_mismatch() throws Exception {
+    @Test
+    public void tetrahedral_mismatch() throws Exception {
         assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(N)(O)CC"));
         assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(O)(CC)N"));
         assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@](C)(CC)(N)(O)"));
@@ -157,19 +167,22 @@ public abstract class SubstructureTest {
         assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("[C@@](CC)(N)(O)C"));
     }
 
-    @Test public void tetrahedral_match_implicit_h() throws Exception {
+    @Test
+    public void tetrahedral_match_implicit_h() throws Exception {
         assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@H](C)(N)(O)"));
         assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@]([H])(C)(N)(O)"));
         assertMatch(smi("[C@H](C)(N)(O)"), smi("[C@@](C)([H])(N)(O)"));
     }
 
-    @Test public void tetrahedral_mismatch_implicit_h() throws Exception {
+    @Test
+    public void tetrahedral_mismatch_implicit_h() throws Exception {
         assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@@H](C)(N)(O)"));
         assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@@]([H])(C)(N)(O)"));
         assertMismatch(smi("[C@H](C)(N)(O)"), smi("[C@](C)([H])(N)(O)"));
     }
 
-    @Test public void tetrahedral_match_sulfoxide() throws Exception {
+    @Test
+    public void tetrahedral_match_sulfoxide() throws Exception {
         assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](=O)(C)CC"));
         assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](C)(CC)(=O)"));
         assertMatch(smi("[S@](=O)(C)CC"), smi("[S@](CC)(=O)C"));
@@ -178,7 +191,8 @@ public abstract class SubstructureTest {
         assertMatch(smi("[S@](=O)(C)CC"), smi("[S@@](CC)(C)=O"));
     }
 
-    @Test public void tetrahedral_mismatch_sulfoxide() throws Exception {
+    @Test
+    public void tetrahedral_mismatch_sulfoxide() throws Exception {
         assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](=O)(C)CC"));
         assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](C)(CC)(=O)"));
         assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@](CC)(=O)C"));
@@ -187,15 +201,18 @@ public abstract class SubstructureTest {
         assertMismatch(smi("[S@@](=O)(C)CC"), smi("[S@@](CC)(C)=O"));
     }
 
-    @Test public void tetrahedral_missing_in_query() throws Exception {
+    @Test
+    public void tetrahedral_missing_in_query() throws Exception {
         assertMatch(smi("C(C)(N)(O)CC"), smi("[C@@](C)(N)(O)CC"));
     }
 
-    @Test public void tetrahedral_missing_in_target() throws Exception {
+    @Test
+    public void tetrahedral_missing_in_target() throws Exception {
         assertMismatch(smi("[C@@](C)(N)(O)CC"), smi("C(C)(N)(O)CC"));
     }
 
-    @Test public void tetrahedral_count() throws Exception {
+    @Test
+    public void tetrahedral_count() throws Exception {
         // we can map any witch way 4 neighbours but 2 configuration so (4!/2) = 12
         assertMatch(smi("[C@](C)(C)(C)C"), smi("[C@](C)(CC)(CCC)CCCC"), 12);
         assertMatch(smi("[C@@](C)(C)(C)C"), smi("[C@](C)(CC)(CCC)CCCC"), 12);
@@ -203,7 +220,8 @@ public abstract class SubstructureTest {
         assertMatch(smi("[C@@](C)(C)(C)C"), smi("[C@@](C)(CC)(CCC)CCCC"), 12);
     }
 
-    @Test public void geometric_trans_match() throws Exception {
+    @Test
+    public void geometric_trans_match() throws Exception {
         assertMatch(smi("F/C=C/F"), smi("F/C=C/F"));
         assertMatch(smi("F/C=C/F"), smi("F\\C=C\\F"));
         // shouldn't mater which substituents are used
@@ -217,7 +235,8 @@ public abstract class SubstructureTest {
         assertMatch(smi("F/C=C/F"), smi("C(/F)=C\\F"));
     }
 
-    @Test public void geometric_cis_match() throws Exception {
+    @Test
+    public void geometric_cis_match() throws Exception {
         assertMatch(smi("F/C=C\\F"), smi("F/C=C\\F"));
         assertMatch(smi("F/C=C\\F"), smi("F\\C=C/F"));
         assertMatch(smi("F\\C=C/F"), smi("F/C=C\\F"));
@@ -233,137 +252,135 @@ public abstract class SubstructureTest {
         assertMatch(smi("F/C=C\\F"), smi("C(/F)=C/F"));
     }
 
-    @Test public void geometric_trans_mismatch() throws Exception {
+    @Test
+    public void geometric_trans_mismatch() throws Exception {
         assertMismatch(smi("F/C=C/F"), smi("F/C=C\\F"));
         assertMismatch(smi("F/C=C/F"), smi("F\\C=C/F"));
         assertMismatch(smi("F\\C=C\\F"), smi("F/C=C\\F"));
         assertMismatch(smi("F\\C=C\\F"), smi("F\\C=C/F"));
     }
 
-    @Test public void geometric_cis_mismatch() throws Exception {
+    @Test
+    public void geometric_cis_mismatch() throws Exception {
         assertMismatch(smi("F/C=C\\F"), smi("F/C=C/F"));
         assertMismatch(smi("F/C=C\\F"), smi("F\\C=C\\F"));
         assertMismatch(smi("F\\C=C/F"), smi("F/C=C/F"));
         assertMismatch(smi("F\\C=C/F"), smi("F\\C=C\\F"));
     }
 
-    @Test public void geometric_missing_in_query() throws Exception {
+    @Test
+    public void geometric_missing_in_query() throws Exception {
         assertMatch(smi("FC=CF"), smi("F/C=C/F"));
         assertMatch(smi("FC=CF"), smi("F\\C=C\\F"));
         assertMatch(smi("FC=CF"), smi("F\\C=C/F"));
         assertMatch(smi("FC=CF"), smi("F/C=C\\F"));
     }
 
-    @Test public void geometric_missing_in_target() throws Exception {
+    @Test
+    public void geometric_missing_in_target() throws Exception {
         assertMismatch(smi("F/C=C/F"), smi("FC=CF"));
         assertMismatch(smi("F/C=C\\F"), smi("FC=CF"));
         assertMismatch(smi("F\\C=C/F"), smi("FC=CF"));
         assertMismatch(smi("F\\C=C\\F"), smi("FC=CF"));
     }
 
-    @Test public void geometric_count() throws Exception {
+    @Test
+    public void geometric_count() throws Exception {
         assertMatch(smi("C/C=C/C"), smi("CC(/CC)=C(/CC)C"), 4);
         assertMatch(smi("C/C=C\\C"), smi("CC(/CC)=C(/CC)C"), 4);
         assertMatch(smi("C\\C=C\\C"), smi("CC(/CC)=C(/CC)C"), 4);
         assertMatch(smi("C\\C=C/C"), smi("CC(/CC)=C(/CC)C"), 4);
     }
 
-    @Test public void cubane_automorphisms() throws Exception {
-        assertMatch(smi("C12C3C4C1C1C2C3C41"),
-                    smi("C12C3C4C1C1C2C3C41"),
-                    48);
+    @Test
+    public void cubane_automorphisms() throws Exception {
+        assertMatch(smi("C12C3C4C1C1C2C3C41"), smi("C12C3C4C1C1C2C3C41"), 48);
     }
 
-    @Test public void fullerene_c60() throws Exception {
-        assertMatch(smi("C1CCCCC1"),
-                    smi("C12C3C4C5C1C1C6C7C2C2C8C3C3C9C4C4C%10C5C5C1C1C6C6C%11C7C2C2C7C8C3C3C8C9C4C4C9C%10C5C5C1C1C6C6C%11C2C2C7C3C3C8C4C4C9C5C1C1C6C2C3C41"),
-                    240);
+    @Test
+    public void fullerene_c60() throws Exception {
+        assertMatch(
+                smi("C1CCCCC1"),
+                smi("C12C3C4C5C1C1C6C7C2C2C8C3C3C9C4C4C%10C5C5C1C1C6C6C%11C7C2C2C7C8C3C3C8C9C4C4C9C%10C5C5C1C1C6C6C%11C2C2C7C3C3C8C4C4C9C5C1C1C6C2C3C41"),
+                240);
     }
 
-    @Test public void fullerene_c70() throws Exception {
-        assertMatch(smi("C1CCCCC1"),
-                    smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
-                    300);
+    @Test
+    public void fullerene_c70() throws Exception {
+        assertMatch(
+                smi("C1CCCCC1"),
+                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                300);
     }
 
     @Category(SlowTest.class)
-    @Test public void fullerene_c70_automorphisms() throws Exception {
-        assertMatch(smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
-                    smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
-                    20);
+    @Test
+    public void fullerene_c70_automorphisms() throws Exception {
+        assertMatch(
+                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                smi("C12C3C4C5C1C1C6C7C5C5C8C4C4C9C3C3C%10C2C2C1C1C%11C%12C%13C%14C%15C%16C%17C%18C%19C%20C%16C%16C%14C%12C%12C%14C%21C%22C(C%20C%16%14)C%14C%19C%16C(C4C8C(C%18%16)C4C%17C%15C(C7C54)C%13C61)C1C%14C%22C(C3C91)C1C%21C%12C%11C2C%101"),
+                20);
     }
 
-    @Test public void ferrocene_automorphisms_disconnected() throws Exception {
-        assertMatch(smi("[Fe].C1CCCC1.C1CCCC1"),
-                    smi("[Fe].C1CCCC1.C1CCCC1"),
-                    200);
+    @Test
+    public void ferrocene_automorphisms_disconnected() throws Exception {
+        assertMatch(smi("[Fe].C1CCCC1.C1CCCC1"), smi("[Fe].C1CCCC1.C1CCCC1"), 200);
     }
 
-    @Test public void ferrocene_automorphisms() throws Exception {
-        assertMatch(smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
-                    smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
-                    200);
+    @Test
+    public void ferrocene_automorphisms() throws Exception {
+        assertMatch(smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"), smi("[Fe]123456789C%10C1C2C3C4%10.C51C6C7C8C91"),
+                200);
     }
 
-    @Test public void butanoylurea() throws Exception {
-        assertMatch(smi("CCCC(=O)NC(N)=O"),
-                    smi("CCC(Br)(CC)C(=O)NC(=O)NC(C)=O"),
-                    2);
+    @Test
+    public void butanoylurea() throws Exception {
+        assertMatch(smi("CCCC(=O)NC(N)=O"), smi("CCC(Br)(CC)C(=O)NC(=O)NC(C)=O"), 2);
     }
 
-    @Test public void upgradeHydrogen() throws Exception {
-        assertMatch(smi("CC[C@@H](C)O"),
-                    smi("CC[C@](C)([H])O"),
-                    1);
+    @Test
+    public void upgradeHydrogen() throws Exception {
+        assertMatch(smi("CC[C@@H](C)O"), smi("CC[C@](C)([H])O"), 1);
     }
 
-    @Test public void erm() throws Exception {
-        assertMismatch(smi("CC[C@@H](C)O"),
-                      smi("CC[C@](C)(N)O"));
+    @Test
+    public void erm() throws Exception {
+        assertMismatch(smi("CC[C@@H](C)O"), smi("CC[C@](C)(N)O"));
     }
 
     // doesn't matter if the match takes place but it should not cause and error
     // if the query is larger than the target
-    @Test public void largerQuery() throws Exception {
-        assertMismatch(smi("CCCC"),
-                       smi("CC"));
+    @Test
+    public void largerQuery() throws Exception {
+        assertMismatch(smi("CCCC"), smi("CC"));
     }
 
-    @Test public void emptyQuery() throws Exception {
-        assertMismatch(smi(""),
-                       smi("[H][H]"));
+    @Test
+    public void emptyQuery() throws Exception {
+        assertMismatch(smi(""), smi("[H][H]"));
     }
 
-    @Test public void emptyTarget() throws Exception {
-        assertMismatch(smi("[H][H]"),
-                       smi(""));
+    @Test
+    public void emptyTarget() throws Exception {
+        assertMismatch(smi("[H][H]"), smi(""));
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target, int count) {
-        assertThat(query.getProperty(TITLE)
-                           + " should match "
-                           + target.getProperty(TITLE)
-                           + " " + count + " times",
-                   create(query).matchAll(target).stereochemistry().count(),
-                   is(count));
+        assertThat(query.getProperty(TITLE) + " should match " + target.getProperty(TITLE) + " " + count + " times",
+                create(query).matchAll(target).stereochemistry().count(), is(count));
     }
 
     void assertMatch(IAtomContainer query, IAtomContainer target) {
-        assertTrue(query.getProperty(TITLE)
-                           + " should match "
-                           + target.getProperty(TITLE),
-                   create(query).matches(target));
+        assertTrue(query.getProperty(TITLE) + " should match " + target.getProperty(TITLE),
+                create(query).matches(target));
     }
 
     void assertMismatch(IAtomContainer query, IAtomContainer target) {
-        assertFalse(query.getProperty(TITLE)
-                            + " should not matched "
-                            + target.getProperty(TITLE),
-                    create(query).matches(target));
+        assertFalse(query.getProperty(TITLE) + " should not matched " + target.getProperty(TITLE), create(query)
+                .matches(target));
     }
 
-    private static final SmilesParser sp =
-            new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
     // create a container from a smiles string
     IAtomContainer smi(String smi) throws Exception {

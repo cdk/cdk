@@ -48,20 +48,20 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
     @Test
     public void testGetRawFingerprint() throws Exception {
-    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+        SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
-        Map<String,Integer> map = fingerprinter.getRawFingerprint(mol);
+        Map<String, Integer> map = fingerprinter.getRawFingerprint(mol);
         Assert.assertEquals(3, map.size());
         String[] expectedPrints = {"[O]", "[C]", "[N]"};
         for (String print : expectedPrints) {
-        	Assert.assertTrue(map.containsKey(print));
+            Assert.assertTrue(map.containsKey(print));
         }
     }
 
     @Test
     public void testBitFingerprint() throws Exception {
-    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+        SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
         IBitFingerprint bitFP = fingerprinter.getBitFingerprint(mol);
@@ -71,7 +71,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
     @Test
     public void testGetCountFingerprint() throws Exception {
-    	SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
+        SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O(NC)CC");
         ICountFingerprint bitFP = fingerprinter.getCountFingerprint(mol);

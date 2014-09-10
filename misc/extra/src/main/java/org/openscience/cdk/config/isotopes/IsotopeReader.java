@@ -52,12 +52,11 @@ import org.xml.sax.XMLReader;
 @TestClass("org.openscience.cdk.config.isotopes.IsotopeReaderTest")
 public class IsotopeReader {
 
-    private XMLReader parser;
-    private InputStream input;
+    private XMLReader           parser;
+    private InputStream         input;
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IsotopeReader.class);
-    private IChemObjectBuilder builder;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeReader.class);
+    private IChemObjectBuilder  builder;
 
     /**
      * Instantiates a new reader that parses the XML from the given <code>input</code>.
@@ -91,9 +90,8 @@ public class IsotopeReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("gnu.xml.aelfred2.XmlReader").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
+                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -104,9 +102,8 @@ public class IsotopeReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -153,4 +150,3 @@ public class IsotopeReader {
     }
 
 }
-

@@ -49,6 +49,7 @@ import org.openscience.cdk.silent.AtomContainer;
 import org.openscience.cdk.silent.SilentChemObjectBuilder;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
+
 /**
  *  Description of the Class
  *
@@ -59,121 +60,117 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class ModelBuilder3DTest extends CDKTestCase {
 
-	boolean standAlone = false;
-
+    boolean standAlone = false;
 
     /**
-	 *  Sets the standAlone attribute
-	 *
-	 *@param  standAlone  The new standAlone value
-	 */
-	public void setStandAlone(boolean standAlone)
-	{
-		this.standAlone = standAlone;
-	}
+     *  Sets the standAlone attribute
+     *
+     *@param  standAlone  The new standAlone value
+     */
+    public void setStandAlone(boolean standAlone) {
+        this.standAlone = standAlone;
+    }
 
-
-
-	 //  A unit test for JUnit with methylenfluoride\
+    //  A unit test for JUnit with methylenfluoride\
     @Test
     public void testModelBuilder3D_CF() throws Exception {
-		ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
-		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
-		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
-		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
+        Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
+        Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
+        Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
+        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CF");
-		addExplicitHydrogens(mol);
-		//mb3d.setTemplateHandler();
-		mol = mb3d.generate3DCoordinates(mol, false);
-		assertEquals(c_coord, mol.getAtom(0).getPoint3d(), 0.0001);
-		assertEquals(f_coord, mol.getAtom(1).getPoint3d(), 0.0001);
-		assertEquals(h1_coord, mol.getAtom(2).getPoint3d(), 0.0001);
-		assertEquals(h2_coord, mol.getAtom(3).getPoint3d(), 0.0001);
-		assertEquals(h3_coord, mol.getAtom(4).getPoint3d(), 0.0001);
-		checkAverageBondLength(mol);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CF");
+        addExplicitHydrogens(mol);
+        //mb3d.setTemplateHandler();
+        mol = mb3d.generate3DCoordinates(mol, false);
+        assertEquals(c_coord, mol.getAtom(0).getPoint3d(), 0.0001);
+        assertEquals(f_coord, mol.getAtom(1).getPoint3d(), 0.0001);
+        assertEquals(h1_coord, mol.getAtom(2).getPoint3d(), 0.0001);
+        assertEquals(h2_coord, mol.getAtom(3).getPoint3d(), 0.0001);
+        assertEquals(h3_coord, mol.getAtom(4).getPoint3d(), 0.0001);
+        checkAverageBondLength(mol);
     }
 
     @Test
     public void testModelBuilder3D_CccccC() throws Exception {
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		String smile="CccccC";
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles(smile);
-		addExplicitHydrogens(mol);
-		mol = mb3d.generate3DCoordinates(mol, false);
-		for (int i=0;i<mol.getAtomCount();i++){
-			Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-		}
-		checkAverageBondLength(mol);
-		//logger.debug("Layout molecule with SMILE: "+smile);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "CccccC";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        addExplicitHydrogens(mol);
+        mol = mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
+        //logger.debug("Layout molecule with SMILE: "+smile);
     }
 
     @Test
     public void testModelBuilder3D_c1ccccc1C0() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String smile="c1ccccc1C=O";
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    	IAtomContainer mol = sp.parseSmiles(smile);
-    	addExplicitHydrogens(mol);
-    	mb3d.generate3DCoordinates(mol, false);
-    	for(int i=0;i<mol.getAtomCount();i++){
-    		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(mol);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "c1ccccc1C=O";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        addExplicitHydrogens(mol);
+        mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
     }
 
     @Test
     public void testModelBuilder3D_Konstanz() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		String smile="C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles(smile);
-		addExplicitHydrogens(mol);
-		mol = mb3d.generate3DCoordinates(mol, false);
-    	for(int i=0;i<mol.getAtomCount();i++){
-    		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(mol);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "C12(-[H])-C3(-C(-[H])(-[H])-C(-C4(-C5(-C(-Cl)(-Cl)-C(-C-3-4-[H])(-Cl)-C(-Cl)(-[H])-C-5(-Cl)-[H])-Cl)-[H])(-[H])-C-2(-O-1)-[H])-[H]";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        addExplicitHydrogens(mol);
+        mol = mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
     }
 
     @Test
     public void xtestModelBuilder3D_Konstanz2() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		String smile="c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles(smile);
-		addExplicitHydrogens(mol);
-		mol = mb3d.generate3DCoordinates(mol, false);
-    	for(int i=0;i<mol.getAtomCount();i++){
-    		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(mol);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "c1(:c(:c(:c(-[H]):c(-Cl):c:1-[H])-[H])-[H])-[H]";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        addExplicitHydrogens(mol);
+        mol = mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
     }
 
     @Test
-    public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception{
+    public void testModelBuilder3D_C1CCCCCCC1CC() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String smile="C1CCCCCCC1CC";
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-    	IAtomContainer mol = sp.parseSmiles(smile);
-    	addExplicitHydrogens(mol);
-    	mol = mb3d.generate3DCoordinates(mol, false);
-    	for(int i=0;i<mol.getAtomCount();i++){
-    		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(mol);
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "C1CCCCCCC1CC";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        addExplicitHydrogens(mol);
+        mol = mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
     }
 
     /**
@@ -182,74 +179,73 @@ public class ModelBuilder3DTest extends CDKTestCase {
      * @cdk.bug 1610997
      */
     @Test
-    public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception{
+    public void testModelBuilder3D_CCCCCCCCCC_with2d() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		String smile="CCCCCCCCCC";
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles(smile);
-		for(int i=0;i<mol.getAtomCount();i++){
-			mol.getAtom(i).setPoint2d(new Point2d(1,1));
-		}
-		addExplicitHydrogens(mol);
-		mol = mb3d.generate3DCoordinates(mol, false);
-    	for(int i=0;i<mol.getAtomCount();i++){
-    		Assert.assertNotNull(mol.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(mol);
-	}
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String smile = "CCCCCCCCCC";
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles(smile);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            mol.getAtom(i).setPoint2d(new Point2d(1, 1));
+        }
+        addExplicitHydrogens(mol);
+        mol = mb3d.generate3DCoordinates(mol, false);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertNotNull(mol.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(mol);
+    }
 
     /**
      * @cdk.bug 1315823
      */
     @Test
-    public void testModelBuilder3D_232() throws Exception{
+    public void testModelBuilder3D_232() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String filename = "data/mdl/allmol232.mol";
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String filename = "data/mdl/allmol232.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
-    	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IAtomContainer ac = new AtomContainer(containersList.get(0));
-    	addExplicitHydrogens(ac);
-    	ac = mb3d.generate3DCoordinates(ac, false);
-    	Assert.assertNotNull(ac.getAtom(0).getPoint3d());
-    	checkAverageBondLength(ac);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        addExplicitHydrogens(ac);
+        ac = mb3d.generate3DCoordinates(ac, false);
+        Assert.assertNotNull(ac.getAtom(0).getPoint3d());
+        checkAverageBondLength(ac);
     }
 
-    public static void checkAverageBondLength(IAtomContainer ac){
-    	double avlength= GeometryUtil.getBondLengthAverage3D(ac);
-    	for(int i=0;i<ac.getBondCount();i++){
-    		double distance=ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
-    		Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i,
-    			distance >= avlength/2 && distance <= avlength*2);
-    	}
+    public static void checkAverageBondLength(IAtomContainer ac) {
+        double avlength = GeometryUtil.getBondLengthAverage3D(ac);
+        for (int i = 0; i < ac.getBondCount(); i++) {
+            double distance = ac.getBond(i).getAtom(0).getPoint3d().distance(ac.getBond(i).getAtom(1).getPoint3d());
+            Assert.assertTrue("Unreasonable bond length (" + distance + ") for bond " + i, distance >= avlength / 2
+                    && distance <= avlength * 2);
+        }
     }
 
     @Test
-    public void testModelBuilder3D_231() throws Exception{
+    public void testModelBuilder3D_231() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String filename = "data/mdl/allmol231.mol";
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String filename = "data/mdl/allmol231.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
-    	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IAtomContainer ac= new AtomContainer(containersList.get(0));
-    	addExplicitHydrogens(ac);
-    	ac = mb3d.generate3DCoordinates(ac, false);
-    	for(int i=0;i<ac.getAtomCount();i++){
-    		Assert.assertNotNull(ac.getAtom(i).getPoint3d());
-    	}
-    	checkAverageBondLength(ac);
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        addExplicitHydrogens(ac);
+        ac = mb3d.generate3DCoordinates(ac, false);
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(ac);
     }
-
 
     /**
      * Test for SF bug #1309731.
@@ -257,149 +253,149 @@ public class ModelBuilder3DTest extends CDKTestCase {
      */
     @Test
     public void testModelBuilder3D_keepChemObjectIDs() throws Exception {
-    	ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
 
-    	IAtomContainer methanol = new AtomContainer();
-    	IChemObjectBuilder builder = methanol.getBuilder();
+        IAtomContainer methanol = new AtomContainer();
+        IChemObjectBuilder builder = methanol.getBuilder();
 
-    	IAtom carbon1 = builder.newInstance(IAtom.class,"C");
-    	carbon1.setID("carbon1");
-    	methanol.addAtom(carbon1);
-    	for (int i=0; i<3; i++) {
-    		IAtom hydrogen = builder.newInstance(IAtom.class,"H");
-    		methanol.addAtom(hydrogen);
-    		methanol.addBond(builder.newInstance(IBond.class,carbon1, hydrogen, IBond.Order.SINGLE));
-    	}
-    	IAtom oxygen1 = builder.newInstance(IAtom.class,"O");
-    	oxygen1.setID("oxygen1");
-    	methanol.addAtom(oxygen1);
-    	methanol.addBond(builder.newInstance(IBond.class,carbon1, oxygen1, IBond.Order.SINGLE));
-    	IAtom hydrogen = builder.newInstance(IAtom.class,"H");
-    	methanol.addAtom(hydrogen);
-    	methanol.addBond(builder.newInstance(IBond.class,hydrogen, oxygen1, IBond.Order.SINGLE));
+        IAtom carbon1 = builder.newInstance(IAtom.class, "C");
+        carbon1.setID("carbon1");
+        methanol.addAtom(carbon1);
+        for (int i = 0; i < 3; i++) {
+            IAtom hydrogen = builder.newInstance(IAtom.class, "H");
+            methanol.addAtom(hydrogen);
+            methanol.addBond(builder.newInstance(IBond.class, carbon1, hydrogen, IBond.Order.SINGLE));
+        }
+        IAtom oxygen1 = builder.newInstance(IAtom.class, "O");
+        oxygen1.setID("oxygen1");
+        methanol.addAtom(oxygen1);
+        methanol.addBond(builder.newInstance(IBond.class, carbon1, oxygen1, IBond.Order.SINGLE));
+        IAtom hydrogen = builder.newInstance(IAtom.class, "H");
+        methanol.addAtom(hydrogen);
+        methanol.addBond(builder.newInstance(IBond.class, hydrogen, oxygen1, IBond.Order.SINGLE));
 
-    	Assert.assertEquals(6, methanol.getAtomCount());
-    	Assert.assertEquals(5, methanol.getBondCount());
+        Assert.assertEquals(6, methanol.getAtomCount());
+        Assert.assertEquals(5, methanol.getBondCount());
 
-    	mb3d.generate3DCoordinates(methanol, false);
+        mb3d.generate3DCoordinates(methanol, false);
 
-    	checkAverageBondLength(methanol);
-    	Assert.assertEquals("carbon1", carbon1.getID());
-    	Assert.assertEquals("oxygen1", oxygen1.getID());
+        checkAverageBondLength(methanol);
+        Assert.assertEquals("carbon1", carbon1.getID());
+        Assert.assertEquals("oxygen1", oxygen1.getID());
     }
 
     /*
-	 * this is a test contributed by mario baseda / see bug #1610997
-	 *  @cdk.bug 1610997
-	 */
+     * this is a test contributed by mario baseda / see bug #1610997
+     * @cdk.bug 1610997
+     */
     @Test
-    public void testModel3D_bug_1610997() throws Exception{
+    public void testModel3D_bug_1610997() throws Exception {
         Assume.assumeTrue(runSlowTests());
 
-		boolean notCalculatedResults = false;
-		List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
+        boolean notCalculatedResults = false;
+        List<IAtomContainer> inputList = new ArrayList<IAtomContainer>();
 
-		////////////////////////////////////////////////////////////////////////////////////////////
-		//generate the input molecules. This are molecules without x, y, z coordinats
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        //generate the input molecules. This are molecules without x, y, z coordinats
 
-		String[] smiles = new String[] {"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C","OCC=CCc1ccccc1(C=C)", "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
-		SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-		IAtomContainer[] atomContainer = new IAtomContainer[smiles.length];
-		for (int i = 0; i < smiles.length; i++) {
-			atomContainer[i] = sp.parseSmiles(smiles[i]);
+        String[] smiles = new String[]{"CC", "OCC", "O(C)CCC", "c1ccccc1", "C(=C)=C", "OCC=CCc1ccccc1(C=C)",
+                "O(CC=C)CCN", "CCCCCCCCCCCCCCC", "OCC=CCO", "NCCCCN"};
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IAtomContainer[] atomContainer = new IAtomContainer[smiles.length];
+        for (int i = 0; i < smiles.length; i++) {
+            atomContainer[i] = sp.parseSmiles(smiles[i]);
 
-			inputList.add(atomContainer[i]);
-		}
-		///////////////////////////////////////////////////////////////////////////////////////////
-		// Generate 2D coordinates for the input molecules with the Structure Diagram Generator
+            inputList.add(atomContainer[i]);
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        // Generate 2D coordinates for the input molecules with the Structure Diagram Generator
 
-		StructureDiagramGenerator str;
-		List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
-		for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = iter.next();
-			str = new StructureDiagramGenerator();
-			str.setMolecule((IAtomContainer)molecules);
-			str.generateCoordinates();
-			resultList.add(str.getMolecule());
-		}
-		inputList = resultList;
+        StructureDiagramGenerator str;
+        List<IAtomContainer> resultList = new ArrayList<IAtomContainer>();
+        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
+            IAtomContainer molecules = iter.next();
+            str = new StructureDiagramGenerator();
+            str.setMolecule((IAtomContainer) molecules);
+            str.generateCoordinates();
+            resultList.add(str.getMolecule());
+        }
+        inputList = resultList;
 
-		/////////////////////////////////////////////////////////////////////////////////////////////
-		// Delete x and y coordinates
+        /////////////////////////////////////////////////////////////////////////////////////////////
+        // Delete x and y coordinates
 
-		for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
-			IAtomContainer molecules = iter.next();
-			for (Iterator<IAtom> atom = molecules.atoms().iterator(); atom.hasNext();){
-				IAtom last = atom.next();
-				last.setPoint2d(null);
-			}
-		}
+        for (Iterator<IAtomContainer> iter = inputList.iterator(); iter.hasNext();) {
+            IAtomContainer molecules = iter.next();
+            for (Iterator<IAtom> atom = molecules.atoms().iterator(); atom.hasNext();) {
+                IAtom last = atom.next();
+                last.setPoint2d(null);
+            }
+        }
 
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		// Test for the method Model3DBuildersWithMM2ForceField
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Test for the method Model3DBuildersWithMM2ForceField
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-		ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-		for (int i = 0; i < inputList.size(); i++) {
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        for (int i = 0; i < inputList.size(); i++) {
             // shallow copy
-			IAtomContainer mol = builder.newInstance(IAtomContainer.class, inputList.get(i));
+            IAtomContainer mol = builder.newInstance(IAtomContainer.class, inputList.get(i));
             try {
-			    mol = mb3d.generate3DCoordinates(mol, false);
+                mol = mb3d.generate3DCoordinates(mol, false);
                 for (IAtom a : mol.atoms())
-                    Assert.assertNotNull(smiles[0] + " has unplaced atom",
-                                         a.getPoint3d());
+                    Assert.assertNotNull(smiles[0] + " has unplaced atom", a.getPoint3d());
                 checkAverageBondLength(mol);
             } catch (Exception e) {
                 StringWriter stackTrace = new StringWriter();
                 e.printStackTrace(new PrintWriter(stackTrace));
-                Assert.fail("3D coordinated could not be generator for " + smiles[i]  + ": " + stackTrace);
+                Assert.fail("3D coordinated could not be generator for " + smiles[i] + ": " + stackTrace);
             }
-		}
-	}
+        }
+    }
 
     /*
-	 *  @cdk.bug 1241421
-	 */
+     * @cdk.bug 1241421
+     */
     @Test
-    public void testModelBuilder3D_bug_1241421() throws Exception{
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String filename = "data/mdl/bug1241421.mol";
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    public void testModelBuilder3D_bug_1241421() throws Exception {
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String filename = "data/mdl/bug1241421.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
-    	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IAtomContainer ac= new AtomContainer(containersList.get(0));
-    	ac = mb3d.generate3DCoordinates(ac, false);
-    	checkAverageBondLength(ac);
-	}
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        ac = mb3d.generate3DCoordinates(ac, false);
+        checkAverageBondLength(ac);
+    }
 
     @Test
-    public void testModelBuilder3D_reserpine() throws Exception{
-    	ModelBuilder3D mb3d=ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
-    	String filename = "data/mdl/reserpine.mol";
-    	InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-    	MDLV2000Reader reader = new MDLV2000Reader(ins);
-    	ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+    public void testModelBuilder3D_reserpine() throws Exception {
+        ModelBuilder3D mb3d = ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance());
+        String filename = "data/mdl/reserpine.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
-    	List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
-    	IAtomContainer ac= new AtomContainer(containersList.get(0));
-    	ac = mb3d.generate3DCoordinates(ac, false);
-		for (int i=0;i<ac.getAtomCount();i++){
-			Assert.assertNotNull(ac.getAtom(i).getPoint3d());
-		}
-		checkAverageBondLength(ac);
-	}
+        List<IAtomContainer> containersList = ChemFileManipulator.getAllAtomContainers(chemFile);
+        IAtomContainer ac = new AtomContainer(containersList.get(0));
+        ac = mb3d.generate3DCoordinates(ac, false);
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+        }
+        checkAverageBondLength(ac);
+    }
 
     @Test
-    public void testAlkanes() throws CDKException, IOException,
-                                     CloneNotSupportedException {
+    public void testAlkanes() throws CDKException, IOException, CloneNotSupportedException {
         String smiles1 = "CCCCCCCCCCCCCCCCCC";
         String smiles2 = "CCCCCC(CCCC)CCCC";
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer nonBranchedAlkane = parser.parseSmiles(smiles1);
-        IAtomContainer branchedAlkane    = parser.parseSmiles(smiles2);
-        ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance()).generate3DCoordinates(nonBranchedAlkane, false);
+        IAtomContainer branchedAlkane = parser.parseSmiles(smiles2);
+        ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance()).generate3DCoordinates(nonBranchedAlkane,
+                false);
         ModelBuilder3D.getInstance(DefaultChemObjectBuilder.getInstance()).generate3DCoordinates(branchedAlkane, false);
     }
 

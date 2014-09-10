@@ -30,10 +30,7 @@ import org.openscience.cdk.libio.jena.ConvertorTest;
  *
  * @cdk.module test-iordf
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    CDKOWLReaderTest.class,
-    CDKOWLWriterTest.class,
-    ConvertorTest.class
-})
-public class MiordfTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {CDKOWLReaderTest.class, CDKOWLWriterTest.class, ConvertorTest.class})
+public class MiordfTests {
+}

@@ -45,10 +45,10 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     private BasicSceneGenerator sceneGenerator;
 
     /** Generates elements for each atom in a container */
-    private BasicAtomGenerator atomGenerator;
+    private BasicAtomGenerator  atomGenerator;
 
     /** Generates elements for each bond in a container */
-    private BasicBondGenerator bondGenerator;
+    private BasicBondGenerator  bondGenerator;
 
     /**
      * Make a basic generator that creates elements for atoms and bonds.
@@ -71,10 +71,10 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
-    	ArrayList<IGeneratorParameter<?>> list = new ArrayList<IGeneratorParameter<?>>();
-    	list.addAll(this.atomGenerator.getParameters());
-    	list.addAll(this.bondGenerator.getParameters());
-    	list.addAll(this.sceneGenerator.getParameters());
+        ArrayList<IGeneratorParameter<?>> list = new ArrayList<IGeneratorParameter<?>>();
+        list.addAll(this.atomGenerator.getParameters());
+        list.addAll(this.bondGenerator.getParameters());
+        list.addAll(this.sceneGenerator.getParameters());
         return list;
     }
 

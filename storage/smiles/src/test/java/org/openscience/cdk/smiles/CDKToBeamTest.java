@@ -87,93 +87,87 @@ public class CDKToBeamTest {
     public void unknownSymbol() throws Exception {
         IAtom a = new Atom("ALA");
         a.setImplicitHydrogenCount(0);
-        assertThat(new CDKToBeam().toBeamAtom(a).element(),
-                   is(Element.Unknown));
+        assertThat(new CDKToBeam().toBeamAtom(a).element(), is(Element.Unknown));
     }
 
     @Test
     public void unknownSymbol_Pseudo() throws Exception {
         IAtom a = new PseudoAtom("R1");
         a.setImplicitHydrogenCount(0);
-        assertThat(new CDKToBeam().toBeamAtom(a).element(),
-                   is(Element.Unknown));
+        assertThat(new CDKToBeam().toBeamAtom(a).element(), is(Element.Unknown));
     }
 
     @Test
     public void methane_Atom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(4);
-        assertThat(new CDKToBeam().toBeamAtom(a).element(),
-                   is(Element.Carbon));
-        assertThat(new CDKToBeam().toBeamAtom(a).hydrogens(),
-                   is(4));
+        assertThat(new CDKToBeam().toBeamAtom(a).element(), is(Element.Carbon));
+        assertThat(new CDKToBeam().toBeamAtom(a).hydrogens(), is(4));
     }
 
     @Test
     public void water_Atom() throws Exception {
         IAtom a = new Atom("O");
         a.setImplicitHydrogenCount(2);
-        assertThat(new CDKToBeam().toBeamAtom(a).element(),
-                   is(Element.Oxygen));
-        assertThat(new CDKToBeam().toBeamAtom(a).hydrogens(),
-                   is(2));
+        assertThat(new CDKToBeam().toBeamAtom(a).element(), is(Element.Oxygen));
+        assertThat(new CDKToBeam().toBeamAtom(a).hydrogens(), is(2));
     }
 
-    @Test public void chargedAtom() throws Exception {
+    @Test
+    public void chargedAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         for (int chg = -10; chg < 10; chg++) {
             a.setFormalCharge(chg);
-            assertThat(new CDKToBeam().toBeamAtom(a).charge(),
-                       is(chg));
+            assertThat(new CDKToBeam().toBeamAtom(a).charge(), is(chg));
         }
     }
 
-    @Test public void aliphaticAtom() throws Exception {
+    @Test
+    public void aliphaticAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         assertFalse(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
-    @Test public void aromaticAtom() throws Exception {
+    @Test
+    public void aromaticAtom() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         a.setFlag(CDKConstants.ISAROMATIC, true);
         assertTrue(new CDKToBeam().toBeamAtom(a).aromatic());
     }
 
-    @Test public void unspecifiedIsotope() throws Exception {
+    @Test
+    public void unspecifiedIsotope() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
-        assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
-                   is(-1));
+        assertThat(new CDKToBeam().toBeamAtom(a).isotope(), is(-1));
     }
 
-    @Test public void specifiedIsotope() throws Exception {
+    @Test
+    public void specifiedIsotope() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         a.setMassNumber(13);
-        assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
-                   is(13));
+        assertThat(new CDKToBeam().toBeamAtom(a).isotope(), is(13));
     }
 
-    @Test public void defaultIsotope() throws Exception {
+    @Test
+    public void defaultIsotope() throws Exception {
         IAtom a = new Atom("C");
         a.setImplicitHydrogenCount(0);
         a.setMassNumber(12);
-        assertThat(new CDKToBeam().toBeamAtom(a).isotope(),
-                   is(-1));
+        assertThat(new CDKToBeam().toBeamAtom(a).isotope(), is(-1));
     }
 
     // special check that a CDK pseudo atom will default to 0 hydrogens if
     // the hydrogens are set to null
-    @Test public void pseudoAtom_nullH() throws Exception {
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("R")).hydrogens(),
-                   is(0));
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("*")).hydrogens(),
-                   is(0));
-        assertThat(new CDKToBeam().toBeamAtom(new Atom("R1")).hydrogens(),
-                   is(0));
+    @Test
+    public void pseudoAtom_nullH() throws Exception {
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("R")).hydrogens(), is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("*")).hydrogens(), is(0));
+        assertThat(new CDKToBeam().toBeamAtom(new Atom("R1")).hydrogens(), is(0));
     }
 
     @SuppressWarnings("unchecked")
@@ -182,7 +176,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.UNSET);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         new CDKToBeam().toBeamEdge(b, mock);
@@ -194,7 +188,7 @@ public class CDKToBeamTest {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, null);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         new CDKToBeam().toBeamEdge(b, mock);
@@ -210,118 +204,115 @@ public class CDKToBeamTest {
     @SuppressWarnings("unchecked")
     @Test(expected = IllegalArgumentException.class)
     public void tooManyAtoms() throws Exception {
-        IBond b = new Bond(new IAtom[]{mock(IAtom.class),
-                                       mock(IAtom.class),
-                                       mock(IAtom.class)});
+        IBond b = new Bond(new IAtom[]{mock(IAtom.class), mock(IAtom.class), mock(IAtom.class)});
         new CDKToBeam().toBeamEdge(b, mock(Map.class));
     }
 
     @SuppressWarnings("unchecked")
-    @Test public void singleBond() throws Exception {
+    @Test
+    public void singleBond() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
-        assertThat(c2g.toBeamEdge(b, mock),
-                   is(uk.ac.ebi.beam.Bond.SINGLE.edge(0, 1)));
+        assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.SINGLE.edge(0, 1)));
     }
 
     @SuppressWarnings("unchecked")
-    @Test public void aromaticBond() throws Exception {
+    @Test
+    public void aromaticBond() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v);
         b.setFlag(CDKConstants.ISAROMATIC, true);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
-        assertThat(c2g.toBeamEdge(b, mock),
-                   is(uk.ac.ebi.beam.Bond.AROMATIC.edge(0, 1)));
+        assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.AROMATIC.edge(0, 1)));
     }
 
     @SuppressWarnings("unchecked")
-    @Test public void doubleBond() throws Exception {
+    @Test
+    public void doubleBond() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.DOUBLE);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
-        assertThat(c2g.toBeamEdge(b, mock),
-                   is(uk.ac.ebi.beam.Bond.DOUBLE.edge(0, 1)));
+        assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.DOUBLE.edge(0, 1)));
     }
 
     @SuppressWarnings("unchecked")
-    @Test public void tripleBond() throws Exception {
+    @Test
+    public void tripleBond() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.TRIPLE);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
-        assertThat(c2g.toBeamEdge(b, mock),
-                   is(uk.ac.ebi.beam.Bond.TRIPLE.edge(0, 1)));
+        assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.TRIPLE.edge(0, 1)));
     }
 
     @SuppressWarnings("unchecked")
-    @Test public void quadrupleBond() throws Exception {
+    @Test
+    public void quadrupleBond() throws Exception {
         IAtom u = mock(IAtom.class);
         IAtom v = mock(IAtom.class);
         IBond b = new Bond(u, v, IBond.Order.QUADRUPLE);
-        Map<IAtom,Integer> mock = mock(Map.class);
+        Map<IAtom, Integer> mock = mock(Map.class);
         when(mock.get(u)).thenReturn(0);
         when(mock.get(v)).thenReturn(1);
         CDKToBeam c2g = new CDKToBeam();
-        assertThat(c2g.toBeamEdge(b, mock),
-                   is(uk.ac.ebi.beam.Bond.QUADRUPLE.edge(0, 1)));
+        assertThat(c2g.toBeamEdge(b, mock), is(uk.ac.ebi.beam.Bond.QUADRUPLE.edge(0, 1)));
     }
 
-    @Test public void adeneine() throws Exception {
+    @Test
+    public void adeneine() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeAdenine());
-        assertThat(g.toSmiles(),
-                   is("C12=C(N=CN=C1N)NC=N2"));
+        assertThat(g.toSmiles(), is("C12=C(N=CN=C1N)NC=N2"));
     }
 
-    @Test public void benzene_kekule() throws Exception {
+    @Test
+    public void benzene_kekule() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeBenzene());
-        assertThat(g.toSmiles(),
-                   is("C=1C=CC=CC1"));
+        assertThat(g.toSmiles(), is("C=1C=CC=CC1"));
     }
 
-    @Test public void benzene() throws Exception {
+    @Test
+    public void benzene() throws Exception {
         IAtomContainer ac = TestMoleculeFactory.makeBenzene();
         Graph g = convert(ac, true, true);
-        assertThat(g.toSmiles(),
-                   is("c1ccccc1"));
+        assertThat(g.toSmiles(), is("c1ccccc1"));
     }
 
-    @Test public void imidazole_kekule() throws Exception {
-        Graph g = convert(TestMoleculeFactory
-                                          .makeImidazole(), false, true);
-        assertThat(g.toSmiles(),
-                   is("C=1NC=NC1"));
+    @Test
+    public void imidazole_kekule() throws Exception {
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), false, true);
+        assertThat(g.toSmiles(), is("C=1NC=NC1"));
     }
 
-    @Test public void imidazole() throws Exception {
-        Graph g = convert(TestMoleculeFactory
-                                          .makeImidazole(), true, true);
-        assertThat(g.toSmiles(),
-                   is("c1[nH]cnc1"));
+    @Test
+    public void imidazole() throws Exception {
+        Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true);
+        assertThat(g.toSmiles(), is("c1[nH]cnc1"));
     }
 
-    @Test public void imidazole_ignoreAromatic() throws Exception {
+    @Test
+    public void imidazole_ignoreAromatic() throws Exception {
         Graph g = convert(TestMoleculeFactory.makeImidazole(), true, true, false, true);
-        assertThat(g.toSmiles(),
-                   is("C=1NC=NC1"));
+        assertThat(g.toSmiles(), is("C=1NC=NC1"));
     }
 
-    @Test public void C13_isomeric() throws Exception {
+    @Test
+    public void C13_isomeric() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("C");
         a.setMassNumber(13);
@@ -331,7 +322,8 @@ public class CDKToBeamTest {
         assertThat(g.toSmiles(), is("[13CH4]"));
     }
 
-    @Test public void C13_nonIsomeric() throws Exception {
+    @Test
+    public void C13_nonIsomeric() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("C");
         a.setMassNumber(13);
@@ -341,7 +333,8 @@ public class CDKToBeamTest {
         assertThat(g.toSmiles(), is("C"));
     }
 
-    @Test public void azanium() throws Exception {
+    @Test
+    public void azanium() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("N");
         a.setFormalCharge(+1);
@@ -351,7 +344,8 @@ public class CDKToBeamTest {
         assertThat(g.toSmiles(), is("[NH4+]"));
     }
 
-    @Test public void oxidanide() throws Exception {
+    @Test
+    public void oxidanide() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("O");
         a.setFormalCharge(-1);
@@ -361,7 +355,8 @@ public class CDKToBeamTest {
         assertThat(g.toSmiles(), is("[OH-]"));
     }
 
-    @Test public void oxidandiide() throws Exception {
+    @Test
+    public void oxidandiide() throws Exception {
         IAtomContainer ac = new AtomContainer();
         IAtom a = new Atom("O");
         a.setFormalCharge(-2);
@@ -376,7 +371,8 @@ public class CDKToBeamTest {
      *
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
      */
-    @Test public void e_1_2_difluoroethene() throws Exception {
+    @Test
+    public void e_1_2_difluoroethene() throws Exception {
 
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("F"));
@@ -387,15 +383,10 @@ public class CDKToBeamTest {
         ac.addBond(1, 2, DOUBLE);
         ac.addBond(2, 3, SINGLE);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1),
-                                                          new IBond[]{
-                                                                  ac.getBond(0),
-                                                                  ac.getBond(2)
-                                                          },
-                                                          OPPOSITE));
+        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
+                OPPOSITE));
         Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("F/C=C/F"));
+        assertThat(g.toSmiles(), is("F/C=C/F"));
     }
 
     /**
@@ -403,7 +394,8 @@ public class CDKToBeamTest {
      *
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
      */
-    @Test public void z_1_2_difluoroethene() throws Exception {
+    @Test
+    public void z_1_2_difluoroethene() throws Exception {
 
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("F"));
@@ -414,15 +406,10 @@ public class CDKToBeamTest {
         ac.addBond(1, 2, DOUBLE);
         ac.addBond(2, 3, SINGLE);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1),
-                                                          new IBond[]{
-                                                                  ac.getBond(0),
-                                                                  ac.getBond(2)
-                                                          },
-                                                          TOGETHER));
+        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
+                TOGETHER));
         Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("F/C=C\\F"));
+        assertThat(g.toSmiles(), is("F/C=C\\F"));
     }
 
     /**
@@ -430,7 +417,8 @@ public class CDKToBeamTest {
      *
      * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
      */
-    @Test public void _2R_butan_2_ol() throws Exception {
+    @Test
+    public void _2R_butan_2_ol() throws Exception {
 
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
@@ -445,18 +433,14 @@ public class CDKToBeamTest {
         ac.addBond(2, 4, SINGLE);
         ac.addBond(2, 5, SINGLE);
 
-        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2),
-                                                     new IAtom[]{
-                                                             ac.getAtom(1), // C-C
-                                                             ac.getAtom(3), // C
-                                                             ac.getAtom(4), // O
-                                                             ac.getAtom(5), // H
-                                                     },
-                                                     CLOCKWISE));
+        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2), new IAtom[]{ac.getAtom(1), // C-C
+                ac.getAtom(3), // C
+                ac.getAtom(4), // O
+                ac.getAtom(5), // H
+        }, CLOCKWISE));
 
         Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("CC[C@@](C)(O)[H]"));
+        assertThat(g.toSmiles(), is("CC[C@@](C)(O)[H]"));
     }
 
     /**
@@ -464,7 +448,8 @@ public class CDKToBeamTest {
      *
      * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
      */
-    @Test public void _2S_butan_2_ol() throws Exception {
+    @Test
+    public void _2S_butan_2_ol() throws Exception {
 
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
@@ -479,18 +464,14 @@ public class CDKToBeamTest {
         ac.addBond(2, 4, SINGLE);
         ac.addBond(2, 5, SINGLE);
 
-        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2),
-                                                     new IAtom[]{
-                                                             ac.getAtom(1), // C-C
-                                                             ac.getAtom(3), // C
-                                                             ac.getAtom(4), // O
-                                                             ac.getAtom(5), // H
-                                                     },
-                                                     ANTI_CLOCKWISE));
+        ac.addStereoElement(new TetrahedralChirality(ac.getAtom(2), new IAtom[]{ac.getAtom(1), // C-C
+                ac.getAtom(3), // C
+                ac.getAtom(4), // O
+                ac.getAtom(5), // H
+        }, ANTI_CLOCKWISE));
 
         Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("CC[C@](C)(O)[H]"));
+        assertThat(g.toSmiles(), is("CC[C@](C)(O)[H]"));
     }
 
     /**
@@ -500,7 +481,8 @@ public class CDKToBeamTest {
      *
      * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
      */
-    @Test public void z_1_2_difluoroethene_aromatic() throws Exception {
+    @Test
+    public void z_1_2_difluoroethene_aromatic() throws Exception {
 
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("F"));
@@ -513,39 +495,33 @@ public class CDKToBeamTest {
 
         ac.getBond(1).setFlag(CDKConstants.ISAROMATIC, true);
 
-        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1),
-                                                          new IBond[]{
-                                                                  ac.getBond(0),
-                                                                  ac.getBond(2)
-                                                          },
-                                                          TOGETHER));
+        ac.addStereoElement(new DoubleBondStereochemistry(ac.getBond(1), new IBond[]{ac.getBond(0), ac.getBond(2)},
+                TOGETHER));
         Graph g = convert(ac);
-        assertThat(g.toSmiles(),
-                   is("F[CH]:[CH]F"));
+        assertThat(g.toSmiles(), is("F[CH]:[CH]F"));
     }
 
-    @Test public void propadiene() throws Exception {
+    @Test
+    public void propadiene() throws Exception {
 
     }
 
-    @Test public void writeAtomClass() throws Exception {
+    @Test
+    public void writeAtomClass() throws Exception {
         IAtomContainer ac = new AtomContainer();
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("C"));
         ac.addAtom(new Atom("O"));
         ac.addBond(0, 1, SINGLE);
         ac.addBond(1, 2, SINGLE);
-        ac.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
-                                  3);
-        ac.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
-                                  1);
-        ac.getAtom(2).setProperty(CDKConstants.ATOM_ATOM_MAPPING,
-                                  2);
-        assertThat(convert(ac).toSmiles(),
-                   is("[CH3:3][CH2:1][OH:2]"));
+        ac.getAtom(0).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 3);
+        ac.getAtom(1).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 1);
+        ac.getAtom(2).setProperty(CDKConstants.ATOM_ATOM_MAPPING, 2);
+        assertThat(convert(ac).toSmiles(), is("[CH3:3][CH2:1][OH:2]"));
     }
 
-    @Test public void r_penta_2_3_diene_impl_h() throws Exception {
+    @Test
+    public void r_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -557,17 +533,15 @@ public class CDKToBeamTest {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
-                                                         new IAtom[]{m.getAtom(0), m.getAtom(1),
-                                                                     m.getAtom(3), m.getAtom(4)},
-                                                         ANTI_CLOCKWISE);
+        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(1),
+                m.getAtom(3), m.getAtom(4)}, ANTI_CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
-        assertThat(convert(m).toSmiles(),
-                   is("CC=[C@]=CC"));
+        assertThat(convert(m).toSmiles(), is("CC=[C@]=CC"));
     }
 
-    @Test public void s_penta_2_3_diene_impl_h() throws Exception {
+    @Test
+    public void s_penta_2_3_diene_impl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -579,17 +553,15 @@ public class CDKToBeamTest {
         m.addBond(2, 3, IBond.Order.DOUBLE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
-                                                         new IAtom[]{m.getAtom(0), m.getAtom(1),
-                                                                     m.getAtom(3), m.getAtom(4)},
-                                                         CLOCKWISE);
+        IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(1),
+                m.getAtom(3), m.getAtom(4)}, CLOCKWISE);
         m.setStereoElements(Collections.singletonList(element));
 
-        assertThat(convert(m).toSmiles(),
-                   is("CC=[C@@]=CC"));
+        assertThat(convert(m).toSmiles(), is("CC=[C@@]=CC"));
     }
 
-    @Test public void r_penta_2_3_diene_expl_h() throws Exception {
+    @Test
+    public void r_penta_2_3_diene_expl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -605,42 +577,24 @@ public class CDKToBeamTest {
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(3, 6, IBond.Order.SINGLE);
 
-        int[][] atoms = new int[][]{
-                {0, 5, 6, 4},
-                {5, 0, 6, 4},
-                {5, 0, 4, 6},
-                {0, 5, 4, 6},
-                {4, 6, 5, 0},
-                {4, 6, 0, 5},
-                {6, 4, 0, 5},
-                {6, 4, 5, 0},
-        };
-        Stereo[] stereos = new Stereo[]{
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE
-        };
+        int[][] atoms = new int[][]{{0, 5, 6, 4}, {5, 0, 6, 4}, {5, 0, 4, 6}, {0, 5, 4, 6}, {4, 6, 5, 0}, {4, 6, 0, 5},
+                {6, 4, 0, 5}, {6, 4, 5, 0},};
+        Stereo[] stereos = new Stereo[]{Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE,
+                Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE};
 
         for (int i = 0; i < atoms.length; i++) {
 
-            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
-                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
-                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
-                                                             stereos[i]);
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(atoms[i][0]),
+                    m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
-            assertThat(convert(m).toSmiles(),
-                       is("CC(=[C@@]=C(C)[H])[H]"));
+            assertThat(convert(m).toSmiles(), is("CC(=[C@@]=C(C)[H])[H]"));
 
         }
     }
 
-    @Test public void s_penta_2_3_diene_expl_h() throws Exception {
+    @Test
+    public void s_penta_2_3_diene_expl_h() throws Exception {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(new Atom("C"));
         m.addAtom(new Atom("C"));
@@ -656,37 +610,18 @@ public class CDKToBeamTest {
         m.addBond(1, 5, IBond.Order.SINGLE);
         m.addBond(3, 6, IBond.Order.SINGLE);
 
-        int[][] atoms = new int[][]{
-                {0, 5, 6, 4},
-                {5, 0, 6, 4},
-                {5, 0, 4, 6},
-                {0, 5, 4, 6},
-                {4, 6, 5, 0},
-                {4, 6, 0, 5},
-                {6, 4, 0, 5},
-                {6, 4, 5, 0},
-        };
-        Stereo[] stereos = new Stereo[]{
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE,
-                Stereo.CLOCKWISE,
-                Stereo.ANTI_CLOCKWISE
-        };
+        int[][] atoms = new int[][]{{0, 5, 6, 4}, {5, 0, 6, 4}, {5, 0, 4, 6}, {0, 5, 4, 6}, {4, 6, 5, 0}, {4, 6, 0, 5},
+                {6, 4, 0, 5}, {6, 4, 5, 0},};
+        Stereo[] stereos = new Stereo[]{Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE,
+                Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE, Stereo.CLOCKWISE, Stereo.ANTI_CLOCKWISE};
 
         for (int i = 0; i < atoms.length; i++) {
 
-            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2),
-                                                             new IAtom[]{m.getAtom(atoms[i][0]), m.getAtom(atoms[i][1]),
-                                                                         m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])},
-                                                             stereos[i]);
+            IStereoElement element = new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(atoms[i][0]),
+                    m.getAtom(atoms[i][1]), m.getAtom(atoms[i][2]), m.getAtom(atoms[i][3])}, stereos[i]);
             m.setStereoElements(Collections.singletonList(element));
 
-            assertThat(convert(m).toSmiles(),
-                       is("CC(=[C@]=C(C)[H])[H]"));
+            assertThat(convert(m).toSmiles(), is("CC(=[C@]=C(C)[H])[H]"));
 
         }
     }
@@ -695,23 +630,15 @@ public class CDKToBeamTest {
         return convert(ac, false, true);
     }
 
-    static Graph convert(IAtomContainer ac,
-                         boolean perceiveAromaticity,
-                         boolean isomeric) throws Exception {
+    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, boolean isomeric) throws Exception {
         return convert(ac, perceiveAromaticity, isomeric, true, true);
     }
 
-    static Graph convert(IAtomContainer ac,
-                                 boolean perceiveAromaticity,
-                                 boolean isomeric,
-                                 boolean aromatic,
-                                 boolean atomClasses) throws
-                                                   Exception {
+    static Graph convert(IAtomContainer ac, boolean perceiveAromaticity, boolean isomeric, boolean aromatic,
+            boolean atomClasses) throws Exception {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(ac);
-        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance())
-                        .addImplicitHydrogens(ac);
-        if (perceiveAromaticity)
-            Aromaticity.cdkLegacy().apply(ac);
+        CDKHydrogenAdder.getInstance(SilentChemObjectBuilder.getInstance()).addImplicitHydrogens(ac);
+        if (perceiveAromaticity) Aromaticity.cdkLegacy().apply(ac);
         return new CDKToBeam(isomeric, aromatic, atomClasses).toBeamGraph(ac);
     }
 }

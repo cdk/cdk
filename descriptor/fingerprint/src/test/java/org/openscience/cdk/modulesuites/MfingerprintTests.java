@@ -39,19 +39,10 @@ import org.openscience.cdk.similarity.TanimotoTest;
  *
  * @cdk.module  test-fingerprint
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-	CircularFingerprinterTest.class,
-    FingerprintCoverageTest.class,
-    ExtendedFingerprinterTest.class,
-    MACCSFingerprinterTest.class,
-    EStateFingerprinterTest.class,
-    PubchemFingerprinterTest.class,
-    DistanceMomentTest.class,
-    TanimotoTest.class,
-    LingoSimilarityTest.class,
-    KlekotaRothFingerprinterTest.class,
-	ShortestPathFingerprinterTest.class,
-    ShortestPathWalkerTest.class
-})
-public class MfingerprintTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {CircularFingerprinterTest.class, FingerprintCoverageTest.class, ExtendedFingerprinterTest.class,
+        MACCSFingerprinterTest.class, EStateFingerprinterTest.class, PubchemFingerprinterTest.class,
+        DistanceMomentTest.class, TanimotoTest.class, LingoSimilarityTest.class, KlekotaRothFingerprinterTest.class,
+        ShortestPathFingerprinterTest.class, ShortestPathWalkerTest.class})
+public class MfingerprintTests {
+}

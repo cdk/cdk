@@ -32,58 +32,64 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.MDLFormatTest")
 public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public MDLFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new MDLFormat();
-    	return myself;
+        if (myself == null) myself = new MDLFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "MDL Molfile";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-mdl-molfile";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"mol"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-      return "org.openscience.cdk.io.MDLReader";
+        return "org.openscience.cdk.io.MDLReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
-      return null;
+        return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if (lineNumber == 4 && line.length()>7 &&
-        		   (line.indexOf("2000") == -1) && // MDL Mol V2000 format
-        		   (line.indexOf("3000") == -1))    // MDL Mol V3000 format
+        if (lineNumber == 4 && line.length() > 7 && (line.indexOf("2000") == -1) && // MDL Mol V2000 format
+                (line.indexOf("3000") == -1)) // MDL Mol V3000 format
         {
             // possibly a MDL mol file
             try {
@@ -102,31 +108,32 @@ public class MDLFormat extends SimpleChemFormatMatcher implements IChemFormatMat
                 }
             } catch (NumberFormatException nfe) {
                 // Integers not found on fourth line; therefore not a MDL file
-            	return false;
+                return false;
             }
             return true;
         }
         return false;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return getRequiredDataFeatures() |
-		       DataFeatures.HAS_2D_COORDINATES |
-		       DataFeatures.HAS_3D_COORDINATES |
-		       DataFeatures.HAS_GRAPH_REPRESENTATION;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return getRequiredDataFeatures() | DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_GRAPH_REPRESENTATION;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-	}
+        return DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+    }
 }

@@ -57,5 +57,4 @@ public class PharmacophoreBond extends Bond {
         return atom1.getPoint3d().distance(atom2.getPoint3d());
     }
 
-
 }

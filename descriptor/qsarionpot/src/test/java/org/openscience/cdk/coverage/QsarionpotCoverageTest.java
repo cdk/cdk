@@ -32,11 +32,13 @@ public class QsarionpotCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "qsarionpot.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, QsarionpotCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 

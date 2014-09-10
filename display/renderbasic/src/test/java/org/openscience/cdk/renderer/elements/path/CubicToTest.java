@@ -30,13 +30,9 @@ import org.junit.BeforeClass;
  */
 public class CubicToTest extends AbstractPathElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		setPathElement(new CubicTo(
-			new Point2d(0,1),
-			new Point2d(2,3),
-			new Point2d(4,5)
-		));
-	}
+    @BeforeClass
+    public static void setup() {
+        setPathElement(new CubicTo(new Point2d(0, 1), new Point2d(2, 3), new Point2d(4, 5)));
+    }
 
 }

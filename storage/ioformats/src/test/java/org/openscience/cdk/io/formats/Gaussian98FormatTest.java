@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class Gaussian98FormatTest extends ChemFormatMatcherTest {
 
     public Gaussian98FormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)Gaussian98Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) Gaussian98Format.getInstance());
     }
 
 }

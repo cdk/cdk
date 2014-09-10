@@ -32,30 +32,30 @@ package org.openscience.cdk.interfaces;
  */
 public interface IRing extends IAtomContainer {
 
-	/**
-	 * Returns the number of atoms/bonds in this ring.
-	 *
-	 * @return   The number of atoms/bonds in this ring
-	 */
-	public int getRingSize();
+    /**
+     * Returns the number of atoms/bonds in this ring.
+     *
+     * @return   The number of atoms/bonds in this ring
+     */
+    public int getRingSize();
 
-	/**
-	 * Returns the next bond in order, relative to a given bond and atom.
-	 * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0.
-	 * A request getNextBond(1-2, 2) will return Bond 2-3.
-	 *
-	 * @param   bond  A bond for which an atom from a consecutive bond is sought
-	 * @param   atom  A atom from the bond above to assign a search direction
-	 * @return  The next bond in the order given by the above assignment
-	 */
-	public IBond getNextBond(IBond bond, IAtom atom);
+    /**
+     * Returns the next bond in order, relative to a given bond and atom.
+     * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0.
+     * A request getNextBond(1-2, 2) will return Bond 2-3.
+     *
+     * @param   bond  A bond for which an atom from a consecutive bond is sought
+     * @param   atom  A atom from the bond above to assign a search direction
+     * @return  The next bond in the order given by the above assignment
+     */
+    public IBond getNextBond(IBond bond, IAtom atom);
 
-	/**
-	 * Returns the sum of all bond orders in the ring.
-	 *
-	 * @return the sum of all bond orders in the ring
-	 */
-	public int getBondOrderSum();
+    /**
+     * Returns the sum of all bond orders in the ring.
+     *
+     * @return the sum of all bond orders in the ring
+     */
+    public int getBondOrderSum();
 
     /**
      * @inheritDoc

@@ -42,26 +42,21 @@ import org.openscience.cdk.smiles.SmilesParser;
  *
  * @cdk.module test-smsd
  */
-public class SMSDNormalizerTest{
+public class SMSDNormalizerTest {
 
-    public SMSDNormalizerTest() {
-    }
+    public SMSDNormalizerTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     /**
      * Test of makeDeepCopy method, of class SMSDNormalizer.

@@ -33,46 +33,49 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module datadebug
  * @cdk.githash
  */
-public class DebugRingSet extends RingSet
-    implements IRingSet {
+public class DebugRingSet extends RingSet implements IRingSet {
 
     private static final long serialVersionUID = -4144201128508373352L;
 
-    ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DebugRingSet.class);
+    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugRingSet.class);
 
-	public DebugRingSet() {
-		super();
-	}
+    public DebugRingSet() {
+        super();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRingSet getRings(IBond bond) {
-		logger.debug("Getting rings for bond: ", bond);
-		return super.getRings(bond);
-	}
+        logger.debug("Getting rings for bond: ", bond);
+        return super.getRings(bond);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRingSet getRings(IAtom atom) {
-		logger.debug("Getting rings for atom: ", atom);
-		return super.getRings(atom);
-	}
+        logger.debug("Getting rings for atom: ", atom);
+        return super.getRings(atom);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRingSet getConnectedRings(IRing ring) {
-		logger.debug("Getting connected rings for ring: ", ring);
-		return super.getConnectedRings(ring);
-	}
+        logger.debug("Getting connected rings for ring: ", ring);
+        return super.getConnectedRings(ring);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void add(IRingSet ringSet) {
-		logger.debug("Adding ring set: ", ringSet);
-		super.add(ringSet);
-	}
+        logger.debug("Adding ring set: ", ringSet);
+        super.add(ringSet);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean contains(IAtom atom) {
-		logger.debug("Contains atom: ", super.contains(atom));
-		return super.contains(atom);
-	}
+        logger.debug("Contains atom: ", super.contains(atom));
+        return super.contains(atom);
+    }
 
 }

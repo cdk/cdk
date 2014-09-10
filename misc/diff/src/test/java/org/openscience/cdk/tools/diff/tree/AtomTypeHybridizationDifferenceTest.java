@@ -28,22 +28,28 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public class AtomTypeHybridizationDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP2);
+    @Test
+    public void testDiff() {
+        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
+                IAtomType.Hybridization.SP2);
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
-        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1, IAtomType.Hybridization.SP1);
+    @Test
+    public void testSame() {
+        IDifference result = AtomTypeHybridizationDifference.construct("Foo", IAtomType.Hybridization.SP1,
+                IAtomType.Hybridization.SP1);
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
+    @Test
+    public void testOneNull() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         Assert.assertNotNull(result);
 
@@ -51,7 +57,8 @@ public class AtomTypeHybridizationDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         IDifference result = AtomTypeHybridizationDifference.construct("Foo", null, IAtomType.Hybridization.SP1);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);

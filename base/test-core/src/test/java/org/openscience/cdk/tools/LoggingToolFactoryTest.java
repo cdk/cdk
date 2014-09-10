@@ -26,36 +26,31 @@ import org.junit.Test;
  */
 public class LoggingToolFactoryTest {
 
-    @Test public void testSetGetLoggingToolClass() {
+    @Test
+    public void testSetGetLoggingToolClass() {
         Class<? extends ILoggingTool> logger = LoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        Assert.assertEquals(
-            LoggingTool.class.getName(),
-            LoggingToolFactory.getLoggingToolClass().getName()
-        );
+        Assert.assertEquals(LoggingTool.class.getName(), LoggingToolFactory.getLoggingToolClass().getName());
     }
 
-    @Test public void testCreateLoggingTool() {
-        ILoggingTool logger = LoggingToolFactory.createLoggingTool(
-            LoggingToolFactoryTest.class
-        );
+    @Test
+    public void testCreateLoggingTool() {
+        ILoggingTool logger = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
         Assert.assertNotNull(logger);
     }
 
-    @Test public void testCreateLog4jLoggingTool() {
+    @Test
+    public void testCreateLog4jLoggingTool() {
         Class<? extends ILoggingTool> logger = LoggingTool.class;
         LoggingToolFactory.setLoggingToolClass(logger);
-        ILoggingTool instance = LoggingToolFactory.createLoggingTool(
-            LoggingToolFactoryTest.class
-        );
+        ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
         Assert.assertTrue(instance instanceof LoggingTool);
     }
 
-    @Test public void testCustomLogger() {
+    @Test
+    public void testCustomLogger() {
         LoggingToolFactory.setLoggingToolClass(CustomLogger.class);
-        ILoggingTool instance = LoggingToolFactory.createLoggingTool(
-            LoggingToolFactoryTest.class
-        );
+        ILoggingTool instance = LoggingToolFactory.createLoggingTool(LoggingToolFactoryTest.class);
         Assert.assertTrue(instance instanceof CustomLogger);
     }
 
@@ -75,17 +70,31 @@ public class LoggingToolFactoryTest {
         }
 
         public void debug(Object object) {}
+
         public void debug(Object object, Object... objects) {}
+
         public void dumpClasspath() {}
+
         public void dumpSystemProperties() {}
+
         public void error(Object object) {}
+
         public void error(Object object, Object... objects) {}
+
         public void fatal(Object object) {}
+
         public void info(Object object) {}
+
         public void info(Object object, Object... objects) {}
-        public boolean isDebugEnabled() { return true; }
+
+        public boolean isDebugEnabled() {
+            return true;
+        }
+
         public void setStackLength(int length) {}
+
         public void warn(Object object) {}
+
         public void warn(Object object, Object... objects) {}
     }
 }

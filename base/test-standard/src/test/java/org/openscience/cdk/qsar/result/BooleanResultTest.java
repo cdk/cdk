@@ -32,26 +32,24 @@ public class BooleanResultTest extends CDKTestCase {
         super();
     }
 
-	// well, these tests are not shocking...
+    // well, these tests are not shocking...
 
     @Test
     public void testBooleanResult_boolean() {
-		BooleanResult result = new BooleanResult(true);
-		Assert.assertNotNull(result);
-	}
+        BooleanResult result = new BooleanResult(true);
+        Assert.assertNotNull(result);
+    }
 
     @Test
     public void testBooleanValue() {
-		Assert.assertTrue(new BooleanResult(true).booleanValue());
-		Assert.assertFalse(new BooleanResult(false).booleanValue());
-	}
+        Assert.assertTrue(new BooleanResult(true).booleanValue());
+        Assert.assertFalse(new BooleanResult(false).booleanValue());
+    }
 
     @Test
     public void testToString() {
-		Assert.assertEquals("true", new BooleanResult(true).toString());
-		Assert.assertEquals("false", new BooleanResult(false).toString());
-	}
+        Assert.assertEquals("true", new BooleanResult(true).toString());
+        Assert.assertEquals("false", new BooleanResult(false).toString());
+    }
 
 }
-
-

@@ -27,24 +27,28 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS AST
  */
 class ASTRecursiveSmartsExpression extends SimpleNode {
-	/**
-	 * Creates a new instance.
-	 */
-	public ASTRecursiveSmartsExpression(int id) {
-		super(id);
-	}
 
-	/**
-	 * Creates a new instance.
-	 */
-	public ASTRecursiveSmartsExpression(SMARTSParser p, int id) {
-		super(p, id);
-	}
+    /**
+     * Creates a new instance.
+     */
+    public ASTRecursiveSmartsExpression(int id) {
+        super(id);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience.cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.Object)
-	 */
-	public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
-		return visitor.visit(this, data);
-	}
+    /**
+     * Creates a new instance.
+     */
+    public ASTRecursiveSmartsExpression(SMARTSParser p, int id) {
+        super(p, id);
+    }
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience
+     * .cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.Object)
+     */
+    public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
 }

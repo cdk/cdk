@@ -46,7 +46,7 @@ final class AtomSymbol {
     /**
      * The element symbol.
      */
-    private final TextOutline element;
+    private final TextOutline       element;
 
     /**
      * Adjuncts to the symbol, hydrogen count, charge, and mass.
@@ -61,12 +61,12 @@ final class AtomSymbol {
     /**
      * Desired alignment of the symbol.
      */
-    private final SymbolAlignment alignment;
+    private final SymbolAlignment   alignment;
 
     /**
      * The convex hull of the entire atom symbol.
      */
-    private final ConvexHull hull;
+    private final ConvexHull        hull;
 
     /**
      * Alignment of symbol, left aligned symbols are centered on the first
@@ -98,7 +98,8 @@ final class AtomSymbol {
      * @param alignment left, center, or right alignment
      * @param hull convex hull
      */
-    private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, List<TextOutline> annotationAdjuncts, SymbolAlignment alignment, ConvexHull hull) {
+    private AtomSymbol(TextOutline element, List<TextOutline> adjuncts, List<TextOutline> annotationAdjuncts,
+            SymbolAlignment alignment, ConvexHull hull) {
         this.element = element;
         this.adjuncts = adjuncts;
         this.annotationAdjuncts = annotationAdjuncts;
@@ -209,7 +210,8 @@ final class AtomSymbol {
         List<TextOutline> transformedAnnAdjuncts = new ArrayList<TextOutline>(adjuncts.size());
         for (TextOutline adjunct : annotationAdjuncts)
             transformedAnnAdjuncts.add(adjunct.transform(transform));
-        return new AtomSymbol(element.transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment, hull.transform(transform));
+        return new AtomSymbol(element.transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment,
+                hull.transform(transform));
     }
 
     /**

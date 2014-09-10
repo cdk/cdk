@@ -120,7 +120,7 @@ public final class SmilesParser {
     /**
      * Direct converter from Beam to CDK.
      */
-    private final BeamToCDK beamToCDK;
+    private final BeamToCDK          beamToCDK;
 
     /**
      * Kekulise the molecule on load. Generally this is a good idea as a
@@ -129,7 +129,7 @@ public final class SmilesParser {
      * bond orders (if possible) using an efficient algorithm from the
      * underlying Beam library (soon to be added to CDK).
      */
-    private boolean kekulise = true;
+    private boolean                  kekulise = true;
 
     /**
      * Create a new SMILES parser which will create {@link IAtomContainer}s with
@@ -138,7 +138,7 @@ public final class SmilesParser {
      * @param builder used to create the CDK domain objects
      */
     public SmilesParser(final IChemObjectBuilder builder) {
-        this.builder   = builder;
+        this.builder = builder;
         this.beamToCDK = new BeamToCDK(builder);
     }
 
@@ -188,7 +188,6 @@ public final class SmilesParser {
 
         return reaction;
     }
-
 
     /**
      * Parses a SMILES string and returns a structure ({@link IAtomContainer}).
@@ -248,4 +247,3 @@ public final class SmilesParser {
         this.kekulise = kekulise;
     }
 }
-

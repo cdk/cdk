@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class Chem3D_Cartesian_1FormatTest extends ChemFormatTest {
 
     public Chem3D_Cartesian_1FormatTest() {
-        super.setChemFormat((IChemFormat)Chem3D_Cartesian_1Format.getInstance());
+        super.setChemFormat((IChemFormat) Chem3D_Cartesian_1Format.getInstance());
     }
 
 }

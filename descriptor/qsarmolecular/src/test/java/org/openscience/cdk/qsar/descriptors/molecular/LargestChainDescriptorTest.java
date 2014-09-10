@@ -18,86 +18,101 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class LargestChainDescriptorTest extends MolecularDescriptorTest {
 
-	public  LargestChainDescriptorTest() {}
+    public LargestChainDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(LargestChainDescriptor.class);
+        setDescriptor(LargestChainDescriptor.class);
     }
 
-	@Test
+    @Test
     public void test1LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
-		//logger.debug("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1");
-		//logger.debug("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(4, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2");
-		//logger.debug("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CC=CNCC");
-		//logger.debug("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC");
-		//logger.debug("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CCNOC");
-		//logger.debug("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(5, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-	@Test public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");
-		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(6, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("c1ccccc1"); // benzol
+        //logger.debug("test1>:"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
 
-    @Test public void testSingleCAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("C");
-		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
-    @Test public void testSingleOAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		Object[] params = {new Boolean(true),new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("O");
-		//logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
-	}
+    @Test
+    public void test2LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C=CC=Cc1ccccc1");
+        //logger.debug("test2>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(4, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test3LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C=CC=CCc2ccc(Cc1ccncc1C=C)cc2");
+        //logger.debug("test3>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test4LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CC=CNCC");
+        //logger.debug("test4>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test5LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C=C[NH2+]CC");
+        //logger.debug("test5>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test6LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCNOC");
+        //logger.debug("test6>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void test7LargestChainDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CC=CC(C)=O");
+        //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void testSingleCAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("C");
+        //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
+
+    @Test
+    public void testSingleOAtom() throws ClassNotFoundException, CDKException, java.lang.Exception {
+        Object[] params = {new Boolean(true), new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("O");
+        //logger.debug("test7>"+((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
+    }
 
 }

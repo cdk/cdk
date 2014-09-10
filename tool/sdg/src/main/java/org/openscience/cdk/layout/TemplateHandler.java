@@ -68,68 +68,62 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.layout.TemplateHandlerTest")
-public class TemplateHandler
-{
+public class TemplateHandler {
 
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(TemplateHandler.class);
+    private static ILoggingTool        logger                     = LoggingToolFactory
+                                                                          .createLoggingTool(TemplateHandler.class);
 
-	private List<IAtomContainer> templates = null;
+    private List<IAtomContainer>       templates                  = null;
 
-	private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+    private UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
 
+    /**
+     * Creates a new TemplateHandler.
+     */
+    @TestMethod("testInit")
+    public TemplateHandler(IChemObjectBuilder builder) {
+        templates = new ArrayList<IAtomContainer>();
+        loadTemplates(builder);
+    }
 
-	/**
-	 * Creates a new TemplateHandler.
-	 */
-	@TestMethod("testInit")
-	public TemplateHandler(IChemObjectBuilder builder)
-	{
-		templates = new ArrayList<IAtomContainer>();
-		loadTemplates(builder);
-	}
+    /**
+     * Loads all existing templates into memory. To add templates to be used in
+     * SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
+     * template filename to org/openscience/cdk/layout/templates/template.list
+     */
+    @TestMethod("testInit")
+    public void loadTemplates(IChemObjectBuilder builder) {
+        String line = null;
+        try {
+            InputStream ins = this.getClass().getClassLoader()
+                    .getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
+            while (reader.ready()) {
+                line = reader.readLine();
+                line = "org/openscience/cdk/layout/templates/" + line;
+                logger.debug("Attempting to read template ", line);
+                try {
+                    CMLReader structureReader = new CMLReader(this.getClass().getClassLoader()
+                            .getResourceAsStream(line));
+                    IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
+                    List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
+                    for (int i = 0; i < files.size(); i++)
+                        templates.add(anonymousTemplate(files.get(i)));
+                    logger.debug("Successfully read template ", line);
+                } catch (CDKException cdke) {
+                    logger.warn("Could not read template ", line, ", reason: ", cdke.getMessage());
+                    logger.debug(cdke);
+                } catch (IllegalArgumentException iae) {
+                    logger.warn("Could not read template ", line, ", reason: ", iae.getMessage());
+                    logger.debug(iae);
+                }
 
-
-	/**
-	 * Loads all existing templates into memory. To add templates to be used in
-	 * SDG, place a drawing with the new template in org/openscience/cdk/layout/templates and add the
-	 * template filename to org/openscience/cdk/layout/templates/template.list
-	 */
-	@TestMethod("testInit")
-	public void loadTemplates(IChemObjectBuilder builder)
-	{
-		String line = null;
-		try
-		{
-			InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/layout/templates/templates.list");
-			BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
-			while (reader.ready()) {
-					line = reader.readLine();
-					line = "org/openscience/cdk/layout/templates/" + line;
-					logger.debug("Attempting to read template ", line);
-				try {
-					CMLReader structureReader = new CMLReader(
-						this.getClass().getClassLoader().getResourceAsStream(line)
-					);
-					IChemFile file = (IChemFile) structureReader.read(builder.newInstance(IChemFile.class));
-					List<IAtomContainer> files = ChemFileManipulator.getAllAtomContainers(file);
-					for (int i = 0; i < files.size(); i++)
-						templates.add(anonymousTemplate(files.get(i)));
-					logger.debug("Successfully read template ", line);
-				} catch (CDKException cdke) {
-				    logger.warn("Could not read template ", line, ", reason: ", cdke.getMessage());
-				    logger.debug(cdke);
-				} catch (IllegalArgumentException iae) {
-				    logger.warn("Could not read template ", line, ", reason: ", iae.getMessage());
-				    logger.debug(iae);
-				}
-
-			}
-		} catch (IOException ioe) {
-		    logger.warn("Could not read (all of the) templates, reason: ", ioe.getMessage());
-		    logger.debug(ioe);
-		}
-	}
+            }
+        } catch (IOException ioe) {
+            logger.warn("Could not read (all of the) templates, reason: ", ioe.getMessage());
+            logger.debug(ioe);
+        }
+    }
 
     /**
      * Anonymise a molecule (single bonded carbons) and copy other atomic
@@ -146,247 +140,223 @@ public class TemplateHandler
         return template;
     }
 
-	/**
-	 * Adds a Molecule to the list of templates use by this TemplateHandler.
-	 *
-	 * @param  molecule  The molecule to be added to the TemplateHandler
-	 */
-	@TestMethod("testAddMolecule")
-	public void addMolecule(IAtomContainer molecule) {
-		templates.add(anonymousTemplate(molecule));
-	}
+    /**
+     * Adds a Molecule to the list of templates use by this TemplateHandler.
+     *
+     * @param  molecule  The molecule to be added to the TemplateHandler
+     */
+    @TestMethod("testAddMolecule")
+    public void addMolecule(IAtomContainer molecule) {
+        templates.add(anonymousTemplate(molecule));
+    }
 
-	@TestMethod("testRemoveMolecule")
-	public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
-		IAtomContainer ac1 = molecule.getBuilder().newInstance(IAtomContainer.class,molecule);
-		IAtomContainer ac2 = null;
-		IAtomContainer mol2 = null;
-		for (int f = 0; f < templates.size(); f++)
-		{
-			mol2 = templates.get(f);
-			ac2 = molecule.getBuilder().newInstance(IAtomContainer.class,mol2);
-			if (new UniversalIsomorphismTester().isIsomorph(anonymousTemplate(ac1), ac2)) {
-				templates.remove(f);
-				return mol2;
-			}
-		}
-		return null;
-	}
+    @TestMethod("testRemoveMolecule")
+    public IAtomContainer removeMolecule(IAtomContainer molecule) throws CDKException {
+        IAtomContainer ac1 = molecule.getBuilder().newInstance(IAtomContainer.class, molecule);
+        IAtomContainer ac2 = null;
+        IAtomContainer mol2 = null;
+        for (int f = 0; f < templates.size(); f++) {
+            mol2 = templates.get(f);
+            ac2 = molecule.getBuilder().newInstance(IAtomContainer.class, mol2);
+            if (new UniversalIsomorphismTester().isIsomorph(anonymousTemplate(ac1), ac2)) {
+                templates.remove(f);
+                return mol2;
+            }
+        }
+        return null;
+    }
 
-
-	/**
-	 * Checks if one of the loaded templates is isomorph to the given
-	 * Molecule. If so, it assigns the coordinates from the template to the
-	 * respective atoms in the Molecule, and marks the atoms as ISPLACED.
-	 *
-	 * @param  molecule  The molecule to be check for potential templates
-	 * @return           True if there was a possible mapping
-	 */
-	public boolean mapTemplateExact(IAtomContainer molecule) throws CDKException {
-				logger.debug("Trying to map a molecule...");
-		boolean mapped = false;
-		IAtomContainer template = null;
-		RMap map = null;
-		IAtom atom1 = null;
-		IAtom atom2 = null;
+    /**
+     * Checks if one of the loaded templates is isomorph to the given
+     * Molecule. If so, it assigns the coordinates from the template to the
+     * respective atoms in the Molecule, and marks the atoms as ISPLACED.
+     *
+     * @param  molecule  The molecule to be check for potential templates
+     * @return           True if there was a possible mapping
+     */
+    public boolean mapTemplateExact(IAtomContainer molecule) throws CDKException {
+        logger.debug("Trying to map a molecule...");
+        boolean mapped = false;
+        IAtomContainer template = null;
+        RMap map = null;
+        IAtom atom1 = null;
+        IAtom atom2 = null;
 
         // We could also use any atom/bond query container but would required
         // depending on 'cdk-isomorphism'. Instead we can anonymise the
         // container to all singly bonded carbons.
         IAtomContainer anonymised = AtomContainerManipulator.anonymise(molecule);
 
-		for (int f = 0; f < templates.size(); f++)
-		{
-			template = templates.get(f);
-            if (new UniversalIsomorphismTester().isIsomorph(anonymised, template))
-			{
-				List<RMap> list = universalIsomorphismTester.getIsomorphAtomsMap(
-					molecule.getBuilder().newInstance(IAtomContainer.class,anonymised),
-					molecule.getBuilder().newInstance(IAtomContainer.class,template)
-				);
-				logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
-				for (int i = 0; i < list.size(); i++)
-				{
-					map = list.get(i);
-					atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
-					atom2 = template.getAtom(map.getId2());
-					atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
-					atom1.setFlag(CDKConstants.ISPLACED, true);
-				}
-				mapped = true;
-			} else {
-				logger.debug("Structure does not match template: ", template.getID());
-			}
-		}
-		return mapped;
-	}
+        for (int f = 0; f < templates.size(); f++) {
+            template = templates.get(f);
+            if (new UniversalIsomorphismTester().isIsomorph(anonymised, template)) {
+                List<RMap> list = universalIsomorphismTester.getIsomorphAtomsMap(
+                        molecule.getBuilder().newInstance(IAtomContainer.class, anonymised), molecule.getBuilder()
+                                .newInstance(IAtomContainer.class, template));
+                logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
+                for (int i = 0; i < list.size(); i++) {
+                    map = list.get(i);
+                    atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
+                    atom2 = template.getAtom(map.getId2());
+                    atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
+                    atom1.setFlag(CDKConstants.ISPLACED, true);
+                }
+                mapped = true;
+            } else {
+                logger.debug("Structure does not match template: ", template.getID());
+            }
+        }
+        return mapped;
+    }
 
-
-	/**
-	 * Checks if one of the loaded templates is a substructure in the given
-	 * Molecule. If so, it assigns the coordinates from the template to the
-	 * respective atoms in the Molecule, and marks the atoms as ISPLACED.
-	 *
-	 * @param  molecule  The molecule to be check for potential templates
-	 * @return           True if there was a possible mapping
-	 */
-	@TestMethod("testRemoveMolecule")
-	public boolean mapTemplates(IAtomContainer molecule) throws CDKException {
-				logger.debug("Trying to map a molecule...");
-		boolean mapped = false;
-		IAtomContainer template = null;
-		RMap map = null;
-		IAtom atom1 = null;
-		IAtom atom2 = null;
+    /**
+     * Checks if one of the loaded templates is a substructure in the given
+     * Molecule. If so, it assigns the coordinates from the template to the
+     * respective atoms in the Molecule, and marks the atoms as ISPLACED.
+     *
+     * @param  molecule  The molecule to be check for potential templates
+     * @return           True if there was a possible mapping
+     */
+    @TestMethod("testRemoveMolecule")
+    public boolean mapTemplates(IAtomContainer molecule) throws CDKException {
+        logger.debug("Trying to map a molecule...");
+        boolean mapped = false;
+        IAtomContainer template = null;
+        RMap map = null;
+        IAtom atom1 = null;
+        IAtom atom2 = null;
 
         // We could also use any atom/bond query container but would required
         // depending on 'cdk-isomorphism'. Instead we can anonymise the
         // container to all singly bonded carbons.
         IAtomContainer anonymised = AtomContainerManipulator.anonymise(molecule);
 
-		for (int f = 0; f < templates.size(); f++)
-		{
-			template = templates.get(f);
-			if (universalIsomorphismTester.isSubgraph(anonymised, template))
-			{
-				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newInstance(IAtomContainer.class,anonymised),
-						molecule.getBuilder().newInstance(IAtomContainer.class,template)
-				);
-				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
-				for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext(); ) {
-					List list = (List) listOfListsIterator.next();
-					logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
-					for (int i = 0; i < list.size(); i++)
-					{
-						map = (RMap) list.get(i);
-						atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
-						atom2 = template.getAtom(map.getId2());
-						atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
-						atom1.setFlag(CDKConstants.ISPLACED, true);
-					}
-					mapped = true;
-				}
-			} else {
-				logger.debug("Structure does not match template: ", template.getID());
-			}
-		}
-		return mapped;
-	}
+        for (int f = 0; f < templates.size(); f++) {
+            template = templates.get(f);
+            if (universalIsomorphismTester.isSubgraph(anonymised, template)) {
+                List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
+                        molecule.getBuilder().newInstance(IAtomContainer.class, anonymised), molecule.getBuilder()
+                                .newInstance(IAtomContainer.class, template));
+                logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
+                for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext();) {
+                    List list = (List) listOfListsIterator.next();
+                    logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
+                    for (int i = 0; i < list.size(); i++) {
+                        map = (RMap) list.get(i);
+                        atom1 = molecule.getAtom(anonymised.getAtomNumber(anonymised.getAtom(map.getId1())));
+                        atom2 = template.getAtom(map.getId2());
+                        atom1.setPoint2d(new Point2d(atom2.getPoint2d()));
+                        atom1.setFlag(CDKConstants.ISPLACED, true);
+                    }
+                    mapped = true;
+                }
+            } else {
+                logger.debug("Structure does not match template: ", template.getID());
+            }
+        }
+        return mapped;
+    }
 
+    /**
+     *  Gets the templateCount attribute of the TemplateHandler object
+     *
+     *@return    The templateCount value
+     */
+    @TestMethod("testInit")
+    public int getTemplateCount() {
+        return templates.size();
+    }
 
-	/**
-	 *  Gets the templateCount attribute of the TemplateHandler object
-	 *
-	 *@return    The templateCount value
-	 */
-	@TestMethod("testInit")
-	public int getTemplateCount()
-	{
-		return templates.size();
-	}
+    /**
+     *  Gets the templateAt attribute of the TemplateHandler object
+     *
+     *@param  position  Description of the Parameter
+     *@return           The templateAt value
+     */
+    public IAtomContainer getTemplateAt(int position) {
+        return templates.get(position);
+    }
 
+    /**
+     * Checks if one of the loaded templates is a substructure in the given
+     * Molecule and returns all matched substructures in a IAtomContainerSet.
+     * This method does not assign any coordinates.
+     *
+     * @param  molecule  The molecule to be check for potential templates
+     * @return           an IAtomContainerSet of all matched substructures of
+     *                   the molecule
+     * @throws CDKException if an error occurs
+     */
+    @TestMethod("getMappedSubstructures_IAtomContainer")
+    public IAtomContainerSet getMappedSubstructures(IAtomContainer molecule) throws CDKException {
+        logger.debug("Trying get mapped substructures...");
+        IAtomContainerSet matchedSubstructures = molecule.getBuilder().newInstance(IAtomContainerSet.class);
+        for (int f = 0; f < templates.size(); f++) {
+            IAtomContainer template = templates.get(f);
+            if (universalIsomorphismTester.isSubgraph(molecule, template)) {
+                List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
+                        molecule.getBuilder().newInstance(IAtomContainer.class, molecule), molecule.getBuilder()
+                                .newInstance(IAtomContainer.class, template));
+                logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
+                for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext();) {
+                    List list = (List) listOfListsIterator.next();
+                    logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
+                    IAtomContainer matchedSubstructure = molecule.getBuilder().newInstance(IAtomContainer.class);
+                    for (Iterator listIterator = list.iterator(); listIterator.hasNext();) {
+                        RMap map = (RMap) listIterator.next();
+                        IAtom atom = molecule.getAtom(map.getId1());
+                        matchedSubstructure.addAtom(atom);
+                    }
+                    for (Iterator<IAtom> atomIterator = matchedSubstructure.atoms().iterator(); atomIterator.hasNext();) {
+                        IAtom atom = atomIterator.next();
+                        for (Iterator<IBond> connectedBondsIterator = molecule.getConnectedBondsList(atom).iterator(); connectedBondsIterator
+                                .hasNext();) {
+                            IBond bond = connectedBondsIterator.next();
+                            boolean addBond = true;
+                            for (Iterator<IAtom> bondIterator = bond.atoms().iterator(); bondIterator.hasNext();) {
+                                IAtom connectedAtom = bondIterator.next();
+                                if (!matchedSubstructure.contains(connectedAtom) || matchedSubstructure.contains(bond))
+                                    addBond = false;
+                            }
+                            if (addBond) matchedSubstructure.addBond(bond);
+                        }
+                    }
+                    matchedSubstructures.addAtomContainer(matchedSubstructure);
+                }
 
-	/**
-	 *  Gets the templateAt attribute of the TemplateHandler object
-	 *
-	 *@param  position  Description of the Parameter
-	 *@return           The templateAt value
-	 */
-	public IAtomContainer getTemplateAt(int position)
-	{
-		return templates.get(position);
-	}
+            } else {
+                logger.debug("Structure does not match template: ", template.getID());
+            }
+        }
 
+        /*
+         * Uniquify matchedSubstructures
+         */
+        for (int i = 0; i < matchedSubstructures.getAtomContainerCount(); i++) {
+            for (int j = i + 1; j < matchedSubstructures.getAtomContainerCount(); j++) {
+                if (haveSameAtoms(matchedSubstructures.getAtomContainer(i), matchedSubstructures.getAtomContainer(j)))
+                    matchedSubstructures.removeAtomContainer(j--);
+            }
+        }
 
-	/**
-	 * Checks if one of the loaded templates is a substructure in the given
-	 * Molecule and returns all matched substructures in a IAtomContainerSet.
-	 * This method does not assign any coordinates.
-	 *
-	 * @param  molecule  The molecule to be check for potential templates
-	 * @return           an IAtomContainerSet of all matched substructures of
-	 *                   the molecule
-	 * @throws CDKException if an error occurs
-	 */
-	@TestMethod("getMappedSubstructures_IAtomContainer")
-	public IAtomContainerSet getMappedSubstructures(IAtomContainer molecule) throws CDKException {
-		logger.debug("Trying get mapped substructures...");
-		IAtomContainerSet matchedSubstructures =
-		    molecule.getBuilder().newInstance(IAtomContainerSet.class);
-		for (int f = 0; f < templates.size(); f++)
-		{
-			IAtomContainer template = templates.get(f);
-			if (universalIsomorphismTester.isSubgraph(molecule, template))
-			{
-				List listOfLists = universalIsomorphismTester.getSubgraphAtomsMaps(
-						molecule.getBuilder().newInstance(IAtomContainer.class,molecule),
-						molecule.getBuilder().newInstance(IAtomContainer.class,template)
-				);
-				logger.debug("Found " + listOfLists.size() + " subgraphs matching template: " + template.getID());
-				for (Iterator listOfListsIterator = listOfLists.iterator(); listOfListsIterator.hasNext(); ) {
-					List list = (List) listOfListsIterator.next();
-					logger.debug("Found a subgraph mapping of size " + list.size() + ", template: " + template.getID());
-					IAtomContainer matchedSubstructure = molecule.getBuilder().newInstance(IAtomContainer.class);
-					for (Iterator listIterator = list.iterator(); listIterator.hasNext(); )
-					{
-						RMap map = (RMap) listIterator.next();
-						IAtom atom = molecule.getAtom(map.getId1());
-						matchedSubstructure.addAtom(atom);
-					}
-					for (Iterator<IAtom> atomIterator = matchedSubstructure.atoms().iterator(); atomIterator.hasNext(); ) {
-						IAtom atom = atomIterator.next();
-						for (Iterator<IBond> connectedBondsIterator = molecule.getConnectedBondsList(atom).iterator(); connectedBondsIterator.hasNext(); ) {
-							IBond bond = connectedBondsIterator.next();
-							boolean addBond = true;
-							for (Iterator<IAtom> bondIterator = bond.atoms().iterator(); bondIterator.hasNext(); ) {
-								IAtom connectedAtom = bondIterator.next();
-								if (!matchedSubstructure.contains(connectedAtom) || matchedSubstructure.contains(bond))
-									addBond = false;
-							}
-							if (addBond)
-								matchedSubstructure.addBond(bond);
-						}
-					}
-					matchedSubstructures.addAtomContainer(matchedSubstructure);
-				}
+        logger.debug("Found " + matchedSubstructures.getAtomContainerCount() + " unique matched subgraphs");
 
-			} else {
-				logger.debug("Structure does not match template: ", template.getID());
-			}
-		}
+        return matchedSubstructures;
+    }
 
-		/*
-		 * Uniquify matchedSubstructures
-		 */
-		for (int i = 0; i < matchedSubstructures.getAtomContainerCount(); i++) {
-			for (int j = i + 1; j < matchedSubstructures.getAtomContainerCount(); j++) {
-				if (haveSameAtoms(matchedSubstructures.getAtomContainer(i), matchedSubstructures.getAtomContainer(j)))
-					matchedSubstructures.removeAtomContainer(j--);
-			}
-		}
-
-		logger.debug("Found " + matchedSubstructures.getAtomContainerCount() + " unique matched subgraphs");
-
-		return matchedSubstructures;
-	}
-
-	/**
-	 * Returns true if both IAtomContainers have the same number of atoms and all atoms
-	 * are equal, false otherwise.
-	 * @param atomContainer1 an IAtomContainer
-	 * @param atomContainer2 another IAtomContainer
-	 * @return true if both IAtomContainers have the same number of atoms and all atoms
-	 *         are equal, false otherwise.
-	 */
-	private boolean haveSameAtoms(IAtomContainer atomContainer1, IAtomContainer atomContainer2) {
-		if (atomContainer1.getAtomCount() != atomContainer2.getAtomCount())
-			return false;
-		for (Iterator<IAtom> iterator = atomContainer1.atoms().iterator(); iterator.hasNext(); )
-			if (!atomContainer2.contains(iterator.next()))
-				return false;
-		return true;
-	}
+    /**
+     * Returns true if both IAtomContainers have the same number of atoms and all atoms
+     * are equal, false otherwise.
+     * @param atomContainer1 an IAtomContainer
+     * @param atomContainer2 another IAtomContainer
+     * @return true if both IAtomContainers have the same number of atoms and all atoms
+     *         are equal, false otherwise.
+     */
+    private boolean haveSameAtoms(IAtomContainer atomContainer1, IAtomContainer atomContainer2) {
+        if (atomContainer1.getAtomCount() != atomContainer2.getAtomCount()) return false;
+        for (Iterator<IAtom> iterator = atomContainer1.atoms().iterator(); iterator.hasNext();)
+            if (!atomContainer2.contains(iterator.next())) return false;
+        return true;
+    }
 
 }
-

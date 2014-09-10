@@ -52,363 +52,306 @@ import static org.junit.Assert.assertTrue;
 public class SmartsStereoMatchTest {
 
     /* target does not have an element */
-    @Test public void tetrahedral_missingInTarget() {
-        IAtomContainer query  = sma("[C@@](C)(C)(C)C");
+    @Test
+    public void tetrahedral_missingInTarget() {
+        IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    /* Query does not have an element but the target does - the query
-     * therefore is a valid mapping. */
-    @Test public void tetrahedral_missingInQuery() {
+    /*
+     * Query does not have an element but the target does - the query therefore
+     * is a valid mapping.
+     */
+    @Test
+    public void tetrahedral_missingInQuery() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_match() {
-        IAtomContainer query  = sma("[C@@](C)(C)(C)C");;
+    @Test
+    public void tetrahedral_match() {
+        IAtomContainer query = sma("[C@@](C)(C)(C)C");;
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_mismatch() {
+    @Test
+    public void tetrahedral_mismatch() {
         IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    /* Map to different atom order which means the clockwise and anticlockwise match */
-    @Test public void tetrahedral_match_swap() {
-        IAtomContainer query  = sma("[C@@](C)(C)(C)C");
+    /*
+     * Map to different atom order which means the clockwise and anticlockwise
+     * match
+     */
+    @Test
+    public void tetrahedral_match_swap() {
+        IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
     /* These don't match because we don't map the atoms in order. */
-    @Test public void tetrahedral_mismatch_swap() {
-        IAtomContainer query  = sma("[C@@](C)(C)(C)C");
+    @Test
+    public void tetrahedral_mismatch_swap() {
+        IAtomContainer query = sma("[C@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 3, 2, 4}));
     }
 
-    @Test public void tetrahedral_unspecified_match() {
-        IAtomContainer query  = sma("[C@@?](C)(C)(C)C");
+    @Test
+    public void tetrahedral_unspecified_match() {
+        IAtomContainer query = sma("[C@@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_unspecified_match2() {
-        IAtomContainer query  = sma("[C@?](C)(C)(C)C");
+    @Test
+    public void tetrahedral_unspecified_match2() {
+        IAtomContainer query = sma("[C@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_unspecified_mismatch() {
-        IAtomContainer query  = sma("[C@@?](C)(C)(C)C");
+    @Test
+    public void tetrahedral_unspecified_mismatch() {
+        IAtomContainer query = sma("[C@@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_unspecified_mismatch2() {
-        IAtomContainer query  = sma("[C@?](C)(C)(C)C");
+    @Test
+    public void tetrahedral_unspecified_mismatch2() {
+        IAtomContainer query = sma("[C@?](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void tetrahedral_either_match() {
-        IAtomContainer query  = sma("[@,@@](C)(C)(C)C");
+    @Test
+    public void tetrahedral_either_match() {
+        IAtomContainer query = sma("[@,@@](C)(C)(C)C");
         IAtomContainer target = dimethylpropane();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new TetrahedralChirality(target.getAtom(0),
-                                                         new IAtom[]{
-                                                                 target.getAtom(1),
-                                                                 target.getAtom(2),
-                                                                 target.getAtom(3),
-                                                                 target.getAtom(4)
-                                                         },
-                                                         ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        target.addStereoElement(new TetrahedralChirality(target.getAtom(0), new IAtom[]{target.getAtom(1),
+                target.getAtom(2), target.getAtom(3), target.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void geometric_match_together1() {
+    @Test
+    public void geometric_match_together1() {
         IAtomContainer query = sma("C/C=C\\C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_together2() {
+    @Test
+    public void geometric_match_together2() {
         IAtomContainer query = sma("C\\C=C/C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite1() {
+    @Test
+    public void geometric_match_opposite1() {
         IAtomContainer query = sma("C/C=C/C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite2() {
+    @Test
+    public void geometric_match_opposite2() {
         IAtomContainer query = sma("C\\C=C\\C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_mismatch_together1() {
+    @Test
+    public void geometric_mismatch_together1() {
         IAtomContainer query = sma("C/C=C\\C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_mismatch_together2() {
+    @Test
+    public void geometric_mismatch_together2() {
         IAtomContainer query = sma("C\\C=C/C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_mismatch_opposite1() {
+    @Test
+    public void geometric_mismatch_opposite1() {
         IAtomContainer query = sma("C/C=C/C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_mismatch_opposite2() {
+    @Test
+    public void geometric_mismatch_opposite2() {
         IAtomContainer query = sma("C\\C=C\\C");
         IAtomContainer target = but2ene();
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_together_unspecified1() {
+    @Test
+    public void geometric_match_together_unspecified1() {
         IAtomContainer query = sma("C/C=C\\?C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_together_unspecified2() {
+    @Test
+    public void geometric_match_together_unspecified2() {
         IAtomContainer query = sma("C/?C=C\\C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_together_unspecified3() {
+    @Test
+    public void geometric_match_together_unspecified3() {
         IAtomContainer query = sma("C\\C=C/?C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_together_unspecified4() {
+    @Test
+    public void geometric_match_together_unspecified4() {
         IAtomContainer query = sma("C\\?C=C/C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite_unspecified1() {
+    @Test
+    public void geometric_match_opposite_unspecified1() {
         IAtomContainer query = sma("C/C=C/?C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite_unspecified2() {
+    @Test
+    public void geometric_match_opposite_unspecified2() {
         IAtomContainer query = sma("C/?C=C/C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite_unspecified3() {
+    @Test
+    public void geometric_match_opposite_unspecified3() {
         IAtomContainer query = sma("C\\C=C\\?C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 
-    @Test public void geometric_match_opposite_unspecified4() {
+    @Test
+    public void geometric_match_opposite_unspecified4() {
         IAtomContainer query = sma("C\\?C=C\\C");
         IAtomContainer target = but2ene();
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.OPPOSITE));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.OPPOSITE));
         assertTrue(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
         target.setStereoElements(new ArrayList<IStereoElement>(1));
-        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0),
-                                                              new IBond[]{target.getBond(1), target.getBond(2)},
-                                                              IDoubleBondStereochemistry.Conformation.TOGETHER));
+        target.addStereoElement(new DoubleBondStereochemistry(target.getBond(0), new IBond[]{target.getBond(1),
+                target.getBond(2)}, IDoubleBondStereochemistry.Conformation.TOGETHER));
         assertFalse(new SmartsStereoMatch(query, target).apply(new int[]{2, 0, 1, 3}));
     }
 

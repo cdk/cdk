@@ -42,17 +42,16 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.config.CDKBasedAtomTypeConfiguratorTest")
 public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private String configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
-    private InputStream ins = null;
+    private String              configFile = "org.openscience.cdk.config.data.structgen_atomtypes.xml";
+    private InputStream         ins        = null;
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
+    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(CDKBasedAtomTypeConfigurator.class);
 
     @TestMethod("testCDKBasedAtomTypeConfigurator")
-    public CDKBasedAtomTypeConfigurator() {
-    }
+    public CDKBasedAtomTypeConfigurator() {}
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;
@@ -71,20 +70,20 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
         if (ins == null) {
             try {
                 ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-            } catch(Exception exc) {
+            } catch (Exception exc) {
                 logger.error(exc.getMessage());
                 logger.debug(exc);
-                throw new IOException("There was a problem getting a stream for " + configFile +
-                                      " with getClass.getClassLoader.getResourceAsStream");
+                throw new IOException("There was a problem getting a stream for " + configFile
+                        + " with getClass.getClassLoader.getResourceAsStream");
             }
             if (ins == null) {
                 try {
                     ins = this.getClass().getResourceAsStream(configFile);
-                } catch(Exception exc) {
+                } catch (Exception exc) {
                     logger.error(exc.getMessage());
                     logger.debug(exc);
-                    throw new IOException("There was a problem getting a stream for " + configFile +
-                                          " with getClass.getResourceAsStream");
+                    throw new IOException("There was a problem getting a stream for " + configFile
+                            + " with getClass.getResourceAsStream");
                 }
             }
         }

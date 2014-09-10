@@ -27,7 +27,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 import org.openscience.cdk.interfaces.IReactionScheme;
 import org.openscience.cdk.interfaces.ITestObjectBuilder;
 
-
 /**
  * Checks the functionality of the {@link DebugReactionScheme}.
  *
@@ -35,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugReactionSchemeTest extends AbstractReactionSchemeTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugReactionScheme();
             }
         });
     }
 
-    @Test public void testDebugReactionScheme() {
+    @Test
+    public void testDebugReactionScheme() {
         IReactionScheme scheme = new DebugReactionScheme();
         Assert.assertNotNull(scheme);
     }

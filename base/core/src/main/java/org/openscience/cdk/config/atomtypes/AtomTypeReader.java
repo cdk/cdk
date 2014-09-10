@@ -48,10 +48,9 @@ import org.xml.sax.XMLReader;
 @TestClass("org.openscience.cdk.config.atomtypes.AtomTypeReaderTest")
 public class AtomTypeReader {
 
-    private XMLReader parser;
-    private Reader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AtomTypeReader.class);
+    private XMLReader           parser;
+    private Reader              input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.
@@ -83,9 +82,8 @@ public class AtomTypeReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("gnu.xml.aelfred2.XmlReader").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
+                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception exception) {
@@ -96,9 +94,8 @@ public class AtomTypeReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception exception) {
@@ -119,7 +116,7 @@ public class AtomTypeReader {
      */
     @TestMethod("testReadAtomTypes2,testReadAtomTypes_CDK,testReadAtomTypes_FF,testReadAtomTypes_IChemObjectBuilder")
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {
-    	List<IAtomType> isotopes = new ArrayList<IAtomType>();
+        List<IAtomType> isotopes = new ArrayList<IAtomType>();
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
@@ -133,7 +130,7 @@ public class AtomTypeReader {
             parser.parse(new InputSource(input));
             isotopes = handler.getAtomTypes();
         } catch (IOException exception) {
-            logger.error("IOException: ",exception.getMessage());
+            logger.error("IOException: ", exception.getMessage());
             logger.debug(exception);
         } catch (SAXException saxe) {
             logger.error("SAXException: ", saxe.getMessage());
@@ -143,4 +140,3 @@ public class AtomTypeReader {
     }
 
 }
-

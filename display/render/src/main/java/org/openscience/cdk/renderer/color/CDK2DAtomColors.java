@@ -33,16 +33,16 @@ import java.awt.*;
 @TestClass("org.openscience.cdk.renderer.color.CDK2DAtomColorsTest")
 public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
 
-    private static final long serialVersionUID = 6712994043820219426L;
+    private static final long  serialVersionUID = 6712994043820219426L;
 
-    private final static Color HYDROGEN       = Color.black;
-    private final static Color CARBON         = Color.black;
-    private final static Color NITROGEN       = Color.blue;
-    private final static Color OXYGEN         = Color.red;
-    private final static Color PHOSPHORUS     = Color.green.darker();
-    private final static Color SULPHUR        = Color.yellow.darker();
+    private final static Color HYDROGEN         = Color.black;
+    private final static Color CARBON           = Color.black;
+    private final static Color NITROGEN         = Color.blue;
+    private final static Color OXYGEN           = Color.red;
+    private final static Color PHOSPHORUS       = Color.green.darker();
+    private final static Color SULPHUR          = Color.yellow.darker();
 
-    private final static Color DEFAULT        = Color.black;
+    private final static Color DEFAULT          = Color.black;
 
     /**
      * Returns the CDK 2D color for the given atom's element.
@@ -68,16 +68,27 @@ public class CDK2DAtomColors implements IAtomColorer, java.io.Serializable {
     public Color getAtomColor(IAtom atom, Color defaultColor) {
         Color color = defaultColor;
         int atomnumber = 0;
-        if(atom.getAtomicNumber()!=null)
-            atomnumber = atom.getAtomicNumber();
+        if (atom.getAtomicNumber() != null) atomnumber = atom.getAtomicNumber();
         if (atomnumber != 0) {
             switch (atomnumber) {
-                case 1:    color = CDK2DAtomColors.HYDROGEN; break;
-                case 6:    color = CDK2DAtomColors.CARBON; break;
-                case 7:    color = CDK2DAtomColors.NITROGEN; break;
-                case 8:    color = CDK2DAtomColors.OXYGEN; break;
-                case 15:   color = CDK2DAtomColors.PHOSPHORUS; break;
-                case 16:   color = CDK2DAtomColors.SULPHUR; break;
+                case 1:
+                    color = CDK2DAtomColors.HYDROGEN;
+                    break;
+                case 6:
+                    color = CDK2DAtomColors.CARBON;
+                    break;
+                case 7:
+                    color = CDK2DAtomColors.NITROGEN;
+                    break;
+                case 8:
+                    color = CDK2DAtomColors.OXYGEN;
+                    break;
+                case 15:
+                    color = CDK2DAtomColors.PHOSPHORUS;
+                    break;
+                case 16:
+                    color = CDK2DAtomColors.SULPHUR;
+                    break;
             }
         } else {
             String symbol = atom.getSymbol();

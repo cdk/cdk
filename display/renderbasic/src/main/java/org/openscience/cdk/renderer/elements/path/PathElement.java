@@ -40,7 +40,7 @@ public abstract class PathElement {
      *
      * @param type {@link Type} of this path element
      */
-    public PathElement( Type type ) {
+    public PathElement(Type type) {
         this.type = type;
     }
 
@@ -49,7 +49,9 @@ public abstract class PathElement {
      *
      * @return the type of the path element
      */
-    public Type type() { return type;}
+    public Type type() {
+        return type;
+    }
 
     /**
      * Get the points in the path.

@@ -48,100 +48,98 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @TestClass("org.openscience.cdk.config.IsotopesTest")
 public class Isotopes extends IsotopeFactory {
 
-	private static Isotopes myself = null;
+    private static Isotopes myself = null;
 
-	/**
-	 * Returns a singleton instance of this class.
-	 *
-	 * @return the singleton
-	 * @throws IOException when reading of the data file did not work
-	 */
-	@TestMethod("testGetInstance_IChemObjectBuilder")
-	public static Isotopes getInstance() throws IOException {
-		if (myself == null) myself = new Isotopes();
-		return myself;
-	}
+    /**
+     * Returns a singleton instance of this class.
+     *
+     * @return the singleton
+     * @throws IOException when reading of the data file did not work
+     */
+    @TestMethod("testGetInstance_IChemObjectBuilder")
+    public static Isotopes getInstance() throws IOException {
+        if (myself == null) myself = new Isotopes();
+        return myself;
+    }
 
-	private Isotopes() throws IOException {
-		String configFile = "org/openscience/cdk/config/data/isotopes.dat";
-		isotopes = new HashMap<String, List<IIsotope>>();
+    private Isotopes() throws IOException {
+        String configFile = "org/openscience/cdk/config/data/isotopes.dat";
+        isotopes = new HashMap<String, List<IIsotope>>();
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         int streamSize = ins.available();
-		ReadableByteChannel fcIn = Channels.newChannel(ins);
-		ByteBuffer bin = ByteBuffer.allocate(streamSize);
-		fcIn.read(bin);
-		fcIn.close(); ins.close();
-		bin.position(0);
+        ReadableByteChannel fcIn = Channels.newChannel(ins);
+        ByteBuffer bin = ByteBuffer.allocate(streamSize);
+        fcIn.read(bin);
+        fcIn.close();
+        ins.close();
+        bin.position(0);
         int isotopeCount = bin.getInt();
         for (int i = 0; i < isotopeCount; i++) {
-            int atomicNum    = (int)bin.get();
-            int massNum      = (int)bin.getShort();
+            int atomicNum = (int) bin.get();
+            int massNum = (int) bin.getShort();
             double exactMass = bin.getDouble();
-            double natAbund  = bin.get() == 1 ? bin.getDouble() : 0.0;
-            IIsotope isotope = new BODRIsotope(
-                PeriodicTable.getSymbol(atomicNum),
-                atomicNum, massNum,
-                exactMass, natAbund
-            );
+            double natAbund = bin.get() == 1 ? bin.getDouble() : 0.0;
+            IIsotope isotope = new BODRIsotope(PeriodicTable.getSymbol(atomicNum), atomicNum, massNum, exactMass,
+                    natAbund);
             add(isotope);
-		}
+        }
         majorIsotopes = new HashMap<String, IIsotope>();
-	}
+    }
 
-	/**
-	 * Gets an array of all isotopes known to the IsotopeFactory for the given
-	 * element symbol.
-	 *
-	 *@param  symbol  An element symbol to search for
-	 *@return         An array of isotopes that matches the given element symbol
-	 */
+    /**
+     * Gets an array of all isotopes known to the IsotopeFactory for the given
+     * element symbol.
+     *
+     *@param  symbol  An element symbol to search for
+     *@return         An array of isotopes that matches the given element symbol
+     */
     @TestMethod("testGetIsotopes_String")
     public IIsotope[] getIsotopes(String symbol) {
-    	if (isotopes.get(symbol) == null) return new IIsotope[0];
+        if (isotopes.get(symbol) == null) return new IIsotope[0];
         ArrayList<IIsotope> list = new ArrayList<IIsotope>();
         for (IIsotope isotope : isotopes.get(symbol)) {
             if (isotope.getSymbol().equals(symbol)) {
-            	list.add(isotope);
+                list.add(isotope);
             }
         }
         return list.toArray(new IIsotope[list.size()]);
     }
 
     /**
-	 * Gets a array of all isotopes known to the IsotopeFactory.
-	 *
-	 * @return         An array of all isotopes
-	 */
+     * Gets a array of all isotopes known to the IsotopeFactory.
+     *
+     * @return         An array of all isotopes
+     */
     @TestMethod("testGetIsotopes")
     public IIsotope[] getIsotopes() {
-    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (String element : isotopes.keySet()) {
+        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+        for (String element : isotopes.keySet()) {
             for (IIsotope isotope : isotopes.get(element)) {
                 list.add(isotope);
             }
-    	}
-    	return list.toArray(new IIsotope[list.size()]);
+        }
+        return list.toArray(new IIsotope[list.size()]);
     }
 
     /**
-	 * Gets an array of all isotopes matching the searched exact mass within
-	 * a certain difference.
-	 *
-	 * @param  exactMass  search mass
-	 * @param  difference mass the isotope is allowed to differ from the search mass
-	 * @return            An array of all isotopes
-	 */
+     * Gets an array of all isotopes matching the searched exact mass within
+     * a certain difference.
+     *
+     * @param  exactMass  search mass
+     * @param  difference mass the isotope is allowed to differ from the search mass
+     * @return            An array of all isotopes
+     */
     @TestMethod("testGetIsotopes_double_double")
     public IIsotope[] getIsotopes(double exactMass, double difference) {
-    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (String element : isotopes.keySet()) {
+        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+        for (String element : isotopes.keySet()) {
             for (IIsotope isotope : isotopes.get(element)) {
-    		    if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
-    			    list.add(isotope);
-    		    }
+                if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
+                    list.add(isotope);
+                }
             }
-    	}
-    	return list.toArray(new IIsotope[list.size()]);
+        }
+        return list.toArray(new IIsotope[list.size()]);
     }
 
     /**
@@ -173,42 +171,40 @@ public class Isotopes extends IsotopeFactory {
     @TestMethod("testGetIsotopeFromExactMass,testGetIsotopeFromExactMass_NonElement")
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
         if (isotopes.get(symbol) == null) return null;
-        IIsotope ret     = null;
-        double   minDiff = Double.MAX_VALUE;
+        IIsotope ret = null;
+        double minDiff = Double.MAX_VALUE;
         for (IIsotope isotope : isotopes.get(symbol)) {
             double diff = Math.abs(isotope.getExactMass() - exactMass);
-            if (isotope.getSymbol().equals(symbol) &&
-            	diff <= tolerance && diff < minDiff) {
-            	ret = isotope;
-            	minDiff = diff;
+            if (isotope.getSymbol().equals(symbol) && diff <= tolerance && diff < minDiff) {
+                ret = isotope;
+                minDiff = diff;
             }
         }
         return ret;
     }
 
     /**
-	 * Returns the most abundant (major) isotope with a given atomic number.
+     * Returns the most abundant (major) isotope with a given atomic number.
      *
      * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
      * defined as a number that is proportional to the 100 of the most abundant
      * isotope. For atoms with higher atomic numbers, the abundancy is defined
      * as a percentage.
-	 *
-	 * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
-	 * @return               The isotope corresponding to the given atomic number
+     *
+     * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
+     * @return               The isotope corresponding to the given atomic number
      *
      * @see #getMajorIsotope(String symbol)
      */
     @TestMethod("testGetMajorIsotope_int")
     public IIsotope getMajorIsotope(int atomicNumber) {
-    	if (isotopes.get(PeriodicTable.getSymbol(atomicNumber)) == null) return null;
+        if (isotopes.get(PeriodicTable.getSymbol(atomicNumber)) == null) return null;
         IIsotope major = null;
         for (IIsotope isotope : isotopes.get(PeriodicTable.getSymbol(atomicNumber))) {
             if (isotope.getAtomicNumber() == atomicNumber) {
-            	if (major == null||
-            		isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
-            		major = isotope;
-            	}
+                if (major == null || isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                    major = isotope;
+                }
             }
         }
         if (major == null) logger.error("Could not find major isotope for: ", atomicNumber);
@@ -227,16 +223,15 @@ public class Isotopes extends IsotopeFactory {
         if (majorIsotopes.containsKey(symbol)) {
             major = majorIsotopes.get(symbol);
         } else {
-        	if (isotopes.get(symbol) == null) {
-        		logger.error("Could not find major isotope for: ", symbol);
-        		return null;
-        	}
+            if (isotopes.get(symbol) == null) {
+                logger.error("Could not find major isotope for: ", symbol);
+                return null;
+            }
             for (IIsotope isotope : isotopes.get(symbol)) {
                 if (isotope.getSymbol().equals(symbol)) {
-                	if (major == null ||
-                		isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
-                		major = isotope;
-                	}
+                    if (major == null || isotope.getNaturalAbundance() > major.getNaturalAbundance()) {
+                        major = isotope;
+                    }
                 }
             }
             if (major == null) {

@@ -32,76 +32,80 @@ import org.junit.Test;
 public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest {
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetReactionSchemeCount() {
-    	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         Assert.assertEquals(1, scheme.getReactionSchemeCount());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testGetReactionCount() {
-    	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
-    	scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
+        scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
+        scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         Assert.assertEquals(2, scheme.getReactionCount());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testReactionSchemes() {
-        IReactionScheme scheme = (IReactionScheme)newChemObject();
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
         Assert.assertEquals(3, scheme.getReactionSchemeCount());
         int count = 0;
-        for(IReactionScheme sch: scheme.reactionSchemes()) {
-        	sch.getClass();
-        	++count;
+        for (IReactionScheme sch : scheme.reactionSchemes()) {
+            sch.getClass();
+            ++count;
         }
         Assert.assertEquals(3, count);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testReactions() {
-        IReactionScheme scheme = (IReactionScheme)newChemObject();
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
         scheme.addReaction(scheme.getBuilder().newInstance(IReaction.class));
 
         Assert.assertEquals(3, scheme.getReactionCount());
         int count = 0;
-        for(Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
-        	it.next();
-        	++count;
+        for (Iterator<IReaction> it = scheme.reactions().iterator(); it.hasNext();) {
+            it.next();
+            ++count;
         }
         Assert.assertEquals(3, count);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdd_IReactionScheme() {
-    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
@@ -113,14 +117,14 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdd_IReaction() {
-    	IReactionScheme scheme = (IReactionScheme)newChemObject();
-    	scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
+        scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
         scheme.add(scheme.getBuilder().newInstance(IReactionScheme.class));
 
@@ -130,45 +134,48 @@ public abstract class AbstractReactionSchemeTest extends AbstractReactionSetTest
         Assert.assertEquals(1, tested.getReactionSchemeCount());
         Assert.assertEquals(0, tested.getReactionCount());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testClone() throws Exception {
-    	IReactionScheme scheme = (IReactionScheme)newChemObject();
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
         Object clone = scheme.clone();
         Assert.assertTrue(clone instanceof IReactionScheme);
         Assert.assertNotSame(scheme, clone);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testRemoveReactionScheme_IReactionScheme() {
-        IReactionScheme scheme = (IReactionScheme)newChemObject();
-        IReactionScheme scheme1 = (IReactionScheme)newChemObject();
-        IReactionScheme scheme2 = (IReactionScheme)newChemObject();
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
+        IReactionScheme scheme1 = (IReactionScheme) newChemObject();
+        IReactionScheme scheme2 = (IReactionScheme) newChemObject();
         scheme.add(scheme1);
         scheme.add(scheme2);
         scheme.removeReactionScheme(scheme1);
         Assert.assertEquals(1, scheme.getReactionSchemeCount());
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testRemoveAllReactionSchemes() {
-    	 IReactionScheme scheme = (IReactionScheme)newChemObject();
-         IReactionScheme scheme1 = (IReactionScheme)newChemObject();
-         IReactionScheme scheme2 = (IReactionScheme)newChemObject();
-         scheme.add(scheme1);
-         scheme.add(scheme2);
+        IReactionScheme scheme = (IReactionScheme) newChemObject();
+        IReactionScheme scheme1 = (IReactionScheme) newChemObject();
+        IReactionScheme scheme2 = (IReactionScheme) newChemObject();
+        scheme.add(scheme1);
+        scheme.add(scheme2);
 
         Assert.assertEquals(2, scheme.getReactionSchemeCount());
         scheme.removeAllReactionSchemes();

@@ -51,23 +51,20 @@ import org.openscience.cdk.smiles.smarts.SMARTSQueryTool;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BasicGroupCountDescriptorTest")
 public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private final static String[] SMARTS_STRINGS = {
-        "[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
-        "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]",
-        "[$(N=C-N)]", "[$(N-C=N)]"
-    };
-    private final static String[] names = {"nBase"};
+    private final static String[] SMARTS_STRINGS = {"[$([NH2]-[CX4])]", "[$([NH](-[CX4])-[CX4])]",
+            "[$(N(-[CX4])(-[CX4])-[CX4])]", "[$([*;+;!$(*~[*;-])])]", "[$(N=C-N)]", "[$(N-C=N)]"};
+    private final static String[] names          = {"nBase"};
 
-    private List<SMARTSQueryTool> tools = new ArrayList<SMARTSQueryTool>();
+    private List<SMARTSQueryTool> tools          = new ArrayList<SMARTSQueryTool>();
 
     /**
      * Creates a new {@link BasicGroupCountDescriptor}.
      */
     @TestMethod("testConstructor")
-    public BasicGroupCountDescriptor() {
-    }
+    public BasicGroupCountDescriptor() {}
 
-    @Override public void initialise(IChemObjectBuilder builder) {
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
         for (String smarts : SMARTS_STRINGS) {
             tools.add(new SMARTSQueryTool(smarts, builder));
         }
@@ -77,16 +74,13 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
-            this.getClass().getName(),
-            "The Chemistry Development Kit"
-        );
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
+    public void setParameters(Object[] params) throws CDKException {}
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
@@ -95,7 +89,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     /** {@inheritDoc} */
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -104,21 +98,17 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
 
-        if(tools.isEmpty()) {
+        if (tools.isEmpty()) {
             throw new IllegalStateException("descriptor is not initalised, invoke 'initalise' first");
         }
 
         try {
             int count = 0;
             for (SMARTSQueryTool tool : tools) {
-                if (tool.matches(atomContainer))
-                    count += tool.countMatches();
+                if (tool.matches(atomContainer)) count += tool.countMatches();
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(),
-                new IntegerResult(count),
-                getDescriptorNames()
-            );
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                    count), getDescriptorNames());
         } catch (CDKException exception) {
             return getDummyDescriptorValue(exception);
         }
@@ -144,10 +134,7 @@ public class BasicGroupCountDescriptor extends AbstractMolecularDescriptor imple
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception exception) {
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), new IntegerResult(-1), getDescriptorNames(),
-            exception
-        );
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(-1),
+                getDescriptorNames(), exception);
     }
 }
-

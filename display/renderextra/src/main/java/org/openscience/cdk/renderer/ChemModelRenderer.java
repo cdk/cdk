@@ -2,23 +2,23 @@
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                     2009  Stefan Kuhn <shk3@users.sf.net>
  *                     2009  Egon Willighagen <egonw@users.sf.net>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer;
 
 import static org.openscience.cdk.renderer.BoundsCalculator.calculateBounds;
@@ -107,12 +107,11 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.ChemModelRendererTest")
-public class ChemModelRenderer extends AbstractRenderer<IChemModel>
-  implements IRenderer<IChemModel> {
+public class ChemModelRenderer extends AbstractRenderer<IChemModel> implements IRenderer<IChemModel> {
 
-	private IRenderer<IAtomContainerSet> moleculeSetRenderer;
+    private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
-	private IRenderer<IReactionSet> reactionSetRenderer;
+    private IRenderer<IReactionSet>      reactionSetRenderer;
 
     /**
      * A renderer that generates diagrams using the specified
@@ -123,63 +122,60 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	@TestMethod("testConstructor")
-	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		super(new RendererModel());
+    @TestMethod("testConstructor")
+    public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+        super(new RendererModel());
         this.fontManager = fontManager;
         for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-        moleculeSetRenderer = new MoleculeSetRenderer(rendererModel,generators, fontManager);
-        reactionSetRenderer = new ReactionSetRenderer(rendererModel,generators, fontManager);
+        moleculeSetRenderer = new MoleculeSetRenderer(rendererModel, generators, fontManager);
+        reactionSetRenderer = new ReactionSetRenderer(rendererModel, generators, fontManager);
         this.setup();
     }
 
-	public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators,
-	                List<IGenerator<IReaction>> reactionGenerators,
-	                IFontManager fontManager) {
-		super(new RendererModel());
-	    this.fontManager = fontManager;
-	    for (IGenerator<IAtomContainer> generator : generators) {
+    public ChemModelRenderer(List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager) {
+        super(new RendererModel());
+        this.fontManager = fontManager;
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-	    for (IGenerator<IReaction> generator : reactionGenerators) {
+        for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
         }
-        reactionSetRenderer =
-            new ReactionSetRenderer(rendererModel,generators, reactionGenerators, fontManager);
+        reactionSetRenderer = new ReactionSetRenderer(rendererModel, generators, reactionGenerators, fontManager);
         this.setup();
-	}
+    }
 
-	/**
-	 * Setup the transformations necessary to draw this Chem Model.
-	 *
-	 * @param chemModel
-	 * @param screen
-	 */
-	public void setup(IChemModel chemModel, Rectangle screen) {
-	    this.setScale(chemModel);
-	    Rectangle2D bounds = BoundsCalculator.calculateBounds(chemModel);
-	    if(bounds != null)
-	        this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
-	    this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
-	    this.setup();
-	}
+    /**
+     * Setup the transformations necessary to draw this Chem Model.
+     *
+     * @param chemModel
+     * @param screen
+     */
+    public void setup(IChemModel chemModel, Rectangle screen) {
+        this.setScale(chemModel);
+        Rectangle2D bounds = BoundsCalculator.calculateBounds(chemModel);
+        if (bounds != null) this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
+        this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
+        this.setup();
+    }
 
-	/**
-	 * Set the scale for an IChemModel. It calculates the average bond length of
-	 * the model and calculates the multiplication factor to transform this
-	 * to the bond length that is set in the RendererModel.
-	 *
-	 * @param chemModel
-	 */
-	public void setScale(IChemModel chemModel) {
-	    double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(chemModel);
-	    double scale = this.calculateScaleForBondLength(bondLength);
+    /**
+     * Set the scale for an IChemModel. It calculates the average bond length of
+     * the model and calculates the multiplication factor to transform this
+     * to the bond length that is set in the RendererModel.
+     *
+     * @param chemModel
+     */
+    public void setScale(IChemModel chemModel) {
+        double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(chemModel);
+        double scale = this.calculateScaleForBondLength(bondLength);
 
-	    // store the scale so that other components can access it
-	    this.rendererModel.getParameter(Scale.class).setValue(scale);
-	}
+        // store the scale so that other components can access it
+        this.rendererModel.getParameter(Scale.class).setValue(scale);
+    }
 
     /**
      * Paint an IChemModel using the IDrawVisitor at a scale determined by the
@@ -193,14 +189,14 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      */
     public Rectangle paint(IChemModel chemModel, IDrawVisitor drawVisitor) {
 
-    	IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         if (moleculeSet == null && reactionSet != null) {
             Rectangle2D totalBounds = calculateBounds(reactionSet);
             this.setupTransformNatural(totalBounds);
             IRenderingElement diagram = reactionSetRenderer.generateDiagram(reactionSet);
-            this.paint(drawVisitor,diagram);
+            this.paint(drawVisitor, diagram);
             return this.convertToDiagramBounds(totalBounds);
         }
 
@@ -208,7 +204,7 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
             Rectangle2D totalBounds = calculateBounds(moleculeSet);
             this.setupTransformNatural(totalBounds);
             IRenderingElement diagram = moleculeSetRenderer.generateDiagram(moleculeSet);
-            this.paint( drawVisitor, diagram);
+            this.paint(drawVisitor, diagram);
             return this.convertToDiagramBounds(totalBounds);
         }
 
@@ -229,48 +225,46 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         return new Rectangle(0, 0, 0, 0);
     }
 
-//	public Rectangle paintReactionSet(
-//            IReactionSet reactionSet, IDrawVisitor drawVisitor) {
-//        // total up the bounding boxes
-//        Rectangle2D totalBounds = new Rectangle2D.Double();
-//        for (IReaction reaction : reactionSet.reactions()) {
-//            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-//            if (totalBounds == null) {
-//                totalBounds = modelBounds;
-//            } else {
-//                totalBounds = totalBounds.createUnion(modelBounds);
-//            }
-//        }
-//
-//        // setup and draw
-//        this.setupTransformNatural(totalBounds);
-//        ElementGroup diagram = new ElementGroup();
-//        for (IReaction reaction : reactionSet.reactions()) {
-//            diagram.add(this.generateDiagram(reaction));
-//        }
-//        this.paint(drawVisitor, diagram);
-//
-//        // the size of the painted diagram is returned
-//        return this.convertToDiagramBounds(totalBounds);
-//    }
-//
-//	public Rectangle paintReaction(
-//	        IReaction reaction, IDrawVisitor drawVisitor) {
-//
-//        // calculate the bounds
-//        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
-//
-//        // setup and draw
-//        this.setupTransformNatural(modelBounds);
-//        IRenderingElement diagram = this.generateDiagram(reaction);
-//        this.paint(drawVisitor, diagram);
-//
-//        return this.convertToDiagramBounds(modelBounds);
-//    }
+    //	public Rectangle paintReactionSet(
+    //            IReactionSet reactionSet, IDrawVisitor drawVisitor) {
+    //        // total up the bounding boxes
+    //        Rectangle2D totalBounds = new Rectangle2D.Double();
+    //        for (IReaction reaction : reactionSet.reactions()) {
+    //            Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
+    //            if (totalBounds == null) {
+    //                totalBounds = modelBounds;
+    //            } else {
+    //                totalBounds = totalBounds.createUnion(modelBounds);
+    //            }
+    //        }
+    //
+    //        // setup and draw
+    //        this.setupTransformNatural(totalBounds);
+    //        ElementGroup diagram = new ElementGroup();
+    //        for (IReaction reaction : reactionSet.reactions()) {
+    //            diagram.add(this.generateDiagram(reaction));
+    //        }
+    //        this.paint(drawVisitor, diagram);
+    //
+    //        // the size of the painted diagram is returned
+    //        return this.convertToDiagramBounds(totalBounds);
+    //    }
+    //
+    //	public Rectangle paintReaction(
+    //	        IReaction reaction, IDrawVisitor drawVisitor) {
+    //
+    //        // calculate the bounds
+    //        Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
+    //
+    //        // setup and draw
+    //        this.setupTransformNatural(modelBounds);
+    //        IRenderingElement diagram = this.generateDiagram(reaction);
+    //        this.paint(drawVisitor, diagram);
+    //
+    //        return this.convertToDiagramBounds(modelBounds);
+    //    }
 
-
-
-	/**
+    /**
      * Paint a ChemModel.
      *
      * @param chemModel
@@ -279,10 +273,9 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
      * @param resetCenter
      *     if true, set the modelCenter to the center of the ChemModel's bounds.
      */
-    public void paint(IChemModel chemModel,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
+    public void paint(IChemModel chemModel, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
         // check for an empty model
-    	IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
+        IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         IReactionSet reactionSet = chemModel.getReactionSet();
 
         // nasty, but it seems that reactions can be read in as ChemModels
@@ -317,13 +310,13 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
     }
 
     /**
-	 * Given a chem model, calculates the bounding rectangle in screen space.
-	 *
-	 * @param model the model to draw.
-	 * @return a rectangle in screen space.
-	 */
-	public Rectangle calculateDiagramBounds(IChemModel model) {
-		IAtomContainerSet moleculeSet = model.getMoleculeSet();
+     * Given a chem model, calculates the bounding rectangle in screen space.
+     *
+     * @param model the model to draw.
+     * @return a rectangle in screen space.
+     */
+    public Rectangle calculateDiagramBounds(IChemModel model) {
+        IAtomContainerSet moleculeSet = model.getMoleculeSet();
         IReactionSet reactionSet = model.getReactionSet();
         if ((moleculeSet == null && reactionSet == null)) {
             return new Rectangle();
@@ -349,26 +342,25 @@ public class ChemModelRenderer extends AbstractRenderer<IChemModel>
         }
     }
 
-	/**
-	 * Given a bond length for a model, calculate the scale that will transform
-	 * this length to the on screen bond length in RendererModel.
-	 *
-	 * @param  modelBondLength the wanted model bond length in screen length
-	 * @return returns the scale that causes the drawn bond lengths in pixels to match
-	 *         the given model bond length
-	 */
-	public double calculateScaleForBondLength(double modelBondLength) {
-	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
+    /**
+     * Given a bond length for a model, calculate the scale that will transform
+     * this length to the on screen bond length in RendererModel.
+     *
+     * @param  modelBondLength the wanted model bond length in screen length
+     * @return returns the scale that causes the drawn bond lengths in pixels to match
+     *         the given model bond length
+     */
+    public double calculateScaleForBondLength(double modelBondLength) {
+        if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
-            return this.rendererModel.getParameter(BondLength.class)
-        		.getValue() / modelBondLength;
+            return this.rendererModel.getParameter(BondLength.class).getValue() / modelBondLength;
         }
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public List<IGenerator<IChemModel>> getGenerators(){
-	    return null;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public List<IGenerator<IChemModel>> getGenerators() {
+        return null;
+    }
 }

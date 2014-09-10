@@ -75,7 +75,9 @@ public class MoSSOutputFormat extends SimpleChemFormatMatcher implements IChemFo
 
     /** {@inheritDoc} */
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { return null; }
+    public String getWriterClassName() {
+        return null;
+    }
 
     /** {@inheritDoc} */
     @TestMethod("testMatches")

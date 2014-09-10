@@ -36,24 +36,24 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  * @cdk.module  render
  * @cdk.githash
  */
-public interface IGenerator<T extends IChemObject>  {
+public interface IGenerator<T extends IChemObject> {
 
-	/**
-	 * Returns the list of {@link IGeneratorParameter} for this particular
-	 * generator.
-	 *
-	 * @return a {@link List} of {@link IGeneratorParameter}s
-	 */
-	public List<IGeneratorParameter<?>> getParameters();
+    /**
+     * Returns the list of {@link IGeneratorParameter} for this particular
+     * generator.
+     *
+     * @return a {@link List} of {@link IGeneratorParameter}s
+     */
+    public List<IGeneratorParameter<?>> getParameters();
 
-	/**
-	 * Converts a {@link IChemObject} from the chemical data model into
-	 * something that can be drawn in the chemical drawing.
-	 *
-	 * @param object the chemical entity to be depicted
-	 * @param model  the rendering parameters
-	 * @return       a drawable chemical depiction component
-	 */
-	public IRenderingElement generate(T object, RendererModel model);
+    /**
+     * Converts a {@link IChemObject} from the chemical data model into
+     * something that can be drawn in the chemical drawing.
+     *
+     * @param object the chemical entity to be depicted
+     * @param model  the rendering parameters
+     * @return       a drawable chemical depiction component
+     */
+    public IRenderingElement generate(T object, RendererModel model);
 
 }

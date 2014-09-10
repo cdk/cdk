@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class SybylDescriptorFormatTest extends ChemFormatTest {
 
     public SybylDescriptorFormatTest() {
-        super.setChemFormat((IChemFormat)SybylDescriptorFormat.getInstance());
+        super.setChemFormat((IChemFormat) SybylDescriptorFormat.getInstance());
     }
 
 }

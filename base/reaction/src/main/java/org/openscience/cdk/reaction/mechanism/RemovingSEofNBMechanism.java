@@ -47,10 +47,10 @@ import java.util.List;
  * @cdk.module     reaction
  * @cdk.githash
  */
-@TestClass(value="org.openscience.cdk.reaction.mechanism.RemovingSEofNBMechanismTest")
-public class RemovingSEofNBMechanism implements IReactionMechanism{
+@TestClass(value = "org.openscience.cdk.reaction.mechanism.RemovingSEofNBMechanismTest")
+public class RemovingSEofNBMechanism implements IReactionMechanism {
 
-	/**
+    /**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -60,54 +60,56 @@ public class RemovingSEofNBMechanism implements IReactionMechanism{
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one Bond
      * @return            The Reaction mechanism
      *
-	 */
-    @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
-	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
-		if (atomContainerSet.getAtomContainerCount() != 1) {
-			throw new CDKException("RemovingSEofNBMechanism only expects one IMolecule");
-		}
-		if (atomList.size() != 1) {
-			throw new CDKException("RemovingSEofNBMechanism only expects one atom in the ArrayList");
-		}
-		if (bondList != null) {
-			throw new CDKException("RemovingSEofNBMechanism don't expect any bond in the ArrayList");
-		}
-		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
-		IAtomContainer reactantCloned;
-		try {
-			reactantCloned = (IAtomContainer) molecule.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
+     */
+    @TestMethod(value = "testInitiate_IAtomContainerSet_ArrayList_ArrayList")
+    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+            throws CDKException {
+        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+        if (atomContainerSet.getAtomContainerCount() != 1) {
+            throw new CDKException("RemovingSEofNBMechanism only expects one IMolecule");
+        }
+        if (atomList.size() != 1) {
+            throw new CDKException("RemovingSEofNBMechanism only expects one atom in the ArrayList");
+        }
+        if (bondList != null) {
+            throw new CDKException("RemovingSEofNBMechanism don't expect any bond in the ArrayList");
+        }
+        IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
+        IAtomContainer reactantCloned;
+        try {
+            reactantCloned = (IAtomContainer) molecule.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Could not clone IMolecule!", e);
+        }
 
-		// remove one lone pair electron and substitute with one single electron and charge 1.
-		int posAtom = molecule.getAtomNumber(atomList.get(0));
-		List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posAtom));
-		reactantCloned.removeLonePair(lps.get(lps.size() - 1));
+        // remove one lone pair electron and substitute with one single electron and charge 1.
+        int posAtom = molecule.getAtomNumber(atomList.get(0));
+        List<ILonePair> lps = reactantCloned.getConnectedLonePairsList(reactantCloned.getAtom(posAtom));
+        reactantCloned.removeLonePair(lps.get(lps.size() - 1));
 
-		reactantCloned.addSingleElectron(molecule.getBuilder().newInstance(ISingleElectron.class, reactantCloned.getAtom(posAtom)));
-		int charge = reactantCloned.getAtom(posAtom).getFormalCharge();
-		reactantCloned.getAtom(posAtom).setFormalCharge(charge+1);
+        reactantCloned.addSingleElectron(molecule.getBuilder().newInstance(ISingleElectron.class,
+                reactantCloned.getAtom(posAtom)));
+        int charge = reactantCloned.getAtom(posAtom).getFormalCharge();
+        reactantCloned.getAtom(posAtom).setFormalCharge(charge + 1);
 
-		// check if resulting atom type is reasonable
-		reactantCloned.getAtom(posAtom).setHybridization(null);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
-		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(posAtom));
-		if (type == null || type.getAtomTypeName().equals("X"))
-			return null;
+        // check if resulting atom type is reasonable
+        reactantCloned.getAtom(posAtom).setHybridization(null);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, reactantCloned.getAtom(posAtom));
+        if (type == null || type.getAtomTypeName().equals("X")) return null;
 
-		IReaction reaction = molecule.getBuilder().newInstance(IReaction.class);
-		reaction.addReactant(molecule);
+        IReaction reaction = molecule.getBuilder().newInstance(IReaction.class);
+        reaction.addReactant(molecule);
 
-		/* mapping */
-		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = molecule.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
-			reaction.addMapping(mapping);
-	    }
-		reaction.addProduct(reactantCloned);
+        /* mapping */
+        for (IAtom atom : molecule.atoms()) {
+            IMapping mapping = molecule.getBuilder().newInstance(IMapping.class, atom,
+                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+            reaction.addMapping(mapping);
+        }
+        reaction.addProduct(reactantCloned);
 
-		return reaction;
-	}
+        return reaction;
+    }
 
 }

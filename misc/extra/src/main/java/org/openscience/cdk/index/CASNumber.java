@@ -72,17 +72,17 @@ public class CASNumber {
         overall = overall && matcher.matches();
 
         if (matcher.matches()) {
-			/*
-			 * check number
-			 */
-			String part1 = matcher.group(1);
-			String part2 = matcher.group(2);
-			String part3 = matcher.group(3);
-	                int part1value = Integer.parseInt(part1);
-			if (part1value < 50) {
-	                    overall = false;
-			    // CAS numbers start at 50-00-0
-			} else {
+            /*
+             * check number
+             */
+            String part1 = matcher.group(1);
+            String part2 = matcher.group(2);
+            String part3 = matcher.group(3);
+            int part1value = Integer.parseInt(part1);
+            if (part1value < 50) {
+                overall = false;
+                // CAS numbers start at 50-00-0
+            } else {
                 int digit = CASNumber.calculateCheckDigit(part1, part2);
                 overall = overall && (digit == Integer.parseInt(part3));
             }
@@ -93,11 +93,11 @@ public class CASNumber {
 
     private static int calculateCheckDigit(String part1, String part2) {
         int total = 0;
-        total = total + 1*Integer.parseInt(part2.substring(1,2));
-        total = total + 2*Integer.parseInt(part2.substring(0,1));
+        total = total + 1 * Integer.parseInt(part2.substring(1, 2));
+        total = total + 2 * Integer.parseInt(part2.substring(0, 1));
         int length = part1.length();
-        for (int i=0; i<length; i++) {
-            total = total + (3+i)*Integer.parseInt(part1.substring(length-1-i,length-i));
+        for (int i = 0; i < length; i++) {
+            total = total + (3 + i) * Integer.parseInt(part1.substring(length - 1 - i, length - i));
         }
         return total % 10;
     }

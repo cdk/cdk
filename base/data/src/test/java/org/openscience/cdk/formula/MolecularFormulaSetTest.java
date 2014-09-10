@@ -36,25 +36,27 @@ import org.openscience.cdk.interfaces.IMolecularFormulaSet;
  */
 public class MolecularFormulaSetTest extends AbstractMolecularFormulaSetTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testMolecularFormulaSet() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet();
         Assert.assertNotNull(mfS);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testMolecularFormulaSet_IMolecularFormula() {
         IMolecularFormulaSet mfS = new MolecularFormulaSet(getBuilder().newInstance(IMolecularFormula.class));

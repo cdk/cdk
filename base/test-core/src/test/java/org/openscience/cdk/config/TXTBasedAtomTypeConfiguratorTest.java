@@ -32,8 +32,8 @@ import java.io.InputStream;
  *
  * @cdk.module test-core
  */
-public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
-{
+public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase {
+
     @Test
     public void testTXTBasedAtomTypeConfigurator() {
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
@@ -46,13 +46,12 @@ public class TXTBasedAtomTypeConfiguratorTest extends CDKTestCase
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         TXTBasedAtomTypeConfigurator configurator = new TXTBasedAtomTypeConfigurator();
         configurator.setInputStream(ins);
-        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size()
-        );
+        Assert.assertNotSame(0, configurator.readAtomTypes(new ChemObject().getBuilder()).size());
     }
 
     @Test
     public void testSetInputStream_InputStream() throws Exception {
-    	testReadAtomTypes_IChemObjectBuilder();
+        testReadAtomTypes_IChemObjectBuilder();
     }
 
 }

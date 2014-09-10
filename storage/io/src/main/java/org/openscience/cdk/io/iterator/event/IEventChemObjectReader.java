@@ -43,4 +43,3 @@ public interface IEventChemObjectReader extends IChemObjectIO {
     public IAtomContainer getAtomContainer();
 
 }
-

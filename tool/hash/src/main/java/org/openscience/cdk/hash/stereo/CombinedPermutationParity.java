@@ -56,8 +56,8 @@ final class CombinedPermutationParity extends PermutationParity {
      * @inheritDoc
      */
     @TestMethod("testParity")
-    @Override public int parity(long[] current) {
+    @Override
+    public int parity(long[] current) {
         return left.parity(current) * right.parity(current);
     }
 }
-

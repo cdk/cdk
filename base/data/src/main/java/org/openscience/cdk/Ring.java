@@ -34,113 +34,106 @@ import org.openscience.cdk.interfaces.IRing;
  * @cdk.githash
  * @cdk.keyword ring
  */
-public class Ring extends AtomContainer implements java.io.Serializable, IRing
-{
+public class Ring extends AtomContainer implements java.io.Serializable, IRing {
 
-	/**
+    /**
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 6604894792331865990L;
+     */
+    private static final long serialVersionUID = 6604894792331865990L;
 
-	/**
-	 * Constructs an empty ring.
-	 *
-	 */
-	public Ring() {
-		super();
-	}
+    /**
+     * Constructs an empty ring.
+     *
+     */
+    public Ring() {
+        super();
+    }
 
     /**
      * Constructs a ring from the atoms in an IAtomContainer object.
      *
      * @param atomContainer The IAtomContainer object containing the atoms to form the ring
      */
-	public Ring(IAtomContainer atomContainer)
-	{
-		super(atomContainer);
-	}
+    public Ring(IAtomContainer atomContainer) {
+        super(atomContainer);
+    }
 
-	/**
-	 * Constructs a ring that will have a certain number of atoms of the given elements.
-	 *
-	 * @param   ringSize   The number of atoms and bonds the ring will have
-	 * @param   elementSymbol   The element of the atoms the ring will have
-	 */
-	public Ring(int ringSize, String elementSymbol) {
-		this(ringSize);
-		super.atomCount = ringSize;
-		super.bondCount = ringSize;
-		atoms[0] = new Atom(elementSymbol);
-		for (int i = 1; i < ringSize; i++) {
-			atoms[i] = new Atom(elementSymbol);
-			super.bonds[i-1] = new Bond(atoms[i - 1], atoms[i], IBond.Order.SINGLE);
-		}
-		super.bonds[ringSize-1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
-	}
+    /**
+     * Constructs a ring that will have a certain number of atoms of the given elements.
+     *
+     * @param   ringSize   The number of atoms and bonds the ring will have
+     * @param   elementSymbol   The element of the atoms the ring will have
+     */
+    public Ring(int ringSize, String elementSymbol) {
+        this(ringSize);
+        super.atomCount = ringSize;
+        super.bondCount = ringSize;
+        atoms[0] = new Atom(elementSymbol);
+        for (int i = 1; i < ringSize; i++) {
+            atoms[i] = new Atom(elementSymbol);
+            super.bonds[i - 1] = new Bond(atoms[i - 1], atoms[i], IBond.Order.SINGLE);
+        }
+        super.bonds[ringSize - 1] = new Bond(atoms[ringSize - 1], atoms[0], IBond.Order.SINGLE);
+    }
 
+    /**
+     * Constructs an empty ring that will have a certain size.
+     *
+     * @param   ringSize  The size (number of atoms) the ring will have
+     */
 
-	/**
-	 * Constructs an empty ring that will have a certain size.
-	 *
-	 * @param   ringSize  The size (number of atoms) the ring will have
-	 */
+    public Ring(int ringSize) {
+        super(ringSize, ringSize, 0, 0);
+    }
 
-	public Ring(int ringSize) {
-		super(ringSize, ringSize, 0, 0);
-	}
+    /**
+     * Returns the number of atoms\edges in this ring.
+     *
+     * @return   The number of atoms\edges in this ring
+     */
 
+    public int getRingSize() {
+        return this.atomCount;
+    }
 
-	/**
-	 * Returns the number of atoms\edges in this ring.
-	 *
-	 * @return   The number of atoms\edges in this ring
-	 */
-
-	public int getRingSize() {
-		return this.atomCount;
-	}
-
-
-	/**
-	 * Returns the next bond in order, relative to a given bond and atom.
-	 * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2)
-	 * will return Bond 2-3.
-	 *
-	 * @param   bond  A bond for which an atom from a consecutive bond is sought
-	 * @param   atom  A atom from the bond above to assign a search direction
-	 * @return  The next bond in the order given by the above assignment
-	 */
-	public IBond getNextBond(IBond bond, IAtom atom)
-	{
-		IBond tempBond;
-		for (int f = 0; f < getBondCount(); f++) {
-			tempBond = getBond(f);
+    /**
+     * Returns the next bond in order, relative to a given bond and atom.
+     * Example: Let the ring be composed of 0-1, 1-2, 2-3 and 3-0. A request getNextBond(1-2, 2)
+     * will return Bond 2-3.
+     *
+     * @param   bond  A bond for which an atom from a consecutive bond is sought
+     * @param   atom  A atom from the bond above to assign a search direction
+     * @return  The next bond in the order given by the above assignment
+     */
+    public IBond getNextBond(IBond bond, IAtom atom) {
+        IBond tempBond;
+        for (int f = 0; f < getBondCount(); f++) {
+            tempBond = getBond(f);
             if (tempBond.contains(atom) && bond != tempBond) return tempBond;
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
-	/**
-	 * Returns the sum of all bond orders in the ring.
-	 *
-	 * @return the sum of all bond orders in the ring
-	 */
-	public int getBondOrderSum()
-	{
-		int sum = 0;
+    /**
+     * Returns the sum of all bond orders in the ring.
+     *
+     * @return the sum of all bond orders in the ring
+     */
+    public int getBondOrderSum() {
+        int sum = 0;
         for (int i = 0; i < getBondCount(); i++) {
             IBond.Order order = getBond(i).getOrder();
-            if(order != null) {
-	            sum += order.numeric();
+            if (order != null) {
+                sum += order.numeric();
             }
         }
-		return sum;
-	}
+        return sum;
+    }
 
     /**
      * @inheritDoc
@@ -151,11 +144,11 @@ public class Ring extends AtomContainer implements java.io.Serializable, IRing
     }
 
     public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("Ring(");
-		buffer.append(super.toString());
-		buffer.append(')');
-		return buffer.toString();
-	}
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("Ring(");
+        buffer.append(super.toString());
+        buffer.append(')');
+        return buffer.toString();
+    }
 
 }

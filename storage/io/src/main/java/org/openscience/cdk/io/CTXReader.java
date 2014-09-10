@@ -54,11 +54,10 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @TestClass("org.openscience.cdk.io.CTXReaderTest")
 public class CTXReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CTXReader.class);
+    private BufferedReader      input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReader.class);
 
-    private IChemFile file;
+    private IChemFile           file;
 
     public CTXReader() {
         file = null;
@@ -67,7 +66,7 @@ public class CTXReader extends DefaultChemObjectReader {
     public CTXReader(Reader input) {
         this();
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -85,7 +84,7 @@ public class CTXReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
-            this.input = (BufferedReader)reader;
+            this.input = (BufferedReader) reader;
         } else {
             this.input = new BufferedReader(reader);
         }
@@ -96,22 +95,22 @@ public class CTXReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-        	file = (IChemFile)object;
-            return (T)readChemFile();
+            file = (IChemFile) object;
+            return (T) readChemFile();
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
@@ -131,23 +130,24 @@ public class CTXReader extends DefaultChemObjectReader {
                 logger.debug((lineNumber++) + ": ", line);
                 String command = null;
                 if (isCommand(line)) {
-                	command = getCommand(line);
-                	int lineCount = getContentLinesCount(line);
-            		if ("ATOMS".equals(command)) {
-            			processAtomsBlock(lineCount, container);
-            		} else if ("BONDS".equals(command)) {
-            			processBondsBlock(lineCount, container);
-            		} else if ("IDENT".equals(command)) {
-            			processIdentBlock(lineCount, container);
-            		} else if ("NAME".equals(command)) {
-            			processNameBlock(lineCount, container);
-            		} else {
-            			// skip lines
-            			logger.warn("Dropping block: ", command);
-            			for (int i=0; i<lineCount; i++) input.readLine();
-            		}
+                    command = getCommand(line);
+                    int lineCount = getContentLinesCount(line);
+                    if ("ATOMS".equals(command)) {
+                        processAtomsBlock(lineCount, container);
+                    } else if ("BONDS".equals(command)) {
+                        processBondsBlock(lineCount, container);
+                    } else if ("IDENT".equals(command)) {
+                        processIdentBlock(lineCount, container);
+                    } else if ("NAME".equals(command)) {
+                        processNameBlock(lineCount, container);
+                    } else {
+                        // skip lines
+                        logger.warn("Dropping block: ", command);
+                        for (int i = 0; i < lineCount; i++)
+                            input.readLine();
+                    }
                 } else {
-                	logger.warn("Unexpected content at line: ", lineNumber);
+                    logger.warn("Unexpected content at line: ", lineNumber);
                 }
                 line = input.readLine();
             }
@@ -165,63 +165,61 @@ public class CTXReader extends DefaultChemObjectReader {
     }
 
     private void processIdentBlock(int lineCount, IAtomContainer container) throws IOException {
-    	String identifier = "";
-    	for (int i=0; i<lineCount; i++) {
-			identifier = identifier + input.readLine().trim();
-    	}
-    	container.setID(identifier);
+        String identifier = "";
+        for (int i = 0; i < lineCount; i++) {
+            identifier = identifier + input.readLine().trim();
+        }
+        container.setID(identifier);
     }
 
     private void processNameBlock(int lineCount, IAtomContainer container) throws IOException {
-    	String name = "";
-    	for (int i=0; i<lineCount; i++) {
-    		name = name + input.readLine().trim();
-    	}
-    	container.setProperty(CDKConstants.TITLE, name);
+        String name = "";
+        for (int i = 0; i < lineCount; i++) {
+            name = name + input.readLine().trim();
+        }
+        container.setProperty(CDKConstants.TITLE, name);
     }
 
-	private void processAtomsBlock(int lineCount, IAtomContainer container) throws IOException {
-		for (int i=0; i<lineCount; i++) {
-			String line = input.readLine();
-			int atomicNumber = Integer.parseInt(line.substring(7,10).trim());
-			IAtom atom = container.getBuilder().newInstance(IAtom.class);
-			atom.setAtomicNumber(atomicNumber);
-			atom.setSymbol(PeriodicTable.getSymbol(atomicNumber));
-			container.addAtom(atom);
-		}
-	}
+    private void processAtomsBlock(int lineCount, IAtomContainer container) throws IOException {
+        for (int i = 0; i < lineCount; i++) {
+            String line = input.readLine();
+            int atomicNumber = Integer.parseInt(line.substring(7, 10).trim());
+            IAtom atom = container.getBuilder().newInstance(IAtom.class);
+            atom.setAtomicNumber(atomicNumber);
+            atom.setSymbol(PeriodicTable.getSymbol(atomicNumber));
+            container.addAtom(atom);
+        }
+    }
 
-	private void processBondsBlock(int lineCount, IAtomContainer container) throws IOException {
-		for (int i=0; i<lineCount; i++) {
-			String line = input.readLine();
-			int atom1 = Integer.parseInt(line.substring(10,13).trim())-1;
-			int atom2 = Integer.parseInt(line.substring(16,19).trim())-1;
-			if (container.getBond(container.getAtom(atom1), container.getAtom(atom2)) == null) {
-				IBond bond = container.getBuilder().newInstance(IBond.class,
-					container.getAtom(atom1),
-					container.getAtom(atom2)
-				);
-				int order = Integer.parseInt(line.substring(23).trim());
-				bond.setOrder(BondManipulator.createBondOrder((double)order));
-				container.addBond(bond);
-			} // else: bond already present; CTX store the bonds twice
-		}
-	}
+    private void processBondsBlock(int lineCount, IAtomContainer container) throws IOException {
+        for (int i = 0; i < lineCount; i++) {
+            String line = input.readLine();
+            int atom1 = Integer.parseInt(line.substring(10, 13).trim()) - 1;
+            int atom2 = Integer.parseInt(line.substring(16, 19).trim()) - 1;
+            if (container.getBond(container.getAtom(atom1), container.getAtom(atom2)) == null) {
+                IBond bond = container.getBuilder().newInstance(IBond.class, container.getAtom(atom1),
+                        container.getAtom(atom2));
+                int order = Integer.parseInt(line.substring(23).trim());
+                bond.setOrder(BondManipulator.createBondOrder((double) order));
+                container.addBond(bond);
+            } // else: bond already present; CTX store the bonds twice
+        }
+    }
 
-	private int getContentLinesCount(String line) {
-		return Integer.parseInt(line.substring(18,21).trim());
-	}
+    private int getContentLinesCount(String line) {
+        return Integer.parseInt(line.substring(18, 21).trim());
+    }
 
-	private String getCommand(String line) {
-		return line.substring(2,10).trim();
-	}
+    private String getCommand(String line) {
+        return line.substring(2, 10).trim();
+    }
 
-	private boolean isCommand(String line) {
-		return (line.length() > 1 && line.charAt(0) == ' ' && line.charAt(1) == '/');
-	}
+    private boolean isCommand(String line) {
+        return (line.length() > 1 && line.charAt(0) == ' ' && line.charAt(1) == '/');
+    }
 
-	@TestMethod("testClose")
-  public void close() throws IOException {
+    @TestMethod("testClose")
+    public void close() throws IOException {
         input.close();
     }
 }

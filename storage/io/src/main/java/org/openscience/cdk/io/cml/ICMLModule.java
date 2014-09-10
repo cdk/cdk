@@ -35,16 +35,20 @@ import org.xml.sax.Attributes;
  *
  * @author Egon Willighagen <egonw@sci.kun.nl>
  **/
-public interface ICMLModule{
+public interface ICMLModule {
 
-  void startDocument();
-  void endDocument();
-  void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
-  void endElement(CMLStack xpath, String uri, String local, String raw);
-  void characterData(CMLStack xpath, char ch[], int start, int length);
+    void startDocument();
 
-  IChemFile returnChemFile();
+    void endDocument();
 
-  void inherit(ICMLModule conv);
+    void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts);
+
+    void endElement(CMLStack xpath, String uri, String local, String raw);
+
+    void characterData(CMLStack xpath, char ch[], int start, int length);
+
+    IChemFile returnChemFile();
+
+    void inherit(ICMLModule conv);
 
 }

@@ -36,84 +36,84 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.io.cml.CMLStackTest")
 public class CMLModuleStack {
 
-  ICMLModule[] stack = new ICMLModule[64];
-  int sp = 0;
+    ICMLModule[] stack = new ICMLModule[64];
+    int          sp    = 0;
 
-  /**
-   * Adds an entry to the stack.
-   */
-  @TestMethod("testPush_String")
-  public void push(ICMLModule item) {
-    if (sp == stack.length) {
-    	ICMLModule[] temp = new ICMLModule[2 * sp];
-    	System.arraycopy(stack, 0, temp, 0, sp);
-    	stack = temp;
+    /**
+     * Adds an entry to the stack.
+     */
+    @TestMethod("testPush_String")
+    public void push(ICMLModule item) {
+        if (sp == stack.length) {
+            ICMLModule[] temp = new ICMLModule[2 * sp];
+            System.arraycopy(stack, 0, temp, 0, sp);
+            stack = temp;
+        }
+        stack[sp++] = item;
     }
-    stack[sp++] = item;
-  }
 
-  public int length() {
-	  return sp;
-  }
-
-  /**
-   * Retrieves and deletes to last added entry.
-   *
-   * @see #current()
-   */
-  @TestMethod("testPop")
-  public ICMLModule pop() {
-    return stack[--sp];
-  }
-
-  /**
-   * Returns the last added entry.
-   *
-   * @see #pop()
-   */
-  @TestMethod("testCurrent")
-  public ICMLModule current() {
-    if (sp > 0) {
-        return stack[sp-1];
-    } else {
-        return null;
+    public int length() {
+        return sp;
     }
-  }
 
-  /**
-   * Returns a String representation of the stack.
-   */
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append('/');
-    for (int i = 0; i < sp; ++i) {
-      sb.append(stack[i].getClass().getSimpleName());
-      sb.append('/');
+    /**
+     * Retrieves and deletes to last added entry.
+     *
+     * @see #current()
+     */
+    @TestMethod("testPop")
+    public ICMLModule pop() {
+        return stack[--sp];
     }
-    return sb.toString();
-  }
 
-  /**
-   * Convenience method to check the last added elements.
-   */
-  @TestMethod("testEndsWith_String")
-  public boolean endsWith(ICMLModule lastElement) {
-    return stack[sp-1].equals(lastElement);
-  }
+    /**
+     * Returns the last added entry.
+     *
+     * @see #pop()
+     */
+    @TestMethod("testCurrent")
+    public ICMLModule current() {
+        if (sp > 0) {
+            return stack[sp - 1];
+        } else {
+            return null;
+        }
+    }
 
-  /**
-   * Convenience method to check the last two added elements.
-   */
-  @TestMethod("testEndsWith_String_String")
-  public boolean endsWith(ICMLModule oneButLast, ICMLModule lastElement) {
-	    return endsWith(lastElement) && stack[sp-2].equals(oneButLast);
-  }
+    /**
+     * Returns a String representation of the stack.
+     */
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append('/');
+        for (int i = 0; i < sp; ++i) {
+            sb.append(stack[i].getClass().getSimpleName());
+            sb.append('/');
+        }
+        return sb.toString();
+    }
 
-  /**
-   * Convenience method to check the last three added elements.
-   */
-  @TestMethod("testEndsWith_String_String_String")
-  public boolean endsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement) {
-	    return endsWith(oneButLast,lastElement) && stack[sp-3].equals(twoButLast);
-  }
+    /**
+     * Convenience method to check the last added elements.
+     */
+    @TestMethod("testEndsWith_String")
+    public boolean endsWith(ICMLModule lastElement) {
+        return stack[sp - 1].equals(lastElement);
+    }
+
+    /**
+     * Convenience method to check the last two added elements.
+     */
+    @TestMethod("testEndsWith_String_String")
+    public boolean endsWith(ICMLModule oneButLast, ICMLModule lastElement) {
+        return endsWith(lastElement) && stack[sp - 2].equals(oneButLast);
+    }
+
+    /**
+     * Convenience method to check the last three added elements.
+     */
+    @TestMethod("testEndsWith_String_String_String")
+    public boolean endsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement) {
+        return endsWith(oneButLast, lastElement) && stack[sp - 3].equals(twoButLast);
+    }
 }

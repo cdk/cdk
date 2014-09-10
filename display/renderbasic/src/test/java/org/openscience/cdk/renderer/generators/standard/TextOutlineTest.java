@@ -149,10 +149,8 @@ public class TextOutlineTest {
     public void testToString() throws Exception {
         TextOutline outline = new TextOutline("Cl", font);
         Rectangle2D bounds = outline.getBounds();
-        assertThat(outline.toString(), is("Cl [x=" + toString(bounds.getX())
-                                                  + ", y=" + toString(bounds.getY())
-                                                  + ", w=" + toString(bounds.getWidth())
-                                                  + ", h=" + toString(bounds.getHeight()) + "]"));
+        assertThat(outline.toString(), is("Cl [x=" + toString(bounds.getX()) + ", y=" + toString(bounds.getY())
+                + ", w=" + toString(bounds.getWidth()) + ", h=" + toString(bounds.getHeight()) + "]"));
     }
 
     static String toString(double x) {

@@ -46,138 +46,139 @@ public class PiBondModelTest {
 
     private static ElectronDonation model = ElectronDonation.piBonds();
 
-    @Test public void benzene() throws Exception {
-        test(TestMoleculeFactory.makeBenzene(),
-             1, 1, 1, 1, 1, 1);
+    @Test
+    public void benzene() throws Exception {
+        test(TestMoleculeFactory.makeBenzene(), 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void triazole() throws Exception {
-        test(TestMoleculeFactory.make123Triazole(),
-             1, -1, 1, 1, 1);
+    @Test
+    public void triazole() throws Exception {
+        test(TestMoleculeFactory.make123Triazole(), 1, -1, 1, 1, 1);
     }
 
-    @Test public void furan() throws Exception {
-        test(smiles("O1C=CC=C1"),
-             -1, 1, 1, 1, 1);
+    @Test
+    public void furan() throws Exception {
+        test(smiles("O1C=CC=C1"), -1, 1, 1, 1, 1);
     }
 
-    @Test public void pyrrole() throws Exception {
-        test(smiles("N1C=CC=C1"),
-             -1, 1, 1, 1, 1);
+    @Test
+    public void pyrrole() throws Exception {
+        test(smiles("N1C=CC=C1"), -1, 1, 1, 1, 1);
     }
 
-    @Test public void methylpyrrole() throws Exception {
-        test(smiles("CN1C=CC=C1"),
-             -1, -1, 1, 1, 1, 1);
+    @Test
+    public void methylpyrrole() throws Exception {
+        test(smiles("CN1C=CC=C1"), -1, -1, 1, 1, 1, 1);
     }
 
-    @Test public void pyridine() throws Exception {
-        test(smiles("C1=CC=NC=C1"),
-             1, 1, 1, 1, 1, 1);
+    @Test
+    public void pyridine() throws Exception {
+        test(smiles("C1=CC=NC=C1"), 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void hexamethylidenecyclohexane() throws Exception {
-        test(smiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"),
-             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
+    @Test
+    public void hexamethylidenecyclohexane() throws Exception {
+        test(smiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"), -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
     }
 
-    @Test public void cyclopentadienyl() throws Exception {
-        test(smiles("[CH-]1C=CC=C1"),
-             -1, 1, 1, 1, 1);
+    @Test
+    public void cyclopentadienyl() throws Exception {
+        test(smiles("[CH-]1C=CC=C1"), -1, 1, 1, 1, 1);
     }
 
-    @Test public void pyridineOxide() throws Exception {
-        test(TestMoleculeFactory.makePyridineOxide(),
-             1, 1, 1, 1, 1, 1, -1);
+    @Test
+    public void pyridineOxide() throws Exception {
+        test(TestMoleculeFactory.makePyridineOxide(), 1, 1, 1, 1, 1, 1, -1);
     }
 
-    @Test public void isoindole() throws Exception {
-        test(smiles("C2=C1C=CC=CC1=CN2"),
-             1, 1, 1, 1, 1, 1, 1, 1, -1);
+    @Test
+    public void isoindole() throws Exception {
+        test(smiles("C2=C1C=CC=CC1=CN2"), 1, 1, 1, 1, 1, 1, 1, 1, -1);
     }
 
-    @Test public void azulene() throws Exception {
-        test(TestMoleculeFactory.makeAzulene(),
-             1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void azulene() throws Exception {
+        test(TestMoleculeFactory.makeAzulene(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void indole() throws Exception {
-        test(TestMoleculeFactory.makeIndole(),
-             1, 1, 1, 1, 1, 1, 1, 1, -1);
+    @Test
+    public void indole() throws Exception {
+        test(TestMoleculeFactory.makeIndole(), 1, 1, 1, 1, 1, 1, 1, 1, -1);
     }
 
-    @Test public void thiazole() throws Exception {
-        test(TestMoleculeFactory.makeThiazole(),
-             1, 1, 1, -1, 1);
+    @Test
+    public void thiazole() throws Exception {
+        test(TestMoleculeFactory.makeThiazole(), 1, 1, 1, -1, 1);
     }
 
-    @Test public void tetradehydrodecaline() throws Exception {
-        test(smiles("C1CCC2=CC=CC=C2C1"),
-             -1, -1, -1, 1, 1, 1, 1, 1, 1, -1);
+    @Test
+    public void tetradehydrodecaline() throws Exception {
+        test(smiles("C1CCC2=CC=CC=C2C1"), -1, -1, -1, 1, 1, 1, 1, 1, 1, -1);
     }
 
-    @Test public void tropyliumcation() throws Exception {
-        test(smiles("[CH+]1C=CC=CC=C1"),
-             -1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void tropyliumcation() throws Exception {
+        test(smiles("[CH+]1C=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void tropone() throws Exception {
-        test(smiles("O=C1C=CC=CC=C1"),
-             -1, -1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void tropone() throws Exception {
+        test(smiles("O=C1C=CC=CC=C1"), -1, -1, 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void porphyrine() throws Exception {
-        test(smiles("N1C2=CC=C1C=C1C=CC(C=C3NC(C=C3)=CC3=NC(C=C3)=C2)=N1"),
-             -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void porphyrine() throws Exception {
+        test(smiles("N1C2=CC=C1C=C1C=CC(C=C3NC(C=C3)=CC3=NC(C=C3)=C2)=N1"), -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1,
+                1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void quinone() throws Exception {
-        test(smiles("O=C1C=CC(=O)C=C1"),
-             -1, -1, 1, 1, -1, -1, 1, 1);
+    @Test
+    public void quinone() throws Exception {
+        test(smiles("O=C1C=CC(=O)C=C1"), -1, -1, 1, 1, -1, -1, 1, 1);
     }
 
-    @Test public void cyclobutadiene() throws Exception {
-        test(smiles("C1=CC=C1"),
-             1, 1, 1, 1);
+    @Test
+    public void cyclobutadiene() throws Exception {
+        test(smiles("C1=CC=C1"), 1, 1, 1, 1);
     }
 
-    @Test public void aminomethylpyridine() throws Exception {
-        test(smiles("CC1=NC=CC=C1N"),
-             -1, 1, 1, 1, 1, 1, 1, -1);
+    @Test
+    public void aminomethylpyridine() throws Exception {
+        test(smiles("CC1=NC=CC=C1N"), -1, 1, 1, 1, 1, 1, 1, -1);
     }
 
-    @Test public void indolizine() throws Exception {
-        test(smiles("C1=CN2C=CC=CC2=C1"),
-             1, 1, -1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void indolizine() throws Exception {
+        test(smiles("C1=CN2C=CC=CC2=C1"), 1, 1, -1, 1, 1, 1, 1, 1, 1);
     }
 
-    @Test public void imidazothiazole() throws Exception {
-        test(smiles("S1C=CN2C=CN=C12"),
-             -1, 1, 1, -1, 1, 1, 1, 1);
+    @Test
+    public void imidazothiazole() throws Exception {
+        test(smiles("S1C=CN2C=CN=C12"), -1, 1, 1, -1, 1, 1, 1, 1);
     }
 
     // 1-oxide pyridine
-    @Test public void oxidepyridine() throws Exception {
-        test(smiles("O=N1=CC=CC=C1"),
-             -1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void oxidepyridine() throws Exception {
+        test(smiles("O=N1=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
     }
 
     // 2-Pyridone
-    @Test public void pyridinone() throws Exception {
-        test(smiles("O=C1NC=CC=C1"),
-             -1, -1, -1, 1, 1, 1, 1);
+    @Test
+    public void pyridinone() throws Exception {
+        test(smiles("O=C1NC=CC=C1"), -1, -1, -1, 1, 1, 1, 1);
     }
 
     // ensures atoms next to 2 cyclic pi bonds aren't allowed
-    @Test public void cyclodecahexaene() throws Exception {
-        test(smiles("C1=CC=C=CC=C=CC=C1"),
-             1, 1, 1, -1, 1, 1, -1, 1, 1, 1);
+    @Test
+    public void cyclodecahexaene() throws Exception {
+        test(smiles("C1=CC=C=CC=C=CC=C1"), 1, 1, 1, -1, 1, 1, -1, 1, 1, 1);
     }
 
     // similar to cyclodecahexaene but 5 pi bonds instead of 6
-    @Test public void cyclodecapentaene() throws Exception {
-        test(smiles("C1=CC=CC=CC=CC=C1"),
-             1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+    @Test
+    public void cyclodecapentaene() throws Exception {
+        test(smiles("C1=CC=CC=CC=CC=C1"), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
 
     static IAtomContainer smiles(String smi) throws Exception {
@@ -187,7 +188,6 @@ public class PiBondModelTest {
     /** Check the electron contribution is the same as expected. */
     static void test(IAtomContainer m, int... expected) throws CDKException {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
-        assertThat(model.contribution(m, new RingSearch(m)),
-                   is(expected));
+        assertThat(model.contribution(m, new RingSearch(m)), is(expected));
     }
 }

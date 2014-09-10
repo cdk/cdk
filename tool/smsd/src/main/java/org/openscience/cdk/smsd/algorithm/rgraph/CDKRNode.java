@@ -46,13 +46,14 @@ import org.openscience.cdk.annotations.TestClass;
 
 @TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKRNodeTest")
 public class CDKRNode {
+
     // G1/G2 mapping
 
-    private CDKRMap rMap = null;
+    private CDKRMap rMap      = null;
     // set of neighbour nodes in the RGraph
-    private BitSet extension = null;
+    private BitSet  extension = null;
     // set of incompatible nodes in the RGraph
-    private BitSet forbidden = null;
+    private BitSet  forbidden = null;
 
     /**
      *  Constructor for the RNode object
@@ -127,7 +128,8 @@ public class CDKRNode {
      */
     @Override
     public String toString() {
-        return ("id1 : " + getrMap().getId1() + ", id2 : " + getrMap().getId2() + "\n" + "extension : " + getExtension() + "\n" + "forbiden : " + getForbidden());
+        return ("id1 : " + getrMap().getId1() + ", id2 : " + getrMap().getId2() + "\n" + "extension : "
+                + getExtension() + "\n" + "forbiden : " + getForbidden());
     }
 
     /**
@@ -146,4 +148,3 @@ public class CDKRNode {
         this.rMap = rMap;
     }
 }
-

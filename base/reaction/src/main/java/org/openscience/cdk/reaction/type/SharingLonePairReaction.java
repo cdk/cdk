@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -73,133 +72,131 @@ import java.util.Iterator;
  * @cdk.set        reaction-types
  *
  **/
-@TestClass(value="org.openscience.cdk.reaction.type.SharingLonePairReactionTest")
-public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess{
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
+@TestClass(value = "org.openscience.cdk.reaction.type.SharingLonePairReactionTest")
+public class SharingLonePairReaction extends ReactionEngine implements IReactionProcess {
 
-	/**
-	 * Constructor of the SharingLonePairReaction object.
-	 *
-	 */
-	public SharingLonePairReaction(){
-	}
-	/**
-	 *  Gets the specification attribute of the SharingLonePairReaction object.
-	 *
-	 *@return    The specification value
-	 */
-    @TestMethod("testGetSpecification")
-	public ReactionSpecification getSpecification() {
-		return new ReactionSpecification(
-				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair",
-				this.getClass().getName(),
-				"$Id$",
-				"The Chemistry Development Kit");
-	}
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SharingLonePairReaction.class);
 
-	/**
-	 *  Initiate process.
-	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
-	 *  from the class tools.HydrogenAdder.
-	 *
+    /**
+     * Constructor of the SharingLonePairReaction object.
      *
-	 *@exception  CDKException  Description of the Exception
+     */
+    public SharingLonePairReaction() {}
+
+    /**
+     *  Gets the specification attribute of the SharingLonePairReaction object.
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
+    public ReactionSpecification getSpecification() {
+        return new ReactionSpecification(
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair", this
+                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+    }
+
+    /**
+     *  Initiate process.
+     *  It is needed to call the addExplicitHydrogensToSatisfyValency
+     *  from the class tools.HydrogenAdder.
+     *
+     *
+     *@exception  CDKException  Description of the Exception
 
      * @param  reactants         reactants of the reaction.
     * @param  agents            agents of the reaction (Must be in this case null).
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
-	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
-		logger.debug("initiate reaction: SharingLonePairReaction");
+        logger.debug("initiate reaction: SharingLonePairReaction");
 
-		if (reactants.getAtomContainerCount() != 1) {
-			throw new CDKException("SharingLonePairReaction only expects one reactant");
-		}
-		if (agents != null) {
-			throw new CDKException("SharingLonePairReaction don't expects agents");
-		}
+        if (reactants.getAtomContainerCount() != 1) {
+            throw new CDKException("SharingLonePairReaction only expects one reactant");
+        }
+        if (agents != null) {
+            throw new CDKException("SharingLonePairReaction don't expects agents");
+        }
 
-		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
-		IAtomContainer reactant = reactants.getAtomContainer(0);
-		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
-		if( ipr != null && !ipr.isSetParameter())
-			setActiveCenters(reactant);
+        IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
+        IAtomContainer reactant = reactants.getAtomContainer(0);
+        /*
+         * if the parameter hasActiveCenter is not fixed yet, set the active
+         * centers
+         */
+        IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+        if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-		Iterator<IAtom> atomis = reactant.atoms().iterator();
-		while(atomis.hasNext()){
-			IAtom atomi = atomis.next();
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 0 &&
-					reactant.getConnectedSingleElectronsCount(atomi) == 0 &&
-					reactant.getConnectedLonePairsList(atomi).size() > 0){
+        Iterator<IAtom> atomis = reactant.atoms().iterator();
+        while (atomis.hasNext()) {
+            IAtom atomi = atomis.next();
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && atomi.getFormalCharge() == 0
+                    && reactant.getConnectedSingleElectronsCount(atomi) == 0
+                    && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
-				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-				while(bondis.hasNext()){
-					IBond bondi = bondis.next();
-					if(bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE){
-						IAtom atomj = bondi.getConnectedAtom(atomi);
-						if(atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1 &&
-							reactant.getConnectedSingleElectronsCount(atomj) == 0){
+                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
+                while (bondis.hasNext()) {
+                    IBond bondi = bondis.next();
+                    if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() == IBond.Order.SINGLE) {
+                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        if (atomj.getFlag(CDKConstants.REACTIVE_CENTER) && atomj.getFormalCharge() == 1
+                                && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
 
-							ArrayList<IAtom> atomList = new ArrayList<IAtom>();
-		                	atomList.add(atomi);
-		                	atomList.add(atomj);
-		                	ArrayList<IBond> bondList = new ArrayList<IBond>();
-		                	bondList.add(bondi);
+                            ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                            atomList.add(atomi);
+                            atomList.add(atomj);
+                            ArrayList<IBond> bondList = new ArrayList<IBond>();
+                            bondList.add(bondi);
 
-							IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
-							moleculeSet.addAtomContainer(reactant);
-							IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-							if(reaction == null)
-								continue;
-							else
-								setOfReactions.addReaction(reaction);
-						}
-					}
-				}
-			}
-		}
+                            IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                            moleculeSet.addAtomContainer(reactant);
+                            IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
+                            if (reaction == null)
+                                continue;
+                            else
+                                setOfReactions.addReaction(reaction);
+                        }
+                    }
+                }
+            }
+        }
 
-		return setOfReactions;
+        return setOfReactions;
 
+    }
 
-	}
-	/**
-	 * set the active center for this molecule.
-	 * The active center will be those which correspond with [A+]-B|.
-	 * <pre>
-	 * A: Atom with positive charge
-	 * -: Single bond
-	 * B: Atom with lone pair electrons
-	 *  </pre>
-	 *
-	 * @param reactant The molecule to set the activity
-	 * @throws CDKException
-	 */
-	private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-		Iterator<IAtom> atomis = reactant.atoms().iterator();
-		while(atomis.hasNext()){
-			IAtom atomi = atomis.next();
-			if(atomi.getFormalCharge() == 0 &&
-					reactant.getConnectedSingleElectronsCount(atomi) == 0 &&
-					reactant.getConnectedLonePairsList(atomi).size() > 0){
+    /**
+     * set the active center for this molecule.
+     * The active center will be those which correspond with [A+]-B|.
+     * <pre>
+     * A: Atom with positive charge
+     * -: Single bond
+     * B: Atom with lone pair electrons
+     *  </pre>
+     *
+     * @param reactant The molecule to set the activity
+     * @throws CDKException
+     */
+    private void setActiveCenters(IAtomContainer reactant) throws CDKException {
+        Iterator<IAtom> atomis = reactant.atoms().iterator();
+        while (atomis.hasNext()) {
+            IAtom atomi = atomis.next();
+            if (atomi.getFormalCharge() == 0 && reactant.getConnectedSingleElectronsCount(atomi) == 0
+                    && reactant.getConnectedLonePairsList(atomi).size() > 0) {
 
-				Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
-				while(bondis.hasNext()){
-					IBond bondi = bondis.next();
-					if(bondi.getOrder() == IBond.Order.SINGLE){
-						IAtom atomj = bondi.getConnectedAtom(atomi);
-						if(atomj.getFormalCharge() == 1 &&
-							reactant.getConnectedSingleElectronsCount(atomj) == 0){
-							atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							atomj.setFlag(CDKConstants.REACTIVE_CENTER,true);
-							bondi.setFlag(CDKConstants.REACTIVE_CENTER,true);
-						}
-					}
-				}
-			}
-		}
-	}
+                Iterator<IBond> bondis = reactant.getConnectedBondsList(atomi).iterator();
+                while (bondis.hasNext()) {
+                    IBond bondi = bondis.next();
+                    if (bondi.getOrder() == IBond.Order.SINGLE) {
+                        IAtom atomj = bondi.getConnectedAtom(atomi);
+                        if (atomj.getFormalCharge() == 1 && reactant.getConnectedSingleElectronsCount(atomj) == 0) {
+                            atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                            atomj.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                            bondi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

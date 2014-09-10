@@ -28,9 +28,8 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.result.DoubleResultTest")
 public class DoubleResult implements IDescriptorResult {
 
-    private double value;
-	private static final long serialVersionUID = 7711619468523616757L;
-
+    private double            value;
+    private static final long serialVersionUID = 7711619468523616757L;
 
     public DoubleResult(double value) {
         this.value = value;
@@ -48,8 +47,7 @@ public class DoubleResult implements IDescriptorResult {
 
     @TestMethod("testLength")
     public int length() {
-    	return 1;
+        return 1;
     }
 
 }
-

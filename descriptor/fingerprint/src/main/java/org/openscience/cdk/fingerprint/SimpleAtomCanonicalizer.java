@@ -45,18 +45,18 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 @TestClass("org.openscience.cdk.fingerprint.SimpleAtomCanonicalizerTest")
 public class SimpleAtomCanonicalizer {
 
-	/**
-	 * @param container the container
-	 * @return canonicalized atoms
-	 */
+    /**
+     * @param container the container
+     * @return canonicalized atoms
+     */
     @TestMethod("testCanonicalizeAtoms")
-	public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
+    public Collection<IAtom> canonicalizeAtoms(IAtomContainer container) {
 
-		List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
+        List<IAtom> canonicalizedVertexList = new ArrayList<IAtom>();
         for (IAtom atom : container.atoms()) {
             canonicalizedVertexList.add(atom);
         }
-		Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
-		return canonicalizedVertexList;
-	}
+        Collections.sort(canonicalizedVertexList, new SimpleAtomComparator());
+        return canonicalizedVertexList;
+    }
 }

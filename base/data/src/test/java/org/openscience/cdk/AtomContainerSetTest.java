@@ -35,17 +35,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class AtomContainerSetTest extends AbstractAtomContainerSetTest {
 
-    @BeforeClass public static void setUp() {
-        setTestObjectBuilder(
-            new ITestObjectBuilder() {
-                public IChemObject newTestObject() {
-                    return new AtomContainerSet();
-                }
+    @BeforeClass
+    public static void setUp() {
+        setTestObjectBuilder(new ITestObjectBuilder() {
+
+            public IChemObject newTestObject() {
+                return new AtomContainerSet();
             }
-        );
+        });
     }
 
-    @Test public void testAtomContainerSet() {
+    @Test
+    public void testAtomContainerSet() {
         IAtomContainerSet som = new AtomContainerSet();
         Assert.assertNotNull(som);
         Assert.assertEquals(0, som.getAtomContainerCount());

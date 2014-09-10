@@ -11,17 +11,10 @@ import org.openscience.cdk.pharmacophore.*;
  *
  * @cdk.module test-pcore
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value = {
-        PcoreCoverageTest.class,
-        PharmacophoreMatcherTest.class,
-        PharmacophoreUtilityTest.class,
-        PharmacophoreQueryTest.class,
-        PharmacophoreQueryBondTest.class,
-        PharmacophoreQueryAtomTest.class,
-        PharmacophoreQueryAngleBondTest.class,
-        PharmacophoreBondTest.class,
-        PharmacophoreAngleBondTest.class,
-        PharmacophoreAtomTest.class
-})
-public class MpcoreTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {PcoreCoverageTest.class, PharmacophoreMatcherTest.class, PharmacophoreUtilityTest.class,
+        PharmacophoreQueryTest.class, PharmacophoreQueryBondTest.class, PharmacophoreQueryAtomTest.class,
+        PharmacophoreQueryAngleBondTest.class, PharmacophoreBondTest.class, PharmacophoreAngleBondTest.class,
+        PharmacophoreAtomTest.class})
+public class MpcoreTests {
+}

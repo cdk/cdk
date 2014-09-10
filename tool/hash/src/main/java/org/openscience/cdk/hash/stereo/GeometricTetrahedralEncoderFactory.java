@@ -52,8 +52,7 @@ import java.util.Map;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.stereo.GeometricTetrahedralEncoderFactoryTest")
-public class GeometricTetrahedralEncoderFactory
-        implements StereoEncoderFactory {
+public class GeometricTetrahedralEncoderFactory implements StereoEncoderFactory {
 
     /**
      * Create a stereo encoder for all potential 2D and 3D tetrahedral
@@ -63,10 +62,8 @@ public class GeometricTetrahedralEncoderFactory
      * @param graph     adjacency list representation of the container
      * @return a new encoder for tetrahedral elements
      */
-    @TestMethod("testCreate_2D,testCreate_3D," +
-                        "testCreate_2D_Implicit,testCreate_3D_Implicit," +
-                        "testCreate_NonSP3,testCreate_NonSP3,testCreate_NoStereoBonds," +
-                        "testCreate_WrongDegree")
+    @TestMethod("testCreate_2D,testCreate_3D," + "testCreate_2D_Implicit,testCreate_3D_Implicit,"
+            + "testCreate_NonSP3,testCreate_NonSP3,testCreate_NoStereoBonds," + "testCreate_WrongDegree")
     @Override
     public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
@@ -81,26 +78,22 @@ public class GeometricTetrahedralEncoderFactory
         List<StereoEncoder> encoders = new ArrayList<StereoEncoder>();
         Map<IAtom, Integer> elevation = new HashMap<IAtom, Integer>(10);
 
-        ATOMS:
-        for (int i = 0; i < n; i++) {
+        ATOMS: for (int i = 0; i < n; i++) {
 
             int degree = graph[i].length;
 
             // ignore those which don't have 3 or 4 neighbors
-            if (degree < 3 || degree > 4)
-                continue;
+            if (degree < 3 || degree > 4) continue;
 
             IAtom atom = container.getAtom(i);
 
             // only create encoders for SP3 hybridized atom. atom typing is
             // currently wrong for some atoms, in sulfoxide for example the atom
             // type sets SP2... but there we don't to fuss about with that here
-            if (!sp3(atom))
-                continue;
+            if (!sp3(atom)) continue;
 
             // avoid nitrogen-inversion
-            if(Integer.valueOf(7).equals(atom.getAtomicNumber()) && degree == 3)
-                continue;
+            if (Integer.valueOf(7).equals(atom.getAtomicNumber()) && degree == 3) continue;
 
             // TODO: we could be more strict with our selection, InChI uses C,
             // Si, Ge, P, As, B, Sn, N, P, S, Se but has preconditions for
@@ -112,20 +105,16 @@ public class GeometricTetrahedralEncoderFactory
             List<IBond> bonds = container.getConnectedBondsList(atom);
 
             // try to create geometric parity
-            GeometricParity geometric = geometric(elevation, bonds, i, graph[i],
-                                                  container);
+            GeometricParity geometric = geometric(elevation, bonds, i, graph[i], container);
 
             if (geometric != null) {
                 // add a new encoder if a geometric parity
-                encoders.add(new GeometryEncoder(i,
-                                                 new BasicPermutationParity(graph[i]),
-                                                 geometric));
+                encoders.add(new GeometryEncoder(i, new BasicPermutationParity(graph[i]), geometric));
             }
         }
 
         // no encoders, replace with the empty encoder
-        return encoders.isEmpty() ? StereoEncoder.EMPTY
-                                  : new MultiStereoEncoder(encoders);
+        return encoders.isEmpty() ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
     }
 
     /**
@@ -138,15 +127,12 @@ public class GeometricTetrahedralEncoderFactory
      * @param container    container
      * @return geometric parity encoder (or null)
      */
-    private static GeometricParity geometric(Map<IAtom, Integer> elevationMap,
-                                             List<IBond> bonds, int i,
-                                             int[] adjacent,
-                                             IAtomContainer container) {
+    private static GeometricParity geometric(Map<IAtom, Integer> elevationMap, List<IBond> bonds, int i,
+            int[] adjacent, IAtomContainer container) {
         int nStereoBonds = nStereoBonds(bonds);
         if (nStereoBonds > 0)
             return geometric2D(elevationMap, bonds, i, adjacent, container);
-        else if (nStereoBonds == 0)
-            return geometric3D(i, adjacent, container);
+        else if (nStereoBonds == 0) return geometric3D(i, adjacent, container);
         return null;
     }
 
@@ -160,10 +146,8 @@ public class GeometricTetrahedralEncoderFactory
      * @param container    container
      * @return geometric parity encoder (or null)
      */
-    private static GeometricParity geometric2D(Map<IAtom, Integer> elevationMap,
-                                               List<IBond> bonds, int i,
-                                               int[] adjacent,
-                                               IAtomContainer container) {
+    private static GeometricParity geometric2D(Map<IAtom, Integer> elevationMap, List<IBond> bonds, int i,
+            int[] adjacent, IAtomContainer container) {
 
         IAtom atom = container.getAtom(i);
 
@@ -252,7 +236,7 @@ public class GeometricTetrahedralEncoderFactory
         for (IBond bond : bonds) {
             IBond.Stereo stereo = bond.getStereo();
             switch (stereo) {
-                // query bonds... no configuration possible
+            // query bonds... no configuration possible
                 case E_OR_Z:
                 case UP_OR_DOWN:
                 case UP_OR_DOWN_INVERTED:
@@ -301,6 +285,5 @@ public class GeometricTetrahedralEncoderFactory
             }
         }
     }
-
 
 }

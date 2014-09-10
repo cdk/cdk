@@ -38,18 +38,10 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaRangeManipulatorTes
  *
  * @cdk.module test-formula
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    FormulaCoverageTest.class,
-    IsotopeContainerTest.class,
-    IsotopePatternGeneratorTest.class,
-    IsotopePatternManipulatorTest.class,
-    IsotopePatternSimilarityTest.class,
-    IsotopePatternTest.class,
-    MassToFormulaToolTest.class,
-    MolecularFormulaManipulatorTest.class,
-    MolecularFormulaRangeManipulatorTest.class,
-    MolecularFormulaRangeTest.class,
-    MolecularFormulaRangeManipulatorTest.class
-})
-public class MformulaTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {FormulaCoverageTest.class, IsotopeContainerTest.class, IsotopePatternGeneratorTest.class,
+        IsotopePatternManipulatorTest.class, IsotopePatternSimilarityTest.class, IsotopePatternTest.class,
+        MassToFormulaToolTest.class, MolecularFormulaManipulatorTest.class, MolecularFormulaRangeManipulatorTest.class,
+        MolecularFormulaRangeTest.class, MolecularFormulaRangeManipulatorTest.class})
+public class MformulaTests {
+}

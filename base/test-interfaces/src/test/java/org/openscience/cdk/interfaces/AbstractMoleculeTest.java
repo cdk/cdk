@@ -28,43 +28,46 @@ import org.junit.Test;
  */
 public abstract class AbstractMoleculeTest extends AbstractAtomContainerTest {
 
-	@Test public void testClone() throws Exception {
-        IAtomContainer molecule = (IAtomContainer)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IAtomContainer molecule = (IAtomContainer) newChemObject();
         Object clone = molecule.clone();
         Assert.assertTrue(clone instanceof IAtomContainer);
-	Assert.assertNotSame(molecule, clone);
+        Assert.assertNotSame(molecule, clone);
     }
 
     /** Test for RFC #9 */
-    @Test public void testToString() {
-        IAtomContainer m = (IAtomContainer)newChemObject();
+    @Test
+    public void testToString() {
+        IAtomContainer m = (IAtomContainer) newChemObject();
         String description = m.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    @Test public void testGetLonePairCount_Molecule() {
-        IAtomContainer acetone = (IAtomContainer)newChemObject();
-        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
-        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+    @Test
+    public void testGetLonePairCount_Molecule() {
+        IAtomContainer acetone = (IAtomContainer) newChemObject();
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class, "O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class, "C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class, c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
 
         // add lone pairs on oxygen
-        ILonePair lp1 = acetone.getBuilder().newInstance(ILonePair.class,o);
-        ILonePair lp2 = acetone.getBuilder().newInstance(ILonePair.class,o);
+        ILonePair lp1 = acetone.getBuilder().newInstance(ILonePair.class, o);
+        ILonePair lp2 = acetone.getBuilder().newInstance(ILonePair.class, o);
         acetone.addLonePair(lp1);
         acetone.addLonePair(lp2);
 

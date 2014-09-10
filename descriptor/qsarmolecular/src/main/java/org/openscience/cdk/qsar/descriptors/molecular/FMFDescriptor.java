@@ -57,9 +57,7 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FMFDescriptorTest")
 public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    public FMFDescriptor() {
-    }
-
+    public FMFDescriptor() {}
 
     /**
      * Calculates the FMF descriptor value for the given {@link IAtomContainer}.
@@ -81,7 +79,8 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
                 result = new DoubleResult(framework[0].getAtomCount() / (double) container.getAtomCount());
             } else if (framework.length == 0 && ringSystems.length == 1) {
                 result = new DoubleResult(ringSystems[0].getAtomCount() / (double) container.getAtomCount());
-            } else result = new DoubleResult(0.0);
+            } else
+                result = new DoubleResult(0.0);
         } catch (CDKException e) {
             result = new DoubleResult(Double.NaN);
         }
@@ -127,10 +126,8 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      * @return An object containing the descriptor specification
      */
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -166,8 +163,7 @@ public class FMFDescriptor extends AbstractMolecularDescriptor implements IMolec
      *          if invalid number of type of parameters are passed to it
      * @see #getParameters
      */
-    public void setParameters(Object[] params) throws CDKException {
-    }
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      * Returns the current parameter values.

@@ -31,32 +31,35 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class TautomerizationMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(TautomerizationMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(TautomerizationMechanism.class);
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testTautomerizationMechanism(){
-		IReactionMechanism mechanism = new TautomerizationMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testTautomerizationMechanism() {
+        IReactionMechanism mechanism = new TautomerizationMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new TautomerizationMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new TautomerizationMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

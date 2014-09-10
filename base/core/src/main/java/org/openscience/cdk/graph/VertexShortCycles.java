@@ -53,8 +53,8 @@ final class VertexShortCycles {
      *  given initial cycles. */
     VertexShortCycles(InitialCycles initialCycles) {
 
-        int[][] graph  = initialCycles.graph();
-        int[]   sizeOf = new int[graph.length];
+        int[][] graph = initialCycles.graph();
+        int[] sizeOf = new int[graph.length];
 
         this.paths = new ArrayList<int[]>(initialCycles.numberOfCycles());
 
@@ -69,7 +69,7 @@ final class VertexShortCycles {
             // check if any vertex is the shortest through a vertex in the path
             for (final int v : path) {
                 if (sizeOf[v] < 1 || length <= sizeOf[v]) {
-                    found     = true;
+                    found = true;
                     sizeOf[v] = length;
                 }
             }
@@ -88,8 +88,7 @@ final class VertexShortCycles {
      *
      * @return the paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
-                        "paths_cyclophane_even")
+    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_even")
     int[][] paths() {
         int[][] paths = new int[this.paths.size()][0];
         for (int i = 0; i < this.paths.size(); i++)
@@ -102,8 +101,7 @@ final class VertexShortCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," +
-                        "size_cyclophane_even")
+    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_even")
     int size() {
         return paths.size();
     }

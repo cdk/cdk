@@ -30,9 +30,10 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public abstract class AbstractRingTest extends AbstractAtomContainerTest {
 
-    @Test public void testGetBondOrderSum() {
-    	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
+    @Test
+    public void testGetBondOrderSum() {
+        IChemObject object = newChemObject();
+        IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
         Assert.assertEquals(5, r.getBondOrderSum());
 
         BondManipulator.increaseBondOrder(r.getBond(0));
@@ -45,20 +46,22 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
         Assert.assertEquals(8, r.getBondOrderSum());
     }
 
-    @Test public void testGetRingSize() {
-    	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
+    @Test
+    public void testGetRingSize() {
+        IChemObject object = newChemObject();
+        IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
         Assert.assertEquals(5, r.getRingSize());
     }
 
-    @Test public void testGetNextBond_IBond_IAtom() {
-        IRing ring = (IRing)newChemObject();
-        IAtom c1 = ring.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = ring.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c3 = ring.getBuilder().newInstance(IAtom.class,"C");
-        IBond b1 = ring.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = ring.getBuilder().newInstance(IBond.class,c3, c2, IBond.Order.SINGLE);
-        IBond b3 = ring.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+    @Test
+    public void testGetNextBond_IBond_IAtom() {
+        IRing ring = (IRing) newChemObject();
+        IAtom c1 = ring.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = ring.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c3 = ring.getBuilder().newInstance(IAtom.class, "C");
+        IBond b1 = ring.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = ring.getBuilder().newInstance(IBond.class, c3, c2, IBond.Order.SINGLE);
+        IBond b3 = ring.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         ring.addAtom(c1);
         ring.addAtom(c2);
         ring.addAtom(c3);
@@ -66,19 +69,20 @@ public abstract class AbstractRingTest extends AbstractAtomContainerTest {
         ring.addBond(b2);
         ring.addBond(b3);
 
-        Assert.assertEquals(b1, ring.getNextBond(b2,c2));
-        Assert.assertEquals(b1, ring.getNextBond(b3,c1));
-        Assert.assertEquals(b2, ring.getNextBond(b1,c2));
-        Assert.assertEquals(b2, ring.getNextBond(b3,c3));
-        Assert.assertEquals(b3, ring.getNextBond(b1,c1));
-        Assert.assertEquals(b3, ring.getNextBond(b2,c3));
+        Assert.assertEquals(b1, ring.getNextBond(b2, c2));
+        Assert.assertEquals(b1, ring.getNextBond(b3, c1));
+        Assert.assertEquals(b2, ring.getNextBond(b1, c2));
+        Assert.assertEquals(b2, ring.getNextBond(b3, c3));
+        Assert.assertEquals(b3, ring.getNextBond(b1, c1));
+        Assert.assertEquals(b3, ring.getNextBond(b2, c3));
     }
 
-    @Test public void testToString() {
-    	IChemObject object = newChemObject();
-        IRing r = object.getBuilder().newInstance(IRing.class,5, "C");
+    @Test
+    public void testToString() {
+        IChemObject object = newChemObject();
+        IRing r = object.getBuilder().newInstance(IRing.class, 5, "C");
         String description = r.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }

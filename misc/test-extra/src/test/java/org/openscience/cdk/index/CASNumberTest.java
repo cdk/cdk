@@ -37,57 +37,62 @@ public class CASNumberTest extends CDKTestCase {
 
     @Test
     public void testValidNumbers() {
-		// valid cas numbers
-		Assert.assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
-		Assert.assertTrue(CASNumber.isValid("548-00-5"));
-		Assert.assertTrue(CASNumber.isValid("2622-26-6"));
-		Assert.assertTrue(CASNumber.isValid("15299-99-7"));
-		Assert.assertTrue(CASNumber.isValid("673434-32-7"));
+        // valid cas numbers
+        Assert.assertTrue(CASNumber.isValid("50-00-0")); // formaldehyde
+        Assert.assertTrue(CASNumber.isValid("548-00-5"));
+        Assert.assertTrue(CASNumber.isValid("2622-26-6"));
+        Assert.assertTrue(CASNumber.isValid("15299-99-7"));
+        Assert.assertTrue(CASNumber.isValid("673434-32-7"));
     }
 
-    @Test public void testInvalidCheckDigits() {
-		// invalid R value
-		Assert.assertFalse(CASNumber.isValid("50-00-1"));
-		Assert.assertFalse(CASNumber.isValid("50-00-2"));
-		Assert.assertFalse(CASNumber.isValid("50-00-3"));
-		Assert.assertFalse(CASNumber.isValid("50-00-4"));
-		Assert.assertFalse(CASNumber.isValid("50-00-5"));
-		Assert.assertFalse(CASNumber.isValid("50-00-6"));
-		Assert.assertFalse(CASNumber.isValid("50-00-7"));
-		Assert.assertFalse(CASNumber.isValid("50-00-8"));
-		Assert.assertFalse(CASNumber.isValid("50-00-9"));
+    @Test
+    public void testInvalidCheckDigits() {
+        // invalid R value
+        Assert.assertFalse(CASNumber.isValid("50-00-1"));
+        Assert.assertFalse(CASNumber.isValid("50-00-2"));
+        Assert.assertFalse(CASNumber.isValid("50-00-3"));
+        Assert.assertFalse(CASNumber.isValid("50-00-4"));
+        Assert.assertFalse(CASNumber.isValid("50-00-5"));
+        Assert.assertFalse(CASNumber.isValid("50-00-6"));
+        Assert.assertFalse(CASNumber.isValid("50-00-7"));
+        Assert.assertFalse(CASNumber.isValid("50-00-8"));
+        Assert.assertFalse(CASNumber.isValid("50-00-9"));
     }
 
-    @Test public void testLargerThanFirst() {
-		// valid format, but wrong number, the first is 50-00-0
-	Assert.assertFalse(CASNumber.isValid("3-21-4"));
+    @Test
+    public void testLargerThanFirst() {
+        // valid format, but wrong number, the first is 50-00-0
+        Assert.assertFalse(CASNumber.isValid("3-21-4"));
     }
 
-    @Test public void testWrongHyphenPositions() {
-		// invalid format due to invalid hyphen positions
-		Assert.assertFalse(CASNumber.isValid("3-21-40"));
-		Assert.assertFalse(CASNumber.isValid("3-210-4"));
-		Assert.assertFalse(CASNumber.isValid("03-1-4"));
-		Assert.assertFalse(CASNumber.isValid("03-21-"));
+    @Test
+    public void testWrongHyphenPositions() {
+        // invalid format due to invalid hyphen positions
+        Assert.assertFalse(CASNumber.isValid("3-21-40"));
+        Assert.assertFalse(CASNumber.isValid("3-210-4"));
+        Assert.assertFalse(CASNumber.isValid("03-1-4"));
+        Assert.assertFalse(CASNumber.isValid("03-21-"));
     }
 
-    @Test public void testInvalidCharacters() {
-		// invalid characters
-		Assert.assertFalse(CASNumber.isValid("a-21-4"));
-		Assert.assertFalse(CASNumber.isValid("3-a1-4"));
-		Assert.assertFalse(CASNumber.isValid("3-2a-4"));
-		Assert.assertFalse(CASNumber.isValid("3-21-a"));
-		Assert.assertFalse(CASNumber.isValid("d-cb-a"));
+    @Test
+    public void testInvalidCharacters() {
+        // invalid characters
+        Assert.assertFalse(CASNumber.isValid("a-21-4"));
+        Assert.assertFalse(CASNumber.isValid("3-a1-4"));
+        Assert.assertFalse(CASNumber.isValid("3-2a-4"));
+        Assert.assertFalse(CASNumber.isValid("3-21-a"));
+        Assert.assertFalse(CASNumber.isValid("d-cb-a"));
     }
 
-    @Test public void testSanity() {
-		// completely stupid value
-		Assert.assertFalse(CASNumber.isValid("0&z003-!0>/-0a"));
+    @Test
+    public void testSanity() {
+        // completely stupid value
+        Assert.assertFalse(CASNumber.isValid("0&z003-!0>/-0a"));
     }
 
-    @Test public void testCharacterSet() {
-		// invalid value even with the '0' unicode character '\u0030'
-		Assert.assertFalse(CASNumber.isValid("\u0030-21-4"));
+    @Test
+    public void testCharacterSet() {
+        // invalid value even with the '0' unicode character '\u0030'
+        Assert.assertFalse(CASNumber.isValid("\u0030-21-4"));
     }
 }
-

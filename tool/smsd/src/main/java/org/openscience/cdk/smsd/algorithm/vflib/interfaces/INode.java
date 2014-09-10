@@ -47,7 +47,6 @@
  */
 package org.openscience.cdk.smsd.algorithm.vflib.interfaces;
 
-
 import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.smsd.algorithm.matchers.VFAtomMatcher;

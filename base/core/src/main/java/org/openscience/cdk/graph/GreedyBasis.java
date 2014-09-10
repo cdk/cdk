@@ -49,10 +49,10 @@ final class GreedyBasis {
     private final List<Cycle> basis;
 
     /** Edges of the current basis. */
-    private final BitSet edgesOfBasis;
+    private final BitSet      edgesOfBasis;
 
     /** Number of edges */
-    private final int m;
+    private final int         m;
 
     /**
      * Create a new basis for the <i>potential</i> number of cycles and the
@@ -137,8 +137,7 @@ final class GreedyBasis {
     final boolean isIndependent(final Cycle candidate) {
 
         // simple checks for independence
-        if (basis.isEmpty() || !isSubsetOfBasis(candidate))
-            return true;
+        if (basis.isEmpty() || !isSubsetOfBasis(candidate)) return true;
 
         final BitMatrix matrix = BitMatrix.from(basis, candidate);
 

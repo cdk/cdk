@@ -46,25 +46,26 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
 
-    public MomentOfInertiaDescriptorTest() {
-    }
+    public MomentOfInertiaDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(MomentOfInertiaDescriptor.class);
+        setDescriptor(MomentOfInertiaDescriptor.class);
     }
 
     /**
      * @cdk.bug 1956139
      * @throws InvalidSmilesException
      */
-    @Test public void testMOIFromSmiles() throws InvalidSmilesException {
+    @Test
+    public void testMOIFromSmiles() throws InvalidSmilesException {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCC");
         DescriptorValue value = descriptor.calculate(mol);
-        Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords" , value.getException());
+        Assert.assertNotNull("The Exception should be non-null since we don't have 3D coords", value.getException());
 
     }
+
     @Test
     public void testMomentOfInertia1() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/gravindex.hin";
@@ -85,8 +86,8 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(5.411195, retval.get(6), 0.00001);
     }
 
-
-    @Test public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testMomentOfInertia2() throws ClassNotFoundException, CDKException, java.lang.Exception {
         String filename = "data/hin/momi2.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -106,4 +107,3 @@ public class MomentOfInertiaDescriptorTest extends MolecularDescriptorTest {
     }
 
 }
-

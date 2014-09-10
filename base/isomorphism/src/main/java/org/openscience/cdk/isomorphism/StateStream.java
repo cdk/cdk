@@ -42,16 +42,16 @@ import java.util.Iterator;
 final class StateStream implements Iterator<int[]> {
 
     /** A mapping state. */
-    private final State state;
+    private final State          state;
 
     /** The stack replaces the call-stack in a recursive matcher. */
     private final CandidateStack stack;
 
     /** Current candidates. */
-    private int n = 0, m = -1;
+    private int                  n = 0, m = -1;
 
     /** The next mapping. */
-    private int[] next;
+    private int[]                next;
 
     /**
      * Create a stream for the provided state.
@@ -61,19 +61,20 @@ final class StateStream implements Iterator<int[]> {
     StateStream(final State state) {
         this.state = state;
         this.stack = new CandidateStack(state.nMax());
-        this.next  = state.nMax() == 0 || state.mMax() == 0 ? null
-                                                            : findNext(); // first-mapping
+        this.next = state.nMax() == 0 || state.mMax() == 0 ? null : findNext(); // first-mapping
     }
 
     /** @inheritDoc */
     @TestMethod("hasNext")
-    @Override public boolean hasNext() {
+    @Override
+    public boolean hasNext() {
         return next != null;
     }
 
     /** @inheritDoc */
     @TestMethod("next")
-    @Override public int[] next() {
+    @Override
+    public int[] next() {
         int[] ret = next;
         next = findNext();
         return ret;
@@ -81,7 +82,8 @@ final class StateStream implements Iterator<int[]> {
 
     /** @inheritDoc */
     @TestMethod("remove")
-    @Override public void remove() {
+    @Override
+    public void remove() {
         throw new UnsupportedOperationException("a graph matching cannot be removed");
     }
 
@@ -91,9 +93,8 @@ final class StateStream implements Iterator<int[]> {
      * @return the next state (or null if none)
      */
     private int[] findNext() {
-        while (map()) ;
-        if (state.size() == state.nMax())
-            return state.mapping();
+        while (map());
+        if (state.size() == state.nMax()) return state.mapping();
         return null;
     }
 
@@ -107,9 +108,7 @@ final class StateStream implements Iterator<int[]> {
 
         // backtrack - we've tried all possible n or m, remove the last mapping
         if ((n == state.nMax() || m == state.mMax()) && !stack.empty())
-            state.remove(n = stack.popN(),
-                         m = stack.popM());
-
+            state.remove(n = stack.popN(), m = stack.popM());
 
         while ((m = state.nextM(n, m)) < state.mMax()) {
             if (state.add(n, m)) {
@@ -136,7 +135,7 @@ final class StateStream implements Iterator<int[]> {
         private final int[] ns, ms;
 
         /** Size of each stack. */
-        private int nSize, mSize;
+        private int         nSize, mSize;
 
         private CandidateStack(int capacity) {
             ns = new int[capacity];

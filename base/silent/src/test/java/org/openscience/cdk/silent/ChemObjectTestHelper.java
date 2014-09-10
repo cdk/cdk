@@ -87,7 +87,7 @@ public class ChemObjectTestHelper {
     public static void testClone_ChemObjectListeners(IChemObject chemObject) throws Exception {
         ChemObjectListener listener = new ChemObjectListener();
         chemObject.addListener(listener);
-        IChemObject chemObject2 = (IChemObject)chemObject.clone();
+        IChemObject chemObject2 = (IChemObject) chemObject.clone();
 
         // test lack of cloning of listeners
         Assert.assertEquals(0, chemObject.getListenerCount());
@@ -143,13 +143,13 @@ public class ChemObjectTestHelper {
     }
 
     public static void testSetAtoms_removeListener(IChemObject newChemObject) {
-        IAtomContainer container = (IAtomContainer)newChemObject;
+        IAtomContainer container = (IAtomContainer) newChemObject;
 
         IAtom[] atoms = new IAtom[4];
-        atoms[0] = container.getBuilder().newInstance(IAtom.class,"C");
-        atoms[1] = container.getBuilder().newInstance(IAtom.class,"C");
-        atoms[2] = container.getBuilder().newInstance(IAtom.class,"C");
-        atoms[3] = container.getBuilder().newInstance(IAtom.class,"O");
+        atoms[0] = container.getBuilder().newInstance(IAtom.class, "C");
+        atoms[1] = container.getBuilder().newInstance(IAtom.class, "C");
+        atoms[2] = container.getBuilder().newInstance(IAtom.class, "C");
+        atoms[3] = container.getBuilder().newInstance(IAtom.class, "O");
         container.setAtoms(atoms);
 
         // if an atom changes, the atomcontainer will throw a change event too

@@ -35,15 +35,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ChemFileTest extends AbstractChemFileTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new ChemFile();
             }
         });
     }
 
-    @Test public void testChemFile() {
+    @Test
+    public void testChemFile() {
         IChemFile cs = new ChemFile();
         Assert.assertNotNull(cs);
     }

@@ -1,6 +1,5 @@
 package org.openscience.cdk.group;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -91,23 +90,35 @@ public class AtomContainerPrinter {
 
     private static char bondOrderToChar(IBond.Order order) {
         switch (order) {
-            case SINGLE:     return '1';
-            case DOUBLE:     return '2';
-            case TRIPLE:     return '3';
-            case QUADRUPLE : return '4';
-            case UNSET:      return '?';
-            default:         return '?';
+            case SINGLE:
+                return '1';
+            case DOUBLE:
+                return '2';
+            case TRIPLE:
+                return '3';
+            case QUADRUPLE:
+                return '4';
+            case UNSET:
+                return '?';
+            default:
+                return '?';
         }
     }
 
     private static IBond.Order charToBondOrder(char orderChar) {
         switch (orderChar) {
-            case '1' :     return IBond.Order.SINGLE;
-            case '2' :     return IBond.Order.DOUBLE;
-            case '3' :     return IBond.Order.TRIPLE;
-            case '4' :     return IBond.Order.QUADRUPLE;
-            case '?' :     return IBond.Order.UNSET;
-            default:       return IBond.Order.UNSET;
+            case '1':
+                return IBond.Order.SINGLE;
+            case '2':
+                return IBond.Order.DOUBLE;
+            case '3':
+                return IBond.Order.TRIPLE;
+            case '4':
+                return IBond.Order.QUADRUPLE;
+            case '?':
+                return IBond.Order.UNSET;
+            default:
+                return IBond.Order.UNSET;
         }
     }
 

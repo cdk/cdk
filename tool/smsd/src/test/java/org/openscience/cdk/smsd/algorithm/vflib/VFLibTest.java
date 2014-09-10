@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -58,9 +57,9 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 public class VFLibTest extends CDKTestCase {
 
     private static IAtomContainer hexane;
-    private static IQuery hexaneQuery;
+    private static IQuery         hexaneQuery;
     private static IAtomContainer benzene;
-    private static IQuery benzeneQuery;
+    private static IQuery         benzeneQuery;
 
     @BeforeClass
     public static void setUp() throws CDKException {
@@ -238,7 +237,6 @@ public class VFLibTest extends CDKTestCase {
         IBond bond4 = new Bond(c4, c5, IBond.Order.SINGLE);
         IBond bond5 = new Bond(c5, c6, IBond.Order.SINGLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
@@ -280,14 +278,12 @@ public class VFLibTest extends CDKTestCase {
         IBond bond5 = new Bond(c5, c6, IBond.Order.SINGLE);
         IBond bond6 = new Bond(c6, c1, IBond.Order.DOUBLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
         result.addBond(bond4);
         result.addBond(bond5);
         result.addBond(bond6);
-
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         return result;

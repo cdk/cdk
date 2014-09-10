@@ -55,8 +55,7 @@ public class CustomSerializer extends Serializer {
      * @param out      the output stream to write the document on
      * @param encoding the character encoding for the serialization
      */
-    public CustomSerializer(OutputStream out, String encoding)
-            throws UnsupportedEncodingException {
+    public CustomSerializer(OutputStream out, String encoding) throws UnsupportedEncodingException {
         super(out, encoding);
     }
 

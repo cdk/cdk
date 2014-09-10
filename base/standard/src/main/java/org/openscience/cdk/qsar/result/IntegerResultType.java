@@ -30,7 +30,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.result.IntegerResultTypeTest")
 public class IntegerResultType implements IDescriptorResult {
 
-	private static final long serialVersionUID = -6643953534920216664L;
+    private static final long serialVersionUID = -6643953534920216664L;
 
     @TestMethod("testToString")
     public String toString() {
@@ -39,7 +39,6 @@ public class IntegerResultType implements IDescriptorResult {
 
     @TestMethod("testLength")
     public int length() {
-    	return 1;
+        return 1;
     }
 }
-

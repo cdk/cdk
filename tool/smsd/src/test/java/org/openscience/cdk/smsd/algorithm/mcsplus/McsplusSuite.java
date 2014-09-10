@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -38,25 +37,21 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusHandlerTest.class,
-    org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusTest.class,
-    org.openscience.cdk.smsd.algorithm.mcsplus.ExactMappingTest.class,
-    org.openscience.cdk.smsd.algorithm.mcsplus.GenerateCompatibilityGraphTest.class,
-    org.openscience.cdk.smsd.algorithm.mcsplus.BKKCKCFTest.class})
+        org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlusTest.class,
+        org.openscience.cdk.smsd.algorithm.mcsplus.ExactMappingTest.class,
+        org.openscience.cdk.smsd.algorithm.mcsplus.GenerateCompatibilityGraphTest.class,
+        org.openscience.cdk.smsd.algorithm.mcsplus.BKKCKCFTest.class})
 public class McsplusSuite {
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() throws Exception {
-    }
+    public void setUp() throws Exception {}
 
     @After
-    public void tearDown() throws Exception {
-    }
+    public void tearDown() throws Exception {}
 }

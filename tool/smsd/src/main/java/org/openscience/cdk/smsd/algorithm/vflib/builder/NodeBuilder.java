@@ -41,8 +41,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class NodeBuilder implements INode {
 
-    private List<INode> neighborsList;
-    private List<IEdge> edgesList;
+    private List<INode>   neighborsList;
+    private List<IEdge>   edgesList;
     private VFAtomMatcher matcher;
 
     /**

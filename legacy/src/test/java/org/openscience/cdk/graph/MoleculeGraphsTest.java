@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.graph;
 
-
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org.junit.Assert;
 import org.junit.Test;
@@ -35,18 +34,16 @@ public class MoleculeGraphsTest extends CDKTestCase {
         super();
     }
 
-	/**
-	 * Tests that the jgrapht graph has as many vertices as atoms,
-	 * and as many edges as bonds in alpha-pinene.
-	 */
+    /**
+     * Tests that the jgrapht graph has as many vertices as atoms,
+     * and as many edges as bonds in alpha-pinene.
+     */
     @Test
     public void testGetMoleculeGraph_IAtomContainer() {
         IAtomContainer apinene = MoleculeFactory.makeAlphaPinene();
-		SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
-		Assert.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());
-		Assert.assertEquals(apinene.getBondCount(), graph.edgeSet().size());
-	}
+        SimpleGraph graph = MoleculeGraphs.getMoleculeGraph(apinene);
+        Assert.assertEquals(apinene.getAtomCount(), graph.vertexSet().size());
+        Assert.assertEquals(apinene.getBondCount(), graph.edgeSet().size());
+    }
 
 }
-
-

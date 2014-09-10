@@ -42,10 +42,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class InvariantRankerTest {
 
-    @Test public void rank() {
+    @Test
+    public void rank() {
 
         InvariantRanker ranker = new InvariantRanker(6);
-        long[] prev = new long[]{1,  1,   1,  1,   1,  1};
+        long[] prev = new long[]{1, 1, 1, 1, 1, 1};
         long[] curr = new long[]{50, 100, 25, 100, 50, 90};
 
         // no we leave extra space
@@ -63,10 +64,11 @@ public class InvariantRankerTest {
         assertThat(ws, is(new int[]{0, 4, 1, 3, -1, 0}));
     }
 
-    @Test public void rank_all_equiv() {
+    @Test
+    public void rank_all_equiv() {
 
         InvariantRanker ranker = new InvariantRanker(6);
-        long[] prev = new long[]{1,  1,  1,  1,  1,  1};
+        long[] prev = new long[]{1, 1, 1, 1, 1, 1};
         long[] curr = new long[]{42, 42, 42, 42, 42, 42};
 
         // no we leave extra space
@@ -84,10 +86,11 @@ public class InvariantRankerTest {
         assertThat(ws, is(new int[]{0, 1, 2, 3, 4, 5}));
     }
 
-    @Test public void rank_all_unique() {
+    @Test
+    public void rank_all_unique() {
 
         InvariantRanker ranker = new InvariantRanker(7);
-        long[] prev = new long[]{1, 1, 1, 1, 1,  1,  1};
+        long[] prev = new long[]{1, 1, 1, 1, 1, 1, 1};
         long[] curr = new long[]{7, 3, 1, 0, 91, 32, 67};
 
         // no we leave extra space
@@ -105,7 +108,8 @@ public class InvariantRankerTest {
         assertThat(ws, is(new int[]{-1, 0, 0, 0, 0, 0, 0}));
     }
 
-    @Test public void mergeSort() {
+    @Test
+    public void mergeSort() {
 
         int n = 100;
 
@@ -130,7 +134,8 @@ public class InvariantRankerTest {
             assertTrue(prev[vs[i]] > prev[vs[i - 1]]);
     }
 
-    @Test public void mergeSort_range() {
+    @Test
+    public void mergeSort_range() {
 
         int n = 100;
 
@@ -161,7 +166,8 @@ public class InvariantRankerTest {
             assertThat(vs[i], is(i));
     }
 
-    @Test public void insertionSort() {
+    @Test
+    public void insertionSort() {
         long[] prev = new long[]{11, 10, 9, 8, 7};
         long[] curr = new long[]{11, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4};
@@ -169,7 +175,8 @@ public class InvariantRankerTest {
         assertThat(vs, is(new int[]{4, 3, 2, 1, 0}));
     }
 
-    @Test public void insertionSort_duplicate() {
+    @Test
+    public void insertionSort_duplicate() {
         long[] prev = new long[]{11, 10, 10, 9, 8, 7};
         long[] curr = new long[]{11, 10, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4, 5};
@@ -177,7 +184,8 @@ public class InvariantRankerTest {
         assertThat(vs, is(new int[]{5, 4, 3, 1, 2, 0}));
     }
 
-    @Test public void insertionSort_range() {
+    @Test
+    public void insertionSort_range() {
         long[] prev = new long[]{12, 11, 10, 9, 8, 7};
         long[] curr = new long[]{12, 11, 10, 9, 8, 7};
         int[] vs = new int[]{0, 1, 2, 3, 4, 5};
@@ -185,7 +193,8 @@ public class InvariantRankerTest {
         assertThat(vs, is(new int[]{0, 1, 4, 3, 2, 5}));
     }
 
-    @Test public void less() throws Exception {
+    @Test
+    public void less() throws Exception {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 1, 2, 2};
         assertFalse(InvariantRanker.less(0, 1, curr, prev));
@@ -196,7 +205,8 @@ public class InvariantRankerTest {
         assertTrue(InvariantRanker.less(1, 3, curr, prev));
     }
 
-    @Test public void lessUsingPrev() throws Exception {
+    @Test
+    public void lessUsingPrev() throws Exception {
         long[] prev = new long[]{1, 1, 2, 2};
         long[] curr = new long[]{1, 2, 1, 2};
         // 0,1 and 2,3 are only less is we inspect the 'curr' invariants

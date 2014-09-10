@@ -30,10 +30,8 @@ import org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptorTest;
  *
  * @cdk.module  test-qsarprotein
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsarproteinCoverageTest.class,
-    TaeAminoAcidDescriptorTest.class,
-    AminoAcidCountDescriptorTest.class
-})
-public class MqsarproteinTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QsarproteinCoverageTest.class, TaeAminoAcidDescriptorTest.class,
+        AminoAcidCountDescriptorTest.class})
+public class MqsarproteinTests {
+}

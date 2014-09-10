@@ -40,16 +40,14 @@ public abstract class AbstractMCSTest {
     public class AbstractMCSImpl extends AbstractMCS {
 
         @Override
-        public void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanMol) throws CDKException {
-        }
+        public void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanMol)
+                throws CDKException {}
 
         @Override
-        public void init(IQueryAtomContainer source, IAtomContainer target) throws CDKException {
-        }
+        public void init(IQueryAtomContainer source, IAtomContainer target) throws CDKException {}
 
         @Override
-        public void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter) {
-        }
+        public void setChemFilters(boolean stereoFilter, boolean fragmentFilter, boolean energyFilter) {}
 
         @Override
         public Double getEnergyScore(int Key) {

@@ -34,13 +34,8 @@ import org.openscience.cdk.smiles.AbsoluteSMILESTest;
  *
  * @cdk.module test-inchi
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    InchiCoverageTest.class,
-    InChIGeneratorTest.class,
-    InChIToStructureTest.class,
-    InChINumbersToolsTest.class,
-    InChIGeneratorFactoryTest.class,
-    AbsoluteSMILESTest.class
-})
-public class MinchiTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {InchiCoverageTest.class, InChIGeneratorTest.class, InChIToStructureTest.class,
+        InChINumbersToolsTest.class, InChIGeneratorFactoryTest.class, AbsoluteSMILESTest.class})
+public class MinchiTests {
+}

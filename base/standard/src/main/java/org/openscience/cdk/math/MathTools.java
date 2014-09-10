@@ -30,67 +30,61 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.math.MathToolsTest")
 public class MathTools {
 
-	/**
-	 * Analog of Math.max that returns the largest double value in an array of doubles.
-	 *
-	 * @param   values  the values to be searched for the largest value among them
-	 * @return   the largest value among a set of given values
-	 */
+    /**
+     * Analog of Math.max that returns the largest double value in an array of doubles.
+     *
+     * @param   values  the values to be searched for the largest value among them
+     * @return   the largest value among a set of given values
+     */
     @TestMethod("testMax_arraydouble")
-    public static double max(double[] values)
-	{
-		double max = values[0];
+    public static double max(double[] values) {
+        double max = values[0];
         for (double value : values)
-            if (value > max)
-                max = value;
-			return max;
-	}
+            if (value > max) max = value;
+        return max;
+    }
 
-	/**
-	 * Analog of Math.min that returns the largest double value in an array of double.
-	 *
-	 * @param   values  the values to be searched for the smallest value among them
-	 * @return   the smallest value among a set of given values
-	 */
+    /**
+     * Analog of Math.min that returns the largest double value in an array of double.
+     *
+     * @param   values  the values to be searched for the smallest value among them
+     * @return   the smallest value among a set of given values
+     */
     @TestMethod("testMin_arraydouble")
-    public static double min(double[] values)
-	{
-		double min = values[0];
+    public static double min(double[] values) {
+        double min = values[0];
         for (double value : values)
-            if (value < min)
-                min = value;
-			return min;
-	}
+            if (value < min) min = value;
+        return min;
+    }
 
-	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints.
-	 **/
+    /**
+     * Analog of Math.max that returns the largest int value in an array of ints.
+     **/
     @TestMethod("testMax_arrayint")
-    public static int max(int[] values)
-	{
-		int max = values[0];
+    public static int max(int[] values) {
+        int max = values[0];
         for (int value : values) {
             if (value > max) {
                 max = value;
             }
         }
-		return max;
-	}
+        return max;
+    }
 
-	/**
-	 * Analog of Math.max that returns the largest int value in an array of ints.
-	 **/
+    /**
+     * Analog of Math.max that returns the largest int value in an array of ints.
+     **/
     @TestMethod("testMin_arrayint")
-    public static int min(int[] values)
-	{
-		int min = values[0];
+    public static int min(int[] values) {
+        int min = values[0];
         for (int value : values) {
             if (value < min) {
                 min = value;
             }
         }
-		return min;
-	}
+        return min;
+    }
 
     @TestMethod("testIsOdd_int")
     public static boolean isOdd(int intValue) {
@@ -103,4 +97,3 @@ public class MathTools {
     }
 
 }
-

@@ -34,21 +34,21 @@ import java.util.List;
  */
 public interface IReactionProcess {
 
-	/**
-	 * Returns a <code>Map</code> which specifies which reaction
-	 * is implemented by this class.
-	 *
-	 * These fields are used in the map:
-	 * <ul>
-	 * <li>Specification-Reference: refers to an entry in a unique dictionary or web page
-	 * <li>Implementation-Title: anything
-	 * <li>Implementation-Identifier: a unique identifier for this version of
-	 *  this class
-	 * <li>Implementation-Vendor: CDK, JOELib, or anything else
-	 * </ul>
-	 *
-	 * @return An object containing the reaction specification
-	 */
+    /**
+     * Returns a <code>Map</code> which specifies which reaction
+     * is implemented by this class.
+     *
+     * These fields are used in the map:
+     * <ul>
+     * <li>Specification-Reference: refers to an entry in a unique dictionary or web page
+     * <li>Implementation-Title: anything
+     * <li>Implementation-Identifier: a unique identifier for this version of
+     *  this class
+     * <li>Implementation-Vendor: CDK, JOELib, or anything else
+     * </ul>
+     *
+     * @return An object containing the reaction specification
+     */
     public ReactionSpecification getSpecification();
 
     /**

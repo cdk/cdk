@@ -41,15 +41,15 @@ import org.openscience.cdk.annotations.TestClass;
  * @see          Dictionary
  */
 @TestClass("org.openscience.cdk.dict.EntryReactTest")
-public class EntryReact extends Entry{
+public class EntryReact extends Entry {
 
-    private List<String> reactionInfo;
-	private List<String> representations;
-	private HashMap<String,String> parameters;
-	private List<String> parametersValue;
-	private List<String> reactionExample;
-	private List<List<String>> parameterClass;
-	private String mechanism;
+    private List<String>            reactionInfo;
+    private List<String>            representations;
+    private HashMap<String, String> parameters;
+    private List<String>            parametersValue;
+    private List<String>            reactionExample;
+    private List<List<String>>      parameterClass;
+    private String                  mechanism;
 
     /**
      * Constructor of the EntryReact.
@@ -60,7 +60,7 @@ public class EntryReact extends Entry{
     public EntryReact(String identifier, String term) {
         super(identifier, term);
         this.representations = new ArrayList<String>();
-        this.parameters = new HashMap<String,String>();
+        this.parameters = new HashMap<String, String>();
         this.parametersValue = new ArrayList<String>();
         this.reactionExample = new ArrayList<String>();
         this.parameterClass = new ArrayList<List<String>>();
@@ -72,11 +72,11 @@ public class EntryReact extends Entry{
      * @param identifier The ID value
      */
     public EntryReact(String identifier) {
-    	this(identifier, "");
+        this(identifier, "");
     }
 
     public void setReactionMetadata(String metadata) {
-        this.reactionInfo.add( metadata );
+        this.reactionInfo.add(metadata);
     }
 
     public List<String> getReactionMetadata() {
@@ -89,7 +89,7 @@ public class EntryReact extends Entry{
      * @param contentRepr The representation of the reaction as String
      */
     public void setRepresentation(String contentRepr) {
-    	this.representations.add(contentRepr);
+        this.representations.add(contentRepr);
     }
 
     /**
@@ -98,7 +98,7 @@ public class EntryReact extends Entry{
      * @return A List of String of the reaction representations
      */
     public List<String> getRepresentations() {
-    	return this.representations;
+        return this.representations;
     }
 
     /**
@@ -109,8 +109,8 @@ public class EntryReact extends Entry{
      * @param value     The value default of the parameter
      */
     public void setParameters(String nameParam, String typeParam, String value) {
-    	this.parameters.put(nameParam, typeParam);
-    	this.parametersValue.add(value);
+        this.parameters.put(nameParam, typeParam);
+        this.parametersValue.add(value);
     }
 
     /**
@@ -118,8 +118,8 @@ public class EntryReact extends Entry{
      *
      * @return A HashMap with the parameters
      */
-    public HashMap<String,String> getParameters() {
-    	return this.parameters;
+    public HashMap<String, String> getParameters() {
+        return this.parameters;
     }
 
     /**
@@ -128,8 +128,9 @@ public class EntryReact extends Entry{
      * @return A String List with the parameter class
      */
     public List<List<String>> getParameterClass() {
-    	return this.parameterClass;
+        return this.parameterClass;
     }
+
     /**
      * Add a IParameterReact's of the reaction.
      *
@@ -137,15 +138,16 @@ public class EntryReact extends Entry{
      */
     public void addParameter(List<String> param) {
 
-    	this.parameterClass.add(param);
+        this.parameterClass.add(param);
     }
+
     /**
      * Get the parameter value of the reaction.
      *
      * @return A List with the parameter value
      */
     public List<String> getParameterValue() {
-    	return this.parametersValue;
+        return this.parametersValue;
     }
 
     /**
@@ -153,33 +155,34 @@ public class EntryReact extends Entry{
      *
      * @param mechani The mechanism
      */
-	public void setMechanism(String mechani) {
-		this.mechanism = mechani;
-	}
-	/**
+    public void setMechanism(String mechani) {
+        this.mechanism = mechani;
+    }
+
+    /**
      * Get the mechanism of this reaction.
      *
      * @return The mechanism
      */
-	public String getMechanism() {
-		return this.mechanism;
-	}
+    public String getMechanism() {
+        return this.mechanism;
+    }
 
-	/**
-	 * add a example for this reaction.
-	 *
-	 * @param xml A reaction in XML scheme
-	 */
-	public void addExampleReaction(String xml) {
-		this.reactionExample.add(xml);
+    /**
+     * add a example for this reaction.
+     *
+     * @param xml A reaction in XML scheme
+     */
+    public void addExampleReaction(String xml) {
+        this.reactionExample.add(xml);
 
-	}
+    }
 
-	/**
-	 * @return A List of reactions in XML schema.
-	 */
-	public List<String> getExampleReactions() {
-		return this.reactionExample;
+    /**
+     * @return A List of reactions in XML schema.
+     */
+    public List<String> getExampleReactions() {
+        return this.reactionExample;
 
-	}
+    }
 }

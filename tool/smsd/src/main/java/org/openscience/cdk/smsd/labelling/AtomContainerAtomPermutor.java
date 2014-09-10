@@ -11,8 +11,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.githash
  */
 
-public class AtomContainerAtomPermutor extends Permutor
-    implements Iterator<IAtomContainer>{
+public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAtomContainer> {
 
     private IAtomContainer original;
 
@@ -21,9 +20,9 @@ public class AtomContainerAtomPermutor extends Permutor
         original = atomContainer;
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
     public IAtomContainer next() {
         int[] p = super.getNextPermutation();
         return AtomContainerAtomPermutor.permute(p, original);
@@ -41,8 +40,7 @@ public class AtomContainerAtomPermutor extends Permutor
     private static IAtomContainer permuteA(int[] p, IAtomContainer atomContainer) {
         IAtomContainer permutedContainer = null;
         try {
-            permutedContainer =
-                atomContainer.getBuilder().newInstance(IAtomContainer.class);
+            permutedContainer = atomContainer.getBuilder().newInstance(IAtomContainer.class);
             for (int i = 0; i < p.length; i++) {
                 IAtom atom = atomContainer.getAtom(p[i]);
                 permutedContainer.addAtom((IAtom) atom.clone());
@@ -91,9 +89,9 @@ public class AtomContainerAtomPermutor extends Permutor
         return permutedContainer;
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
     public void remove() {
         // can just increase rank....
     }

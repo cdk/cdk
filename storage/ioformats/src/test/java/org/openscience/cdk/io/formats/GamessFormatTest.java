@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class GamessFormatTest extends ChemFormatMatcherTest {
 
     public GamessFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)GamessFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) GamessFormat.getInstance());
     }
 
 }

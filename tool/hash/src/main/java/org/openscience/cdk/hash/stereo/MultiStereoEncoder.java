@@ -55,9 +55,8 @@ final class MultiStereoEncoder implements StereoEncoder {
      */
     @TestMethod("testConstruction_Empty")
     public MultiStereoEncoder(List<StereoEncoder> encoders) {
-        if (encoders.isEmpty())
-            throw new IllegalArgumentException("no stereo encoders provided");
-        this.encoders     = Collections.unmodifiableList(new ArrayList<StereoEncoder>(encoders));
+        if (encoders.isEmpty()) throw new IllegalArgumentException("no stereo encoders provided");
+        this.encoders = Collections.unmodifiableList(new ArrayList<StereoEncoder>(encoders));
         this.unconfigured = new BitSet(encoders.size());
         unconfigured.flip(0, encoders.size());
     }
@@ -66,11 +65,11 @@ final class MultiStereoEncoder implements StereoEncoder {
      * @inheritDoc
      */
     @TestMethod("testEncode")
-    @Override public boolean encode(long[] current, long[] next) {
+    @Override
+    public boolean encode(long[] current, long[] next) {
         boolean configured = false;
 
-        for (int i = unconfigured.nextSetBit(0); i >= 0;
-             i = unconfigured.nextSetBit(i + 1)) {
+        for (int i = unconfigured.nextSetBit(0); i >= 0; i = unconfigured.nextSetBit(i + 1)) {
 
             if (encoders.get(i).encode(current, next)) {
                 unconfigured.clear(i); // don't configure again (unless reset)
@@ -84,7 +83,8 @@ final class MultiStereoEncoder implements StereoEncoder {
      * @inheritDoc
      */
     @TestMethod("testReset")
-    @Override public void reset() {
+    @Override
+    public void reset() {
         // mark all as unperceived and reset
         for (int i = 0; i < encoders.size(); i++) {
             unconfigured.set(i);

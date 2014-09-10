@@ -35,15 +35,9 @@ import org.openscience.cdk.layout.TemplateHandlerTest;
  *
  * @cdk.module  test-sdg
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SdgCoverageTest.class,
-    StructureDiagramGeneratorTest.class,
-    HydrogenPlacerTest.class,
-    OverlapResolverTest.class,
-    TemplateHandlerTest.class,
-    AtomPlacerTest.class,
-    NonPlanarBondsTest.class,
-    CorrectGeometricConfigurationTest.class
-})
-public class MsdgTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SdgCoverageTest.class, StructureDiagramGeneratorTest.class, HydrogenPlacerTest.class,
+        OverlapResolverTest.class, TemplateHandlerTest.class, AtomPlacerTest.class, NonPlanarBondsTest.class,
+        CorrectGeometricConfigurationTest.class})
+public class MsdgTests {
+}

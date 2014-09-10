@@ -29,27 +29,31 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class Point2dDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
-    	Point2d foo = new Point2d(1.0, 2.0);
-    	Point2d bar = new Point2d(1.0, 5.0);
+    @Test
+    public void testDiff() {
+        Point2d foo = new Point2d(1.0, 2.0);
+        Point2d bar = new Point2d(1.0, 5.0);
         IDifference result = Point2dDifference.construct("Foo", foo, bar);
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
-    	Point2d foo = new Point2d(1.0, 2.0);
-    	Point2d bar = new Point2d(1.0, 2.0);
+    @Test
+    public void testSame() {
+        Point2d foo = new Point2d(1.0, 2.0);
+        Point2d bar = new Point2d(1.0, 2.0);
         IDifference result = Point2dDifference.construct("Foo", foo, bar);
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = Point2dDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
-    	Point2d bar = new Point2d(1.0, 2.0);
+    @Test
+    public void testOneNull() {
+        Point2d bar = new Point2d(1.0, 2.0);
         IDifference result = Point2dDifference.construct("Foo", null, bar);
         Assert.assertNotNull(result);
 
@@ -57,8 +61,9 @@ public class Point2dDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
-    	Point2d bar = new Point2d(1.0, 5.0);
+    @Test
+    public void testToString() {
+        Point2d bar = new Point2d(1.0, 5.0);
         IDifference result = Point2dDifference.construct("Foo", null, bar);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);

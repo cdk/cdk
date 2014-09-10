@@ -36,7 +36,7 @@ import org.openscience.cdk.interfaces.IChemObject;
 @TestClass("org.openscience.cdk.validate.ProblemMarkerTest")
 public class ProblemMarker {
 
-    public static String ERROR_MARKER = "org.openscience.cdk.validate.error";
+    public static String ERROR_MARKER   = "org.openscience.cdk.validate.error";
     public static String WARNING_MARKER = "org.openscience.cdk.validate.warning";
 
     @TestMethod("testMarkWithError_IChemObject")

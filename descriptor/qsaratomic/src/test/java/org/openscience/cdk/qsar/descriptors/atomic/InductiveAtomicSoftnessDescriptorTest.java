@@ -36,60 +36,60 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  */
 public class InductiveAtomicSoftnessDescriptorTest extends AtomicDescriptorTest {
 
-	public  InductiveAtomicSoftnessDescriptorTest() {}
+    public InductiveAtomicSoftnessDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(InductiveAtomicSoftnessDescriptor.class);
+        setDescriptor(InductiveAtomicSoftnessDescriptor.class);
     }
 
-	@Test
-    public void testInductiveAtomicSoftnessDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		double [] testResult={0.78};
+    @Test
+    public void testInductiveAtomicSoftnessDescriptor() throws ClassNotFoundException, CDKException,
+            java.lang.Exception {
+        double[] testResult = {0.78};
 
-		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
-		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
-		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
-		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
+        Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
+        Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
+        Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
+        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-		IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = new AtomContainer(); // molecule is CF
 
-		Atom c = new Atom("C");
-		mol.addAtom(c);
-		c.setPoint3d(c_coord);
+        Atom c = new Atom("C");
+        mol.addAtom(c);
+        c.setPoint3d(c_coord);
 
-		Atom f = new Atom("F");
-		mol.addAtom(f);
-		f.setPoint3d(f_coord);
+        Atom f = new Atom("F");
+        mol.addAtom(f);
+        f.setPoint3d(f_coord);
 
-		Atom h1 = new Atom("H");
-		mol.addAtom(h1);
-		h1.setPoint3d(h1_coord);
+        Atom h1 = new Atom("H");
+        mol.addAtom(h1);
+        h1.setPoint3d(h1_coord);
 
-		Atom h2 = new Atom("H");
-		mol.addAtom(h2);
-		h2.setPoint3d(h2_coord);
+        Atom h2 = new Atom("H");
+        mol.addAtom(h2);
+        h2.setPoint3d(h2_coord);
 
-		Atom h3 = new Atom("H");
-		mol.addAtom(h3);
-		h3.setPoint3d(h3_coord);
+        Atom h3 = new Atom("H");
+        mol.addAtom(h3);
+        h3.setPoint3d(h3_coord);
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 1
 
-		IAtomicDescriptor descriptor  = new InductiveAtomicSoftnessDescriptor();
+        IAtomicDescriptor descriptor = new InductiveAtomicSoftnessDescriptor();
 
-		double retval = ((DoubleResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).doubleValue();
-		Assert.assertEquals(testResult[0], retval, 0.1);
+        double retval = ((DoubleResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).doubleValue();
+        Assert.assertEquals(testResult[0], retval, 0.1);
 
-		// F: expected is 0.32, calculated is 0.35
-		// difference depends on different starting values (3D distances and small differences
-		// in electronegativity values
+        // F: expected is 0.32, calculated is 0.35
+        // difference depends on different starting values (3D distances and small differences
+        // in electronegativity values
 
-		// H: expected is 0.28, calculated is 0.28
-	}
+        // H: expected is 0.28, calculated is 0.28
+    }
 }
-

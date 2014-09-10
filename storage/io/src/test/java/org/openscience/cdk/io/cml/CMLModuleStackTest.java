@@ -34,70 +34,76 @@ import org.openscience.cdk.interfaces.IChemFile;
  */
 public class CMLModuleStackTest extends CDKTestCase {
 
-    @Test public void testPush_String() {
-    	// the class has a hardcoded default length. Test going beyond this.
-    	CMLModuleStack stack = new CMLModuleStack();
-    	for (int i=0; i<100; i++) {
-    		stack.push(new CMLCoreModule((IChemFile)null));
-    	}
+    @Test
+    public void testPush_String() {
+        // the class has a hardcoded default length. Test going beyond this.
+        CMLModuleStack stack = new CMLModuleStack();
+        for (int i = 0; i < 100; i++) {
+            stack.push(new CMLCoreModule((IChemFile) null));
+        }
     }
 
-    @Test public void testPop() {
-    	CMLModuleStack stack = new CMLModuleStack();
-    	ICMLModule first = new CMLCoreModule((IChemFile)null);
-    	ICMLModule second = new CMLCoreModule((IChemFile)null);
-    	ICMLModule third = new CMLCoreModule((IChemFile)null);
-    	stack.push(first);
-    	stack.push(second);
-    	stack.push(third);
-    	Assert.assertEquals(third, stack.pop());
-    	Assert.assertEquals(second, stack.pop());
-    	Assert.assertEquals(first, stack.pop());
-    	try {
-    		Assert.assertEquals("doesNotExist", stack.pop());
-    		Assert.fail("Should have received an ArrayIndexOutOfBoundsException");
-    	} catch (Exception exception) {
-    		// OK, should happen
-    	}
+    @Test
+    public void testPop() {
+        CMLModuleStack stack = new CMLModuleStack();
+        ICMLModule first = new CMLCoreModule((IChemFile) null);
+        ICMLModule second = new CMLCoreModule((IChemFile) null);
+        ICMLModule third = new CMLCoreModule((IChemFile) null);
+        stack.push(first);
+        stack.push(second);
+        stack.push(third);
+        Assert.assertEquals(third, stack.pop());
+        Assert.assertEquals(second, stack.pop());
+        Assert.assertEquals(first, stack.pop());
+        try {
+            Assert.assertEquals("doesNotExist", stack.pop());
+            Assert.fail("Should have received an ArrayIndexOutOfBoundsException");
+        } catch (Exception exception) {
+            // OK, should happen
+        }
     }
 
-    @Test public void testCurrent() {
-    	CMLModuleStack stack = new CMLModuleStack();
-    	ICMLModule first = new CMLCoreModule((IChemFile)null);
-    	stack.push(first);
-    	Assert.assertEquals(first, stack.current());
+    @Test
+    public void testCurrent() {
+        CMLModuleStack stack = new CMLModuleStack();
+        ICMLModule first = new CMLCoreModule((IChemFile) null);
+        stack.push(first);
+        Assert.assertEquals(first, stack.current());
     }
 
-    @Test public void testEndsWith_String() {
-    	CMLModuleStack stack = new CMLModuleStack();
-    	ICMLModule first = new CMLCoreModule((IChemFile)null);
-    	stack.push(first);
-    	Assert.assertTrue(stack.endsWith(first));
-    	ICMLModule second = new CMLCoreModule((IChemFile)null);
-    	stack.push(second);
-    	Assert.assertTrue(stack.endsWith(second));
+    @Test
+    public void testEndsWith_String() {
+        CMLModuleStack stack = new CMLModuleStack();
+        ICMLModule first = new CMLCoreModule((IChemFile) null);
+        stack.push(first);
+        Assert.assertTrue(stack.endsWith(first));
+        ICMLModule second = new CMLCoreModule((IChemFile) null);
+        stack.push(second);
+        Assert.assertTrue(stack.endsWith(second));
     }
 
-    @Test public void testEndsWith_String_String() {
-    	CMLModuleStack stack = new CMLModuleStack();
-    	ICMLModule first = new CMLCoreModule((IChemFile)null);
-    	stack.push(first);
-    	ICMLModule second = new CMLCoreModule((IChemFile)null);
-    	stack.push(second);
-    	Assert.assertTrue(stack.endsWith(first, second));
-    	ICMLModule third = new CMLCoreModule((IChemFile)null);
-    	stack.push(third);
-    	Assert.assertTrue(stack.endsWith(second, third));
+    @Test
+    public void testEndsWith_String_String() {
+        CMLModuleStack stack = new CMLModuleStack();
+        ICMLModule first = new CMLCoreModule((IChemFile) null);
+        stack.push(first);
+        ICMLModule second = new CMLCoreModule((IChemFile) null);
+        stack.push(second);
+        Assert.assertTrue(stack.endsWith(first, second));
+        ICMLModule third = new CMLCoreModule((IChemFile) null);
+        stack.push(third);
+        Assert.assertTrue(stack.endsWith(second, third));
     }
 
-    @Test public void testEndsWith_String_String_String() {
-    	CMLModuleStack stack = new CMLModuleStack();
-    	ICMLModule first = new CMLCoreModule((IChemFile)null);
-    	stack.push(first);
-    	ICMLModule second = new CMLCoreModule((IChemFile)null);
-    	stack.push(second);
-    	ICMLModule third = new CMLCoreModule((IChemFile)null);
-    	stack.push(third);
-    	Assert.assertTrue(stack.endsWith(first, second, third));
+    @Test
+    public void testEndsWith_String_String_String() {
+        CMLModuleStack stack = new CMLModuleStack();
+        ICMLModule first = new CMLCoreModule((IChemFile) null);
+        stack.push(first);
+        ICMLModule second = new CMLCoreModule((IChemFile) null);
+        stack.push(second);
+        ICMLModule third = new CMLCoreModule((IChemFile) null);
+        stack.push(third);
+        Assert.assertTrue(stack.endsWith(first, second, third));
     }
 }

@@ -31,11 +31,13 @@ public class SdgCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "sdg.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, SdgCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 

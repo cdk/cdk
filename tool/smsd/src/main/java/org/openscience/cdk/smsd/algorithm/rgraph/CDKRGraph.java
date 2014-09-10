@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
  *               2007-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -100,30 +99,32 @@ import org.openscience.cdk.smsd.tools.TimeManager;
  */
 @TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKRGraphTest")
 public class CDKRGraph {
+
     // an CDKRGraph is a list of CDKRGraph nodes
     // each node keeping track of its
     // neighbors.
 
-    private List<CDKRNode> graph = null;
+    private List<CDKRNode> graph            = null;
     // maximal number of iterations before
     // search break
-    private int maxIteration = -1;
+    private int            maxIteration     = -1;
     // dimensions of the compared graphs
-    private int firstGraphSize = 0;
-    private int secondGraphSize = 0;
+    private int            firstGraphSize   = 0;
+    private int            secondGraphSize  = 0;
     // constrains
-    private BitSet sourceBitSet = null;
-    private BitSet targetBitSet = null;
+    private BitSet         sourceBitSet     = null;
+    private BitSet         targetBitSet     = null;
     // current solution list
-    private List<BitSet> solutionList = null;
+    private List<BitSet>   solutionList     = null;
     // flag to define if we want to get all possible 'mappings'
-    private boolean findAllMap = false;
+    private boolean        findAllMap       = false;
     // flag to define if we want to get all possible 'structures'
-    private boolean findAllStructure = true;
+    private boolean        findAllStructure = true;
     // working variables
-    private boolean stop = false;
-    private int nbIteration = 0;
-    private BitSet graphBitSet = null;
+    private boolean        stop             = false;
+    private int            nbIteration      = 0;
+    private BitSet         graphBitSet      = null;
+
     // -1 for infinite search and one min is 1
 
     /**
@@ -220,7 +221,8 @@ public class CDKRGraph {
      * @param timeManager
      * @throws CDKException
      */
-    public void parse(BitSet sourceBitSet, BitSet targetBitSet, boolean findAllStructure, boolean findAllMap, TimeManager timeManager) throws CDKException {
+    public void parse(BitSet sourceBitSet, BitSet targetBitSet, boolean findAllStructure, boolean findAllMap,
+            TimeManager timeManager) throws CDKException {
         // initialize the list of solution
         checkTimeOut();
         // initialize the list of solution
@@ -291,7 +293,7 @@ public class CDKRGraph {
                     if (traversed.isEmpty()) {
                         newExtension = (BitSet) ((getGraph().get(x)).getExtension().clone());
                     } // else we simply update the set of solution by
-                    // including the neighbors of the newly accepted node
+                      // including the neighbors of the newly accepted node
                     else {
                         newExtension = (BitSet) extension.clone();
                         newExtension.or((getGraph().get(x)).getExtension());
@@ -432,7 +434,8 @@ public class CDKRGraph {
 
             checkTimeOut();
 
-            if ((sourceBitSet.get(rNode.getRMap().getId1()) || sourceBitSet.isEmpty()) && (targetBitSet.get(rNode.getRMap().getId2()) || targetBitSet.isEmpty())) {
+            if ((sourceBitSet.get(rNode.getRMap().getId1()) || sourceBitSet.isEmpty())
+                    && (targetBitSet.get(rNode.getRMap().getId2()) || targetBitSet.isEmpty())) {
                 bistSet.set(getGraph().indexOf(rNode));
             }
         }

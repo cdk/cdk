@@ -41,12 +41,13 @@ public final class RingSearchTest_Empty {
 
     private final IAtomContainer empty = new AtomContainer(0, 0, 0, 0);
 
-    @Test public void testCyclic() {
-        assertThat(new RingSearch(empty).cyclic().length,
-                   is(0));
+    @Test
+    public void testCyclic() {
+        assertThat(new RingSearch(empty).cyclic().length, is(0));
     }
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         int n = empty.getAtomCount();
         RingSearch ringSearch = new RingSearch(empty);
         for (int i = 0; i < n; i++) {
@@ -54,23 +55,28 @@ public final class RingSearchTest_Empty {
         }
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         assertThat(new RingSearch(empty).isolated().length, is(0));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         assertThat(new RingSearch(empty).fused().length, is(0));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         assertTrue(new RingSearch(empty).ringFragments().isEmpty());
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         assertTrue(new RingSearch(empty).isolatedRingFragments().isEmpty());
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         assertTrue(new RingSearch(empty).fusedRingFragments().isEmpty());
     }
 

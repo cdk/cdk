@@ -34,14 +34,9 @@ import org.openscience.cdk.modeling.builder3d.TemplateHandler3DTest;
  *
  * @cdk.module test-builder3d
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    Builder3dCoverageTest.class,
-    ModelBuilder3DTest.class,
-    TemplateHandler3DTest.class,
-    FurtherAtomPlacer3DTest.class,
-    AtomTetrahedralLigandPlacer3DTest.class,
-    AtomPlacer3DTest.class,
-    FurtherTemplateHandler3DTest.class
-})
-public class Mbuilder3dTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {Builder3dCoverageTest.class, ModelBuilder3DTest.class, TemplateHandler3DTest.class,
+        FurtherAtomPlacer3DTest.class, AtomTetrahedralLigandPlacer3DTest.class, AtomPlacer3DTest.class,
+        FurtherTemplateHandler3DTest.class})
+public class Mbuilder3dTests {
+}

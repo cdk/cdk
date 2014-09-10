@@ -15,18 +15,15 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class AtomPermutationTests extends CDKTestCase {
 
-    public static IChemObjectBuilder builder =
-            SilentChemObjectBuilder.getInstance();
+    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
      * This test is checking all permutations of an atom container to see
      * if the refiner gives the canonical labelling map (effectively).
      */
     public void checkForCanonicalForm(IAtomContainer atomContainer) {
-        AtomContainerAtomPermutor permutor =
-                new AtomContainerAtomPermutor(atomContainer);
-        AtomDiscretePartitionRefiner refiner =
-                new AtomDiscretePartitionRefiner();
+        AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(atomContainer);
+        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         refiner.refine(atomContainer);
         Permutation best = refiner.getBest().invert();
         String cert = AtomContainerPrinter.toString(atomContainer, best, true);
@@ -35,8 +32,7 @@ public class AtomPermutationTests extends CDKTestCase {
             IAtomContainer permutedContainer = permutor.next();
             refiner.refine(permutedContainer);
             best = refiner.getBest().invert();
-            String permCert =
-                   AtomContainerPrinter.toString(permutedContainer, best, true);
+            String permCert = AtomContainerPrinter.toString(permutedContainer, best, true);
             Assert.assertEquals(cert, permCert);
             refiner.reset();
         }

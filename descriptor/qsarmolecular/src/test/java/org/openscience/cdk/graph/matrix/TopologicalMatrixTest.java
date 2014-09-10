@@ -15,21 +15,21 @@ import org.openscience.cdk.io.MDLV2000Reader;
  */
 public class TopologicalMatrixTest extends CDKTestCase {
 
-	@Test public void testTopologicalMatrix_IAtomContainer() throws Exception {
-		String filename = "data/mdl/clorobenzene.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-				filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		IAtomContainer container = (IAtomContainer)reader.read(new AtomContainer());
-		int[][] matrix = TopologicalMatrix.getMatrix(container);
-		Assert.assertEquals(12, matrix.length);
-		for (int i = 0; i < matrix.length; i++) {
+    @Test
+    public void testTopologicalMatrix_IAtomContainer() throws Exception {
+        String filename = "data/mdl/clorobenzene.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        IAtomContainer container = (IAtomContainer) reader.read(new AtomContainer());
+        int[][] matrix = TopologicalMatrix.getMatrix(container);
+        Assert.assertEquals(12, matrix.length);
+        for (int i = 0; i < matrix.length; i++) {
 
-			System.out.println("");
+            System.out.println("");
 
-			for (int j = 0; j < matrix.length; j++) {
-				System.out.print(matrix[i][j] + " ");
-			}
-		}
-	}
+            for (int j = 0; j < matrix.length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+        }
+    }
 }

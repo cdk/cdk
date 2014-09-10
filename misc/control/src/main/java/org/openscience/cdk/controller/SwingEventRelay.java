@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 package org.openscience.cdk.controller;
+
 import javax.swing.JComponent;
 
 /**
@@ -28,14 +29,15 @@ import javax.swing.JComponent;
  */
 public class SwingEventRelay implements IViewEventRelay {
 
-	private JComponent component;
+    private JComponent component;
 
-	public SwingEventRelay(JComponent painter) {
-		component = painter;
-	}
-	public void updateView() {
-		System.out.println("updateView in SwingEventRelay");
-		component.repaint();
+    public SwingEventRelay(JComponent painter) {
+        component = painter;
+    }
 
-	}
+    public void updateView() {
+        System.out.println("updateView in SwingEventRelay");
+        component.repaint();
+
+    }
 }

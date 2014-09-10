@@ -29,17 +29,17 @@ import org.junit.Test;
  */
 public abstract class AbstractFontManagerTest {
 
-	public static AbstractFontManager manager;
+    public static AbstractFontManager manager;
 
-	public static void setFontManager(AbstractFontManager fontManager) {
-		manager = fontManager;
-	}
+    public static void setFontManager(AbstractFontManager fontManager) {
+        manager = fontManager;
+    }
 
-	@Test
-	public void testGetSetFontName() {
-		String fontName = "Not-Arial";
-		manager.setFontName(fontName);
-		Assert.assertEquals(fontName, manager.getFontName());
-	}
+    @Test
+    public void testGetSetFontName() {
+        String fontName = "Not-Arial";
+        manager.setFontName(fontName);
+        Assert.assertEquals(fontName, manager.getFontName());
+    }
 
 }

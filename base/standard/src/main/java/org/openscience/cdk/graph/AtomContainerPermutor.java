@@ -38,8 +38,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.keyword    permutation
  * @cdk.module     standard
  */
-public abstract class AtomContainerPermutor extends Permutor
-    implements Iterator<IAtomContainer> {
+public abstract class AtomContainerPermutor extends Permutor implements Iterator<IAtomContainer> {
 
     /**
      * The atom container that is permuted at each step.
@@ -80,7 +79,8 @@ public abstract class AtomContainerPermutor extends Permutor
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see java.util.Iterator#next()
      */
     public IAtomContainer next() {
@@ -96,4 +96,3 @@ public abstract class AtomContainerPermutor extends Permutor
     }
 
 }
-

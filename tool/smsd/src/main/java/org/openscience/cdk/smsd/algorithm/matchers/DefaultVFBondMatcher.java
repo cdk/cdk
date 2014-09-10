@@ -63,11 +63,11 @@ import org.openscience.cdk.smsd.algorithm.vflib.builder.TargetProperties;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class DefaultVFBondMatcher implements VFBondMatcher {
 
-    static final long serialVersionUID = -7861469841127328812L;
-    private IBond queryBond = null;
-    private int unsaturation = 0;
-    private boolean shouldMatchBonds;
-    private IQueryBond smartQueryBond = null;
+    static final long  serialVersionUID = -7861469841127328812L;
+    private IBond      queryBond        = null;
+    private int        unsaturation     = 0;
+    private boolean    shouldMatchBonds;
+    private IQueryBond smartQueryBond   = null;
 
     /**
      * Bond type flag
@@ -168,8 +168,7 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
     }
 
     private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getImplicitHydrogenCount() == null)
-                ? 0 : atom.getImplicitHydrogenCount();
+        return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
     /**

@@ -97,25 +97,23 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     }
 
     /** {@inheritDoc} */
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		if (IAtomContainer.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
-		Class superClass = classObject.getSuperclass();
-	    if (superClass != null) return this.accepts(superClass);
-	        return false;
-	}
+        if (IAtomContainer.class.equals(classObject)) return true;
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /** {@inheritDoc} */
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (!(object instanceof IAtomContainer))
-            throw new CDKException(
-                "Only supported is reading of IMolecule objects."
-            );
-        IAtomContainer result = (IAtomContainer)object;
+            throw new CDKException("Only supported is reading of IMolecule objects.");
+        IAtomContainer result = (IAtomContainer) object;
 
         // do the actual parsing
         Model model = ModelFactory.createDefaultModel();
@@ -123,7 +121,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
         IAtomContainer mol = Convertor.model2Molecule(model, object.getBuilder());
         result.add(mol);
-        return (T)result;
+        return (T) result;
     }
 
     /** {@inheritDoc} */
@@ -133,4 +131,3 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     }
 
 }
-

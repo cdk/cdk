@@ -30,11 +30,13 @@ public class SmartsCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "smarts.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, SmartsCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 }

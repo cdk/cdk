@@ -48,8 +48,9 @@ public class StereoTool {
      * 'means' by an assignment of some atoms to a class.
      *
      */
-    public enum StereoClass { TETRAHEDRAL, SQUARE_PLANAR,
-        TRIGONAL_BIPYRAMIDAL, OCTAHEDRAL }
+    public enum StereoClass {
+        TETRAHEDRAL, SQUARE_PLANAR, TRIGONAL_BIPYRAMIDAL, OCTAHEDRAL
+    }
 
     /**
      * The handedness of a tetrahedron, in terms of the point-plane distance
@@ -58,25 +59,29 @@ public class StereoTool {
      * PLUS indices a positive point-plane distance,
      * MINUS is a negative point-plane distance.
      */
-    public enum TetrahedralSign { PLUS, MINUS }
+    public enum TetrahedralSign {
+        PLUS, MINUS
+    }
 
     /**
      * The shape that four atoms take in a plane.
      */
-    public enum SquarePlanarShape { U_SHAPE, FOUR_SHAPE, Z_SHAPE }
+    public enum SquarePlanarShape {
+        U_SHAPE, FOUR_SHAPE, Z_SHAPE
+    }
 
     /**
      * The maximum angle in radians for two lines to be 'diaxial'.
      * Where 0.95 is about 172 degrees.
      */
-    public static final double MAX_AXIS_ANGLE = 0.95;
+    public static final double MAX_AXIS_ANGLE      = 0.95;
 
     /**
      * The maximum tolerance for the normal calculated during colinearity.
      */
     public static final double MIN_COLINEAR_NORMAL = 0.05;
 
-    public static final double PLANE_TOLERANCE = 0.05;
+    public static final double PLANE_TOLERANCE     = 0.05;
 
     /**
      * Checks these four atoms for square planarity.
@@ -88,8 +93,7 @@ public class StereoTool {
      * @return true if all the atoms are in the same plane
      */
     @TestMethod("squarePlanarTest")
-    public static boolean isSquarePlanar(
-            IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
+    public static boolean isSquarePlanar(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
         Point3d pointA = atomA.getPoint3d();
         Point3d pointB = atomB.getPoint3d();
         Point3d pointC = atomC.getPoint3d();
@@ -98,14 +102,12 @@ public class StereoTool {
         return isSquarePlanar(pointA, pointB, pointC, pointD);
     }
 
-    private static boolean isSquarePlanar(
-            Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
+    private static boolean isSquarePlanar(Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
         return isSquarePlanar(pointA, pointB, pointC, pointD, new Vector3d());
     }
 
-    private static boolean isSquarePlanar(
-            Point3d pointA, Point3d pointB,
-            Point3d pointC, Point3d pointD, Vector3d normal) {
+    private static boolean isSquarePlanar(Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD,
+            Vector3d normal) {
         // define a plane using ABC, also checking that the are not colinear
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
@@ -130,8 +132,7 @@ public class StereoTool {
      * @return the shape (U/4/Z)
      */
     @TestMethod("squarePlanarUShapeTest, squarePlanarZShapeTest, squarePlanar4ShapeTest")
-    public static SquarePlanarShape getSquarePlanarShape(
-            IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
+    public static SquarePlanarShape getSquarePlanarShape(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD) {
         Point3d pointA = atomA.getPoint3d();
         Point3d pointB = atomB.getPoint3d();
         Point3d pointC = atomC.getPoint3d();
@@ -164,11 +165,11 @@ public class StereoTool {
         double aDotB = normalA.dot(normalB);
         double aDotC = normalA.dot(normalC);
         double bDotC = normalB.dot(normalC);
-        if (aDotB > 0 && aDotC > 0 && bDotC > 0) {  // UUU or DDD
+        if (aDotB > 0 && aDotC > 0 && bDotC > 0) { // UUU or DDD
             return SquarePlanarShape.U_SHAPE;
-        } else if (aDotB > 0 && aDotC < 0 && bDotC < 0) {   // UUD or DDU
+        } else if (aDotB > 0 && aDotC < 0 && bDotC < 0) { // UUD or DDU
             return SquarePlanarShape.FOUR_SHAPE;
-        } else {    // UDD or DUU
+        } else { // UDD or DUU
             return SquarePlanarShape.Z_SHAPE;
         }
     }
@@ -183,11 +184,9 @@ public class StereoTool {
      * @return false if any of the points is not in the plane
      */
     @TestMethod("allCoplanarTest")
-    public static boolean allCoplanar(
-            Vector3d planeNormal, Point3d pointInPlane, Point3d... points) {
+    public static boolean allCoplanar(Vector3d planeNormal, Point3d pointInPlane, Point3d... points) {
         for (Point3d point : points) {
-            double distance = StereoTool.signedDistanceToPlane(
-                    planeNormal, pointInPlane, point);
+            double distance = StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, point);
             if (distance < PLANE_TOLERANCE) {
                 continue;
             } else {
@@ -210,8 +209,8 @@ public class StereoTool {
      * @return true if the geometry is octahedral
      */
     @TestMethod("octahedralTest")
-    public static boolean isOctahedral(IAtom atomA, IAtom atomB, IAtom atomC,
-            IAtom atomD, IAtom atomE, IAtom atomF, IAtom atomG) {
+    public static boolean isOctahedral(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, IAtom atomE, IAtom atomF,
+            IAtom atomG) {
         Point3d pointA = atomA.getPoint3d();
         Point3d pointB = atomB.getPoint3d();
         Point3d pointC = atomC.getPoint3d();
@@ -248,8 +247,8 @@ public class StereoTool {
      * @return true if the geometry is trigonal-bipyramidal
      */
     @TestMethod("trigonalBipyramidalTest")
-    public static boolean isTrigonalBipyramidal(IAtom atomA, IAtom atomB,
-            IAtom atomC, IAtom atomD, IAtom atomE, IAtom atomF) {
+    public static boolean isTrigonalBipyramidal(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, IAtom atomE,
+            IAtom atomF) {
         Point3d pointA = atomA.getPoint3d();
         Point3d pointB = atomB.getPoint3d();
         Point3d pointC = atomC.getPoint3d();
@@ -263,12 +262,10 @@ public class StereoTool {
             Vector3d normal = StereoTool.getNormal(pointC, pointD, pointE);
 
             // get the side of the plane that axis point A is
-            TetrahedralSign handednessCDEA =
-                StereoTool.getHandedness(normal, pointC, pointF);
+            TetrahedralSign handednessCDEA = StereoTool.getHandedness(normal, pointC, pointF);
 
             // get the side of the plane that axis point F is
-            TetrahedralSign handednessCDEF =
-                StereoTool.getHandedness(normal, pointC, pointA);
+            TetrahedralSign handednessCDEF = StereoTool.getHandedness(normal, pointC, pointA);
 
             // in other words, the two axial points (A,F) are on opposite sides
             // of the equatorial plane CDE
@@ -289,13 +286,11 @@ public class StereoTool {
      * @return clockwise or anticlockwise
      */
     @TestMethod("getStereoCWTest, getStereoACWTest")
-    public static Stereo getStereo(
-            IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
+    public static Stereo getStereo(IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4) {
 
         // a normal is calculated for the base atoms (2, 3, 4) and compared to
         // the first atom. PLUS indicates ACW.
-        TetrahedralSign sign =
-            StereoTool.getHandedness(atom2, atom3, atom4, atom1);
+        TetrahedralSign sign = StereoTool.getHandedness(atom2, atom3, atom4, atom1);
 
         if (sign == TetrahedralSign.PLUS) {
             return Stereo.ANTI_CLOCKWISE;
@@ -316,13 +311,10 @@ public class StereoTool {
      * @param apexAtom the atom in the point of the tetrahedron
      * @return the sign of the tetrahedron
      */
-    @TestMethod("tetrahedralPlusAtomsAboveXYClockwiseTest, " +
-    		    "tetrahedralPlusAtomsAboveXYTest," +
-                "tetrahedralMinusAtomsAboveXYTest," +
-    		    "tetrahedralPlusAtomsBelowXYTest," +
-    		    "tetrahedralMinusAtomsBelowXYTest")
-    public static TetrahedralSign getHandedness(
-            IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom) {
+    @TestMethod("tetrahedralPlusAtomsAboveXYClockwiseTest, " + "tetrahedralPlusAtomsAboveXYTest,"
+            + "tetrahedralMinusAtomsAboveXYTest," + "tetrahedralPlusAtomsBelowXYTest,"
+            + "tetrahedralMinusAtomsBelowXYTest")
+    public static TetrahedralSign getHandedness(IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom) {
         Point3d pointA = baseAtomA.getPoint3d();
         Point3d pointB = baseAtomB.getPoint3d();
         Point3d pointC = baseAtomC.getPoint3d();
@@ -330,8 +322,7 @@ public class StereoTool {
         return StereoTool.getHandedness(pointA, pointB, pointC, pointD);
     }
 
-    private static TetrahedralSign getHandedness(
-            Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
+    private static TetrahedralSign getHandedness(Point3d pointA, Point3d pointB, Point3d pointC, Point3d pointD) {
         // assumes anti-clockwise for a right-handed system
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
 
@@ -339,10 +330,8 @@ public class StereoTool {
         return StereoTool.getHandedness(normal, pointA, pointD);
     }
 
-    private static TetrahedralSign getHandedness(
-            Vector3d planeNormal, Point3d pointInPlane, Point3d testPoint) {
-        double distance = signedDistanceToPlane(
-                planeNormal, pointInPlane, testPoint);
+    private static TetrahedralSign getHandedness(Vector3d planeNormal, Point3d pointInPlane, Point3d testPoint) {
+        double distance = signedDistanceToPlane(planeNormal, pointInPlane, testPoint);
 
         // The point-plane distance is the absolute value,
         // the sign of the distance gives the side of the plane the point is on
@@ -364,9 +353,8 @@ public class StereoTool {
      * @param ptC
      * @return true if the tree points are on a straight line
      */
-    @TestMethod("colinearTestWithColinearPoints," +
-    		"colinearTestWithNearlyColinearPoints," +
-    		"colinearTestWithNonColinearPoints")
+    @TestMethod("colinearTestWithColinearPoints," + "colinearTestWithNearlyColinearPoints,"
+            + "colinearTestWithNonColinearPoints")
     public static boolean isColinear(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
@@ -391,8 +379,7 @@ public class StereoTool {
      * @return the signed distance to the plane
      */
     @TestMethod("positivePointPlaneDistanceTest, negativePointPlaneDistanceTest")
-    public static double signedDistanceToPlane(
-            Vector3d planeNormal, Point3d pointInPlane, Point3d point) {
+    public static double signedDistanceToPlane(Vector3d planeNormal, Point3d pointInPlane, Point3d point) {
         if (planeNormal == null) return Double.NaN;
 
         Vector3d pointPointDiff = new Vector3d();
@@ -417,14 +404,14 @@ public class StereoTool {
     public static Vector3d getNormal(Point3d ptA, Point3d ptB, Point3d ptC) {
         Vector3d vectorAB = new Vector3d();
         Vector3d vectorAC = new Vector3d();
-        Vector3d normal   = new Vector3d();
+        Vector3d normal = new Vector3d();
         StereoTool.getRawNormal(ptA, ptB, ptC, normal, vectorAB, vectorAC);
         normal.normalize();
         return normal;
     }
 
-    private static void getRawNormal(Point3d ptA, Point3d ptB, Point3d ptC,
-                               Vector3d normal, Vector3d vcAB, Vector3d vcAC) {
+    private static void getRawNormal(Point3d ptA, Point3d ptB, Point3d ptC, Vector3d normal, Vector3d vcAB,
+            Vector3d vcAC) {
         // make A->B and A->C
         vcAB.sub(ptB, ptA);
         vcAC.sub(ptC, ptA);

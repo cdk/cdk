@@ -30,65 +30,77 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.CMLRSSFormatTest")
 public class CMLRSSFormat extends AbstractResourceFormat implements IChemFormat {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public CMLRSSFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new CMLRSSFormat();
-    	return myself;
+        if (myself == null) myself = new CMLRSSFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "CML enriched RSS";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { return null; }
+    public String getReaderClassName() {
+        return null;
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { return "org.openscience.cdk.io.RssWriter"; }
+    public String getWriterClassName() {
+        return "org.openscience.cdk.io.RssWriter";
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return true;
-	}
+        return true;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.HAS_3D_COORDINATES |
-		       DataFeatures.HAS_GRAPH_REPRESENTATION |
-		       DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.HAS_3D_COORDINATES | DataFeatures.HAS_GRAPH_REPRESENTATION
+                | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

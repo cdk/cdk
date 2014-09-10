@@ -40,23 +40,23 @@ import java.io.StringWriter;
  */
 public class CDKOWLWriterTest extends ChemObjectWriterTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setChemObjectWriter(new CDKOWLWriter());
     }
 
-    @Test public void testWriteMolecule() throws Exception {
+    @Test
+    public void testWriteMolecule() throws Exception {
         StringWriter output = new StringWriter();
         CDKOWLWriter writer = new CDKOWLWriter(output);
 
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
         mol.addAtom(new Atom("C"));
         mol.addAtom(new Atom("C"));
-        mol.addBond(0,1,IBond.Order.DOUBLE);
+        mol.addBond(0, 1, IBond.Order.DOUBLE);
         writer.write(mol);
         writer.close();
         String outputString = output.toString();
-        Assert.assertTrue(outputString.contains(
-            "http://cdk.sourceforge.net/model.owl#"
-        ));
+        Assert.assertTrue(outputString.contains("http://cdk.sourceforge.net/model.owl#"));
     }
 }

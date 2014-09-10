@@ -35,15 +35,8 @@ import org.openscience.cdk.dict.OWLReactTest;
  *
  * @cdk.module  test-dict
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    DictCoverageTest.class,
-    DictDBTest.class,
-    DictDBReactTest.class,
-    EntryTest.class,
-    EntryReactTest.class,
-    DictionaryTest.class,
-    OWLFileTest.class,
-    OWLReactTest.class
-})
-public class MdictTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {DictCoverageTest.class, DictDBTest.class, DictDBReactTest.class, EntryTest.class,
+        EntryReactTest.class, DictionaryTest.class, OWLFileTest.class, OWLReactTest.class})
+public class MdictTests {
+}

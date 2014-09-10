@@ -34,26 +34,29 @@ import static org.openscience.cdk.interfaces.IAtomType.Hybridization.SP3;
  */
 public class AtomTypeDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IAtomType element1 = mock(IAtomType.class);
         String result = AtomTypeDiff.diff(element1, element1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IAtomType element1 = mock(IAtomType.class);
         IAtomType element2 = mock(IAtomType.class);
         when(element1.getHybridization()).thenReturn(PLANAR3);
         when(element2.getHybridization()).thenReturn(SP3);
 
-        String result = AtomTypeDiff.diff( element1, element2 );
+        String result = AtomTypeDiff.diff(element1, element2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "AtomTypeDiff");
         assertContains(result, "PLANAR3/SP3");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IAtomType element1 = mock(IAtomType.class);
         IAtomType element2 = mock(IAtomType.class);
         when(element1.getHybridization()).thenReturn(PLANAR3);

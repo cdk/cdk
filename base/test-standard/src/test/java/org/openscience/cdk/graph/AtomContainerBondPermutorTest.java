@@ -56,7 +56,7 @@ public class AtomContainerBondPermutorTest extends CDKTestCase {
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(0, 2, IBond.Order.SINGLE);
         AtomContainerBondPermutor acbp = new AtomContainerBondPermutor(atomContainer);
-        IAtomContainer permuted = acbp.containerFromPermutation(new int[] {1, 0, 2});
+        IAtomContainer permuted = acbp.containerFromPermutation(new int[]{1, 0, 2});
         Assert.assertNotNull(permuted);
         Assert.assertEquals(atomContainer.getAtomCount(), permuted.getAtomCount());
         Assert.assertEquals(atomContainer.getBondCount(), permuted.getBondCount());

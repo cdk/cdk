@@ -71,17 +71,16 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.hash.BasicAtomHashGeneratorTest")
-final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
-        implements AtomHashGenerator {
+final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements AtomHashGenerator {
 
     /* a generator for the initial atom seeds */
-    private final AtomHashGenerator seedGenerator;
+    private final AtomHashGenerator    seedGenerator;
 
     /* creates stereo encoders for IAtomContainers */
     private final StereoEncoderFactory factory;
 
     /* number of cycles to include adjacent invariants */
-    private final int depth;
+    private final int                  depth;
 
     /**
      * Create a basic hash generator using the provided seed generator to
@@ -98,18 +97,14 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
      *                                  null
      * @see SeedGenerator
      */
-    public BasicAtomHashGenerator(AtomHashGenerator seedGenerator,
-                                  Pseudorandom      pseudorandom,
-                                  StereoEncoderFactory factory,
-                                  int depth) {
+    public BasicAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
+            StereoEncoderFactory factory, int depth) {
         super(pseudorandom);
-        if (seedGenerator == null)
-            throw new NullPointerException("seed generator cannot be null");
-        if (depth < 0)
-            throw new IllegalArgumentException("depth cannot be less then 0");
+        if (seedGenerator == null) throw new NullPointerException("seed generator cannot be null");
+        if (depth < 0) throw new IllegalArgumentException("depth cannot be less then 0");
         this.seedGenerator = seedGenerator;
-        this.factory       = factory;
-        this.depth         = depth;
+        this.factory = factory;
+        this.depth = depth;
     }
 
     /**
@@ -126,9 +121,7 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
      *                                  null
      * @see SeedGenerator
      */
-    public BasicAtomHashGenerator(AtomHashGenerator seedGenerator,
-                                  Pseudorandom      pseudorandom,
-                                  int depth){
+    public BasicAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom, int depth) {
         this(seedGenerator, pseudorandom, StereoEncoderFactory.EMPTY, depth);
     }
 
@@ -136,12 +129,10 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
      * @inheritDoc
      */
     @TestMethod("testGenerate")
-    @Override public long[] generate(IAtomContainer container) {
+    @Override
+    public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
-        return generate(seedGenerator.generate(container),
-                        factory.create(container, graph),
-                        graph,
-                        Suppressed.none());
+        return generate(seedGenerator.generate(container), factory.create(container, graph), graph, Suppressed.none());
     }
 
     /**
@@ -156,11 +147,11 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
     @TestMethod("testGenerate_Simple,testGenerate_ZeroDepth,testGenerate_Disconnected")
     long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed) {
 
-        int    n        = graph.length;
-        long[] next     = copy(current);
+        int n = graph.length;
+        long[] next = copy(current);
 
         // buffers for including adjacent invariants
-        long[] unique   = new long[n];
+        long[] unique = new long[n];
         long[] included = new long[n];
 
         while (encoder.encode(current, next)) {
@@ -199,9 +190,8 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
      *                 found.
      * @return the next value for <i>v</i>
      */
-    @TestMethod("testRotation") long next(int[][] graph, int v,
-                                          long[] current,
-                                          long[] unique, long[] included) {
+    @TestMethod("testRotation")
+    long next(int[][] graph, int v, long[] current, long[] unique, long[] included) {
 
         long invariant = distribute(current[v]);
         int nUnique = 0;
@@ -218,8 +208,7 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator
 
             // no match, then the value is unique, use adjInv
             // match, then rotate the previously included value
-            included[i] = (i == nUnique) ? unique[nUnique++] = adjInv
-                                         : rotate(included[i]);
+            included[i] = (i == nUnique) ? unique[nUnique++] = adjInv : rotate(included[i]);
 
             invariant ^= included[i];
         }

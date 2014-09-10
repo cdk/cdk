@@ -68,17 +68,22 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         IAtom hydrogen = new ImmutableHydrogen();
         Assert.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.addListener(new IChemObjectListener() {
+
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
         Assert.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.removeListener(new IChemObjectListener() {
+
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
         Assert.assertEquals(0, hydrogen.getListenerCount());
 
         hydrogen.notifyChanged();
         hydrogen.notifyChanged(new IChemObjectChangeEvent() {
-            public Object getSource() {return new String();}
+
+            public Object getSource() {
+                return new String();
+            }
         });
 
         Assert.assertFalse(hydrogen.getNotification());
@@ -122,8 +127,8 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         IAtom hydrogen = new ImmutableHydrogen();
         hydrogen.setCharge(2.0);
         hydrogen.setImplicitHydrogenCount(1);
-        hydrogen.setPoint2d(new Point2d(1,2));
-        hydrogen.setPoint3d(new Point3d(2,3,4));
+        hydrogen.setPoint2d(new Point2d(1, 2));
+        hydrogen.setPoint3d(new Point3d(2, 3, 4));
         hydrogen.setStereoParity(1);
         hydrogen.setAtomTypeName("foo");
         hydrogen.setBondOrderSum(4.0);
@@ -151,5 +156,3 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertEquals(hydrogen, hydrogen.clone());
     }
 }
-
-

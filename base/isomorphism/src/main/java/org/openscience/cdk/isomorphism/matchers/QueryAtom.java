@@ -41,48 +41,48 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * The default value is {@link CDKConstants#UNSET} and serves to provide a check whether the charge has been
      * set or not
      */
-    protected Double charge = (Double) CDKConstants.UNSET;
+    protected Double                  charge               = (Double) CDKConstants.UNSET;
 
     /**
      *  A 2D point specifying the location of this atom in a 2D coordinate
      *  space.
      */
-    protected Point2d point2d = (Point2d) CDKConstants.UNSET;
+    protected Point2d                 point2d              = (Point2d) CDKConstants.UNSET;
 
     /**
      *  A 3 point specifying the location of this atom in a 3D coordinate
      *  space.
      */
-    protected Point3d point3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d                 point3d              = (Point3d) CDKConstants.UNSET;
 
     /**
      *  A 3 point specifying the location of this atom in a crystal unit cell.
      */
-    protected Point3d fractionalPoint3d = (Point3d) CDKConstants.UNSET;
+    protected Point3d                 fractionalPoint3d    = (Point3d) CDKConstants.UNSET;
 
     /**
      *  The number of implicitly bound hydrogen atoms for this atom.
      */
-    protected Integer hydrogenCount = (Integer) CDKConstants.UNSET;
+    protected Integer                 hydrogenCount        = (Integer) CDKConstants.UNSET;
 
     /**
      *  A stereo parity descriptor for the stereochemistry of this atom.
      */
-    protected Integer stereoParity = (Integer) CDKConstants.UNSET;
+    protected Integer                 stereoParity         = (Integer) CDKConstants.UNSET;
 
     /**
      *  The maximum bond order allowed for this atom type.
      */
-    IBond.Order maxBondOrder = null;
+    IBond.Order                       maxBondOrder         = null;
     /**
      *  The maximum sum of all bond orders allowed for this atom type.
      */
-    Double bondOrderSum = (Double) CDKConstants.UNSET;
+    Double                            bondOrderSum         = (Double) CDKConstants.UNSET;
 
     /**
      * The covalent radius of this atom type.
      */
-    Double covalentRadius = (Double) CDKConstants.UNSET;
+    Double                            covalentRadius       = (Double) CDKConstants.UNSET;
 
     /**
      *  The formal charge of the atom with CDKConstants.UNSET as default. Implements RFC #6.
@@ -90,45 +90,45 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      *  Note that some constructors ({@link #AtomType(String)} and
      * {@link #AtomType(String, String)} ) will explicitly set this field to 0
      */
-    protected Integer formalCharge = (Integer) CDKConstants.UNSET;
+    protected Integer                 formalCharge         = (Integer) CDKConstants.UNSET;
 
     /**
      * The hybridization state of this atom with CDKConstants.HYBRIDIZATION_UNSET
      * as default.
      */
-    protected IAtomType.Hybridization hybridization = (Hybridization) CDKConstants.UNSET;
+    protected IAtomType.Hybridization hybridization        = (Hybridization) CDKConstants.UNSET;
 
     /**
      *  The electron Valency of this atom with CDKConstants.UNSET as default.
      */
-    protected Integer electronValency = (Integer) CDKConstants.UNSET;
+    protected Integer                 electronValency      = (Integer) CDKConstants.UNSET;
 
     /**
      * The formal number of neighbours this atom type can have with CDKConstants_UNSET
      * as default. This includes explicitely and implicitely connected atoms, including
      * implicit hydrogens.
      */
-    protected Integer formalNeighbourCount = (Integer) CDKConstants.UNSET;
+    protected Integer                 formalNeighbourCount = (Integer) CDKConstants.UNSET;
 
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String identifier = (String) CDKConstants.UNSET;
+    private String                    identifier           = (String) CDKConstants.UNSET;
 
     /** Exact mass of this isotope. */
-    public Double exactMass;
+    public Double                     exactMass;
 
     /** Natural abundance of this isotope. */
-    public Double naturalAbundance;
+    public Double                     naturalAbundance;
 
     /** The mass number for this isotope. */
-    private Integer massNumber;
+    private Integer                   massNumber;
 
     /** The element symbol for this element as listed in the periodic table. */
-    protected String symbol;
+    protected String                  symbol;
 
     /** The atomic number for this element giving their position in the periodic table. */
-    protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
+    protected Integer                 atomicNumber         = (Integer) CDKConstants.UNSET;
 
     public QueryAtom(String symbol, IChemObjectBuilder builder) {
         this(builder);
@@ -162,7 +162,7 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
      * @see    #setCharge
      */
     public Double getCharge() {
-           return this.charge;
+        return this.charge;
     }
 
     /**
@@ -197,451 +197,440 @@ public abstract class QueryAtom extends QueryChemObject implements IQueryAtom {
     *
     * @see    #getPoint2d
     */
-   public void setPoint2d(Point2d point2d) {
-           this.point2d = point2d;
-   notifyChanged();
-   }
-   /**
-    *
-    * Sets a point specifying the location of this
-    * atom in 3D space.
-    *
-    * @param  point3d  A point in a 3-dimensional space
-    *
-    * @see    #getPoint3d
-    */
-   public void setPoint3d(Point3d point3d) {
-           this.point3d = point3d;
-   notifyChanged();
-   }
-   /**
-    * Sets a point specifying the location of this
-    * atom in a Crystal unit cell.
-    *
-    * @param  point3d  A point in a 3d fractional unit cell space
-    *
-    * @see    #getFractionalPoint3d
-    * @see    org.openscience.cdk.Crystal
-    */
-   public void setFractionalPoint3d(Point3d point3d) {
-           this.fractionalPoint3d = point3d;
-   notifyChanged();
-   }
-   /**
-    * Sets the stereo parity for this atom.
-    *
-    * @param  stereoParity  The stereo parity for this atom
-    *
-    * @see    org.openscience.cdk.CDKConstants for predefined values.
-    * @see    #getStereoParity
-    */
-   public void setStereoParity(Integer stereoParity) {
-       this.stereoParity = stereoParity;
-       notifyChanged();
-   }
+    public void setPoint2d(Point2d point2d) {
+        this.point2d = point2d;
+        notifyChanged();
+    }
 
-   /**
-    * Returns a point specifying the location of this
-    * atom in a 2D space.
-    *
-    * @return    A point in a 2D plane. Null if unset.
-    *
-    * @see       #setPoint2d
-    */
-   public Point2d getPoint2d() {
-           return this.point2d;
-   }
-   /**
-    * Returns a point specifying the location of this
-    * atom in a 3D space.
-    *
-    * @return    A point in 3-dimensional space. Null if unset.
-    *
-    * @see       #setPoint3d
-    */
-   public Point3d getPoint3d() {
-           return this.point3d;
-   }
+    /**
+     *
+     * Sets a point specifying the location of this
+     * atom in 3D space.
+     *
+     * @param  point3d  A point in a 3-dimensional space
+     *
+     * @see    #getPoint3d
+     */
+    public void setPoint3d(Point3d point3d) {
+        this.point3d = point3d;
+        notifyChanged();
+    }
 
-   /**
-    * Returns a point specifying the location of this
-    * atom in a Crystal unit cell.
-    *
-    * @return    A point in 3d fractional unit cell space. Null if unset.
-    *
-    * @see       #setFractionalPoint3d
-    * @see       org.openscience.cdk.CDKConstants for predefined values.
-    */
-   public Point3d getFractionalPoint3d() {
-           return this.fractionalPoint3d;
-   }
+    /**
+     * Sets a point specifying the location of this
+     * atom in a Crystal unit cell.
+     *
+     * @param  point3d  A point in a 3d fractional unit cell space
+     *
+     * @see    #getFractionalPoint3d
+     * @see    org.openscience.cdk.Crystal
+     */
+    public void setFractionalPoint3d(Point3d point3d) {
+        this.fractionalPoint3d = point3d;
+        notifyChanged();
+    }
 
-   /**
-    *  Returns the stereo parity of this atom. It uses the predefined values
-    *  found in CDKConstants.
-    *
-    * @return    The stereo parity for this atom
-    *
-    * @see       org.openscience.cdk.CDKConstants
-    * @see       #setStereoParity
-    */
-   public Integer getStereoParity() {
-       return this.stereoParity;
-   }
+    /**
+     * Sets the stereo parity for this atom.
+     *
+     * @param  stereoParity  The stereo parity for this atom
+     *
+     * @see    org.openscience.cdk.CDKConstants for predefined values.
+     * @see    #getStereoParity
+     */
+    public void setStereoParity(Integer stereoParity) {
+        this.stereoParity = stereoParity;
+        notifyChanged();
+    }
 
-   /**
-    *  Sets the if attribute of the AtomType object.
-    *
-    * @param  identifier  The new AtomTypeID value. Null if unset.
-    *
-    * @see    #getAtomTypeName
-    */
-   public void setAtomTypeName(String identifier)
-   {
-       this.identifier = identifier;
-       notifyChanged();
-   }
+    /**
+     * Returns a point specifying the location of this
+     * atom in a 2D space.
+     *
+     * @return    A point in a 2D plane. Null if unset.
+     *
+     * @see       #setPoint2d
+     */
+    public Point2d getPoint2d() {
+        return this.point2d;
+    }
 
+    /**
+     * Returns a point specifying the location of this
+     * atom in a 3D space.
+     *
+     * @return    A point in 3-dimensional space. Null if unset.
+     *
+     * @see       #setPoint3d
+     */
+    public Point3d getPoint3d() {
+        return this.point3d;
+    }
 
-   /**
-    *  Sets the MaxBondOrder attribute of the AtomType object.
-    *
-    * @param  maxBondOrder  The new MaxBondOrder value
-    *
-    * @see       #getMaxBondOrder
-    */
-   public void setMaxBondOrder(IBond.Order maxBondOrder)
-   {
-       this.maxBondOrder = maxBondOrder;
-       notifyChanged();
-   }
+    /**
+     * Returns a point specifying the location of this
+     * atom in a Crystal unit cell.
+     *
+     * @return    A point in 3d fractional unit cell space. Null if unset.
+     *
+     * @see       #setFractionalPoint3d
+     * @see       org.openscience.cdk.CDKConstants for predefined values.
+     */
+    public Point3d getFractionalPoint3d() {
+        return this.fractionalPoint3d;
+    }
 
+    /**
+     *  Returns the stereo parity of this atom. It uses the predefined values
+     *  found in CDKConstants.
+     *
+     * @return    The stereo parity for this atom
+     *
+     * @see       org.openscience.cdk.CDKConstants
+     * @see       #setStereoParity
+     */
+    public Integer getStereoParity() {
+        return this.stereoParity;
+    }
 
-   /**
-    *  Sets the the exact bond order sum attribute of the AtomType object.
-    *
-    * @param  bondOrderSum  The new bondOrderSum value
-    *
-    * @see       #getBondOrderSum
-    */
-   public void setBondOrderSum(Double bondOrderSum)
-   {
-       this.bondOrderSum = bondOrderSum;
-       notifyChanged();
-   }
+    /**
+     *  Sets the if attribute of the AtomType object.
+     *
+     * @param  identifier  The new AtomTypeID value. Null if unset.
+     *
+     * @see    #getAtomTypeName
+     */
+    public void setAtomTypeName(String identifier) {
+        this.identifier = identifier;
+        notifyChanged();
+    }
 
+    /**
+     *  Sets the MaxBondOrder attribute of the AtomType object.
+     *
+     * @param  maxBondOrder  The new MaxBondOrder value
+     *
+     * @see       #getMaxBondOrder
+     */
+    public void setMaxBondOrder(IBond.Order maxBondOrder) {
+        this.maxBondOrder = maxBondOrder;
+        notifyChanged();
+    }
 
-   /**
-    *  Gets the id attribute of the AtomType object.
-    *
-    * @return    The id value
-    *
-    * @see       #setAtomTypeName
-    */
-   public String getAtomTypeName()
-   {
-       return this.identifier;
-   }
+    /**
+     *  Sets the the exact bond order sum attribute of the AtomType object.
+     *
+     * @param  bondOrderSum  The new bondOrderSum value
+     *
+     * @see       #getBondOrderSum
+     */
+    public void setBondOrderSum(Double bondOrderSum) {
+        this.bondOrderSum = bondOrderSum;
+        notifyChanged();
+    }
 
+    /**
+     *  Gets the id attribute of the AtomType object.
+     *
+     * @return    The id value
+     *
+     * @see       #setAtomTypeName
+     */
+    public String getAtomTypeName() {
+        return this.identifier;
+    }
 
-   /**
-    *  Gets the MaxBondOrder attribute of the AtomType object.
-    *
-    * @return    The MaxBondOrder value
-    *
-    * @see       #setMaxBondOrder
-    */
-   public IBond.Order getMaxBondOrder()
-   {
-       return maxBondOrder;
-   }
+    /**
+     *  Gets the MaxBondOrder attribute of the AtomType object.
+     *
+     * @return    The MaxBondOrder value
+     *
+     * @see       #setMaxBondOrder
+     */
+    public IBond.Order getMaxBondOrder() {
+        return maxBondOrder;
+    }
 
+    /**
+     *  Gets the bondOrderSum attribute of the AtomType object.
+     *
+     * @return    The bondOrderSum value
+     *
+     * @see       #setBondOrderSum
+     */
+    public Double getBondOrderSum() {
+        return bondOrderSum;
+    }
 
-   /**
-    *  Gets the bondOrderSum attribute of the AtomType object.
-    *
-    * @return    The bondOrderSum value
-    *
-    * @see       #setBondOrderSum
-    */
-   public Double getBondOrderSum()
-   {
-       return bondOrderSum;
-   }
+    /**
+     *  Sets the formal charge of this atom.
+     *
+     * @param  charge  The formal charge
+     *
+     * @see    #getFormalCharge
+     */
+    public void setFormalCharge(Integer charge) {
+        this.formalCharge = charge;
+        notifyChanged();
+    }
 
-   /**
-    *  Sets the formal charge of this atom.
-    *
-    * @param  charge  The formal charge
-    *
-    * @see    #getFormalCharge
-    */
-   public void setFormalCharge(Integer charge) {
-       this.formalCharge = charge;
-       notifyChanged();
-   }
+    /**
+     *  Returns the formal charge of this atom.
+     *
+     * @return the formal charge of this atom
+     *
+     * @see    #setFormalCharge
+     */
+    public Integer getFormalCharge() {
+        return this.formalCharge;
+    }
 
-   /**
-    *  Returns the formal charge of this atom.
-    *
-    * @return the formal charge of this atom
-    *
-    * @see    #setFormalCharge
-    */
-   public Integer getFormalCharge() {
-       return this.formalCharge;
-   }
+    /**
+     * Sets the formal neighbour count of this atom.
+     *
+     * @param  count  The neighbour count
+     *
+     * @see    #getFormalNeighbourCount
+     */
+    public void setFormalNeighbourCount(Integer count) {
+        this.formalNeighbourCount = count;
+        notifyChanged();
+    }
 
-   /**
-    * Sets the formal neighbour count of this atom.
-    *
-    * @param  count  The neighbour count
-    *
-    * @see    #getFormalNeighbourCount
-    */
-   public void setFormalNeighbourCount(Integer count) {
-       this.formalNeighbourCount = count;
-   notifyChanged();
-   }
+    /**
+     * Returns the formal neighbour count of this atom.
+     *
+     * @return the formal neighbour count of this atom
+     *
+     * @see    #setFormalNeighbourCount
+     */
+    public Integer getFormalNeighbourCount() {
+        return this.formalNeighbourCount;
+    }
 
-   /**
-    * Returns the formal neighbour count of this atom.
-    *
-    * @return the formal neighbour count of this atom
-    *
-    * @see    #setFormalNeighbourCount
-    */
-   public Integer getFormalNeighbourCount() {
-       return this.formalNeighbourCount;
-   }
+    /**
+     *  Sets the hybridization of this atom.
+     *
+     * @param  hybridization  The hybridization
+     *
+     * @see    #getHybridization
+     */
+    public void setHybridization(IAtomType.Hybridization hybridization) {
+        this.hybridization = hybridization;
+        notifyChanged();
+    }
 
-   /**
-    *  Sets the hybridization of this atom.
-    *
-    * @param  hybridization  The hybridization
-    *
-    * @see    #getHybridization
-    */
-   public void setHybridization(IAtomType.Hybridization hybridization) {
-       this.hybridization = hybridization;
-       notifyChanged();
-   }
+    /**
+     *  Returns the hybridization of this atom.
+     *
+     * @return the hybridization of this atom
+     *
+     * @see    #setHybridization
+     */
+    public IAtomType.Hybridization getHybridization() {
+        return this.hybridization;
+    }
 
-   /**
-    *  Returns the hybridization of this atom.
-    *
-    * @return the hybridization of this atom
-    *
-    * @see    #setHybridization
-    */
-   public IAtomType.Hybridization getHybridization() {
-       return this.hybridization;
-   }
+    /**
+     *  Sets the NaturalAbundance attribute of the Isotope object.
+     *
+     * @param  naturalAbundance  The new NaturalAbundance value
+     *
+     * @see       #getNaturalAbundance
+     */
+    public void setNaturalAbundance(Double naturalAbundance) {
+        this.naturalAbundance = naturalAbundance;
+        notifyChanged();
+    }
 
-   /**
-    *  Sets the NaturalAbundance attribute of the Isotope object.
-    *
-    * @param  naturalAbundance  The new NaturalAbundance value
-    *
-    * @see       #getNaturalAbundance
-    */
-   public void setNaturalAbundance(Double naturalAbundance) {
-       this.naturalAbundance = naturalAbundance;
-       notifyChanged();
-   }
+    /**
+     *  Sets the ExactMass attribute of the Isotope object.
+     *
+     * @param  exactMass  The new ExactMass value
+     *
+     * @see       #getExactMass
+     */
+    public void setExactMass(Double exactMass) {
+        this.exactMass = exactMass;
+        notifyChanged();
+    }
 
+    /**
+     *  Gets the NaturalAbundance attribute of the Isotope object.
+     *
+     *  <p>Once instantiated all field not filled by passing parameters
+     * to the constructor are null. Isotopes can be configured by using
+     * the IsotopeFactory.configure() method:
+     * <pre>
+     *   Isotope isotope = new Isotope("C", 13);
+     *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
+     *   if.configure(isotope);
+     * </pre>
+     * </p>
+     *
+     * @return    The NaturalAbundance value
+     *
+     * @see       #setNaturalAbundance
+     */
+    public Double getNaturalAbundance() {
+        return this.naturalAbundance;
+    }
 
-   /**
-    *  Sets the ExactMass attribute of the Isotope object.
-    *
-    * @param  exactMass  The new ExactMass value
-    *
-    * @see       #getExactMass
-    */
-   public void setExactMass(Double exactMass) {
-       this.exactMass = exactMass;
-       notifyChanged();
-   }
+    /**
+     *  Gets the ExactMass attribute of the Isotope object.
+     *  <p>Once instantiated all field not filled by passing parameters
+     * to the constructor are null. Isotopes can be configured by using
+     * the IsotopeFactory.configure() method:
+     * <pre>
+     *   Isotope isotope = new Isotope("C", 13);
+     *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
+     *   if.configure(isotope);
+     * </pre>
+     * </p>
+     *
+     * @return    The ExactMass value
+     *
+     * @see       #setExactMass
+     */
+    public Double getExactMass() {
+        return this.exactMass;
+    }
 
+    /**
+     * Returns the atomic mass of this element.
+     *
+     * <p>Once instantiated all field not filled by passing parameters
+     * to the constructor are null. Isotopes can be configured by using
+     * the IsotopeFactory.configure() method:
+     * <pre>
+     *   Isotope isotope = new Isotope("C", 13);
+     *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
+     *   if.configure(isotope);
+     * </pre>
+     * </p>
+     *
+     * @return The atomic mass of this element
+     *
+     * @see    #setMassNumber(Integer)
+     */
+    public Integer getMassNumber() {
+        return this.massNumber;
+    }
 
-   /**
-    *  Gets the NaturalAbundance attribute of the Isotope object.
-    *
-    *  <p>Once instantiated all field not filled by passing parameters
-    * to the constructor are null. Isotopes can be configured by using
-    * the IsotopeFactory.configure() method:
-    * <pre>
-    *   Isotope isotope = new Isotope("C", 13);
-    *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
-    *   if.configure(isotope);
-    * </pre>
-    * </p>
-    *
-    * @return    The NaturalAbundance value
-    *
-    * @see       #setNaturalAbundance
-    */
-   public Double getNaturalAbundance() {
-       return this.naturalAbundance;
-   }
+    /**
+     * Sets the atomic mass of this element.
+     *
+     * @param   massNumber The atomic mass to be assigned to this element
+     *
+     * @see    #getMassNumber
+     */
+    public void setMassNumber(Integer massNumber) {
+        this.massNumber = massNumber;
+        notifyChanged();
+    }
 
+    /**
+     * Returns the atomic number of this element.
+     *
+     *  <p>Once instantiated all field not filled by passing parameters
+     * to the constructor are null. Elements can be configured by using
+     * the IsotopeFactory.configure() method:
+     * <pre>
+     *   Element element = new Element("C");
+     *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
+     *   if.configure(element);
+     * </pre>
+     * </p>
+     *
+     * @return The atomic number of this element
+     *
+     * @see    #setAtomicNumber
+     */
+    public Integer getAtomicNumber() {
+        return this.atomicNumber;
+    }
 
-   /**
-    *  Gets the ExactMass attribute of the Isotope object.
-    *  <p>Once instantiated all field not filled by passing parameters
-    * to the constructor are null. Isotopes can be configured by using
-    * the IsotopeFactory.configure() method:
-    * <pre>
-    *   Isotope isotope = new Isotope("C", 13);
-    *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
-    *   if.configure(isotope);
-    * </pre>
-    * </p>
-    *
-    * @return    The ExactMass value
-    *
-    * @see       #setExactMass
-    */
-   public Double getExactMass() {
-       return this.exactMass;
-   }
+    /**
+     * Sets the atomic number of this element.
+     *
+     * @param   atomicNumber The atomic mass to be assigned to this element
+     *
+     * @see    #getAtomicNumber
+     */
+    public void setAtomicNumber(Integer atomicNumber) {
+        this.atomicNumber = atomicNumber;
+        notifyChanged();
+    }
 
-   /**
-    * Returns the atomic mass of this element.
-    *
-    * <p>Once instantiated all field not filled by passing parameters
-    * to the constructor are null. Isotopes can be configured by using
-    * the IsotopeFactory.configure() method:
-    * <pre>
-    *   Isotope isotope = new Isotope("C", 13);
-    *   IsotopeFactory if = IsotopeFactory.getInstance(isotope.getNewBuilder());
-    *   if.configure(isotope);
-    * </pre>
-    * </p>
-    *
-    * @return The atomic mass of this element
-    *
-    * @see    #setMassNumber(Integer)
-    */
-   public Integer getMassNumber() {
-       return this.massNumber;
-   }
+    /**
+     * Returns the element symbol of this element.
+     *
+     * @return The element symbol of this element. Null if unset.
+     *
+     * @see    #setSymbol
+     */
+    public String getSymbol() {
+        return this.symbol;
+    }
 
-   /**
-    * Sets the atomic mass of this element.
-    *
-    * @param   massNumber The atomic mass to be assigned to this element
-    *
-    * @see    #getMassNumber
-    */
-   public void setMassNumber(Integer massNumber) {
-       this.massNumber = massNumber;
-       notifyChanged();
-   }
+    /**
+     * Sets the element symbol of this element.
+     *
+     * @param symbol The element symbol to be assigned to this atom
+     *
+     * @see    #getSymbol
+     */
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+        notifyChanged();
+    }
 
-   /**
-    * Returns the atomic number of this element.
-    *
-    *  <p>Once instantiated all field not filled by passing parameters
-    * to the constructor are null. Elements can be configured by using
-    * the IsotopeFactory.configure() method:
-    * <pre>
-    *   Element element = new Element("C");
-    *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
-    *   if.configure(element);
-    * </pre>
-    * </p>
-    *
-    * @return The atomic number of this element
-    *
-    * @see    #setAtomicNumber
-    */
-   public Integer getAtomicNumber() {
-       return this.atomicNumber;
-   }
+    /**
+     * Sets the covalent radius for this AtomType.
+     *
+     * @param radius The covalent radius for this AtomType
+     * @see    #getCovalentRadius
+     */
+    public void setCovalentRadius(Double radius) {
+        this.covalentRadius = radius;
+        notifyChanged();
+    }
 
-   /**
-    * Sets the atomic number of this element.
-    *
-    * @param   atomicNumber The atomic mass to be assigned to this element
-    *
-    * @see    #getAtomicNumber
-    */
-   public void setAtomicNumber(Integer atomicNumber) {
-       this.atomicNumber = atomicNumber;
-       notifyChanged();
-   }
+    /**
+     * Returns the covalent radius for this AtomType.
+     *
+     * @return The covalent radius for this AtomType
+     * @see    #setCovalentRadius
+     */
+    public Double getCovalentRadius() {
+        return this.covalentRadius;
+    }
 
-   /**
-    * Returns the element symbol of this element.
-    *
-    * @return The element symbol of this element. Null if unset.
-    *
-    * @see    #setSymbol
-    */
-   public String getSymbol() {
-       return this.symbol;
-   }
+    /**
+     *  Sets the the exact electron valency of the AtomType object.
+     *
+     * @param  valency  The new valency value
+     * @see #getValency
+     *
+     */
+    public void setValency(Integer valency) {
+        this.electronValency = valency;
+        notifyChanged();
+    }
 
-   /**
-    * Sets the element symbol of this element.
-    *
-    * @param symbol The element symbol to be assigned to this atom
-    *
-    * @see    #getSymbol
-    */
-   public void setSymbol(String symbol) {
-       this.symbol = symbol;
-   notifyChanged();
-   }
+    /**
+     *  Gets the the exact electron valency of the AtomType object.
+     *
+     * @return The valency value
+     * @see #setValency
+     *
+     */
+    public Integer getValency() {
+        return this.electronValency;
+    }
 
-   /**
-    * Sets the covalent radius for this AtomType.
-    *
-    * @param radius The covalent radius for this AtomType
-    * @see    #getCovalentRadius
-    */
-   public void setCovalentRadius(Double radius) {
-       this.covalentRadius = radius;
-   notifyChanged();
-   }
-
-   /**
-    * Returns the covalent radius for this AtomType.
-    *
-    * @return The covalent radius for this AtomType
-    * @see    #setCovalentRadius
-    */
-   public Double getCovalentRadius() {
-       return this.covalentRadius;
-   }
-
-   /**
-    *  Sets the the exact electron valency of the AtomType object.
-    *
-    * @param  valency  The new valency value
-    * @see #getValency
-    *
-    */
-   public void setValency(Integer valency)
-   {
-       this.electronValency = valency;
-       notifyChanged();
-   }
-
-   /**
-    *  Gets the the exact electron valency of the AtomType object.
-    *
-    * @return The valency value
-    * @see #setValency
-    *
-    */
-   public Integer getValency()
-   {
-       return this.electronValency;
-   }
-
-    @Override public IAtom clone() throws CloneNotSupportedException {
+    @Override
+    public IAtom clone() throws CloneNotSupportedException {
         // XXX: clone always dodgy
         return (IAtom) super.clone();
     }

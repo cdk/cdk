@@ -28,23 +28,24 @@ import org.junit.Test;
  */
 public class EntryReactTest extends AbstractEntryTest {
 
-	@Before
-	public void setTestClass() {
-		super.setTestClass(new EntryReact("someID"));
-	}
+    @Before
+    public void setTestClass() {
+        super.setTestClass(new EntryReact("someID"));
+    }
 
-	@After
-	public void testTestedClass() {
-		Assert.assertTrue(super.getTestClass() instanceof EntryReact);
-	}
+    @After
+    public void testTestedClass() {
+        Assert.assertTrue(super.getTestClass() instanceof EntryReact);
+    }
 
-	@Test
-	@Override // customize because there is no constructor without any parameters
-	public void testID() {
-		Entry entry = getTestClass();
-		Assert.assertEquals("someid", entry.getID());
-		entry.setID("identifier");
-		Assert.assertEquals("identifier", entry.getID());
-	}
+    @Test
+    @Override
+    // customize because there is no constructor without any parameters
+    public void testID() {
+        Entry entry = getTestClass();
+        Assert.assertEquals("someid", entry.getID());
+        entry.setID("identifier");
+        Assert.assertEquals("identifier", entry.getID());
+    }
 
 }

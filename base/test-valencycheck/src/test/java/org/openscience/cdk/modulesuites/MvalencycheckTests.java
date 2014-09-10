@@ -33,13 +33,9 @@ import org.openscience.cdk.tools.SaturationCheckerTest;
  *
  * @cdk.module  test-valencycheck
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    ValencycheckCoverageTest.class,
-    SaturationCheckerTest.class,
-    DeduceBondOrderTestFromExplicitHydrogens.class,
-    CDKHydrogenAdderTest.class,
-    CDKValencyCheckerTest.class,
-    ATASaturationCheckerTest.class
-})
-public class MvalencycheckTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {ValencycheckCoverageTest.class, SaturationCheckerTest.class,
+        DeduceBondOrderTestFromExplicitHydrogens.class, CDKHydrogenAdderTest.class, CDKValencyCheckerTest.class,
+        ATASaturationCheckerTest.class})
+public class MvalencycheckTests {
+}

@@ -31,39 +31,42 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class AdductionPBMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(AdductionPBMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(AdductionPBMechanism.class);
+    }
 
-	/**
-	 *  Constructor for the AdductionPBMechanismTest object.
-	 */
-	public AdductionPBMechanismTest(){
+    /**
+     *  Constructor for the AdductionPBMechanismTest object.
+     */
+    public AdductionPBMechanismTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testAdductionPBMechanism(){
-		IReactionMechanism mechanism = new AdductionPBMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAdductionPBMechanism() {
+        IReactionMechanism mechanism = new AdductionPBMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new AdductionPBMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new AdductionPBMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

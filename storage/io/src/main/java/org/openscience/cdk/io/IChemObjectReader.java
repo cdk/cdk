@@ -46,12 +46,12 @@ import org.openscience.cdk.io.iterator.IIteratingChemObjectReader;
  **/
 public interface IChemObjectReader extends IChemObjectIO {
 
-	public enum Mode {
-		/** Only fail on serious format problems */
-		RELAXED,
-		/** Fail on any format problem */
-		STRICT
-	}
+    public enum Mode {
+        /** Only fail on serious format problems */
+        RELAXED,
+        /** Fail on any format problem */
+        STRICT
+    }
 
     /**
      * Sets the Reader from which this ChemObjectReader should read
@@ -97,8 +97,7 @@ public interface IChemObjectReader extends IChemObjectIO {
      * @param message  the error message.
      * @param exception the corresponding {@link Exception}.
      */
-    public void handleError(String message, Exception exception)
-    throws CDKException;
+    public void handleError(String message, Exception exception) throws CDKException;
 
     /**
      * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
@@ -121,7 +120,5 @@ public interface IChemObjectReader extends IChemObjectIO {
      * @param colStart Start column in the file where the error is found.
      * @param colEnd   End column in the file where the error is found.
      */
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
-    throws CDKException;
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException;
 }
-

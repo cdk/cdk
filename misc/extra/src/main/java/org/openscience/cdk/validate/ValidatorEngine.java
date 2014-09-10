@@ -55,12 +55,11 @@ import java.util.Map;
  */
 public class ValidatorEngine implements IValidator {
 
-    private Map<String,IValidator> validators;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
+    private Map<String, IValidator> validators;
+    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(ValidatorEngine.class);
 
     public ValidatorEngine() {
-        validators = new Hashtable<String,IValidator>();
+        validators = new Hashtable<String, IValidator>();
     }
 
     public void addValidator(IValidator validator) {
@@ -95,6 +94,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateAtomContainer(IAtomContainer subject) {
         logger.info("Validating org.openscience.cdk.AtomContainer");
         ValidationReport report = new ValidationReport();
@@ -107,7 +107,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         Iterator<IAtom> atoms = subject.atoms().iterator();
         while (atoms.hasNext()) {
-            report.addReport(validateAtom((IAtom)atoms.next()));
+            report.addReport(validateAtom((IAtom) atoms.next()));
         }
 
         Iterator<IBond> bonds = subject.bonds().iterator();
@@ -117,6 +117,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
+
     public ValidationReport validateAtomType(IAtomType subject) {
         logger.info("Validating org.openscience.cdk.AtomType");
         ValidationReport report = new ValidationReport();
@@ -129,6 +130,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateBond(IBond subject) {
         logger.info("Validating org.openscience.cdk.Bond");
         ValidationReport report = new ValidationReport();
@@ -141,10 +143,11 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         Iterator<IAtom> atoms = subject.atoms().iterator();
         while (atoms.hasNext()) {
-            report.addReport(validateAtom((IAtom)atoms.next()));
+            report.addReport(validateAtom((IAtom) atoms.next()));
         }
         return report;
     }
+
     public ValidationReport validateChemFile(IChemFile subject) {
         logger.info("Validating org.openscience.cdk.ChemFile");
         ValidationReport report = new ValidationReport();
@@ -155,11 +158,12 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        for (int i=0; i< subject.getChemSequenceCount(); i++) {
+        for (int i = 0; i < subject.getChemSequenceCount(); i++) {
             report.addReport(validateChemSequence(subject.getChemSequence(i)));
         }
         return report;
     }
+
     public ValidationReport validateChemModel(IChemModel subject) {
         logger.info("Validating org.openscience.cdk.ChemModel");
         ValidationReport report = new ValidationReport();
@@ -184,6 +188,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
+
     public ValidationReport validateChemObject(IChemObject subject) {
         logger.info("Validating org.openscience.cdk.ChemObject");
         ValidationReport report = new ValidationReport();
@@ -195,6 +200,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateChemSequence(IChemSequence subject) {
         logger.info("Validating org.openscience.cdk.ChemSequence");
         ValidationReport report = new ValidationReport();
@@ -211,6 +217,7 @@ public class ValidatorEngine implements IValidator {
         }
         return report;
     }
+
     public ValidationReport validateCrystal(ICrystal subject) {
         logger.info("Validating org.openscience.cdk.Crystal");
         ValidationReport report = new ValidationReport();
@@ -223,6 +230,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateElectronContainer(IElectronContainer subject) {
         logger.info("Validating org.openscience.cdk.ElectronContainer");
         ValidationReport report = new ValidationReport();
@@ -235,6 +243,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateElement(IElement subject) {
         logger.info("Validating org.openscience.cdk.Element");
         ValidationReport report = new ValidationReport();
@@ -247,6 +256,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateIsotope(IIsotope subject) {
         logger.info("Validating org.openscience.cdk.Isotope");
         ValidationReport report = new ValidationReport();
@@ -259,6 +269,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateMolecule(IAtomContainer subject) {
         logger.info("Validating org.openscience.cdk.Molecule");
         ValidationReport report = new ValidationReport();
@@ -271,6 +282,7 @@ public class ValidatorEngine implements IValidator {
         // traverse into hierarchy
         return report;
     }
+
     public ValidationReport validateReaction(IReaction subject) {
         logger.info("Validating org.openscience.cdk.Reaction");
         ValidationReport report = new ValidationReport();
@@ -282,15 +294,16 @@ public class ValidatorEngine implements IValidator {
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
         IAtomContainerSet reactants = subject.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             report.addReport(validateMolecule(reactants.getAtomContainer(i)));
         }
         IAtomContainerSet products = subject.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             report.addReport(validateMolecule(products.getAtomContainer(i)));
         }
         return report;
     }
+
     public ValidationReport validateMoleculeSet(IAtomContainerSet subject) {
         logger.info("Validating org.openscience.cdk.MoleculeSet");
         ValidationReport report = new ValidationReport();
@@ -301,11 +314,12 @@ public class ValidatorEngine implements IValidator {
         // traverse into super class
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
-        for (int i=0; i<subject.getAtomContainerCount(); i++) {
+        for (int i = 0; i < subject.getAtomContainerCount(); i++) {
             report.addReport(validateMolecule(subject.getAtomContainer(i)));
         }
         return report;
     }
+
     public ValidationReport validateReactionSet(IReactionSet subject) {
         logger.info("Validating org.openscience.cdk.ReactionSet");
         ValidationReport report = new ValidationReport();
@@ -317,7 +331,7 @@ public class ValidatorEngine implements IValidator {
         report.addReport(validateChemObject(subject));
         // traverse into hierarchy
         for (Iterator<IReaction> iter = subject.reactions().iterator(); iter.hasNext();) {
-            report.addReport(validateReaction((IReaction)iter.next()));
+            report.addReport(validateReaction((IReaction) iter.next()));
         }
         return report;
     }

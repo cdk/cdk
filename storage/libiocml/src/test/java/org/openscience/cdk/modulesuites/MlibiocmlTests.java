@@ -33,13 +33,8 @@ import org.openscience.cdk.libio.cml.ConvertorTest;
  *
  * @cdk.module test-libiocml
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    CML2Test.class,
-    CML2WriterTest.class,
-    CMLRoundTripTest.class,
-    ConvertorTest.class,
-    CMLWriterFactoryTest.class,
-    MDLCMLRoundtripTest.class
-})
-public class MlibiocmlTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {CML2Test.class, CML2WriterTest.class, CMLRoundTripTest.class, ConvertorTest.class,
+        CMLWriterFactoryTest.class, MDLCMLRoundtripTest.class})
+public class MlibiocmlTests {
+}

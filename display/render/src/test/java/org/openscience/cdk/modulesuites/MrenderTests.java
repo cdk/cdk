@@ -37,15 +37,8 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
  * @cdk.module  test-render
  */
 @RunWith(Suite.class)
-@SuiteClasses({
-	RenderCoverageTest.class,
-	CPKAtomColorsTest.class,
-	RasmolColorsTest.class,
-	CDKAtomColorsTest.class,
-	CDK2DAtomColorsTest.class,
-	PartialAtomicChargeColorsTest.class,
-	RendererModelTest.class,
-	AbstractGeneratorParameterTest.class,
-	TextElementTest.class
-})
-public class MrenderTests {}
+@SuiteClasses({RenderCoverageTest.class, CPKAtomColorsTest.class, RasmolColorsTest.class, CDKAtomColorsTest.class,
+        CDK2DAtomColorsTest.class, PartialAtomicChargeColorsTest.class, RendererModelTest.class,
+        AbstractGeneratorParameterTest.class, TextElementTest.class})
+public class MrenderTests {
+}

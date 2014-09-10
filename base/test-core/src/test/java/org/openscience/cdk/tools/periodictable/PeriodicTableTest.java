@@ -28,10 +28,9 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class PeriodicTableTest extends CDKTestCase {
 
-	public PeriodicTableTest() {
-		super();
-	}
-
+    public PeriodicTableTest() {
+        super();
+    }
 
     @Test
     public void testTable() {
@@ -40,9 +39,10 @@ public class PeriodicTableTest extends CDKTestCase {
         Assert.assertEquals(39, PeriodicTable.getAtomicNumber("Y"), 0.001);
         Assert.assertEquals(2.55, PeriodicTable.getPaulingElectronegativity("C"), 0.001);
         Assert.assertEquals(CDKConstants.UNSET, PeriodicTable.getPaulingElectronegativity("He"));
-        Assert.assertEquals(CDKConstants.UNSET, org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius("Pu"));
+        Assert.assertEquals(CDKConstants.UNSET,
+                org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius("Pu"));
         Assert.assertEquals(0.32, PeriodicTable.getCovalentRadius("He"), 0.001);
-        Assert.assertEquals(14, PeriodicTable.getGroup("C"),0.01);
+        Assert.assertEquals(14, PeriodicTable.getGroup("C"), 0.01);
 
         Assert.assertEquals("H", PeriodicTable.getSymbol(1));
         Assert.assertEquals("C", PeriodicTable.getSymbol(6));

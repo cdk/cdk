@@ -27,47 +27,46 @@ package org.openscience.cdk.interfaces;
  * @cdk.module  interfaces
  * @cdk.githash
  */
-public interface IReactionScheme extends IReactionSet{
-
-	/**
-	 * Add a scheme of reactions.
-	 *
-	 * @param reactScheme The IReactionScheme to include
-	 */
-	public void add(IReactionScheme reactScheme);
-
-	/**
-	 *  Returns an Iterable for looping over all IMolecularScheme
-	 *   in this ReactionScheme.
-	 *
-	 * @return    An Iterable with the IMolecularScheme in this ReactionScheme
-	 */
-	public Iterable<IReactionScheme> reactionSchemes();
+public interface IReactionScheme extends IReactionSet {
 
     /**
-	 * Returns the number of ReactionScheme in this Scheme.
-	 *
-	 * @return     The number of ReactionScheme in this Scheme
-	 */
-	public int getReactionSchemeCount();
+     * Add a scheme of reactions.
+     *
+     * @param reactScheme The IReactionScheme to include
+     */
+    public void add(IReactionScheme reactScheme);
 
     /**
-	 * Removes all IReactionScheme from this chemObject.
-	 */
+     *  Returns an Iterable for looping over all IMolecularScheme
+     *   in this ReactionScheme.
+     *
+     * @return    An Iterable with the IMolecularScheme in this ReactionScheme
+     */
+    public Iterable<IReactionScheme> reactionSchemes();
+
+    /**
+     * Returns the number of ReactionScheme in this Scheme.
+     *
+     * @return     The number of ReactionScheme in this Scheme
+     */
+    public int getReactionSchemeCount();
+
+    /**
+     * Removes all IReactionScheme from this chemObject.
+     */
     public void removeAllReactionSchemes();
 
     /**
-	 * Removes an IReactionScheme from this chemObject.
-	 *
-	 * @param  scheme  The IReactionScheme to be removed from this chemObject
-	 */
+     * Removes an IReactionScheme from this chemObject.
+     *
+     * @param  scheme  The IReactionScheme to be removed from this chemObject
+     */
     public void removeReactionScheme(IReactionScheme scheme);
 
-
     /**
-	 * Clones this IReactionScheme object and its content.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException ;
+     * Clones this IReactionScheme object and its content.
+     *
+     * @return    The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException;
 }

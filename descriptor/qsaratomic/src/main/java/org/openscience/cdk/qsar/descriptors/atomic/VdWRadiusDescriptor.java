@@ -56,7 +56,7 @@ import java.io.IOException;
  * @cdk.set        qsar-descriptors
  * @cdk.dictref qsar-descriptors:vdwradius
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest")
 public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"vdwRadius"};
@@ -67,9 +67,7 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
      *  @throws IOException if an error ocurrs when reading atom type information
      *  @throws ClassNotFoundException if an error occurs during tom typing
      */
-    public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {
-    }
-
+    public VdWRadiusDescriptor() throws IOException, ClassNotFoundException {}
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
@@ -86,22 +84,18 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
      *
      * @return An object containing the descriptor specification
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vdwradius", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      *  Gets the parameters attribute of the VdWRadiusDescriptor object.
@@ -109,16 +103,15 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      *  This method calculate the Van der Waals radius of an atom.
@@ -136,13 +129,12 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
 
     }
 
-
     /**
      *  Gets the parameterNames attribute of the VdWRadiusDescriptor object.
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -153,9 +145,8 @@ public class VdWRadiusDescriptor extends AbstractAtomicDescriptor implements IAt
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-

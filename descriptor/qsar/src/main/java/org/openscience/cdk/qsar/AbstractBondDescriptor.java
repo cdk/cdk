@@ -36,48 +36,47 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 public abstract class AbstractBondDescriptor extends AbstractDescriptor implements IBondDescriptor {
 
-	private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
+    private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 
-	private Map cachedDescriptorValues = null;
+    private Map                 cachedDescriptorValues = null;
 
-	/**
-	 * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
-	 *
-	 * @param container
-	 * @return false, if the cache is for a different IAtomContainer
-	 */
-	public boolean isCachedAtomContainer(IAtomContainer container) {
-		if (cachedDescriptorValues == null) return false;
-		return (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) == container);
-	}
+    /**
+     * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
+     *
+     * @param container
+     * @return false, if the cache is for a different IAtomContainer
+     */
+    public boolean isCachedAtomContainer(IAtomContainer container) {
+        if (cachedDescriptorValues == null) return false;
+        return (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) == container);
+    }
 
-	/**
-	 * Returns the cached DescriptorValue for the given IBond.
-	 *
-	 * @param bond the IAtom for which the DescriptorValue is requested
-	 * @return     null, if no DescriptorValue was cached for the given IBond
-	 */
-	public IDescriptorResult getCachedDescriptorValue(IBond bond) {
-		if (cachedDescriptorValues == null) return null;
-		return (IDescriptorResult)cachedDescriptorValues.get(bond);
-	}
+    /**
+     * Returns the cached DescriptorValue for the given IBond.
+     *
+     * @param bond the IAtom for which the DescriptorValue is requested
+     * @return     null, if no DescriptorValue was cached for the given IBond
+     */
+    public IDescriptorResult getCachedDescriptorValue(IBond bond) {
+        if (cachedDescriptorValues == null) return null;
+        return (IDescriptorResult) cachedDescriptorValues.get(bond);
+    }
 
-	/**
-	 * Caches a DescriptorValue for a given IBond. This method may only
-	 * be called after setNewContainer() is called.
-	 *
-	 * @param bond  IBond to cache the value for
-	 * @param doubleResult DescriptorValue for the given IBond
-	 */
-	public void cacheDescriptorValue(IBond bond, IAtomContainer container, IDescriptorResult doubleResult) {
-		if (cachedDescriptorValues == null) {
-			cachedDescriptorValues = new HashMap();
-			cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
-		} else if (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) != container) {
-			cachedDescriptorValues.clear();
-			cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
-		}
-		cachedDescriptorValues.put(bond, doubleResult);
-	}
+    /**
+     * Caches a DescriptorValue for a given IBond. This method may only
+     * be called after setNewContainer() is called.
+     *
+     * @param bond  IBond to cache the value for
+     * @param doubleResult DescriptorValue for the given IBond
+     */
+    public void cacheDescriptorValue(IBond bond, IAtomContainer container, IDescriptorResult doubleResult) {
+        if (cachedDescriptorValues == null) {
+            cachedDescriptorValues = new HashMap();
+            cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
+        } else if (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) != container) {
+            cachedDescriptorValues.clear();
+            cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
+        }
+        cachedDescriptorValues.put(bond, doubleResult);
+    }
 }
-

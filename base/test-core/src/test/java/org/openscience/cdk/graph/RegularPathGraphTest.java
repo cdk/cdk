@@ -54,7 +54,6 @@ public class RegularPathGraphTest {
         new RegularPathGraph(new int[4][], new int[0], 5);
     }
 
-
     /* re-invoking the remove on the same vertex should not do anything */
     @Test
     public void repeatRemoval() {
@@ -76,7 +75,8 @@ public class RegularPathGraphTest {
         assertThat(cycles.size(), is(1));
     }
 
-    @Test public void k3Degree() {
+    @Test
+    public void k3Degree() {
         int ord = 3;
         int[][] k3 = completeGraphOfSize(ord);
         RegularPathGraph pg = new RegularPathGraph(k3, identity(3), ord);
@@ -111,9 +111,7 @@ public class RegularPathGraphTest {
     public void k8() {
         int ord = 8;
         int[][] k8 = completeGraphOfSize(ord);
-        RegularPathGraph pg = new RegularPathGraph(k8,
-                                                   identity(8),
-                                                   ord);
+        RegularPathGraph pg = new RegularPathGraph(k8, identity(8), ord);
         List<int[]> cycles = new ArrayList<int[]>();
         for (int v = 0; v < ord; v++)
             pg.remove(v, cycles);
@@ -142,55 +140,38 @@ public class RegularPathGraphTest {
         return g;
     }
 
-    @Test public void loop() {
+    @Test
+    public void loop() {
         assertFalse(new SimpleEdge(0, 1).loop());
         assertTrue(new SimpleEdge(0, 0).loop());
-        assertFalse(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1)
-                            .loop());
-        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 0)
-                           .loop());
-        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 1)
-                           .loop());
+        assertFalse(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).loop());
+        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 0).loop());
+        assertTrue(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(0, 1), 1).loop());
     }
 
-    @Test public void path() {
-        assertThat(new SimpleEdge(0, 1).path(),
-                   is(new int[]{0, 1}));
-        assertThat(new ReducedEdge(new SimpleEdge(0, 1),
-                                   new SimpleEdge(2, 1),
-                                   1).path(),
-                   is(new int[]{0, 1, 2}));
-        assertThat(new ReducedEdge(new ReducedEdge(new SimpleEdge(0, 1),
-                                                   new SimpleEdge(2, 1),
-                                                   1),
-                                   new ReducedEdge(new SimpleEdge(2, 3),
-                                                   new SimpleEdge(3, 4),
-                                                   3),
-                                   2).path(),
-                   is(new int[]{0, 1, 2, 3, 4}));
+    @Test
+    public void path() {
+        assertThat(new SimpleEdge(0, 1).path(), is(new int[]{0, 1}));
+        assertThat(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1).path(), is(new int[]{0, 1, 2}));
+        assertThat(new ReducedEdge(new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1), new ReducedEdge(
+                new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3), 2).path(), is(new int[]{0, 1, 2, 3, 4}));
     }
 
-    @Test public void disjoint() {
-        PathEdge e = new ReducedEdge(new SimpleEdge(0, 1),
-                                     new SimpleEdge(2, 1),
-                                     1);
-        PathEdge f = new ReducedEdge(new SimpleEdge(2, 3),
-                                     new SimpleEdge(3, 4),
-                                     3);
+    @Test
+    public void disjoint() {
+        PathEdge e = new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1);
+        PathEdge f = new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3);
         assertTrue(e.disjoint(f));
         assertTrue(f.disjoint(e));
         assertFalse(e.disjoint(e));
         assertFalse(e.disjoint(e));
     }
 
-    @Test public void len() {
+    @Test
+    public void len() {
         assertThat(new SimpleEdge(0, 1).len(), is(2));
-        PathEdge e = new ReducedEdge(new SimpleEdge(0, 1),
-                                     new SimpleEdge(2, 1),
-                                     1);
-        PathEdge f = new ReducedEdge(new SimpleEdge(2, 3),
-                                     new SimpleEdge(3, 4),
-                                     3);
+        PathEdge e = new ReducedEdge(new SimpleEdge(0, 1), new SimpleEdge(2, 1), 1);
+        PathEdge f = new ReducedEdge(new SimpleEdge(2, 3), new SimpleEdge(3, 4), 3);
         assertThat(e.len(), is(3));
         assertThat(f.len(), is(3));
         assertThat(new ReducedEdge(e, f, 2).len(), is(5));

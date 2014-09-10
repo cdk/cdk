@@ -32,7 +32,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class VFSubstructureTest extends SubstructureTest {
 
-    @Override Pattern create(IAtomContainer container) {
+    @Override
+    Pattern create(IAtomContainer container) {
         return VentoFoggia.findSubstructure(container);
     }
 }

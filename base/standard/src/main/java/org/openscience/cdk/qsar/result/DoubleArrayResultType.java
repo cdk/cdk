@@ -30,13 +30,13 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.result.DoubleArrayResultTypeTest")
 public class DoubleArrayResultType implements IDescriptorResult {
 
-	private static final long serialVersionUID = -8255004284721233969L;
+    private static final long serialVersionUID = -8255004284721233969L;
 
-	private int size;
+    private int               size;
 
-	public DoubleArrayResultType(int size) {
-		this.size = size;
-	}
+    public DoubleArrayResultType(int size) {
+        this.size = size;
+    }
 
     @TestMethod("testToString")
     public String toString() {
@@ -45,7 +45,6 @@ public class DoubleArrayResultType implements IDescriptorResult {
 
     @TestMethod("testLength")
     public int length() {
-    	return size;
+        return size;
     }
 }
-

@@ -33,13 +33,8 @@ import org.openscience.cdk.tools.ProteinBuilderToolTest;
  *
  * @cdk.module test-pdb
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    PdbCoverageTest.class,
-    AminoAcidsTest.class,
-    PDBReaderTest.class,
-    PDBWriterTest.class,
-    ProteinBuilderToolTest.class,
-    PDBReaderFactoryTest.class
-})
-public class MpdbTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {PdbCoverageTest.class, AminoAcidsTest.class, PDBReaderTest.class, PDBWriterTest.class,
+        ProteinBuilderToolTest.class, PDBReaderFactoryTest.class})
+public class MpdbTests {
+}

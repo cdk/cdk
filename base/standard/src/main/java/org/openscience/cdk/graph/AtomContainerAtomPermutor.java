@@ -68,8 +68,7 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
     @TestMethod("containerFromPermutationTest")
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
-            IAtomContainer permutedContainer =
-                (IAtomContainer) atomContainer.clone();
+            IAtomContainer permutedContainer = (IAtomContainer) atomContainer.clone();
             IAtom[] atoms = new IAtom[atomContainer.getAtomCount()];
             for (int i = 0; i < atomContainer.getAtomCount(); i++) {
                 atoms[permutation[i]] = permutedContainer.getAtom(i);
@@ -82,4 +81,3 @@ public class AtomContainerAtomPermutor extends AtomContainerPermutor {
     }
 
 }
-

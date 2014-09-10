@@ -30,9 +30,7 @@ import org.openscience.cdk.tools.IonizationPotentialToolTest;
  *
  * @cdk.module  test-ionpot
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    IonpotCoverageTest.class,
-    IonizationPotentialToolTest.class
-})
-public class MionpotTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {IonpotCoverageTest.class, IonizationPotentialToolTest.class})
+public class MionpotTests {
+}

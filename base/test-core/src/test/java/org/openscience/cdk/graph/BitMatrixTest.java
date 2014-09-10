@@ -47,7 +47,8 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
  */
 public class BitMatrixTest {
 
-    @Test public void swap_basic() {
+    @Test
+    public void swap_basic() {
         BitMatrix m = new BitMatrix(0, 4);
         List<BitSet> rows = new ArrayList<BitSet>();
         for (int i = 0; i < 4; i++) {
@@ -55,9 +56,9 @@ public class BitMatrixTest {
             rows.add(row);
             m.add(row);
         }
-        m.swap(0,1);
-        m.swap(2,3);
-        m.swap(0,2);
+        m.swap(0, 1);
+        m.swap(2, 3);
+        m.swap(0, 2);
         // check when we access by index we get back the exact same instance
         for (int i = 0; i < 4; i++) {
             assertThat(m.row(i), is(sameInstance(rows.get(i))));
@@ -65,7 +66,8 @@ public class BitMatrixTest {
     }
 
     // ensure we can access the rows by with original index even after swapping
-    @Test public void swap() {
+    @Test
+    public void swap() {
         BitMatrix m = new BitMatrix(0, 100);
         List<BitSet> rows = new ArrayList<BitSet>();
         for (int i = 0; i < 100; i++) {
@@ -86,7 +88,8 @@ public class BitMatrixTest {
         }
     }
 
-    @Test public void clear() {
+    @Test
+    public void clear() {
         BitMatrix m = new BitMatrix(9, 3);
         BitSet r1 = toBitSet("110000000");
         BitSet r2 = toBitSet("100000000");
@@ -106,7 +109,8 @@ public class BitMatrixTest {
         assertThat(m.row(2), is(sameInstance(r1)));
     }
 
-    @Test public void indexOf() {
+    @Test
+    public void indexOf() {
         BitMatrix m = new BitMatrix(9, 3);
         BitSet r1 = toBitSet("010000000");
         BitSet r2 = toBitSet("100001000");
@@ -125,15 +129,14 @@ public class BitMatrixTest {
         assertThat(m.indexOf(2, 2), is(-1));
     }
 
-    @Test public void string() {
+    @Test
+    public void string() {
         BitMatrix m = new BitMatrix(9, 3);
         m.add(toBitSet("110000000"));
         m.add(toBitSet("110011000"));
         m.add(toBitSet("000011000"));
         String str = m.toString();
-        assertThat(str, is("0: 11-------\n" +
-                                   "1: 11--11---\n" +
-                                   "2: ----11---\n"));
+        assertThat(str, is("0: 11-------\n" + "1: 11--11---\n" + "2: ----11---\n"));
     }
 
     @Test
@@ -161,7 +164,6 @@ public class BitMatrixTest {
         assertFalse(m.eliminated(1));
         assertTrue(m.eliminated(2));
     }
-
 
     @Test
     public void eliminate3() throws Exception {
@@ -208,7 +210,6 @@ public class BitMatrixTest {
         assertFalse(m.eliminated(2));
     }
 
-
     @Test
     public void duplicates() throws Exception {
         // ensure duplicates are handled
@@ -236,7 +237,8 @@ public class BitMatrixTest {
         return s;
     }
 
-    @Test public void xor() {
+    @Test
+    public void xor() {
         BitSet s = toBitSet("00011");
         BitSet t = toBitSet("10010");
         BitSet u = BitMatrix.xor(s, t);
@@ -245,7 +247,8 @@ public class BitMatrixTest {
         assertThat(u, is(toBitSet("10001")));
     }
 
-    @Test public void from_cycles() {
+    @Test
+    public void from_cycles() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle c3 = mock(Cycle.class);
@@ -261,7 +264,8 @@ public class BitMatrixTest {
         assertThat(m.row(2), is(sameInstance(s3)));
     }
 
-    @Test public void from_cycles_cycle() {
+    @Test
+    public void from_cycles_cycle() {
         Cycle c1 = mock(Cycle.class);
         Cycle c2 = mock(Cycle.class);
         Cycle last = mock(Cycle.class);
@@ -276,6 +280,5 @@ public class BitMatrixTest {
         assertThat(m.row(1), is(sameInstance(s2)));
         assertThat(m.row(2), is(sameInstance(s3)));
     }
-
 
 }

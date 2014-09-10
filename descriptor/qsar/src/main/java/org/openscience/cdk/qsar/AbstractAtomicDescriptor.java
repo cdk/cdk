@@ -36,48 +36,47 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 public abstract class AbstractAtomicDescriptor extends AbstractDescriptor implements IAtomicDescriptor {
 
-	private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
+    private static final String PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
 
-	private Map cachedDescriptorValues = null; // FIXME: needs a better solution!
+    private Map                 cachedDescriptorValues = null;                   // FIXME: needs a better solution!
 
-	/**
-	 * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
-	 *
-	 * @param container
-	 * @return false, if the cache is for a different IAtomContainer
-	 */
-	public boolean isCachedAtomContainer(IAtomContainer container) {
-		if (cachedDescriptorValues == null) return false;
-		return (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) == container);
-	}
+    /**
+     * Returns true if the cached IDescriptorResult's are for the given IAtomContainer.
+     *
+     * @param container
+     * @return false, if the cache is for a different IAtomContainer
+     */
+    public boolean isCachedAtomContainer(IAtomContainer container) {
+        if (cachedDescriptorValues == null) return false;
+        return (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) == container);
+    }
 
-	/**
-	 * Returns the cached DescriptorValue for the given IAtom.
-	 *
-	 * @param atom the IAtom for which the DescriptorValue is requested
-	 * @return     null, if no DescriptorValue was cached for the given IAtom
-	 */
-	public IDescriptorResult getCachedDescriptorValue(IAtom atom) {
-		if (cachedDescriptorValues == null) return null;
-		return (IDescriptorResult)cachedDescriptorValues.get(atom);
-	}
+    /**
+     * Returns the cached DescriptorValue for the given IAtom.
+     *
+     * @param atom the IAtom for which the DescriptorValue is requested
+     * @return     null, if no DescriptorValue was cached for the given IAtom
+     */
+    public IDescriptorResult getCachedDescriptorValue(IAtom atom) {
+        if (cachedDescriptorValues == null) return null;
+        return (IDescriptorResult) cachedDescriptorValues.get(atom);
+    }
 
-	/**
-	 * Caches a DescriptorValue for a given IAtom. This method may only
-	 * be called after setNewContainer() is called.
-	 *
-	 * @param atom  IAtom to cache the value for
-	 * @param value DescriptorValue for the given IAtom
-	 */
-	public void cacheDescriptorValue(IAtom atom, IAtomContainer container, IDescriptorResult value) {
-		if (cachedDescriptorValues == null) {
-			cachedDescriptorValues = new HashMap();
-			cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
-		} else if (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) != container) {
-			cachedDescriptorValues.clear();
-			cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
-		}
-		cachedDescriptorValues.put(atom, value);
-	}
+    /**
+     * Caches a DescriptorValue for a given IAtom. This method may only
+     * be called after setNewContainer() is called.
+     *
+     * @param atom  IAtom to cache the value for
+     * @param value DescriptorValue for the given IAtom
+     */
+    public void cacheDescriptorValue(IAtom atom, IAtomContainer container, IDescriptorResult value) {
+        if (cachedDescriptorValues == null) {
+            cachedDescriptorValues = new HashMap();
+            cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
+        } else if (cachedDescriptorValues.get(PREVIOUS_ATOMCONTAINER) != container) {
+            cachedDescriptorValues.clear();
+            cachedDescriptorValues.put(PREVIOUS_ATOMCONTAINER, container);
+        }
+        cachedDescriptorValues.put(atom, value);
+    }
 }
-

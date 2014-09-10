@@ -43,7 +43,7 @@ public class DescriptorException extends CDKException {
      * @param message for the constructed exception
      */
     public DescriptorException(String message) {
-        super( message );
+        super(message);
     }
 
     /**
@@ -53,8 +53,7 @@ public class DescriptorException extends CDKException {
      *  @param message The message associated with the exception
      */
     public DescriptorException(String name, String message) {
-        super( name + ": " + message );
+        super(name + ": " + message);
     }
 
 }
-

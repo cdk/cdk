@@ -78,40 +78,40 @@ public class AtomTypeFactory {
     /**
      *  Used as an ID to describe the atom type.
      */
-    public final static String ATOMTYPE_ID_STRUCTGEN = "structgen";
+    public final static String                  ATOMTYPE_ID_STRUCTGEN = "structgen";
     /**
      *  Used as an ID to describe the atom type.
      */
-    public final static String ATOMTYPE_ID_MODELING = "modeling";
+    public final static String                  ATOMTYPE_ID_MODELING  = "modeling";
     // these are not available
     /**
      *  Used as an ID to describe the atom type.
      */
-    public final static String ATOMTYPE_ID_JMOL = "jmol";
+    public final static String                  ATOMTYPE_ID_JMOL      = "jmol";
 
-    private final static String TXT_EXTENSION = "txt";
-    private final static String XML_EXTENSION = "xml";
-    private final static String OWL_EXTENSION = "owl";
+    private final static String                 TXT_EXTENSION         = "txt";
+    private final static String                 XML_EXTENSION         = "xml";
+    private final static String                 OWL_EXTENSION         = "owl";
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AtomTypeFactory.class);
-    private static Map<String, AtomTypeFactory> tables = null;
-    private List<IAtomType> atomTypes = null;
+    private static ILoggingTool                 logger                = LoggingToolFactory
+                                                                              .createLoggingTool(AtomTypeFactory.class);
+    private static Map<String, AtomTypeFactory> tables                = null;
+    private List<IAtomType>                     atomTypes             = null;
 
-	/**
-	 * Private constructor for the AtomTypeFactory singleton.
-	 *
-	 *
-	 */
+    /**
+     * Private constructor for the AtomTypeFactory singleton.
+     *
+     *
+     */
     private AtomTypeFactory(String configFile, IChemObjectBuilder builder) {
         atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(configFile, builder);
     }
 
-	/**
-	 * Private constructor for the AtomTypeFactory singleton.
-	 *
-	 */
+    /**
+     * Private constructor for the AtomTypeFactory singleton.
+     *
+     */
     private AtomTypeFactory(InputStream ins, String format, IChemObjectBuilder builder) {
         atomTypes = new ArrayList<IAtomType>(100);
         readConfiguration(ins, format, builder);
@@ -171,37 +171,36 @@ public class AtomTypeFactory {
         return tables.get(configFile);
     }
 
-	/**
-	 * Read the config from a text file.
-	 *
-	 * @param  fileName  name of the config file
+    /**
+     * Read the config from a text file.
+     *
+     * @param  fileName  name of the config file
      * @param  builder     INewChemObjectBuilder used to make IChemObject instances
-	 */
-	private void readConfiguration(String fileName, IChemObjectBuilder builder)
-	{
-		logger.info("Reading config file from ", fileName);
+     */
+    private void readConfiguration(String fileName, IChemObjectBuilder builder) {
+        logger.info("Reading config file from ", fileName);
 
-		InputStream ins;
-		{
-			//try to see if this is a resource
-			ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
-			if(ins==null){
-				// try to see if this configFile is an actual file
-				File file = new File(fileName);
-	            if (file.exists()) {
-	                logger.debug("configFile is a File");
-	                // what's next?
-	                try {
-	                    ins = new FileInputStream(file);
-	                } catch (Exception exception) {
-	                    logger.error(exception.getMessage());
-	                    logger.debug(exception);
-	                }
-	            } else {
-	            	logger.error("no stream and no file");
-	            }
+        InputStream ins;
+        {
+            //try to see if this is a resource
+            ins = this.getClass().getClassLoader().getResourceAsStream(fileName);
+            if (ins == null) {
+                // try to see if this configFile is an actual file
+                File file = new File(fileName);
+                if (file.exists()) {
+                    logger.debug("configFile is a File");
+                    // what's next?
+                    try {
+                        ins = new FileInputStream(file);
+                    } catch (Exception exception) {
+                        logger.error(exception.getMessage());
+                        logger.debug(exception);
+                    }
+                } else {
+                    logger.error("no stream and no file");
+                }
             }
-   		}
+        }
 
         String format = XML_EXTENSION;
         if (fileName.endsWith(TXT_EXTENSION)) {
@@ -217,87 +216,75 @@ public class AtomTypeFactory {
     private IAtomTypeConfigurator constructConfigurator(String format) {
         try {
             if (format.equals(TXT_EXTENSION)) {
-                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
-                    loadClass("org.openscience.cdk.config.TXTBasedAtomTypeConfigurator").
-                    newInstance();
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader()
+                        .loadClass("org.openscience.cdk.config.TXTBasedAtomTypeConfigurator").newInstance();
             } else if (format.equals(XML_EXTENSION)) {
-                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
-                 loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").
-                 newInstance();
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader()
+                        .loadClass("org.openscience.cdk.config.CDKBasedAtomTypeConfigurator").newInstance();
             } else if (format.equals(OWL_EXTENSION)) {
-                return (IAtomTypeConfigurator) this.getClass().getClassLoader().
-                 loadClass("org.openscience.cdk.config.OWLBasedAtomTypeConfigurator").
-                 newInstance();
+                return (IAtomTypeConfigurator) this.getClass().getClassLoader()
+                        .loadClass("org.openscience.cdk.config.OWLBasedAtomTypeConfigurator").newInstance();
             }
-		} catch (Exception exc) {
-			logger.error("Could not get instance of AtomTypeConfigurator for format ", format);
+        } catch (Exception exc) {
+            logger.error("Could not get instance of AtomTypeConfigurator for format ", format);
             logger.debug(exc);
-		}
+        }
         return null;
     }
 
     private void readConfiguration(InputStream ins, String format, IChemObjectBuilder builder) {
-    	IAtomTypeConfigurator atc = constructConfigurator(format);
-		if (atc != null) {
-			atc.setInputStream(ins);
-			try
-			{
-				atomTypes = atc.readAtomTypes(builder);
-			} catch (Exception exc)
-			{
-				logger.error("Could not read AtomType's from file due to: ", exc.getMessage());
+        IAtomTypeConfigurator atc = constructConfigurator(format);
+        if (atc != null) {
+            atc.setInputStream(ins);
+            try {
+                atomTypes = atc.readAtomTypes(builder);
+            } catch (Exception exc) {
+                logger.error("Could not read AtomType's from file due to: ", exc.getMessage());
                 logger.debug(exc);
-			}
-		} else
-		{
-			logger.debug("AtomTypeConfigurator was null!");
-			atomTypes = new ArrayList<IAtomType>();
-		}
-	}
+            }
+        } else {
+            logger.debug("AtomTypeConfigurator was null!");
+            atomTypes = new ArrayList<IAtomType>();
+        }
+    }
 
-
-	/**
-	 * Returns the number of atom types in this list.
-	 *
-	 * @return    The number of atom types
-	 */
+    /**
+     * Returns the number of atom types in this list.
+     *
+     * @return    The number of atom types
+     */
     @TestMethod("testGetSize")
-    public int getSize()
-	{
-		return atomTypes.size();
-	}
+    public int getSize() {
+        return atomTypes.size();
+    }
 
-
-	/**
-	 * Get an AtomType with the given ID.
-	 *
-	 * @param  identifier                   an ID for a particular atom type (like C$)
-	 * @return                              The AtomType for this id
-	 * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
-	 */
+    /**
+     * Get an AtomType with the given ID.
+     *
+     * @param  identifier                   an ID for a particular atom type (like C$)
+     * @return                              The AtomType for this id
+     * @exception  NoSuchAtomTypeException  Thrown if the atom type does not exist.
+     */
     @TestMethod("testGetAtomType_String,testGetAtomTypeFromJmol,testGetAtomTypeFromMM2,testGetAtomTypeFromPDB")
-    public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException
-	{
+    public IAtomType getAtomType(String identifier) throws NoSuchAtomTypeException {
         for (IAtomType atomType : atomTypes) {
             if (atomType.getAtomTypeName().equals(identifier)) {
                 return atomType;
             }
         }
         throw new NoSuchAtomTypeException("The AtomType " + identifier + " could not be found");
-	}
+    }
 
-
-	/**
-	 * Get an array of all atomTypes known to the AtomTypeFactory for the given
-	 * element symbol and atomtype class.
-	 *
-	 * @param  symbol  An element symbol to search for
-	 * @return         An array of atomtypes that matches the given element symbol
-	 *                 and atomtype class
-	 */
+    /**
+     * Get an array of all atomTypes known to the AtomTypeFactory for the given
+     * element symbol and atomtype class.
+     *
+     * @param  symbol  An element symbol to search for
+     * @return         An array of atomtypes that matches the given element symbol
+     *                 and atomtype class
+     */
     @TestMethod("testGetAtomTypes_String")
-    public IAtomType[] getAtomTypes(String symbol)
-	{
+    public IAtomType[] getAtomTypes(String symbol) {
         logger.debug("Request for atomtype for symbol ", symbol);
         List<IAtomType> atomList = new ArrayList<IAtomType>();
         for (IAtomType atomType : atomTypes) {
@@ -314,25 +301,23 @@ public class AtomTypeFactory {
                 }
             }
         }
-        IAtomType[] atomTypes = (IAtomType[])atomList.toArray(new IAtomType[atomList.size()]);
+        IAtomType[] atomTypes = (IAtomType[]) atomList.toArray(new IAtomType[atomList.size()]);
         if (atomTypes.length > 0)
             logger.debug("Atomtype for symbol ", symbol, " has this number of types: " + atomTypes.length);
         else
             logger.debug("No atomtype for symbol ", symbol);
         return atomTypes;
-	}
+    }
 
-
-	/**
-	 * Gets the allAtomTypes attribute of the AtomTypeFactory object.
-	 *
-	 * @return    The allAtomTypes value
-	 */
+    /**
+     * Gets the allAtomTypes attribute of the AtomTypeFactory object.
+     *
+     * @return    The allAtomTypes value
+     */
     @TestMethod("testGetAllAtomTypes")
-    public IAtomType[] getAllAtomTypes()
-	{
-		logger.debug("Returning list of size: ", getSize());
-		List<IAtomType> atomtypeList = new ArrayList<IAtomType>();
+    public IAtomType[] getAllAtomTypes() {
+        logger.debug("Returning list of size: ", getSize());
+        List<IAtomType> atomtypeList = new ArrayList<IAtomType>();
         for (IAtomType atomType : atomTypes) {
             IAtomType clone;
             try {
@@ -343,20 +328,19 @@ public class AtomTypeFactory {
                 logger.debug(e);
             }
         }
-        return (IAtomType[])atomtypeList.toArray(new IAtomType[atomtypeList.size()]);
-	}
+        return (IAtomType[]) atomtypeList.toArray(new IAtomType[atomtypeList.size()]);
+    }
 
-
-	/**
-	 * Configures an atom. Finds the correct element type by looking at the Atom's
-	 * atom type name, and if that fails, picks the first atom type matching
+    /**
+     * Configures an atom. Finds the correct element type by looking at the Atom's
+     * atom type name, and if that fails, picks the first atom type matching
      * the Atom's element symbol..
-	 *
-	 * @param  atom  The atom to be configured
-	 * @return       The configured atom
-	 * @throws       CDKException when it could not recognize and configure the
-	 *               IAtom
-	 */
+     *
+     * @param  atom  The atom to be configured
+     * @return       The configured atom
+     * @throws       CDKException when it could not recognize and configure the
+     *               IAtom
+     */
     @TestMethod("testConfigure_IAtom")
     public IAtom configure(IAtom atom) throws CDKException {
         if (atom instanceof IPseudoAtom) {
@@ -373,8 +357,8 @@ public class AtomTypeFactory {
                     logger.warn("Taking first atom type, but other may exist");
                     atomType = types[0];
                 } else {
-                    String message = "Could not configure atom with unknown ID: " +
-                        atom.toString() + " + (id=" + atom.getAtomTypeName() + ")";
+                    String message = "Could not configure atom with unknown ID: " + atom.toString() + " + (id="
+                            + atom.getAtomTypeName() + ")";
                     logger.warn(message);
                     throw new CDKException(message);
                 }
@@ -394,8 +378,7 @@ public class AtomTypeFactory {
             atom.setAtomicNumber(atomType.getAtomicNumber());
             atom.setExactMass(atomType.getExactMass());
         } catch (Exception exception) {
-            logger.warn("Could not configure atom with unknown ID: ", atom,
-                        " + (id=", atom.getAtomTypeName(), ")");
+            logger.warn("Could not configure atom with unknown ID: ", atom, " + (id=", atom.getAtomTypeName(), ")");
             logger.debug(exception);
             throw new CDKException(exception.toString(), exception);
         }
@@ -403,4 +386,3 @@ public class AtomTypeFactory {
         return atom;
     }
 }
-

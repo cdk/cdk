@@ -29,9 +29,7 @@ import org.openscience.cdk.libio.md.MDMoleculeTest;
  *
  * @cdk.module test-libiomd
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    LibiomdCoverageTest.class,
-    MDMoleculeTest.class
-})
-public class MlibiomdTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {LibiomdCoverageTest.class, MDMoleculeTest.class})
+public class MlibiomdTests {
+}

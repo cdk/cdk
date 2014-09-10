@@ -65,128 +65,103 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
  */
 public class SingleStructureRandomGenerator {
 
-	ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
+    ILoggingTool      logger = LoggingToolFactory.createLoggingTool(SingleStructureRandomGenerator.class);
 
-	IAtomContainer atomContainer;
-	SaturationChecker satCheck;
-	Random random = null;
+    IAtomContainer    atomContainer;
+    SaturationChecker satCheck;
+    Random            random = null;
 
-	/**
-	 * Constructor for the SingleStructureRandomGenerator object.
-	 */
-	public SingleStructureRandomGenerator(long seed) throws java.lang.Exception
-	{
-		satCheck = new SaturationChecker();
-		random = new Random(seed);
-	}
+    /**
+     * Constructor for the SingleStructureRandomGenerator object.
+     */
+    public SingleStructureRandomGenerator(long seed) throws java.lang.Exception {
+        satCheck = new SaturationChecker();
+        random = new Random(seed);
+    }
 
-	/**
-	 * Constructor for the SingleStructureRandomGenerator object.
-	 */
-	public SingleStructureRandomGenerator() throws java.lang.Exception
-	{
-		this((long)11000);
-	}
+    /**
+     * Constructor for the SingleStructureRandomGenerator object.
+     */
+    public SingleStructureRandomGenerator() throws java.lang.Exception {
+        this((long) 11000);
+    }
 
+    /**
+     * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
+     *
+     * @param  ac  The new AtomContainer value
+     */
+    public void setAtomContainer(IAtomContainer ac) {
+        this.atomContainer = ac;
+    }
 
-	/**
-	 * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
-	 *
-	 * @param  ac  The new AtomContainer value
-	 */
-	public void setAtomContainer(IAtomContainer ac)
-	{
-		this.atomContainer = ac;
-	}
+    /**
+     * Generates a random structure based on the atoms in the given IAtomContainer.
+     */
+    public IAtomContainer generate() throws CDKException {
+        boolean structureFound = false;
+        boolean bondFormed;
+        double order;
+        double max, cmax1, cmax2;
+        int iteration = 0;
+        IAtom partner;
+        IAtom atom;
+        do {
+            iteration++;
+            atomContainer.removeAllElectronContainers();
+            do {
+                bondFormed = false;
+                for (int f = 0; f < atomContainer.getAtomCount(); f++) {
+                    atom = atomContainer.getAtom(f);
 
-	/**
-	 * Generates a random structure based on the atoms in the given IAtomContainer.
-	 */
-	public IAtomContainer generate() throws CDKException
-	{
-		boolean structureFound = false;
-		boolean bondFormed;
-		double order;
-		double max, cmax1, cmax2;
-		int iteration = 0;
-		IAtom partner;
-		IAtom atom;
-		do
-		{
-			iteration++;
-			atomContainer.removeAllElectronContainers();
-			do
-			{
-				bondFormed = false;
-				for (int f = 0; f < atomContainer.getAtomCount(); f++)
-				{
-					atom = atomContainer.getAtom(f);
+                    if (!satCheck.isSaturated(atom, atomContainer)) {
+                        partner = getAnotherUnsaturatedNode(atom);
+                        if (partner != null) {
+                            cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
 
-					if (!satCheck.isSaturated(atom, atomContainer))
-					{
-						partner = getAnotherUnsaturatedNode(atom);
-						if (partner != null)
-						{
-							cmax1 = satCheck.getCurrentMaxBondOrder(atom, atomContainer);
+                            cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
+                            max = Math.min(cmax1, cmax2);
+                            order = Math.min(Math.max(1.0, random.nextInt((int) Math.round(max))), 3.0);
+                            logger.debug("Forming bond of order ", order);
+                            atomContainer.addBond(atomContainer.getBuilder().newInstance(IBond.class, atom, partner,
+                                    BondManipulator.createBondOrder(order)));
+                            bondFormed = true;
+                        }
+                    }
+                }
+            } while (bondFormed);
+            if (ConnectivityChecker.isConnected(atomContainer) && satCheck.allSaturated(atomContainer)) {
+                structureFound = true;
+            }
+        } while (!structureFound && iteration < 20);
+        logger.debug("Structure found after #iterations: ", iteration);
+        return atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
+    }
 
-							cmax2 = satCheck.getCurrentMaxBondOrder(partner, atomContainer);
-							max = Math.min(cmax1, cmax2);
-							order = Math.min(Math.max(1.0, random.nextInt((int)Math.round(max))), 3.0);
-							logger.debug("Forming bond of order ", order);
-							atomContainer.addBond(
-								atomContainer.getBuilder().newInstance(IBond.class,
-									atom, partner, BondManipulator.createBondOrder(order)
-								)
-							);
-							bondFormed = true;
-						}
-					}
-				}
-			} while (bondFormed);
-			if (ConnectivityChecker.isConnected(atomContainer)
-					&& satCheck.allSaturated(atomContainer))
-			{
-				structureFound = true;
-			}
-		} while (!structureFound && iteration < 20);
-		logger.debug("Structure found after #iterations: ", iteration);
-		return atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
-	}
+    /**
+     * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
+     *
+     * @return                The AnotherUnsaturatedNode value
+     */
+    private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException {
+        IAtom atom;
+        int next = random.nextInt(atomContainer.getAtomCount());
 
-
-	/**
-	 * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
-	 *
-	 * @return                The AnotherUnsaturatedNode value
-	 */
-	private IAtom getAnotherUnsaturatedNode(IAtom exclusionAtom) throws CDKException
-	{
-		IAtom atom;
-		int next = random.nextInt(atomContainer.getAtomCount());
-
-		for (int f = next; f < atomContainer.getAtomCount(); f++)
-		{
-			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer)
-					&& exclusionAtom != atom
-					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
-			{
-				return atom;
-			}
-		}
-		for (int f = 0; f < next; f++)
-		{
-			atom = atomContainer.getAtom(f);
-			if (!satCheck.isSaturated(atom, atomContainer)
-					&& exclusionAtom != atom
-					&& !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom))
-			{
-				return atom;
-			}
-		}
-		return null;
-	}
+        for (int f = next; f < atomContainer.getAtomCount(); f++) {
+            atom = atomContainer.getAtom(f);
+            if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom
+                    && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
+                return atom;
+            }
+        }
+        for (int f = 0; f < next; f++) {
+            atom = atomContainer.getAtom(f);
+            if (!satCheck.isSaturated(atom, atomContainer) && exclusionAtom != atom
+                    && !atomContainer.getConnectedAtomsList(exclusionAtom).contains(atom)) {
+                return atom;
+            }
+        }
+        return null;
+    }
 
 }
-

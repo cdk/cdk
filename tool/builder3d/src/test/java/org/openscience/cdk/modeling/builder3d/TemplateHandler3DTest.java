@@ -49,21 +49,21 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class TemplateHandler3DTest extends CDKTestCase {
 
-	@Test
-	public void testGetInstance() throws Exception {
-		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
-		// need to trigger a load of the templates
-		th3d.mapTemplates(new AtomContainer(), 0);
-		Assert.assertEquals(10751, th3d.getTemplateCount());
-	}
+    @Test
+    public void testGetInstance() throws Exception {
+        TemplateHandler3D th3d = TemplateHandler3D.getInstance();
+        // need to trigger a load of the templates
+        th3d.mapTemplates(new AtomContainer(), 0);
+        Assert.assertEquals(10751, th3d.getTemplateCount());
+    }
 
     private static BitSet parseBitSet(String str) throws Exception {
         return TemplateHandler3D.getBitSetFromFile(new StringTokenizer(str, "\t ;{, }"));
     }
 
-	@Test
-	public void testFingerprints() throws Exception{
-		BitSet[] expected = new BitSet[]{
+    @Test
+    public void testFingerprints() throws Exception {
+        BitSet[] expected = new BitSet[]{
                 parseBitSet("{1, 4, 10, 14, 24, 28, 37, 40, 41, 44, 50, 53, 54, 59, 61, 65, 67, 73, 74, 77, 86, 94, 103, 104, 112, 117, 119, 120, 125, 127, 131, 134, 154, 155, 160, 162, 166, 182, 186, 187, 189, 196, 198, 205, 221, 222, 223, 224, 228, 232, 234, 248, 249, 253, 255, 262, 286, 287, 293, 296, 299, 300, 303, 305, 308, 309, 317, 320, 325, 331, 335, 337, 339, 342, 344, 354, 357, 371, 374, 376, 385, 386, 388, 395, 398, 408, 424, 429, 432, 438, 443, 447, 454, 463, 464, 473, 482, 489, 490, 492, 506, 510, 511, 515, 522, 523, 533, 534, 544, 548, 555, 557, 561, 562, 568, 571, 573, 576, 588, 590, 602, 606, 608, 612, 628, 652, 665, 670, 671, 672, 678, 680, 681, 709, 711, 714, 729, 730, 741, 742, 747, 752, 753, 760, 766, 769, 770, 773, 794, 798, 800, 808, 816, 832, 833, 834, 839, 841, 843, 847, 850, 859, 868, 873, 876, 879, 881, 882, 884, 887, 905, 911, 921, 922, 924, 925, 930, 936, 939, 944, 946, 949, 952, 953, 954, 955, 960, 963, 986, 987, 995, 998, 1003, 1006, 1009, 1010, 1017, 1020}"),
                 parseBitSet("{1, 4, 10, 14, 24, 28, 44, 50, 54, 59, 61, 65, 67, 73, 77, 79, 86, 94, 103, 104, 112, 119, 120, 134, 153, 154, 155, 160, 162, 166, 182, 186, 187, 189, 196, 222, 223, 224, 228, 234, 236, 239, 242, 253, 262, 264, 287, 291, 293, 296, 300, 303, 305, 308, 309, 317, 320, 323, 325, 335, 337, 339, 354, 356, 357, 371, 376, 381, 383, 385, 386, 395, 398, 422, 424, 432, 443, 464, 473, 482, 489, 490, 492, 506, 510, 515, 522, 523, 533, 544, 548, 561, 562, 573, 578, 588, 597, 602, 609, 645, 652, 653, 665, 671, 672, 678, 709, 711, 714, 726, 730, 740, 741, 742, 747, 752, 760, 766, 769, 770, 773, 781, 792, 793, 798, 801, 808, 816, 825, 832, 833, 834, 841, 843, 850, 851, 856, 876, 884, 885, 888, 914, 921, 922, 924, 925, 933, 936, 944, 949, 952, 955, 963, 977, 980, 981, 986, 987, 993, 995, 998, 1001, 1003, 1010, 1020}"),
                 parseBitSet("{4, 17, 51, 52, 58, 110, 114, 162, 177, 182, 208, 224, 230, 231, 242, 259, 262, 266, 270, 277, 289, 307, 309, 325, 335, 339, 349, 351, 354, 363, 371, 376, 387, 406, 433, 437, 489, 491, 500, 504, 513, 522, 533, 539, 545, 561, 573, 588, 601, 603, 611, 614, 618, 665, 686, 735, 746, 747, 752, 755, 764, 776, 777, 784, 795, 798, 801, 808, 822, 823, 851, 876, 882, 886, 944, 969, 987}"),
@@ -73,39 +73,35 @@ public class TemplateHandler3DTest extends CDKTestCase {
                 parseBitSet("{4, 10, 77, 162, 522, 714, 747, 752, 816}"),
                 parseBitSet("{4, 10, 162, 522, 714, 747, 752, 816}"),
                 parseBitSet("{4, 17, 51, 52, 58, 110, 114, 162, 177, 182, 208, 224, 230, 231, 242, 259, 262, 266, 270, 277, 289, 307, 309, 325, 335, 339, 349, 351, 354, 363, 371, 376, 387, 406, 433, 437, 489, 491, 500, 504, 513, 522, 533, 539, 545, 561, 573, 588, 601, 603, 611, 614, 618, 665, 686, 735, 746, 747, 752, 755, 764, 776, 777, 784, 795, 798, 801, 808, 822, 823, 851, 876, 882, 886, 944, 969, 987}"),
-                parseBitSet("{4, 14, 50, 61, 65, 67, 83, 86, 91, 103, 104, 120, 133, 154, 162, 166, 188, 192, 222, 300, 308, 317, 320, 398, 426, 429, 432, 465, 468, 473, 475, 490, 505, 506, 510, 515, 522, 671, 682, 689, 704, 739, 747, 770, 782, 834, 921, 922, 925, 944, 952, 953, 960, 963, 998, 1020}")
-        };
+                parseBitSet("{4, 14, 50, 61, 65, 67, 83, 86, 91, 103, 104, 120, 133, 154, 162, 166, 188, 192, 222, 300, 308, 317, 320, 398, 426, 429, 432, 465, 468, 473, 475, 490, 505, 506, 510, 515, 522, 671, 682, 689, 704, 739, 747, 770, 782, 834, 921, 922, 925, 944, 952, 953, 960, 963, 998, 1020}")};
 
-		String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
+        String filename = "data/mdl/fingerprints_from_modelbuilder3d.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        List<IBitFingerprint> data= new TemplateExtractor().makeFingerprintsFromSdf(
-            true,false, new HashMap<String,Integer>(),
-            new BufferedReader ( new InputStreamReader ( ins ) ),
-            10
-        );
+        List<IBitFingerprint> data = new TemplateExtractor().makeFingerprintsFromSdf(true, false,
+                new HashMap<String, Integer>(), new BufferedReader(new InputStreamReader(ins)), 10);
         QueryChemObject obj = new QueryChemObject(DefaultChemObjectBuilder.getInstance());
         obj.getBuilder();
-        for(int i=0; i<data.size(); i++){
-        	IBitFingerprint bs = data.get(i);
-        	Assert.assertEquals(expected[i], bs.asBitSet());
+        for (int i = 0; i < data.size(); i++) {
+            IBitFingerprint bs = data.get(i);
+            Assert.assertEquals(expected[i], bs.asBitSet());
         }
-	}
+    }
 
-	@Test
-	public void testMapTemplates_IAtomContainer_double() throws Exception{
-	    IAtomContainer ac = MoleculeFactory.makeBicycloRings();
-		TemplateHandler3D th3d = TemplateHandler3D.getInstance();
-		ForceFieldConfigurator ffc = new ForceFieldConfigurator();
-		ffc.setForceFieldConfigurator("mm2", ac.getBuilder());
-		IRingSet ringSetMolecule = ffc.assignAtomTyps(ac);
-		List<IRingSet> ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
-		IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
-		IAtomContainer largestRingSetContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
-		th3d.mapTemplates(largestRingSetContainer, largestRingSetContainer.getAtomCount());
-		for (int i=0;i<ac.getAtomCount();i++){
-			Assert.assertNotNull(ac.getAtom(i).getPoint3d());
-		}
-		ModelBuilder3DTest.checkAverageBondLength(ac);
-	}
+    @Test
+    public void testMapTemplates_IAtomContainer_double() throws Exception {
+        IAtomContainer ac = MoleculeFactory.makeBicycloRings();
+        TemplateHandler3D th3d = TemplateHandler3D.getInstance();
+        ForceFieldConfigurator ffc = new ForceFieldConfigurator();
+        ffc.setForceFieldConfigurator("mm2", ac.getBuilder());
+        IRingSet ringSetMolecule = ffc.assignAtomTyps(ac);
+        List<IRingSet> ringSystems = RingPartitioner.partitionRings(ringSetMolecule);
+        IRingSet largestRingSet = RingSetManipulator.getLargestRingSet(ringSystems);
+        IAtomContainer largestRingSetContainer = RingSetManipulator.getAllInOneContainer(largestRingSet);
+        th3d.mapTemplates(largestRingSetContainer, largestRingSetContainer.getAtomCount());
+        for (int i = 0; i < ac.getAtomCount(); i++) {
+            Assert.assertNotNull(ac.getAtom(i).getPoint3d());
+        }
+        ModelBuilder3DTest.checkAverageBondLength(ac);
+    }
 
 }

@@ -37,149 +37,151 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class MolecularFormulaRangeManipulatorTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-
-	/**
-	 *  Constructor for the MolecularFormulaRangeManipulatorTest object.
-	 *
-	 */
-	public MolecularFormulaRangeManipulatorTest(){
-
-		super();
-	}
+    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     *  Constructor for the MolecularFormulaRangeManipulatorTest object.
+     *
+     */
+    public MolecularFormulaRangeManipulatorTest() {
+
+        super();
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testGetRange_IMolecularFormulaSet() {
-		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
+    public void testGetRange_IMolecularFormulaSet() {
+        IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "N"), 1);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "O"), 4);
 
+        IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 7);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 20);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "N"), 4);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
 
-		IMolecularFormula mf2 = new MolecularFormula(); /*C7H20N4O2*/
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),20);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),4);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
+        IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "C"), 9);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "H"), 5);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "O"), 7);
 
+        IMolecularFormulaSet mfSet = new MolecularFormulaSet();
+        mfSet.addMolecularFormula(mf1);
+        mfSet.addMolecularFormula(mf2);
+        mfSet.addMolecularFormula(mf3);
 
-		IMolecularFormula mf3 = new MolecularFormula(); /*C9H5O7*/
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
+        MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
 
-		IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-		mfSet.addMolecularFormula(mf1);
-		mfSet.addMolecularFormula(mf2);
-		mfSet.addMolecularFormula(mf3);
+        /* Result: C4-9H5-20N0-4O2-7 */
 
-		MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
+        Assert.assertEquals(4, mfRange.getIsotopeCount());
+        Assert.assertEquals(4, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(9, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(5, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(20, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(0, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(4, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(2, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
+        Assert.assertEquals(7, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
 
+    }
 
-		/* Result: C4-9H5-20N0-4O2-7 */
-
-		Assert.assertEquals(4, mfRange.getIsotopeCount());
-		Assert.assertEquals(4, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"C")));
-		Assert.assertEquals(9, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"C")));
-		Assert.assertEquals(5, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"H")));
-		Assert.assertEquals(20, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"H")));
-		Assert.assertEquals(0, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"N")));
-		Assert.assertEquals(4, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"N")));
-		Assert.assertEquals(2, mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"O")));
-		Assert.assertEquals(7, mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"O")));
-
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
-		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
+    public void testGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder() {
+        IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "N"), 1);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "O"), 4);
 
+        IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 7);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 20);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "N"), 4);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
 
-		IMolecularFormula mf2 = new MolecularFormula(); /*C7H20N4O2*/
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),20);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),4);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
+        IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "C"), 9);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "H"), 5);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "O"), 7);
 
+        IMolecularFormulaSet mfSet = new MolecularFormulaSet();
+        mfSet.addMolecularFormula(mf1);
+        mfSet.addMolecularFormula(mf2);
+        mfSet.addMolecularFormula(mf3);
 
-		IMolecularFormula mf3 = new MolecularFormula(); /*C9H5O7*/
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
+        MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
+        IMolecularFormula formula = MolecularFormulaRangeManipulator.getMaximalFormula(mfRange, builder);
 
-		IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-		mfSet.addMolecularFormula(mf1);
-		mfSet.addMolecularFormula(mf2);
-		mfSet.addMolecularFormula(mf3);
+        /* Result: C4-9H5-20N0-4O2-7 */
 
-		MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
-		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMaximalFormula(mfRange, builder);
+        Assert.assertEquals(4, mfRange.getIsotopeCount());
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")),
+                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")),
+                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")),
+                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")),
+                mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class, "O")));
 
-		/* Result: C4-9H5-20N0-4O2-7 */
+    }
 
-		Assert.assertEquals(4, mfRange.getIsotopeCount());
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"C")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"C")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"H")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"H")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"N")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"N")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"O")), mfRange.getIsotopeCountMax(builder.newInstance(IIsotope.class,"O")));
-
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {
-		IMolecularFormula mf1 = new MolecularFormula(); /*C4H12NO4*/
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"C"),4);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"H"),12);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"N"),1);
-		mf1.addIsotope(builder.newInstance(IIsotope.class,"O"),4);
+    public void testGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder() {
+        IMolecularFormula mf1 = new MolecularFormula(); /* C4H12NO4 */
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "C"), 4);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "H"), 12);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "N"), 1);
+        mf1.addIsotope(builder.newInstance(IIsotope.class, "O"), 4);
 
+        IMolecularFormula mf2 = new MolecularFormula(); /* C7H20N4O2 */
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "C"), 7);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "H"), 20);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "N"), 4);
+        mf2.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
 
-		IMolecularFormula mf2 = new MolecularFormula(); /*C7H20N4O2*/
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"C"),7);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"H"),20);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"N"),4);
-		mf2.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
+        IMolecularFormula mf3 = new MolecularFormula(); /* C9H5O7 */
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "C"), 9);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "H"), 5);
+        mf3.addIsotope(builder.newInstance(IIsotope.class, "O"), 7);
 
+        IMolecularFormulaSet mfSet = new MolecularFormulaSet();
+        mfSet.addMolecularFormula(mf1);
+        mfSet.addMolecularFormula(mf2);
+        mfSet.addMolecularFormula(mf3);
 
-		IMolecularFormula mf3 = new MolecularFormula(); /*C9H5O7*/
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"C"),9);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"H"),5);
-		mf3.addIsotope(builder.newInstance(IIsotope.class,"O"),7);
+        MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
+        IMolecularFormula formula = MolecularFormulaRangeManipulator.getMinimalFormula(mfRange, builder);
 
-		IMolecularFormulaSet mfSet = new MolecularFormulaSet();
-		mfSet.addMolecularFormula(mf1);
-		mfSet.addMolecularFormula(mf2);
-		mfSet.addMolecularFormula(mf3);
+        /* Result: C4-9H5-20N0-4O2-7 */
 
-		MolecularFormulaRange mfRange = MolecularFormulaRangeManipulator.getRange(mfSet);
-		IMolecularFormula formula = MolecularFormulaRangeManipulator.getMinimalFormula(mfRange, builder);
+        Assert.assertEquals(4, mfRange.getIsotopeCount());
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "C")),
+                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "C")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "H")),
+                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "H")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "N")),
+                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "N")));
+        Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class, "O")),
+                mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class, "O")));
 
-		/* Result: C4-9H5-20N0-4O2-7 */
-
-		Assert.assertEquals(4, mfRange.getIsotopeCount());
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"C")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"C")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"H")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"H")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"N")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"N")));
-		Assert.assertEquals(formula.getIsotopeCount(builder.newInstance(IIsotope.class,"O")), mfRange.getIsotopeCountMin(builder.newInstance(IIsotope.class,"O")));
-
-	}
+    }
 }
-

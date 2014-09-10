@@ -31,39 +31,42 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RearrangementChargeMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(RearrangementChargeMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(RearrangementChargeMechanism.class);
+    }
 
-	/**
-	 *  Constructor for the RearrangementChargeMechanism object.
-	 */
-	public RearrangementChargeMechanismTest(){
+    /**
+     *  Constructor for the RearrangementChargeMechanism object.
+     */
+    public RearrangementChargeMechanismTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testRearrangementChargeMechanism(){
-		IReactionMechanism mechanism = new RearrangementChargeMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRearrangementChargeMechanism() {
+        IReactionMechanism mechanism = new RearrangementChargeMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new RearrangementChargeMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new RearrangementChargeMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

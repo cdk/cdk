@@ -58,22 +58,22 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @see Electronegativity
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescriptorTest")
 public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
-	/**Number of maximum iterations*/
-    private int maxIterations = 6;
+    /**Number of maximum iterations*/
+    private int                   maxIterations   = 6;
 
-	private Electronegativity electronegativity;
+    private Electronegativity     electronegativity;
 
     private static final String[] descriptorNames = {"elecSigB"};
+
     /**
      *  Constructor for the BondSigmaElectronegativityDescriptor object.
      */
     public BondSigmaElectronegativityDescriptor() {
-    	electronegativity = new Electronegativity();
+        electronegativity = new Electronegativity();
     }
-
 
     /**
      *  Gets the specification attribute of the BondSigmaElectronegativityDescriptor
@@ -81,27 +81,25 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
         }
-        if (!(params[0] instanceof Integer) ){
+        if (!(params[0] instanceof Integer)) {
             throw new CDKException("The parameter must be of type Integer");
         }
-        if(params.length==0)
-        	return;
+        if (params.length == 0) return;
         maxIterations = (Integer) params[0];
     }
 
@@ -111,7 +109,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -119,14 +117,14 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(Double.NaN), descriptorNames, e);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), descriptorNames, e);
     }
 
     /**
@@ -136,7 +134,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *@param  atomContainer                AtomContainer
      *@return                   return the sigma electronegativity
      */
-    @TestMethod(value="testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
+    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
     public DescriptorValue calculate(IBond aBond, IAtomContainer atomContainer) {
         IAtomContainer ac;
         IBond bond;
@@ -151,27 +149,27 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
             return getDummyDescriptorValue(e);
         }
 
-        if(maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
+        if (maxIterations != -1 && maxIterations != 0) electronegativity.setMaxIterations(maxIterations);
 
-	    double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(0));
-	    double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
+        double electroAtom1 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(0));
+        double electroAtom2 = electronegativity.calculateSigmaElectronegativity(ac, bond.getAtom(1));
 
-	    return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(Math.abs(electroAtom1 - electroAtom2)),descriptorNames);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Math.abs(electroAtom1 - electroAtom2)), descriptorNames);
 
     }
-	 /**
-     * Gets the parameterNames attribute of the BondSigmaElectronegativityDescriptor object.
-     *
-     * @return    The parameterNames value
-     */
-    @TestMethod(value="testGetParameterNames")
+
+    /**
+    * Gets the parameterNames attribute of the BondSigmaElectronegativityDescriptor object.
+    *
+    * @return    The parameterNames value
+    */
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
-    	String[] params = new String[1];
+        String[] params = new String[1];
         params[0] = "maxIterations";
         return params;
     }
-
 
     /**
      * Gets the parameterType attribute of the BondSigmaElectronegativityDescriptor object.
@@ -179,9 +177,8 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return 0;
     }
 }
-

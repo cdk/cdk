@@ -32,69 +32,78 @@ import java.util.List;
 @TestClass("org.openscience.cdk.io.formats.PubChemSubstanceXMLFormatTest")
 public class PubChemSubstanceXMLFormat extends AbstractResourceFormat implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public PubChemSubstanceXMLFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new PubChemSubstanceXMLFormat();
-    	return myself;
+        if (myself == null) myself = new PubChemSubstanceXMLFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "PubChem Substance XML";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return null;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"xml"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-    	return "org.openscience.cdk.io.PCSubstanceXMLReader";
+        return "org.openscience.cdk.io.PCSubstanceXMLReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
-    	return null;
+        return null;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return true;
-	}
+        return true;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.NONE;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -103,10 +112,8 @@ public class PubChemSubstanceXMLFormat extends AbstractResourceFormat implements
         MatchResult result = NO_MATCH;
         for (int i = 0; i < lines.size(); i++) {
             String line = lines.get(i);
-            if (line.contains("<PC-Substance") && result == NO_MATCH)
-                result = new MatchResult(true, this, i);
-            if (line.contains("<PC-Substances"))
-                return NO_MATCH;
+            if (line.contains("<PC-Substance") && result == NO_MATCH) result = new MatchResult(true, this, i);
+            if (line.contains("<PC-Substances")) return NO_MATCH;
         }
         return result;
     }

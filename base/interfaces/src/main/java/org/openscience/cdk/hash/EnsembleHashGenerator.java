@@ -45,5 +45,4 @@ public interface EnsembleHashGenerator {
      */
     public long generate(Set<IAtomContainer> ensemble);
 
-
 }

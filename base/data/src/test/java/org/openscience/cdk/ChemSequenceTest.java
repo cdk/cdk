@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ChemSequenceTest extends AbstractChemSequenceTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new ChemSequence();
             }
         });
     }
 
-    @Test public void testChemSequence() {
+    @Test
+    public void testChemSequence() {
         IChemSequence cs = new ChemSequence();
         Assert.assertNotNull(cs);
     }

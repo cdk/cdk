@@ -38,104 +38,92 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.module data
  * @cdk.githash
  */
-public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable
-{
+public class ChemModel extends ChemObject implements Serializable, IChemModel, IChemObjectListener, Cloneable {
 
-	/**
+    /**
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = -5213425310451366185L;
-
-	/**
-	 *  A MoleculeSet.
-	 */
-	protected IAtomContainerSet setOfMolecules = null;
-
-	/**
-	 *  A ReactionSet.
-	 */
-	protected IReactionSet setOfReactions = null;
-
-	/**
-	 *  A RingSet.
-	 */
-	protected IRingSet ringSet = null;
+     */
+    private static final long   serialVersionUID = -5213425310451366185L;
 
     /**
-	 *  A Crystal.
-	 */
-     protected ICrystal crystal = null;
+     *  A MoleculeSet.
+     */
+    protected IAtomContainerSet setOfMolecules   = null;
 
-	/**
-	 *  Constructs an new ChemModel with a null setOfMolecules.
-	 */
-	public ChemModel() {}
+    /**
+     *  A ReactionSet.
+     */
+    protected IReactionSet      setOfReactions   = null;
 
-	/**
-	 * Returns the MoleculeSet of this ChemModel.
-	 *
-	 * @return   The MoleculeSet of this ChemModel
+    /**
+     *  A RingSet.
+     */
+    protected IRingSet          ringSet          = null;
+
+    /**
+     *  A Crystal.
+     */
+    protected ICrystal          crystal          = null;
+
+    /**
+     *  Constructs an new ChemModel with a null setOfMolecules.
+     */
+    public ChemModel() {}
+
+    /**
+     * Returns the MoleculeSet of this ChemModel.
+     *
+     * @return   The MoleculeSet of this ChemModel
      *
      * @see      #setMoleculeSet
-	 */
-	public IAtomContainerSet getMoleculeSet()
-	{
-		return this.setOfMolecules;
-	}
+     */
+    public IAtomContainerSet getMoleculeSet() {
+        return this.setOfMolecules;
+    }
 
-
-	/**
-	 * Sets the MoleculeSet of this ChemModel.
-	 *
-	 * @param   setOfMolecules  the content of this model
+    /**
+     * Sets the MoleculeSet of this ChemModel.
+     *
+     * @param   setOfMolecules  the content of this model
      *
      * @see      #getMoleculeSet
-	 */
-	public void setMoleculeSet(IAtomContainerSet setOfMolecules)
-	{
-	    if (this.setOfMolecules != null)
-	        this.setOfMolecules.removeListener(this);
-		this.setOfMolecules = setOfMolecules;
-		if (this.setOfMolecules != null)
-		    this.setOfMolecules.addListener(this);
-		notifyChanged();
-	}
+     */
+    public void setMoleculeSet(IAtomContainerSet setOfMolecules) {
+        if (this.setOfMolecules != null) this.setOfMolecules.removeListener(this);
+        this.setOfMolecules = setOfMolecules;
+        if (this.setOfMolecules != null) this.setOfMolecules.addListener(this);
+        notifyChanged();
+    }
 
-
-
-	/**
-	 * Returns the RingSet of this ChemModel.
-	 *
-	 * @return the ringset of this model
+    /**
+     * Returns the RingSet of this ChemModel.
+     *
+     * @return the ringset of this model
      *
      * @see      #setRingSet
-	 */
-	public IRingSet getRingSet() {
-		return this.ringSet;
-	}
+     */
+    public IRingSet getRingSet() {
+        return this.ringSet;
+    }
 
-
-	/**
-	 * Sets the RingSet of this ChemModel.
-	 *
-	 * @param   ringSet         the content of this model
+    /**
+     * Sets the RingSet of this ChemModel.
+     *
+     * @param   ringSet         the content of this model
      *
      * @see      #getRingSet
-	 */
-	public void setRingSet(IRingSet ringSet)
-	{
-	    if (this.ringSet != null)
-	        this.ringSet.removeListener(this);
-		this.ringSet = ringSet;
-		if (this.ringSet != null)
-		    this.ringSet.addListener(this);
-		notifyChanged();
-	}
+     */
+    public void setRingSet(IRingSet ringSet) {
+        if (this.ringSet != null) this.ringSet.removeListener(this);
+        this.ringSet = ringSet;
+        if (this.ringSet != null) this.ringSet.addListener(this);
+        notifyChanged();
+    }
 
     /**
      * Gets the Crystal contained in this ChemModel.
@@ -156,11 +144,9 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * @see      #getCrystal
      */
     public void setCrystal(ICrystal crystal) {
-        if (this.crystal != null)
-            this.crystal.removeListener(this);
+        if (this.crystal != null) this.crystal.removeListener(this);
         this.crystal = crystal;
-        if (this.crystal != null)
-            this.crystal.addListener(this);
+        if (this.crystal != null) this.crystal.addListener(this);
         notifyChanged();
     }
 
@@ -183,11 +169,9 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
      * @see       #getReactionSet
      */
     public void setReactionSet(IReactionSet sor) {
-        if (this.setOfReactions != null)
-            this.setOfReactions.removeListener(this);
+        if (this.setOfReactions != null) this.setOfReactions.removeListener(this);
         this.setOfReactions = sor;
-        if (this.setOfReactions != null)
-            this.setOfReactions.addListener(this);
+        if (this.setOfReactions != null) this.setOfReactions.addListener(this);
         notifyChanged();
     }
 
@@ -217,64 +201,57 @@ public class ChemModel extends ChemObject implements Serializable, IChemModel, I
         return buffer.toString();
     }
 
-	/**
-	 * Clones this <code>ChemModel</code> and its content.
-	 *
-	 * @return  The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		ChemModel clone = (ChemModel)super.clone();
+    /**
+     * Clones this <code>ChemModel</code> and its content.
+     *
+     * @return  The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException {
+        ChemModel clone = (ChemModel) super.clone();
         // clone the content
         if (setOfMolecules != null) {
-            clone.setOfMolecules = (IAtomContainerSet)setOfMolecules.clone();
+            clone.setOfMolecules = (IAtomContainerSet) setOfMolecules.clone();
         } else {
             clone.setOfMolecules = null;
         }
         if (setOfReactions != null) {
-            clone.setOfReactions = (IReactionSet)((ReactionSet)setOfReactions).clone();
+            clone.setOfReactions = (IReactionSet) ((ReactionSet) setOfReactions).clone();
         } else {
             clone.setOfReactions = null;
         }
         if (crystal != null) {
-            clone.crystal = (Crystal)((Crystal)crystal).clone();
+            clone.crystal = (Crystal) ((Crystal) crystal).clone();
         } else {
             clone.crystal = null;
         }
         if (ringSet != null) {
-            clone.ringSet = (RingSet)((RingSet)ringSet).clone();
+            clone.ringSet = (RingSet) ((RingSet) ringSet).clone();
         } else {
             clone.ringSet = null;
         }
-		return clone;
-	}
+        return clone;
+    }
 
-	/**
-	 *  Called by objects to which this object has
-	 *  registered as a listener.
-	 *
-	 *@param  event  A change event pointing to the source of the change
-	 */
-	public void stateChanged(IChemObjectChangeEvent event)
-	{
-		notifyChanged(event);
-	}
+    /**
+     *  Called by objects to which this object has
+     *  registered as a listener.
+     *
+     *@param  event  A change event pointing to the source of the change
+     */
+    public void stateChanged(IChemObjectChangeEvent event) {
+        notifyChanged(event);
+    }
 
     /**
      * @inheritDoc
      */
     @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
     @Override
-    public boolean isEmpty()
-	{
-    	if (setOfMolecules != null && !setOfMolecules.isEmpty())
-    		return false;
-    	if (setOfReactions != null && !setOfReactions.isEmpty())
-    		return false;
-    	if (ringSet != null && !ringSet.isEmpty())
-    		return false;
-        if (crystal != null && !crystal.isEmpty())
-    		return false;
-		return true;
-	}
+    public boolean isEmpty() {
+        if (setOfMolecules != null && !setOfMolecules.isEmpty()) return false;
+        if (setOfReactions != null && !setOfReactions.isEmpty()) return false;
+        if (ringSet != null && !ringSet.isEmpty()) return false;
+        if (crystal != null && !crystal.isEmpty()) return false;
+        return true;
+    }
 }
-

@@ -161,7 +161,7 @@ public final class Mappings implements Iterable<int[]> {
     private final Iterable<int[]> iterable;
 
     /** Query and target structures. */
-    private IAtomContainer query, target;
+    private IAtomContainer        query, target;
 
     /**
      * Create a fluent mappings instance for the provided query / target and an
@@ -172,8 +172,7 @@ public final class Mappings implements Iterable<int[]> {
      * @param iterable iterable of permutation
      * @see Pattern
      */
-    Mappings(IAtomContainer query, IAtomContainer target,
-             Iterable<int[]> iterable) {
+    Mappings(IAtomContainer query, IAtomContainer target, Iterable<int[]> iterable) {
         this.query = query;
         this.target = target;
         this.iterable = iterable;
@@ -204,8 +203,7 @@ public final class Mappings implements Iterable<int[]> {
      */
     @TestMethod("filter")
     public Mappings filter(final Predicate<int[]> predicate) {
-        return new Mappings(query, target,
-                            Iterables.filter(iterable, predicate));
+        return new Mappings(query, target, Iterables.filter(iterable, predicate));
     }
 
     /**
@@ -266,8 +264,7 @@ public final class Mappings implements Iterable<int[]> {
     @TestMethod("stereochemistry")
     public Mappings stereochemistry() {
         // query structures currently have special requirements (i.e. SMARTS)
-        if (query instanceof IQueryAtomContainer)
-            return this;
+        if (query instanceof IQueryAtomContainer) return this;
         return filter(new StereoMatch(query, target));
     }
 
@@ -283,13 +280,13 @@ public final class Mappings implements Iterable<int[]> {
     public Mappings uniqueAtoms() {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
-        return new Mappings(query, target,
-                            new Iterable<int[]>() {
-                                @Override public Iterator<int[]> iterator() {
-                                    return Iterators.filter(iterable.iterator(),
-                                                            new UniqueAtomMatches());
-                                }
-                            });
+        return new Mappings(query, target, new Iterable<int[]>() {
+
+            @Override
+            public Iterator<int[]> iterator() {
+                return Iterators.filter(iterable.iterator(), new UniqueAtomMatches());
+            }
+        });
     }
 
     /**
@@ -304,13 +301,13 @@ public final class Mappings implements Iterable<int[]> {
         // we need the unique predicate to be reset for each new iterator -
         // otherwise multiple iterations are always filtered (seen before)
         final int[][] g = GraphUtil.toAdjList(query);
-        return new Mappings(query, target,
-                            new Iterable<int[]>() {
-                                @Override public Iterator<int[]> iterator() {
-                                    return Iterators.filter(iterable.iterator(),
-                                                            new UniqueBondMatches(g));
-                                }
-                            });
+        return new Mappings(query, target, new Iterable<int[]>() {
+
+            @Override
+            public Iterator<int[]> iterator() {
+                return Iterators.filter(iterable.iterator(), new UniqueBondMatches(g));
+            }
+        });
     }
 
     /**
@@ -465,7 +462,8 @@ public final class Mappings implements Iterable<int[]> {
 
     /** @inheritDoc */
     @TestMethod("iterator")
-    @Override public Iterator<int[]> iterator() {
+    @Override
+    public Iterator<int[]> iterator() {
         return iterable.iterator();
     }
 
@@ -487,7 +485,8 @@ public final class Mappings implements Iterable<int[]> {
         }
 
         /** @inheritDoc */
-        @Override public Map<IAtom, IAtom> apply(int[] mapping) {
+        @Override
+        public Map<IAtom, IAtom> apply(int[] mapping) {
             ImmutableMap.Builder<IAtom, IAtom> map = ImmutableMap.builder();
             for (int i = 0; i < mapping.length; i++)
                 map.put(query.getAtom(i), target.getAtom(mapping[i]));
@@ -518,13 +517,13 @@ public final class Mappings implements Iterable<int[]> {
         }
 
         /** @inheritDoc */
-        @Override public Map<IBond, IBond> apply(int[] mapping) {
+        @Override
+        public Map<IBond, IBond> apply(int[] mapping) {
             ImmutableMap.Builder<IBond, IBond> map = ImmutableMap.builder();
             for (int u = 0; u < g1.length; u++) {
                 for (int v : g1[u]) {
                     if (v > u) {
-                        map.put(bonds1.get(u, v),
-                                bonds2.get(mapping[u], mapping[v]));
+                        map.put(bonds1.get(u, v), bonds2.get(mapping[u], mapping[v]));
                     }
                 }
             }

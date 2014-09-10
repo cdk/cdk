@@ -31,11 +31,8 @@ import org.openscience.cdk.coverage.AtomtypeCoverageTest;
  *
  * @cdk.module  test-atomtype
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    AtomtypeCoverageTest.class,
-    OWLAtomTypeMappingHandlerTest.class,
-    OWLAtomTypeMappingReaderTest.class,
-    SybylAtomTypeMatcherTest.class
-})
-public class MatomtypeTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {AtomtypeCoverageTest.class, OWLAtomTypeMappingHandlerTest.class,
+        OWLAtomTypeMappingReaderTest.class, SybylAtomTypeMatcherTest.class})
+public class MatomtypeTests {
+}

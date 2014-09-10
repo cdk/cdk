@@ -47,10 +47,10 @@ import java.util.ArrayList;
  * @cdk.module     reaction
  * @cdk.githash
  */
-@TestClass(value="org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest")
-public class HeterolyticCleavageMechanism implements IReactionMechanism{
+@TestClass(value = "org.openscience.cdk.reaction.mechanism.HeterolyticCleavageMechanismTest")
+public class HeterolyticCleavageMechanism implements IReactionMechanism {
 
-	/**
+    /**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -62,73 +62,76 @@ public class HeterolyticCleavageMechanism implements IReactionMechanism{
      * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
      * @return            The Reaction mechanism
      *
-	 */
-    @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
-	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(), CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
-		if (atomContainerSet.getAtomContainerCount() != 1) {
-			throw new CDKException("TautomerizationMechanism only expects one IMolecule");
-		}
-		if (atomList.size() != 2) {
-			throw new CDKException("HeterolyticCleavageMechanism expects two atoms in the ArrayList");
-		}
-		if (bondList.size() != 1) {
-			throw new CDKException("HeterolyticCleavageMechanism only expect one bond in the ArrayList");
-		}
-		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
-		IAtomContainer reactantCloned;
-		try {
-			reactantCloned = (IAtomContainer) molecule.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
-		IAtom atom1 = atomList.get(0);
-		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
-		IAtom atom2 = atomList.get(1);
-		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
-		IBond bond1 = bondList.get(0);
-		int posBond1 = molecule.getBondNumber(bond1);
+     */
+    @TestMethod(value = "testInitiate_IAtomContainerSet_ArrayList_ArrayList")
+    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+            throws CDKException {
+        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder(),
+                CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+        if (atomContainerSet.getAtomContainerCount() != 1) {
+            throw new CDKException("TautomerizationMechanism only expects one IMolecule");
+        }
+        if (atomList.size() != 2) {
+            throw new CDKException("HeterolyticCleavageMechanism expects two atoms in the ArrayList");
+        }
+        if (bondList.size() != 1) {
+            throw new CDKException("HeterolyticCleavageMechanism only expect one bond in the ArrayList");
+        }
+        IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
+        IAtomContainer reactantCloned;
+        try {
+            reactantCloned = (IAtomContainer) molecule.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Could not clone IMolecule!", e);
+        }
+        IAtom atom1 = atomList.get(0);
+        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom2 = atomList.get(1);
+        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IBond bond1 = bondList.get(0);
+        int posBond1 = molecule.getBondNumber(bond1);
 
-		if(bond1.getOrder() == IBond.Order.SINGLE)
-			reactantCloned.removeBond(reactantCloned.getBond(posBond1));
-		else
-        	BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
+        if (bond1.getOrder() == IBond.Order.SINGLE)
+            reactantCloned.removeBond(reactantCloned.getBond(posBond1));
+        else
+            BondManipulator.decreaseBondOrder(reactantCloned.getBond(posBond1));
 
-		int charge = atom1C.getFormalCharge();
-		atom1C.setFormalCharge(charge+1);
-		// check if resulting atom type is reasonable
-		atom1C.setHybridization(null);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
-		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
-		if (type == null || type.getAtomTypeName().equals("X")) return null;
+        int charge = atom1C.getFormalCharge();
+        atom1C.setFormalCharge(charge + 1);
+        // check if resulting atom type is reasonable
+        atom1C.setHybridization(null);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom1C);
+        if (type == null || type.getAtomTypeName().equals("X")) return null;
 
-		charge = atom2C.getFormalCharge();
-		atom2C.setFormalCharge(charge-1);
-		reactantCloned.addLonePair(atom1C.getBuilder().newInstance(ILonePair.class, atom2C));
-		// check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
-		atom2C.setHybridization(null);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
-		type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
-		if (type == null || type.getAtomTypeName().equals("X")) return null;
+        charge = atom2C.getFormalCharge();
+        atom2C.setFormalCharge(charge - 1);
+        reactantCloned.addLonePair(atom1C.getBuilder().newInstance(ILonePair.class, atom2C));
+        // check if resulting atom type is reasonable: an acceptor atom cannot be charged positive*/
+        atom2C.setHybridization(null);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
+        if (type == null || type.getAtomTypeName().equals("X")) return null;
 
-		IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
-		reaction.addReactant(molecule);
+        IReaction reaction = atom1C.getBuilder().newInstance(IReaction.class);
+        reaction.addReactant(molecule);
 
-		/* mapping */
-		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
-			reaction.addMapping(mapping);
-	    }
-		if(bond1.getOrder() != IBond.Order.SINGLE) {
-        	reaction.addProduct(reactantCloned);
-        } else{
+        /* mapping */
+        for (IAtom atom : molecule.atoms()) {
+            IMapping mapping = atom1C.getBuilder().newInstance(IMapping.class, atom,
+                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+            reaction.addMapping(mapping);
+        }
+        if (bond1.getOrder() != IBond.Order.SINGLE) {
+            reaction.addProduct(reactantCloned);
+        } else {
             IAtomContainerSet moleculeSetP = ConnectivityChecker.partitionIntoMolecules(reactantCloned);
-			for(int z = 0; z < moleculeSetP.getAtomContainerCount() ; z++){
-				reaction.addProduct((IAtomContainer)moleculeSetP.getAtomContainer(z));
-			}
+            for (int z = 0; z < moleculeSetP.getAtomContainerCount(); z++) {
+                reaction.addProduct((IAtomContainer) moleculeSetP.getAtomContainer(z));
+            }
         }
 
-		return reaction;
-	}
+        return reaction;
+    }
 
 }

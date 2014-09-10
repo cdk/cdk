@@ -31,4 +31,3 @@ package org.openscience.cdk.graph.matrix;
 public interface IGraphMatrix {
 
 }
-

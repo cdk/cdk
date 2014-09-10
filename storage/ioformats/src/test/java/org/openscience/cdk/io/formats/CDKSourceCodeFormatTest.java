@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class CDKSourceCodeFormatTest extends ChemFormatTest {
 
     public CDKSourceCodeFormatTest() {
-        super.setChemFormat((IChemFormat)CDKSourceCodeFormat.getInstance());
+        super.setChemFormat((IChemFormat) CDKSourceCodeFormat.getInstance());
     }
 
 }

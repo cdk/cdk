@@ -30,152 +30,148 @@ import java.lang.reflect.Constructor;
  * @cdk.keyword SMARTS AST
  */
 class SimpleNode implements Node, Cloneable {
-	protected Node parent;
 
-	protected Node[] children;
+    protected Node         parent;
 
-	protected int id;
+    protected Node[]       children;
 
-	protected SMARTSParser parser;
+    protected int          id;
 
-	public SimpleNode(int i) {
-		id = i;
-	}
+    protected SMARTSParser parser;
 
-	public SimpleNode(SMARTSParser p, int i) {
-		this(i);
-		parser = p;
-	}
+    public SimpleNode(int i) {
+        id = i;
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#clone()
-	 */
-	public Object clone() {
-		Constructor constructor = null;
-		Node clone = null;
-		try {
-			constructor = this.getClass().getConstructor(
-					new Class[] { SMARTSParser.class, Integer.TYPE });
-			clone = (Node) constructor.newInstance(new Object[] { parser,
-					Integer.valueOf(id) });
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+    public SimpleNode(SMARTSParser p, int i) {
+        this(i);
+        parser = p;
+    }
 
-		clone.jjtSetParent(parent);
-		if (this.jjtGetNumChildren() > 0) {
-			for (int i = 0; i < children.length; i++) {
-				clone.jjtAddChild((Node) ((SimpleNode) children[i]).clone(), i);
-			}
-		}
-		return clone;
-	}
+    /*
+     * (non-Javadoc)
+     * @see java.lang.Object#clone()
+     */
+    public Object clone() {
+        Constructor constructor = null;
+        Node clone = null;
+        try {
+            constructor = this.getClass().getConstructor(new Class[]{SMARTSParser.class, Integer.TYPE});
+            clone = (Node) constructor.newInstance(new Object[]{parser, Integer.valueOf(id)});
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
-	public void jjtOpen() {
-	}
+        clone.jjtSetParent(parent);
+        if (this.jjtGetNumChildren() > 0) {
+            for (int i = 0; i < children.length; i++) {
+                clone.jjtAddChild((Node) ((SimpleNode) children[i]).clone(), i);
+            }
+        }
+        return clone;
+    }
 
-	public void jjtClose() {
-	}
+    public void jjtOpen() {}
 
-	public void jjtSetParent(Node n) {
-		parent = n;
-	}
+    public void jjtClose() {}
 
-	public Node jjtGetParent() {
-		return parent;
-	}
+    public void jjtSetParent(Node n) {
+        parent = n;
+    }
 
-	public void jjtAddChild(Node n, int i) {
-		if (children == null) {
-			children = new Node[i + 1];
-		} else if (i >= children.length) {
-			Node c[] = new Node[i + 1];
-			System.arraycopy(children, 0, c, 0, children.length);
-			children = c;
-		}
-		children[i] = n;
-	}
+    public Node jjtGetParent() {
+        return parent;
+    }
 
+    public void jjtAddChild(Node n, int i) {
+        if (children == null) {
+            children = new Node[i + 1];
+        } else if (i >= children.length) {
+            Node c[] = new Node[i + 1];
+            System.arraycopy(children, 0, c, 0, children.length);
+            children = c;
+        }
+        children[i] = n;
+    }
 
+    public void jjtRemoveChild(int i) {
+        if (i >= children.length) return;
+        Node[] c = new Node[children.length - 1];
+        System.arraycopy(children, 0, c, 0, i);
+        if (i < c.length) {
+            System.arraycopy(children, i + 1, c, i, c.length - i);
+        }
+        children = c;
+    }
 
-	public void jjtRemoveChild(int i) {
-		if (i >= children.length) return;
-		Node[] c = new Node[children.length - 1];
-		System.arraycopy( children, 0, c, 0, i );
-		if (i < c.length) {
-			System.arraycopy( children, i+1, c, i, c.length - i );
-		}
-		children = c;
-	}
+    public Node jjtGetChild(int i) {
+        return children[i];
+    }
 
-	public Node jjtGetChild(int i) {
-		return children[i];
-	}
+    public int jjtGetNumChildren() {
+        return (children == null) ? 0 : children.length;
+    }
 
-	public int jjtGetNumChildren() {
-		return (children == null) ? 0 : children.length;
-	}
+    /** Accept the visitor. * */
+    public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
 
-	/** Accept the visitor. * */
-	public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
-		return visitor.visit(this, data);
-	}
+    /** Accept the visitor. * */
+    public Object childrenAccept(SMARTSParserVisitor visitor, Object data) {
+        if (children != null) {
+            for (int i = 0; i < children.length; ++i) {
+                children[i].jjtAccept(visitor, data);
+            }
+        }
+        return data;
+    }
 
-	/** Accept the visitor. * */
-	public Object childrenAccept(SMARTSParserVisitor visitor, Object data) {
-		if (children != null) {
-			for (int i = 0; i < children.length; ++i) {
-				children[i].jjtAccept(visitor, data);
-			}
-		}
-		return data;
-	}
+    /*
+     * You can override these two methods in subclasses of SimpleNode to
+     * customize the way the node appears when the tree is dumped. If your
+     * output uses more than one line you should override toString(String),
+     * otherwise overriding toString() is probably all you need to do.
+     */
 
-	/*
-	 * You can override these two methods in subclasses of SimpleNode to
-	 * customize the way the node appears when the tree is dumped. If your
-	 * output uses more than one line you should override toString(String),
-	 * otherwise overriding toString() is probably all you need to do.
-	 */
+    public String toString() {
+        return SMARTSParserTreeConstants.jjtNodeName[id];
+    }
 
-	public String toString() {
-		return SMARTSParserTreeConstants.jjtNodeName[id];
-	}
+    public String toString(String prefix) {
+        return prefix + toString();
+    }
 
-	public String toString(String prefix) {
-		return prefix + toString();
-	}
+    /*
+     * Override this method if you want to customize how the node dumps out its
+     * children.
+     */
 
-	/*
-	 * Override this method if you want to customize how the node dumps out its
-	 * children.
-	 */
+    public void dump(String prefix) {
+        System.out.println(toString(prefix));
+        if (children != null) {
+            for (int i = 0; i < children.length; ++i) {
+                SimpleNode n = (SimpleNode) children[i];
+                if (n != null) {
+                    n.dump(prefix + " ");
+                }
+            }
+        }
+    }
 
-	public void dump(String prefix) {
-		System.out.println(toString(prefix));
-		if (children != null) {
-			for (int i = 0; i < children.length; ++i) {
-				SimpleNode n = (SimpleNode) children[i];
-				if (n != null) {
-					n.dump(prefix + " ");
-				}
-			}
-		}
-	}
+    public int getId() {
+        return id;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public SMARTSParser getParser() {
+        return parser;
+    }
 
-	public SMARTSParser getParser() {
-		return parser;
-	}
-
-	public void setParser(SMARTSParser parser) {
-		this.parser = parser;
-	}
+    public void setParser(SMARTSParser parser) {
+        this.parser = parser;
+    }
 }

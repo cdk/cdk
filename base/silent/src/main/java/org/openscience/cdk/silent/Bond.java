@@ -53,6 +53,7 @@ import org.openscience.cdk.interfaces.IBond;
  * @cdk.keyword electron
  */
 public class Bond extends ElectronContainer implements IBond, Serializable, Cloneable {
+
     /**
      * Determines if a de-serialized object is compatible with this class.
      * <p/>
@@ -66,22 +67,22 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     /**
      * The bond order of this bond.
      */
-    protected IBond.Order order = (Order) CDKConstants.UNSET;
+    protected IBond.Order     order            = (Order) CDKConstants.UNSET;
 
     /**
      * Number of atoms contained by this object.
      */
-    protected int atomCount = 0;
+    protected int             atomCount        = 0;
 
     /**
      * A list of atoms participating in this bond.
      */
-    protected IAtom[] atoms = null;
+    protected IAtom[]         atoms            = null;
 
     /**
      * A descriptor the stereochemical orientation of this bond.
      */
-    protected IBond.Stereo stereo;
+    protected IBond.Stereo    stereo;
 
     /**
      * Constructs an empty bond.
@@ -90,7 +91,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         this(null, null, null, IBond.Stereo.NONE);
         atomCount = 0;
     }
-
 
     /**
      * Constructs a bond with a single bond order..
@@ -101,7 +101,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     public Bond(IAtom atom1, IAtom atom2) {
         this(atom1, atom2, IBond.Order.SINGLE, IBond.Stereo.NONE);
     }
-
 
     /**
      * Constructs a bond with a given order.
@@ -138,7 +137,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         this.order = order;
     }
 
-
     /**
      * Constructs a bond with a given order and stereo orientation from an array
      * of atoms.
@@ -157,7 +155,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         this.atomCount = 2;
     }
 
-
     /**
      * Returns the Iterator to atoms making up this bond.
      * Iterator.remove() is not implemented.
@@ -167,9 +164,10 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      */
     public Iterable<IAtom> atoms() {
         return new Iterable<IAtom>() {
-        	public Iterator<IAtom> iterator() {
-        		return new AtomsIterator();
-        	}
+
+            public Iterator<IAtom> iterator() {
+                return new AtomsIterator();
+            }
         };
     }
 
@@ -189,8 +187,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             return atoms[pointer - 1];
         }
 
-        public void remove() {
-        }
+        public void remove() {}
 
     }
 
@@ -205,7 +202,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         atomCount = atoms.length;
     }
 
-
     /**
      * Returns the number of Atoms in this Bond.
      *
@@ -215,7 +211,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return atomCount;
     }
 
-
     /**
      * Returns an Atom from this bond.
      *
@@ -224,10 +219,11 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
      * @see #setAtom
      */
     public IAtom getAtom(int position) {
-        if (atoms == null) return null;
-        else return atoms[position];
+        if (atoms == null)
+            return null;
+        else
+            return atoms[position];
     }
-
 
     /**
      * Returns the atom connected to the given atom.
@@ -282,7 +278,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return conAtoms.toArray(new IAtom[]{});
     }
 
-
     /**
      * Returns true if the given atom participates in this bond.
      *
@@ -297,7 +292,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return false;
     }
 
-
     /**
      * Sets an Atom in this bond.
      *
@@ -311,7 +305,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         atoms[position] = atom;
     }
 
-
     /**
      * Returns the bond order of this bond.
      *
@@ -324,7 +317,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return this.order;
     }
 
-
     /**
      * Sets the bond order of this bond.
      *
@@ -336,26 +328,25 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     public void setOrder(Order order) {
         this.order = order;
         if (order != null) {
-        	switch (order) {
-        	case SINGLE:
-        		this.electronCount = 2;
-        		break;
-        	case DOUBLE:
-        		this.electronCount = 4;
-        		break;
-        	case TRIPLE:
-        		this.electronCount = 6;
-        		break;
-        	case QUADRUPLE:
-        		this.electronCount = 8;
-        		break;
-        	default:
-        		this.electronCount = 0;
-        		break;
-        	}
+            switch (order) {
+                case SINGLE:
+                    this.electronCount = 2;
+                    break;
+                case DOUBLE:
+                    this.electronCount = 4;
+                    break;
+                case TRIPLE:
+                    this.electronCount = 6;
+                    break;
+                case QUADRUPLE:
+                    this.electronCount = 8;
+                    break;
+                default:
+                    this.electronCount = 0;
+                    break;
+            }
         }
     }
-
 
     /**
      * Returns the stereo descriptor for this bond.
@@ -368,7 +359,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return this.stereo;
     }
 
-
     /**
      * Sets the stereo descriptor for this bond.
      *
@@ -379,7 +369,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     public void setStereo(IBond.Stereo stereo) {
         this.stereo = stereo;
     }
-
 
     /**
      * Returns the geometric 2D center of the bond.
@@ -394,10 +383,8 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             yOfCenter += atom.getPoint2d().y;
         }
 
-        return new Point2d(xOfCenter / ((double) getAtomCount()),
-                yOfCenter / ((double) getAtomCount()));
+        return new Point2d(xOfCenter / ((double) getAtomCount()), yOfCenter / ((double) getAtomCount()));
     }
-
 
     /**
      * Returns the geometric 3D center of the bond.
@@ -414,9 +401,7 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
             zOfCenter += atom.getPoint3d().z;
         }
 
-        return new Point3d(xOfCenter / getAtomCount(),
-                yOfCenter / getAtomCount(),
-                zOfCenter / getAtomCount());
+        return new Point3d(xOfCenter / getAtomCount(), yOfCenter / getAtomCount(), zOfCenter / getAtomCount());
     }
 
     /**
@@ -443,7 +428,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         return false;
     }
 
-
     /**
      * Checks whether a bond is connected to another one.
      * This can only be true if the bonds have an Atom in common.
@@ -457,7 +441,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         }
         return false;
     }
-
 
     /**
      * Clones this bond object, including clones of the atoms between which the
@@ -478,7 +461,6 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
         }
         return clone;
     }
-
 
     /**
      * Returns a one line string representation of this Container. This method is
@@ -505,4 +487,3 @@ public class Bond extends ElectronContainer implements IBond, Serializable, Clon
     }
 
 }
-

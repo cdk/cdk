@@ -39,18 +39,21 @@ public class AnyAtom extends SMARTSAtom {
         super(builder);
     }
 
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
         return true;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		return "AnyAtom()";
+        return "AnyAtom()";
     }
 }
-

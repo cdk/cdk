@@ -56,14 +56,14 @@ import java.util.Iterator;
  * @cdk.bug     1846421
  */
 public class NumericalSurface {
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(NumericalSurface.class);
-    double solvent_radius = 1.4;
-    int tesslevel = 4;
-    IAtom[] atoms;
-    ArrayList[] surf_points;
-    double[] areas;
-    double[] volumes;
+
+    private static ILoggingTool logger         = LoggingToolFactory.createLoggingTool(NumericalSurface.class);
+    double                      solvent_radius = 1.4;
+    int                         tesslevel      = 4;
+    IAtom[]                     atoms;
+    ArrayList[]                 surf_points;
+    double[]                    areas;
+    double[]                    volumes;
 
     /**
      * Constructor to initialize the surface calculation with default values.
@@ -76,6 +76,7 @@ public class NumericalSurface {
     public NumericalSurface(IAtomContainer atomContainer) {
         this.atoms = AtomContainerManipulator.getAtomArray(atomContainer);
     }
+
     /**
      * Constructor to initialize the surface calculation with user specified values.
      *
@@ -103,12 +104,12 @@ public class NumericalSurface {
     public void calculateSurface() {
 
         // get r_f and geometric center
-        Point3d cp = new Point3d(0,0,0);
+        Point3d cp = new Point3d(0, 0, 0);
         double max_radius = 0;
         for (int i = 0; i < atoms.length; i++) {
             double vdwr = PeriodicTable.getVdwRadius(atoms[i].getSymbol());
-            if (vdwr+solvent_radius > max_radius)
-                max_radius = PeriodicTable.getVdwRadius(atoms[i].getSymbol())+solvent_radius;
+            if (vdwr + solvent_radius > max_radius)
+                max_radius = PeriodicTable.getVdwRadius(atoms[i].getSymbol()) + solvent_radius;
 
             cp.x = cp.x + atoms[i].getPoint3d().x;
             cp.y = cp.y + atoms[i].getPoint3d().y;
@@ -118,34 +119,28 @@ public class NumericalSurface {
         cp.y = cp.y / atoms.length;
         cp.z = cp.z / atoms.length;
 
-
         // do the tesselation
-        Tessellate tess = new Tessellate("ico",tesslevel);
+        Tessellate tess = new Tessellate("ico", tesslevel);
         tess.doTessellate();
-        logger.info("Got tesselation, number of triangles = "+tess.getNumberOfTriangles());
-
+        logger.info("Got tesselation, number of triangles = " + tess.getNumberOfTriangles());
 
         // get neighbor list
-        NeighborList nbrlist = new NeighborList(atoms, max_radius+solvent_radius);
+        NeighborList nbrlist = new NeighborList(atoms, max_radius + solvent_radius);
         logger.info("Got neighbor list");
 
         /*
-           for (int i = 0; i < atoms.length; i++) {
-           int[] nlist = nbrlist.getNeighbors(i);
-           logger.debug("Atom "+i+": ");
-           for (int j = 0; j < nlist.length; j++)
-           logger.debug(j+" ");
-           logger.debug("");
-           }
-           */
+         * for (int i = 0; i < atoms.length; i++) { int[] nlist =
+         * nbrlist.getNeighbors(i); logger.debug("Atom "+i+": "); for (int j =
+         * 0; j < nlist.length; j++) logger.debug(j+" "); logger.debug(""); }
+         */
 
         // loop over atoms and get surface points
-        this.surf_points = new ArrayList[ atoms.length ];
-        this.areas = new double[ atoms.length ];
-        this.volumes = new double[ atoms.length ];
+        this.surf_points = new ArrayList[atoms.length];
+        this.areas = new double[atoms.length];
+        this.volumes = new double[atoms.length];
 
         for (int i = 0; i < atoms.length; i++) {
-            int point_density = tess.getNumberOfTriangles()*3;
+            int point_density = tess.getNumberOfTriangles() * 3;
             Point3d[][] points = atomicSurfacePoints(nbrlist, i, atoms[i], tess);
             translatePoints(i, points, point_density, atoms[i], cp);
         }
@@ -170,11 +165,11 @@ public class NumericalSurface {
         for (int i = 0; i < this.surf_points.length; i++) {
             ArrayList arl = this.surf_points[i];
             for (Iterator it = arl.iterator(); it.hasNext();) {
-                ret[j] = (Point3d)it.next();
+                ret[j] = (Point3d) it.next();
                 j++;
             }
         }
-        return(ret);
+        return (ret);
     }
 
     /**
@@ -191,9 +186,11 @@ public class NumericalSurface {
         }
         ArrayList arl = this.surf_points[atomIdx];
         Point3d[] ret = new Point3d[arl.size()];
-        for (int i = 0; i < arl.size(); i++) ret[i] = (Point3d)arl.get(i);
-        return(ret);
+        for (int i = 0; i < arl.size(); i++)
+            ret[i] = (Point3d) arl.get(i);
+        return (ret);
     }
+
     /**
      * Get the surface area for the specified atom.
      *
@@ -206,15 +203,16 @@ public class NumericalSurface {
         if (atomIdx >= this.surf_points.length) {
             throw new CDKException("Atom index was out of bounds");
         }
-        return(this.areas[atomIdx]);
+        return (this.areas[atomIdx]);
     }
+
     /**
      * Get an array containing the accessible surface area for each atom.
      *
      * @return An array of double giving the surface areas of all the atoms
      */
     public double[] getAllSurfaceAreas() {
-        return(this.areas);
+        return (this.areas);
     }
 
     /**
@@ -223,17 +221,17 @@ public class NumericalSurface {
      * @return A double containing the total surface area of the AtomContainer for
      * which the surface was calculated for
      */
-    public  double getTotalSurfaceArea() {
+    public double getTotalSurfaceArea() {
         double ta = 0.0;
-        for (int i =0; i < this.areas.length; i++) ta += this.areas[i];
-        return(ta);
+        for (int i = 0; i < this.areas.length; i++)
+            ta += this.areas[i];
+        return (ta);
     }
-
 
     private void translatePoints(int atmIdx, Point3d[][] points, int point_density, IAtom atom, Point3d cp) {
         double total_radius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solvent_radius;
 
-        double area = 4 * Math.PI * (total_radius*total_radius) * points.length / point_density;
+        double area = 4 * Math.PI * (total_radius * total_radius) * points.length / point_density;
 
         double sumx = 0.0;
         double sumy = 0.0;
@@ -244,35 +242,35 @@ public class NumericalSurface {
             sumy += p.y;
             sumz += p.z;
         }
-        double vconst = 4.0/3.0 * Math.PI / (double)point_density;
-        double dotp1 = (atom.getPoint3d().x - cp.x)*sumx +
-            (atom.getPoint3d().y - cp.y)*sumy +
-            (atom.getPoint3d().z - cp.z)*sumz;
-        double volume = vconst*(total_radius*total_radius) *dotp1 +
-            (total_radius*total_radius*total_radius)*points.length;
+        double vconst = 4.0 / 3.0 * Math.PI / (double) point_density;
+        double dotp1 = (atom.getPoint3d().x - cp.x) * sumx + (atom.getPoint3d().y - cp.y) * sumy
+                + (atom.getPoint3d().z - cp.z) * sumz;
+        double volume = vconst * (total_radius * total_radius) * dotp1 + (total_radius * total_radius * total_radius)
+                * points.length;
 
         this.areas[atmIdx] = area;
         this.volumes[atmIdx] = volume;
 
         ArrayList tmp = new ArrayList();
-        for (int i = 0; i < points.length; i++) tmp.add( points[i][0] );
-        this.surf_points[atmIdx] =  tmp;
+        for (int i = 0; i < points.length; i++)
+            tmp.add(points[i][0]);
+        this.surf_points[atmIdx] = tmp;
     }
 
     private Point3d[][] atomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess) {
 
         double total_radius = PeriodicTable.getVdwRadius(atom.getSymbol()) + solvent_radius;
-        double total_radius2 = total_radius*total_radius;
-        double twice_total_radius = 2*total_radius;
+        double total_radius2 = total_radius * total_radius;
+        double twice_total_radius = 2 * total_radius;
 
         int[] nlist = nbrlist.getNeighbors(currAtomIdx);
-        double[][] data = new double[ nlist.length ][4];
+        double[][] data = new double[nlist.length][4];
         for (int i = 0; i < nlist.length; i++) {
             double x12 = atoms[nlist[i]].getPoint3d().x - atom.getPoint3d().x;
             double y12 = atoms[nlist[i]].getPoint3d().y - atom.getPoint3d().y;
             double z12 = atoms[nlist[i]].getPoint3d().z - atom.getPoint3d().z;
 
-            double d2 = x12*x12 + y12*y12 + z12*z12;
+            double d2 = x12 * x12 + y12 * y12 + z12 * z12;
             double tmp = PeriodicTable.getVdwRadius(atoms[nlist[i]].getSymbol()) + solvent_radius;
             tmp = tmp * tmp;
             double thresh = (d2 + total_radius2 - tmp) / twice_total_radius;
@@ -296,28 +294,22 @@ public class NumericalSurface {
             }
             if (buried == false) {
                 Point3d[] tmp = new Point3d[2];
-                tmp[0] =  new Point3d(
-                        total_radius * pt.x + atom.getPoint3d().x,
-                        total_radius * pt.y + atom.getPoint3d().y,
-                        total_radius * pt.z + atom.getPoint3d().z
-                        );
+                tmp[0] = new Point3d(total_radius * pt.x + atom.getPoint3d().x, total_radius * pt.y
+                        + atom.getPoint3d().y, total_radius * pt.z + atom.getPoint3d().z);
                 tmp[1] = pt;
-                points.add( tmp );
+                points.add(tmp);
             }
         }
 
         // the first column contains the transformed points
         // and the second column contains the points from the
         // original unit tesselation
-        Point3d[][] ret = new Point3d[ points.size() ][2];
+        Point3d[][] ret = new Point3d[points.size()][2];
         for (int i = 0; i < points.size(); i++) {
-            Point3d[] tmp = (Point3d[])points.get(i);
+            Point3d[] tmp = (Point3d[]) points.get(i);
             ret[i][0] = tmp[0];
             ret[i][1] = tmp[1];
         }
-        return(ret);
+        return (ret);
     }
 }
-
-
-

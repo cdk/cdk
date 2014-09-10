@@ -43,24 +43,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class XYZReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(XYZReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new XYZReader(), "data/xyz/viagra.xyz");
     }
 
-    @Test public void testAccepts() {
-    	XYZReader reader = new XYZReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        XYZReader reader = new XYZReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    @Test public void testViagra() throws Exception {
+    @Test
+    public void testViagra() throws Exception {
         String filename = "data/xyz/viagra.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -86,12 +88,13 @@ public class XYZReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(0.1795, m.getAtom(0).getPoint3d().z, 0.0001);
     }
 
-    @Test public void testComment() throws Exception {
+    @Test
+    public void testComment() throws Exception {
         String filename = "data/xyz/viagra_withComment.xyz";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         XYZReader reader = new XYZReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);

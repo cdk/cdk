@@ -37,13 +37,16 @@ public interface StereoEncoder {
     /**
      * empty stereo encoder when no stereo can be perceived
      */
-    public static StereoEncoder EMPTY = new StereoEncoder(){
-        @Override public boolean encode(long[] current, long[] next) {
-            return false;
-        }
+    public static StereoEncoder EMPTY = new StereoEncoder() {
 
-        @Override public void reset() {}
-    };
+                                          @Override
+                                          public boolean encode(long[] current, long[] next) {
+                                              return false;
+                                          }
+
+                                          @Override
+                                          public void reset() {}
+                                      };
 
     /**
      * Encode one or more stereo elements based on the current invariants. If

@@ -56,51 +56,46 @@ import java.util.Iterator;
  *
  * @cdk.keyword command line util
  */
-public class GaussiansCalculationTest
-{
-	public GaussiansCalculationTest(String inFile)
-  {
-    try {
-      ISimpleChemObjectReader reader;
-      System.out.println("Loading: " + inFile);
-      if (inFile.endsWith(".xyz"))
-      {
-        reader = new XYZReader(new FileReader(inFile));
-        System.out.println("Expecting XYZ format...");
-      } else if (inFile.endsWith(".cml"))
-      {
-        reader = new CMLReader(new FileInputStream(inFile));
-        System.out.println("Expecting CML format...");
-      } else
-      {
-        reader = new MDLReader(new FileInputStream(inFile), Mode.STRICT);
-        System.out.println("Expecting MDL MolFile format...");
-      }
-      ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+public class GaussiansCalculationTest {
 
-      IChemSequence chemSequence = chemFile.getChemSequence(0);
-      IChemModel chemModel = chemSequence.getChemModel(0);
-      Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
-      while (containers.hasNext()) {
-    	  IAtomContainer atomContainer = containers.next();
-    	  IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
+    public GaussiansCalculationTest(String inFile) {
+        try {
+            ISimpleChemObjectReader reader;
+            System.out.println("Loading: " + inFile);
+            if (inFile.endsWith(".xyz")) {
+                reader = new XYZReader(new FileReader(inFile));
+                System.out.println("Expecting XYZ format...");
+            } else if (inFile.endsWith(".cml")) {
+                reader = new CMLReader(new FileInputStream(inFile));
+                System.out.println("Expecting CML format...");
+            } else {
+                reader = new MDLReader(new FileInputStream(inFile), Mode.STRICT);
+                System.out.println("Expecting MDL MolFile format...");
+            }
+            ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 
-    	  GaussiansBasis basis = new SimpleBasisSet(atoms);
+            IChemSequence chemSequence = chemFile.getChemSequence(0);
+            IChemModel chemModel = chemSequence.getChemModel(0);
+            Iterator<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(chemModel).iterator();
+            while (containers.hasNext()) {
+                IAtomContainer atomContainer = containers.next();
+                IAtom[] atoms = AtomContainerManipulator.getAtomArray(atomContainer);
 
-    	  Orbitals orbitals = new Orbitals(basis);
+                GaussiansBasis basis = new SimpleBasisSet(atoms);
 
-    	  int count_electrons = 0;
-    	  for(int i=0; i<atoms.length; i++)
-    		  count_electrons += atoms[i].getAtomicNumber();
-    	  orbitals.setCountElectrons(count_electrons);
+                Orbitals orbitals = new Orbitals(basis);
 
-    	  ClosedShellJob job = new ClosedShellJob(orbitals);
-    	  orbitals = job.calculate();
-      }
-    } catch(Exception exc)
-    {
-      exc.printStackTrace();
+                int count_electrons = 0;
+                for (int i = 0; i < atoms.length; i++)
+                    count_electrons += atoms[i].getAtomicNumber();
+                orbitals.setCountElectrons(count_electrons);
+
+                ClosedShellJob job = new ClosedShellJob(orbitals);
+                orbitals = job.calculate();
+            }
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
     }
-  }
 
 }

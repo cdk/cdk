@@ -29,20 +29,21 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class SetReactionCenterTest extends CDKTestCase {
 
-	/**
-	 *  Constructor for the SetReactionCenterTest object.
-	 */
-	public SetReactionCenterTest(){
+    /**
+     *  Constructor for the SetReactionCenterTest object.
+     */
+    public SetReactionCenterTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testSetReactionCenter(){
-		SetReactionCenter react = new SetReactionCenter();
-		Assert.assertNotNull(react);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSetReactionCenter() {
+        SetReactionCenter react = new SetReactionCenter();
+        Assert.assertNotNull(react);
+    }
 }

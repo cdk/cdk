@@ -48,7 +48,7 @@ import java.util.List;
 @TestClass("org.openscience.cdk.graph.PathToolsTest")
 public class PathTools {
 
-	/** Boolean with which debugging can be turned on. */
+    /** Boolean with which debugging can be turned on. */
     public final static boolean DEBUG = false;
 
     /**
@@ -70,7 +70,6 @@ public class PathTools {
         }
         return colSum;
     }
-
 
     /**
      * All-Pairs-Shortest-Path computation based on Floyd's
@@ -143,7 +142,6 @@ public class PathTools {
         return computeFloydAPSP(distMatrix);
     }
 
-
     /**
      * Recursivly perfoms a depth first search in a molecular graphs contained in
      * the AtomContainer molecule, starting at the root atom and returning when it
@@ -191,7 +189,6 @@ public class PathTools {
         return false;
     }
 
-
     /**
      * Performs a breadthFirstSearch in an AtomContainer starting with a
      * particular sphere, which usually consists of one start atom. While
@@ -212,7 +209,6 @@ public class PathTools {
         // logger.debug("Staring partitioning with this ac: " + ac);
         breadthFirstSearch(atomContainer, sphere, molecule, -1);
     }
-
 
     /**
      * Returns the atoms which are closest to an atom in an AtomContainer by bonds.
@@ -241,7 +237,6 @@ public class PathTools {
         return (returnValue);
     }
 
-
     /**
      * Performs a breadthFirstSearch in an AtomContainer starting with a
      * particular sphere, which usually consists of one start atom. While
@@ -262,7 +257,8 @@ public class PathTools {
      * @param max
      */
     @TestMethod("testBreadthFirstSearch_IAtomContainer_List_IAtomContainer_int")
-    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule, int max) {
+    public static void breadthFirstSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtomContainer molecule,
+            int max) {
         IAtom nextAtom;
         List<IAtom> newSphere = new ArrayList<IAtom>();
         for (IAtom atom : sphere) {
@@ -273,10 +269,12 @@ public class PathTools {
             // to be copied too
             List<ILonePair> lonePairs = atomContainer.getConnectedLonePairsList(atom);
             //logger.debug("found #ec's: " + lonePairs.length);
-            for (ILonePair lonePair : lonePairs) molecule.addLonePair(lonePair);
+            for (ILonePair lonePair : lonePairs)
+                molecule.addLonePair(lonePair);
 
             List<ISingleElectron> singleElectrons = atomContainer.getConnectedSingleElectronsList(atom);
-            for (ISingleElectron singleElectron : singleElectrons) molecule.addSingleElectron(singleElectron);
+            for (ISingleElectron singleElectron : singleElectrons)
+                molecule.addSingleElectron(singleElectron);
 
             // now look at bonds
             List<IBond> bonds = atomContainer.getConnectedBondsList(atom);
@@ -287,19 +285,17 @@ public class PathTools {
                 }
                 nextAtom = bond.getConnectedAtom(atom);
                 if (!nextAtom.getFlag(CDKConstants.VISITED)) {
-//					logger.debug("wie oft???");
+                    //					logger.debug("wie oft???");
                     newSphere.add(nextAtom);
                     nextAtom.setFlag(CDKConstants.VISITED, true);
                 }
             }
-            if (max > -1 && molecule.getAtomCount() > max)
-                return;
+            if (max > -1 && molecule.getAtomCount() > max) return;
         }
         if (newSphere.size() > 0) {
             breadthFirstSearch(atomContainer, newSphere, molecule, max);
         }
     }
-
 
     /**
      * Performs a breadthFirstTargetSearch in an AtomContainer starting with a
@@ -318,7 +314,8 @@ public class PathTools {
      * @return The shortest path between the starting sphere and the target atom
      */
     @TestMethod("testBreadthFirstTargetSearch_IAtomContainer_List_IAtom_int_int")
-    public static int breadthFirstTargetSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtom target, int pathLength, int cutOff) {
+    public static int breadthFirstTargetSearch(IAtomContainer atomContainer, List<IAtom> sphere, IAtom target,
+            int pathLength, int cutOff) {
         if (pathLength == 0) resetFlags(atomContainer);
         pathLength++;
         if (pathLength > cutOff) {
@@ -477,7 +474,8 @@ public class PathTools {
 
         List<IAtom> Slist = new ArrayList<IAtom>();
         List<Integer> Qlist = new ArrayList<Integer>();
-        for (int i = 0; i < natom; i++) Qlist.add(i);
+        for (int i = 0; i < natom; i++)
+            Qlist.add(i);
 
         while (true) {
             if (Qlist.size() == 0) break;
@@ -538,18 +536,19 @@ public class PathTools {
         return allPaths;
     }
 
-    private static void findPathBetween(List<List<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start, IAtom end, List<IAtom> path) {
+    private static void findPathBetween(List<List<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start,
+            IAtom end, List<IAtom> path) {
         if (start == end) {
             path.add(start);
             allPaths.add(new ArrayList<IAtom>(path));
             path.remove(path.size() - 1);
             return;
         }
-        if (path.contains(start))
-            return;
+        if (path.contains(start)) return;
         path.add(start);
         List<IAtom> nbrs = atomContainer.getConnectedAtomsList(start);
-        for (IAtom nbr : nbrs) findPathBetween(allPaths, atomContainer, nbr, end, path);
+        for (IAtom nbr : nbrs)
+            findPathBetween(allPaths, atomContainer, nbr, end, path);
         path.remove(path.size() - 1);
     }
 
@@ -645,7 +644,8 @@ public class PathTools {
      *                      than the limit.
      */
     @TestMethod("testGetLimitedPathsOfLengthUpto")
-    public static List<List<IAtom>> getLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length, int limit) throws CDKException {
+    public static List<List<IAtom>> getLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length,
+            int limit) throws CDKException {
         List<IAtom> curPath = new ArrayList<IAtom>();
         List<List<IAtom>> paths = new ArrayList<List<IAtom>>();
         List<List<IAtom>> allpaths = new ArrayList<List<IAtom>>();
@@ -666,7 +666,8 @@ public class PathTools {
                 }
             }
             if (allpaths.size() + tmpList.size() > limit)
-                throw new CDKException("Too many paths generate. We're working making this faster but for now try generating paths with a smaller length");
+                throw new CDKException(
+                        "Too many paths generate. We're working making this faster but for now try generating paths with a smaller length");
 
             paths.clear();
             paths.addAll(tmpList);
@@ -675,4 +676,3 @@ public class PathTools {
         return (allpaths);
     }
 }
-

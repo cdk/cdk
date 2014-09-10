@@ -99,10 +99,11 @@ public abstract class BondMatcher {
      * equal.
      */
     private static final class OrderMatcher extends BondMatcher {
+
         /** @inheritDoc */
-        @Override public boolean matches(IBond bond1, IBond bond2) {
-            return bond1.getFlag(ISAROMATIC) && bond2.getFlag(ISAROMATIC) ||
-                    bond1.getOrder() == bond2.getOrder();
+        @Override
+        public boolean matches(IBond bond1, IBond bond2) {
+            return bond1.getFlag(ISAROMATIC) && bond2.getFlag(ISAROMATIC) || bond1.getOrder() == bond2.getOrder();
         }
     }
 
@@ -112,18 +113,21 @@ public abstract class BondMatcher {
      * not match a single or double bond which is part of an aromatic system.
      */
     private static final class StrictOrderMatcher extends BondMatcher {
+
         /** @inheritDoc */
-        @Override public boolean matches(IBond bond1, IBond bond2) {
-            return bond1.getFlag(ISAROMATIC) == bond2.getFlag(ISAROMATIC) &&
-                    (bond1.getOrder() == bond2.getOrder() ||
-                            bond1.getFlag(ISAROMATIC) && bond2.getFlag(ISAROMATIC));
+        @Override
+        public boolean matches(IBond bond1, IBond bond2) {
+            return bond1.getFlag(ISAROMATIC) == bond2.getFlag(ISAROMATIC)
+                    && (bond1.getOrder() == bond2.getOrder() || bond1.getFlag(ISAROMATIC) && bond2.getFlag(ISAROMATIC));
         }
     }
 
     /** All bonds are considered compatible. */
     private static final class AnyMatcher extends BondMatcher {
+
         /** @inheritDoc */
-        @Override public boolean matches(IBond bond1, IBond bond2) {
+        @Override
+        public boolean matches(IBond bond1, IBond bond2) {
             return true;
         }
     }
@@ -133,8 +137,10 @@ public abstract class BondMatcher {
      * matches the second, {@code bond2}.
      */
     private static final class QueryMatcher extends BondMatcher {
+
         /** @inheritDoc */
-        @Override public boolean matches(IBond bond1, IBond bond2) {
+        @Override
+        public boolean matches(IBond bond1, IBond bond2) {
             return ((IQueryBond) bond1).matches(bond2);
         }
     }

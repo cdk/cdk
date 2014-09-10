@@ -33,33 +33,33 @@ package org.openscience.cdk.interfaces;
  */
 public interface IFragmentAtom extends IPseudoAtom {
 
-	/**
-	 * Helper method to indicate that the method should be drawn fully, and not
-	 * just the abbreviated form.
-	 *
-	 * @return true, if it should be considered in expended form
-	 */
-	public boolean isExpanded();
+    /**
+     * Helper method to indicate that the method should be drawn fully, and not
+     * just the abbreviated form.
+     *
+     * @return true, if it should be considered in expended form
+     */
+    public boolean isExpanded();
 
-	/**
-	 * Sets whether this atom is to be fully drawn and not just in the abbreviated form.
-	 *
-	 * @param bool true if the full structure should be drawn
-	 */
-	public void setExpanded(boolean bool);
+    /**
+     * Sets whether this atom is to be fully drawn and not just in the abbreviated form.
+     *
+     * @param bool true if the full structure should be drawn
+     */
+    public void setExpanded(boolean bool);
 
-	/**
-	 * Returns the fully expended form of the IFragmentAtom.
-	 *
-	 * @return the fully expanded form as an IAtomContainer object
-	 */
-	public IAtomContainer getFragment();
+    /**
+     * Returns the fully expended form of the IFragmentAtom.
+     *
+     * @return the fully expanded form as an IAtomContainer object
+     */
+    public IAtomContainer getFragment();
 
-	/**
-	 * Sets the fully expended form of the IFragmentAtom.
-	 *
-	 * @param fragment The fragment
-	 */
-	public void setFragment(IAtomContainer fragment);
+    /**
+     * Sets the fully expended form of the IFragmentAtom.
+     *
+     * @param fragment The fragment
+     */
+    public void setFragment(IAtomContainer fragment);
 
 }

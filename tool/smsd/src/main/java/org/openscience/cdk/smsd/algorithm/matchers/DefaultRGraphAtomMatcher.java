@@ -61,10 +61,10 @@ import org.openscience.cdk.isomorphism.matchers.IQueryAtom;
 public class DefaultRGraphAtomMatcher implements AtomMatcher {
 
     static final long serialVersionUID = -7861469841127327812L;
-    private int maximumNeighbors;
-    private String symbol = null;
-    private IAtom qAtom = null;
-    private boolean shouldMatchBonds = false;
+    private int       maximumNeighbors;
+    private String    symbol           = null;
+    private IAtom     qAtom            = null;
+    private boolean   shouldMatchBonds = false;
 
     /**
      * @return the shouldMatchBonds
@@ -109,7 +109,8 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
      * @param blockedPositions
      * @param shouldMatchBonds bond matching flag
      */
-    public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions, boolean shouldMatchBonds) {
+    public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
+            boolean shouldMatchBonds) {
         this(queryContainer, template, shouldMatchBonds);
         this.maximumNeighbors = countSaturation(queryContainer, template) - blockedPositions;
     }
@@ -162,8 +163,7 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
     }
 
     private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getImplicitHydrogenCount() == null)
-                ? 0 : atom.getImplicitHydrogenCount();
+        return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
     private int countSaturation(IAtomContainer container, IAtom atom) {
@@ -174,4 +174,3 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
         return container.getConnectedAtomsCount(atom);
     }
 }
-

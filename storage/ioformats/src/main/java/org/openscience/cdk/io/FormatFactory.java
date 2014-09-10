@@ -61,7 +61,7 @@ import static org.openscience.cdk.io.formats.IChemFormatMatcher.MatchResult;
 @TestClass("org.openscience.cdk.io.FormatFactoryTest")
 public class FormatFactory {
 
-    private int headerLength;
+    private int                      headerLength;
 
     private List<IChemFormatMatcher> formats = new ArrayList<IChemFormatMatcher>(100);
 
@@ -85,7 +85,7 @@ public class FormatFactory {
     }
 
     private void loadFormats() {
-        for(IChemFormatMatcher format : ServiceLoader.load(IChemFormatMatcher.class)){
+        for (IChemFormatMatcher format : ServiceLoader.load(IChemFormatMatcher.class)) {
             formats.add(format);
         }
     }
@@ -104,8 +104,8 @@ public class FormatFactory {
      * @return {@link List} of {@link IChemFormat}s.
      */
     @TestMethod("testGetFormats")
-    public List<IChemFormatMatcher> getFormats(){
-    	return formats;
+    public List<IChemFormatMatcher> getFormats() {
+        return formats;
     }
 
     /**
@@ -145,7 +145,7 @@ public class FormatFactory {
         BufferedReader buffer = new BufferedReader(new CharArrayReader(header));
 
         /* Search file for a line containing an identifying keyword */
-        List<String>     lines   = Collections.unmodifiableList(CharStreams.readLines(buffer));
+        List<String> lines = Collections.unmodifiableList(CharStreams.readLines(buffer));
         Set<MatchResult> results = new TreeSet<MatchResult>();
 
         for (IChemFormatMatcher format : formats) {
@@ -155,8 +155,7 @@ public class FormatFactory {
         // best result is first element (sorted set)
         if (results.size() > 1) {
             MatchResult best = results.iterator().next();
-            if (best.matched())
-                return best.format();
+            if (best.matched()) return best.format();
         }
 
         buffer = new BufferedReader(new CharArrayReader(header));
@@ -169,11 +168,11 @@ public class FormatFactory {
             if (tokenCount == 1) {
                 Integer.parseInt(tokenizer.nextToken());
                 // if not failed, then it is a XYZ file
-                return (IChemFormat)XYZFormat.getInstance();
+                return (IChemFormat) XYZFormat.getInstance();
             } else if (tokenCount == 2) {
                 Integer.parseInt(tokenizer.nextToken());
                 if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return (IChemFormat)XYZFormat.getInstance();
+                    return (IChemFormat) XYZFormat.getInstance();
                 }
             }
         } catch (NumberFormatException exception) {
@@ -197,12 +196,10 @@ public class FormatFactory {
         input.read(header, 0, this.headerLength);
         input.reset();
 
-        BufferedReader buffer = new BufferedReader(
-            new StringReader(new String(header))
-        );
+        BufferedReader buffer = new BufferedReader(new StringReader(new String(header)));
 
-         /* Search file for a line containing an identifying keyword */
-        List<String>     lines   = Collections.unmodifiableList(CharStreams.readLines(buffer));
+        /* Search file for a line containing an identifying keyword */
+        List<String> lines = Collections.unmodifiableList(CharStreams.readLines(buffer));
         Set<MatchResult> results = new TreeSet<MatchResult>();
 
         for (IChemFormatMatcher format : formats) {
@@ -212,13 +209,10 @@ public class FormatFactory {
         // best result is first element (sorted set)
         if (results.size() > 1) {
             MatchResult best = results.iterator().next();
-            if (best.matched())
-                return best.format();
+            if (best.matched()) return best.format();
         }
 
-        buffer = new BufferedReader(
-            new StringReader(new String(header))
-        );
+        buffer = new BufferedReader(new StringReader(new String(header)));
 
         String line = buffer.readLine();
         // is it a XYZ file?
@@ -228,11 +222,11 @@ public class FormatFactory {
             if (tokenCount == 1) {
                 Integer.parseInt(tokenizer.nextToken());
                 // if not failed, then it is a XYZ file
-                return (IChemFormat)XYZFormat.getInstance();
+                return (IChemFormat) XYZFormat.getInstance();
             } else if (tokenCount == 2) {
                 Integer.parseInt(tokenizer.nextToken());
                 if ("Bohr".equalsIgnoreCase(tokenizer.nextToken())) {
-                    return (IChemFormat)XYZFormat.getInstance();
+                    return (IChemFormat) XYZFormat.getInstance();
                 }
             }
         } catch (NumberFormatException exception) {

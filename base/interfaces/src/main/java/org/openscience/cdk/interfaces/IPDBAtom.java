@@ -30,39 +30,44 @@ package org.openscience.cdk.interfaces;
  * @cdk.keyword pdbpolymer
  */
 public interface IPDBAtom extends IAtom {
+
     /**
      * Get one entire line from the PDB entry file which describe the IPDBAtom.
      * It consists of 80 columns.
      *
      * @return a String with all information
      */
-	public String getRecord();
+    public String getRecord();
 
-	/**
+    /**
      * Set one entire line from the PDB entry file which describe the IPDBAtom.
      * It consists of 80 columns.
-	 *
-	 * @param newRecord A String with all information
-	 */
+     *
+     * @param newRecord A String with all information
+     */
     public void setRecord(String newRecord);
+
     /**
      * get the Temperature factor of this atom.
      *
      * @return the Temperature factor of this atom
      */
     public Double getTempFactor();
+
     /**
      * set the Temperature factor of this atom.
      *
      * @param newTempFactor  the Temperature factor of this atom
      */
     public void setTempFactor(Double newTempFactor);
+
     /**
      * get the Residue name of this atom.
      *
      * @return the Residue name of this atom
      */
     public String getResName();
+
     /**
      * set the Residue name of this atom.
      *
@@ -90,6 +95,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Atom name of this atom
      */
     public String getName();
+
     /**
      * set the Atom name of this atom.
      *
@@ -103,6 +109,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Chain identifier of this atom
      */
     public String getChainID();
+
     /**
      * set the Chain identifier of this atom.
      *
@@ -116,6 +123,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Alternate location indicator of this atom
      */
     public String getAltLoc();
+
     /**
      * set the Alternate location indicator of this atom.
      *
@@ -129,6 +137,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Segment identifier, left-justified of this atom
      */
     public String getSegID();
+
     /**
      * set the Segment identifier, left-justified of this atom.
      *
@@ -142,6 +151,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Atom serial number of this atom
      */
     public Integer getSerial();
+
     /**
      * set the Atom serial number of this atom.
      *
@@ -155,6 +165,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Residue sequence number of this atom
      */
     public String getResSeq();
+
     /**
      * set the Residue sequence number of this atom.
      *
@@ -195,6 +206,7 @@ public interface IPDBAtom extends IAtom {
      * @return the Occupancy of this atom
      */
     public Double getOccupancy();
+
     /**
      * set the Occupancy of this atom.
      *
@@ -202,10 +214,4 @@ public interface IPDBAtom extends IAtom {
      */
     public void setOccupancy(Double newOccupancy);
 
-
 }
-
-
-
-
-

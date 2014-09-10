@@ -34,8 +34,7 @@ public class ChiIndexUtilsTest extends CDKTestCase {
 
     DefaultChemObjectBuilder builder;
 
-    public ChiIndexUtilsTest() {
-    }
+    public ChiIndexUtilsTest() {}
 
     @Before
     public void setup() {
@@ -80,4 +79,3 @@ public class ChiIndexUtilsTest extends CDKTestCase {
     }
 
 }
-

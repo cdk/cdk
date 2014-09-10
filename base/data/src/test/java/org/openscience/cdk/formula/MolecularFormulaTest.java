@@ -38,28 +38,29 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public class MolecularFormulaTest extends AbstractMolecularFormulaTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testMolecularFormula() {
 
         IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
-    	Assert.assertNotNull(mf);
+        Assert.assertNotNull(mf);
     }
 
     @Test
     public void testIsTheSame_IIsotope_IIsotope() throws IOException {
         MolecularFormula mf = new MolecularFormula();
-        IIsotope carb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class,"C");
-        IIsotope h = getBuilder().newInstance(IIsotope.class,"H");
+        IIsotope carb = getBuilder().newInstance(IIsotope.class, "C");
+        IIsotope anotherCarb = getBuilder().newInstance(IIsotope.class, "C");
+        IIsotope h = getBuilder().newInstance(IIsotope.class, "H");
 
         carb.setExactMass(12.0);
         anotherCarb.setExactMass(12.0);

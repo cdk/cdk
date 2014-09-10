@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class NWChemFormatTest extends ChemFormatMatcherTest {
 
     public NWChemFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)NWChemFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) NWChemFormat.getInstance());
     }
 
 }

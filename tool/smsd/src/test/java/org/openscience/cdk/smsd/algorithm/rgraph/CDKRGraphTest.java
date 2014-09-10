@@ -36,5 +36,3 @@ public class CDKRGraphTest extends CDKTestCase {
         Assert.assertNotNull(graph);
     }
 }
-
-

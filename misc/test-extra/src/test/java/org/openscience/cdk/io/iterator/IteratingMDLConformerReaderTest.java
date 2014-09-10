@@ -19,17 +19,15 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class IteratingMDLConformerReaderTest extends CDKTestCase {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingMDLConformerReaderTest.class);
 
     @Test
     public void testSDF() throws Exception {
         String filename = "data/mdl/iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
-            ins, DefaultChemObjectBuilder.getInstance()
-        );
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
+                DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         int[] nconfs = new int[3];
@@ -48,15 +46,13 @@ public class IteratingMDLConformerReaderTest extends CDKTestCase {
         Assert.assertEquals(18, nconfs[2]);
     }
 
-
     @Test(expected = UnsupportedOperationException.class)
     public void testRemove() {
         String filename = "data/mdl/iterconftest.sdf";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
-            ins, DefaultChemObjectBuilder.getInstance()
-        );
+        IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
+                DefaultChemObjectBuilder.getInstance());
 
         reader.hasNext();
         reader.next();

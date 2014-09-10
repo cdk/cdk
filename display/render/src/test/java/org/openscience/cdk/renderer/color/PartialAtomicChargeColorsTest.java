@@ -34,23 +34,24 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class PartialAtomicChargeColorsTest extends CDKTestCase {
 
-	@Test public void testGetAtomColor() {
-		PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
-		Assert.assertNotNull(colors);
-		IAtom hydrogen = new Atom("H"); hydrogen.setAtomicNumber(1);
-		Assert.assertEquals(Color.white, colors.getAtomColor(hydrogen));
-		IAtom helium = new Atom("He"); helium.setAtomicNumber(2);
-		Assert.assertEquals(Color.white, colors.getAtomColor(helium));
-	}
+    @Test
+    public void testGetAtomColor() {
+        PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
+        Assert.assertNotNull(colors);
+        IAtom hydrogen = new Atom("H");
+        hydrogen.setAtomicNumber(1);
+        Assert.assertEquals(Color.white, colors.getAtomColor(hydrogen));
+        IAtom helium = new Atom("He");
+        helium.setAtomicNumber(2);
+        Assert.assertEquals(Color.white, colors.getAtomColor(helium));
+    }
 
-	@Test public void testGetDefaultAtomColor() {
-		PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
+    @Test
+    public void testGetDefaultAtomColor() {
+        PartialAtomicChargeColors colors = new PartialAtomicChargeColors();
 
-		Assert.assertNotNull(colors);
-		IAtom imaginary = new Atom("Ix");
-		Assert.assertEquals(
-			Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE)
-		);
-	}
+        Assert.assertNotNull(colors);
+        IAtom imaginary = new Atom("Ix");
+        Assert.assertEquals(Color.ORANGE, colors.getAtomColor(imaginary, Color.ORANGE));
+    }
 }
-

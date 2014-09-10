@@ -104,7 +104,7 @@ public final class Aromaticity {
     private final ElectronDonation model;
 
     /** The method to find cycles which will be tested for aromaticity. */
-    private final CycleFinder cycles;
+    private final CycleFinder      cycles;
 
     /**
      * Create an aromaticity model using the specified electron donation {@code
@@ -151,9 +151,8 @@ public final class Aromaticity {
      * @see ElectronDonation
      * @see org.openscience.cdk.graph.Cycles
      */
-    public Aromaticity(ElectronDonation model,
-                       CycleFinder      cycles) {
-        this.model  = checkNotNull(model);
+    public Aromaticity(ElectronDonation model, CycleFinder cycles) {
+        this.model = checkNotNull(model);
         this.cycles = checkNotNull(cycles);
     }
 
@@ -183,11 +182,11 @@ public final class Aromaticity {
 
         // build graph data-structures for fast cycle perception
         final EdgeToBondMap bondMap = EdgeToBondMap.withSpaceFor(molecule);
-        final int[][]       graph   = GraphUtil.toAdjList(molecule, bondMap);
+        final int[][] graph = GraphUtil.toAdjList(molecule, bondMap);
 
         // initial ring/cycle search and get the contribution from each atom
         final RingSearch ringSearch = new RingSearch(molecule, graph);
-        final int[]      electrons  = model.contribution(molecule, ringSearch);
+        final int[] electrons = model.contribution(molecule, ringSearch);
 
         final Set<IBond> bonds = Sets.newHashSetWithExpectedSize(molecule.getBondCount());
 
@@ -195,7 +194,7 @@ public final class Aromaticity {
         // allowed to be aromatic) - we then find the cycles in this subgraph
         // and 'lift' the indices back to the original graph using the subset
         // as a lookup
-        final int[]   subset   = subset(electrons);
+        final int[] subset = subset(electrons);
         final int[][] subgraph = GraphUtil.subgraph(graph, subset);
 
         // for each cycle if the electron sum is valid add the bonds of the
@@ -203,7 +202,7 @@ public final class Aromaticity {
         for (final int[] cycle : cycles.find(molecule, subgraph, subgraph.length).paths()) {
             if (checkElectronSum(cycle, electrons, subset)) {
                 for (int i = 1; i < cycle.length; i++) {
-                    bonds.add(bondMap.get(subset[cycle[i]], subset[cycle[i-1]]));
+                    bonds.add(bondMap.get(subset[cycle[i]], subset[cycle[i - 1]]));
                 }
             }
         }
@@ -315,18 +314,16 @@ public final class Aromaticity {
      */
     private static int[] subset(final int[] electrons) {
         int[] vs = new int[electrons.length];
-        int   n  = 0;
+        int n = 0;
 
         for (int i = 0; i < electrons.length; i++)
-            if (electrons[i] >= 0)
-                vs[n++] = i;
+            if (electrons[i] >= 0) vs[n++] = i;
 
         return Arrays.copyOf(vs, n);
     }
 
     /** Replicates CDKHueckelAromaticityDetector. */
-    private static final Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.cdk(),
-                                                                  Cycles.cdkAromaticSet());
+    private static final Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet());
 
     /**
      * Access an aromaticity instance that replicates the previously utilised -

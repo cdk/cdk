@@ -43,22 +43,21 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.stereo.DoubleBondStereochemistryTest")
 public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
 
-	private Conformation stereo;
-	private IBond[] ligandBonds;
-	private IBond stereoBond;
+    private Conformation       stereo;
+    private IBond[]            ligandBonds;
+    private IBond              stereoBond;
     private IChemObjectBuilder builder;
 
-	/**
-	 * Creates a new double bond stereo chemistry. The path of length three is defined by
-	 * <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
-	 */
-	public DoubleBondStereochemistry(IBond stereoBond, IBond[] ligandBonds, Conformation stereo) {
-        if(ligandBonds.length > 2)
-            throw new IllegalArgumentException("expected two ligand bonds");
-		this.stereoBond = stereoBond;
-		this.ligandBonds = ligandBonds;
-		this.stereo = stereo;
-	}
+    /**
+     * Creates a new double bond stereo chemistry. The path of length three is defined by
+     * <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
+     */
+    public DoubleBondStereochemistry(IBond stereoBond, IBond[] ligandBonds, Conformation stereo) {
+        if (ligandBonds.length > 2) throw new IllegalArgumentException("expected two ligand bonds");
+        this.stereoBond = stereoBond;
+        this.ligandBonds = ligandBonds;
+        this.stereo = stereo;
+    }
 
     /**
      * Sets a new {@link IChemObjectBuilder}.
@@ -71,60 +70,57 @@ public class DoubleBondStereochemistry implements IDoubleBondStereochemistry {
         this.builder = builder;
     }
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testBuilder")
-	public IChemObjectBuilder getBuilder() {
-		return this.builder;
-	}
+    public IChemObjectBuilder getBuilder() {
+        return this.builder;
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetBonds")
-	public IBond[] getBonds() {
-		IBond[] arrayCopy = new IBond[2];
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetBonds")
+    public IBond[] getBonds() {
+        IBond[] arrayCopy = new IBond[2];
         System.arraycopy(ligandBonds, 0, arrayCopy, 0, 2);
         return arrayCopy;
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetStereoBond")
-	public IBond getStereoBond() {
-		return this.stereoBond;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetStereoBond")
+    public IBond getStereoBond() {
+        return this.stereoBond;
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetStereo")
-	public Conformation getStereo() {
-		return this.stereo;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetStereo")
+    public Conformation getStereo() {
+        return this.stereo;
+    }
 
     /**
      * @inheritDoc
      */
     @TestMethod("contains")
-    @Override public boolean contains(IAtom atom) {
-        return stereoBond.contains(atom)
-                || ligandBonds[0].contains(atom)
-                || ligandBonds[1].contains(atom);
+    @Override
+    public boolean contains(IAtom atom) {
+        return stereoBond.contains(atom) || ligandBonds[0].contains(atom) || ligandBonds[1].contains(atom);
     }
 
     @TestMethod("testMap_Map_Map,testMap_Null_Map,testMap_Map_Map_NullElement,testMap_Map_Map_EmptyMapping")
     @Override
     public IDoubleBondStereochemistry map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
 
-        if(bonds == null)
-            throw new IllegalArgumentException("null bond mapping provided");
+        if (bonds == null) throw new IllegalArgumentException("null bond mapping provided");
 
         // map the double bond and the connected ligand bonds
-        IBond   doubleBond  = stereoBond != null ? bonds.get(stereoBond) : null;
-        IBond[] connected   = new IBond[ligandBonds.length];
+        IBond doubleBond = stereoBond != null ? bonds.get(stereoBond) : null;
+        IBond[] connected = new IBond[ligandBonds.length];
 
-        for(int i = 0; i < connected.length; i++){
-            if(ligandBonds[i] != null)
-                connected[i] = bonds.get(ligandBonds[i]);
+        for (int i = 0; i < connected.length; i++) {
+            if (ligandBonds[i] != null) connected[i] = bonds.get(ligandBonds[i]);
         }
 
         return new DoubleBondStereochemistry(doubleBond, connected, stereo);

@@ -33,9 +33,7 @@ import org.openscience.cdk.tautomers.InChITautomerGeneratorTest;
  *
  * @cdk.module  test-tautomer
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    TautomerCoverageTest.class,
-    InChITautomerGeneratorTest.class
-})
-public class MtautomerTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {TautomerCoverageTest.class, InChITautomerGeneratorTest.class})
+public class MtautomerTests {
+}

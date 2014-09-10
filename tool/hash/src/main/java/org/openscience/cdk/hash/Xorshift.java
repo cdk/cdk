@@ -46,7 +46,8 @@ final class Xorshift extends Pseudorandom {
      * @return the next pseudorandom number
      */
     @TestMethod("testNext,testDistribution,demonstrateZeroLimitation")
-    @Override long next(long seed) {
+    @Override
+    long next(long seed) {
         seed = seed ^ seed << 21;
         seed = seed ^ seed >>> 35;
         return seed ^ seed << 4;

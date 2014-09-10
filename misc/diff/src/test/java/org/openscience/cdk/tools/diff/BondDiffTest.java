@@ -33,13 +33,15 @@ import static org.mockito.Mockito.when;
  */
 public class BondDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IBond bond1 = mock(IBond.class);
         String result = BondDiff.diff(bond1, bond1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
 
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
@@ -64,7 +66,7 @@ public class BondDiffTest extends CDKTestCase {
         bond1.setOrder(IBond.Order.SINGLE);
         bond2.setOrder(IBond.Order.DOUBLE);
 
-        String result = BondDiff.diff( bond1, bond2 );
+        String result = BondDiff.diff(bond1, bond2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "BondDiff");
@@ -73,7 +75,8 @@ public class BondDiffTest extends CDKTestCase {
         assertContains(result, "C/O");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 

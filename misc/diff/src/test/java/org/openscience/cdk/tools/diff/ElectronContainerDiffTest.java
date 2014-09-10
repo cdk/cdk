@@ -32,19 +32,21 @@ import static org.mockito.Mockito.when;
  */
 public class ElectronContainerDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IElectronContainer atom1 = mock(IElectronContainer.class);
         String result = ElectronContainerDiff.diff(atom1, atom1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IElectronContainer ec1 = mock(IElectronContainer.class);
         IElectronContainer ec2 = mock(IElectronContainer.class);
         when(ec1.getElectronCount()).thenReturn(2);
         when(ec2.getElectronCount()).thenReturn(3);
 
-        String result = ElectronContainerDiff.diff( ec1, ec2 );
+        String result = ElectronContainerDiff.diff(ec1, ec2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "ElectronContainerDiff");
@@ -52,7 +54,8 @@ public class ElectronContainerDiffTest extends CDKTestCase {
         assertContains(result, "2/3");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IElectronContainer ec1 = mock(IElectronContainer.class);
         IElectronContainer ec2 = mock(IElectronContainer.class);
         when(ec1.getElectronCount()).thenReturn(2);

@@ -56,15 +56,15 @@ import org.openscience.cdk.interfaces.IReactionSet;
 @TestClass("org.openscience.cdk.tools.manipulator.ChemModelManipulatorTest")
 public class ChemModelManipulator {
 
-	/**
-	 * Get the total number of atoms inside an IChemModel.
-	 *
-	 * @param chemModel  The IChemModel object.
-	 * @return           The number of Atom object inside.
-	 */
+    /**
+     * Get the total number of atoms inside an IChemModel.
+     *
+     * @param chemModel  The IChemModel object.
+     * @return           The number of Atom object inside.
+     */
     @TestMethod("testGetAtomCount_IChemModel")
     public static int getAtomCount(IChemModel chemModel) {
-    	int count = 0;
+        int count = 0;
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             count += crystal.getAtomCount();
@@ -81,14 +81,14 @@ public class ChemModelManipulator {
     }
 
     /**
-	 * Get the total number of bonds inside an IChemModel.
-	 *
-	 * @param chemModel  The IChemModel object.
-	 * @return           The number of Bond object inside.
-	 */
+     * Get the total number of bonds inside an IChemModel.
+     *
+     * @param chemModel  The IChemModel object.
+     * @return           The number of Bond object inside.
+     */
     @TestMethod("testGetBondCount_IChemModel")
     public static int getBondCount(IChemModel chemModel) {
-    	int count = 0;
+        int count = 0;
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             count += crystal.getBondCount();
@@ -170,11 +170,11 @@ public class ChemModelManipulator {
         IAtomContainer molecule = chemModel.getBuilder().newInstance(IAtomContainer.class);
         if (chemModel.getMoleculeSet() != null) {
             IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
-            for(int i=0;i<moleculeSet.getAtomContainerCount();i++){
-            	if(moleculeSet.getAtomContainer(i).getAtomCount()==0){
-            		moleculeSet.removeAtomContainer(i);
-            		i--;
-            	}
+            for (int i = 0; i < moleculeSet.getAtomContainerCount(); i++) {
+                if (moleculeSet.getAtomContainer(i).getAtomCount() == 0) {
+                    moleculeSet.removeAtomContainer(i);
+                    i--;
+                }
             }
             moleculeSet.addAtomContainer(molecule);
         } else {
@@ -224,7 +224,7 @@ public class ChemModelManipulator {
             return chemModel.getCrystal();
         }
         if (chemModel.getRingSet() != null) {
-        	return AtomContainerSetManipulator.getRelevantAtomContainer(chemModel.getRingSet(), atom);
+            return AtomContainerSetManipulator.getRelevantAtomContainer(chemModel.getRingSet(), atom);
         }
         throw new IllegalArgumentException("The provided atom is not part of this IChemModel.");
     }
@@ -283,11 +283,7 @@ public class ChemModelManipulator {
             moleculeSet.add(chemModel.getMoleculeSet());
         }
         if (chemModel.getReactionSet() != null) {
-            moleculeSet.add(
-                ReactionSetManipulator.getAllMolecules(
-                    chemModel.getReactionSet()
-                )
-            );
+            moleculeSet.add(ReactionSetManipulator.getAllMolecules(chemModel.getReactionSet()));
         }
         return MoleculeSetManipulator.getAllAtomContainers(moleculeSet);
     }
@@ -302,19 +298,13 @@ public class ChemModelManipulator {
     @TestMethod("testSetAtomProperties_IChemModel_Object_Object")
     public static void setAtomProperties(IChemModel chemModel, Object propKey, Object propVal) {
         if (chemModel.getMoleculeSet() != null) {
-            MoleculeSetManipulator.setAtomProperties(
-                chemModel.getMoleculeSet(), propKey, propVal
-            );
+            MoleculeSetManipulator.setAtomProperties(chemModel.getMoleculeSet(), propKey, propVal);
         }
         if (chemModel.getReactionSet() != null) {
-            ReactionSetManipulator.setAtomProperties(
-                chemModel.getReactionSet(), propKey, propVal
-            );
+            ReactionSetManipulator.setAtomProperties(chemModel.getReactionSet(), propKey, propVal);
         }
         if (chemModel.getCrystal() != null) {
-            AtomContainerManipulator.setAtomProperties(
-                chemModel.getCrystal(), propKey, propVal
-            );
+            AtomContainerManipulator.setAtomProperties(chemModel.getCrystal(), propKey, propVal);
         }
     }
 
@@ -326,7 +316,7 @@ public class ChemModelManipulator {
      */
     @TestMethod("testGetAllChemObjects_IChemModel")
     public static List<IChemObject> getAllChemObjects(IChemModel chemModel) {
-		List<IChemObject> list = new ArrayList<IChemObject>();
+        List<IChemObject> list = new ArrayList<IChemObject>();
         // list.add(chemModel); // only add ChemObjects contained within
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
@@ -334,40 +324,39 @@ public class ChemModelManipulator {
         }
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
-        	list.add(moleculeSet);
-        	List<IChemObject> current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
+            list.add(moleculeSet);
+            List<IChemObject> current = MoleculeSetManipulator.getAllChemObjects(moleculeSet);
             for (IChemObject chemObject : current) {
                 if (!list.contains(chemObject)) list.add(chemObject);
             }
         }
         IReactionSet reactionSet = chemModel.getReactionSet();
         if (reactionSet != null) {
-        	list.add(reactionSet);
+            list.add(reactionSet);
             List<IChemObject> current = ReactionSetManipulator.getAllChemObjects(reactionSet);
             for (IChemObject chemObject : current) {
                 if (!list.contains(chemObject)) list.add(chemObject);
             }
         }
-		return list;
-	}
+        return list;
+    }
 
     @TestMethod("testGetAllIDs_IChemModel")
     public static List<String> getAllIDs(IChemModel chemModel) {
-		ArrayList<String> list = new ArrayList<String>();
-		if (chemModel.getID() != null) list.add(chemModel.getID());
+        ArrayList<String> list = new ArrayList<String>();
+        if (chemModel.getID() != null) list.add(chemModel.getID());
         ICrystal crystal = chemModel.getCrystal();
         if (crystal != null) {
             list.addAll(AtomContainerManipulator.getAllIDs(crystal));
         }
         IAtomContainerSet moleculeSet = chemModel.getMoleculeSet();
         if (moleculeSet != null) {
-        	list.addAll(MoleculeSetManipulator.getAllIDs(moleculeSet));
+            list.addAll(MoleculeSetManipulator.getAllIDs(moleculeSet));
         }
         IReactionSet reactionSet = chemModel.getReactionSet();
         if (reactionSet != null) {
-        	list.addAll(ReactionSetManipulator.getAllIDs(reactionSet));
+            list.addAll(ReactionSetManipulator.getAllIDs(reactionSet));
         }
-		return list;
-	}
+        return list;
+    }
 }
-

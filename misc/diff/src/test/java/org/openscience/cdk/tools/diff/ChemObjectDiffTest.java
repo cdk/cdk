@@ -32,28 +32,29 @@ import static org.mockito.Mockito.when;
  */
 public class ChemObjectDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IChemObject atom1 = mock(IChemObject.class);
         String result = ChemObjectDiff.diff(atom1, atom1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
         when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});
         when(atom2.getFlags()).thenReturn(new boolean[]{false, true, false});
 
-        String result = ChemObjectDiff.diff( atom1, atom2 );
+        String result = ChemObjectDiff.diff(atom1, atom2);
         Assert.assertNotNull(result);
-        Assert.assertNotSame(
-            "Expected non-zero-length result", 0, result.length()
-        );
+        Assert.assertNotSame("Expected non-zero-length result", 0, result.length());
         assertContains(result, "ChemObjectDiff");
         assertContains(result, "F/T");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IChemObject atom1 = mock(IChemObject.class);
         IChemObject atom2 = mock(IChemObject.class);
         when(atom1.getFlags()).thenReturn(new boolean[]{false, false, false});

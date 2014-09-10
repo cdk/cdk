@@ -37,7 +37,7 @@ import org.openscience.cdk.CDKTestCase;
 public class PermutationGroupTest extends CDKTestCase {
 
     // the first 7 factorials
-    private final static int[] lookup = { 1, 1, 2, 6, 24, 120, 720, 5040 };
+    private final static int[] lookup = {1, 1, 2, 6, 24, 120, 720, 5040};
 
     private int factorial(int n) {
         if (n < lookup.length) {

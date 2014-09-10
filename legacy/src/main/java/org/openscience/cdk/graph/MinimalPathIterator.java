@@ -48,263 +48,230 @@ import java.util.*;
 @TestClass("org.openscience.cdk.graph.MinimalPathIteratorTest")
 public class MinimalPathIterator implements Iterator {
 
-	private Object sourceVertex, targetVertex;
-	private Graph g;
-	private DirectedGraph shortestPathGraph;
+    private Object        sourceVertex, targetVertex;
+    private Graph         g;
+    private DirectedGraph shortestPathGraph;
 
-	private Stack edgeIteratorStack;
-	private Stack vertexStack;
+    private Stack         edgeIteratorStack;
+    private Stack         vertexStack;
 
-	private Object next;
+    private Object        next;
 
-	/**
-	 * Creates a minimal path iterator for the specified undirected graph.
-	 * @param g the specified graph
-	 * @param sourceVertex the start vertex for the paths
-	 * @param targetVertex the target vertex for the paths
-	 */
-	public MinimalPathIterator(SimpleGraph g, Object sourceVertex, Object targetVertex) {
+    /**
+     * Creates a minimal path iterator for the specified undirected graph.
+     * @param g the specified graph
+     * @param sourceVertex the start vertex for the paths
+     * @param targetVertex the target vertex for the paths
+     */
+    public MinimalPathIterator(SimpleGraph g, Object sourceVertex, Object targetVertex) {
 
-		this.g = g;
+        this.g = g;
 
-		this.sourceVertex = sourceVertex;
-		this.targetVertex = targetVertex;
+        this.sourceVertex = sourceVertex;
+        this.targetVertex = targetVertex;
 
-		createShortestPathGraph();
-	}
+        createShortestPathGraph();
+    }
 
-	private void createShortestPathGraph() {
+    private void createShortestPathGraph() {
 
+        /*
+         * shortestPathGraph = new DefaultDirectedGraph();
+         * //shortestPathGraph.addAllVertices(g.vertexSet()); LinkedList queue =
+         * new LinkedList(); //encounter target vertex
+         * queue.addLast(targetVertex);
+         * shortestPathGraph.addVertex(targetVertex); int distance = 0; Object
+         * firstVertexOfNextLevel = targetVertex; Collection verticesOfNextLevel
+         * = new ArrayList(); while (!queue.isEmpty()) { //provide next vertex
+         * Object vertex = queue.removeFirst(); if (vertex ==
+         * firstVertexOfNextLevel) { distance++; firstVertexOfNextLevel = null;
+         * verticesOfNextLevel.clear(); } //add unseen children of next vertex
+         * List edges = g.edgesOf(vertex); for(Iterator i = edges.iterator();
+         * i.hasNext();) { Edge e = (Edge) i.next( ); Object opposite =
+         * e.oppositeVertex(vertex); if
+         * (!shortestPathGraph.containsVertex(opposite)) { //encounter vertex
+         * queue.addLast(opposite); shortestPathGraph.addVertex(opposite);
+         * verticesOfNextLevel.add(opposite); if (firstVertexOfNextLevel ==
+         * null) { firstVertexOfNextLevel = opposite; } } if
+         * (verticesOfNextLevel.contains(opposite)) {
+         * shortestPathGraph.addEdge(opposite, vertex); } } }
+         */
 
-/*		shortestPathGraph = new DefaultDirectedGraph();
-		//shortestPathGraph.addAllVertices(g.vertexSet());
+        shortestPathGraph = new DefaultDirectedGraph();
+        shortestPathGraph.addVertex(targetVertex);
 
-		LinkedList queue = new LinkedList();
+        // This map gives the distance of a vertex to the target vertex
+        Map distanceMap = new HashMap();
 
-		//encounter target vertex
-		queue.addLast(targetVertex);
-		shortestPathGraph.addVertex(targetVertex);
+        for (MyBreadthFirstIterator iter = new MyBreadthFirstIterator(g, targetVertex); iter.hasNext();) {
+            Object vertex = iter.next();
+            shortestPathGraph.addVertex(vertex);
 
-		int distance = 0;
+            int distance = iter.level;
+            distanceMap.put(vertex, Integer.valueOf(distance));
 
-		Object firstVertexOfNextLevel = targetVertex;
-		Collection verticesOfNextLevel = new ArrayList();
+            for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
+                Edge edge = (Edge) edges.next();
+                Object opposite = edge.oppositeVertex(vertex);
+                if (distanceMap.get(opposite) != null) {
+                    if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+                        shortestPathGraph.addVertex(opposite);
+                        shortestPathGraph.addEdge(vertex, opposite);
+                    }
+                }
+            }
 
-		while (!queue.isEmpty()) {
-			//provide next vertex
-			Object vertex = queue.removeFirst();
+            if (vertex == sourceVertex) {
+                break;
+            }
+        }
 
-			if (vertex == firstVertexOfNextLevel) {
-				distance++;
-				firstVertexOfNextLevel = null;
-				verticesOfNextLevel.clear();
-			}
+        Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
 
-			//add unseen children of next vertex
-			List edges = g.edgesOf(vertex);
+        edgeIteratorStack = new Stack();
+        edgeIteratorStack.push(edgeIterator);
 
-			for(Iterator i = edges.iterator(); i.hasNext();) {
-				Edge e = (Edge) i.next(  );
-				Object opposite = e.oppositeVertex(vertex);
+        vertexStack = new Stack();
+        vertexStack.push(sourceVertex);
 
-				if (!shortestPathGraph.containsVertex(opposite)) {
-					//encounter vertex
-					queue.addLast(opposite);
-					shortestPathGraph.addVertex(opposite);
+    }
 
-					verticesOfNextLevel.add(opposite);
-
-					if (firstVertexOfNextLevel == null) {
-						firstVertexOfNextLevel = opposite;
-					}
-				}
-
-
-				if (verticesOfNextLevel.contains(opposite)) {
-					shortestPathGraph.addEdge(opposite, vertex);
-				}
-			}
-		}
-*/
-
-
-		shortestPathGraph = new DefaultDirectedGraph();
-		shortestPathGraph.addVertex(targetVertex);
-
-		// This map gives the distance of a vertex to the target vertex
-		Map distanceMap = new HashMap();
-
-		for (MyBreadthFirstIterator iter = new MyBreadthFirstIterator(g, targetVertex); iter.hasNext(); ) {
-			Object vertex = iter.next();
-			shortestPathGraph.addVertex(vertex);
-
-			int distance = iter.level;
-			distanceMap.put(vertex, Integer.valueOf(distance));
-
-			for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
-				Edge edge = (Edge) edges.next();
-				Object opposite = edge.oppositeVertex(vertex);
-				if (distanceMap.get(opposite) != null) {
-					if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
-						shortestPathGraph.addVertex(opposite);
-						shortestPathGraph.addEdge(vertex, opposite);
-					}
-				}
-			}
-
-			if (vertex == sourceVertex) {
-				break;
-			}
-		}
-
-		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
-
-		edgeIteratorStack = new Stack();
-		edgeIteratorStack.push(edgeIterator);
-
-		vertexStack = new Stack();
-		vertexStack.push(sourceVertex);
-
-	}
-
-//	private void createShortestPathWeightedGraph() {
-//		shortestPathGraph = new DefaultDirectedGraph();
-//		//shortestPathGraph.addAllVertices(g.vertexSet());
-//		shortestPathGraph.addVertex(targetVertex);
-//
-//		// This map gives the distance of a vertex to the target vertex
-//		Map distanceMap = new HashMap();
-//		distanceMap.put(targetVertex, new Integer(0));
-//
-//		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
-//			Object vertex = iter.next();
-//			shortestPathGraph.addVertex(vertex);
-//
-//			Edge treeEdge = iter.getSpanningTreeEdge(vertex);
-//
-//			// in the first iteration, vertex is the target vertex; therefore no tree edge exists
-//			if (treeEdge != null) {
-//				Object parent = treeEdge.oppositeVertex(vertex);
-//				int distance = ((Integer)distanceMap.get(parent)).intValue() + 1;
-//				distanceMap.put(vertex, new Integer(distance));
-//
-//				for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
-//					Edge edge = (Edge) edges.next();
-//					Object opposite = edge.oppositeVertex(vertex);
-//					if (distanceMap.get(opposite) != null) {
-//						if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
-//							shortestPathGraph.addVertex(opposite);
-//							shortestPathGraph.addEdge(vertex, opposite);
-//						}
-//					}
-//				}
-//			}
-//			if (vertex == sourceVertex) {
-//				break;
-//			}
-//		}
-//
-//		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
-//
-//		edgeIteratorStack = new Stack();
-//		edgeIteratorStack.push(edgeIterator);
-//
-//		vertexStack = new Stack();
-//		vertexStack.push(sourceVertex);
-//
-//	}
+    //	private void createShortestPathWeightedGraph() {
+    //		shortestPathGraph = new DefaultDirectedGraph();
+    //		//shortestPathGraph.addAllVertices(g.vertexSet());
+    //		shortestPathGraph.addVertex(targetVertex);
+    //
+    //		// This map gives the distance of a vertex to the target vertex
+    //		Map distanceMap = new HashMap();
+    //		distanceMap.put(targetVertex, new Integer(0));
+    //
+    //		for (ClosestFirstIterator iter = new ClosestFirstIterator(g, targetVertex); iter.hasNext(); ) {
+    //			Object vertex = iter.next();
+    //			shortestPathGraph.addVertex(vertex);
+    //
+    //			Edge treeEdge = iter.getSpanningTreeEdge(vertex);
+    //
+    //			// in the first iteration, vertex is the target vertex; therefore no tree edge exists
+    //			if (treeEdge != null) {
+    //				Object parent = treeEdge.oppositeVertex(vertex);
+    //				int distance = ((Integer)distanceMap.get(parent)).intValue() + 1;
+    //				distanceMap.put(vertex, new Integer(distance));
+    //
+    //				for (Iterator edges = g.edgesOf(vertex).iterator(); edges.hasNext();) {
+    //					Edge edge = (Edge) edges.next();
+    //					Object opposite = edge.oppositeVertex(vertex);
+    //					if (distanceMap.get(opposite) != null) {
+    //						if (((Integer) distanceMap.get(opposite)).intValue() + 1 == distance) {
+    //							shortestPathGraph.addVertex(opposite);
+    //							shortestPathGraph.addEdge(vertex, opposite);
+    //						}
+    //					}
+    //				}
+    //			}
+    //			if (vertex == sourceVertex) {
+    //				break;
+    //			}
+    //		}
+    //
+    //		Iterator edgeIterator = shortestPathGraph.outgoingEdgesOf(sourceVertex).iterator();
+    //
+    //		edgeIteratorStack = new Stack();
+    //		edgeIteratorStack.push(edgeIterator);
+    //
+    //		vertexStack = new Stack();
+    //		vertexStack.push(sourceVertex);
+    //
+    //	}
 
     @TestMethod("testMinimalPathIterator")
     public boolean hasNext() {
 
-		if (next == null) {
+        if (next == null) {
 
-			while (next == null && !edgeIteratorStack.isEmpty()) {
-				Iterator edgeIterator = (Iterator) edgeIteratorStack.peek();
-				Object currentVertex = vertexStack.peek();
+            while (next == null && !edgeIteratorStack.isEmpty()) {
+                Iterator edgeIterator = (Iterator) edgeIteratorStack.peek();
+                Object currentVertex = vertexStack.peek();
 
-				//logger.debug(currentVertex);
+                //logger.debug(currentVertex);
 
-				if (edgeIterator.hasNext()) {
-					Edge edge = (Edge)edgeIterator.next();
-					currentVertex = edge.oppositeVertex(currentVertex);
-					edgeIterator = shortestPathGraph.outgoingEdgesOf(currentVertex).iterator();
+                if (edgeIterator.hasNext()) {
+                    Edge edge = (Edge) edgeIterator.next();
+                    currentVertex = edge.oppositeVertex(currentVertex);
+                    edgeIterator = shortestPathGraph.outgoingEdgesOf(currentVertex).iterator();
 
-					edgeIteratorStack.push(edgeIterator);
-					vertexStack.push(currentVertex);
+                    edgeIteratorStack.push(edgeIterator);
+                    vertexStack.push(currentVertex);
 
-				} else {
-					if (currentVertex == targetVertex) {
-						next = edgeList(g, vertexStack);
-					}
-					edgeIteratorStack.pop();
-					vertexStack.pop();
-				}
+                } else {
+                    if (currentVertex == targetVertex) {
+                        next = edgeList(g, vertexStack);
+                    }
+                    edgeIteratorStack.pop();
+                    vertexStack.pop();
+                }
 
-			}
+            }
 
+        }
 
-		}
+        return (next != null);
 
-		return (next != null);
-
-	}
+    }
 
     @TestMethod("testMinimalPathIterator")
     public Object next() {
-		if (hasNext()) {
-			Object result = next;
-			next = null;
-			return result;
-		}
-		else {
-			return null;
-		}
-	}
+        if (hasNext()) {
+            Object result = next;
+            next = null;
+            return result;
+        } else {
+            return null;
+        }
+    }
 
     @TestMethod("testRemove")
     public void remove() {
-		throw new UnsupportedOperationException();
-	}
+        throw new UnsupportedOperationException();
+    }
 
-	private List edgeList(Graph g, List vertexList) {
-		List edgeList = new ArrayList(vertexList.size()-1);
-		Iterator vertices = vertexList.iterator();
-		Object currentVertex = vertices.next();
-		while (vertices.hasNext()) {
-			Object nextVertex = vertices.next();
-			edgeList.add(g.getAllEdges(currentVertex, nextVertex).get(0));
-			currentVertex = nextVertex;
-		}
+    private List edgeList(Graph g, List vertexList) {
+        List edgeList = new ArrayList(vertexList.size() - 1);
+        Iterator vertices = vertexList.iterator();
+        Object currentVertex = vertices.next();
+        while (vertices.hasNext()) {
+            Object nextVertex = vertices.next();
+            edgeList.add(g.getAllEdges(currentVertex, nextVertex).get(0));
+            currentVertex = nextVertex;
+        }
 
-		return edgeList;
+        return edgeList;
 
-	}
+    }
 
-	private static class MyBreadthFirstIterator extends BreadthFirstIterator {
+    private static class MyBreadthFirstIterator extends BreadthFirstIterator {
 
-		public MyBreadthFirstIterator(Graph g, Object startVertex) {
-			super(g, startVertex);
-		}
+        public MyBreadthFirstIterator(Graph g, Object startVertex) {
+            super(g, startVertex);
+        }
 
-		int level = -1;
-		private Object firstVertexOfNextLevel;
+        int            level = -1;
+        private Object firstVertexOfNextLevel;
 
-	    protected void encounterVertex( Object vertex, Edge edge ) {
-	        super.encounterVertex(vertex, edge);
-	        if (firstVertexOfNextLevel == null) {
-	        		firstVertexOfNextLevel = vertex;
-	        }
-	    }
+        protected void encounterVertex(Object vertex, Edge edge) {
+            super.encounterVertex(vertex, edge);
+            if (firstVertexOfNextLevel == null) {
+                firstVertexOfNextLevel = vertex;
+            }
+        }
 
-	    protected Object provideNextVertex(  ) {
-			Object nextVertex = super.provideNextVertex();
-			if (firstVertexOfNextLevel == nextVertex) {
-				firstVertexOfNextLevel = null;
-				level++;
-			}
-			return nextVertex;
-		}
+        protected Object provideNextVertex() {
+            Object nextVertex = super.provideNextVertex();
+            if (firstVertexOfNextLevel == nextVertex) {
+                firstVertexOfNextLevel = null;
+                level++;
+            }
+            return nextVertex;
+        }
 
-	}
+    }
 }

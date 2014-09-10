@@ -35,8 +35,11 @@ import java.util.ListIterator;
  */
 public interface IRandomAccessChemObjectReader<T> extends ListIterator<T> {
 
-	T readRecord(int record) throws Exception ;
+    T readRecord(int record) throws Exception;
+
     public T first();
+
     public T last();
+
     public int size();
 }

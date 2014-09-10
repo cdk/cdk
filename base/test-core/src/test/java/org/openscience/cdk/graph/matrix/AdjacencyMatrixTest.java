@@ -31,7 +31,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AdjacencyMatrixTest extends CDKTestCase {
 
-	private static SmilesParser sp;
+    private static SmilesParser sp;
 
     @BeforeClass
     public static void getSmilesParser() {
@@ -41,14 +41,12 @@ public class AdjacencyMatrixTest extends CDKTestCase {
     @Test
     public void testGetMatrix_IAtomContainer() throws Exception {
         IAtomContainer container = sp.parseSmiles("C1CC1");
-		int[][] matrix = AdjacencyMatrix.getMatrix(container);
-		Assert.assertEquals(3,matrix.length);
-		Assert.assertEquals(3,matrix[0].length);
+        int[][] matrix = AdjacencyMatrix.getMatrix(container);
+        Assert.assertEquals(3, matrix.length);
+        Assert.assertEquals(3, matrix[0].length);
         Assert.assertEquals(0, matrix[0][0]);
         Assert.assertEquals(1, matrix[0][2]);
         Assert.assertEquals(1, matrix[0][1]);
     }
 
 }
-
-

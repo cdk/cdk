@@ -41,8 +41,7 @@ import org.openscience.cdk.interfaces.ISingleElectron;
  * @cdk.keyword radical
  * @cdk.keyword electron, unpaired
  */
-public class SingleElectron extends ElectronContainer implements Serializable, ISingleElectron, Cloneable
-{
+public class SingleElectron extends ElectronContainer implements Serializable, ISingleElectron, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -51,14 +50,14 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 7796574734668490940L;
+     */
+    private static final long serialVersionUID = 7796574734668490940L;
 
-	/** Number of electron for this class is defined as one. */
-    protected final int electronCount = 1;
+    /** Number of electron for this class is defined as one. */
+    protected final int       electronCount    = 1;
 
     /** The atom with which this single electron is associated. */
-    protected IAtom atom;
+    protected IAtom           atom;
 
     /**
      * Constructs an single electron orbital on an Atom.
@@ -75,6 +74,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
     public SingleElectron() {
         this.atom = null;
     }
+
     /**
      * Returns the number of electrons in this SingleElectron.
      *
@@ -90,22 +90,22 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      * @return the associated Atom.
      *
      * @see    #setAtom
-	 */
-	public IAtom getAtom() {
-		return this.atom;
-	}
+     */
+    public IAtom getAtom() {
+        return this.atom;
+    }
 
-	/**
-	 * Sets the associated Atom.
-	 *
-	 * @param atom the Atom this SingleElectron will be associated with
+    /**
+     * Sets the associated Atom.
+     *
+     * @param atom the Atom this SingleElectron will be associated with
      *
      * @see    #getAtom
-	 */
-	public void setAtom(IAtom atom) {
-		this.atom = atom;
-		notifyChanged();
-	}
+     */
+    public void setAtom(IAtom atom) {
+        this.atom = atom;
+        notifyChanged();
+    }
 
     /**
      * Returns true if the given atom participates in this SingleElectron.
@@ -113,7 +113,7 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this SingleElectron is associated with the atom
      */
-    public boolean contains(IAtom atom)     {
+    public boolean contains(IAtom atom) {
         return (this.atom == atom) ? true : false;
     }
 
@@ -135,21 +135,19 @@ public class SingleElectron extends ElectronContainer implements Serializable, I
         return stringContent.toString();
     }
 
-	/**
-	 * Clones this SingleElectron object, including a clone of the atom for which the
+    /**
+     * Clones this SingleElectron object, including a clone of the atom for which the
      * SingleElectron is defined.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		SingleElectron clone = (SingleElectron) super.clone();
+     *
+     * @return    The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException {
+        SingleElectron clone = (SingleElectron) super.clone();
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (IAtom)((IAtom)atom).clone();
+            clone.atom = (IAtom) ((IAtom) atom).clone();
         }
-		return clone;
-	}
+        return clone;
+    }
 
 }
-
-

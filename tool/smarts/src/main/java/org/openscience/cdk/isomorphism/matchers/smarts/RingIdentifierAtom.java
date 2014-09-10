@@ -31,34 +31,38 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.keyword SMARTS
  */
 public class RingIdentifierAtom extends SMARTSAtom {
-	private static final long serialVersionUID = -6812146026923460637L;
-	private IQueryAtom atom;
-	private IQueryBond ringBond;
 
-    public RingIdentifierAtom(IChemObjectBuilder builder){
+    private static final long serialVersionUID = -6812146026923460637L;
+    private IQueryAtom        atom;
+    private IQueryBond        ringBond;
+
+    public RingIdentifierAtom(IChemObjectBuilder builder) {
         super(builder);
     }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		return this.atom.matches(atom);
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
+        return this.atom.matches(atom);
+    }
 
-	public IQueryAtom getAtom() {
-		return atom;
-	}
+    public IQueryAtom getAtom() {
+        return atom;
+    }
 
-	public void setAtom(IQueryAtom atom) {
-		this.atom = atom;
-	}
+    public void setAtom(IQueryAtom atom) {
+        this.atom = atom;
+    }
 
-	public IQueryBond getRingBond() {
-		return ringBond;
-	}
+    public IQueryBond getRingBond() {
+        return ringBond;
+    }
 
-	public void setRingBond(IQueryBond bond) {
-		this.ringBond = bond;
-	}
+    public void setRingBond(IQueryBond bond) {
+        this.ringBond = bond;
+    }
 }

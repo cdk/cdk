@@ -36,28 +36,33 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class AtomContainerTest extends AbstractAtomContainerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new AtomContainer();
             }
         });
     }
 
-    @Test public void testAtomContainer_int_int_int_int() {
+    @Test
+    public void testAtomContainer_int_int_int_int() {
         // create an empty container with predefined
         // array lengths
-        IAtomContainer ac = new AtomContainer(5,6,1,2);
+        IAtomContainer ac = new AtomContainer(5, 6, 1, 2);
 
         Assert.assertEquals(0, ac.getAtomCount());
         Assert.assertEquals(0, ac.getElectronContainerCount());
 
         // test whether the ElectronContainer is correctly initialized
-        ac.addBond(ac.getBuilder().newInstance(IBond.class,ac.getBuilder().newInstance(IAtom.class,"C"), ac.getBuilder().newInstance(IAtom.class,"C"), IBond.Order.DOUBLE));
-        ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class,ac.getBuilder().newInstance(IAtom.class,"N")));
+        ac.addBond(ac.getBuilder().newInstance(IBond.class, ac.getBuilder().newInstance(IAtom.class, "C"),
+                ac.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
+        ac.addLonePair(ac.getBuilder().newInstance(ILonePair.class, ac.getBuilder().newInstance(IAtom.class, "N")));
     }
 
-    @Test public void testAtomContainer() {
+    @Test
+    public void testAtomContainer() {
         // create an empty container with in the constructor defined array lengths
         IAtomContainer container = new AtomContainer();
 
@@ -65,23 +70,27 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
         Assert.assertEquals(0, container.getBondCount());
 
         // test whether the ElectronContainer is correctly initialized
-        container.addBond(container.getBuilder().newInstance(IBond.class,container.getBuilder().newInstance(IAtom.class,"C"), container.getBuilder().newInstance(IAtom.class,"C"), IBond.Order.DOUBLE));
-        container.addLonePair(container.getBuilder().newInstance(ILonePair.class,container.getBuilder().newInstance(IAtom.class,"N")));
+        container.addBond(container.getBuilder().newInstance(IBond.class,
+                container.getBuilder().newInstance(IAtom.class, "C"),
+                container.getBuilder().newInstance(IAtom.class, "C"), IBond.Order.DOUBLE));
+        container.addLonePair(container.getBuilder().newInstance(ILonePair.class,
+                container.getBuilder().newInstance(IAtom.class, "N")));
     }
 
-    @Test public void testAtomContainer_IAtomContainer() {
+    @Test
+    public void testAtomContainer_IAtomContainer() {
         IAtomContainer acetone = newChemObject().getBuilder().newInstance(IAtomContainer.class);
-        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
-        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class, "O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class, "C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class, c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -93,43 +102,68 @@ public class AtomContainerTest extends AbstractAtomContainerTest {
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    @Test public void testSetAtoms_removeListener() {
+
+    @Test
+    public void testSetAtoms_removeListener() {
         ChemObjectTestHelper.testSetAtoms_removeListener(newChemObject());
     }
 }

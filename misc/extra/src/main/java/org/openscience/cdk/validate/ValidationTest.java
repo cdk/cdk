@@ -36,9 +36,9 @@ public class ValidationTest {
     /** IChemObject which has the error. */
     private IChemObject object;
     /** String representation of the found error. */
-    private String error;
+    private String      error;
     /** Multiline String with details on the error. */
-    private String details;
+    private String      details;
 
     public ValidationTest(IChemObject object, String error) {
         this(object, error, "");

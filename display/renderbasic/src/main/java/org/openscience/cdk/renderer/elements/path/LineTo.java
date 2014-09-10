@@ -77,11 +77,12 @@ public class LineTo extends PathElement {
     @Override
     @TestMethod("testPoints")
     public float[] points() {
-        return new float[]{ (float) coords[0], (float) coords[1]};
+        return new float[]{(float) coords[0], (float) coords[1]};
     }
 
     /** @inheritDoc */
-    @Override public void points(double[] coords) {
+    @Override
+    public void points(double[] coords) {
         coords[0] = this.coords[0];
         coords[1] = this.coords[1];
     }

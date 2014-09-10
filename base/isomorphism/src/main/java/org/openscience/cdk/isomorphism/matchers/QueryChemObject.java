@@ -46,12 +46,12 @@ public class QueryChemObject implements IChemObject {
     /**
      *  A hashtable for the storage of any kind of properties of this IChemObject.
      */
-    private Map<Object, Object> properties;
+    private Map<Object, Object>       properties;
 
     /**
      * String representing the identifier for this atom type with null as default.
      */
-    private String identifier = (String) CDKConstants.UNSET;
+    private String                    identifier = (String) CDKConstants.UNSET;
 
     /**
      *  You will frequently have to use some flags on a IChemObject. For example, if
@@ -61,9 +61,9 @@ public class QueryChemObject implements IChemObject {
      *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
      *  per object should be more than enough.
      */
-    private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
+    private short                     flags;                                   // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
-    private final IChemObjectBuilder builder;
+    private final IChemObjectBuilder  builder;
 
     public QueryChemObject(IChemObjectBuilder builder) {
         chemObjectListeners = null;
@@ -77,14 +77,12 @@ public class QueryChemObject implements IChemObject {
      *
      *@return    List with the ChemObjects associated.
      */
-    private List<IChemObjectListener> lazyChemObjectListeners()
-    {
+    private List<IChemObjectListener> lazyChemObjectListeners() {
         if (chemObjectListeners == null) {
             chemObjectListeners = new ArrayList<IChemObjectListener>();
         }
         return chemObjectListeners;
     }
-
 
     /**
      *  Use this to add yourself to this IChemObject as a listener. In order to do
@@ -93,18 +91,15 @@ public class QueryChemObject implements IChemObject {
      *@param  col  the ChemObjectListener
      *@see         #removeListener
      */
-    public void addListener(IChemObjectListener col)
-    {
+    public void addListener(IChemObjectListener col) {
         List<IChemObjectListener> listeners = lazyChemObjectListeners();
 
-        if (!listeners.contains(col))
-        {
+        if (!listeners.contains(col)) {
             listeners.add(col);
         }
         // Should we throw an exception if col is already in here or
         // just silently ignore it?
     }
-
 
     /**
      *  Returns the number of ChemObjectListeners registered with this object.
@@ -117,7 +112,6 @@ public class QueryChemObject implements IChemObject {
         }
         return lazyChemObjectListeners().size();
     }
-
 
     /**
      *  Use this to remove a ChemObjectListener from the ListenerList of this
@@ -137,7 +131,6 @@ public class QueryChemObject implements IChemObject {
         }
     }
 
-
     /**
      *  This should be triggered by an method that changes the content of an object
      *  to that the registered listeners can react to it.
@@ -146,13 +139,10 @@ public class QueryChemObject implements IChemObject {
         if (getNotification() && getListenerCount() > 0) {
             List<IChemObjectListener> listeners = lazyChemObjectListeners();
             for (Object listener : listeners) {
-                ((IChemObjectListener) listener).stateChanged(
-                        new QueryChemObjectChangeEvent(this)
-                );
+                ((IChemObjectListener) listener).stateChanged(new QueryChemObjectChangeEvent(this));
             }
         }
     }
-
 
     /**
      *  This should be triggered by an method that changes the content of an object
@@ -172,21 +162,17 @@ public class QueryChemObject implements IChemObject {
         }
     }
 
-
     /**
      * Lazy creation of properties hash.
      *
      * @return    Returns in instance of the properties
      */
-    private Map<Object, Object> lazyProperties()
-    {
-        if (properties == null)
-        {
+    private Map<Object, Object> lazyProperties() {
+        if (properties == null) {
             properties = new HashMap<Object, Object>();
         }
         return properties;
     }
-
 
     /**
      *  Sets a property for a IChemObject.
@@ -197,12 +183,10 @@ public class QueryChemObject implements IChemObject {
      *@see                 #getProperty
      *@see                 #removeProperty
      */
-    public void setProperty(Object description, Object property)
-    {
+    public void setProperty(Object description, Object property) {
         lazyProperties().put(description, property);
         notifyChanged();
     }
-
 
     /**
      *  Removes a property for a IChemObject.
@@ -212,13 +196,11 @@ public class QueryChemObject implements IChemObject {
      *@see                 #setProperty
      *@see                 #getProperty
      */
-    public void removeProperty(Object description)
-    {
+    public void removeProperty(Object description) {
         if (properties == null) {
             return;
         }
-        if (lazyProperties().remove(description) != null)
-            notifyChanged();
+        if (lazyProperties().remove(description) != null) notifyChanged();
     }
 
     /**
@@ -231,8 +213,7 @@ public class QueryChemObject implements IChemObject {
      *@see                 #setProperty
      *@see                 #removeProperty
      */
-    public <T> T getProperty(Object description)
-    {
+    public <T> T getProperty(Object description) {
         // can't check the type
         @SuppressWarnings("unchecked")
         T value = (T) lazyProperties().get(description);
@@ -243,25 +224,23 @@ public class QueryChemObject implements IChemObject {
      * @inheritDoc
      */
     @Override
-    public <T> T getProperty(Object description, Class<T> c)
-    {
+    public <T> T getProperty(Object description, Class<T> c) {
         Object value = lazyProperties().get(description);
 
-        if(c.isInstance(value)) {
+        if (c.isInstance(value)) {
 
             @SuppressWarnings("unchecked")
             T typed = (T) value;
             return typed;
 
-        } else if(value != null){
-            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected " + c
-                    .getSimpleName() + " got " + value.getClass().getSimpleName());
+        } else if (value != null) {
+            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected "
+                    + c.getSimpleName() + " got " + value.getClass().getSimpleName());
         }
 
         return null;
 
     }
-
 
     /**
      *  Returns a Map with the IChemObject's properties.
@@ -269,8 +248,7 @@ public class QueryChemObject implements IChemObject {
      *@return    The object's properties as an Hashtable
      *@see       #addProperties
      */
-    public Map<Object,Object> getProperties()
-    {
+    public Map<Object, Object> getProperties() {
         return lazyProperties();
     }
 
@@ -280,8 +258,7 @@ public class QueryChemObject implements IChemObject {
      *@return    a String representing the ID value
      *@see       #setID
      */
-    public String getID()
-    {
+    public String getID() {
         return this.identifier;
     }
 
@@ -291,8 +268,7 @@ public class QueryChemObject implements IChemObject {
      *@param  identifier  a String representing the ID value
      *@see                #getID
      */
-    public void setID(String identifier)
-    {
+    public void setID(String identifier) {
         this.identifier = identifier;
         notifyChanged();
     }
@@ -300,8 +276,7 @@ public class QueryChemObject implements IChemObject {
     /**
      * @inheritDoc
      */
-    public void setFlag(int mask, boolean value)
-    {
+    public void setFlag(int mask, boolean value) {
         // set/unset a bit in the flags value
         if (value)
             flags |= mask;
@@ -313,17 +288,14 @@ public class QueryChemObject implements IChemObject {
     /**
      * @inheritDoc
      */
-    public boolean getFlag(int mask)
-    {
+    public boolean getFlag(int mask) {
         return (flags & mask) != 0;
     }
 
     /** @inheritDoc */
-    public void setProperties(Map<Object, Object> properties)
-    {
+    public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
-        if (properties != null)
-            addProperties(properties);
+        if (properties != null) addProperties(properties);
     }
 
     /**
@@ -332,8 +304,7 @@ public class QueryChemObject implements IChemObject {
      *@param  properties  a Hashtable specifying the property values
      *@see                #getProperties
      */
-    public void addProperties(Map<Object, Object> properties)
-    {
+    public void addProperties(Map<Object, Object> properties) {
         if (properties == null) return;
         lazyProperties().putAll(properties);
         notifyChanged();
@@ -344,29 +315,28 @@ public class QueryChemObject implements IChemObject {
     /**
      * @inheritDoc
      */
-    public void setFlags(boolean[] flagsNew){
-        for(int i = 0; i < flagsNew.length ; i++)
+    public void setFlags(boolean[] flagsNew) {
+        for (int i = 0; i < flagsNew.length; i++)
             setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
     }
 
     /**
      * @inheritDoc
      */
-    public boolean[] getFlags(){
+    public boolean[] getFlags() {
         // could use a list a invoke .toArray() on the return
         boolean[] flagArray = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-        for(int i = 0 ; i < CDKConstants.FLAG_MASKS.length; i++){
+        for (int i = 0; i < CDKConstants.FLAG_MASKS.length; i++) {
             int mask = CDKConstants.FLAG_MASKS[i];
             flagArray[i] = getFlag(mask);
         }
         return flagArray;
     }
 
-
     /**
      * @inheritDoc
      */
-    public Short getFlagValue(){
+    public Short getFlagValue() {
         return flags;
     }
 
@@ -378,29 +348,28 @@ public class QueryChemObject implements IChemObject {
         return this.doNotification;
     }
 
-     public IChemObjectBuilder getBuilder() {
-         return builder;
-     }
+    public IChemObjectBuilder getBuilder() {
+        return builder;
+    }
 
-     public boolean matches(IAtom atom) {
-         // TODO Auto-generated method stub
-         return false;
-     }
+    public boolean matches(IAtom atom) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
-     @Override
-     public Object clone() throws CloneNotSupportedException {
-         // TODO Auto-generated method stub
-         return super.clone();
-     }
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        // TODO Auto-generated method stub
+        return super.clone();
+    }
 
-     class QueryChemObjectChangeEvent extends EventObject
-     implements IChemObjectChangeEvent {
+    class QueryChemObjectChangeEvent extends EventObject implements IChemObjectChangeEvent {
 
         private static final long serialVersionUID = 8060005185140623245L;
 
         /** {@inheritDoc} */
-         public QueryChemObjectChangeEvent(Object source) {
-             super(source);
-         }
-     }
+        public QueryChemObjectChangeEvent(Object source) {
+            super(source);
+        }
+    }
 }

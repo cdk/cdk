@@ -31,7 +31,8 @@ import static org.junit.Assert.assertTrue;
 
 public class AnyAtomTest {
 
-    @Test public void matchHydrogen() throws Exception {
+    @Test
+    public void matchHydrogen() throws Exception {
         assertTrue(new AnyAtom(null).matches(new Atom("H")));
     }
 }

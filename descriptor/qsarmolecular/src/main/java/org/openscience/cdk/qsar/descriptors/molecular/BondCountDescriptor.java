@@ -69,14 +69,13 @@ import org.openscience.cdk.qsar.result.IntegerResult;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BondCountDescriptorTest")
 public class BondCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-	/** defaults to UNSET, which means: count all bonds **/
+    /** defaults to UNSET, which means: count all bonds **/
     private String order = "";
 
     /**
      *  Constructor for the BondCountDescriptor object
      */
     public BondCountDescriptor() {}
-
 
     /**
      *  Gets the specification attribute of the BondCountDescriptor object
@@ -86,11 +85,9 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondCount", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the BondCountDescriptor object
@@ -106,14 +103,13 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         if (!(params[0] instanceof String)) {
             throw new CDKException("The parameter must be of type IBond.Order");
         }
-        String bondType = (String)params[0];
+        String bondType = (String) params[0];
         if (bondType.length() > 1 || !"sdtq".contains(bondType)) {
-        	throw new CDKException("The only allowed values for this parameter are 's', 'd', 't', 'q' and ''.");
+            throw new CDKException("The only allowed values for this parameter are 's', 'd', 't', 'q' and ''.");
         }
         // ok, all should be fine
         order = bondType;
     }
-
 
     /**
      *  Gets the parameters attribute of the BondCountDescriptor object
@@ -128,12 +124,13 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
-        if (order.equals("")) return new String[]{"nB"};
-        else  return new String[]{"nB"+order};
+        if (order.equals(""))
+            return new String[]{"nB"};
+        else
+            return new String[]{"nB" + order};
     }
-
 
     /**
      *  This method calculate the number of bonds of a given type in an atomContainer
@@ -156,8 +153,8 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
                 if (!hasHydrogen) bondCount++;
 
             }
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult(bondCount), getDescriptorNames(), null);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                    bondCount), getDescriptorNames(), null);
         }
 
         int bondCount = 0;
@@ -167,19 +164,22 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-            new IntegerResult(bondCount), getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                bondCount), getDescriptorNames());
     }
 
     private boolean bondMatch(Order order, String orderString) {
-        if (order == Order.SINGLE && "s".equals(orderString)) return true;
-        else if (order == Order.DOUBLE && "d".equals(orderString)) return true;
-        else if (order == Order.TRIPLE && "t".equals(orderString)) return true;
-        else return (order == Order.QUADRUPLE && "q".equals(orderString));
+        if (order == Order.SINGLE && "s".equals(orderString))
+            return true;
+        else if (order == Order.DOUBLE && "d".equals(orderString))
+            return true;
+        else if (order == Order.TRIPLE && "t".equals(orderString))
+            return true;
+        else
+            return (order == Order.QUADRUPLE && "q".equals(orderString));
     }
 
-
-	/**
+    /**
      * Returns the specific type of the DescriptorResult object.
      * <p/>
      * The return value from this method really indicates what type of result will
@@ -195,7 +195,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         return new IntegerResult(1);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the BondCountDescriptor object
      *
@@ -208,7 +207,6 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
         return params;
     }
 
-
     /**
      *  Gets the parameterType attribute of the BondCountDescriptor object
      *
@@ -217,8 +215,7 @@ public class BondCountDescriptor extends AbstractMolecularDescriptor implements 
      */
     @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-    	if ("order".equals(name)) return "";
-    	return null;
+        if ("order".equals(name)) return "";
+        return null;
     }
 }
-

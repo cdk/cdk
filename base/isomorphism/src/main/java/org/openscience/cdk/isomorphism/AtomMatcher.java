@@ -83,11 +83,11 @@ public abstract class AtomMatcher {
     private static final class AnyMatcher extends AtomMatcher {
 
         /** @inheritDoc */
-        @Override public boolean matches(IAtom atom1, IAtom atom2) {
+        @Override
+        public boolean matches(IAtom atom1, IAtom atom2) {
             return true;
         }
     }
-
 
     /**
      * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is
@@ -96,7 +96,8 @@ public abstract class AtomMatcher {
     private static final class QueryMatcher extends AtomMatcher {
 
         /** @inheritDoc */
-        @Override public boolean matches(IAtom atom1, IAtom atom2) {
+        @Override
+        public boolean matches(IAtom atom1, IAtom atom2) {
             return ((IQueryAtom) atom1).matches(atom2);
         }
     }
@@ -108,7 +109,8 @@ public abstract class AtomMatcher {
     private static final class ElementMatcher extends AtomMatcher {
 
         /** @inheritDoc */
-        @Override public boolean matches(IAtom atom1, IAtom atom2) {
+        @Override
+        public boolean matches(IAtom atom1, IAtom atom2) {
             return atomicNumber(atom1) == atomicNumber(atom2);
         }
 
@@ -120,10 +122,8 @@ public abstract class AtomMatcher {
          */
         private int atomicNumber(IAtom atom) {
             Integer elem = atom.getAtomicNumber();
-            if (elem != null)
-                return elem;
-            if (atom instanceof IPseudoAtom)
-                return 0;
+            if (elem != null) return elem;
+            if (atom instanceof IPseudoAtom) return 0;
             throw new NullPointerException("an atom had unset atomic number");
         }
     }

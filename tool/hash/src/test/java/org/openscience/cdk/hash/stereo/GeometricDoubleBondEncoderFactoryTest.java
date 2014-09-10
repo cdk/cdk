@@ -123,14 +123,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         StereoEncoderFactory factory = new GeometricDoubleBondEncoderFactory();
 
-        int[][] g = new int[][]{
-            {1},
-            {0, 2, 4},
-            {1, 3, 5},
-            {2},
-            {1},
-            {2}
-        };
+        int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
         assertTrue(factory.create(mol, g) instanceof MultiStereoEncoder);
     }
@@ -198,26 +191,19 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
         StereoEncoderFactory factory = new GeometricDoubleBondEncoderFactory();
 
-        int[][] g = new int[][]{
-                {1},
-                {0, 2, 4},
-                {1, 3, 5},
-                {2},
-                {1},
-                {2}
-        };
+        int[][] g = new int[][]{{1}, {0, 2, 4}, {1, 3, 5}, {2}, {1}, {2}};
 
         assertTrue(factory.create(mol, g) == StereoEncoder.EMPTY);
     }
 
     @Test
     public void testGeometric_2D() throws Exception {
-        IAtom l  = mock(IAtom.class);  // 0
-        IAtom r  = mock(IAtom.class);  // 1
-        IAtom l1 = mock(IAtom.class);  // 2
-        IAtom l2 = mock(IAtom.class);  // 3
-        IAtom r1 = mock(IAtom.class);  // 4
-        IAtom r2 = mock(IAtom.class);  // 5
+        IAtom l = mock(IAtom.class); // 0
+        IAtom r = mock(IAtom.class); // 1
+        IAtom l1 = mock(IAtom.class); // 2
+        IAtom l2 = mock(IAtom.class); // 3
+        IAtom r1 = mock(IAtom.class); // 4
+        IAtom r2 = mock(IAtom.class); // 5
 
         IAtomContainer m = mock(IAtomContainer.class);
 
@@ -241,12 +227,12 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
     @Test
     public void testGeometric_3D() throws Exception {
-        IAtom l  = mock(IAtom.class);  // 0
-        IAtom r  = mock(IAtom.class);  // 1
-        IAtom l1 = mock(IAtom.class);  // 2
-        IAtom l2 = mock(IAtom.class);  // 3
-        IAtom r1 = mock(IAtom.class);  // 4
-        IAtom r2 = mock(IAtom.class);  // 5
+        IAtom l = mock(IAtom.class); // 0
+        IAtom r = mock(IAtom.class); // 1
+        IAtom l1 = mock(IAtom.class); // 2
+        IAtom l2 = mock(IAtom.class); // 3
+        IAtom r1 = mock(IAtom.class); // 4
+        IAtom r2 = mock(IAtom.class); // 5
 
         IAtomContainer m = mock(IAtomContainer.class);
 
@@ -272,8 +258,7 @@ public class GeometricDoubleBondEncoderFactoryTest {
     public void testPermutation_SingleSubstituents() throws Exception {
         // for a double atom with only one substituent the permutation parity
         // should be the identity (i.e. 1)
-        assertThat(permutation(new int[]{1, 2}),
-                   is(PermutationParity.IDENTITY));
+        assertThat(permutation(new int[]{1, 2}), is(PermutationParity.IDENTITY));
     }
 
     @Test
@@ -287,14 +272,10 @@ public class GeometricDoubleBondEncoderFactoryTest {
 
     @Test
     public void testMoveToBack() throws Exception {
-        assertThat(moveToBack(new int[]{0, 1, 2}, 0),
-                   is(new int[]{1, 2, 0}));
-        assertThat(moveToBack(new int[]{0, 1, 2}, 1),
-                   is(new int[]{0, 2, 1}));
-        assertThat(moveToBack(new int[]{0, 1, 2}, 2),
-                   is(new int[]{0, 1, 2}));
-        assertThat(moveToBack(new int[]{0, 1, 2, 4, 5, 6}, 2),
-                   is(new int[]{0, 1, 4, 5, 6, 2}));
+        assertThat(moveToBack(new int[]{0, 1, 2}, 0), is(new int[]{1, 2, 0}));
+        assertThat(moveToBack(new int[]{0, 1, 2}, 1), is(new int[]{0, 2, 1}));
+        assertThat(moveToBack(new int[]{0, 1, 2}, 2), is(new int[]{0, 1, 2}));
+        assertThat(moveToBack(new int[]{0, 1, 2, 4, 5, 6}, 2), is(new int[]{0, 1, 4, 5, 6, 2}));
     }
 
     @Test

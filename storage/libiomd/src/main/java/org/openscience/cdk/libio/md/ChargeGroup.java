@@ -35,54 +35,50 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @cdk.module libiomd
  * @cdk.githash
  */
-public class ChargeGroup extends AtomContainer{
+public class ChargeGroup extends AtomContainer {
 
-	private static final long serialVersionUID = 362147331841737028L;
+    private static final long serialVersionUID = 362147331841737028L;
 
-	private int number;
-	private MDMolecule parentMolecule;
-	private IAtom switchingAtom;
+    private int               number;
+    private MDMolecule        parentMolecule;
+    private IAtom             switchingAtom;
 
-	/**
-	 * Empty constructor.
-	 */
-	public ChargeGroup(){
-	}
+    /**
+     * Empty constructor.
+     */
+    public ChargeGroup() {}
 
-	/**
-	 * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule.
-	 */
-	public ChargeGroup(IAtomContainer container, int number, MDMolecule parentMolecule) {
-		super(container);
-		this.number=number;
-		this.parentMolecule=parentMolecule;
-	}
+    /**
+     * Constructor to create a ChargeGroup based on an AC, a number, and a MDMolecule.
+     */
+    public ChargeGroup(IAtomContainer container, int number, MDMolecule parentMolecule) {
+        super(container);
+        this.number = number;
+        this.parentMolecule = parentMolecule;
+    }
 
+    public int getNumber() {
+        return number;
+    }
 
-	public int getNumber() {
-		return number;
-	}
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
-	public void setNumber(int number) {
-		this.number = number;
-	}
+    public MDMolecule getParentMolecule() {
+        return parentMolecule;
+    }
 
-	public MDMolecule getParentMolecule() {
-		return parentMolecule;
-	}
+    public void setParentMolecule(MDMolecule parentMolecule) {
+        this.parentMolecule = parentMolecule;
+    }
 
-	public void setParentMolecule(MDMolecule parentMolecule) {
-		this.parentMolecule = parentMolecule;
-	}
+    public IAtom getSwitchingAtom() {
+        return switchingAtom;
+    }
 
-
-	public IAtom getSwitchingAtom() {
-		return switchingAtom;
-	}
-
-
-	public void setSwitchingAtom(IAtom switchingAtom) {
-		this.switchingAtom = switchingAtom;
-	}
+    public void setSwitchingAtom(IAtom switchingAtom) {
+        this.switchingAtom = switchingAtom;
+    }
 
 }

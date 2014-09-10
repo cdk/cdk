@@ -35,12 +35,14 @@ import static org.junit.Assert.assertThat;
  */
 public class IntractableTest {
 
-    @Test public void timeout() throws Exception {
+    @Test
+    public void timeout() throws Exception {
         Intractable e = Intractable.timeout(12);
         assertThat(e.getMessage(), is("Operation did not finish after 12 ms."));
     }
 
-    @Test public void timeoutWithDesc() throws Exception {
+    @Test
+    public void timeoutWithDesc() throws Exception {
         Intractable e = Intractable.timeout("MCS", 200);
         assertThat(e.getMessage(), is("MCS did not finish after 200 ms."));
     }

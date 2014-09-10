@@ -34,14 +34,14 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.CacaoCartesianFormatTest")
 public class CacaoCartesianFormat extends AbstractResourceFormat implements IChemFormat {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public CacaoCartesianFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new CacaoCartesianFormat();
-    	return myself;
+        if (myself == null) myself = new CacaoCartesianFormat();
+        return myself;
     }
 
     @TestMethod("testGetFormatName")
@@ -53,32 +53,39 @@ public class CacaoCartesianFormat extends AbstractResourceFormat implements IChe
     public String getMIMEType() {
         return null;
     }
+
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"caccrt"};
     }
 
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { return null; }
+    public String getReaderClassName() {
+        return null;
+    }
+
     @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() { return null; }
+    public String getWriterClassName() {
+        return null;
+    }
 
-	@TestMethod("testIsXMLBased")
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
-	}
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.NONE;
+    }
 
-	@TestMethod("testGetRequiredDataFeatures")
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

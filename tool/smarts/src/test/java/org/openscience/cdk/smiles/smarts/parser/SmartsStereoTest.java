@@ -44,15 +44,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class SmartsStereoTest {
 
-    @Test public void nonAbsoluteGeometric_trans() throws Exception {
+    @Test
+    public void nonAbsoluteGeometric_trans() throws Exception {
         assertMatch("C/C=C/C", "C/C(CC)=C(CC)/C", 4, 2);
     }
 
-    @Test public void nonAbsoluteGeometric_cis() throws Exception {
+    @Test
+    public void nonAbsoluteGeometric_cis() throws Exception {
         assertMatch("C(/C)=C/C", "C/C(CC)=C(CC)/C", 4, 2);
     }
 
-    @Test public void unspecifiedGeometric() throws Exception {
+    @Test
+    public void unspecifiedGeometric() throws Exception {
         assertMatch("C/C=C/?Cl", "CC=CCl", 1, 1);
         assertMatch("C/C=C/?Cl", "C/C=C/Cl", 1, 1);
         assertMatch("C/?C=C/Cl", "CC=CCl", 1, 1);
@@ -61,48 +64,56 @@ public class SmartsStereoTest {
         assertMatch("C/C=C/?Cl", "C/C=C/Cl", 1, 1);
     }
 
-    @Test public void nonAbsoluteTetrahedral() throws Exception {
+    @Test
+    public void nonAbsoluteTetrahedral() throws Exception {
         assertMatch("C[C@](C)(C)C", "C[C@](CC)(CCC)CCCC", 12, 1);
         assertMatch("C[C@](C)(C)C", "C[C@@](CC)(CCC)CCCC", 12, 1);
     }
 
-    @Test public void tetrahedralNegation_anticlockwise() throws Exception {
+    @Test
+    public void tetrahedralNegation_anticlockwise() throws Exception {
         assertMatch("[!@](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[!@](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 1, 1);
         assertMatch("[!@](C)(N)(O)CC", "[C@](C)(N)(O)CC", 0, 0);
     }
 
-    @Test public void tetrahedralNegation_clockwise() throws Exception {
+    @Test
+    public void tetrahedralNegation_clockwise() throws Exception {
         assertMatch("[!@@](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[!@@](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 0, 0);
         assertMatch("[!@@](C)(N)(O)CC", "[C@](C)(N)(O)CC", 1, 1);
     }
 
-    @Test public void tetrahedralUnspecified_clockwise() throws Exception {
+    @Test
+    public void tetrahedralUnspecified_clockwise() throws Exception {
         assertMatch("[@@?](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[@@?](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 1, 1);
         assertMatch("[@@?](C)(N)(O)CC", "[C@](C)(N)(O)CC", 0, 0);
     }
 
-    @Test public void tetrahedralUnspecified_anticlockwise() throws Exception {
+    @Test
+    public void tetrahedralUnspecified_anticlockwise() throws Exception {
         assertMatch("[@?](C)(N)(O)CC", "C(C)(N)(O)CC", 1, 1);
         assertMatch("[@?](C)(N)(O)CC", "[C@@](C)(N)(O)CC", 0, 0);
         assertMatch("[@?](C)(N)(O)CC", "[C@](C)(N)(O)CC", 1, 1);
     }
 
-    @Test public void tetrahedral_or() throws Exception {
+    @Test
+    public void tetrahedral_or() throws Exception {
         assertMatch("C[@,@@](C)(C)C", "CC(CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@,@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 24, 1);
         assertMatch("C[@,@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 24, 1);
     }
 
-    @Test public void tetrahedral_and() throws Exception {
+    @Test
+    public void tetrahedral_and() throws Exception {
         assertMatch("C[@&@@](C)(C)C", "CC(CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@&@@](C)(C)C", "C[C@](CC)(CCC)CCCC", 0, 0);
         assertMatch("C[@&@@](C)(C)C", "C[C@@](CC)(CCC)CCCC", 0, 0);
     }
 
-    @Test public void tetrahedralAndSymbol_or() throws Exception {
+    @Test
+    public void tetrahedralAndSymbol_or() throws Exception {
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "CC(CC)(CCC)CCCCC", 0, 0);
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "C[Si](CC)(CCC)CCCCC", 0, 0);
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "C[C@](CC)(CCC)CCCC", 1, 1);
@@ -111,7 +122,8 @@ public class SmartsStereoTest {
         assertMatch("C[C@,Si@@](CC)(CCC)CCCC", "C[Si@@](CC)(CCC)CCCC", 1, 1);
     }
 
-    @Test public void recursiveGeometric_trans() throws Exception {
+    @Test
+    public void recursiveGeometric_trans() throws Exception {
         assertMatch("[$(*/C=C/*)]", "C/C=C/C", 2, 2);
         assertMatch("[$(*/C=C/*)]", "F/C=C/Cl", 2, 2);
         assertMatch("[$(*/C=C/*)]", "CC=CC", 0, 0);
@@ -120,7 +132,8 @@ public class SmartsStereoTest {
         assertMatch("[$(*/C=C/*)]", "F/C=C\\Cl", 0, 0);
     }
 
-    @Test public void recursiveGeometric_cis() throws Exception {
+    @Test
+    public void recursiveGeometric_cis() throws Exception {
         assertMatch("[$(C(/*)=C/*)]", "C/C=C/C", 0, 0);
         assertMatch("[$(C(/*)=C/*)]", "F/C=C/Cl", 0, 0);
         assertMatch("[$(C(/*)=C/*)]", "CC=CC", 0, 0);
@@ -129,19 +142,22 @@ public class SmartsStereoTest {
         assertMatch("[$(C(/*)=C/*)]", "F/C=C\\Cl", 2, 2);
     }
 
-    @Test public void recursiveTetrahedral() throws Exception {
+    @Test
+    public void recursiveTetrahedral() throws Exception {
         assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@@](N)(CC)O", 1, 1);
         assertMatch("[$([C@](C)(CC)(N)O)]", "C[C@](N)(CC)O", 0, 0);
         assertMatch("[$([C@](C)(CC)(N)O)]", "CC(N)(CC)O", 0, 0);
     }
 
-    @Test public void tetrahedralImplicitH() throws Exception {
+    @Test
+    public void tetrahedralImplicitH() throws Exception {
         assertMatch("[C@H](C)(N)O", "[C@@H](N)(C)O", 1, 1);
         assertMatch("[C@H](C)(N)O", "[C@H](N)(C)O", 0, 0);
         assertMatch("[C@H](C)(N)O", "C(N)(C)O", 0, 0);
     }
 
-    @Test public void tetrahedralImplicitH_unspec() throws Exception {
+    @Test
+    public void tetrahedralImplicitH_unspec() throws Exception {
         assertMatch("[C@?H](C)(N)O", "[C@@H](N)(C)O", 1, 1);
         assertMatch("[C@?H](C)(N)O", "[C@H](N)(C)O", 0, 0);
         assertMatch("[C@?H](C)(N)O", "C(N)(C)O", 1, 1);

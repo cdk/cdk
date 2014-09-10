@@ -40,15 +40,16 @@ import static org.hamcrest.Matchers.closeTo;
  */
 public class XLogPDescriptorTest extends MolecularDescriptorTest {
 
-    public XLogPDescriptorTest() {
-    }
+    public XLogPDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(XLogPDescriptor.class);
+        setDescriptor(XLogPDescriptor.class);
     }
 
-    @Ignore @Test public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Ignore
+    @Test
+    public void testno688() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -72,7 +73,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.86, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void testno367() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno367() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -83,7 +85,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(-3.30, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno1837() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno1837() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -94,7 +97,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(-1.19, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno87() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno87() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -105,7 +109,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(7.00, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno1782() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno1782() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -116,7 +121,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.84, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno30() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno30() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -127,7 +133,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(4.62, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Ignore @Test public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Ignore
+    @Test
+    public void testno937() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -138,7 +146,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.66, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno990() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno990() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -149,7 +158,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.834, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void testno1000() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno1000() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -160,7 +170,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2.809, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testApirinBug1296383() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -171,7 +182,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1.422, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno1429() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno1429() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -182,7 +194,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0.31, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void testno1274() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno1274() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -193,7 +206,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(-1.487, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno454() throws ClassNotFoundException, CDKException, java.lang.Exception {
         //xlogp program gives a result of -0.89, because one N is classified as in ring and not as amid
         //if one takes a 5 or 7 ring than the program assignes amid ... strange
         //sometimes amid is O=C-N-C=O sometimes not...
@@ -207,7 +221,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(-2.11, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testno498() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testno498() throws ClassNotFoundException, CDKException, java.lang.Exception {
         //even here the amid assignment is very strange
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
@@ -219,7 +234,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(-0.59, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testAprindine() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testAprindine() throws ClassNotFoundException, CDKException, java.lang.Exception {
         //even here the amid assignment is very strange
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
@@ -231,7 +247,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(5.03, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void test1844() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void test1844() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -243,7 +260,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(5.22, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 1.0); //at:  16
     }
 
-    @Test public void test1810() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void test1810() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -257,7 +275,8 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
      */
-    @Test public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void test1822() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {new Boolean(true), new Boolean(false)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -268,8 +287,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(2.36, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.1); //at:  16
     }
 
-    @Test public void testAromaticBenzene() throws java.lang.Exception {
-        Object[] params = { false, true };
+    @Test
+    public void testAromaticBenzene() throws java.lang.Exception {
+        Object[] params = {false, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
@@ -280,8 +300,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
     }
 
-    @Test public void testNonAromaticBenzene() throws java.lang.Exception {
-        Object[] params = { false, true };
+    @Test
+    public void testNonAromaticBenzene() throws java.lang.Exception {
+        Object[] params = {false, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
@@ -290,8 +311,9 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.08, 0.01));
     }
 
-    @Test public void testPerceivedAromaticBenzene() throws java.lang.Exception {
-        Object[] params = { true, true };
+    @Test
+    public void testPerceivedAromaticBenzene() throws java.lang.Exception {
+        Object[] params = {true, true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C1=CC=CC=C1"); // benzene
@@ -300,4 +322,3 @@ public class XLogPDescriptorTest extends MolecularDescriptorTest {
         Assert.assertThat(((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), closeTo(2.02, 0.01));
     }
 }
-

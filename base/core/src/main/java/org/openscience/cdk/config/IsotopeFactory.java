@@ -43,45 +43,43 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  */
 public abstract class IsotopeFactory {
 
-	protected Map<String, List<IIsotope>> isotopes = null;
-	protected Map<String, IIsotope> majorIsotopes = null;
-    protected static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
+    protected Map<String, List<IIsotope>> isotopes      = null;
+    protected Map<String, IIsotope>       majorIsotopes = null;
+    protected static ILoggingTool         logger        = LoggingToolFactory.createLoggingTool(IsotopeFactory.class);
 
-	/**
-	 *  Returns the number of isotopes defined by this class.
-	 *
-	 *@return    The size value
-	 */
+    /**
+     *  Returns the number of isotopes defined by this class.
+     *
+     *@return    The size value
+     */
     @TestMethod("testGetSize")
-    public int getSize()
-	{
-		return isotopes.size();
-	}
+    public int getSize() {
+        return isotopes.size();
+    }
 
     /**
      * Protected methods only to be used by classes extending this class to add
      * an IIsotope.
      */
     protected void add(IIsotope isotope) {
-    	List<IIsotope> isotopesForSymbol = isotopes.get(isotope.getSymbol());
-    	if (isotopesForSymbol == null) {
-    		isotopesForSymbol = new ArrayList<IIsotope>();
-    		isotopes.put(isotope.getSymbol(), isotopesForSymbol);
-    	}
-    	isotopesForSymbol.add(isotope);
+        List<IIsotope> isotopesForSymbol = isotopes.get(isotope.getSymbol());
+        if (isotopesForSymbol == null) {
+            isotopesForSymbol = new ArrayList<IIsotope>();
+            isotopes.put(isotope.getSymbol(), isotopesForSymbol);
+        }
+        isotopesForSymbol.add(isotope);
     }
 
-	/**
-	 * Gets an array of all isotopes known to the IsotopeFactory for the given
-	 * element symbol.
-	 *
-	 *@param  symbol  An element symbol to search for
-	 *@return         An array of isotopes that matches the given element symbol
-	 */
+    /**
+     * Gets an array of all isotopes known to the IsotopeFactory for the given
+     * element symbol.
+     *
+     *@param  symbol  An element symbol to search for
+     *@return         An array of isotopes that matches the given element symbol
+     */
     @TestMethod("testGetIsotopes_String")
     public IIsotope[] getIsotopes(String symbol) {
-    	if (isotopes.get(symbol) == null) return new IIsotope[0];
+        if (isotopes.get(symbol) == null) return new IIsotope[0];
         List<IIsotope> list = new ArrayList<IIsotope>();
         for (IIsotope isotope : isotopes.get(symbol)) {
             try {
@@ -96,14 +94,14 @@ public abstract class IsotopeFactory {
     }
 
     /**
-	 * Gets a array of all isotopes known to the IsotopeFactory.
-	 *
-	 * @return         An array of all isotopes
-	 */
+     * Gets a array of all isotopes known to the IsotopeFactory.
+     *
+     * @return         An array of all isotopes
+     */
     @TestMethod("testGetIsotopes")
     public IIsotope[] getIsotopes() {
-    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (String element : isotopes.keySet()) {
+        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+        for (String element : isotopes.keySet()) {
             for (IIsotope isotope : isotopes.get(element)) {
                 try {
                     IIsotope clone = (IIsotope) isotope.clone();
@@ -113,35 +111,35 @@ public abstract class IsotopeFactory {
                     logger.debug(e);
                 }
             }
-    	}
-    	return list.toArray(new IIsotope[list.size()]);
+        }
+        return list.toArray(new IIsotope[list.size()]);
     }
 
     /**
-	 * Gets an array of all isotopes matching the searched exact mass within
-	 * a certain difference.
-	 *
-	 * @param  exactMass  search mass
-	 * @param  difference mass the isotope is allowed to differ from the search mass
-	 * @return            An array of all isotopes
-	 */
+     * Gets an array of all isotopes matching the searched exact mass within
+     * a certain difference.
+     *
+     * @param  exactMass  search mass
+     * @param  difference mass the isotope is allowed to differ from the search mass
+     * @return            An array of all isotopes
+     */
     @TestMethod("testGetIsotopes_double_double")
     public IIsotope[] getIsotopes(double exactMass, double difference) {
-    	ArrayList<IIsotope> list = new ArrayList<IIsotope>();
-    	for (String element : isotopes.keySet()) {
+        ArrayList<IIsotope> list = new ArrayList<IIsotope>();
+        for (String element : isotopes.keySet()) {
             for (IIsotope isotope : isotopes.get(element)) {
-    		    if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
-    			    try {
-    			        IIsotope clone = (IIsotope) isotope.clone();
-    			        list.add(clone);
-    		        } catch (CloneNotSupportedException e) {
-    	                logger.error("Could not clone IIsotope: ", e.getMessage());
-    	                logger.debug(e);
-    		        }
-    			}
-    		}
-    	}
-    	return list.toArray(new IIsotope[list.size()]);
+                if (Math.abs(isotope.getExactMass() - exactMass) <= difference) {
+                    try {
+                        IIsotope clone = (IIsotope) isotope.clone();
+                        list.add(clone);
+                    } catch (CloneNotSupportedException e) {
+                        logger.error("Could not clone IIsotope: ", e.getMessage());
+                        logger.debug(e);
+                    }
+                }
+            }
+        }
+        return list.toArray(new IIsotope[list.size()]);
     }
 
     /**
@@ -178,12 +176,11 @@ public abstract class IsotopeFactory {
      */
     @TestMethod("testGetIsotopeFromExactMass")
     public IIsotope getIsotope(String symbol, double exactMass, double tolerance) {
-        IIsotope ret     = null;
-        double   minDiff = Double.MAX_VALUE;
+        IIsotope ret = null;
+        double minDiff = Double.MAX_VALUE;
         for (IIsotope isotope : isotopes.get(symbol)) {
             double diff = Math.abs(isotope.getExactMass() - exactMass);
-            if (isotope.getSymbol().equals(symbol) &&
-            	diff <= tolerance && diff < minDiff) {
+            if (isotope.getSymbol().equals(symbol) && diff <= tolerance && diff < minDiff) {
                 try {
                     ret = (IIsotope) isotope.clone();
                     minDiff = diff;
@@ -197,15 +194,15 @@ public abstract class IsotopeFactory {
     }
 
     /**
-	 * Returns the most abundant (major) isotope with a given atomic number.
+     * Returns the most abundant (major) isotope with a given atomic number.
      *
      * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
      * defined as a number that is proportional to the 100 of the most abundant
      * isotope. For atoms with higher atomic numbers, the abundancy is defined
      * as a percentage.
-	 *
-	 * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
-	 * @return               The isotope corresponding to the given atomic number
+     *
+     * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
+     * @return               The isotope corresponding to the given atomic number
      *
      * @see #getMajorIsotope(String symbol)
      */
@@ -251,10 +248,10 @@ public abstract class IsotopeFactory {
         if (majorIsotopes.containsKey(symbol)) {
             major = majorIsotopes.get(symbol);
         } else {
-        	if (isotopes.get(symbol) == null) {
-        		logger.error("Could not find major isotope for: ", symbol);
-        		return null;
-        	}
+            if (isotopes.get(symbol) == null) {
+                logger.error("Could not find major isotope for: ", symbol);
+                return null;
+            }
             for (IIsotope isotope : isotopes.get(symbol)) {
                 if (isotope.getSymbol().equals(symbol)) {
                     try {
@@ -280,30 +277,27 @@ public abstract class IsotopeFactory {
         return major;
     }
 
-	/**
-	 *  Returns an Element with a given element symbol.
-	 *
-	 *@param  symbol  The element symbol for the requested element
-	 *@return         The configured element
-	 */
+    /**
+     *  Returns an Element with a given element symbol.
+     *
+     *@param  symbol  The element symbol for the requested element
+     *@return         The configured element
+     */
     @TestMethod("testGetElement_String")
-    public IElement getElement(String symbol)
-	{
+    public IElement getElement(String symbol) {
         return getMajorIsotope(symbol);
-	}
+    }
 
-
-	/**
-	 *  Returns an element according to a given atomic number.
-	 *
-	 *@param  atomicNumber  The elements atomic number
-	 *@return               The Element
-	 */
+    /**
+     *  Returns an element according to a given atomic number.
+     *
+     *@param  atomicNumber  The elements atomic number
+     *@return               The Element
+     */
     @TestMethod("testGetElement_int")
-    public IElement getElement(int atomicNumber)
-	{
+    public IElement getElement(int atomicNumber) {
         return getMajorIsotope(atomicNumber);
-	}
+    }
 
     /**
      * Returns the symbol matching the element with the given atomic number.
@@ -317,82 +311,77 @@ public abstract class IsotopeFactory {
         return isotope.getSymbol();
     }
 
-	/**
-	 * Configures an atom. Finds the correct element type
-	 * by looking at the atoms element symbol. If the element symbol is not recognized, it will
-	 * throw an {@link IllegalArgumentException}.
-	 *
-	 * @param  atom  The atom to be configured
-	 * @return       The configured atom
-	 */
-    @TestMethod("testConfigure_IAtom")
-    public IAtom configure(IAtom atom)
-	{
-		IIsotope isotope;
-
-        if (atom.getMassNumber() == null) isotope = getMajorIsotope(atom.getSymbol());
-        else isotope = getIsotope(atom.getSymbol(), atom.getMassNumber());
-
-        if (isotope == null)
-        	throw new IllegalArgumentException("Cannot configure an unrecognized element: " + atom);
-		return configure(atom, isotope);
-	}
-
-
-	/**
-	 *  Configures an atom to have all the data of the
-	 *  given isotope.
-	 *
-	 *@param  atom     The atom to be configure
-	 *@param  isotope  The isotope to read the data from
-	 *@return          The configured atom
-	 */
-    @TestMethod("testConfigure_IAtom_IIsotope")
-    public IAtom configure(IAtom atom, IIsotope isotope)
-	{
-		atom.setMassNumber(isotope.getMassNumber());
-		atom.setSymbol(isotope.getSymbol());
-		atom.setExactMass(isotope.getExactMass());
-		atom.setAtomicNumber(isotope.getAtomicNumber());
-		atom.setNaturalAbundance(isotope.getNaturalAbundance());
-		return atom;
-	}
-
-
-	/**
-	 *  Configures atoms in an AtomContainer to
-	 *  carry all the correct data according to their element type.
-	 *
-	 *@param  container  The AtomContainer to be configured
-	 */
-    @TestMethod("testConfigureAtoms_IAtomContainer")
-    public void configureAtoms(IAtomContainer container)
-	{
-		for (int f = 0; f < container.getAtomCount(); f++)
-		{
-			configure(container.getAtom(f));
-		}
-	}
     /**
-	 *  Gets the natural mass of this element, defined as average of masses of isotopes,
-	 *  weighted by abundance.
-	 *
-	 * @param  element                     the element in question
-	 * @return                             The natural mass value
-	 */
+     * Configures an atom. Finds the correct element type
+     * by looking at the atoms element symbol. If the element symbol is not recognized, it will
+     * throw an {@link IllegalArgumentException}.
+     *
+     * @param  atom  The atom to be configured
+     * @return       The configured atom
+     */
+    @TestMethod("testConfigure_IAtom")
+    public IAtom configure(IAtom atom) {
+        IIsotope isotope;
+
+        if (atom.getMassNumber() == null)
+            isotope = getMajorIsotope(atom.getSymbol());
+        else
+            isotope = getIsotope(atom.getSymbol(), atom.getMassNumber());
+
+        if (isotope == null) throw new IllegalArgumentException("Cannot configure an unrecognized element: " + atom);
+        return configure(atom, isotope);
+    }
+
+    /**
+     *  Configures an atom to have all the data of the
+     *  given isotope.
+     *
+     *@param  atom     The atom to be configure
+     *@param  isotope  The isotope to read the data from
+     *@return          The configured atom
+     */
+    @TestMethod("testConfigure_IAtom_IIsotope")
+    public IAtom configure(IAtom atom, IIsotope isotope) {
+        atom.setMassNumber(isotope.getMassNumber());
+        atom.setSymbol(isotope.getSymbol());
+        atom.setExactMass(isotope.getExactMass());
+        atom.setAtomicNumber(isotope.getAtomicNumber());
+        atom.setNaturalAbundance(isotope.getNaturalAbundance());
+        return atom;
+    }
+
+    /**
+     *  Configures atoms in an AtomContainer to
+     *  carry all the correct data according to their element type.
+     *
+     *@param  container  The AtomContainer to be configured
+     */
+    @TestMethod("testConfigureAtoms_IAtomContainer")
+    public void configureAtoms(IAtomContainer container) {
+        for (int f = 0; f < container.getAtomCount(); f++) {
+            configure(container.getAtom(f));
+        }
+    }
+
+    /**
+     *  Gets the natural mass of this element, defined as average of masses of isotopes,
+     *  weighted by abundance.
+     *
+     * @param  element                     the element in question
+     * @return                             The natural mass value
+     */
     @TestMethod("testGetNaturalMass_IElement")
-	public double getNaturalMass(IElement element){
-		IIsotope[] isotopes = getIsotopes(element.getSymbol());
-		double summedAbundances = 0;
-		double summedWeightedAbundances = 0;
-		double getNaturalMass = 0;
-		for (int i = 0; i < isotopes.length; i++) {
-			summedAbundances += isotopes[i].getNaturalAbundance();
-			summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
-			getNaturalMass = summedWeightedAbundances / summedAbundances;
-		}
-		return getNaturalMass;
-	}
+    public double getNaturalMass(IElement element) {
+        IIsotope[] isotopes = getIsotopes(element.getSymbol());
+        double summedAbundances = 0;
+        double summedWeightedAbundances = 0;
+        double getNaturalMass = 0;
+        for (int i = 0; i < isotopes.length; i++) {
+            summedAbundances += isotopes[i].getNaturalAbundance();
+            summedWeightedAbundances += isotopes[i].getNaturalAbundance() * isotopes[i].getExactMass();
+            getNaturalMass = summedWeightedAbundances / summedAbundances;
+        }
+        return getNaturalMass;
+    }
 
 }
-

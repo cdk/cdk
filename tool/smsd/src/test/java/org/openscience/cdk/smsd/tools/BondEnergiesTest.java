@@ -22,7 +22,6 @@
  */
 package org.openscience.cdk.smsd.tools;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -38,8 +37,8 @@ public class BondEnergiesTest extends CDKTestCase {
 
     @Test
     public void testGetInstance() throws Exception {
-    	BondEnergies energies = BondEnergies.getInstance();
-    	Assert.assertNotNull(energies);
+        BondEnergies energies = BondEnergies.getInstance();
+        Assert.assertNotNull(energies);
     }
 
     /**

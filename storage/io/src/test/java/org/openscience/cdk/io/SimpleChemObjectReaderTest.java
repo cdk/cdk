@@ -28,7 +28,6 @@ import org.openscience.cdk.interfaces.IChemObject;
 
 import java.io.InputStream;
 
-
 /**
  * TestCase for CDK IO classes.
  *
@@ -43,7 +42,8 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
         SimpleChemObjectReaderTest.chemObjectIO = aSimpelChemObjectReader;
     }
 
-    @Test public void testRead_IChemObject() throws Exception {
+    @Test
+    public void testRead_IChemObject() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
 
         boolean read = false;
@@ -53,8 +53,7 @@ public abstract class SimpleChemObjectReaderTest extends ChemObjectReaderTest {
                 chemObjectIO.setReader(ins);
                 IChemObject readObject = chemObjectIO.read(object);
                 chemObjectIO.close();
-                Assert.assertNotNull("Failed attempt to read the file as " +
-                    object.getClass().getName(), readObject);
+                Assert.assertNotNull("Failed attempt to read the file as " + object.getClass().getName(), readObject);
                 read = true;
             }
         }

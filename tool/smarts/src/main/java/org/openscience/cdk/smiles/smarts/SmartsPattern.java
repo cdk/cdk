@@ -78,14 +78,14 @@ public final class SmartsPattern extends Pattern {
     private final IAtomContainer query;
 
     /** Subgraph mapping. */
-    private final Pattern pattern;
+    private final Pattern        pattern;
 
     /** Include invariants about ring size / number. */
-    private final boolean ringInfo;
+    private final boolean        ringInfo;
 
     /** Aromaticity model. */
-    private final Aromaticity arom = new Aromaticity(ElectronDonation.daylight(),
-                                                     Cycles.or(Cycles.all(), Cycles.relevant()));
+    private final Aromaticity    arom = new Aromaticity(ElectronDonation.daylight(), Cycles.or(Cycles.all(),
+                                              Cycles.relevant()));
 
     /**
      * Internal constructor.
@@ -111,7 +111,8 @@ public final class SmartsPattern extends Pattern {
     /**
      * @inheritDoc
      */
-    @Override public int[] match(IAtomContainer container) {
+    @Override
+    public int[] match(IAtomContainer container) {
         return matchAll(container).first();
     }
 
@@ -137,7 +138,8 @@ public final class SmartsPattern extends Pattern {
      * @param target the target compound in which we want to match the pattern
      * @return mappings of the query to the target compound
      */
-    @Override public Mappings matchAll(final IAtomContainer target) {
+    @Override
+    public Mappings matchAll(final IAtomContainer target) {
 
         // TODO: prescreen target for element frequency before intialising
         // invariants and applying aromaticity, requires pattern enumeration -
@@ -191,11 +193,9 @@ public final class SmartsPattern extends Pattern {
     static boolean ringSizeOrNumber(final String smarts) {
         for (int i = 0, end = smarts.length() - 1; i <= end; i++) {
             char c = smarts.charAt(i);
-            if ((c == 'r' || c == 'R') && i < end && Character.isDigit(smarts.charAt(i + 1)))
-                return true;
+            if ((c == 'r' || c == 'R') && i < end && Character.isDigit(smarts.charAt(i + 1))) return true;
             // !R = R0
-            if (c == '!' && i < end && smarts.charAt(i + 1) == 'R')
-                return true;
+            if (c == '!' && i < end && smarts.charAt(i + 1) == 'R') return true;
         }
         return false;
     }

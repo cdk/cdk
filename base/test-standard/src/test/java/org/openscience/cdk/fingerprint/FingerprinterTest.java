@@ -52,110 +52,117 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-	boolean standAlone = false;
-	private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
+    boolean                     standAlone = false;
+    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(FingerprinterTest.class);
 
-	public IFingerprinter getBitFingerprinter() {
-	    return new Fingerprinter();
-	}
+    public IFingerprinter getBitFingerprinter() {
+        return new Fingerprinter();
+    }
 
-	@Test public void testRegression() throws Exception {
-	    IAtomContainer mol1 = MoleculeFactory.makeIndole();
-	    IAtomContainer mol2 = MoleculeFactory.makePyrrole();
-		Fingerprinter fingerprinter = new Fingerprinter();
-		IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33, bs1.cardinality());
-		IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
-		Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13, bs2.cardinality());
-	}
+    @Test
+    public void testRegression() throws Exception {
+        IAtomContainer mol1 = MoleculeFactory.makeIndole();
+        IAtomContainer mol2 = MoleculeFactory.makePyrrole();
+        Fingerprinter fingerprinter = new Fingerprinter();
+        IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
+        Assert.assertEquals(
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 33,
+                bs1.cardinality());
+        IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
+        Assert.assertEquals(
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 13,
+                bs2.cardinality());
+    }
 
-	@Test public void testGetSize() throws java.lang.Exception {
-		IFingerprinter fingerprinter = new Fingerprinter(512);
-		Assert.assertNotNull(fingerprinter);
-		Assert.assertEquals(512, fingerprinter.getSize());
-	}
+    @Test
+    public void testGetSize() throws java.lang.Exception {
+        IFingerprinter fingerprinter = new Fingerprinter(512);
+        Assert.assertNotNull(fingerprinter);
+        Assert.assertEquals(512, fingerprinter.getSize());
+    }
 
-	@Test public void testGetSearchDepth() throws java.lang.Exception {
-		Fingerprinter fingerprinter = new Fingerprinter(512,3);
-		Assert.assertNotNull(fingerprinter);
-		Assert.assertEquals(3, fingerprinter.getSearchDepth());
-	}
+    @Test
+    public void testGetSearchDepth() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter(512, 3);
+        Assert.assertNotNull(fingerprinter);
+        Assert.assertEquals(3, fingerprinter.getSearchDepth());
+    }
 
-	@Test public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter();
+    @Test
+    public void testgetBitFingerprint_IAtomContainer() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter();
 
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		IBitFingerprint bs = fingerprinter.getBitFingerprint(mol);
-		Assert.assertNotNull(bs);
-		Assert.assertEquals(fingerprinter.getSize(), bs.size());
-	}
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IBitFingerprint bs = fingerprinter.getBitFingerprint(mol);
+        Assert.assertNotNull(bs);
+        Assert.assertEquals(fingerprinter.getSize(), bs.size());
+    }
 
-	@Test public void testFingerprinter() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter();
-		Assert.assertNotNull(fingerprinter);
+    @Test
+    public void testFingerprinter() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter();
+        Assert.assertNotNull(fingerprinter);
 
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-	}
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
+        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+    }
 
-	@Test public void testFingerprinter_int() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter(512);
-		Assert.assertNotNull(fingerprinter);
+    @Test
+    public void testFingerprinter_int() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter(512);
+        Assert.assertNotNull(fingerprinter);
 
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-	}
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
+        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+    }
 
-	@Test public void testFingerprinter_int_int() throws java.lang.Exception
-	{
-		Fingerprinter fingerprinter = new Fingerprinter(1024,7);
-		Assert.assertNotNull(fingerprinter);
+    @Test
+    public void testFingerprinter_int_int() throws java.lang.Exception {
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 7);
+        Assert.assertNotNull(fingerprinter);
 
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
-		Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
-	}
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        BitSet bs1 = fingerprinter.getBitFingerprint(frag1).asBitSet();
+        Assert.assertTrue(FingerprinterTool.isSubset(bs, bs1));
+    }
 
-  @Test public void testFingerprinterBitSetSize() throws Exception {
-    Fingerprinter fingerprinter = new Fingerprinter(1024,7);
-    Assert.assertNotNull(fingerprinter);
-    IAtomContainer mol = MoleculeFactory.makeIndole();
-    BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
-    Assert.assertEquals(994, bs.length()); // highest set bit
-    Assert.assertEquals(1024, bs.size()); // actual bit set size
-  }
+    @Test
+    public void testFingerprinterBitSetSize() throws Exception {
+        Fingerprinter fingerprinter = new Fingerprinter(1024, 7);
+        Assert.assertNotNull(fingerprinter);
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        BitSet bs = fingerprinter.getBitFingerprint(mol).asBitSet();
+        Assert.assertEquals(994, bs.length()); // highest set bit
+        Assert.assertEquals(1024, bs.size()); // actual bit set size
+    }
 
-	/**
-	 * @cdk.bug 1851202
-	 */
-	@Test
+    /**
+     * @cdk.bug 1851202
+     */
+    @Test
     public void testBug1851202() throws Exception {
         String filename1 = "data/mdl/0002.stg01.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, Mode.STRICT);
-        IReaction reaction = (IReaction)reader.read(new Reaction());
+        IReaction reaction = (IReaction) reader.read(new Reaction());
         Assert.assertNotNull(reaction);
 
         IAtomContainer reactant = reaction.getReactants().getAtomContainer(0);
         IAtomContainer product = reaction.getProducts().getAtomContainer(0);
 
-        Fingerprinter fingerprinter = new Fingerprinter(64*26,8);
+        Fingerprinter fingerprinter = new Fingerprinter(64 * 26, 8);
         Assert.assertNotNull(fingerprinter.getBitFingerprint(reactant));
         Assert.assertNotNull(fingerprinter.getBitFingerprint(product));
-	}
+    }
 
     @Test(timeout = 500, expected = CDKException.class)
     public void testbug2917084() throws Exception {
@@ -243,122 +250,115 @@ public class FingerprinterTest extends AbstractFixedLengthFingerprinterTest {
         }
     }
 
-    public static IAtomContainer makeFragment1()
-	{
-		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
+    public static IAtomContainer makeFragment1() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+        mol.addAtom(new Atom("C")); // 6
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
-		mol.addBond(3, 5, IBond.Order.SINGLE); // 5
-		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
-		return mol;
-	}
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(3, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
+        return mol;
+    }
 
+    public static IAtomContainer makeFragment4() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
 
-	public static IAtomContainer makeFragment4()
-	{
-		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        return mol;
+    }
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		return mol;
-	}
+    public static IAtomContainer makeFragment2() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("S")); // 3
+        mol.addAtom(new Atom("O")); // 4
+        mol.addAtom(new Atom("C")); // 5
+        mol.addAtom(new Atom("C")); // 6
 
-	public static IAtomContainer makeFragment2()
-	{
-		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("S")); // 3
-		mol.addAtom(new Atom("O")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
+        mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(3, 5, IBond.Order.SINGLE); // 5
+        mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
+        mol.addBond(5, 6, IBond.Order.DOUBLE); // 7
+        return mol;
+    }
 
-		mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
-		mol.addBond(3, 5, IBond.Order.SINGLE); // 5
-		mol.addBond(5, 6, IBond.Order.DOUBLE); // 6
-		mol.addBond(5, 6, IBond.Order.DOUBLE); // 7
-		return mol;
-	}
+    public static IAtomContainer makeFragment3() {
+        IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 4
+        mol.addAtom(new Atom("C")); // 5
+        mol.addAtom(new Atom("C")); // 6
 
-	public static IAtomContainer makeFragment3()
-	{
-		IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
-		mol.addAtom(new Atom("C")); // 4
-		mol.addAtom(new Atom("C")); // 5
-		mol.addAtom(new Atom("C")); // 6
-
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 3
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 4
-		mol.addBond(3, 5, IBond.Order.DOUBLE); // 5
-		mol.addBond(5, 6, IBond.Order.SINGLE); // 6
-		return mol;
-	}
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 4
+        mol.addBond(3, 5, IBond.Order.DOUBLE); // 5
+        mol.addBond(5, 6, IBond.Order.SINGLE); // 6
+        return mol;
+    }
 
     public static IAtomContainer makeButane() {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("C")); // 3
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("C")); // 3
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
 
-		return mol;
+        return mol;
     }
 
     public static IAtomContainer makePropylAmine() {
         IAtomContainer mol = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-		mol.addAtom(new Atom("C")); // 0
-		mol.addAtom(new Atom("C")); // 1
-		mol.addAtom(new Atom("C")); // 2
-		mol.addAtom(new Atom("N")); // 3
+        mol.addAtom(new Atom("C")); // 0
+        mol.addAtom(new Atom("C")); // 1
+        mol.addAtom(new Atom("C")); // 2
+        mol.addAtom(new Atom("N")); // 3
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(1, 2, IBond.Order.SINGLE); // 2
-		mol.addBond(2, 3, IBond.Order.SINGLE); // 3
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(1, 2, IBond.Order.SINGLE); // 2
+        mol.addBond(2, 3, IBond.Order.SINGLE); // 3
 
-		return mol;
+        return mol;
     }
 
-    public static void main(String[] args) throws Exception
-	{
-		BigInteger bi=new BigInteger("0");
-		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
-		System.err.println(bi.toString());
-		bi=bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
-		System.err.println(bi.toString());
-		FingerprinterTest fpt = new FingerprinterTest();
-		fpt.standAlone = true;
-		//fpt.testFingerprinter();
-		//fpt.testFingerprinterArguments();
-		//fpt.testBug706786();
-		//fpt.testBug771485();
-		//fpt.testBug853254();
-		//fpt.testBug931608();
-		fpt.testBug934819();
-	}
+    public static void main(String[] args) throws Exception {
+        BigInteger bi = new BigInteger("0");
+        bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 63)));
+        System.err.println(bi.toString());
+        bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
+        System.err.println(bi.toString());
+        FingerprinterTest fpt = new FingerprinterTest();
+        fpt.standAlone = true;
+        //fpt.testFingerprinter();
+        //fpt.testFingerprinterArguments();
+        //fpt.testBug706786();
+        //fpt.testBug771485();
+        //fpt.testBug853254();
+        //fpt.testBug931608();
+        fpt.testBug934819();
+    }
 }
-

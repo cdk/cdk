@@ -32,15 +32,11 @@ public class FortranFormatTest extends CDKTestCase {
         super();
     }
 
-
-
     @Test
     public void testAtof_String() {
-		Assert.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
+        Assert.assertEquals(1.5, FortranFormat.atof("1.5"), 0.0001);
 
-		// FIXME: need to add something here with a 'd'
-	}
+        // FIXME: need to add something here with a 'd'
+    }
 
 }
-
-

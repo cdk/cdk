@@ -39,15 +39,15 @@ import static org.junit.Assert.assertTrue;
  */
 public final class RingSearchTest_NonCyclic {
 
-    private final IAtomContainer nonCyclic = MoleculeFactory
-            .makeBranchedAliphatic();
+    private final IAtomContainer nonCyclic = MoleculeFactory.makeBranchedAliphatic();
 
-    @Test public void testCyclic() {
-        assertThat(new RingSearch(nonCyclic).cyclic().length,
-                   is(0));
+    @Test
+    public void testCyclic() {
+        assertThat(new RingSearch(nonCyclic).cyclic().length, is(0));
     }
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         int n = nonCyclic.getAtomCount();
         RingSearch ringSearch = new RingSearch(nonCyclic);
         for (int i = 0; i < n; i++) {
@@ -55,23 +55,28 @@ public final class RingSearchTest_NonCyclic {
         }
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         assertThat(new RingSearch(nonCyclic).isolated().length, is(0));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         assertThat(new RingSearch(nonCyclic).fused().length, is(0));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         assertTrue(new RingSearch(nonCyclic).ringFragments().isEmpty());
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         assertTrue(new RingSearch(nonCyclic).isolatedRingFragments().isEmpty());
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         assertTrue(new RingSearch(nonCyclic).fusedRingFragments().isEmpty());
     }
 

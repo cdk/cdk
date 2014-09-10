@@ -43,108 +43,85 @@ public class CDKAtomTypeMatcherFilesTest extends AbstractCDKAtomTypeTest {
 
     private static Map<String, Integer> testedAtomTypes = new HashMap<String, Integer>();
 
-    @Test public void testFile3() throws Exception {
+    @Test
+    public void testFile3() throws Exception {
         String filename = "data/cml/3.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {
-            "C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2",
-            "O.sp3", "C.sp2", "C.sp2", "C.sp2"
-        };
+        String[] expectedTypes = {"C.sp2", "N.sp2", "C.sp2", "N.sp3", "C.sp2", "N.sp2", "O.sp3", "C.sp2", "C.sp2",
+                "C.sp2"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
     /**
      * @cdk.bug 3141611
      */
-    @Test public void testBug3141611() throws Exception {
+    @Test
+    public void testBug3141611() throws Exception {
         String filename = "data/mdl/error.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {
-            "C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3",
-            "C.sp3", "P.ate", "O.sp2", "O.minus"
-        };
+        String[] expectedTypes = {"C.sp3", "C.sp2", "O.sp2", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "P.ate", "O.sp2",
+                "O.minus"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testOla28() throws Exception {
+    @Test
+    public void testOla28() throws Exception {
         String filename = "data/cml/mol28.cml";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
 
         // test the resulting ChemFile content
         Assert.assertNotNull(chemFile);
         IAtomContainer mol = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
-        String[] expectedTypes = {
-            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "F",
-            "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
-            "C.sp3", "C.sp3", "N.plus", "C.sp3", "C.sp3",
-            "C.sp3", "C.sp3", "C.sp3", "C.sp2", "O.sp3",
-            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
-            "Cl"
-        };
+        String[] expectedTypes = {"C.sp2", "C.sp2", "C.sp2", "C.sp2", "F", "C.sp2", "C.sp2", "C.sp2", "O.sp2", "C.sp3",
+                "C.sp3", "C.sp3", "N.plus", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp3", "C.sp2", "O.sp3", "C.sp2",
+                "C.sp2", "C.sp2", "C.sp2", "C.sp2", "Cl"};
         assertAtomTypes(testedAtomTypes, expectedTypes, mol);
     }
 
-    @Test public void testSmilesFiles() throws Exception {
-        CDKAtomTypeMatcher atomTypeMatcher =
-            CDKAtomTypeMatcher.getInstance(
-                SilentChemObjectBuilder.getInstance()
-            );
+    @Test
+    public void testSmilesFiles() throws Exception {
+        CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.getInstance(SilentChemObjectBuilder.getInstance());
 
         // Read the first file
         String filename = "data/cml/smiles1.cml";
-        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-            filename
-        );
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
-        IAtomContainer mol1 = ChemFileManipulator
-            .getAllAtomContainers(chemFile).get(0);
+        IAtomContainer mol1 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         // Read the second file
         filename = "data/cml/smiles2.cml";
-        ins = this.getClass().getClassLoader().getResourceAsStream(
-            filename
-        );
+        ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new CMLReader(ins);
-        chemFile = (IChemFile)reader.read(new ChemFile());
+        chemFile = (IChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
-        IAtomContainer mol2 = ChemFileManipulator
-            .getAllAtomContainers(chemFile).get(0);
+        IAtomContainer mol2 = ChemFileManipulator.getAllAtomContainers(chemFile).get(0);
 
         IAtomType[] types1 = atomTypeMatcher.findMatchingAtomTypes(mol1);
         IAtomType[] types2 = atomTypeMatcher.findMatchingAtomTypes(mol2);
-        for (int i=0; i<mol1.getAtomCount(); i++) {
-            Assert.assertNotNull(
-                "Atom typing in mol1 failed for atom " + (i+1),
-                types1[i]
-            );
-            Assert.assertNotNull(
-                "Atom typing in mol2 failed for atom " + (i+1),
-                types2[i]
-            );
-            Assert.assertEquals(
-                "Atom type mismatch for the " + (i+1) + " atom",
-                types1[i].getAtomTypeName(),
-                types2[i].getAtomTypeName()
-            );
+        for (int i = 0; i < mol1.getAtomCount(); i++) {
+            Assert.assertNotNull("Atom typing in mol1 failed for atom " + (i + 1), types1[i]);
+            Assert.assertNotNull("Atom typing in mol2 failed for atom " + (i + 1), types2[i]);
+            Assert.assertEquals("Atom type mismatch for the " + (i + 1) + " atom", types1[i].getAtomTypeName(),
+                    types2[i].getAtomTypeName());
         }
     }
 }

@@ -56,7 +56,7 @@ public class PMPConvention extends CMLCoreModule {
 
     public void startDocument() {
         super.startDocument();
-//        cdo.startObject("Frame");
+        //        cdo.startObject("Frame");
         currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
     }
 
@@ -75,42 +75,26 @@ public class PMPConvention extends CMLCoreModule {
             if ("P 21 21 21 (1)".equals(s)) {
                 sg = "P 2_1 2_1 2_1";
             }
-//            cdo.setObjectProperty("Crystal", "spacegroup", sg);
-            ((ICrystal)currentMolecule).setSpaceGroup(sg);
-        } else if (xpath.toString().endsWith("floatArray/") &&
-           (elementTitle.equals("a") || elementTitle.equals("b") ||
-            elementTitle.equals("c"))) {
-        	StringTokenizer st = new StringTokenizer(s);
-        	if (st.countTokens() > 2) {
-        		if (elementTitle.equals("a")) {
-        			((ICrystal)currentMolecule).setA(
-        				new Vector3d(
-        					Double.parseDouble(st.nextToken()),
-        					Double.parseDouble(st.nextToken()),
-        					Double.parseDouble(st.nextToken())
-        				)
-        			);
-        		} else if (elementTitle.equals("b")) {
-        			((ICrystal)currentMolecule).setB(
-       					new Vector3d(
-    						Double.parseDouble(st.nextToken()),
-    						Double.parseDouble(st.nextToken()),
-    						Double.parseDouble(st.nextToken())
-       					)
-        			);
-        		} else if (elementTitle.equals("c")) {
-        			((ICrystal)currentMolecule).setC(
-       					new Vector3d(
-      						Double.parseDouble(st.nextToken()),
-      						Double.parseDouble(st.nextToken()),
-      						Double.parseDouble(st.nextToken())
-       					)
-        			);
-        		}
-        	} else {
+            //            cdo.setObjectProperty("Crystal", "spacegroup", sg);
+            ((ICrystal) currentMolecule).setSpaceGroup(sg);
+        } else if (xpath.toString().endsWith("floatArray/")
+                && (elementTitle.equals("a") || elementTitle.equals("b") || elementTitle.equals("c"))) {
+            StringTokenizer st = new StringTokenizer(s);
+            if (st.countTokens() > 2) {
+                if (elementTitle.equals("a")) {
+                    ((ICrystal) currentMolecule).setA(new Vector3d(Double.parseDouble(st.nextToken()), Double
+                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                } else if (elementTitle.equals("b")) {
+                    ((ICrystal) currentMolecule).setB(new Vector3d(Double.parseDouble(st.nextToken()), Double
+                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                } else if (elementTitle.equals("c")) {
+                    ((ICrystal) currentMolecule).setC(new Vector3d(Double.parseDouble(st.nextToken()), Double
+                            .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                }
+            } else {
                 logger.debug("PMP Convention error: incorrect number of cell axis fractions!");
             }
-//            cdo.endObject(axis);
+            //            cdo.endObject(axis);
         } else {
             super.characterData(xpath, ch, start, length);
         }

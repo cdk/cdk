@@ -42,15 +42,13 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
 
     @Test
     public void testConfigure_IAtom_IAtomType() {
-		IAtom atom = new Atom(Elements.CARBON);
-		IAtomType atomType = new AtomType(Elements.CARBON);
-		atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
-		AtomTypeManipulator.configure(atom, atomType);
-		Assert.assertEquals(
-			atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
-			atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR)
-		);
-	}
+        IAtom atom = new Atom(Elements.CARBON);
+        IAtomType atomType = new AtomType(Elements.CARBON);
+        atomType.setFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR, true);
+        AtomTypeManipulator.configure(atom, atomType);
+        Assert.assertEquals(atomType.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR),
+                atom.getFlag(CDKConstants.IS_HYDROGENBOND_ACCEPTOR));
+    }
 
     @Test
     public void testConfigureUnsetProperties_DontOverwriterSetProperties() {
@@ -78,7 +76,8 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         AtomTypeManipulator.configure(atom, atomType);
     }
 
-    @Test public void unknownAtomTypeDoesNotModifyProperties() {
+    @Test
+    public void unknownAtomTypeDoesNotModifyProperties() {
         IAtom atom = new Atom(Elements.CARBON);
         IAtomType atomType = new AtomType(Elements.Unknown.toIElement());
         atomType.setAtomTypeName("X");
@@ -87,5 +86,3 @@ public class AtomTypeManipulatorTest extends CDKTestCase {
         assertThat(atom.getAtomicNumber(), is(6));
     }
 }
-
-

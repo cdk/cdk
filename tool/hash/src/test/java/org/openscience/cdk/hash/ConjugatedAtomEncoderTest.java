@@ -48,7 +48,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
  */
 public class ConjugatedAtomEncoderTest {
 
-
     @Test(expected = NullPointerException.class)
     public void testConstruction_Null() {
         new ConjugatedAtomEncoder(null);
@@ -56,7 +55,7 @@ public class ConjugatedAtomEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testConstruction_Empty() {
-        new ConjugatedAtomEncoder(Collections.<AtomEncoder>emptyList());
+        new ConjugatedAtomEncoder(Collections.<AtomEncoder> emptyList());
     }
 
     /**
@@ -97,7 +96,8 @@ public class ConjugatedAtomEncoderTest {
         ConjugatedAtomEncoder.create(mock(AtomEncoder.class), null);
     }
 
-    @Test public void testEncode_Single() throws Exception {
+    @Test
+    public void testEncode_Single() throws Exception {
         AtomEncoder a = mock(AtomEncoder.class);
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
@@ -110,7 +110,8 @@ public class ConjugatedAtomEncoderTest {
         verifyNoMoreInteractions(a, atom, container);
     }
 
-    @Test public void testEncode() throws Exception {
+    @Test
+    public void testEncode() throws Exception {
         AtomEncoder a = mock(AtomEncoder.class);
         AtomEncoder b = mock(AtomEncoder.class);
         AtomEncoder c = mock(AtomEncoder.class);

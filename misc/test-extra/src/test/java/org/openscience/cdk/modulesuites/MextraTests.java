@@ -48,28 +48,12 @@ import org.openscience.cdk.tools.HOSECodeAnalyserTest;
  *
  * @cdk.module  test-extra
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    ExtraCoverageTest.class,
-    XMLIsotopeFactoryTest.class,
-    IsotopeReaderTest.class,
-    IsotopeHandlerTest.class,
-    CloneAtomContainerTest.class,
-    RDFCalculatorTest.class,
-    KabschAlignmentTest.class,
-    CASNumberTest.class,
-    HOSECodeAnalyserTest.class,
-    DeAromatizationToolTest.class,
-    ShelXWriterTest.class,
-    CrystClustReaderTest.class,
-    GamessReaderTest.class,
-    INChIReaderTest.class,
-    INChIPlainTextReaderTest.class,
-    IteratingMDLConformerReaderTest.class,
-    ExtraReaderFactoryTest.class,
-    RandomAccessTest.class,
-    BremserPredictorTest.class,
-    ReactionChainTest.class,
-    EquivalentClassPartitionerTest.class,
-})
-public class MextraTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {ExtraCoverageTest.class, XMLIsotopeFactoryTest.class, IsotopeReaderTest.class,
+        IsotopeHandlerTest.class, CloneAtomContainerTest.class, RDFCalculatorTest.class, KabschAlignmentTest.class,
+        CASNumberTest.class, HOSECodeAnalyserTest.class, DeAromatizationToolTest.class, ShelXWriterTest.class,
+        CrystClustReaderTest.class, GamessReaderTest.class, INChIReaderTest.class, INChIPlainTextReaderTest.class,
+        IteratingMDLConformerReaderTest.class, ExtraReaderFactoryTest.class, RandomAccessTest.class,
+        BremserPredictorTest.class, ReactionChainTest.class, EquivalentClassPartitionerTest.class,})
+public class MextraTests {
+}

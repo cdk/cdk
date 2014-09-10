@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.qsar;
 
-
 import java.io.Serializable;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -32,16 +31,16 @@ import org.openscience.cdk.qsar.result.*;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.qsar.DescriptorValueTest")
-public class DescriptorValue implements Serializable{
+public class DescriptorValue implements Serializable {
 
-	private static final long serialVersionUID = -5672896059814842972L;
+    private static final long       serialVersionUID = -5672896059814842972L;
 
     private DescriptorSpecification specification;
-    private String[] parameterNames;
-    private Object[] parameterSettings;
-    private IDescriptorResult value;
-    private String[] descriptorNames;
-    private Exception exception;
+    private String[]                parameterNames;
+    private Object[]                parameterSettings;
+    private IDescriptorResult       value;
+    private String[]                descriptorNames;
+    private Exception               exception;
 
     /**
      * Construct a descriptor value object, representing the numeric values as well as parameters and provenance.
@@ -54,11 +53,8 @@ public class DescriptorValue implements Serializable{
      * @param value  The actual values
      * @param descriptorNames The names of the values
      */
-    public DescriptorValue(DescriptorSpecification specification,
-                           String[] parameterNames,
-                           Object[] parameterSettings,
-                           IDescriptorResult value,
-                           String[] descriptorNames) {
+    public DescriptorValue(DescriptorSpecification specification, String[] parameterNames, Object[] parameterSettings,
+            IDescriptorResult value, String[] descriptorNames) {
         this(specification, parameterNames, parameterSettings, value, descriptorNames, null);
 
     }
@@ -76,12 +72,8 @@ public class DescriptorValue implements Serializable{
      * @param exception The exception object that should have been caught if an error occurred during descriptor
      * calculation
      */
-    public DescriptorValue(DescriptorSpecification specification,
-                           String[] parameterNames,
-                           Object[] parameterSettings,
-                           IDescriptorResult value,
-                           String[] descriptorNames,
-                           Exception exception) {
+    public DescriptorValue(DescriptorSpecification specification, String[] parameterNames, Object[] parameterSettings,
+            IDescriptorResult value, String[] descriptorNames, Exception exception) {
         this.specification = specification;
         this.parameterNames = parameterNames;
         this.parameterSettings = parameterSettings;
@@ -141,9 +133,7 @@ public class DescriptorValue implements Serializable{
     public String[] getNames() {
         if (descriptorNames == null || descriptorNames.length == 0) {
             String title = specification.getImplementationTitle();
-            if (value instanceof BooleanResult ||
-                    value instanceof DoubleResult ||
-                    value instanceof IntegerResult) {
+            if (value instanceof BooleanResult || value instanceof DoubleResult || value instanceof IntegerResult) {
                 descriptorNames = new String[1];
                 descriptorNames[0] = title;
             } else {
@@ -154,11 +144,11 @@ public class DescriptorValue implements Serializable{
                     ndesc = value.length();
                 }
                 descriptorNames = new String[ndesc];
-                for (int i = 1; i < ndesc+1; i++) descriptorNames[i] = title+i;
+                for (int i = 1; i < ndesc + 1; i++)
+                    descriptorNames[i] = title + i;
             }
         }
         return descriptorNames;
     }
 
 }
-

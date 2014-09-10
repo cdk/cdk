@@ -37,7 +37,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.smsd.tools.TimeManagerTest")
 public class TimeManager {
 
-    private double startTime;
+    private double           startTime;
     private SimpleDateFormat dateFormat;
 
     /**
@@ -61,7 +61,6 @@ public class TimeManager {
         double currentTime = System.currentTimeMillis();
 
         return (currentTime - startTime) / (60 * 60 * 1000);
-
 
     }
 

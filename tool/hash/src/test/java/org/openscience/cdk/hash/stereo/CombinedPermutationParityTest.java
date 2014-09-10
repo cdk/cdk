@@ -19,7 +19,7 @@ public class CombinedPermutationParityTest {
 
     @Test
     public void testParity() throws Exception {
-        PermutationParity left  = mock(PermutationParity.class);
+        PermutationParity left = mock(PermutationParity.class);
         PermutationParity right = mock(PermutationParity.class);
         PermutationParity parity = new CombinedPermutationParity(left, right);
 

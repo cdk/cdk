@@ -41,7 +41,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
 
     @Test
     public void testReadAtomTypes_IChemObjectBuilder() throws Exception {
-    	OWLBasedAtomTypeConfigurator configurator = new OWLBasedAtomTypeConfigurator();
+        OWLBasedAtomTypeConfigurator configurator = new OWLBasedAtomTypeConfigurator();
         String configFile = "org/openscience/cdk/dict/data/cdk-atom-types.owl";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         configurator.setInputStream(ins);
@@ -50,7 +50,7 @@ public class OWLBasedAtomTypeConfiguratorTest extends CDKTestCase {
 
     @Test
     public void testSetInputStream_InputStream() throws Exception {
-    	testReadAtomTypes_IChemObjectBuilder();
+        testReadAtomTypes_IChemObjectBuilder();
     }
 
 }

@@ -48,7 +48,6 @@ class ASTPeriodicGroupNumber extends SimpleNode {
         super(p, id);
     }
 
-
     /**
      * Accept the visitor. *
      */

@@ -36,8 +36,10 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ReactionSchemeTest extends AbstractReactionSchemeTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new ReactionScheme();
             }
@@ -45,10 +47,10 @@ public class ReactionSchemeTest extends AbstractReactionSchemeTest {
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testReactionScheme() {
         IReactionScheme scheme = new ReactionScheme();

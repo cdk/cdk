@@ -43,8 +43,8 @@ public interface IDoubleBondStereochemistry extends IStereoElement {
      * Enumeration that defines the two possible values for this stereochemistry type.
      */
     public enum Conformation {
-        TOGETHER,  //  as in Z-but-2-ene
-        OPPOSITE;  //  as in E-but-2-ene
+        TOGETHER, //  as in Z-but-2-ene
+        OPPOSITE; //  as in E-but-2-ene
 
         /**
          * Invert this conformation, inv(together) = opposite, inv(opposite)

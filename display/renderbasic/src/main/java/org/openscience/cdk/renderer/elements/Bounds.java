@@ -84,12 +84,14 @@ public final class Bounds implements IRenderingElement {
 
     /** @inheritDoc */
     @TestMethod("testAccept")
-    @Override public void accept(IRenderingVisitor visitor) {
+    @Override
+    public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }
 
     /** @inheritDoc */
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "{{" + minX + ", " + minY + "} - {" + maxX + ", " + maxY + "}}";
     }
 }

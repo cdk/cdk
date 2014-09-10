@@ -32,26 +32,26 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest {
 
-	public  ProtonTotalPartialChargeDescriptorTest() {}
+    public ProtonTotalPartialChargeDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(ProtonTotalPartialChargeDescriptor.class);
+        setDescriptor(ProtonTotalPartialChargeDescriptor.class);
     }
 
-	@Test
+    @Test
     public void testProtonTotalPartialChargeDescriptorTest() throws java.lang.Exception {
-		double [] testResult={0.07915,0.05783,0.05783,0.05783};
-		IAtomicDescriptor descriptor  = new ProtonTotalPartialChargeDescriptor();
+        double[] testResult = {0.07915, 0.05783, 0.05783, 0.05783};
+        IAtomicDescriptor descriptor = new ProtonTotalPartialChargeDescriptor();
 
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CF");
-		addExplicitHydrogens(mol);
-		DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol.getAtom(0),mol).getValue();
-		for (int i = 0; i < testResult.length; ++i) {
-		    Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
-		}
-	}
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CF");
+        addExplicitHydrogens(mol);
+        DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol.getAtom(0), mol).getValue();
+        for (int i = 0; i < testResult.length; ++i) {
+            Assert.assertEquals(testResult[i], retval.get(i), 0.00001);
+        }
+    }
 
     /**
      * @cdk.bug 2039739
@@ -68,4 +68,3 @@ public class ProtonTotalPartialChargeDescriptorTest extends AtomicDescriptorTest
         Assert.assertTrue(Double.isNaN(retval.get(4)));
     }
 }
-

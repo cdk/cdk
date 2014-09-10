@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class BSFormatTest extends ChemFormatTest {
 
     public BSFormatTest() {
-        super.setChemFormat((IChemFormat)BSFormat.getInstance());
+        super.setChemFormat((IChemFormat) BSFormat.getInstance());
     }
 
 }

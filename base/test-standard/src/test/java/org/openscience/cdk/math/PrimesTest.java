@@ -32,17 +32,17 @@ public class PrimesTest extends CDKTestCase {
         super();
     }
 
-	@Test
-	public void testGetPrimeAt_int() {
-		Assert.assertEquals(2, Primes.getPrimeAt(0));
+    @Test
+    public void testGetPrimeAt_int() {
+        Assert.assertEquals(2, Primes.getPrimeAt(0));
 
-		try {
-			Primes.getPrimeAt(2229);
-			Assert.fail("Should fail her, because it contains only X primes.");
-		} catch (ArrayIndexOutOfBoundsException exception) {
-			// OK, that should happen
-		}
-	}
+        try {
+            Primes.getPrimeAt(2229);
+            Assert.fail("Should fail her, because it contains only X primes.");
+        } catch (ArrayIndexOutOfBoundsException exception) {
+            // OK, that should happen
+        }
+    }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void testArrayIndexOutOfBounds() {
@@ -50,5 +50,3 @@ public class PrimesTest extends CDKTestCase {
     }
 
 }
-
-

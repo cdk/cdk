@@ -30,12 +30,10 @@ import org.junit.BeforeClass;
  */
 public class RingElementTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new RingElement(
-			3, 4, 5, Color.orange
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new RingElement(3, 4, 5, Color.orange);
+        setRenderingElement(element);
+    }
 
 }

@@ -37,16 +37,16 @@ public class MockMolecule extends AtomContainer {
 
     private static final long serialVersionUID = -3475592461591784619L;
 
-    public MockMolecule () {
-		super();
+    public MockMolecule() {
+        super();
 
-		addAtom(new Atom("C", new Point3d(1,1,-1)));
-		addAtom(new Atom("C", new Point3d(1,-1,-1)));
-		addAtom(new Atom("C", new Point3d(-1,1,-1)));
-		addAtom(new Atom("C", new Point3d(-1,-1,-1)));
-		addAtom(new Atom("C", new Point3d(1,1,1)));
-		addAtom(new Atom("C", new Point3d(1,-1,1)));
-		addAtom(new Atom("C", new Point3d(-1,1,1)));
-		addAtom(new Atom("C", new Point3d(-1,-1,1)));
-	}
+        addAtom(new Atom("C", new Point3d(1, 1, -1)));
+        addAtom(new Atom("C", new Point3d(1, -1, -1)));
+        addAtom(new Atom("C", new Point3d(-1, 1, -1)));
+        addAtom(new Atom("C", new Point3d(-1, -1, -1)));
+        addAtom(new Atom("C", new Point3d(1, 1, 1)));
+        addAtom(new Atom("C", new Point3d(1, -1, 1)));
+        addAtom(new Atom("C", new Point3d(-1, 1, 1)));
+        addAtom(new Atom("C", new Point3d(-1, -1, 1)));
+    }
 }

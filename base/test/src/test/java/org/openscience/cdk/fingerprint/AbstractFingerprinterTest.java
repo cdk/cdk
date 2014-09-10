@@ -34,18 +34,18 @@ import static org.mockito.Mockito.mock;
 public abstract class AbstractFingerprinterTest extends CDKTestCase {
 
     public IFingerprinter getBitFingerprinter() {
-        throw new IllegalAccessError("This method should be overwritten " +
-        "by subclasses unit tests");
+        throw new IllegalAccessError("This method should be overwritten " + "by subclasses unit tests");
     };
 
     /* override if method is implemented */
-    @Test(expected=UnsupportedOperationException.class) public void testGetCountFingerprint() throws Exception {
+    @Test(expected = UnsupportedOperationException.class)
+    public void testGetCountFingerprint() throws Exception {
         getBitFingerprinter().getCountFingerprint(mock(IAtomContainer.class));
     }
 
     /* override if method is implemented */
-    @Test(expected=UnsupportedOperationException.class) public void testGetRawFingerprint() throws Exception {
+    @Test(expected = UnsupportedOperationException.class)
+    public void testGetRawFingerprint() throws Exception {
         getBitFingerprinter().getRawFingerprint(mock(IAtomContainer.class));
     }
 }
-

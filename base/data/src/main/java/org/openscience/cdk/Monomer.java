@@ -39,8 +39,7 @@ import org.openscience.cdk.interfaces.IMonomer;
  * @cdk.keyword    monomer
  *
  */
-public class Monomer extends AtomContainer implements Serializable, IMonomer, Cloneable
-{
+public class Monomer extends AtomContainer implements Serializable, IMonomer, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -49,72 +48,72 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = -6084164963937650703L;
+     */
+    private static final long serialVersionUID = -6084164963937650703L;
 
-	/** The name of this monomer (e.g. Trp42). */
-    private String monomerName;
+    /** The name of this monomer (e.g. Trp42). */
+    private String            monomerName;
     /** The type of this monomer (e.g. TRP). */
-    private String monomerType;
+    private String            monomerType;
 
-	/**
-	 *
-	 * Constructs a new Monomer.
-	 *
-	 */
-	public Monomer () {
-		super();
-	}
+    /**
+     *
+     * Constructs a new Monomer.
+     *
+     */
+    public Monomer() {
+        super();
+    }
 
-	/**
-	 *
-	 * Retrieves the monomer name.
-	 *
-	 * @return The name of the Monomer object
-	 *
+    /**
+     *
+     * Retrieves the monomer name.
+     *
+     * @return The name of the Monomer object
+     *
      * @see    #setMonomerName
-	 */
-	public String getMonomerName() {
-		return monomerName;
-	}
+     */
+    public String getMonomerName() {
+        return monomerName;
+    }
 
-	/**
-	 *
-	 * Retrieves the monomer type.
-	 *
-	 * @return The type of the Monomer object
-	 *
+    /**
+     *
+     * Retrieves the monomer type.
+     *
+     * @return The type of the Monomer object
+     *
      * @see    #setMonomerType
-	 */
-	public String getMonomerType() {
-		return monomerType;
-	}
+     */
+    public String getMonomerType() {
+        return monomerType;
+    }
 
-	/**
-	 *
-	 * Sets the name of the Monomer object.
-	 *
-	 * @param cMonomerName  The new name for this monomer
-	 *
+    /**
+     *
+     * Sets the name of the Monomer object.
+     *
+     * @param cMonomerName  The new name for this monomer
+     *
      * @see    #getMonomerName
-	 */
-	public void setMonomerName(String cMonomerName) {
-		monomerName = cMonomerName;
-		notifyChanged();
-	}
+     */
+    public void setMonomerName(String cMonomerName) {
+        monomerName = cMonomerName;
+        notifyChanged();
+    }
 
-	/**
-	 *
-	 * Sets the type of the Monomer object.
-	 *
-	 * @param cMonomerType  The new type for this monomer
-	 *
+    /**
+     *
+     * Sets the type of the Monomer object.
+     *
+     * @param cMonomerType  The new type for this monomer
+     *
      * @see    #getMonomerType
-	 */
-	public void setMonomerType(String cMonomerType) {
-		monomerType = cMonomerType;
-		notifyChanged();
-	}
+     */
+    public void setMonomerType(String cMonomerType) {
+        monomerType = cMonomerType;
+        notifyChanged();
+    }
 
     /**
      * @inheritDoc
@@ -125,16 +124,16 @@ public class Monomer extends AtomContainer implements Serializable, IMonomer, Cl
     }
 
     public String toString() {
-		StringBuilder buffer = new StringBuilder();
-		buffer.append("Monomer{").append(this.hashCode());
-		if (getMonomerName() != null) {
-			buffer.append(", N=").append(getMonomerName());
-		}
-		if (getMonomerType() != null) {
-			buffer.append(", T=").append(getMonomerType());
-		}
-		buffer.append('}');
-		return buffer.toString();
-	}
+        StringBuilder buffer = new StringBuilder();
+        buffer.append("Monomer{").append(this.hashCode());
+        if (getMonomerName() != null) {
+            buffer.append(", N=").append(getMonomerName());
+        }
+        if (getMonomerType() != null) {
+            buffer.append(", T=").append(getMonomerType());
+        }
+        buffer.append('}');
+        return buffer.toString();
+    }
 
 }

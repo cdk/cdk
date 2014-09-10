@@ -30,14 +30,11 @@ import org.openscience.cdk.io.ReaderEvent;
  */
 public interface IReaderListener extends IChemObjectIOListener {
 
-  /**
-   * Indicates that a new frame has been read.
-   *
-   * @param event information about the event.
-   */
-  public void frameRead(ReaderEvent event);
+    /**
+     * Indicates that a new frame has been read.
+     *
+     * @param event information about the event.
+     */
+    public void frameRead(ReaderEvent event);
 
 }
-
-
-

@@ -35,22 +35,26 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugSingleElectronTest extends AbstractSingleElectronTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugSingleElectron();
             }
         });
     }
 
-    @Test public void testDebugSingleElectron() {
+    @Test
+    public void testDebugSingleElectron() {
         ISingleElectron radical = new DebugSingleElectron();
         Assert.assertNull(radical.getAtom());
         Assert.assertEquals(1, radical.getElectronCount().intValue());
     }
 
-    @Test public void testDebugSingleElectron_IAtom() {
-        IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class,"N");
+    @Test
+    public void testDebugSingleElectron_IAtom() {
+        IAtom atom = newChemObject().getBuilder().newInstance(IAtom.class, "N");
         ISingleElectron radical = new DebugSingleElectron(atom);
         Assert.assertEquals(1, radical.getElectronCount().intValue());
         Assert.assertEquals(atom, radical.getAtom());

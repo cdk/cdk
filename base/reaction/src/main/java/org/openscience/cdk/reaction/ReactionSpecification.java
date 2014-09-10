@@ -29,7 +29,7 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.module  reaction
  * @cdk.githash
  */
-@TestClass(value="org.openscience.cdk.reaction.ReactionSpecificationTest")
+@TestClass(value = "org.openscience.cdk.reaction.ReactionSpecificationTest")
 public class ReactionSpecification implements IImplementationSpecification {
 
     private String specificationReference;
@@ -52,34 +52,31 @@ public class ReactionSpecification implements IImplementationSpecification {
      * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
-    @TestMethod(value="testReactionSpecification_String_String_String_String")
-    public ReactionSpecification(
-        String specificationReference,
-        String implementationTitle,
-        String implementationIdentifier,
-        String implementationVendor) {
+    @TestMethod(value = "testReactionSpecification_String_String_String_String")
+    public ReactionSpecification(String specificationReference, String implementationTitle,
+            String implementationIdentifier, String implementationVendor) {
         this.specificationReference = specificationReference;
         this.implementationTitle = implementationTitle;
         this.implementationIdentifier = implementationIdentifier;
         this.implementationVendor = implementationVendor;
     }
 
-    @TestMethod(value="testGetSpecificationReference")
+    @TestMethod(value = "testGetSpecificationReference")
     public String getSpecificationReference() {
         return this.specificationReference;
     };
 
-    @TestMethod(value="testGetImplementationTitle")
+    @TestMethod(value = "testGetImplementationTitle")
     public String getImplementationTitle() {
         return this.implementationTitle;
     };
 
-    @TestMethod(value="testGetImplementationIdentifier")
+    @TestMethod(value = "testGetImplementationIdentifier")
     public String getImplementationIdentifier() {
         return this.implementationIdentifier;
     };
 
-    @TestMethod(value="testGetImplementationVendor")
+    @TestMethod(value = "testGetImplementationVendor")
     public String getImplementationVendor() {
         return this.implementationVendor;
     };

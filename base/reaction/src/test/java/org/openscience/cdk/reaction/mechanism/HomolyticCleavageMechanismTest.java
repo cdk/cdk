@@ -31,39 +31,42 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class HomolyticCleavageMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(HomolyticCleavageMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(HomolyticCleavageMechanism.class);
+    }
 
-	/**
-	 *  Constructor for the HomolyticCleavageMechanismTest object.
-	 */
-	public HomolyticCleavageMechanismTest(){
+    /**
+     *  Constructor for the HomolyticCleavageMechanismTest object.
+     */
+    public HomolyticCleavageMechanismTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testHomolyticCleavageMechanism(){
-		IReactionMechanism mechanism = new HomolyticCleavageMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testHomolyticCleavageMechanism() {
+        IReactionMechanism mechanism = new HomolyticCleavageMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new HomolyticCleavageMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new HomolyticCleavageMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

@@ -50,34 +50,21 @@ import org.openscience.cdk.tools.diff.tree.StringDifferenceTest;
  *
  * @cdk.module test-diff
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    DiffCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {
+        DiffCoverageTest.class,
 
-    // cdk.tools.diff
-    AtomDiffTest.class,
-    AtomTypeDiffTest.class,
-    ChemObjectDiffTest.class,
-    ElectronContainerDiffTest.class,
-    ElementDiffTest.class,
-    IsotopeDiffTest.class,
-    BondDiffTest.class,
-    LonePairDiffTest.class,
-    SingleElectronDiffTest.class,
-    AtomContainerDiffTest.class,
+        // cdk.tools.diff
+        AtomDiffTest.class, AtomTypeDiffTest.class, ChemObjectDiffTest.class, ElectronContainerDiffTest.class,
+        ElementDiffTest.class, IsotopeDiffTest.class, BondDiffTest.class,
+        LonePairDiffTest.class,
+        SingleElectronDiffTest.class,
+        AtomContainerDiffTest.class,
 
-    // cdk.tools.diff.tree
-    AbstractDifferenceTest.class,
-    AbstractDifferenceListTest.class,
-    ChemObjectDifferenceTest.class,
-    BooleanDifferenceTest.class,
-    BooleanArrayDifferenceTest.class,
-    DoubleDifferenceTest.class,
-    IntegerDifferenceTest.class,
-    StringDifferenceTest.class,
-    BondOrderDifferenceTest.class,
-    AtomTypeHybridizationDifferenceTest.class,
-    Point2dDifferenceTest.class,
-    Point3dDifferenceTest.class
-})
-public class MdiffTests {}
+        // cdk.tools.diff.tree
+        AbstractDifferenceTest.class, AbstractDifferenceListTest.class, ChemObjectDifferenceTest.class,
+        BooleanDifferenceTest.class, BooleanArrayDifferenceTest.class, DoubleDifferenceTest.class,
+        IntegerDifferenceTest.class, StringDifferenceTest.class, BondOrderDifferenceTest.class,
+        AtomTypeHybridizationDifferenceTest.class, Point2dDifferenceTest.class, Point3dDifferenceTest.class})
+public class MdiffTests {
+}

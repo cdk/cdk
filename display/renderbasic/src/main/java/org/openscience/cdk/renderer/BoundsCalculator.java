@@ -58,14 +58,10 @@ public class BoundsCalculator {
         IReactionSet reactionSet = chemModel.getReactionSet();
         Rectangle2D totalBounds = new Rectangle2D.Double();
         if (moleculeSet != null) {
-            totalBounds = totalBounds.createUnion(
-            	calculateBounds(moleculeSet)
-            );
+            totalBounds = totalBounds.createUnion(calculateBounds(moleculeSet));
         }
         if (reactionSet != null) {
-            totalBounds = totalBounds.createUnion(
-                 calculateBounds(reactionSet)
-            );
+            totalBounds = totalBounds.createUnion(calculateBounds(reactionSet));
         }
         return totalBounds;
     }
@@ -144,9 +140,7 @@ public class BoundsCalculator {
         } else if (atomContainer.getAtomCount() == 1) {
             Point2d point = atomContainer.getAtom(0).getPoint2d();
             if (point == null) {
-                throw new IllegalArgumentException(
-                    "Cannot calculate bounds when 2D coordinates are missing."
-                );
+                throw new IllegalArgumentException("Cannot calculate bounds when 2D coordinates are missing.");
             }
             return new Rectangle2D.Double(point.x, point.y, 0, 0);
         }
@@ -159,9 +153,7 @@ public class BoundsCalculator {
         for (IAtom atom : atomContainer.atoms()) {
             Point2d point = atom.getPoint2d();
             if (point == null) {
-                throw new IllegalArgumentException(
-                    "Cannot calculate bounds when 2D coordinates are missing."
-                );
+                throw new IllegalArgumentException("Cannot calculate bounds when 2D coordinates are missing.");
             }
             xmin = Math.min(xmin, point.x);
             xmax = Math.max(xmax, point.x);

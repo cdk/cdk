@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class YasaraFormatTest extends ChemFormatTest {
 
     public YasaraFormatTest() {
-        super.setChemFormat((IChemFormat)YasaraFormat.getInstance());
+        super.setChemFormat((IChemFormat) YasaraFormat.getInstance());
     }
 
 }

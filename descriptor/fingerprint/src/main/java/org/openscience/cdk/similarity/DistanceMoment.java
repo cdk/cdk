@@ -185,7 +185,6 @@ public class DistanceMoment {
         moments[4] = sigma2;
         moments[5] = skewness;
 
-
         mean = mu1(distFct);
         sigma2 = mu2(distFct, mean);
         skewness = mu3(distFct, mean, Math.sqrt(sigma2));
@@ -222,6 +221,6 @@ public class DistanceMoment {
         for (int i = 0; i < mom1.length; i++) {
             sum += Math.abs(mom1[i] - mom2[i]);
         }
-        return (float) (1.0 / (1.0 + sum/12.0));
+        return (float) (1.0 / (1.0 + sum / 12.0));
     }
 }

@@ -32,14 +32,11 @@ public class UnsupportedChemObjectExceptionTest extends CDKTestCase {
         super();
     }
 
-
     @Test
-	public void testUnsupportedChemObjectException_String() {
+    public void testUnsupportedChemObjectException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         UnsupportedChemObjectException exception = new UnsupportedChemObjectException(EXPLANATION);
         Assert.assertNotNull(exception);
         Assert.assertEquals(EXPLANATION, exception.getMessage());
     }
 }
-
-

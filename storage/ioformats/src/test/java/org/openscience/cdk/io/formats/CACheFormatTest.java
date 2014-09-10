@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class CACheFormatTest extends ChemFormatMatcherTest {
 
     public CACheFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)CACheFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) CACheFormat.getInstance());
     }
 
 }

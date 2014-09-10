@@ -42,11 +42,13 @@ public class BoundsTest extends AbstractElementTest {
         setRenderingElement(new Bounds(0, 0, 0, 0));
     }
 
-    @Test public void width() throws Exception {
+    @Test
+    public void width() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).width(), is(closeTo(5d, 0.1)));
     }
 
-    @Test public void testHeight() throws Exception {
+    @Test
+    public void testHeight() throws Exception {
         assertThat(new Bounds(2, 2, 7, 6).height(), is(closeTo(4d, 0.1)));
     }
 }

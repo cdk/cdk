@@ -82,7 +82,8 @@ public class PharmacophoreUtils {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
      */
     @TestMethod("testReadPcoreDef, testInvalidPcoreXML")
-    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(String filename) throws CDKException, IOException {
+    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(String filename) throws CDKException,
+            IOException {
         Builder parser = new Builder();
         Document doc;
         try {
@@ -130,7 +131,8 @@ public class PharmacophoreUtils {
      * @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
      */
     @TestMethod("testReadPcoreDef, testReadPcoreAngleDef, testInvalidPcoreXML")
-    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(InputStream ins) throws IOException, CDKException {
+    public static List<PharmacophoreQuery> readPharmacophoreDefinitions(InputStream ins) throws IOException,
+            CDKException {
         Builder parser = new Builder();
         Document doc;
         try {
@@ -161,7 +163,8 @@ public class PharmacophoreUtils {
      * @throws IOException if there is a problem writing the XML document
      */
     @TestMethod("testPCoreWrite")
-    public static void writePharmacophoreDefinition(List<PharmacophoreQuery> queries, OutputStream out) throws IOException {
+    public static void writePharmacophoreDefinition(List<PharmacophoreQuery> queries, OutputStream out)
+            throws IOException {
         writePharmacophoreDefinition(queries.toArray(new PharmacophoreQuery[]{}), out);
     }
 
@@ -180,12 +183,10 @@ public class PharmacophoreUtils {
             Element pcore = new Element("pharmacophore");
 
             Object description = query.getProperty("description");
-            if (description != null)
-                pcore.addAttribute(new Attribute("description", (String) description));
+            if (description != null) pcore.addAttribute(new Attribute("description", (String) description));
 
             Object name = query.getProperty(CDKConstants.TITLE);
-            if (name != null)
-                pcore.addAttribute(new Attribute("name", (String) name));
+            if (name != null) pcore.addAttribute(new Attribute("name", (String) name));
 
             // we add the pcore groups for this query as local to the group
             for (IAtom atom : query.atoms()) {
@@ -246,14 +247,15 @@ public class PharmacophoreUtils {
         Elements children = root.getChildElements();
         for (int i = 0; i < children.size(); i++) {
             Element e = children.get(i);
-            if (e.getQualifiedName().equals("pharmacophore"))
-                ret.add(processPharmacophoreElement(e, groups));
+            if (e.getQualifiedName().equals("pharmacophore")) ret.add(processPharmacophoreElement(e, groups));
         }
         return ret;
     }
 
-    /* find all <group> elements that are directly under the supplied element
-    so this wont recurse through sub elements that may contain group elements */
+    /*
+     * find all <group> elements that are directly under the supplied element so
+     * this wont recurse through sub elements that may contain group elements
+     */
     private static HashMap<String, String> getGroupDefinitions(Element e) {
         HashMap<String, String> groups = new HashMap<String, String>();
         Elements children = e.getChildElements();
@@ -269,8 +271,8 @@ public class PharmacophoreUtils {
     }
 
     /* process a single pcore definition */
-    private static PharmacophoreQuery processPharmacophoreElement(Element e,
-                                                                   HashMap<String, String> global) throws CDKException {
+    private static PharmacophoreQuery processPharmacophoreElement(Element e, HashMap<String, String> global)
+            throws CDKException {
         PharmacophoreQuery ret = new PharmacophoreQuery();
         ret.setProperty("description", e.getAttributeValue("description"));
         ret.setProperty(CDKConstants.TITLE, e.getAttributeValue("name"));
@@ -291,20 +293,22 @@ public class PharmacophoreUtils {
         return ret;
     }
 
-    private static void processDistanceConstraint(Element child,
-                                                  HashMap<String, String> local,
-                                                  HashMap<String, String> global,
-                                                  PharmacophoreQuery ret) throws CDKException {
+    private static void processDistanceConstraint(Element child, HashMap<String, String> local,
+            HashMap<String, String> global, PharmacophoreQuery ret) throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
-        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
-        else lower = Double.parseDouble(tmp);
+        if (tmp == null)
+            throw new CDKException("Must have a 'lower' attribute");
+        else
+            lower = Double.parseDouble(tmp);
 
         // we may not have an upper bound specified
         double upper;
         tmp = child.getAttributeValue("upper");
-        if (tmp != null) upper = Double.parseDouble(tmp);
-        else upper = lower;
+        if (tmp != null)
+            upper = Double.parseDouble(tmp);
+        else
+            upper = lower;
 
         // now get the two groups for this distance
         Elements grouprefs = child.getChildElements();
@@ -314,13 +318,19 @@ public class PharmacophoreUtils {
 
         // see if it's a local def, else get it from the global list
         String smarts1, smarts2;
-        if (local.containsKey(id1)) smarts1 = local.get(id1);
-        else if (global.containsKey(id1)) smarts1 = global.get(id1);
-        else throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id1))
+            smarts1 = local.get(id1);
+        else if (global.containsKey(id1))
+            smarts1 = global.get(id1);
+        else
+            throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id2)) smarts2 = local.get(id2);
-        else if (global.containsKey(id2)) smarts2 = global.get(id2);
-        else throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id2))
+            smarts2 = local.get(id2);
+        else if (global.containsKey(id2))
+            smarts2 = global.get(id2);
+        else
+            throw new CDKException("Referring to a non-existant group definition");
 
         // now see if we already have a correpsondiong pcore atom
         // else create a new atom
@@ -342,20 +352,22 @@ public class PharmacophoreUtils {
         ret.addBond(new PharmacophoreQueryBond((PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2, lower, upper));
     }
 
-    private static void processAngleConstraint(Element child,
-                                               HashMap<String, String> local,
-                                               HashMap<String, String> global,
-                                               PharmacophoreQuery ret) throws CDKException {
+    private static void processAngleConstraint(Element child, HashMap<String, String> local,
+            HashMap<String, String> global, PharmacophoreQuery ret) throws CDKException {
         double lower;
         String tmp = child.getAttributeValue("lower");
-        if (tmp == null) throw new CDKException("Must have a 'lower' attribute");
-        else lower = Double.parseDouble(tmp);
+        if (tmp == null)
+            throw new CDKException("Must have a 'lower' attribute");
+        else
+            lower = Double.parseDouble(tmp);
 
         // we may not have an upper bound specified
         double upper;
         tmp = child.getAttributeValue("upper");
-        if (tmp != null) upper = Double.parseDouble(tmp);
-        else upper = lower;
+        if (tmp != null)
+            upper = Double.parseDouble(tmp);
+        else
+            upper = lower;
 
         // now get the three groups for this distance
         Elements grouprefs = child.getChildElements();
@@ -366,17 +378,26 @@ public class PharmacophoreUtils {
 
         // see if it's a local def, else get it from the global list
         String smarts1, smarts2, smarts3;
-        if (local.containsKey(id1)) smarts1 = local.get(id1);
-        else if (global.containsKey(id1)) smarts1 = global.get(id1);
-        else throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id1))
+            smarts1 = local.get(id1);
+        else if (global.containsKey(id1))
+            smarts1 = global.get(id1);
+        else
+            throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id2)) smarts2 = local.get(id2);
-        else if (global.containsKey(id2)) smarts2 = global.get(id2);
-        else throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id2))
+            smarts2 = local.get(id2);
+        else if (global.containsKey(id2))
+            smarts2 = global.get(id2);
+        else
+            throw new CDKException("Referring to a non-existant group definition");
 
-        if (local.containsKey(id3)) smarts3 = local.get(id3);
-        else if (global.containsKey(id3)) smarts3 = global.get(id3);
-        else throw new CDKException("Referring to a non-existant group definition");
+        if (local.containsKey(id3))
+            smarts3 = local.get(id3);
+        else if (global.containsKey(id3))
+            smarts3 = global.get(id3);
+        else
+            throw new CDKException("Referring to a non-existant group definition");
 
         // now see if we already have a correpsondiong pcore atom
         // else create a new atom
@@ -401,9 +422,7 @@ public class PharmacophoreUtils {
             if (queryAtom.getSymbol().equals(id2)) a2 = queryAtom;
             if (queryAtom.getSymbol().equals(id3)) a3 = queryAtom;
         }
-        ret.addBond(new PharmacophoreQueryAngleBond(
-                (PharmacophoreQueryAtom) a1,
-                (PharmacophoreQueryAtom) a2,
+        ret.addBond(new PharmacophoreQueryAngleBond((PharmacophoreQueryAtom) a1, (PharmacophoreQueryAtom) a2,
                 (PharmacophoreQueryAtom) a3, lower, upper));
     }
 

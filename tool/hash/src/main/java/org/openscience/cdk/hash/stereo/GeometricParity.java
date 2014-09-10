@@ -63,7 +63,8 @@ abstract class GeometricParity {
         }
 
         /** @inheritDoc */
-        @Override int parity() {
+        @Override
+        int parity() {
             return parity;
         }
     }

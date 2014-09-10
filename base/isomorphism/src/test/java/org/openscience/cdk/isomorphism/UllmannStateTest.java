@@ -43,8 +43,7 @@ public class UllmannStateTest {
 
     @Test
     public void testNextN() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.nextN(0), is(0));
         state.size = 1;
         assertThat(state.nextN(0), is(1));
@@ -54,79 +53,58 @@ public class UllmannStateTest {
 
     @Test
     public void testNextM() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertThat(state.nextM(0, -1), is(0));
-        assertThat(state.nextM(0, 0),  is(1));
-        assertThat(state.nextM(0, 1),  is(2));
+        assertThat(state.nextM(0, 0), is(1));
+        assertThat(state.nextM(0, 1), is(2));
         state.m2[1] = 0; // 1 has been mapped and should be skipped over
-        assertThat(state.nextM(0, 0),  is(2));
+        assertThat(state.nextM(0, 0), is(2));
     }
 
     @Test
     public void add() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
-        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
+        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
         assertTrue(state.add(0, 0));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, 1, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, 1, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         assertTrue(state.add(1, 9));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {1, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -2, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         assertTrue(state.add(2, 8));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         assertTrue(state.add(3, 7));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         assertTrue(state.add(4, 2));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
         assertTrue(state.add(5, 1));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
     }
 
     @Test
     public void remove() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
-        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
+        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
         assertTrue(state.add(0, 0));
         assertTrue(state.add(1, 9));
         assertTrue(state.add(2, 8));
@@ -134,68 +112,52 @@ public class UllmannStateTest {
         assertTrue(state.add(4, 2));
         assertTrue(state.add(5, 1));
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
         state.remove(5, 1);
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, -5, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, -5}}));
         state.remove(4, 2);
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4},
-                                                      {-4, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, -4}, {-4, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         state.remove(3, 7);
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, -3, -1, -2, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {-3, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, -3, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         state.remove(2, 8);
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {1, -1, -2, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -2, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, -2, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, -2, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -2, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         state.remove(1, 9);
         assertThat(state.matrix.fix(), is(new int[][]{{1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, 1, -1, -1, -1, 1, -1, 1},
-                                                      {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
-                                                      {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, 1, -1, -1, -1, 1, -1, 1}, {1, -1, 1, -1, -1, -1, -1, -1, 1, -1},
+                {-1, 1, -1, -1, -1, -1, -1, -1, -1, 1}}));
         state.remove(0, 0);
-        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                                                      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
+        assertThat(state.matrix.fix(), is(new int[][]{{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}));
     }
 
     @Test
     public void mapping() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         state.m1[0] = 1;
         state.m1[1] = 2;
         assertThat(state.mapping(), is(state.m1));
         assertThat(state.mapping(), is(not(sameInstance(state.m1))));
     }
 
-    @Test public void accessors() throws Exception {
-        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                        BondMatcher.forAny());
+    @Test
+    public void accessors() throws Exception {
+        UllmannState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         state.size = 1;
         assertThat(state.size(), is(1));
         assertThat(state.nMax(), is(state.g1.length));
@@ -206,8 +168,7 @@ public class UllmannStateTest {
      * Create a state for matching benzene to naphthalene Benzene:
      * InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
      */
-    UllmannState createBenzeneToNaphthalene(AtomMatcher atomMatcher,
-                                            BondMatcher bondMatcher) throws Exception {
+    UllmannState createBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher) throws Exception {
         IAtomContainer container1 = TestMoleculeFactory.makeBenzene();
         IAtomContainer container2 = TestMoleculeFactory.makeNaphthalene();
         GraphUtil.EdgeToBondMap bonds1 = GraphUtil.EdgeToBondMap.withSpaceFor(container1);

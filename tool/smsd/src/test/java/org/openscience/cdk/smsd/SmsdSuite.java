@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -37,31 +36,23 @@ import org.junit.runners.Suite;
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.SMSDTest.class,
-    org.openscience.cdk.smsd.SMSDBondSensitiveTest.class,
-    org.openscience.cdk.smsd.SMSDBondInsensitiveTest.class,
-    org.openscience.cdk.smsd.global.GlobalSuite.class,
-    org.openscience.cdk.smsd.helper.HelperSuite.class,
-    //        org.openscience.cdk.smsd.interfaces.InterfacesSuite.class,
-    org.openscience.cdk.smsd.filters.FiltersSuite.class,
-    org.openscience.cdk.smsd.factory.FactorySuite.class,
-    org.openscience.cdk.smsd.algorithm.AlgorithmSuite.class,
-    org.openscience.cdk.smsd.tools.ToolsSuite.class})
+@Suite.SuiteClasses({org.openscience.cdk.smsd.SMSDTest.class, org.openscience.cdk.smsd.SMSDBondSensitiveTest.class,
+        org.openscience.cdk.smsd.SMSDBondInsensitiveTest.class, org.openscience.cdk.smsd.global.GlobalSuite.class,
+        org.openscience.cdk.smsd.helper.HelperSuite.class,
+        //        org.openscience.cdk.smsd.interfaces.InterfacesSuite.class,
+        org.openscience.cdk.smsd.filters.FiltersSuite.class, org.openscience.cdk.smsd.factory.FactorySuite.class,
+        org.openscience.cdk.smsd.algorithm.AlgorithmSuite.class, org.openscience.cdk.smsd.tools.ToolsSuite.class})
 public class SmsdSuite {
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() throws Exception {
-    }
+    public void setUp() throws Exception {}
 
     @After
-    public void tearDown() throws Exception {
-    }
+    public void tearDown() throws Exception {}
 }

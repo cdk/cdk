@@ -57,34 +57,29 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class DefaultMatcher {
 
-        public static boolean isBondMatch(BondMatcher bondMatcher,
-            IAtomContainer ac2,
-            IBond bondA2,
+    public static boolean isBondMatch(BondMatcher bondMatcher, IAtomContainer ac2, IBond bondA2,
             boolean shouldMatchBonds) {
 
         // ok, bonds match
         if (bondMatcher.matches(ac2, bondA2)) {
-//            System.out.println("Bond Matched");
+            //            System.out.println("Bond Matched");
             return true;
         }
         return false;
 
     }
 
-    public static boolean isAtomMatch(AtomMatcher atomMatcher1,
-            AtomMatcher atomMatcher2,
-            IAtomContainer ac2,
-            IBond bondA2,
-            boolean shouldMatchBonds) {
+    public static boolean isAtomMatch(AtomMatcher atomMatcher1, AtomMatcher atomMatcher2, IAtomContainer ac2,
+            IBond bondA2, boolean shouldMatchBonds) {
 
         // ok, atoms match
         if (atomMatcher1.matches(ac2, bondA2.getAtom(0)) && atomMatcher2.matches(ac2, bondA2.getAtom(1))) {
-//            System.out.println("Atom Matched");
+            //            System.out.println("Atom Matched");
             return true;
         }
         // ok, atoms match
         if (atomMatcher1.matches(ac2, bondA2.getAtom(1)) && atomMatcher2.matches(ac2, bondA2.getAtom(0))) {
-//            System.out.println("Atom Matched");
+            //            System.out.println("Atom Matched");
             return true;
         }
         return false;

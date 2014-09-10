@@ -30,14 +30,8 @@ import org.junit.runners.Suite.SuiteClasses;
  *
  * @see org.openscience.cdk.modulesuites.MlibiocmlTests
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    CMLStackTest.class,
-    JumboTest.class,
-    JChemPaintTest.class,
-    CMLFragmentsTest.class,
-    CML23FragmentsTest.class,
-    CML25FragmentsTest.class,
-    Jumbo46CMLFragmentsTest.class
-})
-public class CMLIOTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {CMLStackTest.class, JumboTest.class, JChemPaintTest.class, CMLFragmentsTest.class,
+        CML23FragmentsTest.class, CML25FragmentsTest.class, Jumbo46CMLFragmentsTest.class})
+public class CMLIOTests {
+}

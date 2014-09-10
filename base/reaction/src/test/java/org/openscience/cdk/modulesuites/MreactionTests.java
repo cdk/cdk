@@ -79,68 +79,48 @@ import org.openscience.cdk.tools.StructureResonanceGeneratorTest;
  *
  * @cdk.module  test-reaction
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    ReactionCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {
+        ReactionCoverageTest.class,
 
-    // Individual Tests
-    ReactionEngineTest.class,
-    ReactionSpecificationTest.class,
+        // Individual Tests
+        ReactionEngineTest.class,
+        ReactionSpecificationTest.class,
 
-    // from cdk.test.reaction.mechanism
-    AdductionLPMechanismTest.class,
-    AdductionPBMechanismTest.class,
-    HeterolyticCleavageMechanismTest.class,
-    HomolyticCleavageMechanismTest.class,
-    RadicalSiteIonizationMechanismTest.class,
-    RadicalSiteRearrangementMechanismTest.class,
-    RemovingSEofBMechanismTest.class,
-    RemovingSEofNBMechanismTest.class,
-    SharingElectronMechanismTest.class,
-    TautomerizationMechanismTest.class,
-    ConjugatedPiSystemsDetectorTest.class,
+        // from cdk.test.reaction.mechanism
+        AdductionLPMechanismTest.class,
+        AdductionPBMechanismTest.class,
+        HeterolyticCleavageMechanismTest.class,
+        HomolyticCleavageMechanismTest.class,
+        RadicalSiteIonizationMechanismTest.class,
+        RadicalSiteRearrangementMechanismTest.class,
+        RemovingSEofBMechanismTest.class,
+        RemovingSEofNBMechanismTest.class,
+        SharingElectronMechanismTest.class,
+        TautomerizationMechanismTest.class,
+        ConjugatedPiSystemsDetectorTest.class,
 
-    // from cdk.test.reaction.type
-    AdductionProtonLPReactionTest.class,
-    AdductionProtonPBReactionTest.class,
-    AdductionSodiumLPReactionTest.class,
-    CarbonylEliminationReactionTest.class,
-    ElectronImpactPDBReactionTest.class,
-    ElectronImpactNBEReactionTest.class,
-    ElectronImpactSDBReactionTest.class,
-    HeterolyticCleavagePBReactionTest.class,
-    HeterolyticCleavageSBReactionTest.class,
-    HomolyticCleavageReactionTest.class,
-    HyperconjugationReactionTest.class,
-    PiBondingMovementReactionTest.class,
-    RadicalChargeSiteInitiationHReactionTest.class,
-    RadicalChargeSiteInitiationReactionTest.class,
-    RadicalSiteHrAlphaReactionTest.class,
-    RadicalSiteHrBetaReactionTest.class,
-    RadicalSiteHrDeltaReactionTest.class,
-    RadicalSiteHrGammaReactionTest.class,
-    RadicalSiteInitiationHReactionTest.class,
-    RadicalSiteInitiationReactionTest.class,
-    RadicalSiteRrAlphaReactionTest.class,
-    RadicalSiteRrBetaReactionTest.class,
-    RadicalSiteRrDeltaReactionTest.class,
-    RadicalSiteRrGammaReactionTest.class,
-    RearrangementAnionReactionTest.class,
-    RearrangementCationReactionTest.class,
-    RearrangementLonePairReactionTest.class,
-    RearrangementRadicalReactionTest.class,
-    SharingAnionReactionTest.class,
-    SharingChargeDBReactionTest.class,
-    SharingChargeSBReactionTest.class,
-    SharingLonePairReactionTest.class,
-    TautomerizationReactionTest.class,
+        // from cdk.test.reaction.type
+        AdductionProtonLPReactionTest.class, AdductionProtonPBReactionTest.class, AdductionSodiumLPReactionTest.class,
+        CarbonylEliminationReactionTest.class, ElectronImpactPDBReactionTest.class,
+        ElectronImpactNBEReactionTest.class, ElectronImpactSDBReactionTest.class,
+        HeterolyticCleavagePBReactionTest.class, HeterolyticCleavageSBReactionTest.class,
+        HomolyticCleavageReactionTest.class, HyperconjugationReactionTest.class, PiBondingMovementReactionTest.class,
+        RadicalChargeSiteInitiationHReactionTest.class, RadicalChargeSiteInitiationReactionTest.class,
+        RadicalSiteHrAlphaReactionTest.class, RadicalSiteHrBetaReactionTest.class,
+        RadicalSiteHrDeltaReactionTest.class, RadicalSiteHrGammaReactionTest.class,
+        RadicalSiteInitiationHReactionTest.class, RadicalSiteInitiationReactionTest.class,
+        RadicalSiteRrAlphaReactionTest.class, RadicalSiteRrBetaReactionTest.class,
+        RadicalSiteRrDeltaReactionTest.class, RadicalSiteRrGammaReactionTest.class,
+        RearrangementAnionReactionTest.class, RearrangementCationReactionTest.class,
+        RearrangementLonePairReactionTest.class, RearrangementRadicalReactionTest.class,
+        SharingAnionReactionTest.class, SharingChargeDBReactionTest.class, SharingChargeSBReactionTest.class,
+        SharingLonePairReactionTest.class, TautomerizationReactionTest.class,
 
-    // parameters test
-    ParameterReactTest.class,
-    SetReactionCenterTest.class,
+        // parameters test
+        ParameterReactTest.class, SetReactionCenterTest.class,
 
-    // tools test
-    StructureResonanceGeneratorTest.class,
-    ResonanceStructuresTest.class
-})
-public class MreactionTests {}
+        // tools test
+        StructureResonanceGeneratorTest.class, ResonanceStructuresTest.class})
+public class MreactionTests {
+}

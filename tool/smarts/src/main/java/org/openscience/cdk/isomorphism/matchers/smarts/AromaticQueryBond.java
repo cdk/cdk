@@ -39,8 +39,8 @@ public class AromaticQueryBond extends SMARTSBond {
      *
      */
     public AromaticQueryBond(IChemObjectBuilder builder) {
-    	super(builder);
-    	setFlag(CDKConstants.ISAROMATIC, true);
+        super(builder);
+        setFlag(CDKConstants.ISAROMATIC, true);
     }
 
     /**
@@ -48,22 +48,25 @@ public class AromaticQueryBond extends SMARTSBond {
      *
      */
     public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, IBond.Order order, IChemObjectBuilder builder) {
-    	super(atom1, atom2, order, builder);
-    	setFlag(CDKConstants.ISAROMATIC, true);
+        super(atom1, atom2, order, builder);
+        setFlag(CDKConstants.ISAROMATIC, true);
     }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
-	 */
-	public boolean matches(IBond bond) {
-         return bond.getFlag(CDKConstants.ISAROMATIC);
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
+     * .openscience.cdk.interfaces.IBond)
+     */
+    public boolean matches(IBond bond) {
+        return bond.getFlag(CDKConstants.ISAROMATIC);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
     public String toString() {
-		return "AromaticQueryBond()";
+        return "AromaticQueryBond()";
     }
 }
-

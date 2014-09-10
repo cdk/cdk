@@ -76,10 +76,10 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class VFMapper implements IMapper {
 
-    private IQuery query;
+    private IQuery                  query;
     private List<Map<INode, IAtom>> maps;
-    private int currentMCSSize = -1;
-    private static TimeManager timeManager = null;
+    private int                     currentMCSSize = -1;
+    private static TimeManager      timeManager    = null;
 
     /**
      * @return the timeout
@@ -218,8 +218,8 @@ public class VFMapper implements IMapper {
         }
 
         if (hasMap(state.getMap())) {
-                state.backTrack();
-            }
+            state.backTrack();
+        }
 
         if (state.isGoal()) {
             Map<INode, IAtom> map = state.getMap();

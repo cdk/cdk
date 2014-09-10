@@ -27,14 +27,14 @@ import org.junit.Before;
  */
 public class OWLReactTest extends AbstractDictionaryTest {
 
-	@Before
-	public void setTestClass() {
-		super.setTestClass(new OWLReact());
-	}
+    @Before
+    public void setTestClass() {
+        super.setTestClass(new OWLReact());
+    }
 
-	@After
-	public void testTestClass() {
-		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLReact"));
-	}
+    @After
+    public void testTestClass() {
+        Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLReact"));
+    }
 
 }

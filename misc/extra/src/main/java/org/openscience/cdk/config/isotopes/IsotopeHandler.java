@@ -53,16 +53,15 @@ import org.xml.sax.helpers.DefaultHandler;
 @TestClass("org.openscience.cdk.config.isotopes.IsotopeHandlerTest")
 public class IsotopeHandler extends DefaultHandler {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
-    private String currentChars;
-    private List<IIsotope> isotopes;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(IsotopeHandler.class);
+    private String              currentChars;
+    private List<IIsotope>      isotopes;
 
-    private IIsotope workingIsotope;
-    private String currentElement;
-    private String dictRef;
+    private IIsotope            workingIsotope;
+    private String              currentElement;
+    private String              dictRef;
 
-    private IChemObjectBuilder builder;
+    private IChemObjectBuilder  builder;
 
     /**
      * Constructs an IsotopeHandler used by the IsotopeReader.
@@ -86,19 +85,20 @@ public class IsotopeHandler extends DefaultHandler {
 
     // SAX Parser methods
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testStartDocument")
     public void startDocument() {
         isotopes = new ArrayList<IIsotope>();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEndElement_String_String_String")
     public void endElement(String uri, String local, String raw) {
         logger.debug("end element: ", raw);
         if ("isotope".equals(local)) {
-            if (workingIsotope != null)
-                isotopes.add(workingIsotope);
+            if (workingIsotope != null) isotopes.add(workingIsotope);
             workingIsotope = null;
         } else if ("isotopeList".equals(local)) {
             currentElement = null;
@@ -118,10 +118,10 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEndElement_String_String_String")
-    public void startElement(String uri, String local,
-                             String raw, Attributes atts) {
+    public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         dictRef = "";
         logger.debug("startElement: ", raw);
@@ -141,7 +141,8 @@ public class IsotopeHandler extends DefaultHandler {
         }
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testCharacters_arraychar_int_int")
     public void characters(char chars[], int start, int length) {
         currentChars += new String(chars, start, length);

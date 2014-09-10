@@ -35,20 +35,17 @@ public class Geometry3DValidator extends AbstractValidator {
 
     // assumes 1 unit in the coordinate system is one angstrom
     public ValidationReport validateBond(IBond subject) {
-    	ValidationReport report = new ValidationReport();
-    	// only consider two atom bonds
-    	if (subject.getAtomCount() == 2) {
-    		double distance = subject.getAtom(0).getPoint3d().distance(
-    			subject.getAtom(1).getPoint3d()
-    		);
-    		if (distance > 3.0) { // should really depend on the elements
-    			ValidationTest badBondLengthError = new ValidationTest(subject,
-                    "Bond length cannot exceed 3 Angstroms.",
-                    "A bond length typically is between 0.5 and 3.0 Angstroms."
-                );
-    			report.addError(badBondLengthError);
-    		}
-    	}
-    	return report;
+        ValidationReport report = new ValidationReport();
+        // only consider two atom bonds
+        if (subject.getAtomCount() == 2) {
+            double distance = subject.getAtom(0).getPoint3d().distance(subject.getAtom(1).getPoint3d());
+            if (distance > 3.0) { // should really depend on the elements
+                ValidationTest badBondLengthError = new ValidationTest(subject,
+                        "Bond length cannot exceed 3 Angstroms.",
+                        "A bond length typically is between 0.5 and 3.0 Angstroms.");
+                report.addError(badBondLengthError);
+            }
+        }
+        return report;
     }
 }

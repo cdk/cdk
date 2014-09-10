@@ -75,103 +75,98 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.RotatableBondsCountDescriptorTest")
 public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-	private boolean includeTerminals = false;
-    private boolean excludeAmides = false;
 
-
-	/**
-	 *  Constructor for the RotatableBondsCountDescriptor object
-	 */
-	public RotatableBondsCountDescriptor() { }
-
-
-	/**
-	 *  Gets the specification attribute of the RotatableBondsCountDescriptor
-	 *  object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod("testGetSpecification")
-    public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount",
-		    this.getClass().getName(),
-		    "The Chemistry Development Kit");
-	}
-
-
-	/**
-	 *  Sets the parameters attribute of the RotatableBondsCountDescriptor object
-	 *
-	 *@param  params            a boolean true means that terminal atoms must be included in the count
-	 *@exception  CDKException  Description of the Exception
-	 */
-	@TestMethod("testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-		if (params.length != 2) {
-			throw new CDKException("RotatableBondsCount expects two parameters");
-		}
-		if (!(params[0] instanceof Boolean) || !(params[1] instanceof Boolean)) {
-			throw new CDKException("The parameters must be of type Boolean");
-		}
-		// ok, all should be fine
-		includeTerminals = (Boolean) params[0];
-        excludeAmides = (Boolean) params[1];
-	}
-
-
-	/**
-	 *  Gets the parameters attribute of the RotatableBondsCountDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	@TestMethod("testGetParameters")
-    public Object[] getParameters() {
-		// return the parameters as used for the descriptor calculation
-		Object[] params = new Object[2];
-		params[0] = includeTerminals;
-        params[1] = excludeAmides;
-		return params;
-	}
-
-    @TestMethod(value="testNamesConsistency")
-    public String[] getDescriptorNames() {
-        return new String[] { includeTerminals ? "nRotBt" : "nRotB"};
-    }
-
+    private boolean includeTerminals = false;
+    private boolean excludeAmides    = false;
 
     /**
-	 *  The method calculates the number of rotatable bonds of an atom container.
-	 *  If the boolean parameter is set to true, terminal bonds are included.
-	 *
-	 *@param  ac                AtomContainer
-	 *@return                   number of rotatable bonds
-	 */
-	@TestMethod("testCalculate_IAtomContainer")
+     *  Constructor for the RotatableBondsCountDescriptor object
+     */
+    public RotatableBondsCountDescriptor() {}
+
+    /**
+     *  Gets the specification attribute of the RotatableBondsCountDescriptor
+     *  object
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rotatableBondsCount", this
+                        .getClass().getName(), "The Chemistry Development Kit");
+    }
+
+    /**
+     *  Sets the parameters attribute of the RotatableBondsCountDescriptor object
+     *
+     *@param  params            a boolean true means that terminal atoms must be included in the count
+     *@exception  CDKException  Description of the Exception
+     */
+    @TestMethod("testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
+        if (params.length != 2) {
+            throw new CDKException("RotatableBondsCount expects two parameters");
+        }
+        if (!(params[0] instanceof Boolean) || !(params[1] instanceof Boolean)) {
+            throw new CDKException("The parameters must be of type Boolean");
+        }
+        // ok, all should be fine
+        includeTerminals = (Boolean) params[0];
+        excludeAmides = (Boolean) params[1];
+    }
+
+    /**
+     *  Gets the parameters attribute of the RotatableBondsCountDescriptor object
+     *
+     *@return    The parameters value
+     */
+    @TestMethod("testGetParameters")
+    public Object[] getParameters() {
+        // return the parameters as used for the descriptor calculation
+        Object[] params = new Object[2];
+        params[0] = includeTerminals;
+        params[1] = excludeAmides;
+        return params;
+    }
+
+    @TestMethod(value = "testNamesConsistency")
+    public String[] getDescriptorNames() {
+        return new String[]{includeTerminals ? "nRotBt" : "nRotB"};
+    }
+
+    /**
+     *  The method calculates the number of rotatable bonds of an atom container.
+     *  If the boolean parameter is set to true, terminal bonds are included.
+     *
+     *@param  ac                AtomContainer
+     *@return                   number of rotatable bonds
+     */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer ac) {
-		int rotatableBondsCount = 0;
-		int degree0;
-		int degree1;
+        int rotatableBondsCount = 0;
+        int degree0;
+        int degree1;
         IRingSet ringSet;
         try {
             ringSet = new SpanningTree(ac).getBasicRings();
         } catch (NoSuchAtomException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult((int) Double.NaN), getDescriptorNames(), e);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                    (int) Double.NaN), getDescriptorNames(), e);
         }
         for (IBond bond : ac.bonds()) {
-			if (ringSet.getRings(bond).getAtomContainerCount() > 0) {
-				bond.setFlag(CDKConstants.ISINRING, true);
-			}
-		}
-		for (IBond bond : ac.bonds()) {
-			IAtom atom0 = bond.getAtom(0);
-			IAtom atom1 = bond.getAtom(1);
+            if (ringSet.getRings(bond).getAtomContainerCount() > 0) {
+                bond.setFlag(CDKConstants.ISINRING, true);
+            }
+        }
+        for (IBond bond : ac.bonds()) {
+            IAtom atom0 = bond.getAtom(0);
+            IAtom atom1 = bond.getAtom(1);
             if (atom0.getSymbol().equals("H") || atom1.getSymbol().equals("H")) continue;
             if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
-				if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE)) &&
-					(BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
-					if (!bond.getFlag(CDKConstants.ISINRING)) {
+                if ((BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom0), IBond.Order.TRIPLE))
+                        && (BondManipulator.isLowerOrder(ac.getMaximumBondOrder(atom1), IBond.Order.TRIPLE))) {
+                    if (!bond.getFlag(CDKConstants.ISINRING)) {
 
                         if (excludeAmides && (isAmide(atom0, atom1, ac) || isAmide(atom1, atom0, ac))) {
                             continue;
@@ -179,22 +174,22 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 
                         // if there are explicit H's we should ignore those bonds
                         degree0 = ac.getConnectedBondsCount(atom0) - getConnectedHCount(ac, atom0);
-						degree1 = ac.getConnectedBondsCount(atom1) - getConnectedHCount(ac, atom1);
-						if ((degree0 == 1) || (degree1 == 1)) {
-							if (includeTerminals) {
-								rotatableBondsCount += 1;
-							}
-						} else {
-							rotatableBondsCount += 1;
-						}
-					}
-				}
-			}
-		}
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(rotatableBondsCount), getDescriptorNames());
+                        degree1 = ac.getConnectedBondsCount(atom1) - getConnectedHCount(ac, atom1);
+                        if ((degree0 == 1) || (degree1 == 1)) {
+                            if (includeTerminals) {
+                                rotatableBondsCount += 1;
+                            }
+                        } else {
+                            rotatableBondsCount += 1;
+                        }
+                    }
+                }
+            }
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                rotatableBondsCount), getDescriptorNames());
 
-	}
+    }
 
     /**
      * Checks whether both atoms are involved in an amide C-N bond: *N(*)C(*)=O.
@@ -212,8 +207,8 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
 
         if (atom0.getSymbol().equals("C") && atom1.getSymbol().equals("N")) {
             for (IAtom neighbor : ac.getConnectedAtomsList(atom0)) {
-                if (neighbor.getSymbol().equals("O") &&
-                        ac.getBond(atom0, neighbor).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
+                if (neighbor.getSymbol().equals("O")
+                        && ac.getBond(atom0, neighbor).getOrder() == CDKConstants.BONDORDER_DOUBLE) {
                     return true;
                 }
             }
@@ -224,7 +219,8 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
     private int getConnectedHCount(IAtomContainer atomContainer, IAtom atom) {
         List<IAtom> connectedAtoms = atomContainer.getConnectedAtomsList(atom);
         int n = 0;
-        for (IAtom anAtom : connectedAtoms) if (anAtom.getSymbol().equals("H")) n++;
+        for (IAtom anAtom : connectedAtoms)
+            if (anAtom.getSymbol().equals("H")) n++;
         return n;
     }
 
@@ -244,7 +240,6 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         return new IntegerResult(1);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the RotatableBondsCountDescriptor
      *  object
@@ -259,18 +254,15 @@ public class RotatableBondsCountDescriptor extends AbstractMolecularDescriptor i
         return params;
     }
 
-
-
-	/**
-	 *  Gets the parameterType attribute of the RotatableBondsCountDescriptor
-	 *  object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	@TestMethod("testGetParameterType_String")
+    /**
+     *  Gets the parameterType attribute of the RotatableBondsCountDescriptor
+     *  object
+     *
+     *@param  name  Description of the Parameter
+     *@return       The parameterType value
+     */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-		return true;
-	}
+        return true;
+    }
 }
-

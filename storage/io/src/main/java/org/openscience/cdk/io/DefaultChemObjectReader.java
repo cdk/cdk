@@ -35,10 +35,10 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
     /**
      * An event to be sent to listeners when a frame is read.
      */
-    private ReaderEvent frameReadEvent = null;
+    private ReaderEvent                     frameReadEvent = null;
 
-    protected IChemObjectReader.Mode mode = IChemObjectReader.Mode.RELAXED;
-    protected IChemObjectReaderErrorHandler errorHandler = null;
+    protected IChemObjectReader.Mode        mode           = IChemObjectReader.Mode.RELAXED;
+    protected IChemObjectReaderErrorHandler errorHandler   = null;
 
     /* Extra convenience methods */
 
@@ -52,13 +52,13 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
                 if (frameReadEvent == null) {
                     frameReadEvent = new ReaderEvent(this);
                 }
-                ((IReaderListener)listener).frameRead(frameReadEvent);
+                ((IReaderListener) listener).frameRead(frameReadEvent);
             }
         }
     }
 
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
-    	this.mode = mode;
+        this.mode = mode;
     }
 
     /** {@inheritDoc} */
@@ -73,10 +73,8 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
     }
 
     /** {@inheritDoc} */
-    public void handleError(String message, Exception exception)
-    throws CDKException {
-        if (this.errorHandler != null)
-            this.errorHandler.handleError(message, exception);
+    public void handleError(String message, Exception exception) throws CDKException {
+        if (this.errorHandler != null) this.errorHandler.handleError(message, exception);
         if (this.mode == Mode.STRICT) {
             throw new CDKException(message, exception);
         }
@@ -84,16 +82,13 @@ public abstract class DefaultChemObjectReader extends ChemObjectIO implements IS
 
     /** {@inheritDoc} */
     public void handleError(String message, int row, int colStart, int colEnd) throws CDKException {
-        if (this.errorHandler != null)
-            this.errorHandler.handleError(message, row, colStart, colEnd);
+        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd);
         if (this.mode == Mode.STRICT) throw new CDKException(message);
     }
 
     /** {@inheritDoc} */
-    public void handleError(String message, int row, int colStart, int colEnd, Exception exception)
-    throws CDKException {
-        if (this.errorHandler != null)
-            this.errorHandler.handleError(message, row, colStart, colEnd, exception);
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException {
+        if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd, exception);
         if (this.mode == Mode.STRICT) {
             throw new CDKException(message, exception);
         }

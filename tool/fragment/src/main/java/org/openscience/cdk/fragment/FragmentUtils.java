@@ -55,8 +55,7 @@ public class FragmentUtils {
      * @return A list containing the two parts of the molecule
      */
     @TestMethod("testSplit")
-    protected static List<IAtomContainer> splitMolecule(IAtomContainer atomContainer,
-                                                        IBond bond) {
+    protected static List<IAtomContainer> splitMolecule(IAtomContainer atomContainer, IBond bond) {
         List<IAtomContainer> ret = new ArrayList<IAtomContainer>();
 
         for (IAtom atom : bond.atoms()) {
@@ -64,8 +63,10 @@ public class FragmentUtils {
             // later on we'll want to make sure that the fragment doesn't contain
             // the bond joining the current atom and the atom that is on the other side
             IAtom excludedAtom;
-            if (atom.equals(bond.getAtom(0))) excludedAtom = bond.getAtom(1);
-            else excludedAtom = bond.getAtom(0);
+            if (atom.equals(bond.getAtom(0)))
+                excludedAtom = bond.getAtom(1);
+            else
+                excludedAtom = bond.getAtom(0);
 
             List<IBond> part = new ArrayList<IBond>();
             part.add(bond);
@@ -114,16 +115,13 @@ public class FragmentUtils {
     }
 
     @TestMethod("testTraversal_Chain")
-    protected static List<IBond> traverse(IAtomContainer atomContainer, IAtom atom,
-                                          List<IBond> bondList) {
+    protected static List<IBond> traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList) {
         List<IBond> connectedBonds = atomContainer.getConnectedBondsList(atom);
         for (IBond aBond : connectedBonds) {
-            if (bondList.contains(aBond))
-                continue;
+            if (bondList.contains(aBond)) continue;
             bondList.add(aBond);
             IAtom nextAtom = aBond.getConnectedAtom(atom);
-            if (atomContainer.getConnectedAtomsCount(nextAtom) == 1)
-                continue;
+            if (atomContainer.getConnectedAtomsCount(nextAtom) == 1) continue;
             traverse(atomContainer, nextAtom, bondList);
         }
         return bondList;

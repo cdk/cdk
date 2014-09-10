@@ -42,7 +42,8 @@ import static org.junit.Assert.assertTrue;
 public class ComponentGroupingTest {
 
     // mock matching [#8].[#8]
-    @Test public void ungrouped() {
+    @Test
+    public void ungrouped() {
         assertTrue(create(null, oxidanone()).apply(new int[]{0, 1}));
         assertTrue(create(null, oxidanone()).apply(new int[]{1, 0}));
         assertTrue(create(null, ethyleneGlycol()).apply(new int[]{0, 3}));
@@ -52,7 +53,8 @@ public class ComponentGroupingTest {
     }
 
     // mock matching ([#8].[#8])
-    @Test public void grouped() {
+    @Test
+    public void grouped() {
         int[] grouping = {1, 1, 1};
         assertTrue(create(grouping, oxidanone()).apply(new int[]{0, 1}));
         assertTrue(create(grouping, oxidanone()).apply(new int[]{1, 0}));
@@ -63,7 +65,8 @@ public class ComponentGroupingTest {
     }
 
     // mock matching ([#8]).([#8])
-    @Test public void multipleGroups() {
+    @Test
+    public void multipleGroups() {
         int[] grouping = {1, 2, 2};
         assertFalse(create(grouping, oxidanone()).apply(new int[]{0, 1}));
         assertFalse(create(grouping, oxidanone()).apply(new int[]{1, 0}));

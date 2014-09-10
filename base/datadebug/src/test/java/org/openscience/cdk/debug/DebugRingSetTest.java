@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugRingSetTest extends AbstractRingSetTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugRingSet();
             }
         });
     }
 
-    @Test public void testDebugRingSet() {
+    @Test
+    public void testDebugRingSet() {
         IRingSet rs = new DebugRingSet();
         Assert.assertNotNull(rs);
     }

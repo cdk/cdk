@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -49,23 +48,23 @@ public class InductivePartialChargesTest extends CDKTestCase {
 
     @BeforeClass
     public static void makeMoleucle() {
-    	IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         mol = builder.newInstance(IAtomContainer.class);
-        IAtom atom1 = builder.newInstance(IAtom.class,"C");
-        IAtom atom2 = builder.newInstance(IAtom.class,"Cl");
-        IAtom atom3 = builder.newInstance(IAtom.class,"Br");
-        IAtom atom4 = builder.newInstance(IAtom.class,"H");
-        IAtom atom5 = builder.newInstance(IAtom.class,"O");
+        IAtom atom1 = builder.newInstance(IAtom.class, "C");
+        IAtom atom2 = builder.newInstance(IAtom.class, "Cl");
+        IAtom atom3 = builder.newInstance(IAtom.class, "Br");
+        IAtom atom4 = builder.newInstance(IAtom.class, "H");
+        IAtom atom5 = builder.newInstance(IAtom.class, "O");
         atom5.setPoint3d(new Point3d(2.24, 1.33, 0.0));
         atom1.setPoint3d(new Point3d(1.80, 0.0, 0.0));
         atom2.setPoint3d(new Point3d(0.0, 0.0, 0.0));
         atom3.setPoint3d(new Point3d(2.60, -0.79, 1.59));
         atom4.setPoint3d(new Point3d(2.15, -0.60, -0.87));
 
-        IBond bond1 = builder.newInstance(IBond.class,atom1, atom2, IBond.Order.SINGLE);
-        IBond bond2 = builder.newInstance(IBond.class,atom1, atom3, IBond.Order.SINGLE);
-        IBond bond3 = builder.newInstance(IBond.class,atom1, atom4, IBond.Order.SINGLE);
-        IBond bond4 = builder.newInstance(IBond.class,atom1, atom5, IBond.Order.SINGLE);
+        IBond bond1 = builder.newInstance(IBond.class, atom1, atom2, IBond.Order.SINGLE);
+        IBond bond2 = builder.newInstance(IBond.class, atom1, atom3, IBond.Order.SINGLE);
+        IBond bond3 = builder.newInstance(IBond.class, atom1, atom4, IBond.Order.SINGLE);
+        IBond bond4 = builder.newInstance(IBond.class, atom1, atom5, IBond.Order.SINGLE);
 
         mol.addAtom(atom1);
         mol.addAtom(atom2);
@@ -80,97 +79,100 @@ public class InductivePartialChargesTest extends CDKTestCase {
     }
 
     /**
-	 *  A unit test for JUnit with beta-amino-acetic-acid
-	 *
-	 */
+     *  A unit test for JUnit with beta-amino-acetic-acid
+     *
+     */
     @Test
     public void testCalculateCharges_IAtomContainer() throws java.lang.Exception {
-    	double [] testResult={0.197,-0.492,0.051,0.099,0.099};
-		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
-		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
-		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
-		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        double[] testResult = {0.197, -0.492, 0.051, 0.099, 0.099};
+        Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
+        Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
+        Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
+        Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
+        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-		IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = new AtomContainer(); // molecule is CF
 
-		Atom c = new Atom("C");
-		mol.addAtom(c);
-		c.setPoint3d(c_coord);
+        Atom c = new Atom("C");
+        mol.addAtom(c);
+        c.setPoint3d(c_coord);
 
-		Atom f = new Atom("F");
-		mol.addAtom(f);
-		f.setPoint3d(f_coord);
+        Atom f = new Atom("F");
+        mol.addAtom(f);
+        f.setPoint3d(f_coord);
 
-		Atom h1 = new Atom("H");
-		mol.addAtom(h1);
-		h1.setPoint3d(h1_coord);
+        Atom h1 = new Atom("H");
+        mol.addAtom(h1);
+        h1.setPoint3d(h1_coord);
 
-		Atom h2 = new Atom("H");
-		mol.addAtom(h2);
-		h2.setPoint3d(h2_coord);
+        Atom h2 = new Atom("H");
+        mol.addAtom(h2);
+        h2.setPoint3d(h2_coord);
 
-		Atom h3 = new Atom("H");
-		mol.addAtom(h3);
-		h3.setPoint3d(h3_coord);
+        Atom h3 = new Atom("H");
+        mol.addAtom(h3);
+        h3.setPoint3d(h3_coord);
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 1
-		InductivePartialCharges ipc = new InductivePartialCharges();
-		ipc.assignInductivePartialCharges(mol);
-		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Assert.assertEquals(testResult[i], ((Double)mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
-			//logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
-		}
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 1
+        InductivePartialCharges ipc = new InductivePartialCharges();
+        ipc.assignInductivePartialCharges(mol);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertEquals(testResult[i],
+                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
+            //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+        }
     }
+
     /**
-	 *  A unit test for JUnit with beta-amino-acetic-acid
-	 *
-	 */
+     *  A unit test for JUnit with beta-amino-acetic-acid
+     *
+     */
     @Test
     public void testInductivePartialCharges() throws java.lang.Exception {
-		double [] testResult={0.197,-0.492,0.051,0.099,0.099};
-		Point3d c_coord=new Point3d(1.392, 0.0, 0.0);
-		Point3d f_coord=new Point3d(0.0, 0.0, 0.0);
-		Point3d h1_coord=new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
-		Point3d h2_coord=new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
-		Point3d h3_coord=new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
+        double[] testResult = {0.197, -0.492, 0.051, 0.099, 0.099};
+        Point3d c_coord = new Point3d(1.392, 0.0, 0.0);
+        Point3d f_coord = new Point3d(0.0, 0.0, 0.0);
+        Point3d h1_coord = new Point3d(1.7439615035767404, 1.0558845107302222, 0.0);
+        Point3d h2_coord = new Point3d(1.7439615035767404, -0.5279422553651107, 0.914422809754875);
+        Point3d h3_coord = new Point3d(1.7439615035767402, -0.5279422553651113, -0.9144228097548747);
 
-		IAtomContainer mol = new AtomContainer(); // molecule is CF
+        IAtomContainer mol = new AtomContainer(); // molecule is CF
 
-		Atom c = new Atom("C");
-		mol.addAtom(c);
-		c.setPoint3d(c_coord);
+        Atom c = new Atom("C");
+        mol.addAtom(c);
+        c.setPoint3d(c_coord);
 
-		Atom f = new Atom("F");
-		mol.addAtom(f);
-		f.setPoint3d(f_coord);
+        Atom f = new Atom("F");
+        mol.addAtom(f);
+        f.setPoint3d(f_coord);
 
-		Atom h1 = new Atom("H");
-		mol.addAtom(h1);
-		h1.setPoint3d(h1_coord);
+        Atom h1 = new Atom("H");
+        mol.addAtom(h1);
+        h1.setPoint3d(h1_coord);
 
-		Atom h2 = new Atom("H");
-		mol.addAtom(h2);
-		h2.setPoint3d(h2_coord);
+        Atom h2 = new Atom("H");
+        mol.addAtom(h2);
+        h2.setPoint3d(h2_coord);
 
-		Atom h3 = new Atom("H");
-		mol.addAtom(h3);
-		h3.setPoint3d(h3_coord);
+        Atom h3 = new Atom("H");
+        mol.addAtom(h3);
+        h3.setPoint3d(h3_coord);
 
-		mol.addBond(0, 1, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 2, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 3, IBond.Order.SINGLE); // 1
-		mol.addBond(0, 4, IBond.Order.SINGLE); // 1
-		InductivePartialCharges ipc = new InductivePartialCharges();
-		ipc.assignInductivePartialCharges(mol);
-		for (int i = 0; i < mol.getAtomCount(); i++) {
-			Assert.assertEquals(testResult[i], ((Double)mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
-			//logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
-		}
-	}
+        mol.addBond(0, 1, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 2, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 3, IBond.Order.SINGLE); // 1
+        mol.addBond(0, 4, IBond.Order.SINGLE); // 1
+        InductivePartialCharges ipc = new InductivePartialCharges();
+        ipc.assignInductivePartialCharges(mol);
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            Assert.assertEquals(testResult[i],
+                    ((Double) mol.getAtom(i).getProperty("InductivePartialCharge")).doubleValue(), 0.1);
+            //logger.debug("CHARGE AT " + ac.getAtomAt(i).getSymbol() + " " + ac.getAtomAt(i).getProperty("MMFF94charge"));
+        }
+    }
 
     @Test
     public void testGetPaulingElectronegativities() throws Exception {
@@ -184,7 +186,8 @@ public class InductivePartialChargesTest extends CDKTestCase {
         Assert.assertEquals("Error in O electronegativity", 3.20, eneg[4], 0.01);
     }
 
-    @Ignore @Test
+    @Ignore
+    @Test
     public void testGetAtomicSoftness() throws Exception {
         InductivePartialCharges ipc = new InductivePartialCharges();
         double softness = ipc.getAtomicSoftnessCore(mol, 0);
@@ -192,4 +195,3 @@ public class InductivePartialChargesTest extends CDKTestCase {
     }
 
 }
-

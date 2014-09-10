@@ -37,9 +37,7 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
  *
  * @see  Atom
  */
-public class PseudoAtom extends Atom
-  implements java.io.Serializable, Cloneable, IPseudoAtom
-{
+public class PseudoAtom extends Atom implements java.io.Serializable, Cloneable, IPseudoAtom {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -48,10 +46,10 @@ public class PseudoAtom extends Atom
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 1L;
+     */
+    private static final long serialVersionUID = 1L;
 
-	private String label;
+    private String            label;
 
     /**
      * Constructs an empty PseudoAtom.
@@ -84,10 +82,10 @@ public class PseudoAtom extends Atom
     public PseudoAtom(IElement element) {
         super(element);
         if (element instanceof IPseudoAtom) {
-            this.label = ((IPseudoAtom)element).getLabel();
+            this.label = ((IPseudoAtom) element).getLabel();
         } else {
-        	super.symbol = "R";
-        	this.label = element.getSymbol();
+            super.symbol = "R";
+            this.label = element.getSymbol();
         }
     }
 
@@ -133,7 +131,6 @@ public class PseudoAtom extends Atom
         this.label = label;
     }
 
-
     /**
      * Dummy method: the stereo parity is undefined, final.
      */
@@ -152,7 +149,7 @@ public class PseudoAtom extends Atom
         description.append("PseudoAtom(");
         description.append(this.hashCode());
         if (getLabel() != null) {
-        	description.append(", ").append(getLabel());
+            description.append(", ").append(getLabel());
         }
         description.append(", ").append(super.toString());
         description.append(')');
@@ -163,8 +160,3 @@ public class PseudoAtom extends Atom
         return (IPseudoAtom) super.clone();
     }
 }
-
-
-
-
-

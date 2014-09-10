@@ -36,90 +36,90 @@ import java.util.Map;
  */
 public interface IStrand extends IAtomContainer {
 
-	/**
-	 * Retrieve the strand name.
-	 *
-	 * @return The name of the Strand object
-	 * @see    #setStrandName(String)
-	 */
-	public String getStrandName();
+    /**
+     * Retrieve the strand name.
+     *
+     * @return The name of the Strand object
+     * @see    #setStrandName(String)
+     */
+    public String getStrandName();
 
-	/**
-	 * Retrieve the strand type.
-	 *
-	 * @return The type of the Strand object
-	 * @see    #setStrandType(String)
-	 */
-	public String getStrandType();
+    /**
+     * Retrieve the strand type.
+     *
+     * @return The type of the Strand object
+     * @see    #setStrandType(String)
+     */
+    public String getStrandType();
 
-	/**
-	 * Set the name of the Strand object.
-	 *
-	 * @param cStrandName  The new name for this strand
-	 * @see                #getStrandName()
-	 */
-	public void setStrandName(String cStrandName);
+    /**
+     * Set the name of the Strand object.
+     *
+     * @param cStrandName  The new name for this strand
+     * @see                #getStrandName()
+     */
+    public void setStrandName(String cStrandName);
 
-	/**
-	 * Set the type of the Strand object.
-	 *
-	 * @param cStrandType  The new type for this strand
-	 * @see                #getStrandType()
-	 */
-	public void setStrandType(String cStrandType);
+    /**
+     * Set the type of the Strand object.
+     *
+     * @param cStrandType  The new type for this strand
+     * @see                #getStrandType()
+     */
+    public void setStrandType(String cStrandType);
 
-	/**
-	 * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-	 * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
-	 *
-	 * @param oAtom  The atom to add
-	 */
-	public void addAtom(IAtom oAtom);
+    /**
+     * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+     * atom gets added to a Monomer of type UNKNOWN in a Strand of type UNKNOWN.
+     *
+     * @param oAtom  The atom to add
+     */
+    public void addAtom(IAtom oAtom);
 
-	/**
-	 * Adds the atom oAtom to a specific Monomer.
-	 *
-	 * @param oAtom  The atom to add
-	 * @param oMonomer  The monomer the atom belongs to
-	 */
-	public void addAtom(IAtom oAtom, IMonomer oMonomer);
+    /**
+     * Adds the atom oAtom to a specific Monomer.
+     *
+     * @param oAtom  The atom to add
+     * @param oMonomer  The monomer the atom belongs to
+     */
+    public void addAtom(IAtom oAtom, IMonomer oMonomer);
 
-	/**
-	 * Return the number of monomers present in the Strand.
-	 *
-	 * @return number of monomers
-	 */
-	public int getMonomerCount();
+    /**
+     * Return the number of monomers present in the Strand.
+     *
+     * @return number of monomers
+     */
+    public int getMonomerCount();
 
-	/**
-	 * Retrieve a Monomer object by specifying its name.
-	 *
-	 * @param cName  The name of the monomer to look for
-	 * @return The Monomer object which was asked for
-	 */
-	public IMonomer getMonomer(String cName);
+    /**
+     * Retrieve a Monomer object by specifying its name.
+     *
+     * @param cName  The name of the monomer to look for
+     * @return The Monomer object which was asked for
+     */
+    public IMonomer getMonomer(String cName);
 
-	/**
-	 * Returns a collection of the names of all <code>Monomer</code>s in this
-	 * polymer.
-	 *
-	 * @return a <code>Collection</code> of all the monomer names.
-	 */
-	public Collection<String> getMonomerNames();
+    /**
+     * Returns a collection of the names of all <code>Monomer</code>s in this
+     * polymer.
+     *
+     * @return a <code>Collection</code> of all the monomer names.
+     */
+    public Collection<String> getMonomerNames();
 
-	/**
-	 * Removes a particular monomer, specified by its name.
-	 *
-	 * @param name The name of the monomer to remove
-	 */
-	public void removeMonomer(String name);
+    /**
+     * Removes a particular monomer, specified by its name.
+     *
+     * @param name The name of the monomer to remove
+     */
+    public void removeMonomer(String name);
 
-	/**
-	 * Returns the monomers in this strand.
-	 *
-	 * @return Map containing the monomers in the strand.
-	 */
-	public Map<String,IMonomer> getMonomers();
+    /**
+     * Returns the monomers in this strand.
+     *
+     * @return Map containing the monomers in the strand.
+     */
+    public Map<String, IMonomer> getMonomers();
 
     /**
      * @inheritDoc

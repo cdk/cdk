@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class ADFFormatTest extends ChemFormatMatcherTest {
 
     public ADFFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)ADFFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) ADFFormat.getInstance());
     }
 
 }

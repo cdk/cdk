@@ -1,4 +1,3 @@
-
 /* Copyright (c) 2014 Collaborative Drug Discovery, Inc. <alex@collaborativedrug.com>
  *
  * Implemented by Alex M. Clark, produced by Collaborative Drug Discovery, Inc.
@@ -56,226 +55,224 @@ import static org.junit.Assert.assertNotNull;
 /**
  * @cdk.module test-standard
  */
-public class CircularFingerprinterTest extends CDKTestCase
-{
-	private static ILoggingTool logger=LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
+public class CircularFingerprinterTest extends CDKTestCase {
 
-	private static IAtomContainer trivialMol=null;
-	static
-	{
-		SmilesParser parser=new SmilesParser(SilentChemObjectBuilder.getInstance());
-		try {trivialMol=parser.parseSmiles("CCC(=O)N");}
-		catch (InvalidSmilesException ex) {}
-	}
+    private static ILoggingTool   logger     = LoggingToolFactory.createLoggingTool(CircularFingerprinterTest.class);
+
+    private static IAtomContainer trivialMol = null;
+    static {
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        try {
+            trivialMol = parser.parseSmiles("CCC(=O)N");
+        } catch (InvalidSmilesException ex) {
+        }
+    }
 
     @Test
     @Category(SlowTest.class)
-    public void testFingerprints() throws Exception
-    {
-    	logger.info("CircularFingerprinter test: loading source materials");
+    public void testFingerprints() throws Exception {
+        logger.info("CircularFingerprinter test: loading source materials");
 
-        String fnzip="data/cdd/circular_validation.zip";
-        logger.info("Loading source content: "+fnzip);
-        InputStream in=this.getClass().getClassLoader().getResourceAsStream(fnzip);
-    	validate(in);
-    	in.close();
+        String fnzip = "data/cdd/circular_validation.zip";
+        logger.info("Loading source content: " + fnzip);
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream(fnzip);
+        validate(in);
+        in.close();
 
-		logger.info("CircularFingerprinter test: completed without any problems");
-	}
+        logger.info("CircularFingerprinter test: completed without any problems");
+    }
 
-	@Test
-	public void testGetBitFingerprint() throws Exception
-	{
-		assert(trivialMol!=null);
-		CircularFingerprinter circ=new CircularFingerprinter();
-		IBitFingerprint result=circ.getBitFingerprint(trivialMol);
+    @Test
+    public void testGetBitFingerprint() throws Exception {
+        assert (trivialMol != null);
+        CircularFingerprinter circ = new CircularFingerprinter();
+        IBitFingerprint result = circ.getBitFingerprint(trivialMol);
 
-		BitSet wantBits=new BitSet(),gotBits=result.asBitSet();
-		final int[] REQUIRE_BITS={19,152,293,340,439,480,507,726,762,947,993};
-		for (int b : REQUIRE_BITS) wantBits.set(b);
-		if (!wantBits.equals(gotBits)) throw new CDKException("Got "+gotBits+", wanted "+wantBits);
-	}
+        BitSet wantBits = new BitSet(), gotBits = result.asBitSet();
+        final int[] REQUIRE_BITS = {19, 152, 293, 340, 439, 480, 507, 726, 762, 947, 993};
+        for (int b : REQUIRE_BITS)
+            wantBits.set(b);
+        if (!wantBits.equals(gotBits)) throw new CDKException("Got " + gotBits + ", wanted " + wantBits);
+    }
 
-	@Test
-	public void testGetCountFingerprint() throws Exception
-	{
-		assert(trivialMol!=null);
-		CircularFingerprinter circ=new CircularFingerprinter();
-		ICountFingerprint result=circ.getCountFingerprint(trivialMol);
+    @Test
+    public void testGetCountFingerprint() throws Exception {
+        assert (trivialMol != null);
+        CircularFingerprinter circ = new CircularFingerprinter();
+        ICountFingerprint result = circ.getCountFingerprint(trivialMol);
 
-		final int[] ANSWER_KEY=
-		{
-            -414937772,		1,
-            -1027418143,	1,
-            1627608083,		1,
-            -868007456,		1,
-            -1006701866,	1,
-            -1059145289,	1,
-            -801752141,		1,
-            790592664,		1,
-            -289109509,		1,
-            -1650154758,	1,
-            1286833445,		1
-		};
+        final int[] ANSWER_KEY = {-414937772, 1, -1027418143, 1, 1627608083, 1, -868007456, 1, -1006701866, 1,
+                -1059145289, 1, -801752141, 1, 790592664, 1, -289109509, 1, -1650154758, 1, 1286833445, 1};
 
-		int wantBits=ANSWER_KEY.length>>1;
-		boolean fail=result.numOfPopulatedbins()!=wantBits;
-		for (int n=0;!fail && n<result.numOfPopulatedbins();n++)
-		{
-			int gotHash=result.getHash(n),gotCount=result.getCount(n);
-			boolean found=false;
-			for (int i=0;i<wantBits;i++)
-			{
-				int wantHash=ANSWER_KEY[i*2],wantCount=ANSWER_KEY[i*2+1];
-				if (gotHash==wantHash)
-				{
-					found=true;
-					if (gotCount!=wantCount) throw new CDKException("For hash "+gotHash+" got count "+gotCount+" but wanted "+wantCount);
-				}
-			}
-			if (!found) {fail=true; break;}
-		}
-		if (fail) throw new CDKException("Hash values do not match.");
-	}
+        int wantBits = ANSWER_KEY.length >> 1;
+        boolean fail = result.numOfPopulatedbins() != wantBits;
+        for (int n = 0; !fail && n < result.numOfPopulatedbins(); n++) {
+            int gotHash = result.getHash(n), gotCount = result.getCount(n);
+            boolean found = false;
+            for (int i = 0; i < wantBits; i++) {
+                int wantHash = ANSWER_KEY[i * 2], wantCount = ANSWER_KEY[i * 2 + 1];
+                if (gotHash == wantHash) {
+                    found = true;
+                    if (gotCount != wantCount)
+                        throw new CDKException("For hash " + gotHash + " got count " + gotCount + " but wanted "
+                                + wantCount);
+                }
+            }
+            if (!found) {
+                fail = true;
+                break;
+            }
+        }
+        if (fail) throw new CDKException("Hash values do not match.");
+    }
 
-	@Test
-	public void testGetRawFingerprint() throws Exception
-	{
-		// currently no-op
-	}
+    @Test
+    public void testGetRawFingerprint() throws Exception {
+        // currently no-op
+    }
 
-	private void validate(InputStream in) throws Exception
-	{
-		ZipInputStream zip=new ZipInputStream(in);
+    private void validate(InputStream in) throws Exception {
+        ZipInputStream zip = new ZipInputStream(in);
 
-		// stream the contents form the zipfile: these are all short
-		HashMap<String,byte[]> content=new HashMap<String,byte[]>();
-		while (true)
-		{
-			ZipEntry ze=zip.getNextEntry();
-			if (ze==null) break;
-			String fn=ze.getName();
-			ByteArrayOutputStream buff=new ByteArrayOutputStream();
-			while (true)
-			{
-				int b=zip.read();
-				if (b<0) break;
-				buff.write(b);
-			}
-			content.put(fn,buff.toByteArray());
-		}
+        // stream the contents form the zipfile: these are all short
+        HashMap<String, byte[]> content = new HashMap<String, byte[]>();
+        while (true) {
+            ZipEntry ze = zip.getNextEntry();
+            if (ze == null) break;
+            String fn = ze.getName();
+            ByteArrayOutputStream buff = new ByteArrayOutputStream();
+            while (true) {
+                int b = zip.read();
+                if (b < 0) break;
+                buff.write(b);
+            }
+            content.put(fn, buff.toByteArray());
+        }
 
-		zip.close();
+        zip.close();
 
-		for (int idx=1;;idx++)
-		{
-			String basefn=String.valueOf(idx);
-			while (basefn.length()<6) basefn="0"+basefn;
-			byte[] molBytes=content.get(basefn+".mol");
-			if (molBytes==null) break;
+        for (int idx = 1;; idx++) {
+            String basefn = String.valueOf(idx);
+            while (basefn.length() < 6)
+                basefn = "0" + basefn;
+            byte[] molBytes = content.get(basefn + ".mol");
+            if (molBytes == null) break;
 
-    		AtomContainer mol=new AtomContainer();
-    		MDLV2000Reader mdl=new MDLV2000Reader(new ByteArrayInputStream(molBytes));
-    		mdl.read(mol);
-    		mdl.close();
+            AtomContainer mol = new AtomContainer();
+            MDLV2000Reader mdl = new MDLV2000Reader(new ByteArrayInputStream(molBytes));
+            mdl.read(mol);
+            mdl.close();
 
-    		CircularFingerprinter.FP[] validateECFP=parseValidation(content.get(basefn+".ecfp"));
-    		CircularFingerprinter.FP[] validateFCFP=parseValidation(content.get(basefn+".fcfp"));
+            CircularFingerprinter.FP[] validateECFP = parseValidation(content.get(basefn + ".ecfp"));
+            CircularFingerprinter.FP[] validateFCFP = parseValidation(content.get(basefn + ".fcfp"));
 
-    		logger.info("FN="+basefn+" MOL="+mol.getAtomCount()+","+mol.getBondCount()+
-	    		   		" Requires ECFP="+validateECFP.length+" FCFP="+validateFCFP.length);
+            logger.info("FN=" + basefn + " MOL=" + mol.getAtomCount() + "," + mol.getBondCount() + " Requires ECFP="
+                    + validateECFP.length + " FCFP=" + validateFCFP.length);
 
-			validateFingerprints("ECFP6",mol,CircularFingerprinter.CLASS_ECFP6,validateECFP);
-			validateFingerprints("FCFP6",mol,CircularFingerprinter.CLASS_FCFP6,validateFCFP);
-		}
-	}
-	private CircularFingerprinter.FP[] parseValidation(byte[] raw) throws Exception
-	{
-		InputStream in=new ByteArrayInputStream(raw);
-		BufferedReader rdr=new BufferedReader(new InputStreamReader(in));
-		ArrayList<CircularFingerprinter.FP> list=new ArrayList<CircularFingerprinter.FP>();
+            validateFingerprints("ECFP6", mol, CircularFingerprinter.CLASS_ECFP6, validateECFP);
+            validateFingerprints("FCFP6", mol, CircularFingerprinter.CLASS_FCFP6, validateFCFP);
+        }
+    }
 
-		while (true)
-		{
-			String line=rdr.readLine();
-			if (line==null || line.length()==0) break;
-			String[] bits=line.split(" ");
-			int hashCode=Integer.parseInt(bits[0]);
-			int iteration=Integer.parseInt(bits[1]);
-			int[] atoms=new int[bits.length-2];
-			for (int n=0;n<atoms.length;n++) atoms[n]=Integer.parseInt(bits[n+2])-1; // note: atom#'s are 1-based in reference file
-			list.add(new CircularFingerprinter.FP(hashCode,iteration,atoms));
-		}
+    private CircularFingerprinter.FP[] parseValidation(byte[] raw) throws Exception {
+        InputStream in = new ByteArrayInputStream(raw);
+        BufferedReader rdr = new BufferedReader(new InputStreamReader(in));
+        ArrayList<CircularFingerprinter.FP> list = new ArrayList<CircularFingerprinter.FP>();
 
-		rdr.close();
-		return list.toArray(new CircularFingerprinter.FP[list.size()]);
-	}
+        while (true) {
+            String line = rdr.readLine();
+            if (line == null || line.length() == 0) break;
+            String[] bits = line.split(" ");
+            int hashCode = Integer.parseInt(bits[0]);
+            int iteration = Integer.parseInt(bits[1]);
+            int[] atoms = new int[bits.length - 2];
+            for (int n = 0; n < atoms.length; n++)
+                atoms[n] = Integer.parseInt(bits[n + 2]) - 1; // note: atom#'s are 1-based in reference file
+            list.add(new CircularFingerprinter.FP(hashCode, iteration, atoms));
+        }
 
-	private void validateFingerprints(String label,AtomContainer mol,int classType,CircularFingerprinter.FP[] validate) throws Exception
-	{
-		CircularFingerprinter circ=new CircularFingerprinter(classType);
-		try {circ.calculate(mol);}
-		catch (Exception ex)
-		{
-			System.out.println("Fingerprint calculation failed for molecule:");
-    		MDLV2000Writer molwr=new MDLV2000Writer(System.out);
-    		molwr.write(mol);
-    		molwr.close();
-			throw ex;
-		}
+        rdr.close();
+        return list.toArray(new CircularFingerprinter.FP[list.size()]);
+    }
 
-		CircularFingerprinter.FP[] obtained=new CircularFingerprinter.FP[circ.getFPCount()];
-		for (int n=0;n<circ.getFPCount();n++) obtained[n]=circ.getFP(n);
+    private void validateFingerprints(String label, AtomContainer mol, int classType,
+            CircularFingerprinter.FP[] validate) throws Exception {
+        CircularFingerprinter circ = new CircularFingerprinter(classType);
+        try {
+            circ.calculate(mol);
+        } catch (Exception ex) {
+            System.out.println("Fingerprint calculation failed for molecule:");
+            MDLV2000Writer molwr = new MDLV2000Writer(System.out);
+            molwr.write(mol);
+            molwr.close();
+            throw ex;
+        }
 
-		boolean same=obtained.length==validate.length;
-		for (int i=0;i<obtained.length && same;i++)
-		{
-			boolean hit=false;
-			for (int j=0;j<validate.length;j++) if (equalFingerprints(obtained[i],validate[j])) {hit=true; break;}
-			if (!hit) same=false;
-		}
-		for (int i=0;i<validate.length && same;i++)
-		{
-			boolean hit=false;
-			for (int j=0;j<obtained.length;j++) if (equalFingerprints(validate[i],obtained[j])) {hit=true; break;}
-			if (!hit) same=false;
-		}
-		if (same) return;
+        CircularFingerprinter.FP[] obtained = new CircularFingerprinter.FP[circ.getFPCount()];
+        for (int n = 0; n < circ.getFPCount(); n++)
+            obtained[n] = circ.getFP(n);
 
-		System.out.println("Fingerprint mismatch, validation failed.\nMolecular structure");
-		MDLV2000Writer molwr=new MDLV2000Writer(System.out);
-		molwr.write(mol);
-		molwr.close();
+        boolean same = obtained.length == validate.length;
+        for (int i = 0; i < obtained.length && same; i++) {
+            boolean hit = false;
+            for (int j = 0; j < validate.length; j++)
+                if (equalFingerprints(obtained[i], validate[j])) {
+                    hit = true;
+                    break;
+                }
+            if (!hit) same = false;
+        }
+        for (int i = 0; i < validate.length && same; i++) {
+            boolean hit = false;
+            for (int j = 0; j < obtained.length; j++)
+                if (equalFingerprints(validate[i], obtained[j])) {
+                    hit = true;
+                    break;
+                }
+            if (!hit) same = false;
+        }
+        if (same) return;
 
-		System.out.println("Obtained fingerprints:");
-		for (int n=0;n<obtained.length;n++) System.out.println((n+1)+"/"+obtained.length+": "+formatFP(obtained[n]));
-		System.out.println("Validation fingerprints:");
-		for (int n=0;n<validate.length;n++) System.out.println((n+1)+"/"+validate.length+": "+formatFP(validate[n]));
+        System.out.println("Fingerprint mismatch, validation failed.\nMolecular structure");
+        MDLV2000Writer molwr = new MDLV2000Writer(System.out);
+        molwr.write(mol);
+        molwr.close();
 
-		throw new CDKException("Fingerprint comparison failed.");
-	}
+        System.out.println("Obtained fingerprints:");
+        for (int n = 0; n < obtained.length; n++)
+            System.out.println((n + 1) + "/" + obtained.length + ": " + formatFP(obtained[n]));
+        System.out.println("Validation fingerprints:");
+        for (int n = 0; n < validate.length; n++)
+            System.out.println((n + 1) + "/" + validate.length + ": " + formatFP(validate[n]));
 
-	private boolean equalFingerprints(CircularFingerprinter.FP fp1,CircularFingerprinter.FP fp2)
-	{
-		if (fp1.hashCode!=fp2.hashCode || fp1.iteration!=fp2.iteration || fp1.atoms.length!=fp2.atoms.length) return false;
-		for (int n=0;n<fp1.atoms.length;n++) if (fp1.atoms[n]!=fp2.atoms[n])  return false;
-		return true;
-	}
-	private String formatFP(CircularFingerprinter.FP fp)
-	{
-		String str="["+fp.hashCode+"] iter="+fp.iteration+" atoms={";
-		for (int n=0;n<fp.atoms.length;n++) str+=(n>0 ? "," : "")+fp.atoms[n];
-		return str+"}";
-	}
+        throw new CDKException("Fingerprint comparison failed.");
+    }
 
-    @Test public void protonsDontCauseNPE() throws Exception {
+    private boolean equalFingerprints(CircularFingerprinter.FP fp1, CircularFingerprinter.FP fp2) {
+        if (fp1.hashCode != fp2.hashCode || fp1.iteration != fp2.iteration || fp1.atoms.length != fp2.atoms.length)
+            return false;
+        for (int n = 0; n < fp1.atoms.length; n++)
+            if (fp1.atoms[n] != fp2.atoms[n]) return false;
+        return true;
+    }
+
+    private String formatFP(CircularFingerprinter.FP fp) {
+        String str = "[" + fp.hashCode + "] iter=" + fp.iteration + " atoms={";
+        for (int n = 0; n < fp.atoms.length; n++)
+            str += (n > 0 ? "," : "") + fp.atoms[n];
+        return str + "}";
+    }
+
+    @Test
+    public void protonsDontCauseNPE() throws Exception {
         IAtomContainer proton = new AtomContainer(1, 0, 0, 0);
         proton.addAtom(atom("H", +1, 0));
         CircularFingerprinter circ = new CircularFingerprinter(CircularFingerprinter.CLASS_FCFP2);
         assertThat(circ.getBitFingerprint(proton).cardinality(), is(0));
     }
 
-    @Test public void iminesDetectionDoesntCauseNPE() throws Exception {
+    @Test
+    public void iminesDetectionDoesntCauseNPE() throws Exception {
         IAtomContainer pyrazole = new AtomContainer(6, 6, 0, 0);
         pyrazole.addAtom(atom("H", 0, 0));
         pyrazole.addAtom(atom("N", 0, 0));
@@ -301,4 +298,3 @@ public class CircularFingerprinterTest extends CDKTestCase
     }
 
 }
-

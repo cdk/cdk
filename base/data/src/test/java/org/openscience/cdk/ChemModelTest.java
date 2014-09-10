@@ -44,64 +44,67 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ChemModelTest extends AbstractChemModelTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new ChemModel();
             }
         });
     }
 
-    @Test public void testChemModel() {
-	    IChemModel chemModel = new ChemModel();
-	    Assert.assertNotNull(chemModel);
-	    Assert.assertTrue(chemModel.isEmpty());
+    @Test
+    public void testChemModel() {
+        IChemModel chemModel = new ChemModel();
+        Assert.assertNotNull(chemModel);
+        Assert.assertTrue(chemModel.isEmpty());
 
-	    IAtom atom = new Atom("N");
-	    IAtomContainer mol = new AtomContainer();
-	    IAtomContainerSet mset = new AtomContainerSet();
-	    mol.addAtom(atom);
-	    mset.addAtomContainer(mol);
-	    chemModel.setMoleculeSet(mset);
-	    Assert.assertFalse(chemModel.isEmpty());
-	    mol.removeAtom(atom);
-	    Assert.assertFalse(chemModel.isEmpty());
-	    chemModel.setMoleculeSet(null);
-	    Assert.assertTrue(chemModel.isEmpty());
+        IAtom atom = new Atom("N");
+        IAtomContainer mol = new AtomContainer();
+        IAtomContainerSet mset = new AtomContainerSet();
+        mol.addAtom(atom);
+        mset.addAtomContainer(mol);
+        chemModel.setMoleculeSet(mset);
+        Assert.assertFalse(chemModel.isEmpty());
+        mol.removeAtom(atom);
+        Assert.assertFalse(chemModel.isEmpty());
+        chemModel.setMoleculeSet(null);
+        Assert.assertTrue(chemModel.isEmpty());
 
-	    IChemModel model1 = new ChemModel();
-	    mol.addAtom(atom);
-	    IReaction react = new Reaction();
-	    react.addReactant(mol);
-	    IReactionSet rset = new ReactionSet();
-	    rset.addReaction(react);
-	    model1.setReactionSet(rset);
-	    Assert.assertFalse(model1.isEmpty());
-	    mol.removeAtom(atom);
-	    Assert.assertFalse(model1.isEmpty());
-	    model1.setReactionSet(null);
-	    Assert.assertTrue(model1.isEmpty());
+        IChemModel model1 = new ChemModel();
+        mol.addAtom(atom);
+        IReaction react = new Reaction();
+        react.addReactant(mol);
+        IReactionSet rset = new ReactionSet();
+        rset.addReaction(react);
+        model1.setReactionSet(rset);
+        Assert.assertFalse(model1.isEmpty());
+        mol.removeAtom(atom);
+        Assert.assertFalse(model1.isEmpty());
+        model1.setReactionSet(null);
+        Assert.assertTrue(model1.isEmpty());
 
-	    IChemModel model2 = new ChemModel();
-	    mol.addAtom(atom);
-	    IRingSet ringset = new RingSet();
-	    ringset.add(mset);
-	    model2.setRingSet(ringset);
-	    Assert.assertFalse(model2.isEmpty());
-	    mol.removeAtom(atom);
-	    Assert.assertFalse(model2.isEmpty());
-	    model2.setRingSet(null);
-	    Assert.assertTrue(model2.isEmpty());
+        IChemModel model2 = new ChemModel();
+        mol.addAtom(atom);
+        IRingSet ringset = new RingSet();
+        ringset.add(mset);
+        model2.setRingSet(ringset);
+        Assert.assertFalse(model2.isEmpty());
+        mol.removeAtom(atom);
+        Assert.assertFalse(model2.isEmpty());
+        model2.setRingSet(null);
+        Assert.assertTrue(model2.isEmpty());
 
-	    IChemModel model3 = new ChemModel();
-	    mol.addAtom(atom);
-	    ICrystal cry = new Crystal(mol);
-	    model3.setCrystal(cry);
-	    Assert.assertFalse(model3.isEmpty());
-	    mol.removeAtom(atom);
-	    Assert.assertFalse(model3.isEmpty());
-	    model3.setCrystal(null);
-	    Assert.assertTrue(model3.isEmpty());
+        IChemModel model3 = new ChemModel();
+        mol.addAtom(atom);
+        ICrystal cry = new Crystal(mol);
+        model3.setCrystal(cry);
+        Assert.assertFalse(model3.isEmpty());
+        mol.removeAtom(atom);
+        Assert.assertFalse(model3.isEmpty());
+        model3.setCrystal(null);
+        Assert.assertTrue(model3.isEmpty());
     }
 
 }

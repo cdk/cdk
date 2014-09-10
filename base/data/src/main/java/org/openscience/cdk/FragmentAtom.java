@@ -37,60 +37,61 @@ import org.openscience.cdk.interfaces.IFragmentAtom;
  */
 public class FragmentAtom extends PseudoAtom implements IFragmentAtom {
 
-	private static final long serialVersionUID = -6144605920605752463L;
+    private static final long serialVersionUID = -6144605920605752463L;
 
-	private IAtomContainer fragment;
-	private boolean isExpanded;
+    private IAtomContainer    fragment;
+    private boolean           isExpanded;
 
-	public FragmentAtom() {
-		fragment = this.getBuilder().newInstance(IAtomContainer.class);
-		isExpanded = false;
-	}
+    public FragmentAtom() {
+        fragment = this.getBuilder().newInstance(IAtomContainer.class);
+        isExpanded = false;
+    }
 
-	public boolean isExpanded() {
-		return isExpanded;
-	}
+    public boolean isExpanded() {
+        return isExpanded;
+    }
 
-	public void setExpanded(boolean bool) {
-		this.isExpanded = bool;
-	}
+    public void setExpanded(boolean bool) {
+        this.isExpanded = bool;
+    }
 
-	public IAtomContainer getFragment() {
-		return fragment;
-	}
+    public IAtomContainer getFragment() {
+        return fragment;
+    }
 
-	public void setFragment(IAtomContainer fragment) {
-		this.fragment = fragment;
-	}
+    public void setFragment(IAtomContainer fragment) {
+        this.fragment = fragment;
+    }
 
-	public void setExactMass(Double mass) {
-	    throw new IllegalAccessError("Cannot set the mass of a IFragmentAtom.");
-	}
+    public void setExactMass(Double mass) {
+        throw new IllegalAccessError("Cannot set the mass of a IFragmentAtom.");
+    }
 
-	/**
-	 * The exact mass of an FragmentAtom is defined as the sum of exact masses
-	 * of the IAtom's in the fragment.
-	 */
-	public Double getExactMass() {
-		double totalMass = 0.0;
+    /**
+     * The exact mass of an FragmentAtom is defined as the sum of exact masses
+     * of the IAtom's in the fragment.
+     */
+    public Double getExactMass() {
+        double totalMass = 0.0;
         for (IAtom atom : fragment.atoms()) {
             totalMass += atom.getExactMass();
         }
-		return totalMass;
-	}
+        return totalMass;
+    }
 
-	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("FragmentAtom{").append(hashCode());
-		buffer.append(", A=").append(super.toString());
-		if (fragment != null) {
-			buffer.append(", F=").append(fragment.toString());
-		}
-		buffer.append('}');
-		return buffer.toString();
-	}
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("FragmentAtom{").append(hashCode());
+        buffer.append(", A=").append(super.toString());
+        if (fragment != null) {
+            buffer.append(", F=").append(fragment.toString());
+        }
+        buffer.append('}');
+        return buffer.toString();
+    }
 
-    @Override public IFragmentAtom clone() throws CloneNotSupportedException {
+    @Override
+    public IFragmentAtom clone() throws CloneNotSupportedException {
         IFragmentAtom cpy = (IFragmentAtom) super.clone();
         cpy.setFragment(fragment.clone());
         cpy.setExpanded(isExpanded);

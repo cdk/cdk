@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class CMLFormatTest extends ChemFormatMatcherTest {
 
     public CMLFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)CMLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) CMLFormat.getInstance());
     }
 
 }

@@ -41,156 +41,133 @@ import org.openscience.cdk.interfaces.IRingSet;
  * @cdk.keyword atom type, E-state
  */
 @TestClass("org.openscience.cdk.atomtype.EStateAtomTypeMatcherTest")
-public class EStateAtomTypeMatcher  implements IAtomTypeMatcher {
+public class EStateAtomTypeMatcher implements IAtomTypeMatcher {
 
-	IRingSet ringSet = null;
+    IRingSet ringSet = null;
 
-	public void setRingSet(IRingSet rs)
-	{
-		ringSet = rs;
-	}
+    public void setRingSet(IRingSet rs) {
+        ringSet = rs;
+    }
 
-	@TestMethod("testFindMatchingAtomType_IAtomContainer")
-  public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
-      IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
-      int typeCounter = 0;
-      for (IAtom atom : atomContainer.atoms()) {
-          types[typeCounter] = findMatchingAtomType(atomContainer, atom);
-          typeCounter++;
-      }
-      return types;
-  }
+    @TestMethod("testFindMatchingAtomType_IAtomContainer")
+    public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
+        IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
+        int typeCounter = 0;
+        for (IAtom atom : atomContainer.atoms()) {
+            types[typeCounter] = findMatchingAtomType(atomContainer, atom);
+            typeCounter++;
+        }
+        return types;
+    }
 
     @TestMethod("testSP3Atoms,testNaCl,testNaphthalene,testSP2Atoms,testSPAtoms,testBenzeneFromSmiles")
-    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
-	{
+    public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) {
 
-		IAtomType atomType = null;
-		try {
-			String fragment = "";
-			int NumHAtoms = 0;
-			int NumSingleBonds2 = 0;
-			int NumDoubleBonds2 = 0;
-			int NumTripleBonds2 = 0;
-			int NumAromaticBonds2 = 0;
-			int NumAromaticBondsTotal2 = 0;
+        IAtomType atomType = null;
+        try {
+            String fragment = "";
+            int NumHAtoms = 0;
+            int NumSingleBonds2 = 0;
+            int NumDoubleBonds2 = 0;
+            int NumTripleBonds2 = 0;
+            int NumAromaticBonds2 = 0;
+            int NumAromaticBondsTotal2 = 0;
 
-			String element = atom.getSymbol();
+            String element = atom.getSymbol();
 
-			List<IAtom> attachedAtoms = atomContainer.getConnectedAtomsList(atom);
+            List<IAtom> attachedAtoms = atomContainer.getConnectedAtomsList(atom);
 
-			for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
-				IAtom attached = (IAtom)attachedAtoms.get(j);
-				IBond b = atomContainer.getBond(atom, attached);
-				if(attached.getSymbol().equals("H"))
-					NumHAtoms++;
+            for (int j = 0; j <= attachedAtoms.size() - 1; j++) {
+                IAtom attached = (IAtom) attachedAtoms.get(j);
+                IBond b = atomContainer.getBond(atom, attached);
+                if (attached.getSymbol().equals("H")) NumHAtoms++;
 
-				if (atom.getFlag(CDKConstants.ISAROMATIC)
-						&& attached.getFlag(CDKConstants.ISAROMATIC)) {
+                if (atom.getFlag(CDKConstants.ISAROMATIC) && attached.getFlag(CDKConstants.ISAROMATIC)) {
 
-					boolean SameRing = inSameAromaticRing(atomContainer, atom,
-							attached, ringSet);
+                    boolean SameRing = inSameAromaticRing(atomContainer, atom, attached, ringSet);
 
-					if (SameRing) {
-						NumAromaticBonds2++;
-						if (element.equals("N")) {
-							if (b.getOrder() == IBond.Order.SINGLE)
-								NumAromaticBondsTotal2++;
-							if (b.getOrder() == IBond.Order.DOUBLE)
-								NumAromaticBondsTotal2 = NumAromaticBondsTotal2 + 2;
-						}
-					} else {
-						if (b.getOrder() == IBond.Order.SINGLE)
-							NumSingleBonds2++;
-						if (b.getOrder() == IBond.Order.DOUBLE)
-							NumDoubleBonds2++;
-						if (b.getOrder() == IBond.Order.TRIPLE)
-							NumTripleBonds2++;
-					}
+                    if (SameRing) {
+                        NumAromaticBonds2++;
+                        if (element.equals("N")) {
+                            if (b.getOrder() == IBond.Order.SINGLE) NumAromaticBondsTotal2++;
+                            if (b.getOrder() == IBond.Order.DOUBLE)
+                                NumAromaticBondsTotal2 = NumAromaticBondsTotal2 + 2;
+                        }
+                    } else {
+                        if (b.getOrder() == IBond.Order.SINGLE) NumSingleBonds2++;
+                        if (b.getOrder() == IBond.Order.DOUBLE) NumDoubleBonds2++;
+                        if (b.getOrder() == IBond.Order.TRIPLE) NumTripleBonds2++;
+                    }
 
-				} else {
+                } else {
 
-					if (b.getOrder() == IBond.Order.SINGLE)
-						NumSingleBonds2++;
-					if (b.getOrder() == IBond.Order.DOUBLE)
-						NumDoubleBonds2++;
-					if (b.getOrder() == IBond.Order.TRIPLE)
-						NumTripleBonds2++;
-				}
-			}
-			NumSingleBonds2 = NumSingleBonds2 - NumHAtoms;
+                    if (b.getOrder() == IBond.Order.SINGLE) NumSingleBonds2++;
+                    if (b.getOrder() == IBond.Order.DOUBLE) NumDoubleBonds2++;
+                    if (b.getOrder() == IBond.Order.TRIPLE) NumTripleBonds2++;
+                }
+            }
+            NumSingleBonds2 = NumSingleBonds2 - NumHAtoms;
 
-			// assign frag here
-			fragment = "S";
+            // assign frag here
+            fragment = "S";
 
-			for (int j = 0; j <= NumTripleBonds2 - 1; j++) {
-				fragment += "t";
-			}
+            for (int j = 0; j <= NumTripleBonds2 - 1; j++) {
+                fragment += "t";
+            }
 
-			for (int j = 0; j <= NumDoubleBonds2 - 1; j++) {
-				fragment += "d";
-			}
+            for (int j = 0; j <= NumDoubleBonds2 - 1; j++) {
+                fragment += "d";
+            }
 
-			for (int j = 0; j <= NumSingleBonds2 - 1; j++) {
-				fragment += "s";
-			}
+            for (int j = 0; j <= NumSingleBonds2 - 1; j++) {
+                fragment += "s";
+            }
 
-			for (int j = 0; j <= NumAromaticBonds2 - 1; j++) {
-				fragment += "a";
-			}
+            for (int j = 0; j <= NumAromaticBonds2 - 1; j++) {
+                fragment += "a";
+            }
 
-			fragment += element;
+            fragment += element;
 
-			if (atom.getFormalCharge() == 1) {
-				fragment += "p";
-			} else if (atom.getFormalCharge() == -1) {
-				fragment += "m";
-			}
+            if (atom.getFormalCharge() == 1) {
+                fragment += "p";
+            } else if (atom.getFormalCharge() == -1) {
+                fragment += "m";
+            }
 
-			if (NumHAtoms == 1)
-				fragment += "H";
-			else
-				if (NumHAtoms > 1)
-					fragment += ("H" + NumHAtoms);
+            if (NumHAtoms == 1)
+                fragment += "H";
+            else if (NumHAtoms > 1) fragment += ("H" + NumHAtoms);
 
-			atomType = atom.getBuilder().newInstance(IAtomType.class,fragment, atom.getSymbol());
-			atomType.setFormalCharge(atom.getFormalCharge());
-			if (atom.getFlag(CDKConstants.ISAROMATIC))
-				atomType.setFlag(CDKConstants.ISAROMATIC, true);
+            atomType = atom.getBuilder().newInstance(IAtomType.class, fragment, atom.getSymbol());
+            atomType.setFormalCharge(atom.getFormalCharge());
+            if (atom.getFlag(CDKConstants.ISAROMATIC)) atomType.setFlag(CDKConstants.ISAROMATIC, true);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-		return atomType;
-	}
+        return atomType;
+    }
 
     @TestMethod("testAromaticAtoms")
-    public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1,
-			IAtom atom2, IRingSet rs)
-	{
-		if (rs == null)
-			return false;
-		for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++)
-		{
-			IRing r = (IRing) rs.getAtomContainer(i);
-			if (r.contains(atom1) && r.contains(atom2))
-			{
-				if (isAromaticRing(r))
-					return(true);
-			}
-		}
-		return false;
-	}
+    public static boolean inSameAromaticRing(IAtomContainer m, IAtom atom1, IAtom atom2, IRingSet rs) {
+        if (rs == null) return false;
+        for (int i = 0; i <= rs.getAtomContainerCount() - 1; i++) {
+            IRing r = (IRing) rs.getAtomContainer(i);
+            if (r.contains(atom1) && r.contains(atom2)) {
+                if (isAromaticRing(r)) return (true);
+            }
+        }
+        return false;
+    }
 
     @TestMethod("testAromaticAtoms")
-	static boolean  isAromaticRing(IRing ring)
-	{
-		for (int i = 0; i < ring.getAtomCount(); i++)
-			if(!ring.getAtom(i).getFlag(CDKConstants.ISAROMATIC))
-				return(false);
+    static boolean isAromaticRing(IRing ring) {
+        for (int i = 0; i < ring.getAtomCount(); i++)
+            if (!ring.getAtom(i).getFlag(CDKConstants.ISAROMATIC)) return (false);
 
-		return(true);
-	}
+        return (true);
+    }
 
 }

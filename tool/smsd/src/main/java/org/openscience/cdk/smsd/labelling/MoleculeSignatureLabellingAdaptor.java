@@ -10,17 +10,16 @@ import org.openscience.cdk.signature.MoleculeSignature;
 
 public class MoleculeSignatureLabellingAdaptor implements ICanonicalMoleculeLabeller {
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
     public IAtomContainer getCanonicalMolecule(IAtomContainer container) {
-        return AtomContainerAtomPermutor.permute(
-                getCanonicalPermutation(container), container);
+        return AtomContainerAtomPermutor.permute(getCanonicalPermutation(container), container);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
     public int[] getCanonicalPermutation(IAtomContainer container) {
         MoleculeSignature molSig = new MoleculeSignature(container);
         return molSig.getCanonicalLabels();

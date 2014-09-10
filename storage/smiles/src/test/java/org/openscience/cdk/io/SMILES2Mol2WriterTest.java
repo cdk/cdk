@@ -79,8 +79,7 @@ public class SMILES2Mol2WriterTest {
                 swriter.getBuffer().toString().indexOf("1 C1 0.000 0.000 0.000 C.ar") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 O8 0.000 0.000 0.000 O.2") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("7 C7 0.000 0.000 0.000 C.2") > 0);
-        Assert.assertTrue("Aromatic bond not properly reported",
-                swriter.getBuffer().toString().indexOf("1 1 2 ar") > 0);
+        Assert.assertTrue("Aromatic bond not properly reported", swriter.getBuffer().toString().indexOf("1 1 2 ar") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("8 7 8 2") > 0);
     }
 
@@ -99,8 +98,7 @@ public class SMILES2Mol2WriterTest {
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("3 O3 0.000 0.000 0.000 O.") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 N4 0.000 0.000 0.000 N.a") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("1 1 2 1") > 0);
-        Assert.assertTrue("Amide bond not properly reported",
-                swriter.getBuffer().toString().indexOf("3 2 4 am") > 0);
+        Assert.assertTrue("Amide bond not properly reported", swriter.getBuffer().toString().indexOf("3 2 4 am") > 0);
         Assert.assertTrue(swriter.getBuffer().toString().indexOf("4 4 5 1") > 0);
     }
 }

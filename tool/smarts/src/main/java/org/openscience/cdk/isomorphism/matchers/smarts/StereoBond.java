@@ -30,20 +30,20 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class StereoBond extends SMARTSBond {
 
-    private final boolean unspecified;
+    private final boolean   unspecified;
     private final Direction direction;
 
-    public enum Direction {UP, DOWN}
-
-    public StereoBond(IChemObjectBuilder builder,
-                      Direction          direction,
-                      boolean            unspecified){
-        super(builder);
-        this.unspecified = unspecified;
-        this.direction  = direction;
+    public enum Direction {
+        UP, DOWN
     }
 
-	public boolean matches(IBond bond) {
+    public StereoBond(IChemObjectBuilder builder, Direction direction, boolean unspecified) {
+        super(builder);
+        this.unspecified = unspecified;
+        this.direction = direction;
+    }
+
+    public boolean matches(IBond bond) {
         return Order.SINGLE.equals(bond.getOrder());
     }
 
@@ -54,8 +54,7 @@ public class StereoBond extends SMARTSBond {
     public Direction direction(IAtom atom) {
         if (atom == getAtom(0))
             return direction;
-        else if (atom == getAtom(1))
-            return inv(direction);
+        else if (atom == getAtom(1)) return inv(direction);
         throw new IllegalArgumentException("atom is not a memeber of this bond");
     }
 

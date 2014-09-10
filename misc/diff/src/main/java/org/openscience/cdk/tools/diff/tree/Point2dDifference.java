@@ -53,16 +53,10 @@ public class Point2dDifference extends AbstractDifferenceList implements IDiffer
         if (first == null && second == null) return null;
 
         Point2dDifference totalDiff = new Point2dDifference(name);
-        totalDiff.addChild(DoubleDifference.construct(
-        	"x",
-        	first == null ? null : first.x,
-        	second == null ? null : second.x
-        ));
-        totalDiff.addChild(DoubleDifference.construct(
-        	"y",
-        	first == null ? null : first.y,
-        	second == null ? null : second.y
-        ));
+        totalDiff.addChild(DoubleDifference.construct("x", first == null ? null : first.x, second == null ? null
+                : second.x));
+        totalDiff.addChild(DoubleDifference.construct("y", first == null ? null : first.y, second == null ? null
+                : second.y));
         if (totalDiff.childCount() == 0) {
             return null;
         }

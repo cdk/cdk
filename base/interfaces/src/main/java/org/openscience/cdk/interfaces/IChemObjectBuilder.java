@@ -41,7 +41,6 @@ public interface IChemObjectBuilder {
      * @throws IllegalArgumentException Exception thrown when the {@link IChemObjectBuilder}
      *               builder cannot instantiate the <code>clazz</code> with the given parameters.
      */
-    public <T extends ICDKObject>T newInstance(Class<T> clazz, Object... params)
-    throws IllegalArgumentException;
+    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) throws IllegalArgumentException;
 
 }

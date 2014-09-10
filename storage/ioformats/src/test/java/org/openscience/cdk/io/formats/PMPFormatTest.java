@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class PMPFormatTest extends ChemFormatMatcherTest {
 
     public PMPFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)PMPFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) PMPFormat.getInstance());
     }
 
 }

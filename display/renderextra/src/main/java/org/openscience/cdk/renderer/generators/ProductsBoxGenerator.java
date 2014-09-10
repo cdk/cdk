@@ -47,16 +47,14 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 @TestClass("org.openscience.cdk.renderer.generators.ProductsBoxGeneratorTest")
 public class ProductsBoxGenerator implements IGenerator<IReaction> {
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testEmptyReaction")
-	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if(!model.getParameter(ShowReactionBoxes.class).getValue())
-			return null;
-	    if (reaction.getProductCount() == 0)
-	    	return new ElementGroup();
-		double distance = model.getParameter(BondLength.class)
-    		.getValue() / model.getParameter(Scale.class).getValue() / 2;
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testEmptyReaction")
+    public IRenderingElement generate(IReaction reaction, RendererModel model) {
+        if (!model.getParameter(ShowReactionBoxes.class).getValue()) return null;
+        if (reaction.getProductCount() == 0) return new ElementGroup();
+        double distance = model.getParameter(BondLength.class).getValue() / model.getParameter(Scale.class).getValue()
+                / 2;
         Rectangle2D totalBounds = null;
         for (IAtomContainer molecule : reaction.getProducts().atomContainers()) {
             Rectangle2D bounds = BoundsCalculator.calculateBounds(molecule);
@@ -69,31 +67,18 @@ public class ProductsBoxGenerator implements IGenerator<IReaction> {
         if (totalBounds == null) return null;
 
         ElementGroup diagram = new ElementGroup();
-        Color foregroundColor = model.getParameter(
-        	BasicSceneGenerator.ForegroundColor.class).getValue();
-        diagram.add(new RectangleElement(
-        	totalBounds.getMinX()-distance,
-            totalBounds.getMinY()-distance,
-            totalBounds.getMaxX()+distance,
-            totalBounds.getMaxY()+distance,
-            foregroundColor
-        ));
-        diagram.add(new TextElement(
-        	(totalBounds.getMinX()+totalBounds.getMaxX())/2,
-        	totalBounds.getMinY()-distance,
-        	"Products",
-        	foregroundColor
-        ));
+        Color foregroundColor = model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(new RectangleElement(totalBounds.getMinX() - distance, totalBounds.getMinY() - distance,
+                totalBounds.getMaxX() + distance, totalBounds.getMaxY() + distance, foregroundColor));
+        diagram.add(new TextElement((totalBounds.getMinX() + totalBounds.getMaxX()) / 2, totalBounds.getMinY()
+                - distance, "Products", foregroundColor));
         return diagram;
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
-	public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-            }
-        );
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(new IGeneratorParameter<?>[]{});
     }
 }

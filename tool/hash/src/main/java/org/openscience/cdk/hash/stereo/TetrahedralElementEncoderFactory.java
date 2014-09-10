@@ -54,7 +54,8 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
      * @inheritDoc
      */
     @TestMethod("createExplicitH,createImplicitH_back,createImplicitH_front")
-    @Override public StereoEncoder create(IAtomContainer container, int[][] graph) {
+    @Override
+    public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
         // index atoms for quick lookup - wish we didn't have to do this
         // but the it's better than calling getAtomNumber every time - we use
@@ -66,13 +67,11 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
         // for each tetrahedral element - create a new encoder
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof ITetrahedralChirality) {
-                encoders.add(encoder((ITetrahedralChirality) se,
-                                     atomToIndex = indexMap(atomToIndex, container)));
+                encoders.add(encoder((ITetrahedralChirality) se, atomToIndex = indexMap(atomToIndex, container)));
             }
         }
 
-        return encoders.isEmpty() ? StereoEncoder.EMPTY
-                                  : new MultiStereoEncoder(encoders);
+        return encoders.isEmpty() ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
     }
 
     /**
@@ -82,20 +81,18 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
      * @param atomToIndex map of atoms to indices
      * @return a new geometry encoder
      */
-    private static GeometryEncoder encoder(ITetrahedralChirality tc,
-                                           Map<IAtom,Integer> atomToIndex) {
+    private static GeometryEncoder encoder(ITetrahedralChirality tc, Map<IAtom, Integer> atomToIndex) {
 
         IAtom[] ligands = tc.getLigands();
 
-        int     centre  = atomToIndex.get(tc.getChiralAtom());
-        int[]   indices = new int[4];
+        int centre = atomToIndex.get(tc.getChiralAtom());
+        int[] indices = new int[4];
 
         int offset = -1;
 
         for (int i = 0; i < ligands.length; i++) {
             indices[i] = atomToIndex.get(ligands[i]);
-            if (indices[i] == centre)
-                offset = i;
+            if (indices[i] == centre) offset = i;
         }
 
         // convert clockwise/anticlockwise to -1/+1
@@ -114,17 +111,14 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
             // 3 (last index) minus the index where we started. if the
             // value is odd we invert the parity (odd number of
             // inversions)
-            if (Integer.lowestOneBit(3 - offset) == 0x1)
-                parity *= -1;
+            if (Integer.lowestOneBit(3 - offset) == 0x1) parity *= -1;
 
             // trim the array to size we don't include the last (implicit)
             // vertex when checking the invariants
             indices = Arrays.copyOf(indices, indices.length - 1);
         }
 
-        return new GeometryEncoder(centre,
-                                   new BasicPermutationParity(indices),
-                                   GeometricParity.valueOf(parity));
+        return new GeometryEncoder(centre, new BasicPermutationParity(indices), GeometricParity.valueOf(parity));
     }
 
     /**
@@ -135,8 +129,7 @@ public final class TetrahedralElementEncoderFactory implements StereoEncoderFact
      * @return a usable atom to index map for the given container
      */
     private static Map<IAtom, Integer> indexMap(Map<IAtom, Integer> map, IAtomContainer container) {
-        if (map != null)
-            return map;
+        if (map != null) return map;
         map = new HashMap<IAtom, Integer>();
         for (IAtom a : container.atoms()) {
             map.put(a, map.size());

@@ -31,18 +31,18 @@ import org.openscience.cdk.renderer.font.IFontManager;
  */
 public interface IDrawVisitor extends IRenderingVisitor {
 
-	/**
-	 * Sets the {@link IFontManager} this {@link IDrawVisitor} should use.
-	 *
-	 * @param fontManager the {@link IFontManager} to be used
-	 */
+    /**
+     * Sets the {@link IFontManager} this {@link IDrawVisitor} should use.
+     *
+     * @param fontManager the {@link IFontManager} to be used
+     */
     public void setFontManager(IFontManager fontManager);
 
-	/**
-	 * Sets the {@link RendererModel} this {@link IDrawVisitor} should use.
-	 *
-	 * @param rendererModel the {@link RendererModel} to be used
-	 */
+    /**
+     * Sets the {@link RendererModel} this {@link IDrawVisitor} should use.
+     *
+     * @param rendererModel the {@link RendererModel} to be used
+     */
     public void setRendererModel(RendererModel rendererModel);
 
 }

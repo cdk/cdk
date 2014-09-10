@@ -29,12 +29,9 @@ import org.openscience.cdk.fragment.MurckoFragmenterTest;
 /**
  * @cdk.module  test-fragment
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    FragmentCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {FragmentCoverageTest.class,
 
-    MurckoFragmenterTest.class,
-    ExhaustiveFragmenterTest.class,
-    FragmentUtilsTest.class
-})
-public class MfragmentTests {}
+MurckoFragmenterTest.class, ExhaustiveFragmenterTest.class, FragmentUtilsTest.class})
+public class MfragmentTests {
+}

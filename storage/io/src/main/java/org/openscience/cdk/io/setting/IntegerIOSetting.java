@@ -30,8 +30,7 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class IntegerIOSetting extends IOSetting {
 
-    public IntegerIOSetting(String name, Importance level,
-                            String question, String defaultSetting) {
+    public IntegerIOSetting(String name, Importance level, String question, String defaultSetting) {
         super(name, level, question, defaultSetting);
     }
 

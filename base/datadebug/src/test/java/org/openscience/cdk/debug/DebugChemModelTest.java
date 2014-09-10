@@ -34,16 +34,19 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugChemModelTest extends AbstractChemModelTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugChemModel();
             }
         });
     }
 
-    @Test public void testDebugChemModel() {
-	    IChemModel chemModel = new DebugChemModel();
-	    Assert.assertNotNull(chemModel);
+    @Test
+    public void testDebugChemModel() {
+        IChemModel chemModel = new DebugChemModel();
+        Assert.assertNotNull(chemModel);
     }
 }

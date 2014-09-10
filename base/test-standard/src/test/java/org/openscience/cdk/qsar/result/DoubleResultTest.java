@@ -32,24 +32,23 @@ public class DoubleResultTest extends CDKTestCase {
         super();
     }
 
-
     @Test
-	public void testDoubleResult_double() {
-		DoubleResult result = new DoubleResult(5.0);
-		Assert.assertNotNull(result);
-	}
+    public void testDoubleResult_double() {
+        DoubleResult result = new DoubleResult(5.0);
+        Assert.assertNotNull(result);
+    }
 
     @Test
     public void testToString() {
-		DoubleResult result = new DoubleResult(5.0);
-		Assert.assertEquals("5.0", result.toString());
-	}
+        DoubleResult result = new DoubleResult(5.0);
+        Assert.assertEquals("5.0", result.toString());
+    }
 
     @Test
     public void testDoubleValue() {
-		DoubleResult result = new DoubleResult(5);
-		Assert.assertEquals(5.0, result.doubleValue(), 0.000001);
-	}
+        DoubleResult result = new DoubleResult(5);
+        Assert.assertEquals(5.0, result.doubleValue(), 0.000001);
+    }
 
     @Test
     public void testLength() {
@@ -57,5 +56,3 @@ public class DoubleResultTest extends CDKTestCase {
         Assert.assertEquals(1, result.length());
     }
 }
-
-

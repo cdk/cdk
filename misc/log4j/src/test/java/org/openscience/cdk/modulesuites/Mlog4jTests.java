@@ -30,10 +30,7 @@ import org.openscience.cdk.tools.LoggingToolTestDebugTrue;
  *
  * @cdk.module  test-log4j
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    Log4jCoverageTest.class,
-    LoggingToolTest.class,
-    LoggingToolTestDebugTrue.class
-})
-public class Mlog4jTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {Log4jCoverageTest.class, LoggingToolTest.class, LoggingToolTestDebugTrue.class})
+public class Mlog4jTests {
+}

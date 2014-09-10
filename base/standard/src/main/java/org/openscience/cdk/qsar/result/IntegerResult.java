@@ -30,10 +30,9 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.result.IntegerResultTest")
 public class IntegerResult implements IDescriptorResult {
 
-	private static final long serialVersionUID = -8066984646119839996L;
+    private static final long serialVersionUID = -8066984646119839996L;
 
-    private int value;
-
+    private int               value;
 
     public IntegerResult(int value) {
         this.value = value;
@@ -51,8 +50,7 @@ public class IntegerResult implements IDescriptorResult {
 
     @TestMethod("testLength")
     public int length() {
-    	return 1;
+        return 1;
     }
 
 }
-

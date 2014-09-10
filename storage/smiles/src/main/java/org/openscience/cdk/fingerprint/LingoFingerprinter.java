@@ -51,16 +51,15 @@ import java.util.regex.Pattern;
 @TestClass("org.openscience.cdk.fingerprint.LingoFingerprinterTest")
 public class LingoFingerprinter implements IFingerprinter {
 
-    int q = 4;
-    SmilesGenerator gen = new SmilesGenerator();
-    Pattern ringClosurePattern = Pattern.compile("[0-9]+");
+    int             q                  = 4;
+    SmilesGenerator gen                = new SmilesGenerator();
+    Pattern         ringClosurePattern = Pattern.compile("[0-9]+");
 
     /**
      * Initialize the fingerprinter with a defult substring length of 4.
      */
     @TestMethod("testFingerprint")
-    public LingoFingerprinter() {
-    }
+    public LingoFingerprinter() {}
 
     /**
      * Initialize the fingerprinter.
@@ -80,11 +79,13 @@ public class LingoFingerprinter implements IFingerprinter {
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         Aromaticity.cdkLegacy().apply(atomContainer);
         String smiles = refactorSmiles(gen.create(atomContainer));
-        Map<String, Integer> map = new HashMap<String,Integer>();
-        for (int i = 0; i < smiles.length()-q+1; i++) {
-          String subsmi = smiles.substring(i, i+q);
-            if (map.containsKey(subsmi)) map.put(subsmi, map.get(subsmi)+1);
-            else map.put(subsmi, 1);
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (int i = 0; i < smiles.length() - q + 1; i++) {
+            String subsmi = smiles.substring(i, i + q);
+            if (map.containsKey(subsmi))
+                map.put(subsmi, map.get(subsmi) + 1);
+            else
+                map.put(subsmi, 1);
         }
         return map;
     }
@@ -99,10 +100,9 @@ public class LingoFingerprinter implements IFingerprinter {
         return matcher.replaceAll("0");
     }
 
-	@Override
-	public ICountFingerprint getCountFingerprint(IAtomContainer container)
-			throws CDKException {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public ICountFingerprint getCountFingerprint(IAtomContainer container) throws CDKException {
+        throw new UnsupportedOperationException();
+    }
 
 }

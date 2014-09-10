@@ -198,6 +198,4 @@ public interface IChemObjectIO extends Closeable {
      */
     public Collection<IOSetting> getSettings();
 
-
 }
-

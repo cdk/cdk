@@ -30,29 +30,32 @@ import org.junit.Test;
  */
 public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
-	@Test public void testLoggingTool_Class() throws Exception {
-	    ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
-		Assert.assertNotNull(logger);
-	}
+    @Test
+    public void testLoggingTool_Class() throws Exception {
+        ILoggingTool logger = new SystemOutLoggingTool(this.getClass());
+        Assert.assertNotNull(logger);
+    }
 
-	@Test public void testDebug_Object() throws Exception {
-	    // set up things such that we can test the actual output
+    @Test
+    public void testDebug_Object() throws Exception {
+        // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
         // do the testing
-	    SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
-	    logger.setDebugEnabled(true);
-		logger.debug(this);
-		Assert.assertTrue(out.toString().contains("DEBUG"));
+        SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
+        logger.setDebugEnabled(true);
+        logger.debug(this);
+        Assert.assertTrue(out.toString().contains("DEBUG"));
         Assert.assertTrue(out.toString().contains(this.getClass().getName()));
 
-		// reset the STDOUT
-		System.setOut(stdout);
-	}
+        // reset the STDOUT
+        System.setOut(stdout);
+    }
 
-	@Test public void testDebug_Object_Object() throws Exception {
+    @Test
+    public void testDebug_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -67,9 +70,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_int() throws Exception {
+    @Test
+    public void testDebug_Object_int() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -85,9 +89,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_double() throws Exception {
+    @Test
+    public void testDebug_Object_double() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -103,9 +108,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_boolean() throws Exception {
+    @Test
+    public void testDebug_Object_boolean() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -121,9 +127,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testDebug_Object_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -138,9 +145,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testDebug_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -155,9 +163,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDebug_Object_Object_Object() throws Exception {
+    @Test
+    public void testDebug_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -172,9 +181,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object() throws Exception {
+    @Test
+    public void testError_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -189,9 +199,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_Object() throws Exception {
+    @Test
+    public void testError_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -206,9 +217,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_int() throws Exception {
+    @Test
+    public void testError_Object_int() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -224,9 +236,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_double() throws Exception {
+    @Test
+    public void testError_Object_double() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -242,9 +255,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_boolean() throws Exception {
+    @Test
+    public void testError_Object_boolean() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -260,9 +274,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testError_Object_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -277,9 +292,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testError_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -294,9 +310,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testError_Object_Object_Object() throws Exception {
+    @Test
+    public void testError_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -311,9 +328,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object() throws Exception {
+    @Test
+    public void testWarn_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -328,9 +346,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_Object() throws Exception {
+    @Test
+    public void testWarn_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -345,9 +364,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_int() throws Exception {
+    @Test
+    public void testWarn_Object_int() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -363,9 +383,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_double() throws Exception {
+    @Test
+    public void testWarn_Object_double() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -381,9 +402,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_boolean() throws Exception {
+    @Test
+    public void testWarn_Object_boolean() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -399,9 +421,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testWarn_Object_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -416,9 +439,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testWarn_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -433,9 +457,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testWarn_Object_Object_Object() throws Exception {
+    @Test
+    public void testWarn_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -450,9 +475,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object() throws Exception {
+    @Test
+    public void testInfo_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -467,9 +493,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_Object() throws Exception {
+    @Test
+    public void testInfo_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -484,9 +511,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_int() throws Exception {
+    @Test
+    public void testInfo_Object_int() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -502,9 +530,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_double() throws Exception {
+    @Test
+    public void testInfo_Object_double() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -520,9 +549,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_boolean() throws Exception {
+    @Test
+    public void testInfo_Object_boolean() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -538,9 +568,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_Object_Object_Object_Object() throws Exception {
+    @Test
+    public void testInfo_Object_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -555,9 +586,9 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test
+    @Test
     public void testInfo_Object_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
@@ -573,9 +604,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testInfo_Object_Object_Object() throws Exception {
+    @Test
+    public void testInfo_Object_Object_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -590,9 +622,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testFatal_Object() throws Exception {
+    @Test
+    public void testFatal_Object() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -607,14 +640,16 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testSetStackLength_int() throws Exception {
-		SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
-		logger.setStackLength(20);
-	}
+    @Test
+    public void testSetStackLength_int() throws Exception {
+        SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
+        logger.setStackLength(20);
+    }
 
-	@Test public void testDumpClasspath() throws Exception {
+    @Test
+    public void testDumpClasspath() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -630,9 +665,10 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testDumpSystemProperties() throws Exception {
+    @Test
+    public void testDumpSystemProperties() throws Exception {
         // set up things such that we can test the actual output
         PrintStream stdout = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -652,27 +688,28 @@ public class SystemOutLoggingToolTest extends AbstractLoggingToolTest {
 
         // reset the STDOUT
         System.setOut(stdout);
-	}
+    }
 
-	@Test public void testIsDebugEnabled() throws Exception {
-		SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
-		// the default must be not the debug
-		Assert.assertFalse(logger.isDebugEnabled());
-		// but we can overwrite it here...
-		logger.setDebugEnabled(true);
+    @Test
+    public void testIsDebugEnabled() throws Exception {
+        SystemOutLoggingTool logger = new SystemOutLoggingTool(this.getClass());
+        // the default must be not the debug
+        Assert.assertFalse(logger.isDebugEnabled());
+        // but we can overwrite it here...
+        logger.setDebugEnabled(true);
         Assert.assertTrue(logger.isDebugEnabled());
         logger.setDebugEnabled(false);
         Assert.assertFalse(logger.isDebugEnabled());
-	}
+    }
 
-    @Test public void testCreate() throws Exception {
+    @Test
+    public void testCreate() throws Exception {
         ILoggingTool logger = SystemOutLoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
 
-	@Override
-	public ILoggingTool getLoggingTool() {
-		return new SystemOutLoggingTool(this.getClass());
-	}
+    @Override
+    public ILoggingTool getLoggingTool() {
+        return new SystemOutLoggingTool(this.getClass());
+    }
 }
-

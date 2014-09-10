@@ -39,7 +39,7 @@ public class PathElement implements IRenderingElement {
     public final List<Point2d> points;
 
     /** The color of the path. **/
-    public final Color color;
+    public final Color         color;
 
     /**
      * Make a path from the list of points.

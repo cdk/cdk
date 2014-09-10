@@ -51,67 +51,66 @@ import org.w3c.dom.NodeList;
 @TestClass("org.openscience.cdk.tools.NormalizerTest")
 public class Normalizer {
 
-  /**
-   *  The method takes an xml files like the following:<br>
-   *  &lt;replace-set&gt;<br>
-   *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
-   *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
-   *  &lt;/replace-set&gt;<br>
-   *  All parts in ac which are the same as replace will be changed according to replacement.
-   *  Currently the following changes are done: BondOrder, FormalCharge.
-   *  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
-   *  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
-   *
-   * @param  ac                          The atomcontainer to normalize.
-   * @param  doc                         The configuration file.
-   * @return                             Did a replacement take place?
-   * @exception  InvalidSmilesException  doc contains an invalid smiles.
-   */
-  @TestMethod("testNormalize")
-  public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
-    NodeList nl = doc.getElementsByTagName("replace-set");
-    SmilesParser sp = new SmilesParser(ac.getBuilder());
-    boolean change=false;
-    for (int i = 0; i < nl.getLength(); i++) {
-      Element child = (Element) nl.item(i);
-      NodeList replaces = child.getElementsByTagName("replace");
-      NodeList replacement = child.getElementsByTagName("replacement");
-      String replacementstring = replacement.item(0).getFirstChild().getNodeValue();
-      if (replacementstring.indexOf('\n') > -1 || replacementstring.length() < 1) {
-        replacementstring = replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
-      }
-      IAtomContainer replacementStructure = sp.parseSmiles(replacementstring);
-      for (int k = 0; k < replaces.getLength(); k++) {
-        Element replace = (Element) replaces.item(k);
-        String replacestring = replace.getFirstChild().getNodeValue();
-        if (replacestring.indexOf('\n') > -1 || replacestring.length() < 1) {
-          replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
+    /**
+     *  The method takes an xml files like the following:<br>
+     *  &lt;replace-set&gt;<br>
+     *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
+     *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
+     *  &lt;/replace-set&gt;<br>
+     *  All parts in ac which are the same as replace will be changed according to replacement.
+     *  Currently the following changes are done: BondOrder, FormalCharge.
+     *  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
+     *  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
+     *
+     * @param  ac                          The atomcontainer to normalize.
+     * @param  doc                         The configuration file.
+     * @return                             Did a replacement take place?
+     * @exception  InvalidSmilesException  doc contains an invalid smiles.
+     */
+    @TestMethod("testNormalize")
+    public static boolean normalize(IAtomContainer ac, Document doc) throws InvalidSmilesException, CDKException {
+        NodeList nl = doc.getElementsByTagName("replace-set");
+        SmilesParser sp = new SmilesParser(ac.getBuilder());
+        boolean change = false;
+        for (int i = 0; i < nl.getLength(); i++) {
+            Element child = (Element) nl.item(i);
+            NodeList replaces = child.getElementsByTagName("replace");
+            NodeList replacement = child.getElementsByTagName("replacement");
+            String replacementstring = replacement.item(0).getFirstChild().getNodeValue();
+            if (replacementstring.indexOf('\n') > -1 || replacementstring.length() < 1) {
+                replacementstring = replacement.item(0).getFirstChild().getNextSibling().getNodeValue();
+            }
+            IAtomContainer replacementStructure = sp.parseSmiles(replacementstring);
+            for (int k = 0; k < replaces.getLength(); k++) {
+                Element replace = (Element) replaces.item(k);
+                String replacestring = replace.getFirstChild().getNodeValue();
+                if (replacestring.indexOf('\n') > -1 || replacestring.length() < 1) {
+                    replacestring = replace.getFirstChild().getNextSibling().getNodeValue();
+                }
+                IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
+                List<RMap> l = null;
+                UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
+                while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
+                    List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
+                    Iterator<RMap> bondit = l.iterator();
+                    while (bondit.hasNext()) {
+                        RMap rmap = bondit.next();
+                        IBond acbond = ac.getBond(rmap.getId1());
+                        IBond replacebond = replacementStructure.getBond(rmap.getId2());
+                        acbond.setOrder(replacebond.getOrder());
+                        change = true;
+                    }
+                    Iterator<RMap> atomit = l2.iterator();
+                    while (atomit.hasNext()) {
+                        RMap rmap = atomit.next();
+                        IAtom acatom = ac.getAtom(rmap.getId1());
+                        IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
+                        acatom.setFormalCharge(replaceatom.getFormalCharge());
+                        change = true;
+                    }
+                }
+            }
         }
-        IAtomContainer replaceStructure = sp.parseSmiles(replacestring);
-        List<RMap> l = null;
-        UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
-        while ((l = universalIsomorphismTester.getSubgraphMap(ac, replaceStructure)) != null) {
-          List<RMap> l2 = universalIsomorphismTester.makeAtomsMapOfBondsMap(l, ac, replaceStructure);
-          Iterator<RMap> bondit = l.iterator();
-          while (bondit.hasNext()) {
-            RMap rmap = bondit.next();
-            IBond acbond = ac.getBond(rmap.getId1());
-            IBond replacebond = replacementStructure.getBond(rmap.getId2());
-            acbond.setOrder(replacebond.getOrder());
-            change=true;
-          }
-          Iterator<RMap> atomit = l2.iterator();
-          while (atomit.hasNext()) {
-            RMap rmap = atomit.next();
-            IAtom acatom = ac.getAtom(rmap.getId1());
-            IAtom replaceatom = replacementStructure.getAtom(rmap.getId2());
-            acatom.setFormalCharge(replaceatom.getFormalCharge());
-            change=true;
-          }
-        }
-      }
+        return (change);
     }
-    return (change);
-  }
 }
-

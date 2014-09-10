@@ -34,6 +34,7 @@ import static org.junit.Assert.assertThat;
  * @cdk.module test-hash
  */
 public class GeometricParityTest {
+
     @Test
     public void valueOf() throws Exception {
         GeometricParity odd = GeometricParity.valueOf(-1);

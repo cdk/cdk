@@ -27,14 +27,14 @@ import org.junit.Before;
  */
 public class DictionaryTest extends AbstractDictionaryTest {
 
-	@Before
-	public void setTestClass() {
-		super.setTestClass(new Dictionary());
-	}
+    @Before
+    public void setTestClass() {
+        super.setTestClass(new Dictionary());
+    }
 
-	@After
-	public void testTestClass() {
-		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
-	}
+    @After
+    public void testTestClass() {
+        Assert.assertTrue(getTestClass().getClass().getName().endsWith(".Dictionary"));
+    }
 
 }

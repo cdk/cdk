@@ -54,25 +54,22 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         ILigand[] ligand1Ligands = CIPTool.getLigandLigands(ligand1);
         ILigand[] ligand2Ligands = CIPTool.getLigandLigands(ligand2);
         // if neither have ligands:
-        if (ligand1Ligands.length == 0 && ligand2Ligands.length == 0)
-            return 0;
+        if (ligand1Ligands.length == 0 && ligand2Ligands.length == 0) return 0;
         // else if one has no ligands
-        if (ligand1Ligands.length == 0)
-            return -1;
-        if (ligand2Ligands.length == 0)
-            return 1;
+        if (ligand1Ligands.length == 0) return -1;
+        if (ligand2Ligands.length == 0) return 1;
         // ok, both have at least one ligand
         int minLigandCount = Math.min(ligand1Ligands.length, ligand2Ligands.length);
         if (ligand1Ligands.length > 1) ligand1Ligands = order(ligand1Ligands);
         if (ligand2Ligands.length > 1) ligand2Ligands = order(ligand2Ligands);
         // first do a basic number rule
-        for (int i=0; i<minLigandCount; i++) {
+        for (int i = 0; i < minLigandCount; i++) {
             int comparison = numberRule.compare(ligand1Ligands[i], ligand2Ligands[i]);
             if (comparison != 0) return comparison;
         }
         if (ligand1Ligands.length == ligand2Ligands.length) {
             // it that does not resolve it, do a full, recursive compare
-            for (int i=0; i<minLigandCount; i++) {
+            for (int i = 0; i < minLigandCount; i++) {
                 int comparison = compare(ligand1Ligands[i], ligand2Ligands[i]);
                 if (comparison != 0) return comparison;
             }
@@ -97,8 +94,8 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
         Arrays.sort(newLigands, numberRule);
         // this above list is from low to high precendence, so we need to revert the array
         ILigand[] reverseLigands = new ILigand[newLigands.length];
-        for (int i=0; i<newLigands.length; i++) {
-            reverseLigands[(newLigands.length-1)-i] = newLigands[i];
+        for (int i = 0; i < newLigands.length; i++) {
+            reverseLigands[(newLigands.length - 1) - i] = newLigands[i];
         }
         return reverseLigands;
     }

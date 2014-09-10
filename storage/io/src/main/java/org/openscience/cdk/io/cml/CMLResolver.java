@@ -40,11 +40,9 @@ import org.xml.sax.InputSource;
  **/
 public class CMLResolver implements EntityResolver {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CMLResolver.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CMLResolver.class);
 
-    public CMLResolver() {
-    }
+    public CMLResolver() {}
 
     /**
      * Not implemented: always returns null.
@@ -57,8 +55,7 @@ public class CMLResolver implements EntityResolver {
      * Not implemented, but uses resolveEntity(String publicId, String systemId)
      * instead.
      **/
-    public InputSource resolveEntity(String name, String publicId,
-                                     String baseURI, String systemId) {
+    public InputSource resolveEntity(String name, String publicId, String baseURI, String systemId) {
         return resolveEntity(publicId, systemId);
     }
 
@@ -69,19 +66,17 @@ public class CMLResolver implements EntityResolver {
      * @param systemId the SYSTEM identifier of the DTD
      * @return the CML DTD as an InputSource or null if id's unresolvable
      */
-    public InputSource resolveEntity (String publicId, String systemId) {
+    public InputSource resolveEntity(String publicId, String systemId) {
         logger.debug("CMLResolver: resolving ", publicId, ", ", systemId);
         systemId = systemId.toLowerCase();
-        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) ||
-            (systemId.indexOf("cml.dtd") != -1) ||
-            (systemId.indexOf("cml1_0.dtd") != -1)) {
+        if ((systemId.indexOf("cml-1999-05-15.dtd") != -1) || (systemId.indexOf("cml.dtd") != -1)
+                || (systemId.indexOf("cml1_0.dtd") != -1)) {
             logger.info("File has CML 1.0 DTD");
-            return getCMLType( "cml1_0.dtd" );
-        } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) ||
-                   (systemId.indexOf("cml1_0_1.dtd") != -1) ||
-                   (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
+            return getCMLType("cml1_0.dtd");
+        } else if ((systemId.indexOf("cml-2001-04-06.dtd") != -1) || (systemId.indexOf("cml1_0_1.dtd") != -1)
+                || (systemId.indexOf("cml_1_0_1.dtd") != -1)) {
             logger.info("File has CML 1.0.1 DTD");
-            return getCMLType( "cml1_0_1.dtd" );
+            return getCMLType("cml1_0_1.dtd");
         } else {
             logger.warn("Could not resolve systemID: ", systemId);
             return null;
@@ -96,13 +91,13 @@ public class CMLResolver implements EntityResolver {
      * @param type the name of the CML DTD version
      * @return the InputSource to the CML DTD
      */
-    private InputSource getCMLType( String type ) {
+    private InputSource getCMLType(String type) {
         try {
-            InputStream ins = this.getClass().getClassLoader().getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
+            InputStream ins = this.getClass().getClassLoader()
+                    .getResourceAsStream("org/openscience/cdk/io/cml/data/" + type);
             return new InputSource(new BufferedReader(new InputStreamReader(ins)));
         } catch (Exception e) {
-            logger.error("Error while trying to read CML DTD (" + type + "): ",
-                         e.getMessage());
+            logger.error("Error while trying to read CML DTD (" + type + "): ", e.getMessage());
             logger.debug(e);
             return null;
         }

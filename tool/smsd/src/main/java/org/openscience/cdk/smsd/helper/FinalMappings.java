@@ -42,7 +42,7 @@ import org.openscience.cdk.smsd.interfaces.IFinalMapping;
 public class FinalMappings implements IFinalMapping {
 
     private static List<Map<Integer, Integer>> mappings = null;
-    private static FinalMappings instance = null;
+    private static FinalMappings               instance = null;
 
     protected FinalMappings() {
         mappings = new ArrayList<Map<Integer, Integer>>();

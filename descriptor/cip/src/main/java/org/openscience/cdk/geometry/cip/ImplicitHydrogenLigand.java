@@ -39,11 +39,8 @@ public class ImplicitHydrogenLigand extends TerminalLigand {
     private static final IAtom IMMUTABLE_HYDROGEN = new ImmutableHydrogen();
 
     @TestMethod("testConstructorAndGetMethods")
-    public ImplicitHydrogenLigand(IAtomContainer container,
-        VisitedAtoms visitedAtoms, IAtom centralAtom) {
-        super(container, visitedAtoms, centralAtom,
-            IMMUTABLE_HYDROGEN
-        );
+    public ImplicitHydrogenLigand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom) {
+        super(container, visitedAtoms, centralAtom, IMMUTABLE_HYDROGEN);
     }
 
 }

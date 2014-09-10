@@ -52,14 +52,14 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 @TestClass("org.openscience.cdk.smsd.algorithm.cdk.CDKMCSHandlerTest")
 public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
-//    //~--- fields -------------------------------------------------------------
-    private IAtomContainer source;
-    private IAtomContainer target;
-    private boolean rOnPFlag = false;
-    private List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private Map<IAtom, IAtom> firstAtomMCS = null;
-    private Map<Integer, Integer> firstMCS = null;
-    private List<Map<Integer, Integer>> allMCS = null;
+    //    //~--- fields -------------------------------------------------------------
+    private IAtomContainer              source;
+    private IAtomContainer              target;
+    private boolean                     rOnPFlag     = false;
+    private List<Map<IAtom, IAtom>>     allAtomMCS   = null;
+    private Map<IAtom, IAtom>           firstAtomMCS = null;
+    private Map<Integer, Integer>       firstMCS     = null;
+    private List<Map<Integer, Integer>> allMCS       = null;
 
     //~--- constructors -------------------------------------------------------
     /*
@@ -127,7 +127,7 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
 
         } catch (CDKException e) {
             rmap = null;
-//            System.err.println("WARNING: graphContainer: most probably time out error ");
+            //            System.err.println("WARNING: graphContainer: most probably time out error ");
         }
 
         return !getFirstMapping().isEmpty();
@@ -141,7 +141,8 @@ public class CDKSubGraphHandler extends AbstractSubGraph implements IMCSBase {
      * @return IMolecule Set
      * @throws CDKException
      */
-    protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds) throws CDKException {
+    protected IAtomContainerSet getUncommon(IAtomContainer mol, IAtomContainer mcss, boolean shouldMatchBonds)
+            throws CDKException {
         ArrayList<Integer> atomSerialsToDelete = new ArrayList<Integer>();
 
         List<List<CDKRMap>> matches = CDKMCS.getSubgraphAtomsMaps(mol, mcss, shouldMatchBonds);

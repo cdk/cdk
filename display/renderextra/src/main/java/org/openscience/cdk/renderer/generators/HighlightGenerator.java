@@ -110,26 +110,25 @@ import java.util.Map;
 public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 
     /** The atom radius on screen. */
-    private final HighlightRadius highlightRadius = new HighlightRadius();
+    private final HighlightRadius  highlightRadius  = new HighlightRadius();
 
     /** Color palette to use. */
     private final HighlightPalette highlightPalette = new HighlightPalette();
 
     /** Property key. */
-    public static final String ID_MAP = "cdk.highlight.id";
+    public static final String     ID_MAP           = "cdk.highlight.id";
 
     /** @inheritDoc */
-    @Override public IRenderingElement generate(IAtomContainer container, RendererModel model) {
+    @Override
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
 
         final Map<IChemObject, Integer> highlight = container.getProperty(ID_MAP);
 
-        if (highlight == null)
-            return null;
+        if (highlight == null) return null;
 
         final Palette palette = model.getParameter(HighlightPalette.class).getValue();
-        final double  radius  = model.getParameter(HighlightRadius.class).getValue()
-                                  / model.getParameter(BasicSceneGenerator.Scale.class).getValue();
-
+        final double radius = model.getParameter(HighlightRadius.class).getValue()
+                / model.getParameter(BasicSceneGenerator.Scale.class).getValue();
 
         final Map<Integer, Area> shapes = new HashMap<Integer, Area>();
 
@@ -137,10 +136,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 
             Integer id = highlight.get(atom);
 
-            if (id == null)
-                continue;
+            if (id == null) continue;
 
-            Area  area  = shapes.get(id);
+            Area area = shapes.get(id);
             Shape shape = createAtomHighlight(atom, radius);
 
             if (area == null)
@@ -153,10 +151,9 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
 
             Integer id = highlight.get(bond);
 
-            if (id == null)
-                continue;
+            if (id == null) continue;
 
-            Area  area  = shapes.get(id);
+            Area area = shapes.get(id);
             Shape shape = createBondHighlight(bond, radius);
 
             if (area == null)
@@ -167,20 +164,17 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
             // punch out the area occupied by atoms highlighted with a
             // different color
 
-            IAtom   a1 = bond.getAtom(0), a2 = bond.getAtom(1);
+            IAtom a1 = bond.getAtom(0), a2 = bond.getAtom(1);
             Integer a1Id = highlight.get(a1), a2Id = highlight.get(a2);
 
-            if (a1Id != null && !a1Id.equals(id))
-                area.subtract(shapes.get(a1Id));
-            if (a2Id != null && !a2Id.equals(id))
-                area.subtract(shapes.get(a2Id));
+            if (a1Id != null && !a1Id.equals(id)) area.subtract(shapes.get(a1Id));
+            if (a2Id != null && !a2Id.equals(id)) area.subtract(shapes.get(a2Id));
         }
 
         // create rendering elements for each highlight shape
         ElementGroup group = new ElementGroup();
         for (Map.Entry<Integer, Area> e : shapes.entrySet()) {
-            group.add(GeneralPath.shapeOf(e.getValue(),
-                                          palette.color(e.getKey())));
+            group.add(GeneralPath.shapeOf(e.getValue(), palette.color(e.getKey())));
         }
 
         return group;
@@ -197,9 +191,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         double x = atom.getPoint2d().x;
         double y = atom.getPoint2d().y;
 
-        return new RoundRectangle2D.Double(x - radius, y - radius,
-                                           2 * radius, 2 * radius,
-                                           2 * radius, 2 * radius);
+        return new RoundRectangle2D.Double(x - radius, y - radius, 2 * radius, 2 * radius, 2 * radius, 2 * radius);
     }
 
     /**
@@ -224,30 +216,19 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         dx /= mag;
         dy /= mag;
 
-        double r2  = radius / 2;
+        double r2 = radius / 2;
 
-        Shape s = new RoundRectangle2D.Double(x1 - r2,
-                                              y1 - r2,
-                                              mag + radius,
-                                              radius,
-                                              radius,
-                                              radius);
+        Shape s = new RoundRectangle2D.Double(x1 - r2, y1 - r2, mag + radius, radius, radius, radius);
 
         double theta = Math.atan2(dy, dx);
 
-        return AffineTransform.getRotateInstance(theta,
-                                                 x1,
-                                                 y1)
-                              .createTransformedShape(s);
+        return AffineTransform.getRotateInstance(theta, x1, y1).createTransformedShape(s);
     }
 
     /** @inheritDoc */
-    @Override public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-                new IGeneratorParameter<?>[]{
-                        highlightRadius,
-                        highlightPalette
-                });
+    @Override
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(new IGeneratorParameter<?>[]{highlightRadius, highlightPalette});
     }
 
     /**
@@ -266,7 +247,7 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
      * @param colors colors to use in the palette
      * @return a palette to use in highlighting
      */
-    public static Palette createPalette(final Color color, final Color ... colors) {
+    public static Palette createPalette(final Color color, final Color... colors) {
         Color[] cs = new Color[colors.length + 1];
         cs[0] = color;
         System.arraycopy(colors, 0, cs, 1, colors.length);
@@ -346,11 +327,10 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
         /**
          * @inheritDoc
          */
-        @Override public Color color(int id) {
-            if (id < 0)
-                throw new IllegalArgumentException("id should be positive");
-            if (id >= colors.length)
-                throw new IllegalArgumentException("no color has been provided for id=" + id);
+        @Override
+        public Color color(int id) {
+            if (id < 0) throw new IllegalArgumentException("id should be positive");
+            if (id >= colors.length) throw new IllegalArgumentException("no color has been provided for id=" + id);
             return colors[id];
         }
     }
@@ -364,19 +344,19 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
     private static final class AutoGenerated implements Palette {
 
         /** Golden ratio. */
-        private static final float PHI = 0.618033988749895f;
+        private static final float PHI    = 0.618033988749895f;
 
         /** Starting color - adjust for a different start color. */
-        private static final int offset = 14;
+        private static final int   offset = 14;
 
         /** The colors. */
-        private Color[] colors;
+        private Color[]            colors;
 
         /** Color alpha. */
-        private final int alpha;
+        private final int          alpha;
 
         /** The saturation and brightness values. */
-        private final float saturation, brightness;
+        private final float        saturation, brightness;
 
         /**
          * Create an automatically generating color palette.
@@ -418,17 +398,16 @@ public final class HighlightGenerator implements IGenerator<IAtomContainer> {
                     Color c = Color.getHSBColor((offset + i) * PHI, saturation, brightness);
                     colors[i] = new Color(c.getRed(), c.getGreen(), c.getBlue(), alpha);
                 }
-            }
-            else {
+            } else {
                 for (int i = from; i <= to; i++)
                     colors[i] = Color.getHSBColor((offset + i) * PHI, saturation, brightness);
             }
         }
 
         /** @inheritDoc */
-        @Override public Color color(int id) {
-            if (id < 0)
-                throw new IllegalArgumentException("id should be positive");
+        @Override
+        public Color color(int id) {
+            if (id < 0) throw new IllegalArgumentException("id should be positive");
             if (id >= colors.length) {
                 int org = colors.length;
                 colors = Arrays.copyOf(colors, id * 2);

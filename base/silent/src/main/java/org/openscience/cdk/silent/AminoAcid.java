@@ -47,13 +47,13 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = -5032283549467862509L;
+     */
+    private static final long serialVersionUID = -5032283549467862509L;
 
-	/** The atom that constitutes the N-terminus. */
-    private IAtom nTerminus;
+    /** The atom that constitutes the N-terminus. */
+    private IAtom             nTerminus;
     /** The atom that constitutes the C-terminus. */
-    private IAtom cTerminus;
+    private IAtom             cTerminus;
 
     /**
      * Constructs a new AminoAcid.
@@ -140,10 +140,8 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
     public IAminoAcid clone() throws CloneNotSupportedException {
         AminoAcid clone = (AminoAcid) super.clone();
         // copying the new N-terminus and C-terminus pointers
-        if (getNTerminus() != null)
-        	clone.setNTerminus(clone.getAtom(getAtomNumber(getNTerminus())));
-        if (getCTerminus() != null)
-        	clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
+        if (getNTerminus() != null) clone.setNTerminus(clone.getAtom(getAtomNumber(getNTerminus())));
+        if (getCTerminus() != null) clone.setCTerminus(clone.getAtom(getAtomNumber(getCTerminus())));
         return clone;
     }
 
@@ -152,10 +150,10 @@ public class AminoAcid extends Monomer implements IAminoAcid, Serializable, Clon
         stringContent.append("AminoAcid(");
         stringContent.append(this.hashCode());
         if (nTerminus != null) {
-        	stringContent.append(", N:").append(nTerminus.toString());
+            stringContent.append(", N:").append(nTerminus.toString());
         }
         if (cTerminus != null) {
-        	stringContent.append(", C:").append(cTerminus.toString());
+            stringContent.append(", C:").append(cTerminus.toString());
         }
         stringContent.append(", ").append(super.toString());
         stringContent.append(')');

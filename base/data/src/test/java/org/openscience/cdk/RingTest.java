@@ -38,39 +38,43 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class RingTest extends AbstractRingTest {
 
-    @BeforeClass public static void setUp() {
-        setTestObjectBuilder(
-            new ITestObjectBuilder() {
-                public IChemObject newTestObject() {
-                    return new Ring();
-                }
+    @BeforeClass
+    public static void setUp() {
+        setTestObjectBuilder(new ITestObjectBuilder() {
+
+            public IChemObject newTestObject() {
+                return new Ring();
             }
-        );
+        });
     }
 
-    @Test public void testRing_int_String() {
+    @Test
+    public void testRing_int_String() {
         IRing r = new Ring(5, "C");
         Assert.assertEquals(5, r.getAtomCount());
         Assert.assertEquals(5, r.getBondCount());
     }
 
-    @Test public void testRing_int() {
+    @Test
+    public void testRing_int() {
         IRing r = new Ring(5); // This does not create a ring!
         Assert.assertEquals(0, r.getAtomCount());
         Assert.assertEquals(0, r.getBondCount());
     }
 
-    @Test public void testRing() {
+    @Test
+    public void testRing() {
         IRing ring = new Ring();
         Assert.assertNotNull(ring);
         Assert.assertEquals(0, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
     }
 
-    @Test public void testRing_IAtomContainer() {
+    @Test
+    public void testRing_IAtomContainer() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer();
-        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
-        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
 
         IRing ring = new Ring(container);
         Assert.assertNotNull(ring);

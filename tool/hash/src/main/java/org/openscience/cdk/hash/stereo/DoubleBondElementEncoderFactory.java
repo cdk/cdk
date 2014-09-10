@@ -54,7 +54,8 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
      * @inheritDoc
      */
     @TestMethod("opposite,together")
-    @Override public StereoEncoder create(IAtomContainer container, int[][] graph) {
+    @Override
+    public StereoEncoder create(IAtomContainer container, int[][] graph) {
 
         // index atoms for quick lookup - wish we didn't have to do this
         // but the it's better than calling getAtomNumber every time - we use
@@ -66,14 +67,12 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
         // for each double-bond element - create a new encoder
         for (IStereoElement se : container.stereoElements()) {
             if (se instanceof IDoubleBondStereochemistry) {
-                encoders.add(encoder((IDoubleBondStereochemistry) se,
-                                     atomToIndex = indexMap(atomToIndex, container),
-                                     graph));
+                encoders.add(encoder((IDoubleBondStereochemistry) se, atomToIndex = indexMap(atomToIndex, container),
+                        graph));
             }
         }
 
-        return encoders.isEmpty() ? StereoEncoder.EMPTY
-                                  : new MultiStereoEncoder(encoders);
+        return encoders.isEmpty() ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
     }
 
     /**
@@ -84,13 +83,12 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
      * @param graph        adjacency list of connected vertices
      * @return a new geometry encoder
      */
-    private static GeometryEncoder encoder(IDoubleBondStereochemistry dbs,
-                                           Map<IAtom,Integer> atomToIndex,
-                                           int[][] graph) {
+    private static GeometryEncoder encoder(IDoubleBondStereochemistry dbs, Map<IAtom, Integer> atomToIndex,
+            int[][] graph) {
 
         IBond db = dbs.getStereoBond();
-        int   u  = atomToIndex.get(db.getAtom(0));
-        int   v  = atomToIndex.get(db.getAtom(1));
+        int u = atomToIndex.get(db.getAtom(0));
+        int v = atomToIndex.get(db.getAtom(1));
 
         // we now need to expand our view of the environment - the vertex arrays
         // 'us' and 'vs' hold the neighbors of each end point of the double bond
@@ -111,18 +109,15 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
 
         int parity = dbs.getStereo() == OPPOSITE ? +1 : -1;
 
-        GeometricParity   geomParity = GeometricParity.valueOf(parity);
+        GeometricParity geomParity = GeometricParity.valueOf(parity);
 
         // the permutation parity is combined - but note we only use this if we
         // haven't used 'u' or 'v' as place holders (i.e. implicit hydrogens)
         // otherwise there is only '1' and the parity is just '1' (identity)
         PermutationParity permParity = new CombinedPermutationParity(us[1] == u ? BasicPermutationParity.IDENTITY
-                                                                                : new BasicPermutationParity(us),
-                                                                     vs[1] == v ? BasicPermutationParity.IDENTITY
-                                                                                : new BasicPermutationParity(vs));
-        return new GeometryEncoder(new int[]{u, v},
-                                   permParity,
-                                   geomParity);
+                : new BasicPermutationParity(us), vs[1] == v ? BasicPermutationParity.IDENTITY
+                : new BasicPermutationParity(vs));
+        return new GeometryEncoder(new int[]{u, v}, permParity, geomParity);
     }
 
     /**
@@ -135,8 +130,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
      */
     private static int findOther(int[] vs, int u, int x) {
         for (int v : vs) {
-            if (v != u && v != x)
-                return v;
+            if (v != u && v != x) return v;
         }
         throw new IllegalArgumentException("vs[] did not contain another vertex");
     }
@@ -149,8 +143,7 @@ public final class DoubleBondElementEncoderFactory implements StereoEncoderFacto
      * @return a usable atom to index map for the given container
      */
     private static Map<IAtom, Integer> indexMap(Map<IAtom, Integer> map, IAtomContainer container) {
-        if (map != null)
-            return map;
+        if (map != null) return map;
         map = new HashMap<IAtom, Integer>();
         for (IAtom a : container.atoms()) {
             map.put(a, map.size());

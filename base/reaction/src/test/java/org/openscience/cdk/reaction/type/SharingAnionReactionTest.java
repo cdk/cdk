@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.CDKConstants;
@@ -56,38 +55,40 @@ import java.util.List;
 
 public class SharingAnionReactionTest extends ReactionProcessTest {
 
-	private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-	/**
-	 *  The JUnit setup method
-	 */
-	public  SharingAnionReactionTest()  throws Exception {
-			setReaction(SharingAnionReaction.class);
-	}
+    private final LonePairElectronChecker lpcheck = new LonePairElectronChecker();
+    private IChemObjectBuilder            builder = SilentChemObjectBuilder.getInstance();
 
-	 /**
-	  *  The JUnit setup method
-	  */
-	 @Test public void testSharingAnionReaction() throws Exception {
-			IReactionProcess type = new SharingAnionReaction();
-			Assert.assertNotNull(type);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    public SharingAnionReactionTest() throws Exception {
+        setReaction(SharingAnionReaction.class);
+    }
 
-	/**
-	 * A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
-	 * Automatic search of the center active.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
-		IReactionProcess type = new SharingAnionReaction();
-		IAtomContainerSet setOfReactants = getExampleReactants();
+    /**
+     *  The JUnit setup method
+     */
+    @Test
+    public void testSharingAnionReaction() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
+        Assert.assertNotNull(type);
+    }
 
+    /**
+     * A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
+     * Automatic search of the center active.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_IAtomContainerSet() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
+        IAtomContainerSet setOfReactants = getExampleReactants();
 
-		/* initiate */
+        /* initiate */
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
+        IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
@@ -96,42 +97,40 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         Assert.assertEquals(1, setOfReactions.getReactionCount());
         Assert.assertEquals(1, setOfReactions.getReaction(0).getProductCount());
 
-
-
-
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
-        /*C=[O+]*/
+        /* C=[O+] */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
-	}
+    }
 
-	/**
-	 * A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
-	 * Manually put of the center active.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testManuallyCentreActive() throws Exception {
-		IReactionProcess type = new SharingAnionReaction();
+    /**
+     * A unit test suite for JUnit. Reaction: [C+]-[O-] => C=O
+     * Manually put of the center active.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testManuallyCentreActive() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
 
-		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
-		/*manually put the center active*/
-		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+        /* manually put the center active */
+        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
+        IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
 
-		/* initiate */
+        /* initiate */
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
@@ -140,44 +139,42 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        /*C=[O+]*/
+        /* C=[O+] */
         IAtomContainer molecule2 = getExpectedProducts().getAtomContainer(0);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
+    }
 
-	}
+    /**
+     * A unit test suite for JUnit. Reaction: [C+]-[C-] => C=C
+     * Automatic search of the center active.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testCarbons() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.getAtom(0).setFormalCharge(1);
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.getAtom(1).setFormalCharge(-1);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-
-	/**
-	 * A unit test suite for JUnit. Reaction: [C+]-[C-] => C=C
-	 * Automatic search of the center active.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testCarbons() throws Exception {
-		IReactionProcess type = new SharingAnionReaction();
-		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
-		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule.getAtom(0).setFormalCharge(1);
-		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule.getAtom(1).setFormalCharge(-1);
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
-
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
 
         lpcheck.saturate(molecule);
 
-		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
-		setOfReactants.addAtomContainer(molecule);
+        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+        setOfReactants.addAtomContainer(molecule);
 
-
-		/* initiate */
+        /* initiate */
 
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
+        IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
@@ -188,37 +185,38 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
         IAtomContainer molecule2 = builder.newInstance(IAtomContainer.class);
-		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule2.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule2.addBond(0, 1, IBond.Order.DOUBLE);
+        molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule2.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule2.addBond(0, 1, IBond.Order.DOUBLE);
 
-		addExplicitHydrogens(molecule2);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
+        addExplicitHydrogens(molecule2);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule2);
         lpcheck.saturate(molecule2);
 
         IQueryAtomContainer queryAtom = QueryAtomContainerCreator.createSymbolAndChargeQueryContainer(product);
-        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2,queryAtom));
+        Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(molecule2, queryAtom));
 
-	}
+    }
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testCDKConstants_REACTIVE_CENTER() throws Exception {
-		IReactionProcess type  = new SharingAnionReaction();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testCDKConstants_REACTIVE_CENTER() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
 
-		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
-		/*manually put the reactive center*/
-		molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER,true);
-		molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER,true);
+        /* manually put the reactive center */
+        molecule.getAtom(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getAtom(1).setFlag(CDKConstants.REACTIVE_CENTER, true);
+        molecule.getBond(0).setFlag(CDKConstants.REACTIVE_CENTER, true);
 
-		List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
+        List<IParameterReact> paramList = new ArrayList<IParameterReact>();
+        IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.TRUE);
         paramList.add(param);
         type.setParameterList(paramList);
@@ -227,131 +225,136 @@ public class SharingAnionReactionTest extends ReactionProcessTest {
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer reactant = setOfReactions.getReaction(0).getReactants().getAtomContainer(0);
-		Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-		Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
-		Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-		Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
-		Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-		Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
-	}
+        Assert.assertTrue(molecule.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(reactant.getAtom(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(molecule.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(reactant.getAtom(1).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(molecule.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+        Assert.assertTrue(reactant.getBond(0).getFlag(CDKConstants.REACTIVE_CENTER));
+    }
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testMapping() throws Exception {
-		IReactionProcess type = new SharingAnionReaction();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testMapping() throws Exception {
+        IReactionProcess type = new SharingAnionReaction();
 
-		IAtomContainerSet setOfReactants = getExampleReactants();
+        IAtomContainerSet setOfReactants = getExampleReactants();
         IAtomContainer molecule = setOfReactants.getAtomContainer(0);
 
-		/*automatic search of the center active*/
+        /* automatic search of the center active */
         List<IParameterReact> paramList = new ArrayList<IParameterReact>();
-	    IParameterReact param = new SetReactionCenter();
+        IParameterReact param = new SetReactionCenter();
         param.setParameter(Boolean.FALSE);
         paramList.add(param);
         type.setParameterList(paramList);
-		/* initiate */
+        /* initiate */
 
         IReactionSet setOfReactions = type.initiate(setOfReactants, null);
 
         IAtomContainer product = setOfReactions.getReaction(0).getProducts().getAtomContainer(0);
 
-        Assert.assertEquals(4,setOfReactions.getReaction(0).getMappingCount());
+        Assert.assertEquals(4, setOfReactions.getReaction(0).getMappingCount());
 
-        IAtom mappedProductA1 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(0));
+        IAtom mappedProductA1 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
+                molecule.getAtom(0));
         Assert.assertEquals(mappedProductA1, product.getAtom(0));
-        IAtom mappedProductA2 = (IAtom)ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0), molecule.getAtom(1));
+        IAtom mappedProductA2 = (IAtom) ReactionManipulator.getMappedChemObject(setOfReactions.getReaction(0),
+                molecule.getAtom(1));
         Assert.assertEquals(mappedProductA2, product.getAtom(1));
 
-	}
+    }
 
-	/**
-	 * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
-	 */
-	@Test public void testAtomTypesAtomContainer1() throws Exception{
-		IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
-		makeSureAtomTypesAreRecognized(moleculeTest);
+    /**
+     * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
+     */
+    @Test
+    public void testAtomTypesAtomContainer1() throws Exception {
+        IAtomContainer moleculeTest = getExampleReactants().getAtomContainer(0);
+        makeSureAtomTypesAreRecognized(moleculeTest);
 
-	}
+    }
 
-	/**
-	 * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
-	 */
-	@Test public void testAtomTypesAtomContainer2() throws Exception{
-		IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
-		makeSureAtomTypesAreRecognized(moleculeTest);
+    /**
+     * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
+     */
+    @Test
+    public void testAtomTypesAtomContainer2() throws Exception {
+        IAtomContainer moleculeTest = getExpectedProducts().getAtomContainer(0);
+        makeSureAtomTypesAreRecognized(moleculeTest);
 
-	}
-	/**
-	 * get the molecule 1: [C+]-[O-]
-	 *
-	 * @return The IAtomContainerSet
-	 */
-	private IAtomContainerSet getExampleReactants() {
-		IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
+    }
 
-		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
-		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule.getAtom(0).setFormalCharge(1);
-		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
-		molecule.getAtom(1).setFormalCharge(-1);
-		molecule.addBond(0, 1, IBond.Order.SINGLE);
+    /**
+     * get the molecule 1: [C+]-[O-]
+     *
+     * @return The IAtomContainerSet
+     */
+    private IAtomContainerSet getExampleReactants() {
+        IAtomContainerSet setOfReactants = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
 
-		try {
-			addExplicitHydrogens(molecule);
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.getAtom(0).setFormalCharge(1);
+        molecule.addAtom(builder.newInstance(IAtom.class, "O"));
+        molecule.getAtom(1).setFormalCharge(-1);
+        molecule.addBond(0, 1, IBond.Order.SINGLE);
 
-	        lpcheck.saturate(molecule);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            addExplicitHydrogens(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+
+            lpcheck.saturate(molecule);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setOfReactants.addAtomContainer(molecule);
-		return setOfReactants;
-	}
-	/**
-	 * Get the expected set of molecules.
-	 *
-	 * @return The IAtomContainerSet
-	 */
-	private IAtomContainerSet getExpectedProducts() {
-		IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
-		//C=[O]
+        return setOfReactants;
+    }
 
-		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
-		molecule.addAtom(builder.newInstance(IAtom.class,"C"));
-		molecule.addAtom(builder.newInstance(IAtom.class,"O"));
-		molecule.addBond(0, 1, IBond.Order.DOUBLE);
+    /**
+     * Get the expected set of molecules.
+     *
+     * @return The IAtomContainerSet
+     */
+    private IAtomContainerSet getExpectedProducts() {
+        IAtomContainerSet setOfProducts = builder.newInstance(IAtomContainerSet.class);
+        //C=[O]
 
-		try {
-			addExplicitHydrogens(molecule);
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        molecule.addAtom(builder.newInstance(IAtom.class, "C"));
+        molecule.addAtom(builder.newInstance(IAtom.class, "O"));
+        molecule.addBond(0, 1, IBond.Order.DOUBLE);
 
-	        lpcheck.saturate(molecule);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            addExplicitHydrogens(molecule);
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+
+            lpcheck.saturate(molecule);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         setOfProducts.addAtomContainer(molecule);
-		return setOfProducts;
-	}
-	/**
-	 * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-	 *
-	 * @param molecule          The IAtomContainer to analyze
-	 * @throws CDKException
-	 */
-	private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
+        return setOfProducts;
+    }
 
-		Iterator<IAtom> atoms = molecule.atoms().iterator();
-		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
-		while (atoms.hasNext()) {
-				IAtom nextAtom = atoms.next();
-				Assert.assertNotNull(
-					"Missing atom type for: " + nextAtom,
-					matcher.findMatchingAtomType(molecule, nextAtom)
-				);
-		}
-	}
+    /**
+     * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+     *
+     * @param molecule          The IAtomContainer to analyze
+     * @throws CDKException
+     */
+    private void makeSureAtomTypesAreRecognized(IAtomContainer molecule) throws Exception {
+
+        Iterator<IAtom> atoms = molecule.atoms().iterator();
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(molecule.getBuilder());
+        while (atoms.hasNext()) {
+            IAtom nextAtom = atoms.next();
+            Assert.assertNotNull("Missing atom type for: " + nextAtom, matcher.findMatchingAtomType(molecule, nextAtom));
+        }
+    }
 }

@@ -36,24 +36,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class VASPReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(VASPReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new VASPReader(), "data/vasp/LiMoS2_optimisation_ISIF3.vasp");
     }
 
-    @Test public void testAccepts() {
-    	VASPReader reader = new VASPReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        VASPReader reader = new VASPReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    @Test public void testReading() throws Exception {
+    @Test
+    public void testReading() throws Exception {
         String filename = "data/vasp/LiMoS2_optimisation_ISIF3.vasp";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         VASPReader reader = new VASPReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read(new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read(new ChemFile());
         Assert.assertNotNull(chemFile);
         org.openscience.cdk.interfaces.IChemSequence sequence = chemFile.getChemSequence(0);
         Assert.assertNotNull(sequence);

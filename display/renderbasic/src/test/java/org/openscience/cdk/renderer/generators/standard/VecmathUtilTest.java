@@ -164,7 +164,7 @@ public class VecmathUtilTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetNearestVectorComplainsWhenNoVectorsProvided() throws Exception {
-        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.<Vector2d>emptyList());
+        VecmathUtil.getNearestVector(new Vector2d(1, 0), Collections.<Vector2d> emptyList());
     }
 
     @Test
@@ -191,70 +191,64 @@ public class VecmathUtilTest {
         assertThat(nearest.y, closeTo(0.707d, 0.01));
     }
 
-    @Test public void intersection1() {
-        Tuple2d intersect = VecmathUtil.intersection(new Point2d(1, 1),
-                                                     new Vector2d(0, 1),
-                                                     new Point2d(1, 0),
-                                                     new Vector2d(1, 0));
+    @Test
+    public void intersection1() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(1, 1), new Vector2d(0, 1), new Point2d(1, 0),
+                new Vector2d(1, 0));
         assertThat(intersect.x, closeTo(1.0, 0.01));
         assertThat(intersect.y, closeTo(0.0, 0.01));
     }
 
-    @Test public void intersection2() {
-        Tuple2d intersect = VecmathUtil.intersection(new Point2d(6, 1),
-                                                     new Vector2d(-4, -2),
-                                                     new Point2d(1, 6),
-                                                     new Vector2d(2, 4));
+    @Test
+    public void intersection2() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(6, 1), new Vector2d(-4, -2), new Point2d(1, 6),
+                new Vector2d(2, 4));
         System.out.println(intersect);
         assertThat(intersect.x, closeTo(-4, 0.01));
         assertThat(intersect.y, closeTo(-4, 0.01));
     }
 
-    @Test public void parallelLines() {
-        Tuple2d intersect = VecmathUtil.intersection(new Point2d(0, 1),
-                                                     new Vector2d(0, 1),
-                                                     new Point2d(0, -1),
-                                                     new Vector2d(0, 1));
+    @Test
+    public void parallelLines() {
+        Tuple2d intersect = VecmathUtil.intersection(new Point2d(0, 1), new Vector2d(0, 1), new Point2d(0, -1),
+                new Vector2d(0, 1));
         assertTrue(Double.isNaN(intersect.x));
         assertTrue(Double.isNaN(intersect.y));
     }
 
-    @Test public void sweepEast() {
-        assertThat(VecmathUtil.extent(new Vector2d(1, 0)),
-                   is(closeTo(Math.toRadians(0), 0.01)));
+    @Test
+    public void sweepEast() {
+        assertThat(VecmathUtil.extent(new Vector2d(1, 0)), is(closeTo(Math.toRadians(0), 0.01)));
     }
 
-    @Test public void sweepNorth() {
-        assertThat(VecmathUtil.extent(new Vector2d(0, 1)),
-                   is(closeTo(Math.toRadians(90), 0.01)));
+    @Test
+    public void sweepNorth() {
+        assertThat(VecmathUtil.extent(new Vector2d(0, 1)), is(closeTo(Math.toRadians(90), 0.01)));
     }
 
-    @Test public void sweepWest() {
-        assertThat(VecmathUtil.extent(new Vector2d(-1, 0)),
-                   is(closeTo(Math.toRadians(180), 0.01)));
+    @Test
+    public void sweepWest() {
+        assertThat(VecmathUtil.extent(new Vector2d(-1, 0)), is(closeTo(Math.toRadians(180), 0.01)));
     }
 
-    @Test public void sweepSouth() {
-        assertThat(VecmathUtil.extent(new Vector2d(0, -1)),
-                   is(closeTo(Math.toRadians(270), 0.01)));
+    @Test
+    public void sweepSouth() {
+        assertThat(VecmathUtil.extent(new Vector2d(0, -1)), is(closeTo(Math.toRadians(270), 0.01)));
     }
 
-    @Test public void largestGapSouthWest() {
-        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(0, 1),
-                                                                          new Vector2d(1, 0)));
+    @Test
+    public void largestGapSouthWest() {
+        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(0, 1), new Vector2d(1, 0)));
         assertThat(vector.x, closeTo(-0.707d, 0.01));
         assertThat(vector.y, closeTo(-0.707d, 0.01));
         assertThat(vector.length(), closeTo(1d, 0.01));
     }
 
-    @Test public void largestGapEast() {
-        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays.asList(new Vector2d(1, 1),
-                                                                          new Vector2d(1, -1),
-                                                                          new Vector2d(-1, -1),
-                                                                          new Vector2d(-1, 1),
-                                                                          new Vector2d(-1, 0),
-                                                                          new Vector2d(0, 1),
-                                                                          new Vector2d(0, -1)));
+    @Test
+    public void largestGapEast() {
+        Vector2d vector = VecmathUtil.newVectorInLargestGap(Arrays
+                .asList(new Vector2d(1, 1), new Vector2d(1, -1), new Vector2d(-1, -1), new Vector2d(-1, 1),
+                        new Vector2d(-1, 0), new Vector2d(0, 1), new Vector2d(0, -1)));
         assertThat(vector.x, closeTo(1, 0.01));
         assertThat(vector.y, closeTo(0, 0.01));
         assertThat(vector.length(), closeTo(1d, 0.01));

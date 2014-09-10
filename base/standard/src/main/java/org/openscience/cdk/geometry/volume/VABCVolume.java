@@ -50,24 +50,27 @@ public class VABCVolume {
      * paper are imprecise.
      */
     @SuppressWarnings("serial")
-    private static Map<String,Double> bondiiVolumes = new HashMap<String, Double>() {{
-        put("H", 7.2382293504);
-        put("C", 20.5795259250667);
-        put("N", 15.5985308577667);
-        put("O", 14.7102267005611);
-        put("Cl", 22.4492971208333);
-        put("Br", 26.5218483279667);
-        put("F", 13.3057882007064);
-        put("I", 32.5150310206656);
-        put("S",24.4290240576);
-        put("P",24.4290240576);
-        put("As", 26.5218483279667);
-        put("B", 40.48); // value missing from spreadsheet; taken from paper
-        put("Se", 28.7309115245333);
-        put("Si", 38.7923854248);
-    }};
+    private static Map<String, Double> bondiiVolumes = new HashMap<String, Double>() {
 
-    private static AtomTypeFactory atomTypeList = null;
+                                                         {
+                                                             put("H", 7.2382293504);
+                                                             put("C", 20.5795259250667);
+                                                             put("N", 15.5985308577667);
+                                                             put("O", 14.7102267005611);
+                                                             put("Cl", 22.4492971208333);
+                                                             put("Br", 26.5218483279667);
+                                                             put("F", 13.3057882007064);
+                                                             put("I", 32.5150310206656);
+                                                             put("S", 24.4290240576);
+                                                             put("P", 24.4290240576);
+                                                             put("As", 26.5218483279667);
+                                                             put("B", 40.48); // value missing from spreadsheet; taken from paper
+                                                             put("Se", 28.7309115245333);
+                                                             put("Si", 38.7923854248);
+                                                         }
+                                                     };
+
+    private static AtomTypeFactory     atomTypeList  = null;
 
     /**
      * Calculates the volume for the given {@link IAtomContainer}. This methods assumes
@@ -78,29 +81,25 @@ public class VABCVolume {
      */
     public static double calculate(IAtomContainer molecule) throws CDKException {
         if (atomTypeList == null) {
-            atomTypeList = AtomTypeFactory.getInstance(
-                "org/openscience/cdk/dict/data/cdk-atom-types.owl",
-                molecule.getBuilder() // take whatever we got first
-            );
+            atomTypeList = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl",
+                    molecule.getBuilder() // take whatever we got first
+                    );
         }
 
         double sum = 0.0;
         int totalHCount = 0;
         for (IAtom atom : molecule.atoms()) {
             Double bondiiVolume = bondiiVolumes.get(atom.getSymbol());
-            if (bondiiVolume == null)
-                throw new CDKException("Unsupported element.");
+            if (bondiiVolume == null) throw new CDKException("Unsupported element.");
 
             sum += bondiiVolume;
 
             // add volumes of implicit hydrogens?
-            IAtomType type =  atomTypeList.getAtomType(atom.getAtomTypeName());
-            if (type == null)
-                throw new CDKException("Unknown atom type for atom: " + atom.getSymbol());
+            IAtomType type = atomTypeList.getAtomType(atom.getAtomTypeName());
+            if (type == null) throw new CDKException("Unknown atom type for atom: " + atom.getSymbol());
             if (type.getFormalNeighbourCount() == null)
                 throw new CDKException("Formal neighbor count not given for : " + type.getAtomTypeName());
-            int hCount = type.getFormalNeighbourCount() -
-                molecule.getConnectedAtomsCount(atom);
+            int hCount = type.getFormalNeighbourCount() - molecule.getConnectedAtomsCount(atom);
             sum += (hCount * bondiiVolumes.get("H"));
             totalHCount += hCount;
         }

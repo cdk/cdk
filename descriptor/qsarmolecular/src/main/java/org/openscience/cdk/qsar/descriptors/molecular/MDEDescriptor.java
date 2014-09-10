@@ -1,22 +1,22 @@
 /*
-*  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
-*
-*  Contact: cdk-devel@lists.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.openscience.cdk.annotations.TestClass;
@@ -87,51 +87,43 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.MDEDescriptorTest")
 public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {
-            "MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14",
-            "MDEC-22", "MDEC-23", "MDEC-24",
-            "MDEC-33", "MDEC-34",
-            "MDEC-44",
-            "MDEO-11", "MDEO-12", "MDEO-22",
-            "MDEN-11", "MDEN-12", "MDEN-13",
-            "MDEN-22", "MDEN-23",
-            "MDEN-33"
-    };
+    private static final String[] names  = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
+            "MDEC-24", "MDEC-33", "MDEC-34", "MDEC-44", "MDEO-11", "MDEO-12", "MDEO-22", "MDEN-11", "MDEN-12",
+            "MDEN-13", "MDEN-22", "MDEN-23", "MDEN-33"};
 
-    public static final int mdec11 = 0;
-    public static final int mdec12 = 1;
-    public static final int mdec13 = 2;
-    public static final int mdec14 = 3;
-    public static final int mdec22 = 4;
-    public static final int mdec23 = 5;
-    public static final int mdec24 = 6;
-    public static final int mdec33 = 7;
-    public static final int mdec34 = 8;
-    public static final int mdec44 = 9;
+    public static final int       mdec11 = 0;
+    public static final int       mdec12 = 1;
+    public static final int       mdec13 = 2;
+    public static final int       mdec14 = 3;
+    public static final int       mdec22 = 4;
+    public static final int       mdec23 = 5;
+    public static final int       mdec24 = 6;
+    public static final int       mdec33 = 7;
+    public static final int       mdec34 = 8;
+    public static final int       mdec44 = 9;
 
-    public static final int mdeo11 = 10;
-    public static final int mdeo12 = 11;
-    public static final int mdeo22 = 12;
+    public static final int       mdeo11 = 10;
+    public static final int       mdeo12 = 11;
+    public static final int       mdeo22 = 12;
 
-    public static final int mden11 = 13;
-    public static final int mden12 = 14;
-    public static final int mden13 = 15;
-    public static final int mden22 = 16;
-    public static final int mden23 = 17;
-    public static final int mden33 = 18;
+    public static final int       mden11 = 13;
+    public static final int       mden12 = 14;
+    public static final int       mden13 = 15;
+    public static final int       mden22 = 16;
+    public static final int       mden23 = 17;
+    public static final int       mden33 = 18;
 
+    private static final int      C_1    = 1;
+    private static final int      C_2    = 2;
+    private static final int      C_3    = 3;
+    private static final int      C_4    = 4;
 
-    private static final int C_1 = 1;
-    private static final int C_2 = 2;
-    private static final int C_3 = 3;
-    private static final int C_4 = 4;
+    private static final int      O_1    = 1;
+    private static final int      O_2    = 2;
 
-    private static final int O_1 = 1;
-    private static final int O_2 = 2;
-
-    private static final int N_1 = 1;
-    private static final int N_2 = 2;
-    private static final int N_3 = 3;
+    private static final int      N_1    = 1;
+    private static final int      N_2    = 2;
+    private static final int      N_3    = 3;
 
     public MDEDescriptor() {
 
@@ -153,10 +145,8 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
      */
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -173,7 +163,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
         // none
     }
 
-
     /**
      * Gets the parameters attribute of the WeightDescriptor object.
      *
@@ -185,11 +174,10 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      * Calculate the weight of specified element type in the supplied {@link org.openscience.cdk.interfaces.IAtomContainer}.
@@ -209,8 +197,8 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             retval.add(dedge(local, i));
         }
 
-        return new DescriptorValue(getSpecification(),
-                getParameterNames(), getParameters(), retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -370,11 +358,11 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
             lambda = Math.sqrt(lambda);
             n = n / 2;
         }
-        if (n == 0) return 0.0;
+        if (n == 0)
+            return 0.0;
         else
             return n / Math.pow(Math.pow(lambda, 1.0 / (2.0 * n)), 2);
     }
-
 
     /**
      * Gets the parameterNames attribute of the WeightDescriptor object.
@@ -385,7 +373,6 @@ public class MDEDescriptor extends AbstractMolecularDescriptor implements IMolec
     public String[] getParameterNames() {
         return null;
     }
-
 
     /**
      * Gets the parameterType attribute of the WeightDescriptor object.

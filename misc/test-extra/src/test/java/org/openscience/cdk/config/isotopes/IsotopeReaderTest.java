@@ -35,21 +35,16 @@ import java.util.List;
  * @cdk.module test-extra
  */
 public class IsotopeReaderTest extends CDKTestCase {
+
     @Test
     public void testIsotopeReader_InputStream_IChemObjectBuilder() {
-        IsotopeReader reader = new IsotopeReader(
-            new ByteArrayInputStream(new byte[0]),
-            new ChemObject().getBuilder()
-        );
+        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
         Assert.assertNotNull(reader);
     }
 
     @Test
     public void testReadIsotopes() {
-        IsotopeReader reader = new IsotopeReader(
-        	new ByteArrayInputStream(new byte[0]),
-        	new ChemObject().getBuilder()
-        );
+        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(new byte[0]), new ChemObject().getBuilder());
         Assert.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
         Assert.assertNotNull(isotopes);
@@ -58,35 +53,26 @@ public class IsotopeReaderTest extends CDKTestCase {
 
     @Test
     public void testReadIsotopes2() {
-        String isotopeData =
-            "<?xml version=\"1.0\"?>" +
-            "<list xmlns=\"http://www.xml-cml.org/schema/cml2/core\"" +
-            "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-            "    xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd\">" +
-            "" +
-            "    <isotopeList id=\"H\">" +
-            "        <isotope id=\"H1\" isotopeNumber=\"1\" elementType=\"H\">" +
-            "            <abundance dictRef=\"cdk:relativeAbundance\">100.0</abundance>" +
-            "            <scalar dictRef=\"cdk:exactMass\">1.00782504</scalar>" +
-            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
-            "        </isotope>" +
-            "        <isotope id=\"H2\" isotopeNumber=\"2\" elementType=\"H\">" +
-            "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>" +
-            "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>" +
-            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
-            "        </isotope>" +
-            "        <isotope id=\"D2\" isotopeNumber=\"2\" elementType=\"D\">" +
-            "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>" +
-            "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>" +
-            "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" +
-            "        </isotope>" +
-            "    </isotopeList>" +
-            "</list>";
+        String isotopeData = "<?xml version=\"1.0\"?>" + "<list xmlns=\"http://www.xml-cml.org/schema/cml2/core\""
+                + "    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+                + "    xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlCore.xsd\">"
+                + "" + "    <isotopeList id=\"H\">"
+                + "        <isotope id=\"H1\" isotopeNumber=\"1\" elementType=\"H\">"
+                + "            <abundance dictRef=\"cdk:relativeAbundance\">100.0</abundance>"
+                + "            <scalar dictRef=\"cdk:exactMass\">1.00782504</scalar>"
+                + "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" + "        </isotope>"
+                + "        <isotope id=\"H2\" isotopeNumber=\"2\" elementType=\"H\">"
+                + "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>"
+                + "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>"
+                + "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" + "        </isotope>"
+                + "        <isotope id=\"D2\" isotopeNumber=\"2\" elementType=\"D\">"
+                + "            <abundance dictRef=\"cdk:relativeAbundance\">0.015</abundance>"
+                + "            <scalar dictRef=\"cdk:exactMass\">2.01410179</scalar>"
+                + "            <scalar dictRef=\"cdk:atomicNumber\">1</scalar>" + "        </isotope>"
+                + "    </isotopeList>" + "</list>";
 
-        IsotopeReader reader = new IsotopeReader(
-        	new ByteArrayInputStream(isotopeData.getBytes()),
-            new ChemObject().getBuilder()
-        );
+        IsotopeReader reader = new IsotopeReader(new ByteArrayInputStream(isotopeData.getBytes()),
+                new ChemObject().getBuilder());
         Assert.assertNotNull(reader);
         List<IIsotope> isotopes = reader.readIsotopes();
         Assert.assertNotNull(isotopes);

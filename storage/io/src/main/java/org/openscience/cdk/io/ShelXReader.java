@@ -50,7 +50,6 @@ import org.openscience.cdk.math.FortranFormat;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-
 /**
  * A reader for ShelX output (RES) files. It does not read all information.
  * The list of fields that is read: REM, END, CELL, SPGR.
@@ -72,9 +71,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.ShelXReaderTest")
 public class ShelXReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(ShelXReader.class);
+    private BufferedReader      input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ShelXReader.class);
 
     /**
      * Create an ShelX file reader.
@@ -101,7 +99,7 @@ public class ShelXReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -112,36 +110,36 @@ public class ShelXReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (ICrystal.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (ICrystal.class.equals(interfaces[i])) return true;
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * Read a ChemFile from input.
      *
      * @return the content in a ChemFile object
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             try {
-                return (T)readChemFile((IChemFile)object);
+                return (T) readChemFile((IChemFile) object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage(), e);
             }
         } else if (object instanceof ICrystal) {
             try {
-                return (T)readCrystal((ICrystal)object);
+                return (T) readCrystal((ICrystal) object);
             } catch (IOException e) {
                 logger.error("Input/Output error while reading from input: " + e.getMessage());
                 throw new CDKException(e.getMessage(), e);
@@ -172,8 +170,7 @@ public class ShelXReader extends DefaultChemObjectReader {
         boolean end_found = false;
         while (input.ready() && line != null && !end_found) {
             /* is line continued? */
-            if (line.length() > 0 &&
-                line.substring(line.length()-1).equals("=")) {
+            if (line.length() > 0 && line.substring(line.length() - 1).equals("=")) {
                 /* yes, line is continued */
                 line = line + input.readLine();
             }
@@ -188,17 +185,18 @@ public class ShelXReader extends DefaultChemObjectReader {
             }
 
             logger.debug("command: " + command);
-            if (command.substring(0,3).equalsIgnoreCase("REM")) {
+            if (command.substring(0, 3).equalsIgnoreCase("REM")) {
                 /* line is comment, disregard */
 
-            /* 7.1 Crystal data and general instructions */
-            } else if (command.substring(0,3).equalsIgnoreCase("END")) {
+                /* 7.1 Crystal data and general instructions */
+            } else if (command.substring(0, 3).equalsIgnoreCase("END")) {
                 end_found = true;
             } else if (command.equalsIgnoreCase("TITL")) {
             } else if (command.equalsIgnoreCase("CELL")) {
-                /* example:
-                 * CELL  1.54184   23.56421  7.13203 18.68928  90.0000 109.3799  90.0000
-                 * CELL   1.54184   7.11174  21.71704  30.95857  90.000  90.000  90.000
+                /*
+                 * example: CELL 1.54184 23.56421 7.13203 18.68928 90.0000
+                 * 109.3799 90.0000 CELL 1.54184 7.11174 21.71704 30.95857
+                 * 90.000 90.000 90.000
                  */
                 StringTokenizer st = new StringTokenizer(line);
                 st.nextToken(); // String command_again
@@ -207,7 +205,7 @@ public class ShelXReader extends DefaultChemObjectReader {
                 String sb = st.nextToken();
                 String sc = st.nextToken();
                 String salpha = st.nextToken();
-                String sbeta  = st.nextToken();
+                String sbeta = st.nextToken();
                 String sgamma = st.nextToken();
                 logger.debug("a: " + sa);
                 logger.debug("b: " + sb);
@@ -220,10 +218,10 @@ public class ShelXReader extends DefaultChemObjectReader {
                 double b = FortranFormat.atof(sb);
                 double c = FortranFormat.atof(sc);
                 double alpha = FortranFormat.atof(salpha);
-                double beta  = FortranFormat.atof(sbeta);
+                double beta = FortranFormat.atof(sbeta);
                 double gamma = FortranFormat.atof(sgamma);
 
-                Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a,b,c, alpha, beta, gamma);
+                Vector3d[] axes = CrystalGeometryTools.notionalToCartesian(a, b, c, alpha, beta, gamma);
 
                 crystal.setA(axes[0]);
                 crystal.setB(axes[1]);
@@ -239,7 +237,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("MORE")) {
             } else if (command.equalsIgnoreCase("TIME")) {
 
-            /* 7.2 Reflection data input */
+                /* 7.2 Reflection data input */
             } else if (command.equalsIgnoreCase("HKLF")) {
             } else if (command.equalsIgnoreCase("OMIT")) {
             } else if (command.equalsIgnoreCase("SHEL")) {
@@ -250,7 +248,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("HOPE")) {
             } else if (command.equalsIgnoreCase("MERG")) {
 
-            /* 7.3 Atom list and least-squares constraints */
+                /* 7.3 Atom list and least-squares constraints */
             } else if (command.equalsIgnoreCase("SPEC")) {
             } else if (command.equalsIgnoreCase("RESI")) {
             } else if (command.equalsIgnoreCase("MOVE")) {
@@ -264,13 +262,13 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("EADP")) {
             } else if (command.equalsIgnoreCase("EQIV")) {
 
-            /* 7.4 The connectivity list */
+                /* 7.4 The connectivity list */
             } else if (command.equalsIgnoreCase("CONN")) {
             } else if (command.equalsIgnoreCase("PART")) {
             } else if (command.equalsIgnoreCase("BIND")) {
             } else if (command.equalsIgnoreCase("FREE")) {
 
-            /* 7.5 Least-squares restraints */
+                /* 7.5 Least-squares restraints */
             } else if (command.equalsIgnoreCase("DFIX")) {
             } else if (command.equalsIgnoreCase("DANG")) {
             } else if (command.equalsIgnoreCase("BUMP")) {
@@ -285,7 +283,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("NCSY")) {
             } else if (command.equalsIgnoreCase("SUMP")) {
 
-            /* 7.6 Least-squares organization */
+                /* 7.6 Least-squares organization */
             } else if (command.equalsIgnoreCase("L.S.")) {
             } else if (command.equalsIgnoreCase("CGLS")) {
             } else if (command.equalsIgnoreCase("BLOC")) {
@@ -294,7 +292,7 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("WGHT")) {
             } else if (command.equalsIgnoreCase("FVAR")) {
 
-            /* 7.7 Lists and tables */
+                /* 7.7 Lists and tables */
             } else if (command.equalsIgnoreCase("BOND")) {
             } else if (command.equalsIgnoreCase("CONF")) {
             } else if (command.equalsIgnoreCase("MPLA")) {
@@ -306,27 +304,29 @@ public class ShelXReader extends DefaultChemObjectReader {
             } else if (command.equalsIgnoreCase("TEMP")) {
             } else if (command.equalsIgnoreCase("WPDB")) {
 
-            /* 7.8 Fouriers, peak search and lineprinter plots */
+                /* 7.8 Fouriers, peak search and lineprinter plots */
             } else if (command.equalsIgnoreCase("FMAP")) {
             } else if (command.equalsIgnoreCase("GRID")) {
             } else if (command.equalsIgnoreCase("PLAN")) {
             } else if (command.equalsIgnoreCase("MOLE")) {
 
-            /* NOT DOCUMENTED BUT USED BY PLATON */
+                /* NOT DOCUMENTED BUT USED BY PLATON */
             } else if (command.equalsIgnoreCase("SPGR")) {
                 // Line added by PLATON stating the spacegroup
                 StringTokenizer st = new StringTokenizer(line);
                 st.nextToken(); // String command_again
                 String spacegroup = st.nextToken();
                 crystal.setSpaceGroup(spacegroup);
-           } else if (command.equalsIgnoreCase("    ")) {
+            } else if (command.equalsIgnoreCase("    ")) {
                 logger.debug("Disrgarding line assumed to be added by PLATON: " + line);
 
-            /* All other is atom */
+                /* All other is atom */
             } else {
                 //logger.debug("Assumed to contain an atom: " + line);
-                /* this line gives an atom, because all lines not starting with
-                   a ShelX command is an atom (that sucks!) */
+                /*
+                 * this line gives an atom, because all lines not starting with
+                 * a ShelX command is an atom (that sucks!)
+                 */
                 StringTokenizer st = new StringTokenizer(line);
                 String atype = st.nextToken();
                 st.nextToken(); // String scatt_factor
@@ -337,11 +337,11 @@ public class ShelXReader extends DefaultChemObjectReader {
 
                 if (Character.isDigit(atype.charAt(1))) {
                     // atom type has a one letter code
-                    atype = atype.substring(0,1);
+                    atype = atype.substring(0, 1);
                 } else {
                     StringBuffer sb2 = new StringBuffer();
                     sb2.append(atype.charAt(1));
-                    atype = atype.substring(0,1) + sb2.toString().toLowerCase();
+                    atype = atype.substring(0, 1) + sb2.toString().toLowerCase();
                 }
 
                 double[] frac = new double[3];
@@ -353,10 +353,8 @@ public class ShelXReader extends DefaultChemObjectReader {
                 if (atype.equalsIgnoreCase("Q")) {
                     // ingore atoms named Q
                 } else {
-                    logger.info("Adding atom: " + atype + ", " + frac[0]
-                                                        + ", " + frac[1]
-                                                        + ", " + frac[2]);
-                    IAtom atom = crystal.getBuilder().newInstance(IAtom.class,atype);
+                    logger.info("Adding atom: " + atype + ", " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+                    IAtom atom = crystal.getBuilder().newInstance(IAtom.class, atype);
                     atom.setFractionalPoint3d(new Point3d(frac[0], frac[1], frac[2]));
                     crystal.addAtom(atom);
                     logger.debug("Atom added: ", atom);

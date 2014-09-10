@@ -40,14 +40,14 @@ import java.util.List;
  * @cdk.githash
  */
 public class NeighborList {
-    HashMap<String,List> boxes;
-    double boxSize;
-    IAtom[] atoms;
 
+    HashMap<String, List> boxes;
+    double                boxSize;
+    IAtom[]               atoms;
 
     public NeighborList(IAtom[] atoms, double radius) {
         this.atoms = atoms;
-        this.boxes = new HashMap<String,List>();
+        this.boxes = new HashMap<String, List>();
         this.boxSize = 2 * radius;
         for (int i = 0; i < atoms.length; i++) {
             String key = getKeyString(atoms[i]);
@@ -55,9 +55,9 @@ public class NeighborList {
             if (this.boxes.containsKey(key)) {
                 List arl = this.boxes.get(key);
                 arl.add(i);
-                this.boxes.put( key, arl );
+                this.boxes.put(key, arl);
             } else {
-                this.boxes.put( key, new ArrayList() );
+                this.boxes.put(key, new ArrayList());
             }
         }
     }
@@ -67,44 +67,41 @@ public class NeighborList {
         double y = atom.getPoint3d().y;
         double z = atom.getPoint3d().z;
 
-        int k1,k2,k3;
-        k1 = (int)(Math.floor(x/ boxSize));
-        k2 = (int)(Math.floor(y/ boxSize));
-        k3 = (int)(Math.floor(z/ boxSize));
+        int k1, k2, k3;
+        k1 = (int) (Math.floor(x / boxSize));
+        k2 = (int) (Math.floor(y / boxSize));
+        k3 = (int) (Math.floor(z / boxSize));
 
-        String key =
-            Integer.toString(k1) + " " +
-            Integer.toString(k2) + " " +
-            Integer.toString(k3) + " " ;
-        return(key);
+        String key = Integer.toString(k1) + " " + Integer.toString(k2) + " " + Integer.toString(k3) + " ";
+        return (key);
     }
+
     private int[] getKeyArray(IAtom atom) {
         double x = atom.getPoint3d().x;
         double y = atom.getPoint3d().y;
         double z = atom.getPoint3d().z;
 
-        int k1,k2,k3;
-        k1 = (int)(Math.floor(x/ boxSize));
-        k2 = (int)(Math.floor(y/ boxSize));
-        k3 = (int)(Math.floor(z/ boxSize));
+        int k1, k2, k3;
+        k1 = (int) (Math.floor(x / boxSize));
+        k2 = (int) (Math.floor(y / boxSize));
+        k3 = (int) (Math.floor(z / boxSize));
 
-        int[] ret = { k1, k2, k3 };
-        return(ret);
+        int[] ret = {k1, k2, k3};
+        return (ret);
     }
-
 
     public int getNumberOfNeighbors(int i) {
         return getNeighbors(i).length;
     }
 
     public int[] getNeighbors(int ii) {
-        double maxDist2 = this.boxSize *this.boxSize;
+        double maxDist2 = this.boxSize * this.boxSize;
 
         IAtom ai = this.atoms[ii];
         int[] key = getKeyArray(ai);
         ArrayList nlist = new ArrayList();
 
-        int[] bval = {-1,0,1};
+        int[] bval = {-1, 0, 1};
         for (int i = 0; i < bval.length; i++) {
             int x = bval[i];
             for (int j = 0; j < bval.length; j++) {
@@ -112,12 +109,10 @@ public class NeighborList {
                 for (int k = 0; k < bval.length; k++) {
                     int z = bval[k];
 
-                    String keyj =
-                        Integer.toString(key[0]+x) + " " +
-                        Integer.toString(key[1]+y) + " " +
-                        Integer.toString(key[2]+z) + " " ;
+                    String keyj = Integer.toString(key[0] + x) + " " + Integer.toString(key[1] + y) + " "
+                            + Integer.toString(key[2] + z) + " ";
                     if (boxes.containsKey(keyj)) {
-                        ArrayList nbrs = (ArrayList)boxes.get(keyj);
+                        ArrayList nbrs = (ArrayList) boxes.get(keyj);
                         for (int l = 0; l < nbrs.size(); l++) {
                             int i2 = (Integer) nbrs.get(l);
                             if (i2 != ii) {
@@ -125,7 +120,7 @@ public class NeighborList {
                                 double x12 = aj.getPoint3d().x - ai.getPoint3d().x;
                                 double y12 = aj.getPoint3d().y - ai.getPoint3d().y;
                                 double z12 = aj.getPoint3d().z - ai.getPoint3d().z;
-                                double d2 = x12*x12 + y12*y12 + z12*z12;
+                                double d2 = x12 * x12 + y12 * y12 + z12 * z12;
                                 if (d2 < maxDist2) nlist.add(i2);
                             }
                         }
@@ -134,10 +129,9 @@ public class NeighborList {
             }
         }
         Object[] tmp = nlist.toArray();
-        int[] ret = new int[ tmp.length ];
-        for (int j = 0; j < tmp.length; j++) ret[j] = (Integer) tmp[j];
-        return(ret);
+        int[] ret = new int[tmp.length];
+        for (int j = 0; j < tmp.length; j++)
+            ret[j] = (Integer) tmp[j];
+        return (ret);
     }
 }
-
-

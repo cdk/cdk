@@ -75,64 +75,49 @@ import org.openscience.cdk.tools.periodictable.PeriodicTableTest;
  *
  * @cdk.module  test-core
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    CoreCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {
+        CoreCoverageTest.class,
 
-    CDKTest.class,
-    CDKConstantsTest.class,
-    DataFeaturesTest.class,
+        CDKTest.class,
+        CDKConstantsTest.class,
+        DataFeaturesTest.class,
 
-    // cdk.config
-    IsotopesTest.class,
-    BODRIsotopeTest.class,
-    AtomTypeFactoryTest.class,
-    CDKBasedAtomTypeConfiguratorTest.class,
-    TXTBasedAtomTypeConfiguratorTest.class,
-    OWLBasedAtomTypeConfiguratorTest.class,
-    AtomTypeReaderTest.class,
-    AtomTypeHandlerTest.class,
-    OWLAtomTypeReaderTest.class,
-    OWLAtomTypeHandlerTest.class,
-    PeriodicTableTest.class,
+        // cdk.config
+        IsotopesTest.class,
+        BODRIsotopeTest.class,
+        AtomTypeFactoryTest.class,
+        CDKBasedAtomTypeConfiguratorTest.class,
+        TXTBasedAtomTypeConfiguratorTest.class,
+        OWLBasedAtomTypeConfiguratorTest.class,
+        AtomTypeReaderTest.class,
+        AtomTypeHandlerTest.class,
+        OWLAtomTypeReaderTest.class,
+        OWLAtomTypeHandlerTest.class,
+        PeriodicTableTest.class,
 
-    // the CDK atom typer
-    CDKAtomTypeMatcherTest.class,
-    CDKAtomTypeMatcherTestFileReposTest.class,
-    CDKAtomTypeMatcherFilesTest.class,
-    CDKAtomTypeMatcherSMILESTest.class,
-    RepeatedCDKAtomTypeMatcherSMILESTest.class,
+        // the CDK atom typer
+        CDKAtomTypeMatcherTest.class,
+        CDKAtomTypeMatcherTestFileReposTest.class,
+        CDKAtomTypeMatcherFilesTest.class,
+        CDKAtomTypeMatcherSMILESTest.class,
+        RepeatedCDKAtomTypeMatcherSMILESTest.class,
 
-    // other
-    CDKExceptionTest.class,
-    NoSuchAtomExceptionTest.class,
-    NoSuchAtomTypeExceptionTest.class,
-    LoggingToolFactoryTest.class,
-    SystemOutLoggingToolTest.class,
-    BondManipulatorTest.class,
-    AdjacencyMatrixTest.class,
-    PathToolsTest.class,
-    TetrahedralChiralityTest.class,
-    DoubleBondStereochemistryTest.class,
-    SpanningTreeTest.class,
-    AllPairsShortestPathsTest.class,
-    ShortestPathsTest.class,
-    DynamicFactoryTest.class,
-    ConnectedComponentsTest.class,
+        // other
+        CDKExceptionTest.class, NoSuchAtomExceptionTest.class, NoSuchAtomTypeExceptionTest.class,
+        LoggingToolFactoryTest.class, SystemOutLoggingToolTest.class, BondManipulatorTest.class,
+        AdjacencyMatrixTest.class, PathToolsTest.class, TetrahedralChiralityTest.class,
+        DoubleBondStereochemistryTest.class, SpanningTreeTest.class, AllPairsShortestPathsTest.class,
+        ShortestPathsTest.class,
+        DynamicFactoryTest.class,
+        ConnectedComponentsTest.class,
 
-    // ring search (more in test-standard)
-    RegularCyclicVertexSearchTest.class,
-    JumboCyclicVertexSearchTest.class,
-    RingSearchTest.class,
-    BitMatrixTest.class,
-    InitialCyclesTest.class,
-    GreedyBasisTest.class,
-    RelevantCyclesTest.class,
-    MinimumCycleBasisTest.class,
-    EssentialCyclesTest.class,
-    RegularPathGraphTest.class,
-    JumboPathGraphTest.class,
-    CyclesTest.class
+        // ring search (more in test-standard)
+        RegularCyclicVertexSearchTest.class, JumboCyclicVertexSearchTest.class, RingSearchTest.class,
+        BitMatrixTest.class, InitialCyclesTest.class, GreedyBasisTest.class, RelevantCyclesTest.class,
+        MinimumCycleBasisTest.class, EssentialCyclesTest.class, RegularPathGraphTest.class, JumboPathGraphTest.class,
+        CyclesTest.class
 
 })
-public class McoreTests {}
+public class McoreTests {
+}

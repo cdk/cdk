@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -62,24 +61,19 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class SMSDTest {
 
-    public SMSDTest() {
-    }
+    public SMSDTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     /**
      * Test of init method, of class Isomorphism.
@@ -225,11 +219,10 @@ public class SMSDTest {
         Aromaticity.cdkLegacy().apply(target);
         Aromaticity.cdkLegacy().apply(queryac);
 
-
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(queryac);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
 
-//	Calling the main algorithm to perform MCS cearch
+        //	Calling the main algorithm to perform MCS cearch
 
         Aromaticity.cdkLegacy().apply(queryac);
         Aromaticity.cdkLegacy().apply(target);
@@ -531,7 +524,7 @@ public class SMSDTest {
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(query);
         ExtAtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(target);
 
-//	Calling the main algorithm to perform MCS cearch
+        //	Calling the main algorithm to perform MCS cearch
 
         Aromaticity.cdkLegacy().apply(query);
         Aromaticity.cdkLegacy().apply(target);
@@ -541,13 +534,13 @@ public class SMSDTest {
         boolean foundMatches = smsd.isSubgraph();
         Assert.assertTrue(foundMatches);
 
-//        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
-//
-//        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
-//        smsd1.init(queryContainer, target, true, true);
-//        smsd1.setChemFilters(true, true, true);
-//        foundMatches = smsd1.isSubgraph();
-//        Assert.assertFalse(foundMatches);
+        //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(query);
+        //
+        //        Isomorphism smsd1 = new Isomorphism(Algorithm.SubStructure, true);
+        //        smsd1.init(queryContainer, target, true, true);
+        //        smsd1.setChemFilters(true, true, true);
+        //        foundMatches = smsd1.isSubgraph();
+        //        Assert.assertFalse(foundMatches);
     }
 
     public void testQueryAtomCount() throws CDKException {

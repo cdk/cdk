@@ -2,23 +2,23 @@
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                     2009  Stefan Kuhn <shk3@users.sf.net>
  *                     2009  Egon Willighagen <egonw@users.sf.net>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
@@ -104,11 +104,9 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.ReactionSetRendererTest")
-public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
-  implements IRenderer<IReactionSet> {
+public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implements IRenderer<IReactionSet> {
 
     private IRenderer<IReaction> reactionRenderer;
-
 
     /**
      * A renderer that generates diagrams using the specified
@@ -120,16 +118,18 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      *            a class that manages mappings between zoom and font sizes
      */
     @TestMethod("testConstructor")
-	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this(new RendererModel(),generators,fontManager);
-		for (IGenerator<IAtomContainer> generator : generators) {
+    public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+        this(new RendererModel(), generators, fontManager);
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-	}
-	public ReactionSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager){
-		super(rendererModel);
+    }
+
+    public ReactionSetRenderer(RendererModel rendererModel, List<IGenerator<IAtomContainer>> generators,
+            IFontManager fontManager) {
+        super(rendererModel);
         this.fontManager = fontManager;
-        reactionRenderer = new ReactionRenderer(rendererModel,generators, fontManager);
+        reactionRenderer = new ReactionRenderer(rendererModel, generators, fontManager);
         this.setup();
     }
 
@@ -145,43 +145,41 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators,
-	                List<IGenerator<IReaction>> reactionGenerators,
-	                IFontManager fontManager) {
-		this(new RendererModel(),generators,reactionGenerators,fontManager);
-	}
-	protected ReactionSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators,
-            List<IGenerator<IReaction>> reactionGenerators,
-            IFontManager fontManager) {
-		super(rendererModel);
-	    this.fontManager = fontManager;
-	    reactionRenderer =
-	        new ReactionRenderer(generators, reactionGenerators, fontManager);
-        this.setup();
-	}
+    public ReactionSetRenderer(List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager) {
+        this(new RendererModel(), generators, reactionGenerators, fontManager);
+    }
 
-	/**
-	 * Setup the transformations necessary to draw this Reaction Set.
-	 *
-	 * @param reactionSet
-	 * @param screen
-	 */
-	public void setup(IReactionSet reactionSet, Rectangle screen) {
-	    this.setScale(reactionSet);
-	    Rectangle2D bounds = BoundsCalculator.calculateBounds(reactionSet);
+    protected ReactionSetRenderer(RendererModel rendererModel, List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager) {
+        super(rendererModel);
+        this.fontManager = fontManager;
+        reactionRenderer = new ReactionRenderer(generators, reactionGenerators, fontManager);
+        this.setup();
+    }
+
+    /**
+     * Setup the transformations necessary to draw this Reaction Set.
+     *
+     * @param reactionSet
+     * @param screen
+     */
+    public void setup(IReactionSet reactionSet, Rectangle screen) {
+        this.setScale(reactionSet);
+        Rectangle2D bounds = BoundsCalculator.calculateBounds(reactionSet);
         this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
         this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
         this.setup();
-	}
+    }
 
-	/**
-	 * Set the scale for an IReactionSet. It calculates the average bond length
-	 * of the model and calculates the multiplication factor to transform this
+    /**
+     * Set the scale for an IReactionSet. It calculates the average bond length
+     * of the model and calculates the multiplication factor to transform this
      * to the bond length that is set in the RendererModel.
      *
-	 * @param reactionSet
-	 */
-	public void setScale(IReactionSet reactionSet) {
+     * @param reactionSet
+     */
+    public void setScale(IReactionSet reactionSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(reactionSet);
         double scale = this.calculateScaleForBondLength(bondLength);
 
@@ -189,8 +187,9 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle paint(IReactionSet reactionSet, IDrawVisitor drawVisitor) {
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle paint(IReactionSet reactionSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reactionSet);
 
@@ -216,8 +215,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paint(IReactionSet reactionSet,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
+    public void paint(IReactionSet reactionSet, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reactionSet);
@@ -234,33 +232,32 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet>
         this.paint(drawVisitor, diagram);
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle calculateDiagramBounds(IReactionSet reactionSet) {
-        return this.calculateScreenBounds(
-                BoundsCalculator.calculateBounds(reactionSet));
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle calculateDiagramBounds(IReactionSet reactionSet) {
+        return this.calculateScreenBounds(BoundsCalculator.calculateBounds(reactionSet));
+    }
 
-	/**
-	 * Given a bond length for a model, calculate the scale that will transform
-	 * this length to the on screen bond length in RendererModel.
-	 *
-	 * @param  modelBondLength the wanted model bond length in screen length
-	 * @return returns the scale that causes the drawn bond lengths in pixels to match
-	 *         the given model bond length
-	 */
-	public double calculateScaleForBondLength(double modelBondLength) {
-	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
+    /**
+     * Given a bond length for a model, calculate the scale that will transform
+     * this length to the on screen bond length in RendererModel.
+     *
+     * @param  modelBondLength the wanted model bond length in screen length
+     * @return returns the scale that causes the drawn bond lengths in pixels to match
+     *         the given model bond length
+     */
+    public double calculateScaleForBondLength(double modelBondLength) {
+        if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
-            return this.rendererModel.getParameter(BondLength.class)
-        		.getValue() / modelBondLength;
+            return this.rendererModel.getParameter(BondLength.class).getValue() / modelBondLength;
         }
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public List<IGenerator<IReactionSet>> getGenerators(){
-//	    return reactionRenderer.getReactionGenerators();
-	    return null;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public List<IGenerator<IReactionSet>> getGenerators() {
+        //	    return reactionRenderer.getReactionGenerators();
+        return null;
+    }
 }

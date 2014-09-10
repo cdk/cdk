@@ -51,17 +51,15 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.io.cml.PDBAtomCustomizerTest")
 public class PDBAtomCustomizer implements ICMLCustomizer {
 
-
     @TestMethod("testPDBAtomCustomization")
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
-    	if (!(nodeToAdd instanceof Element))
-    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+        if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
-    	Element element = (Element)nodeToAdd;
+        Element element = (Element) nodeToAdd;
         if (atom instanceof IPDBAtom) {
-            IPDBAtom pdbAtom = (IPDBAtom)atom;
+            IPDBAtom pdbAtom = (IPDBAtom) atom;
             if (hasContent(pdbAtom.getAltLoc())) {
-            	CMLScalar scalar = new CMLScalar();
+                CMLScalar scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:altLoc"));
                 scalar.appendChild(pdbAtom.getAltLoc());
                 element.appendChild(scalar);
@@ -77,7 +75,7 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
             {
                 Element scalar = new CMLScalar();
                 scalar.addAttribute(new Attribute("dictRef", "pdb:hetAtom"));
-                scalar.appendChild(""+pdbAtom.getHetAtom());
+                scalar.appendChild("" + pdbAtom.getHetAtom());
                 element.appendChild(scalar);
             }
 
@@ -153,15 +151,14 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
     }
 
     private boolean hasContent(String string) {
-		return string != null && string.trim().length() > 0;
-	}
+        return string != null && string.trim().length() > 0;
+    }
 
-	public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
+    public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 
-	public void customize(IBond bond, Object nodeToAdd) throws Exception {
-		// nothing to do at this moment
-	}
+    public void customize(IBond bond, Object nodeToAdd) throws Exception {
+        // nothing to do at this moment
+    }
 }
-

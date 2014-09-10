@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class GROMOS96FormatTest extends ChemFormatTest {
 
     public GROMOS96FormatTest() {
-        super.setChemFormat((IChemFormat)GROMOS96Format.getInstance());
+        super.setChemFormat((IChemFormat) GROMOS96Format.getInstance());
     }
 
 }

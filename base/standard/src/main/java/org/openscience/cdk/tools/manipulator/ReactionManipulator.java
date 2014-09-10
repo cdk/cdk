@@ -47,44 +47,43 @@ public class ReactionManipulator {
 
     @TestMethod("testGetAtomCount_IReaction")
     public static int getAtomCount(IReaction reaction) {
-    	int count = 0;
+        int count = 0;
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-        	count += reactants.getAtomContainer(i).getAtomCount();
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
+            count += reactants.getAtomContainer(i).getAtomCount();
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
-        	count += products.getAtomContainer(i).getAtomCount();
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
+            count += products.getAtomContainer(i).getAtomCount();
         }
         return count;
     }
 
     @TestMethod("testGetBondCount_IReaction")
     public static int getBondCount(IReaction reaction) {
-    	int count = 0;
-    	IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
-        	count += reactants.getAtomContainer(i).getBondCount();
+        int count = 0;
+        IAtomContainerSet reactants = reaction.getReactants();
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
+            count += reactants.getAtomContainer(i).getBondCount();
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
-        	count += products.getAtomContainer(i).getBondCount();
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
+            count += products.getAtomContainer(i).getBondCount();
         }
         return count;
     }
 
-
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IReaction reaction, IAtom atom) {
-    	IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        IAtomContainerSet reactants = reaction.getReactants();
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
             }
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             IAtomContainer mol = products.getAtomContainer(i);
             if (mol.contains(atom)) {
                 mol.removeAtomAndConnectedElectronContainers(atom);
@@ -94,15 +93,15 @@ public class ReactionManipulator {
 
     @TestMethod("testRemoveElectronContainer_IReaction_IElectronContainer")
     public static void removeElectronContainer(IReaction reaction, IElectronContainer electrons) {
-    	IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        IAtomContainerSet reactants = reaction.getReactants();
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
             }
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             IAtomContainer mol = products.getAtomContainer(i);
             if (mol.contains(electrons)) {
                 mol.removeElectronContainer(electrons);
@@ -125,6 +124,7 @@ public class ReactionManipulator {
 
         return moleculeSet;
     }
+
     /**
      * get all products of a IReaction
      *
@@ -135,7 +135,7 @@ public class ReactionManipulator {
     public static IAtomContainerSet getAllProducts(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             moleculeSet.addAtomContainer(products.getAtomContainer(i));
         }
         return moleculeSet;
@@ -151,7 +151,7 @@ public class ReactionManipulator {
     public static IAtomContainerSet getAllReactants(IReaction reaction) {
         IAtomContainerSet moleculeSet = reaction.getBuilder().newInstance(IAtomContainerSet.class);
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             moleculeSet.addAtomContainer(reactants.getAtomContainer(i));
         }
         return moleculeSet;
@@ -174,12 +174,12 @@ public class ReactionManipulator {
             reversedReaction.setDirection(IReaction.Direction.FORWARD);
         }
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             double coefficient = reaction.getReactantCoefficient(reactants.getAtomContainer(i));
             reversedReaction.addProduct(reactants.getAtomContainer(i), coefficient);
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             double coefficient = reaction.getProductCoefficient(products.getAtomContainer(i));
             reversedReaction.addReactant(products.getAtomContainer(i), coefficient);
         }
@@ -193,9 +193,7 @@ public class ReactionManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IReaction")
     public static List<IAtomContainer> getAllAtomContainers(IReaction reaction) {
-		return MoleculeSetManipulator.getAllAtomContainers(
-            getAllMolecules(reaction)
-        );
+        return MoleculeSetManipulator.getAllAtomContainers(getAllMolecules(reaction));
     }
 
     @TestMethod("testGetAllIDs_IReaction")
@@ -203,12 +201,12 @@ public class ReactionManipulator {
         List<String> idList = new ArrayList<String>();
         if (reaction.getID() != null) idList.add(reaction.getID());
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             IAtomContainer mol = reactants.getAtomContainer(i);
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             IAtomContainer mol = products.getAtomContainer(i);
             idList.addAll(AtomContainerManipulator.getAllIDs(mol));
         }
@@ -235,17 +233,13 @@ public class ReactionManipulator {
 
     @TestMethod("testSetAtomProperties_IReactionSet_Object_Object")
     public static void setAtomProperties(IReaction reaction, Object propKey, Object propVal) {
-    	IAtomContainerSet reactants = reaction.getReactants();
-        for (int j=0; j<reactants.getAtomContainerCount(); j++) {
-            AtomContainerManipulator.setAtomProperties(
-                reactants.getAtomContainer(j), propKey, propVal
-            );
+        IAtomContainerSet reactants = reaction.getReactants();
+        for (int j = 0; j < reactants.getAtomContainerCount(); j++) {
+            AtomContainerManipulator.setAtomProperties(reactants.getAtomContainer(j), propKey, propVal);
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int j=0; j<products.getAtomContainerCount(); j++) {
-            AtomContainerManipulator.setAtomProperties(
-                products.getAtomContainer(j), propKey, propVal
-            );
+        for (int j = 0; j < products.getAtomContainerCount(); j++) {
+            AtomContainerManipulator.setAtomProperties(products.getAtomContainer(j), propKey, propVal);
         }
     }
 
@@ -254,15 +248,16 @@ public class ReactionManipulator {
         ArrayList<IChemObject> list = new ArrayList<IChemObject>();
         list.add(reaction);
         IAtomContainerSet reactants = reaction.getReactants();
-        for (int i=0; i<reactants.getAtomContainerCount(); i++) {
+        for (int i = 0; i < reactants.getAtomContainerCount(); i++) {
             list.add(reactants.getAtomContainer(i));
         }
         IAtomContainerSet products = reaction.getProducts();
-        for (int i=0; i<products.getAtomContainerCount(); i++) {
+        for (int i = 0; i < products.getAtomContainerCount(); i++) {
             list.add(products.getAtomContainer(i));
         }
         return list;
     }
+
     /**
      * get the IAtom which is mapped
      *
@@ -271,14 +266,13 @@ public class ReactionManipulator {
      * @return           The mapped IChemObject
      */
     @TestMethod("testGetMappedChemObject_IReaction_IAtom,testGetMappedChemObject_IReaction_IBond")
-    public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject){
+    public static IChemObject getMappedChemObject(IReaction reaction, IChemObject chemObject) {
         for (IMapping mapping : reaction.mappings()) {
             if (mapping.getChemObject(0).equals(chemObject)) {
                 return mapping.getChemObject(1);
-            } else if (mapping.getChemObject(1).equals(chemObject))
-                return mapping.getChemObject(0);
+            } else if (mapping.getChemObject(1).equals(chemObject)) return mapping.getChemObject(0);
         }
-    	return null;
+        return null;
     }
 
 }

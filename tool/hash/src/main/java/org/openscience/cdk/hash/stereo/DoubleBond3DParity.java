@@ -42,7 +42,6 @@ import javax.vecmath.Point3d;
 @TestClass("org.openscience.cdk.hash.stereo.DoubleBond3DParityTest")
 final class DoubleBond3DParity extends GeometricParity {
 
-
     // coordinates of the double bond atoms:
     // x       w
     //  \     /
@@ -57,8 +56,7 @@ final class DoubleBond3DParity extends GeometricParity {
      * @param leftSubstituent  the substituent atom connected to the left atom
      * @param rightSubstituent the substituent atom connected to the right atom
      */
-    public DoubleBond3DParity(Point3d left, Point3d right,
-                              Point3d leftSubstituent, Point3d rightSubstituent) {
+    public DoubleBond3DParity(Point3d left, Point3d right, Point3d leftSubstituent, Point3d rightSubstituent) {
         this.u = left;
         this.v = right;
         this.x = leftSubstituent;
@@ -71,7 +69,8 @@ final class DoubleBond3DParity extends GeometricParity {
      * @return opposite (+1), together (-1)
      */
     @TestMethod("opposite,together")
-    @Override public int parity() {
+    @Override
+    public int parity() {
 
         // create three vectors, v->u, v->w and u->x
         double[] vu = toVector(v, u);
@@ -89,8 +88,7 @@ final class DoubleBond3DParity extends GeometricParity {
         // then it is at pi/2 radians (i.e. unspecified) however 3D coordinates
         // are generally discrete and do not normally represent on unspecified
         // stereo configurations so we don't check this
-        int parity = (int) Math.signum(dot(normal, vw))
-                * (int) Math.signum(dot(normal, ux));
+        int parity = (int) Math.signum(dot(normal, vw)) * (int) Math.signum(dot(normal, ux));
 
         // invert sign, this then matches with Sp2 double bond parity
         return parity * -1;
@@ -104,9 +102,7 @@ final class DoubleBond3DParity extends GeometricParity {
      * @return a new vector
      */
     private static double[] toVector(Point3d src, Point3d dest) {
-        return new double[]{dest.x - src.x,
-                            dest.y - src.y,
-                            dest.z - src.z};
+        return new double[]{dest.x - src.x, dest.y - src.y, dest.z - src.z};
     }
 
     /**
@@ -128,9 +124,7 @@ final class DoubleBond3DParity extends GeometricParity {
      * @return the cross-product
      */
     private static double[] crossProduct(double[] u, double[] v) {
-        return new double[]{(u[1] * v[2]) - (v[1] * u[2]),
-                            (u[2] * v[0]) - (v[2] * u[0]),
-                            (u[0] * v[1]) - (v[0] * u[1])};
+        return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1])};
     }
 
 }

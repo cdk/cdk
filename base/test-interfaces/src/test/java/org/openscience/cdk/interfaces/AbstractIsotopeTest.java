@@ -31,43 +31,53 @@ import org.openscience.cdk.tools.diff.IsotopeDiff;
  */
 public abstract class AbstractIsotopeTest extends AbstractElementTest {
 
-    @Test public void testSetNaturalAbundance_Double() {
-        IIsotope i = (IIsotope)newChemObject();
+    @Test
+    public void testSetNaturalAbundance_Double() {
+        IIsotope i = (IIsotope) newChemObject();
         i.setNaturalAbundance(80.0);
         Assert.assertEquals(80.0, i.getNaturalAbundance(), 0.001);
     }
-    @Test public void testGetNaturalAbundance() {
+
+    @Test
+    public void testGetNaturalAbundance() {
         testSetNaturalAbundance_Double();
     }
 
-    @Test public void testSetExactMass_Double() {
-        IIsotope i = (IIsotope)newChemObject();
+    @Test
+    public void testSetExactMass_Double() {
+        IIsotope i = (IIsotope) newChemObject();
         i.setExactMass(12.03);
         Assert.assertEquals(12.03, i.getExactMass(), 0.001);
     }
-    @Test public void testGetExactMass() {
+
+    @Test
+    public void testGetExactMass() {
         testSetExactMass_Double();
     }
 
-    @Test public void testSetMassNumber_Integer() {
-        IIsotope i = (IIsotope)newChemObject();
+    @Test
+    public void testSetMassNumber_Integer() {
+        IIsotope i = (IIsotope) newChemObject();
         i.setMassNumber(2);
         Assert.assertEquals(2, i.getMassNumber().intValue());
     }
-    @Test public void testGetMassNumber() {
+
+    @Test
+    public void testGetMassNumber() {
         testSetMassNumber_Integer();
     }
 
     /**
      * Method to test the clone() method
      */
-    @Test public void testClone() throws Exception {
-        IIsotope iso = (IIsotope)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IIsotope iso = (IIsotope) newChemObject();
         Object clone = iso.clone();
         Assert.assertTrue(clone instanceof IIsotope);
 
         // test that everything has been cloned properly
-        String diff = IsotopeDiff.diff(iso, (IIsotope)clone);
+        String diff = IsotopeDiff.diff(iso, (IIsotope) clone);
         Assert.assertNotNull(diff);
         Assert.assertEquals(0, diff.length());
     }
@@ -75,10 +85,11 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     /**
      * Method to test the clone() method
      */
-    @Test public void testClone_ExactMass() throws Exception {
-        IIsotope iso = (IIsotope)newChemObject();
+    @Test
+    public void testClone_ExactMass() throws Exception {
+        IIsotope iso = (IIsotope) newChemObject();
         iso.setExactMass(1.0);
-        IIsotope clone = (IIsotope)iso.clone();
+        IIsotope clone = (IIsotope) iso.clone();
 
         // test cloning of exact mass
         iso.setExactMass(2.0);
@@ -88,10 +99,11 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     /**
      * Method to test the clone() method
      */
-    @Test public void testClone_NaturalAbundance() throws Exception {
-        IIsotope iso = (IIsotope)newChemObject();
+    @Test
+    public void testClone_NaturalAbundance() throws Exception {
+        IIsotope iso = (IIsotope) newChemObject();
         iso.setNaturalAbundance(1.0);
-        IIsotope clone = (IIsotope)iso.clone();
+        IIsotope clone = (IIsotope) iso.clone();
 
         // test cloning of exact mass
         iso.setNaturalAbundance(2.0);
@@ -101,10 +113,11 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     /**
      * Method to test the clone() method
      */
-    @Test public void testClone_MassNumber() throws Exception {
-        IIsotope iso = (IIsotope)newChemObject();
+    @Test
+    public void testClone_MassNumber() throws Exception {
+        IIsotope iso = (IIsotope) newChemObject();
         iso.setMassNumber(12);
-        IIsotope clone = (IIsotope)iso.clone();
+        IIsotope clone = (IIsotope) iso.clone();
 
         // test cloning of exact mass
         iso.setMassNumber(13);
@@ -114,10 +127,11 @@ public abstract class AbstractIsotopeTest extends AbstractElementTest {
     /**
      * Method to test whether the class complies with RFC #9.
      */
-    @Test public void testToString() {
-        IIsotope iso = (IIsotope)newChemObject();
+    @Test
+    public void testToString() {
+        IIsotope iso = (IIsotope) newChemObject();
         String description = iso.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }

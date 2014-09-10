@@ -43,107 +43,107 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  */
 public class ElementUtility implements IDrawVisitor {
 
-	private List<IRenderingElement> elements = new ArrayList<IRenderingElement>();
+    private List<IRenderingElement> elements         = new ArrayList<IRenderingElement>();
 
-	private AffineTransform transform;
+    private AffineTransform         transform;
 
-	private RendererModel model;
+    private RendererModel           model;
 
-	private boolean getElementGroups = false;
+    private boolean                 getElementGroups = false;
 
-	public int numberOfElements() {
-		return this.elements.size();
-	}
-
-	public void setTransform(AffineTransform transform) {
-		this.transform = transform;
-	}
-
-	public void visit(IRenderingElement element) {
-		if (element instanceof ElementGroup) {
-			if (getElementGroups) {
-				this.elements.add(element);
-			}
-			((ElementGroup) element).visitChildren(this);
-		} else {
-			this.elements.add(element);
-		}
-	}
-
-	public List<IRenderingElement> getElements() {
-		return this.elements;
-	}
-
-	public List<IRenderingElement> getAllSimpleElements(IRenderingElement root) {
-	    elements.clear();
-		getElementGroups = false;
-		root.accept(this);
-		return new ArrayList<IRenderingElement>(elements);
-	}
-
-	public int[] transformPoint(double x, double y) {
-        double[] src = new double[] {x, y};
-        double[] dest = new double[2];
-        this.transform.transform(src, 0, dest, 0, 1);
-        return new int[] { (int) dest[0], (int) dest[1] };
+    public int numberOfElements() {
+        return this.elements.size();
     }
 
-	public void setFontManager(IFontManager fontManager) {
-		// TODO Auto-generated method stub
+    public void setTransform(AffineTransform transform) {
+        this.transform = transform;
+    }
 
-	}
+    public void visit(IRenderingElement element) {
+        if (element instanceof ElementGroup) {
+            if (getElementGroups) {
+                this.elements.add(element);
+            }
+            ((ElementGroup) element).visitChildren(this);
+        } else {
+            this.elements.add(element);
+        }
+    }
 
-	public void setRendererModel(RendererModel rendererModel) {
-		this.model = rendererModel;
-	}
+    public List<IRenderingElement> getElements() {
+        return this.elements;
+    }
 
-	public RendererModel getModel() {
-		return this.model;
-	}
+    public List<IRenderingElement> getAllSimpleElements(IRenderingElement root) {
+        elements.clear();
+        getElementGroups = false;
+        root.accept(this);
+        return new ArrayList<IRenderingElement>(elements);
+    }
 
-	public String toString(int[] p) {
-		return String.format("(%d, %d)", p[0], p[1]);
-	}
+    public int[] transformPoint(double x, double y) {
+        double[] src = new double[]{x, y};
+        double[] dest = new double[2];
+        this.transform.transform(src, 0, dest, 0, 1);
+        return new int[]{(int) dest[0], (int) dest[1]};
+    }
 
-	public String toString(double x, double y) {
-		return String.format("(%+3.1f, %+3.1f)", x, y);
-	}
+    public void setFontManager(IFontManager fontManager) {
+        // TODO Auto-generated method stub
 
-	public String toString(double x, double y, double r) {
-		return String.format("(%+3.1f, %+3.1f, %+3.1f)", x, y, r);
-	}
+    }
 
-	public String toString(IRenderingElement element) {
-		if (element instanceof LineElement) {
-			LineElement e = (LineElement) element;
-			String p1 = toString(e.firstPointX, e.firstPointY);
-			String p2 = toString(e.secondPointX, e.secondPointY);
-			String p1T = toString(transformPoint(e.firstPointX, e.firstPointY));
-			String p2T = toString(transformPoint(e.secondPointX, e.secondPointY));
-			String lineFormat = "Line [%s, %s] -> [%s, %s]\n";
-			return String.format(lineFormat, p1, p2, p1T, p2T);
-		} else if (element instanceof OvalElement) {
-			OvalElement e = (OvalElement) element;
-			double r = e.radius;
-			String c = toString(e.xCoord, e.yCoord, r);
-			String p1 = toString(transformPoint(e.xCoord - r, e.yCoord - r));
-			String p2 = toString(transformPoint(e.xCoord + r, e.yCoord + r));
-			return String.format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
-		} else if (element instanceof AtomSymbolElement) {
-		    AtomSymbolElement e = (AtomSymbolElement) element;
-		    return String.format("AtomSymbol [%s]\n", e.text);
-		} else if (element instanceof ElementGroup) {
-			return "Element Group\n";
-		} else {
-			return "Unknown element\n";
-		}
-	}
+    public void setRendererModel(RendererModel rendererModel) {
+        this.model = rendererModel;
+    }
 
-	public void printToStream(IRenderingElement root, PrintStream stream) {
-		root.accept(this);
-		for (IRenderingElement element : this.elements) {
-			stream.print(toString(element));
-		}
-	}
+    public RendererModel getModel() {
+        return this.model;
+    }
+
+    public String toString(int[] p) {
+        return String.format("(%d, %d)", p[0], p[1]);
+    }
+
+    public String toString(double x, double y) {
+        return String.format("(%+3.1f, %+3.1f)", x, y);
+    }
+
+    public String toString(double x, double y, double r) {
+        return String.format("(%+3.1f, %+3.1f, %+3.1f)", x, y, r);
+    }
+
+    public String toString(IRenderingElement element) {
+        if (element instanceof LineElement) {
+            LineElement e = (LineElement) element;
+            String p1 = toString(e.firstPointX, e.firstPointY);
+            String p2 = toString(e.secondPointX, e.secondPointY);
+            String p1T = toString(transformPoint(e.firstPointX, e.firstPointY));
+            String p2T = toString(transformPoint(e.secondPointX, e.secondPointY));
+            String lineFormat = "Line [%s, %s] -> [%s, %s]\n";
+            return String.format(lineFormat, p1, p2, p1T, p2T);
+        } else if (element instanceof OvalElement) {
+            OvalElement e = (OvalElement) element;
+            double r = e.radius;
+            String c = toString(e.xCoord, e.yCoord, r);
+            String p1 = toString(transformPoint(e.xCoord - r, e.yCoord - r));
+            String p2 = toString(transformPoint(e.xCoord + r, e.yCoord + r));
+            return String.format("Oval [%s] -> [%s, %s]\n", c, p1, p2);
+        } else if (element instanceof AtomSymbolElement) {
+            AtomSymbolElement e = (AtomSymbolElement) element;
+            return String.format("AtomSymbol [%s]\n", e.text);
+        } else if (element instanceof ElementGroup) {
+            return "Element Group\n";
+        } else {
+            return "Unknown element\n";
+        }
+    }
+
+    public void printToStream(IRenderingElement root, PrintStream stream) {
+        root.accept(this);
+        for (IRenderingElement element : this.elements) {
+            stream.print(toString(element));
+        }
+    }
 
 }

@@ -39,7 +39,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer_SingleAtom() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -50,7 +50,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainer() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -62,7 +62,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainerSet_SingleAtom() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -75,7 +75,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IAtomContainerSet() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -89,14 +89,12 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet_SingleAtom() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
-        reaction.addReactant(
-            container.getBuilder().newInstance(IAtomContainer.class, container)
-        );
+        reaction.addReactant(container.getBuilder().newInstance(IAtomContainer.class, container));
         IReactionSet set = container.getBuilder().newInstance(IReactionSet.class);
         set.addReaction(reaction);
         BoundsCalculator.calculateBounds(set);
@@ -106,15 +104,13 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReactionSet() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
-        reaction.addReactant(
-            container.getBuilder().newInstance(IAtomContainer.class, container)
-        );
+        reaction.addReactant(container.getBuilder().newInstance(IAtomContainer.class, container));
         IReactionSet set = container.getBuilder().newInstance(IReactionSet.class);
         set.addReaction(reaction);
         BoundsCalculator.calculateBounds(set);
@@ -124,7 +120,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel_SingleAtom() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -139,7 +135,7 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IChemModel() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
@@ -155,14 +151,12 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReaction_SingleAtom() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
-        reaction.addReactant(
-            container.getBuilder().newInstance(IAtomContainer.class, container)
-        );
+        reaction.addReactant(container.getBuilder().newInstance(IAtomContainer.class, container));
         BoundsCalculator.calculateBounds(reaction);
     }
 
@@ -170,15 +164,13 @@ public class BoundsCalculatorTest {
      * Test if we get the expected {@link IllegalArgumentException} when we pass
      * an {@link IAtomContainer} without 2D coordinates.
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testCalculateBounds_IReaction() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
         IReaction reaction = container.getBuilder().newInstance(IReaction.class);
-        reaction.addReactant(
-            container.getBuilder().newInstance(IAtomContainer.class, container)
-        );
+        reaction.addReactant(container.getBuilder().newInstance(IAtomContainer.class, container));
         BoundsCalculator.calculateBounds(reaction);
     }
 }

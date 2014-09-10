@@ -29,27 +29,27 @@ import org.junit.Test;
  */
 public abstract class AbstractPathElementTest {
 
-	private static PathElement pathElement;
+    private static PathElement pathElement;
 
-	public static void setPathElement(PathElement element) {
-		pathElement = element;
-	}
+    public static void setPathElement(PathElement element) {
+        pathElement = element;
+    }
 
-	@Test
-	public void testConstructor() {
-		Assert.assertNotNull(pathElement);
-	}
+    @Test
+    public void testConstructor() {
+        Assert.assertNotNull(pathElement);
+    }
 
-	@Test
-	public void testType() {
-		Assert.assertNotNull(pathElement.type());
-	}
+    @Test
+    public void testType() {
+        Assert.assertNotNull(pathElement.type());
+    }
 
-	@Test
-	public void testPoints() {
-		float[] points = pathElement.points();
-		Assert.assertNotNull(points);
-		Assert.assertNotSame(0, points.length);
-	}
+    @Test
+    public void testPoints() {
+        float[] points = pathElement.points();
+        Assert.assertNotNull(points);
+        Assert.assertNotSame(0, points.length);
+    }
 
 }

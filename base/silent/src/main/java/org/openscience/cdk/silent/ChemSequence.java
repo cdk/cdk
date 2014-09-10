@@ -38,184 +38,171 @@ import java.util.Iterator;
  * @cdk.keyword animation
  * @cdk.keyword reaction
  */
-public class ChemSequence extends ChemObject implements Serializable, IChemSequence, IChemObjectListener, Cloneable
-{
+public class ChemSequence extends ChemObject implements Serializable, IChemSequence, IChemObjectListener, Cloneable {
 
-	/**
+    /**
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 2199218627455492000L;
+     */
+    private static final long serialVersionUID = 2199218627455492000L;
 
-	/**
-	 *  Array of ChemModels.
-	 */
-	protected IChemModel[] chemModels;
+    /**
+     *  Array of ChemModels.
+     */
+    protected IChemModel[]    chemModels;
 
-	/**
-	 *  Number of ChemModels contained by this container.
-	 */
-	protected int chemModelCount;
+    /**
+     *  Number of ChemModels contained by this container.
+     */
+    protected int             chemModelCount;
 
-	/**
-	 *  Amount by which the chemModels array grows when elements are added and
-	 *  the array is not large enough for that.
-	 */
-	protected int growArraySize = 4;
+    /**
+     *  Amount by which the chemModels array grows when elements are added and
+     *  the array is not large enough for that.
+     */
+    protected int             growArraySize    = 4;
 
+    /**
+     *  Constructs an empty ChemSequence.
+     */
+    public ChemSequence() {
+        chemModelCount = 0;
+        chemModels = new ChemModel[growArraySize];
+    }
 
-
-	/**
-	 *  Constructs an empty ChemSequence.
-	 */
-	public ChemSequence()
-	{
-		chemModelCount = 0;
-		chemModels = new ChemModel[growArraySize];
-	}
-
-
-
-	/**
-	 *  Adds an chemModel to this container.
-	 *
-	 * @param  chemModel  The chemModel to be added to this container
+    /**
+     *  Adds an chemModel to this container.
+     *
+     * @param  chemModel  The chemModel to be added to this container
      *
      * @see            #getChemModel
-	 */
-	public void addChemModel(IChemModel chemModel)
-	{
-		if (chemModelCount + 1 >= chemModels.length)
-		{
-			growChemModelArray();
-		}
-		chemModels[chemModelCount] = chemModel;
-		chemModelCount++;
-	}
+     */
+    public void addChemModel(IChemModel chemModel) {
+        if (chemModelCount + 1 >= chemModels.length) {
+            growChemModelArray();
+        }
+        chemModels[chemModelCount] = chemModel;
+        chemModelCount++;
+    }
 
+    /**
+     * Remove a ChemModel from this ChemSequence.
+     *
+     * @param  pos  The position of the ChemModel to be removed.
+     */
+    public void removeChemModel(int pos) {
+        for (int i = pos; i < chemModelCount - 1; i++) {
+            chemModels[i] = chemModels[i + 1];
+        }
+        chemModels[chemModelCount - 1] = null;
+        chemModelCount--;
+    }
 
-	/**
-	 * Remove a ChemModel from this ChemSequence.
-	 *
-	 * @param  pos  The position of the ChemModel to be removed.
-	 */
-	public void removeChemModel(int pos) {
-		for (int i = pos; i < chemModelCount - 1; i++) {
-			chemModels[i] = chemModels[i + 1];
-		}
-		chemModels[chemModelCount - 1] = null;
-		chemModelCount--;
-	}
-
-	/**
+    /**
      * Returns an Iterable to ChemModels in this container.
      *
      * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
-     public Iterable<IChemModel> chemModels() {
-    	 return new Iterable<IChemModel>(){
-             public Iterator<IChemModel> iterator() {
-                 return new ChemModelIterator();
-             }
-         };
-     }
+    public Iterable<IChemModel> chemModels() {
+        return new Iterable<IChemModel>() {
 
-     /**
-      * The inner Iterator class.
-      *
-      */
-     private class ChemModelIterator implements Iterator<IChemModel> {
+            public Iterator<IChemModel> iterator() {
+                return new ChemModelIterator();
+            }
+        };
+    }
 
-         private int pointer = 0;
+    /**
+     * The inner Iterator class.
+     *
+     */
+    private class ChemModelIterator implements Iterator<IChemModel> {
 
-         public boolean hasNext() {
-             return pointer < chemModelCount;
-         }
+        private int pointer = 0;
 
-         public IChemModel next() {
-             return chemModels[pointer++];
-         }
+        public boolean hasNext() {
+            return pointer < chemModelCount;
+        }
 
-         public void remove() {
-             removeChemModel(--pointer);
-         }
+        public IChemModel next() {
+            return chemModels[pointer++];
+        }
 
-     }
+        public void remove() {
+            removeChemModel(--pointer);
+        }
 
+    }
 
-	/**
-	 *
-	 * Returns the ChemModel at position <code>number</code> in the
-	 * container.
-	 *
-	 * @param  number  The position of the ChemModel to be returned.
-	 * @return         The ChemModel at position <code>number</code>.
+    /**
+     *
+     * Returns the ChemModel at position <code>number</code> in the
+     * container.
+     *
+     * @param  number  The position of the ChemModel to be returned.
+     * @return         The ChemModel at position <code>number</code>.
      *
      * @see            #addChemModel
-	 */
-	public IChemModel getChemModel(int number)
-	{
-		return chemModels[number];
-	}
+     */
+    public IChemModel getChemModel(int number) {
+        return chemModels[number];
+    }
 
-	/**
-	 *  Grows the chemModel array by a given size.
-	 *
-	 * @see    growArraySize
-	 */
-	protected void growChemModelArray()
-	{
-		ChemModel[] newchemModels = new ChemModel[chemModels.length + growArraySize];
-		System.arraycopy(chemModels, 0, newchemModels, 0, chemModels.length);
-		chemModels = newchemModels;
-	}
+    /**
+     *  Grows the chemModel array by a given size.
+     *
+     * @see    growArraySize
+     */
+    protected void growChemModelArray() {
+        ChemModel[] newchemModels = new ChemModel[chemModels.length + growArraySize];
+        System.arraycopy(chemModels, 0, newchemModels, 0, chemModels.length);
+        chemModels = newchemModels;
+    }
 
+    /**
+     * Returns the number of ChemModels in this Container.
+     *
+     * @return    The number of ChemModels in this Container
+     */
+    public int getChemModelCount() {
+        return this.chemModelCount;
+    }
 
-	/**
-	 * Returns the number of ChemModels in this Container.
-	 *
-	 * @return    The number of ChemModels in this Container
-	 */
-	public int getChemModelCount()
-	{
-		return this.chemModelCount;
-	}
-
-	public String toString() {
+    public String toString() {
         StringBuffer buffer = new StringBuffer(32);
         buffer.append("ChemSequence(#M=");
         buffer.append(chemModelCount);
         if (chemModelCount > 0) {
-        	buffer.append(", ");
-        	for (int i=0; i<chemModelCount; i++) {
-        		buffer.append(chemModels[i].toString());
-        	}
+            buffer.append(", ");
+            for (int i = 0; i < chemModelCount; i++) {
+                buffer.append(chemModels[i].toString());
+            }
         }
         buffer.append(')');
         return buffer.toString();
     }
 
-	public Object clone() throws CloneNotSupportedException {
-		ChemSequence clone = (ChemSequence)super.clone();
+    public Object clone() throws CloneNotSupportedException {
+        ChemSequence clone = (ChemSequence) super.clone();
         // clone the chemModels
         clone.chemModelCount = getChemModelCount();
-		clone.chemModels = new ChemModel[clone.chemModelCount];
-		for (int f = 0; f < clone.chemModelCount; f++) {
-			clone.chemModels[f] = (ChemModel)((ChemModel)chemModels[f]).clone();
-		}
-		return clone;
-	}
+        clone.chemModels = new ChemModel[clone.chemModelCount];
+        for (int f = 0; f < clone.chemModelCount; f++) {
+            clone.chemModels[f] = (ChemModel) ((ChemModel) chemModels[f]).clone();
+        }
+        return clone;
+    }
 
-	/**
-	 *  Called by objects to which this object has
-	 *  registered as a listener.
-	 *
-	 *@param  event  A change event pointing to the source of the change
-	 */
-	public void stateChanged(IChemObjectChangeEvent event) {}
+    /**
+     *  Called by objects to which this object has
+     *  registered as a listener.
+     *
+     *@param  event  A change event pointing to the source of the change
+     */
+    public void stateChanged(IChemObjectChangeEvent event) {}
 }

@@ -33,8 +33,8 @@ import java.util.List;
  * @author John May
  * @cdk.module ioformats
  */
-abstract class SimpleChemFormatMatcher extends AbstractResourceFormat
-                                       implements IChemFormatMatcher {
+abstract class SimpleChemFormatMatcher extends AbstractResourceFormat implements IChemFormatMatcher {
+
     /**
      * Check whether a given line at a specified position (line number) could
      * belong to this format.
@@ -52,10 +52,10 @@ abstract class SimpleChemFormatMatcher extends AbstractResourceFormat
      * @param lines lines of the input to be checked
      * @return runs the lines
      */
-    @Override public final MatchResult matches(final List<String> lines) {
+    @Override
+    public final MatchResult matches(final List<String> lines) {
         for (int i = 0; i < lines.size(); i++) {
-            if (matches(i + 1, lines.get(i)))
-                return new MatchResult(true, this, i);
+            if (matches(i + 1, lines.get(i))) return new MatchResult(true, this, i);
         }
         return NO_MATCH;
     }

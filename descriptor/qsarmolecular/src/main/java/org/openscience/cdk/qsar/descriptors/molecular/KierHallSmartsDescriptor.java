@@ -307,13 +307,14 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.KierHallSmartsDescriptorTest")
 public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static String[] names;
+    private static String[]       names;
     private static final String[] smarts = EStateFragments.getSmarts();
 
     public KierHallSmartsDescriptor() {
         String[] tmp = EStateFragments.getNames();
         names = new String[tmp.length];
-        for (int i = 0; i < tmp.length; i++) names[i] = "khs." + tmp[i];
+        for (int i = 0; i < tmp.length; i++)
+            names[i] = "khs." + tmp[i];
     }
 
     /**
@@ -334,9 +335,8 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -351,7 +351,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     public void setParameters(Object[] params) throws CDKException {
         if (params != null) throw new CDKException("Must not supply any parameters");
     }
-
 
     /**
      * Gets the parameters attribute of the descriptor.
@@ -369,12 +368,12 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         return names;
     }
 
-
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         IntegerArrayResult result = new IntegerArrayResult();
-        for (String smart : smarts) result.add((int) Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                result, getDescriptorNames(), e);
+        for (String smart : smarts)
+            result.add((int) Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                getDescriptorNames(), e);
     }
 
     /**
@@ -405,17 +404,19 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
                 boolean status = sqt.matches(atomContainer);
                 if (status) {
                     counts[i] = sqt.getUniqueMatchingAtoms().size();
-                } else counts[i] = 0;
+                } else
+                    counts[i] = 0;
             }
         } catch (CDKException e) {
             return getDummyDescriptorValue(e);
         }
 
         IntegerArrayResult result = new IntegerArrayResult();
-        for (Integer i : counts) result.add(i);
+        for (Integer i : counts)
+            result.add(i);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                result, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                getDescriptorNames());
     }
 
     /**
@@ -434,7 +435,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
         return new IntegerArrayResult(smarts.length);
     }
 
-
     /**
      * Gets the parameterNames attribute of the descriptor.
      *
@@ -444,7 +444,6 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
     public String[] getParameterNames() {
         return null;
     }
-
 
     /**
      * Gets the parameterType attribute of the descriptor.

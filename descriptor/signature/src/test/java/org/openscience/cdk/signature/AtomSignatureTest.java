@@ -1,25 +1,25 @@
 /* Copyright (C) 2009-2010 maclean {gilleain.torrance@gmail.com}
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.signature;
 
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
 
     private IAtomContainer atomContainer;
 
-    private AtomSignature atomSignature;
+    private AtomSignature  atomSignature;
 
     @Before
     public void setUp() {
@@ -85,8 +85,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
 
         AtomSignature signature = new AtomSignature(0, benzeneRing);
         for (int i = 0; i < 6; i++) {
-            Assert.assertEquals("Failed for " + i,
-                    "p", signature.getEdgeLabel(i, (i + 1) % 6));
+            Assert.assertEquals("Failed for " + i, "p", signature.getEdgeLabel(i, (i + 1) % 6));
         }
     }
 
@@ -95,36 +94,36 @@ public class AtomSignatureTest extends AbstractSignatureTest {
         Assert.assertEquals("C", atomSignature.getVertexSymbol(0));
     }
 
-//    @Test
-//    public void integerInvariantsTest() {
-//        IAtomContainer isotopeChiralMol = builder.newInstance(IAtomContainer.class);
-//        isotopeChiralMol.addAtom(builder.newInstance(IAtom.class, "C"));
-//
-//        IAtom s32 = builder.newInstance(IAtom.class, "S");
-//        s32.setMassNumber(32);
-//
-//        IAtom s33 = builder.newInstance(IAtom.class, "S");
-//        s33.setMassNumber(33);
-//
-//        IAtom s34 = builder.newInstance(IAtom.class, "S");
-//        s34.setMassNumber(34);
-//
-//        IAtom s36 = builder.newInstance(IAtom.class, "S");
-//        s36.setMassNumber(36);
-//
-//        isotopeChiralMol.addAtom(s36);
-//        isotopeChiralMol.addAtom(s34);
-//        isotopeChiralMol.addAtom(s33);
-//        isotopeChiralMol.addAtom(s32);
-//
-//        isotopeChiralMol.addBond(0, 1, IBond.Order.SINGLE);
-//        isotopeChiralMol.addBond(0, 2, IBond.Order.SINGLE);
-//        isotopeChiralMol.addBond(0, 3, IBond.Order.SINGLE);
-//        isotopeChiralMol.addBond(0, 4, IBond.Order.SINGLE);
-//
-//        MoleculeSignature molSig = new MoleculeSignature(isotopeChiralMol);
-//        System.out.println(molSig.toCanonicalString());
-//    }
+    //    @Test
+    //    public void integerInvariantsTest() {
+    //        IAtomContainer isotopeChiralMol = builder.newInstance(IAtomContainer.class);
+    //        isotopeChiralMol.addAtom(builder.newInstance(IAtom.class, "C"));
+    //
+    //        IAtom s32 = builder.newInstance(IAtom.class, "S");
+    //        s32.setMassNumber(32);
+    //
+    //        IAtom s33 = builder.newInstance(IAtom.class, "S");
+    //        s33.setMassNumber(33);
+    //
+    //        IAtom s34 = builder.newInstance(IAtom.class, "S");
+    //        s34.setMassNumber(34);
+    //
+    //        IAtom s36 = builder.newInstance(IAtom.class, "S");
+    //        s36.setMassNumber(36);
+    //
+    //        isotopeChiralMol.addAtom(s36);
+    //        isotopeChiralMol.addAtom(s34);
+    //        isotopeChiralMol.addAtom(s33);
+    //        isotopeChiralMol.addAtom(s32);
+    //
+    //        isotopeChiralMol.addBond(0, 1, IBond.Order.SINGLE);
+    //        isotopeChiralMol.addBond(0, 2, IBond.Order.SINGLE);
+    //        isotopeChiralMol.addBond(0, 3, IBond.Order.SINGLE);
+    //        isotopeChiralMol.addBond(0, 4, IBond.Order.SINGLE);
+    //
+    //        MoleculeSignature molSig = new MoleculeSignature(isotopeChiralMol);
+    //        System.out.println(molSig.toCanonicalString());
+    //    }
 
     @Test
     public void cuneaneCubaneHeightTest() {
@@ -187,7 +186,7 @@ public class AtomSignatureTest extends AbstractSignatureTest {
 
     @Test
     public void convertEdgeLabelToColorTest() {
-        IAtomContainer ac = makeBenzene();  // doesn't really matter
+        IAtomContainer ac = makeBenzene(); // doesn't really matter
         AtomSignature atomSignature = new AtomSignature(0, ac);
         int aromaticColor = atomSignature.convertEdgeLabelToColor("p");
         Assert.assertTrue(aromaticColor > 0);

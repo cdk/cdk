@@ -37,35 +37,39 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class CrystalTest extends AbstractCrystalTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Crystal();
             }
         });
     }
 
-    @Test public void testCrystal() {
+    @Test
+    public void testCrystal() {
         ICrystal crystal = new Crystal();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(0, crystal.getAtomCount());
         Assert.assertEquals(0, crystal.getBondCount());
     }
 
-    @Test public void testCrystal_IAtomContainer() {
+    @Test
+    public void testCrystal_IAtomContainer() {
         IChemObject object = newChemObject();
         IAtomContainer acetone = object.getBuilder().newInstance(IAtomContainer.class);
-        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
-        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class, "O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class, "C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class, c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

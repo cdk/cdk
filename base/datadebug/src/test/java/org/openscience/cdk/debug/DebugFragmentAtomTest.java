@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugFragmentAtomTest extends AbstractFragmentAtomTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugFragmentAtom();
             }
         });
     }
 
-    @Test public void testDebugFragmentAtom() {
+    @Test
+    public void testDebugFragmentAtom() {
         IFragmentAtom a = new DebugFragmentAtom();
         Assert.assertNotNull(a);
     }

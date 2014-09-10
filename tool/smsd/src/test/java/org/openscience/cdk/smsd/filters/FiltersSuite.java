@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -38,23 +37,20 @@ import org.junit.runners.Suite;
  * @cdk.require java1.6+
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({org.openscience.cdk.smsd.filters.PostFilterTest.class,org.openscience.cdk.smsd.filters.ChemicalFiltersTest.class})
+@Suite.SuiteClasses({org.openscience.cdk.smsd.filters.PostFilterTest.class,
+        org.openscience.cdk.smsd.filters.ChemicalFiltersTest.class})
 public class FiltersSuite {
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() throws Exception {
-    }
+    public void setUp() throws Exception {}
 
     @After
-    public void tearDown() throws Exception {
-    }
+    public void tearDown() throws Exception {}
 
 }

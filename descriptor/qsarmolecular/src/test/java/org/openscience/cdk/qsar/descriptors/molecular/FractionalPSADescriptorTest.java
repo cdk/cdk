@@ -43,46 +43,41 @@ import org.openscience.cdk.tools.*;
  * @cdk.module test-qsarmolecular
  */
 
-public class FractionalPSADescriptorTest extends MolecularDescriptorTest
-{
-	private static ILoggingTool logger=LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
+public class FractionalPSADescriptorTest extends MolecularDescriptorTest {
 
-    public FractionalPSADescriptorTest()
-    {
-    }
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(FractionalPSADescriptorTest.class);
+
+    public FractionalPSADescriptorTest() {}
 
     @Before
-    public void setUp() throws Exception
-    {
-    	setDescriptor(FractionalPSADescriptor.class);
+    public void setUp() throws Exception {
+        setDescriptor(FractionalPSADescriptor.class);
     }
 
     @Test
-    public void testDescriptors() throws Exception
-    {
-    	String fnmol="data/cdd/pyridineacid.mol";
-    	MDLV2000Reader mdl=new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
-		AtomContainer mol=new AtomContainer();
-		mdl.read(mol);
-		mdl.close();
+    public void testDescriptors() throws Exception {
+        String fnmol = "data/cdd/pyridineacid.mol";
+        MDLV2000Reader mdl = new MDLV2000Reader(this.getClass().getClassLoader().getResourceAsStream(fnmol));
+        AtomContainer mol = new AtomContainer();
+        mdl.read(mol);
+        mdl.close();
 
-		FractionalPSADescriptor fpsa=new FractionalPSADescriptor();
-		DescriptorValue results=fpsa.calculate(mol);
+        FractionalPSADescriptor fpsa = new FractionalPSADescriptor();
+        DescriptorValue results = fpsa.calculate(mol);
 
-		// note: test currently assumes that just one descriptor is calculated
-		String[] names=results.getNames();
-		if (names.length!=1 || !names[0].equals("tpsaEfficiency")) throw new CDKException("Only expecting 'tpsaEfficiency'");
-		DoubleResult value=(DoubleResult)results.getValue();
-		double tpsaEfficiency=value.doubleValue();
-		final double ANSWER=0.4036,ANSWER_LO=ANSWER*0.999,ANSWER_HI=ANSWER*1.001; // (we can tolerate rounding errors)
-		if (tpsaEfficiency<ANSWER_LO || tpsaEfficiency>ANSWER_HI)
-		{
-			throw new CDKException("Got "+tpsaEfficiency+", expected "+ANSWER);
-		}
+        // note: test currently assumes that just one descriptor is calculated
+        String[] names = results.getNames();
+        if (names.length != 1 || !names[0].equals("tpsaEfficiency"))
+            throw new CDKException("Only expecting 'tpsaEfficiency'");
+        DoubleResult value = (DoubleResult) results.getValue();
+        double tpsaEfficiency = value.doubleValue();
+        final double ANSWER = 0.4036, ANSWER_LO = ANSWER * 0.999, ANSWER_HI = ANSWER * 1.001; // (we can tolerate rounding errors)
+        if (tpsaEfficiency < ANSWER_LO || tpsaEfficiency > ANSWER_HI) {
+            throw new CDKException("Got " + tpsaEfficiency + ", expected " + ANSWER);
+        }
     }
 
     // included to shutdown the warning messages for not having tests for trivial methods
     @Test
     public void nop() throws Exception {}
 }
-

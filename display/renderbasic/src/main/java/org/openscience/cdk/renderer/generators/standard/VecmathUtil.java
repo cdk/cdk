@@ -129,8 +129,7 @@ final class VecmathUtil {
      * @return the midpoint
      */
     static Point2d midpoint(Point2d a, Point2d b) {
-        return new Point2d((a.x + b.x) / 2,
-                           (a.y + b.y) / 2);
+        return new Point2d((a.x + b.x) / 2, (a.y + b.y) / 2);
     }
 
     /**
@@ -168,7 +167,6 @@ final class VecmathUtil {
         return new Vector2d(-vector.x, -vector.y);
     }
 
-
     /**
      * Calculate the intersection of two vectors given their starting positions.
      *
@@ -181,8 +179,7 @@ final class VecmathUtil {
     static Point2d intersection(final Tuple2d p1, final Tuple2d d1, final Tuple2d p2, final Tuple2d d2) {
         final Vector2d p1End = sum(p1, d1);
         final Vector2d p2End = sum(p2, d2);
-        return intersection(p1.x, p1.y, p1End.x, p1End.y,
-                            p2.x, p2.y, p2End.x, p2End.y);
+        return intersection(p1.x, p1.y, p1End.x, p1End.y, p2.x, p2.y, p2End.x, p2End.y);
     }
 
     /**
@@ -201,14 +198,12 @@ final class VecmathUtil {
      * @see <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection,
      * Wikipedia</a>
      */
-    static Point2d intersection(final double x1, final double y1,
-                                final double x2, final double y2,
-                                final double x3, final double y3,
-                                final double x4, final double y4) {
-        final double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1)) /
-                ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
-        final double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3)) /
-                ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+    static Point2d intersection(final double x1, final double y1, final double x2, final double y2, final double x3,
+            final double y3, final double x4, final double y4) {
+        final double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))
+                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+        final double y = ((y3 - y4) * (x1 * y2 - x2 * y1) - (y1 - y2) * (x3 * y4 - x4 * y3))
+                / ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
         return new Point2d(x, y);
     }
 
@@ -342,8 +337,7 @@ final class VecmathUtil {
         int index = -1;
         for (int i = 0; i < vectors.size(); i++) {
             double extent = extents[(i + 1) % vectors.size()] - extents[i];
-            if (extent < 0)
-                extent += TAU;
+            if (extent < 0) extent += TAU;
             if (extent > max) {
                 max = extent;
                 index = i;
@@ -352,7 +346,7 @@ final class VecmathUtil {
 
         assert index >= 0;
 
-        double mid   = (max / 2);
+        double mid = (max / 2);
         double theta = extents[index] + mid;
 
         return new Vector2d(Math.cos(theta), Math.sin(theta));

@@ -30,32 +30,31 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.reaction.type.parameters.IParameterReactTest")
 public interface IParameterReact {
 
-	/**
-	 * Set the parameter to take account.
-	 *
-	 * @param set True, if the parameter needs to take account
-	 */
-	public void setParameter(boolean set);
+    /**
+     * Set the parameter to take account.
+     *
+     * @param set True, if the parameter needs to take account
+     */
+    public void setParameter(boolean set);
 
-	/**
-	 * Get if this parameter needs to take account.
-	 *
-	 * @return True, if the parameter needs to take account
-	 */
-	public boolean isSetParameter();
+    /**
+     * Get if this parameter needs to take account.
+     *
+     * @return True, if the parameter needs to take account
+     */
+    public boolean isSetParameter();
 
-	/**
-	 * Set the value of the parameter.
-	 *
-	 * @param value The value of the parameter
-	 */
-	public void setValue(Object value);
+    /**
+     * Set the value of the parameter.
+     *
+     * @param value The value of the parameter
+     */
+    public void setValue(Object value);
 
-
-	/**
-	 * Get the value of the parameter.
-	 *
-	 * @return The value of the parameter
-	 */
-	public Object getValue();
+    /**
+     * Get the value of the parameter.
+     *
+     * @return The value of the parameter
+     */
+    public Object getValue();
 }

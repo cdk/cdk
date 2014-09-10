@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import org.openscience.cdk.annotations.TestClass;
@@ -53,7 +52,7 @@ final class UniqueBondMatches implements Predicate<int[]> {
     private final Set<Set<Tuple>> unique;
 
     /** The query graph. */
-    private final int[][] g;
+    private final int[][]         g;
 
     /**
      * Create filter for the expected number of unique matches. The number of
@@ -111,19 +110,20 @@ final class UniqueBondMatches implements Predicate<int[]> {
         }
 
         /** @inheritDoc */
-        @Override public int hashCode() {
+        @Override
+        public int hashCode() {
             return u ^ v;
         }
 
         /** @inheritDoc */
-        @Override public boolean equals(Object o) {
+        @Override
+        public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
             Tuple that = (Tuple) o;
 
-            return this.u == that.u && this.v == that.v
-                    || this.u == that.v && this.v == that.u;
+            return this.u == that.u && this.v == that.v || this.u == that.v && this.v == that.u;
         }
     }
 }

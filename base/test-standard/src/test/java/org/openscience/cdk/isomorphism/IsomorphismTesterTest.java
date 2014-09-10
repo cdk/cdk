@@ -38,115 +38,114 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  *
  * @cdk.module test-standard
  */
-public class IsomorphismTesterTest extends CDKTestCase
-{
-	IAtomContainer pinene_1 = null, pinene_2 = null, pinene_non = null;
-	public IsomorphismTesterTest()
-	{
-		super();
-	}
+public class IsomorphismTesterTest extends CDKTestCase {
+
+    IAtomContainer pinene_1 = null, pinene_2 = null, pinene_non = null;
+
+    public IsomorphismTesterTest() {
+        super();
+    }
 
     @Before
-    public void setUp()
-	{
-		pinene_1 = new AtomContainer();
-		pinene_1.addAtom(new Atom("C")); // 1
-		pinene_1.addAtom(new Atom("C")); // 2
-		pinene_1.addAtom(new Atom("C")); // 3
-		pinene_1.addAtom(new Atom("C")); // 4
-		pinene_1.addAtom(new Atom("C")); // 5
-		pinene_1.addAtom(new Atom("C")); // 6
-		pinene_1.addAtom(new Atom("C")); // 7
-		pinene_1.addAtom(new Atom("C")); // 8
-		pinene_1.addAtom(new Atom("C")); // 9
-		pinene_1.addAtom(new Atom("C")); // 10
+    public void setUp() {
+        pinene_1 = new AtomContainer();
+        pinene_1.addAtom(new Atom("C")); // 1
+        pinene_1.addAtom(new Atom("C")); // 2
+        pinene_1.addAtom(new Atom("C")); // 3
+        pinene_1.addAtom(new Atom("C")); // 4
+        pinene_1.addAtom(new Atom("C")); // 5
+        pinene_1.addAtom(new Atom("C")); // 6
+        pinene_1.addAtom(new Atom("C")); // 7
+        pinene_1.addAtom(new Atom("C")); // 8
+        pinene_1.addAtom(new Atom("C")); // 9
+        pinene_1.addAtom(new Atom("C")); // 10
 
-		pinene_1.addBond(0, 1, IBond.Order.DOUBLE); // 1
-		pinene_1.addBond(1, 2, IBond.Order.SINGLE); // 2
-		pinene_1.addBond(2, 3, IBond.Order.SINGLE); // 3
-		pinene_1.addBond(3, 4, IBond.Order.SINGLE); // 4
-		pinene_1.addBond(4, 5, IBond.Order.SINGLE); // 5
-		pinene_1.addBond(5, 0, IBond.Order.SINGLE); // 6
-		pinene_1.addBond(0, 6, IBond.Order.SINGLE); // 7
-		pinene_1.addBond(3, 7, IBond.Order.SINGLE); // 8
-		pinene_1.addBond(5, 7, IBond.Order.SINGLE); // 9
-		pinene_1.addBond(7, 8, IBond.Order.SINGLE); // 10
-		pinene_1.addBond(7, 9, IBond.Order.SINGLE); // 11
+        pinene_1.addBond(0, 1, IBond.Order.DOUBLE); // 1
+        pinene_1.addBond(1, 2, IBond.Order.SINGLE); // 2
+        pinene_1.addBond(2, 3, IBond.Order.SINGLE); // 3
+        pinene_1.addBond(3, 4, IBond.Order.SINGLE); // 4
+        pinene_1.addBond(4, 5, IBond.Order.SINGLE); // 5
+        pinene_1.addBond(5, 0, IBond.Order.SINGLE); // 6
+        pinene_1.addBond(0, 6, IBond.Order.SINGLE); // 7
+        pinene_1.addBond(3, 7, IBond.Order.SINGLE); // 8
+        pinene_1.addBond(5, 7, IBond.Order.SINGLE); // 9
+        pinene_1.addBond(7, 8, IBond.Order.SINGLE); // 10
+        pinene_1.addBond(7, 9, IBond.Order.SINGLE); // 11
 
-		pinene_2 = new AtomContainer();
-		pinene_2.addAtom(new Atom("C")); // 1
-		pinene_2.addAtom(new Atom("C")); // 2
-		pinene_2.addAtom(new Atom("C")); // 3
-		pinene_2.addAtom(new Atom("C")); // 4
-		pinene_2.addAtom(new Atom("C")); // 5
-		pinene_2.addAtom(new Atom("C")); // 6
-		pinene_2.addAtom(new Atom("C")); // 7
-		pinene_2.addAtom(new Atom("C")); // 8
-		pinene_2.addAtom(new Atom("C")); // 9
-		pinene_2.addAtom(new Atom("C")); // 10
+        pinene_2 = new AtomContainer();
+        pinene_2.addAtom(new Atom("C")); // 1
+        pinene_2.addAtom(new Atom("C")); // 2
+        pinene_2.addAtom(new Atom("C")); // 3
+        pinene_2.addAtom(new Atom("C")); // 4
+        pinene_2.addAtom(new Atom("C")); // 5
+        pinene_2.addAtom(new Atom("C")); // 6
+        pinene_2.addAtom(new Atom("C")); // 7
+        pinene_2.addAtom(new Atom("C")); // 8
+        pinene_2.addAtom(new Atom("C")); // 9
+        pinene_2.addAtom(new Atom("C")); // 10
 
-		pinene_2.addBond(0, 4, IBond.Order.SINGLE); // 1
-		pinene_2.addBond(0, 5, IBond.Order.SINGLE); // 2
-		pinene_2.addBond(0, 8, IBond.Order.SINGLE); // 3
-		pinene_2.addBond(1, 2, IBond.Order.SINGLE); // 4
-		pinene_2.addBond(1, 9, IBond.Order.SINGLE); // 5
-		pinene_2.addBond(2, 3, IBond.Order.SINGLE); // 6
-		pinene_2.addBond(2, 0, IBond.Order.SINGLE); // 7
-		pinene_2.addBond(3, 8, IBond.Order.SINGLE); // 8
-		pinene_2.addBond(8, 7, IBond.Order.SINGLE); // 9
-		pinene_2.addBond(7, 9, IBond.Order.DOUBLE); // 10
-		pinene_2.addBond(7, 6, IBond.Order.SINGLE); // 11
+        pinene_2.addBond(0, 4, IBond.Order.SINGLE); // 1
+        pinene_2.addBond(0, 5, IBond.Order.SINGLE); // 2
+        pinene_2.addBond(0, 8, IBond.Order.SINGLE); // 3
+        pinene_2.addBond(1, 2, IBond.Order.SINGLE); // 4
+        pinene_2.addBond(1, 9, IBond.Order.SINGLE); // 5
+        pinene_2.addBond(2, 3, IBond.Order.SINGLE); // 6
+        pinene_2.addBond(2, 0, IBond.Order.SINGLE); // 7
+        pinene_2.addBond(3, 8, IBond.Order.SINGLE); // 8
+        pinene_2.addBond(8, 7, IBond.Order.SINGLE); // 9
+        pinene_2.addBond(7, 9, IBond.Order.DOUBLE); // 10
+        pinene_2.addBond(7, 6, IBond.Order.SINGLE); // 11
 
-		pinene_non = new AtomContainer();
-		pinene_non.addAtom(new Atom("C")); // 1
-		pinene_non.addAtom(new Atom("C")); // 2
-		pinene_non.addAtom(new Atom("C")); // 3
-		pinene_non.addAtom(new Atom("C")); // 4
-		pinene_non.addAtom(new Atom("C")); // 5
-		pinene_non.addAtom(new Atom("C")); // 6
-		pinene_non.addAtom(new Atom("C")); // 7
-		pinene_non.addAtom(new Atom("C")); // 8
-		pinene_non.addAtom(new Atom("C")); // 9
-		pinene_non.addAtom(new Atom("C")); // 10
+        pinene_non = new AtomContainer();
+        pinene_non.addAtom(new Atom("C")); // 1
+        pinene_non.addAtom(new Atom("C")); // 2
+        pinene_non.addAtom(new Atom("C")); // 3
+        pinene_non.addAtom(new Atom("C")); // 4
+        pinene_non.addAtom(new Atom("C")); // 5
+        pinene_non.addAtom(new Atom("C")); // 6
+        pinene_non.addAtom(new Atom("C")); // 7
+        pinene_non.addAtom(new Atom("C")); // 8
+        pinene_non.addAtom(new Atom("C")); // 9
+        pinene_non.addAtom(new Atom("C")); // 10
 
-		pinene_non.addBond(0, 5, IBond.Order.SINGLE); // 1
-		pinene_non.addBond(0, 7, IBond.Order.SINGLE); // 2
-		pinene_non.addBond(0, 8, IBond.Order.SINGLE); // 3
-		pinene_non.addBond(1, 9, IBond.Order.SINGLE); // 4
-		pinene_non.addBond(1, 4, IBond.Order.SINGLE); // 5
-		pinene_non.addBond(2, 3, IBond.Order.SINGLE); // 6
-		pinene_non.addBond(2, 4, IBond.Order.SINGLE); // 7
-		pinene_non.addBond(2, 6, IBond.Order.SINGLE); // 8
-		pinene_non.addBond(2, 7, IBond.Order.SINGLE); // 9
-		pinene_non.addBond(4, 5, IBond.Order.DOUBLE); // 10
-		pinene_non.addBond(7, 9, IBond.Order.SINGLE); // 11
-	}
+        pinene_non.addBond(0, 5, IBond.Order.SINGLE); // 1
+        pinene_non.addBond(0, 7, IBond.Order.SINGLE); // 2
+        pinene_non.addBond(0, 8, IBond.Order.SINGLE); // 3
+        pinene_non.addBond(1, 9, IBond.Order.SINGLE); // 4
+        pinene_non.addBond(1, 4, IBond.Order.SINGLE); // 5
+        pinene_non.addBond(2, 3, IBond.Order.SINGLE); // 6
+        pinene_non.addBond(2, 4, IBond.Order.SINGLE); // 7
+        pinene_non.addBond(2, 6, IBond.Order.SINGLE); // 8
+        pinene_non.addBond(2, 7, IBond.Order.SINGLE); // 9
+        pinene_non.addBond(4, 5, IBond.Order.DOUBLE); // 10
+        pinene_non.addBond(7, 9, IBond.Order.SINGLE); // 11
+    }
 
     @Test
-	public void testIsomorphismTester_IAtomContainer() throws Exception {
-		IsomorphismTester it = new IsomorphismTester(pinene_1);
-		Assert.assertNotNull(it);
-	}
+    public void testIsomorphismTester_IAtomContainer() throws Exception {
+        IsomorphismTester it = new IsomorphismTester(pinene_1);
+        Assert.assertNotNull(it);
+    }
 
     @Test
     public void testIsomorphismTester() throws Exception {
-		IsomorphismTester it = new IsomorphismTester();
-		Assert.assertNotNull(it);
-	}
+        IsomorphismTester it = new IsomorphismTester();
+        Assert.assertNotNull(it);
+    }
 
     @Test
     public void testIsIsomorphic_IAtomContainer() throws Exception {
-		IsomorphismTester it = new IsomorphismTester(pinene_1);
-		Assert.assertTrue(it.isIsomorphic(pinene_2));
-		Assert.assertFalse(it.isIsomorphic(pinene_non));
-	}
+        IsomorphismTester it = new IsomorphismTester(pinene_1);
+        Assert.assertTrue(it.isIsomorphic(pinene_2));
+        Assert.assertFalse(it.isIsomorphic(pinene_non));
+    }
 
     @Test
     public void testIsIsomorphic_IAtomContainer_IAtomContainer() throws Exception {
-		IsomorphismTester it = new IsomorphismTester();
-		Assert.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
-		Assert.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
-	}
+        IsomorphismTester it = new IsomorphismTester();
+        Assert.assertTrue(it.isIsomorphic(pinene_2, pinene_1));
+        Assert.assertFalse(it.isIsomorphic(pinene_2, pinene_non));
+    }
 
     @Test
     public void testBiphenyl() throws Exception {
@@ -160,7 +159,6 @@ public class IsomorphismTesterTest extends CDKTestCase
         Aromaticity.cdkLegacy().apply(biphenyl_aromaticsmiles);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_aromaticsmiles);
 
-
         //get the biphenyl as Kekule smiles
         IAtomContainer biphenyl_kekulesmiles = parser.parseSmiles("C1=C(C=CC=C1)C2=CC=CC=C2");
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(biphenyl_kekulesmiles);
@@ -168,7 +166,6 @@ public class IsomorphismTesterTest extends CDKTestCase
         hAdder.addImplicitHydrogens(biphenyl_kekulesmiles);
         Aromaticity.cdkLegacy().apply(biphenyl_kekulesmiles);
         AtomContainerManipulator.convertImplicitToExplicitHydrogens(biphenyl_kekulesmiles);
-
 
         Assert.assertTrue(new UniversalIsomorphismTester().isIsomorph(biphenyl_aromaticsmiles, biphenyl_kekulesmiles));
     }

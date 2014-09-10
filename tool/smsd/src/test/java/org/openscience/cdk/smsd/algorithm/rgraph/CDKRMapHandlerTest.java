@@ -47,24 +47,19 @@ import org.openscience.cdk.smsd.helper.FinalMappings;
  */
 public class CDKRMapHandlerTest {
 
-    public CDKRMapHandlerTest() {
-    }
+    public CDKRMapHandlerTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     /**
      * Test of getSource method, of class CDKRMapHandler.

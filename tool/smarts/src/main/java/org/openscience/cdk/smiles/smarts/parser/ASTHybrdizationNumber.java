@@ -17,6 +17,7 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS AST
  */
 class ASTHybrdizationNumber extends SimpleNode {
+
     int hybridizationNumber;
 
     public ASTHybrdizationNumber(int id) {

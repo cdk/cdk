@@ -16,31 +16,29 @@ import org.openscience.cdk.qsar.result.DoubleArrayResult;
  */
 public class AutocorrelationDescriptorChargeTest extends MolecularDescriptorTest {
 
-	public AutocorrelationDescriptorChargeTest() {
-		super();
-	}
+    public AutocorrelationDescriptorChargeTest() {
+        super();
+    }
 
-
-	@Before
+    @Before
     public void setUp() throws Exception {
-		setDescriptor(AutocorrelationDescriptorCharge.class);
-	}
+        setDescriptor(AutocorrelationDescriptorCharge.class);
+    }
 
     @Test
     public void test1() throws Exception {
-		String filename = "data/mdl/clorobenzene.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-				filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IAtomContainer container = reader.read(new AtomContainer());
-		DescriptorValue count = descriptor.calculate(container);
-		Assert.assertEquals(5, count.getValue().length());
-		Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);
-		DoubleArrayResult result = (DoubleArrayResult)count.getValue();
-		for (int i=0; i<5; i++) {
-			Assert.assertFalse(Double.isNaN(result.get(i)));
-			Assert.assertTrue(0.0 != result.get(i));
-		}
-	}
+        String filename = "data/mdl/clorobenzene.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer container = reader.read(new AtomContainer());
+        DescriptorValue count = descriptor.calculate(container);
+        Assert.assertEquals(5, count.getValue().length());
+        Assert.assertTrue(count.getValue() instanceof DoubleArrayResult);
+        DoubleArrayResult result = (DoubleArrayResult) count.getValue();
+        for (int i = 0; i < 5; i++) {
+            Assert.assertFalse(Double.isNaN(result.get(i)));
+            Assert.assertTrue(0.0 != result.get(i));
+        }
+    }
 
 }

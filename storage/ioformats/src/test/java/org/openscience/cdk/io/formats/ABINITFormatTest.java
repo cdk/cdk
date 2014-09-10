@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class ABINITFormatTest extends ChemFormatMatcherTest {
 
     public ABINITFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)ABINITFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) ABINITFormat.getInstance());
     }
 
 }

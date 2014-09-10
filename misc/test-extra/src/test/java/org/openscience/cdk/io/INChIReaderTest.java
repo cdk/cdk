@@ -45,14 +45,15 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class INChIReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new INChIReader(), "data/inchi/guanine.inchi.xml");
     }
 
-    @Test public void testAccepts() {
+    @Test
+    public void testAccepts() {
         Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
@@ -60,12 +61,13 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
      * Test a INChI 1.1Beta file containing the two tautomers
      * of guanine.
      */
-    @Test public void testGuanine() throws Exception {
+    @Test
+    public void testGuanine() throws Exception {
         String filename = "data/inchi/guanine.inchi.xml";
         logger.info("Testing: ", filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         INChIReader reader = new INChIReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());
@@ -83,7 +85,7 @@ public class INChIReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(12, molecule.getBondCount());
     }
 
-    @Test(expected=CDKException.class)
+    @Test(expected = CDKException.class)
     public void testSetReader_Reader() throws Exception {
         // CDKException expected as these INChI files are XML, which must
         // be read via InputStreams

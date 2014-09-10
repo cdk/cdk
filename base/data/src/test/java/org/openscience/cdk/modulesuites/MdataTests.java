@@ -68,55 +68,25 @@ import org.openscience.cdk.protein.data.PDBStructureTest;
  *
  * @cdk.module test-data
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    DataCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {DataCoverageTest.class,
 
-    AminoAcidTest.class,
-    AtomContainerTest.class,
-    AtomTest.class,
-    AtomTypeTest.class,
-    BioPolymerTest.class,
-    BondTest.class,
-    ChemFileTest.class,
-    ChemModelTest.class,
-    ChemObjectTest.class,
-    ChemSequenceTest.class,
-    ConformerContainerTest.class,
-    CrystalTest.class,
-    DefaultChemObjectBuilderTest.class,
-    ElectronContainerTest.class,
-    ElementTest.class,
-    IsotopeTest.class,
-    LonePairTest.class,
-    MappingTest.class,
-    MoleculeTest.class,
-    MonomerTest.class,
-    PolymerTest.class,
-    PseudoAtomTest.class,
-    ReactionTest.class,
-    ReactionSchemeTest.class,
-    RingTest.class,
-    RingSetTest.class,
-    AtomContainerSetTest.class,
-    ReactionSetTest.class,
-    SingleElectronTest.class,
-    StrandTest.class,
-    ChangeEventPropagationTest.class,
+AminoAcidTest.class, AtomContainerTest.class, AtomTest.class, AtomTypeTest.class, BioPolymerTest.class, BondTest.class,
+        ChemFileTest.class, ChemModelTest.class, ChemObjectTest.class, ChemSequenceTest.class,
+        ConformerContainerTest.class, CrystalTest.class, DefaultChemObjectBuilderTest.class,
+        ElectronContainerTest.class, ElementTest.class, IsotopeTest.class, LonePairTest.class, MappingTest.class,
+        MoleculeTest.class, MonomerTest.class, PolymerTest.class, PseudoAtomTest.class, ReactionTest.class,
+        ReactionSchemeTest.class, RingTest.class, RingSetTest.class, AtomContainerSetTest.class, ReactionSetTest.class,
+        SingleElectronTest.class, StrandTest.class, ChangeEventPropagationTest.class,
 
-    FragmentAtomTest.class,
+        FragmentAtomTest.class,
 
-    AdductFormulaTest.class,
-    MolecularFormulaSetTest.class,
-    MolecularFormulaTest.class,
+        AdductFormulaTest.class, MolecularFormulaSetTest.class, MolecularFormulaTest.class,
 
-    // test from test.event
-    ChemObjectChangeEventTest.class,
+        // test from test.event
+        ChemObjectChangeEventTest.class,
 
-    // tests from test.protein.data
-    PDBAtomTest.class,
-    PDBMonomerTest.class,
-    PDBPolymerTest.class,
-    PDBStructureTest.class
-})
-public class MdataTests {}
+        // tests from test.protein.data
+        PDBAtomTest.class, PDBMonomerTest.class, PDBPolymerTest.class, PDBStructureTest.class})
+public class MdataTests {
+}

@@ -80,13 +80,12 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         atom.setPoint2d(new Point2d(2, 3));
         atom.setImplicitHydrogenCount(0);
         int alignment = 1;
-        AtomSymbolElement element =
-            generator.generateElement(atom, alignment, model);
+        AtomSymbolElement element = generator.generateElement(atom, alignment, model);
         Assert.assertEquals(atom.getPoint2d().x, element.xCoord, 0.1);
         Assert.assertEquals(atom.getPoint2d().y, element.yCoord, 0.1);
         Assert.assertEquals(atom.getSymbol(), element.text);
-        Assert.assertEquals((int)atom.getFormalCharge(), element.formalCharge);
-        Assert.assertEquals((int)atom.getImplicitHydrogenCount(), element.hydrogenCount);
+        Assert.assertEquals((int) atom.getFormalCharge(), element.formalCharge);
+        Assert.assertEquals((int) atom.getImplicitHydrogenCount(), element.hydrogenCount);
         Assert.assertEquals(alignment, element.alignment);
         Assert.assertEquals(generator.getAtomColor(atom, model), element.color);
     }
@@ -113,16 +112,13 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtom drawableHAtom = super.builder.newInstance(IAtom.class, "H");
         drawableHAtom.setPoint2d(new Point2d(0, 0));
 
-        IAtomContainer dummyContainer =
-            super.builder.newInstance(IAtomContainer.class);
+        IAtomContainer dummyContainer = super.builder.newInstance(IAtomContainer.class);
 
         model.set(KekuleStructure.class, true);
         model.set(ShowExplicitHydrogens.class, true);
 
-        Assert.assertTrue(
-                generator.canDraw(drawableCAtom, dummyContainer, model));
-        Assert.assertTrue(
-                generator.canDraw(drawableHAtom, dummyContainer, model));
+        Assert.assertTrue(generator.canDraw(drawableCAtom, dummyContainer, model));
+        Assert.assertTrue(generator.canDraw(drawableHAtom, dummyContainer, model));
     }
 
     @Test
@@ -147,14 +143,12 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         // NOTE : just testing the element symbol here, see showCarbonTest
         // for the full range of possibilities...
         IAtom carbon = super.builder.newInstance(IAtom.class, "C");
-        IAtomContainer dummyContainer =
-            super.builder.newInstance(IAtomContainer.class);
+        IAtomContainer dummyContainer = super.builder.newInstance(IAtomContainer.class);
 
         // we force the issue by making isKekule=true
         model.set(KekuleStructure.class, true);
 
-        Assert.assertFalse(
-                generator.invisibleCarbon(carbon, dummyContainer, model));
+        Assert.assertFalse(generator.invisibleCarbon(carbon, dummyContainer, model));
     }
 
     @Test
@@ -212,8 +206,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.OVAL);
         model.set(CompactAtom.class, true);
-        List<IRenderingElement> elements =
-            getAllSimpleElements(generator, singleAtom);
+        List<IRenderingElement> elements = getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
         Assert.assertEquals(OvalElement.class, elements.get(0).getClass());
     }
@@ -223,8 +216,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
         model.set(CompactShape.class, Shape.SQUARE);
         model.set(CompactAtom.class, true);
-        List<IRenderingElement> elements =
-            getAllSimpleElements(generator, singleAtom);
+        List<IRenderingElement> elements = getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
         Assert.assertEquals(RectangleElement.class, elements.get(0).getClass());
     }
@@ -237,10 +229,9 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         model.set(ColorByType.class, false);
         generator.getAtomColor(singleAtom.getAtom(0), model);
 
-        List<IRenderingElement> elements =
-            getAllSimpleElements(generator, singleAtom);
+        List<IRenderingElement> elements = getAllSimpleElements(generator, singleAtom);
         Assert.assertEquals(1, elements.size());
-        TextGroupElement element = ((TextGroupElement)elements.get(0));
+        TextGroupElement element = ((TextGroupElement) elements.get(0));
         Assert.assertEquals(testColor, element.color);
     }
 
@@ -276,7 +267,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         List<IRenderingElement> elements = getAllSimpleElements(generator, cnop);
         Assert.assertEquals(4, elements.size());
         for (IRenderingElement element : elements) {
-        	TextGroupElement symbolElement = (TextGroupElement) element;
+            TextGroupElement symbolElement = (TextGroupElement) element;
             String symbol = symbolElement.text;
             Assert.assertTrue(colorMap.containsKey(symbol));
             Assert.assertEquals(colorMap.get(symbol), symbolElement.color);
@@ -290,7 +281,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         List<IRenderingElement> elements = getAllSimpleElements(generator, snop);
         Color defaultColor = model.getDefault(AtomColor.class);
         for (IRenderingElement element : elements) {
-        	TextGroupElement symbolElement = (TextGroupElement) element;
+            TextGroupElement symbolElement = (TextGroupElement) element;
             Assert.assertEquals(defaultColor, symbolElement.color);
         }
     }
@@ -300,14 +291,12 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer methane = makeMethane();
         // don't generate elements for hydrogens
         model.set(ShowExplicitHydrogens.class, false);
-        List<IRenderingElement> carbonOnly =
-            getAllSimpleElements(generator, methane);
+        List<IRenderingElement> carbonOnly = getAllSimpleElements(generator, methane);
         Assert.assertEquals(1, carbonOnly.size());
 
         // do generate elements for hydrogens
         model.set(ShowExplicitHydrogens.class, true);
-        List<IRenderingElement> carbonPlusHydrogen =
-            getAllSimpleElements(generator, methane);
+        List<IRenderingElement> carbonPlusHydrogen = getAllSimpleElements(generator, methane);
         Assert.assertEquals(5, carbonPlusHydrogen.size());
     }
 
@@ -334,8 +323,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         IAtomContainer singleAtom = makeSingleAtom();
 
         // nothing should be made
-        IRenderingElement root =
-            generator.generate(singleAtom, singleAtom.getAtom(0), model);
+        IRenderingElement root = generator.generate(singleAtom, singleAtom.getAtom(0), model);
         List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
         Assert.assertEquals(1, elements.size());
     }
@@ -369,7 +357,7 @@ public class ExtendedAtomGeneratorTest extends BasicAtomGeneratorTest {
         Assert.assertEquals(4, elements.size());
 
         // test that the center is at the origin
-        Assert.assertEquals(new Point2d(0,0), center(elements));
+        Assert.assertEquals(new Point2d(0, 0), center(elements));
     }
 
     @Test

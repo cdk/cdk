@@ -83,64 +83,33 @@ import org.openscience.cdk.qsar.descriptors.molecular.ZagrebIndexDescriptorTest;
  *
  * @cdk.bug     1860497
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsarmolecularCoverageTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {
+        QsarmolecularCoverageTest.class,
 
         // Individual Tests - Please add correlatively
-    ChiIndexUtilsTest.class,
-    DescriptorEngineTest.class,
-    DescriptorNamesTest.class,
+        ChiIndexUtilsTest.class,
+        DescriptorEngineTest.class,
+        DescriptorNamesTest.class,
 
-//      from cdk.test.qsar.molecular
-	SmallRingDescriptorTest.class,
-	FractionalPSADescriptorTest.class,
-    AcidicGroupCountDescriptorTest.class,
-    ALOGPDescriptorTest.class,
-    APolDescriptorTest.class,
-    AromaticAtomsCountDescriptorTest.class,
-    AromaticBondsCountDescriptorTest.class,
-    AtomCountDescriptorTest.class,
-    BasicGroupCountDescriptorTest.class,
-    BCUTDescriptorTest.class,
-    BondCountDescriptorTest.class,
-    BPolDescriptorTest.class,
-    ChiChainDescriptorTest.class,
-    ChiPathDescriptorTest.class,
-    ChiClusterDescriptorTest.class,
-    ChiPathClusterDescriptorTest.class,
-    CPSADescriptorTest.class,
-    EccentricConnectivityIndexDescriptorTest.class,
-    GravitationalIndexDescriptorTest.class,
-    HBondAcceptorCountDescriptorTest.class,
-    HBondDonorCountDescriptorTest.class,
-    KappaShapeIndicesDescriptorTest.class,
-    KierHallSmartsDescriptorTest.class,
-    LargestChainDescriptorTest.class,
-    LargestPiSystemDescriptorTest.class,
-    LengthOverBreadthDescriptorTest.class,
-    LongestAliphaticChainDescriptorTest.class,
-    MDEDescriptorTest.class,
-    MomentOfInertiaDescriptorTest.class,
-    PetitjeanNumberDescriptorTest.class,
-    PetitjeanShapeIndexDescriptorTest.class,
-    RotatableBondsCountDescriptorTest.class,
-    RuleOfFiveDescriptorTest.class,
-    TPSADescriptorTest.class,
-    VAdjMaDescriptorTest.class,
-    WeightDescriptorTest.class,
-    WeightedPathDescriptorTest.class,
-    WHIMDescriptorTest.class,
-    WienerNumbersDescriptorTest.class,
-    XLogPDescriptorTest.class,
-    ZagrebIndexDescriptorTest.class,
-    AutocorrelationDescriptorChargeTest.class,
-    AutocorrelationDescriptorMassTest.class,
-    AutocorrelationDescriptorPolarizabilityTest.class,
-    CarbonTypesDescriptorTest.class,
-    HybridizationRatioDescriptorTest.class,
-    FMFDescriptorTest.class,
-    FragmentComplexityDescriptorTest.class,
-    TopologicalMatrixTest.class
-})
-public class MqsarmolecularTests {}
+        //      from cdk.test.qsar.molecular
+        SmallRingDescriptorTest.class, FractionalPSADescriptorTest.class, AcidicGroupCountDescriptorTest.class,
+        ALOGPDescriptorTest.class, APolDescriptorTest.class, AromaticAtomsCountDescriptorTest.class,
+        AromaticBondsCountDescriptorTest.class, AtomCountDescriptorTest.class, BasicGroupCountDescriptorTest.class,
+        BCUTDescriptorTest.class, BondCountDescriptorTest.class, BPolDescriptorTest.class,
+        ChiChainDescriptorTest.class, ChiPathDescriptorTest.class, ChiClusterDescriptorTest.class,
+        ChiPathClusterDescriptorTest.class, CPSADescriptorTest.class, EccentricConnectivityIndexDescriptorTest.class,
+        GravitationalIndexDescriptorTest.class, HBondAcceptorCountDescriptorTest.class,
+        HBondDonorCountDescriptorTest.class, KappaShapeIndicesDescriptorTest.class, KierHallSmartsDescriptorTest.class,
+        LargestChainDescriptorTest.class, LargestPiSystemDescriptorTest.class, LengthOverBreadthDescriptorTest.class,
+        LongestAliphaticChainDescriptorTest.class, MDEDescriptorTest.class, MomentOfInertiaDescriptorTest.class,
+        PetitjeanNumberDescriptorTest.class, PetitjeanShapeIndexDescriptorTest.class,
+        RotatableBondsCountDescriptorTest.class, RuleOfFiveDescriptorTest.class, TPSADescriptorTest.class,
+        VAdjMaDescriptorTest.class, WeightDescriptorTest.class, WeightedPathDescriptorTest.class,
+        WHIMDescriptorTest.class, WienerNumbersDescriptorTest.class, XLogPDescriptorTest.class,
+        ZagrebIndexDescriptorTest.class, AutocorrelationDescriptorChargeTest.class,
+        AutocorrelationDescriptorMassTest.class, AutocorrelationDescriptorPolarizabilityTest.class,
+        CarbonTypesDescriptorTest.class, HybridizationRatioDescriptorTest.class, FMFDescriptorTest.class,
+        FragmentComplexityDescriptorTest.class, TopologicalMatrixTest.class})
+public class MqsarmolecularTests {
+}

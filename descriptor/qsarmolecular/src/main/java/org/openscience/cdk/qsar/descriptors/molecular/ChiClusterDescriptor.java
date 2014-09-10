@@ -81,34 +81,29 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiClusterDescriptorTest")
 public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
-    private SmilesParser sp;
 
-    private static final String[] names = {
-            "SC-3", "SC-4", "SC-5", "SC-6",
-            "VC-3", "VC-4", "VC-5", "VC-6"
-    };
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ChiClusterDescriptor.class);
+    private SmilesParser          sp;
 
-    public ChiClusterDescriptor() {
-    }
+    private static final String[] names  = {"SC-3", "SC-4", "SC-5", "SC-6", "VC-3", "VC-4", "VC-5", "VC-6"};
+
+    public ChiClusterDescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiCluster", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testSetParameters_arrayObject")
@@ -118,26 +113,26 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
 
     @TestMethod("testGetParameters")
     public Object[] getParameters() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
 
-
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (sp == null) sp = new SmilesParser(container.getBuilder());
+        if (sp == null) sp = new SmilesParser(container.getBuilder());
 
         // removeHydrogens does a deep copy, so no need to clone
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
@@ -190,9 +185,8 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         retval.add(order5v);
         retval.add(order6v);
 
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
 
     }
 
@@ -217,7 +211,7 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -225,9 +219,10 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
     private List order4(IAtomContainer atomContainer) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)(C)"), false);
+            queries[0] = QueryAtomContainerCreator
+                    .createAnyAtomAnyBondContainer(sp.parseSmiles("C(C)(C)(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -237,7 +232,7 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -245,10 +240,12 @@ public class ChiClusterDescriptor extends AbstractMolecularDescriptor implements
     private List order6(IAtomContainer atomContainer) {
         QueryAtomContainer[] queries = new QueryAtomContainer[2];
         try {
-            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1(C)C(C)C1(C)"), false);
-            queries[1] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
+            queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("C1(C)C(C)C1(C)"),
+                    false);
+            queries[1] = QueryAtomContainerCreator
+                    .createAnyAtomAnyBondContainer(sp.parseSmiles("CC(C)C(C)(C)C"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }

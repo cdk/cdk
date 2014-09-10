@@ -34,8 +34,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class HybridizationRatioDescriptorTest extends MolecularDescriptorTest {
 
-    public HybridizationRatioDescriptorTest() {
-    }
+    public HybridizationRatioDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {

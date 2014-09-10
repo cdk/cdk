@@ -33,13 +33,9 @@ import org.openscience.cdk.qsar.descriptors.bond.BondSigmaElectronegativityDescr
  *
  * @cdk.module  test-qsarbond
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsarbondCoverageTest.class,
-    BondPartialPiChargeDescriptorTest.class,
-    BondPartialSigmaChargeDescriptorTest.class,
-    BondPartialTChargeDescriptorTest.class,
-    BondSigmaElectronegativityDescriptorTest.class,
-    AtomicNumberDifferenceDescriptorTest.class
-})
-public class MqsarbondTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QsarbondCoverageTest.class, BondPartialPiChargeDescriptorTest.class,
+        BondPartialSigmaChargeDescriptorTest.class, BondPartialTChargeDescriptorTest.class,
+        BondSigmaElectronegativityDescriptorTest.class, AtomicNumberDifferenceDescriptorTest.class})
+public class MqsarbondTests {
+}

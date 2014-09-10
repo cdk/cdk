@@ -40,7 +40,8 @@ import static org.junit.Assert.assertThat;
  */
 public class MDLValenceTest {
 
-    @Test public void sodium_metal() {
+    @Test
+    public void sodium_metal() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(0);
@@ -50,7 +51,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(0));
     }
 
-    @Test public void sodium_hydride() {
+    @Test
+    public void sodium_hydride() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         atom.setValency(1);
@@ -60,7 +62,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(1));
     }
 
-    @Test public void sodium_implicit() {
+    @Test
+    public void sodium_implicit() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Na");
         container.addAtom(atom);
@@ -69,7 +72,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(1));
     }
 
-    @Test public void bismuth() {
+    @Test
+    public void bismuth() {
         IAtomContainer container = new AtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
@@ -84,7 +88,8 @@ public class MDLValenceTest {
         assertThat(h2.getImplicitHydrogenCount(), is(0));
     }
 
-    @Test public void tin_ii() {
+    @Test
+    public void tin_ii() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(2);
@@ -94,7 +99,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(2));
     }
 
-    @Test public void tin_iv() {
+    @Test
+    public void tin_iv() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("Sn");
         atom.setValency(4);
@@ -107,7 +113,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(3)); // 4 - explicit H
     }
 
-    @Test public void carbon_neutral() {
+    @Test
+    public void carbon_neutral() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         container.addAtom(atom);
@@ -116,7 +123,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(4));
     }
 
-    @Test public void carbon_cation() {
+    @Test
+    public void carbon_cation() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(-1);
@@ -126,7 +134,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(3));
     }
 
-    @Test public void carbon_cation_doubleBonded() {
+    @Test
+    public void carbon_cation_doubleBonded() {
         IAtomContainer container = new AtomContainer();
         IAtom c1 = new Atom("C");
         IAtom c2 = new Atom("C");
@@ -141,8 +150,8 @@ public class MDLValenceTest {
         assertThat(c2.getImplicitHydrogenCount(), is(2));
     }
 
-
-    @Test public void carbon_anion() {
+    @Test
+    public void carbon_anion() {
         IAtomContainer container = new AtomContainer();
         IAtom atom = new Atom("C");
         atom.setFormalCharge(+1);
@@ -152,7 +161,8 @@ public class MDLValenceTest {
         assertThat(atom.getImplicitHydrogenCount(), is(3));
     }
 
-    @Test public void bismuth_isImplicit() {
+    @Test
+    public void bismuth_isImplicit() {
         IAtomContainer container = new AtomContainer();
         IAtom bi1 = new Atom("Bi");
         IAtom h2 = new Atom("H");
@@ -167,7 +177,8 @@ public class MDLValenceTest {
         assertThat(h2.getImplicitHydrogenCount(), is(0));
     }
 
-    @Test public void nitrogen_neutral() {
+    @Test
+    public void nitrogen_neutral() {
         assertThat(MDLValence.implicitValence(7, 0, 0), is(3));
         assertThat(MDLValence.implicitValence(7, 0, 1), is(3));
         assertThat(MDLValence.implicitValence(7, 0, 2), is(3));
@@ -177,7 +188,8 @@ public class MDLValenceTest {
         assertThat(MDLValence.implicitValence(7, 0, 6), is(6));
     }
 
-    @Test public void nitrogen_cation() {
+    @Test
+    public void nitrogen_cation() {
         assertThat(MDLValence.implicitValence(7, +1, 0), is(4));
         assertThat(MDLValence.implicitValence(7, +1, 1), is(4));
         assertThat(MDLValence.implicitValence(7, +1, 2), is(4));
@@ -187,7 +199,8 @@ public class MDLValenceTest {
         assertThat(MDLValence.implicitValence(7, +1, 6), is(6));
     }
 
-    @Test public void nitrogen_anion() {
+    @Test
+    public void nitrogen_anion() {
         assertThat(MDLValence.implicitValence(7, -1, 0), is(2));
         assertThat(MDLValence.implicitValence(7, -1, 1), is(2));
         assertThat(MDLValence.implicitValence(7, -1, 2), is(2));

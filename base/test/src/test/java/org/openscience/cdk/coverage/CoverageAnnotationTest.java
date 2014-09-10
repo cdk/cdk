@@ -43,8 +43,8 @@ abstract public class CoverageAnnotationTest {
 
     private final static String BASEPACKAGENAME = "org.openscience.cdk.";
 
-    private static String moduleName;
-    private static ClassLoader classLoader;
+    private static String       moduleName;
+    private static ClassLoader  classLoader;
     private static List<String> classesToTest;
 
     protected static void loadClassList(String classList, ClassLoader loader) throws Exception {
@@ -63,9 +63,7 @@ abstract public class CoverageAnnotationTest {
             String rawClassName = reader.readLine();
             if (rawClassName == null) break;
             rawClassName = rawClassName.substring(20);
-            String className = convertSlash2Dot(
-                    rawClassName.substring(0, rawClassName.indexOf('.'))
-            );
+            String className = convertSlash2Dot(rawClassName.substring(0, rawClassName.indexOf('.')));
             classesToTest.add(className);
         }
     }
@@ -79,8 +77,8 @@ abstract public class CoverageAnnotationTest {
             if (errors > 0) uncoveredClassesCount++;
         }
         if (missingTestsCount > 0) {
-            Assert.fail("The " + moduleName + " module is not fully tested! Missing number of method tests: " +
-                    missingTestsCount + " in number of classes: " + uncoveredClassesCount);
+            Assert.fail("The " + moduleName + " module is not fully tested! Missing number of method tests: "
+                    + missingTestsCount + " in number of classes: " + uncoveredClassesCount);
         }
         return true;
     }
@@ -100,7 +98,7 @@ abstract public class CoverageAnnotationTest {
             int modifiers = constructor.getModifiers();
             if (Modifier.isPrivate(modifiers)) continue;
 
-            TestMethod testMethodAnnotation = (TestMethod)constructor.getAnnotation(TestMethod.class);
+            TestMethod testMethodAnnotation = (TestMethod) constructor.getAnnotation(TestMethod.class);
 
             if (constructor.getName().startsWith("access$")) {
                 // skip this test
@@ -112,29 +110,31 @@ abstract public class CoverageAnnotationTest {
                 // if a method does not have the annotation, it's missing a test
                 System.out.println(className + toString(constructor) + " does not have a test method");
                 missingTestCount++;
-            } else methodAnnotations.put(constructor.getName(), testMethodAnnotation);
+            } else
+                methodAnnotations.put(constructor.getName(), testMethodAnnotation);
         }
 
         // lets get all the methods in the class we're checking
         // we're going to skip private.
         Method[] sourceMethods = coreClass.getDeclaredMethods();
         for (Method method : sourceMethods) {
-        	if (method.isBridge()) continue;
+            if (method.isBridge()) continue;
 
-        	int modifiers = method.getModifiers();
+            int modifiers = method.getModifiers();
             if (Modifier.isPrivate(modifiers)) continue;
 
             TestMethod testMethodAnnotation = method.getAnnotation(TestMethod.class);
 
             if (method.getName().startsWith("access$")) {
-            	// skip this test
+                // skip this test
             } else if (method.getName().contains("SWITCH_TABLE")) {
                 // skip this test
             } else if (testMethodAnnotation == null) {
                 // if a method does not have the annotation, it's missing a test
                 System.out.println(className + "#" + toString(method) + " does not have a test method");
                 missingTestCount++;
-            } else methodAnnotations.put(method.getName(), testMethodAnnotation);
+            } else
+                methodAnnotations.put(method.getName(), testMethodAnnotation);
         }
 
         // get the test class for this class, as noted in the class annotation
@@ -143,14 +143,14 @@ abstract public class CoverageAnnotationTest {
         // methods might have TestMethod annotations
         TestClass testClassAnnotation = (TestClass) coreClass.getAnnotation(TestClass.class);
         if (testClassAnnotation == null) {
-        	if (coreClass.getDeclaredMethods().length == 0 && coreClass.getDeclaredConstructors().length <= 1) {
-        		// that's fine, no functionality; something like CDKConstants or DataFeatures
-        		// the 1 is for the default constructor; maybe the tested class should be 'abstract final'?
-        		return 0;
-        	} else {
-        		System.out.println(className + " did not have a TestClass annotation");
-        		return methodAnnotations.size() + missingTestCount + 1;
-        	}
+            if (coreClass.getDeclaredMethods().length == 0 && coreClass.getDeclaredConstructors().length <= 1) {
+                // that's fine, no functionality; something like CDKConstants or DataFeatures
+                // the 1 is for the default constructor; maybe the tested class should be 'abstract final'?
+                return 0;
+            } else {
+                System.out.println(className + " did not have a TestClass annotation");
+                return methodAnnotations.size() + missingTestCount + 1;
+            }
         }
         Class testClass;
         try {
@@ -162,8 +162,7 @@ abstract public class CoverageAnnotationTest {
         List<String> testMethodNames = new ArrayList<String>();
         Method[] testMethods = testClass.getMethods();
         for (Method method : testMethods) {
-            if (method.getAnnotation(org.junit.Test.class) != null)
-                testMethodNames.add(method.getName());
+            if (method.getAnnotation(org.junit.Test.class) != null) testMethodNames.add(method.getName());
         }
 
         // at this point we look at the superclass of the test class and pull
@@ -173,8 +172,7 @@ abstract public class CoverageAnnotationTest {
         Class superClass = testClass.getSuperclass();
         Method[] superMethods = superClass.getMethods();
         for (Method method : superMethods) {
-            if (method.getAnnotation(org.junit.Test.class) != null)
-                testMethodNames.add(method.getName());
+            if (method.getAnnotation(org.junit.Test.class) != null) testMethodNames.add(method.getName());
         }
 
         // now we check that the methods specified in the annotations
@@ -188,9 +186,8 @@ abstract public class CoverageAnnotationTest {
             String[] tokens = annotation.value().split(",");
             for (String token : tokens) {
                 if (!testMethodNames.contains(token.trim())) {
-                    System.out.println(
-                    	className + "#" + key + " has a test method annotation '" +
-                    	token + "' which is not found in test class: " + testClass.getName());
+                    System.out.println(className + "#" + key + " has a test method annotation '" + token
+                            + "' which is not found in test class: " + testClass.getName());
                     missingTestCount++;
                 }
             }
@@ -203,10 +200,10 @@ abstract public class CoverageAnnotationTest {
         StringBuffer methodString = new StringBuffer();
         methodString.append(method.getName()).append('(');
         Class[] classes = method.getParameterTypes();
-        for (int i=0;i<classes.length; i++) {
+        for (int i = 0; i < classes.length; i++) {
             Class clazz = classes[i];
-            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
-            if ((i+1)<classes.length) methodString.append(',');
+            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1));
+            if ((i + 1) < classes.length) methodString.append(',');
         }
         methodString.append(')');
         return methodString.toString();
@@ -216,10 +213,10 @@ abstract public class CoverageAnnotationTest {
         StringBuffer methodString = new StringBuffer();
         methodString.append('(');
         Class[] classes = constructor.getParameterTypes();
-        for (int i=0;i<classes.length; i++) {
+        for (int i = 0; i < classes.length; i++) {
             Class clazz = classes[i];
-            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.')+1));
-            if ((i+1)<classes.length) methodString.append(',');
+            methodString.append(clazz.getName().substring(clazz.getName().lastIndexOf('.') + 1));
+            if ((i + 1) < classes.length) methodString.append(',');
         }
         methodString.append(')');
         return methodString.toString();

@@ -45,58 +45,63 @@ public class AtomContainerDiff {
      */
     private AtomContainerDiff() {}
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testMatchAgainstItself,testDiff")
-    public static String diff( IChemObject first, IChemObject second ) {
-    	IDifference diff = difference(first, second);
-    	if (diff == null) {
-    		return "";
-    	} else {
-    		return diff.toString();
-    	}
+    public static String diff(IChemObject first, IChemObject second) {
+        IDifference diff = difference(first, second);
+        if (diff == null) {
+            return "";
+        } else {
+            return diff.toString();
+        }
     }
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testDifference")
-    public static IDifference difference( IChemObject first, IChemObject second ) {
+    public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IAtomContainer && second instanceof IAtomContainer)) {
             return null;
         }
-        IAtomContainer firstAC = (IAtomContainer)first;
-        IAtomContainer secondAC = (IAtomContainer)second;
+        IAtomContainer firstAC = (IAtomContainer) first;
+        IAtomContainer secondAC = (IAtomContainer) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomContainerDiff");
         totalDiff.addChild(IntegerDifference.construct("atomCount", firstAC.getAtomCount(), secondAC.getAtomCount()));
         if (firstAC.getAtomCount() == secondAC.getAtomCount()) {
-            for (int i=0; i<firstAC.getAtomCount(); i++) {
+            for (int i = 0; i < firstAC.getAtomCount(); i++) {
                 totalDiff.addChild(AtomDiff.difference(firstAC.getAtom(i), secondAC.getAtom(i)));
             }
         }
-        totalDiff.addChild(IntegerDifference.construct("electronContainerCount", firstAC.getElectronContainerCount(), secondAC.getElectronContainerCount()));
+        totalDiff.addChild(IntegerDifference.construct("electronContainerCount", firstAC.getElectronContainerCount(),
+                secondAC.getElectronContainerCount()));
         if (firstAC.getElectronContainerCount() == secondAC.getElectronContainerCount()) {
-            for (int i=0; i<firstAC.getElectronContainerCount(); i++) {
-                if (firstAC.getElectronContainer(i) instanceof IBond &&
-                    secondAC.getElectronContainer(i) instanceof IBond) {
-                    totalDiff.addChild(BondDiff.difference(firstAC.getElectronContainer(i), secondAC.getElectronContainer(i)));
-                } else if (firstAC.getElectronContainer(i) instanceof ILonePair &&
-                        secondAC.getElectronContainer(i) instanceof ILonePair) {
-                    totalDiff.addChild(LonePairDiff.difference(firstAC.getElectronContainer(i), secondAC.getElectronContainer(i)));
-                } else if (firstAC.getElectronContainer(i) instanceof ISingleElectron &&
-                        secondAC.getElectronContainer(i) instanceof ISingleElectron) {
-                    totalDiff.addChild(SingleElectronDiff.difference(firstAC.getElectronContainer(i), secondAC.getElectronContainer(i)));
+            for (int i = 0; i < firstAC.getElectronContainerCount(); i++) {
+                if (firstAC.getElectronContainer(i) instanceof IBond
+                        && secondAC.getElectronContainer(i) instanceof IBond) {
+                    totalDiff.addChild(BondDiff.difference(firstAC.getElectronContainer(i),
+                            secondAC.getElectronContainer(i)));
+                } else if (firstAC.getElectronContainer(i) instanceof ILonePair
+                        && secondAC.getElectronContainer(i) instanceof ILonePair) {
+                    totalDiff.addChild(LonePairDiff.difference(firstAC.getElectronContainer(i),
+                            secondAC.getElectronContainer(i)));
+                } else if (firstAC.getElectronContainer(i) instanceof ISingleElectron
+                        && secondAC.getElectronContainer(i) instanceof ISingleElectron) {
+                    totalDiff.addChild(SingleElectronDiff.difference(firstAC.getElectronContainer(i),
+                            secondAC.getElectronContainer(i)));
                 } else {
-                    totalDiff.addChild(ElectronContainerDiff.difference(firstAC.getElectronContainer(i), secondAC.getElectronContainer(i)));
+                    totalDiff.addChild(ElectronContainerDiff.difference(firstAC.getElectronContainer(i),
+                            secondAC.getElectronContainer(i)));
                 }
             }
         }

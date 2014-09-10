@@ -53,29 +53,23 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  */
 public class VFlibMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
-    public VFlibMCSHandlerTest() {
-    }
+    public VFlibMCSHandlerTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     @BeforeClass
     public static void setMCSAlgorithm() {
-        AbstractMCSAlgorithmTest.setMCSAlgorithm(
-                new VFlibMCSHandler());
+        AbstractMCSAlgorithmTest.setMCSAlgorithm(new VFlibMCSHandler());
     }
 
     /**

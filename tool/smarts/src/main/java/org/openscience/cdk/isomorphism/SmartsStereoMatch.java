@@ -66,13 +66,13 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
     private final Map<IAtom, Integer> queryMap, targetMap;
 
     /** Indexed array of stereo elements. */
-    private final IStereoElement[] queryElements, targetElements;
+    private final IStereoElement[]    queryElements, targetElements;
 
     /** Indexed array of stereo element types. */
-    private final Type[] queryTypes, targetTypes;
+    private final Type[]              queryTypes, targetTypes;
 
     /** Indices of focus atoms of stereo elements. */
-    private final int[] queryStereoIndices, targetStereoIndices;
+    private final int[]               queryStereoIndices, targetStereoIndices;
 
     /**
      * Create a predicate for checking mappings between a provided
@@ -88,17 +88,17 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         if (!(query.getAtom(0) instanceof SMARTSAtom))
             throw new IllegalArgumentException("match predicate is for SMARTS only");
 
-        this.query  = query;
+        this.query = query;
         this.target = target;
 
-        this.queryMap  = indexAtoms(query);
+        this.queryMap = indexAtoms(query);
         this.targetMap = indexAtoms(target);
-        this.queryElements  = new IStereoElement[query.getAtomCount()];
+        this.queryElements = new IStereoElement[query.getAtomCount()];
         this.targetElements = new IStereoElement[target.getAtomCount()];
-        this.queryTypes  = new Type[query.getAtomCount()];
+        this.queryTypes = new Type[query.getAtomCount()];
         this.targetTypes = new Type[target.getAtomCount()];
 
-        queryStereoIndices  = indexElements(queryMap, queryElements, queryTypes, query);
+        queryStereoIndices = indexElements(queryMap, queryElements, queryTypes, query);
         targetStereoIndices = indexElements(targetMap, targetElements, targetTypes, target);
     }
 
@@ -114,12 +114,10 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {
                 case Tetrahedral:
-                    if (!checkTetrahedral(u, mapping))
-                        return false;
+                    if (!checkTetrahedral(u, mapping)) return false;
                     break;
                 case Geometric:
-                    if (!checkGeometric(u, otherIndex(u), mapping))
-                        return false;
+                    if (!checkGeometric(u, otherIndex(u), mapping)) return false;
                     break;
             }
         }
@@ -138,26 +136,24 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
 
         int v = mapping[u];
 
-        ITetrahedralChirality queryElement  = (ITetrahedralChirality) queryElements[u];
+        ITetrahedralChirality queryElement = (ITetrahedralChirality) queryElements[u];
         ITetrahedralChirality targetElement = (ITetrahedralChirality) targetElements[v];
 
-        SMARTSAtom queryAtom  = (SMARTSAtom) query.getAtom(u);
-        IAtom      targetAtom = target.getAtom(v);
+        SMARTSAtom queryAtom = (SMARTSAtom) query.getAtom(u);
+        IAtom targetAtom = target.getAtom(v);
 
         int[] us = neighbors(queryElement, queryMap);
         us = map(u, v, us, mapping);
         int p = permutationParity(us);
 
         // check if unspecified was allowed
-        if (targetTypes[v] == null)
-            return queryAtom.chiralityMatches(targetAtom, 0, p);
+        if (targetTypes[v] == null) return queryAtom.chiralityMatches(targetAtom, 0, p);
 
         // target was non-tetrahedral
-        if (targetTypes[v] != Type.Tetrahedral)
-            return false;
+        if (targetTypes[v] != Type.Tetrahedral) return false;
 
         int[] vs = neighbors(targetElement, targetMap);
-        int   q  = permutationParity(vs) * parity(targetElement.getStereo());
+        int q = permutationParity(vs) * parity(targetElement.getStereo());
 
         return queryAtom.chiralityMatches(targetAtom, q, p);
     }
@@ -198,24 +194,19 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         IDoubleBondStereochemistry queryElement = (IDoubleBondStereochemistry) queryElements[u1];
         IBond[] queryBonds = queryElement.getBonds();
 
-        boolean unspecified = ((StereoBond)queryBonds[0]).unspecified()
-                              || ((StereoBond)queryBonds[1]).unspecified();
+        boolean unspecified = ((StereoBond) queryBonds[0]).unspecified() || ((StereoBond) queryBonds[1]).unspecified();
 
-        if (unspecified && (targetTypes[v1] == null || targetTypes[v2] == null))
-            return true;
+        if (unspecified && (targetTypes[v1] == null || targetTypes[v2] == null)) return true;
 
         // no configuration in target
-        if (targetTypes[v1] != Type.Geometric || targetTypes[v2] != Type.Geometric)
-            return false;
-
+        if (targetTypes[v1] != Type.Geometric || targetTypes[v2] != Type.Geometric) return false;
 
         IDoubleBondStereochemistry targetElement = (IDoubleBondStereochemistry) targetElements[v1];
 
         // although the atoms were mapped and 'v1' and 'v2' are bond in double-bond
         // elements they are not in the same element
         if (!targetElement.getStereoBond().contains(target.getAtom(v1))
-                || !targetElement.getStereoBond().contains(target.getAtom(v2)))
-            return false;
+                || !targetElement.getStereoBond().contains(target.getAtom(v2))) return false;
 
         // bond is undirected so we need to ensure v1 is the first atom in the bond
         // we also need to to swap the substituents later
@@ -226,7 +217,6 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
             v2 = tmp;
             swap = true;
         }
-
 
         IBond[] targetBonds = targetElement.getBonds();
 
@@ -244,10 +234,8 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
             vLeft = vRight;
             vRight = tmp;
         }
-        if (mapping[uLeft] != vLeft)
-            p *= -1;
-        if (mapping[uRight] != vRight)
-            p *= -1;
+        if (mapping[uLeft] != vLeft) p *= -1;
+        if (mapping[uRight] != vRight) p *= -1;
 
         return p == q;
     }
@@ -279,8 +267,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
         int n = 0;
         for (int i = 0; i < vs.length; i++)
             for (int j = i + 1; j < vs.length; j++)
-                if (vs[i] > vs[j])
-                    n++;
+                if (vs[i] > vs[j]) n++;
         return (n & 0x1) == 1 ? -1 : 1;
     }
 
@@ -320,10 +307,8 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
      * @param container the container to index the elements of
      * @return indices of atoms involved in stereo configurations
      */
-    private static int[] indexElements(Map<IAtom, Integer> map,
-                                       IStereoElement[] elements,
-                                       Type[] types,
-                                       IAtomContainer container) {
+    private static int[] indexElements(Map<IAtom, Integer> map, IStereoElement[] elements, Type[] types,
+            IAtomContainer container) {
         int[] indices = new int[container.getAtomCount()];
         int nElements = 0;
         for (IStereoElement element : container.stereoElements()) {
@@ -333,8 +318,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
                 elements[idx] = element;
                 types[idx] = Type.Tetrahedral;
                 indices[nElements++] = idx;
-            }
-            else if (element instanceof IDoubleBondStereochemistry) {
+            } else if (element instanceof IDoubleBondStereochemistry) {
                 IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry) element;
                 int idx1 = map.get(dbs.getStereoBond().getAtom(0));
                 int idx2 = map.get(dbs.getStereoBond().getAtom(1));
@@ -368,7 +352,6 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
 
     // could be moved into the IStereoElement to allow faster introspection
     private static enum Type {
-        Tetrahedral,
-        Geometric
+        Tetrahedral, Geometric
     }
 }

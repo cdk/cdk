@@ -47,14 +47,14 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 @TestClass("org.openscience.cdk.config.TXTBasedAtomTypeConfiguratorTest")
 public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private String configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
-    private InputStream ins = null;
+    private String      configFile = "org/openscience/cdk/config/data/jmol_atomtypes.txt";
+    private InputStream ins        = null;
 
     @TestMethod("testTXTBasedAtomTypeConfigurator")
-	public TXTBasedAtomTypeConfigurator() {
-	}
+    public TXTBasedAtomTypeConfigurator() {}
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;
@@ -77,69 +77,64 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
             //                   + configFile);
             ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
         }
-        if (ins == null)
-            throw new IOException("There was a problem getting the default stream: " + configFile);
+        if (ins == null) throw new IOException("There was a problem getting the default stream: " + configFile);
 
         // read the contents from file
         BufferedReader reader = new BufferedReader(new InputStreamReader(ins), 1024);
         StringTokenizer tokenizer;
         String string;
 
-            while (true) {
-                string = reader.readLine();
-                if (string == null) {
-                    break;
-                }
-                if (!string.startsWith("#")) {
-                    String name;
-                    String rootType;
-                    int atomicNumber, colorR, colorG, colorB;
-                    double mass, covalent;
-                    tokenizer = new StringTokenizer(string, "\t ,;");
-                    int tokenCount = tokenizer.countTokens();
+        while (true) {
+            string = reader.readLine();
+            if (string == null) {
+                break;
+            }
+            if (!string.startsWith("#")) {
+                String name;
+                String rootType;
+                int atomicNumber, colorR, colorG, colorB;
+                double mass, covalent;
+                tokenizer = new StringTokenizer(string, "\t ,;");
+                int tokenCount = tokenizer.countTokens();
 
-                    if (tokenCount == 9) {
-                        name = tokenizer.nextToken();
-                        rootType = tokenizer.nextToken();
-                        String san = tokenizer.nextToken();
-                        String sam = tokenizer.nextToken();
-                        tokenizer.nextToken(); // skip the vdw radius value
-                        String scovalent = tokenizer.nextToken();
-                        String sColorR = tokenizer.nextToken();
-                        String sColorG = tokenizer.nextToken();
-                        String sColorB = tokenizer.nextToken();
+                if (tokenCount == 9) {
+                    name = tokenizer.nextToken();
+                    rootType = tokenizer.nextToken();
+                    String san = tokenizer.nextToken();
+                    String sam = tokenizer.nextToken();
+                    tokenizer.nextToken(); // skip the vdw radius value
+                    String scovalent = tokenizer.nextToken();
+                    String sColorR = tokenizer.nextToken();
+                    String sColorG = tokenizer.nextToken();
+                    String sColorB = tokenizer.nextToken();
 
-                        try {
-                            mass = new Double(sam);
-                            covalent = new Double(scovalent);
-                            atomicNumber = Integer.parseInt(san);
-                            colorR = Integer.parseInt(sColorR);
-                            colorG = Integer.parseInt(sColorG);
-                            colorB = Integer.parseInt(sColorB);
-                        } catch (NumberFormatException nfe) {
-                            throw new IOException("AtomTypeTable.ReadAtypes: " +
-                            "Malformed Number");
-                        }
-
-                        IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
-                        atomType.setAtomicNumber(atomicNumber);
-                        atomType.setExactMass(mass);
-                        atomType.setCovalentRadius(covalent);
-
-                        // pack the RGB color space components into a single int. Note we
-                        // avoid java.awt.Color (not available on some JREs)
-                        atomType.setProperty("org.openscience.cdk.renderer.color",
-                                             ((colorR << 16) & 0xff0000) |
-                                             ((colorG << 8)  & 0x00ff00) |
-                                             (colorB         & 0x0000ff));
-                        atomTypes.add(atomType);
-                    } else {
-                        throw new IOException("AtomTypeTable.ReadAtypes: " +
-                        "Wrong Number of fields");
+                    try {
+                        mass = new Double(sam);
+                        covalent = new Double(scovalent);
+                        atomicNumber = Integer.parseInt(san);
+                        colorR = Integer.parseInt(sColorR);
+                        colorG = Integer.parseInt(sColorG);
+                        colorB = Integer.parseInt(sColorB);
+                    } catch (NumberFormatException nfe) {
+                        throw new IOException("AtomTypeTable.ReadAtypes: " + "Malformed Number");
                     }
+
+                    IAtomType atomType = builder.newInstance(IAtomType.class, name, rootType);
+                    atomType.setAtomicNumber(atomicNumber);
+                    atomType.setExactMass(mass);
+                    atomType.setCovalentRadius(covalent);
+
+                    // pack the RGB color space components into a single int. Note we
+                    // avoid java.awt.Color (not available on some JREs)
+                    atomType.setProperty("org.openscience.cdk.renderer.color", ((colorR << 16) & 0xff0000)
+                            | ((colorG << 8) & 0x00ff00) | (colorB & 0x0000ff));
+                    atomTypes.add(atomType);
+                } else {
+                    throw new IOException("AtomTypeTable.ReadAtypes: " + "Wrong Number of fields");
                 }
-            }    // end while
-            ins.close();
+            }
+        } // end while
+        ins.close();
 
         return atomTypes;
     }

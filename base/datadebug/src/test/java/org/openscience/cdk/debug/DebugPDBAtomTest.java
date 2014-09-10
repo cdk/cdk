@@ -38,25 +38,29 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugPDBAtomTest extends AbstractPDBAtomTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugPDBAtom(new DebugElement());
             }
         });
     }
 
-    @Test public void testDebugPDBAtom_IElement() {
-    	IElement element = new DebugElement();
-        IAtom a = element.getBuilder().newInstance(IPDBAtom.class,element);
+    @Test
+    public void testDebugPDBAtom_IElement() {
+        IElement element = new DebugElement();
+        IAtom a = element.getBuilder().newInstance(IPDBAtom.class, element);
         Assert.assertNotNull(a);
     }
 
     /**
      * Method to test the Atom(String symbol) method.
      */
-    @Test public void testDebugPDBAtom_String() {
-    	IPDBAtom a = new DebugPDBAtom("C");
+    @Test
+    public void testDebugPDBAtom_String() {
+        IPDBAtom a = new DebugPDBAtom("C");
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertNull(a.getPoint2d());
         Assert.assertNull(a.getPoint3d());
@@ -66,7 +70,8 @@ public class DebugPDBAtomTest extends AbstractPDBAtomTest {
     /**
      * Method to test the Atom(String symbol, javax.vecmath.Point3d point3D) method.
      */
-    @Test public void testDebugPDBAtom_String_Point3d() {
+    @Test
+    public void testDebugPDBAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IPDBAtom a = new DebugPDBAtom("C", point3d);

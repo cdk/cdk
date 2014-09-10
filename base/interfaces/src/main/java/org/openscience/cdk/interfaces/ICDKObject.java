@@ -35,5 +35,3 @@ public interface ICDKObject extends Cloneable {
      */
     public IChemObjectBuilder getBuilder();
 }
-
-

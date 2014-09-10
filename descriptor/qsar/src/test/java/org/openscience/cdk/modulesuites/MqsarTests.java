@@ -30,10 +30,7 @@ import org.openscience.cdk.tools.AtomicPropertiesTest;
  *
  * @cdk.module test-qsar
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsarCoverageTest.class,
-    DescriptorExceptionTest.class,
-    AtomicPropertiesTest.class
-})
-public class MqsarTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QsarCoverageTest.class, DescriptorExceptionTest.class, AtomicPropertiesTest.class})
+public class MqsarTests {
+}

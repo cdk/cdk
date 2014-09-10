@@ -35,26 +35,28 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class DictDBReactTest extends CDKTestCase {
 
-    @Test public void testDictDBReact() {
+    @Test
+    public void testDictDBReact() {
         DictionaryDatabase db = new DictionaryDatabase();
         Assert.assertTrue(db.hasDictionary("reaction-processes"));
     }
 
+    @Test
+    public void TestCheckUniqueID() {
+        DictionaryDatabase db = new DictionaryDatabase();
+        Dictionary dict = db.getDictionary("reaction-processes");
+        Entry[] entries = dict.getEntries();
+        List<String> idList = new ArrayList<String>();
+        idList.add(entries[0].getID());
+        for (int i = 1; i < entries.length; i++) {
+            //    		System.out.println(entries[i].getID());
+            if (!idList.contains(entries[i].getID()))
+                idList.add(entries[i].getID());
+            else
+                Assert.assertFalse("The entry is contained " + entries[i] + "two times",
+                        idList.contains(entries[i].getID()));
 
-    @Test public void TestCheckUniqueID() {
-    	DictionaryDatabase db = new DictionaryDatabase();
-    	Dictionary dict = db.getDictionary("reaction-processes");
-    	Entry[] entries = dict.getEntries();
-    	List<String> idList = new ArrayList<String>();
-		idList.add(entries[0].getID());
-    	for(int i = 1 ; i < entries.length; i++){
-//    		System.out.println(entries[i].getID());
-    		if(!idList.contains(entries[i].getID()))
-    			idList.add(entries[i].getID());
-    		else
-    			Assert.assertFalse("The entry is contained "+entries[i]+"two times",idList.contains(entries[i].getID()));
-
-    	}
+        }
     }
 
 }

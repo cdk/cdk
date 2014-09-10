@@ -114,12 +114,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @TestClass("org.openscience.cdk.smiles.smarts.SMARTSQueryToolTest")
 public class SMARTSQueryTool {
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
-    private String smarts;
-    private IAtomContainer     atomContainer = null;
-    private QueryAtomContainer query         = null;
-    private List<int[]> mappings;
+
+    private static ILoggingTool logger        = LoggingToolFactory.createLoggingTool(SMARTSQueryTool.class);
+    private String              smarts;
+    private IAtomContainer      atomContainer = null;
+    private QueryAtomContainer  query         = null;
+    private List<int[]>         mappings;
 
     /**
      * Defines which set of rings to define rings in the target.
@@ -132,7 +132,9 @@ public class SMARTSQueryTool {
          * however the non-uniqueness leads to ambiguous matching.
          */
         SmallestSetOfSmallestRings {
-            @Override IRingSet ringSet(IAtomContainer m) {
+
+            @Override
+            IRingSet ringSet(IAtomContainer m) {
                 return Cycles.sssr(m).toRingSet();
             }
         },
@@ -142,7 +144,9 @@ public class SMARTSQueryTool {
          * The set is unique but may excludes rings (e.g. from bridged systems).
          */
         EssentialRings {
-            @Override IRingSet ringSet(IAtomContainer m) {
+
+            @Override
+            IRingSet ringSet(IAtomContainer m) {
                 return Cycles.essential(m).toRingSet();
             }
         },
@@ -152,7 +156,9 @@ public class SMARTSQueryTool {
          * The set is unique but may include more rings then is necessary.
          */
         RelevantRings {
-            @Override IRingSet ringSet(IAtomContainer m) {
+
+            @Override
+            IRingSet ringSet(IAtomContainer m) {
                 return Cycles.relevant(m).toRingSet();
             }
         };
@@ -167,7 +173,7 @@ public class SMARTSQueryTool {
     }
 
     /** Which short cyclic set should be used. */
-    private RingSet ringSet = RingSet.EssentialRings;
+    private RingSet                  ringSet         = RingSet.EssentialRings;
 
     private final IChemObjectBuilder builder;
 
@@ -175,8 +181,8 @@ public class SMARTSQueryTool {
      * Aromaticity perception - dealing with SMARTS we should use the Daylight
      * model. This can be set to a different model using {@link #setAromaticity(Aromaticity)}.
      */
-    private Aromaticity aromaticity = new Aromaticity(ElectronDonation.daylight(),
-                                                      Cycles.allOrVertexShort());
+    private Aromaticity              aromaticity     = new Aromaticity(ElectronDonation.daylight(),
+                                                             Cycles.allOrVertexShort());
 
     /**
      * Logical flag indicates whether the aromaticity model should be skipped.
@@ -185,15 +191,17 @@ public class SMARTSQueryTool {
      * the molecules being tests are known to all have the same aromaticity
      * model.
      */
-    private boolean skipAromaticity = false;
+    private boolean                  skipAromaticity = false;
 
     // a simplistic cache to store parsed SMARTS queries
-    private int MAX_ENTRIES = 20;
-    Map<String, QueryAtomContainer> cache = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1, .75F, true) {
-        public boolean removeEldestEntry(Map.Entry eldest) {
-            return size() > MAX_ENTRIES;
-        }
-    };
+    private int                      MAX_ENTRIES     = 20;
+    Map<String, QueryAtomContainer>  cache           = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1,
+                                                             .75F, true) {
+
+                                                         public boolean removeEldestEntry(Map.Entry eldest) {
+                                                             return size() > MAX_ENTRIES;
+                                                         }
+                                                     };
 
     /**
      * Create a new SMARTS query tool for the specified SMARTS string. Query
@@ -203,8 +211,7 @@ public class SMARTSQueryTool {
      * @param smarts SMARTS query string
      * @throws IllegalArgumentException if the SMARTS string can not be handled
      */
-    public SMARTSQueryTool(String smarts,
-                           IChemObjectBuilder builder) {
+    public SMARTSQueryTool(String smarts, IChemObjectBuilder builder) {
         this.builder = builder;
         this.smarts = smarts;
         try {
@@ -224,7 +231,6 @@ public class SMARTSQueryTool {
     public void setQueryCacheSize(int maxEntries) {
         MAX_ENTRIES = maxEntries;
     }
-
 
     /**
      * Indicates that ring properties should use the Smallest Set of Smallest
@@ -282,8 +288,7 @@ public class SMARTSQueryTool {
      */
     @TestMethod("setAromaticity,nullAromaticity")
     public void setAromaticity(Aromaticity aromaticity) {
-        this.aromaticity = checkNotNull(aromaticity,
-                                        "aromaticity was not provided");
+        this.aromaticity = checkNotNull(aromaticity, "aromaticity was not provided");
     }
 
     /**
@@ -307,7 +312,6 @@ public class SMARTSQueryTool {
         this.smarts = smarts;
         initializeQuery();
     }
-
 
     /**
      * Perform a SMARTS match and check whether the query is present in the target molecule. <p/> This function simply
@@ -350,8 +354,7 @@ public class SMARTSQueryTool {
 
         if (this.atomContainer == atomContainer) {
             if (forceInitialization) initializeMolecule();
-        }
-        else {
+        } else {
             this.atomContainer = atomContainer;
             initializeMolecule();
         }
@@ -367,13 +370,10 @@ public class SMARTSQueryTool {
                     mappings.add(new int[]{i});
                 }
             }
-        }
-        else {
-            mappings = FluentIterable.from(Ullmann.findSubstructure(query)
-                                                  .matchAll(atomContainer))
-                                     .filter(new SmartsStereoMatch(query, atomContainer))
-                                     .filter(new ComponentGrouping(query, atomContainer))
-                                     .toList();
+        } else {
+            mappings = FluentIterable.from(Ullmann.findSubstructure(query).matchAll(atomContainer))
+                    .filter(new SmartsStereoMatch(query, atomContainer))
+                    .filter(new ComponentGrouping(query, atomContainer)).toList();
         }
 
         return !mappings.isEmpty();
@@ -402,7 +402,7 @@ public class SMARTSQueryTool {
         List<List<Integer>> matched = new ArrayList<List<Integer>>(mappings.size());
         for (int[] mapping : mappings)
             matched.add(Ints.asList(mapping));
-         return matched;
+        return matched;
     }
 
     /**
@@ -420,8 +420,7 @@ public class SMARTSQueryTool {
             BitSet atomSet = new BitSet();
             for (int x : mapping)
                 atomSet.set(x);
-            if (atomSets.add(atomSet))
-                matched.add(Ints.asList(mapping));
+            if (atomSets.add(atomSet)) matched.add(Ints.asList(mapping));
         }
         return matched;
     }
@@ -438,15 +437,14 @@ public class SMARTSQueryTool {
 
         // initialise required invariants - the query has ISINRING set if
         // the query contains ring queries [R?] [r?] [x?] etc.
-        SmartsMatchers.prepare(atomContainer,
-                               true);
+        SmartsMatchers.prepare(atomContainer, true);
 
         // providing skip aromaticity has not be set apply the desired
         // aromaticity model
         try {
-             if (!skipAromaticity) {
-                 aromaticity.apply(atomContainer);
-             }
+            if (!skipAromaticity) {
+                aromaticity.apply(atomContainer);
+            }
         } catch (CDKException e) {
             logger.debug(e.toString());
             throw new CDKException(e.toString(), e);

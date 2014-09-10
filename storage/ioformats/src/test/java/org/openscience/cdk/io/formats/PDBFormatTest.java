@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class PDBFormatTest extends ChemFormatMatcherTest {
 
     public PDBFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)PDBFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) PDBFormat.getInstance());
     }
 
 }

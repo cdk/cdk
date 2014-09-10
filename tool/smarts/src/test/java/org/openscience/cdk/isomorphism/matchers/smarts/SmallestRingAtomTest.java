@@ -40,17 +40,14 @@ import static org.mockito.Mockito.when;
  * @cdk.module test-smarts
  */
 public class SmallestRingAtomTest {
-    @Test public void matches() {
+
+    @Test
+    public void matches() {
         SmallestRingAtom matcher = new SmallestRingAtom(5, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
-                                                                                             0,
-                                                                                             0,
-                                                                                             Collections.<Integer>singleton(5),
-                                                                                             0,
-                                                                                             0,
-                                                                                             0,
-                                                                                             0));
+        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(
+                new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.<Integer> singleton(5), 0, 0, 0,
+                        0));
         assertTrue(matcher.matches(atom));
     }
 }

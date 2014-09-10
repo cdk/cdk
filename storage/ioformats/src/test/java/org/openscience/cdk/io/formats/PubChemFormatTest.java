@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class PubChemFormatTest extends ChemFormatTest {
 
     public PubChemFormatTest() {
-        super.setChemFormat((IChemFormat)PubChemFormat.getInstance());
+        super.setChemFormat((IChemFormat) PubChemFormat.getInstance());
     }
 
 }

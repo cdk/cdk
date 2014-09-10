@@ -32,15 +32,12 @@ import org.openscience.cdk.io.setting.IOSetting;
  */
 public interface IChemObjectIOListener extends EventListener {
 
-  /**
-   * Prompted when the IO filter needs information to process the
-   * file. The ReaderListener may redirect this question to the
-   * user, disregard it (and let the Reader take the default),
-   * or answer it itself.
-   */
-  public void processIOSettingQuestion(IOSetting setting);
+    /**
+     * Prompted when the IO filter needs information to process the
+     * file. The ReaderListener may redirect this question to the
+     * user, disregard it (and let the Reader take the default),
+     * or answer it itself.
+     */
+    public void processIOSettingQuestion(IOSetting setting);
 
 }
-
-
-

@@ -34,8 +34,7 @@ import java.io.Serializable;
  * @cdk.keyword orbital
  * @cdk.keyword lone-pair
  */
-public class LonePair extends ElectronContainer implements Serializable, ILonePair, Cloneable
-{
+public class LonePair extends ElectronContainer implements Serializable, ILonePair, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -44,14 +43,14 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 51311422004885329L;
+     */
+    private static final long serialVersionUID = 51311422004885329L;
 
-	/** Number of electrons in the lone pair. */
-    protected final int electronCount = 2;
+    /** Number of electrons in the lone pair. */
+    protected final int       electronCount    = 2;
 
     /** The atom with which this lone pair is associated. */
-    protected IAtom atom;
+    protected IAtom           atom;
 
     /**
      * Constructs an unconnected lone pair.
@@ -85,22 +84,22 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * @return the associated Atom.
      *
      * @see    #setAtom
-	 */
-	public IAtom getAtom() {
-		return this.atom;
-	}
+     */
+    public IAtom getAtom() {
+        return this.atom;
+    }
 
-	/**
-	 * Sets the associated Atom.
-	 *
-	 * @param atom the Atom this lone pair will be associated with
+    /**
+     * Sets the associated Atom.
+     *
+     * @param atom the Atom this lone pair will be associated with
      *
      * @see    #getAtom
-	 */
-	public void setAtom(IAtom atom) {
-		this.atom = atom;
-		notifyChanged();
-	}
+     */
+    public void setAtom(IAtom atom) {
+        this.atom = atom;
+        notifyChanged();
+    }
 
     /**
      * Returns true if the given atom participates in this lone pair.
@@ -108,24 +107,24 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
      * @param   atom  The atom to be tested if it participates in this bond
      * @return     true if this lone pair is associated with the atom
      */
-    public boolean contains(IAtom atom)     {
+    public boolean contains(IAtom atom) {
         return (this.atom == atom);
     }
 
-	/**
-	 * Clones this LonePair object, including a clone of the atom for which the
+    /**
+     * Clones this LonePair object, including a clone of the atom for which the
      * lone pair is defined.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException {
-		LonePair clone = (LonePair) super.clone();
+     *
+     * @return    The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException {
+        LonePair clone = (LonePair) super.clone();
         // clone the Atom
         if (atom != null) {
-		    clone.atom = (IAtom)((IAtom)atom).clone();
+            clone.atom = (IAtom) ((IAtom) atom).clone();
         }
-		return clone;
-	}
+        return clone;
+    }
 
     /**
      * Returns a one line string representation of this LonePair.
@@ -144,5 +143,3 @@ public class LonePair extends ElectronContainer implements Serializable, ILonePa
         return resultString.toString();
     }
 }
-
-

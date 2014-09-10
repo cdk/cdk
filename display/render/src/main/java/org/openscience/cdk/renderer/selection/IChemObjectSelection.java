@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public interface IChemObjectSelection {
 
-	/**
+    /**
      * Perform a selection by some method. This is used for selecting outside
      * the hub, for example:
      *
@@ -46,7 +46,6 @@ public interface IChemObjectSelection {
      * @param chemModel an IChemModel to select from.
      */
     public void select(IChemModel chemModel);
-
 
     /**
      * Make an IAtomContainer where all the bonds

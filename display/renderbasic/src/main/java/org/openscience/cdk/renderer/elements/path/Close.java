@@ -36,7 +36,7 @@ public class Close extends PathElement {
      * Make a Close PathElement.
      */
     public Close() {
-        super( Type.Close );
+        super(Type.Close);
     }
 
     /** {@inheritDoc} **/
@@ -46,7 +46,8 @@ public class Close extends PathElement {
     }
 
     /** @inheritDoc */
-    @Override public void points(double[] coords) {
+    @Override
+    public void points(double[] coords) {
         // N/A
     }
 }

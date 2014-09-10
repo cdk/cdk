@@ -16,11 +16,13 @@ import org.openscience.cdk.interfaces.IBond;
 public class AtomContainerPrinter {
 
     private class Edge implements Comparable<Edge> {
+
         public String firstString;
         public String lastString;
-        public int first;
-        public int last;
-        public int order;
+        public int    first;
+        public int    last;
+        public int    order;
+
         public Edge(int first, int last, int order, String firstString, String lastString) {
             this.first = first;
             this.last = last;
@@ -29,9 +31,9 @@ public class AtomContainerPrinter {
             this.lastString = lastString;
         }
 
-    	/**
-    	 * {@inheritDoc}
-    	 */
+        /**
+         * {@inheritDoc}
+         */
         public int compareTo(Edge o) {
             if (first < o.first || (first == o.first && last < o.last)) {
                 return -1;
@@ -41,7 +43,7 @@ public class AtomContainerPrinter {
         }
 
         @Override
-		public String toString() {
+        public String toString() {
             return firstString + first + ":" + lastString + last + "(" + order + ")";
         }
     }

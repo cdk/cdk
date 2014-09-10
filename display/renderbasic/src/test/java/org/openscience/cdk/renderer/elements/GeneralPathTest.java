@@ -32,12 +32,10 @@ import org.openscience.cdk.renderer.elements.path.PathElement;
  */
 public class GeneralPathTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new GeneralPath(
-			new ArrayList<PathElement>(), Color.black
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new GeneralPath(new ArrayList<PathElement>(), Color.black);
+        setRenderingElement(element);
+    }
 
 }

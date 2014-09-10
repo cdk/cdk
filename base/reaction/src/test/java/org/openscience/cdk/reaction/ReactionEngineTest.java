@@ -31,49 +31,55 @@ import org.openscience.cdk.reaction.type.parameters.SetReactionCenter;
  */
 public class ReactionEngineTest extends CDKTestCase {
 
-	/**
-	 *  Constructor for the ReactionEngineTest object.
-	 */
-	public ReactionEngineTest(){
+    /**
+     *  Constructor for the ReactionEngineTest object.
+     */
+    public ReactionEngineTest() {
         super();
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testReactionEngine() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine);
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testGetParameterList() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine.getParameterList());
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testSetParameterList_List() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		engine.setParameterList(engine.getParameterList());
-		Assert.assertNotNull(engine.getParameterList());
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testReactionEngine() throws Exception {
+        ReactionEngine engine = new AdductionProtonLPReaction();
+        Assert.assertNotNull(engine);
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testGetParameterClass_Class() throws Exception {
-		ReactionEngine engine = new AdductionProtonLPReaction();
-		Assert.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetParameterList() throws Exception {
+        ReactionEngine engine = new AdductionProtonLPReaction();
+        Assert.assertNotNull(engine.getParameterList());
+    }
+
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSetParameterList_List() throws Exception {
+        ReactionEngine engine = new AdductionProtonLPReaction();
+        engine.setParameterList(engine.getParameterList());
+        Assert.assertNotNull(engine.getParameterList());
+    }
+
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetParameterClass_Class() throws Exception {
+        ReactionEngine engine = new AdductionProtonLPReaction();
+        Assert.assertNotNull(engine.getParameterClass(SetReactionCenter.class));
+    }
 }

@@ -24,7 +24,6 @@
 
 package org.openscience.cdk.isomorphism;
 
-
 import com.google.common.base.Predicate;
 import com.google.common.collect.Sets;
 import org.openscience.cdk.annotations.TestClass;

@@ -80,23 +80,22 @@ import java.util.List;
 public final class HashGeneratorMaker {
 
     /* no default depth */
-    private int depth = -1;
+    private int                        depth          = -1;
 
     /* ordered list of custom encoders */
-    private List<AtomEncoder> customEncoders = new ArrayList<AtomEncoder>();
+    private List<AtomEncoder>          customEncoders = new ArrayList<AtomEncoder>();
 
     /* ordered set of basic encoders */
-    private EnumSet<BasicAtomEncoder> encoderSet = EnumSet
-            .noneOf(BasicAtomEncoder.class);
+    private EnumSet<BasicAtomEncoder>  encoderSet     = EnumSet.noneOf(BasicAtomEncoder.class);
 
     /* list of stereo encoders */
     private List<StereoEncoderFactory> stereoEncoders = new ArrayList<StereoEncoderFactory>();
 
     /* whether we want to use perturbed hash generators */
-    private EquivalentSetFinder equivSetFinder = null;
+    private EquivalentSetFinder        equivSetFinder = null;
 
     /* function determines whether any atoms are suppressed */
-    private AtomSuppression suppression = AtomSuppression.unsuppressed();
+    private AtomSuppression            suppression    = AtomSuppression.unsuppressed();
 
     /**
      * Specify the depth of the hash generator. Larger values discriminate more
@@ -108,8 +107,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testInvalidDepth,testDepth")
     public HashGeneratorMaker depth(int depth) {
-        if (depth < 0)
-            throw new IllegalArgumentException("depth must not be less than 0");
+        if (depth < 0) throw new IllegalArgumentException("depth must not be less than 0");
         this.depth = depth;
         return this;
     }
@@ -279,8 +277,7 @@ public final class HashGeneratorMaker {
      */
     @TestMethod("testEncode_Null,testEncode")
     public HashGeneratorMaker encode(AtomEncoder encoder) {
-        if (encoder == null)
-            throw new NullPointerException("no encoder provided");
+        if (encoder == null) throw new NullPointerException("no encoder provided");
         customEncoders.add(encoder);
         return this;
     }
@@ -296,13 +293,9 @@ public final class HashGeneratorMaker {
         } else if (stereoEncoders.size() == 1) {
             return stereoEncoders.get(0);
         } else {
-            StereoEncoderFactory factory = new ConjugatedEncoderFactory(stereoEncoders
-                                                                                .get(0),
-                                                                        stereoEncoders
-                                                                                .get(1));
+            StereoEncoderFactory factory = new ConjugatedEncoderFactory(stereoEncoders.get(0), stereoEncoders.get(1));
             for (int i = 2; i < stereoEncoders.size(); i++) {
-                factory = new ConjugatedEncoderFactory(factory, stereoEncoders
-                        .get(i));
+                factory = new ConjugatedEncoderFactory(factory, stereoEncoders.get(i));
             }
             return factory;
         }
@@ -318,7 +311,6 @@ public final class HashGeneratorMaker {
     public EnsembleHashGenerator ensemble() {
         throw new UnsupportedOperationException("not yet supported");
     }
-
 
     /**
      * Given the current configuration create an {@link MoleculeHashGenerator}.
@@ -340,8 +332,7 @@ public final class HashGeneratorMaker {
     @TestMethod("testAtomic,testNoDepth")
     public AtomHashGenerator atomic() {
 
-        if (depth < 0)
-            throw new IllegalArgumentException("no depth specified, use .depth(int)");
+        if (depth < 0) throw new IllegalArgumentException("no depth specified, use .depth(int)");
 
         List<AtomEncoder> encoders = new ArrayList<AtomEncoder>();
 
@@ -355,31 +346,19 @@ public final class HashGeneratorMaker {
         // we also use the 'Basic' generator (see below)
         boolean suppress = suppression != AtomSuppression.unsuppressed();
 
-        AtomEncoder   encoder = new ConjugatedAtomEncoder(encoders);
-        SeedGenerator seeds   = new SeedGenerator(encoder, suppression);
+        AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
+        SeedGenerator seeds = new SeedGenerator(encoder, suppression);
 
-        AbstractAtomHashGenerator simple = suppress
-                                           ? new SuppressedAtomHashGenerator(seeds,
-                                                                             new Xorshift(),
-                                                                             makeStereoEncoderFactory(),
-                                                                             suppression,
-                                                                             depth)
-                                           : new BasicAtomHashGenerator(seeds,
-                                                                        new Xorshift(),
-                                                                        makeStereoEncoderFactory(),
-                                                                        depth);
+        AbstractAtomHashGenerator simple = suppress ? new SuppressedAtomHashGenerator(seeds, new Xorshift(),
+                makeStereoEncoderFactory(), suppression, depth) : new BasicAtomHashGenerator(seeds, new Xorshift(),
+                makeStereoEncoderFactory(), depth);
 
         // if there is a finder for checking equivalent vertices then the user
         // wants to 'perturb' the hashed
         if (equivSetFinder != null) {
-            return new PerturbedAtomHashGenerator(seeds,
-                                                  simple,
-                                                  new Xorshift(),
-                                                  makeStereoEncoderFactory(),
-                                                  equivSetFinder,
-                                                  suppression);
-        }
-        else {
+            return new PerturbedAtomHashGenerator(seeds, simple, new Xorshift(), makeStereoEncoderFactory(),
+                    equivSetFinder, suppression);
+        } else {
             // no equivalence set finder - just use the simple hash
             return simple;
         }
@@ -388,8 +367,8 @@ public final class HashGeneratorMaker {
     /**
      * Help class to combined two stereo encoder factories
      */
-    private final class ConjugatedEncoderFactory
-            implements StereoEncoderFactory {
+    private final class ConjugatedEncoderFactory implements StereoEncoderFactory {
+
         private final StereoEncoderFactory left, right;
 
         /**
@@ -409,8 +388,7 @@ public final class HashGeneratorMaker {
          */
         @Override
         public StereoEncoder create(IAtomContainer container, int[][] graph) {
-            return new ConjugatedEncoder(left.create(container, graph), right
-                    .create(container, graph));
+            return new ConjugatedEncoder(left.create(container, graph), right.create(container, graph));
         }
     }
 
@@ -439,7 +417,8 @@ public final class HashGeneratorMaker {
          * @param next    next invariants
          * @return whether either encoder modified any values
          */
-        @Override public boolean encode(long[] current, long[] next) {
+        @Override
+        public boolean encode(long[] current, long[] next) {
             boolean modified = left.encode(current, next);
             return right.encode(current, next) || modified;
         }
@@ -447,7 +426,8 @@ public final class HashGeneratorMaker {
         /**
          * reset the left and right encoders
          */
-        @Override public void reset() {
+        @Override
+        public void reset() {
             left.reset();
             right.reset();
         }

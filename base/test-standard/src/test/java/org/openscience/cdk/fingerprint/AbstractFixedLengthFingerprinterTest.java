@@ -59,12 +59,13 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     /**
      * @cdk.bug 706786
      */
-    @Test public void testBug706786() throws Exception {
+    @Test
+    public void testBug706786() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
         // included. generally MACCS and ESTATE can't be used for substructure filter
         // check those subclasses which check the bits are set
         IAtomContainer superStructure = bug706786_1();
-        IAtomContainer subStructure   = bug706786_2();
+        IAtomContainer subStructure = bug706786_2();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
@@ -73,7 +74,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
-        BitSet subBS   = fingerprinter.getBitFingerprint(subStructure).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(subStructure).asBitSet();
 
         Assert.assertThat(and(superBS, subBS), is(subBS));
     }
@@ -81,17 +82,17 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     /**
      * @cdk.bug 853254
      */
-    @Test public void testBug853254() throws Exception {
+    @Test
+    public void testBug853254() throws Exception {
         String filename = "data/mdl/bug853254-2.mol";
-        InputStream ins =
-            this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer superstructure = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer superstructure = (IAtomContainer) reader.read(new AtomContainer());
 
         filename = "data/mdl/bug853254-1.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer substructure = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer substructure = (IAtomContainer) reader.read(new AtomContainer());
 
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
@@ -113,11 +114,12 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      *
      * @cdk.bug 934819
      */
-    @Test public void testBug934819() throws Exception {
+    @Test
+    public void testBug934819() throws Exception {
         // inlined molecules - note this test fails if implicit hydrogens are
         // included. generally PubCheMFingerprint can't be used for substructure filter
         IAtomContainer superStructure = bug934819_2();
-        IAtomContainer subStructure   = bug934819_1();
+        IAtomContainer subStructure = bug934819_1();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
@@ -126,7 +128,7 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
 
         IFingerprinter fingerprinter = getBitFingerprinter();
         BitSet superBS = fingerprinter.getBitFingerprint(superStructure).asBitSet();
-        BitSet subBS   = fingerprinter.getBitFingerprint(subStructure).asBitSet();
+        BitSet subBS = fingerprinter.getBitFingerprint(subStructure).asBitSet();
 
         Assert.assertThat(and(superBS, subBS), is(subBS));
     }
@@ -136,17 +138,17 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      *
      * @cdk.bug 771485
      */
-    @Test public void testBug771485() throws Exception {
+    @Test
+    public void testBug771485() throws Exception {
         String filename = "data/mdl/bug771485-1.mol";
-        InputStream ins =
-            this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure1 = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer structure1 = (IAtomContainer) reader.read(new AtomContainer());
 
         filename = "data/mdl/bug771485-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer structure2 = (IAtomContainer) reader.read(new AtomContainer());
 
         // these molecules are different resonance forms of the same molecule
         // make sure aromaticity is detected. although some fingerprinters do this
@@ -181,17 +183,17 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
      * @cdk.bug 931608
      * @cdk.bug 934819
      */
-    @Test public void testBug931608() throws Exception {
+    @Test
+    public void testBug931608() throws Exception {
         String filename = "data/mdl/bug931608-1.mol";
-        InputStream ins =
-            this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure1 = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer structure1 = (IAtomContainer) reader.read(new AtomContainer());
 
         filename = "data/mdl/bug931608-2.mol";
         ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         reader = new MDLV2000Reader(ins, Mode.STRICT);
-        IAtomContainer structure2 = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer structure2 = (IAtomContainer) reader.read(new AtomContainer());
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure1);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(structure2);
@@ -383,48 +385,48 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     static IAtomContainer bug934819_1() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"O");
+        IAtom a1 = builder.newInstance(IAtom.class, "O");
         a1.setFormalCharge(-1);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"N");
+        IAtom a2 = builder.newInstance(IAtom.class, "N");
         a2.setFormalCharge(1);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"O");
+        IAtom a3 = builder.newInstance(IAtom.class, "O");
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"S");
+        IAtom a8 = builder.newInstance(IAtom.class, "S");
         a8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a8);
-        IBond b1 = builder.newInstance(IBond.class,a2, a1, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a3, a2, IBond.Order.DOUBLE);
+        IBond b2 = builder.newInstance(IBond.class, a3, a2, IBond.Order.DOUBLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a4, a2, IBond.Order.SINGLE);
+        IBond b3 = builder.newInstance(IBond.class, a4, a2, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a5, a4, IBond.Order.DOUBLE);
+        IBond b4 = builder.newInstance(IBond.class, a5, a4, IBond.Order.DOUBLE);
         b4.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a6, a5, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a6, a5, IBond.Order.SINGLE);
         b5.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a7, a6, IBond.Order.DOUBLE);
+        IBond b6 = builder.newInstance(IBond.class, a7, a6, IBond.Order.DOUBLE);
         b6.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a8, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a8, a7, IBond.Order.SINGLE);
         b7.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a8, a4, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a8, a4, IBond.Order.SINGLE);
         b8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b8);
         return mol;
@@ -438,118 +440,117 @@ public abstract class AbstractFixedLengthFingerprinterTest extends AbstractFinge
     static IAtomContainer bug934819_2() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"S");
+        IAtom a5 = builder.newInstance(IAtom.class, "S");
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"S");
+        IAtom a10 = builder.newInstance(IAtom.class, "S");
         a10.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a10);
-        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        IAtom a11 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a11);
-        IAtom a12 = builder.newInstance(IAtom.class,"C");
+        IAtom a12 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a12);
-        IAtom a13 = builder.newInstance(IAtom.class,"C");
+        IAtom a13 = builder.newInstance(IAtom.class, "C");
         a13.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a13);
-        IAtom a14 = builder.newInstance(IAtom.class,"C");
+        IAtom a14 = builder.newInstance(IAtom.class, "C");
         a14.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a14);
-        IAtom a15 = builder.newInstance(IAtom.class,"C");
+        IAtom a15 = builder.newInstance(IAtom.class, "C");
         a15.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a15);
-        IAtom a16 = builder.newInstance(IAtom.class,"C");
+        IAtom a16 = builder.newInstance(IAtom.class, "C");
         a16.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a16);
-        IAtom a17 = builder.newInstance(IAtom.class,"S");
+        IAtom a17 = builder.newInstance(IAtom.class, "S");
         a17.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addAtom(a17);
-        IAtom a18 = builder.newInstance(IAtom.class,"N");
+        IAtom a18 = builder.newInstance(IAtom.class, "N");
         a18.setFormalCharge(1);
         mol.addAtom(a18);
-        IAtom a19 = builder.newInstance(IAtom.class,"O");
+        IAtom a19 = builder.newInstance(IAtom.class, "O");
         a19.setFormalCharge(-1);
         mol.addAtom(a19);
-        IAtom a20 = builder.newInstance(IAtom.class,"O");
+        IAtom a20 = builder.newInstance(IAtom.class, "O");
         mol.addAtom(a20);
-        IBond b1 = builder.newInstance(IBond.class,a2, a1, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a2, a1, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a3, a2, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a3, a2, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a4, a3, IBond.Order.SINGLE);
+        IBond b3 = builder.newInstance(IBond.class, a4, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a5, a4, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a5, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a6, a5, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a6, a5, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a7, a6, IBond.Order.DOUBLE);
+        IBond b6 = builder.newInstance(IBond.class, a7, a6, IBond.Order.DOUBLE);
         b6.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a8, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a8, a7, IBond.Order.SINGLE);
         b7.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a9, a8, IBond.Order.DOUBLE);
+        IBond b8 = builder.newInstance(IBond.class, a9, a8, IBond.Order.DOUBLE);
         b8.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a10, a9, IBond.Order.SINGLE);
+        IBond b9 = builder.newInstance(IBond.class, a10, a9, IBond.Order.SINGLE);
         b9.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a10, a6, IBond.Order.SINGLE);
+        IBond b10 = builder.newInstance(IBond.class, a10, a6, IBond.Order.SINGLE);
         b10.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a11, a9, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a11, a9, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = builder.newInstance(IBond.class,a12, a11, IBond.Order.TRIPLE);
+        IBond b12 = builder.newInstance(IBond.class, a12, a11, IBond.Order.TRIPLE);
         mol.addBond(b12);
-        IBond b13 = builder.newInstance(IBond.class,a13, a12, IBond.Order.SINGLE);
+        IBond b13 = builder.newInstance(IBond.class, a13, a12, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = builder.newInstance(IBond.class,a14, a13, IBond.Order.DOUBLE);
+        IBond b14 = builder.newInstance(IBond.class, a14, a13, IBond.Order.DOUBLE);
         b14.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b14);
-        IBond b15 = builder.newInstance(IBond.class,a15, a14, IBond.Order.SINGLE);
+        IBond b15 = builder.newInstance(IBond.class, a15, a14, IBond.Order.SINGLE);
         b15.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b15);
-        IBond b16 = builder.newInstance(IBond.class,a16, a15, IBond.Order.DOUBLE);
+        IBond b16 = builder.newInstance(IBond.class, a16, a15, IBond.Order.DOUBLE);
         b16.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b16);
-        IBond b17 = builder.newInstance(IBond.class,a17, a16, IBond.Order.SINGLE);
+        IBond b17 = builder.newInstance(IBond.class, a17, a16, IBond.Order.SINGLE);
         b17.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b17);
-        IBond b18 = builder.newInstance(IBond.class,a17, a13, IBond.Order.SINGLE);
+        IBond b18 = builder.newInstance(IBond.class, a17, a13, IBond.Order.SINGLE);
         b18.setFlag(CDKConstants.ISAROMATIC, true);
         mol.addBond(b18);
-        IBond b19 = builder.newInstance(IBond.class,a18, a16, IBond.Order.SINGLE);
+        IBond b19 = builder.newInstance(IBond.class, a18, a16, IBond.Order.SINGLE);
         mol.addBond(b19);
-        IBond b20 = builder.newInstance(IBond.class,a19, a18, IBond.Order.SINGLE);
+        IBond b20 = builder.newInstance(IBond.class, a19, a18, IBond.Order.SINGLE);
         mol.addBond(b20);
-        IBond b21 = builder.newInstance(IBond.class,a20, a18, IBond.Order.DOUBLE);
+        IBond b21 = builder.newInstance(IBond.class, a20, a18, IBond.Order.DOUBLE);
         mol.addBond(b21);
         return mol;
     }
 
-    static BitSet asBitSet(int ... xs) {
+    static BitSet asBitSet(int... xs) {
         BitSet bs = new BitSet();
         for (int x : xs)
             bs.set(x);
         return bs;
     }
 }
-

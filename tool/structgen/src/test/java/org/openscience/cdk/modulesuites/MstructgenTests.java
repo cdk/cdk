@@ -35,15 +35,9 @@ import org.openscience.cdk.structgen.stochastic.operator.CrossoverMachineTest;
  *
  * @cdk.module  test-structgen
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    StructgenCoverageTest.class,
-    StructGenAtomTypeGuesserTest.class,
-    StructGenMatcherTest.class,
-    RandomStructureGeneratorTest.class,
-    VicinitySamplerTest.class,
-    PartialFilledStructureMergerTest.class,
-    ChemGraphTest.class,
-    CrossoverMachineTest.class
-})
-public class MstructgenTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {StructgenCoverageTest.class, StructGenAtomTypeGuesserTest.class, StructGenMatcherTest.class,
+        RandomStructureGeneratorTest.class, VicinitySamplerTest.class, PartialFilledStructureMergerTest.class,
+        ChemGraphTest.class, CrossoverMachineTest.class})
+public class MstructgenTests {
+}

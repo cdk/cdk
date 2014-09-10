@@ -1,25 +1,25 @@
 /* Copyright (C) 2009-2010 maclean {gilleain.torrance@gmail.com}
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.signature;
 
 import org.junit.Assert;
@@ -52,8 +52,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     public IAtomContainer reconstruct(String signature) {
         ColoredTree tree = AbstractVertexSignature.parse(signature);
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeFromColoredTree(tree);
         return builder.getAtomContainer();
     }
@@ -126,18 +125,14 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void makeGraphTest() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         Assert.assertNotNull(builder.getAtomContainer());
     }
 
     @Test
     public void makeVertexTest() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         IAtomContainer product = builder.getAtomContainer();
@@ -146,9 +141,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void makeEdgeTest_singleBond() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -162,9 +155,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void makeEdgeTest_doubleBond() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -178,9 +169,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void makeEdgeTest_tripleBond() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -194,9 +183,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void makeEdgeTest_aromaticBond() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         builder.makeVertex("C");
         builder.makeVertex("C");
@@ -212,9 +199,7 @@ public class MoleculeFromSignatureBuilderTest extends AbstractSignatureTest {
 
     @Test
     public void getAtomContainerTest() {
-        MoleculeFromSignatureBuilder builder =
-            new MoleculeFromSignatureBuilder(
-                    SilentChemObjectBuilder.getInstance());
+        MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(SilentChemObjectBuilder.getInstance());
         builder.makeGraph();
         Assert.assertNotNull(builder.getAtomContainer());
     }

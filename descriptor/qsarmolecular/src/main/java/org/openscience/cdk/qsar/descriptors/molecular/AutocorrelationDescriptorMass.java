@@ -46,34 +46,31 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorMassTest")
-public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor implements IMolecularDescriptor{
+public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private final static String[] names = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
-    private final static double CARBON_MASS = 12.010735896788;
+    private final static String[] names       = {"ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5"};
+    private final static double   CARBON_MASS = 12.010735896788;
 
-    private static double scaledAtomicMasses(IElement element)
-            throws java.io.IOException, ClassNotFoundException {
+    private static double scaledAtomicMasses(IElement element) throws java.io.IOException, ClassNotFoundException {
 
-    	IsotopeFactory isofac = Isotopes.getInstance();
+        IsotopeFactory isofac = Isotopes.getInstance();
         double realmasses = isofac.getNaturalMass(element);
         return (realmasses / CARBON_MASS);
 
     }
 
-	private static double[] listConvertion(IAtomContainer container)
-			throws java.io.IOException, ClassNotFoundException{
-		int natom = container.getAtomCount();
+    private static double[] listConvertion(IAtomContainer container) throws java.io.IOException, ClassNotFoundException {
+        int natom = container.getAtomCount();
 
-		double[] scalated = new double[natom];
+        double[] scalated = new double[natom];
 
-		for (int i = 0; i < natom; i++) {
-			scalated[i] = scaledAtomicMasses(container.getAtom(i));
-		}
-		return scalated;
-	}
+        for (int i = 0; i < natom; i++) {
+            scalated[i] = scaledAtomicMasses(container.getAtom(i));
+        }
+        return scalated;
+    }
 
-
-	/**
+    /**
      * This method calculate the ATS Autocorrelation descriptor.
      */
     @TestMethod("test1")
@@ -84,10 +81,10 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
             container = AtomContainerManipulator.removeHydrogens(container);
         } catch (CloneNotSupportedException e) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++) result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, getDescriptorNames(),
-                    new CDKException("Error during cloner: " + e.getMessage(), e));
+            for (int i = 0; i < 5; i++)
+                result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                    getDescriptorNames(), new CDKException("Error during cloner: " + e.getMessage(), e));
         }
 
         try {
@@ -102,7 +99,8 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
 
                         if (distancematrix[i][j] == k) {
                             masSum[k] += w[i] * w[j];
-                        } else masSum[k] += 0.0;
+                        } else
+                            masSum[k] += 0.0;
                     }
                 }
                 if (k > 0) masSum[k] = masSum[k] / 2;
@@ -113,54 +111,54 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
                 result.add(aMasSum);
             }
 
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, getDescriptorNames());
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                    getDescriptorNames());
 
         } catch (Exception ex) {
             DoubleArrayResult result = new DoubleArrayResult(5);
-            for (int i = 0; i < 5; i++) result.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, getDescriptorNames(),
-                    new CDKException("Error while calculating the ATS_mass descriptor: " + ex.getMessage(), ex));
+            for (int i = 0; i < 5; i++)
+                result.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                    getDescriptorNames(), new CDKException("Error while calculating the ATS_mass descriptor: "
+                            + ex.getMessage(), ex));
         }
     }
 
     @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
-		return new String[0];
-	}
+        return new String[0];
+    }
 
-	@TestMethod("testGetParameterType_String")
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-		return null;
-	}
+        return null;
+    }
 
-	@TestMethod("testGetParameters")
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
-		return null;
-	}
+        return null;
+    }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
-	}
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass", this
+                        .getClass().getName(), "The Chemistry Development Kit");
+    }
 
-	@TestMethod("testGetDescriptorResultType")
+    @TestMethod("testGetDescriptorResultType")
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
-	@TestMethod("testSetParameters_arrayObject")
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
 
-		}
+    }
 
 }

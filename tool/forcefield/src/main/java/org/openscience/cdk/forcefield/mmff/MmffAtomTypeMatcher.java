@@ -70,10 +70,10 @@ final class MmffAtomTypeMatcher {
     private final MmffAromaticTypeMapping aromaticTypes = new MmffAromaticTypeMapping();
 
     /** Substructure patterns for atom types. */
-    private final AtomTypePattern[] patterns;
+    private final AtomTypePattern[]       patterns;
 
     /** Mapping of parent to hydrogen symbols. */
-    private final Map<String, String> hydrogenMap;
+    private final Map<String, String>     hydrogenMap;
 
     /**
      * Create a new MMFF atom type matcher, definitions are loaded at instantiation.
@@ -87,7 +87,8 @@ final class MmffAtomTypeMatcher {
             this.patterns = loadPatterns(smaIn);
             this.hydrogenMap = loadHydrogenDefinitions(hdefIn);
         } catch (IOException e) {
-            throw new InternalError("Atom type definitions for MMFF94 Atom Types could not be loaded: " + e.getMessage());
+            throw new InternalError("Atom type definitions for MMFF94 Atom Types could not be loaded: "
+                    + e.getMessage());
         } finally {
             close(smaIn);
             close(hdefIn);
@@ -220,8 +221,7 @@ final class MmffAtomTypeMatcher {
 
             try {
                 IQueryAtomContainer container = SMARTSParser.parse(sma, null);
-                matchers.add(new AtomTypePattern(VentoFoggia.findSubstructure(container),
-                                                 symb));
+                matchers.add(new AtomTypePattern(VentoFoggia.findSubstructure(container), symb));
             } catch (IllegalArgumentException e) {
                 throw new IOException(line + " could not be loaded: " + e.getMessage());
             } catch (TokenMgrError e) {

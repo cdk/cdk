@@ -47,9 +47,7 @@ import java.util.List;
 
 public class BCUTDescriptorTest extends MolecularDescriptorTest {
 
-    public BCUTDescriptorTest() {
-    }
-
+    public BCUTDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
@@ -76,29 +74,37 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         Assert.assertNotNull(retval);
         /* System.out.println("Num ret = "+retval.size()); */
         for (int i = 0; i < retval.length(); i++) {
-            Assert.assertTrue(
-                    "The returned value must be non-zero",
-                    Math.abs(0.0 - retval.get(i)) > 0.0000001
-            );
+            Assert.assertTrue("The returned value must be non-zero", Math.abs(0.0 - retval.get(i)) > 0.0000001);
         }
 
         String[] names = descriptorValue.getNames();
-        for (String name : names) Assert.assertNotNull(name);
+        for (String name : names)
+            Assert.assertNotNull(name);
 
         /*
-        Assert.assertEquals(1756.5060703860984, ((Double)retval.get(0)).doubleValue(), 0.00000001);
-        Assert.assertEquals(41.91069159994975,  ((Double)retval.get(1)).doubleValue(), 0.00000001);
-        Assert.assertEquals(12.06562671430088,  ((Double)retval.get(2)).doubleValue(), 0.00000001);
-        Assert.assertEquals(1976.6432599699767, ((Double)retval.get(3)).doubleValue(), 0.00000001);
-        Assert.assertEquals(44.45945636161082,  ((Double)retval.get(4)).doubleValue(), 0.00000001);
-        Assert.assertEquals(12.549972243701887, ((Double)retval.get(5)).doubleValue(), 0.00000001);
-        Assert.assertEquals(4333.097373073368,  ((Double)retval.get(6)).doubleValue(), 0.00000001);
-        Assert.assertEquals(65.82626658920714,  ((Double)retval.get(7)).doubleValue(), 0.00000001);
-        Assert.assertEquals(16.302948232909483, ((Double)retval.get(8)).doubleValue(), 0.00000001);
-        */
+         * Assert.assertEquals(1756.5060703860984,
+         * ((Double)retval.get(0)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(41.91069159994975,
+         * ((Double)retval.get(1)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(12.06562671430088,
+         * ((Double)retval.get(2)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(1976.6432599699767,
+         * ((Double)retval.get(3)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(44.45945636161082,
+         * ((Double)retval.get(4)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(12.549972243701887,
+         * ((Double)retval.get(5)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(4333.097373073368,
+         * ((Double)retval.get(6)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(65.82626658920714,
+         * ((Double)retval.get(7)).doubleValue(), 0.00000001);
+         * Assert.assertEquals(16.302948232909483,
+         * ((Double)retval.get(8)).doubleValue(), 0.00000001);
+         */
     }
 
-    @Test public void testExtraEigenvalues() throws Exception {
+    @Test
+    public void testExtraEigenvalues() throws Exception {
         String filename = "data/hin/gravindex.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -117,14 +123,16 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         int nheavy = 20;
 
         Assert.assertEquals(75, retval.length());
-        for (int i = 0; i < nheavy; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < nheavy; i++)
+            Assert.assertTrue(retval.get(i) != Double.NaN);
         for (int i = nheavy; i < nheavy + 5; i++) {
             Assert.assertTrue("Extra eigenvalue should have been NaN", Double.isNaN(retval.get(i)));
         }
 
     }
 
-    @Test public void testAromaticity() throws Exception {
+    @Test
+    public void testAromaticity() throws Exception {
         setDescriptor(BCUTDescriptor.class);
 
         String smiles1 = "c1ccccc1";
@@ -151,11 +159,13 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         }
     }
 
-    @Test public void testHAddition() throws Exception {
+    @Test
+    public void testHAddition() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C=1C=CC(=CC1)CNC2=CC=C(C=C2N(=O)=O)S(=O)(=O)C(Cl)(Cl)Br");
         DoubleArrayResult result1 = (DoubleArrayResult) descriptor.calculate(mol).getValue();
-        for (int i = 0; i < result1.length(); i++) Assert.assertTrue( result1.get(i) != Double.NaN);
+        for (int i = 0; i < result1.length(); i++)
+            Assert.assertTrue(result1.get(i) != Double.NaN);
     }
 
     /**
@@ -179,7 +189,6 @@ public class BCUTDescriptorTest extends MolecularDescriptorTest {
         Assert.assertNotNull(e);
         // make sure exception was a NPE etc.
         Assert.assertEquals("Could not calculate partial charges: Partial charge not-supported for element: 'As'.",
-                            e.getMessage());
+                e.getMessage());
     }
 }
-

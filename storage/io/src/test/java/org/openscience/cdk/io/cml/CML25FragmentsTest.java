@@ -48,19 +48,12 @@ public class CML25FragmentsTest extends CDKTestCase {
 
     @Ignore("Functionality not yet implemented")
     public void testIsotopeRef() throws Exception {
-        String cmlString = "<cml>" +
-            "  <isotopeList>" +
-            "    <isotope id='H1' number='1' elementType='H'>" +
-            "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>" +
-            "      <scalar dictRef='bo:exactMass' errorValue='0.0001E-6'>1.007825032</scalar>" +
-            "    </isotope>" +
-            "  </isotopeList>" +
-            "  <molecule>" +
-            "    <atomArray>" +
-            "      <atom id='a1' elementType='H' isotopeRef='H1'/>" +
-            "    </atomArray>" +
-            "  </molecule>" +
-            "</cml>";
+        String cmlString = "<cml>" + "  <isotopeList>" + "    <isotope id='H1' number='1' elementType='H'>"
+                + "      <scalar dictRef='bo:relativeAbundance'>99.9885</scalar>"
+                + "      <scalar dictRef='bo:exactMass' errorValue='0.0001E-6'>1.007825032</scalar>" + "    </isotope>"
+                + "  </isotopeList>" + "  <molecule>" + "    <atomArray>"
+                + "      <atom id='a1' elementType='H' isotopeRef='H1'/>" + "    </atomArray>" + "  </molecule>"
+                + "</cml>";
 
         IChemFile chemFile = parseCMLString(cmlString);
         IAtomContainer mol = checkForSingleMoleculeFile(chemFile);
@@ -77,7 +70,7 @@ public class CML25FragmentsTest extends CDKTestCase {
     private IChemFile parseCMLString(String cmlString) throws Exception {
         IChemFile chemFile = null;
         CMLReader reader = new CMLReader(new ByteArrayInputStream(cmlString.getBytes()));
-        chemFile = (IChemFile)reader.read(new ChemFile());
+        chemFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
         return chemFile;
     }
@@ -105,7 +98,7 @@ public class CML25FragmentsTest extends CDKTestCase {
 
         Assert.assertEquals(moleculeSet.getAtomContainerCount(), numberOfMolecules);
         IAtomContainer mol = null;
-        for (int i=0; i<numberOfMolecules; i++) {
+        for (int i = 0; i < numberOfMolecules; i++) {
             mol = moleculeSet.getAtomContainer(i);
             Assert.assertNotNull(mol);
         }

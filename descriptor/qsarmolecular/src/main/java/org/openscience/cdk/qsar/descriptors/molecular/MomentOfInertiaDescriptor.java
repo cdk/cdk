@@ -90,20 +90,15 @@ import Jama.Matrix;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.MomentOfInertiaDescriptorTest")
 public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MomentOfInertiaDescriptor.class);
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(MomentOfInertiaDescriptor.class);
 
-    private static final String[] names = {
-            "MOMI-X", "MOMI-Y", "MOMI-Z",
-            "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"
-    };
+    private static final String[] names  = {"MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"};
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -130,7 +125,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -146,7 +141,6 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         return (null);
     }
 
-
     /**
      * Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
      *
@@ -161,9 +155,10 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 
     /**
@@ -183,7 +178,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         IAtomContainer clone;
         IsotopeFactory factory;
         try {
-            clone = (IAtomContainer)container.clone();
+            clone = (IAtomContainer) container.clone();
             factory = Isotopes.getInstance();
             factory.configureAtoms(clone);
         } catch (Exception e) {
@@ -191,13 +186,10 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
             return getDummyDescriptorValue(e);
         }
 
-
         DoubleArrayResult retval = new DoubleArrayResult(7);
 
         double ccf = 1.000138;
         double eps = 1e-5;
-
-
 
         double[][] imat = new double[3][3];
         Point3d centerOfMass = GeometryUtil.get3DCentreOfMass(clone);
@@ -247,8 +239,10 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         eval[0] = eval[2];
         eval[2] = etmp;
 
-        if (Math.abs(eval[1]) > 1e-3) retval.add(eval[0] / eval[1]);
-        else retval.add(1000);
+        if (Math.abs(eval[1]) > 1e-3)
+            retval.add(eval[0] / eval[1]);
+        else
+            retval.add(1000);
 
         if (Math.abs(eval[2]) > 1e-3) {
             retval.add(eval[0] / eval[2]);
@@ -261,14 +255,14 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         // finally get the radius of gyration
         double pri;
         IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(clone);
-        if (Math.abs(eval[2]) > eps) pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
-        else pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
+        if (Math.abs(eval[2]) > eps)
+            pri = Math.pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
+        else
+            pri = Math.sqrt(eval[0] * ccf / MolecularFormulaManipulator.getTotalExactMass(formula));
         retval.add(Math.sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.getTotalExactMass(formula)));
 
-
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -287,5 +281,3 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
         return new DoubleArrayResultType(7);
     }
 }
-
-

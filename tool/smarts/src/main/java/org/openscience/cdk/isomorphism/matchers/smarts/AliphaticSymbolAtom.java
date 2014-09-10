@@ -30,28 +30,32 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class AliphaticSymbolAtom extends SMARTSAtom {
 
-	/**
-	 * Creates a new instance.
-	 *
-	 * @param symbol the atom symbol
-	 */
-	public AliphaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
-		super(builder);
-		setFlag(CDKConstants.ISAROMATIC, false);
-		setSymbol(symbol);
-	}
+    /**
+     * Creates a new instance.
+     *
+     * @param symbol the atom symbol
+     */
+    public AliphaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
+        super(builder);
+        setFlag(CDKConstants.ISAROMATIC, false);
+        setSymbol(symbol);
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
-		return !atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
+        return !atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.PseudoAtom#toString()
-	 */
-	public String toString() {
-		return "AliphaticSymbolAtom(" + getSymbol() + ")";
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
+    public String toString() {
+        return "AliphaticSymbolAtom(" + getSymbol() + ")";
+    }
 }

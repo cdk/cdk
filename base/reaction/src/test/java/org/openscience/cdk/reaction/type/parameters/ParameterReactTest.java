@@ -29,63 +29,71 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class ParameterReactTest extends CDKTestCase {
 
-	/**
-	 *  Constructor for the ParameterReactTest object.
-	 */
-	public ParameterReactTest(){
+    /**
+     *  Constructor for the ParameterReactTest object.
+     */
+    public ParameterReactTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testParameterReact(){
-		IParameterReact paramSet = new ParameterReact();
-		Assert.assertNotNull(paramSet);
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testSetParameter_boolean(){
-		IParameterReact paramSet = new ParameterReact();
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testParameterReact() {
+        IParameterReact paramSet = new ParameterReact();
+        Assert.assertNotNull(paramSet);
+    }
 
-		paramSet.setParameter(Boolean.TRUE);
-		Assert.assertTrue(paramSet.isSetParameter());
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSetParameter_boolean() {
+        IParameterReact paramSet = new ParameterReact();
 
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testIsSetParameter(){
-		IParameterReact paramSet = new ParameterReact();
-		Assert.assertFalse(paramSet.isSetParameter());
-	}
+        paramSet.setParameter(Boolean.TRUE);
+        Assert.assertTrue(paramSet.isSetParameter());
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testSetValue_object(){
-		IParameterReact paramSet = new ParameterReact();
-		paramSet.setValue(null);
-		Assert.assertNull(paramSet.getValue());
+    }
 
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testGetValue(){
-		IParameterReact paramSet = new ParameterReact();
-		paramSet.setValue(new Object());
-		Assert.assertNotNull(paramSet.getValue());
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testIsSetParameter() {
+        IParameterReact paramSet = new ParameterReact();
+        Assert.assertFalse(paramSet.isSetParameter());
+    }
+
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testSetValue_object() {
+        IParameterReact paramSet = new ParameterReact();
+        paramSet.setValue(null);
+        Assert.assertNull(paramSet.getValue());
+
+    }
+
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetValue() {
+        IParameterReact paramSet = new ParameterReact();
+        paramSet.setValue(new Object());
+        Assert.assertNotNull(paramSet.getValue());
+    }
 }

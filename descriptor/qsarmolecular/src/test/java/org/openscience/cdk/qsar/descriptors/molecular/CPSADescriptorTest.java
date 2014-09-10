@@ -1,22 +1,22 @@
 /*
-* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import org.junit.Assert;
@@ -34,7 +34,6 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 import java.io.InputStream;
 import java.util.List;
 
-
 /**
  * TestSuite that runs all QSAR tests.
  *
@@ -43,9 +42,7 @@ import java.util.List;
 
 public class CPSADescriptorTest extends MolecularDescriptorTest {
 
-    public CPSADescriptorTest() {
-    }
-
+    public CPSADescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
@@ -63,11 +60,9 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         /*
-        System.out.println("Num ret = "+retval.size());
-        for (int i = 0; i < retval.size(); i++) {
-            System.out.println( retval.get(i) );
-        }
-        */
+         * System.out.println("Num ret = "+retval.size()); for (int i = 0; i <
+         * retval.size(); i++) { System.out.println( retval.get(i) ); }
+         */
 
         Assert.assertEquals(0, retval.get(28), 0.0001);
         Assert.assertEquals(1, retval.get(27), 0.0001);
@@ -76,7 +71,8 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
     }
 
-    @Test public void testChargedMolecule() throws Exception {
+    @Test
+    public void testChargedMolecule() throws Exception {
         String filename = "data/mdl/cpsa-charged.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -86,10 +82,12 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++)
+            Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 
-    @Test public void testUnChargedMolecule() throws Exception {
+    @Test
+    public void testUnChargedMolecule() throws Exception {
         String filename = "data/mdl/cpsa-uncharged.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
@@ -99,7 +97,7 @@ public class CPSADescriptorTest extends MolecularDescriptorTest {
 
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(ac).getValue();
         int ndesc = retval.length();
-        for (int i = 0; i < ndesc; i++) Assert.assertTrue(retval.get(i) != Double.NaN);
+        for (int i = 0; i < ndesc; i++)
+            Assert.assertTrue(retval.get(i) != Double.NaN);
     }
 }
-

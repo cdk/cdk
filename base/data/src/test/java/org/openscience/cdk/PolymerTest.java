@@ -37,40 +37,42 @@ import org.openscience.cdk.interfaces.*;
  */
 public class PolymerTest extends AbstractPolymerTest {
 
-    @BeforeClass public static void setUp() {
-        setTestObjectBuilder(
-            new ITestObjectBuilder() {
-                public IChemObject newTestObject() {
-                    return new Polymer();
-                }
+    @BeforeClass
+    public static void setUp() {
+        setTestObjectBuilder(new ITestObjectBuilder() {
+
+            public IChemObject newTestObject() {
+                return new Polymer();
             }
-        );
+        });
     }
 
-	@Test public void testPolymer() {
-		IPolymer oPolymer = new Polymer();
-		Assert.assertNotNull(oPolymer);
-		Assert.assertEquals(oPolymer.getMonomerCount(), 0);
-	}
+    @Test
+    public void testPolymer() {
+        IPolymer oPolymer = new Polymer();
+        Assert.assertNotNull(oPolymer);
+        Assert.assertEquals(oPolymer.getMonomerCount(), 0);
+    }
 
-	/**
-	 * A clone must deep clone everything, so that after the clone, operations
-	 * on the original do not modify the clone.
-	 *
-	 * @cdk.bug 2454890
-	 */
-	@Test public void testPolymerClone() throws Exception {
-		IPolymer oPolymer = new Polymer();
-		Assert.assertNotNull(oPolymer);
-		Assert.assertEquals(0, oPolymer.getMonomerCount());
-		Polymer clone = (Polymer)oPolymer.clone();
-		Monomer monomer = new Monomer();
-		monomer.setMonomerName("TYR55");
-		oPolymer.addAtom(new Atom("C"), monomer);
+    /**
+     * A clone must deep clone everything, so that after the clone, operations
+     * on the original do not modify the clone.
+     *
+     * @cdk.bug 2454890
+     */
+    @Test
+    public void testPolymerClone() throws Exception {
+        IPolymer oPolymer = new Polymer();
+        Assert.assertNotNull(oPolymer);
+        Assert.assertEquals(0, oPolymer.getMonomerCount());
+        Polymer clone = (Polymer) oPolymer.clone();
+        Monomer monomer = new Monomer();
+        monomer.setMonomerName("TYR55");
+        oPolymer.addAtom(new Atom("C"), monomer);
 
         // changes should not occur in the clone
         Assert.assertEquals(0, clone.getMonomerCount());
-		Assert.assertEquals(0, clone.getMonomerNames().size());
+        Assert.assertEquals(0, clone.getMonomerNames().size());
 
         // new clone should see the changes
         clone = (Polymer) oPolymer.clone();
@@ -95,7 +97,7 @@ public class PolymerTest extends AbstractPolymerTest {
 
         Monomer monomer = new Monomer();
         monomer.setMonomerName("TYR55");
-        IAtom atom = monomer.getBuilder().newInstance(IAtom.class,"C");
+        IAtom atom = monomer.getBuilder().newInstance(IAtom.class, "C");
         oPolymer.addAtom(atom, monomer);
 
         Polymer clone = (Polymer) oPolymer.clone();

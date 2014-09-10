@@ -34,21 +34,19 @@ public class IntegerArrayResultTypeTest extends CDKTestCase {
     }
 
     @Test
-	public void testIntegerArrayResultType() {
-		IDescriptorResult type = new IntegerArrayResultType(6);
-		Assert.assertNotNull(type);
-	}
+    public void testIntegerArrayResultType() {
+        IDescriptorResult type = new IntegerArrayResultType(6);
+        Assert.assertNotNull(type);
+    }
 
     @Test
-	public void testToString() {
-		Assert.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
-	}
+    public void testToString() {
+        Assert.assertEquals("IntegerArrayResultType", new IntegerArrayResultType(7).toString());
+    }
 
     @Test
     public void testLength() {
-		Assert.assertEquals(7, new IntegerArrayResultType(7).length());
-	}
+        Assert.assertEquals(7, new IntegerArrayResultType(7).length());
+    }
 
 }
-
-

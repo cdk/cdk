@@ -74,7 +74,7 @@ public class InChIGeneratorFactory {
     /**
      * If the CDK aromaticity flag should be ignored and the bonds treated solely as single and double bonds.
      */
-    private boolean ignoreAromaticBonds = true;
+    private boolean                      ignoreAromaticBonds = true;
 
     /**
      * <p>Constructor for InChIGeneratorFactory. Ensures that native code
@@ -87,8 +87,7 @@ public class InChIGeneratorFactory {
         try {
             JniInchiWrapper.loadLibrary();
         } catch (LoadNativeLibraryException lnle) {
-            throw new CDKException( "Unable to load native code; "
-                                    + lnle.getMessage(), lnle );
+            throw new CDKException("Unable to load native code; " + lnle.getMessage(), lnle);
         }
     }
 
@@ -102,8 +101,8 @@ public class InChIGeneratorFactory {
      */
     @TestMethod("testGetInstance")
     public static InChIGeneratorFactory getInstance() throws CDKException {
-        synchronized ( InChIGeneratorFactory.class ) {
-            if ( INSTANCE == null ) {
+        synchronized (InChIGeneratorFactory.class) {
+            if (INSTANCE == null) {
                 INSTANCE = new InChIGeneratorFactory();
             }
             return INSTANCE;
@@ -149,9 +148,8 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIGenerator_IAtomContainer")
-    public InChIGenerator getInChIGenerator(IAtomContainer container)
-                          throws CDKException {
-        return(new InChIGenerator(container, ignoreAromaticBonds));
+    public InChIGenerator getInChIGenerator(IAtomContainer container) throws CDKException {
+        return (new InChIGenerator(container, ignoreAromaticBonds));
     }
 
     /**
@@ -163,10 +161,8 @@ public class InChIGeneratorFactory {
      * @throws CDKException if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIGenerator_IAtomContainer_String")
-    public InChIGenerator getInChIGenerator(IAtomContainer container,
-                                            String options)
-                          throws CDKException {
-        return(new InChIGenerator(container, options, ignoreAromaticBonds));
+    public InChIGenerator getInChIGenerator(IAtomContainer container, String options) throws CDKException {
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -178,9 +174,8 @@ public class InChIGeneratorFactory {
      * @throws CDKException  if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIGenerator_IAtomContainer_List")
-    public InChIGenerator getInChIGenerator(IAtomContainer container,
-                                            List<INCHI_OPTION> options) throws CDKException {
-        return(new InChIGenerator(container, options, ignoreAromaticBonds));
+    public InChIGenerator getInChIGenerator(IAtomContainer container, List<INCHI_OPTION> options) throws CDKException {
+        return (new InChIGenerator(container, options, ignoreAromaticBonds));
     }
 
     /**
@@ -192,10 +187,8 @@ public class InChIGeneratorFactory {
      * @throws CDKException    if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder")
-    public InChIToStructure getInChIToStructure(String inchi,
-                                                IChemObjectBuilder builder)
-                            throws CDKException {
-        return(new InChIToStructure(inchi, builder));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder) throws CDKException {
+        return (new InChIToStructure(inchi, builder));
     }
 
     /**
@@ -208,11 +201,9 @@ public class InChIGeneratorFactory {
      * @throws CDKException    if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder_NullString")
-    public InChIToStructure getInChIToStructure(String inchi,
-                                                IChemObjectBuilder builder,
-                                                String options)
-                            throws CDKException {
-        return(new InChIToStructure(inchi, builder, options));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, String options)
+            throws CDKException {
+        return (new InChIToStructure(inchi, builder, options));
     }
 
     /**
@@ -225,10 +216,8 @@ public class InChIGeneratorFactory {
      * @throws CDKException    if the generator cannot be instantiated
      */
     @TestMethod("testGetInChIToStructure_String_IChemObjectBuilder_List")
-    public InChIToStructure getInChIToStructure(String inchi,
-                                                IChemObjectBuilder builder,
-                                                List<String> options)
-                            throws CDKException {
-        return(new InChIToStructure(inchi, builder, options));
+    public InChIToStructure getInChIToStructure(String inchi, IChemObjectBuilder builder, List<String> options)
+            throws CDKException {
+        return (new InChIToStructure(inchi, builder, options));
     }
 }

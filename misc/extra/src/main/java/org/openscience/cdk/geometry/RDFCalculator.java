@@ -63,15 +63,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class RDFCalculator {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(RDFCalculator.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RDFCalculator.class);
 
-    private double startCutoff;
-    private double cutoff;
-    private double resolution;
-    private double peakWidth;
+    private double              startCutoff;
+    private double              cutoff;
+    private double              resolution;
+    private double              peakWidth;
 
-    private IRDFWeightFunction weightFunction;
+    private IRDFWeightFunction  weightFunction;
 
     /**
      * Constructs a RDF calculator that calculates a unweighted, digitized
@@ -82,8 +81,7 @@ public class RDFCalculator {
      * @param resolution  width of the bins
      * @param peakWidth   width of the gaussian applied to the peaks in &Aring;ngstrom
      */
-    public RDFCalculator(double startCutoff, double cutoff, double resolution,
-                         double peakWidth) {
+    public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth) {
         this(startCutoff, cutoff, resolution, peakWidth, null);
     }
 
@@ -98,13 +96,13 @@ public class RDFCalculator {
      * @param weightFunction the weight function. If null, then an unweighted RDF is
      *                       calculated
      */
-    public RDFCalculator(double startCutoff, double cutoff, double resolution,
-                         double peakWidth, IRDFWeightFunction weightFunction) {
-         this.startCutoff = startCutoff;
-         this.cutoff = cutoff;
-         this.resolution = resolution;
-         this.peakWidth = peakWidth;
-         this.weightFunction = weightFunction;
+    public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth,
+            IRDFWeightFunction weightFunction) {
+        this.startCutoff = startCutoff;
+        this.cutoff = cutoff;
+        this.resolution = resolution;
+        this.peakWidth = peakWidth;
+        this.weightFunction = weightFunction;
     }
 
     /**
@@ -112,24 +110,24 @@ public class RDFCalculator {
      * of the atoms in the <code>AtomContainer</code>.
      */
     public double[] calculate(IAtomContainer container, IAtom atom) {
-        int length = (int)((cutoff-startCutoff)/resolution) + 1;
+        int length = (int) ((cutoff - startCutoff) / resolution) + 1;
         logger.debug("Creating RDF of length ", length);
 
         // the next we need for Gaussian smoothing
-        int binsToFillOnEachSide = (int)(peakWidth*3.0/resolution);
+        int binsToFillOnEachSide = (int) (peakWidth * 3.0 / resolution);
         double sigmaSquare = Math.pow(peakWidth, 2.0);
         // factors is only half a Gaussian, taking advantage of being symmetrical!
         double[] factors = new double[binsToFillOnEachSide];
         double totalArea = 0.0;
         if (factors.length > 0) {
             factors[0] = 1;
-            for (int binCounter=1; binCounter<factors.length; binCounter++) {
-                double height = Math.exp(-1.0*(Math.pow(((double)binCounter)*resolution, 2.0))/sigmaSquare);
+            for (int binCounter = 1; binCounter < factors.length; binCounter++) {
+                double height = Math.exp(-1.0 * (Math.pow(((double) binCounter) * resolution, 2.0)) / sigmaSquare);
                 factors[binCounter] = height;
                 totalArea += height;
             }
             // normalize the Gaussian to unit area
-            for (int binCounter=0; binCounter<factors.length; binCounter++) {
+            for (int binCounter = 0; binCounter < factors.length; binCounter++) {
                 factors[binCounter] = factors[binCounter] / totalArea;
             }
         }
@@ -142,19 +140,19 @@ public class RDFCalculator {
         Point3d atomPoint = atom.getPoint3d();
         Iterator<IAtom> atomsInContainer = container.atoms().iterator();
         while (atomsInContainer.hasNext()) {
-        	IAtom atomInContainer = (IAtom)atomsInContainer.next();
+            IAtom atomInContainer = (IAtom) atomsInContainer.next();
             if (atom == atomInContainer) continue; // don't include the central atom
             distance = atomPoint.distance(atomInContainer.getPoint3d());
-            index = (int)((distance-startCutoff)/this.resolution);
+            index = (int) ((distance - startCutoff) / this.resolution);
             double weight = 1.0;
             if (weightFunction != null) {
                 weight = weightFunction.calculate(atom, atomInContainer);
             }
             if (factors.length > 0) {
                 // apply Gaussian smoothing
-                rdf[index] += weight*factors[0];
-                for (int binCounter=1; binCounter<factors.length; binCounter++) {
-                    double diff = weight*factors[binCounter];
+                rdf[index] += weight * factors[0];
+                for (int binCounter = 1; binCounter < factors.length; binCounter++) {
+                    double diff = weight * factors[binCounter];
                     if ((index - binCounter) >= 0) {
                         rdf[index - binCounter] += diff;
                     }
@@ -170,6 +168,3 @@ public class RDFCalculator {
     }
 
 }
-
-
-

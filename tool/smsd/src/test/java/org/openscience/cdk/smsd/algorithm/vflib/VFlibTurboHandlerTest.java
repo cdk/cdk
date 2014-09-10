@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -52,26 +51,21 @@ import org.openscience.cdk.smsd.tools.MolHandler;
  */
 public class VFlibTurboHandlerTest extends AbstractSubGraphTest {
 
-    public VFlibTurboHandlerTest() {
-    }
+    public VFlibTurboHandlerTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
     @Override
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
     @Override
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     /**
      * Test of isSubgraph method, of class VFlibSubStructureHandler.

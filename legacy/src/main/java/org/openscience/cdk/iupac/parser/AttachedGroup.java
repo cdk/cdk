@@ -31,29 +31,27 @@ import java.util.List;
  * @cdk.require ant1.6
  */
 public class AttachedGroup {
+
     /** The name of the group */
-    private String name = "";
+    private String      name      = "";
     /** The collection of locations the group is attached to */
     private List<Token> locations = new ArrayList<Token>();
     /** The length of the substituent chain */
-    private int length = 0;
+    private int         length    = 0;
 
     /** Creates a new instance of FunctionalGroup */
-    public AttachedGroup() {
-    }
+    public AttachedGroup() {}
 
     /** Creates a new instance of AttachedGroup with a Sting denoting the functional group */
-    public AttachedGroup (List<Token> locations, String name)
-    {
-        setLocations (locations);
-        setName (name);
+    public AttachedGroup(List<Token> locations, String name) {
+        setLocations(locations);
+        setName(name);
     }
 
     /** Creates a new instance of AttachedGroup with an int denoting the length of the substituent chain */
-    public AttachedGroup (List<Token> locations, int length)
-    {
-        setLocations (locations);
-        setLength (length);
+    public AttachedGroup(List<Token> locations, int length) {
+        setLocations(locations);
+        setLength(length);
     }
 
     /** Getter for property name.
@@ -91,13 +89,11 @@ public class AttachedGroup {
     /**
      * A debug string which represents the contents of the class.
      */
-    public String toString ()
-    {
+    public String toString() {
         String returnString = name + ": ";
 
         Iterator<Token> locationsIterator = locations.iterator();
-        while (locationsIterator.hasNext())
-        {
+        while (locationsIterator.hasNext()) {
             Token locationToken = locationsIterator.next();
             returnString += locationToken.image + " ";
         }
@@ -109,8 +105,7 @@ public class AttachedGroup {
      * @return Value of property length.
      *
      */
-    public int getLength()
-    {
+    public int getLength() {
         return length;
     }
 
@@ -118,8 +113,7 @@ public class AttachedGroup {
      * @param length New value of property length.
      *
      */
-    public void setLength(int length)
-    {
+    public void setLength(int length) {
         this.length = length;
     }
 }

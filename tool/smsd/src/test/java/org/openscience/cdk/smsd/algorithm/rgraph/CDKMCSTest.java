@@ -109,7 +109,7 @@ public class CDKMCSTest extends CDKTestCase {
         IQueryAtom a3 = new SymbolQueryAtom(DefaultChemObjectBuilder.getInstance());
         a3.setSymbol("C");
 
-        IBond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE,DefaultChemObjectBuilder.getInstance());
+        IBond b2 = new OrderQueryBond(a2, a3, IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
         query.addAtom(a1);
         query.addAtom(a2);
         query.addAtom(a3);
@@ -238,7 +238,6 @@ public class CDKMCSTest extends CDKTestCase {
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
 
-
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(mol1.getBuilder());
         adder.addImplicitHydrogens(mol1);
@@ -286,7 +285,6 @@ public class CDKMCSTest extends CDKTestCase {
         adder.addImplicitHydrogens(mol2);
         Aromaticity.cdkLegacy().apply(mol2);
 
-
         List<IAtomContainer> list1 = CDKMCS.getOverlaps(mol1, mol2, true);
         List<IAtomContainer> list2 = CDKMCS.getOverlaps(mol2, mol1, true);
         Assert.assertEquals(1, list1.size());
@@ -298,7 +296,8 @@ public class CDKMCSTest extends CDKTestCase {
     @Test
     public void testItself() throws Exception {
         String smiles = "C1CCCCCCC1CC";
-        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles), true);
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(
+                DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles), true);
         IAtomContainer ac = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
         if (standAlone) {
             System.out.println("AtomCount of query: " + query.getAtomCount());

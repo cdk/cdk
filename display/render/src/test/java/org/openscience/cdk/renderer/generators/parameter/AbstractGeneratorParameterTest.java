@@ -30,21 +30,22 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  */
 public class AbstractGeneratorParameterTest {
 
-	class MockParameter extends AbstractGeneratorParameter<Boolean> {
-		public Boolean getDefault() {
-			return false;
-		}
-	}
+    class MockParameter extends AbstractGeneratorParameter<Boolean> {
 
-	@Test
-	public void testValue() {
-		IGeneratorParameter<Boolean> param = new MockParameter();
-		// test the default
-		Assert.assertFalse(param.getValue());
-		param.setValue(true);
-		Assert.assertTrue(param.getValue());
-		param.setValue(false);
-		Assert.assertFalse(param.getValue());
-	}
+        public Boolean getDefault() {
+            return false;
+        }
+    }
+
+    @Test
+    public void testValue() {
+        IGeneratorParameter<Boolean> param = new MockParameter();
+        // test the default
+        Assert.assertFalse(param.getValue());
+        param.setValue(true);
+        Assert.assertTrue(param.getValue());
+        param.setValue(false);
+        Assert.assertFalse(param.getValue());
+    }
 
 }

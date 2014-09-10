@@ -40,7 +40,9 @@ public class TextGroupElement extends TextElement {
      * Compass-point positions for text element annotation children.
      *
      */
-    public enum Position { NW, SW, SE, NE, S, N, W, E };
+    public enum Position {
+        NW, SW, SE, NE, S, N, W, E
+    };
 
     /**
      * A string of text that should be shown around the parent.
@@ -53,12 +55,12 @@ public class TextGroupElement extends TextElement {
         /**
          * The text of this child.
          */
-        public final String text;
+        public final String   text;
 
         /**
          * A subscript (if any) for the child.
          */
-        public final String subscript;
+        public final String   subscript;
 
         /**
          * The position of the child relative to the parent.

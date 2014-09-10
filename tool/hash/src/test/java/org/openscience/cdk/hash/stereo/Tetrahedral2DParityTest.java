@@ -44,12 +44,12 @@ public class Tetrahedral2DParityTest {
     private static final int NONE          = 0;
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstruction_InvalidCoords(){
+    public void testConstruction_InvalidCoords() {
         new Tetrahedral2DParity(new Point2d[0], new int[4]);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstruction_InvalidElev(){
+    public void testConstruction_InvalidElev() {
         new Tetrahedral2DParity(new Point2d[4], new int[0]);
     }
 
@@ -58,9 +58,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_NNND() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_NNND() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H (down)
@@ -75,9 +75,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_NNNU() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_NNNU() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H (up)
@@ -93,9 +93,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_NNNN() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_NNNN() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H
@@ -111,9 +111,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_UUUN() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_UUUN() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H
@@ -129,9 +129,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_DDDN() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_DDDN() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H
@@ -147,9 +147,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_UUUU() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_UUUU() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H
@@ -165,9 +165,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Four_DDDD() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O
+    @Test
+    public void testParity_Four_DDDD() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-9.09, 5.02), // -H
@@ -182,9 +182,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Three_UNN() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O (up)
+    @Test
+    public void testParity_Three_UNN() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (up)
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-7.75, 4.25), //  C (centre)
@@ -199,9 +199,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Three_UUU() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O (up)
+    @Test
+    public void testParity_Three_UUU() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (up)
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-7.75, 4.25), //  C (centre)
@@ -216,9 +216,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Three_DNN() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O (down)
+    @Test
+    public void testParity_Three_DNN() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (down)
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-7.75, 4.25), //  C (centre)
@@ -233,9 +233,9 @@ public class Tetrahedral2DParityTest {
      *
      * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
      */
-    @Test public void testParity_Three_DDD() {
-        Point2d[] coords = new Point2d[]{
-                new Point2d(-7.75, 5.79), // -O (down)
+    @Test
+    public void testParity_Three_DDD() {
+        Point2d[] coords = new Point2d[]{new Point2d(-7.75, 5.79), // -O (down)
                 new Point2d(-6.42, 3.48), // -N
                 new Point2d(-9.09, 3.48), // -C
                 new Point2d(-7.75, 4.25), //  C (centre)

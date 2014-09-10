@@ -37,20 +37,14 @@ public class SimpleCycleTest extends CDKTestCase {
 
     @Test
     public void testSimpleCycle_UndirectedGraph_Collection() {
-		SimpleCycle cycle = new SimpleCycle(
-			new SimpleGraph(), new ArrayList()
-		);
-		Assert.assertNotNull(cycle);
-	}
+        SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new ArrayList());
+        Assert.assertNotNull(cycle);
+    }
 
     @Test
     public void testSimpleCycle_UndirectedGraph_Set() {
-		SimpleCycle cycle = new SimpleCycle(
-			new SimpleGraph(), new HashSet()
-		);
-		Assert.assertNotNull(cycle);
-	}
+        SimpleCycle cycle = new SimpleCycle(new SimpleGraph(), new HashSet());
+        Assert.assertNotNull(cycle);
+    }
 
 }
-
-

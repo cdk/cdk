@@ -33,17 +33,17 @@ import org.junit.BeforeClass;
  */
 public class PathElementTest extends AbstractElementTest {
 
-	@SuppressWarnings("serial")
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new PathElement(
-			new ArrayList<Point2d>() {{
-				add(new Point2d(0,0));
-				add(new Point2d(1,1));
-			}},
-			Color.orange
-		);
-		setRenderingElement(element);
-	}
+    @SuppressWarnings("serial")
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new PathElement(new ArrayList<Point2d>() {
+
+            {
+                add(new Point2d(0, 0));
+                add(new Point2d(1, 1));
+            }
+        }, Color.orange);
+        setRenderingElement(element);
+    }
 
 }

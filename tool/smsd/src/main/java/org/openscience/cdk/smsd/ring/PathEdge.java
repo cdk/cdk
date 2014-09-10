@@ -126,7 +126,8 @@ public class PathEdge {
     }
 
     private IAtom getIntersection(List<IAtom> others) {
-        if (atoms.get(atoms.size() - 1) == others.get(0) || atoms.get(atoms.size() - 1) == others.get(others.size() - 1)) {
+        if (atoms.get(atoms.size() - 1) == others.get(0)
+                || atoms.get(atoms.size() - 1) == others.get(others.size() - 1)) {
             return atoms.get(atoms.size() - 1);
         }
 

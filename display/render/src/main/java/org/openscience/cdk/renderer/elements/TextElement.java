@@ -42,7 +42,7 @@ public class TextElement implements IRenderingElement {
     public final String text;
 
     /** The color of the text. */
-    public final Color color;
+    public final Color  color;
 
     /**
      * Constructs a new TextElement with the content <code>text</code> to be

@@ -57,36 +57,19 @@ import org.openscience.cdk.qsar.descriptors.atomic.VdWRadiusDescriptorTest;
  *
  * @cdk.module test-qsaratomic
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsaratomicCoverageTest.class,
-    AtomDegreeDescriptorTest.class,
-    AtomHybridizationDescriptorTest.class,
-    AtomHybridizationVSEPRDescriptorTest.class,
-    AtomValenceDescriptorTest.class,
-    BondsToAtomDescriptorTest.class,
-    CovalentRadiusDescriptorTest.class,
-    DistanceToAtomDescriptorTest.class,
-    EffectiveAtomPolarizabilityDescriptorTest.class,
-    InductiveAtomicHardnessDescriptorTest.class,
-    InductiveAtomicSoftnessDescriptorTest.class,
-    IsProtonInAromaticSystemDescriptorTest.class,
-    IsProtonInConjugatedPiSystemDescriptorTest.class,
-    PartialPiChargeDescriptorTest.class,
-    PartialSigmaChargeDescriptorTest.class,
-    PartialTChargePEOEDescriptorTest.class,
-    PeriodicTablePositionDescriptorTest.class,
-    PiElectronegativityDescriptorTest.class,
-    ProtonTotalPartialChargeDescriptorTest.class,
-    RDFProtonDescriptor_G3RTest.class,
-    RDFProtonDescriptor_GDRTest.class,
-    RDFProtonDescriptor_GHRTest.class,
-    RDFProtonDescriptor_GHR_topolTest.class,
-    RDFProtonDescriptor_GSRTest.class,
-    SigmaElectronegativityDescriptorTest.class,
-    StabilizationPlusChargeDescriptorTest.class,
-    VdWRadiusDescriptorTest.class,
-    IPAtomicHOSEDescriptorTest.class,
-    PartialTChargeMMFF94DescriptorTest.class
-})
-public class MqsaratomicTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QsaratomicCoverageTest.class, AtomDegreeDescriptorTest.class,
+        AtomHybridizationDescriptorTest.class, AtomHybridizationVSEPRDescriptorTest.class,
+        AtomValenceDescriptorTest.class, BondsToAtomDescriptorTest.class, CovalentRadiusDescriptorTest.class,
+        DistanceToAtomDescriptorTest.class, EffectiveAtomPolarizabilityDescriptorTest.class,
+        InductiveAtomicHardnessDescriptorTest.class, InductiveAtomicSoftnessDescriptorTest.class,
+        IsProtonInAromaticSystemDescriptorTest.class, IsProtonInConjugatedPiSystemDescriptorTest.class,
+        PartialPiChargeDescriptorTest.class, PartialSigmaChargeDescriptorTest.class,
+        PartialTChargePEOEDescriptorTest.class, PeriodicTablePositionDescriptorTest.class,
+        PiElectronegativityDescriptorTest.class, ProtonTotalPartialChargeDescriptorTest.class,
+        RDFProtonDescriptor_G3RTest.class, RDFProtonDescriptor_GDRTest.class, RDFProtonDescriptor_GHRTest.class,
+        RDFProtonDescriptor_GHR_topolTest.class, RDFProtonDescriptor_GSRTest.class,
+        SigmaElectronegativityDescriptorTest.class, StabilizationPlusChargeDescriptorTest.class,
+        VdWRadiusDescriptorTest.class, IPAtomicHOSEDescriptorTest.class, PartialTChargeMMFF94DescriptorTest.class})
+public class MqsaratomicTests {
+}

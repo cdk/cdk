@@ -36,12 +36,12 @@ import org.openscience.cdk.annotations.TestMethod;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.dict.DictRefTest")
-public class DictRef implements java.io.Serializable, Cloneable  {
+public class DictRef implements java.io.Serializable, Cloneable {
 
     private static final long serialVersionUID = -3691244168587563625L;
 
-    String type;
-    String reference;
+    String                    type;
+    String                    reference;
 
     public DictRef(String type, String dictRef) {
         this.type = type;
@@ -60,7 +60,7 @@ public class DictRef implements java.io.Serializable, Cloneable  {
 
     @TestMethod("testToString")
     public String toString() {
-        return "DictRef{T=" + this.type + ", R=" + reference +"}";
+        return "DictRef{T=" + this.type + ", R=" + reference + "}";
     }
 
 }

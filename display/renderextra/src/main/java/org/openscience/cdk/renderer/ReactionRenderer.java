@@ -2,23 +2,23 @@
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                     2009  Stefan Kuhn <shk3@users.sf.net>
  *                     2009  Egon Willighagen <egonw@users.sf.net>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
@@ -105,8 +105,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.ReactionRendererTest")
-public class ReactionRenderer extends AbstractRenderer<IReaction>
-  implements IRenderer<IReaction> {
+public class ReactionRenderer extends AbstractRenderer<IReaction> implements IRenderer<IReaction> {
 
     private IRenderer<IAtomContainerSet> moleculeSetRenderer;
 
@@ -120,16 +119,18 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
      *            a class that manages mappings between zoom and font sizes
      */
     @TestMethod("testConstructor")
-	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this(new RendererModel(),generators,fontManager);
-		for (IGenerator<IAtomContainer> generator : generators) {
+    public ReactionRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+        this(new RendererModel(), generators, fontManager);
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
-	}
-	public ReactionRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		super(rendererModel);
+    }
+
+    public ReactionRenderer(RendererModel rendererModel, List<IGenerator<IAtomContainer>> generators,
+            IFontManager fontManager) {
+        super(rendererModel);
         this.fontManager = fontManager;
-        moleculeSetRenderer = new MoleculeSetRenderer(rendererModel,generators, fontManager);
+        moleculeSetRenderer = new MoleculeSetRenderer(rendererModel, generators, fontManager);
     }
 
     /**
@@ -143,24 +144,23 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
      * @param fontManager
      *            a class that manages mappings between zoom and font sizes
      */
-	public ReactionRenderer(List<IGenerator<IAtomContainer>> generators,
-	                List<IGenerator<IReaction>> reactionGenerators,
-	                IFontManager fontManager) {
-	    this(generators, fontManager);
+    public ReactionRenderer(List<IGenerator<IAtomContainer>> generators,
+            List<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager) {
+        this(generators, fontManager);
         for (IGenerator<IReaction> generator : reactionGenerators) {
             rendererModel.registerParameters(generator);
         }
         this.generators = reactionGenerators;
         this.setup();
-	}
+    }
 
-	/**
-	 * Setup the transformations necessary to draw this Reaction.
-	 *
-	 * @param reaction
-	 * @param screen
-	 */
-	public void setup(IReaction reaction, Rectangle screen) {
+    /**
+     * Setup the transformations necessary to draw this Reaction.
+     *
+     * @param reaction
+     * @param screen
+     */
+    public void setup(IReaction reaction, Rectangle screen) {
         this.setScale(reaction);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(reaction);
         this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
@@ -182,8 +182,9 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle paint(IReaction reaction, IDrawVisitor drawVisitor) {
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle paint(IReaction reaction, IDrawVisitor drawVisitor) {
 
         // calculate the bounds
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
@@ -197,22 +198,21 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
     }
 
     /**
-	 * Paint a reaction.
-	 *
-	 * @param reaction the reaction to paint
-	 * @param drawVisitor the visitor that does the drawing
-	 * @param bounds the bounds on the screen
-	 * @param resetCenter
-	 *     if true, set the draw center to be the center of bounds
-	 */
-	public void paint(IReaction reaction, IDrawVisitor drawVisitor,
-            Rectangle2D bounds, boolean resetCenter) {
+     * Paint a reaction.
+     *
+     * @param reaction the reaction to paint
+     * @param drawVisitor the visitor that does the drawing
+     * @param bounds the bounds on the screen
+     * @param resetCenter
+     *     if true, set the draw center to be the center of bounds
+     */
+    public void paint(IReaction reaction, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
-	    // calculate the bounds
+        // calculate the bounds
         Rectangle2D modelBounds = BoundsCalculator.calculateBounds(reaction);
 
-        this.setupTransformToFit(bounds, modelBounds,
-                AverageBondLengthCalculator.calculateAverageBondLength(reaction), resetCenter);
+        this.setupTransformToFit(bounds, modelBounds, AverageBondLengthCalculator.calculateAverageBondLength(reaction),
+                resetCenter);
 
         // generate the elements
         IRenderingElement diagram = this.generateDiagram(reaction);
@@ -221,47 +221,47 @@ public class ReactionRenderer extends AbstractRenderer<IReaction>
         this.paint(drawVisitor, diagram);
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle calculateDiagramBounds(IReaction reaction) {
-        return this.calculateScreenBounds(
-                BoundsCalculator.calculateBounds(reaction));
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle calculateDiagramBounds(IReaction reaction) {
+        return this.calculateScreenBounds(BoundsCalculator.calculateBounds(reaction));
+    }
 
-	/**
-	 * Given a bond length for a model, calculate the scale that will transform
-	 * this length to the on screen bond length in RendererModel.
-	 *
-	 * @param  modelBondLength the wanted model bond length in screen length
-	 * @return returns the scale that causes the drawn bond lengths in pixels to match
-	 *         the given model bond length
-	 */
-	public double calculateScaleForBondLength(double modelBondLength) {
-	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
+    /**
+     * Given a bond length for a model, calculate the scale that will transform
+     * this length to the on screen bond length in RendererModel.
+     *
+     * @param  modelBondLength the wanted model bond length in screen length
+     * @return returns the scale that causes the drawn bond lengths in pixels to match
+     *         the given model bond length
+     */
+    public double calculateScaleForBondLength(double modelBondLength) {
+        if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
-            return this.rendererModel.getParameter(BondLength.class)
-        		.getValue() / modelBondLength;
+            return this.rendererModel.getParameter(BondLength.class).getValue() / modelBondLength;
         }
-	}
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRenderingElement generateDiagram(IReaction reaction) {
-	    ElementGroup diagram = new ElementGroup();
+        ElementGroup diagram = new ElementGroup();
 
-	    for (IGenerator<IReaction> generator : this.generators) {
-	        diagram.add(generator.generate(reaction, rendererModel));
-	    }
+        for (IGenerator<IReaction> generator : this.generators) {
+            diagram.add(generator.generate(reaction, rendererModel));
+        }
 
-	    diagram.add(moleculeSetRenderer.generateDiagram(reaction.getReactants()));
-	    diagram.add(moleculeSetRenderer.generateDiagram(reaction.getProducts()));
+        diagram.add(moleculeSetRenderer.generateDiagram(reaction.getReactants()));
+        diagram.add(moleculeSetRenderer.generateDiagram(reaction.getProducts()));
 
-	    return diagram;
-	}
+        return diagram;
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public List<IGenerator<IReaction>> getGenerators(){
-	    return new ArrayList<IGenerator<IReaction>>(generators);
-	}
+    /** {@inheritDoc} */
+    @Override
+    public List<IGenerator<IReaction>> getGenerators() {
+        return new ArrayList<IGenerator<IReaction>>(generators);
+    }
 
 }

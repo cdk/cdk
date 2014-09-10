@@ -71,8 +71,7 @@ final class MmffAromaticTypeMapping {
     /**
      * Create an instance to map from preliminary MMFF symbolic types to their aromatic equivalent.
      */
-    MmffAromaticTypeMapping() {
-    }
+    MmffAromaticTypeMapping() {}
 
     /**
      * Given the assigned preliminary MMFF atom types (symbs[]) update these to the aromatic types.
@@ -92,16 +91,12 @@ final class MmffAromaticTypeMapping {
         Arrays.fill(doubleBonds, -1);
         setupContributionAndDoubleBonds(container, bonds, graph, contribution, doubleBonds);
 
-        int[][] cycles = findAromaticRings(cyclesOfSizeFiveOrSix(container, graph),
-                                           contribution,
-                                           doubleBonds);
+        int[][] cycles = findAromaticRings(cyclesOfSizeFiveOrSix(container, graph), contribution, doubleBonds);
 
         for (int[] cycle : cycles) {
             int len = cycle.length - 1;
-            if (len == 6)
-                updateAromaticTypesInSixMemberRing(cycle, symbs);
-            if (len == 5 && normaliseCycle(cycle, contribution))
-                updateAromaticTypesInFiveMemberRing(cycle, symbs);
+            if (len == 6) updateAromaticTypesInSixMemberRing(cycle, symbs);
+            if (len == 5 && normaliseCycle(cycle, contribution)) updateAromaticTypesInFiveMemberRing(cycle, symbs);
         }
     }
 
@@ -149,8 +144,7 @@ final class MmffAromaticTypeMapping {
                     }
                     if (len == 6)
                         ringsOfSize6.add(cycle);
-                    else if (len == 5)
-                        ringsOfSize5.add(cycle);
+                    else if (len == 5) ringsOfSize5.add(cycle);
 
                 }
             }
@@ -162,7 +156,6 @@ final class MmffAromaticTypeMapping {
 
         return rings.toArray(new int[rings.size()][]);
     }
-
 
     /**
      * Check if a cycle/ring is aromatic. A cycle is aromatic if the sum of its p electrons is equal
@@ -199,10 +192,8 @@ final class MmffAromaticTypeMapping {
             // is aromatic
             if (pElectrons == 1) {
                 final int other = dbs[curr];
-                if (other < 0)
-                    return false;
-                if (other != prev && other != next && !aromatic[other])
-                    return false;
+                if (other < 0) return false;
+                if (other != prev && other != next && !aromatic[other]) return false;
             }
 
             iPrev = i;
@@ -230,8 +221,7 @@ final class MmffAromaticTypeMapping {
                 symbs[v] = "NPOX";
             else if ("N=C".equals(symbs[v]) || "N=N".equals(symbs[v]))
                 symbs[v] = "NPYD";
-            else if (symbs[v].startsWith("C"))
-                symbs[v] = "CB";
+            else if (symbs[v].startsWith("C")) symbs[v] = "CB";
         }
     }
 
@@ -306,15 +296,12 @@ final class MmffAromaticTypeMapping {
      * @return the aromatic type
      */
     static String getAromaticType(Map<String, String> map, char suffix, String symb, boolean imidazolium, boolean anion) {
-        if (anion && symb.startsWith("N"))
-            symb = "N5M";
-        if (map.containsKey(symb))
-            symb = map.get(symb);
+        if (anion && symb.startsWith("N")) symb = "N5M";
+        if (map.containsKey(symb)) symb = map.get(symb);
         if ((imidazolium || anion) && symb.charAt(symb.length() - 1) == suffix)
             symb = symb.substring(0, symb.length() - 1);
         return symb;
     }
-
 
     /**
      * Find the index of a hetroatom in a cycle. A hetroatom in MMFF is the unique atom that
@@ -327,8 +314,7 @@ final class MmffAromaticTypeMapping {
     static int indexOfHetro(int[] cycle, int[] contribution) {
         int index = -1;
         for (int i = 0; i < cycle.length - 1; i++) {
-            if (contribution[cycle[i]] == 2)
-                index = index == -1 ? i : -2;
+            if (contribution[cycle[i]] == 2) index = index == -1 ? i : -2;
         }
         return index;
     }
@@ -364,7 +350,8 @@ final class MmffAromaticTypeMapping {
      * @param v    bonded valence
      * @return p electrons
      */
-    @SuppressWarnings("PMD.CyclomaticComplexity") // high complexity but clean
+    @SuppressWarnings("PMD.CyclomaticComplexity")
+    // high complexity but clean
     static int contribution(int elem, int x, int v) {
         switch (elem) {
             case 6:
@@ -410,7 +397,7 @@ final class MmffAromaticTypeMapping {
      * @param dbs          vector of double-bond pairs, index stored double-bonded index
      */
     private static void setupContributionAndDoubleBonds(IAtomContainer molecule, EdgeToBondMap bonds, int[][] graph,
-                                                        int[] contribution, int[] dbs) {
+            int[] contribution, int[] dbs) {
         // fill the contribution and dbs vectors
         for (int v = 0; v < graph.length; v++) {
 
@@ -427,9 +414,7 @@ final class MmffAromaticTypeMapping {
                 }
             }
 
-            contribution[v] = contribution(molecule.getAtom(v).getAtomicNumber(),
-                                           con,
-                                           val);
+            contribution[v] = contribution(molecule.getAtom(v).getAtomicNumber(), con, val);
         }
     }
 
@@ -437,81 +422,51 @@ final class MmffAromaticTypeMapping {
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
      * lone pair.
      */
-    private final Map<String, String> hetroTypes = ImmutableMap.<String, String>builder()
-                                                               .put("S", STHI)
-                                                               .put("-O-", OFUR)
-                                                               .put("OC=C", OFUR)
-                                                               .put("OC=N", OFUR)
-                                                               .put(NCN_PLUS, NIM_PLUS)
-                                                               .put(NGD_PLUS, NIM_PLUS)
-                                                               .put("NM", N5M)
-                                                               .put("NC=C", NPYL)
-                                                               .put("NC=N", NPYL)
-                                                               .put("NC=O", NPYL)
-                                                               .put("NC=S", NPYL)
-                                                               .put("NSO2", NPYL)
-                                                               .put("NR", NPYL)
-                                                               .build();
+    private final Map<String, String> hetroTypes = ImmutableMap.<String, String> builder().put("S", STHI)
+                                                         .put("-O-", OFUR).put("OC=C", OFUR).put("OC=N", OFUR)
+                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
+                                                         .put("NM", N5M).put("NC=C", NPYL).put("NC=N", NPYL)
+                                                         .put("NC=O", NPYL).put("NC=S", NPYL).put("NSO2", NPYL)
+                                                         .put("NR", NPYL).build();
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are alpha to an atom that contributes a lone pair.
      */
-    private final Map<String, String> alphaTypes = ImmutableMap.<String, String>builder()
-                                                               .put("CNN+", CIM_PLUS)
-                                                               .put("CGD+", CIM_PLUS)
-                                                               .put("C=C", C5A)
-                                                               .put("C=N", C5A)
-                                                               .put("CGD", C5A)
-                                                               .put("CB", C5A)
-                                                               .put(C5B, C5)
-                                                               .put("N2OX", N5AX)
-                                                               .put(NCN_PLUS, NIM_PLUS)
-                                                               .put(NGD_PLUS, NIM_PLUS)
-                                                               .put("N+=C", N5A_PLUS)
-                                                               .put("N+=N", N5A_PLUS)
-                                                               .put("NPD+", N5A_PLUS)
-                                                               .put("N=C", N5A)
-                                                               .put("N=N", N5A)
-                                                               .build();
+    private final Map<String, String> alphaTypes = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
+                                                         .put("CGD+", CIM_PLUS).put("C=C", C5A).put("C=N", C5A)
+                                                         .put("CGD", C5A).put("CB", C5A).put(C5B, C5).put("N2OX", N5AX)
+                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
+                                                         .put("N+=C", N5A_PLUS).put("N+=N", N5A_PLUS)
+                                                         .put("NPD+", N5A_PLUS).put("N=C", N5A).put("N=N", N5A).build();
     /**
      * Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
      * one electron and are beta to an atom that contributes a lone pair.
      */
-    private final Map<String, String> betaTypes  = ImmutableMap.<String, String>builder()
-                                                               .put("CNN+", CIM_PLUS)
-                                                               .put("CGD+", CIM_PLUS)
-                                                               .put("C=C", C5B)
-                                                               .put("C=N", C5B)
-                                                               .put("CGD", C5B)
-                                                               .put("CB", C5B)
-                                                               .put(C5A, C5)
-                                                               .put("N2OX", N5BX)
-                                                               .put(NCN_PLUS, NIM_PLUS)
-                                                               .put(NGD_PLUS, NIM_PLUS)
-                                                               .put("N+=C", N5B_PLUS)
-                                                               .put("N+=N", N5B_PLUS)
-                                                               .put("NPD+", N5B_PLUS)
-                                                               .put("N=C", N5B)
-                                                               .put("N=N", N5B)
-                                                               .build();
+    private final Map<String, String> betaTypes  = ImmutableMap.<String, String> builder().put("CNN+", CIM_PLUS)
+                                                         .put("CGD+", CIM_PLUS).put("C=C", C5B).put("C=N", C5B)
+                                                         .put("CGD", C5B).put("CB", C5B).put(C5A, C5).put("N2OX", N5BX)
+                                                         .put(NCN_PLUS, NIM_PLUS).put(NGD_PLUS, NIM_PLUS)
+                                                         .put("N+=C", N5B_PLUS).put("N+=N", N5B_PLUS)
+                                                         .put("NPD+", N5B_PLUS).put("N=C", N5B).put("N=N", N5B).build();
 
-    @SuppressWarnings("PMD.ShortVariable") // C5 is intended
-    private static final String C5       = "C5";
-    private static final String C5A      = "C5A";
-    private static final String C5B      = "C5B";
-    private static final String N5A      = "N5A";
-    private static final String N5B      = "N5B";
-    private static final String NPYL     = "NPYL";
-    private static final String NCN_PLUS = "NCN+";
-    private static final String NGD_PLUS = "NGD+";
-    private static final String NIM_PLUS = "NIM+";
-    private static final String N5A_PLUS = "N5A+";
-    private static final String N5B_PLUS = "N5B+";
-    private static final String N5M      = "N5M";
-    private static final String N5AX     = "N5AX";
-    private static final String N5BX     = "N5BX";
-    private static final String CIM_PLUS = "CIM+";
-    private static final String OFUR     = "OFUR";
-    private static final String STHI     = "STHI";
+    @SuppressWarnings("PMD.ShortVariable")
+    // C5 is intended
+    private static final String       C5         = "C5";
+    private static final String       C5A        = "C5A";
+    private static final String       C5B        = "C5B";
+    private static final String       N5A        = "N5A";
+    private static final String       N5B        = "N5B";
+    private static final String       NPYL       = "NPYL";
+    private static final String       NCN_PLUS   = "NCN+";
+    private static final String       NGD_PLUS   = "NGD+";
+    private static final String       NIM_PLUS   = "NIM+";
+    private static final String       N5A_PLUS   = "N5A+";
+    private static final String       N5B_PLUS   = "N5B+";
+    private static final String       N5M        = "N5M";
+    private static final String       N5AX       = "N5AX";
+    private static final String       N5BX       = "N5BX";
+    private static final String       CIM_PLUS   = "CIM+";
+    private static final String       OFUR       = "OFUR";
+    private static final String       STHI       = "STHI";
 
 }

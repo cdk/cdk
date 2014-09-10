@@ -53,9 +53,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.CrystClustWriterTest")
 public class CrystClustWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
+    private BufferedWriter      writer;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustWriter.class);
 
     /**
      * Constructs a new CrystClustWriter class. Output will be stored in the Writer
@@ -64,9 +63,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      * @param out Writer to redirect the output to.
      */
     public CrystClustWriter(Writer out) {
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
+        try {
+            if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter) out;
             } else {
                 writer = new BufferedWriter(out);
             }
@@ -89,27 +88,26 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
-
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
+        Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
             if (ICrystal.class.equals(anInterface)) return true;
             if (IChemSequence.class.equals(anInterface)) return true;
         }
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Serializes the IChemObject to CrystClust format and redirects it to the output Writer.
@@ -118,9 +116,9 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      */
     public void write(IChemObject object) throws UnsupportedChemObjectException {
         if (object instanceof ICrystal) {
-            writeCrystal((ICrystal)object);
-        }   else if (object instanceof IChemSequence) {
-            writeChemSequence((IChemSequence)object);
+            writeCrystal((ICrystal) object);
+        } else if (object instanceof IChemSequence) {
+            writeChemSequence((IChemSequence) object);
         } else {
             throw new UnsupportedChemObjectException("This object type is not supported.");
         }
@@ -131,15 +129,15 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
      */
     @TestMethod("testClose")
     public void close() throws IOException {
-    	writer.close();
+        writer.close();
     }
 
     // Private procedures
 
     private void writeChemSequence(IChemSequence cs) throws UnsupportedChemObjectException {
         int count = cs.getChemModelCount();
-        for (int i=0; i < count; i++) {
-            writeln("frame: " + (i+1));
+        for (int i = 0; i < count; i++) {
+            writeln("frame: " + (i + 1));
             writeCrystal(cs.getChemModel(i).getCrystal());
         }
     }
@@ -194,7 +192,7 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
         // output atoms
         for (int i = 0; i < noatoms; i++) {
             // output atom sumbol
-        	IAtom atom = crystal.getAtom(i);
+            IAtom atom = crystal.getAtom(i);
             write(atom.getSymbol());
             write(":");
             // output atom charge
@@ -209,20 +207,18 @@ public class CrystClustWriter extends DefaultChemObjectWriter {
 
     private void write(String s) {
         try {
-        	writer.write(s);
+            writer.write(s);
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 
     private void writeln(String s) {
         try {
-        	writer.write(s);
-        	writer.newLine();
+            writer.write(s);
+            writer.newLine();
         } catch (IOException e) {
-            System.err.println("CMLWriter IOException while printing \"" +
-                                s + "\":" + e.toString());
+            System.err.println("CMLWriter IOException while printing \"" + s + "\":" + e.toString());
         }
     }
 

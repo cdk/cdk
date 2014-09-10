@@ -53,57 +53,58 @@ public class PDBAtomCustomizerTest extends CDKTestCase {
     /**
      * A roundtripping test to see of PDB atom customization works.
      *
-	 * @cdk.bug 1085912
-	 */
-	@Test public void testSFBug1085912_1() throws Exception {
-		String filename_pdb = "data/pdb/1CKV.pdb";
-	    InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
+     * @cdk.bug 1085912
+     */
+    @Test
+    public void testSFBug1085912_1() throws Exception {
+        String filename_pdb = "data/pdb/1CKV.pdb";
+        InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename_pdb);
 
-	    ISimpleChemObjectReader reader = new PDBReader(ins1);
-	    IChemFile chemFile1 = (IChemFile) reader.read(new ChemFile());
+        ISimpleChemObjectReader reader = new PDBReader(ins1);
+        IChemFile chemFile1 = (IChemFile) reader.read(new ChemFile());
         reader.close();
-	    IChemSequence seq1 = chemFile1.getChemSequence(0);
-	    IChemModel model1 = seq1.getChemModel(0);
-	    IAtomContainer container = model1.getMoleculeSet().getAtomContainer(0);
-	    IBioPolymer polymer1 = (IBioPolymer)container;
-	    int countchemFile1 = chemFile1.getChemSequenceCount();
-	    int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
-	    int countpolymer1 = polymer1.getAtomCount();
+        IChemSequence seq1 = chemFile1.getChemSequence(0);
+        IChemModel model1 = seq1.getChemModel(0);
+        IAtomContainer container = model1.getMoleculeSet().getAtomContainer(0);
+        IBioPolymer polymer1 = (IBioPolymer) container;
+        int countchemFile1 = chemFile1.getChemSequenceCount();
+        int countmodel1 = model1.getMoleculeSet().getAtomContainerCount();
+        int countpolymer1 = polymer1.getAtomCount();
 
-	    StringWriter writer = new StringWriter();
-	    CMLWriter cmlWriter = new CMLWriter(writer);
-	    cmlWriter.registerCustomizer(new PDBAtomCustomizer());
-	    cmlWriter.write(polymer1);
-	    cmlWriter.close();
-	    String cmlContent1 = writer.toString();
-	    System.out.println(cmlContent1.substring(0, 500));
+        StringWriter writer = new StringWriter();
+        CMLWriter cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new PDBAtomCustomizer());
+        cmlWriter.write(polymer1);
+        cmlWriter.close();
+        String cmlContent1 = writer.toString();
+        System.out.println(cmlContent1.substring(0, 500));
 
-	    CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
-	    IChemFile chemFil2 = (IChemFile)reader2.read(new ChemFile());
+        CMLReader reader2 = new CMLReader(new ByteArrayInputStream(cmlContent1.getBytes()));
+        IChemFile chemFil2 = (IChemFile) reader2.read(new ChemFile());
         reader2.close();
-	    IChemSequence seq2 = chemFil2.getChemSequence(0);
-	    IChemModel model2 = seq2.getChemModel(0);
-	    PDBPolymer polymer2 =  (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
+        IChemSequence seq2 = chemFil2.getChemSequence(0);
+        IChemModel model2 = seq2.getChemModel(0);
+        PDBPolymer polymer2 = (PDBPolymer) model2.getMoleculeSet().getAtomContainer(0);
 
-	    int countchemFile2 = chemFil2.getChemSequenceCount();
-	    int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
-	    int countpolymer2 = polymer2.getAtomCount();
+        int countchemFile2 = chemFil2.getChemSequenceCount();
+        int countmodel2 = model2.getMoleculeSet().getAtomContainerCount();
+        int countpolymer2 = polymer2.getAtomCount();
 
-	    Assert.assertEquals(countchemFile1, countchemFile2);
-	    Assert.assertEquals(countmodel1,countmodel2);
-	    Assert.assertEquals(countpolymer1,countpolymer2);
+        Assert.assertEquals(countchemFile1, countchemFile2);
+        Assert.assertEquals(countmodel1, countmodel2);
+        Assert.assertEquals(countpolymer1, countpolymer2);
 
-	    writer = new StringWriter();
-	    cmlWriter = new CMLWriter(writer);
-	    cmlWriter.registerCustomizer(new PDBAtomCustomizer());
-	    cmlWriter.write(polymer2);
-	    cmlWriter.close();
-	    String cmlContent2 = writer.toString();
-	    System.out.println(cmlContent2.substring(0, 500));
+        writer = new StringWriter();
+        cmlWriter = new CMLWriter(writer);
+        cmlWriter.registerCustomizer(new PDBAtomCustomizer());
+        cmlWriter.write(polymer2);
+        cmlWriter.close();
+        String cmlContent2 = writer.toString();
+        System.out.println(cmlContent2.substring(0, 500));
 
-	    String conte1 = cmlContent1.substring(0, 1000);
-	    String conte2 = cmlContent2.substring(0, 1000);
-	    Assert.assertEquals(conte1,conte2);
+        String conte1 = cmlContent1.substring(0, 1000);
+        String conte2 = cmlContent2.substring(0, 1000);
+        Assert.assertEquals(conte1, conte2);
     }
 
 }

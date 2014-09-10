@@ -41,32 +41,32 @@ import java.util.List;
 @TestClass("org.openscience.cdk.tools.manipulator.ChemSequenceManipulatorTest")
 public class ChemSequenceManipulator {
 
-	/**
-	 * Get the total number of atoms inside an IChemSequence.
-	 *
-	 * @param sequence   The IChemSequence object.
-	 * @return           The number of Atom objects inside.
-	 */
+    /**
+     * Get the total number of atoms inside an IChemSequence.
+     *
+     * @param sequence   The IChemSequence object.
+     * @return           The number of Atom objects inside.
+     */
     @TestMethod("testGetAtomCount_IChemSequence")
     public static int getAtomCount(IChemSequence sequence) {
-    	int count = 0;
-        for (int i=0; i<sequence.getChemModelCount(); i++) {
-        	count += ChemModelManipulator.getAtomCount(sequence.getChemModel(i));
+        int count = 0;
+        for (int i = 0; i < sequence.getChemModelCount(); i++) {
+            count += ChemModelManipulator.getAtomCount(sequence.getChemModel(i));
         }
         return count;
     }
 
     /**
-	 * Get the total number of bonds inside an IChemSequence.
-	 *
-	 * @param sequence   The IChemSequence object.
-	 * @return           The number of Bond objects inside.
-	 */
+     * Get the total number of bonds inside an IChemSequence.
+     *
+     * @param sequence   The IChemSequence object.
+     * @return           The number of Bond objects inside.
+     */
     @TestMethod("testGetBondCount_IChemSequence")
     public static int getBondCount(IChemSequence sequence) {
-    	int count = 0;
-        for (int i=0; i<sequence.getChemModelCount(); i++) {
-        	count += ChemModelManipulator.getBondCount(sequence.getChemModel(i));
+        int count = 0;
+        for (int i = 0; i < sequence.getChemModelCount(); i++) {
+            count += ChemModelManipulator.getBondCount(sequence.getChemModel(i));
         }
         return count;
     }
@@ -90,27 +90,26 @@ public class ChemSequenceManipulator {
      */
     @TestMethod("testGetAllChemObjects_IChemSequence")
     public static List<IChemObject> getAllChemObjects(IChemSequence sequence) {
-		List<IChemObject> list = new ArrayList<IChemObject>();
+        List<IChemObject> list = new ArrayList<IChemObject>();
         // list.add(sequence);
-        for (int i=0; i<sequence.getChemModelCount(); i++) {
-        	list.add(sequence.getChemModel(i));
-        	List<IChemObject> current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
+        for (int i = 0; i < sequence.getChemModelCount(); i++) {
+            list.add(sequence.getChemModel(i));
+            List<IChemObject> current = ChemModelManipulator.getAllChemObjects(sequence.getChemModel(i));
             for (IChemObject chemObject : current) {
                 if (!list.contains(chemObject)) list.add(chemObject);
             }
 
         }
-		return list;
-	}
+        return list;
+    }
 
     @TestMethod("testGetAllIDs_IChemSequence")
     public static List<String> getAllIDs(IChemSequence sequence) {
-		ArrayList<String> list = new ArrayList<String>();
-		if (sequence.getID() != null) list.add(sequence.getID());
-        for (int i=0; i<sequence.getChemModelCount(); i++) {
-        	list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));
+        ArrayList<String> list = new ArrayList<String>();
+        if (sequence.getID() != null) list.add(sequence.getID());
+        for (int i = 0; i < sequence.getChemModelCount(); i++) {
+            list.addAll(ChemModelManipulator.getAllIDs(sequence.getChemModel(i)));
         }
-		return list;
-	}
+        return list;
+    }
 }
-

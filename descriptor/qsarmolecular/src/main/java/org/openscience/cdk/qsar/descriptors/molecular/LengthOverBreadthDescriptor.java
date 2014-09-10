@@ -65,16 +65,15 @@ import javax.vecmath.Point3d;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.LengthOverBreadthDescriptorTest")
 public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
 
-    private static final String[] names = {"LOBMAX", "LOBMIN"};
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(LengthOverBreadthDescriptor.class);
+
+    private static final String[] names  = {"LOBMAX", "LOBMIN"};
+
     /**
      * Constructor for the LengthOverBreadthDescriptor object.
      */
-    public LengthOverBreadthDescriptor() {
-    }
-
+    public LengthOverBreadthDescriptor() {}
 
     /**
      * Gets the specification attribute of the PetitjeanNumberDescriptor object
@@ -84,11 +83,9 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#lengthOverBreadth", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * Sets the parameters attribute of the PetitjeanNumberDescriptor object
@@ -102,7 +99,6 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         // no parameters for this descriptor
     }
 
-
     /**
      * Gets the parameters attribute of the PetitjeanNumberDescriptor object
      *
@@ -114,19 +110,19 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         // no parameters to return
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult result = new DoubleArrayResult(2);
         result.add(Double.NaN);
         result.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), result, getDescriptorNames(), e);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                getDescriptorNames(), e);
     }
+
     /**
      * Evaluate the descriptor for the molecule.
      *
@@ -165,7 +161,6 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
             coords[i][2] -= com.z;
         }
 
-
         int nangle = (int) (90 / angle);
         for (int i = 0; i < nangle; i++) {
             rotateZ(coords, Math.PI / 180.0 * angle);
@@ -193,9 +188,8 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         result.add(maxLOB);
         result.add(mmLOB);
 
-        return new DescriptorValue(getSpecification(),
-                getParameterNames(), getParameters(),
-                result, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                getDescriptorNames());
     }
 
     /**
@@ -253,7 +247,8 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
             System.arraycopy(coords[i], 0, coord, 0, coords[0].length);
             if (withRadii) {
                 IAtom atom = atomContainer.getAtom(i);
-                double radius = org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius(atom.getSymbol());
+                double radius = org.openscience.cdk.tools.periodictable.PeriodicTable.getCovalentRadius(atom
+                        .getSymbol());
 
                 xmax = Math.max(xmax, coord[0] + radius);
                 ymax = Math.max(ymax, coord[1] + radius);
@@ -289,7 +284,6 @@ public class LengthOverBreadthDescriptor extends AbstractMolecularDescriptor imp
         // no param names to return
         return (null);
     }
-
 
     /**
      * Gets the parameterType attribute of the PetitjeanNumberDescriptor object

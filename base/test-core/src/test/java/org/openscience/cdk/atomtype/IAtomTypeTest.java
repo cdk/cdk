@@ -31,28 +31,28 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public interface IAtomTypeTest {
 
-	/**
-	 * Returns a name for the atom type scheme being tested.
-	 *
-	 * @return a String of the name.
-	 */
-	public String getAtomTypeListName();
+    /**
+     * Returns a name for the atom type scheme being tested.
+     *
+     * @return a String of the name.
+     */
+    public String getAtomTypeListName();
 
-	/**
-	 * Returns an {@link AtomTypeFactory} instance for the atom type scheme
-	 * being tested. It is used to provide a list of atom types the scheme
-	 * defines.
-	 *
-	 * @return an {@link AtomTypeFactory} instance
-	 */
-	public AtomTypeFactory getFactory();
+    /**
+     * Returns an {@link AtomTypeFactory} instance for the atom type scheme
+     * being tested. It is used to provide a list of atom types the scheme
+     * defines.
+     *
+     * @return an {@link AtomTypeFactory} instance
+     */
+    public AtomTypeFactory getFactory();
 
-	/**
-	 * The {@link IAtomTypeMatcher} being tested.
-	 *
-	 * @param builder the {@link IChemObjectBuilder} used to create atom types.
-	 * @return return an {@link IAtomTypeMatcher} instance
-	 */
-	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder);
+    /**
+     * The {@link IAtomTypeMatcher} being tested.
+     *
+     * @param builder the {@link IChemObjectBuilder} used to create atom types.
+     * @return return an {@link IAtomTypeMatcher} instance
+     */
+    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder);
 
 }

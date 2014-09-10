@@ -36,34 +36,36 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class BondCountDescriptorTest extends MolecularDescriptorTest {
 
-	private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    private static final SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
 
-    public  BondCountDescriptorTest() {}
+    public BondCountDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(BondCountDescriptor.class);
+        setDescriptor(BondCountDescriptor.class);
     }
 
-    @Test public void testBondCountDescriptor() throws Exception {
-    	Assert.assertNotNull(descriptor);
+    @Test
+    public void testBondCountDescriptor() throws Exception {
+        Assert.assertNotNull(descriptor);
     }
 
-    @Test public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testSingleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor.setParameters(new String[]{"s"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
-        Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     @Test
     public void testDoubleBondCount() throws ClassNotFoundException, CDKException, java.lang.Exception {
         descriptor.setParameters(new String[]{"d"});
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 
     /**
@@ -72,16 +74,16 @@ public class BondCountDescriptorTest extends MolecularDescriptorTest {
      *
      * @cdk.bug 1651263
      */
-    @Test public void testDefaultSetting() throws Exception {
-    	IMolecularDescriptor descriptor  = new BondCountDescriptor();
+    @Test
+    public void testDefaultSetting() throws Exception {
+        IMolecularDescriptor descriptor = new BondCountDescriptor();
         IAtomContainer mol = sp.parseSmiles("CCO"); // ethanol
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("C=C=C");
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("CC=O");
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
         mol = sp.parseSmiles("CC#N");
-        Assert.assertEquals(2, ((IntegerResult)descriptor.calculate(mol).getValue()).intValue());
+        Assert.assertEquals(2, ((IntegerResult) descriptor.calculate(mol).getValue()).intValue());
     }
 }
-

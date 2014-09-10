@@ -35,20 +35,18 @@ public class IntegerResultTypeTest extends CDKTestCase {
 
     @Test
     public void testIntegerResultType() {
-		IDescriptorResult type = new IntegerResultType();
-		Assert.assertNotNull(type);
-	}
+        IDescriptorResult type = new IntegerResultType();
+        Assert.assertNotNull(type);
+    }
 
     @Test
     public void testToString() {
-		Assert.assertEquals("IntegerResultType", new IntegerResultType().toString());
-	}
+        Assert.assertEquals("IntegerResultType", new IntegerResultType().toString());
+    }
 
     @Test
     public void testLength() {
-		Assert.assertEquals(1, new IntegerResultType().length());
-	}
+        Assert.assertEquals(1, new IntegerResultType().length());
+    }
 
 }
-
-

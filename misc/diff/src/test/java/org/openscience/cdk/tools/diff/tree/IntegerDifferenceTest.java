@@ -27,22 +27,26 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class IntegerDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IDifference result = IntegerDifference.construct("Foo", 1, 2);
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
+    @Test
+    public void testSame() {
         IDifference result = IntegerDifference.construct("Foo", 1, 1);
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = IntegerDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
+    @Test
+    public void testOneNull() {
         IDifference result = IntegerDifference.construct("Foo", null, 1);
         Assert.assertNotNull(result);
 
@@ -50,14 +54,16 @@ public class IntegerDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
-    	IDifference result = IntegerDifference.construct("Foo", 1, 2);
+    @Test
+    public void testToString() {
+        IDifference result = IntegerDifference.construct("Foo", 1, 2);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
         assertOneLiner(diffString);
     }
 
-    @Test public void testRefs() {
+    @Test
+    public void testRefs() {
         Integer x = new Integer(1);
         Integer y = new Integer(1);
         IDifference diff = IntegerDifference.construct("foo", x, y);

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class FingerprintFormatTest extends ChemFormatTest {
 
     public FingerprintFormatTest() {
-        super.setChemFormat((IChemFormat)FingerprintFormat.getInstance());
+        super.setChemFormat((IChemFormat) FingerprintFormat.getInstance());
     }
 
 }

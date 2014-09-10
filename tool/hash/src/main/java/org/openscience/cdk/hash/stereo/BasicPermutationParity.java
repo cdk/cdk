@@ -49,11 +49,10 @@ final class BasicPermutationParity extends PermutationParity {
      */
     @TestMethod("testConstruction_Null,testConstruction_Empty")
     public BasicPermutationParity(int[] indices) {
-        if (indices == null)
-            throw new NullPointerException("no indices[] provided");
+        if (indices == null) throw new NullPointerException("no indices[] provided");
         if (indices.length < 2)
-            throw new IllegalArgumentException("at least 2 incides required," +
-                                                       "use PermutationParity.IDENTITY for single neighbors");
+            throw new IllegalArgumentException("at least 2 incides required,"
+                    + "use PermutationParity.IDENTITY for single neighbors");
         this.indices = indices;
     }
 
@@ -63,9 +62,10 @@ final class BasicPermutationParity extends PermutationParity {
      *
      * @inheritDoc
      */
-    @TestMethod("testParity_Even,testParity_Odd,testParity_Even_Negative," +
-                        "testParity_Odd_Negative,testParity_All,testParity_Duplicate")
-    @Override public int parity(long[] current) {
+    @TestMethod("testParity_Even,testParity_Odd,testParity_Even_Negative,"
+            + "testParity_Odd_Negative,testParity_All,testParity_Duplicate")
+    @Override
+    public int parity(long[] current) {
 
         int count = 0;
 
@@ -74,8 +74,7 @@ final class BasicPermutationParity extends PermutationParity {
                 int cmp = compare(current[indices[i]], current[indices[j]]);
                 if (cmp == 0)
                     return 0;
-                else if (cmp > 0)
-                    count++;
+                else if (cmp > 0) count++;
             }
         }
 

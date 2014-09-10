@@ -30,36 +30,38 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module datadebug
  * @cdk.githash
  */
-public class DebugPDBMonomer extends PDBMonomer  implements IPDBMonomer {
+public class DebugPDBMonomer extends PDBMonomer implements IPDBMonomer {
 
-	private static final long serialVersionUID = -5156111560946745699L;
+    private static final long serialVersionUID = -5156111560946745699L;
 
-	ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
+    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugAtomContainer.class);
 
-    /** {@inheritDoc} */ @Override
-	public void setICode(String newICode) {
-    	logger.debug("Setting I Code: ", newICode);
-		super.setICode(newICode);
+    /** {@inheritDoc} */
+    @Override
+    public void setICode(String newICode) {
+        logger.debug("Setting I Code: ", newICode);
+        super.setICode(newICode);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public String getICode() {
-    	logger.debug("Getting I Code: ", super.getICode());
-		return super.getICode();
+        logger.debug("Getting I Code: ", super.getICode());
+        return super.getICode();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setChainID(String newChainID) {
-    	logger.debug("Setting ChainID: ", newChainID);
-		super.setChainID(newChainID);
+        logger.debug("Setting ChainID: ", newChainID);
+        super.setChainID(newChainID);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public String getChainID() {
-    	logger.debug("Getting ChainID: ", super.getChainID());
-		return super.getChainID();
+        logger.debug("Getting ChainID: ", super.getChainID());
+        return super.getChainID();
     }
-
 
 }

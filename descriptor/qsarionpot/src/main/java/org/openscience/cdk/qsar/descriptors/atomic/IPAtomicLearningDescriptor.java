@@ -62,35 +62,33 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicLearningDescriptorTest")
 public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] descriptorNames = {"ipAtomicLearning"};
 
-	/**
-	 *  Constructor for the IPAtomicLearningDescriptor object.
-	 */
-	public IPAtomicLearningDescriptor() {
-	}
-	/**
-	 *  Gets the specification attribute of the IPAtomicLearningDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod(value="testGetSpecification")
+    /**
+     *  Constructor for the IPAtomicLearningDescriptor object.
+     */
+    public IPAtomicLearningDescriptor() {}
+
+    /**
+     *  Gets the specification attribute of the IPAtomicLearningDescriptor object
+     *
+     *@return    The specification value
+     */
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
-				this.getClass().getName(),
-				"The Chemistry Development Kit");
-	}
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
+                        .getClass().getName(), "The Chemistry Development Kit");
+    }
+
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      *  Gets the parameters attribute of the IPAtomicLearningDescriptor object.
@@ -98,33 +96,33 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
 
     /**
-	 *  This method calculates the ionization potential of an atom.
-	 *
-	 *@param  atom          The IAtom to ionize.
-	 *@param  container         Parameter is the IAtomContainer.
-	 *@return                   The ionization potential. Not possible the ionization.
-	 */
-	@TestMethod(value="testCalculate_IAtomContainer")
+     *  This method calculates the ionization potential of an atom.
+     *
+     *@param  atom          The IAtom to ionize.
+     *@param  container         Parameter is the IAtomContainer.
+     *@return                   The ionization potential. Not possible the ionization.
+     */
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
-    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-    	String originalAtomtypeName = atom.getAtomTypeName();
-    	Integer originalNeighborCount = atom.getFormalNeighbourCount();
-    	Integer originalValency = atom.getValency();
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        String originalAtomtypeName = atom.getAtomTypeName();
+        Integer originalNeighborCount = atom.getFormalNeighbourCount();
+        Integer originalValency = atom.getValency();
         IAtomType.Hybridization originalHybrid = atom.getHybridization();
-    	Double originalBondOrderSum = atom.getBondOrderSum();
-    	Order originalMaxBondOrder = atom.getMaxBondOrder();
+        Double originalBondOrderSum = atom.getBondOrderSum();
+        Order originalMaxBondOrder = atom.getMaxBondOrder();
 
         if (!isCachedAtomContainer(container)) {
             try {
@@ -133,36 +131,37 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(container);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                        Double.NaN), getDescriptorNames(), e);
 
             }
         }
 
         try {
-            value = IonizationPotentialTool.predictIP(container,atom);
+            value = IonizationPotentialTool.predictIP(container, atom);
         } catch (CDKException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                        new DoubleResult(Double.NaN), getDescriptorNames(), e);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), getDescriptorNames(), e);
         }
-    	// restore original props
-    	atom.setAtomTypeName(originalAtomtypeName);
-    	atom.setFormalNeighbourCount(originalNeighborCount);
-    	atom.setValency(originalValency);
+        // restore original props
+        atom.setAtomTypeName(originalAtomtypeName);
+        atom.setFormalNeighbourCount(originalNeighborCount);
+        atom.setValency(originalValency);
         atom.setHybridization(originalHybrid);
-    	atom.setMaxBondOrder(originalMaxBondOrder);
-    	atom.setBondOrderSum(originalBondOrderSum);
+        atom.setMaxBondOrder(originalMaxBondOrder);
+        atom.setBondOrderSum(originalBondOrderSum);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(value), getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
+                getDescriptorNames());
 
-	}
-	/**
+    }
+
+    /**
      * Gets the parameterNames attribute of the IPAtomicLearningDescriptor object.
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -173,9 +172,8 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-

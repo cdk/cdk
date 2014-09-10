@@ -50,13 +50,13 @@ import org.openscience.cdk.smsd.tools.MolHandler;
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private static Map<IAtom, IAtom> atomsMCS = null;
-    private static Map<Integer, Integer> firstMCS = null;
-    private static List<Map<Integer, Integer>> allMCS = null;
-    private IAtomContainer source = null;
-    private IAtomContainer target = null;
-    private boolean flagExchange = false;
+    private static List<Map<IAtom, IAtom>>     allAtomMCS   = null;
+    private static Map<IAtom, IAtom>           atomsMCS     = null;
+    private static Map<Integer, Integer>       firstMCS     = null;
+    private static List<Map<Integer, Integer>> allMCS       = null;
+    private IAtomContainer                     source       = null;
+    private IAtomContainer                     target       = null;
+    private boolean                            flagExchange = false;
 
     /**
      * Constructor for the MCS Plus algorithm class
@@ -122,7 +122,7 @@ public class MCSPlusHandler extends AbstractMCSAlgorithm implements IMCSBase {
             List<Map<Integer, Integer>> final_solution = FinalMappings.getInstance().getFinalMapping();
             int counter = 0;
             for (Map<Integer, Integer> solution : final_solution) {
-//                System.out.println("Number of MCS solution: " + solution);
+                //                System.out.println("Number of MCS solution: " + solution);
                 Map<Integer, Integer> validSolution = new TreeMap<Integer, Integer>();
                 if (!flagExchange) {
                     for (Map.Entry<Integer, Integer> map : solution.entrySet()) {

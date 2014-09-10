@@ -80,12 +80,9 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom start = mock(IAtom.class);
         IAtom end = mock(IAtom.class);
-        when(container.getConnectedBondsList(start)).thenReturn(Collections
-                                                                        .<IBond>emptyList());
-        when(container.getConnectedBondsList(end)).thenReturn(Collections
-                                                                      .<IBond>emptyList());
-        assertNull(GeometricCumulativeDoubleBondFactory
-                           .axialEncoder(container, start, end));
+        when(container.getConnectedBondsList(start)).thenReturn(Collections.<IBond> emptyList());
+        when(container.getConnectedBondsList(end)).thenReturn(Collections.<IBond> emptyList());
+        assertNull(GeometricCumulativeDoubleBondFactory.axialEncoder(container, start, end));
     }
 
     @Test
@@ -96,10 +93,8 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         when(bond.getStereo()).thenReturn(IBond.Stereo.UP);
         when(bond.getAtom(0)).thenReturn(a1);
         when(bond.getAtom(1)).thenReturn(a2);
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond, a1), is(+1));
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond, a2), is(-1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a1), is(+1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a2), is(-1));
     }
 
     @Test
@@ -110,10 +105,8 @@ public class GeometricCumulativeDoubleBondFactoryTest {
         when(bond.getStereo()).thenReturn(IBond.Stereo.DOWN);
         when(bond.getAtom(0)).thenReturn(a1);
         when(bond.getAtom(1)).thenReturn(a2);
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond, a1), is(-1));
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond, a2), is(+1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a1), is(-1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond, a2), is(+1));
     }
 
     @Test
@@ -126,15 +119,13 @@ public class GeometricCumulativeDoubleBondFactoryTest {
     public void testElevation_Up() throws Exception {
         IBond bond = mock(IBond.class);
         when(bond.getStereo()).thenReturn(IBond.Stereo.UP);
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond), is(+1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(+1));
     }
 
     @Test
     public void testElevation_Down() throws Exception {
         IBond bond = mock(IBond.class);
         when(bond.getStereo()).thenReturn(IBond.Stereo.DOWN);
-        assertThat(GeometricCumulativeDoubleBondFactory
-                           .elevation(bond), is(-1));
+        assertThat(GeometricCumulativeDoubleBondFactory.elevation(bond), is(-1));
     }
 }

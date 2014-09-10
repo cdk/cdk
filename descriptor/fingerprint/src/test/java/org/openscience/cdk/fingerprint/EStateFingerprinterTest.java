@@ -41,12 +41,11 @@ import static org.junit.Assert.assertThat;
  */
 public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-	private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
-	public IFingerprinter getBitFingerprinter() {
-		return new EStateFingerprinter();
-	}
+    public IFingerprinter getBitFingerprinter() {
+        return new EStateFingerprinter();
+    }
 
     @Test
     public void testGetSize() throws Exception {
@@ -56,13 +55,13 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 
     @Test
     public void testFingerprint() throws Exception {
-		SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-		IFingerprinter printer = new EStateFingerprinter();
+        SmilesParser parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+        IFingerprinter printer = new EStateFingerprinter();
 
-		IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
-		IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
+        IBitFingerprint bs1 = printer.getBitFingerprint(parser.parseSmiles("C=C-C#N"));
+        IBitFingerprint bs2 = printer.getBitFingerprint(parser.parseSmiles("C=CCC(O)CC#N"));
 
-        Assert.assertEquals(79,printer.getSize());
+        Assert.assertEquals(79, printer.getSize());
 
         Assert.assertTrue(bs1.get(7));
         Assert.assertTrue(bs1.get(10));
@@ -78,7 +77,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
     public void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();
-        IAtomContainer subStructure   = bug706786_2();
+        IAtomContainer subStructure = bug706786_2();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
@@ -87,11 +86,9 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 
         IFingerprinter fpr = new EStateFingerprinter();
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
-        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+        IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);
 
-        assertThat(superBits.asBitSet(),
-                   is(asBitSet(6, 11, 12, 15, 16, 18, 33, 34, 35)));
-        assertThat(subBits.asBitSet(),
-                   is(asBitSet(8, 11, 16, 35)));
+        assertThat(superBits.asBitSet(), is(asBitSet(6, 11, 12, 15, 16, 18, 33, 34, 35)));
+        assertThat(subBits.asBitSet(), is(asBitSet(8, 11, 16, 35)));
     }
 }

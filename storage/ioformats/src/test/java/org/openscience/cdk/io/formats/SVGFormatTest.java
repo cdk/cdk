@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class SVGFormatTest extends ResourceFormatTest {
 
     public SVGFormatTest() {
-        super.setResourceFormat((IResourceFormat)SVGFormat.getInstance());
+        super.setResourceFormat((IResourceFormat) SVGFormat.getInstance());
     }
 
 }

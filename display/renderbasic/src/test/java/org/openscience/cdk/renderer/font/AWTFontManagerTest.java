@@ -30,15 +30,15 @@ import org.junit.Test;
  */
 public class AWTFontManagerTest extends AbstractFontManagerTest {
 
-	@BeforeClass
-	public static void setup() {
-		setFontManager(new AWTFontManager());
-	}
+    @BeforeClass
+    public static void setup() {
+        setFontManager(new AWTFontManager());
+    }
 
-	@Test
-	public void testConstructor() {
-		IFontManager fontManager = new AWTFontManager();
-		Assert.assertNotNull(fontManager);
-	}
+    @Test
+    public void testConstructor() {
+        IFontManager fontManager = new AWTFontManager();
+        Assert.assertNotNull(fontManager);
+    }
 
 }

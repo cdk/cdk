@@ -62,44 +62,16 @@ import org.openscience.cdk.silent.StrandTest;
  *
  * @cdk.module  test-silent
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SilentCoverageTest.class,
-    SilentChemObjectBuilderTest.class,
-    AminoAcidTest.class,
-    AtomContainerTest.class,
-    AtomTest.class,
-    AtomTypeTest.class,
-    BioPolymerTest.class,
-    BondTest.class,
-    ChemObjectTest.class,
-    ChemFileTest.class,
-    ChemModelTest.class,
-    ChemSequenceTest.class,
-    CrystalTest.class,
-    ElectronContainerTest.class,
-    ElementTest.class,
-    FragmentAtomTest.class,
-    IsotopeTest.class,
-    LonePairTest.class,
-    MonomerTest.class,
-    PseudoAtomTest.class,
-    PolymerTest.class,
-    ReactionTest.class,
-    RingTest.class,
-    RingSetTest.class,
-    AtomContainerSetTest.class,
-    ReactionSetTest.class,
-    ReactionSchemeTest.class,
-    SingleElectronTest.class,
-    StrandTest.class,
-    MolecularFormulaTest.class,
-    MolecularFormulaSetTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SilentCoverageTest.class, SilentChemObjectBuilderTest.class, AminoAcidTest.class,
+        AtomContainerTest.class, AtomTest.class, AtomTypeTest.class, BioPolymerTest.class, BondTest.class,
+        ChemObjectTest.class, ChemFileTest.class, ChemModelTest.class, ChemSequenceTest.class, CrystalTest.class,
+        ElectronContainerTest.class, ElementTest.class, FragmentAtomTest.class, IsotopeTest.class, LonePairTest.class,
+        MonomerTest.class, PseudoAtomTest.class, PolymerTest.class, ReactionTest.class, RingTest.class,
+        RingSetTest.class, AtomContainerSetTest.class, ReactionSetTest.class, ReactionSchemeTest.class,
+        SingleElectronTest.class, StrandTest.class, MolecularFormulaTest.class, MolecularFormulaSetTest.class,
 
-    // tests from test.protein.data
-    PDBAtomTest.class,
-    PDBMonomerTest.class,
-    PDBPolymerTest.class,
-    PDBStructureTest.class
-})
-public class MsilentTests {}
+        // tests from test.protein.data
+        PDBAtomTest.class, PDBMonomerTest.class, PDBPolymerTest.class, PDBStructureTest.class})
+public class MsilentTests {
+}

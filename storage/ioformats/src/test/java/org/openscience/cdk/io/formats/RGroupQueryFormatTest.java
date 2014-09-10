@@ -28,7 +28,8 @@ package org.openscience.cdk.io.formats;
  * @cdk.module test-ioformats
  */
 public class RGroupQueryFormatTest extends ChemFormatMatcherTest {
+
     public RGroupQueryFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)RGroupQueryFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) RGroupQueryFormat.getInstance());
     }
 }

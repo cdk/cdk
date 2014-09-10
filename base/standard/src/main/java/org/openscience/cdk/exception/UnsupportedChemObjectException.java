@@ -35,7 +35,6 @@ public class UnsupportedChemObjectException extends CDKException {
     private static final long serialVersionUID = -5348883360384907383L;
 
     public UnsupportedChemObjectException(String message) {
-        super( message );
+        super(message);
     }
 }
-

@@ -39,12 +39,14 @@ import org.openscience.cdk.annotations.TestMethod;
 public abstract class AbstractResourceFormat implements IResourceFormat {
 
     @TestMethod("testHashCode")
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return getClass().hashCode();
     }
 
     @TestMethod("testEquals,testEquals_null")
-    @Override public boolean equals(Object that) {
+    @Override
+    public boolean equals(Object that) {
         return that != null && this.getClass().equals(that.getClass());
     }
 }

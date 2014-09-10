@@ -66,20 +66,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest")
 public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private static Map<IAtom, IAtom> atomsMCS = null;
-    private static List<Map<IAtom, IAtom>> allAtomMCSCopy = null;
-    private static Map<Integer, Integer> firstMCS = null;
-    private static List<Map<Integer, Integer>> allMCS = null;
-    private static List<Map<Integer, Integer>> allMCSCopy = null;
-    private IQueryAtomContainer queryMol = null;
-    private IAtomContainer mol1 = null;
-    private IAtomContainer mol2 = null;
-    private List<Map<INode, IAtom>> vfLibSolutions = null;
-    private int vfMCSSize = -1;
-    private boolean bond_Match_Flag = false;
-    private final static ILoggingTool Logger =
-            LoggingToolFactory.createLoggingTool(VFlibSubStructureHandler.class);
+    private static List<Map<IAtom, IAtom>>     allAtomMCS      = null;
+    private static Map<IAtom, IAtom>           atomsMCS        = null;
+    private static List<Map<IAtom, IAtom>>     allAtomMCSCopy  = null;
+    private static Map<Integer, Integer>       firstMCS        = null;
+    private static List<Map<Integer, Integer>> allMCS          = null;
+    private static List<Map<Integer, Integer>> allMCSCopy      = null;
+    private IQueryAtomContainer                queryMol        = null;
+    private IAtomContainer                     mol1            = null;
+    private IAtomContainer                     mol2            = null;
+    private List<Map<INode, IAtom>>            vfLibSolutions  = null;
+    private int                                vfMCSSize       = -1;
+    private boolean                            bond_Match_Flag = false;
+    private final static ILoggingTool          Logger          = LoggingToolFactory
+                                                                       .createLoggingTool(VFlibSubStructureHandler.class);
 
     /**
      * Constructor for an extended VF Algorithm for the MCS search
@@ -183,7 +183,7 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
     }
 
     private void searchVFMappings() {
-//        System.out.println("searchVFMappings ");
+        //        System.out.println("searchVFMappings ");
         IQuery query = null;
         IMapper mapper = null;
         vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
@@ -254,8 +254,8 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
                     }
                 }
             }
-//            System.out.println("indexindexMapping " + indexindexMapping.size());
-//            System.out.println("MCS Size " + vfMCSSize);
+            //            System.out.println("indexindexMapping " + indexindexMapping.size());
+            //            System.out.println("MCS Size " + vfMCSSize);
             if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCSCopy)
                     && indexindexMapping.size() == vfMCSSize) {
                 allAtomMCSCopy.add(counter, atomatomMapping);
@@ -263,24 +263,24 @@ public class VFlibSubStructureHandler extends AbstractSubGraph implements IMCSBa
                 counter++;
             }
         }
-//        System.out.println("allMCSCopy " + allMCSCopy.size());
+        //        System.out.println("allMCSCopy " + allMCSCopy.size());
     }
 
     @Override
     public boolean isSubgraph(boolean shouldMatchBonds) {
         setBondMatchFlag(shouldMatchBonds);
         searchVFMappings();
-//        boolean flag = mcgregorFlag();
-//        if (flag && !vfLibSolutions.isEmpty()) {
-//            try {
-//                searchMcGregorMapping();
-//            } catch (CDKException ex) {
-//                Logger.error(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.error(Level.SEVERE, null, ex);
-//            }
-//
-//        } else
+        //        boolean flag = mcgregorFlag();
+        //        if (flag && !vfLibSolutions.isEmpty()) {
+        //            try {
+        //                searchMcGregorMapping();
+        //            } catch (CDKException ex) {
+        //                Logger.error(Level.SEVERE, null, ex);
+        //            } catch (IOException ex) {
+        //                Logger.error(Level.SEVERE, null, ex);
+        //            }
+        //
+        //        } else
 
         if (!allAtomMCSCopy.isEmpty()) {
             allAtomMCS.addAll(allAtomMCSCopy);

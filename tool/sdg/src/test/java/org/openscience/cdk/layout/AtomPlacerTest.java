@@ -56,7 +56,7 @@ public class AtomPlacerTest extends CDKTestCase {
         AtomPlacer placer = new AtomPlacer();
         boolean npeThrown = false;
         try {
-            placer.populatePolygonCorners(atoms, new Point2d(0,0), 0, 10, 10);
+            placer.populatePolygonCorners(atoms, new Point2d(0, 0), 0, 10, 10);
         } catch (NullPointerException npe) {
             npeThrown = true;
         }
@@ -70,13 +70,14 @@ public class AtomPlacerTest extends CDKTestCase {
         atoms.add(new Atom("C"));
         atoms.add(new Atom("C"));
         AtomPlacer placer = new AtomPlacer();
-        placer.populatePolygonCorners(atoms, new Point2d(0,0), 0, 10, 10);
+        placer.populatePolygonCorners(atoms, new Point2d(0, 0), 0, 10, 10);
         for (IAtom atom : atoms) {
             Assert.assertNotNull(atom.getPoint2d());
         }
     }
 
-    @Test public void cumulated_x2() {
+    @Test
+    public void cumulated_x2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
@@ -98,10 +99,8 @@ public class AtomPlacerTest extends CDKTestCase {
         Point2d p2 = m.getAtom(2).getPoint2d();
         Point2d p3 = m.getAtom(3).getPoint2d();
 
-        Vector2d p2p1 = new Vector2d(p1.x - p2.x,
-                                   p1.y - p2.y);
-        Vector2d p2p3 = new Vector2d(p3.x - p2.x,
-                                   p3.y - p2.y);
+        Vector2d p2p1 = new Vector2d(p1.x - p2.x, p1.y - p2.y);
+        Vector2d p2p3 = new Vector2d(p3.x - p2.x, p3.y - p2.y);
 
         p2p1.normalize();
         p2p3.normalize();
@@ -111,8 +110,8 @@ public class AtomPlacerTest extends CDKTestCase {
         assertThat(theta, closeTo(Math.PI, 0.05));
     }
 
-
-    @Test public void cumulated_x3() {
+    @Test
+    public void cumulated_x3() {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("C", 3));
         m.addAtom(atom("C", 1));
@@ -132,30 +131,23 @@ public class AtomPlacerTest extends CDKTestCase {
         atomPlacer.setMolecule(m);
         atomPlacer.placeLinearChain(m, new Vector2d(0, 1.5), 1.5);
 
-
         Point2d p1 = m.getAtom(1).getPoint2d();
         Point2d p2 = m.getAtom(2).getPoint2d();
         Point2d p3 = m.getAtom(3).getPoint2d();
         Point2d p4 = m.getAtom(4).getPoint2d();
 
-        Vector2d p2p1 = new Vector2d(p1.x - p2.x,
-                                     p1.y - p2.y);
-        Vector2d p2p3 = new Vector2d(p3.x - p2.x,
-                                     p3.y - p2.y);
-        Vector2d p3p2 = new Vector2d(p2.x - p3.x,
-                                     p2.y - p3.y);
-        Vector2d p3p4 = new Vector2d(p4.x - p3.x,
-                                     p4.y - p3.y);
+        Vector2d p2p1 = new Vector2d(p1.x - p2.x, p1.y - p2.y);
+        Vector2d p2p3 = new Vector2d(p3.x - p2.x, p3.y - p2.y);
+        Vector2d p3p2 = new Vector2d(p2.x - p3.x, p2.y - p3.y);
+        Vector2d p3p4 = new Vector2d(p4.x - p3.x, p4.y - p3.y);
 
         p2p1.normalize();
         p2p3.normalize();
         p3p2.normalize();
         p3p4.normalize();
 
-        assertThat(Math.acos(p2p1.x * p2p3.x + p2p1.y * p2p3.y),
-                   closeTo(Math.PI, 0.05));
-        assertThat(Math.acos(p3p2.x * p3p4.x + p3p2.y * p3p4.y),
-                   closeTo(Math.PI, 0.05));
+        assertThat(Math.acos(p2p1.x * p2p3.x + p2p1.y * p2p3.y), closeTo(Math.PI, 0.05));
+        assertThat(Math.acos(p3p2.x * p3p4.x + p3p2.y * p3p4.y), closeTo(Math.PI, 0.05));
 
     }
 

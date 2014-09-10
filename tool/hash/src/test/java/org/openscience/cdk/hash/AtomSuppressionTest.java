@@ -40,7 +40,8 @@ import static org.mockito.Mockito.when;
  */
 public class AtomSuppressionTest {
 
-    @Test public void unsuppressed() throws Exception {
+    @Test
+    public void unsuppressed() throws Exception {
         AtomSuppression suppression = AtomSuppression.unsuppressed();
         IAtomContainer container = mock(IAtomContainer.class);
         Suppressed suppressed = suppression.suppress(container);
@@ -51,7 +52,8 @@ public class AtomSuppressionTest {
         assertFalse(suppressed.contains(4));
     }
 
-    @Test public void anyHydrogens() throws Exception {
+    @Test
+    public void anyHydrogens() throws Exception {
         AtomSuppression suppression = AtomSuppression.anyHydrogens();
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);
@@ -76,7 +78,8 @@ public class AtomSuppressionTest {
         assertTrue(suppressed.contains(4));
     }
 
-    @Test public void anyPseudos() throws Exception {
+    @Test
+    public void anyPseudos() throws Exception {
         AtomSuppression suppression = AtomSuppression.anyPseudos();
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getAtomCount()).thenReturn(5);

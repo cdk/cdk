@@ -37,8 +37,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class EdgeBuilder implements IEdge {
 
-    private NodeBuilder source;
-    private NodeBuilder target;
+    private NodeBuilder   source;
+    private NodeBuilder   target;
     private VFBondMatcher matcher;
 
     /**

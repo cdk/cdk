@@ -46,11 +46,12 @@ final class PiBondModel extends ElectronDonation {
 
     /** @inheritDoc */
     @TestMethod("bezene,furan,pyrrole")
-    @Override int[] contribution(IAtomContainer container, RingSearch ringSearch) {
+    @Override
+    int[] contribution(IAtomContainer container, RingSearch ringSearch) {
 
-        int   n         = container.getAtomCount();
+        int n = container.getAtomCount();
         int[] electrons = new int[n];
-        int[] piBonds   = new int[n];
+        int[] piBonds = new int[n];
 
         // count number of cyclic pi bonds
         for (IBond bond : container.bonds()) {

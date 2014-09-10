@@ -41,17 +41,16 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
         setDescriptor(BasicGroupCountDescriptor.class);
     }
 
-    @Test public void testConstructor() throws Exception {
+    @Test
+    public void testConstructor() throws Exception {
         Assert.assertNotNull(new BasicGroupCountDescriptor());
     }
 
-    @Test public void testAmine() throws Exception {
-        SmilesParser sp = new SmilesParser(
-            SilentChemObjectBuilder.getInstance()
-        );
+    @Test
+    public void testAmine() throws Exception {
+        SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("NC");
-        IntegerResult result =
-            (IntegerResult)descriptor.calculate(mol).getValue();
+        IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         Assert.assertEquals(1, result.intValue());
     }
 
@@ -63,47 +62,46 @@ public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
     /**
      * @cdk.inchi InChI=1S/C2H4N2/c1-4-2-3/h2-3H,1H2
      */
-    @Test public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
         IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"N");
+        IAtom a1 = builder.newInstance(IAtom.class, "N");
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"N");
+        IAtom a2 = builder.newInstance(IAtom.class, "N");
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"H");
+        IAtom a5 = builder.newInstance(IAtom.class, "H");
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"H");
+        IAtom a6 = builder.newInstance(IAtom.class, "H");
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"H");
+        IAtom a7 = builder.newInstance(IAtom.class, "H");
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"H");
+        IAtom a8 = builder.newInstance(IAtom.class, "H");
         mol.addAtom(a8);
-        IBond b1 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a1, a4, IBond.Order.DOUBLE);
+        IBond b2 = builder.newInstance(IBond.class, a1, a4, IBond.Order.DOUBLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a2, a3, IBond.Order.DOUBLE);
+        IBond b3 = builder.newInstance(IBond.class, a2, a3, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a2, a8, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a2, a8, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a3, a5, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a4, a6, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a4, a6, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a4, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a4, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
         addImplicitHydrogens(mol);
 
-        IntegerResult result =
-            (IntegerResult)descriptor.calculate(mol).getValue();
+        IntegerResult result = (IntegerResult) descriptor.calculate(mol).getValue();
         // two SMARTS matches
         Assert.assertEquals(2, result.intValue());
     }
 }
-

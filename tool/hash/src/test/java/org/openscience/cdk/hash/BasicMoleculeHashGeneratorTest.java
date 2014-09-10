@@ -51,17 +51,16 @@ public class BasicMoleculeHashGeneratorTest {
         new BasicMoleculeHashGenerator(mock(AtomHashGenerator.class), null);
     }
 
-    @Test public void testGenerate() {
+    @Test
+    public void testGenerate() {
 
         AtomHashGenerator atomGenerator = mock(AtomHashGenerator.class);
         Pseudorandom prng = mock(Pseudorandom.class);
         IAtomContainer container = mock(IAtomContainer.class);
 
-        MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator,
-                                                                         prng);
+        MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, prng);
 
-        when(atomGenerator.generate(container))
-                .thenReturn(new long[]{1, 1, 1, 1});
+        when(atomGenerator.generate(container)).thenReturn(new long[]{1, 1, 1, 1});
         when(prng.next(1L)).thenReturn(1L);
 
         long hashCode = generator.generate(container);
@@ -77,17 +76,16 @@ public class BasicMoleculeHashGeneratorTest {
 
     }
 
-    @Test public void testGenerate_Rotation() {
+    @Test
+    public void testGenerate_Rotation() {
 
         AtomHashGenerator atomGenerator = mock(AtomHashGenerator.class);
         Xorshift xorshift = new Xorshift();
         IAtomContainer container = mock(IAtomContainer.class);
 
-        MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator,
-                                                                         new Xorshift());
+        MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, new Xorshift());
 
-        when(atomGenerator.generate(container))
-                .thenReturn(new long[]{5L, 5L, 5L, 5L});
+        when(atomGenerator.generate(container)).thenReturn(new long[]{5L, 5L, 5L, 5L});
 
         long hashCode = generator.generate(container);
 
@@ -95,10 +93,7 @@ public class BasicMoleculeHashGeneratorTest {
 
         verifyNoMoreInteractions(atomGenerator, container);
 
-        long expected = 2147483647L
-                ^ 5L
-                ^ xorshift.next(5L)
-                ^ xorshift.next(xorshift.next(5L))
+        long expected = 2147483647L ^ 5L ^ xorshift.next(5L) ^ xorshift.next(xorshift.next(5L))
                 ^ xorshift.next(xorshift.next(xorshift.next(5L)));
 
         assertThat(hashCode, is(expected));

@@ -52,62 +52,77 @@ public class AbstractValidator implements IValidator {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateAtom(IAtom subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateAtomContainer(IAtomContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateAtomType(IAtomType subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateBond(IBond subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateChemFile(IChemFile subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateChemModel(IChemModel subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateChemSequence(IChemSequence subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateCrystal(ICrystal subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateElectronContainer(IElectronContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateElement(IElement subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateIsotope(IIsotope subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateMolecule(IAtomContainer subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateReaction(IReaction subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateMoleculeSet(IAtomContainerSet subject) {
         ValidationReport report = new ValidationReport();
         return report;
     }
+
     public ValidationReport validateReactionSet(IReactionSet subject) {
         ValidationReport report = new ValidationReport();
         return report;

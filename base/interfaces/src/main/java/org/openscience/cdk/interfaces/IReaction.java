@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-
 /**
  * Represents the idea of a chemical reaction. The reaction consists of
  * a set of reactants and a set of products.
@@ -44,14 +43,14 @@ public interface IReaction extends IChemObject {
     /**
      * Permissible reaction directions.
      */
-	public enum Direction {
-		/** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
-		FORWARD,
-		/** Reaction equilibrium which is (almost) fully on the reactant side. Often denoted with a backward arrow. */
-		BACKWARD,
-		/** Reaction equilibrium state. Often denoted by a double arrow. */
-		BIDIRECTIONAL
-	}
+    public enum Direction {
+        /** Reaction equilibrium which is (almost) fully on the product side. Often denoted with a forward arrow. */
+        FORWARD,
+        /** Reaction equilibrium which is (almost) fully on the reactant side. Often denoted with a backward arrow. */
+        BACKWARD,
+        /** Reaction equilibrium state. Often denoted by a double arrow. */
+        BIDIRECTIONAL
+    }
 
     /**
      * Returns the number of reactants in this reaction.
@@ -92,7 +91,7 @@ public interface IReaction extends IChemObject {
      */
     public IAtomContainerSet getProducts();
 
-	/**
+    /**
      * Assigns a IAtomContaineSet to the products of this reaction.
      *
      *
@@ -177,7 +176,7 @@ public interface IReaction extends IChemObject {
      */
     public Double getProductCoefficient(IAtomContainer product);
 
-	/**
+    /**
      * Sets the coefficient of a a reactant to a given value.
      *
      * @param   reactant    Reactant for which the coefficient is set
@@ -187,7 +186,7 @@ public interface IReaction extends IChemObject {
      */
     public boolean setReactantCoefficient(IAtomContainer reactant, Double coefficient);
 
-	/**
+    /**
      * Sets the coefficient of a a product to a given value.
      *
      * @param   product     Product for which the coefficient is set
@@ -197,25 +196,25 @@ public interface IReaction extends IChemObject {
      */
     public boolean setProductCoefficient(IAtomContainer product, Double coefficient);
 
-	/**
+    /**
      * Returns an array of double with the stoichiometric coefficients
-	 * of the reactants.
+     * of the reactants.
      *
      * @return An array of double's containing the coefficients of the reactants
      * @see    #setReactantCoefficients
      */
     public Double[] getReactantCoefficients();
 
-	/**
+    /**
      * Returns an array of double with the stoichiometric coefficients
-	 * of the products.
+     * of the products.
      *
      * @return An array of double's containing the coefficients of the products
      * @see    #setProductCoefficients
      */
     public Double[] getProductCoefficients();
 
-	/**
+    /**
      * Sets the coefficients of the reactants.
      *
      * @param   coefficients An array of double's containing the coefficients of the reactants
@@ -224,7 +223,7 @@ public interface IReaction extends IChemObject {
      */
     public boolean setReactantCoefficients(Double[] coefficients);
 
-	/**
+    /**
      * Sets the coefficient of the products.
      *
      * @param   coefficients An array of double's containing the coefficients of the products
@@ -283,6 +282,5 @@ public interface IReaction extends IChemObject {
      * @return Number of stored Mappings.
      */
     public int getMappingCount();
-
 
 }

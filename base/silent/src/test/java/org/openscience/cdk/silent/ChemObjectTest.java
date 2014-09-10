@@ -33,66 +33,94 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ChemObjectTest extends AbstractChemObjectTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new ChemObject();
             }
         });
     }
 
-    @Test public void testChemObject() {
+    @Test
+    public void testChemObject() {
         IChemObject chemObject = new ChemObject();
         Assert.assertNotNull(chemObject);
         String value = chemObject.getProperty("hello");
     }
 
-    @Test public void testChemObject_IChemObject() {
-    	IChemObject chemObject1 = new ChemObject();
+    @Test
+    public void testChemObject_IChemObject() {
+        IChemObject chemObject1 = new ChemObject();
         IChemObject chemObject = new ChemObject(chemObject1);
         Assert.assertNotNull(chemObject);
     }
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
 
-    @Test public void compare() {
+    @Test
+    public void compare() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID(new String("a1"));
@@ -100,7 +128,8 @@ public class ChemObjectTest extends AbstractChemObjectTest {
         Assert.assertTrue(co1.compare(co2));
     }
 
-    @Test public void compareDifferent() {
+    @Test
+    public void compareDifferent() {
         ChemObject co1 = new ChemObject();
         ChemObject co2 = new ChemObject();
         co1.setID(new String("a1"));

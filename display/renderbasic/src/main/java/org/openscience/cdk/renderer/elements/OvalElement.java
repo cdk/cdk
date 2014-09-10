@@ -33,19 +33,19 @@ import org.openscience.cdk.annotations.TestMethod;
 public class OvalElement implements IRenderingElement {
 
     /** The x-coordinate of the center of the oval. **/
-    public final double xCoord;
+    public final double  xCoord;
 
     /** The y-coordinate of the center of the oval. **/
-    public final double yCoord;
+    public final double  yCoord;
 
     /** The radius of the oval. **/
-    public final double radius;        // TODO : width AND height
+    public final double  radius; // TODO : width AND height
 
     /** If true, draw the oval as filled. **/
     public final boolean fill;
 
     /** The color to draw the oval. **/
-    public final Color color;
+    public final Color   color;
 
     /**
      * Make an oval with a default radius of 10.
@@ -89,7 +89,7 @@ public class OvalElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} **/
-	@TestMethod("testAccept")
+    @TestMethod("testAccept")
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }

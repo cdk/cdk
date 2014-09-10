@@ -40,10 +40,11 @@ import org.openscience.cdk.tools.ProteinBuilderTool;
  */
 public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
 
-	private static IMolecularDescriptor descriptor;
+    private static IMolecularDescriptor descriptor;
 
-    @BeforeClass public static void setUp() {
-    	descriptor = new TaeAminoAcidDescriptor();
+    @BeforeClass
+    public static void setUp() {
+        descriptor = new TaeAminoAcidDescriptor();
     }
 
     @Before
@@ -51,7 +52,8 @@ public class TaeAminoAcidDescriptorTest extends MolecularDescriptorTest {
         super.setDescriptor(TaeAminoAcidDescriptor.class);
     }
 
-    @Test public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    @Test
+    public void testTaeAminoAcidDescriptor() throws ClassNotFoundException, CDKException, Exception {
         IBioPolymer pepseq = ProteinBuilderTool.createProtein("ACDEFGH", SilentChemObjectBuilder.getInstance());
         DescriptorValue result = descriptor.calculate(pepseq);
 

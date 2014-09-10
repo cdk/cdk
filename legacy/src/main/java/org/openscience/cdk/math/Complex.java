@@ -30,112 +30,101 @@ package org.openscience.cdk.math;
  *
  * @cdk.module qm
  */
-public class Complex
-{
-  /** The real part of this value */
-  public double real = 0;
-  /** The imaginary part of this value */
-  public double imag = 0;
+public class Complex {
 
-  /**
-   * Creates a complex number
-   *
-   * @param real the real part
-   * @param imag the imaginary part
-   */
-  public Complex(double real, double imag)
-  {
-    this.real = real;
-    this.imag = imag;
-  }
+    /** The real part of this value */
+    public double real = 0;
+    /** The imaginary part of this value */
+    public double imag = 0;
 
-  /**
-   * Creates a copy of a complex object
-   */
-  public Complex(Complex c)
-  {
-    real = c.real;
-    imag = c.imag;
-  }
+    /**
+     * Creates a complex number
+     *
+     * @param real the real part
+     * @param imag the imaginary part
+     */
+    public Complex(double real, double imag) {
+        this.real = real;
+        this.imag = imag;
+    }
 
-  /**
-   * Sets the real part of this complex value
-   */
-  public void setRealPart(double real)
-  {
-    this.real = real;
-  }
+    /**
+     * Creates a copy of a complex object
+     */
+    public Complex(Complex c) {
+        real = c.real;
+        imag = c.imag;
+    }
 
-  /**
-   * Gets the real part of this complex value
-   */
-  public double getRealPart()
-  {
-    return real;
-  }
+    /**
+     * Sets the real part of this complex value
+     */
+    public void setRealPart(double real) {
+        this.real = real;
+    }
 
-  /**
-   * Sets the imaginary part of this value
-   */
-  public void setImaginaryPart(double imag)
-  {
-    this.imag = imag;
-  }
+    /**
+     * Gets the real part of this complex value
+     */
+    public double getRealPart() {
+        return real;
+    }
 
-  /**
-   * Gets the imaginary part of this value
-   */
-  public double getImaginaryPart()
-  {
-    return imag;
-  }
+    /**
+     * Sets the imaginary part of this value
+     */
+    public void setImaginaryPart(double imag) {
+        this.imag = imag;
+    }
 
-  /**
-   * Add a complex value
-   */
-  public void add(Complex c)
-  {
-    real += c.real;
-    imag += c.imag;
-  }
+    /**
+     * Gets the imaginary part of this value
+     */
+    public double getImaginaryPart() {
+        return imag;
+    }
 
-  /**
-   * Subtracs a complex value
-   */
-  public void sub(Complex c)
-  {
-    real -= c.real;
-    imag -= c.imag;
-  }
+    /**
+     * Add a complex value
+     */
+    public void add(Complex c) {
+        real += c.real;
+        imag += c.imag;
+    }
 
-  /**
-   * Multiply this value with a complex value
-   */
-  public void mul(Complex c)
-  {
-    double newreal = real*c.real-imag*c.imag;
-    double newimag = real*c.imag+imag*c.real;
-    real = newreal;
-    imag = newimag;
-  }
+    /**
+     * Subtracs a complex value
+     */
+    public void sub(Complex c) {
+        real -= c.real;
+        imag -= c.imag;
+    }
 
-  /**
-   * Div this value by a complex value
-   */
-  public void div(Complex c)
-  {
-    double modulus = c.real*c.real+c.imag*c.imag;
-    double newreal = imag*c.imag+real*c.real;
-    double newimag = imag*c.real-real*c.imag;
-    real = newreal/modulus;
-    imag = newimag/modulus;
-  }
+    /**
+     * Multiply this value with a complex value
+     */
+    public void mul(Complex c) {
+        double newreal = real * c.real - imag * c.imag;
+        double newimag = real * c.imag + imag * c.real;
+        real = newreal;
+        imag = newimag;
+    }
 
-  /**
-   * Create a string of the content of this class
-   */
-  public String toString()
-  {
-    return "("+real+"+i*"+imag+")";
-  }
+    /**
+     * Div this value by a complex value
+     */
+    public void div(Complex c) {
+        double modulus = c.real * c.real + c.imag * c.imag;
+        double newreal = imag * c.imag + real * c.real;
+        double newimag = imag * c.real - real * c.imag;
+        real = newreal / modulus;
+        imag = newimag / modulus;
+    }
+
+    /**
+     * Create a string of the content of this class
+     */
+    public String toString() {
+        return "(" + real + "+i*" + imag + ")";
+    }
 }

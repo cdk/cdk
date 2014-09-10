@@ -51,8 +51,8 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
 
     public RadicalGenerator() {}
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
@@ -62,41 +62,37 @@ public class RadicalGenerator implements IGenerator<IAtomContainer> {
         final Color RADICAL_COLOR = Color.BLACK;
 
         // XXX : is this the best option?
-        final double ATOM_RADIUS =
-            ((AtomRadius)model.getParameter(AtomRadius.class)).
-            getValue()/ model.getParameter(Scale.class).getValue();
+        final double ATOM_RADIUS = ((AtomRadius) model.getParameter(AtomRadius.class)).getValue()
+                / model.getParameter(Scale.class).getValue();
 
-        double modelRadius = SCREEN_RADIUS /
-            model.getParameter(Scale.class).getValue();
+        double modelRadius = SCREEN_RADIUS / model.getParameter(Scale.class).getValue();
         double modelSpacing = modelRadius * 2.5;
-        Map<IAtom,Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
+        Map<IAtom, Integer> singleElectronsPerAtom = new HashMap<IAtom, Integer>();
         for (ISingleElectron electron : container.singleElectrons()) {
             IAtom atom = electron.getAtom();
-            if(singleElectronsPerAtom.get(atom)==null)
-                singleElectronsPerAtom.put(atom,0);
+            if (singleElectronsPerAtom.get(atom) == null) singleElectronsPerAtom.put(atom, 0);
             Point2d point = atom.getPoint2d();
             int align = GeometryUtil.getBestAlignmentForLabelXY(container, atom);
             double xRadius = point.x;
             double yRadius = point.y;
             if (align == 1) {
-                xRadius += ATOM_RADIUS*4+singleElectronsPerAtom.get(atom)*modelSpacing;
+                xRadius += ATOM_RADIUS * 4 + singleElectronsPerAtom.get(atom) * modelSpacing;
             } else if (align == -1) {
-                xRadius -= ATOM_RADIUS*4+singleElectronsPerAtom.get(atom)*modelSpacing;
+                xRadius -= ATOM_RADIUS * 4 + singleElectronsPerAtom.get(atom) * modelSpacing;
             } else if (align == 2) {
-                yRadius += ATOM_RADIUS*4+singleElectronsPerAtom.get(atom)*modelSpacing;
+                yRadius += ATOM_RADIUS * 4 + singleElectronsPerAtom.get(atom) * modelSpacing;
             } else if (align == -2) {
-                yRadius -= ATOM_RADIUS*4+singleElectronsPerAtom.get(atom)*modelSpacing;
+                yRadius -= ATOM_RADIUS * 4 + singleElectronsPerAtom.get(atom) * modelSpacing;
             }
-            singleElectronsPerAtom.put(atom, singleElectronsPerAtom.get(atom)+1);
-            group.add(
-                    new OvalElement(xRadius, yRadius, modelRadius, true, RADICAL_COLOR));
+            singleElectronsPerAtom.put(atom, singleElectronsPerAtom.get(atom) + 1);
+            group.add(new OvalElement(xRadius, yRadius, modelRadius, true, RADICAL_COLOR));
         }
         return group;
     }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }

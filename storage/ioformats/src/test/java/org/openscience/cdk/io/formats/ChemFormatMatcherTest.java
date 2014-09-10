@@ -44,36 +44,38 @@ abstract public class ChemFormatMatcherTest extends ChemFormatTest {
         this.matcher = matcher;
     }
 
-    @Test public void testChemFormatMatcherSet() {
-        Assert.assertNotNull(
-            "You must use setChemFormatMatcher() to set the IChemFormatMatcher object.",
-            matcher
-        );
+    @Test
+    public void testChemFormatMatcherSet() {
+        Assert.assertNotNull("You must use setChemFormatMatcher() to set the IChemFormatMatcher object.", matcher);
     }
 
-    protected boolean matches(String header)
-        throws IOException {
-        BufferedReader reader = new BufferedReader(
-            new StringReader(header)
-        );
+    protected boolean matches(String header) throws IOException {
+        BufferedReader reader = new BufferedReader(new StringReader(header));
         return matcher.matches(CharStreams.readLines(reader)).matched();
     }
 
-    @Test public void testMatches() throws Exception {
+    @Test
+    public void testMatches() throws Exception {
         Assert.assertTrue(true);
         // positive testing is done by the ReaderFactoryTest, and
         // negative tests are given below
     }
 
-    @Test public void testNoLines() {
-        Assert.assertFalse(matcher.matches(Collections.<String>emptyList()).matched());
+    @Test
+    public void testNoLines() {
+        Assert.assertFalse(matcher.matches(Collections.<String> emptyList()).matched());
     }
 
-    @Test public void testMatchesEmptyString() {
+    @Test
+    public void testMatchesEmptyString() {
         Assert.assertFalse(matcher.matches(Arrays.asList("")).matched());
     }
 
-    @Test public void testMatchesLoremIpsum() {
-        Assert.assertFalse(matcher.matches(Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla.")).matched());
+    @Test
+    public void testMatchesLoremIpsum() {
+        Assert.assertFalse(matcher
+                .matches(
+                        Arrays.asList("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam accumsan metus ut nulla."))
+                .matched());
     }
 }

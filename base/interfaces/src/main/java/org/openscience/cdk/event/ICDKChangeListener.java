@@ -32,13 +32,12 @@ import java.util.EventObject;
  * @cdk.module  interfaces
  * @cdk.githash
  */
-public interface ICDKChangeListener extends EventListener
-{
-	/**
-	 * Invoked when the target of the listener has changed its state.
-	 *
-	 * @param   event  The EventObject
-	 */
+public interface ICDKChangeListener extends EventListener {
+
+    /**
+     * Invoked when the target of the listener has changed its state.
+     *
+     * @param   event  The EventObject
+     */
     void stateChanged(EventObject event);
 }
-

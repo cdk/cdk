@@ -47,7 +47,7 @@ import java.util.Arrays;
 public class PharmacophoreAtom extends Atom {
 
     private String smarts;
-    private int[] matchingAtoms;
+    private int[]  matchingAtoms;
 
     /**
      * Create a pharmacophore group.
@@ -132,7 +132,6 @@ public class PharmacophoreAtom extends Atom {
         return matchingAtoms;
     }
 
-
     @TestMethod("testEquals")
     public boolean equals(Object o) {
         if (!(o instanceof PharmacophoreAtom)) return false;
@@ -150,13 +149,11 @@ public class PharmacophoreAtom extends Atom {
                     break;
                 }
             }
-        } else atomIndicesMatch = false;
+        } else
+            atomIndicesMatch = false;
 
-        return smarts.equals(patom.getSmarts()) &&
-                symbol.equals(patom.getSymbol()) &&
-                point3d.equals(patom.getPoint3d()) &&
-                atomIndicesMatch;
+        return smarts.equals(patom.getSmarts()) && symbol.equals(patom.getSymbol())
+                && point3d.equals(patom.getPoint3d()) && atomIndicesMatch;
     }
-
 
 }

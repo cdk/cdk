@@ -2,23 +2,23 @@
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                     2009  Stefan Kuhn <shk3@users.sf.net>
  *                     2009  Egon Willighagen <egonw@users.sf.net>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer;
 
 import java.awt.Rectangle;
@@ -106,8 +106,7 @@ import org.openscience.cdk.renderer.visitor.IDrawVisitor;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.MoleculeSetRendererTest")
-public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
-  implements IRenderer<IAtomContainerSet> {
+public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet> implements IRenderer<IAtomContainerSet> {
 
     private IRenderer<IAtomContainer> atomContainerRenderer;
 
@@ -121,34 +120,35 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
      *            a class that manages mappings between zoom and font sizes
      */
     @TestMethod("testConstructor")
-	public MoleculeSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		this(new RendererModel(),generators,fontManager);
-	}
-	public MoleculeSetRenderer(RendererModel rendererModel,List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
-		super(rendererModel);
-		for (IGenerator<IAtomContainer> generator : generators) {
+    public MoleculeSetRenderer(List<IGenerator<IAtomContainer>> generators, IFontManager fontManager) {
+        this(new RendererModel(), generators, fontManager);
+    }
+
+    public MoleculeSetRenderer(RendererModel rendererModel, List<IGenerator<IAtomContainer>> generators,
+            IFontManager fontManager) {
+        super(rendererModel);
+        for (IGenerator<IAtomContainer> generator : generators) {
             rendererModel.registerParameters(generator);
         }
         this.fontManager = fontManager;
-        atomContainerRenderer = new AtomContainerRenderer(rendererModel,generators, fontManager);
+        atomContainerRenderer = new AtomContainerRenderer(rendererModel, generators, fontManager);
         this.generators = Collections.emptyList();
         this.setup();
     }
 
-	/**
-	 * Setup the transformations necessary to draw this {@link IAtomContainerSet}.
-	 *
-	 * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
-	 * @param screen      the {@link Rectangle} for which to calculate the scale
-	 */
-	public void setup(IAtomContainerSet moleculeSet, Rectangle screen) {
-	    this.setScale(moleculeSet);
-	    Rectangle2D bounds = BoundsCalculator.calculateBounds(moleculeSet);
-	    if(bounds != null)
-	        this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
-	    this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
-	    this.setup();
-	}
+    /**
+     * Setup the transformations necessary to draw this {@link IAtomContainerSet}.
+     *
+     * @param moleculeSet the {@link IAtomContainerSet} for what to set the scale
+     * @param screen      the {@link Rectangle} for which to calculate the scale
+     */
+    public void setup(IAtomContainerSet moleculeSet, Rectangle screen) {
+        this.setScale(moleculeSet);
+        Rectangle2D bounds = BoundsCalculator.calculateBounds(moleculeSet);
+        if (bounds != null) this.modelCenter = new Point2d(bounds.getCenterX(), bounds.getCenterY());
+        this.drawCenter = new Point2d(screen.getCenterX(), screen.getCenterY());
+        this.setup();
+    }
 
     /**
      * Determine the overlap of the diagram with the screen, and shift (if
@@ -163,14 +163,14 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
      * @return the shape that the screen should be
      */
     public Rectangle shift(Rectangle screenBounds, Rectangle diagramBounds) {
-        int screenMaxX  = screenBounds.x + screenBounds.width;
-        int screenMaxY  = screenBounds.y + screenBounds.height;
+        int screenMaxX = screenBounds.x + screenBounds.width;
+        int screenMaxY = screenBounds.y + screenBounds.height;
         int diagramMaxX = diagramBounds.x + diagramBounds.width;
         int diagramMaxY = diagramBounds.y + diagramBounds.height;
 
-        int leftOverlap   = screenBounds.x - diagramBounds.x;
-        int rightOverlap  = diagramMaxX - screenMaxX;
-        int topOverlap    = screenBounds.y - diagramBounds.y;
+        int leftOverlap = screenBounds.x - diagramBounds.x;
+        int rightOverlap = diagramMaxX - screenMaxX;
+        int topOverlap = screenBounds.y - diagramBounds.y;
         int bottomOverlap = diagramMaxY - screenMaxY;
 
         int diffx = 0;
@@ -216,8 +216,9 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
         this.rendererModel.getParameter(Scale.class).setValue(scale);
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle paint(IAtomContainerSet moleculeSet, IDrawVisitor drawVisitor) {
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle paint(IAtomContainerSet moleculeSet, IDrawVisitor drawVisitor) {
         // total up the bounding boxes
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
@@ -230,7 +231,7 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
         return this.convertToDiagramBounds(totalBounds);
     }
 
-	/**
+    /**
      * Paint a set of molecules.
      *
      * @param molecules   the {@link IAtomContainerSet} to paint
@@ -239,20 +240,20 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
-    public void paint(IAtomContainerSet molecules,
-            IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
+    public void paint(IAtomContainerSet molecules, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(molecules);
 
         this.setupTransformToFit(bounds, totalBounds,
-        		AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
+                AverageBondLengthCalculator.calculateAverageBondLength(molecules), resetCenter);
 
         IRenderingElement diagram = this.generateDiagram(molecules);
         this.paint(drawVisitor, diagram);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRenderingElement generateDiagram(IAtomContainerSet molecules) {
         ElementGroup diagram = new ElementGroup();
         for (IAtomContainer molecule : molecules.atomContainers()) {
@@ -261,32 +262,31 @@ public class MoleculeSetRenderer extends AbstractRenderer<IAtomContainerSet>
         return diagram;
     }
 
-    /** {@inheritDoc} */ @Override
-	public Rectangle calculateDiagramBounds(IAtomContainerSet moleculeSet) {
-		if(moleculeSet == null) return this.calculateScreenBounds(new Rectangle2D.Double());
-	    return this.calculateScreenBounds(
-	               BoundsCalculator.calculateBounds(moleculeSet));
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Rectangle calculateDiagramBounds(IAtomContainerSet moleculeSet) {
+        if (moleculeSet == null) return this.calculateScreenBounds(new Rectangle2D.Double());
+        return this.calculateScreenBounds(BoundsCalculator.calculateBounds(moleculeSet));
+    }
 
-	/**
-	 * Given a bond length for a model, calculate the scale that will transform
-	 * this length to the on screen bond length in RendererModel.
-	 *
-	 * @param  modelBondLength the wanted model bond length in screen length
-	 * @return returns the scale that causes the drawn bond lengths in pixels to match
-	 *         the given model bond length
-	 */
-	public double calculateScaleForBondLength(double modelBondLength) {
-	    if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
+    /**
+     * Given a bond length for a model, calculate the scale that will transform
+     * this length to the on screen bond length in RendererModel.
+     *
+     * @param  modelBondLength the wanted model bond length in screen length
+     * @return returns the scale that causes the drawn bond lengths in pixels to match
+     *         the given model bond length
+     */
+    public double calculateScaleForBondLength(double modelBondLength) {
+        if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();
         } else {
-            return this.rendererModel.getParameter(BondLength.class)
-        		.getValue() / modelBondLength;
+            return this.rendererModel.getParameter(BondLength.class).getValue() / modelBondLength;
         }
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     public List<IGenerator<IAtomContainerSet>> getGenerators() {
         return new ArrayList<IGenerator<IAtomContainerSet>>(generators);
     }

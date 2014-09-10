@@ -39,51 +39,52 @@ import static org.junit.Assert.assertTrue;
 
 public class SymbolVisibilityTest {
 
-    @Test public void anyAtom() {
+    @Test
+    public void anyAtom() {
         assertTrue(SymbolVisibility.all().visible(null, null, null));
     }
 
-    @Test public void iupacOxygen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"),
-                                                                   Collections.<IBond>emptyList(),
-                                                                   new RendererModel()));
+    @Test
+    public void iupacOxygen() {
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("O"), Collections.<IBond> emptyList(),
+                new RendererModel()));
     }
 
-    @Test public void iupacNitrogen() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"),
-                                                                   Collections.<IBond>emptyList(),
-                                                                   new RendererModel()));
+    @Test
+    public void iupacNitrogen() {
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("N"), Collections.<IBond> emptyList(),
+                new RendererModel()));
     }
 
-    @Test public void iupacMethane() {
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"),
-                                                                   Collections.<IBond>emptyList(),
-                                                                   new RendererModel()));
+    @Test
+    public void iupacMethane() {
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(new Atom("C"), Collections.<IBond> emptyList(),
+                new RendererModel()));
     }
 
-    @Test public void iupacMethylPreferred() {
+    @Test
+    public void iupacMethylPreferred() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                   Arrays.asList(bond),
-                                                                   new RendererModel()));
+        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond), new RendererModel()));
     }
 
-    @Test public void iupacMethylAcceptable() {
+    @Test
+    public void iupacMethylAcceptable() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IBond bond = new Bond(a1, a2);
         a1.setPoint2d(new Point2d(0, 0));
         a2.setPoint2d(new Point2d(0, 0));
-        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon().visible(a1,
-                                                                                 Arrays.asList(bond),
-                                                                                 new RendererModel()));
+        assertFalse(SymbolVisibility.iupacRecommendationsWithoutTerminalCarbon().visible(a1, Arrays.asList(bond),
+                new RendererModel()));
     }
 
-    @Test public void iupacUnlabelledCarbon() {
+    @Test
+    public void iupacUnlabelledCarbon() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -99,12 +100,12 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertFalse(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                    Arrays.asList(bond1, bond2),
-                                                                    new RendererModel()));
+        assertFalse(SymbolVisibility.iupacRecommendations().visible(a1, Arrays.asList(bond1, bond2),
+                new RendererModel()));
     }
 
-    @Test public void iupacCarbonIon() {
+    @Test
+    public void iupacCarbonIon() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -121,12 +122,12 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                   Arrays.asList(bond1, bond2),
-                                                                   new RendererModel()));
+        assertTrue(SymbolVisibility.iupacRecommendations()
+                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
-    @Test public void iupacCarbonParallel() {
+    @Test
+    public void iupacCarbonParallel() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -142,13 +143,13 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                   Arrays.asList(bond1, bond2),
-                                                                   new RendererModel()));
+        assertTrue(SymbolVisibility.iupacRecommendations()
+                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
     // produces an NaN internally
-    @Test public void iupacCarbonCornerCase() {
+    @Test
+    public void iupacCarbonCornerCase() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -164,12 +165,12 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                   Arrays.asList(bond1, bond2),
-                                                                   new RendererModel()));
+        assertTrue(SymbolVisibility.iupacRecommendations()
+                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
-    @Test public void carbonIsotope() {
+    @Test
+    public void carbonIsotope() {
         IAtom a1 = new Atom("C");
         IAtom a2 = new Atom("C");
         IAtom a3 = new Atom("C");
@@ -187,9 +188,8 @@ public class SymbolVisibilityTest {
         a2.setImplicitHydrogenCount(3);
         a3.setImplicitHydrogenCount(3);
 
-        assertTrue(SymbolVisibility.iupacRecommendations().visible(a1,
-                                                                   Arrays.asList(bond1, bond2),
-                                                                   new RendererModel()));
+        assertTrue(SymbolVisibility.iupacRecommendations()
+                .visible(a1, Arrays.asList(bond1, bond2), new RendererModel()));
     }
 
 }

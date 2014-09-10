@@ -45,43 +45,46 @@ public class AtomDiff {
      */
     private AtomDiff() {}
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testMatchAgainstItself,testDiff")
-    public static String diff( IChemObject first, IChemObject second ) {
-    	IDifference diff = difference(first, second);
-    	if (diff == null) {
-    		return "";
-    	} else {
-    		return diff.toString();
-    	}
+    public static String diff(IChemObject first, IChemObject second) {
+        IDifference diff = difference(first, second);
+        if (diff == null) {
+            return "";
+        } else {
+            return diff.toString();
+        }
     }
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testDifference")
-    public static IDifference difference( IChemObject first, IChemObject second ) {
+    public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IAtom && second instanceof IAtom)) {
             return null;
         }
-        IAtom firstElem = (IAtom)first;
-        IAtom secondElem = (IAtom)second;
+        IAtom firstElem = (IAtom) first;
+        IAtom secondElem = (IAtom) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomDiff");
-        totalDiff.addChild(IntegerDifference.construct("H", firstElem.getImplicitHydrogenCount(), secondElem.getImplicitHydrogenCount()));
-        totalDiff.addChild(IntegerDifference.construct("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
+        totalDiff.addChild(IntegerDifference.construct("H", firstElem.getImplicitHydrogenCount(),
+                secondElem.getImplicitHydrogenCount()));
+        totalDiff
+                .addChild(IntegerDifference.construct("SP", firstElem.getStereoParity(), secondElem.getStereoParity()));
         totalDiff.addChild(Point2dDifference.construct("2D", firstElem.getPoint2d(), secondElem.getPoint2d()));
         totalDiff.addChild(Point3dDifference.construct("3D", firstElem.getPoint3d(), secondElem.getPoint3d()));
-        totalDiff.addChild(Point3dDifference.construct("F3D", firstElem.getFractionalPoint3d(), secondElem.getFractionalPoint3d()));
+        totalDiff.addChild(Point3dDifference.construct("F3D", firstElem.getFractionalPoint3d(),
+                secondElem.getFractionalPoint3d()));
         totalDiff.addChild(DoubleDifference.construct("C", firstElem.getCharge(), secondElem.getCharge()));
         totalDiff.addChild(AtomTypeDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {

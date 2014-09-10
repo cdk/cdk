@@ -37,15 +37,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class ReactionTest extends AbstractReactionTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Reaction();
             }
         });
     }
 
-    @Test public void testReaction() {
+    @Test
+    public void testReaction() {
         IReaction reaction = new Reaction();
         Assert.assertNotNull(reaction);
         Assert.assertEquals(0, reaction.getReactantCount());

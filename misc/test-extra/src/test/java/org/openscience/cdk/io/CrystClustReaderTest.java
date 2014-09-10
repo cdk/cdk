@@ -44,24 +44,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CrystClustReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new CrystClustReader(), "data/crystclust/estron.crystclust");
     }
 
-    @Test public void testAccepts() {
-    	Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
-      Assert.assertFalse(chemObjectIO.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() {
+        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+        Assert.assertFalse(chemObjectIO.accepts(AtomContainer.class));
     }
 
-    @Test public void testEstrone() throws Exception {
+    @Test
+    public void testEstrone() throws Exception {
         String filename = "data/crystclust/estron.crystclust";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CrystClustReader reader = new CrystClustReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
 
         Assert.assertNotNull(chemFile);
         Assert.assertEquals(1, chemFile.getChemSequenceCount());

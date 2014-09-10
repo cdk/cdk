@@ -96,7 +96,7 @@ public final class AllPairsShortestPaths {
 
         int n = container.getAtomCount();
 
-        this.container     = container;
+        this.container = container;
         this.shortestPaths = new ShortestPaths[n];
 
         // for each atom construct the ShortestPaths object
@@ -125,9 +125,7 @@ public final class AllPairsShortestPaths {
      */
     @TestMethod("testFrom_Int_Benzene")
     public ShortestPaths from(int start) {
-        return (start < 0 || start >= shortestPaths.length)
-                ? EMPTY_SHORTEST_PATHS
-                : shortestPaths[start];
+        return (start < 0 || start >= shortestPaths.length) ? EMPTY_SHORTEST_PATHS : shortestPaths[start];
     }
 
     /**
@@ -159,404 +157,447 @@ public final class AllPairsShortestPaths {
         return from(container.getAtomNumber(start));
     }
 
-
     /**
      * an empty atom container so we can handle invalid vertices/atoms better.
      * Not very pretty but we can't access the domain model from cdk-core.
      */
-    private static final IAtomContainer EMPTY_CONTAINER = new IAtomContainer() {
+    private static final IAtomContainer EMPTY_CONTAINER      = new IAtomContainer() {
+
+                                                                 public void addStereoElement(IStereoElement element) {}
+
+                                                                 public void setStereoElements(
+                                                                         List<IStereoElement> elements) {}
+
+                                                                 public Iterable<IStereoElement> stereoElements() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public void setAtoms(IAtom[] atoms) {}
+
+                                                                 public void setBonds(IBond[] bonds) {}
+
+                                                                 public void setAtom(int number, IAtom atom) {}
+
+                                                                 public IAtom getAtom(int number) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public IBond getBond(int number) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public ILonePair getLonePair(int number) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public ISingleElectron getSingleElectron(int number) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public Iterable<IAtom> atoms() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public Iterable<IBond> bonds() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public Iterable<ILonePair> lonePairs() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public Iterable<ISingleElectron> singleElectrons() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public Iterable<IElectronContainer> electronContainers() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public IAtom getFirstAtom() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public IAtom getLastAtom() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public int getAtomNumber(IAtom atom) {
+                                                                     return -1;
+                                                                 }
+
+                                                                 public int getBondNumber(IAtom atom1, IAtom atom2) {
+                                                                     return -1;
+                                                                 }
+
+                                                                 public int getBondNumber(IBond bond) {
+                                                                     return -1;
+                                                                 }
+
+                                                                 public int getLonePairNumber(ILonePair lonePair) {
+                                                                     return -1;
+                                                                 }
+
+                                                                 public int getSingleElectronNumber(
+                                                                         ISingleElectron singleElectron) {
+                                                                     return -1;
+                                                                 }
+
+                                                                 public IElectronContainer getElectronContainer(
+                                                                         int number) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
+
+                                                                 public IBond getBond(IAtom atom1, IAtom atom2) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public void addStereoElement(IStereoElement element) {
-        }
+                                                                 public int getAtomCount() {
+                                                                     return 0;
+                                                                 }
 
-        public void setStereoElements(List<IStereoElement> elements) {
-        }
+                                                                 public int getBondCount() {
+                                                                     return 0;
+                                                                 }
 
-        public Iterable<IStereoElement> stereoElements() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public int getLonePairCount() {
+                                                                     return 0;
+                                                                 }
 
-        public void setAtoms(IAtom[] atoms) {
-        }
+                                                                 public int getSingleElectronCount() {
+                                                                     return 0;
+                                                                 }
 
-        public void setBonds(IBond[] bonds) {
-        }
+                                                                 public int getElectronContainerCount() {
+                                                                     return 0;
+                                                                 }
 
-        public void setAtom(int number, IAtom atom) {
-        }
+                                                                 public List<IAtom> getConnectedAtomsList(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IAtom getAtom(int number) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public List<IBond> getConnectedBondsList(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IBond getBond(int number) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public List<ILonePair> getConnectedLonePairsList(
+                                                                         IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public ILonePair getLonePair(int number) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public List<ISingleElectron> getConnectedSingleElectronsList(
+                                                                         IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public ISingleElectron getSingleElectron(int number) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public List<IElectronContainer> getConnectedElectronContainersList(
+                                                                         IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public Iterable<IAtom> atoms() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public int getConnectedAtomsCount(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public Iterable<IBond> bonds() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public int getConnectedBondsCount(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
+                                                                 public int getConnectedBondsCount(int atomnumber) {
+                                                                     return 0;
+                                                                 }
 
-        public Iterable<ILonePair> lonePairs() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public int getConnectedLonePairsCount(IAtom atom) {
+                                                                     return 0;
+                                                                 }
 
-        public Iterable<ISingleElectron> singleElectrons() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public int getConnectedSingleElectronsCount(IAtom atom) {
+                                                                     return 0;
+                                                                 }
 
-        public Iterable<IElectronContainer> electronContainers() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public double getBondOrderSum(IAtom atom) {
+                                                                     return 0;
+                                                                 }
 
-        public IAtom getFirstAtom() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public IBond.Order getMaximumBondOrder(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IAtom getLastAtom() {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public IBond.Order getMinimumBondOrder(IAtom atom) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public int getAtomNumber(IAtom atom) {
-            return -1;
-        }
+                                                                 public void add(IAtomContainer atomContainer) {
 
-        public int getBondNumber(IAtom atom1, IAtom atom2) {
-            return -1;
-        }
+                                                                 }
 
-        public int getBondNumber(IBond bond) {
-            return -1;
-        }
+                                                                 public void addAtom(IAtom atom) {
 
-        public int getLonePairNumber(ILonePair lonePair) {
-            return -1;
-        }
+                                                                 }
 
-        public int getSingleElectronNumber(ISingleElectron singleElectron) {
-            return -1;
-        }
+                                                                 public void addBond(IBond bond) {
 
-        public IElectronContainer getElectronContainer(int number) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public IBond getBond(IAtom atom1, IAtom atom2) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void addLonePair(ILonePair lonePair) {
 
-        public int getAtomCount() {
-            return 0;
-        }
+                                                                 }
 
-        public int getBondCount() {
-            return 0;
-        }
+                                                                 public void addSingleElectron(
+                                                                         ISingleElectron singleElectron) {
 
-        public int getLonePairCount() {
-            return 0;
-        }
+                                                                 }
 
-        public int getSingleElectronCount() {
-            return 0;
-        }
+                                                                 public void addElectronContainer(
+                                                                         IElectronContainer electronContainer) {
 
-        public int getElectronContainerCount() {
-            return 0;
-        }
+                                                                 }
 
-        public List<IAtom> getConnectedAtomsList(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void remove(IAtomContainer atomContainer) {
 
-        public List<IBond> getConnectedBondsList(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public List<ILonePair> getConnectedLonePairsList(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void removeAtom(int position) {
 
-        public List<ISingleElectron> getConnectedSingleElectronsList(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public List<IElectronContainer> getConnectedElectronContainersList(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void removeAtom(IAtom atom) {
 
-        public int getConnectedAtomsCount(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public int getConnectedBondsCount(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public IBond removeBond(int position) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public int getConnectedBondsCount(int atomnumber) {
-            return 0;
-        }
+                                                                 public IBond removeBond(IAtom atom1, IAtom atom2) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public int getConnectedLonePairsCount(IAtom atom) {
-            return 0;
-        }
+                                                                 public void removeBond(IBond bond) {
 
-        public int getConnectedSingleElectronsCount(IAtom atom) {
-            return 0;
-        }
+                                                                 }
 
-        public double getBondOrderSum(IAtom atom) {
-            return 0;
-        }
+                                                                 public ILonePair removeLonePair(int position) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IBond.Order getMaximumBondOrder(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void removeLonePair(ILonePair lonePair) {
 
-        public IBond.Order getMinimumBondOrder(IAtom atom) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public void add(IAtomContainer atomContainer) {
+                                                                 public ISingleElectron removeSingleElectron(
+                                                                         int position) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        }
+                                                                 public void removeSingleElectron(
+                                                                         ISingleElectron singleElectron) {
 
-        public void addAtom(IAtom atom) {
+                                                                 }
 
-        }
+                                                                 public IElectronContainer removeElectronContainer(
+                                                                         int position) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public void addBond(IBond bond) {
+                                                                 public void removeElectronContainer(
+                                                                         IElectronContainer electronContainer) {
 
-        }
+                                                                 }
 
-        public void addLonePair(ILonePair lonePair) {
+                                                                 public void removeAtomAndConnectedElectronContainers(
+                                                                         IAtom atom) {
 
-        }
+                                                                 }
 
-        public void addSingleElectron(ISingleElectron singleElectron) {
+                                                                 public void removeAllElements() {
 
-        }
+                                                                 }
 
-        public void addElectronContainer(IElectronContainer electronContainer) {
+                                                                 public void removeAllElectronContainers() {
 
-        }
+                                                                 }
 
-        public void remove(IAtomContainer atomContainer) {
+                                                                 public void removeAllBonds() {
 
-        }
+                                                                 }
 
-        public void removeAtom(int position) {
+                                                                 public void addBond(int atom1, int atom2,
+                                                                         IBond.Order order, IBond.Stereo stereo) {
 
-        }
+                                                                 }
 
-        public void removeAtom(IAtom atom) {
+                                                                 public void addBond(int atom1, int atom2,
+                                                                         IBond.Order order) {
 
-        }
+                                                                 }
 
-        public IBond removeBond(int position) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void addLonePair(int atomID) {
 
-        public IBond removeBond(IAtom atom1, IAtom atom2) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 }
 
-        public void removeBond(IBond bond) {
+                                                                 public void addSingleElectron(int atomID) {
 
-        }
+                                                                 }
 
-        public ILonePair removeLonePair(int position) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public boolean contains(IAtom atom) {
+                                                                     return false;
+                                                                 }
 
-        public void removeLonePair(ILonePair lonePair) {
+                                                                 public boolean contains(IBond bond) {
+                                                                     return false;
+                                                                 }
 
-        }
+                                                                 public boolean contains(ILonePair lonePair) {
+                                                                     return false;
+                                                                 }
 
+                                                                 public boolean contains(ISingleElectron singleElectron) {
+                                                                     return false;
+                                                                 }
 
-        public ISingleElectron removeSingleElectron(int position) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public boolean contains(
+                                                                         IElectronContainer electronContainer) {
+                                                                     return false;
+                                                                 }
 
-        public void removeSingleElectron(ISingleElectron singleElectron) {
+                                                                 public boolean isEmpty() {
+                                                                     return true;
+                                                                 }
 
-        }
+                                                                 public IAtomContainer clone()
+                                                                         throws CloneNotSupportedException {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IElectronContainer removeElectronContainer(int position) {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void addListener(IChemObjectListener col) {
 
-        public void removeElectronContainer(IElectronContainer electronContainer) {
+                                                                 }
 
-        }
+                                                                 public int getListenerCount() {
+                                                                     return 0;
+                                                                 }
 
-        public void removeAtomAndConnectedElectronContainers(IAtom atom) {
+                                                                 public void removeListener(IChemObjectListener col) {
 
-        }
+                                                                 }
 
-        public void removeAllElements() {
+                                                                 public void setNotification(boolean bool) {
 
-        }
+                                                                 }
 
-        public void removeAllElectronContainers() {
+                                                                 public boolean getNotification() {
+                                                                     return false;
+                                                                 }
 
-        }
+                                                                 public void notifyChanged() {
 
-        public void removeAllBonds() {
+                                                                 }
 
-        }
+                                                                 public void notifyChanged(IChemObjectChangeEvent evt) {
 
-        public void addBond(int atom1, int atom2, IBond.Order order, IBond.Stereo stereo) {
+                                                                 }
 
-        }
+                                                                 public void setProperty(Object description,
+                                                                         Object property) {
 
-        public void addBond(int atom1, int atom2, IBond.Order order) {
+                                                                 }
 
-        }
+                                                                 public void removeProperty(Object description) {
 
-        public void addLonePair(int atomID) {
+                                                                 }
 
-        }
+                                                                 public <T> T getProperty(Object description) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public void addSingleElectron(int atomID) {
+                                                                 public <T> T getProperty(Object description, Class<T> c) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        }
+                                                                 public Map<Object, Object> getProperties() {
+                                                                     return null;
+                                                                 }
 
-        public boolean contains(IAtom atom) {
-            return false;
-        }
+                                                                 public String getID() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public boolean contains(IBond bond) {
-            return false;
-        }
+                                                                 public void setID(String identifier) {
 
-        public boolean contains(ILonePair lonePair) {
-            return false;
-        }
+                                                                 }
 
-        public boolean contains(ISingleElectron singleElectron) {
-            return false;
-        }
+                                                                 public void setFlag(int mask, boolean value) {
 
-        public boolean contains(IElectronContainer electronContainer) {
-            return false;
-        }
+                                                                 }
 
-        public boolean isEmpty() {
-            return true;
-        }
+                                                                 public boolean getFlag(int mask) {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public IAtomContainer clone() throws CloneNotSupportedException {
-            throw new UnsupportedOperationException("not supported");
-        }
+                                                                 public void setProperties(
+                                                                         Map<Object, Object> properties) {}
 
-        public void addListener(IChemObjectListener col) {
+                                                                 public void addProperties(
+                                                                         Map<Object, Object> properties) {}
 
-        }
+                                                                 public void setFlags(boolean[] newFlags) {}
 
-        public int getListenerCount() {
-            return 0;
-        }
+                                                                 public boolean[] getFlags() {
+                                                                     return new boolean[0];
+                                                                 }
 
-        public void removeListener(IChemObjectListener col) {
+                                                                 public Number getFlagValue() {
+                                                                     return 0;
+                                                                 }
 
-        }
+                                                                 public IChemObjectBuilder getBuilder() {
+                                                                     throw new UnsupportedOperationException(
+                                                                             "not supported");
+                                                                 }
 
-        public void setNotification(boolean bool) {
+                                                                 public void stateChanged(IChemObjectChangeEvent event) {
 
-        }
-
-        public boolean getNotification() {
-            return false;
-        }
-
-        public void notifyChanged() {
-
-        }
-
-        public void notifyChanged(IChemObjectChangeEvent evt) {
-
-        }
-
-        public void setProperty(Object description, Object property) {
-
-        }
-
-        public void removeProperty(Object description) {
-
-        }
-
-        public <T> T getProperty(Object description) {
-            throw new UnsupportedOperationException("not supported");
-        }
-
-        public <T> T getProperty(Object description, Class<T> c) {
-            throw new UnsupportedOperationException("not supported");
-        }
-
-        public Map<Object, Object> getProperties() {
-            return null;
-        }
-
-        public String getID() {
-            throw new UnsupportedOperationException("not supported");
-        }
-
-        public void setID(String identifier) {
-
-        }
-
-        public void setFlag(int mask, boolean value) {
-
-        }
-
-        public boolean getFlag(int mask) {
-            throw new UnsupportedOperationException("not supported");
-        }
-
-        public void setProperties(Map<Object, Object> properties) {
-        }
-
-        public void addProperties(Map<Object, Object> properties) {
-        }
-
-        public void setFlags(boolean[] newFlags) {
-        }
-
-        public boolean[] getFlags() {
-            return new boolean[0];
-        }
-
-        public Number getFlagValue() {
-            return 0;
-        }
-
-        public IChemObjectBuilder getBuilder() {
-            throw new UnsupportedOperationException("not supported");
-        }
-
-        public void stateChanged(IChemObjectChangeEvent event) {
-
-        }
-    };
+                                                                 }
+                                                             };
 
     /**
      * pseudo shortest-paths - when an invalid atom is given. this will always
      * return 0 length paths and distances.
      */
-    private static final ShortestPaths EMPTY_SHORTEST_PATHS = new ShortestPaths(new int[0][0], EMPTY_CONTAINER, 0);
+    private static final ShortestPaths  EMPTY_SHORTEST_PATHS = new ShortestPaths(new int[0][0], EMPTY_CONTAINER, 0);
 
 }

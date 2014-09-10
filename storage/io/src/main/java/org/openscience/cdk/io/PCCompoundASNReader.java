@@ -62,12 +62,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.PCCompoundASNReaderTest")
 public class PCCompoundASNReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
+    private BufferedReader      input;
+    private static ILoggingTool logger   = LoggingToolFactory.createLoggingTool(PCCompoundASNReader.class);
 
-    IAtomContainer molecule = null;
-    Map<String,IAtom> atomIDs = null;
+    IAtomContainer              molecule = null;
+    Map<String, IAtom>          atomIDs  = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -94,7 +93,7 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -105,29 +104,29 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-        	try {
-        		return (T)readChemFile((IChemFile)object);
-        	} catch (IOException e) {
-        		throw new CDKException("An IO Exception occured while reading the file.", e);
-        	} catch (CDKException e) {
-        		throw e;
-        	} catch (Exception e) {
-        		throw new CDKException("An error occured.", e);
-        	}
+            try {
+                return (T) readChemFile((IChemFile) object);
+            } catch (IOException e) {
+                throw new CDKException("An IO Exception occured while reading the file.", e);
+            } catch (CDKException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new CDKException("An error occured.", e);
+            }
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -145,16 +144,16 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
         IAtomContainerSet moleculeSet = file.getBuilder().newInstance(IAtomContainerSet.class);
         molecule = file.getBuilder().newInstance(IAtomContainer.class);
-        atomIDs = new HashMap<String,IAtom>();
+        atomIDs = new HashMap<String, IAtom>();
 
         String line = input.readLine();
         while (input.ready() && line != null) {
-        	if (line.indexOf('{') != -1) {
-        		processBlock(line);
-        	} else {
-        		logger.warn("Skipping non-block: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf('{') != -1) {
+                processBlock(line);
+            } else {
+                logger.warn("Skipping non-block: " + line);
+            }
+            line = input.readLine();
         }
         moleculeSet.addAtomContainer(molecule);
         chemModel.setMoleculeSet(moleculeSet);
@@ -163,312 +162,311 @@ public class PCCompoundASNReader extends DefaultChemObjectReader {
         return file;
     }
 
-
-	private void processBlock(String line) throws Exception {
-    	String command = getCommand(line);
-    	if (command.equals("atoms")) {
+    private void processBlock(String line) throws Exception {
+        String command = getCommand(line);
+        if (command.equals("atoms")) {
             // parse frame by frame
-    		logger.debug("ASN atoms found");
-    		processAtomBlock();
-    	} else if (command.equals("bonds")) {
-    		// ok, that fine
-    		logger.debug("ASN bonds found");
-    		processBondBlock();
-    	} else if (command.equals("props")) {
-    		// ok, that fine
-    		logger.debug("ASN props found");
-    		processPropsBlock();
-    	} else if (command.equals("PC-Compound ::=")) {
-    		// ok, that fine
-    		logger.debug("ASN PC-Compound found");
+            logger.debug("ASN atoms found");
+            processAtomBlock();
+        } else if (command.equals("bonds")) {
+            // ok, that fine
+            logger.debug("ASN bonds found");
+            processBondBlock();
+        } else if (command.equals("props")) {
+            // ok, that fine
+            logger.debug("ASN props found");
+            processPropsBlock();
+        } else if (command.equals("PC-Compound ::=")) {
+            // ok, that fine
+            logger.debug("ASN PC-Compound found");
         } else {
-        	logger.warn("Skipping block: " + command);
-        	skipBlock();
+            logger.warn("Skipping block: " + command);
+            skipBlock();
         }
-	}
+    }
 
-	private void processPropsBlock() throws Exception {
-		String line = input.readLine();
+    private void processPropsBlock() throws Exception {
+        String line = input.readLine();
         while (input.ready() && line != null) {
-        	if (line.indexOf('{') != -1) {
-        		processPropsBlockBlock();
-        	} else if (line.indexOf('}')!= -1) {
-    			return;
-    		} else {
-    			logger.warn("Skipping non-block: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf('{') != -1) {
+                processPropsBlockBlock();
+            } else if (line.indexOf('}') != -1) {
+                return;
+            } else {
+                logger.warn("Skipping non-block: " + line);
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private void processPropsBlockBlock() throws Exception {
-		String line = input.readLine();
-		URN urn = null;
+    private void processPropsBlockBlock() throws Exception {
+        String line = input.readLine();
+        URN urn = null;
         while (input.ready() && line != null) {
-        	if (line.indexOf("urn") != -1) {
-        		urn = extractURN();
-        	} else if (line.indexOf("value") != -1) {
-        		logger.debug("Found a prop value line: " + line);
-        		if (line.indexOf(" sval") != -1) {
-        			logger.debug("Label: " + urn.label);
-        			logger.debug("Name: " + urn.name);
-        			if ("InChI".equals(urn.label)) {
-        				String value = getQuotedValue(line.substring(line.indexOf("value sval")+10));
-        				molecule.setProperty(CDKConstants.INCHI, value);
-        			} else if ("SMILES".equals(urn.label) &&
-        					"Canonical".equals(urn.name)) {
-        				String value = getQuotedValue(line.substring(line.indexOf("value sval")+10));
-        				molecule.setProperty(CDKConstants.SMILES, value);
-        			}
-        		}
-        	} else if (line.indexOf('}')!= -1) {
-    			return;
-    		} else {
-    			logger.warn("Skipping non-block: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf("urn") != -1) {
+                urn = extractURN();
+            } else if (line.indexOf("value") != -1) {
+                logger.debug("Found a prop value line: " + line);
+                if (line.indexOf(" sval") != -1) {
+                    logger.debug("Label: " + urn.label);
+                    logger.debug("Name: " + urn.name);
+                    if ("InChI".equals(urn.label)) {
+                        String value = getQuotedValue(line.substring(line.indexOf("value sval") + 10));
+                        molecule.setProperty(CDKConstants.INCHI, value);
+                    } else if ("SMILES".equals(urn.label) && "Canonical".equals(urn.name)) {
+                        String value = getQuotedValue(line.substring(line.indexOf("value sval") + 10));
+                        molecule.setProperty(CDKConstants.SMILES, value);
+                    }
+                }
+            } else if (line.indexOf('}') != -1) {
+                return;
+            } else {
+                logger.warn("Skipping non-block: " + line);
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private URN extractURN() throws Exception {
-		URN urn = new URN();
-		String line = input.readLine();
+    private URN extractURN() throws Exception {
+        URN urn = new URN();
+        String line = input.readLine();
         while (input.ready() && line != null) {
-        	if (line.indexOf("name") != -1) {
-        		urn.name = getQuotedValue(line.substring(line.indexOf("name")+4));
-        	} else if (line.indexOf("label") != -1) {
-        		urn.label = getQuotedValue(line.substring(line.indexOf("label")+4));
-        	} else if (line.indexOf('}')!= -1 && line.indexOf('\"')==-1) {
-        		// ok, don't return if it also has a "
-    			return urn;
-    		} else {
-    			logger.warn("Ignoring URN statement: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf("name") != -1) {
+                urn.name = getQuotedValue(line.substring(line.indexOf("name") + 4));
+            } else if (line.indexOf("label") != -1) {
+                urn.label = getQuotedValue(line.substring(line.indexOf("label") + 4));
+            } else if (line.indexOf('}') != -1 && line.indexOf('\"') == -1) {
+                // ok, don't return if it also has a "
+                return urn;
+            } else {
+                logger.warn("Ignoring URN statement: " + line);
+            }
+            line = input.readLine();
         }
         return urn;
-	}
+    }
 
-	private void processAtomBlock() throws Exception {
-		String line = input.readLine();
+    private void processAtomBlock() throws Exception {
+        String line = input.readLine();
         while (input.ready() && line != null) {
-        	if (line.indexOf('{') != -1) {
-        		processAtomBlockBlock(line);
-        	} else if (line.indexOf('}')!= -1) {
-    			return;
-    		} else {
-    			logger.warn("Skipping non-block: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf('{') != -1) {
+                processAtomBlockBlock(line);
+            } else if (line.indexOf('}') != -1) {
+                return;
+            } else {
+                logger.warn("Skipping non-block: " + line);
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private void processBondBlock() throws Exception {
-		String line = input.readLine();
+    private void processBondBlock() throws Exception {
+        String line = input.readLine();
         while (input.ready() && line != null) {
-        	if (line.indexOf('{') != -1) {
-        		processBondBlockBlock(line);
-        	} else if (line.indexOf('}')!= -1) {
-    			return;
-    		} else {
-    			logger.warn("Skipping non-block: " + line);
-        	}
-        	line = input.readLine();
+            if (line.indexOf('{') != -1) {
+                processBondBlockBlock(line);
+            } else if (line.indexOf('}') != -1) {
+                return;
+            } else {
+                logger.warn("Skipping non-block: " + line);
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private IAtom getAtom(int i) {
-		if (molecule.getAtomCount() <= i) {
-			molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class));
-		}
-		return molecule.getAtom(i);
-	}
+    private IAtom getAtom(int i) {
+        if (molecule.getAtomCount() <= i) {
+            molecule.addAtom(molecule.getBuilder().newInstance(IAtom.class));
+        }
+        return molecule.getAtom(i);
+    }
 
-	private IBond getBond(int i) {
-		if (molecule.getBondCount() <= i) {
-			molecule.addBond(molecule.getBuilder().newInstance(IBond.class));
-		}
-		return molecule.getBond(i);
-	}
+    private IBond getBond(int i) {
+        if (molecule.getBondCount() <= i) {
+            molecule.addBond(molecule.getBuilder().newInstance(IBond.class));
+        }
+        return molecule.getBond(i);
+    }
 
-	private void processAtomBlockBlock(String line) throws Exception {
-		String command = getCommand(line);
-		if (command.equals("aid")) {
-			// assume this is the first block in the atom block
-			logger.debug("ASN atoms aid found");
-			processAtomAIDs();
-		} else if (command.equals("element")) {
-			// assume this is the first block in the atom block
-			logger.debug("ASN atoms element found");
-			processAtomElements();
-		} else {
-			logger.warn("Skipping atom block block: " + command);
-			skipBlock();
-		}
-	}
+    private void processAtomBlockBlock(String line) throws Exception {
+        String command = getCommand(line);
+        if (command.equals("aid")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN atoms aid found");
+            processAtomAIDs();
+        } else if (command.equals("element")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN atoms element found");
+            processAtomElements();
+        } else {
+            logger.warn("Skipping atom block block: " + command);
+            skipBlock();
+        }
+    }
 
-	private void processBondBlockBlock(String line) throws Exception {
-		String command = getCommand(line);
-		if (command.equals("aid1")) {
-			// assume this is the first block in the atom block
-			logger.debug("ASN bonds aid1 found");
-			processBondAtomIDs(0);
-		} else if (command.equals("aid2")) {
-			// assume this is the first block in the atom block
-			logger.debug("ASN bonds aid2 found");
-			processBondAtomIDs(1);
-		} else {
-			logger.warn("Skipping atom block block: " + command);
-			skipBlock();
-		}
-	}
+    private void processBondBlockBlock(String line) throws Exception {
+        String command = getCommand(line);
+        if (command.equals("aid1")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN bonds aid1 found");
+            processBondAtomIDs(0);
+        } else if (command.equals("aid2")) {
+            // assume this is the first block in the atom block
+            logger.debug("ASN bonds aid2 found");
+            processBondAtomIDs(1);
+        } else {
+            logger.warn("Skipping atom block block: " + command);
+            skipBlock();
+        }
+    }
 
-	private void processAtomAIDs() throws Exception {
-		String line = input.readLine();
-		int atomIndex = 0;
+    private void processAtomAIDs() throws Exception {
+        String line = input.readLine();
+        int atomIndex = 0;
         while (input.ready() && line != null) {
-        	if (line.indexOf('}') != -1) {
-        		// done
-        		return;
-        	} else {
-//        		logger.debug("Found an atom ID: " + line);
-//        		logger.debug("  index: " + atomIndex);
-        		IAtom atom = getAtom(atomIndex);
-        		String id = getValue(line);
-        		atom.setID(id);
-        		atomIDs.put(id, atom);
-        		atomIndex++;
-        	}
-        	line = input.readLine();
+            if (line.indexOf('}') != -1) {
+                // done
+                return;
+            } else {
+                //        		logger.debug("Found an atom ID: " + line);
+                //        		logger.debug("  index: " + atomIndex);
+                IAtom atom = getAtom(atomIndex);
+                String id = getValue(line);
+                atom.setID(id);
+                atomIDs.put(id, atom);
+                atomIndex++;
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private void processBondAtomIDs(int pos) throws Exception {
-		String line = input.readLine();
-		int bondIndex = 0;
+    private void processBondAtomIDs(int pos) throws Exception {
+        String line = input.readLine();
+        int bondIndex = 0;
         while (input.ready() && line != null) {
-        	if (line.indexOf('}') != -1) {
-        		// done
-        		return;
-        	} else {
-//        		logger.debug("Found an atom ID: " + line);
-//        		logger.debug("  index: " + atomIndex);
-        		IBond bond = getBond(bondIndex);
-        		String id = getValue(line);
-        		IAtom atom = (IAtom)atomIDs.get(id);
-        		if (atom == null) {
-        			throw new CDKException("File is corrupt: atom ID does not exist " + id);
-        		}
-        		bond.setAtom(atom, pos);
-        		bondIndex++;
-        	}
-        	line = input.readLine();
+            if (line.indexOf('}') != -1) {
+                // done
+                return;
+            } else {
+                //        		logger.debug("Found an atom ID: " + line);
+                //        		logger.debug("  index: " + atomIndex);
+                IBond bond = getBond(bondIndex);
+                String id = getValue(line);
+                IAtom atom = (IAtom) atomIDs.get(id);
+                if (atom == null) {
+                    throw new CDKException("File is corrupt: atom ID does not exist " + id);
+                }
+                bond.setAtom(atom, pos);
+                bondIndex++;
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private void processAtomElements() throws Exception {
-		String line = input.readLine();
-		int atomIndex = 0;
+    private void processAtomElements() throws Exception {
+        String line = input.readLine();
+        int atomIndex = 0;
         while (input.ready() && line != null) {
-        	if (line.indexOf('}') != -1) {
-        		// done
-        		return;
-        	} else {
-//        		logger.debug("Found symbol: " + toSymbol(getValue(line)));
-//        		logger.debug("  index: " + atomIndex);
-        		IAtom atom = getAtom(atomIndex);
-        		atom.setSymbol(toSymbol(getValue(line)));
-        		atomIndex++;
-        	}
-        	line = input.readLine();
+            if (line.indexOf('}') != -1) {
+                // done
+                return;
+            } else {
+                //        		logger.debug("Found symbol: " + toSymbol(getValue(line)));
+                //        		logger.debug("  index: " + atomIndex);
+                IAtom atom = getAtom(atomIndex);
+                atom.setSymbol(toSymbol(getValue(line)));
+                atomIndex++;
+            }
+            line = input.readLine();
         }
-	}
+    }
 
-	private String toSymbol(String value) {
-		if (value.length() == 1) return value.toUpperCase();
-		return value.substring(0,1).toUpperCase() + value.substring(1);
-	}
+    private String toSymbol(String value) {
+        if (value.length() == 1) return value.toUpperCase();
+        return value.substring(0, 1).toUpperCase() + value.substring(1);
+    }
 
-	private void skipBlock() throws IOException {
-		String line = input.readLine();
-		int openBrackets = 0;
+    private void skipBlock() throws IOException {
+        String line = input.readLine();
+        int openBrackets = 0;
         while (line != null) {
-//    		logger.debug("SkipBlock: line=" + line);
-    		if (line.indexOf('{') != -1) {
-        		openBrackets++;
-        	}
-//    		logger.debug(" #open brackets: " + openBrackets);
-        	if (line.indexOf('}') != -1) {
-        		if (openBrackets == 0) return;
-        		openBrackets--;
-        	}
-        	line = input.readLine();
+            //    		logger.debug("SkipBlock: line=" + line);
+            if (line.indexOf('{') != -1) {
+                openBrackets++;
+            }
+            //    		logger.debug(" #open brackets: " + openBrackets);
+            if (line.indexOf('}') != -1) {
+                if (openBrackets == 0) return;
+                openBrackets--;
+            }
+            line = input.readLine();
         }
-	}
+    }
 
     private String getCommand(String line) {
-    	StringBuffer buffer = new StringBuffer();
-    	int i = 0;
-    	boolean foundBracket = false;
-    	while (i<line.length() && !foundBracket) {
-    		char currentChar = line.charAt(i);
-    		if (currentChar == '{') {
-    			foundBracket = true;
-    		} else {
-    			buffer.append(currentChar);
-    		}
-    		i++;
-    	}
-    	return foundBracket ? buffer.toString().trim() : null;
+        StringBuffer buffer = new StringBuffer();
+        int i = 0;
+        boolean foundBracket = false;
+        while (i < line.length() && !foundBracket) {
+            char currentChar = line.charAt(i);
+            if (currentChar == '{') {
+                foundBracket = true;
+            } else {
+                buffer.append(currentChar);
+            }
+            i++;
+        }
+        return foundBracket ? buffer.toString().trim() : null;
     }
 
     private String getValue(String line) {
-    	StringBuffer buffer = new StringBuffer();
-    	int i = 0;
-    	boolean foundComma = false;
-    	boolean preWS = true;
-    	while (i<line.length() && !foundComma) {
-    		char currentChar = line.charAt(i);
-    		if (Character.isWhitespace(currentChar)) {
-    			if (!preWS) buffer.append(currentChar);
-    		} else if (currentChar == ',') {
-    			foundComma = true;
-    		} else {
-    			buffer.append(currentChar);
-    			preWS = false;
-    		}
-    		i++;
-    	}
-    	return buffer.toString();
+        StringBuffer buffer = new StringBuffer();
+        int i = 0;
+        boolean foundComma = false;
+        boolean preWS = true;
+        while (i < line.length() && !foundComma) {
+            char currentChar = line.charAt(i);
+            if (Character.isWhitespace(currentChar)) {
+                if (!preWS) buffer.append(currentChar);
+            } else if (currentChar == ',') {
+                foundComma = true;
+            } else {
+                buffer.append(currentChar);
+                preWS = false;
+            }
+            i++;
+        }
+        return buffer.toString();
     }
 
     private String getQuotedValue(String line) throws Exception {
-    	StringBuffer buffer = new StringBuffer();
-    	int i = 0;
-//    	logger.debug("QV line: " + line);
-    	boolean startQuoteFound = false;
-    	while (line != null) {
-    		while (i<line.length()) {
-    			char currentChar = line.charAt(i);
-    			if (currentChar == '"') {
-    				if (startQuoteFound) {
-    					return buffer.toString();
-    				} else {
-    					startQuoteFound = true;
-    				}
-    			} else if (startQuoteFound){
-    				buffer.append(currentChar);
-    			}
-    			i++;
-    		}
-    		line = input.readLine();
-    		i = 0;
-    	}
-    	return null;
+        StringBuffer buffer = new StringBuffer();
+        int i = 0;
+        //    	logger.debug("QV line: " + line);
+        boolean startQuoteFound = false;
+        while (line != null) {
+            while (i < line.length()) {
+                char currentChar = line.charAt(i);
+                if (currentChar == '"') {
+                    if (startQuoteFound) {
+                        return buffer.toString();
+                    } else {
+                        startQuoteFound = true;
+                    }
+                } else if (startQuoteFound) {
+                    buffer.append(currentChar);
+                }
+                i++;
+            }
+            line = input.readLine();
+            i = 0;
+        }
+        return null;
     }
 
     class URN {
-    	String name = null;
-    	String label = null;
+
+        String name  = null;
+        String label = null;
     }
 }

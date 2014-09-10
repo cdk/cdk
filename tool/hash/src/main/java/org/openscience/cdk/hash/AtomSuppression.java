@@ -53,7 +53,9 @@ abstract class AtomSuppression {
 
     /** Default implementation - don't suppress anything. */
     private static final class Unsuppressed extends AtomSuppression {
-        @Override Suppressed suppress(IAtomContainer container) {
+
+        @Override
+        Suppressed suppress(IAtomContainer container) {
             return Suppressed.none();
         }
     }
@@ -63,8 +65,10 @@ abstract class AtomSuppression {
      * hydrogen ion or isotope.
      */
     private static final class AnyHydrogens extends AtomSuppression {
+
         /** @inheritDoc */
-        @Override Suppressed suppress(IAtomContainer container) {
+        @Override
+        Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();
             for (int i = 0; i < container.getAtomCount(); i++) {
                 IAtom atom = container.getAtom(i);
@@ -76,8 +80,10 @@ abstract class AtomSuppression {
 
     /** Suppresses any pseudo atom. */
     private static final class AnyPseudos extends AtomSuppression {
+
         /** @inheritDoc */
-        @Override Suppressed suppress(IAtomContainer container) {
+        @Override
+        Suppressed suppress(IAtomContainer container) {
             BitSet hydrogens = new BitSet();
             for (int i = 0; i < container.getAtomCount(); i++) {
                 IAtom atom = container.getAtom(i);
@@ -103,7 +109,6 @@ abstract class AtomSuppression {
     static AtomSuppression unsuppressed() {
         return unsuppressed;
     }
-
 
     /**
      * Suppress all hydrogens even if they are charged or an isotope.

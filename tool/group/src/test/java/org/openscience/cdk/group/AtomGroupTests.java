@@ -38,8 +38,7 @@ import org.openscience.cdk.smiles.SmilesParser;
 public class AtomGroupTests extends CDKTestCase {
 
     public IAtomContainer getMol(String smiles) throws InvalidSmilesException {
-        SmilesParser parser =
-            new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         return parser.parseSmiles(smiles);
     }
 

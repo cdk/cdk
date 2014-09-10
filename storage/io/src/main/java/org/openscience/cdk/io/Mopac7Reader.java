@@ -56,29 +56,13 @@ import org.openscience.cdk.io.formats.MOPAC7Format;
  */
 @TestClass("org.openscience.cdk.io.Mopac7ReaderTest")
 public class Mopac7Reader extends DefaultChemObjectReader {
-    BufferedReader input = null;
-    private static String[] parameters = {
-    		"NO. OF FILLED LEVELS",
-        	"TOTAL ENERGY",
-        	"FINAL HEAT OF FORMATION",
-        	"IONIZATION POTENTIAL",
-        	"ELECTRONIC ENERGY",
-        	"CORE-CORE REPULSION",
-        	"MOLECULAR WEIGHT",
-        	"EHOMO",
-        	"ELUMO" };
-    private static String[] units = {
-		"",
-    	"EV",
-    	"KJ",
-    	"",
-    	"EV",
-    	"EV",
-    	"",
-    	"EV",
-    	"EV"};
-    private static String eigenvalues = "EIGENVALUES";
-    private static String filledLevels = "NO. OF FILLED LEVELS";
+
+    BufferedReader          input        = null;
+    private static String[] parameters   = {"NO. OF FILLED LEVELS", "TOTAL ENERGY", "FINAL HEAT OF FORMATION",
+            "IONIZATION POTENTIAL", "ELECTRONIC ENERGY", "CORE-CORE REPULSION", "MOLECULAR WEIGHT", "EHOMO", "ELUMO"};
+    private static String[] units        = {"", "EV", "KJ", "", "EV", "EV", "", "EV", "EV"};
+    private static String   eigenvalues  = "EIGENVALUES";
+    private static String   filledLevels = "NO. OF FILLED LEVELS";
 
     /**
      * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.
@@ -87,9 +71,9 @@ public class Mopac7Reader extends DefaultChemObjectReader {
      */
     public Mopac7Reader(Reader input) {
         if (input instanceof BufferedReader) {
-        	this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
-        	this.input = new BufferedReader(input);
+            this.input = new BufferedReader(input);
         }
     }
 
@@ -111,131 +95,121 @@ public class Mopac7Reader extends DefaultChemObjectReader {
     }
 
     /*
-     *FINAL HEAT OF FORMATION =        -32.90826 KCAL =   -137.68818 KJ
-
-
-          TOTAL ENERGY          =      -1618.31024 EV
-          ELECTRONIC ENERGY       =      -6569.42640 EV  POINT GROUP:     C1
-          CORE-CORE REPULSION     =       4951.11615 EV
-
-          IONIZATION POTENTIAL    =         10.76839
-          NO. OF FILLED LEVELS    =         23
-          MOLECULAR WEIGHT        =    122.123
-
+     * FINAL HEAT OF FORMATION = -32.90826 KCAL = -137.68818 KJ TOTAL ENERGY =
+     * -1618.31024 EV ELECTRONIC ENERGY = -6569.42640 EV POINT GROUP: C1
+     * CORE-CORE REPULSION = 4951.11615 EV IONIZATION POTENTIAL = 10.76839 NO.
+     * OF FILLED LEVELS = 23 MOLECULAR WEIGHT = 122.123
      */
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testRead_IChemObject")
     public <T extends IChemObject> T read(T object) throws CDKException {
-    	final String[] expected_columns = { "NO.","ATOM","X","Y","Z"};
+        final String[] expected_columns = {"NO.", "ATOM", "X", "Y", "Z"};
         StringBuffer eigenvalues = new StringBuffer();
         if (object instanceof IAtomContainer) {
-             IAtomContainer container = (IAtomContainer) object;
-	         try {
-	            String line = input.readLine();
-	            while (line != null) {
-	            	if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED")> -1)
-	            		throw new CDKException(line);
-	            	if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"")> -1)
-	            		throw new CDKException(line);
-	            	if ("CARTESIAN COORDINATES".equals(line.trim())) {
+            IAtomContainer container = (IAtomContainer) object;
+            try {
+                String line = input.readLine();
+                while (line != null) {
+                    if (line.indexOf("****  MAX. NUMBER OF ATOMS ALLOWED") > -1) throw new CDKException(line);
+                    if (line.indexOf("TO CONTINUE CALCULATION SPECIFY \"GEO-OK\"") > -1) throw new CDKException(line);
+                    if ("CARTESIAN COORDINATES".equals(line.trim())) {
 
-	            		IAtomContainer atomcontainer = ((IAtomContainer)object);
-	            		input.readLine(); //reads blank line
-	            		line = input.readLine();
+                        IAtomContainer atomcontainer = ((IAtomContainer) object);
+                        input.readLine(); //reads blank line
+                        line = input.readLine();
 
-	            		String[] columns = line.trim().split(" +");
-	            		int okCols = 0;
-	            		if (columns.length==expected_columns.length)
-	            			for (int i=0; i < expected_columns.length;i++)
-	            				okCols += (columns[i].equals(expected_columns[i]))?1:0;
+                        String[] columns = line.trim().split(" +");
+                        int okCols = 0;
+                        if (columns.length == expected_columns.length)
+                            for (int i = 0; i < expected_columns.length; i++)
+                                okCols += (columns[i].equals(expected_columns[i])) ? 1 : 0;
 
-	            		if (okCols < expected_columns.length) continue;
-	            		//if (!"    NO.       ATOM         X         Y         Z".equals(line)) continue;
+                        if (okCols < expected_columns.length) continue;
+                        //if (!"    NO.       ATOM         X         Y         Z".equals(line)) continue;
 
-	            		input.readLine(); //reads blank line
+                        input.readLine(); //reads blank line
                         int atomIndex = 0;
-	                    while (!line.trim().isEmpty()) {
-	                        line = input.readLine();
-	                        StringTokenizer tokenizer = new StringTokenizer(line);
-	                        int token = 0;
+                        while (!line.trim().isEmpty()) {
+                            line = input.readLine();
+                            StringTokenizer tokenizer = new StringTokenizer(line);
+                            int token = 0;
 
-	                        IAtom atom = null;
-	                        double[] point3d = new double[3];
-	                        while (tokenizer.hasMoreTokens()) {
-	                        	String tokenStr = tokenizer.nextToken();
-	                        	switch (token) {
-	                        	case 0: {
-	                        		atomIndex = Integer.parseInt(tokenStr)-1;
-	                        		if (atomIndex < atomcontainer.getAtomCount()) {
-	                        			atom = atomcontainer.getAtom(atomIndex);
-	                        		} else
-	                        			atom = null;
-	                        		break;
-	                        	}
-	                        	case 1: {
-	                        		if ((atom != null) && (!tokenStr.equals(atom.getSymbol())))
-	                        			atom = null;
-	                        		break;
-	                        	}
-	                        	case 2: {
-	                        		point3d[0] = Double.parseDouble(tokenStr);
-	                        		break;
-	                        	}
-	                        	case 3: {
-	                        		point3d[1] = Double.parseDouble(tokenStr);
-	                        		break;
-	                        	}
-	                        	case 4: {
-	                        		point3d[2] = Double.parseDouble(tokenStr);
-	                        		if (atom != null)
-	                        			atom.setPoint3d(new Point3d(point3d));
-	                        		break;
-	                        	}
+                            IAtom atom = null;
+                            double[] point3d = new double[3];
+                            while (tokenizer.hasMoreTokens()) {
+                                String tokenStr = tokenizer.nextToken();
+                                switch (token) {
+                                    case 0: {
+                                        atomIndex = Integer.parseInt(tokenStr) - 1;
+                                        if (atomIndex < atomcontainer.getAtomCount()) {
+                                            atom = atomcontainer.getAtom(atomIndex);
+                                        } else
+                                            atom = null;
+                                        break;
+                                    }
+                                    case 1: {
+                                        if ((atom != null) && (!tokenStr.equals(atom.getSymbol()))) atom = null;
+                                        break;
+                                    }
+                                    case 2: {
+                                        point3d[0] = Double.parseDouble(tokenStr);
+                                        break;
+                                    }
+                                    case 3: {
+                                        point3d[1] = Double.parseDouble(tokenStr);
+                                        break;
+                                    }
+                                    case 4: {
+                                        point3d[2] = Double.parseDouble(tokenStr);
+                                        if (atom != null) atom.setPoint3d(new Point3d(point3d));
+                                        break;
+                                    }
 
-	                        	}
-	                        	token++;
-	                        	if (atom == null) break;
-	                        }
-	                        if ((atom == null) || ( (atomIndex+1) >= atomcontainer.getAtomCount()))
-	                        	break;
+                                }
+                                token++;
+                                if (atom == null) break;
+                            }
+                            if ((atom == null) || ((atomIndex + 1) >= atomcontainer.getAtomCount())) break;
 
-	                    }
+                        }
 
-	            	} else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
-	                    line = input.readLine();
-	                    line = input.readLine();
-	                    while (!line.trim().equals("")) {
-	                        eigenvalues.append(line);
-	                        line = input.readLine();
-	                    }
-	                    container.setProperty(Mopac7Reader.eigenvalues,eigenvalues.toString());
-	                } else
-	                    for (int i=0; i < parameters.length;i++)
-	    		            if (line.indexOf(parameters[i]) >= 0) {
-	    		            	String value = line.substring(line.lastIndexOf('=')+1).trim();
+                    } else if (line.indexOf(Mopac7Reader.eigenvalues) >= 0) {
+                        line = input.readLine();
+                        line = input.readLine();
+                        while (!line.trim().equals("")) {
+                            eigenvalues.append(line);
+                            line = input.readLine();
+                        }
+                        container.setProperty(Mopac7Reader.eigenvalues, eigenvalues.toString());
+                    } else
+                        for (int i = 0; i < parameters.length; i++)
+                            if (line.indexOf(parameters[i]) >= 0) {
+                                String value = line.substring(line.lastIndexOf('=') + 1).trim();
 
-	    		            	/*
-	    		            	v = v.replaceAll("EV","");
-	    		            	v = v.replaceAll("KCAL","");
-	    		            	v = v.replaceAll("KJ","");
-	    		            	*/
-	    		            	value = value.replaceAll(Mopac7Reader.units[i],"").trim();
-	    		            	int pos = value.indexOf(' ');
-	    		            	if (pos >= 0)
-	    		            		value = value.substring(0,pos-1);
-			                    container.setProperty(parameters[i],value.trim());
-			                    break;
-	    		            }
-	                line = input.readLine();
-	            }
-	            calcHomoLumo(container);
-	            return (T)container;
+                                /*
+                                 * v = v.replaceAll("EV",""); v =
+                                 * v.replaceAll("KCAL",""); v =
+                                 * v.replaceAll("KJ","");
+                                 */
+                                value = value.replaceAll(Mopac7Reader.units[i], "").trim();
+                                int pos = value.indexOf(' ');
+                                if (pos >= 0) value = value.substring(0, pos - 1);
+                                container.setProperty(parameters[i], value.trim());
+                                break;
+                            }
+                    line = input.readLine();
+                }
+                calcHomoLumo(container);
+                return (T) container;
             } catch (IOException exception) {
                 throw new CDKException(exception.getMessage());
             }
-        } else return null;
+        } else
+            return null;
     }
+
     private void calcHomoLumo(IAtomContainer mol) {
         Object eigenProp = mol.getProperty(eigenvalues);
         if (eigenProp == null) return;
@@ -251,58 +225,67 @@ public class Mopac7Reader extends DefaultChemObjectReader {
         }
         String[] eigenVals = eigenProp.toString().split("\\s");
         int levelCounter = 0;
-        for (int i=0; i < eigenVals.length;i++) {
-            if (eigenVals[i].trim().isEmpty()) continue;
+        for (int i = 0; i < eigenVals.length; i++) {
+            if (eigenVals[i].trim().isEmpty())
+                continue;
             else
                 try {
-                	// check if the value is an proper double:
+                    // check if the value is an proper double:
                     Double.parseDouble(eigenVals[i]);
                     levelCounter++;
-                    if (levelCounter==nFilledLevels) {mol.setProperty("EHOMO",eigenVals[i]); }
-                    else if (levelCounter==(nFilledLevels+1)) {  mol.setProperty("ELUMO",eigenVals[i]); }
+                    if (levelCounter == nFilledLevels) {
+                        mol.setProperty("EHOMO", eigenVals[i]);
+                    } else if (levelCounter == (nFilledLevels + 1)) {
+                        mol.setProperty("ELUMO", eigenVals[i]);
+                    }
                 } catch (NumberFormatException exception) {
                     return;
                 }
         }
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-        	this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
-        	this.input = new BufferedReader(input);
+            this.input = new BufferedReader(input);
         }
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testSetReader_InputStream")
     public void setReader(InputStream input) throws CDKException {
-    	this.input = new BufferedReader(new InputStreamReader(input));
+        this.input = new BufferedReader(new InputStreamReader(input));
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testClose")
     public void close() throws IOException {
         input.close();
 
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
-		if (IAtomContainer.class.equals(classObject)) return true;
-	    Class superClass = classObject.getSuperclass();
-	    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        }
+        if (IAtomContainer.class.equals(classObject)) return true;
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("testGetFormat")
     public IResourceFormat getFormat() {
         return MOPAC7Format.getInstance();

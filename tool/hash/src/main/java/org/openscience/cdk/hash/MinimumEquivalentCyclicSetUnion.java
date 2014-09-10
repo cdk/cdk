@@ -82,8 +82,7 @@ import java.util.TreeMap;
  */
 @Deprecated
 @TestClass("org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnionTest")
-final class MinimumEquivalentCyclicSetUnion
-        extends EquivalentSetFinder {
+final class MinimumEquivalentCyclicSetUnion extends EquivalentSetFinder {
 
     /**
      * @inheritDoc

@@ -40,10 +40,10 @@ import java.util.Arrays;
 final class GeometryEncoder implements StereoEncoder {
 
     /* value for a clockwise configuration */
-    private static final long CLOCKWISE     = 15543053;
+    private static final long       CLOCKWISE     = 15543053;
 
     /* value for a anticlockwise configuration */
-    private static final long ANTICLOCKWISE = 15521419;
+    private static final long       ANTICLOCKWISE = 15521419;
 
     /* for calculation the permutation parity */
     private final PermutationParity permutation;
@@ -64,14 +64,11 @@ final class GeometryEncoder implements StereoEncoder {
      * @throws IllegalArgumentException if the centres[] were empty
      */
     @TestMethod("testConstruction_Empty")
-    public GeometryEncoder(int[] centres,
-                           PermutationParity permutation,
-                           GeometricParity geometric) {
-        if (centres.length == 0)
-            throw new IllegalArgumentException("no centres[] provided");
+    public GeometryEncoder(int[] centres, PermutationParity permutation, GeometricParity geometric) {
+        if (centres.length == 0) throw new IllegalArgumentException("no centres[] provided");
         this.permutation = permutation;
-        this.geometric   = geometric;
-        this.centres     = Arrays.copyOf(centres, centres.length);
+        this.geometric = geometric;
+        this.centres = Arrays.copyOf(centres, centres.length);
     }
 
     /**
@@ -83,9 +80,7 @@ final class GeometryEncoder implements StereoEncoder {
      * @throws IllegalArgumentException if the centres[] were empty
      */
     @TestMethod("testConstruction_Singleton")
-    public GeometryEncoder(int centre,
-                           PermutationParity permutation,
-                           GeometricParity   geometric){
+    public GeometryEncoder(int centre, PermutationParity permutation, GeometricParity geometric) {
         this(new int[]{centre}, permutation, geometric);
     }
 
@@ -99,11 +94,12 @@ final class GeometryEncoder implements StereoEncoder {
      *
      * @inheritDoc
      */
-    @TestMethod("testEncode_Clockwise,testEncode_Anticlockwise," +
-                        "testEncode_Clockwise_Alt,testEncode_Anticlockwise_Alt," +
-                        "testEncode_Clockwise_Two, testEncode_Anticlockwise_Two," +
-                        "testEncode_NoGeometry,testEncode_NoPermutation")
-    @Override public boolean encode(long[] current, long[] next) {
+    @TestMethod("testEncode_Clockwise,testEncode_Anticlockwise,"
+            + "testEncode_Clockwise_Alt,testEncode_Anticlockwise_Alt,"
+            + "testEncode_Clockwise_Two, testEncode_Anticlockwise_Two,"
+            + "testEncode_NoGeometry,testEncode_NoPermutation")
+    @Override
+    public boolean encode(long[] current, long[] next) {
 
         int p = permutation.parity(current);
 
@@ -135,7 +131,8 @@ final class GeometryEncoder implements StereoEncoder {
      * @inheritDoc
      */
     @TestMethod("testReset")
-    @Override public void reset() {
+    @Override
+    public void reset() {
         // never inactive
     }
 }

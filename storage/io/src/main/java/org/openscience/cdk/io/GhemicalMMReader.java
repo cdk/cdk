@@ -59,9 +59,8 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.GhemicalMMReaderTest")
 public class GhemicalMMReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
-    private BufferedReader input = null;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GhemicalMMReader.class);
+    private BufferedReader      input  = null;
 
     public GhemicalMMReader(Reader input) {
         this.input = new BufferedReader(input);
@@ -83,7 +82,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -95,31 +94,30 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
-    public void close() {
-    }
+    public void close() {}
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemModel.class.equals(interfaces[i])) return true;
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemModel) {
-            return (T) readChemModel((IChemModel)object);
+            return (T) readChemModel((IChemModel) object);
         } else if (object instanceof IChemFile) {
-        	IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-            sequence.addChemModel((IChemModel)this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
-        	((IChemFile)object).addChemSequence(sequence);
-        	return object;
+            IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
+            sequence.addChemModel((IChemModel) this.readChemModel(object.getBuilder().newInstance(IChemModel.class)));
+            ((IChemFile) object).addChemSequence(sequence);
+            return object;
         } else {
             throw new CDKException("Only supported is ChemModel.");
         }
@@ -240,7 +238,8 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     IAtomContainer container = model.getBuilder().newInstance(IAtomContainer.class);
                     for (int i = 0; i < numberOfAtoms; i++) {
                         try {
-                            IAtom atom = model.getBuilder().newInstance(IAtom.class,Isotopes.getInstance().getElementSymbol(atoms[i]));
+                            IAtom atom = model.getBuilder().newInstance(IAtom.class,
+                                    Isotopes.getInstance().getElementSymbol(atoms[i]));
                             atom.setAtomicNumber(atoms[i]);
                             atom.setPoint3d(new Point3d(atomxs[i], atomys[i], atomzs[i]));
                             atom.setCharge(atomcharges[i]);
@@ -258,7 +257,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
                     }
 
                     IAtomContainerSet moleculeSet = model.getBuilder().newInstance(IAtomContainerSet.class);
-                    moleculeSet.addAtomContainer(model.getBuilder().newInstance(IAtomContainer.class,container));
+                    moleculeSet.addAtomContainer(model.getBuilder().newInstance(IAtomContainer.class, container));
                     model.setMoleculeSet(moleculeSet);
 
                     return model;

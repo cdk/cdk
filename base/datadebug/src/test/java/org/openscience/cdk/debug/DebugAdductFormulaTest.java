@@ -33,7 +33,8 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setBuilder(DebugChemObjectBuilder.getInstance());
     }
 
@@ -43,7 +44,8 @@ public class DebugAdductFormulaTest extends AbstractAdductFormulaTest {
         Assert.assertNotNull(mfS);
     }
 
-    @Test public void testDebugAdductFormula_IMolecularFormula() {
+    @Test
+    public void testDebugAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new DebugAdductFormula(getBuilder().newInstance(IMolecularFormula.class));
         Assert.assertEquals(1, mfS.size());
     }

@@ -41,30 +41,29 @@ import org.openscience.cdk.math.Primes;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.smiles.InvPairTest")
-public class InvPair implements java.io.Serializable{
+public class InvPair implements java.io.Serializable {
 
-    private static final long serialVersionUID = -1397634098919863122L;
+    private static final long  serialVersionUID = -1397634098919863122L;
 
-  /** The description used to set the invariance numbers in the atom's property*/
-  public final static String INVARIANCE_PAIR = "InvariancePair";
-  public final static String CANONICAL_LABEL = "CanonicalLabel";
+    /** The description used to set the invariance numbers in the atom's property*/
+    public final static String INVARIANCE_PAIR  = "InvariancePair";
+    public final static String CANONICAL_LABEL  = "CanonicalLabel";
 
-  private long last = 0;
+    private long               last             = 0;
 
-  private long curr = 0;
+    private long               curr             = 0;
 
-  private IAtom atom;
+    private IAtom              atom;
 
-  private int prime;
+    private int                prime;
 
-  public InvPair() {
-  }
+    public InvPair() {}
 
-  public InvPair(long current, IAtom atom){
-    curr = current;
-    this.atom = atom;
-    atom.setProperty(INVARIANCE_PAIR, this);
-  }
+    public InvPair(long current, IAtom atom) {
+        curr = current;
+        this.atom = atom;
+        atom.setProperty(INVARIANCE_PAIR, this);
+    }
 
     @TestMethod("testGetLast")
     public long getLast() {
@@ -111,7 +110,7 @@ public class InvPair implements java.io.Serializable{
     public boolean equals(Object object) {
         if (object instanceof InvPair) {
             InvPair o = (InvPair) object;
-//      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
+            //      logger.debug("Last " + last + "o.last " + o.getLast() + " curr " + curr + " o.curr " + o.getCurr() + " equals " +(last == o.getLast() && curr == o.getCurr()));
             return (last == o.getLast() && curr == o.getCurr());
         } else {
             return false;

@@ -42,7 +42,7 @@ public class OWLAtomTypeHandlerTest extends CDKTestCase {
 
     @Test
     public void testGetAtomTypes() {
-    	OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
+        OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read
         Assert.assertNotNull(handler);
         Assert.assertNull(handler.getAtomTypes());
@@ -50,7 +50,7 @@ public class OWLAtomTypeHandlerTest extends CDKTestCase {
 
     @Test
     public void testStartDocument() {
-    	OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
+        OWLAtomTypeHandler handler = new OWLAtomTypeHandler(new ChemObject().getBuilder());
         // nothing is read, but Vector is initialized
         Assert.assertNotNull(handler);
         Assert.assertNull(handler.getAtomTypes());

@@ -45,17 +45,20 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class SMILESWriterTest extends ChemObjectIOTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setChemObjectIO(new SMILESWriter());
     }
 
-    @Test public void testAccepts() throws Exception {
-    	SMILESWriter reader = new SMILESWriter();
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() throws Exception {
+        SMILESWriter reader = new SMILESWriter();
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
         Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
-    @Test public void testWriteSMILESFile() throws Exception {
+    @Test
+    public void testWriteSMILESFile() throws Exception {
         StringWriter stringWriter = new StringWriter();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
@@ -65,7 +68,8 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         Assert.assertTrue(stringWriter.toString().contains("C=C"));
     }
 
-    @Test public void testWriteAromatic() throws Exception {
+    @Test
+    public void testWriteAromatic() throws Exception {
         StringWriter stringWriter = new StringWriter();
         IAtomContainer benzene = TestMoleculeFactory.makeBenzene();
         addImplicitHydrogens(benzene);
@@ -73,7 +77,7 @@ public class SMILESWriterTest extends ChemObjectIOTest {
         Aromaticity.cdkLegacy().apply(benzene);
         SMILESWriter smilesWriter = new SMILESWriter(stringWriter);
         Properties prop = new Properties();
-        prop.setProperty("UseAromaticity","true");
+        prop.setProperty("UseAromaticity", "true");
         PropertiesListener listener = new PropertiesListener(prop);
         smilesWriter.addChemObjectIOListener(listener);
         smilesWriter.customizeJob();

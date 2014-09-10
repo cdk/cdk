@@ -65,7 +65,6 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
 
     private String elementName = "*";
 
-
     /**
      *  Constructor for the AtomCountDescriptor object.
      */
@@ -91,9 +90,8 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#atomCount", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -115,7 +113,6 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         elementName = (String) params[0];
     }
 
-
     /**
      *  Gets the parameters attribute of the AtomCountDescriptor object.
      *
@@ -130,14 +127,15 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         String name = "n";
-        if (elementName.equals("*")) name = "nAtom";
-        else name += elementName;
+        if (elementName.equals("*"))
+            name = "nAtom";
+        else
+            name += elementName;
         return new String[]{name};
     }
-
 
     /**
      *  This method calculate the number of atoms of a given type in an {@link IAtomContainer}.
@@ -153,15 +151,14 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         int atomCount = 0;
 
         if (container == null) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
-                    new CDKException("The supplied AtomContainer was NULL"));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                    (int) Double.NaN), getDescriptorNames(), new CDKException("The supplied AtomContainer was NULL"));
         }
 
         if (container.getAtomCount() == 0) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new IntegerResult((int) Double.NaN), getDescriptorNames(),
-                    new CDKException("The supplied AtomContainer did not have any atoms"));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                    (int) Double.NaN), getDescriptorNames(), new CDKException(
+                    "The supplied AtomContainer did not have any atoms"));
         }
 
         if (elementName.equals("*")) {
@@ -181,8 +178,7 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
                     if (hcount != CDKConstants.UNSET) atomCount += hcount;
                 }
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < container.getAtomCount(); i++) {
                 if (container.getAtom(i).getSymbol().equals(elementName)) {
                     atomCount += 1;
@@ -190,8 +186,8 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(atomCount), getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(
+                atomCount), getDescriptorNames());
     }
 
     /**
@@ -210,7 +206,6 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         return new IntegerResult(1);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the AtomCountDescriptor object.
      *
@@ -223,7 +218,6 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         return params;
     }
 
-
     /**
      *  Gets the parameterType attribute of the AtomCountDescriptor object.
      *
@@ -235,4 +229,3 @@ public class AtomCountDescriptor extends AbstractMolecularDescriptor implements 
         return "";
     }
 }
-

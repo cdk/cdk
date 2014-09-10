@@ -27,22 +27,26 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class StringDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IDifference result = StringDifference.construct("Foo", "foo", "bar");
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
+    @Test
+    public void testSame() {
         IDifference result = StringDifference.construct("Foo", "foo", "foo");
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = StringDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
+    @Test
+    public void testOneNull() {
         IDifference result = StringDifference.construct("Foo", null, "bar");
         Assert.assertNotNull(result);
 
@@ -50,8 +54,9 @@ public class StringDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
-    	IDifference result = StringDifference.construct("Foo", null, "bar");
+    @Test
+    public void testToString() {
+        IDifference result = StringDifference.construct("Foo", null, "bar");
         String diffString = result.toString();
         Assert.assertNotNull(diffString);
         assertOneLiner(diffString);

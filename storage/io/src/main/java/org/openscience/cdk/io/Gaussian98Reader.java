@@ -76,17 +76,15 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @TestClass("org.openscience.cdk.io.Gaussian98ReaderTest")
 public class Gaussian98Reader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(Gaussian98Reader.class);;
-    private int atomCount = 0;
-    private String lastRoute = "";
+    private BufferedReader      input;
+    private static ILoggingTool logger    = LoggingToolFactory.createLoggingTool(Gaussian98Reader.class); ;
+    private int                 atomCount = 0;
+    private String              lastRoute = "";
 
     /**
      * Customizable setting
      */
-    private BooleanIOSetting readOptimizedStructureOnly;
-
+    private BooleanIOSetting    readOptimizedStructureOnly;
 
     /**
      * Constructor for the Gaussian98Reader object
@@ -124,7 +122,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-
     /**
      * Create an Gaussian98 output reader.
      *
@@ -159,15 +156,11 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             try {
                 file = readChemFile(file);
             } catch (IOException exception) {
-                throw new CDKException(
-                        "Error while reading file: " + exception.toString(),
-                        exception
-                );
+                throw new CDKException("Error while reading file: " + exception.toString(), exception);
             }
-            return (T)file;
+            return (T) file;
         } else {
-            throw new CDKException("Reading of a " + object.getClass().getName() +
-                    " is not supported.");
+            throw new CDKException("Reading of a " + object.getClass().getName() + " is not supported.");
         }
     }
 
@@ -175,7 +168,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
     public void close() throws IOException {
         input.close();
     }
-
 
     /**
      * Read the Gaussian98 output.
@@ -265,7 +257,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         return chemFile;
     }
 
-
     /**
      * Reads a set of coordinates into ChemFrame.
      *
@@ -327,19 +318,18 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
             }
             String symbol = "Du";
             symbol = PeriodicTable.getSymbol(atomicNumber);
-            IAtom atom = model.getBuilder().newInstance(IAtom.class,symbol);
+            IAtom atom = model.getBuilder().newInstance(IAtom.class, symbol);
             atom.setPoint3d(new Point3d(x, y, z));
             molecule.addAtom(atom);
         }
         /*
-           *  this is the place where we store the atomcount to
-           *  be used as a counter in the nmr reading
-           */
+         * this is the place where we store the atomcount to be used as a
+         * counter in the nmr reading
+         */
         atomCount = molecule.getAtomCount();
         moleculeSet.addAtomContainer(molecule);
         model.setMoleculeSet(moleculeSet);
     }
-
 
     /**
      * Reads partial atomic charges and add the to the given ChemModel.
@@ -372,8 +362,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 double charge;
                 if (tokenizer.nextToken() == StreamTokenizer.TT_NUMBER) {
                     charge = tokenizer.nval;
-                    logger.debug("Found charge for atom " + atomCounter +
-                            ": " + charge);
+                    logger.debug("Found charge for atom " + atomCounter + ": " + charge);
                 } else {
                     throw new CDKException("Error while reading charge: expected double.");
                 }
@@ -389,78 +378,46 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
      *@param  model            Description of the Parameter
      *@exception IOException  if an I/O error occurs
      */
-//	private void readFrequencies(IChemModel model) throws IOException
-//	{
+    //	private void readFrequencies(IChemModel model) throws IOException
+    //	{
     /*
-          *  FIXME: this is yet to be ported
-          *  String line;
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  while ((line != null) && line.startsWith(" Frequencies --")) {
-          *  Vector currentVibs = new Vector();
-          *  StringReader vibValRead = new StringReader(line.substring(15));
-          *  StreamTokenizer token = new StreamTokenizer(vibValRead);
-          *  while (token.nextToken() != StreamTokenizer.TT_EOF) {
-          *  Vibration vib = new Vibration(Double.toString(token.nval));
-          *  currentVibs.addElement(vib);
-          *  }
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  for (int i = 0; i < frame.getAtomCount(); ++i) {
-          *  line = input.readLine();
-          *  StringReader vectorRead = new StringReader(line);
-          *  token = new StreamTokenizer(vectorRead);
-          *  token.nextToken();
-          *  / ignore first token
-          *  token.nextToken();
-          *  / ignore second token
-          *  for (int j = 0; j < currentVibs.size(); ++j) {
-          *  double[] v = new double[3];
-          *  if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
-          *  v[0] = token.nval;
-          *  } else {
-          *  throw new IOException("Error reading frequency");
-          *  }
-          *  if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
-          *  v[1] = token.nval;
-          *  } else {
-          *  throw new IOException("Error reading frequency");
-          *  }
-          *  if (token.nextToken() == StreamTokenizer.TT_NUMBER) {
-          *  v[2] = token.nval;
-          *  } else {
-          *  throw new IOException("Error reading frequency");
-          *  }
-          *  ((Vibration) currentVibs.elementAt(j)).addAtomVector(v);
-          *  }
-          *  }
-          *  for (int i = 0; i < currentVibs.size(); ++i) {
-          *  frame.addVibration((Vibration) currentVibs.elementAt(i));
-          *  }
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  line = input.readLine();
-          *  }
-          */
-//	}
-
+     * FIXME: this is yet to be ported String line; line = input.readLine();
+     * line = input.readLine(); line = input.readLine(); line =
+     * input.readLine(); line = input.readLine(); while ((line != null) &&
+     * line.startsWith(" Frequencies --")) { Vector currentVibs = new Vector();
+     * StringReader vibValRead = new StringReader(line.substring(15));
+     * StreamTokenizer token = new StreamTokenizer(vibValRead); while
+     * (token.nextToken() != StreamTokenizer.TT_EOF) { Vibration vib = new
+     * Vibration(Double.toString(token.nval)); currentVibs.addElement(vib); }
+     * line = input.readLine(); line = input.readLine(); line =
+     * input.readLine(); line = input.readLine(); line = input.readLine(); line
+     * = input.readLine(); for (int i = 0; i < frame.getAtomCount(); ++i) { line
+     * = input.readLine(); StringReader vectorRead = new StringReader(line);
+     * token = new StreamTokenizer(vectorRead); token.nextToken(); / ignore
+     * first token token.nextToken(); / ignore second token for (int j = 0; j <
+     * currentVibs.size(); ++j) { double[] v = new double[3]; if
+     * (token.nextToken() == StreamTokenizer.TT_NUMBER) { v[0] = token.nval; }
+     * else { throw new IOException("Error reading frequency"); } if
+     * (token.nextToken() == StreamTokenizer.TT_NUMBER) { v[1] = token.nval; }
+     * else { throw new IOException("Error reading frequency"); } if
+     * (token.nextToken() == StreamTokenizer.TT_NUMBER) { v[2] = token.nval; }
+     * else { throw new IOException("Error reading frequency"); } ((Vibration)
+     * currentVibs.elementAt(j)).addAtomVector(v); } } for (int i = 0; i <
+     * currentVibs.size(); ++i) { frame.addVibration((Vibration)
+     * currentVibs.elementAt(i)); } line = input.readLine(); line =
+     * input.readLine(); line = input.readLine(); }
+     */
+    //	}
 
     /**
      * Reads NMR nuclear shieldings.
      */
     private void readNMRData(IChemModel model, String labelLine) throws CDKException {
-    	List<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model);
-    	if (containers.size() == 0) {
-    		// nothing to store the results into
-    		return;
-    	} // otherwise insert in the first AC
+        List<IAtomContainer> containers = ChemModelManipulator.getAllAtomContainers(model);
+        if (containers.size() == 0) {
+            // nothing to store the results into
+            return;
+        } // otherwise insert in the first AC
 
         IAtomContainer ac = containers.get(0);
         // Determine label for properties
@@ -505,7 +462,6 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         }
     }
 
-
     /**
      * Select the theory and basis set from the first archive line.
      *
@@ -521,8 +477,7 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
                 line = input.readLine().trim();
                 summary.append(line);
             } while (!(line.indexOf('@') >= 0));
-        }
-        catch (Exception exc) {
+        } catch (Exception exc) {
             logger.debug("syntax problem while parsing summary of g98 section: ");
             logger.debug(exc);
         }
@@ -542,10 +497,9 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         return st1.nextToken() + "/" + st1.nextToken();
     }
 
-
     private void initIOSettings() {
-        readOptimizedStructureOnly = addSetting(new BooleanIOSetting("ReadOptimizedStructureOnly", IOSetting.Importance.LOW,
-                "Should I only read the optimized structure from a geometry optimization?",
+        readOptimizedStructureOnly = addSetting(new BooleanIOSetting("ReadOptimizedStructureOnly",
+                IOSetting.Importance.LOW, "Should I only read the optimized structure from a geometry optimization?",
                 "false"));
     }
 
@@ -553,6 +507,4 @@ public class Gaussian98Reader extends DefaultChemObjectReader {
         fireIOSettingQuestion(readOptimizedStructureOnly);
     }
 
-
 }
-

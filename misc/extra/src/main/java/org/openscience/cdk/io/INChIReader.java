@@ -66,11 +66,10 @@ import org.xml.sax.XMLReader;
 @TestClass("org.openscience.cdk.io.INChIReaderTest")
 public class INChIReader extends DefaultChemObjectReader {
 
-    private XMLReader parser;
-    private InputStream input;
+    private XMLReader           parser;
+    private InputStream         input;
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(INChIReader.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(INChIReader.class);
 
     /**
      * Construct a INChI reader from a InputStream object.
@@ -127,9 +126,8 @@ public class INChIReader extends DefaultChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("gnu.xml.aelfred2.XmlReader").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
+                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -140,9 +138,8 @@ public class INChIReader extends DefaultChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -155,17 +152,17 @@ public class INChIReader extends DefaultChemObjectReader {
         }
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * Reads a IChemObject of type object from input.
@@ -174,12 +171,12 @@ public class INChIReader extends DefaultChemObjectReader {
      * @param  object type of requested IChemObject
      * @return the content in a ChemFile object
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
-      if (object instanceof IChemFile) {
-        return (T)readChemFile();
-      } else {
-        throw new CDKException("Only supported is reading of ChemFile objects.");
-      }
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (object instanceof IChemFile) {
+            return (T) readChemFile();
+        } else {
+            throw new CDKException("Only supported is reading of ChemFile objects.");
+        }
     }
 
     // private functions
@@ -217,4 +214,3 @@ public class INChIReader extends DefaultChemObjectReader {
         input.close();
     }
 }
-

@@ -44,22 +44,22 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class RGroup {
 
-	/**
-	 * Standard label/title to be used for the root atom container.
-	 */
-	public final static String ROOT_LABEL="Root structure";
+    /**
+     * Standard label/title to be used for the root atom container.
+     */
+    public final static String ROOT_LABEL = "Root structure";
 
-	/**
-	 * Makes a label/title to be used for a substituent.
-	 * @param rgroupNum R-Group number (1..32)
-	 * @return label for substituent, like "R3"
-	 */
-	public static String makeLabel(int rgroupNum ) {
-		return "(R"+rgroupNum+")";
-	}
+    /**
+     * Makes a label/title to be used for a substituent.
+     * @param rgroupNum R-Group number (1..32)
+     * @return label for substituent, like "R3"
+     */
+    public static String makeLabel(int rgroupNum) {
+        return "(R" + rgroupNum + ")";
+    }
 
-    IAtom firstAttachmentPoint;
-    IAtom secondAttachmentPoint;
+    IAtom          firstAttachmentPoint;
+    IAtom          secondAttachmentPoint;
     IAtomContainer group;
 
     public void setFirstAttachmentPoint(IAtom firstAttachmentPoint) {

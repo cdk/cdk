@@ -32,47 +32,47 @@ package org.openscience.cdk.interfaces;
  */
 public interface IIsotope extends IElement {
 
-	/**
-	 * Sets the NaturalAbundance attribute of the Isotope object.
-	 *
-	 * @param  naturalAbundance  The new NaturalAbundance value
+    /**
+     * Sets the NaturalAbundance attribute of the Isotope object.
+     *
+     * @param  naturalAbundance  The new NaturalAbundance value
      *
      * @see    #getNaturalAbundance
-	 */
-	public void setNaturalAbundance(Double naturalAbundance);
+     */
+    public void setNaturalAbundance(Double naturalAbundance);
 
-	/**
-	 * Sets the ExactMass attribute of the Isotope object.
-	 *
-	 * @param  exactMass  The new ExactMass value
+    /**
+     * Sets the ExactMass attribute of the Isotope object.
+     *
+     * @param  exactMass  The new ExactMass value
      *
      * @see    #getExactMass
-	 */
-	public void setExactMass(Double exactMass);
+     */
+    public void setExactMass(Double exactMass);
 
-	/**
-	 * Gets the NaturalAbundance attribute of the Isotope object.
-	 * Returns null when unconfigured.
-	 *
-	 * @return    The NaturalAbundance value
+    /**
+     * Gets the NaturalAbundance attribute of the Isotope object.
+     * Returns null when unconfigured.
+     *
+     * @return    The NaturalAbundance value
      *
      * @see       #setNaturalAbundance
-	 */
-	public Double getNaturalAbundance();
+     */
+    public Double getNaturalAbundance();
 
-	/**
-	 * Gets the ExactMass attribute of the Isotope object.
-	 * Returns null when unconfigured.
-	 *
-	 * @return    The ExactMass value
+    /**
+     * Gets the ExactMass attribute of the Isotope object.
+     * Returns null when unconfigured.
+     *
+     * @return    The ExactMass value
      *
      * @see       #setExactMass
-	 */
-	public Double getExactMass();
+     */
+    public Double getExactMass();
 
     /**
      * Returns the atomic mass of this element.
-	 * Returns null when unconfigured.
+     * Returns null when unconfigured.
      *
      * @return The atomic mass of this element
      *
@@ -90,4 +90,3 @@ public interface IIsotope extends IElement {
     public void setMassNumber(Integer massNumber);
 
 }
-

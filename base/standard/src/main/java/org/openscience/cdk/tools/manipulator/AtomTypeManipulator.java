@@ -29,7 +29,6 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomType;
 import org.openscience.cdk.interfaces.IPseudoAtom;
 
-
 /**
  * Class with utilities for the <code>AtomType</code> class.
  * - changed 21/7/05 by cho: add properties for mmff94 atom type
@@ -42,14 +41,14 @@ import org.openscience.cdk.interfaces.IPseudoAtom;
 @TestClass("org.openscience.cdk.tools.manipulator.AtomTypeManipulatorTest")
 public class AtomTypeManipulator {
 
-	/**
-	 * Method that assign properties to an atom given a particular atomType.
-	 * An <code>IllegalArgumentException</code> is thrown if the given <code>IAtomType</code>
-	 * is null. <b>This method overwrites non-null values.</b>
-	 *
-	 * @param  atom     Atom to configure
-	 * @param  atomType AtomType. Must not be null.
-	 */
+    /**
+     * Method that assign properties to an atom given a particular atomType.
+     * An <code>IllegalArgumentException</code> is thrown if the given <code>IAtomType</code>
+     * is null. <b>This method overwrites non-null values.</b>
+     *
+     * @param  atom     Atom to configure
+     * @param  atomType AtomType. Must not be null.
+     */
     @TestMethod("testConfigure_IAtom_IAtomType")
     public static void configure(IAtom atom, IAtomType atomType) {
         if (atomType == null) {
@@ -116,18 +115,29 @@ public class AtomTypeManipulator {
             return;
         }
 
-        if (atom.getSymbol() == CDKConstants.UNSET && atomType.getSymbol() != CDKConstants.UNSET) atom.setSymbol(atomType.getSymbol());
-        if (atom.getAtomTypeName() == CDKConstants.UNSET && atomType.getAtomTypeName() != CDKConstants.UNSET) atom.setAtomTypeName(atomType.getAtomTypeName());
-        if (atom.getMaxBondOrder() == CDKConstants.UNSET && atomType.getMaxBondOrder() != CDKConstants.UNSET) atom.setMaxBondOrder(atomType.getMaxBondOrder());
-        if (atom.getBondOrderSum() == CDKConstants.UNSET && atomType.getBondOrderSum() != CDKConstants.UNSET) atom.setBondOrderSum(atomType.getBondOrderSum());
-        if (atom.getCovalentRadius() == CDKConstants.UNSET && atomType.getCovalentRadius() != CDKConstants.UNSET) atom.setCovalentRadius(atomType.getCovalentRadius());
-        if (atom.getValency() == CDKConstants.UNSET && atomType.getValency() != CDKConstants.UNSET) atom.setValency(atomType.getValency());
-        if (atom.getFormalCharge() == CDKConstants.UNSET && atomType.getFormalCharge() != CDKConstants.UNSET) atom.setFormalCharge(atomType.getFormalCharge());
-        if (atom.getHybridization() == CDKConstants.UNSET && atomType.getHybridization() != CDKConstants.UNSET) atom.setHybridization(atomType.getHybridization());
-        if (atom.getFormalNeighbourCount() == CDKConstants.UNSET && atomType.getFormalNeighbourCount() != CDKConstants.UNSET) atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
-        if (atom.getAtomicNumber() == CDKConstants.UNSET && atomType.getAtomicNumber() != CDKConstants.UNSET) atom.setAtomicNumber(atomType.getAtomicNumber());
-        if (atom.getExactMass() == CDKConstants.UNSET && atomType.getExactMass() != CDKConstants.UNSET) atom.setExactMass(atomType.getExactMass());
+        if (atom.getSymbol() == CDKConstants.UNSET && atomType.getSymbol() != CDKConstants.UNSET)
+            atom.setSymbol(atomType.getSymbol());
+        if (atom.getAtomTypeName() == CDKConstants.UNSET && atomType.getAtomTypeName() != CDKConstants.UNSET)
+            atom.setAtomTypeName(atomType.getAtomTypeName());
+        if (atom.getMaxBondOrder() == CDKConstants.UNSET && atomType.getMaxBondOrder() != CDKConstants.UNSET)
+            atom.setMaxBondOrder(atomType.getMaxBondOrder());
+        if (atom.getBondOrderSum() == CDKConstants.UNSET && atomType.getBondOrderSum() != CDKConstants.UNSET)
+            atom.setBondOrderSum(atomType.getBondOrderSum());
+        if (atom.getCovalentRadius() == CDKConstants.UNSET && atomType.getCovalentRadius() != CDKConstants.UNSET)
+            atom.setCovalentRadius(atomType.getCovalentRadius());
+        if (atom.getValency() == CDKConstants.UNSET && atomType.getValency() != CDKConstants.UNSET)
+            atom.setValency(atomType.getValency());
+        if (atom.getFormalCharge() == CDKConstants.UNSET && atomType.getFormalCharge() != CDKConstants.UNSET)
+            atom.setFormalCharge(atomType.getFormalCharge());
+        if (atom.getHybridization() == CDKConstants.UNSET && atomType.getHybridization() != CDKConstants.UNSET)
+            atom.setHybridization(atomType.getHybridization());
+        if (atom.getFormalNeighbourCount() == CDKConstants.UNSET
+                && atomType.getFormalNeighbourCount() != CDKConstants.UNSET)
+            atom.setFormalNeighbourCount(atomType.getFormalNeighbourCount());
+        if (atom.getAtomicNumber() == CDKConstants.UNSET && atomType.getAtomicNumber() != CDKConstants.UNSET)
+            atom.setAtomicNumber(atomType.getAtomicNumber());
+        if (atom.getExactMass() == CDKConstants.UNSET && atomType.getExactMass() != CDKConstants.UNSET)
+            atom.setExactMass(atomType.getExactMass());
     }
 
 }
-

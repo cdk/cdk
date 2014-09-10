@@ -40,7 +40,8 @@ import static org.mockito.Mockito.when;
  */
 public class AtomMatcherTest {
 
-    @Test public void anyMatch() throws Exception {
+    @Test
+    public void anyMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forAny();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -57,7 +58,8 @@ public class AtomMatcherTest {
         assertTrue(matcher.matches(null, null));
     }
 
-    @Test public void elementMatch() throws Exception {
+    @Test
+    public void elementMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -67,7 +69,8 @@ public class AtomMatcherTest {
         assertTrue(matcher.matches(atom2, atom1));
     }
 
-    @Test public void elementMismatch() throws Exception {
+    @Test
+    public void elementMismatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
@@ -77,7 +80,8 @@ public class AtomMatcherTest {
         assertFalse(matcher.matches(atom2, atom1));
     }
 
-    @Test public void elementPsuedo() throws Exception {
+    @Test
+    public void elementPsuedo() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IPseudoAtom.class);
         IAtom atom2 = mock(IPseudoAtom.class);
@@ -95,7 +99,8 @@ public class AtomMatcherTest {
         matcher.matches(atom1, atom2);
     }
 
-    @Test public void queryMatch() throws Exception {
+    @Test
+    public void queryMatch() throws Exception {
         AtomMatcher matcher = AtomMatcher.forQuery();
         IQueryAtom atom1 = mock(IQueryAtom.class);
         IAtom atom2 = mock(IAtom.class);

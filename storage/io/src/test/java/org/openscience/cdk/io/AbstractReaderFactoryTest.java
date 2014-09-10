@@ -51,65 +51,46 @@ public class AbstractReaderFactoryTest {
 
     private ReaderFactory factory = new ReaderFactory();
 
-    void expectReader(String filename, IResourceFormat expectedFormat, int expectedAtomCount, int expectedBondCount) throws Exception {
+    void expectReader(String filename, IResourceFormat expectedFormat, int expectedAtomCount, int expectedBondCount)
+            throws Exception {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Assert.assertNotNull("Cannot find file: " + filename, ins);
         if (expectedFormat instanceof IChemFormatMatcher) {
-        	factory.registerFormat((IChemFormatMatcher)expectedFormat);
+            factory.registerFormat((IChemFormatMatcher) expectedFormat);
         }
         ISimpleChemObjectReader reader = factory.createReader(ins);
         Assert.assertNotNull(reader);
-        Assert.assertEquals(
-            ((IChemFormat)expectedFormat).getReaderClassName(),
-            reader.getClass().getName()
-        );
+        Assert.assertEquals(((IChemFormat) expectedFormat).getReaderClassName(), reader.getClass().getName());
         // now try reading something from it
-        IChemObject[] objects = {
-        		new ChemFile(), new ChemModel(), new AtomContainer(),
-        		new Reaction()
-        };
+        IChemObject[] objects = {new ChemFile(), new ChemModel(), new AtomContainer(), new Reaction()};
         boolean read = false;
-        for (int i=0; (i<objects.length && !read); i++) {
-        	if (reader.accepts(objects[i].getClass())) {
+        for (int i = 0; (i < objects.length && !read); i++) {
+            if (reader.accepts(objects[i].getClass())) {
                 IChemObject chemObject = reader.read(objects[i]);
-                Assert.assertNotNull("Reader accepted a " +
-                    objects[i].getClass().getName() + " but failed to read it",
-                    chemObject
-                );
+                Assert.assertNotNull("Reader accepted a " + objects[i].getClass().getName() + " but failed to read it",
+                        chemObject);
                 assertAtomCount(expectedAtomCount, chemObject);
                 assertBondCount(expectedBondCount, chemObject);
-        		read = true;
-        	}
+                read = true;
+            }
         }
         if (read) {
-        	// ok, reseting worked
+            // ok, reseting worked
         } else {
-        	Assert.fail("Reading an IChemObject from the Reader did not work properly.");
+            Assert.fail("Reading an IChemObject from the Reader did not work properly.");
         }
     }
 
     void assertBondCount(int expectedBondCount, IChemObject chemObject) {
         if (expectedBondCount != -1) {
             if (chemObject instanceof IChemFile) {
-                Assert.assertEquals(
-                    expectedBondCount,
-                    ChemFileManipulator.getBondCount((IChemFile)chemObject)
-                );
+                Assert.assertEquals(expectedBondCount, ChemFileManipulator.getBondCount((IChemFile) chemObject));
             } else if (chemObject instanceof IChemModel) {
-                Assert.assertEquals(
-                    expectedBondCount,
-                    ChemModelManipulator.getBondCount((IChemModel)chemObject)
-                );
+                Assert.assertEquals(expectedBondCount, ChemModelManipulator.getBondCount((IChemModel) chemObject));
             } else if (chemObject instanceof IAtomContainer) {
-                Assert.assertEquals(
-                    expectedBondCount,
-                    ((IAtomContainer)chemObject).getBondCount()
-                );
+                Assert.assertEquals(expectedBondCount, ((IAtomContainer) chemObject).getBondCount());
             } else if (chemObject instanceof IReaction) {
-                Assert.assertEquals(
-                    expectedBondCount,
-                    ReactionManipulator.getBondCount((IReaction)chemObject)
-                );
+                Assert.assertEquals(expectedBondCount, ReactionManipulator.getBondCount((IReaction) chemObject));
             }
         }
     }
@@ -117,25 +98,13 @@ public class AbstractReaderFactoryTest {
     void assertAtomCount(int expectedAtomCount, IChemObject chemObject) {
         if (expectedAtomCount != -1) {
             if (chemObject instanceof IChemFile) {
-                Assert.assertEquals(
-                    expectedAtomCount,
-                    ChemFileManipulator.getAtomCount((IChemFile)chemObject)
-                );
+                Assert.assertEquals(expectedAtomCount, ChemFileManipulator.getAtomCount((IChemFile) chemObject));
             } else if (chemObject instanceof IChemModel) {
-                Assert.assertEquals(
-                    expectedAtomCount,
-                    ChemModelManipulator.getAtomCount((IChemModel)chemObject)
-                );
+                Assert.assertEquals(expectedAtomCount, ChemModelManipulator.getAtomCount((IChemModel) chemObject));
             } else if (chemObject instanceof IAtomContainer) {
-                Assert.assertEquals(
-                    expectedAtomCount,
-                    ((IAtomContainer)chemObject).getAtomCount()
-                );
+                Assert.assertEquals(expectedAtomCount, ((IAtomContainer) chemObject).getAtomCount());
             } else if (chemObject instanceof IReaction) {
-                Assert.assertEquals(
-                    expectedAtomCount,
-                    ReactionManipulator.getAtomCount((IReaction)chemObject)
-                );
+                Assert.assertEquals(expectedAtomCount, ReactionManipulator.getAtomCount((IReaction) chemObject));
             }
         }
     }

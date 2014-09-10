@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugReactionSetTest extends AbstractReactionSetTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugReactionSet();
             }
         });
     }
 
-    @Test public void testDebugReactionSet() {
+    @Test
+    public void testDebugReactionSet() {
         IReactionSet rs = new DebugReactionSet();
         Assert.assertNotNull(rs);
     }

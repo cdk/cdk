@@ -31,17 +31,16 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.result.DoubleArrayResultTest")
 public class DoubleArrayResult extends DoubleArrayResultType {
 
-    private List<Double> array;
-	private static final long serialVersionUID = 2345607580017306612L;
-
+    private List<Double>      array;
+    private static final long serialVersionUID = 2345607580017306612L;
 
     public DoubleArrayResult() {
-    	super(0);
+        super(0);
         this.array = new ArrayList<Double>();
     }
 
     public DoubleArrayResult(int size) {
-    	super(size);
+        super(size);
         this.array = new ArrayList<Double>(size);
     }
 
@@ -55,9 +54,9 @@ public class DoubleArrayResult extends DoubleArrayResultType {
      */
     @TestMethod("testGet_int")
     public double get(int index) {
-    	if (index >= this.array.size()) {
-    		return 0.0;
-    	}
+        if (index >= this.array.size()) {
+            return 0.0;
+        }
         return this.array.get(index);
     }
 
@@ -69,11 +68,10 @@ public class DoubleArrayResult extends DoubleArrayResultType {
     @TestMethod("testToString")
     public String toString() {
         StringBuilder buf = new StringBuilder();
-        for (int i=0; i<length(); i++) {
+        for (int i = 0; i < length(); i++) {
             buf.append(get(i));
-            if (i+1<length()) buf.append(',');
+            if (i + 1 < length()) buf.append(',');
         }
         return buf.toString();
     }
 }
-

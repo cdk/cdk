@@ -35,13 +35,11 @@ import org.openscience.cdk.smiles.SmilesParser;
 
 public class BPolDescriptorTest extends MolecularDescriptorTest {
 
-    public BPolDescriptorTest() {
-    }
-
+    public BPolDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(BPolDescriptor.class);
+        setDescriptor(BPolDescriptor.class);
     }
 
     @Test
@@ -52,4 +50,3 @@ public class BPolDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(7.517242, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.01);
     }
 }
-

@@ -26,11 +26,11 @@ package org.openscience.cdk.renderer.elements;
  */
 public interface IRenderingElement {
 
-	/**
-	 * Converts this {@link TextElement} into widget specific objects.
-	 *
-	 * @param visitor Toolkit specific widget factory.
-	 */
-	public void accept(IRenderingVisitor visitor);
+    /**
+     * Converts this {@link TextElement} into widget specific objects.
+     *
+     * @param visitor Toolkit specific widget factory.
+     */
+    public void accept(IRenderingVisitor visitor);
 
 }

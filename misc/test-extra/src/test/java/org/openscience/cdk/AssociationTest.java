@@ -32,37 +32,40 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public class AssociationTest extends CDKTestCase {
 
-    @Test public void testAssociation() {
+    @Test
+    public void testAssociation() {
         Association association = new Association();
         Assert.assertEquals(0, association.getElectronCount().intValue());
         Assert.assertEquals(0, association.getAtomCount());
     }
 
-    @Test public void testAssociation_IAtom_IAtom() {
+    @Test
+    public void testAssociation_IAtom_IAtom() {
         Association association = new Association(new Atom("C"), new Atom("C"));
         Assert.assertEquals(0, association.getElectronCount().intValue());
         Assert.assertEquals(2, association.getAtomCount());
     }
 
     /** Test for RFC #9 */
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         Association association = new Association();
         String description = association.toString();
-        for (int i=0; i< description.length(); i++) {
-        	Assert.assertTrue(description.charAt(i) != '\n');
-        	Assert.assertTrue(description.charAt(i) != '\r');
+        for (int i = 0; i < description.length(); i++) {
+            Assert.assertTrue(description.charAt(i) != '\n');
+            Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    @Test public void testToStringWithAtoms() {
-        Association association = new Association(
-            new Atom("C"), new Atom("C")
-        );
+    @Test
+    public void testToStringWithAtoms() {
+        Association association = new Association(new Atom("C"), new Atom("C"));
         String description = association.toString();
         Assert.assertTrue(description.contains(","));
     }
 
-    @Test public void testContains() {
+    @Test
+    public void testContains() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
 
@@ -72,7 +75,8 @@ public class AssociationTest extends CDKTestCase {
         Assert.assertTrue(association.contains(o));
     }
 
-    @Test public void testGetAtomCount() {
+    @Test
+    public void testGetAtomCount() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
 
@@ -81,7 +85,8 @@ public class AssociationTest extends CDKTestCase {
         Assert.assertEquals(2, association.getAtomCount());
     }
 
-    @Test public void testGetAtoms() {
+    @Test
+    public void testGetAtoms() {
         Atom c = new Atom("C");
         Atom o = new Atom("O");
 
@@ -134,6 +139,6 @@ public class AssociationTest extends CDKTestCase {
     @Test
     public void testGetElectronCount() {
         Association association = new Association();
-        Assert.assertEquals(0, association.getElectronCount(),0.00001);
+        Assert.assertEquals(0, association.getElectronCount(), 0.00001);
     }
 }

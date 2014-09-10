@@ -32,7 +32,8 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class UllmannSubstructureTest extends SubstructureTest {
 
-    @Override Pattern create(IAtomContainer container) {
+    @Override
+    Pattern create(IAtomContainer container) {
         return Ullmann.findSubstructure(container);
     }
 }

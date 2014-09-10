@@ -34,38 +34,43 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 *
 * @cdk.module test-charges
 */
-public class StabilizationChargesTest  extends CDKTestCase{
+public class StabilizationChargesTest extends CDKTestCase {
 
-	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
-	/**
-	 * Constructor of the StabilizationChargesTest.
-	 */
-	public StabilizationChargesTest() {
+
+    /**
+     * Constructor of the StabilizationChargesTest.
+     */
+    public StabilizationChargesTest() {
         super();
     }
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test public void testStabilizationCharges()	{
 
-		Assert.assertNotNull(new StabilizationCharges());
-	}
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 *  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
-	 *
-	 * @return    The test suite
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testStabilizationCharges() {
+
+        Assert.assertNotNull(new StabilizationCharges());
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     *  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
+     *
+     * @return    The test suite
      * @throws Exception
-	 */
-    @Test public void testCalculatePositive_IAtomContainer_IAtom() throws Exception	{
+     */
+    @Test
+    public void testCalculatePositive_IAtomContainer_IAtom() throws Exception {
 
-		StabilizationCharges sc = new StabilizationCharges();
+        StabilizationCharges sc = new StabilizationCharges();
 
-		IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
+        IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(new Atom("C"));
         molecule.addAtom(new Atom("C"));
         molecule.addBond(0, 1, IBond.Order.SINGLE);
@@ -75,16 +80,16 @@ public class StabilizationChargesTest  extends CDKTestCase{
         molecule.addAtom(new Atom("C"));
         molecule.addBond(2, 3, IBond.Order.DOUBLE);
 
-		addExplicitHydrogens(molecule);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
-		lpcheck.saturate(molecule);
+        addExplicitHydrogens(molecule);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(molecule);
+        lpcheck.saturate(molecule);
 
-        for(int i = 0 ; i < molecule.getAtomCount(); i++){
-        	if(i==1)
-        		Assert.assertNotSame(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)));
-        	else
-        		Assert.assertEquals(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)),0.001);
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            if (i == 1)
+                Assert.assertNotSame(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)));
+            else
+                Assert.assertEquals(0.0, sc.calculatePositive(molecule, molecule.getAtom(i)), 0.001);
 
         }
-	}
+    }
 }

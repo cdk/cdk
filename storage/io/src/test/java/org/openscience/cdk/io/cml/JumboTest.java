@@ -45,8 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class JumboTest extends CDKTestCase {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(JumboTest.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(JumboTest.class);
 
     /**
      * Now come the actual tests...
@@ -57,12 +56,13 @@ public class JumboTest extends CDKTestCase {
      * - <atomArray><atom/><atom/></atomArray>
      * - X2D only
      */
-    @Test public void testCuran() throws Exception {
+    @Test
+    public void testCuran() throws Exception {
         String filename = "data/cml/curan.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -89,12 +89,13 @@ public class JumboTest extends CDKTestCase {
      * - use of cml: namespace
      * - X2D only
      */
-    @Test public void testCephNS() throws Exception {
+    @Test
+    public void testCephNS() throws Exception {
         String filename = "data/cml/ceph-ns.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -122,12 +123,13 @@ public class JumboTest extends CDKTestCase {
      * - <bondArray><stringArray builtin="atomRef"/></atomArray>
      * - no coords
      */
-    @Test public void testNucleustest() throws Exception {
+    @Test
+    public void testNucleustest() throws Exception {
         String filename = "data/cml/nucleustest.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content

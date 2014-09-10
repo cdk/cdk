@@ -39,151 +39,81 @@ import java.util.Map;
  * @cdk.githash
  */
 public enum Elements {
-          Unknown(  0, "",    0,  0, null, 0.00, null),
-         Hydrogen(  1, "H",   1,  1, 0.37, 1.20, 2.20),
-           Helium(  2, "He",  1, 18, 0.32, 1.40, null),
-          Lithium(  3, "Li",  2,  1, 1.34, 2.20, 0.98),
-        Beryllium(  4, "Be",  2,  2, 0.90, 1.90, 1.57),
-            Boron(  5, "B",   2, 13, 0.82, 1.80, 2.04),
-           Carbon(  6, "C",   2, 14, 0.77, 1.70, 2.55),
-         Nitrogen(  7, "N",   2, 15, 0.75, 1.60, 3.04),
-           Oxygen(  8, "O",   2, 16, 0.73, 1.55, 3.44),
-         Fluorine(  9, "F",   2, 17, 0.71, 1.50, 3.98),
-             Neon( 10, "Ne",  2, 18, 0.69, 1.54, null),
-           Sodium( 11, "Na",  3,  1, 1.54, 2.40, 0.93),
-        Magnesium( 12, "Mg",  3,  2, 1.30, 2.20, 1.31),
-        Aluminium( 13, "Al",  3, 13, 1.18, 2.10, 1.61),
-          Silicon( 14, "Si",  3, 14, 1.11, 2.10, 1.90),
-       Phosphorus( 15, "P",   3, 15, 1.06, 1.95, 2.19),
-           Sulfur( 16, "S",   3, 16, 1.02, 1.80, 2.58),
-         Chlorine( 17, "Cl",  3, 17, 0.99, 1.80, 3.16),
-            Argon( 18, "Ar",  3, 18, 0.97, 1.88, null),
-        Potassium( 19, "K",   4,  1, 1.96, 2.80, 0.82),
-          Calcium( 20, "Ca",  4,  2, 1.74, 2.40, 1.00),
-         Scandium( 21, "Sc",  4,  3, 1.44, 2.30, 1.36),
-         Titanium( 22, "Ti",  4,  4, 1.36, 2.15, 1.54),
-         Vanadium( 23, "V",   4,  5, 1.25, 2.05, 1.63),
-         Chromium( 24, "Cr",  4,  6, 1.27, 2.05, 1.66),
-        Manganese( 25, "Mn",  4,  7, 1.39, 2.05, 1.55),
-             Iron( 26, "Fe",  4,  8, 1.25, 2.05, 1.83),
-           Cobalt( 27, "Co",  4,  9, 1.26, null, 1.88),
-           Nickel( 28, "Ni",  4, 10, 1.21, null, 1.91),
-           Copper( 29, "Cu",  4, 11, 1.38, null, 1.90),
-             Zinc( 30, "Zn",  4, 12, 1.31, 2.10, 1.65),
-          Gallium( 31, "Ga",  4, 13, 1.26, 2.10, 1.81),
-        Germanium( 32, "Ge",  4, 14, 1.22, 2.10, 2.01),
-          Arsenic( 33, "As",  4, 15, 1.19, 2.05, 2.18),
-         Selenium( 34, "Se",  4, 16, 1.16, 1.90, 2.55),
-          Bromine( 35, "Br",  4, 17, 1.14, 1.90, 2.96),
-          Krypton( 36, "Kr",  4, 18, 1.10, 2.02, 3.00),
-         Rubidium( 37, "Rb",  5,  1, 2.11, 2.90, 0.82),
-        Strontium( 38, "Sr",  5,  2, 1.92, 2.55, 0.95),
-          Yttrium( 39, "Y",   5,  3, 1.62, 2.40, 1.22),
-        Zirconium( 40, "Zr",  5,  4, 1.48, 2.30, 1.33),
-          Niobium( 41, "Nb",  5,  5, 1.37, 2.15, 1.60),
-       Molybdenum( 42, "Mo",  5,  6, 1.45, 2.10, 2.16),
-       Technetium( 43, "Tc",  5,  7, 1.56, 2.05, 1.90),
-        Ruthenium( 44, "Ru",  5,  8, 1.26, 2.05, 2.20),
-          Rhodium( 45, "Rh",  5,  9, 1.35, null, 2.28),
-        Palladium( 46, "Pd",  5, 10, 1.31, 2.05, 2.20),
-           Silver( 47, "Ag",  5, 11, 1.53, 2.10, 1.93),
-          Cadmium( 48, "Cd",  5, 12, 1.48, 2.20, 1.69),
-           Indium( 49, "In",  5, 13, 1.44, 2.20, 1.78),
-              Tin( 50, "Sn",  5, 14, 1.41, 2.25, 1.96),
-         Antimony( 51, "Sb",  5, 15, 1.38, 2.20, 2.05),
-        Tellurium( 52, "Te",  5, 16, 1.35, 2.10, 2.10),
-           Iodine( 53, "I",   5, 17, 1.33, 2.10, 2.66),
-            Xenon( 54, "Xe",  5, 18, 1.30, 2.16, 2.60),
-          Caesium( 55, "Cs",  6,  1, 2.25, 3.00, 0.79),
-           Barium( 56, "Ba",  6,  2, 1.98, 2.70, 0.89),
-        Lanthanum( 57, "La",  6,  3, 1.69, 2.50, 1.10),
-           Cerium( 58, "Ce",  6,  0, null, 2.48, 1.12),
-     Praseodymium( 59, "Pr",  6,  0, null, 2.47, 1.13),
-        Neodymium( 60, "Nd",  6,  0, null, 2.45, 1.14),
-       Promethium( 61, "Pm",  6,  0, null, 2.43, null),
-         Samarium( 62, "Sm",  6,  0, null, 2.42, 1.17),
-         Europium( 63, "Eu",  6,  0, 2.40, 2.40, null),
-       Gadolinium( 64, "Gd",  6,  0, null, 2.38, 1.20),
-          Terbium( 65, "Tb",  6,  0, null, 2.37, null),
-       Dysprosium( 66, "Dy",  6,  0, null, 2.35, 1.22),
-          Holmium( 67, "Ho",  6,  0, null, 2.33, 1.23),
-           Erbium( 68, "Er",  6,  0, null, 2.32, 1.24),
-          Thulium( 69, "Tm",  6,  0, null, 2.30, 1.25),
-        Ytterbium( 70, "Yb",  6,  0, null, 2.28, null),
-         Lutetium( 71, "Lu",  6,  0, 1.60, 2.27, 1.27),
-          Hafnium( 72, "Hf",  6,  4, 1.50, 2.25, 1.30),
-         Tantalum( 73, "Ta",  6,  5, 1.38, 2.20, 1.50),
-         Tungsten( 74, "W",   6,  6, 1.46, 2.10, 2.36),
-          Rhenium( 75, "Re",  6,  7, 1.59, 2.05, 1.90),
-           Osmium( 76, "Os",  6,  8, 1.28, null, 2.20),
-          Iridium( 77, "Ir",  6,  9, 1.37, null, 2.20),
-         Platinum( 78, "Pt",  6, 10, 1.28, 2.05, 2.28),
-             Gold( 79, "Au",  6, 11, 1.44, 2.10, 2.54),
-          Mercury( 80, "Hg",  6, 12, 1.49, 2.05, 2.00),
-         Thallium( 81, "Tl",  6, 13, 1.48, 2.20, 1.62),
-             Lead( 82, "Pb",  6, 14, 1.47, 2.30, 2.33),
-          Bismuth( 83, "Bi",  6, 15, 1.46, 2.30, 2.02),
-         Polonium( 84, "Po",  6, 16, 1.46, null, 2.00),
-         Astatine( 85, "At",  6, 17, null, null, 2.20),
-            Radon( 86, "Rn",  6, 18, 1.45, null, null),
-         Francium( 87, "Fr",  7,  1, null, null, 0.70),
-           Radium( 88, "Ra",  7,  2, null, null, 0.90),
-         Actinium( 89, "Ac",  7,  3, null, null, 1.10),
-          Thorium( 90, "Th",  7,  0, null, 2.40, 1.30),
-     Protactinium( 91, "Pa",  7,  0, null, null, 1.50),
-          Uranium( 92, "U",   7,  0, null, 2.30, 1.38),
-        Neptunium( 93, "Np",  7,  0, null, null, 1.36),
-        Plutonium( 94, "Pu",  7,  0, null, null, 1.28),
-        Americium( 95, "Am",  7,  0, null, null, 1.30),
-           Curium( 96, "Cm",  7,  0, null, null, 1.30),
-        Berkelium( 97, "Bk",  7,  0, null, null, 1.30),
-      Californium( 98, "Cf",  7,  0, null, null, 1.30),
-      Einsteinium( 99, "Es",  7,  0, null, null, 1.30),
-          Fermium(100, "Fm",  7,  0, null, null, 1.30),
-      Mendelevium(101, "Md",  7,  0, null, null, 1.30),
-         Nobelium(102, "No",  7,  0, null, null, 1.30),
-       Lawrencium(103, "Lr",  7,  0, null, null, null),
-    Rutherfordium(104, "Rf",  7,  4, null, null, null),
-          Dubnium(105, "Db",  7,  5, null, null, null),
-       Seaborgium(106, "Sg",  7,  6, null, null, null),
-          Bohrium(107, "Bh",  7,  7, null, null, null),
-          Hassium(108, "Hs",  7,  8, null, null, null),
-       Meitnerium(109, "Mt",  7,  9, null, null, null),
-     Darmstadtium(110, "Ds",  7, 10, null, null, null),
-      Roentgenium(111, "Rg",  7, 11, null, null, null),
-      Copernicium(112, "Cn",  7, 12, null, null, null),
-        Ununtrium(113, "Uut", 0,  0, null, null, null),
-        Flerovium(114, "Fl",  0,  0, null, null, null),
-      Ununpentium(115, "Uup", 0,  0, null, null, null),
-      Livermorium(116, "Lv",  0,  0, null, null, null),
-      Ununseptium(117, "Uus", 0,  0, null, null, null),
-       Ununoctium(118, "Uuo", 0,  0, null, null, null);
+    Unknown(0, "", 0, 0, null, 0.00, null), Hydrogen(1, "H", 1, 1, 0.37, 1.20, 2.20), Helium(2, "He", 1, 18, 0.32,
+            1.40, null), Lithium(3, "Li", 2, 1, 1.34, 2.20, 0.98), Beryllium(4, "Be", 2, 2, 0.90, 1.90, 1.57), Boron(5,
+            "B", 2, 13, 0.82, 1.80, 2.04), Carbon(6, "C", 2, 14, 0.77, 1.70, 2.55), Nitrogen(7, "N", 2, 15, 0.75, 1.60,
+            3.04), Oxygen(8, "O", 2, 16, 0.73, 1.55, 3.44), Fluorine(9, "F", 2, 17, 0.71, 1.50, 3.98), Neon(10, "Ne",
+            2, 18, 0.69, 1.54, null), Sodium(11, "Na", 3, 1, 1.54, 2.40, 0.93), Magnesium(12, "Mg", 3, 2, 1.30, 2.20,
+            1.31), Aluminium(13, "Al", 3, 13, 1.18, 2.10, 1.61), Silicon(14, "Si", 3, 14, 1.11, 2.10, 1.90), Phosphorus(
+            15, "P", 3, 15, 1.06, 1.95, 2.19), Sulfur(16, "S", 3, 16, 1.02, 1.80, 2.58), Chlorine(17, "Cl", 3, 17,
+            0.99, 1.80, 3.16), Argon(18, "Ar", 3, 18, 0.97, 1.88, null), Potassium(19, "K", 4, 1, 1.96, 2.80, 0.82), Calcium(
+            20, "Ca", 4, 2, 1.74, 2.40, 1.00), Scandium(21, "Sc", 4, 3, 1.44, 2.30, 1.36), Titanium(22, "Ti", 4, 4,
+            1.36, 2.15, 1.54), Vanadium(23, "V", 4, 5, 1.25, 2.05, 1.63), Chromium(24, "Cr", 4, 6, 1.27, 2.05, 1.66), Manganese(
+            25, "Mn", 4, 7, 1.39, 2.05, 1.55), Iron(26, "Fe", 4, 8, 1.25, 2.05, 1.83), Cobalt(27, "Co", 4, 9, 1.26,
+            null, 1.88), Nickel(28, "Ni", 4, 10, 1.21, null, 1.91), Copper(29, "Cu", 4, 11, 1.38, null, 1.90), Zinc(30,
+            "Zn", 4, 12, 1.31, 2.10, 1.65), Gallium(31, "Ga", 4, 13, 1.26, 2.10, 1.81), Germanium(32, "Ge", 4, 14,
+            1.22, 2.10, 2.01), Arsenic(33, "As", 4, 15, 1.19, 2.05, 2.18), Selenium(34, "Se", 4, 16, 1.16, 1.90, 2.55), Bromine(
+            35, "Br", 4, 17, 1.14, 1.90, 2.96), Krypton(36, "Kr", 4, 18, 1.10, 2.02, 3.00), Rubidium(37, "Rb", 5, 1,
+            2.11, 2.90, 0.82), Strontium(38, "Sr", 5, 2, 1.92, 2.55, 0.95), Yttrium(39, "Y", 5, 3, 1.62, 2.40, 1.22), Zirconium(
+            40, "Zr", 5, 4, 1.48, 2.30, 1.33), Niobium(41, "Nb", 5, 5, 1.37, 2.15, 1.60), Molybdenum(42, "Mo", 5, 6,
+            1.45, 2.10, 2.16), Technetium(43, "Tc", 5, 7, 1.56, 2.05, 1.90), Ruthenium(44, "Ru", 5, 8, 1.26, 2.05, 2.20), Rhodium(
+            45, "Rh", 5, 9, 1.35, null, 2.28), Palladium(46, "Pd", 5, 10, 1.31, 2.05, 2.20), Silver(47, "Ag", 5, 11,
+            1.53, 2.10, 1.93), Cadmium(48, "Cd", 5, 12, 1.48, 2.20, 1.69), Indium(49, "In", 5, 13, 1.44, 2.20, 1.78), Tin(
+            50, "Sn", 5, 14, 1.41, 2.25, 1.96), Antimony(51, "Sb", 5, 15, 1.38, 2.20, 2.05), Tellurium(52, "Te", 5, 16,
+            1.35, 2.10, 2.10), Iodine(53, "I", 5, 17, 1.33, 2.10, 2.66), Xenon(54, "Xe", 5, 18, 1.30, 2.16, 2.60), Caesium(
+            55, "Cs", 6, 1, 2.25, 3.00, 0.79), Barium(56, "Ba", 6, 2, 1.98, 2.70, 0.89), Lanthanum(57, "La", 6, 3,
+            1.69, 2.50, 1.10), Cerium(58, "Ce", 6, 0, null, 2.48, 1.12), Praseodymium(59, "Pr", 6, 0, null, 2.47, 1.13), Neodymium(
+            60, "Nd", 6, 0, null, 2.45, 1.14), Promethium(61, "Pm", 6, 0, null, 2.43, null), Samarium(62, "Sm", 6, 0,
+            null, 2.42, 1.17), Europium(63, "Eu", 6, 0, 2.40, 2.40, null), Gadolinium(64, "Gd", 6, 0, null, 2.38, 1.20), Terbium(
+            65, "Tb", 6, 0, null, 2.37, null), Dysprosium(66, "Dy", 6, 0, null, 2.35, 1.22), Holmium(67, "Ho", 6, 0,
+            null, 2.33, 1.23), Erbium(68, "Er", 6, 0, null, 2.32, 1.24), Thulium(69, "Tm", 6, 0, null, 2.30, 1.25), Ytterbium(
+            70, "Yb", 6, 0, null, 2.28, null), Lutetium(71, "Lu", 6, 0, 1.60, 2.27, 1.27), Hafnium(72, "Hf", 6, 4,
+            1.50, 2.25, 1.30), Tantalum(73, "Ta", 6, 5, 1.38, 2.20, 1.50), Tungsten(74, "W", 6, 6, 1.46, 2.10, 2.36), Rhenium(
+            75, "Re", 6, 7, 1.59, 2.05, 1.90), Osmium(76, "Os", 6, 8, 1.28, null, 2.20), Iridium(77, "Ir", 6, 9, 1.37,
+            null, 2.20), Platinum(78, "Pt", 6, 10, 1.28, 2.05, 2.28), Gold(79, "Au", 6, 11, 1.44, 2.10, 2.54), Mercury(
+            80, "Hg", 6, 12, 1.49, 2.05, 2.00), Thallium(81, "Tl", 6, 13, 1.48, 2.20, 1.62), Lead(82, "Pb", 6, 14,
+            1.47, 2.30, 2.33), Bismuth(83, "Bi", 6, 15, 1.46, 2.30, 2.02), Polonium(84, "Po", 6, 16, 1.46, null, 2.00), Astatine(
+            85, "At", 6, 17, null, null, 2.20), Radon(86, "Rn", 6, 18, 1.45, null, null), Francium(87, "Fr", 7, 1,
+            null, null, 0.70), Radium(88, "Ra", 7, 2, null, null, 0.90), Actinium(89, "Ac", 7, 3, null, null, 1.10), Thorium(
+            90, "Th", 7, 0, null, 2.40, 1.30), Protactinium(91, "Pa", 7, 0, null, null, 1.50), Uranium(92, "U", 7, 0,
+            null, 2.30, 1.38), Neptunium(93, "Np", 7, 0, null, null, 1.36), Plutonium(94, "Pu", 7, 0, null, null, 1.28), Americium(
+            95, "Am", 7, 0, null, null, 1.30), Curium(96, "Cm", 7, 0, null, null, 1.30), Berkelium(97, "Bk", 7, 0,
+            null, null, 1.30), Californium(98, "Cf", 7, 0, null, null, 1.30), Einsteinium(99, "Es", 7, 0, null, null,
+            1.30), Fermium(100, "Fm", 7, 0, null, null, 1.30), Mendelevium(101, "Md", 7, 0, null, null, 1.30), Nobelium(
+            102, "No", 7, 0, null, null, 1.30), Lawrencium(103, "Lr", 7, 0, null, null, null), Rutherfordium(104, "Rf",
+            7, 4, null, null, null), Dubnium(105, "Db", 7, 5, null, null, null), Seaborgium(106, "Sg", 7, 6, null,
+            null, null), Bohrium(107, "Bh", 7, 7, null, null, null), Hassium(108, "Hs", 7, 8, null, null, null), Meitnerium(
+            109, "Mt", 7, 9, null, null, null), Darmstadtium(110, "Ds", 7, 10, null, null, null), Roentgenium(111,
+            "Rg", 7, 11, null, null, null), Copernicium(112, "Cn", 7, 12, null, null, null), Ununtrium(113, "Uut", 0,
+            0, null, null, null), Flerovium(114, "Fl", 0, 0, null, null, null), Ununpentium(115, "Uup", 0, 0, null,
+            null, null), Livermorium(116, "Lv", 0, 0, null, null, null), Ununseptium(117, "Uus", 0, 0, null, null, null), Ununoctium(
+            118, "Uuo", 0, 0, null, null, null);
 
     /**
      * Atomic number, periodic table period and group.
      */
-    private final int number, period, group;
+    private final int                  number, period, group;
 
     /**
      * The symbol of the element.
      */
-    private final String symbol;
+    private final String               symbol;
 
     /**
      * Covalent radius (<i>r<sub>cov</sub></i>), van der Waals radius
      * (<i>r<sub>w</sub></i>) and Pauling electronegativity.
      */
-    private final Double rCov, rW, electronegativity;
+    private final Double               rCov, rW, electronegativity;
 
     /**
      * An {@link IElement} instance of this element.
      */
-    private final IElement instance;
+    private final IElement             instance;
 
     /**
      * Lookup elements by atomic number.
      */
-    static final Elements[] numberMap = new Elements[119];
+    static final Elements[]            numberMap = new Elements[119];
 
     /**
      * Lookup elements by symbol / name.
@@ -194,10 +124,8 @@ public enum Elements {
         // index elements
         for (final Elements e : values()) {
             numberMap[e.number] = e;
-            symbolMap.put(e.symbol.toLowerCase(Locale.ENGLISH),
-                          e);
-            symbolMap.put(e.name().toLowerCase(Locale.ENGLISH),
-                          e);
+            symbolMap.put(e.symbol.toLowerCase(Locale.ENGLISH), e);
+            symbolMap.put(e.name().toLowerCase(Locale.ENGLISH), e);
         }
 
         // recently named elements
@@ -228,13 +156,7 @@ public enum Elements {
      * @param rW                van der Waals radius
      * @param electronegativity pauling electronegativity
      */
-    private Elements(int    number,
-                     String symbol,
-                     int    period,
-                     int    group,
-                     Double rCov,
-                     Double rW,
-                     Double electronegativity) {
+    private Elements(int number, String symbol, int period, int group, Double rCov, Double rW, Double electronegativity) {
         this.number = number;
         this.period = period;
         this.group = group;
@@ -347,8 +269,7 @@ public enum Elements {
      * @return an element, or {@link #Unknown}
      */
     public static Elements ofNumber(final int number) {
-        if (number < 0 || number > 118)
-            return Unknown;
+        if (number < 0 || number > 118) return Unknown;
         return numberMap[number];
     }
 
@@ -369,11 +290,9 @@ public enum Elements {
      * @return an element, or {@link #Unknown}
      */
     public static Elements ofString(final String str) {
-        if (str == null)
-            return Unknown;
+        if (str == null) return Unknown;
         Elements e = symbolMap.get(str.toLowerCase(Locale.ENGLISH));
-        if (e == null)
-            return Unknown;
+        if (e == null) return Unknown;
         return e;
     }
 

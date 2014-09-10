@@ -67,22 +67,22 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandlerTest")
 public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private static Map<IAtom, IAtom> atomsMCS = null;
-    private static List<Map<IAtom, IAtom>> allAtomMCSCopy = null;
-    private static Map<Integer, Integer> firstMCS = null;
-    private static List<Map<Integer, Integer>> allMCS = null;
-    private static List<Map<Integer, Integer>> allMCSCopy = null;
-    private List<Map<INode, IAtom>> vfLibSolutions = null;
-    private IQueryAtomContainer queryMol = null;
-    private IAtomContainer mol1 = null;
-    private IAtomContainer mol2 = null;
-    private int vfMCSSize = -1;
-    private boolean bond_Match_Flag = false;
-    private int countR = 0;
-    private int countP = 0;
-    private final static ILoggingTool Logger =
-            LoggingToolFactory.createLoggingTool(VFlibMCSHandler.class);
+    private static List<Map<IAtom, IAtom>>     allAtomMCS      = null;
+    private static Map<IAtom, IAtom>           atomsMCS        = null;
+    private static List<Map<IAtom, IAtom>>     allAtomMCSCopy  = null;
+    private static Map<Integer, Integer>       firstMCS        = null;
+    private static List<Map<Integer, Integer>> allMCS          = null;
+    private static List<Map<Integer, Integer>> allMCSCopy      = null;
+    private List<Map<INode, IAtom>>            vfLibSolutions  = null;
+    private IQueryAtomContainer                queryMol        = null;
+    private IAtomContainer                     mol1            = null;
+    private IAtomContainer                     mol2            = null;
+    private int                                vfMCSSize       = -1;
+    private boolean                            bond_Match_Flag = false;
+    private int                                countR          = 0;
+    private int                                countP          = 0;
+    private final static ILoggingTool          Logger          = LoggingToolFactory
+                                                                       .createLoggingTool(VFlibMCSHandler.class);
 
     /**
      * Constructor for an extended VF Algorithm for the MCS search
@@ -213,13 +213,15 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     }
 
     private void searchVFMCSMappings() {
-//        System.out.println("searchVFMCSMappings ");
+        //        System.out.println("searchVFMCSMappings ");
         IQuery query = null;
         IMapper mapper = null;
 
         if (queryMol == null) {
-            countR = getReactantMol().getAtomCount() + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
-            countP = getProductMol().getAtomCount() + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
+            countR = getReactantMol().getAtomCount()
+                    + AtomContainerManipulator.getSingleBondEquivalentSum(getReactantMol());
+            countP = getProductMol().getAtomCount()
+                    + AtomContainerManipulator.getSingleBondEquivalentSum(getProductMol());
         }
         vfLibSolutions = new ArrayList<Map<INode, IAtom>>();
         if (queryMol != null) {
@@ -248,10 +250,10 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             setVFMappings(false, query);
         }
         setVFMappings(false, query);
-//        System.out.println("Sol count " + vfLibSolutions.size());
-//        System.out.println("Sol size " + vfLibSolutions.iterator().next().size());
-//        System.out.println("MCSSize " + vfMCSSize);
-//        System.out.println("After Sol count " + allMCSCopy.size());
+        //        System.out.println("Sol count " + vfLibSolutions.size());
+        //        System.out.println("Sol size " + vfLibSolutions.iterator().next().size());
+        //        System.out.println("MCSSize " + vfMCSSize);
+        //        System.out.println("After Sol count " + allMCSCopy.size());
 
     }
 
@@ -279,11 +281,11 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
             mappings = mgit.getMappings();
             mgit = null;
         }
-//        System.out.println("\nSol count after MG" + mappings.size());
+        //        System.out.println("\nSol count after MG" + mappings.size());
         setMcGregorMappings(ROPFlag, mappings);
         vfMCSSize = vfMCSSize / 2;
-//        System.out.println("After set Sol count MG" + allMCS.size());
-//        System.out.println("MCSSize " + vfMCSSize + "\n");
+        //        System.out.println("After set Sol count MG" + allMCS.size());
+        //        System.out.println("MCSSize " + vfMCSSize + "\n");
     }
 
     private void setVFMappings(boolean RONP, IQuery query) {
@@ -364,7 +366,6 @@ public class VFlibMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
                     qIndex = mapping.get(index + 1);
                     tIndex = mapping.get(index);
                 }
-
 
                 if (qIndex != null && tIndex != null) {
                     atomatomMapping.put(qAtom, tAtom);

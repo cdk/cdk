@@ -37,106 +37,134 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class BioPolymerTest extends AbstractBioPolymerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new BioPolymer();
             }
         });
     }
 
-	@Test public void testBioPolymer() {
-		IBioPolymer oBioPolymer = new BioPolymer();
-		Assert.assertNotNull(oBioPolymer);
-		Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
+    @Test
+    public void testBioPolymer() {
+        IBioPolymer oBioPolymer = new BioPolymer();
+        Assert.assertNotNull(oBioPolymer);
+        Assert.assertEquals(oBioPolymer.getMonomerCount(), 0);
 
-		IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
-		oStrand1.setStrandName("A");
-		IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
-		oStrand2.setStrandName("B");
-		IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
-		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C1");
-		IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C3");
-		IAtom oAtom4 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C4");
-		IAtom oAtom5 = oBioPolymer.getBuilder().newInstance(IAtom.class,"C5");
+        IStrand oStrand1 = oBioPolymer.getBuilder().newInstance(IStrand.class);
+        oStrand1.setStrandName("A");
+        IStrand oStrand2 = oBioPolymer.getBuilder().newInstance(IStrand.class);
+        oStrand2.setStrandName("B");
+        IMonomer oMono1 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IMonomer oMono3 = oBioPolymer.getBuilder().newInstance(IMonomer.class);
+        oMono3.setMonomerName(new String("GLYA16"));
+        IAtom oAtom1 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C1");
+        IAtom oAtom2 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom4 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C4");
+        IAtom oAtom5 = oBioPolymer.getBuilder().newInstance(IAtom.class, "C5");
 
-		oBioPolymer.addAtom(oAtom1);
-		oBioPolymer.addAtom(oAtom2, oStrand1);
-		oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
-		oBioPolymer.addAtom(oAtom4, oMono2, oStrand2);
-		oBioPolymer.addAtom(oAtom5, oMono3, oStrand2);
-		Assert.assertNotNull(oBioPolymer.getAtom(0));
-		Assert.assertNotNull(oBioPolymer.getAtom(1));
-		Assert.assertNotNull(oBioPolymer.getAtom(2));
-		Assert.assertNotNull(oBioPolymer.getAtom(3));
-		Assert.assertNotNull(oBioPolymer.getAtom(4));
-		Assert.assertEquals(oAtom1, oBioPolymer.getAtom(0));
-		Assert.assertEquals(oAtom2, oBioPolymer.getAtom(1));
-		Assert.assertEquals(oAtom3, oBioPolymer.getAtom(2));
-		Assert.assertEquals(oAtom4, oBioPolymer.getAtom(3));
-		Assert.assertEquals(oAtom5, oBioPolymer.getAtom(4));
+        oBioPolymer.addAtom(oAtom1);
+        oBioPolymer.addAtom(oAtom2, oStrand1);
+        oBioPolymer.addAtom(oAtom3, oMono1, oStrand1);
+        oBioPolymer.addAtom(oAtom4, oMono2, oStrand2);
+        oBioPolymer.addAtom(oAtom5, oMono3, oStrand2);
+        Assert.assertNotNull(oBioPolymer.getAtom(0));
+        Assert.assertNotNull(oBioPolymer.getAtom(1));
+        Assert.assertNotNull(oBioPolymer.getAtom(2));
+        Assert.assertNotNull(oBioPolymer.getAtom(3));
+        Assert.assertNotNull(oBioPolymer.getAtom(4));
+        Assert.assertEquals(oAtom1, oBioPolymer.getAtom(0));
+        Assert.assertEquals(oAtom2, oBioPolymer.getAtom(1));
+        Assert.assertEquals(oAtom3, oBioPolymer.getAtom(2));
+        Assert.assertEquals(oAtom4, oBioPolymer.getAtom(3));
+        Assert.assertEquals(oAtom5, oBioPolymer.getAtom(4));
 
-		Assert.assertNull(oBioPolymer.getMonomer("0815", "A"));
-		Assert.assertNull(oBioPolymer.getMonomer("0815", "B"));
-		Assert.assertNull(oBioPolymer.getMonomer("0815", ""));
-		Assert.assertNull(oBioPolymer.getStrand(""));
-		Assert.assertNotNull(oBioPolymer.getMonomer("TRP279", "A"));
-		Assert.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
-		Assert.assertEquals(oBioPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
-		Assert.assertNotNull(oBioPolymer.getMonomer("HOH", "B"));
-		Assert.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
-		Assert.assertEquals(oBioPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
-		Assert.assertEquals(oBioPolymer.getStrand("B").getAtomCount(), 2);
-		Assert.assertEquals(oBioPolymer.getStrand("B").getMonomerCount(), 2);
-		Assert.assertNull(oBioPolymer.getStrand("C"));
-		Assert.assertNotNull(oBioPolymer.getStrand("B"));
-	}
+        Assert.assertNull(oBioPolymer.getMonomer("0815", "A"));
+        Assert.assertNull(oBioPolymer.getMonomer("0815", "B"));
+        Assert.assertNull(oBioPolymer.getMonomer("0815", ""));
+        Assert.assertNull(oBioPolymer.getStrand(""));
+        Assert.assertNotNull(oBioPolymer.getMonomer("TRP279", "A"));
+        Assert.assertEquals(oMono1, oBioPolymer.getMonomer("TRP279", "A"));
+        Assert.assertEquals(oBioPolymer.getMonomer("TRP279", "A").getAtomCount(), 1);
+        Assert.assertNotNull(oBioPolymer.getMonomer("HOH", "B"));
+        Assert.assertEquals(oMono2, oBioPolymer.getMonomer("HOH", "B"));
+        Assert.assertEquals(oBioPolymer.getMonomer("HOH", "B").getAtomCount(), 1);
+        Assert.assertEquals(oBioPolymer.getStrand("B").getAtomCount(), 2);
+        Assert.assertEquals(oBioPolymer.getStrand("B").getMonomerCount(), 2);
+        Assert.assertNull(oBioPolymer.getStrand("C"));
+        Assert.assertNotNull(oBioPolymer.getStrand("B"));
+    }
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    @Test public void testSetAtoms_removeListener() {
+
+    @Test
+    public void testSetAtoms_removeListener() {
         ChemObjectTestHelper.testSetAtoms_removeListener(newChemObject());
     }
 }

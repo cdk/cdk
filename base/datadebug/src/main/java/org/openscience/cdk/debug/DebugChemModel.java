@@ -40,192 +40,211 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.module datadebug
  * @cdk.githash
  */
-public class DebugChemModel extends ChemModel
-    implements IChemModel {
+public class DebugChemModel extends ChemModel implements IChemModel {
 
     private static final long serialVersionUID = -920209300005079592L;
 
-    ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DebugChemModel.class);
+    ILoggingTool              logger           = LoggingToolFactory.createLoggingTool(DebugChemModel.class);
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void addListener(IChemObjectListener col) {
-		logger.debug("Adding listener: ", col);
-		super.addListener(col);
-	}
+        logger.debug("Adding listener: ", col);
+        super.addListener(col);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public int getListenerCount() {
-		logger.debug("Getting listener count: ", super.getListenerCount());
-		return super.getListenerCount();
-	}
+        logger.debug("Getting listener count: ", super.getListenerCount());
+        return super.getListenerCount();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeListener(IChemObjectListener col) {
-		logger.debug("Removing listener: ", col);
-		super.removeListener(col);
-	}
+        logger.debug("Removing listener: ", col);
+        super.removeListener(col);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void notifyChanged() {
-		logger.debug("Notifying changed");
-		super.notifyChanged();
-	}
+        logger.debug("Notifying changed");
+        super.notifyChanged();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void notifyChanged(IChemObjectChangeEvent evt) {
-		logger.debug("Notifying changed event: ", evt);
-		super.notifyChanged(evt);
-	}
+        logger.debug("Notifying changed event: ", evt);
+        super.notifyChanged(evt);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setProperty(Object description, Object property) {
-		logger.debug("Setting property: ", description + "=" + property);
-		super.setProperty(description, property);
-	}
+        logger.debug("Setting property: ", description + "=" + property);
+        super.setProperty(description, property);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeProperty(Object description) {
-		logger.debug("Removing property: ", description);
-		super.removeProperty(description);
-	}
+        logger.debug("Removing property: ", description);
+        super.removeProperty(description);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public <T> T getProperty(Object description) {
-		logger.debug("Getting property: ", description + "=" + super.getProperty(description));
-		return super.getProperty(description);
-	}
+        logger.debug("Getting property: ", description + "=" + super.getProperty(description));
+        return super.getProperty(description);
+    }
 
-    /** {@inheritDoc} */ @Override
-    public Map<Object,Object> getProperties() {
-		logger.debug("Getting properties");
-		return super.getProperties();
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Map<Object, Object> getProperties() {
+        logger.debug("Getting properties");
+        return super.getProperties();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public String getID() {
-		logger.debug("Getting ID: ", super.getID());
-		return super.getID();
-	}
+        logger.debug("Getting ID: ", super.getID());
+        return super.getID();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setID(String identifier) {
-		logger.debug("Setting ID: ", identifier);
-		super.setID(identifier);
-	}
+        logger.debug("Setting ID: ", identifier);
+        super.setID(identifier);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setFlag(int flag_type, boolean flag_value) {
-		logger.debug("Setting flag: ", flag_type + "=" + flag_value);
-		super.setFlag(flag_type, flag_value);
-	}
+        logger.debug("Setting flag: ", flag_type + "=" + flag_value);
+        super.setFlag(flag_type, flag_value);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean getFlag(int flag_type) {
-		logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
-		return super.getFlag(flag_type);
-	}
+        logger.debug("Setting flag: ", flag_type + "=" + super.getFlag(flag_type));
+        return super.getFlag(flag_type);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void addProperties(Map<Object, Object> properties) {
-		logger.debug("Setting properties: ", properties);
-		super.addProperties(properties);
-	}
+        logger.debug("Setting properties: ", properties);
+        super.addProperties(properties);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setFlags(boolean[] flagsNew) {
-		logger.debug("Setting flags:", flagsNew.length);
-		super.setFlags(flagsNew);
-	}
+        logger.debug("Setting flags:", flagsNew.length);
+        super.setFlags(flagsNew);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean[] getFlags() {
-		logger.debug("Getting flags:", super.getFlags().length);
-		return super.getFlags();
-	}
+        logger.debug("Getting flags:", super.getFlags().length);
+        return super.getFlags();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public Object clone() throws CloneNotSupportedException {
         Object clone = null;
         try {
-        	clone = super.clone();
+            clone = super.clone();
         } catch (Exception exception) {
-        	logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
-        	logger.debug(exception);
+            logger.error("Could not clone DebugAtom: " + exception.getMessage(), exception);
+            logger.debug(exception);
         }
         return clone;
-	}
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IAtomContainerSet getMoleculeSet() {
-		logger.debug("Getting setOfMolecules: ", super.getMoleculeSet());
-		return super.getMoleculeSet();
-	}
+        logger.debug("Getting setOfMolecules: ", super.getMoleculeSet());
+        return super.getMoleculeSet();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setMoleculeSet(IAtomContainerSet setOfMolecules) {
-		logger.debug("Setting setOfMolecules: ", setOfMolecules);
-		super.setMoleculeSet(setOfMolecules);
-	}
+        logger.debug("Setting setOfMolecules: ", setOfMolecules);
+        super.setMoleculeSet(setOfMolecules);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IRingSet getRingSet() {
-		logger.debug("Getting ringSet: ", super.getRingSet());
-		return super.getRingSet();
-	}
+        logger.debug("Getting ringSet: ", super.getRingSet());
+        return super.getRingSet();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setRingSet(IRingSet ringSet) {
-		logger.debug("Setting ringSet: ", ringSet);
-		super.setRingSet(ringSet);
-	}
+        logger.debug("Setting ringSet: ", ringSet);
+        super.setRingSet(ringSet);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public ICrystal getCrystal() {
-		logger.debug("Getting crystal: ", super.getCrystal());
-		return super.getCrystal();
-	}
+        logger.debug("Getting crystal: ", super.getCrystal());
+        return super.getCrystal();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setCrystal(ICrystal crystal) {
-		logger.debug("Setting crystal: ", crystal);
-		super.setCrystal(crystal);
-	}
+        logger.debug("Setting crystal: ", crystal);
+        super.setCrystal(crystal);
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IReactionSet getReactionSet() {
-		logger.debug("Getting setOfReactions: ", super.getReactionSet());
-		return super.getReactionSet();
-	}
+        logger.debug("Getting setOfReactions: ", super.getReactionSet());
+        return super.getReactionSet();
+    }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void setReactionSet(IReactionSet sor) {
-		logger.debug("Setting setOfReactions: ", sor);
-		super.setReactionSet(sor);
-	}
+        logger.debug("Setting setOfReactions: ", sor);
+        super.setReactionSet(sor);
+    }
 
     /**
      * @inheritDoc
      */
     @TestMethod("testIsEmpty_MoleculeSet,testIsEmpty_RingSet,testIsEmpty_Crystal,testIsEmpty_ReactionSet")
     @Override
-    public boolean isEmpty()
-	{
-    	boolean res = true;
-    	if (setOfMolecules != null && !setOfMolecules.isEmpty())
-    		res = false;
-    	if (setOfReactions != null && !setOfReactions.isEmpty())
-    		res = false;
-    	if (ringSet != null && !ringSet.isEmpty())
-    		res = false;
-        if (crystal != null && !crystal.isEmpty())
-    		res = false;
+    public boolean isEmpty() {
+        boolean res = true;
+        if (setOfMolecules != null && !setOfMolecules.isEmpty()) res = false;
+        if (setOfReactions != null && !setOfReactions.isEmpty()) res = false;
+        if (ringSet != null && !ringSet.isEmpty()) res = false;
+        if (crystal != null && !crystal.isEmpty()) res = false;
         logger.debug("Checking if chemModel is empty: ", res);
-		return res;
-	}
+        return res;
+    }
 }

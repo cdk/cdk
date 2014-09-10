@@ -34,24 +34,25 @@ import javax.swing.undo.UndoableEdit;
  */
 public class UndoAdapter implements UndoableEditListener {
 
-	private UndoManager undoManager;
+    private UndoManager undoManager;
 
-	/**
-	 * @param undoManager
-	 *            The undoManager handling the undo/redo history list
-	 */
-	public UndoAdapter(UndoManager undoManager) {
-		this.undoManager = undoManager;
-	}
+    /**
+     * @param undoManager
+     *            The undoManager handling the undo/redo history list
+     */
+    public UndoAdapter(UndoManager undoManager) {
+        this.undoManager = undoManager;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see javax.swing.event.UndoableEditListener#undoableEditHappened(javax.swing.event.UndoableEditEvent)
-	 */
-	public void undoableEditHappened(UndoableEditEvent arg0) {
-		UndoableEdit edit = arg0.getEdit();
-		undoManager.addEdit(edit);
-	}
+    /*
+     * (non-Javadoc)
+     * @see
+     * javax.swing.event.UndoableEditListener#undoableEditHappened(javax.swing
+     * .event.UndoableEditEvent)
+     */
+    public void undoableEditHappened(UndoableEditEvent arg0) {
+        UndoableEdit edit = arg0.getEdit();
+        undoManager.addEdit(edit);
+    }
 
 }

@@ -71,40 +71,38 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set      qsar-descriptors
  * @cdk.dictref  qsar-descriptors:ionizationPotential
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IPAtomicHOSEDescriptorTest")
 public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
 
     private static final String[] descriptorNames = {"ipAtomicHOSE"};
 
-	/** Maximum spheres to use by the HoseCode model.*/
-	int maxSpheresToUse = 10;
+    /** Maximum spheres to use by the HoseCode model.*/
+    int                           maxSpheresToUse = 10;
 
-	private IPdb db = new IPdb();
+    private IPdb                  db              = new IPdb();
 
-	/**
-	 *  Constructor for the IPAtomicHOSEDescriptor object.
-	 */
-	public IPAtomicHOSEDescriptor() {
-	}
-	/**
-	 *  Gets the specification attribute of the IPAtomicHOSEDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod(value="testGetSpecification")
+    /**
+     *  Constructor for the IPAtomicHOSEDescriptor object.
+     */
+    public IPAtomicHOSEDescriptor() {}
+
+    /**
+     *  Gets the specification attribute of the IPAtomicHOSEDescriptor object
+     *
+     *@return    The specification value
+     */
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential",
-				this.getClass().getName(),
-				"The Chemistry Development Kit");
-	}
+        return new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
+                        .getClass().getName(), "The Chemistry Development Kit");
+    }
+
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      *  Gets the parameters attribute of the IPAtomicHOSEDescriptor object.
@@ -112,34 +110,33 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
 
-
     /**
-	 *  This method calculates the ionization potential of an atom.
-	 *
-	 *@param  atom          The IAtom to ionize.
-	 *@param  container         Parameter is the IAtomContainer.
-	 *@return                   The ionization potential. Not possible the ionization.
-	 */
-	@TestMethod(value="testCalculate_IAtomContainer")
+     *  This method calculates the ionization potential of an atom.
+     *
+     *@param  atom          The IAtom to ionize.
+     *@param  container         Parameter is the IAtomContainer.
+     *@return                   The ionization potential. Not possible the ionization.
+     */
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value;
-    	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-    	String originalAtomtypeName = atom.getAtomTypeName();
-    	Integer originalNeighborCount = atom.getFormalNeighbourCount();
-    	Integer originalValency = atom.getValency();
-    	Double originalBondOrderSum = atom.getBondOrderSum();
-    	Order originalMaxBondOrder = atom.getMaxBondOrder();
-    	IAtomType.Hybridization originalHybridization = atom.getHybridization();
+        // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+        String originalAtomtypeName = atom.getAtomTypeName();
+        Integer originalNeighborCount = atom.getFormalNeighbourCount();
+        Integer originalValency = atom.getValency();
+        Double originalBondOrderSum = atom.getBondOrderSum();
+        Order originalMaxBondOrder = atom.getMaxBondOrder();
+        IAtomType.Hybridization originalHybridization = atom.getHybridization();
 
         if (!isCachedAtomContainer(container)) {
             try {
@@ -147,47 +144,45 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
                 LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                 lpcheck.saturate(container);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                        new DoubleResult(Double.NaN), descriptorNames, e);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                        Double.NaN), descriptorNames, e);
             }
 
         }
-		value = db.extractIP(container, atom);
-    	// restore original props
-    	atom.setAtomTypeName(originalAtomtypeName);
-    	atom.setFormalNeighbourCount(originalNeighborCount);
-    	atom.setValency(originalValency);
-    	atom.setHybridization(originalHybridization);
-    	atom.setMaxBondOrder(originalMaxBondOrder);
-    	atom.setBondOrderSum(originalBondOrderSum);
+        value = db.extractIP(container, atom);
+        // restore original props
+        atom.setAtomTypeName(originalAtomtypeName);
+        atom.setFormalNeighbourCount(originalNeighborCount);
+        atom.setValency(originalValency);
+        atom.setHybridization(originalHybridization);
+        atom.setMaxBondOrder(originalMaxBondOrder);
+        atom.setBondOrderSum(originalBondOrderSum);
 
-		return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(value),descriptorNames);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(value),
+                descriptorNames);
 
-	}
-	/**
-	 * Looking if the Atom belongs to the halogen family.
-	 *
-	 * @param  atom  The IAtom
-	 * @return       True, if it belongs
-	 */
-	private boolean familyHalogen(IAtom atom) {
-		String symbol = atom.getSymbol();
-        return symbol.equals("F") ||
-                symbol.equals("Cl") ||
-                symbol.equals("Br") ||
-                symbol.equals("I");
-	}
-	 /**
-     * Gets the parameterNames attribute of the IPAtomicHOSEDescriptor object.
+    }
+
+    /**
+     * Looking if the Atom belongs to the halogen family.
      *
-     * @return    The parameterNames value
+     * @param  atom  The IAtom
+     * @return       True, if it belongs
      */
-    @TestMethod(value="testGetParameterNames")
+    private boolean familyHalogen(IAtom atom) {
+        String symbol = atom.getSymbol();
+        return symbol.equals("F") || symbol.equals("Cl") || symbol.equals("Br") || symbol.equals("I");
+    }
+
+    /**
+    * Gets the parameterNames attribute of the IPAtomicHOSEDescriptor object.
+    *
+    * @return    The parameterNames value
+    */
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      * Gets the parameterType attribute of the IPAtomicHOSEDescriptor object.
@@ -195,7 +190,7 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      * @param  name  Description of the Parameter
      * @return       An Object of class equal to that of the parameter being requested
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
@@ -207,177 +202,170 @@ public class IPAtomicHOSEDescriptor extends AbstractAtomicDescriptor {
      * @author Miguel Rojas
      *
      */
-	private class IPdb {
+    private class IPdb {
 
-		HashMap<String, HashMap<String,Double>> listGroup = new HashMap<String, HashMap<String,Double>>();
-		HashMap<String, HashMap<String,Double>> listGroupS = new HashMap<String, HashMap<String,Double>>();
-		/**
-		 * The constructor of the IPdb.
-		 *
-		 */
-		public IPdb(){
+        HashMap<String, HashMap<String, Double>> listGroup  = new HashMap<String, HashMap<String, Double>>();
+        HashMap<String, HashMap<String, Double>> listGroupS = new HashMap<String, HashMap<String, Double>>();
 
-		}
+        /**
+         * The constructor of the IPdb.
+         *
+         */
+        public IPdb() {
 
-		/**
-		 * extract from the db the ionization energy.
-		 *
-		 * @param container  The IAtomContainer
-		 * @param atom       The IAtom
-		 * @return           The energy value
-		 */
-		public double extractIP(IAtomContainer container, IAtom atom) {
-			// loading the files if they are not done
-			String name = "";
-			String nameS = "";
-			HashMap<String,Double> hoseVSenergy = new HashMap<String,Double>();
-			HashMap<String,Double> hoseVSenergyS = new HashMap<String,Double>();
-			if(familyHalogen(atom)){
-				name = "X_IP_HOSE.db";
-				nameS = "X_IP_HOSE_S.db";
-				if(listGroup.containsKey(name)){
-					hoseVSenergy = listGroup.get(name);
-					hoseVSenergyS = listGroupS.get(nameS);
-				}else{
-					String path = "org/openscience/cdk/qsar/descriptors/atomic/data/"+name;
-					String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/"+nameS;
-					InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
-					BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
-					hoseVSenergy = extractAttributes(insr);
+        }
 
-					ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
-					insr = new BufferedReader(new InputStreamReader(ins));
-					hoseVSenergyS = extractAttributes(insr);
-				}
-			} else return 0;
+        /**
+         * extract from the db the ionization energy.
+         *
+         * @param container  The IAtomContainer
+         * @param atom       The IAtom
+         * @return           The energy value
+         */
+        public double extractIP(IAtomContainer container, IAtom atom) {
+            // loading the files if they are not done
+            String name = "";
+            String nameS = "";
+            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
+            HashMap<String, Double> hoseVSenergyS = new HashMap<String, Double>();
+            if (familyHalogen(atom)) {
+                name = "X_IP_HOSE.db";
+                nameS = "X_IP_HOSE_S.db";
+                if (listGroup.containsKey(name)) {
+                    hoseVSenergy = listGroup.get(name);
+                    hoseVSenergyS = listGroupS.get(nameS);
+                } else {
+                    String path = "org/openscience/cdk/qsar/descriptors/atomic/data/" + name;
+                    String pathS = "org/openscience/cdk/qsar/descriptors/atomic/data/" + nameS;
+                    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(path);
+                    BufferedReader insr = new BufferedReader(new InputStreamReader(ins));
+                    hoseVSenergy = extractAttributes(insr);
 
-			try {
-				HOSECodeGenerator hcg = new HOSECodeGenerator();
-				//Check starting from the exact sphere hose code and maximal a value of 10
-				int exactSphere = 0;
-				String hoseCode = "";
-				for(int spheres = maxSpheresToUse; spheres > 0; spheres--){
-					 hcg.getSpheres(container, atom, spheres, true);
-					 List<IAtom> atoms = hcg.getNodesInSphere(spheres);
-					 if(atoms.size() != 0){
-						 exactSphere = spheres;
-						 hoseCode = hcg.getHOSECode(container, atom, spheres,true);
-						 if(hoseVSenergy.containsKey(hoseCode)){
-							  return hoseVSenergy.get(hoseCode);
-						  }
-						 if(hoseVSenergyS.containsKey(hoseCode)){
-							  return hoseVSenergyS.get(hoseCode);
-						  }
-						 break;
-					 }
-				}
-				//Check starting from the rings bigger and smaller
-				//TODO:IP: Better application
-				for(int i = 0; i < 3; i++) { // two rings
-					for(int plusMinus = 0; plusMinus < 2; plusMinus++){ // plus==bigger, minus==smaller
-						int sign = -1;
-						if(plusMinus== 1)
-							sign = 1;
+                    ins = this.getClass().getClassLoader().getResourceAsStream(pathS);
+                    insr = new BufferedReader(new InputStreamReader(ins));
+                    hoseVSenergyS = extractAttributes(insr);
+                }
+            } else
+                return 0;
 
-						StringTokenizer st = new StringTokenizer(hoseCode, "()/");
-						StringBuffer hoseCodeBuffer = new StringBuffer();
-						  int sum = exactSphere+sign*(i+1);
-						  for (int k = 0; k < sum; k++) {
-						    if (st.hasMoreTokens()) {
-						      String partcode = st.nextToken();
-						      hoseCodeBuffer.append(partcode);
-						    }
-						    if (k == 0) {
-						      hoseCodeBuffer.append('(');
-						    } else if (k == 3) {
-						      hoseCodeBuffer.append(')');
-						    } else {
-						      hoseCodeBuffer.append('/');
-						    }
-						  }
-						  String hoseCodeBU = hoseCodeBuffer.toString();
+            try {
+                HOSECodeGenerator hcg = new HOSECodeGenerator();
+                //Check starting from the exact sphere hose code and maximal a value of 10
+                int exactSphere = 0;
+                String hoseCode = "";
+                for (int spheres = maxSpheresToUse; spheres > 0; spheres--) {
+                    hcg.getSpheres(container, atom, spheres, true);
+                    List<IAtom> atoms = hcg.getNodesInSphere(spheres);
+                    if (atoms.size() != 0) {
+                        exactSphere = spheres;
+                        hoseCode = hcg.getHOSECode(container, atom, spheres, true);
+                        if (hoseVSenergy.containsKey(hoseCode)) {
+                            return hoseVSenergy.get(hoseCode);
+                        }
+                        if (hoseVSenergyS.containsKey(hoseCode)) {
+                            return hoseVSenergyS.get(hoseCode);
+                        }
+                        break;
+                    }
+                }
+                //Check starting from the rings bigger and smaller
+                //TODO:IP: Better application
+                for (int i = 0; i < 3; i++) { // two rings
+                    for (int plusMinus = 0; plusMinus < 2; plusMinus++) { // plus==bigger, minus==smaller
+                        int sign = -1;
+                        if (plusMinus == 1) sign = 1;
 
-						  if(hoseVSenergyS.containsKey(hoseCodeBU)){
-							  return hoseVSenergyS.get(hoseCodeBU);
-						  }
-					}
-				}
-			} catch (CDKException e) {
-				e.printStackTrace();
-			}
-			return 0;
-		}
-		/**
-		 * Extract the Hose code and energy
-		 *
-		 * @param input  The BufferedReader
-		 * @return       HashMap with the Hose vs energy attributes
-		 */
-		private HashMap<String,Double> extractAttributes(BufferedReader input) {
-			HashMap<String,Double> hoseVSenergy = new HashMap<String,Double>();
-			String line;
+                        StringTokenizer st = new StringTokenizer(hoseCode, "()/");
+                        StringBuffer hoseCodeBuffer = new StringBuffer();
+                        int sum = exactSphere + sign * (i + 1);
+                        for (int k = 0; k < sum; k++) {
+                            if (st.hasMoreTokens()) {
+                                String partcode = st.nextToken();
+                                hoseCodeBuffer.append(partcode);
+                            }
+                            if (k == 0) {
+                                hoseCodeBuffer.append('(');
+                            } else if (k == 3) {
+                                hoseCodeBuffer.append(')');
+                            } else {
+                                hoseCodeBuffer.append('/');
+                            }
+                        }
+                        String hoseCodeBU = hoseCodeBuffer.toString();
 
-			try {
-				while ((line = input.readLine()) != null) {
-					if(line.startsWith("#"))
-						continue;
-					List<String> values = extractInfo(line);
-					if(values.get(1).equals(""))
-						continue;
-					hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return hoseVSenergy;
-		}
-	}
-	/**
-	 * Extract the information from a line which contains HOSE_ID & energy.
-	 *
-	 * @param str  String with the information
-	 * @return     List with String = HOSECode and String = energy
-	 */
-	private static List<String> extractInfo(String str){
+                        if (hoseVSenergyS.containsKey(hoseCodeBU)) {
+                            return hoseVSenergyS.get(hoseCodeBU);
+                        }
+                    }
+                }
+            } catch (CDKException e) {
+                e.printStackTrace();
+            }
+            return 0;
+        }
 
-		StringBuffer idEdited = new StringBuffer();
-		StringBuffer valEdited = new StringBuffer();
+        /**
+         * Extract the Hose code and energy
+         *
+         * @param input  The BufferedReader
+         * @return       HashMap with the Hose vs energy attributes
+         */
+        private HashMap<String, Double> extractAttributes(BufferedReader input) {
+            HashMap<String, Double> hoseVSenergy = new HashMap<String, Double>();
+            String line;
 
-		int strlen = str.length();
+            try {
+                while ((line = input.readLine()) != null) {
+                    if (line.startsWith("#")) continue;
+                    List<String> values = extractInfo(line);
+                    if (values.get(1).equals("")) continue;
+                    hoseVSenergy.put(values.get(0), Double.valueOf(values.get(1)));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return hoseVSenergy;
+        }
+    }
 
-		boolean foundSpace = false;
-		int countSpace = 0;
-		boolean foundDigit = false;
-		for (int i = 0; i < strlen; i++)
-		{
-			if(!foundDigit)
-				if(Character.isLetter(str.charAt(i)))
-					foundDigit = true;
+    /**
+     * Extract the information from a line which contains HOSE_ID & energy.
+     *
+     * @param str  String with the information
+     * @return     List with String = HOSECode and String = energy
+     */
+    private static List<String> extractInfo(String str) {
 
-			if(foundDigit){
-				if (Character.isWhitespace(str.charAt(i)))
-				{
-					if(countSpace == 0){
-						foundSpace = true;
-					}else
-						break;
-				}
-				else
-				{
-					if(foundSpace){
-						valEdited.append(str.charAt(i));
-					}
-					else{
-						idEdited.append(str.charAt(i));
-					}
-				}
-			}
-		}
-		List<String> objec = new ArrayList<String>();
-		objec.add(idEdited.toString());
-		objec.add(valEdited.toString());
-		return objec;
+        StringBuffer idEdited = new StringBuffer();
+        StringBuffer valEdited = new StringBuffer();
 
-	}
+        int strlen = str.length();
+
+        boolean foundSpace = false;
+        int countSpace = 0;
+        boolean foundDigit = false;
+        for (int i = 0; i < strlen; i++) {
+            if (!foundDigit) if (Character.isLetter(str.charAt(i))) foundDigit = true;
+
+            if (foundDigit) {
+                if (Character.isWhitespace(str.charAt(i))) {
+                    if (countSpace == 0) {
+                        foundSpace = true;
+                    } else
+                        break;
+                } else {
+                    if (foundSpace) {
+                        valEdited.append(str.charAt(i));
+                    } else {
+                        idEdited.append(str.charAt(i));
+                    }
+                }
+            }
+        }
+        List<String> objec = new ArrayList<String>();
+        objec.add(idEdited.toString());
+        objec.add(valEdited.toString());
+        return objec;
+
+    }
 }
-

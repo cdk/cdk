@@ -34,8 +34,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class FMFDescriptorTest extends MolecularDescriptorTest {
 
-    public FMFDescriptorTest() {
-    }
+    public FMFDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {

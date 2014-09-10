@@ -37,16 +37,16 @@ import org.openscience.cdk.annotations.TestMethod;
 public class SystemOutLoggingTool implements ILoggingTool {
 
     /** Boolean which is true when debug messages are send to System.out. */
-    private boolean doDebug = false;
+    private boolean             doDebug = false;
 
     /** Logger used to report internal problems. */
     private static ILoggingTool logger;
 
     /** Name of the class for which this {@link ILoggingTool} is reporting. */
-    private String classname;
+    private String              classname;
 
     /** Length of the stack to print for reported {@link Exception}s. */
-    private int stackLength;
+    private int                 stackLength;
 
     /**
      * Constructs a ILoggingTool which produces log lines indicating them to be
@@ -58,8 +58,8 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public SystemOutLoggingTool(Class<?> classInst) {
         this.classname = classInst.getName();
         doDebug = false;
-        if (System.getProperty("cdk.debugging", "false").equals("true") ||
-            System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+        if (System.getProperty("cdk.debugging", "false").equals("true")
+                || System.getProperty("cdk.debug.stdout", "false").equals("true")) {
             doDebug = true;
         }
     }
@@ -91,7 +91,7 @@ public class SystemOutLoggingTool implements ILoggingTool {
     public void debug(Object object) {
         if (doDebug) {
             if (object instanceof Throwable) {
-                debugThrowable((Throwable)object);
+                debugThrowable((Throwable) object);
             } else {
                 debugString("" + object);
             }
@@ -110,9 +110,9 @@ public class SystemOutLoggingTool implements ILoggingTool {
             result.append(object.toString());
             for (Object obj : objects) {
                 if (obj == null) {
-                	result.append("null");
+                    result.append("null");
                 } else {
-                	result.append(obj.toString());
+                    result.append(obj.toString());
                 }
             }
             debugString(result.toString());
@@ -130,28 +130,25 @@ public class SystemOutLoggingTool implements ILoggingTool {
             problem.printStackTrace(new PrintWriter(stackTraceWriter));
             String trace = stackTraceWriter.toString();
             try {
-                BufferedReader reader = new BufferedReader(
-                    new StringReader(trace)
-                );
+                BufferedReader reader = new BufferedReader(new StringReader(trace));
                 if (reader.ready()) {
                     String traceLine = reader.readLine();
                     int counter = 0;
-                    while (reader.ready() && traceLine != null &&
-                    		(counter < stackLength)) {
+                    while (reader.ready() && traceLine != null && (counter < stackLength)) {
                         debug(traceLine);
                         traceLine = reader.readLine();
                         counter++;
                     }
                 }
             } catch (Exception ioException) {
-                error("Serious error in LoggingTool while printing exception " +
-                      "stack trace: ", ioException.getMessage());
+                error("Serious error in LoggingTool while printing exception " + "stack trace: ",
+                        ioException.getMessage());
                 logger.debug(ioException);
             }
             Throwable cause = problem.getCause();
             if (cause != null) {
-            	debug("Caused by: ");
-            	debugThrowable(cause);
+                debug("Caused by: ");
+                debugThrowable(cause);
             }
         }
     }

@@ -46,59 +46,56 @@ import java.util.List;
 @TestClass("org.openscience.cdk.graph.BFSShortestPathTest")
 public final class BFSShortestPath {
 
-    private BFSShortestPath(  ) {} // ensure non-instantiability.
+    private BFSShortestPath() {} // ensure non-instantiability.
 
     @TestMethod("testFindPathBetween_Graph_Object_Object")
-    public static List<Edge> findPathBetween( Graph graph, Object startVertex,
-            Object endVertex ) {
-            MyBreadthFirstIterator iter =
-                new MyBreadthFirstIterator( graph, startVertex );
+    public static List<Edge> findPathBetween(Graph graph, Object startVertex, Object endVertex) {
+        MyBreadthFirstIterator iter = new MyBreadthFirstIterator(graph, startVertex);
 
-            while( iter.hasNext(  ) ) {
-                Object vertex = iter.next(  );
+        while (iter.hasNext()) {
+            Object vertex = iter.next();
 
-                if( vertex.equals( endVertex ) ) {
-                    return createPath( iter, endVertex );
-                }
+            if (vertex.equals(endVertex)) {
+                return createPath(iter, endVertex);
             }
-
-            return null;
         }
 
-    private static List<Edge> createPath( MyBreadthFirstIterator iter, Object endVertex ) {
-        List<Edge> path = new ArrayList<Edge>(  );
+        return null;
+    }
 
-        while( true ) {
-            Edge edge = iter.getSpanningTreeEdge( endVertex );
+    private static List<Edge> createPath(MyBreadthFirstIterator iter, Object endVertex) {
+        List<Edge> path = new ArrayList<Edge>();
 
-            if( edge == null ) {
+        while (true) {
+            Edge edge = iter.getSpanningTreeEdge(endVertex);
+
+            if (edge == null) {
                 break;
             }
 
-            path.add( edge );
-            endVertex = edge.oppositeVertex( endVertex );
+            path.add(edge);
+            endVertex = edge.oppositeVertex(endVertex);
         }
 
-        Collections.reverse( path );
+        Collections.reverse(path);
 
         return path;
     }
 
+    private static class MyBreadthFirstIterator extends BreadthFirstIterator {
 
-	private static class MyBreadthFirstIterator extends BreadthFirstIterator {
+        public MyBreadthFirstIterator(Graph g, Object startVertex) {
+            super(g, startVertex);
+        }
 
-		public MyBreadthFirstIterator(Graph g, Object startVertex) {
-			super(g, startVertex);
-		}
+        protected void encounterVertex(Object vertex, Edge edge) {
+            super.encounterVertex(vertex, edge);
+            putSeenData(vertex, edge);
+        }
 
-	    protected void encounterVertex( Object vertex, Edge edge ) {
-	        super.encounterVertex( vertex, edge );
-	        putSeenData( vertex, edge );
-	    }
+        public Edge getSpanningTreeEdge(Object vertex) {
+            return (Edge) getSeenData(vertex);
+        }
 
-	    public Edge getSpanningTreeEdge( Object vertex ) {
-	        return (Edge) getSeenData( vertex );
-	    }
-
-	}
+    }
 }

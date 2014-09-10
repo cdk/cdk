@@ -64,23 +64,22 @@ import java.util.Set;
  * @see HashGeneratorMaker
  */
 @TestClass("org.openscience.cdk.hash.PerturbedAtomHashGeneratorTest")
-final class PerturbedAtomHashGenerator extends AbstractHashGenerator
-        implements AtomHashGenerator {
+final class PerturbedAtomHashGenerator extends AbstractHashGenerator implements AtomHashGenerator {
 
     /* creates stereo encoders for IAtomContainers */
-    private final StereoEncoderFactory factory;
+    private final StereoEncoderFactory      factory;
 
-    /* simple hash generator*/
+    /* simple hash generator */
     private final AbstractAtomHashGenerator simple;
 
-    /* seed generator*/
-    private final AtomHashGenerator seeds;
+    /* seed generator */
+    private final AtomHashGenerator         seeds;
 
     /* find the set of vertices in which we will add systematic differences */
-    private final EquivalentSetFinder finder;
+    private final EquivalentSetFinder       finder;
 
     /* suppression of atoms */
-    private final AtomSuppression suppression;
+    private final AtomSuppression           suppression;
 
     /**
      * Create a perturbed hash generator using the provided seed generator to
@@ -99,24 +98,17 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
      *                                  null
      * @see org.openscience.cdk.hash.SeedGenerator
      */
-    public PerturbedAtomHashGenerator(SeedGenerator seeds,
-                                      AbstractAtomHashGenerator simple,
-                                      Pseudorandom pseudorandom,
-                                      StereoEncoderFactory factory,
-                                      EquivalentSetFinder finder,
-                                      AtomSuppression suppression) {
+    public PerturbedAtomHashGenerator(SeedGenerator seeds, AbstractAtomHashGenerator simple, Pseudorandom pseudorandom,
+            StereoEncoderFactory factory, EquivalentSetFinder finder, AtomSuppression suppression) {
 
         super(pseudorandom);
-        if (simple == null)
-            throw new NullPointerException("no simple generator provided");
-        if (seeds == null)
-            throw new NullPointerException("no seed generator provided");
-        if (suppression == null)
-            throw new NullPointerException("no suppression provided, use AtomSuppression.none()");
-        this.finder      = finder;
-        this.factory     = factory;
-        this.simple      = simple;
-        this.seeds       = seeds;
+        if (simple == null) throw new NullPointerException("no simple generator provided");
+        if (seeds == null) throw new NullPointerException("no seed generator provided");
+        if (suppression == null) throw new NullPointerException("no suppression provided, use AtomSuppression.none()");
+        this.finder = finder;
+        this.factory = factory;
+        this.simple = simple;
+        this.seeds = seeds;
         this.suppression = suppression;
     }
 
@@ -124,34 +116,27 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
      * @inheritDoc
      */
     @TestMethod("testGenerate")
-    @Override public long[] generate(IAtomContainer container) {
+    @Override
+    public long[] generate(IAtomContainer container) {
         int[][] graph = toAdjList(container);
-        return generate(container,
-                        seeds.generate(container),
-                        factory.create(container, graph),
-                        graph);
+        return generate(container, seeds.generate(container), factory.create(container, graph), graph);
     }
 
-
-    private long[] generate(IAtomContainer container, long[] seeds,
-                            StereoEncoder encoder, int[][] graph) {
+    private long[] generate(IAtomContainer container, long[] seeds, StereoEncoder encoder, int[][] graph) {
 
         Suppressed suppressed = suppression.suppress(container);
 
         // compute original values then find indices equivalent values
         long[] original = simple.generate(seeds, encoder, graph, suppressed);
         Set<Integer> equivalentSet = finder.find(original, container, graph);
-        Integer[] equivalents = equivalentSet.toArray(new Integer[equivalentSet
-                .size()]);
-
+        Integer[] equivalents = equivalentSet.toArray(new Integer[equivalentSet.size()]);
 
         // size of the matrix we need to make
         int n = original.length;
         int m = equivalents.length;
 
         // skip when there are no equivalent atoms
-        if (m < 2)
-            return original;
+        if (m < 2) return original;
 
         // matrix of perturbed values and identity values
         long[][] perturbed = new long[n][m + 1];
@@ -192,7 +177,8 @@ final class PerturbedAtomHashGenerator extends AbstractHashGenerator
      * @param perturbed n x m, matrix
      * @return the combined values of each row
      */
-    @TestMethod("testCombine") long[] combine(long[][] perturbed) {
+    @TestMethod("testCombine")
+    long[] combine(long[][] perturbed) {
 
         int n = perturbed.length;
         int m = perturbed[0].length;

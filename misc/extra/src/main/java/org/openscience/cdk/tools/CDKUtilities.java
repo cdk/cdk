@@ -45,253 +45,238 @@ import org.openscience.cdk.tools.manipulator.RingSetManipulator;
  */
 public class CDKUtilities {
 
-	public static String fixSmiles(String Smiles) {
-		Smiles=Smiles.replaceAll("CL","Cl");
-		Smiles=Smiles.replaceAll("(H)","([H])");
-//		Smiles=Smiles.replace("N=N#N","N=[N+]=[N-]");
-//		Smiles=Smiles.replace("#N=O","#[N+][O-]");
-		Smiles=Smiles.trim();
+    public static String fixSmiles(String Smiles) {
+        Smiles = Smiles.replaceAll("CL", "Cl");
+        Smiles = Smiles.replaceAll("(H)", "([H])");
+        //		Smiles=Smiles.replace("N=N#N","N=[N+]=[N-]");
+        //		Smiles=Smiles.replace("#N=O","#[N+][O-]");
+        Smiles = Smiles.trim();
 
-		return Smiles;
+        return Smiles;
 
-	}
+    }
 
+    private static boolean fixNitroGroups(IAtomContainer m) {
+        // changes nitros given by N(=O)(=O) to [N+](=O)[O-]
+        boolean changed = false;
+        try {
+            for (int i = 0; i <= m.getAtomCount() - 1; i++) {
+                IAtom a = m.getAtom(i);
+                if (a.getSymbol().equals("N")) {
+                    List<IAtom> ca = m.getConnectedAtomsList(a);
 
-	private static boolean fixNitroGroups(IAtomContainer m) {
-		// changes nitros given by N(=O)(=O) to [N+](=O)[O-]
-		boolean changed=false;
-		try {
-		for (int i=0;i<=m.getAtomCount()-1;i++) {
-			IAtom a=m.getAtom(i);
-			if (a.getSymbol().equals("N")) {
-				List<IAtom> ca=m.getConnectedAtomsList(a);
+                    if (ca.size() == 3) {
 
-				if (ca.size()==3) {
+                        IAtom[] cao = new IAtom[2];
 
-					IAtom [] cao= new IAtom[2];
+                        int count = 0;
 
-					int count=0;
+                        for (int j = 0; j <= 2; j++) {
+                            if (((IAtom) ca.get(j)).getSymbol().equals("O")) {
+                                count++;
+                            }
+                        }
 
-					for (int j=0;j<=2;j++) {
-						if (((IAtom)ca.get(j)).getSymbol().equals("O")) {
-							count++;
-						}
-					}
+                        if (count > 1) {
 
-					if (count>1) {
+                            count = 0;
+                            for (int j = 0; j <= 2; j++) {
+                                IAtom caj = (IAtom) ca.get(j);
+                                if (caj.getSymbol().equals("O")) {
+                                    if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
+                                        cao[count] = caj;
+                                        count++;
+                                    }
+                                }
+                            }
 
-						count=0;
-						for (int j=0;j<=2;j++) {
-							IAtom caj = (IAtom)ca.get(j);
-							if (caj.getSymbol().equals("O")) {
-								if (m.getConnectedAtomsCount(caj)==1) {// account for possibility of ONO2
-									cao[count]=caj;
-									count++;
-								}
-							}
-						}
+                            IBond.Order order1 = m.getBond(a, cao[0]).getOrder();
+                            IBond.Order order2 = m.getBond(a, cao[1]).getOrder();
 
+                            //if (totalobonds==4) { // need to fix (FIXME)
+                            if (order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE) {
+                                a.setFormalCharge(1);
+                                cao[0].setFormalCharge(-1); // pick first O arbitrarily
+                                m.getBond(a, cao[0]).setOrder(IBond.Order.SINGLE);
+                                changed = true;
+                            }
+                        } //else if (count==1) {// end if count>1
 
-						IBond.Order order1 = m.getBond(a,cao[0]).getOrder();
-						IBond.Order order2 = m.getBond(a,cao[1]).getOrder();
+                    }// end ca==3 if
 
+                } // end symbol == N
 
-						//if (totalobonds==4) { // need to fix (FIXME)
-						if (order1 == IBond.Order.SINGLE &&
-							order2 == IBond.Order.DOUBLE) {
-							a.setFormalCharge(1);
-							cao[0].setFormalCharge(-1); // pick first O arbitrarily
-							m.getBond(a,cao[0]).setOrder(IBond.Order.SINGLE);
-							changed=true;
-						}
-					} //else if (count==1) {// end if count>1
+            }
 
-				}// end ca==3 if
+            return changed;
 
-			} // end symbol == N
+        } catch (Exception e) {
+            return changed;
+        }
 
+    }
 
-		}
+    public static boolean fixNitroGroups2(IAtomContainer m) {
+        // changes nitros given by [N+](=O)[O-] to N(=O)(=O)
+        boolean changed = false;
+        try {
+            for (int i = 0; i <= m.getAtomCount() - 1; i++) {
+                IAtom a = m.getAtom(i);
+                if (a.getSymbol().equals("N")) {
+                    List<IAtom> ca = m.getConnectedAtomsList(a);
 
-		return changed;
+                    if (ca.size() == 3) {
 
+                        IAtom[] cao = new IAtom[2];
 
-		} catch (Exception e) {
-			return changed;
-		}
+                        int count = 0;
 
-	}
+                        for (int j = 0; j <= 2; j++) {
+                            IAtom caj = ca.get(j);
+                            if (caj.getSymbol().equals("O")) {
+                                count++;
+                            }
+                        }
 
-	public static boolean fixNitroGroups2(IAtomContainer m) {
-		// changes nitros given by [N+](=O)[O-] to N(=O)(=O)
-		boolean changed=false;
-		try {
-		for (int i=0;i<=m.getAtomCount()-1;i++) {
-			IAtom a=m.getAtom(i);
-			if (a.getSymbol().equals("N")) {
-				List<IAtom> ca=m.getConnectedAtomsList(a);
+                        if (count > 1) {
 
-				if (ca.size()==3) {
+                            count = 0;
+                            for (int j = 0; j <= 2; j++) {
+                                IAtom caj = (IAtom) ca.get(j);
+                                if (caj.getSymbol().equals("O")) {
+                                    if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
+                                        cao[count] = caj;
+                                        count++;
+                                    }
+                                }
+                            }
 
-					IAtom [] cao=new IAtom[2];
+                            IBond.Order order1 = m.getBond(a, cao[0]).getOrder();
+                            IBond.Order order2 = m.getBond(a, cao[1]).getOrder();
 
-					int count=0;
+                            //int totalobonds=0;
+                            //totalobonds+=m.getBond(a,cao[0]).getOrder();
+                            //						totalobonds+=m.getBond(a,cao[1]).getOrder();
 
-					for (int j=0;j<=2;j++) {
-						IAtom caj = ca.get(j);
-						if (caj.getSymbol().equals("O")) {
-							count++;
-						}
-					}
+                            //if (totalobonds==4) { // need to fix
+                            if ((order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE)
+                                    || (order1 == IBond.Order.DOUBLE && order2 == IBond.Order.SINGLE)) {
+                                a.setFormalCharge(0);
+                                cao[0].setFormalCharge(0); // pick first O arbitrarily
+                                cao[1].setFormalCharge(0); // pick first O arbitrarily
+                                m.getBond(a, cao[0]).setOrder(IBond.Order.DOUBLE);
+                                m.getBond(a, cao[1]).setOrder(IBond.Order.DOUBLE);
+                                changed = true;
+                            }
+                        } // end if count>1
 
-					if (count>1) {
+                    }// end ca==3 if
 
-						count=0;
-						for (int j=0;j<=2;j++) {
-							IAtom caj = (IAtom)ca.get(j);
-							if (caj.getSymbol().equals("O")) {
-								if (m.getConnectedAtomsCount(caj) == 1) {// account for possibility of ONO2
-									cao[count]=caj;
-									count++;
-								}
-							}
-						}
+                } // end symbol == N
 
+            }
 
-						IBond.Order order1 = m.getBond(a,cao[0]).getOrder();
-						IBond.Order order2 = m.getBond(a,cao[1]).getOrder();
+            return changed;
+        } catch (Exception e) {
+            return changed;
+        }
+    }
 
-						//int totalobonds=0;
-						//totalobonds+=m.getBond(a,cao[0]).getOrder();
-//						totalobonds+=m.getBond(a,cao[1]).getOrder();
+    public static void fixAromaticityForXLogP(IAtomContainer m) {
+        // need to find rings and aromaticity again since added H's
 
-						//if (totalobonds==4) { // need to fix
-						if ((order1 == IBond.Order.SINGLE && order2 == IBond.Order.DOUBLE) ||
-							(order1 == IBond.Order.DOUBLE && order2 == IBond.Order.SINGLE) ) {
-							a.setFormalCharge(0);
-							cao[0].setFormalCharge(0); // pick first O arbitrarily
-							cao[1].setFormalCharge(0); // pick first O arbitrarily
-							m.getBond(a,cao[0]).setOrder(IBond.Order.DOUBLE);
-							m.getBond(a,cao[1]).setOrder(IBond.Order.DOUBLE);
-							changed=true;
-						}
-					} // end if count>1
+        IRingSet rs = null;
+        try {
+            AllRingsFinder arf = new AllRingsFinder();
+            rs = arf.findAllRings(m);
 
+            // SSSRFinder s = new SSSRFinder(m);
+            // srs = s.findEssentialRings();
 
-				}// end ca==3 if
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-			} // end symbol == N
-
-
-		}
-
-		return changed;
-		} catch (Exception e) {
-			return changed;
-		}
-	}
-
-	public static void fixAromaticityForXLogP(IAtomContainer m) {
-		// need to find rings and aromaticity again since added H's
-
-		IRingSet rs=null;
-		try {
-			AllRingsFinder arf = new AllRingsFinder();
-			rs = arf.findAllRings(m);
-
-			// SSSRFinder s = new SSSRFinder(m);
-			// srs = s.findEssentialRings();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		try {
-			// figure out which atoms are in aromatic rings:
-			AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
+        try {
+            // figure out which atoms are in aromatic rings:
+            AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(m);
             Aromaticity.cdkLegacy().apply(m);
-			// figure out which rings are aromatic:
-			RingSetManipulator.markAromaticRings(rs);
-			// figure out which simple (non cycles) rings are aromatic:
-			// HueckelAromaticityDetector.detectAromaticity(m, srs);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            // figure out which rings are aromatic:
+            RingSetManipulator.markAromaticRings(rs);
+            // figure out which simple (non cycles) rings are aromatic:
+            // HueckelAromaticityDetector.detectAromaticity(m, srs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        // only atoms in 6 membered rings are aromatic
+        // determine largest ring that each atom is a part of
 
-		// only atoms in 6 membered rings are aromatic
-		// determine largest ring that each atom is a part of
+        for (int i = 0; i <= m.getAtomCount() - 1; i++) {
 
-		for (int i=0;i<=m.getAtomCount()-1;i++) {
+            m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
 
-			m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,false);
+            jloop: for (int j = 0; j <= rs.getAtomContainerCount() - 1; j++) {
+                //logger.debug(i+"\t"+j);
+                IRing r = (IRing) rs.getAtomContainer(j);
+                if (!r.getFlag(CDKConstants.ISAROMATIC)) {
+                    continue jloop;
+                }
 
-			jloop:
-			for (int j=0;j<=rs.getAtomContainerCount()-1;j++) {
-				//logger.debug(i+"\t"+j);
-				IRing r=(IRing)rs.getAtomContainer(j);
-				if (!r.getFlag(CDKConstants.ISAROMATIC)) {
-					continue jloop;
-				}
+                boolean haveatom = r.contains(m.getAtom(i));
 
-				boolean haveatom=r.contains(m.getAtom(i));
+                //logger.debug("haveatom="+haveatom);
 
-				//logger.debug("haveatom="+haveatom);
+                if (haveatom && r.getAtomCount() == 6) {
+                    m.getAtom(i).setFlag(CDKConstants.ISAROMATIC, true);
+                }
 
-				if (haveatom && r.getAtomCount()==6) {
-					m.getAtom(i).setFlag(CDKConstants.ISAROMATIC,true);
-				}
+            }
 
-			}
+        }
 
-		}
+    }
 
+    public static void fixSulphurH(IAtomContainer m) {
+        // removes extra H's attached to sulphurs
+        //logger.debug("EnterFixSulphur");
 
-	}
+        for (int i = 0; i <= m.getAtomCount() - 1; i++) {
+            IAtom a = m.getAtom(i);
 
+            if (a.getSymbol().equals("S")) {
+                List<IAtom> connectedAtoms = m.getConnectedAtomsList(a);
 
-	public static void fixSulphurH(IAtomContainer m) {
-		// removes extra H's attached to sulphurs
-		//logger.debug("EnterFixSulphur");
+                int bondOrderSum = 0;
 
-		for (int i = 0; i <= m.getAtomCount()-1; i++)
-		{
-			IAtom a=m.getAtom(i);
+                for (int j = 0; j < connectedAtoms.size(); j++) {
+                    IAtom conAtom = connectedAtoms.get(j);
+                    if (!conAtom.getSymbol().equals("H")) {
+                        IBond bond = m.getBond(a, conAtom);
+                        if (bond.getOrder() == IBond.Order.SINGLE) {
+                            bondOrderSum += 1;
+                        } else if (bond.getOrder() == IBond.Order.DOUBLE) {
+                            bondOrderSum += 2;
+                        } else if (bond.getOrder() == IBond.Order.TRIPLE) {
+                            bondOrderSum += 3;
+                        } else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
+                            bondOrderSum += 4;
+                        }
+                    }
+                }
 
-			if (a.getSymbol().equals("S")) {
-				List<IAtom> connectedAtoms=m.getConnectedAtomsList(a);
+                if (bondOrderSum > 1) {
+                    for (int j = 0; j < connectedAtoms.size(); j++) {
+                        IAtom conAtom = (IAtom) connectedAtoms.get(j);
+                        if (conAtom.getSymbol().equals("H")) {
+                            m.removeAtomAndConnectedElectronContainers(conAtom);
+                        }
+                    }
+                }
 
+            }
 
-				int bondOrderSum=0;
-
-				for (int j=0;j<connectedAtoms.size();j++) {
-					IAtom conAtom = connectedAtoms.get(j);
-					if (!conAtom.getSymbol().equals("H")) {
-						IBond bond = m.getBond(a,conAtom);
-						if (bond.getOrder() == IBond.Order.SINGLE) {
-							bondOrderSum += 1;
-						} else if (bond.getOrder() == IBond.Order.DOUBLE) {
-							bondOrderSum += 2;
-						} else if (bond.getOrder() == IBond.Order.TRIPLE) {
-							bondOrderSum += 3;
-						} else if (bond.getOrder() == IBond.Order.QUADRUPLE) {
-							bondOrderSum += 4;
-						}
-					}
-				}
-
-				if (bondOrderSum>1) {
-					for (int j=0;j<connectedAtoms.size();j++) {
-						IAtom conAtom = (IAtom)connectedAtoms.get(j);
-						if (conAtom.getSymbol().equals("H")) {
-							m.removeAtomAndConnectedElectronContainers(conAtom);
-						}
-					}
-				}
-
-			}
-
-		}
-	}
+        }
+    }
 
 }

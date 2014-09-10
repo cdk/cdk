@@ -52,7 +52,6 @@ public class QuadTo extends PathElement {
         this(cp.x, cp.y, ep.x, ep.y);
     }
 
-
     /**
      * Make a quad curve path element.
      *
@@ -84,14 +83,12 @@ public class QuadTo extends PathElement {
     @Override
     @TestMethod("testPoints")
     public float[] points() {
-     return new float[] { (float) coords[0],
-                          (float) coords[1],
-                          (float) coords[2],
-                          (float) coords[3]};
+        return new float[]{(float) coords[0], (float) coords[1], (float) coords[2], (float) coords[3]};
     }
 
     /** @inheritDoc */
-    @Override public void points(double[] coords) {
+    @Override
+    public void points(double[] coords) {
         coords[0] = this.coords[0];
         coords[1] = this.coords[1];
         coords[2] = this.coords[2];

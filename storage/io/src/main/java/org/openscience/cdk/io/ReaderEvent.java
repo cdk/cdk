@@ -44,4 +44,3 @@ public class ReaderEvent extends EventObject {
     }
 
 }
-

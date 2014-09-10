@@ -70,32 +70,27 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
 @TestClass("org.openscience.cdk.io.Mol2ReaderTest")
 public class Mol2Reader extends DefaultChemObjectReader {
 
-    boolean firstLineisMolecule = false;
+    boolean                                  firstLineisMolecule = false;
 
-    BufferedReader input = null;
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(Mol2Reader.class);
+    BufferedReader                           input               = null;
+    private static ILoggingTool              logger              = LoggingToolFactory
+                                                                         .createLoggingTool(Mol2Reader.class);
 
     /**
      * Dictionary of known atom type aliases. If the key is seen on input, it
      * is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
      */
-    private static final Map<String, String> ATOM_TYPE_ALIASES = ImmutableMap.<String, String>builder()
-                                                                            // previously produced by Open Babel
-                                                                            .put("S.o2", "S.O2")
-                                                                            .put("S.o", "S.O")
-                                                                            // seen in MMFF94 validation suite
-                                                                            .put("CL", "Cl")
-                                                                            .put("CU", "Cu")
-                                                                            .put("FE", "Fe")
-                                                                            .put("BR", "Br")
-                                                                            .put("NA", "Na")
-                                                                            .put("SI", "Si")
-                                                                            .put("CA", "Ca")
-                                                                            .put("ZN", "Zn")
-                                                                            .put("LI", "Li")
-                                                                            .put("MG", "Mg")
-                                                                            .build();
+    private static final Map<String, String> ATOM_TYPE_ALIASES   = ImmutableMap
+                                                                         .<String, String> builder()
+                                                                         // previously produced by Open Babel
+                                                                         .put("S.o2", "S.O2")
+                                                                         .put("S.o", "S.O")
+                                                                         // seen in MMFF94 validation suite
+                                                                         .put("CL", "Cl").put("CU", "Cu")
+                                                                         .put("FE", "Fe").put("BR", "Br")
+                                                                         .put("NA", "Na").put("SI", "Si")
+                                                                         .put("CA", "Ca").put("ZN", "Zn")
+                                                                         .put("LI", "Li").put("MG", "Mg").build();
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -220,7 +215,6 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return chemFile;
     }
 
-
     @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
         if (object instanceof IChemFile) {
@@ -233,7 +227,6 @@ public class Mol2Reader extends DefaultChemObjectReader {
         return false;
     }
 
-
     /**
      * Read a Reaction from a file in MDL RXN format
      *
@@ -242,9 +235,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
     private IAtomContainer readMolecule(IAtomContainer molecule) throws CDKException {
         AtomTypeFactory atFactory = null;
         try {
-            atFactory = AtomTypeFactory.getInstance(
-                    "org/openscience/cdk/config/data/mol2_atomtypes.xml", molecule.getBuilder()
-            );
+            atFactory = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/mol2_atomtypes.xml",
+                    molecule.getBuilder());
         } catch (Exception exception) {
             String error = "Could not instantiate an AtomTypeFactory";
             logger.error(error);
@@ -264,7 +256,8 @@ public class Mol2Reader extends DefaultChemObjectReader {
             }
 
             // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
-            if (firstLineisMolecule) molecule.setProperty(CDKConstants.TITLE, line);
+            if (firstLineisMolecule)
+                molecule.setProperty(CDKConstants.TITLE, line);
             else {
                 line = input.readLine();
                 molecule.setProperty(CDKConstants.TITLE, line);
@@ -380,9 +373,7 @@ public class Mol2Reader extends DefaultChemObjectReader {
                                 // do not connect the atoms
                             } else {
                                 IBond bond = molecule.getBuilder().newInstance(IBond.class,
-                                        molecule.getAtom(atom1 - 1),
-                                        molecule.getAtom(atom2 - 1)
-                                );
+                                        molecule.getAtom(atom1 - 1), molecule.getAtom(atom2 - 1));
                                 if ("1".equals(orderStr)) {
                                     bond.setOrder(CDKConstants.BONDORDER_SINGLE);
                                 } else if ("2".equals(orderStr)) {
@@ -433,4 +424,3 @@ public class Mol2Reader extends DefaultChemObjectReader {
         input.close();
     }
 }
-

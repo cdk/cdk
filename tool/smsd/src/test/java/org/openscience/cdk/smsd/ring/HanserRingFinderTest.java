@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -52,6 +51,7 @@ public class HanserRingFinderTest {
         Collection result = instance.findRings(molecule);
         assertEquals(expResult, result);
     }
+
     private HanserRingFinder finder;
 
     @Before

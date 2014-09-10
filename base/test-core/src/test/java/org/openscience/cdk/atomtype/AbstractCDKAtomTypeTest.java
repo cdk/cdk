@@ -32,22 +32,22 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 abstract public class AbstractCDKAtomTypeTest extends AbstractAtomTypeTest {
 
-	private final static String ATOMTYPE_LIST = "cdk-atom-types.owl";
+    private final static String            ATOMTYPE_LIST = "cdk-atom-types.owl";
 
-	protected final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
-		SilentChemObjectBuilder.getInstance()
-    );
+    protected final static AtomTypeFactory factory       = AtomTypeFactory
+                                                                 .getInstance("org/openscience/cdk/dict/data/"
+                                                                         + ATOMTYPE_LIST,
+                                                                         SilentChemObjectBuilder.getInstance());
 
-	public String getAtomTypeListName() {
-		return ATOMTYPE_LIST;
-	};
+    public String getAtomTypeListName() {
+        return ATOMTYPE_LIST;
+    };
 
-	public AtomTypeFactory getFactory() {
-		return factory;
-	}
+    public AtomTypeFactory getFactory() {
+        return factory;
+    }
 
-	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
-		return CDKAtomTypeMatcher.getInstance(builder);
-	}
+    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+        return CDKAtomTypeMatcher.getInstance(builder);
+    }
 }

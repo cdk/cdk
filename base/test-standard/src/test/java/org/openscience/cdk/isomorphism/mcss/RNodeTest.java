@@ -27,13 +27,12 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class RNodeTest extends CDKTestCase {
 
-	@Test public void testRNode_int_int() {
-		RNode node = new RNode(1,2);
-		Assert.assertNotNull(node);
-		Assert.assertNotNull(node.getExtension());
-		Assert.assertNotNull(node.getForbidden());
-	}
+    @Test
+    public void testRNode_int_int() {
+        RNode node = new RNode(1, 2);
+        Assert.assertNotNull(node);
+        Assert.assertNotNull(node.getExtension());
+        Assert.assertNotNull(node.getForbidden());
+    }
 
 }
-
-

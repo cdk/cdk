@@ -46,41 +46,40 @@ import java.util.Random;
 @TestClass("org.openscience.cdk.fingerprint.GraphOnlyFingerprinterTest")
 public class GraphOnlyFingerprinter extends Fingerprinter {
 
-	/**
-	 * Creates a fingerprint generator of length <code>defaultSize</code>
-	 * and with a search depth of <code>defaultSearchDepth</code>.
-	 */
-	public GraphOnlyFingerprinter() {
-		super(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
-	}
+    /**
+     * Creates a fingerprint generator of length <code>defaultSize</code>
+     * and with a search depth of <code>defaultSearchDepth</code>.
+     */
+    public GraphOnlyFingerprinter() {
+        super(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH);
+    }
 
-	public GraphOnlyFingerprinter(int size) {
-		super(size, DEFAULT_SEARCH_DEPTH);
-	}
+    public GraphOnlyFingerprinter(int size) {
+        super(size, DEFAULT_SEARCH_DEPTH);
+    }
 
-	public GraphOnlyFingerprinter(int size, int searchDepth) {
-		super(size, searchDepth);
-	}
+    public GraphOnlyFingerprinter(int size, int searchDepth) {
+        super(size, searchDepth);
+    }
 
-	/**
-	 * Gets the bondSymbol attribute of the Fingerprinter class. Because we do
-	 * not consider bond orders to be important, we just return "";
-	 *
-	 * @param  bond  Description of the Parameter
-	 * @return       The bondSymbol value
-	 */
-	protected String getBondSymbol(IBond bond) {
-		return "";
-	}
+    /**
+     * Gets the bondSymbol attribute of the Fingerprinter class. Because we do
+     * not consider bond orders to be important, we just return "";
+     *
+     * @param  bond  Description of the Parameter
+     * @return       The bondSymbol value
+     */
+    protected String getBondSymbol(IBond bond) {
+        return "";
+    }
 
     @TestMethod("testFingerPrint,testFingerprint")
     public BitSet getBitFingerprint(IAtomContainer container, int size) throws Exception {
-		int[] hashes = findPathes(container, super.getSearchDepth());
-		BitSet bitSet = new BitSet(size);
+        int[] hashes = findPathes(container, super.getSearchDepth());
+        BitSet bitSet = new BitSet(size);
         for (int hash : hashes) {
             bitSet.set(new Random(hash).nextInt(size));
         }
-		return bitSet;
-	}
+        return bitSet;
+    }
 }
-

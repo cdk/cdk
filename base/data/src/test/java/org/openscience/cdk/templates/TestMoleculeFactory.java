@@ -45,8 +45,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class TestMoleculeFactory {
 
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(TestMoleculeFactory.class);
 
     public static IAtomContainer makeAlphaPinene() {
         IAtomContainer mol = new AtomContainer();
@@ -189,7 +188,6 @@ public class TestMoleculeFactory {
         return mol;
     }
 
-
     /**
      * Returns cyclobutane without explicit hydrogens.
      *
@@ -266,7 +264,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 10
         mol.addAtom(new Atom("C")); // 11
 
-
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
         mol.addBond(2, 3, IBond.Order.DOUBLE); // 3
@@ -283,7 +280,6 @@ public class TestMoleculeFactory {
         mol.addBond(11, 6, IBond.Order.DOUBLE); // 5
         return mol;
     }
-
 
     public static IAtomContainer makePhenylEthylBenzene() {
         IAtomContainer mol = new AtomContainer();
@@ -321,7 +317,6 @@ public class TestMoleculeFactory {
         return mol;
     }
 
-
     public static IAtomContainer makePhenylAmine() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C")); // 0
@@ -342,7 +337,6 @@ public class TestMoleculeFactory {
         mol.addBond(0, 6, IBond.Order.SINGLE); // 7
         return mol;
     }
-
 
     /* build a molecule from 4 condensed triangles */
     public static IAtomContainer make4x3CondensedRings() {
@@ -380,7 +374,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 8
         mol.addAtom(new Atom("C")); // 9
 
-
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
         mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -394,7 +387,6 @@ public class TestMoleculeFactory {
         mol.addBond(9, 6, IBond.Order.SINGLE); // 11
         return mol;
     }
-
 
     public static IAtomContainer makeBicycloRings() {
         IAtomContainer mol = new AtomContainer();
@@ -460,7 +452,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 8
         mol.addAtom(new Atom("C")); // 9
         mol.addAtom(new Atom("C")); // 10
-
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -545,7 +536,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 15
         mol.addAtom(new Atom("C")); // 16
 
-
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
         mol.addBond(2, 3, IBond.Order.SINGLE); // 3
@@ -620,7 +610,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 6
         mol.addAtom(new Atom("C")); // 7
         mol.addAtom(new Atom("N")); // 8
-
 
         mol.addBond(0, 1, IBond.Order.DOUBLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1048,7 +1037,6 @@ public class TestMoleculeFactory {
         return mol;
     }
 
-
     public static IAtomContainer makeSingleRing() {
         IAtomContainer mol = new AtomContainer();
         mol.addAtom(new Atom("C")); // 0
@@ -1057,10 +1045,10 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 3
         mol.addAtom(new Atom("C")); // 4
         mol.addAtom(new Atom("C")); // 5
-//		mol.addAtom(new Atom("C")); // 6
-//		mol.addAtom(new Atom("C")); // 7
-//		mol.addAtom(new Atom("C")); // 8
-//		mol.addAtom(new Atom("C")); // 9
+        //		mol.addAtom(new Atom("C")); // 6
+        //		mol.addAtom(new Atom("C")); // 7
+        //		mol.addAtom(new Atom("C")); // 8
+        //		mol.addAtom(new Atom("C")); // 9
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1068,16 +1056,14 @@ public class TestMoleculeFactory {
         mol.addBond(3, 4, IBond.Order.SINGLE); // 4
         mol.addBond(4, 5, IBond.Order.SINGLE); // 5
         mol.addBond(5, 0, IBond.Order.SINGLE); // 6
-//		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
-//		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
-//		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
-//		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
-//		mol.addBond(9, 1, IBond.Order.SINGLE); // 11
-
+        //		mol.addBond(5, 6, IBond.Order.SINGLE); // 7
+        //		mol.addBond(6, 7, IBond.Order.SINGLE); // 8
+        //		mol.addBond(7, 4, IBond.Order.SINGLE); // 9
+        //		mol.addBond(8, 0, IBond.Order.SINGLE); // 10
+        //		mol.addBond(9, 1, IBond.Order.SINGLE); // 11
 
         return mol;
     }
-
 
     public static IAtomContainer makeDiamantane() {
         IAtomContainer mol = new AtomContainer();
@@ -1095,7 +1081,6 @@ public class TestMoleculeFactory {
         mol.addAtom(new Atom("C")); // 11
         mol.addAtom(new Atom("C")); // 12
         mol.addAtom(new Atom("C")); // 13
-
 
         mol.addBond(0, 1, IBond.Order.SINGLE); // 1
         mol.addBond(1, 2, IBond.Order.SINGLE); // 2
@@ -1118,7 +1103,6 @@ public class TestMoleculeFactory {
 
         return mol;
     }
-
 
     public static IAtomContainer makeBranchedAliphatic() {
         IAtomContainer mol = new AtomContainer();
@@ -1160,7 +1144,6 @@ public class TestMoleculeFactory {
         mol.addBond(15, 16, IBond.Order.DOUBLE);
         mol.addBond(16, 17, IBond.Order.DOUBLE);
         mol.addBond(17, 18, IBond.Order.SINGLE);
-
 
         return mol;
     }
@@ -1283,38 +1266,27 @@ public class TestMoleculeFactory {
         IAtom a10 = mol.getBuilder().newInstance(IAtom.class, "C");
         a10.setPoint2d(new Point2d(23.4609, -18.8267));
         mol.addAtom(a10);
-        IBond b1 = mol.getBuilder()
-                      .newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
+        IBond b1 = mol.getBuilder().newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = mol.getBuilder()
-                      .newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
+        IBond b2 = mol.getBuilder().newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = mol.getBuilder()
-                      .newInstance(IBond.class, a1, a4, IBond.Order.SINGLE);
+        IBond b3 = mol.getBuilder().newInstance(IBond.class, a1, a4, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = mol.getBuilder()
-                      .newInstance(IBond.class, a2, a5, IBond.Order.SINGLE);
+        IBond b4 = mol.getBuilder().newInstance(IBond.class, a2, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = mol.getBuilder()
-                      .newInstance(IBond.class, a2, a6, IBond.Order.SINGLE);
+        IBond b5 = mol.getBuilder().newInstance(IBond.class, a2, a6, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = mol.getBuilder()
-                      .newInstance(IBond.class, a3, a7, IBond.Order.DOUBLE);
+        IBond b6 = mol.getBuilder().newInstance(IBond.class, a3, a7, IBond.Order.DOUBLE);
         mol.addBond(b6);
-        IBond b7 = mol.getBuilder()
-                      .newInstance(IBond.class, a3, a8, IBond.Order.SINGLE);
+        IBond b7 = mol.getBuilder().newInstance(IBond.class, a3, a8, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = mol.getBuilder()
-                      .newInstance(IBond.class, a4, a9, IBond.Order.DOUBLE);
+        IBond b8 = mol.getBuilder().newInstance(IBond.class, a4, a9, IBond.Order.DOUBLE);
         mol.addBond(b8);
-        IBond b9 = mol.getBuilder()
-                      .newInstance(IBond.class, a5, a10, IBond.Order.DOUBLE);
+        IBond b9 = mol.getBuilder().newInstance(IBond.class, a5, a10, IBond.Order.DOUBLE);
         mol.addBond(b9);
-        IBond b10 = mol.getBuilder()
-                       .newInstance(IBond.class, a6, a9, IBond.Order.SINGLE);
+        IBond b10 = mol.getBuilder().newInstance(IBond.class, a6, a9, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = mol.getBuilder()
-                       .newInstance(IBond.class, a7, a10, IBond.Order.SINGLE);
+        IBond b11 = mol.getBuilder().newInstance(IBond.class, a7, a10, IBond.Order.SINGLE);
         mol.addBond(b11);
 
         return mol;
@@ -1323,60 +1295,61 @@ public class TestMoleculeFactory {
     /**
      * InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
      */
-    @Test public static IAtomContainer makeNaphthalene() {
+    @Test
+    public static IAtomContainer makeNaphthalene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFormalCharge(0);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFormalCharge(0);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFormalCharge(0);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFormalCharge(0);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFormalCharge(0);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFormalCharge(0);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
         a10.setFormalCharge(0);
         mol.addAtom(a10);
-        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.DOUBLE);
+        IBond b3 = builder.newInstance(IBond.class, a3, a4, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a5, a6, IBond.Order.DOUBLE);
+        IBond b5 = builder.newInstance(IBond.class, a5, a6, IBond.Order.DOUBLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a7, a8, IBond.Order.DOUBLE);
+        IBond b7 = builder.newInstance(IBond.class, a7, a8, IBond.Order.DOUBLE);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a3, a8, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a3, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        IBond b9 = builder.newInstance(IBond.class, a8, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a9, a10, IBond.Order.DOUBLE);
+        IBond b10 = builder.newInstance(IBond.class, a9, a10, IBond.Order.DOUBLE);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a1, a10, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a1, a10, IBond.Order.SINGLE);
         mol.addBond(b11);
         return mol;
     }
@@ -1384,82 +1357,83 @@ public class TestMoleculeFactory {
     /**
      * @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
      */
-    @Test public static IAtomContainer makeAnthracene() {
+    @Test
+    public static IAtomContainer makeAnthracene() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFormalCharge(0);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFormalCharge(0);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFormalCharge(0);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFormalCharge(0);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFormalCharge(0);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFormalCharge(0);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
         a10.setFormalCharge(0);
         mol.addAtom(a10);
-        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        IAtom a11 = builder.newInstance(IAtom.class, "C");
         a11.setFormalCharge(0);
         mol.addAtom(a11);
-        IAtom a12 = builder.newInstance(IAtom.class,"C");
+        IAtom a12 = builder.newInstance(IAtom.class, "C");
         a12.setFormalCharge(0);
         mol.addAtom(a12);
-        IAtom a13 = builder.newInstance(IAtom.class,"C");
+        IAtom a13 = builder.newInstance(IAtom.class, "C");
         a13.setFormalCharge(0);
         mol.addAtom(a13);
-        IAtom a14 = builder.newInstance(IAtom.class,"C");
+        IAtom a14 = builder.newInstance(IAtom.class, "C");
         a14.setFormalCharge(0);
         mol.addAtom(a14);
-        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.DOUBLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.DOUBLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.DOUBLE);
+        IBond b3 = builder.newInstance(IBond.class, a3, a4, IBond.Order.DOUBLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a5, a6, IBond.Order.DOUBLE);
+        IBond b5 = builder.newInstance(IBond.class, a5, a6, IBond.Order.DOUBLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a7, a8, IBond.Order.DOUBLE);
+        IBond b7 = builder.newInstance(IBond.class, a7, a8, IBond.Order.DOUBLE);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a8, a9, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a9, a10, IBond.Order.DOUBLE);
+        IBond b9 = builder.newInstance(IBond.class, a9, a10, IBond.Order.DOUBLE);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a5, a10, IBond.Order.SINGLE);
+        IBond b10 = builder.newInstance(IBond.class, a5, a10, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a10, a11, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a10, a11, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = builder.newInstance(IBond.class,a11, a12, IBond.Order.DOUBLE);
+        IBond b12 = builder.newInstance(IBond.class, a11, a12, IBond.Order.DOUBLE);
         mol.addBond(b12);
-        IBond b13 = builder.newInstance(IBond.class,a3, a12, IBond.Order.SINGLE);
+        IBond b13 = builder.newInstance(IBond.class, a3, a12, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = builder.newInstance(IBond.class,a12, a13, IBond.Order.SINGLE);
+        IBond b14 = builder.newInstance(IBond.class, a12, a13, IBond.Order.SINGLE);
         mol.addBond(b14);
-        IBond b15 = builder.newInstance(IBond.class,a13, a14, IBond.Order.DOUBLE);
+        IBond b15 = builder.newInstance(IBond.class, a13, a14, IBond.Order.DOUBLE);
         mol.addBond(b15);
-        IBond b16 = builder.newInstance(IBond.class,a1, a14, IBond.Order.SINGLE);
+        IBond b16 = builder.newInstance(IBond.class, a1, a14, IBond.Order.SINGLE);
         mol.addBond(b16);
         return mol;
     }
@@ -1468,197 +1442,198 @@ public class TestMoleculeFactory {
      * octacyclo[17.2.2.2¹,⁴.2⁴,⁷.2⁷,¹⁰.2¹⁰,¹³.2¹³,¹⁶.2¹⁶,¹⁹]pentatriacontane
      * @cdk.inchi InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
      */
-    @Test public static IAtomContainer makeCyclophaneLike() {
+    @Test
+    public static IAtomContainer makeCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFormalCharge(0);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFormalCharge(0);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFormalCharge(0);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFormalCharge(0);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFormalCharge(0);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFormalCharge(0);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
         a10.setFormalCharge(0);
         mol.addAtom(a10);
-        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        IAtom a11 = builder.newInstance(IAtom.class, "C");
         a11.setFormalCharge(0);
         mol.addAtom(a11);
-        IAtom a12 = builder.newInstance(IAtom.class,"C");
+        IAtom a12 = builder.newInstance(IAtom.class, "C");
         a12.setFormalCharge(0);
         mol.addAtom(a12);
-        IAtom a13 = builder.newInstance(IAtom.class,"C");
+        IAtom a13 = builder.newInstance(IAtom.class, "C");
         a13.setFormalCharge(0);
         mol.addAtom(a13);
-        IAtom a14 = builder.newInstance(IAtom.class,"C");
+        IAtom a14 = builder.newInstance(IAtom.class, "C");
         a14.setFormalCharge(0);
         mol.addAtom(a14);
-        IAtom a15 = builder.newInstance(IAtom.class,"C");
+        IAtom a15 = builder.newInstance(IAtom.class, "C");
         a15.setFormalCharge(0);
         mol.addAtom(a15);
-        IAtom a16 = builder.newInstance(IAtom.class,"C");
+        IAtom a16 = builder.newInstance(IAtom.class, "C");
         a16.setFormalCharge(0);
         mol.addAtom(a16);
-        IAtom a17 = builder.newInstance(IAtom.class,"C");
+        IAtom a17 = builder.newInstance(IAtom.class, "C");
         a17.setFormalCharge(0);
         mol.addAtom(a17);
-        IAtom a18 = builder.newInstance(IAtom.class,"C");
+        IAtom a18 = builder.newInstance(IAtom.class, "C");
         a18.setFormalCharge(0);
         mol.addAtom(a18);
-        IAtom a19 = builder.newInstance(IAtom.class,"C");
+        IAtom a19 = builder.newInstance(IAtom.class, "C");
         a19.setFormalCharge(0);
         mol.addAtom(a19);
-        IAtom a20 = builder.newInstance(IAtom.class,"C");
+        IAtom a20 = builder.newInstance(IAtom.class, "C");
         a20.setFormalCharge(0);
         mol.addAtom(a20);
-        IAtom a21 = builder.newInstance(IAtom.class,"C");
+        IAtom a21 = builder.newInstance(IAtom.class, "C");
         a21.setFormalCharge(0);
         mol.addAtom(a21);
-        IAtom a22 = builder.newInstance(IAtom.class,"C");
+        IAtom a22 = builder.newInstance(IAtom.class, "C");
         a22.setFormalCharge(0);
         mol.addAtom(a22);
-        IAtom a23 = builder.newInstance(IAtom.class,"C");
+        IAtom a23 = builder.newInstance(IAtom.class, "C");
         a23.setFormalCharge(0);
         mol.addAtom(a23);
-        IAtom a24 = builder.newInstance(IAtom.class,"C");
+        IAtom a24 = builder.newInstance(IAtom.class, "C");
         a24.setFormalCharge(0);
         mol.addAtom(a24);
-        IAtom a25 = builder.newInstance(IAtom.class,"C");
+        IAtom a25 = builder.newInstance(IAtom.class, "C");
         a25.setFormalCharge(0);
         mol.addAtom(a25);
-        IAtom a26 = builder.newInstance(IAtom.class,"C");
+        IAtom a26 = builder.newInstance(IAtom.class, "C");
         a26.setFormalCharge(0);
         mol.addAtom(a26);
-        IAtom a27 = builder.newInstance(IAtom.class,"C");
+        IAtom a27 = builder.newInstance(IAtom.class, "C");
         a27.setFormalCharge(0);
         mol.addAtom(a27);
-        IAtom a28 = builder.newInstance(IAtom.class,"C");
+        IAtom a28 = builder.newInstance(IAtom.class, "C");
         a28.setFormalCharge(0);
         mol.addAtom(a28);
-        IAtom a29 = builder.newInstance(IAtom.class,"C");
+        IAtom a29 = builder.newInstance(IAtom.class, "C");
         a29.setFormalCharge(0);
         mol.addAtom(a29);
-        IAtom a30 = builder.newInstance(IAtom.class,"C");
+        IAtom a30 = builder.newInstance(IAtom.class, "C");
         a30.setFormalCharge(0);
         mol.addAtom(a30);
-        IAtom a31 = builder.newInstance(IAtom.class,"C");
+        IAtom a31 = builder.newInstance(IAtom.class, "C");
         a31.setFormalCharge(0);
         mol.addAtom(a31);
-        IAtom a32 = builder.newInstance(IAtom.class,"C");
+        IAtom a32 = builder.newInstance(IAtom.class, "C");
         a32.setFormalCharge(0);
         mol.addAtom(a32);
-        IAtom a33 = builder.newInstance(IAtom.class,"C");
+        IAtom a33 = builder.newInstance(IAtom.class, "C");
         a33.setFormalCharge(0);
         mol.addAtom(a33);
-        IAtom a34 = builder.newInstance(IAtom.class,"C");
+        IAtom a34 = builder.newInstance(IAtom.class, "C");
         a34.setFormalCharge(0);
         mol.addAtom(a34);
-        IAtom a35 = builder.newInstance(IAtom.class,"C");
+        IAtom a35 = builder.newInstance(IAtom.class, "C");
         a35.setFormalCharge(0);
         mol.addAtom(a35);
-        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        IBond b3 = builder.newInstance(IBond.class, a3, a4, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a5, a6, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a5, a6, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a1, a6, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a7, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        IBond b9 = builder.newInstance(IBond.class, a8, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a9, a10, IBond.Order.SINGLE);
+        IBond b10 = builder.newInstance(IBond.class, a9, a10, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a10, a11, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a10, a11, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = builder.newInstance(IBond.class,a6, a11, IBond.Order.SINGLE);
+        IBond b12 = builder.newInstance(IBond.class, a6, a11, IBond.Order.SINGLE);
         mol.addBond(b12);
-        IBond b13 = builder.newInstance(IBond.class,a9, a12, IBond.Order.SINGLE);
+        IBond b13 = builder.newInstance(IBond.class, a9, a12, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = builder.newInstance(IBond.class,a12, a13, IBond.Order.SINGLE);
+        IBond b14 = builder.newInstance(IBond.class, a12, a13, IBond.Order.SINGLE);
         mol.addBond(b14);
-        IBond b15 = builder.newInstance(IBond.class,a13, a14, IBond.Order.SINGLE);
+        IBond b15 = builder.newInstance(IBond.class, a13, a14, IBond.Order.SINGLE);
         mol.addBond(b15);
-        IBond b16 = builder.newInstance(IBond.class,a14, a15, IBond.Order.SINGLE);
+        IBond b16 = builder.newInstance(IBond.class, a14, a15, IBond.Order.SINGLE);
         mol.addBond(b16);
-        IBond b17 = builder.newInstance(IBond.class,a15, a16, IBond.Order.SINGLE);
+        IBond b17 = builder.newInstance(IBond.class, a15, a16, IBond.Order.SINGLE);
         mol.addBond(b17);
-        IBond b18 = builder.newInstance(IBond.class,a9, a16, IBond.Order.SINGLE);
+        IBond b18 = builder.newInstance(IBond.class, a9, a16, IBond.Order.SINGLE);
         mol.addBond(b18);
-        IBond b19 = builder.newInstance(IBond.class,a14, a17, IBond.Order.SINGLE);
+        IBond b19 = builder.newInstance(IBond.class, a14, a17, IBond.Order.SINGLE);
         mol.addBond(b19);
-        IBond b20 = builder.newInstance(IBond.class,a17, a18, IBond.Order.SINGLE);
+        IBond b20 = builder.newInstance(IBond.class, a17, a18, IBond.Order.SINGLE);
         mol.addBond(b20);
-        IBond b21 = builder.newInstance(IBond.class,a18, a19, IBond.Order.SINGLE);
+        IBond b21 = builder.newInstance(IBond.class, a18, a19, IBond.Order.SINGLE);
         mol.addBond(b21);
-        IBond b22 = builder.newInstance(IBond.class,a19, a20, IBond.Order.SINGLE);
+        IBond b22 = builder.newInstance(IBond.class, a19, a20, IBond.Order.SINGLE);
         mol.addBond(b22);
-        IBond b23 = builder.newInstance(IBond.class,a20, a21, IBond.Order.SINGLE);
+        IBond b23 = builder.newInstance(IBond.class, a20, a21, IBond.Order.SINGLE);
         mol.addBond(b23);
-        IBond b24 = builder.newInstance(IBond.class,a14, a21, IBond.Order.SINGLE);
+        IBond b24 = builder.newInstance(IBond.class, a14, a21, IBond.Order.SINGLE);
         mol.addBond(b24);
-        IBond b25 = builder.newInstance(IBond.class,a19, a22, IBond.Order.SINGLE);
+        IBond b25 = builder.newInstance(IBond.class, a19, a22, IBond.Order.SINGLE);
         mol.addBond(b25);
-        IBond b26 = builder.newInstance(IBond.class,a22, a23, IBond.Order.SINGLE);
+        IBond b26 = builder.newInstance(IBond.class, a22, a23, IBond.Order.SINGLE);
         mol.addBond(b26);
-        IBond b27 = builder.newInstance(IBond.class,a23, a24, IBond.Order.SINGLE);
+        IBond b27 = builder.newInstance(IBond.class, a23, a24, IBond.Order.SINGLE);
         mol.addBond(b27);
-        IBond b28 = builder.newInstance(IBond.class,a24, a25, IBond.Order.SINGLE);
+        IBond b28 = builder.newInstance(IBond.class, a24, a25, IBond.Order.SINGLE);
         mol.addBond(b28);
-        IBond b29 = builder.newInstance(IBond.class,a25, a26, IBond.Order.SINGLE);
+        IBond b29 = builder.newInstance(IBond.class, a25, a26, IBond.Order.SINGLE);
         mol.addBond(b29);
-        IBond b30 = builder.newInstance(IBond.class,a26, a27, IBond.Order.SINGLE);
+        IBond b30 = builder.newInstance(IBond.class, a26, a27, IBond.Order.SINGLE);
         mol.addBond(b30);
-        IBond b31 = builder.newInstance(IBond.class,a27, a28, IBond.Order.SINGLE);
+        IBond b31 = builder.newInstance(IBond.class, a27, a28, IBond.Order.SINGLE);
         mol.addBond(b31);
-        IBond b32 = builder.newInstance(IBond.class,a28, a29, IBond.Order.SINGLE);
+        IBond b32 = builder.newInstance(IBond.class, a28, a29, IBond.Order.SINGLE);
         mol.addBond(b32);
-        IBond b33 = builder.newInstance(IBond.class,a3, a29, IBond.Order.SINGLE);
+        IBond b33 = builder.newInstance(IBond.class, a3, a29, IBond.Order.SINGLE);
         mol.addBond(b33);
-        IBond b34 = builder.newInstance(IBond.class,a27, a30, IBond.Order.SINGLE);
+        IBond b34 = builder.newInstance(IBond.class, a27, a30, IBond.Order.SINGLE);
         mol.addBond(b34);
-        IBond b35 = builder.newInstance(IBond.class,a30, a31, IBond.Order.SINGLE);
+        IBond b35 = builder.newInstance(IBond.class, a30, a31, IBond.Order.SINGLE);
         mol.addBond(b35);
-        IBond b36 = builder.newInstance(IBond.class,a3, a31, IBond.Order.SINGLE);
+        IBond b36 = builder.newInstance(IBond.class, a3, a31, IBond.Order.SINGLE);
         mol.addBond(b36);
-        IBond b37 = builder.newInstance(IBond.class,a27, a32, IBond.Order.SINGLE);
+        IBond b37 = builder.newInstance(IBond.class, a27, a32, IBond.Order.SINGLE);
         mol.addBond(b37);
-        IBond b38 = builder.newInstance(IBond.class,a32, a33, IBond.Order.SINGLE);
+        IBond b38 = builder.newInstance(IBond.class, a32, a33, IBond.Order.SINGLE);
         mol.addBond(b38);
-        IBond b39 = builder.newInstance(IBond.class,a24, a33, IBond.Order.SINGLE);
+        IBond b39 = builder.newInstance(IBond.class, a24, a33, IBond.Order.SINGLE);
         mol.addBond(b39);
-        IBond b40 = builder.newInstance(IBond.class,a24, a34, IBond.Order.SINGLE);
+        IBond b40 = builder.newInstance(IBond.class, a24, a34, IBond.Order.SINGLE);
         mol.addBond(b40);
-        IBond b41 = builder.newInstance(IBond.class,a34, a35, IBond.Order.SINGLE);
+        IBond b41 = builder.newInstance(IBond.class, a34, a35, IBond.Order.SINGLE);
         mol.addBond(b41);
-        IBond b42 = builder.newInstance(IBond.class,a19, a35, IBond.Order.SINGLE);
+        IBond b42 = builder.newInstance(IBond.class, a19, a35, IBond.Order.SINGLE);
         mol.addBond(b42);
         return mol;
     }
@@ -1667,239 +1642,240 @@ public class TestMoleculeFactory {
      * octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
      * @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
      */
-    @Test public static IAtomContainer makeGappedCyclophaneLike() {
+    @Test
+    public static IAtomContainer makeGappedCyclophaneLike() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFormalCharge(0);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFormalCharge(0);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFormalCharge(0);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFormalCharge(0);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFormalCharge(0);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFormalCharge(0);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
         a10.setFormalCharge(0);
         mol.addAtom(a10);
-        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        IAtom a11 = builder.newInstance(IAtom.class, "C");
         a11.setFormalCharge(0);
         mol.addAtom(a11);
-        IAtom a12 = builder.newInstance(IAtom.class,"C");
+        IAtom a12 = builder.newInstance(IAtom.class, "C");
         a12.setFormalCharge(0);
         mol.addAtom(a12);
-        IAtom a13 = builder.newInstance(IAtom.class,"C");
+        IAtom a13 = builder.newInstance(IAtom.class, "C");
         a13.setFormalCharge(0);
         mol.addAtom(a13);
-        IAtom a14 = builder.newInstance(IAtom.class,"C");
+        IAtom a14 = builder.newInstance(IAtom.class, "C");
         a14.setFormalCharge(0);
         mol.addAtom(a14);
-        IAtom a15 = builder.newInstance(IAtom.class,"C");
+        IAtom a15 = builder.newInstance(IAtom.class, "C");
         a15.setFormalCharge(0);
         mol.addAtom(a15);
-        IAtom a16 = builder.newInstance(IAtom.class,"C");
+        IAtom a16 = builder.newInstance(IAtom.class, "C");
         a16.setFormalCharge(0);
         mol.addAtom(a16);
-        IAtom a17 = builder.newInstance(IAtom.class,"C");
+        IAtom a17 = builder.newInstance(IAtom.class, "C");
         a17.setFormalCharge(0);
         mol.addAtom(a17);
-        IAtom a18 = builder.newInstance(IAtom.class,"C");
+        IAtom a18 = builder.newInstance(IAtom.class, "C");
         a18.setFormalCharge(0);
         mol.addAtom(a18);
-        IAtom a19 = builder.newInstance(IAtom.class,"C");
+        IAtom a19 = builder.newInstance(IAtom.class, "C");
         a19.setFormalCharge(0);
         mol.addAtom(a19);
-        IAtom a20 = builder.newInstance(IAtom.class,"C");
+        IAtom a20 = builder.newInstance(IAtom.class, "C");
         a20.setFormalCharge(0);
         mol.addAtom(a20);
-        IAtom a21 = builder.newInstance(IAtom.class,"C");
+        IAtom a21 = builder.newInstance(IAtom.class, "C");
         a21.setFormalCharge(0);
         mol.addAtom(a21);
-        IAtom a22 = builder.newInstance(IAtom.class,"C");
+        IAtom a22 = builder.newInstance(IAtom.class, "C");
         a22.setFormalCharge(0);
         mol.addAtom(a22);
-        IAtom a23 = builder.newInstance(IAtom.class,"C");
+        IAtom a23 = builder.newInstance(IAtom.class, "C");
         a23.setFormalCharge(0);
         mol.addAtom(a23);
-        IAtom a24 = builder.newInstance(IAtom.class,"C");
+        IAtom a24 = builder.newInstance(IAtom.class, "C");
         a24.setFormalCharge(0);
         mol.addAtom(a24);
-        IAtom a25 = builder.newInstance(IAtom.class,"C");
+        IAtom a25 = builder.newInstance(IAtom.class, "C");
         a25.setFormalCharge(0);
         mol.addAtom(a25);
-        IAtom a26 = builder.newInstance(IAtom.class,"C");
+        IAtom a26 = builder.newInstance(IAtom.class, "C");
         a26.setFormalCharge(0);
         mol.addAtom(a26);
-        IAtom a27 = builder.newInstance(IAtom.class,"C");
+        IAtom a27 = builder.newInstance(IAtom.class, "C");
         a27.setFormalCharge(0);
         mol.addAtom(a27);
-        IAtom a28 = builder.newInstance(IAtom.class,"C");
+        IAtom a28 = builder.newInstance(IAtom.class, "C");
         a28.setFormalCharge(0);
         mol.addAtom(a28);
-        IAtom a29 = builder.newInstance(IAtom.class,"C");
+        IAtom a29 = builder.newInstance(IAtom.class, "C");
         a29.setFormalCharge(0);
         mol.addAtom(a29);
-        IAtom a30 = builder.newInstance(IAtom.class,"C");
+        IAtom a30 = builder.newInstance(IAtom.class, "C");
         a30.setFormalCharge(0);
         mol.addAtom(a30);
-        IAtom a31 = builder.newInstance(IAtom.class,"C");
+        IAtom a31 = builder.newInstance(IAtom.class, "C");
         a31.setFormalCharge(0);
         mol.addAtom(a31);
-        IAtom a32 = builder.newInstance(IAtom.class,"C");
+        IAtom a32 = builder.newInstance(IAtom.class, "C");
         a32.setFormalCharge(0);
         mol.addAtom(a32);
-        IAtom a33 = builder.newInstance(IAtom.class,"C");
+        IAtom a33 = builder.newInstance(IAtom.class, "C");
         a33.setFormalCharge(0);
         mol.addAtom(a33);
-        IAtom a34 = builder.newInstance(IAtom.class,"C");
+        IAtom a34 = builder.newInstance(IAtom.class, "C");
         a34.setFormalCharge(0);
         mol.addAtom(a34);
-        IAtom a35 = builder.newInstance(IAtom.class,"C");
+        IAtom a35 = builder.newInstance(IAtom.class, "C");
         a35.setFormalCharge(0);
         mol.addAtom(a35);
-        IAtom a36 = builder.newInstance(IAtom.class,"C");
+        IAtom a36 = builder.newInstance(IAtom.class, "C");
         a36.setFormalCharge(0);
         mol.addAtom(a36);
-        IAtom a37 = builder.newInstance(IAtom.class,"C");
+        IAtom a37 = builder.newInstance(IAtom.class, "C");
         a37.setFormalCharge(0);
         mol.addAtom(a37);
-        IAtom a38 = builder.newInstance(IAtom.class,"C");
+        IAtom a38 = builder.newInstance(IAtom.class, "C");
         a38.setFormalCharge(0);
         mol.addAtom(a38);
-        IAtom a39 = builder.newInstance(IAtom.class,"C");
+        IAtom a39 = builder.newInstance(IAtom.class, "C");
         a39.setFormalCharge(0);
         mol.addAtom(a39);
-        IAtom a40 = builder.newInstance(IAtom.class,"C");
+        IAtom a40 = builder.newInstance(IAtom.class, "C");
         a40.setFormalCharge(0);
         mol.addAtom(a40);
-        IAtom a41 = builder.newInstance(IAtom.class,"C");
+        IAtom a41 = builder.newInstance(IAtom.class, "C");
         a41.setFormalCharge(0);
         mol.addAtom(a41);
-        IAtom a42 = builder.newInstance(IAtom.class,"C");
+        IAtom a42 = builder.newInstance(IAtom.class, "C");
         a42.setFormalCharge(0);
         mol.addAtom(a42);
-        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        IBond b3 = builder.newInstance(IBond.class, a3, a4, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a5, a6, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a5, a6, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a1, a6, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a1, a6, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a7, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        IBond b9 = builder.newInstance(IBond.class, a8, a9, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a9, a10, IBond.Order.SINGLE);
+        IBond b10 = builder.newInstance(IBond.class, a9, a10, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a10, a11, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a10, a11, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = builder.newInstance(IBond.class,a11, a12, IBond.Order.SINGLE);
+        IBond b12 = builder.newInstance(IBond.class, a11, a12, IBond.Order.SINGLE);
         mol.addBond(b12);
-        IBond b13 = builder.newInstance(IBond.class,a7, a12, IBond.Order.SINGLE);
+        IBond b13 = builder.newInstance(IBond.class, a7, a12, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = builder.newInstance(IBond.class,a10, a13, IBond.Order.SINGLE);
+        IBond b14 = builder.newInstance(IBond.class, a10, a13, IBond.Order.SINGLE);
         mol.addBond(b14);
-        IBond b15 = builder.newInstance(IBond.class,a13, a14, IBond.Order.SINGLE);
+        IBond b15 = builder.newInstance(IBond.class, a13, a14, IBond.Order.SINGLE);
         mol.addBond(b15);
-        IBond b16 = builder.newInstance(IBond.class,a14, a15, IBond.Order.SINGLE);
+        IBond b16 = builder.newInstance(IBond.class, a14, a15, IBond.Order.SINGLE);
         mol.addBond(b16);
-        IBond b17 = builder.newInstance(IBond.class,a15, a16, IBond.Order.SINGLE);
+        IBond b17 = builder.newInstance(IBond.class, a15, a16, IBond.Order.SINGLE);
         mol.addBond(b17);
-        IBond b18 = builder.newInstance(IBond.class,a16, a17, IBond.Order.SINGLE);
+        IBond b18 = builder.newInstance(IBond.class, a16, a17, IBond.Order.SINGLE);
         mol.addBond(b18);
-        IBond b19 = builder.newInstance(IBond.class,a17, a18, IBond.Order.SINGLE);
+        IBond b19 = builder.newInstance(IBond.class, a17, a18, IBond.Order.SINGLE);
         mol.addBond(b19);
-        IBond b20 = builder.newInstance(IBond.class,a13, a18, IBond.Order.SINGLE);
+        IBond b20 = builder.newInstance(IBond.class, a13, a18, IBond.Order.SINGLE);
         mol.addBond(b20);
-        IBond b21 = builder.newInstance(IBond.class,a16, a19, IBond.Order.SINGLE);
+        IBond b21 = builder.newInstance(IBond.class, a16, a19, IBond.Order.SINGLE);
         mol.addBond(b21);
-        IBond b22 = builder.newInstance(IBond.class,a19, a20, IBond.Order.SINGLE);
+        IBond b22 = builder.newInstance(IBond.class, a19, a20, IBond.Order.SINGLE);
         mol.addBond(b22);
-        IBond b23 = builder.newInstance(IBond.class,a20, a21, IBond.Order.SINGLE);
+        IBond b23 = builder.newInstance(IBond.class, a20, a21, IBond.Order.SINGLE);
         mol.addBond(b23);
-        IBond b24 = builder.newInstance(IBond.class,a21, a22, IBond.Order.SINGLE);
+        IBond b24 = builder.newInstance(IBond.class, a21, a22, IBond.Order.SINGLE);
         mol.addBond(b24);
-        IBond b25 = builder.newInstance(IBond.class,a22, a23, IBond.Order.SINGLE);
+        IBond b25 = builder.newInstance(IBond.class, a22, a23, IBond.Order.SINGLE);
         mol.addBond(b25);
-        IBond b26 = builder.newInstance(IBond.class,a23, a24, IBond.Order.SINGLE);
+        IBond b26 = builder.newInstance(IBond.class, a23, a24, IBond.Order.SINGLE);
         mol.addBond(b26);
-        IBond b27 = builder.newInstance(IBond.class,a19, a24, IBond.Order.SINGLE);
+        IBond b27 = builder.newInstance(IBond.class, a19, a24, IBond.Order.SINGLE);
         mol.addBond(b27);
-        IBond b28 = builder.newInstance(IBond.class,a22, a25, IBond.Order.SINGLE);
+        IBond b28 = builder.newInstance(IBond.class, a22, a25, IBond.Order.SINGLE);
         mol.addBond(b28);
-        IBond b29 = builder.newInstance(IBond.class,a25, a26, IBond.Order.SINGLE);
+        IBond b29 = builder.newInstance(IBond.class, a25, a26, IBond.Order.SINGLE);
         mol.addBond(b29);
-        IBond b30 = builder.newInstance(IBond.class,a26, a27, IBond.Order.SINGLE);
+        IBond b30 = builder.newInstance(IBond.class, a26, a27, IBond.Order.SINGLE);
         mol.addBond(b30);
-        IBond b31 = builder.newInstance(IBond.class,a27, a28, IBond.Order.SINGLE);
+        IBond b31 = builder.newInstance(IBond.class, a27, a28, IBond.Order.SINGLE);
         mol.addBond(b31);
-        IBond b32 = builder.newInstance(IBond.class,a28, a29, IBond.Order.SINGLE);
+        IBond b32 = builder.newInstance(IBond.class, a28, a29, IBond.Order.SINGLE);
         mol.addBond(b32);
-        IBond b33 = builder.newInstance(IBond.class,a29, a30, IBond.Order.SINGLE);
+        IBond b33 = builder.newInstance(IBond.class, a29, a30, IBond.Order.SINGLE);
         mol.addBond(b33);
-        IBond b34 = builder.newInstance(IBond.class,a25, a30, IBond.Order.SINGLE);
+        IBond b34 = builder.newInstance(IBond.class, a25, a30, IBond.Order.SINGLE);
         mol.addBond(b34);
-        IBond b35 = builder.newInstance(IBond.class,a28, a31, IBond.Order.SINGLE);
+        IBond b35 = builder.newInstance(IBond.class, a28, a31, IBond.Order.SINGLE);
         mol.addBond(b35);
-        IBond b36 = builder.newInstance(IBond.class,a31, a32, IBond.Order.SINGLE);
+        IBond b36 = builder.newInstance(IBond.class, a31, a32, IBond.Order.SINGLE);
         mol.addBond(b36);
-        IBond b37 = builder.newInstance(IBond.class,a32, a33, IBond.Order.SINGLE);
+        IBond b37 = builder.newInstance(IBond.class, a32, a33, IBond.Order.SINGLE);
         mol.addBond(b37);
-        IBond b38 = builder.newInstance(IBond.class,a33, a34, IBond.Order.SINGLE);
+        IBond b38 = builder.newInstance(IBond.class, a33, a34, IBond.Order.SINGLE);
         mol.addBond(b38);
-        IBond b39 = builder.newInstance(IBond.class,a34, a35, IBond.Order.SINGLE);
+        IBond b39 = builder.newInstance(IBond.class, a34, a35, IBond.Order.SINGLE);
         mol.addBond(b39);
-        IBond b40 = builder.newInstance(IBond.class,a35, a36, IBond.Order.SINGLE);
+        IBond b40 = builder.newInstance(IBond.class, a35, a36, IBond.Order.SINGLE);
         mol.addBond(b40);
-        IBond b41 = builder.newInstance(IBond.class,a31, a36, IBond.Order.SINGLE);
+        IBond b41 = builder.newInstance(IBond.class, a31, a36, IBond.Order.SINGLE);
         mol.addBond(b41);
-        IBond b42 = builder.newInstance(IBond.class,a34, a37, IBond.Order.SINGLE);
+        IBond b42 = builder.newInstance(IBond.class, a34, a37, IBond.Order.SINGLE);
         mol.addBond(b42);
-        IBond b43 = builder.newInstance(IBond.class,a37, a38, IBond.Order.SINGLE);
+        IBond b43 = builder.newInstance(IBond.class, a37, a38, IBond.Order.SINGLE);
         mol.addBond(b43);
-        IBond b44 = builder.newInstance(IBond.class,a38, a39, IBond.Order.SINGLE);
+        IBond b44 = builder.newInstance(IBond.class, a38, a39, IBond.Order.SINGLE);
         mol.addBond(b44);
-        IBond b45 = builder.newInstance(IBond.class,a39, a40, IBond.Order.SINGLE);
+        IBond b45 = builder.newInstance(IBond.class, a39, a40, IBond.Order.SINGLE);
         mol.addBond(b45);
-        IBond b46 = builder.newInstance(IBond.class,a3, a40, IBond.Order.SINGLE);
+        IBond b46 = builder.newInstance(IBond.class, a3, a40, IBond.Order.SINGLE);
         mol.addBond(b46);
-        IBond b47 = builder.newInstance(IBond.class,a40, a41, IBond.Order.SINGLE);
+        IBond b47 = builder.newInstance(IBond.class, a40, a41, IBond.Order.SINGLE);
         mol.addBond(b47);
-        IBond b48 = builder.newInstance(IBond.class,a41, a42, IBond.Order.SINGLE);
+        IBond b48 = builder.newInstance(IBond.class, a41, a42, IBond.Order.SINGLE);
         mol.addBond(b48);
-        IBond b49 = builder.newInstance(IBond.class,a37, a42, IBond.Order.SINGLE);
+        IBond b49 = builder.newInstance(IBond.class, a37, a42, IBond.Order.SINGLE);
         mol.addBond(b49);
         return mol;
     }
 
     private static void configureAtoms(IAtomContainer mol) {
         try {
-        	Isotopes.getInstance().configureAtoms(mol);
+            Isotopes.getInstance().configureAtoms(mol);
         } catch (Exception exc) {
             logger.error("Could not configure molecule!");
             logger.debug(exc);
@@ -1907,4 +1883,3 @@ public class TestMoleculeFactory {
     }
 
 }
-

@@ -38,15 +38,15 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public interface IAtomTypeGuesser {
 
-     /**
-      * Method that returns an iterator with a suitable list of atom types
-      * given the provided atom.
-      *
-      * @param  container AtomContainer of which the <code>atom</code> is part
-      * @param  atom      Atom for which a matching atom type is searched
-      * @return           The matching AtomTypes
-      * @throws           CDKException when something went wrong with going through
-      *                   the AtomType's
-      */
+    /**
+     * Method that returns an iterator with a suitable list of atom types
+     * given the provided atom.
+     *
+     * @param  container AtomContainer of which the <code>atom</code> is part
+     * @param  atom      Atom for which a matching atom type is searched
+     * @return           The matching AtomTypes
+     * @throws           CDKException when something went wrong with going through
+     *                   the AtomType's
+     */
     public List<IAtomType> possibleAtomTypes(IAtomContainer container, IAtom atom) throws CDKException;
 }

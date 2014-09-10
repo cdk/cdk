@@ -50,26 +50,10 @@ public class MinimumEquivalentCyclicSetUnionTest {
     @Test
     public void testFind() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
-        int[][] g = new int[][]{{1, 5, 6},
-                                {0, 2},
-                                {1, 3},
-                                {2, 4, 7},
-                                {3, 5},
-                                {0, 4},
-                                {0},
-                                {3}};
+        int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
         // mock the invariants
-        long[] values = new long[]{
-                1,
-                4,
-                3,
-                1,
-                3,
-                5,
-                7,
-                8
-        };
+        long[] values = new long[]{1, 4, 3, 1, 3, 5, 7, 8};
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
         Set<Integer> set = finder.find(values, dummy, g);
@@ -85,26 +69,10 @@ public class MinimumEquivalentCyclicSetUnionTest {
     @Test
     public void testFind_Distinct() throws Exception {
         IAtomContainer dummy = mock(IAtomContainer.class);
-        int[][] g = new int[][]{{1, 5, 6},
-                                {0, 2},
-                                {1, 3},
-                                {2, 4, 7},
-                                {3, 5},
-                                {0, 4},
-                                {0},
-                                {3}};
+        int[][] g = new int[][]{{1, 5, 6}, {0, 2}, {1, 3}, {2, 4, 7}, {3, 5}, {0, 4}, {0}, {3}};
 
         // mock the invariants
-        long[] values = new long[]{
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8
-        };
+        long[] values = new long[]{1, 2, 3, 4, 5, 6, 7, 8};
 
         EquivalentSetFinder finder = new AllEquivalentCyclicSet();
         Set<Integer> set = finder.find(values, dummy, g);
@@ -120,22 +88,18 @@ public class MinimumEquivalentCyclicSetUnionTest {
      * finder does not tell them apart but that a more comprehensive set finder
      * does.
      */
-    @Test public void testScenario() {
+    @Test
+    public void testScenario() {
 
         IAtomContainer cid4433798 = cid44333798();
         IAtomContainer cid57170558 = cid57170558();
 
-        MoleculeHashGenerator basic = new HashGeneratorMaker().depth(12)
-                                                              .elemental()
-                                                              .perturbed()
-                                                              .molecular();
+        MoleculeHashGenerator basic = new HashGeneratorMaker().depth(12).elemental().perturbed().molecular();
         // basic equivalence method can't tell these apart
         assertThat(basic.generate(cid4433798), is(basic.generate(cid57170558)));
 
-        MoleculeHashGenerator cmplx = new HashGeneratorMaker().depth(12)
-                                                              .elemental()
-                                                              .perturbWith(new MinimumEquivalentCyclicSetUnion())
-                                                              .molecular();
+        MoleculeHashGenerator cmplx = new HashGeneratorMaker().depth(12).elemental()
+                .perturbWith(new MinimumEquivalentCyclicSetUnion()).molecular();
 
         // complex equivalence method can tell these apart
         assertThat(cmplx.generate(cid4433798), is(not(cmplx.generate(cid57170558))));
@@ -148,40 +112,14 @@ public class MinimumEquivalentCyclicSetUnionTest {
      */
     private IAtomContainer cid44333798() {
         IAtomContainer m = new AtomContainer(14, 16, 0, 0);
-        IAtom[] as = new IAtom[]{
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("N"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-        };
-        IBond[] bs = new IBond[]{
-                new Bond(as[1], as[0]),
-                new Bond(as[2], as[1], DOUBLE),
-                new Bond(as[3], as[2]),
-                new Bond(as[4], as[3], DOUBLE),
-                new Bond(as[5], as[4]),
-                new Bond(as[6], as[5], DOUBLE),
-                new Bond(as[6], as[1]),
-                new Bond(as[7], as[4]),
-                new Bond(as[8], as[7]),
-                new Bond(as[9], as[8]),
-                new Bond(as[10], as[9]),
-                new Bond(as[11], as[10]),
-                new Bond(as[11], as[7]),
-                new Bond(as[12], as[11]),
-                new Bond(as[13], as[12]),
-                new Bond(as[13], as[8]),
-        };
+        IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("N"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("C"),};
+        IBond[] bs = new IBond[]{new Bond(as[1], as[0]), new Bond(as[2], as[1], DOUBLE), new Bond(as[3], as[2]),
+                new Bond(as[4], as[3], DOUBLE), new Bond(as[5], as[4]), new Bond(as[6], as[5], DOUBLE),
+                new Bond(as[6], as[1]), new Bond(as[7], as[4]), new Bond(as[8], as[7]), new Bond(as[9], as[8]),
+                new Bond(as[10], as[9]), new Bond(as[11], as[10]), new Bond(as[11], as[7]), new Bond(as[12], as[11]),
+                new Bond(as[13], as[12]), new Bond(as[13], as[8]),};
         m.setAtoms(as);
         m.setBonds(bs);
         return m;
@@ -194,40 +132,14 @@ public class MinimumEquivalentCyclicSetUnionTest {
      */
     private IAtomContainer cid57170558() {
         IAtomContainer m = new AtomContainer(14, 16, 0, 0);
-        IAtom[] as = new IAtom[]{
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("N"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-                new Atom("C"),
-        };
-        IBond[] bs = new IBond[]{
-                new Bond(as[1], as[0]),
-                new Bond(as[2], as[1], DOUBLE),
-                new Bond(as[3], as[2]),
-                new Bond(as[4], as[3], DOUBLE),
-                new Bond(as[5], as[4]),
-                new Bond(as[6], as[5], DOUBLE),
-                new Bond(as[6], as[1]),
-                new Bond(as[7], as[4]),
-                new Bond(as[8], as[7]),
-                new Bond(as[9], as[8]),
-                new Bond(as[10], as[9]),
-                new Bond(as[10], as[8]),
-                new Bond(as[11], as[7]),
-                new Bond(as[12], as[11]),
-                new Bond(as[13], as[12]),
-                new Bond(as[13], as[11]),
-        };
+        IAtom[] as = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("N"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("C"),};
+        IBond[] bs = new IBond[]{new Bond(as[1], as[0]), new Bond(as[2], as[1], DOUBLE), new Bond(as[3], as[2]),
+                new Bond(as[4], as[3], DOUBLE), new Bond(as[5], as[4]), new Bond(as[6], as[5], DOUBLE),
+                new Bond(as[6], as[1]), new Bond(as[7], as[4]), new Bond(as[8], as[7]), new Bond(as[9], as[8]),
+                new Bond(as[10], as[9]), new Bond(as[10], as[8]), new Bond(as[11], as[7]), new Bond(as[12], as[11]),
+                new Bond(as[13], as[12]), new Bond(as[13], as[11]),};
         m.setAtoms(as);
         m.setBonds(bs);
         return m;

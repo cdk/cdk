@@ -30,12 +30,10 @@ import org.junit.BeforeClass;
  */
 public class LineElementTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new LineElement(
-			0,0,1,1, 1.0, Color.orange
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new LineElement(0, 0, 1, 1, 1.0, Color.orange);
+        setRenderingElement(element);
+    }
 
 }

@@ -32,26 +32,29 @@ import static org.mockito.Mockito.when;
  */
 public class IsotopeDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IIsotope element1 = mock(IIsotope.class);
         String result = IsotopeDiff.diff(element1, element1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IIsotope element1 = mock(IIsotope.class);
         IIsotope element2 = mock(IIsotope.class);
         when(element1.getSymbol()).thenReturn("H");
         when(element2.getSymbol()).thenReturn("C");
 
-        String result = IsotopeDiff.diff( element1, element2 );
+        String result = IsotopeDiff.diff(element1, element2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "IsotopeDiff");
         assertContains(result, "H/C");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IIsotope element1 = mock(IIsotope.class);
         IIsotope element2 = mock(IIsotope.class);
         when(element1.getSymbol()).thenReturn("H");

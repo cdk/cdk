@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -38,26 +37,21 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({org.openscience.cdk.smsd.algorithm.single.SingleSuite.class,
-    org.openscience.cdk.smsd.algorithm.vflib.VflibSuite.class,
-    org.openscience.cdk.smsd.algorithm.mcsplus.McsplusSuite.class,
-    //        org.openscience.cdk.smsd.algorithm.mcgregor.McgregorSuite.class,
-    org.openscience.cdk.smsd.algorithm.rgraph.CdkSuite.class
-})
+        org.openscience.cdk.smsd.algorithm.vflib.VflibSuite.class,
+        org.openscience.cdk.smsd.algorithm.mcsplus.McsplusSuite.class,
+        //        org.openscience.cdk.smsd.algorithm.mcgregor.McgregorSuite.class,
+        org.openscience.cdk.smsd.algorithm.rgraph.CdkSuite.class})
 public class AlgorithmSuite {
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() throws Exception {
-    }
+    public void setUp() throws Exception {}
 
     @After
-    public void tearDown() throws Exception {
-    }
+    public void tearDown() throws Exception {}
 }

@@ -51,6 +51,7 @@ import static org.openscience.cdk.smiles.smarts.parser.SMARTSSearchTest.smiles;
  * @cdk.require ant1.6
  */
 public class RecursiveTest extends CDKTestCase {
+
     private int nmatch;
     private int nqmatch;
 
@@ -70,103 +71,120 @@ public class RecursiveTest extends CDKTestCase {
         }
     }
 
-    @Test public void testRecursiveSmarts1() throws Exception {
+    @Test
+    public void testRecursiveSmarts1() throws Exception {
         match("[$(*O);$(*CC)]", "O[Po]CC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts2() throws Exception {
+    @Test
+    public void testRecursiveSmarts2() throws Exception {
         match("[$(*O);$(*CC)]", "OCCC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts3() throws Exception {
+    @Test
+    public void testRecursiveSmarts3() throws Exception {
         match("[$(*O);$(*CC)]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts4() throws Exception {
+    @Test
+    public void testRecursiveSmarts4() throws Exception {
         match("[$(*O);$(*CC)]", "c1ncccc1C1CCCN1C");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts5() throws Exception {
+    @Test
+    public void testRecursiveSmarts5() throws Exception {
         match("[$(*O);$(*CC)]", "N12CCC36C1CC(C(C2)=CCOC4CC5=O)C4C3N5c7ccccc76");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts6() throws Exception {
+    @Test
+    public void testRecursiveSmarts6() throws Exception {
         match("[$([CX3]=[CX1]),$([CX3+]-[CX1-])]", "CN1C(=O)N(C)C(=O)C(N(C)C=N2)=C12");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts7() throws Exception {
+    @Test
+    public void testRecursiveSmarts7() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "c1ncccc1C1CCCN1C");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts8() throws Exception {
+    @Test
+    public void testRecursiveSmarts8() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "c1ccccc1C(=O)OC2CC(N3C)CCC3C2C(=O)OC");
         Assert.assertEquals(2, nmatch);
         Assert.assertEquals(2, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts9() throws Exception {
+    @Test
+    public void testRecursiveSmarts9() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "CCN(CC)C(=O)C1CN(C)C2CC3=CNc(ccc4)c3c4C2=C1");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts10() throws Exception {
+    @Test
+    public void testRecursiveSmarts10() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "CC[C+]([O-])C");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts11() throws Exception {
+    @Test
+    public void testRecursiveSmarts11() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "CCCCC[C+]([O-])CCCC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts12() throws Exception {
+    @Test
+    public void testRecursiveSmarts12() throws Exception {
         match("[$([CX3]=[OX1]),$([CX3+]-[OX1-])]", "CCCCCC(=O)CCCC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts13() throws Exception {
+    @Test
+    public void testRecursiveSmarts13() throws Exception {
         match("[$([C]aaO);$([C]aaaN)]", "c1c(C)c(O)c(N)cc1");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts14() throws Exception {
+    @Test
+    public void testRecursiveSmarts14() throws Exception {
         match("[$([C]aaO);$([C]aaaN)]", "Oc1c(C)cc(N)cc1");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts15() throws Exception {
+    @Test
+    public void testRecursiveSmarts15() throws Exception {
         match("[$([C]aaO);$([C]aaaN)]", "Oc1c(C)ccc(N)c1");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts16() throws Exception {
+    @Test
+    public void testRecursiveSmarts16() throws Exception {
         match("[$([C]aaO);$([C]aaaN)]", "c1c(C)c(N)c(O)cc1");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts17() throws Exception {
+    @Test
+    public void testRecursiveSmarts17() throws Exception {
         match("[$(C(=O)O),$(P(=O)),$(S(=O)O)]", "CC(=O)O");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
@@ -176,7 +194,8 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts18() throws Exception {
+    @Test
+    public void testRecursiveSmarts18() throws Exception {
         match("[!$([#6,H0,-,-2,-3])]", "CCNC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
@@ -186,8 +205,8 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(0, nqmatch);
     }
 
-
-    @Test public void testRecursiveSmarts19() throws Exception {
+    @Test
+    public void testRecursiveSmarts19() throws Exception {
         match("[!H0;#7,#8,#9]", "CCN(C)C");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
@@ -197,13 +216,15 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts20() throws Exception {
+    @Test
+    public void testRecursiveSmarts20() throws Exception {
         match("[C;D2;$(C(=C)(=C))]", "CCC=C=CC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts21() throws Exception {
+    @Test
+    public void testRecursiveSmarts21() throws Exception {
         match("[C;D2;H2;$(C(C)(C))]", "CC(C)CC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
@@ -213,7 +234,8 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(2, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts22() throws Exception {
+    @Test
+    public void testRecursiveSmarts22() throws Exception {
         match("[C;D3;H1;$(C(C)(C)(C))]", "C(C)(C)CC(C)(C)C");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
@@ -227,7 +249,8 @@ public class RecursiveTest extends CDKTestCase {
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts23() throws Exception {
+    @Test
+    public void testRecursiveSmarts23() throws Exception {
         match("[C;D2;H2;$(C(C)(C))]", "C(C)CC(C)(C)C");
         Assert.assertEquals(2, nmatch);
         Assert.assertEquals(2, nqmatch);
@@ -242,7 +265,8 @@ public class RecursiveTest extends CDKTestCase {
 
     }
 
-    @Test public void testRecursiveSmarts24() throws Exception {
+    @Test
+    public void testRecursiveSmarts24() throws Exception {
         match("[S;D2;$(S(C)(C))]", "CCSCC");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
@@ -257,141 +281,146 @@ public class RecursiveTest extends CDKTestCase {
 
     }
 
-    @Test public void testRecursiveSmarts25() throws Exception {
+    @Test
+    public void testRecursiveSmarts25() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts34() throws Exception {
+    @Test
+    public void testRecursiveSmarts34() throws Exception {
         match("[NX3;h2,h1,H1,H2;!$(NC=O)]", "NC1CCCC1C(CCNC)Cc1ccccc1N");
         Assert.assertEquals(3, nmatch);
         Assert.assertEquals(3, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts30() throws Exception {
+    @Test
+    public void testRecursiveSmarts30() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "CC1CCCC(C1)N1CCN(CC1)C1CCN(CC1)Cc1ccccc1");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts31() throws Exception {
+    @Test
+    public void testRecursiveSmarts31() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "CCOc1cc2c(cc1/C=C/C(=O)c1ccc(cc1)S(=O)(=O)N1CCCC1)OC(C2)C");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts32() throws Exception {
+    @Test
+    public void testRecursiveSmarts32() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "CN1CCc2cc3c(c(c2C1CC(=O)/C=C/c1ccco1)OC)OCO3");
         Assert.assertEquals(0, nmatch);
         Assert.assertEquals(0, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts33() throws Exception {
+    @Test
+    public void testRecursiveSmarts33() throws Exception {
         match("[NX3;H2,H1;!$(NC=O)]", "Cc1nc2=NC3=C(C(n2[nH]1)c1cc(cc(c1)F)F)C(=O)CC(C3)c1ccco1");
         Assert.assertEquals(1, nmatch);
         Assert.assertEquals(1, nqmatch);
     }
 
-    @Test public void testRecursiveSmarts26() throws Exception {
+    @Test
+    public void testRecursiveSmarts26() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S");
+        IAtomContainer smi = smiles("CCCc1cc(=O)nc([nH]1)S");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
     }
 
-    @Test public void testRecursiveSmarts26_cdkAromaticModel() throws Exception {
+    @Test
+    public void testRecursiveSmarts26_cdkAromaticModel() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1cc(=O)nc([nH]1)S");
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet()));
+        IAtomContainer smi = smiles("CCCc1cc(=O)nc([nH]1)S");
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(1, result[0]);
         Assert.assertEquals(1, result[1]);
     }
 
-    @Test public void testRecursiveSmarts27_cdkAromaticModel() throws Exception {
+    @Test
+    public void testRecursiveSmarts27_cdkAromaticModel() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet()));
+        IAtomContainer smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(1, result[0]);
         Assert.assertEquals(1, result[1]);
     }
 
-    @Test public void testRecursiveSmarts27() throws Exception {
+    @Test
+    public void testRecursiveSmarts27() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
+        IAtomContainer smi = smiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
     }
 
-    @Test public void testRecursive28() throws Exception {
+    @Test
+    public void testRecursive28() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
+        IAtomContainer smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
     }
 
-    @Test public void testRecursive28_cdkAromaticModel() throws Exception {
+    @Test
+    public void testRecursive28_cdkAromaticModel() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet()));
+        IAtomContainer smi = smiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(1, result[0]);
         Assert.assertEquals(1, result[1]);
     }
 
-    @Test public void testRecursive29() throws Exception {
+    @Test
+    public void testRecursive29() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
+        IAtomContainer smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(0, result[0]);
         Assert.assertEquals(0, result[1]);
     }
 
-    @Test public void nestedRecursion() throws Exception {
-        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"),
-                   is(new int[]{2, 2}));
-        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCN"),
-                   is(new int[]{1, 1}));
+    @Test
+    public void nestedRecursion() throws Exception {
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCCCN"), is(new int[]{2, 2}));
+        assertThat(SMARTSSearchTest.match("[$(*C[$(*C)$(**N)])]", "CCN"), is(new int[]{1, 1}));
     }
 
-    @Test public void testRecursive29_cdkAromaticModel() throws Exception {
+    @Test
+    public void testRecursive29_cdkAromaticModel() throws Exception {
         SMARTSQueryTool sqt = smarts("[NX3;H2,H1;!$(NC=O)]");
-        IAtomContainer  smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet()));
+        IAtomContainer smi = smiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(smi);
         int[] result = SMARTSSearchTest.match(sqt, smi);
         Assert.assertEquals(1, result[0]);
         Assert.assertEquals(1, result[1]);
     }
-
 
     @Category(SlowTest.class)
-    @Test public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
+    @Test
+    public void testBasicAmineOnDrugs_cdkAromaticModel() throws Exception {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
-        IteratingSMILESReader reader = new IteratingSMILESReader(
-            ins, DefaultChemObjectBuilder.getInstance()
-        );
+        IteratingSMILESReader reader = new IteratingSMILESReader(ins, DefaultChemObjectBuilder.getInstance());
 
         SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", DefaultChemObjectBuilder.getInstance());
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.cdkAromaticSet()));
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.cdkAromaticSet()));
         int nmatch = 0;
         int nmol = 0;
-        READ:
-        while (reader.hasNext()) {
+        READ: while (reader.hasNext()) {
             IAtomContainer container = reader.next();
             AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(container);
 
@@ -414,7 +443,8 @@ public class RecursiveTest extends CDKTestCase {
     }
 
     @Category(SlowTest.class)
-    @Test public void testBasicAmineOnDrugs() throws Exception {
+    @Test
+    public void testBasicAmineOnDrugs() throws Exception {
         String filename = "drugs.smi";
         InputStream ins = this.getClass().getResourceAsStream(filename);
 
@@ -422,7 +452,7 @@ public class RecursiveTest extends CDKTestCase {
 
         // iterating SMILES reader doesn't allow us to turn off automatic aromaticity
         // perception
-        SmilesParser    sp  = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
         int nmatch = 0;
         int nmol = 0;
@@ -440,10 +470,9 @@ public class RecursiveTest extends CDKTestCase {
     /**
      * @cdk.bug 1312
      */
-    @Test public void recursiveComponentGrouping() throws Exception {
-        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"),
-                   is(new int[]{1, 1}));
-        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"),
-                   is(new int[]{0, 0}));
+    @Test
+    public void recursiveComponentGrouping() throws Exception {
+        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1"), is(new int[]{1, 1}));
+        assertThat(SMARTSSearchTest.match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O"), is(new int[]{0, 0}));
     }
 }

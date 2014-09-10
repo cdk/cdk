@@ -54,8 +54,7 @@ import java.util.List;
 public final class HydrogenPlacer {
 
     /** Class logger. */
-    private static final ILoggingTool logger = LoggingToolFactory
-            .createLoggingTool(HydrogenPlacer.class);
+    private static final ILoggingTool logger = LoggingToolFactory.createLoggingTool(HydrogenPlacer.class);
 
     /**
      * Place all hydrogens connected to atoms which have already been laid out.
@@ -106,23 +105,19 @@ public final class HydrogenPlacer {
     @TestMethod("testNoConnections,testNullContainer,unplacedNonHydrogen")
     public void placeHydrogens2D(IAtomContainer container, IAtom atom, double bondLength) {
 
-        if (container == null)
-            throw new IllegalArgumentException("cannot place hydrogens, no container provided");
+        if (container == null) throw new IllegalArgumentException("cannot place hydrogens, no container provided");
         if (atom.getPoint2d() == null)
             throw new IllegalArgumentException("cannot place hydrogens on atom without coordinates");
 
-        logger.debug("placing hydrogens connected to atom ", atom.getSymbol(),
-                     ": ", atom.getPoint2d());
+        logger.debug("placing hydrogens connected to atom ", atom.getSymbol(), ": ", atom.getPoint2d());
         logger.debug("bond length", bondLength);
 
         AtomPlacer atomPlacer = new AtomPlacer();
         atomPlacer.setMolecule(container);
 
-        List<IAtom> connected   = container.getConnectedAtomsList(atom);
-        IAtomContainer placed   = container.getBuilder()
-                                           .newInstance(IAtomContainer.class);
-        IAtomContainer unplaced = container.getBuilder()
-                                           .newInstance(IAtomContainer.class);
+        List<IAtom> connected = container.getConnectedAtomsList(atom);
+        IAtomContainer placed = container.getBuilder().newInstance(IAtomContainer.class);
+        IAtomContainer unplaced = container.getBuilder().newInstance(IAtomContainer.class);
 
         // divide connected atoms into those which are have and haven't been placed
         for (final IAtom conAtom : connected) {
@@ -130,8 +125,8 @@ public final class HydrogenPlacer {
                 if (conAtom.getSymbol().equals("H")) {
                     unplaced.addAtom(conAtom);
                 } else {
-                    throw new IllegalArgumentException("cannot place hydrogens, atom has connected" +
-                                                               " non-hydrogens without coordinates");
+                    throw new IllegalArgumentException("cannot place hydrogens, atom has connected"
+                            + " non-hydrogens without coordinates");
                 }
             } else {
                 placed.addAtom(conAtom);
@@ -154,4 +149,3 @@ public final class HydrogenPlacer {
         }
     }
 }
-

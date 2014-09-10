@@ -30,60 +30,62 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  * @cdk.keyword SMARTS
  */
 public class ChiralityAtom extends SMARTSAtom {
-	/**
-	 * The degree of the chirality
-	 */
-	private int degree;
 
-	/**
-	 * Whether unspecified chirality should be taken into consideration
-	 */
-	private boolean unspecified;
+    /**
+     * The degree of the chirality
+     */
+    private int     degree;
 
-	/**
-	 * Whether the chirality is clockwise
-	 */
-	private boolean clockwise;
+    /**
+     * Whether unspecified chirality should be taken into consideration
+     */
+    private boolean unspecified;
+
+    /**
+     * Whether the chirality is clockwise
+     */
+    private boolean clockwise;
 
     public int getDegree() {
-		return degree;
-	}
+        return degree;
+    }
 
-	public void setDegree(int degree) {
-		this.degree = degree;
-	}
+    public void setDegree(int degree) {
+        this.degree = degree;
+    }
 
-	public boolean isUnspecified() {
-		return unspecified;
-	}
+    public boolean isUnspecified() {
+        return unspecified;
+    }
 
-	public void setUnspecified(boolean unspecified) {
-		this.unspecified = unspecified;
-	}
+    public void setUnspecified(boolean unspecified) {
+        this.unspecified = unspecified;
+    }
 
-	public boolean isClockwise() {
-		return clockwise;
-	}
+    public boolean isClockwise() {
+        return clockwise;
+    }
 
-	public void setClockwise(boolean clockwise) {
-		this.clockwise = clockwise;
-	}
+    public void setClockwise(boolean clockwise) {
+        this.clockwise = clockwise;
+    }
 
-	/**
+    /**
      * Creates a new instance
      *
      */
     public ChiralityAtom(IChemObjectBuilder builder) {
-    	super(builder);
+        super(builder);
     }
 
     public boolean matches(IAtom atom) {
-    	// match testing is done after the match is complete
+        // match testing is done after the match is complete
         return true;
     }
 
     /** @inheritDoc */
-    @Override public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
+    @Override
+    public boolean chiralityMatches(IAtom target, int tParity, int permParity) {
         int qParity = permParity * (clockwise ? 1 : -1);
         return unspecified && tParity == 0 || qParity == tParity;
     }

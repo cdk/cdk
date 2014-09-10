@@ -45,16 +45,16 @@ abstract class AbstractVFState extends State {
     protected static final int UNMAPPED = -1;
 
     /** Adjacency list representation of the containers. */
-    protected final int[][] g1, g2;
+    protected final int[][]    g1, g2;
 
     /** Mapping - m1 is the the mapping from g1 to g1, m2 is from g2 to g1. */
-    protected final int[] m1, m2;
+    protected final int[]      m1, m2;
 
     /** The (terminal) vertices which are adjacent to each mapped pair. */
-    protected final int[] t1, t2;
+    protected final int[]      t1, t2;
 
     /** Size of current solution - the number of vertices matched. */
-    protected int size;
+    protected int              size;
 
     /**
      * Create a state which will be used to match g1 in g2.
@@ -62,8 +62,7 @@ abstract class AbstractVFState extends State {
      * @param g1 find this graph
      * @param g2 search this graph
      */
-    public AbstractVFState(final int[][] g1,
-                           final int[][] g2) {
+    public AbstractVFState(final int[][] g1, final int[][] g2) {
         this.g1 = g1;
         this.g2 = g2;
         this.m1 = new int[g1.length];
@@ -86,15 +85,13 @@ abstract class AbstractVFState extends State {
      * @return the next value of n
      */
     @TestMethod("nextNAt0,nextNTerminal,nextNNonTerminal")
-    @Override final int nextN(int n) {
-        if (size == 0)
-            return 0;
+    @Override
+    final int nextN(int n) {
+        if (size == 0) return 0;
         for (int i = n + 1; i < g1.length; i++)
-            if (m1[i] == UNMAPPED && t1[i] > 0)
-                return i;
+            if (m1[i] == UNMAPPED && t1[i] > 0) return i;
         for (int i = n + 1; i < g1.length; i++)
-            if (m1[i] == UNMAPPED)
-                return i;
+            if (m1[i] == UNMAPPED) return i;
         return nMax();
     }
 
@@ -109,34 +106,35 @@ abstract class AbstractVFState extends State {
      * @return the next value of m
      */
     @TestMethod("nextMAt0,nextMTerminal,nextMNonTerminal")
-    @Override final int nextM(int n, int m) {
-        if (size == 0)
-            return m + 1;
+    @Override
+    final int nextM(int n, int m) {
+        if (size == 0) return m + 1;
         // if the query vertex 'n' is in the terminal set (t1) then the
         // target vertex must be in the terminal set (t2)
         for (int i = m + 1; i < g2.length; i++)
-            if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0))
-                return i;
+            if (m2[i] == UNMAPPED && (t1[n] == 0 || t2[i] > 0)) return i;
         return mMax();
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override final int nMax() {
+    @Override
+    final int nMax() {
         return g1.length;
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override final int mMax() {
+    @Override
+    final int mMax() {
         return g2.length;
     }
 
     /** @inheritDoc */
     @TestMethod("add,addNonFeasible")
-    @Override final boolean add(int n, int m) {
-        if (!feasible(n, m))
-            return false;
+    @Override
+    final boolean add(int n, int m) {
+        if (!feasible(n, m)) return false;
         m1[n] = m;
         m2[m] = n;
         size = size + 1;
@@ -149,7 +147,8 @@ abstract class AbstractVFState extends State {
 
     /** @inheritDoc */
     @TestMethod("remove")
-    @Override final void remove(int n, int m) {
+    @Override
+    final void remove(int n, int m) {
         m1[n] = m2[m] = UNMAPPED;
         size = size - 1;
         for (int w : g1[n])
@@ -170,13 +169,15 @@ abstract class AbstractVFState extends State {
 
     /** @inheritDoc */
     @TestMethod("copyMapping")
-    @Override int[] mapping() {
+    @Override
+    int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override int size() {
+    @Override
+    int size() {
         return size;
     }
 }

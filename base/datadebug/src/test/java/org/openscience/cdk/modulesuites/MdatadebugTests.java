@@ -65,46 +65,18 @@ import org.openscience.cdk.debug.DebugStrandTest;
  *
  * @cdk.module  test-datadebug
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    DatadebugCoverageTest.class,
-    DebugChemObjectBuilderTest.class,
-    DebugAminoAcidTest.class,
-    DebugAtomContainerTest.class,
-    DebugAtomTest.class,
-    DebugAtomTypeTest.class,
-    DebugBioPolymerTest.class,
-    DebugBondTest.class,
-    DebugChemObjectTest.class,
-    DebugChemFileTest.class,
-    DebugChemModelTest.class,
-    DebugChemSequenceTest.class,
-    DebugCrystalTest.class,
-    DebugElectronContainerTest.class,
-    DebugElementTest.class,
-    DebugFragmentAtomTest.class,
-    DebugIsotopeTest.class,
-    DebugLonePairTest.class,
-    DebugMappingTest.class,
-    DebugMonomerTest.class,
-    DebugPseudoAtomTest.class,
-    DebugPolymerTest.class,
-    DebugReactionTest.class,
-    DebugReactionSchemeTest.class,
-    DebugRingTest.class,
-    DebugRingSetTest.class,
-    DebugAtomContainerSetTest.class,
-    DebugReactionSetTest.class,
-    DebugSingleElectronTest.class,
-    DebugStrandTest.class,
-    DebugAdductFormulaTest.class,
-    DebugMolecularFormulaTest.class,
-    DebugMolecularFormulaSetTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {DatadebugCoverageTest.class, DebugChemObjectBuilderTest.class, DebugAminoAcidTest.class,
+        DebugAtomContainerTest.class, DebugAtomTest.class, DebugAtomTypeTest.class, DebugBioPolymerTest.class,
+        DebugBondTest.class, DebugChemObjectTest.class, DebugChemFileTest.class, DebugChemModelTest.class,
+        DebugChemSequenceTest.class, DebugCrystalTest.class, DebugElectronContainerTest.class, DebugElementTest.class,
+        DebugFragmentAtomTest.class, DebugIsotopeTest.class, DebugLonePairTest.class, DebugMappingTest.class,
+        DebugMonomerTest.class, DebugPseudoAtomTest.class, DebugPolymerTest.class, DebugReactionTest.class,
+        DebugReactionSchemeTest.class, DebugRingTest.class, DebugRingSetTest.class, DebugAtomContainerSetTest.class,
+        DebugReactionSetTest.class, DebugSingleElectronTest.class, DebugStrandTest.class, DebugAdductFormulaTest.class,
+        DebugMolecularFormulaTest.class, DebugMolecularFormulaSetTest.class,
 
-    // tests from test.protein.data
-    DebugPDBAtomTest.class,
-    DebugPDBMonomerTest.class,
-    DebugPDBPolymerTest.class,
-    DebugPDBStructureTest.class
-})
-public class MdatadebugTests {}
+        // tests from test.protein.data
+        DebugPDBAtomTest.class, DebugPDBMonomerTest.class, DebugPDBPolymerTest.class, DebugPDBStructureTest.class})
+public class MdatadebugTests {
+}

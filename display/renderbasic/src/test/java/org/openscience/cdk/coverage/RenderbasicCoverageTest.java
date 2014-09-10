@@ -29,11 +29,13 @@ public class RenderbasicCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "renderbasic.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, RenderbasicCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         Assert.assertTrue(super.runCoverageTest());
     }
 

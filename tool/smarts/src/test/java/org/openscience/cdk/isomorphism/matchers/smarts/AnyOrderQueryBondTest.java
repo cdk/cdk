@@ -34,23 +34,23 @@ import static org.mockito.Mockito.mock;
  */
 public class AnyOrderQueryBondTest extends CDKTestCase {
 
-	/**
-	 * @cdk.bug 1305
-	 */
-	@Test
-	public void testMatches() {
-		IBond testBond = null;
-		AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
-		Assert.assertFalse(matcher.matches(testBond));
-	}
+    /**
+     * @cdk.bug 1305
+     */
+    @Test
+    public void testMatches() {
+        IBond testBond = null;
+        AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
+        Assert.assertFalse(matcher.matches(testBond));
+    }
 
-	@Test
-	public void testAnyOrder() {
-		AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
-		IBond testBond = new Bond();
-		for (IBond.Order order : IBond.Order.values()) {
-			testBond.setOrder(order);
-			Assert.assertTrue(matcher.matches(testBond));
-		}
-	}
+    @Test
+    public void testAnyOrder() {
+        AnyOrderQueryBond matcher = new AnyOrderQueryBond(mock(IChemObjectBuilder.class));
+        IBond testBond = new Bond();
+        for (IBond.Order order : IBond.Order.values()) {
+            testBond.setOrder(order);
+            Assert.assertTrue(matcher.matches(testBond));
+        }
+    }
 }

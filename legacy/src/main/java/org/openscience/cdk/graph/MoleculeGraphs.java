@@ -43,56 +43,43 @@ import org.openscience.cdk.interfaces.IBond;
  */
 @TestClass("org.openscience.cdk.graph.MoleculeGraphsTest")
 public class MoleculeGraphs {
-	// make class non-instantiable
-	private MoleculeGraphs() {}
 
-	/**
-	 * Creates a molecule graph for use with jgrapht.
-	 * Bond orders are not respected.
-	 *
-	 * @param molecule the specified molecule
-	 * @return a graph representing the molecule
-	 */
+    // make class non-instantiable
+    private MoleculeGraphs() {}
+
+    /**
+     * Creates a molecule graph for use with jgrapht.
+     * Bond orders are not respected.
+     *
+     * @param molecule the specified molecule
+     * @return a graph representing the molecule
+     */
     @TestMethod("testGetMoleculeGraph_IAtomContainer")
     static public SimpleGraph getMoleculeGraph(IAtomContainer molecule) {
-		SimpleGraph graph = new SimpleGraph();
-		for (int i=0; i<molecule.getAtomCount(); i++) {
-			IAtom atom = molecule.getAtom(i);
-			graph.addVertex(atom);
-		}
+        SimpleGraph graph = new SimpleGraph();
+        for (int i = 0; i < molecule.getAtomCount(); i++) {
+            IAtom atom = molecule.getAtom(i);
+            graph.addVertex(atom);
+        }
 
-		for (int i=0; i<molecule.getBondCount(); i++	) {
-			IBond bond = molecule.getBond(i);
+        for (int i = 0; i < molecule.getBondCount(); i++) {
+            IBond bond = molecule.getBond(i);
 
-			/*
-			int order = (int) bond.getOrder();
-			for (int j=0; j<order; j++) {
-				graph.addEdge(bond.getAtoms()[0], bond.getAtoms()[1]);
-			}
-			*/
-			graph.addEdge(bond.getAtom(0), bond.getAtom(1));
-		}
-		return graph;
-	}
+            /*
+             * int order = (int) bond.getOrder(); for (int j=0; j<order; j++) {
+             * graph.addEdge(bond.getAtoms()[0], bond.getAtoms()[1]); }
+             */
+            graph.addEdge(bond.getAtom(0), bond.getAtom(1));
+        }
+        return graph;
+    }
 
-	/*
-	static public String asString(Graph molGraph) {
-		StringBuffer buf = new StringBuffer();
-		buf.append("[");
-
-	        Iterator i = molGraph.vertexSet().iterator();
-	        boolean hasNext = i.hasNext();
-	        while (hasNext) {
-	            Atom o = (Atom) i.next();
-	            buf.append(o.getSymbol());
-	            hasNext = i.hasNext();
-	            if (hasNext)
-	                buf.append(", ");
-	        }
-
-		buf.append("]");
-
-		return "(" + buf.toString() + ", " + molGraph.edgeSet().toString(  ) + ")";
-	}
-	*/
+    /*
+     * static public String asString(Graph molGraph) { StringBuffer buf = new
+     * StringBuffer(); buf.append("["); Iterator i =
+     * molGraph.vertexSet().iterator(); boolean hasNext = i.hasNext(); while
+     * (hasNext) { Atom o = (Atom) i.next(); buf.append(o.getSymbol()); hasNext
+     * = i.hasNext(); if (hasNext) buf.append(", "); } buf.append("]"); return
+     * "(" + buf.toString() + ", " + molGraph.edgeSet().toString( ) + ")"; }
+     */
 }

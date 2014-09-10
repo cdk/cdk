@@ -58,10 +58,10 @@ final class RegularPathGraph extends PathGraph {
     private final List<PathEdge>[] graph;
 
     /** Limit on the maximum length of cycle to be found. */
-    private final int limit;
+    private final int              limit;
 
     /** Indicates when each vertex will be removed, '0' = first, '|V|' = last. */
-    private final int[] rank;
+    private final int[]            rank;
 
     /**
      * Create a regular path graph (<b>P-Graph</b>) for the given molecule graph
@@ -79,25 +79,20 @@ final class RegularPathGraph extends PathGraph {
      */
     @SuppressWarnings("unchecked")
     @TestMethod("nullMGraph,limitTooLow,limitTooHigh")
-    RegularPathGraph(final int[][] mGraph,
-                     final int[]   rank,
-                     final int     limit) {
+    RegularPathGraph(final int[][] mGraph, final int[] rank, final int limit) {
 
         checkNotNull(mGraph, "no molecule graph");
-        checkNotNull(rank,   "no rank provided");
+        checkNotNull(rank, "no rank provided");
 
         this.graph = new List[mGraph.length];
-        this.rank  = rank;
+        this.rank = rank;
         this.limit = limit + 1; // first/last vertex repeats
-        int ord    = graph.length;
+        int ord = graph.length;
 
         // check configuration
-        checkArgument(ord > 2,
-                      "graph was acyclic");
-        checkArgument(limit >= 3 && limit <= ord,
-                      "limit should be from 3 to |V|");
-        checkArgument(ord < 64,
-                      "graph has 64 or more atoms, use JumboPathGraph");
+        checkArgument(ord > 2, "graph was acyclic");
+        checkArgument(limit >= 3 && limit <= ord, "limit should be from 3 to |V|");
+        checkArgument(ord < 64, "graph has 64 or more atoms, use JumboPathGraph");
 
         for (int v = 0; v < ord; v++)
             graph[v] = Lists.newArrayList();
@@ -162,8 +157,7 @@ final class RegularPathGraph extends PathGraph {
             PathEdge e = edges.get(i);
             for (int j = i + 1; j < n; j++) {
                 PathEdge f = edges.get(j);
-                if (e.disjoint(f))
-                    reduced.add(new ReducedEdge(e, f, x));
+                if (e.disjoint(f)) reduced.add(new ReducedEdge(e, f, x));
             }
         }
 
@@ -198,7 +192,7 @@ final class RegularPathGraph extends PathGraph {
     static abstract class PathEdge {
 
         /** Endpoints of the edge. */
-        final int u, v;
+        final int  u, v;
 
         /** Bits indicate reduced vertices between endpoints (exclusive). */
         final long xs;
@@ -212,8 +206,8 @@ final class RegularPathGraph extends PathGraph {
          * @param xs reduced vertices between endpoints
          */
         PathEdge(int u, int v, long xs) {
-            this.u  = u;
-            this.v  = v;
+            this.u = u;
+            this.v = v;
             this.xs = xs;
         }
 
@@ -280,8 +274,7 @@ final class RegularPathGraph extends PathGraph {
          * @return fixed size array of vertices which are in the path.
          */
         final int[] path() {
-            return reconstruct(new ArrayBuilder(len())
-                                       .append(either())).xs;
+            return reconstruct(new ArrayBuilder(len()).append(either())).xs;
         }
     }
 
@@ -299,12 +292,14 @@ final class RegularPathGraph extends PathGraph {
         }
 
         /** @inheritDoc */
-        @Override ArrayBuilder reconstruct(ArrayBuilder ab) {
+        @Override
+        ArrayBuilder reconstruct(ArrayBuilder ab) {
             return ab.append(other(ab.prev()));
         }
 
         /** @inheritDoc */
-        @Override int len() {
+        @Override
+        int len() {
             return 2;
         }
     }
@@ -333,13 +328,14 @@ final class RegularPathGraph extends PathGraph {
         }
 
         /** @inheritDoc */
-        @Override ArrayBuilder reconstruct(ArrayBuilder ab) {
-            return u == ab.prev() ? f.reconstruct(e.reconstruct(ab))
-                                  : e.reconstruct(f.reconstruct(ab));
+        @Override
+        ArrayBuilder reconstruct(ArrayBuilder ab) {
+            return u == ab.prev() ? f.reconstruct(e.reconstruct(ab)) : e.reconstruct(f.reconstruct(ab));
         }
 
         /** @inheritDoc */
-        @Override int len() {
+        @Override
+        int len() {
             return Long.bitCount(xs) + 2;
         }
     }

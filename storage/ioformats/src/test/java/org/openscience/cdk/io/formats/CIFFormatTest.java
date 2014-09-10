@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class CIFFormatTest extends ChemFormatMatcherTest {
 
     public CIFFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)CIFFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) CIFFormat.getInstance());
     }
 
 }

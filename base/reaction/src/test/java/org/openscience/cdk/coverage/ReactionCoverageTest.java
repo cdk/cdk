@@ -32,11 +32,13 @@ public class ReactionCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "reaction.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, ReactionCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 

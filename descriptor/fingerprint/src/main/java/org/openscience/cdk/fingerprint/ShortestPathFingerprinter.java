@@ -79,14 +79,14 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
     /**
      * The default length of created fingerprints.
      */
-    public final static int DEFAULT_SIZE = 1024;
-    private static final long serialVersionUID = 7867864332244557861L;
+    public final static int     DEFAULT_SIZE     = 1024;
+    private static final long   serialVersionUID = 7867864332244557861L;
     /**
      * The default length of created fingerprints.
      */
-    private int fingerprintLength;
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
+    private int                 fingerprintLength;
+    private static ILoggingTool logger           = LoggingToolFactory
+                                                         .createLoggingTool(ShortestPathFingerprinter.class);
 
     /**
      * Creates a fingerprint generator of length
@@ -115,9 +115,7 @@ public class ShortestPathFingerprinter extends RandomNumber implements IFingerpr
      */
     @Override
     @TestMethod("testgetBitFingerprint_IAtomContainer")
-    public IBitFingerprint getBitFingerprint(
-            IAtomContainer ac)
-            throws CDKException {
+    public IBitFingerprint getBitFingerprint(IAtomContainer ac) throws CDKException {
 
         IAtomContainer atomContainer = null;
         try {

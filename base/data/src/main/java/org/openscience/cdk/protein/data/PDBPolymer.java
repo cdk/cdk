@@ -45,76 +45,77 @@ import org.openscience.cdk.interfaces.IStrand;
  * @cdk.created 2006-04-19
  * @cdk.keyword polymer
  */
-public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer{
+public class PDBPolymer extends BioPolymer implements Cloneable, IPDBPolymer {
 
-	private static final long serialVersionUID = 4173552834313952358L;
+    private static final long serialVersionUID = 4173552834313952358L;
 
-	List<String> sequentialListOfMonomers;
-	List<IPDBStructure> secondaryStructures;
+    List<String>              sequentialListOfMonomers;
+    List<IPDBStructure>       secondaryStructures;
 
-	/**
-	 * Constructs a new Polymer to store the {@link IMonomer}s.
-	 */
-	public PDBPolymer() {
-		super();
-		sequentialListOfMonomers = new ArrayList<String>();
-		secondaryStructures = new ArrayList<IPDBStructure>();
-	}
+    /**
+     * Constructs a new Polymer to store the {@link IMonomer}s.
+     */
+    public PDBPolymer() {
+        super();
+        sequentialListOfMonomers = new ArrayList<String>();
+        secondaryStructures = new ArrayList<IPDBStructure>();
+    }
 
-	public void addStructure(IPDBStructure structure) {
-		secondaryStructures.add(structure);
-	}
+    public void addStructure(IPDBStructure structure) {
+        secondaryStructures.add(structure);
+    }
 
-	public Collection<IPDBStructure> getStructures() {
-//		don't return the original
-		return new ArrayList<IPDBStructure>(secondaryStructures);
-	}
-	/**
-	 * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
-	 * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
-	 * e.g. for HETATMs).
-	 *
-	 * @param oAtom  The {@link IPDBAtom} to add
-	 */
-	public void addAtom(IPDBAtom oAtom){
-		super.addAtom(oAtom);
-	}
+    public Collection<IPDBStructure> getStructures() {
+        //		don't return the original
+        return new ArrayList<IPDBStructure>(secondaryStructures);
+    }
 
-	/**
-	 * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-	 * record of the iCode.
-	 *
-	 * @param oAtom  The IPDBAtom to add
-	 * @param oMonomer  The monomer the atom belongs to
-	 */
-	public void addAtom(IPDBAtom oAtom, IMonomer oMonomer) {
-		super.addAtom(oAtom, oMonomer);
-		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
-			sequentialListOfMonomers.add(oMonomer.getMonomerName());
-	}
+    /**
+     * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
+     * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
+     * e.g. for HETATMs).
+     *
+     * @param oAtom  The {@link IPDBAtom} to add
+     */
+    public void addAtom(IPDBAtom oAtom) {
+        super.addAtom(oAtom);
+    }
 
-	/**
-	 * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
-	 * Additionally, it keeps record of the iCode.
-	 *
-	 * @param oAtom  The IPDBAtom to add
-	 * @param oMonomer  The monomer the atom belongs to
-	 */
-	public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
-		super.addAtom(oAtom, oMonomer, oStrand);
-		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
-			sequentialListOfMonomers.add(oMonomer.getMonomerName());
-	}
+    /**
+     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+     * record of the iCode.
+     *
+     * @param oAtom  The IPDBAtom to add
+     * @param oMonomer  The monomer the atom belongs to
+     */
+    public void addAtom(IPDBAtom oAtom, IMonomer oMonomer) {
+        super.addAtom(oAtom, oMonomer);
+        if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
+            sequentialListOfMonomers.add(oMonomer.getMonomerName());
+    }
 
-	/**
-	 * Returns the monomer names in the order in which they were added.
-	 *
-	 * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
-	 */
-	public Collection<String> getMonomerNamesInSequentialOrder() {
-		// don't return the original
-		return new ArrayList<String>(sequentialListOfMonomers);
-	}
+    /**
+     * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
+     * Additionally, it keeps record of the iCode.
+     *
+     * @param oAtom  The IPDBAtom to add
+     * @param oMonomer  The monomer the atom belongs to
+     */
+    public void addAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand) {
+        super.addAtom(oAtom, oMonomer, oStrand);
+        if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
+            sequentialListOfMonomers.add(oMonomer.getMonomerName());
+    }
+
+    /**
+     * Returns the monomer names in the order in which they were added.
+     *
+     * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
+     */
+    public Collection<String> getMonomerNamesInSequentialOrder() {
+        // don't return the original
+        return new ArrayList<String>(sequentialListOfMonomers);
+    }
 
     /**
      * @inheritDoc

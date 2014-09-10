@@ -43,15 +43,18 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setChemObjectIO(new CDKSourceCodeWriter());
     }
 
-    @Test public void testAccepts() throws Exception {
-    	Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() throws Exception {
+        Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
-    @Test public void testOutput() throws Exception {
+    @Test
+    public void testOutput() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         Atom atom = new Atom("C");
@@ -66,12 +69,9 @@ public class CDKSourceCodeWriterTest extends ChemObjectIOTest {
 
         GroovyShell shell = new GroovyShell();
         shell.evaluate(
-            // import the classes used in the output
-            "import org.openscience.cdk.interfaces.*;" +
-            "import org.openscience.cdk.*;" +
-            // compensate for the write to wrap the output in { ... }
-            "if (true) " +
-            output
-        );
+        // import the classes used in the output
+        "import org.openscience.cdk.interfaces.*;" + "import org.openscience.cdk.*;" +
+        // compensate for the write to wrap the output in { ... }
+                "if (true) " + output);
     }
 }

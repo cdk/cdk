@@ -79,7 +79,7 @@ public final class MinimumCycleBasis {
     private final GreedyBasis basis;
 
     /** The graph used to form the basis. */
-    final int[][] graph;
+    final int[][]             graph;
 
     /**
      * Generate the minimum cycle basis for a graph.
@@ -121,18 +121,15 @@ public final class MinimumCycleBasis {
         checkNotNull(initial, "No InitialCycles provided");
 
         this.graph = initial.graph();
-        this.basis = new GreedyBasis(initial.numberOfCycles(),
-                                     initial.numberOfEdges());
+        this.basis = new GreedyBasis(initial.numberOfCycles(), initial.numberOfEdges());
 
         // a undirected unweighted connected graph there are |E| - (|V| + 1)
         // cycles in the minimum basis
-        int lim = connected ? initial.numberOfEdges() - graph.length + 1
-                            : Integer.MAX_VALUE;
+        int lim = connected ? initial.numberOfEdges() - graph.length + 1 : Integer.MAX_VALUE;
 
         // processing by size add cycles which are independent of smaller cycles
         for (final Cycle cycle : initial.cycles()) {
-            if (basis.size() < lim && basis.isIndependent(cycle))
-                basis.add(cycle);
+            if (basis.size() < lim && basis.isIndependent(cycle)) basis.add(cycle);
         }
     }
 
@@ -141,8 +138,7 @@ public final class MinimumCycleBasis {
      *
      * @return array of vertex paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
-                        "paths_cyclophane_odd,paths_cyclophane_even")
+    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_odd,paths_cyclophane_even")
     public int[][] paths() {
         final int[][] paths = new int[size()][0];
         int i = 0;
@@ -156,8 +152,7 @@ public final class MinimumCycleBasis {
      *
      * @return size of minimum cycle set
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," +
-                        "size_cyclophane_odd,size_cyclophane_even")
+    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
         return basis.size();
     }

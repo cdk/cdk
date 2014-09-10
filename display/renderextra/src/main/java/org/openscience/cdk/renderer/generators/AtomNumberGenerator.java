@@ -53,11 +53,11 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.AtomNumberGeneratorTest")
 public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
-	/** Color to draw the atom numbers with. */
-    public static class AtomNumberTextColor extends
-        AbstractGeneratorParameter<Color> {
-    	/** {@inheritDoc} */
-    	public Color getDefault() {
+    /** Color to draw the atom numbers with. */
+    public static class AtomNumberTextColor extends AbstractGeneratorParameter<Color> {
+
+        /** {@inheritDoc} */
+        public Color getDefault() {
             return Color.BLACK;
         }
     }
@@ -66,94 +66,80 @@ public class AtomNumberGenerator implements IGenerator<IAtomContainer> {
 
     /** Boolean parameter indicating if atom numbers should be drawn, allowing
      * this feature to be disabled temporarily. */
-    public static class WillDrawAtomNumbers extends
-                        AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc} */
+    public static class WillDrawAtomNumbers extends AbstractGeneratorParameter<Boolean> {
+
+        /** {@inheritDoc} */
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
-    private WillDrawAtomNumbers willDrawAtomNumbers =
-    	new WillDrawAtomNumbers();
+
+    private WillDrawAtomNumbers willDrawAtomNumbers = new WillDrawAtomNumbers();
 
     /** The color scheme by which to color the atom numbers, if
      * the {@link ColorByType} boolean is true. */
-    public static class AtomColorer extends
-    AbstractGeneratorParameter<IAtomColorer> {
-    	/** {@inheritDoc} */
-    	public IAtomColorer getDefault() {
-    		return new CDK2DAtomColors();
-    	}
+    public static class AtomColorer extends AbstractGeneratorParameter<IAtomColorer> {
+
+        /** {@inheritDoc} */
+        public IAtomColorer getDefault() {
+            return new CDK2DAtomColors();
+        }
     }
+
     private IGeneratorParameter<IAtomColorer> atomColorer = new AtomColorer();
 
     /** Boolean to indicate of the {@link AtomColorer} scheme will be used. */
-    public static class ColorByType extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc} */
-    	public Boolean getDefault() {
-    		return Boolean.FALSE;
-    	}
+    public static class ColorByType extends AbstractGeneratorParameter<Boolean> {
+
+        /** {@inheritDoc} */
+        public Boolean getDefault() {
+            return Boolean.FALSE;
+        }
     }
+
     private IGeneratorParameter<Boolean> colorByType = new ColorByType();
 
     /**
      * Offset vector in screen space coordinates where the atom number label
      * will be placed.
      */
-    public static class Offset extends
-    AbstractGeneratorParameter<Vector2d> {
-    	/** {@inheritDoc} */
-    	public Vector2d getDefault() {
-    		return new Vector2d();
-    	}
+    public static class Offset extends AbstractGeneratorParameter<Vector2d> {
+
+        /** {@inheritDoc} */
+        public Vector2d getDefault() {
+            return new Vector2d();
+        }
     }
+
     private Offset offset = new Offset();
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEmptyContainer")
-	public IRenderingElement generate(IAtomContainer container, RendererModel model) {
-		ElementGroup numbers = new ElementGroup();
-		if (!model.getParameter(WillDrawAtomNumbers.class).getValue())
-		    return numbers;
+    public IRenderingElement generate(IAtomContainer container, RendererModel model) {
+        ElementGroup numbers = new ElementGroup();
+        if (!model.getParameter(WillDrawAtomNumbers.class).getValue()) return numbers;
 
-		Vector2d offset = new Vector2d(
-			this.offset.getValue().x,
-			-this.offset.getValue().y
-		);
-		offset.scale( 1/model.getParameter(Scale.class).getValue() );
+        Vector2d offset = new Vector2d(this.offset.getValue().x, -this.offset.getValue().y);
+        offset.scale(1 / model.getParameter(Scale.class).getValue());
 
-		int number = 1;
-		for (IAtom atom : container.atoms()) {
-			Point2d point = new Point2d(atom.getPoint2d());
-			point.add( offset );
-			numbers.add(
-				new TextElement(
-					point.x, point.y, String.valueOf(number),
-					colorByType.getValue() ?
-						atomColorer.getValue().getAtomColor(atom)
-						: textColor.getValue()
-				)
-			);
-			number++;
-		}
-		return numbers;
-	}
-
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
-    public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList( new IGeneratorParameter<?>[] {
-                textColor,
-                willDrawAtomNumbers,
-                offset,
-                atomColorer,
-                colorByType
-            }
-        );
+        int number = 1;
+        for (IAtom atom : container.atoms()) {
+            Point2d point = new Point2d(atom.getPoint2d());
+            point.add(offset);
+            numbers.add(new TextElement(point.x, point.y, String.valueOf(number), colorByType.getValue() ? atomColorer
+                    .getValue().getAtomColor(atom) : textColor.getValue()));
+            number++;
+        }
+        return numbers;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(new IGeneratorParameter<?>[]{textColor, willDrawAtomNumbers, offset, atomColorer,
+                colorByType});
+    }
 
 }

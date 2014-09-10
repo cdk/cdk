@@ -91,14 +91,14 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
 @TestClass("org.openscience.cdk.inchi.InChIToStructureTest")
 public class InChIToStructure {
 
-protected JniInchiInputInchi input;
+    protected JniInchiInputInchi      input;
 
     protected JniInchiOutputStructure output;
 
-    protected IAtomContainer molecule;
+    protected IAtomContainer          molecule;
 
     // magic number - indicates isotope mass is relative
-    private static final int ISOTOPIC_SHIFT_FLAG = 10000;
+    private static final int          ISOTOPIC_SHIFT_FLAG = 10000;
 
     /**
      * Constructor. Generates CDK AtomContainer from InChI.
@@ -164,7 +164,7 @@ protected JniInchiInputInchi input;
 
         Map<JniInchiAtom, IAtom> inchiCdkAtomMap = new HashMap<JniInchiAtom, IAtom>();
 
-        for (int i = 0; i < output.getNumAtoms(); i ++) {
+        for (int i = 0; i < output.getNumAtoms(); i++) {
             JniInchiAtom iAt = output.getAtom(i);
             IAtom cAt = builder.newInstance(IAtom.class);
 
@@ -187,15 +187,12 @@ protected JniInchiInputInchi input;
             if (isotopicMass != 0) {
                 if (ISOTOPIC_SHIFT_FLAG == (isotopicMass & ISOTOPIC_SHIFT_FLAG)) {
                     try {
-                        int massNumber = Isotopes.getInstance()
-                                           .getMajorIsotope(cAt.getAtomicNumber())
-                                           .getMassNumber();
+                        int massNumber = Isotopes.getInstance().getMajorIsotope(cAt.getAtomicNumber()).getMassNumber();
                         cAt.setMassNumber(massNumber + (isotopicMass - ISOTOPIC_SHIFT_FLAG));
                     } catch (IOException e) {
                         throw new CDKException("Could not load Isotopes data", e);
                     }
-                }
-                else {
+                } else {
                     cAt.setMassNumber(isotopicMass);
                 }
             }
@@ -203,7 +200,7 @@ protected JniInchiInputInchi input;
             molecule.addAtom(cAt);
         }
 
-        for (int i = 0; i < output.getNumBonds(); i ++) {
+        for (int i = 0; i < output.getNumBonds(); i++) {
             JniInchiBond iBo = output.getBond(i);
             IBond cBo = builder.newInstance(IBond.class);
 
@@ -250,28 +247,23 @@ protected JniInchiInputInchi input;
                 cBo.setStereo(IBond.Stereo.UP_INVERTED);
             }
             // Bond with undefined stereochemistry
-            else if (stereo == INCHI_BOND_STEREO.SINGLE_1EITHER
-                  || stereo == INCHI_BOND_STEREO.DOUBLE_EITHER) {
-                cBo.setStereo((IBond.Stereo)CDKConstants.UNSET);
+            else if (stereo == INCHI_BOND_STEREO.SINGLE_1EITHER || stereo == INCHI_BOND_STEREO.DOUBLE_EITHER) {
+                cBo.setStereo((IBond.Stereo) CDKConstants.UNSET);
             }
 
             molecule.addBond(cBo);
         }
 
-        for (int i = 0; i < output.getNumStereo0D(); i ++) {
+        for (int i = 0; i < output.getNumStereo0D(); i++) {
             JniInchiStereo0D stereo0d = output.getStereo0D(i);
-            if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL ||
-                    stereo0d.getStereoType() == INCHI_STEREOTYPE.ALLENE) {
-                JniInchiAtom   central    = stereo0d.getCentralAtom();
+            if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL
+                    || stereo0d.getStereoType() == INCHI_STEREOTYPE.ALLENE) {
+                JniInchiAtom central = stereo0d.getCentralAtom();
                 JniInchiAtom[] neighbours = stereo0d.getNeighbors();
 
                 IAtom focus = inchiCdkAtomMap.get(central);
-                IAtom[] neighbors = new IAtom[]{
-                        inchiCdkAtomMap.get(neighbours[0]),
-                        inchiCdkAtomMap.get(neighbours[1]),
-                        inchiCdkAtomMap.get(neighbours[2]),
-                        inchiCdkAtomMap.get(neighbours[3])
-                };
+                IAtom[] neighbors = new IAtom[]{inchiCdkAtomMap.get(neighbours[0]), inchiCdkAtomMap.get(neighbours[1]),
+                        inchiCdkAtomMap.get(neighbours[2]), inchiCdkAtomMap.get(neighbours[3])};
                 ITetrahedralChirality.Stereo stereo;
 
                 // as per JNI InChI doc even is clockwise and odd is
@@ -288,10 +280,7 @@ protected JniInchiInputInchi input;
                 IStereoElement stereoElement = null;
 
                 if (stereo0d.getStereoType() == INCHI_STEREOTYPE.TETRAHEDRAL) {
-                    stereoElement = builder.newInstance(ITetrahedralChirality.class,
-                                                        focus,
-                                                        neighbors,
-                                                        stereo);
+                    stereoElement = builder.newInstance(ITetrahedralChirality.class, focus, neighbors, stereo);
                 } else if (stereo0d.getStereoType() == INCHI_STEREOTYPE.ALLENE) {
 
                     // The periphals (p<i>) and terminals (t<i>) are refering to
@@ -303,7 +292,7 @@ protected JniInchiInputInchi input;
                     //    /         \
                     //   p1         p3
                     IAtom[] peripherals = neighbors;
-                    IAtom[] terminals   = ExtendedTetrahedral.findTerminalAtoms(molecule, focus);
+                    IAtom[] terminals = ExtendedTetrahedral.findTerminalAtoms(molecule, focus);
 
                     // InChI always provides the terminal atoms t0 and t1 as
                     // periphals, here we find where they are and then add in
@@ -328,9 +317,7 @@ protected JniInchiInputInchi input;
                         }
                     }
 
-                    stereoElement = new ExtendedTetrahedral(focus,
-                                                            peripherals,
-                                                            stereo);
+                    stereoElement = new ExtendedTetrahedral(focus, peripherals, stereo);
                 }
 
                 assert stereoElement != null;
@@ -366,15 +353,10 @@ protected JniInchiInputInchi input;
                 }
 
                 // unspecified not stored
-                if (conformation == null)
-                    continue;
+                if (conformation == null) continue;
 
-                molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond,
-                                                                        new IBond[]{
-                                                                                molecule.getBond(x, a),
-                                                                                molecule.getBond(b, y)
-                                                                        },
-                                                                        conformation));
+                molecule.addStereoElement(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.getBond(x, a),
+                        molecule.getBond(b, y)}, conformation));
             } else {
                 // TODO - other types of atom parity - double bond, etc
             }
@@ -392,8 +374,7 @@ protected JniInchiInputInchi input;
      */
     private static IAtom findOtherSinglyBonded(IAtomContainer container, IAtom atom, IAtom exclude) {
         for (final IBond bond : container.getConnectedBondsList(atom)) {
-            if (!IBond.Order.SINGLE.equals(bond.getOrder()) || bond.contains(exclude))
-                continue;
+            if (!IBond.Order.SINGLE.equals(bond.getOrder()) || bond.contains(exclude)) continue;
             return bond.getConnectedAtom(atom);
         }
         return atom;
@@ -405,9 +386,8 @@ protected JniInchiInputInchi input;
      */
     @TestMethod("testGetAtomContainer")
     public IAtomContainer getAtomContainer() {
-        return(molecule);
+        return (molecule);
     }
-
 
     /**
      * Gets return status from InChI process.  OKAY and WARNING indicate
@@ -416,7 +396,7 @@ protected JniInchiInputInchi input;
      */
     @TestMethod("testGetReturnStatus_EOF")
     public INCHI_RET getReturnStatus() {
-        return(output.getReturnStatus());
+        return (output.getReturnStatus());
     }
 
     /**
@@ -424,7 +404,7 @@ protected JniInchiInputInchi input;
      */
     @TestMethod("testGetMessage")
     public String getMessage() {
-        return(output.getMessage());
+        return (output.getMessage());
     }
 
     /**
@@ -432,7 +412,7 @@ protected JniInchiInputInchi input;
      */
     @TestMethod("testGetLog")
     public String getLog() {
-        return(output.getLog());
+        return (output.getLog());
     }
 
     /**
@@ -446,7 +426,7 @@ protected JniInchiInputInchi input;
      */
     @TestMethod("testGetWarningFlags")
     public long[][] getWarningFlags() {
-        return(output.getWarningFlags());
+        return (output.getWarningFlags());
     }
 
 }

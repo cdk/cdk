@@ -54,19 +54,19 @@ import java.util.Map;
 final class CorrectGeometricConfiguration {
 
     /** The structure we are assigning labels to. */
-    private final IAtomContainer container;
+    private final IAtomContainer      container;
 
     /** Adjacency list graph representation of the structure. */
-    private final int[][] graph;
+    private final int[][]             graph;
 
     /** Lookup atom index (avoid IAtomContainer). */
     private final Map<IAtom, Integer> atomToIndex;
 
     /** Test if a bond is cyclic. */
-    private final RingSearch ringSearch;
+    private final RingSearch          ringSearch;
 
     /** Visited flags when atoms are being reflected. */
-    private final boolean[] visited;
+    private final boolean[]           visited;
 
     /**
      * Adjust all double bond elements in the provided structure. <b>IMPORTANT:
@@ -78,8 +78,7 @@ final class CorrectGeometricConfiguration {
      * @throws IllegalArgumentException an atom had unset coordinates
      */
     public static IAtomContainer correct(IAtomContainer container) {
-        if (!Iterables.isEmpty(container.stereoElements()))
-            new CorrectGeometricConfiguration(container);
+        if (!Iterables.isEmpty(container.stereoElements())) new CorrectGeometricConfiguration(container);
         return container;
     }
 
@@ -110,8 +109,7 @@ final class CorrectGeometricConfiguration {
         for (int i = 0; i < container.getAtomCount(); i++) {
             IAtom atom = container.getAtom(i);
             atomToIndex.put(atom, i);
-            if (atom.getPoint2d() == null)
-                throw new IllegalArgumentException("atom " + i + " had unset coordinates");
+            if (atom.getPoint2d() == null) throw new IllegalArgumentException("atom " + i + " had unset coordinates");
         }
 
         for (IStereoElement element : container.stereoElements()) {
@@ -135,8 +133,8 @@ final class CorrectGeometricConfiguration {
         IAtom right = db.getAtom(1);
 
         int p = parity(dbs);
-        int q = parity(getAtoms(left, bonds[0].getConnectedAtom(left), right)) *
-                parity(getAtoms(right, bonds[1].getConnectedAtom(right), left));
+        int q = parity(getAtoms(left, bonds[0].getConnectedAtom(left), right))
+                * parity(getAtoms(right, bonds[1].getConnectedAtom(right), left));
 
         // configuration is unspecified? then we add an unspecified bond.
         // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -150,23 +148,21 @@ final class CorrectGeometricConfiguration {
         }
 
         // configuration is already correct
-        if (p == q)
-            return;
+        if (p == q) return;
 
         // incorrect configuration but cyclic if we reflect coordinate
         // we'll still have the same configuration. this needs to be
         // handled by the layout
         if (ringSearch.cyclic(atomToIndex.get(left), atomToIndex.get(right))) {
-            LoggingToolFactory.createLoggingTool(getClass())
-                              .error("cannot correct cyclic double-bond stereo configuration");
+            LoggingToolFactory.createLoggingTool(getClass()).error(
+                    "cannot correct cyclic double-bond stereo configuration");
             return;
         }
 
         Arrays.fill(visited, false);
         visited[atomToIndex.get(left)] = true;
         for (int w : graph[atomToIndex.get(right)]) {
-            if (!visited[w])
-                reflect(w, db);
+            if (!visited[w]) reflect(w, db);
         }
     }
 
@@ -186,14 +182,9 @@ final class CorrectGeometricConfiguration {
         IAtom otherSubstituent = focus;
         for (int w : graph[atomToIndex.get(focus)]) {
             IAtom atom = container.getAtom(w);
-            if (atom != substituent && atom != otherFocus)
-                otherSubstituent = atom;
+            if (atom != substituent && atom != otherFocus) otherSubstituent = atom;
         }
-        return new IAtom[]{
-                substituent,
-                otherSubstituent,
-                otherFocus
-        };
+        return new IAtom[]{substituent, otherSubstituent, otherFocus};
     }
 
     /**
@@ -251,8 +242,7 @@ final class CorrectGeometricConfiguration {
         IAtom atom = container.getAtom(v);
         atom.setPoint2d(reflect(atom.getPoint2d(), bond));
         for (int w : graph[v]) {
-            if (!visited[w])
-                reflect(w, bond);
+            if (!visited[w]) reflect(w, bond);
         }
     }
 
@@ -266,9 +256,7 @@ final class CorrectGeometricConfiguration {
     private Point2d reflect(Point2d p, IBond bond) {
         IAtom a = bond.getAtom(0);
         IAtom b = bond.getAtom(1);
-        return reflect(p,
-                       a.getPoint2d().x, a.getPoint2d().y,
-                       b.getPoint2d().x, b.getPoint2d().y);
+        return reflect(p, a.getPoint2d().x, a.getPoint2d().y, b.getPoint2d().x, b.getPoint2d().y);
     }
 
     /**

@@ -64,18 +64,18 @@ import nu.xom.Element;
 public class QSARCustomizer implements ICMLCustomizer {
 
     private final static String QSAR_NAMESPACE = "qsar";
-    private final static String QSAR_URI = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
+    private final static String QSAR_URI       = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
-	public void customize(IBond bond, Object nodeToAdd) throws Exception {
-    	customizeIChemObject(bond, nodeToAdd);
-	}
+    public void customize(IBond bond, Object nodeToAdd) throws Exception {
+        customizeIChemObject(bond, nodeToAdd);
+    }
 
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
-    	customizeIChemObject(atom, nodeToAdd);
+        customizeIChemObject(atom, nodeToAdd);
     }
 
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
-    	customizeIChemObject(molecule, nodeToAdd);
+        customizeIChemObject(molecule, nodeToAdd);
     }
 
     private Element createScalar(IDescriptorResult value) {
@@ -83,32 +83,32 @@ public class QSARCustomizer implements ICMLCustomizer {
         if (value instanceof DoubleResult) {
             scalar = new CMLScalar();
             scalar.addAttribute(new Attribute("dataType", "xsd:double"));
-            scalar.appendChild("" + ((DoubleResult)value).doubleValue());
+            scalar.appendChild("" + ((DoubleResult) value).doubleValue());
         } else if (value instanceof IntegerResult) {
             scalar = new CMLScalar();
             scalar.addAttribute(new Attribute("dataType", "xsd:int"));
-            scalar.appendChild("" + ((IntegerResult)value).intValue());
+            scalar.appendChild("" + ((IntegerResult) value).intValue());
         } else if (value instanceof BooleanResult) {
             scalar = new CMLScalar();
             scalar.addAttribute(new Attribute("dataType", "xsd:boolean"));
-            scalar.appendChild("" + ((BooleanResult)value).booleanValue());
+            scalar.appendChild("" + ((BooleanResult) value).booleanValue());
         } else if (value instanceof IntegerArrayResult) {
-            IntegerArrayResult result = (IntegerArrayResult)value;
+            IntegerArrayResult result = (IntegerArrayResult) value;
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:int"));
             scalar.addAttribute(new Attribute("size", "" + result.length()));
             StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.length(); i++) {
+            for (int i = 0; i < result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }
             scalar.appendChild(buffer.toString());
         } else if (value instanceof DoubleArrayResult) {
-            DoubleArrayResult result = (DoubleArrayResult)value;
+            DoubleArrayResult result = (DoubleArrayResult) value;
             scalar = new CMLArray();
             scalar.addAttribute(new Attribute("dataType", "xsd:double"));
             scalar.addAttribute(new Attribute("size", "" + result.length()));
             StringBuffer buffer = new StringBuffer();
-            for (int i=0; i<result.length(); i++) {
+            for (int i = 0; i < result.length(); i++) {
                 buffer.append(result.get(i) + " ");
             }
             scalar.appendChild(buffer.toString());
@@ -118,21 +118,20 @@ public class QSARCustomizer implements ICMLCustomizer {
             scalar.appendChild(value.toString());
         }
         return scalar;
-     }
+    }
 
     private void customizeIChemObject(IChemObject object, Object nodeToAdd) throws Exception {
-    	if (!(nodeToAdd instanceof Element))
-    		throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
+        if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
-    	Element element = (Element)nodeToAdd;
-    	Map<Object,Object> props = object.getProperties();
+        Element element = (Element) nodeToAdd;
+        Map<Object, Object> props = object.getProperties();
         Iterator<Object> keys = props.keySet().iterator();
         Element propList = null;
         while (keys.hasNext()) {
             Object key = keys.next();
             if (key instanceof DescriptorSpecification) {
-                DescriptorSpecification specs = (DescriptorSpecification)key;
-                DescriptorValue value = (DescriptorValue)props.get(key);
+                DescriptorSpecification specs = (DescriptorSpecification) key;
+                DescriptorValue value = (DescriptorValue) props.get(key);
                 IDescriptorResult result = value.getValue();
                 if (propList == null) {
                     propList = new CMLPropertyList();
@@ -164,12 +163,12 @@ public class QSARCustomizer implements ICMLCustomizer {
                 metadataList.appendChild(metaData);
                 // add parameter setting to the metadata list
                 Object[] params = value.getParameters();
-//                logger.debug("Value: " + value.getSpecification().getImplementationIdentifier());
+                //                logger.debug("Value: " + value.getSpecification().getImplementationIdentifier());
                 if (params != null && params.length > 0) {
                     String[] paramNames = value.getParameterNames();
                     Element paramSettings = new CMLMetadataList();
                     paramSettings.addAttribute(new Attribute("title", QSAR_NAMESPACE + ":" + "descriptorParameters"));
-                    for (int i=0; i<params.length; i++) {
+                    for (int i = 0; i < params.length; i++) {
                         Element paramSetting = new CMLMetadata();
                         String paramName = paramNames[i];
                         Object paramVal = params[i];
@@ -198,6 +197,4 @@ public class QSARCustomizer implements ICMLCustomizer {
         }
     }
 
-
 }
-

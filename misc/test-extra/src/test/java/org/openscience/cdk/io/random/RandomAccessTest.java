@@ -43,11 +43,10 @@ import java.io.InputStream;
  */
 public class RandomAccessTest extends CDKTestCase {
 
-    private ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(RandomAccessTest.class);
 
-
-    @Test public void test() throws Exception {
+    @Test
+    public void test() throws Exception {
         String path = "/data/mdl/test2.sdf";
         logger.info("Testing: " + path);
         InputStream in = getClass().getResourceAsStream(path);
@@ -63,24 +62,16 @@ public class RandomAccessTest extends CDKTestCase {
                     out.write(buf, 0, len);
                 }
             } finally {
-                if (out != null)
-                    out.close();
+                if (out != null) out.close();
             }
 
             //System.out.println(System.getProperty("user.dir"));
-            RandomAccessReader rf = new RandomAccessSDFReader(
-                    f, DefaultChemObjectBuilder.getInstance());
+            RandomAccessReader rf = new RandomAccessSDFReader(f, DefaultChemObjectBuilder.getInstance());
             try {
                 Assert.assertEquals(6, rf.size());
 
-                String[] mdlnumbers = {
-                        "MFCD00000387",
-                        "MFCD00000661",
-                        "MFCD00000662",
-                        "MFCD00000663",
-                        "MFCD00000664",
-                        "MFCD03453215"
-                };
+                String[] mdlnumbers = {"MFCD00000387", "MFCD00000661", "MFCD00000662", "MFCD00000663", "MFCD00000664",
+                        "MFCD03453215"};
                 //reading backwards - just for the test
                 for (int i = rf.size() - 1; i >= 0; i--) {
                     IChemObject m = rf.readRecord(i);
@@ -89,13 +80,11 @@ public class RandomAccessTest extends CDKTestCase {
                     Assert.assertTrue(((IAtomContainer) m).getAtomCount() > 0);
                 }
             } finally {
-                if (rf != null)
-                    rf.close();
+                if (rf != null) rf.close();
             }
         } finally {
             f.delete();
-            if (in != null)
-                in.close();
+            if (in != null) in.close();
         }
     }
 }

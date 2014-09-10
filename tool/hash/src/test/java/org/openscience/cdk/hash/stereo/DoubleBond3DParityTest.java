@@ -41,60 +41,47 @@ public class DoubleBond3DParityTest {
     private static final int OPPOSITE = +1;
     private static final int TOGETHER = -1;
 
-
     @Test
     public void opposite() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6440, 0.4411, 0.5917),
-                                                           new Point3d(-3.7159, 0.1090, -0.5916),
-                                                           new Point3d(-5.3207, -0.6945, 1.3818),
-                                                           new Point3d(-3.0392, 1.2445, -1.3818));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6440, 0.4411, 0.5917), new Point3d(-3.7159,
+                0.1090, -0.5916), new Point3d(-5.3207, -0.6945, 1.3818), new Point3d(-3.0392, 1.2445, -1.3818));
         assertEquals(OPPOSITE, geometric.parity());
     }
 
     @Test
     public void together() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6440, 0.4411, 0.5917),
-                                                           new Point3d(-3.7159, 0.1090, -0.5916),
-                                                           new Point3d(-4.8954, 1.9087, 0.9848),
-                                                           new Point3d(-3.0392, 1.2445, -1.3818));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6440, 0.4411, 0.5917), new Point3d(-3.7159,
+                0.1090, -0.5916), new Point3d(-4.8954, 1.9087, 0.9848), new Point3d(-3.0392, 1.2445, -1.3818));
         assertEquals(TOGETHER, geometric.parity());
     }
 
     @Test
     public void opposite_endOn() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.3262, 0.3192, 0.6495),
-                                                           new Point3d(-4.3206, 0.3724, -0.8896),
-                                                           new Point3d(-4.3367, -1.0402, 1.3729),
-                                                           new Point3d(-4.3101, 1.7319, -1.6131));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.3262, 0.3192, 0.6495), new Point3d(-4.3206,
+                0.3724, -0.8896), new Point3d(-4.3367, -1.0402, 1.3729), new Point3d(-4.3101, 1.7319, -1.6131));
         assertEquals(OPPOSITE, geometric.parity());
     }
 
     @Test
     public void together_endOn() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.3262, 0.3192, 0.6495),
-                                                           new Point3d(-4.3206, 0.3724, -0.8896),
-                                                           new Point3d(-4.3214, 1.6255, 1.4651),
-                                                           new Point3d(-4.3101, 1.7319, -1.6131));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.3262, 0.3192, 0.6495), new Point3d(-4.3206,
+                0.3724, -0.8896), new Point3d(-4.3214, 1.6255, 1.4651), new Point3d(-4.3101, 1.7319, -1.6131));
         assertEquals(TOGETHER, geometric.parity());
     }
 
     /* slight torsion around double bond */
     @Test
     public void opposite_torsion() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6152, 0.3287, 0.5476),
-                                                           new Point3d(-3.6042, 0.3501, -0.6139),
-                                                           new Point3d(-4.5881, -0.9142, 1.5627),
-                                                           new Point3d(-3.1478, 1.6935, -1.2129));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6152, 0.3287, 0.5476), new Point3d(-3.6042,
+                0.3501, -0.6139), new Point3d(-4.5881, -0.9142, 1.5627), new Point3d(-3.1478, 1.6935, -1.2129));
         assertEquals(OPPOSITE, geometric.parity());
     }
 
     /* slight torsion around double bond */
     @Test
     public void together_torsion() throws Exception {
-        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6152, 0.3287, 0.5476),
-                                                           new Point3d(-3.6042, 0.3501, -0.6139),
-                                                           new Point3d(-5.6414, 1.6608, 0.7013),
-                                                           new Point3d(-3.1478, 1.6935, -1.2129));
+        GeometricParity geometric = new DoubleBond3DParity(new Point3d(-4.6152, 0.3287, 0.5476), new Point3d(-3.6042,
+                0.3501, -0.6139), new Point3d(-5.6414, 1.6608, 0.7013), new Point3d(-3.1478, 1.6935, -1.2129));
         assertEquals(TOGETHER, geometric.parity());
     }
 }

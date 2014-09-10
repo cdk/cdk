@@ -27,7 +27,8 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class ChemObjectDifferenceTest extends CDKTestCase {
 
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         ChemObjectDifference diff = new ChemObjectDifference("AtomTypeDiff");
         String diffString = diff.toString();
         Assert.assertNotNull(diffString);

@@ -37,57 +37,54 @@ import org.openscience.cdk.renderer.font.IFontManager;
  */
 public class AbstractAWTDrawVisitorTest {
 
-	private final class NestedAWTDrawVisitor extends AbstractAWTDrawVisitor {
-		public void visit(IRenderingElement element) {}
+    private final class NestedAWTDrawVisitor extends AbstractAWTDrawVisitor {
 
-		public void setRendererModel(RendererModel rendererModel) {}
+        public void visit(IRenderingElement element) {}
 
-		public void setFontManager(IFontManager fontManager) {}
-	}
+        public void setRendererModel(RendererModel rendererModel) {}
 
-	@Test
-	public void testExtension() {
-		AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
-		Assert.assertNotNull(visitor);
-	}
+        public void setFontManager(IFontManager fontManager) {}
+    }
 
-	@Test
-	public void testSetAffineTransformation() {
-		AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
-		visitor.setTransform(new AffineTransform());
-		Assert.assertNotNull(visitor);
-	}
+    @Test
+    public void testExtension() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        Assert.assertNotNull(visitor);
+    }
 
-	@Test
-	public void testGetTextBounds() {
-		AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
-		visitor.setTransform(new AffineTransform());
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		Rectangle2D rectangle = visitor.getTextBounds("Foo", 3, 5, g2d);
-		Assert.assertNotNull(rectangle);
-	}
+    @Test
+    public void testSetAffineTransformation() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform());
+        Assert.assertNotNull(visitor);
+    }
 
-	@Test
-	public void testTransformPoint() {
-		AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
-		visitor.setTransform(new AffineTransform()); // no transform
-		int[] transformed = visitor.transformPoint(1, 2);
-		Assert.assertEquals(1, transformed[0]);
-		Assert.assertEquals(2, transformed[1]);
-	}
+    @Test
+    public void testGetTextBounds() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform());
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        Rectangle2D rectangle = visitor.getTextBounds("Foo", 3, 5, g2d);
+        Assert.assertNotNull(rectangle);
+    }
 
-	@Test
-	public void testGetTextBasePoint() {
-		AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
-		visitor.setTransform(new AffineTransform());
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		Point point = visitor.getTextBasePoint("Foo", 3, 5, g2d);
-		Assert.assertNotNull(point);
-	}
+    @Test
+    public void testTransformPoint() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform()); // no transform
+        int[] transformed = visitor.transformPoint(1, 2);
+        Assert.assertEquals(1, transformed[0]);
+        Assert.assertEquals(2, transformed[1]);
+    }
+
+    @Test
+    public void testGetTextBasePoint() {
+        AbstractAWTDrawVisitor visitor = new NestedAWTDrawVisitor();
+        visitor.setTransform(new AffineTransform());
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        Point point = visitor.getTextBasePoint("Foo", 3, 5, g2d);
+        Assert.assertNotNull(point);
+    }
 }

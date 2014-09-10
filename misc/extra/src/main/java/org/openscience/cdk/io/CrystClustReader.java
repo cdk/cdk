@@ -51,17 +51,15 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.CrystClustReaderTest")
 public class CrystClustReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CrystClustReader.class);
+    private BufferedReader      input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CrystClustReader.class);
 
-    public CrystClustReader() {
-    }
+    public CrystClustReader() {}
 
     public CrystClustReader(Reader input) {
         this();
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -79,7 +77,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) throws CDKException {
         if (reader instanceof BufferedReader) {
-            this.input = (BufferedReader)reader;
+            this.input = (BufferedReader) reader;
         } else {
             this.input = new BufferedReader(reader);
         }
@@ -90,22 +88,22 @@ public class CrystClustReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            IChemFile cf = readChemFile((IChemFile)object);
-            return (T)cf;
+            IChemFile cf = readChemFile((IChemFile) object);
+            return (T) cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
@@ -191,12 +189,12 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     String symbol;
                     double charge;
                     Point3d cart;
-                    for (int i=1; i<=atomsToRead; i++) {
+                    for (int i = 1; i <= atomsToRead; i++) {
                         cart = new Point3d();
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         symbol = line.substring(0, line.indexOf(':'));
-                        charge = Double.parseDouble(line.substring(line.indexOf(':')+1));
+                        charge = Double.parseDouble(line.substring(line.indexOf(':') + 1));
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.x = Double.parseDouble(line); // x
@@ -206,7 +204,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                         line = input.readLine();
                         logger.debug((lineNumber++) + ": ", line);
                         cart.z = Double.parseDouble(line); // z
-                        IAtom atom = file.getBuilder().newInstance(IAtom.class,symbol);
+                        IAtom atom = file.getBuilder().newInstance(IAtom.class, symbol);
                         atom.setCharge(charge);
                         // convert cartesian coords to fractional
                         Point3d frac = CrystalGeometryTools.cartesianToFractional(a, b, c, cart);
@@ -219,8 +217,7 @@ public class CrystClustReader extends DefaultChemObjectReader {
                     seq.addChemModel(model);
                 } else {
                     logger.debug("Format seems broken. Skipping these lines:");
-                    while (!line.startsWith("frame:") &&
-                    input.ready() && line != null) {
+                    while (!line.startsWith("frame:") && input.ready() && line != null) {
                         line = input.readLine();
                         logger.debug(lineNumber++ + ": ", line);
                     }

@@ -57,74 +57,61 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.layout.AtomPlacerTest")
-public class AtomPlacer
-{
+public class AtomPlacer {
 
-    public final static boolean debug = true;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AtomPlacer.class);
+    public final static boolean debug      = true;
+    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(AtomPlacer.class);
 
     /**
      *  The molecule to be laid out. To be assigned from outside
      */
-     IAtomContainer molecule = null;
+    IAtomContainer              molecule   = null;
 
-    final  Comparator<IAtom> ATOM_ORDER =
-        new Comparator<IAtom>()
-        {
-            public int compare(IAtom a, IAtom b)
-            {
-                return weight(a).compareTo(weight(b));
-            }
+    final Comparator<IAtom>     ATOM_ORDER = new Comparator<IAtom>() {
 
-            /**
-             * Access the weight property of the provided atom. If the weight is
-             * not set (i.e. <i>null</i>) then {@link Integer#MIN_VALUE} is
-             * returned. This allows atoms with no weight to sort lower then
-             * those with weight.
-             *
-             * @param atom an atom to obtain the weight property from
-             * @return the weight value or minimum integer value if null
-             */
-            private Integer weight(IAtom atom){
-                Integer weight = (Integer) atom.getProperty("Weight");
-                return weight != null ? weight : Integer.MIN_VALUE;
-            }
+                                               public int compare(IAtom a, IAtom b) {
+                                                   return weight(a).compareTo(weight(b));
+                                               }
 
-        };
+                                               /**
+                                                * Access the weight property of the provided atom. If the weight is
+                                                * not set (i.e. <i>null</i>) then {@link Integer#MIN_VALUE} is
+                                                * returned. This allows atoms with no weight to sort lower then
+                                                * those with weight.
+                                                *
+                                                * @param atom an atom to obtain the weight property from
+                                                * @return the weight value or minimum integer value if null
+                                                */
+                                               private Integer weight(IAtom atom) {
+                                                   Integer weight = (Integer) atom.getProperty("Weight");
+                                                   return weight != null ? weight : Integer.MIN_VALUE;
+                                               }
 
+                                           };
 
     /**
      *  Constructor for the AtomPlacer object
      */
     @TestMethod("emptyAtomsListTest,triangleTest")
-    public AtomPlacer()
-    {
-    }
-
+    public AtomPlacer() {}
 
     /**
      *  Return the molecule the AtomPlacer currently works with
      *
      *@return    the molecule the AtomPlacer currently works with
      */
-    public IAtomContainer getMolecule()
-    {
+    public IAtomContainer getMolecule() {
         return this.molecule;
     }
-
 
     /**
      *  Sets the molecule the AtomPlacer currently works with
      *
      *@param  molecule  the molecule the AtomPlacer currently works with
      */
-    public void setMolecule(IAtomContainer molecule)
-    {
+    public void setMolecule(IAtomContainer molecule) {
         this.molecule = molecule;
     }
-
-
 
     /**
      *  Distribute the bonded atoms (neighbours) of an atom such that they fill the
@@ -142,8 +129,7 @@ public class AtomPlacer
      *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
      */
     public void distributePartners(IAtom atom, IAtomContainer placedNeighbours, Point2d sharedAtomsCenter,
-            IAtomContainer unplacedNeighbours, double bondLength)
-    {
+            IAtomContainer unplacedNeighbours, double bondLength) {
         double occupiedAngle = 0;
         //double smallestDistance = Double.MAX_VALUE;
         //IAtom[] nearestAtoms = new IAtom[2];
@@ -153,7 +139,7 @@ public class AtomPlacer
         double radius = 0.0;
         double remainingAngle = 0.0;
         /*
-         *  calculate the direction away from the already placed partners of atom
+         * calculate the direction away from the already placed partners of atom
          */
         //Point2d sharedAtomsCenter = sharedAtoms.get2DCenter();
         Vector2d sharedAtomsCenterVector = new Vector2d(sharedAtomsCenter);
@@ -167,28 +153,24 @@ public class AtomPlacer
         logger.debug("Number of shared atoms: ", placedNeighbours.getAtomCount());
 
         /*
-         *    IMPORTANT: This method is not supposed to handle the
-         *    case of one or no place neighbor. In the case of
-         *    one placed neigbor, the chain placement methods
-         *    should be used.
+         * IMPORTANT: This method is not supposed to handle the case of one or
+         * no place neighbor. In the case of one placed neigbor, the chain
+         * placement methods should be used.
          */
-        if (placedNeighbours.getAtomCount() == 1)
-        {
+        if (placedNeighbours.getAtomCount() == 1) {
             logger.debug("Only one neighbour...");
-            for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
-            {
+            for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++) {
                 atomsToDraw.add(unplacedNeighbours.getAtom(f));
             }
 
             addAngle = Math.PI * 2 / (unplacedNeighbours.getAtomCount() + placedNeighbours.getAtomCount());
             /*
-             *  IMPORTANT: At this point we need a calculation of the
-             *  start angle.
-             *  Not done yet.
+             * IMPORTANT: At this point we need a calculation of the start
+             * angle. Not done yet.
              */
             IAtom placedAtom = placedNeighbours.getAtom(0);
-//			double xDiff = atom.getX2d() - placedAtom.getX2d();
-//			double yDiff = atom.getY2d() - placedAtom.getY2d();
+            //			double xDiff = atom.getX2d() - placedAtom.getX2d();
+            //			double yDiff = atom.getY2d() - placedAtom.getY2d();
             double xDiff = placedAtom.getPoint2d().x - atom.getPoint2d().x;
             double yDiff = placedAtom.getPoint2d().y - atom.getPoint2d().y;
 
@@ -200,18 +182,16 @@ public class AtomPlacer
 
             populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
             return;
-        } else if (placedNeighbours.getAtomCount() == 0)
-        {
+        } else if (placedNeighbours.getAtomCount() == 0) {
             logger.debug("First atom...");
-            for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
-            {
+            for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++) {
                 atomsToDraw.add(unplacedNeighbours.getAtom(f));
             }
 
             addAngle = Math.PI * 2.0 / unplacedNeighbours.getAtomCount();
             /*
-             * IMPORTANT: At this point we need a calculation of the
-             * start angle. Not done yet.
+             * IMPORTANT: At this point we need a calculation of the start
+             * angle. Not done yet.
              */
             startAngle = 0.0;
             populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, bondLength);
@@ -219,7 +199,8 @@ public class AtomPlacer
         }
 
         /*
-         *  if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable)
+         * if the least hindered side of the atom is clearly defined (bondLength
+         * / 10 is an arbitrary value that seemed reasonable)
          */
         //newDirection.sub(sharedAtomsCenterVector);
         sharedAtomsCenterVector.sub(newDirection);
@@ -232,7 +213,8 @@ public class AtomPlacer
         distanceMeasure.add(newDirection);
 
         /*
-         *  get the two sharedAtom partners with the smallest distance to the new center
+         * get the two sharedAtom partners with the smallest distance to the new
+         * center
          */
         sortedAtoms = AtomContainerManipulator.getAtomArray(placedNeighbours);
         GeometryUtil.sortBy2DDistance(sortedAtoms, distanceMeasure);
@@ -243,13 +225,14 @@ public class AtomPlacer
         occupiedAngle = closestPoint1.angle(occupiedDirection);
         occupiedAngle += closestPoint2.angle(occupiedDirection);
 
-        double angle1 = GeometryUtil.getAngle(sortedAtoms[0].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[0].getPoint2d().y - atom.getPoint2d().y);
-        double angle2 = GeometryUtil.getAngle(sortedAtoms[1].getPoint2d().x - atom.getPoint2d().x, sortedAtoms[1].getPoint2d().y - atom.getPoint2d().y);
-        double angle3 = GeometryUtil.getAngle(distanceMeasure.x - atom.getPoint2d().x, distanceMeasure.y - atom.getPoint2d().y);
-        if (debug)
-        {
-            try
-            {
+        double angle1 = GeometryUtil.getAngle(sortedAtoms[0].getPoint2d().x - atom.getPoint2d().x,
+                sortedAtoms[0].getPoint2d().y - atom.getPoint2d().y);
+        double angle2 = GeometryUtil.getAngle(sortedAtoms[1].getPoint2d().x - atom.getPoint2d().x,
+                sortedAtoms[1].getPoint2d().y - atom.getPoint2d().y);
+        double angle3 = GeometryUtil.getAngle(distanceMeasure.x - atom.getPoint2d().x,
+                distanceMeasure.y - atom.getPoint2d().y);
+        if (debug) {
+            try {
                 logger.debug("distributePartners->sortedAtoms[0]: ", (molecule.getAtomNumber(sortedAtoms[0]) + 1));
                 logger.debug("distributePartners->sortedAtoms[1]: ", (molecule.getAtomNumber(sortedAtoms[1]) + 1));
                 logger.debug("distributePartners->angle1: ", Math.toDegrees(angle1));
@@ -260,60 +243,50 @@ public class AtomPlacer
         }
         IAtom startAtom = null;
 
-        if (angle1 > angle3)
-        {
-            if (angle1 - angle3 < Math.PI)
-            {
+        if (angle1 > angle3) {
+            if (angle1 - angle3 < Math.PI) {
                 startAtom = sortedAtoms[1];
-            } else
-            {
+            } else {
                 // 12 o'clock is between the two vectors
                 startAtom = sortedAtoms[0];
             }
 
-        } else
-        {
-            if (angle3 - angle1 < Math.PI)
-            {
+        } else {
+            if (angle3 - angle1 < Math.PI) {
                 startAtom = sortedAtoms[0];
-            } else
-            {
+            } else {
                 // 12 o'clock is between the two vectors
                 startAtom = sortedAtoms[1];
             }
         }
         remainingAngle = (2 * Math.PI) - occupiedAngle;
         addAngle = remainingAngle / (unplacedNeighbours.getAtomCount() + 1);
-        if (debug)
-        {
-            try
-            {
+        if (debug) {
+            try {
                 logger.debug("distributePartners->startAtom: " + (molecule.getAtomNumber(startAtom) + 1));
                 logger.debug("distributePartners->remainingAngle: " + Math.toDegrees(remainingAngle));
                 logger.debug("distributePartners->addAngle: " + Math.toDegrees(addAngle));
                 logger.debug("distributePartners-> partners.getAtomCount(): " + unplacedNeighbours.getAtomCount());
-            } catch (Exception exc)
-            {
+            } catch (Exception exc) {
                 logger.debug(exc);
             }
 
         }
-        for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++)
-        {
+        for (int f = 0; f < unplacedNeighbours.getAtomCount(); f++) {
             atomsToDraw.add(unplacedNeighbours.getAtom(f));
         }
         radius = bondLength;
-        startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y - atom.getPoint2d().y);
+        startAngle = GeometryUtil.getAngle(startAtom.getPoint2d().x - atom.getPoint2d().x, startAtom.getPoint2d().y
+                - atom.getPoint2d().y);
         logger.debug("Before check: distributePartners->startAngle: " + startAngle);
-//        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
-//            -0.001))
-//        {
-//            startAngle = Math.PI/placedNeighbours.getAtomCount();
-//        }
+        //        if (startAngle < (Math.PI + 0.001) && startAngle > (Math.PI
+        //            -0.001))
+        //        {
+        //            startAngle = Math.PI/placedNeighbours.getAtomCount();
+        //        }
         logger.debug("After check: distributePartners->startAngle: " + startAngle);
         populatePolygonCorners(atomsToDraw, new Point2d(atom.getPoint2d()), startAngle, addAngle, radius);
     }
-
 
     /**
      * Places the atoms in a linear chain.
@@ -327,42 +300,42 @@ public class AtomPlacer
      * @param  initialBondVector  The Vector indicating the direction of the first bond
      * @param  bondLength         The factor used to scale the initialBondVector
      */
-    public void placeLinearChain(IAtomContainer atomContainer, Vector2d initialBondVector, double bondLength)
-    {
-        IAtomContainer withh = atomContainer.getBuilder().newInstance(IAtomContainer.class,atomContainer);
+    public void placeLinearChain(IAtomContainer atomContainer, Vector2d initialBondVector, double bondLength) {
+        IAtomContainer withh = atomContainer.getBuilder().newInstance(IAtomContainer.class, atomContainer);
 
         // BUGFIX - withh does not have cloned cloned atoms, so changes are
         // reflected in our atom container. If we're using implicit hydrogens
         // the correct counts need saving and restoring
         int[] numh = new int[atomContainer.getAtomCount()];
-        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
+        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i++) {
             Integer tmp = atomContainer.getAtom(i).getImplicitHydrogenCount();
-            if (tmp == CDKConstants.UNSET) numh[i]= 0;
-            else numh[i] = tmp;
+            if (tmp == CDKConstants.UNSET)
+                numh[i] = 0;
+            else
+                numh[i] = tmp;
         }
 
-//		SDG should lay out what it gets and not fiddle with molecules
-//      during layout so this was
-//      removed during debugging. Before you put this in again, contact
-//      er@doktor-steinbeck.de
+        //		SDG should lay out what it gets and not fiddle with molecules
+        //      during layout so this was
+        //      removed during debugging. Before you put this in again, contact
+        //      er@doktor-steinbeck.de
 
-//        if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
-//            try{
-//                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
-//            }catch(Exception ex){
-//                logger.warn("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.getMessage());
-//                logger.debug(ex);
-//            }
-//            new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
-//        }
+        //        if(GeometryTools.has2DCoordinatesNew(atomContainer)==2){
+        //            try{
+        //                new HydrogenAdder().addExplicitHydrogensToSatisfyValency(withh);
+        //            }catch(Exception ex){
+        //                logger.warn("Exception in hydrogen adding. This could mean that cleanup does not respect E/Z: ", ex.getMessage());
+        //                logger.debug(ex);
+        //            }
+        //            new HydrogenPlacer().placeHydrogens2D(withh, bondLength);
+        //        }
         logger.debug("Placing linear chain of length " + atomContainer.getAtomCount());
         Vector2d bondVector = initialBondVector;
         IAtom atom = null;
         Point2d atomPoint = null;
         IAtom nextAtom = null;
         IBond prevBond = null, currBond = null;
-        for (int f = 0; f < atomContainer.getAtomCount() - 1; f++)
-        {
+        for (int f = 0; f < atomContainer.getAtomCount() - 1; f++) {
             atom = atomContainer.getAtom(f);
             nextAtom = atomContainer.getAtom(f + 1);
             currBond = atomContainer.getBond(atom, nextAtom);
@@ -372,21 +345,19 @@ public class AtomPlacer
             atomPoint.add(bondVector);
             nextAtom.setPoint2d(atomPoint);
             nextAtom.setFlag(CDKConstants.ISPLACED, true);
-            boolean trans=false;
+            boolean trans = false;
 
             // quick fix to handle geometry of cumulated, CC=C=CC, ideally it
             // would be useful to know the geometries
-            if (prevBond != null
-                    && IBond.Order.DOUBLE.equals(prevBond.getOrder())
+            if (prevBond != null && IBond.Order.DOUBLE.equals(prevBond.getOrder())
                     && IBond.Order.DOUBLE.equals(currBond.getOrder())) {
 
                 int atomicNumber = atom.getAtomicNumber();
-                int charge       = atom.getFormalCharge();
+                int charge = atom.getFormalCharge();
 
                 if (charge == 0
-                        && (Elements.Carbon.number() == atomicNumber
-                        || Elements.Germanium.number() == atomicNumber
-                        || Elements.Silicon.number() == atomicNumber)) {
+                        && (Elements.Carbon.number() == atomicNumber || Elements.Germanium.number() == atomicNumber || Elements.Silicon
+                                .number() == atomicNumber)) {
 
                     // double length of the last bond to determing next placement
                     Point2d p = new Point2d(prevBond.getConnectedAtom(atom).getPoint2d());
@@ -395,28 +366,30 @@ public class AtomPlacer
                 }
             }
 
-            if(GeometryUtil.has2DCoordinates(atomContainer)){
-                try{
-                    if(f>2 && BondTools.isValidDoubleBondConfiguration(withh,withh.getBond(withh.getAtom(f-2),withh.getAtom(f-1)))){
-                        trans=BondTools.isCisTrans(withh.getAtom(f-3),withh.getAtom(f-2),withh.getAtom(f-1),withh.getAtom(f-0),withh);
+            if (GeometryUtil.has2DCoordinates(atomContainer)) {
+                try {
+                    if (f > 2
+                            && BondTools.isValidDoubleBondConfiguration(withh,
+                                    withh.getBond(withh.getAtom(f - 2), withh.getAtom(f - 1)))) {
+                        trans = BondTools.isCisTrans(withh.getAtom(f - 3), withh.getAtom(f - 2), withh.getAtom(f - 1),
+                                withh.getAtom(f - 0), withh);
                     }
-                }catch(Exception ex){
+                } catch (Exception ex) {
                     logger.debug("Excpetion in detecting E/Z. This could mean that cleanup does not respect E/Z");
                 }
-                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule),trans);
-            }else{
-                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule),true);
+                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule), trans);
+            } else {
+                bondVector = getNextBondVector(nextAtom, atom, GeometryUtil.get2DCenter(molecule), true);
             }
 
             prevBond = currBond;
         }
 
         // BUGFIX part 2 - restore hydrogen counts
-        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i ++) {
+        for (int i = 0, n = atomContainer.getAtomCount(); i < n; i++) {
             atomContainer.getAtom(i).setImplicitHydrogenCount(numh[i]);
         }
     }
-
 
     /**
      *  Returns the next bond vector needed for drawing an extended linear chain of
@@ -433,17 +406,16 @@ public class AtomPlacer
      *@return                  A vector pointing to the location of the next atom
      *      to draw
      */
-    public Vector2d getNextBondVector(IAtom atom, IAtom previousAtom, Point2d distanceMeasure, boolean trans)
-    {
-    if (logger.isDebugEnabled())
-    {
-          logger.debug("Entering AtomPlacer.getNextBondVector()");
-          logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: " + distanceMeasure);
-    }
-        double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x, previousAtom.getPoint2d().y - atom.getPoint2d().y);
+    public Vector2d getNextBondVector(IAtom atom, IAtom previousAtom, Point2d distanceMeasure, boolean trans) {
+        if (logger.isDebugEnabled()) {
+            logger.debug("Entering AtomPlacer.getNextBondVector()");
+            logger.debug("Arguments are atom: " + atom + ", previousAtom: " + previousAtom + ", distanceMeasure: "
+                    + distanceMeasure);
+        }
+        double angle = GeometryUtil.getAngle(previousAtom.getPoint2d().x - atom.getPoint2d().x,
+                previousAtom.getPoint2d().y - atom.getPoint2d().y);
         double addAngle = Math.toRadians(120);
-        if(!trans)
-            addAngle=Math.toRadians(60);
+        if (!trans) addAngle = Math.toRadians(60);
         if (shouldBeLinear(atom, molecule)) addAngle = Math.toRadians(180);
 
         angle += addAngle;
@@ -456,15 +428,13 @@ public class AtomPlacer
         Point2d point2 = new Point2d(atom.getPoint2d());
         point2.add(vec2);
         double distance2 = point2.distance(distanceMeasure);
-        if (distance2 > distance1)
-        {
+        if (distance2 > distance1) {
             logger.debug("Exiting AtomPlacer.getNextBondVector()");
             return vec2;
         }
         logger.debug("Exiting AtomPlacer.getNextBondVector()");
         return vec1;
     }
-
 
     /**
      *  Populates the corners of a polygon with atoms. Used to place atoms in a
@@ -485,8 +455,8 @@ public class AtomPlacer
      *      length or ring radius
      */
     @TestMethod("emptyAtomsListTest,triangleTest")
-    public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle, double addAngle, double radius)
-    {
+    public void populatePolygonCorners(List<IAtom> atomsToDraw, Point2d rotationCenter, double startAngle,
+            double addAngle, double radius) {
         double angle = startAngle;
         double newX;
         double newY;
@@ -500,11 +470,9 @@ public class AtomPlacer
         logger.debug("  centerY:", rotationCenter.y);
         logger.debug("  radius :", radius);
 
-        for (int i = 0; i < atomsToDraw.size(); i++)
-        {
+        for (int i = 0; i < atomsToDraw.size(); i++) {
             angle = angle + addAngle;
-            if (angle >= 2.0 * Math.PI)
-            {
+            if (angle >= 2.0 * Math.PI) {
                 angle -= 2.0 * Math.PI;
             }
             logger.debug("populatePolygonCorners->angle: ", Math.toDegrees(angle));
@@ -515,18 +483,16 @@ public class AtomPlacer
             logger.debug("  newX:", newX);
             logger.debug("  newY:", newY);
             points.add(new Point2d(newX, newY));
-		}
+        }
 
-        for (int i = 0; i < atomsToDraw.size(); i++)
-        {
+        for (int i = 0; i < atomsToDraw.size(); i++) {
             IAtom connectAtom = atomsToDraw.get(i);
             connectAtom.setPoint2d((Point2d) points.get(i));
             connectAtom.setFlag(CDKConstants.ISPLACED, true);
 
             if (logger.isDebugEnabled() && connectAtom != null) {
                 try {
-                    logger.debug("populatePolygonCorners->connectAtom: "
-                            + (molecule.getAtomNumber(connectAtom) + 1)
+                    logger.debug("populatePolygonCorners->connectAtom: " + (molecule.getAtomNumber(connectAtom) + 1)
                             + " placed at " + connectAtom.getPoint2d());
                 } catch (Exception exc) {
                     // nothing to catch here. This is just for logging
@@ -545,22 +511,17 @@ public class AtomPlacer
      *@param  unplacedPartners  A vector for the unplaced bonding partners to go in
      *@param  placedPartners    A vector for the placed bonding partners to go in
      */
-    public void partitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners)
-    {
+    public void partitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners) {
         List atoms = molecule.getConnectedAtomsList(atom);
-        for (int i = 0; i < atoms.size(); i++)
-        {
-            IAtom curatom = (IAtom)atoms.get(i);
-            if (curatom.getFlag(CDKConstants.ISPLACED))
-            {
+        for (int i = 0; i < atoms.size(); i++) {
+            IAtom curatom = (IAtom) atoms.get(i);
+            if (curatom.getFlag(CDKConstants.ISPLACED)) {
                 placedPartners.addAtom(curatom);
-            } else
-            {
+            } else {
                 unplacedPartners.addAtom(curatom);
             }
         }
     }
-
 
     /**
      *  Search an aliphatic molecule for the longest chain. This is the method to
@@ -575,8 +536,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.NoSuchAtomException  Description of
      *      the Exception
      */
-    static public IAtomContainer getInitialLongestChain(IAtomContainer molecule) throws CDKException
-    {
+    static public IAtomContainer getInitialLongestChain(IAtomContainer molecule) throws CDKException {
         logger.debug("Start of getInitialLongestChain()");
         double[][] conMat = ConnectionMatrix.getMatrix(molecule);
         logger.debug("Computing all-pairs-shortest-pathes");
@@ -587,15 +547,11 @@ public class AtomPlacer
         IAtom atom = null;
         IAtom startAtom = null;
         //IAtom endAtom = null;
-        for (int f = 0; f < apsp.length; f++)
-        {
+        for (int f = 0; f < apsp.length; f++) {
             atom = molecule.getAtom(f);
-            if (molecule.getConnectedBondsCount(atom) == 1)
-            {
-                for (int g = 0; g < apsp.length; g++)
-                {
-                    if (apsp[f][g] > maxPathLength)
-                    {
+            if (molecule.getConnectedBondsCount(atom) == 1) {
+                for (int g = 0; g < apsp.length; g++) {
+                    if (apsp[f][g] > maxPathLength) {
                         maxPathLength = apsp[f][g];
                         bestStartAtom = f;
                         bestEndAtom = g;
@@ -603,7 +559,8 @@ public class AtomPlacer
                 }
             }
         }
-        logger.debug("Longest chaing in molecule is of length " + maxPathLength + " between atoms " + (bestStartAtom+1) +  " and " + (bestEndAtom+1) );
+        logger.debug("Longest chaing in molecule is of length " + maxPathLength + " between atoms "
+                + (bestStartAtom + 1) + " and " + (bestEndAtom + 1));
 
         startAtom = molecule.getAtom(bestStartAtom);
         //endAtom = molecule.getAtomAt(bestEndAtom);
@@ -614,8 +571,6 @@ public class AtomPlacer
         logger.debug("End of getInitialLongestChain()");
         return path;
     }
-
-
 
     /**
      *  Search a molecule for the longest unplaced, aliphatic chain in it. If an
@@ -632,8 +587,7 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    static public IAtomContainer getLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom) throws CDKException
-    {
+    static public IAtomContainer getLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom) throws CDKException {
         logger.debug("Start of getLongestUnplacedChain.");
         //ConnectivityChecker cc = new ConnectivityChecker();
         int longest = 0;
@@ -641,8 +595,7 @@ public class AtomPlacer
         int maxDegreeSum = 0;
         int degreeSum = 0;
         IAtomContainer[] pathes = new IAtomContainer[molecule.getAtomCount()];
-        for (int f = 0; f < molecule.getAtomCount(); f++)
-        {
+        for (int f = 0; f < molecule.getAtomCount(); f++) {
             molecule.getAtom(f).setFlag(CDKConstants.VISITED, false);
             pathes[f] = molecule.getBuilder().newInstance(IAtomContainer.class);
             pathes[f].addAtom(startAtom);
@@ -651,24 +604,20 @@ public class AtomPlacer
         List<IAtom> startSphere = new ArrayList<IAtom>();
         startSphere.add(startAtom);
         breadthFirstSearch(molecule, startSphere, pathes);
-        for (int f = 0; f < molecule.getAtomCount(); f++)
-        {
-            if (pathes[f].getAtomCount() >= longestPathLength)
-            {
-            	degreeSum = getDegreeSum(pathes[f], molecule);
+        for (int f = 0; f < molecule.getAtomCount(); f++) {
+            if (pathes[f].getAtomCount() >= longestPathLength) {
+                degreeSum = getDegreeSum(pathes[f], molecule);
 
-            	if (degreeSum > maxDegreeSum)
-            	{
-            		maxDegreeSum = degreeSum;
-            		longest = f;
-            		longestPathLength = pathes[f].getAtomCount();
-            	}
+                if (degreeSum > maxDegreeSum) {
+                    maxDegreeSum = degreeSum;
+                    longest = f;
+                    longestPathLength = pathes[f].getAtomCount();
+                }
             }
         }
         logger.debug("End of getLongestUnplacedChain.");
         return pathes[longest];
     }
-
 
     /**
      *  Performs a breadthFirstSearch in an AtomContainer starting with a
@@ -687,8 +636,8 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    static public  void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes) throws CDKException
-    {
+    static public void breadthFirstSearch(IAtomContainer ac, List<IAtom> sphere, IAtomContainer[] pathes)
+            throws CDKException {
         IAtom atom = null;
         IAtom nextAtom = null;
         int atomNr;
@@ -697,41 +646,33 @@ public class AtomPlacer
         List<IAtom> newSphere = new ArrayList<IAtom>();
         logger.debug("Start of breadthFirstSearch");
 
-        for (int f = 0; f < sphere.size(); f++)
-        {
+        for (int f = 0; f < sphere.size(); f++) {
             atom = sphere.get(f);
-            if (!atom.getFlag(CDKConstants.ISINRING))
-            {
+            if (!atom.getFlag(CDKConstants.ISINRING)) {
                 atomNr = ac.getAtomNumber(atom);
                 logger.debug("BreadthFirstSearch around atom " + (atomNr + 1));
 
                 List bonds = ac.getConnectedBondsList(atom);
-                for (int g = 0; g < bonds.size(); g++)
-                {
-                    IBond curBond = (IBond)bonds.get(g);
+                for (int g = 0; g < bonds.size(); g++) {
+                    IBond curBond = (IBond) bonds.get(g);
                     nextAtom = curBond.getConnectedAtom(atom);
-                    if (!nextAtom.getFlag(CDKConstants.VISITED) &&
-                            !nextAtom.getFlag(CDKConstants.ISPLACED))
-                    {
+                    if (!nextAtom.getFlag(CDKConstants.VISITED) && !nextAtom.getFlag(CDKConstants.ISPLACED)) {
                         nextAtomNr = ac.getAtomNumber(nextAtom);
                         logger.debug("BreadthFirstSearch is meeting new atom " + (nextAtomNr + 1));
-                        pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class,pathes[atomNr]);
+                        pathes[nextAtomNr] = ac.getBuilder().newInstance(IAtomContainer.class, pathes[atomNr]);
                         logger.debug("Making copy of path " + (atomNr + 1) + " to form new path " + (nextAtomNr + 1));
                         pathes[nextAtomNr].addAtom(nextAtom);
                         logger.debug("Adding atom " + (nextAtomNr + 1) + " to path " + (nextAtomNr + 1));
                         pathes[nextAtomNr].addBond(curBond);
-                        if (ac.getConnectedBondsCount(nextAtom) > 1)
-                        {
+                        if (ac.getConnectedBondsCount(nextAtom) > 1) {
                             newSphere.add(nextAtom);
                         }
                     }
                 }
             }
         }
-        if (newSphere.size() > 0)
-        {
-            for (int f = 0; f < newSphere.size(); f++)
-            {
+        if (newSphere.size() > 0) {
+            for (int f = 0; f < newSphere.size(); f++) {
                 newSphere.get(f).setFlag(CDKConstants.VISITED, true);
             }
             breadthFirstSearch(ac, newSphere, pathes);
@@ -739,29 +680,23 @@ public class AtomPlacer
         logger.debug("End of breadthFirstSearch");
     }
 
-
     /**
      *  Returns a string with the numbers of all placed atoms in an AtomContainer
      *
      *@param  ac  The AtomContainer for which the placed atoms are to be listed
      *@return     A string with the numbers of all placed atoms in an AtomContainer
      */
-    public String listPlaced(IAtomContainer ac)
-    {
+    public String listPlaced(IAtomContainer ac) {
         String s = "Placed: ";
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
-            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
-            {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
                 s += (f + 1) + "+ ";
-            } else
-            {
+            } else {
                 s += (f + 1) + "- ";
             }
         }
         return s;
     }
-
 
     /**
      *  Returns a string with the numbers of all atoms in an AtomContainer relative
@@ -777,16 +712,13 @@ public class AtomPlacer
      *@exception  org.openscience.cdk.exception.CDKException  Description of the
      *      Exception
      */
-    static public  String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException
-    {
+    static public String listNumbers(IAtomContainer mol, IAtomContainer ac) throws CDKException {
         String s = "Numbers: ";
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
             s += (mol.getAtomNumber(ac.getAtom(f)) + 1) + " ";
         }
         return s;
     }
-
 
     /**
      *  Returns a string with the numbers of all atoms in a Vector relative to a
@@ -800,16 +732,13 @@ public class AtomPlacer
      *      atoms in an AtomContainer
      *@exception  java.lang.Exception  Description of the Exception
      */
-    static public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception
-    {
+    static public String listNumbers(IAtomContainer mol, List<IAtom> ac) throws java.lang.Exception {
         String s = "Numbers: ";
-        for (int f = 0; f < ac.size(); f++)
-        {
+        for (int f = 0; f < ac.size(); f++) {
             s += (mol.getAtomNumber((IAtom) ac.get(f)) + 1) + " ";
         }
         return s;
     }
-
 
     /**
      *  True is all the atoms in the given AtomContainer have been placed
@@ -817,33 +746,26 @@ public class AtomPlacer
      *@param  ac  The AtomContainer to be searched
      *@return     True is all the atoms in the given AtomContainer have been placed
      */
-    static public  boolean allPlaced(IAtomContainer ac)
-    {
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
-            if (!ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
-            {
+    static public boolean allPlaced(IAtomContainer ac) {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            if (!ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
                 return false;
             }
         }
         return true;
     }
 
-
     /**
      *  Marks all the atoms in the given AtomContainer as not placed
      *
      *@param  ac  The AtomContainer whose atoms are to be marked
      */
-    static public  void markNotPlaced(IAtomContainer ac)
-    {
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
+    static public void markNotPlaced(IAtomContainer ac) {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
             ac.getAtom(f).setFlag(CDKConstants.ISPLACED, false);
         }
 
     }
-
 
     /**
      *  Marks all the atoms in the given AtomContainer as placed
@@ -851,14 +773,11 @@ public class AtomPlacer
      *@param  ac  The AtomContainer whose atoms are to be marked
      */
 
-    static public  void markPlaced(IAtomContainer ac)
-    {
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
+    static public void markPlaced(IAtomContainer ac) {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
             ac.getAtom(f).setFlag(CDKConstants.ISPLACED, true);
         }
     }
-
 
     /**
      *  Get all the placed atoms in an AtomContainer
@@ -866,19 +785,15 @@ public class AtomPlacer
      *@param  ac  The AtomContainer to be searched for placed atoms
      *@return     An AtomContainer containing all the placed atoms
      */
-    static public IAtomContainer getPlacedAtoms(IAtomContainer ac)
-    {
+    static public IAtomContainer getPlacedAtoms(IAtomContainer ac) {
         IAtomContainer ret = ac.getBuilder().newInstance(IAtomContainer.class);
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
-            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED))
-            {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            if (ac.getAtom(f).getFlag(CDKConstants.ISPLACED)) {
                 ret.addAtom(ac.getAtom(f));
             }
         }
         return ret;
     }
-
 
     /**
      *  Sums up the degrees of atoms in an atomcontainer
@@ -888,39 +803,31 @@ public class AtomPlacer
      *
      *@return sum of degrees
      */
-    static int getDegreeSum(IAtomContainer ac, IAtomContainer superAC)
-    {
-    	int degreeSum = 0;
+    static int getDegreeSum(IAtomContainer ac, IAtomContainer superAC) {
+        int degreeSum = 0;
         //String path = "DegreeSum for Path: ";
-    	for (int f = 0; f < ac.getAtomCount(); f++)
-        {
-    		//path += ac.getAtom(f).getSymbol();
+        for (int f = 0; f < ac.getAtomCount(); f++) {
+            //path += ac.getAtom(f).getSymbol();
             degreeSum += superAC.getConnectedBondsCount(ac.getAtom(f));
 
             Integer implH = ac.getAtom(f).getImplicitHydrogenCount();
-            if (implH != null)
-                degreeSum += implH;
+            if (implH != null) degreeSum += implH;
         }
         //System.out.println(path + ": " + degreeSum);
         return degreeSum;
     }
-
-
 
     /**
      *  Calculates weights for unplaced atoms.
      *
      *@param  ac  The atomcontainer for which weights are to be calculated
      */
-    static void calculateWeights(IAtomContainer ac)
-    {
+    static void calculateWeights(IAtomContainer ac) {
         int[] weights = getWeightNumbers(ac);
-        for (int f = 0; f < ac.getAtomCount(); f++)
-        {
+        for (int f = 0; f < ac.getAtomCount(); f++) {
             ac.getAtom(f).setProperty("Weight", Integer.valueOf(weights[f]));
         }
     }
-
 
     /**
      *  Makes an array containing morgan-number-like number for an atomContainer.
@@ -928,30 +835,24 @@ public class AtomPlacer
      *@param  atomContainer  The atomContainer to analyse.
      *@return                The morgan numbers value.
      */
-    static int[] getWeightNumbers(IAtomContainer atomContainer)
-    {
+    static int[] getWeightNumbers(IAtomContainer atomContainer) {
         int[] morganMatrix;
         int[] tempMorganMatrix;
         int N = atomContainer.getAtomCount();
         morganMatrix = new int[N];
         tempMorganMatrix = new int[N];
         List atoms = null;
-        for (int f = 0; f < N; f++)
-        {
+        for (int f = 0; f < N; f++) {
             morganMatrix[f] = atomContainer.getConnectedBondsCount(f);
             tempMorganMatrix[f] = atomContainer.getConnectedBondsCount(f);
         }
-        for (int e = 0; e < N; e++)
-        {
-            for (int f = 0; f < N; f++)
-            {
+        for (int e = 0; e < N; e++) {
+            for (int f = 0; f < N; f++) {
                 morganMatrix[f] = 0;
                 atoms = atomContainer.getConnectedAtomsList(atomContainer.getAtom(f));
-                for (int g = 0; g < atoms.size(); g++)
-                {
-                    IAtom atom = (IAtom)atoms.get(g);
-                    if (!atom.getFlag(CDKConstants.ISPLACED))
-                    {
+                for (int g = 0; g < atoms.size(); g++) {
+                    IAtom atom = (IAtom) atoms.get(g);
+                    if (!atom.getFlag(CDKConstants.ISPLACED)) {
                         morganMatrix[f] += tempMorganMatrix[atomContainer.getAtomNumber(atom)];
                     }
                 }
@@ -961,19 +862,17 @@ public class AtomPlacer
         return tempMorganMatrix;
     }
 
-    static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule)
-    {
+    static public boolean shouldBeLinear(IAtom atom, IAtomContainer molecule) {
         int sum = 0;
         List bonds = molecule.getConnectedBondsList(atom);
-        for (int g = 0; g < bonds.size(); g++)
-        {
-            IBond bond = (IBond)bonds.get(g);
-            if (bond.getOrder() == IBond.Order.TRIPLE) sum += 10;
+        for (int g = 0; g < bonds.size(); g++) {
+            IBond bond = (IBond) bonds.get(g);
+            if (bond.getOrder() == IBond.Order.TRIPLE)
+                sum += 10;
             else if (bond.getOrder() == IBond.Order.SINGLE) sum += 1;
-//            else if (bond.getOrder() == IBond.Order.DOUBLE) sum += 5;
+            //            else if (bond.getOrder() == IBond.Order.DOUBLE) sum += 5;
         }
         if (sum >= 10) return true;
         return false;
     }
 }
-

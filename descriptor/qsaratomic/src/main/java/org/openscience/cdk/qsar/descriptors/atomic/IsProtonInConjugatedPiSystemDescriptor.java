@@ -60,20 +60,18 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.set     qsar-descriptors
  * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.IsProtonInConjugatedPiSystemDescriptorTest")
 public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private static final String[] names = {"protonInConjSystem"};
-    private boolean checkAromaticity = false;
-    private IAtomContainer acold=null;
-    private IAtomContainerSet acSet=null;
-
+    private static final String[] names            = {"protonInConjSystem"};
+    private boolean               checkAromaticity = false;
+    private IAtomContainer        acold            = null;
+    private IAtomContainerSet     acSet            = null;
 
     /**
      *  Constructor for the IsProtonInConjugatedPiSystemDescriptor object
      */
-    public IsProtonInConjugatedPiSystemDescriptor() { }
-
+    public IsProtonInConjugatedPiSystemDescriptor() {}
 
     /**
      *  Gets the specification attribute of the
@@ -81,14 +79,12 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInConjugatedPiSystem", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the IsProtonInConjugatedPiSystemDescriptor
@@ -97,7 +93,7 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  params            Parameters are an integer (heavy atom position) and a boolean (true if is needed a checkAromaticity)
      *@exception  CDKException  Description of the Exception
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("IsProtonInConjugatedPiSystemDescriptor only expects one parameters");
@@ -108,14 +104,13 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
         checkAromaticity = (Boolean) params[0];
     }
 
-
     /**
      *  Gets the parameters attribute of the IsProtonInConjugatedPiSystemDescriptor
      *  object
      *
      *@return    The parameters value
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -123,11 +118,10 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      *  The method is a proton descriptor that evaluates if a proton is joined to a conjugated system.
@@ -136,15 +130,14 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  atomContainer              AtomContainer
      *@return                   true if the proton is bonded to a conjugated system
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
             clonedAtomContainer = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new BooleanResult(false),
-                    names, e);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
+                    false), names, e);
         }
         IAtom clonedAtom = clonedAtomContainer.getAtom(atomContainer.getAtomNumber(atom));
 
@@ -155,14 +148,13 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
                 AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
                 Aromaticity.cdkLegacy().apply(mol);
             } catch (CDKException e) {
-                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                        new BooleanResult(false),
-                        names, e);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
+                        false), names, e);
             }
         }
-        if(atom.getSymbol().equals("H")) {
-            if(acold!=clonedAtomContainer){
-                acold=clonedAtomContainer;
+        if (atom.getSymbol().equals("H")) {
+            if (acold != clonedAtomContainer) {
+                acold = clonedAtomContainer;
                 acSet = ConjugatedPiSystemsDetector.detect(mol);
             }
             Iterator<IAtomContainer> detected = acSet.atomContainers().iterator();
@@ -177,11 +169,9 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
                 }
             }
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new BooleanResult(isProtonInPiSystem),
-                names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new BooleanResult(
+                isProtonInPiSystem), names);
     }
-
 
     /**
      *  Gets the parameterNames attribute of the
@@ -189,13 +179,12 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
         return params;
     }
-
 
     /**
      *  Gets the parameterType attribute of the
@@ -204,9 +193,8 @@ public class IsProtonInConjugatedPiSystemDescriptor extends AbstractAtomicDescri
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return true;
     }
 }
-

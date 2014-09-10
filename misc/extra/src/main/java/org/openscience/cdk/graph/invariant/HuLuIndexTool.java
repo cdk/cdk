@@ -38,47 +38,40 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  *
  * @cdk.githash
  */
-public class HuLuIndexTool
-{
-	private final static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
+public class HuLuIndexTool {
+
+    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HuLuIndexTool.class);
 
     /**
-   * Calculates the extended adjacency matrix index.
-   * An implementation of the algorithm published in {@cdk.cite HU96}.
-   *
-   * @cdk.keyword EAID number
-   */
+    * Calculates the extended adjacency matrix index.
+    * An implementation of the algorithm published in {@cdk.cite HU96}.
+    *
+    * @cdk.keyword EAID number
+    */
     public static double getEAIDNumber(AtomContainer atomContainer) throws NoSuchAtomException,
-            BadMatrixFormatException,IndexOutOfBoundsException
-    {
+            BadMatrixFormatException, IndexOutOfBoundsException {
         GIMatrix matrix = new GIMatrix(getExtendedAdjacenyMatrix(atomContainer));
 
         GIMatrix tempMatrix = matrix;
         GIMatrix fixedMatrix = matrix;
-        for (int i = 2; i < atomContainer.getAtomCount(); i++)
-        {
+        for (int i = 2; i < atomContainer.getAtomCount(); i++) {
             tempMatrix = tempMatrix.multiply(fixedMatrix);
             matrix = matrix.add(tempMatrix);
         }
 
-        for (int i = 0; i < atomContainer.getAtomCount(); i++)
-        {
-            matrix.setValueAt(i,i,matrix.getValueAt(i,i)+1);
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+            matrix.setValueAt(i, i, matrix.getValueAt(i, i) + 1);
         }
         double eaid = matrix.trace();
 
         logger.debug("final matrix - the sum of the powers of EA matrix: ");
         displayMatrix(matrix.getArrayValue());
-        logger.debug("eaid number: "+ eaid);
+        logger.debug("eaid number: " + eaid);
 
         return eaid;
     }
 
-
-    public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer)
-        throws NoSuchAtomException
-    {
+    public static double[][] getExtendedAdjacenyMatrix(AtomContainer atomContainer) throws NoSuchAtomException {
         double[][] adjaMatrix = ConnectionMatrix.getMatrix(atomContainer);
 
         logger.debug("adjacency matrix: ");
@@ -86,25 +79,18 @@ public class HuLuIndexTool
 
         double[] atomWeights = getAtomWeights(atomContainer);
 
-
-        for (int i = 0; i < adjaMatrix.length; i++)
-        {
-            for (int j = 0; j < adjaMatrix.length; j++)
-            {
-                if (i==j)
-                {
-                    if ("O".equals(atomContainer.getAtom(i).getSymbol()))
-                    {
-                        adjaMatrix[i][j] = Math.sqrt(0.74)/6;
+        for (int i = 0; i < adjaMatrix.length; i++) {
+            for (int j = 0; j < adjaMatrix.length; j++) {
+                if (i == j) {
+                    if ("O".equals(atomContainer.getAtom(i).getSymbol())) {
+                        adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
+                    } else {
+                        adjaMatrix[i][j] = Math.sqrt(0.74) / 6;
                     }
-                    else
-                    {
-                        adjaMatrix[i][j] = Math.sqrt(0.74)/6;
-                    }
-                }
-                else
-                {
-                    adjaMatrix[i][j] = (Math.sqrt(atomWeights[i]/atomWeights[j]) + Math.sqrt(atomWeights[j]/atomWeights[i])) * Math.sqrt(adjaMatrix[i][j])/6;
+                } else {
+                    adjaMatrix[i][j] = (Math.sqrt(atomWeights[i] / atomWeights[j]) + Math.sqrt(atomWeights[j]
+                            / atomWeights[i]))
+                            * Math.sqrt(adjaMatrix[i][j]) / 6;
                 }
             }
         }
@@ -115,10 +101,9 @@ public class HuLuIndexTool
         return adjaMatrix;
     }
 
-    public static double[] getAtomWeights(AtomContainer atomContainer) throws NoSuchAtomException
-    {
-        IAtom atom,headAtom,endAtom;
-        int headAtomPosition,endAtomPosition;
+    public static double[] getAtomWeights(AtomContainer atomContainer) throws NoSuchAtomException {
+        IAtom atom, headAtom, endAtom;
+        int headAtomPosition, endAtomPosition;
 
         //int k = 0;
         double[] weightArray = new double[atomContainer.getAtomCount()];
@@ -137,34 +122,27 @@ public class HuLuIndexTool
         logger.debug("atom layers: ");
         displayArray(atomLayers);
 
-        for (int i = 0; i < atomContainer.getAtomCount(); i++)
-        {
+        for (int i = 0; i < atomContainer.getAtomCount(); i++) {
             atom = atomContainer.getAtom(i);
 
             valenceSum = new int[atomLayers[i]];
-            for (int v = 0; v < valenceSum.length; v++)
-            {
+            for (int v = 0; v < valenceSum.length; v++) {
                 valenceSum[v] = 0;
             }
 
-            interLayerBondSum = new int[atomLayers[i]-1];
-            for (int v = 0; v < interLayerBondSum.length; v++)
-            {
+            interLayerBondSum = new int[atomLayers[i] - 1];
+            for (int v = 0; v < interLayerBondSum.length; v++) {
                 interLayerBondSum[v] = 0;
             }
 
-
             //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
-            if("O".equals(atom.getSymbol()))
+            if ("O".equals(atom.getSymbol()))
                 weightArray[i] = 6 - atom.getImplicitHydrogenCount();
             else
                 weightArray[i] = 4 - atom.getImplicitHydrogenCount();
 
-
-
-            for (int j = 0; j < apspMatrix.length; j++)
-            {
-                if("O".equals(atomContainer.getAtom(j).getSymbol()))
+            for (int j = 0; j < apspMatrix.length; j++) {
+                if ("O".equals(atomContainer.getAtom(j).getSymbol()))
                     valenceSum[apspMatrix[j][i]] += 6 - atomContainer.getAtom(j).getImplicitHydrogenCount();
                 else
                     valenceSum[apspMatrix[j][i]] += 4 - atomContainer.getAtom(j).getImplicitHydrogenCount();
@@ -177,25 +155,18 @@ public class HuLuIndexTool
                 headAtom = bond.getAtom(0);
                 endAtom = bond.getAtom(1);
 
-
                 headAtomPosition = atomContainer.getAtomNumber(headAtom);
                 endAtomPosition = atomContainer.getAtomNumber(endAtom);
 
-
-
-
-                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1)
-                {
-                    int min = Math.min(apspMatrix[i][headAtomPosition],apspMatrix[i][endAtomPosition]);
+                if (Math.abs(apspMatrix[i][headAtomPosition] - apspMatrix[i][endAtomPosition]) == 1) {
+                    int min = Math.min(apspMatrix[i][headAtomPosition], apspMatrix[i][endAtomPosition]);
                     IBond.Order order = bond.getOrder();
                     interLayerBondSum[min] += order == null ? 0 : order.numeric();
                 }
             }
 
-
-            for (int j = 0; j < interLayerBondSum.length; j++)
-            {
-                weightArray[i] += interLayerBondSum[j] * valenceSum[j+1] * Math.pow(10, -(j+1));
+            for (int j = 0; j < interLayerBondSum.length; j++) {
+                weightArray[i] += interLayerBondSum[j] * valenceSum[j + 1] * Math.pow(10, -(j + 1));
             }
 
             logger.debug("valence sum: ");
@@ -210,16 +181,12 @@ public class HuLuIndexTool
         return weightArray;
     }
 
-    public static int[] getAtomLayers(int[][]apspMatrix)
-    {
-        int[] atomLayers  = new int[apspMatrix.length];
-        for(int i = 0; i < apspMatrix.length; i++)
-        {
+    public static int[] getAtomLayers(int[][] apspMatrix) {
+        int[] atomLayers = new int[apspMatrix.length];
+        for (int i = 0; i < apspMatrix.length; i++) {
             atomLayers[i] = 0;
-            for(int j = 0; j < apspMatrix.length; j++)
-            {
-                if(atomLayers[i] < 1+ apspMatrix[j][i] )
-                    atomLayers[i] = 1+ apspMatrix[j][i];
+            for (int j = 0; j < apspMatrix.length; j++) {
+                if (atomLayers[i] < 1 + apspMatrix[j][i]) atomLayers[i] = 1 + apspMatrix[j][i];
             }
 
         }
@@ -227,13 +194,11 @@ public class HuLuIndexTool
     }
 
     /** Lists a 2D double matrix to the System console. */
-    public static void displayMatrix(double[][] matrix){
+    public static void displayMatrix(double[][] matrix) {
         String line;
-        for (int f = 0; f < matrix.length; f++)
-        {
-            line  = "";
-            for (int g = 0; g < matrix.length; g++)
-            {
+        for (int f = 0; f < matrix.length; f++) {
+            line = "";
+            for (int g = 0; g < matrix.length; g++) {
                 line += matrix[g][f] + " | ";
             }
             logger.debug(line);
@@ -241,13 +206,11 @@ public class HuLuIndexTool
     }
 
     /** Lists a 2D int matrix to the System console. */
-    public static void displayMatrix(int[][] matrix){
+    public static void displayMatrix(int[][] matrix) {
         String line;
-        for (int f = 0; f < matrix.length; f++)
-        {
-            line  = "";
-            for (int g = 0; g < matrix.length; g++)
-            {
+        for (int f = 0; f < matrix.length; f++) {
+            line = "";
+            for (int g = 0; g < matrix.length; g++) {
                 line += matrix[g][f] + " | ";
             }
             logger.debug(line);
@@ -255,20 +218,18 @@ public class HuLuIndexTool
     }
 
     /** Lists a 1D array to the System console. */
-    public static void displayArray(int[] array){
-        String line  = "";
-        for (int f = 0; f < array.length; f++)
-        {
+    public static void displayArray(int[] array) {
+        String line = "";
+        for (int f = 0; f < array.length; f++) {
             line += array[f] + " | ";
         }
         logger.debug(line);
     }
 
     /** Lists a 1D array to the System console. */
-    public static void displayArray(double[] array){
-        String line  = "";
-        for (int f = 0; f < array.length; f++)
-        {
+    public static void displayArray(double[] array) {
+        String line = "";
+        for (int f = 0; f < array.length; f++) {
             line += array[f] + " | ";
         }
         logger.debug(line);

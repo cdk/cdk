@@ -37,34 +37,38 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class CrystalTest extends AbstractCrystalTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Crystal();
             }
         });
     }
 
-    @Test public void testCrystal() {
+    @Test
+    public void testCrystal() {
         ICrystal crystal = new Crystal();
         Assert.assertNotNull(crystal);
         Assert.assertEquals(0, crystal.getAtomCount());
         Assert.assertEquals(0, crystal.getBondCount());
     }
 
-    @Test public void testCrystal_IAtomContainer() {
+    @Test
+    public void testCrystal_IAtomContainer() {
         IAtomContainer acetone = newChemObject().getBuilder().newInstance(IAtomContainer.class);
-        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
-        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class, "O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class, "C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class, c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);
@@ -77,43 +81,68 @@ public class CrystalTest extends AbstractCrystalTest {
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    @Test public void testSetAtoms_removeListener() {
+
+    @Test
+    public void testSetAtoms_removeListener() {
         ChemObjectTestHelper.testSetAtoms_removeListener(newChemObject());
     }
 }

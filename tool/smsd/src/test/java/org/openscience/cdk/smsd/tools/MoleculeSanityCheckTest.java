@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2009-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -42,24 +41,19 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class MoleculeSanityCheckTest {
 
-    public MoleculeSanityCheckTest() {
-    }
+    public MoleculeSanityCheckTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     /**
      * Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.

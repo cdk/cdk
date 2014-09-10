@@ -39,15 +39,15 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
 
-    public AromaticBondsCountDescriptorTest() {
-    }
+    public AromaticBondsCountDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(AromaticBondsCountDescriptor.class);
+        setDescriptor(AromaticBondsCountDescriptor.class);
     }
 
-    @Test public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
+    @Test
+    public void testAromaticBondsCountDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
         Object[] params = {true};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -58,11 +58,10 @@ public class AromaticBondsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testViaFlags() throws Exception {
         IAtomContainer molecule = MoleculeFactory.makeBenzene();
-    	for (Iterator bonds=molecule.bonds().iterator(); bonds.hasNext();) {
-    		((IBond)bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
-    	}
-    	Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+        for (Iterator bonds = molecule.bonds().iterator(); bonds.hasNext();) {
+            ((IBond) bonds.next()).setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 
 }
-

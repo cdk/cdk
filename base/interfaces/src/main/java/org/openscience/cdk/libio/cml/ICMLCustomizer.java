@@ -40,22 +40,22 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public interface ICMLCustomizer {
 
-	/**
-	 * Customized the nodeToAdd for the given Atom.
-	 *
-	 * @param atom       Atom to base the customization on
-	 * @param nodeToAdd  XOM Element to customize
-	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
-	 */
+    /**
+     * Customized the nodeToAdd for the given Atom.
+     *
+     * @param atom       Atom to base the customization on
+     * @param nodeToAdd  XOM Element to customize
+     * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+     */
     public void customize(IAtom atom, Object nodeToAdd) throws Exception;
 
-	/**
-	 * Customized the nodeToAdd for the given IBond.
-	 *
-	 * @param bond       Bond to base the customization on
-	 * @param nodeToAdd  XOM Element to customize
-	 * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
-	 */
+    /**
+     * Customized the nodeToAdd for the given IBond.
+     *
+     * @param bond       Bond to base the customization on
+     * @param nodeToAdd  XOM Element to customize
+     * @throws Exception thrown if nodeToAdd is not an instance of nu.xom.Element
+     */
     public void customize(IBond bond, Object nodeToAdd) throws Exception;
 
     /**
@@ -67,4 +67,3 @@ public interface ICMLCustomizer {
      */
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception;
 }
-

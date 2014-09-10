@@ -43,38 +43,35 @@ import org.openscience.cdk.interfaces.IRing;
  */
 @Deprecated
 @TestClass("org.openscience.cdk.aromaticity.AromaticityCalculatorTest")
-public class AromaticityCalculator
-{
+public class AromaticityCalculator {
 
-	/**
-	 *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the
+    /**
+     *  Tests the <code>ring</code> in the <code>molecule</code> for aromaticity. Uses the
      *  H&uuml;ckel rule (4n + 2) pie electrons. sp<sup>2</sup> hybridized C contibute 1 electron non
      *  sp<sup>2</sup> hybridized heteroatoms contribute 2 electrons (N and O should never be sp in
      *  or anything else in a ring and d electron elements get to complicated)
      *  sp<sup>2</sup> hybridized heteroatoms contribute 1 electron hybridization is worked out by
      *  counting the number of bonds with order 2. Therefore sp<sup>2</sup> hybridization is assumed
      *  if there is one bond of order 2. Otherwise sp<sup>3</sup> hybridization is assumed.
-	 *
-	 * @param  ring      the ring to test
-	 * @param  atomContainer  the AtomContainer the ring is in
-	 * @return           true if the ring is aromatic false otherwise.
-	 */
+     *
+     * @param  ring      the ring to test
+     * @param  atomContainer  the AtomContainer the ring is in
+     * @return           true if the ring is aromatic false otherwise.
+     */
     @TestMethod("testIsAromatic_IRing_IAtomContainer")
-    public static boolean isAromatic(IRing ring, IAtomContainer atomContainer)
-	{
+    public static boolean isAromatic(IRing ring, IAtomContainer atomContainer) {
 
-		java.util.Iterator<IAtom> ringAtoms = ring.atoms().iterator();
-		int eCount = 0;
-		java.util.List<IBond> conectedBonds;
-		int numDoubleBond = 0;
-		boolean allConnectedBondsSingle;
+        java.util.Iterator<IAtom> ringAtoms = ring.atoms().iterator();
+        int eCount = 0;
+        java.util.List<IBond> conectedBonds;
+        int numDoubleBond = 0;
+        boolean allConnectedBondsSingle;
 
-		while (ringAtoms.hasNext())
-		{
-			IAtom atom = ringAtoms.next();
-			numDoubleBond = 0;
-			allConnectedBondsSingle = true;
-			conectedBonds = atomContainer.getConnectedBondsList(atom);
+        while (ringAtoms.hasNext()) {
+            IAtom atom = ringAtoms.next();
+            numDoubleBond = 0;
+            allConnectedBondsSingle = true;
+            conectedBonds = atomContainer.getConnectedBondsList(atom);
             for (IBond conectedBond : conectedBonds) {
                 if (conectedBond.getOrder() == IBond.Order.DOUBLE && ring.contains(conectedBond)) {
                     numDoubleBond++;
@@ -89,35 +86,23 @@ public class AromaticityCalculator
                     allConnectedBondsSingle = false;
                 }
             }
-            if (numDoubleBond == 1)
-			{
-				//C or heteroatoms both contibute 1 electron in sp2 hybridized form
-				eCount++;
-			}
-			else if (!atom.getSymbol().equals("C"))
-			{
-				//Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
-				eCount = eCount + 2;
-			}
-			else if (atom.getFlag(CDKConstants.ISAROMATIC))
-			{
-				eCount++;
-			}
-			else if (allConnectedBondsSingle
-					&& atom.getSymbol().equals("C")
-					&& atom.getFormalCharge() == 1.0)
-			{
-				// This is for tropylium and kinds.
-				// Dependence on hybridisation would be better:
-				// empty p-orbital is needed
-				continue;
-			}
-			else
-			{
-				return false;
-			}
-		}
+            if (numDoubleBond == 1) {
+                //C or heteroatoms both contibute 1 electron in sp2 hybridized form
+                eCount++;
+            } else if (!atom.getSymbol().equals("C")) {
+                //Heteroatom probably in sp3 hybrid therefore 2 electrons contributed.
+                eCount = eCount + 2;
+            } else if (atom.getFlag(CDKConstants.ISAROMATIC)) {
+                eCount++;
+            } else if (allConnectedBondsSingle && atom.getSymbol().equals("C") && atom.getFormalCharge() == 1.0) {
+                // This is for tropylium and kinds.
+                // Dependence on hybridisation would be better:
+                // empty p-orbital is needed
+                continue;
+            } else {
+                return false;
+            }
+        }
         return eCount - 2 != 0 && (eCount - 2) % 4 == 0;
     }
 }
-

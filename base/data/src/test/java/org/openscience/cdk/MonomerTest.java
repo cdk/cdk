@@ -40,17 +40,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class MonomerTest extends AbstractMonomerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Monomer();
             }
         });
     }
 
-	@Test public void testMonomer() {
-		IMonomer oMonomer = new Monomer();
+    @Test
+    public void testMonomer() {
+        IMonomer oMonomer = new Monomer();
         Assert.assertNotNull(oMonomer);
-	}
+    }
 
 }

@@ -58,19 +58,17 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.dictref qsar-descriptors:effectivePolarizability
  * @see Polarizability
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.EffectiveAtomPolarizabilityDescriptorTest")
 public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-	private Polarizability pol;
-
+    private Polarizability pol;
 
     /**
      *  Constructor for the EffectiveAtomPolarizabilityDescriptor object
      */
     public EffectiveAtomPolarizabilityDescriptor() {
-    	pol = new Polarizability();
-  }
-
+        pol = new Polarizability();
+    }
 
     /**
      *  Gets the specification attribute of the EffectiveAtomPolarizabilityDescriptor
@@ -78,22 +76,18 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#effectivePolarizability", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * This descriptor does have any parameter.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      *  Gets the parameters attribute of the EffectiveAtomPolarizabilityDescriptor
@@ -102,16 +96,15 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      * @return    The parameters value
      * @see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return new String[]{"effAtomPol"};
     }
-
 
     /**
      *  The method calculates the Effective Atom Polarizability of a given atom
@@ -125,35 +118,32 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         double polarizability;
         try {
-        	// FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
-        	String originalAtomtypeName = atom.getAtomTypeName();
-        	Integer originalNeighborCount = atom.getFormalNeighbourCount();
-        	Integer originalHCount = atom.getImplicitHydrogenCount();
-        	Integer originalValency = atom.getValency();
-        	IAtomType.Hybridization originalHybridization = atom.getHybridization();
-        	boolean originalFlag = atom.getFlag(CDKConstants.VISITED);
-        	Double originalBondOrderSum = atom.getBondOrderSum();
-        	Order originalMaxBondOrder = atom.getMaxBondOrder();
+            // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
+            String originalAtomtypeName = atom.getAtomTypeName();
+            Integer originalNeighborCount = atom.getFormalNeighbourCount();
+            Integer originalHCount = atom.getImplicitHydrogenCount();
+            Integer originalValency = atom.getValency();
+            IAtomType.Hybridization originalHybridization = atom.getHybridization();
+            boolean originalFlag = atom.getFlag(CDKConstants.VISITED);
+            Double originalBondOrderSum = atom.getBondOrderSum();
+            Order originalMaxBondOrder = atom.getMaxBondOrder();
             polarizability = pol.calculateGHEffectiveAtomPolarizability(ac, atom, 100, true);
-        	// restore original props
-        	atom.setAtomTypeName(originalAtomtypeName);
-        	atom.setFormalNeighbourCount(originalNeighborCount);
-        	atom.setValency(originalValency);
-        	atom.setImplicitHydrogenCount(originalHCount);
-        	atom.setFlag(CDKConstants.VISITED, originalFlag);
-        	atom.setHybridization(originalHybridization);
-        	atom.setMaxBondOrder(originalMaxBondOrder);
-        	atom.setBondOrderSum(originalBondOrderSum);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(polarizability),
-                    getDescriptorNames());
+            // restore original props
+            atom.setAtomTypeName(originalAtomtypeName);
+            atom.setFormalNeighbourCount(originalNeighborCount);
+            atom.setValency(originalValency);
+            atom.setImplicitHydrogenCount(originalHCount);
+            atom.setFlag(CDKConstants.VISITED, originalFlag);
+            atom.setHybridization(originalHybridization);
+            atom.setMaxBondOrder(originalMaxBondOrder);
+            atom.setBondOrderSum(originalBondOrderSum);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    polarizability), getDescriptorNames());
         } catch (Exception ex1) {
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(Double.NaN),
-                    getDescriptorNames(), ex1);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), getDescriptorNames(), ex1);
         }
     }
-
 
     /**
      *  Gets the parameterNames attribute of the EffectiveAtomPolarizabilityDescriptor
@@ -161,11 +151,10 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *
      *@return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      *  Gets the parameterType attribute of the EffectiveAtomPolarizabilityDescriptor
@@ -174,10 +163,8 @@ public class EffectiveAtomPolarizabilityDescriptor extends AbstractAtomicDescrip
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-
-

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class RawCopyFormatTest extends ChemFormatTest {
 
     public RawCopyFormatTest() {
-        super.setChemFormat((IChemFormat)RawCopyFormat.getInstance());
+        super.setChemFormat((IChemFormat) RawCopyFormat.getInstance());
     }
 
 }

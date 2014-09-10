@@ -37,153 +37,142 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2001-09-03
  * @cdk.module  qm
  */
-public class OneElectronJob
-{
-  private Orbitals orbitals;
-  private Vector E;
+public class OneElectronJob {
 
-  private static ILoggingTool log =
-      LoggingToolFactory.createLoggingTool(OneElectronJob.class);
+    private Orbitals            orbitals;
+    private Vector              E;
 
-  /**
-   * Constructs a one electron job
-   */
-  public OneElectronJob(Orbitals orbitals)
-  {
-    this.orbitals = orbitals;
-  }
+    private static ILoggingTool log = LoggingToolFactory.createLoggingTool(OneElectronJob.class);
 
-  /**
-   * Returns the energies of the orbitals
-   */
-  public Vector getEnergies()
-  {
-    return E.duplicate();
-  }
+    /**
+     * Constructs a one electron job
+     */
+    public OneElectronJob(Orbitals orbitals) {
+        this.orbitals = orbitals;
+    }
 
-  /**
-   * Sorts the orbitals by their energies
-   */
-  private void sort(Matrix C, Vector E)
-  {
-    int i,j;
-    double value;
-    boolean changed;
-    do
-    {
-      changed = false;
-      for(i=1; i<E.size; i++)
-        if (E.vector[i-1]>E.vector[i])
-        {
-          value = E.vector[i];
-          E.vector[i] = E.vector[i-1];
-          E.vector[i-1] = value;
+    /**
+     * Returns the energies of the orbitals
+     */
+    public Vector getEnergies() {
+        return E.duplicate();
+    }
 
-          for(j=0; j<C.rows; j++)
-          {
-            value = C.matrix[j][i];
-            C.matrix[j][i] = C.matrix[j][i-1];
-            C.matrix[j][i-1] = value;
-          }
-          changed = true;
-        }
-    } while (changed);
-  }
+    /**
+     * Sorts the orbitals by their energies
+     */
+    private void sort(Matrix C, Vector E) {
+        int i, j;
+        double value;
+        boolean changed;
+        do {
+            changed = false;
+            for (i = 1; i < E.size; i++)
+                if (E.vector[i - 1] > E.vector[i]) {
+                    value = E.vector[i];
+                    E.vector[i] = E.vector[i - 1];
+                    E.vector[i - 1] = value;
 
-  private Matrix calculateS(IBasis basis)
-  {
-    int size = basis.getSize();
-    Matrix S = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        S.matrix[i][j] = basis.calcS(i,j);
+                    for (j = 0; j < C.rows; j++) {
+                        value = C.matrix[j][i];
+                        C.matrix[j][i] = C.matrix[j][i - 1];
+                        C.matrix[j][i - 1] = value;
+                    }
+                    changed = true;
+                }
+        } while (changed);
+    }
 
-    return S;
-  }
+    private Matrix calculateS(IBasis basis) {
+        int size = basis.getSize();
+        Matrix S = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                S.matrix[i][j] = basis.calcS(i, j);
 
-  /**
-   * Calculates the matrix for the kinetic energy
-   *
-   * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
-   */
-  private Matrix calculateT(IBasis basis)
-  {
-    int size = basis.getSize();
-    Matrix J = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        // (1/2) * -<d^2/dx^2 chi_i | chi_j>
-        J.matrix[i][j] = basis.calcJ(j,i)/2; // Attention indicies are exchanged
+        return S;
+    }
 
-    return J;
-  }
+    /**
+     * Calculates the matrix for the kinetic energy
+     *
+     * T_i,j = (1/2) * -<d^2/dx^2 chi_i | chi_j>
+     */
+    private Matrix calculateT(IBasis basis) {
+        int size = basis.getSize();
+        Matrix J = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                // (1/2) * -<d^2/dx^2 chi_i | chi_j>
+                J.matrix[i][j] = basis.calcJ(j, i) / 2; // Attention indicies are exchanged
 
-  /**
-   * Calculates the matrix for the potential matrix
-   *
-   * V_i,j = <chi_i | 1/r | chi_j>
-   */
-  private Matrix calculateV(IBasis basis)
-  {
-    int size = basis.getSize();
-    Matrix V = new Matrix(size,size);
-    int i,j;
-    for(i=0; i<size; i++)
-      for(j=0; j<size; j++)
-        V.matrix[i][j] = basis.calcV(i,j);
+        return J;
+    }
 
-    return V;
-  }
+    /**
+     * Calculates the matrix for the potential matrix
+     *
+     * V_i,j = <chi_i | 1/r | chi_j>
+     */
+    private Matrix calculateV(IBasis basis) {
+        int size = basis.getSize();
+        Matrix V = new Matrix(size, size);
+        int i, j;
+        for (i = 0; i < size; i++)
+            for (j = 0; j < size; j++)
+                V.matrix[i][j] = basis.calcV(i, j);
 
-  public Orbitals calculate()
-  {
-    long time = System.currentTimeMillis();
+        return V;
+    }
 
-    Matrix C,S,T,V,HAO,H,U;
-    IBasis basis = orbitals.getBasis();
+    public Orbitals calculate() {
+        long time = System.currentTimeMillis();
 
-    //int count_electrons = orbitals.getCountElectrons();
+        Matrix C, S, T, V, HAO, H, U;
+        IBasis basis = orbitals.getBasis();
 
-    C = orbitals.getCoefficients().duplicate();
+        //int count_electrons = orbitals.getCountElectrons();
 
-    S = calculateS(basis);
+        C = orbitals.getCoefficients().duplicate();
 
-    log.debug("S = \n"+S+"\n");
+        S = calculateS(basis);
 
-    log.debug("C = \n"+C+"\n");
+        log.debug("S = \n" + S + "\n");
 
-    C = C.orthonormalize(S);
-    log.debug("C' = \n"+C+"\n");
-    log.debug("C't * S * C' = \n"+S.similar(C)+"\n");
+        log.debug("C = \n" + C + "\n");
 
-    T = calculateT(basis);
-    log.debug("T = \n"+T+"\n");
+        C = C.orthonormalize(S);
+        log.debug("C' = \n" + C + "\n");
+        log.debug("C't * S * C' = \n" + S.similar(C) + "\n");
 
-    V = calculateV(basis);
-    log.debug("V = \n"+V+"\n");
+        T = calculateT(basis);
+        log.debug("T = \n" + T + "\n");
 
-    HAO = T.add(V);
-    log.debug("HAO = \n"+HAO+"\n");
+        V = calculateV(basis);
+        log.debug("V = \n" + V + "\n");
 
-    H = HAO.similar(C);
-    log.debug("H = C't * HAO * C' = \n"+H.similar(C)+"\n");
+        HAO = T.add(V);
+        log.debug("HAO = \n" + HAO + "\n");
 
-    U = H.diagonalize(50);
-    E = H.similar(U).getVectorFromDiagonal();
-    C = C.mul(U);
-    sort(C,E);
-    log.debug("C(neu) = \n"+C+"\n");
-    log.debug("E = \n"+E+"\n");
+        H = HAO.similar(C);
+        log.debug("H = C't * HAO * C' = \n" + H.similar(C) + "\n");
 
-    for(int j=0; j<E.size; j++)
-      log.debug("E("+(j+1)+".Orbital)="+(E.vector[j]*27.211)+" eV");
+        U = H.diagonalize(50);
+        E = H.similar(U).getVectorFromDiagonal();
+        C = C.mul(U);
+        sort(C, E);
+        log.debug("C(neu) = \n" + C + "\n");
+        log.debug("E = \n" + E + "\n");
 
-    time = System.currentTimeMillis()-time;
-    log.debug("Time = "+time+" ms");
-    time = System.currentTimeMillis();
+        for (int j = 0; j < E.size; j++)
+            log.debug("E(" + (j + 1) + ".Orbital)=" + (E.vector[j] * 27.211) + " eV");
 
-    return new Orbitals(basis, C);
-  }
+        time = System.currentTimeMillis() - time;
+        log.debug("Time = " + time + " ms");
+        time = System.currentTimeMillis();
+
+        return new Orbitals(basis, C);
+    }
 }

@@ -46,14 +46,14 @@ import org.openscience.cdk.smsd.tools.TimeManager;
 @TestClass("org.openscience.cdk.smsd.SMSDBondSensitiveTest")
 public class BKKCKCF {
 
-    private List<List<Integer>> maxCliquesSet = null;
+    private List<List<Integer>> maxCliquesSet      = null;
     /***********************************************************************/
-    private List<Integer> cEdges = null;
-    private List<Integer> dEdges = null;
-    private int bestCliqueSize = 0;
-    private List<Integer> compGraphNodes = null;
-    private double dEdgeIterationSize = 0;
-    private double cEdgeIterationSize = 0;
+    private List<Integer>       cEdges             = null;
+    private List<Integer>       dEdges             = null;
+    private int                 bestCliqueSize     = 0;
+    private List<Integer>       compGraphNodes     = null;
+    private double              dEdgeIterationSize = 0;
+    private double              cEdgeIterationSize = 0;
 
     /**
      * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
@@ -78,7 +78,7 @@ public class BKKCKCF {
         cEdgeIterationSize = cEdges.size() / 2;
 
         //reset Degdes and Cedges if required
-//        setEdges();
+        //        setEdges();
 
         //Initialization maxCliquesSet
 
@@ -90,16 +90,13 @@ public class BKKCKCF {
 
     /*
      * Call the wrapper for ENUMERATE_CLIQUES
-     *
      */
     private void init() {
 
-
         /********************************************************************/
         /*
-         * vertex: stored all the vertices for the Graph G
-         * vertex[G]
-         * nodes of vector compGraphNodes are stored in vertex
+         * vertex: stored all the vertices for the Graph G vertex[G] nodes of
+         * vector compGraphNodes are stored in vertex
          */
         List<Integer> vertex = new ArrayList<Integer>(); //Initialization of ArrayList vertex
 
@@ -116,12 +113,13 @@ public class BKKCKCF {
         // System.out.println("ArrayList vertex :" + vertex);
 
         /*
-         *processedVertex: is index set of vertices which have already been used
+         * processedVertex: is index set of vertices which have already been
+         * used
          */
         List<Integer> processedVertex = new ArrayList<Integer>();
         /*
-         * Let processedVertex be the set of Nodes already been used in the initialization
-         *
+         * Let processedVertex be the set of Nodes already been used in the
+         * initialization
          */
         initIterator(vertex, processedVertex);
         processedVertex.clear();
@@ -155,12 +153,7 @@ public class BKKCKCF {
             }
             return 0;
         }
-        findCliques(
-                potentialVertex,
-                vertexOfCurrentClique,
-                potentialCVertex,
-                potentialDVertex,
-                excludedVertex,
+        findCliques(potentialVertex, vertexOfCurrentClique, potentialCVertex, potentialDVertex, excludedVertex,
                 excludedCVertex);
         return 0;
     }
@@ -224,7 +217,6 @@ public class BKKCKCF {
 
             neighbourVertex.clear();
 
-
             for (Integer obj : potentialCVertex) {
                 P_copy.add(obj);
             }
@@ -234,30 +226,15 @@ public class BKKCKCF {
             //System.out.println("potentialVertex.elementAt(index): " + potentialVertex.elementAt(index));
 
             neighbourVertex = findNeighbors(potentialVertexIndex);
-            groupNeighbors(index,
-                    P_copy,
-                    Q_copy,
-                    X_copy,
-                    Y_copy,
-                    neighbourVertex,
-                    potentialDVertex,
-                    potentialVertex,
-                    excludedVertex,
-                    excludedCVertex);
+            groupNeighbors(index, P_copy, Q_copy, X_copy, Y_copy, neighbourVertex, potentialDVertex, potentialVertex,
+                    excludedVertex, excludedCVertex);
             Stack<Integer> P_copy_N_intersec = new Stack<Integer>();
             List<Integer> Q_copy_N_intersec = new ArrayList<Integer>();
             List<Integer> X_copy_N_intersec = new ArrayList<Integer>();
             List<Integer> Y_copy_N_intersec = new ArrayList<Integer>();
 
-            copyVertex(neighbourVertex,
-                    P_copy_N_intersec,
-                    P_copy,
-                    Q_copy_N_intersec,
-                    Q_copy,
-                    X_copy_N_intersec,
-                    X_copy,
-                    Y_copy_N_intersec,
-                    Y_copy);
+            copyVertex(neighbourVertex, P_copy_N_intersec, P_copy, Q_copy_N_intersec, Q_copy, X_copy_N_intersec,
+                    X_copy, Y_copy_N_intersec, Y_copy);
 
             P_copy_N_intersec.push(0);
             R_copy.add(potentialVertexIndex);
@@ -292,16 +269,9 @@ public class BKKCKCF {
         }
     }
 
-    private void groupNeighbors(int index,
-            Stack<Integer> P_copy,
-            List<Integer> Q_copy,
-            List<Integer> X_copy,
-            List<Integer> Y_copy,
-            List<Integer> neighbourVertex,
-            List<Integer> potentialDVertex,
-            List<Integer> potentialVertex,
-            List<Integer> excludedVertex,
-            List<Integer> excludedCVertex) {
+    private void groupNeighbors(int index, Stack<Integer> P_copy, List<Integer> Q_copy, List<Integer> X_copy,
+            List<Integer> Y_copy, List<Integer> neighbourVertex, List<Integer> potentialDVertex,
+            List<Integer> potentialVertex, List<Integer> excludedVertex, List<Integer> excludedCVertex) {
 
         int N_size = neighbourVertex.size();
 
@@ -310,7 +280,6 @@ public class BKKCKCF {
         for (int b = 0; b < N_size; b += 2) {
             // neighbourVertex[index] is node v
             //Grouping of the neighbors:
-
 
             Integer Nelement_at_b = neighbourVertex.get(b);
 
@@ -353,24 +322,24 @@ public class BKKCKCF {
                 d_edgeFlag = true;
             }
 
-//        else if (dEdges.size() > 5000000 && dEdges.size() > cEdges.size()) {
-//            dEdgeIterationSize = (float) dEdges.size() * 0.0001;
-//            d_edgeFlag = true;
-//
-//        } else if (dEdges.size() > 100000 && dEdges.size() > cEdges.size()) {
-//            dEdgeIterationSize = (float) dEdges.size() * 0.1;
-//            d_edgeFlag = true;
-//        }
+            //        else if (dEdges.size() > 5000000 && dEdges.size() > cEdges.size()) {
+            //            dEdgeIterationSize = (float) dEdges.size() * 0.0001;
+            //            d_edgeFlag = true;
+            //
+            //        } else if (dEdges.size() > 100000 && dEdges.size() > cEdges.size()) {
+            //            dEdgeIterationSize = (float) dEdges.size() * 0.1;
+            //            d_edgeFlag = true;
+            //        }
 
-//        }
+            //        }
 
-//        else if (dEdges.size() >= 10000 && 500 >= cEdges.size()) {
-//            dEdgeIterationSize = (float) dEdges.size() * 0.1;
-//            d_edgeFlag = true;
-//        }
-//
-//
-//
+            //        else if (dEdges.size() >= 10000 && 500 >= cEdges.size()) {
+            //            dEdgeIterationSize = (float) dEdges.size() * 0.1;
+            //            d_edgeFlag = true;
+            //        }
+            //
+            //
+            //
 
         }
 
@@ -381,39 +350,38 @@ public class BKKCKCF {
 
     private void initIterator(List<Integer> vertex, List<Integer> processedVertex) {
         /*
-         * vertexOfCurrentClique: set of vertices belonging to the current clique
+         * vertexOfCurrentClique: set of vertices belonging to the current
+         * clique
          */
         List<Integer> vertexOfCurrentClique = new ArrayList<Integer>();
         /*
-         *potentialCVertex: is index set of vertices which <index>can</index> be added
-         *to vertexOfCurrentClique, because they are
-         * neighbours of vertex u via <i>c-edges</i>
+         * potentialCVertex: is index set of vertices which <index>can</index>
+         * be addedto vertexOfCurrentClique, because they are neighbours of
+         * vertex u via <i>c-edges</i>
          */
         Stack<Integer> potentialCVertex = new Stack<Integer>();
         /*
-         *potentialDVertex: is index set of vertices which <index>cannot</index> be added to
-         *vertexOfCurrentClique, because they are
-         * neighbours of vertex u via <i>d-edges</i>
+         * potentialDVertex: is index set of vertices which
+         * <index>cannot</index> be added tovertexOfCurrentClique, because they
+         * are neighbours of vertex u via <i>d-edges</i>
          */
 
         List<Integer> potentialDVertex = new ArrayList<Integer>();
         /*
-         *excludedVertex: set of vertices which are not allowed to be added
-         * to vertexOfCurrentClique
+         * excludedVertex: set of vertices which are not allowed to be added to
+         * vertexOfCurrentClique
          */
         List<Integer> excludedVertex = new ArrayList<Integer>();
 
-
         /*
-         *excludedCVertex: set of vertices which are not allowed to be added
-         * to C
+         * excludedCVertex: set of vertices which are not allowed to be added to
+         * C
          */
 
         List<Integer> excludedCVertex = new ArrayList<Integer>();
 
         /*
          * neighbourVertex[u]: set of neighbours of vertex u in Graph G
-         *
          */
 
         List<Integer> neighbourVertex = new ArrayList<Integer>();

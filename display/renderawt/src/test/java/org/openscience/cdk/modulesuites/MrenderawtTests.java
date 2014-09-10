@@ -32,9 +32,6 @@ import org.openscience.cdk.renderer.visitor.AbstractAWTDrawVisitorTest;
  * @cdk.module  test-renderawt
  */
 @RunWith(Suite.class)
-@SuiteClasses({
-	RenderawtCoverageTest.class,
-	AbstractAWTDrawVisitorTest.class,
-	AWTDrawVisitorTest.class
-})
-public class MrenderawtTests {}
+@SuiteClasses({RenderawtCoverageTest.class, AbstractAWTDrawVisitorTest.class, AWTDrawVisitorTest.class})
+public class MrenderawtTests {
+}

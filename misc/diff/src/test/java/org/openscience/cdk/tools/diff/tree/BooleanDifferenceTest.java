@@ -27,22 +27,26 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class BooleanDifferenceTest extends CDKTestCase {
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
         Assert.assertNotNull(result);
     }
 
-    @Test public void testSame() {
+    @Test
+    public void testSame() {
         IDifference result = BooleanDifference.construct("Foo", false, false);
         Assert.assertNull(result);
     }
 
-    @Test public void testTwoNull() {
+    @Test
+    public void testTwoNull() {
         IDifference result = BooleanDifference.construct("Foo", null, null);
         Assert.assertNull(result);
     }
 
-    @Test public void testOneNull() {
+    @Test
+    public void testOneNull() {
         IDifference result = BooleanDifference.construct("Foo", null, false);
         Assert.assertNotNull(result);
 
@@ -50,7 +54,8 @@ public class BooleanDifferenceTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Test public void testToString() {
+    @Test
+    public void testToString() {
         IDifference result = BooleanDifference.construct("Foo", true, false);
         String diffString = result.toString();
         Assert.assertNotNull(diffString);

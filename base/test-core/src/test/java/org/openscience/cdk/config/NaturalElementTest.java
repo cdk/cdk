@@ -32,19 +32,22 @@ import org.openscience.cdk.interfaces.IElement;
  */
 public class NaturalElementTest {
 
-	@Test public void testGetFlagValueZeroDefault(){
-		IChemObject chemObject = new NaturalElement("C", 12);
-		Assert.assertEquals((short)0, chemObject.getFlagValue());
-	}
+    @Test
+    public void testGetFlagValueZeroDefault() {
+        IChemObject chemObject = new NaturalElement("C", 12);
+        Assert.assertEquals((short) 0, chemObject.getFlagValue());
+    }
 
-	@Test public void testSymbol(){
-		IElement chemObject = new NaturalElement("C", 12);
-		Assert.assertEquals("C", chemObject.getSymbol());
-	}
+    @Test
+    public void testSymbol() {
+        IElement chemObject = new NaturalElement("C", 12);
+        Assert.assertEquals("C", chemObject.getSymbol());
+    }
 
-	@Test public void testMassNumber(){
-		IElement chemObject = new NaturalElement("C", 12);
-		Assert.assertEquals(12, chemObject.getAtomicNumber().intValue());
-	}
+    @Test
+    public void testMassNumber() {
+        IElement chemObject = new NaturalElement("C", 12);
+        Assert.assertEquals(12, chemObject.getAtomicNumber().intValue());
+    }
 
 }

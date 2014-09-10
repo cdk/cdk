@@ -62,11 +62,11 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class DefaultBondMatcher implements BondMatcher {
 
-    static final long serialVersionUID = -7861469841127328812L;
-    private IBond queryBond = null;
-    private IQueryBond smartQueryBond = null;
-    private int unsaturation = 0;
-    private boolean shouldMatchBonds = false;
+    static final long  serialVersionUID = -7861469841127328812L;
+    private IBond      queryBond        = null;
+    private IQueryBond smartQueryBond   = null;
+    private int        unsaturation     = 0;
+    private boolean    shouldMatchBonds = false;
 
     /**
      * Constructor
@@ -157,8 +157,7 @@ public class DefaultBondMatcher implements BondMatcher {
     }
 
     private int countImplicitHydrogens(IAtom atom) {
-        return (atom.getImplicitHydrogenCount() == null)
-                ? 0 : atom.getImplicitHydrogenCount();
+        return (atom.getImplicitHydrogenCount() == null) ? 0 : atom.getImplicitHydrogenCount();
     }
 
     /**

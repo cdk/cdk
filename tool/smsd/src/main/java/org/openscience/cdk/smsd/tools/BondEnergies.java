@@ -196,7 +196,7 @@ import org.openscience.cdk.smsd.helper.BondEnergy;
 public class BondEnergies {
 
     private static Map<Integer, BondEnergy> bondEngergies = null;
-    private static BondEnergies instance = null;
+    private static BondEnergies             instance      = null;
 
     /**
      * Returns Singleton pattern instance for the Bond Energy class
@@ -204,8 +204,7 @@ public class BondEnergies {
      * @throws CDKException
      */
     @TestMethod("testGetInstance")
-    public synchronized static BondEnergies getInstance()
-            throws CDKException {
+    public synchronized static BondEnergies getInstance() throws CDKException {
         if (null == instance) {
             instance = new BondEnergies();
         }
@@ -218,21 +217,21 @@ public class BondEnergies {
         int key = 1;
         bondEngergies = Collections.synchronizedSortedMap(new TreeMap<Integer, BondEnergy>());
 
-//      =========Hydrogen Block==============
+        //      =========Hydrogen Block==============
         key = setHydrogenBlock(key);
-//       ==================Group 13=================
+        //       ==================Group 13=================
         key = setGroup13(key);
-//      ===================Group 14 Part 1=================
+        //      ===================Group 14 Part 1=================
         key = setGroup14Part1(key);
-//      ===================Group 14 Part 2=================
+        //      ===================Group 14 Part 2=================
         key = setGroup14Part2(key);
-//      ===================Group 15=================
+        //      ===================Group 15=================
         key = setGroup15(key);
-//      ===================Group 16=================
+        //      ===================Group 16=================
         key = setGroup16(key);
-//      ===================Group 17=================
+        //      ===================Group 17=================
         key = setGroup17(key);
-//      ===================Group 18=================
+        //      ===================Group 18=================
         key = setGroup18(key);
     }
 
@@ -252,7 +251,8 @@ public class BondEnergies {
             String atom1 = bondEnergy.getSymbolFirstAtom();
             String atom2 = bondEnergy.getSymbolSecondAtom();
             if ((atom1.equalsIgnoreCase(sourceAtom.getSymbol()) && atom2.equalsIgnoreCase(targetAtom.getSymbol()))
-                    || (atom2.equalsIgnoreCase(sourceAtom.getSymbol()) && atom1.equalsIgnoreCase(targetAtom.getSymbol()))) {
+                    || (atom2.equalsIgnoreCase(sourceAtom.getSymbol()) && atom1
+                            .equalsIgnoreCase(targetAtom.getSymbol()))) {
 
                 Order order = bondEnergy.getBondOrder();
                 if (order.compareTo(bondOrder) == 0) {
@@ -411,7 +411,6 @@ public class BondEnergies {
         bondEngergies.put(key++, new BondEnergy("P", "Br", Order.SINGLE, 264));
         bondEngergies.put(key++, new BondEnergy("P", "I", Order.SINGLE, 184));
 
-
         bondEngergies.put(key++, new BondEnergy("As", "As", Order.SINGLE, 146));
         bondEngergies.put(key++, new BondEnergy("As", "O", Order.SINGLE, 301));
         bondEngergies.put(key++, new BondEnergy("As", "F", Order.SINGLE, 484));
@@ -419,12 +418,11 @@ public class BondEnergies {
         bondEngergies.put(key++, new BondEnergy("As", "Br", Order.SINGLE, 458));
         bondEngergies.put(key++, new BondEnergy("As", "I", Order.SINGLE, 200));
 
-
         bondEngergies.put(key++, new BondEnergy("Sb", "Sb", Order.SINGLE, 121));
         bondEngergies.put(key++, new BondEnergy("Sb", "F", Order.SINGLE, 440));
-//          Sb-Cl (SbCl 5)
+        //          Sb-Cl (SbCl 5)
         bondEngergies.put(key++, new BondEnergy("Sb", "Cl", Order.SINGLE, 248));
-//          Sb-Cl (SbCl 3)
+        //          Sb-Cl (SbCl 3)
         bondEngergies.put(key++, new BondEnergy("Sb", "Cl", Order.SINGLE, 315));
         return key;
 

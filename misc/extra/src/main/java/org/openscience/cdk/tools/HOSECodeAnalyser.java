@@ -42,44 +42,42 @@ import java.util.List;
  */
 public class HOSECodeAnalyser {
 
-	public static List<String> getElements(String code) {
-		List<String> elementList = new ArrayList<String>();
+    public static List<String> getElements(String code) {
+        List<String> elementList = new ArrayList<String>();
 
-		if (code.length() == 0) {
-			return elementList;
-		}
+        if (code.length() == 0) {
+            return elementList;
+        }
 
-		String currentSymbol = null;
-		for (int f = 0; f < code.length(); f++) {
-			char currentChar = code.charAt(f);
-			if (currentChar >= 'A' && currentChar <= 'Z') {
-				currentSymbol = "" + currentChar;
-				if (f < code.length()) {
-					currentChar = code.charAt(f+1);
-					if (currentChar >= 'a' && currentChar <= 'z') {
-						currentSymbol += currentChar;
-					}
-				}
-			} else {
-				currentSymbol = null;
-			}
-			if (currentSymbol != null) {
-				if (!elementList.contains(currentSymbol)) {
-					// reverse HOSECodeGenerator.getElementSymbol translations
-					if (currentSymbol.equals("Y")) {
-						currentSymbol = "Br";
-					} else if (currentSymbol.equals("X")) {
-						currentSymbol = "Cl";
-					} else if (currentSymbol.equals("Q")) {
-						currentSymbol = "Si";
-					}
-					elementList.add(currentSymbol);
-				}
-			}
-		}
-		return elementList;
-	}
+        String currentSymbol = null;
+        for (int f = 0; f < code.length(); f++) {
+            char currentChar = code.charAt(f);
+            if (currentChar >= 'A' && currentChar <= 'Z') {
+                currentSymbol = "" + currentChar;
+                if (f < code.length()) {
+                    currentChar = code.charAt(f + 1);
+                    if (currentChar >= 'a' && currentChar <= 'z') {
+                        currentSymbol += currentChar;
+                    }
+                }
+            } else {
+                currentSymbol = null;
+            }
+            if (currentSymbol != null) {
+                if (!elementList.contains(currentSymbol)) {
+                    // reverse HOSECodeGenerator.getElementSymbol translations
+                    if (currentSymbol.equals("Y")) {
+                        currentSymbol = "Br";
+                    } else if (currentSymbol.equals("X")) {
+                        currentSymbol = "Cl";
+                    } else if (currentSymbol.equals("Q")) {
+                        currentSymbol = "Si";
+                    }
+                    elementList.add(currentSymbol);
+                }
+            }
+        }
+        return elementList;
+    }
 
 }
-
-

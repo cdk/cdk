@@ -46,12 +46,13 @@ public final class RingSearchTest_Hexaphenylene {
 
     private final IAtomContainer hexaphenylene = hexaphenylene();
 
-    @Test public void testCyclic() {
-        assertThat(new RingSearch(hexaphenylene).cyclic().length,
-                   is(hexaphenylene.getAtomCount()));
+    @Test
+    public void testCyclic() {
+        assertThat(new RingSearch(hexaphenylene).cyclic().length, is(hexaphenylene.getAtomCount()));
     }
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         int n = hexaphenylene.getAtomCount();
         RingSearch ringSearch = new RingSearch(hexaphenylene);
         for (int i = 0; i < n; i++) {
@@ -59,31 +60,36 @@ public final class RingSearchTest_Hexaphenylene {
         }
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         RingSearch search = new RingSearch(hexaphenylene);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(0));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         int[][] fused = new RingSearch(hexaphenylene).fused();
         assertThat(fused.length, is(1));
         assertThat(fused[0].length, is(hexaphenylene.getAtomCount()));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         IAtomContainer fragment = new RingSearch(hexaphenylene).ringFragments();
         assertThat(fragment.getAtomCount(), is(hexaphenylene.getAtomCount()));
         assertThat(fragment.getBondCount(), is(hexaphenylene.getBondCount()));
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(hexaphenylene);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(0));
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         RingSearch search = new RingSearch(hexaphenylene);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(1));

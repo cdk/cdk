@@ -81,23 +81,17 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         AbstractChemObjectBuilderTest.rootObject = rootObject;
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNewInstance_Class_arrayObject() throws Exception {
         // throw random stuff; it should fail
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(
-            IAtom.class,
-            new Object[2]
-        );
+        builder.newInstance(IAtom.class, new Object[2]);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testIncorrectNumberOf() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(
-            IAtom.class,
-            builder.newInstance(IAtomContainer.class)
-        );
+        builder.newInstance(IAtom.class, builder.newInstance(IAtomContainer.class));
     }
 
     @Test
@@ -111,57 +105,62 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
     @Test
     public void testNewAtom_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IAtom atom = builder.newInstance(
-            IAtom.class, builder.newInstance(IElement.class, "N")
-        );
+        IAtom atom = builder.newInstance(IAtom.class, builder.newInstance(IElement.class, "N"));
         Assert.assertNotNull(atom);
         Assert.assertEquals("N", atom.getSymbol());
     }
 
-    @Test public void testNewAminoAcid() {
+    @Test
+    public void testNewAminoAcid() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAminoAcid aa = builder.newInstance(IAminoAcid.class);
         Assert.assertNotNull(aa);
     }
 
-    @Test public void testNewAtom_String() {
+    @Test
+    public void testNewAtom_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtom atom = builder.newInstance(IAtom.class, "C");
         Assert.assertNotNull(atom);
         Assert.assertEquals("C", atom.getSymbol());
     }
 
-    @Test public void testNewAtom_String_Point2d() {
+    @Test
+    public void testNewAtom_String_Point2d() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        Point2d coord = new Point2d(1,2);
+        Point2d coord = new Point2d(1, 2);
         IAtom atom = builder.newInstance(IAtom.class, "C", coord);
         Assert.assertNotNull(atom);
         Assert.assertEquals("C", atom.getSymbol());
         assertEquals(coord, atom.getPoint2d(), 0.0);
     }
 
-    @Test public void testNewAtom_String_Point3d() {
+    @Test
+    public void testNewAtom_String_Point3d() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        Point3d coord = new Point3d(1,2,3);
+        Point3d coord = new Point3d(1, 2, 3);
         IAtom atom = builder.newInstance(IAtom.class, "C", coord);
         Assert.assertNotNull(atom);
         Assert.assertEquals("C", atom.getSymbol());
         assertEquals(coord, atom.getPoint3d(), 0.0);
     }
 
-    @Test public void testNewAtomContainer() {
+    @Test
+    public void testNewAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         Assert.assertNotNull(container);
     }
 
-    @Test public void testNewAtomContainer_int_int_int_int() {
+    @Test
+    public void testNewAtomContainer_int_int_int_int() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainer container = builder.newInstance(IAtomContainer.class, 1, 2, 3, 4);
         Assert.assertNotNull(container);
     }
 
-    @Test public void testNewAtomContainer_IAtomContainer() {
+    @Test
+    public void testNewAtomContainer_IAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainer container = builder.newInstance(IAtomContainer.class);
         Assert.assertNotNull(container);
@@ -169,483 +168,473 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         Assert.assertNotNull(second);
     }
 
-    @Test public void testNewAtomType_String() {
+    @Test
+    public void testNewAtomType_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomType type = builder.newInstance(IAtomType.class, "C");
         Assert.assertNotNull(type);
     }
 
-    @Test public void testNewAtomType_IElement() {
+    @Test
+    public void testNewAtomType_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IAtomType type = builder.newInstance(
-            IAtomType.class,
-            builder.newInstance(IElement.class, "C")
-        );
+        IAtomType type = builder.newInstance(IAtomType.class, builder.newInstance(IElement.class, "C"));
         Assert.assertNotNull(type);
     }
 
-    @Test public void testNewAtomType_String_String() {
+    @Test
+    public void testNewAtomType_String_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomType type = builder.newInstance(IAtomType.class, "C", "C.sp2");
         Assert.assertNotNull(type);
     }
 
-    @Test public void testNewBioPolymer() {
+    @Test
+    public void testNewBioPolymer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IBioPolymer polymer = builder.newInstance(IBioPolymer.class);
         Assert.assertNotNull(polymer);
     }
 
-    @Test public void testNewBond() {
+    @Test
+    public void testNewBond() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IBond bond = builder.newInstance(IBond.class);
         Assert.assertNotNull(bond);
     }
 
-    @Test public void testNewBond_IAtom_IAtom() {
+    @Test
+    public void testNewBond_IAtom_IAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IBond bond = builder.newInstance(
-            IBond.class,
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class)
-        );
+        IBond bond = builder.newInstance(IBond.class, builder.newInstance(IAtom.class),
+                builder.newInstance(IAtom.class));
         Assert.assertNotNull(bond);
     }
 
     /**
      * @cdk.bug 3526870
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNewBond_IAtom_IMolecule() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        builder.newInstance(
-            IBond.class,
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtomContainer.class)
-        );
+        builder.newInstance(IBond.class, builder.newInstance(IAtom.class), builder.newInstance(IAtomContainer.class));
     }
 
-    @Test public void testNewBond_IAtom_IAtom_IBond_Order() {
+    @Test
+    public void testNewBond_IAtom_IAtom_IBond_Order() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IBond bond = builder.newInstance(
-            IBond.class,
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            IBond.Order.SINGLE
-        );
+        IBond bond = builder.newInstance(IBond.class, builder.newInstance(IAtom.class),
+                builder.newInstance(IAtom.class), IBond.Order.SINGLE);
         Assert.assertNotNull(bond);
     }
 
-    @Test public void testNewBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
+    @Test
+    public void testNewBond_IAtom_IAtom_IBond_Order_IBond_Stereo() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IBond bond = builder.newInstance(
-            IBond.class,
-            builder.newInstance(IAtom.class),
-            builder.newInstance(IAtom.class),
-            IBond.Order.SINGLE,
-            IBond.Stereo.E_OR_Z
-        );
+        IBond bond = builder.newInstance(IBond.class, builder.newInstance(IAtom.class),
+                builder.newInstance(IAtom.class), IBond.Order.SINGLE, IBond.Stereo.E_OR_Z);
         Assert.assertNotNull(bond);
     }
 
-    @Test public void testNewBond_arrayIAtom() {
+    @Test
+    public void testNewBond_arrayIAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IBond bond = builder.newInstance(
-            IBond.class,
-            (Object[])new IAtom[] {
-                builder.newInstance(IAtom.class),
-                builder.newInstance(IAtom.class)
-            }
-        );
+        IBond bond = builder.newInstance(IBond.class,
+                (Object[]) new IAtom[]{builder.newInstance(IAtom.class), builder.newInstance(IAtom.class)});
         Assert.assertNotNull(bond);
     }
 
-    @Test public void testNewBond_arrayIAtom_IBond_Order() {
+    @Test
+    public void testNewBond_arrayIAtom_IBond_Order() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IBond bond = builder.newInstance(
-            IBond.class,
-            (Object[])new IAtom[] {
-                builder.newInstance(IAtom.class),
-                builder.newInstance(IAtom.class)
-            },
-            IBond.Order.DOUBLE
-        );
+        IBond bond = builder.newInstance(IBond.class,
+                (Object[]) new IAtom[]{builder.newInstance(IAtom.class), builder.newInstance(IAtom.class)},
+                IBond.Order.DOUBLE);
         Assert.assertNotNull(bond);
     }
 
-    @Test public void testNewChemFile() {
+    @Test
+    public void testNewChemFile() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IChemFile file = builder.newInstance(IChemFile.class);
         Assert.assertNotNull(file);
     }
 
-    @Test public void testNewChemModel() {
+    @Test
+    public void testNewChemModel() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IChemModel model = builder.newInstance(IChemModel.class);
         Assert.assertNotNull(model);
     }
 
-    @Test public void testNewChemObject() {
+    @Test
+    public void testNewChemObject() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IChemObject model = builder.newInstance(IChemObject.class);
         Assert.assertNotNull(model);
     }
 
-    @Test public void testNewChemObject_IChemObject() {
+    @Test
+    public void testNewChemObject_IChemObject() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IChemObject model = builder.newInstance(
-            IChemObject.class,
-            builder.newInstance(IChemObject.class)
-        );
+        IChemObject model = builder.newInstance(IChemObject.class, builder.newInstance(IChemObject.class));
         Assert.assertNotNull(model);
     }
 
-    @Test public void testNewChemSequence() {
+    @Test
+    public void testNewChemSequence() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IChemSequence sequence = builder.newInstance(IChemSequence.class);
         Assert.assertNotNull(sequence);
     }
 
-    @Test public void testNewCrystal() {
+    @Test
+    public void testNewCrystal() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         ICrystal crystal = builder.newInstance(ICrystal.class);
         Assert.assertNotNull(crystal);
     }
 
-    @Test public void testNewCrystal_IAtomContainer() {
+    @Test
+    public void testNewCrystal_IAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        ICrystal crystal = builder.newInstance(
-            ICrystal.class,
-            builder.newInstance(IAtomContainer.class)
-        );
+        ICrystal crystal = builder.newInstance(ICrystal.class, builder.newInstance(IAtomContainer.class));
         Assert.assertNotNull(crystal);
     }
 
-    @Test public void testNewElectronContainer() {
+    @Test
+    public void testNewElectronContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IElectronContainer container = builder.newInstance(IElectronContainer.class);
         Assert.assertNotNull(container);
     }
 
-    @Test public void testNewElement() {
+    @Test
+    public void testNewElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IElement element = builder.newInstance(IElement.class);
         Assert.assertNotNull(element);
     }
 
-    @Test public void testNewElement_IElement() {
+    @Test
+    public void testNewElement_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IElement element = builder.newInstance(
-            IElement.class,
-            builder.newInstance(IElement.class)
-        );
+        IElement element = builder.newInstance(IElement.class, builder.newInstance(IElement.class));
         Assert.assertNotNull(element);
     }
 
-    @Test public void testNewElement_String() {
+    @Test
+    public void testNewElement_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IElement element = builder.newInstance(IElement.class, "C");
         Assert.assertNotNull(element);
     }
 
-    @Test public void testNewElement_String_int() {
+    @Test
+    public void testNewElement_String_int() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IElement element = builder.newInstance(IElement.class, "C", 13);
         Assert.assertNotNull(element);
     }
 
-    @Test public void testNewIsotope_int_String_double_double() {
+    @Test
+    public void testNewIsotope_int_String_double_double() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IIsotope isotope = builder.newInstance(IIsotope.class, 6, "C", 1.0, 1.0);
         Assert.assertNotNull(isotope);
     }
 
-    @Test public void testNewIsotope_int_String_int_double_double() {
+    @Test
+    public void testNewIsotope_int_String_int_double_double() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IIsotope isotope = builder.newInstance(IIsotope.class, 6, "C", 13, 1.0, 1.0);
         Assert.assertNotNull(isotope);
     }
 
-    @Test public void testNewIsotope_IElement() {
+    @Test
+    public void testNewIsotope_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IIsotope isotope = builder.newInstance(
-            IIsotope.class,
-            builder.newInstance(IElement.class)
-        );
+        IIsotope isotope = builder.newInstance(IIsotope.class, builder.newInstance(IElement.class));
         Assert.assertNotNull(isotope);
     }
 
-    @Test public void testNewIsotope_String() {
+    @Test
+    public void testNewIsotope_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IIsotope isotope = builder.newInstance(IIsotope.class, "C");
         Assert.assertNotNull(isotope);
     }
 
-    @Test public void testNewIsotope_String_int() {
+    @Test
+    public void testNewIsotope_String_int() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IIsotope isotope = builder.newInstance(IIsotope.class, "C", 13);
         Assert.assertNotNull(isotope);
     }
 
-    @Test public void testNewLonePair() {
+    @Test
+    public void testNewLonePair() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         ILonePair lonePair = builder.newInstance(ILonePair.class);
         Assert.assertNotNull(lonePair);
     }
 
-    @Test public void testNewLonePair_IAtom() {
+    @Test
+    public void testNewLonePair_IAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         ILonePair lonePair = builder.newInstance(ILonePair.class, builder.newInstance(IAtom.class));
         Assert.assertNotNull(lonePair);
     }
 
-    @Test public void testNewMapping_IChemObject_IChemObject() {
+    @Test
+    public void testNewMapping_IChemObject_IChemObject() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IMapping mapping = builder.newInstance(
-            IMapping.class,
-            builder.newInstance(IChemObject.class),
-            builder.newInstance(IChemObject.class)
-        );
+        IMapping mapping = builder.newInstance(IMapping.class, builder.newInstance(IChemObject.class),
+                builder.newInstance(IChemObject.class));
         Assert.assertNotNull(mapping);
     }
 
-    @Test public void testNewMonomer() {
+    @Test
+    public void testNewMonomer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IMonomer monomer = builder.newInstance(IMonomer.class);
         Assert.assertNotNull(monomer);
     }
 
-    @Test public void testNewPolymer() {
+    @Test
+    public void testNewPolymer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IPolymer polymer = builder.newInstance(IPolymer.class);
         Assert.assertNotNull(polymer);
     }
 
-    @Test public void testNewPDBAtom_IElement() {
+    @Test
+    public void testNewPDBAtom_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(
-            IPDBAtom.class,
-            builder.newInstance(IElement.class)
-        );
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, builder.newInstance(IElement.class));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPDBAtom_String() {
+    @Test
+    public void testNewPDBAtom_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(
-            IPDBAtom.class,
-            "O.3"
-        );
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O.3");
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPDBAtom_String_Point3D() {
+    @Test
+    public void testNewPDBAtom_String_Point3D() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(
-            IPDBAtom.class,
-            "O.3", new Point3d(1,2,3)
-        );
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "O.3", new Point3d(1, 2, 3));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPDBPolymer() {
+    @Test
+    public void testNewPDBPolymer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IPDBPolymer polymer = builder.newInstance(IPDBPolymer.class);
         Assert.assertNotNull(polymer);
     }
 
-    @Test public void testNewPDBStructure() {
+    @Test
+    public void testNewPDBStructure() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IPDBStructure structure = builder.newInstance(IPDBStructure.class);
         Assert.assertNotNull(structure);
     }
 
-    @Test public void testNewPDBMonomer() {
+    @Test
+    public void testNewPDBMonomer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IPDBMonomer monomer = builder.newInstance(IPDBMonomer.class);
         Assert.assertNotNull(monomer);
     }
 
-    @Test public void testNewPseudoAtom() {
+    @Test
+    public void testNewPseudoAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IPseudoAtom atom = builder.newInstance(IPseudoAtom.class);
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPseudoAtom_IElement() {
+    @Test
+    public void testNewPseudoAtom_IElement() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPseudoAtom atom = builder.newInstance(
-            IPseudoAtom.class, builder.newInstance(IElement.class)
-        );
+        IPseudoAtom atom = builder.newInstance(IPseudoAtom.class, builder.newInstance(IElement.class));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPseudoAtom_IAtom() {
+    @Test
+    public void testNewPseudoAtom_IAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPseudoAtom atom = builder.newInstance(
-            IPseudoAtom.class, builder.newInstance(IAtom.class)
-        );
+        IPseudoAtom atom = builder.newInstance(IPseudoAtom.class, builder.newInstance(IAtom.class));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPseudoAtom_String() {
+    @Test
+    public void testNewPseudoAtom_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPseudoAtom atom = builder.newInstance(
-            IPseudoAtom.class, "Foo"
-        );
+        IPseudoAtom atom = builder.newInstance(IPseudoAtom.class, "Foo");
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPseudoAtom_String_Point2d() {
+    @Test
+    public void testNewPseudoAtom_String_Point2d() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPseudoAtom atom = builder.newInstance(
-            IPseudoAtom.class, "Foo", new Point2d(1,2)
-        );
+        IPseudoAtom atom = builder.newInstance(IPseudoAtom.class, "Foo", new Point2d(1, 2));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPseudoAtom_String_Point3d() {
+    @Test
+    public void testNewPseudoAtom_String_Point3d() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPseudoAtom atom = builder.newInstance(
-            IPseudoAtom.class, "Foo", new Point3d(1,2,3)
-        );
+        IPseudoAtom atom = builder.newInstance(IPseudoAtom.class, "Foo", new Point3d(1, 2, 3));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewPDBAtom_String_Point3d() {
+    @Test
+    public void testNewPDBAtom_String_Point3d() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IPDBAtom atom = builder.newInstance(
-            IPDBAtom.class, "Foo", new Point3d(1,2,3)
-        );
+        IPDBAtom atom = builder.newInstance(IPDBAtom.class, "Foo", new Point3d(1, 2, 3));
         Assert.assertNotNull(atom);
     }
 
-    @Test public void testNewReaction() {
+    @Test
+    public void testNewReaction() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IReaction reaction = builder.newInstance(IReaction.class);
         Assert.assertNotNull(reaction);
     }
 
-    @Test public void testNewRing() {
+    @Test
+    public void testNewRing() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IRing ring = builder.newInstance(IRing.class);
         Assert.assertNotNull(ring);
     }
 
-    @Test public void testNewRing_int() {
+    @Test
+    public void testNewRing_int() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IRing ring = builder.newInstance(IRing.class, 4);
         Assert.assertNotNull(ring);
     }
 
-    @Test public void testNewRing_int_String() {
+    @Test
+    public void testNewRing_int_String() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IRing ring = builder.newInstance(IRing.class, 5, "C");
         Assert.assertNotNull(ring);
     }
 
-    @Test public void testNewRing_IAtomContainer() {
+    @Test
+    public void testNewRing_IAtomContainer() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IRing ring = builder.newInstance(
-            IRing.class, builder.newInstance(IAtomContainer.class)
-        );
+        IRing ring = builder.newInstance(IRing.class, builder.newInstance(IAtomContainer.class));
         Assert.assertNotNull(ring);
     }
 
-    @Test public void testNewRingSet() {
+    @Test
+    public void testNewRingSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IRingSet set = builder.newInstance(IRingSet.class);
         Assert.assertNotNull(set);
     }
 
-    @Test public void testNewAtomContainerSet() {
+    @Test
+    public void testNewAtomContainerSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
         Assert.assertNotNull(set);
     }
 
-    @Test public void testNewMoleculeSet() {
+    @Test
+    public void testNewMoleculeSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainerSet set = builder.newInstance(IAtomContainerSet.class);
         Assert.assertNotNull(set);
     }
 
-    @Test public void testNewReactionSet() {
+    @Test
+    public void testNewReactionSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IReactionSet set = builder.newInstance(IReactionSet.class);
         Assert.assertNotNull(set);
     }
 
-    @Test public void testNewReactionScheme() {
+    @Test
+    public void testNewReactionScheme() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IReactionScheme scheme = builder.newInstance(IReactionScheme.class);
         Assert.assertNotNull(scheme);
     }
 
-    @Test public void testNewSingleElectron() {
+    @Test
+    public void testNewSingleElectron() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         ISingleElectron electron = builder.newInstance(ISingleElectron.class);
         Assert.assertNotNull(electron);
     }
 
-    @Test public void testNewSingleElectron_IAtom() {
+    @Test
+    public void testNewSingleElectron_IAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        ISingleElectron electron = builder.newInstance(
-            ISingleElectron.class,
-            builder.newInstance(IAtom.class)
-        );
+        ISingleElectron electron = builder.newInstance(ISingleElectron.class, builder.newInstance(IAtom.class));
         Assert.assertNotNull(electron);
     }
 
-    @Test public void testNewStrand() {
+    @Test
+    public void testNewStrand() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IStrand strand = builder.newInstance(IStrand.class);
         Assert.assertNotNull(strand);
     }
 
-    @Test public void testNewFragmentAtom() {
+    @Test
+    public void testNewFragmentAtom() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IFragmentAtom fragAtom = builder.newInstance(IFragmentAtom.class);
         Assert.assertNotNull(fragAtom);
     }
 
-    @Test public void testNewMolecularFormula() {
+    @Test
+    public void testNewMolecularFormula() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IMolecularFormula mf = builder.newInstance(IMolecularFormula.class);
         Assert.assertNotNull(mf);
     }
 
-    @Test public void testNewMolecularFormulaSet() {
+    @Test
+    public void testNewMolecularFormulaSet() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IMolecularFormulaSet mfSet = builder.newInstance(IMolecularFormulaSet.class);
         Assert.assertNotNull(mfSet);
     }
 
-    @Test public void testNewMolecularFormulaSet_IMolecularFormula() {
+    @Test
+    public void testNewMolecularFormulaSet_IMolecularFormula() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IMolecularFormulaSet mfSet = builder.newInstance(
-            IMolecularFormulaSet.class,
-            builder.newInstance(IMolecularFormula.class)
-        );
+        IMolecularFormulaSet mfSet = builder.newInstance(IMolecularFormulaSet.class,
+                builder.newInstance(IMolecularFormula.class));
         Assert.assertNotNull(mfSet);
     }
 
-    @Test public void testNewAdductFormula() {
+    @Test
+    public void testNewAdductFormula() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAdductFormula af = builder.newInstance(IAdductFormula.class);
         Assert.assertNotNull(af);
     }
 
-    @Test public void testNewAdductFormula_IMolecularFormula() {
+    @Test
+    public void testNewAdductFormula_IMolecularFormula() {
         IChemObjectBuilder builder = rootObject.getBuilder();
-        IAdductFormula af = builder.newInstance(
-            IAdductFormula.class,
-            builder.newInstance(IMolecularFormula.class)
-        );
+        IAdductFormula af = builder.newInstance(IAdductFormula.class, builder.newInstance(IMolecularFormula.class));
         Assert.assertNotNull(af);
     }
 
-    @Test public void testNewTetrahedralChirality() {
+    @Test
+    public void testNewTetrahedralChirality() {
         IChemObjectBuilder builder = rootObject.getBuilder();
         IAtomContainer molecule = builder.newInstance(IAtomContainer.class);
         molecule.addAtom(builder.newInstance(IAtom.class, "Cl"));
@@ -657,29 +646,24 @@ public abstract class AbstractChemObjectBuilderTest extends CDKTestCase {
         molecule.addBond(1, 2, Order.SINGLE);
         molecule.addBond(1, 3, Order.SINGLE);
         molecule.addBond(1, 4, Order.SINGLE);
-        IAtom[] ligands = new IAtom[] {
-            molecule.getAtom(4),
-            molecule.getAtom(3),
-            molecule.getAtom(2),
-            molecule.getAtom(0)
-        };
-        ITetrahedralChirality chirality = builder.newInstance(
-            ITetrahedralChirality.class,
-            molecule.getAtom(1), ligands, Stereo.CLOCKWISE
-        );
+        IAtom[] ligands = new IAtom[]{molecule.getAtom(4), molecule.getAtom(3), molecule.getAtom(2),
+                molecule.getAtom(0)};
+        ITetrahedralChirality chirality = builder.newInstance(ITetrahedralChirality.class, molecule.getAtom(1),
+                ligands, Stereo.CLOCKWISE);
         Assert.assertNotNull(chirality);
         Assert.assertEquals(builder, chirality.getBuilder());
     }
 
-    @Test public void testSugggestion() {
-    	IChemObjectBuilder builder = getRootObject().getBuilder();
-    	try {
-    		builder.newInstance(IAtom.class, Boolean.TRUE);
-    		Assert.fail("I expected an exception, because this constructor does not exist.");
-    	} catch (Exception exception) {
-    		String message = exception.getMessage();
-    		Assert.assertTrue("But got this message instead: " + message, message.contains("candidates are"));
-    	}
+    @Test
+    public void testSugggestion() {
+        IChemObjectBuilder builder = getRootObject().getBuilder();
+        try {
+            builder.newInstance(IAtom.class, Boolean.TRUE);
+            Assert.fail("I expected an exception, because this constructor does not exist.");
+        } catch (Exception exception) {
+            String message = exception.getMessage();
+            Assert.assertTrue("But got this message instead: " + message, message.contains("candidates are"));
+        }
     }
 
     @Test

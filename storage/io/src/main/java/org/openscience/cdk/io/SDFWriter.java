@@ -63,12 +63,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 @TestClass("org.openscience.cdk.io.SDFWriterTest")
 public class SDFWriter extends DefaultChemObjectWriter {
 
-    private final static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SDFWriter.class);
+    private final static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SDFWriter.class);
 
-    private BufferedWriter writer;
-    private BooleanIOSetting writerProperties;
-	private Set<String> propertiesToWrite;
+    private BufferedWriter            writer;
+    private BooleanIOSetting          writerProperties;
+    private Set<String>               propertiesToWrite;
 
     /**
      * Constructs a new SDFWriter that writes to the given {@link Writer}.
@@ -77,7 +76,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      */
     public SDFWriter(Writer out) {
         if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
@@ -98,7 +97,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this(new StringWriter());
     }
 
-	/**
+    /**
      * Constructs a new SDFWriter that writes to the given {@link Writer}.
      *
      * @param out The {@link Writer} to write to
@@ -113,7 +112,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this.propertiesToWrite = propertiesToWrite;
     }
 
-	/**
+    /**
      * Constructs a new SdfWriter that can write to a given
      * {@link OutputStream}.
      *
@@ -123,7 +122,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         this(new OutputStreamWriter(output), propertiesToWrite);
     }
 
-	/**
+    /**
      * Writes SD-File to a String including the given properties
      */
     public SDFWriter(Set<String> propertiesToWrite) {
@@ -136,15 +135,15 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
     /**
@@ -155,23 +154,23 @@ public class SDFWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-		}
-		if (IAtomContainer.class.equals(classObject)) return true;
-		if (IChemFile.class.equals(classObject)) return true;
-		if (IChemModel.class.equals(classObject)) return true;
-		if (IAtomContainerSet.class.equals(classObject)) return true;
-	    Class superClass = classObject.getSuperclass();
-	    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+            if (IChemFile.class.equals(interfaces[i])) return true;
+            if (IChemModel.class.equals(interfaces[i])) return true;
+            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
+        }
+        if (IAtomContainer.class.equals(classObject)) return true;
+        if (IChemFile.class.equals(classObject)) return true;
+        if (IChemModel.class.equals(classObject)) return true;
+        if (IAtomContainerSet.class.equals(classObject)) return true;
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * Writes a IChemObject to the MDL SD file formated output. It can only
@@ -182,52 +181,50 @@ public class SDFWriter extends DefaultChemObjectWriter {
      *
      * @see #accepts(Class)
      */
-	public void write(IChemObject object) throws CDKException {
-		try {
-			if (object instanceof IAtomContainerSet) {
-				writeMoleculeSet((IAtomContainerSet)object);
-				return;
-			} else if (object instanceof IChemFile) {
-				writeChemFile((IChemFile)object);
-				return;
-			} else if (object instanceof IChemModel) {
-				IChemFile file = object.getBuilder().newInstance(IChemFile.class);
-				IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
-				sequence.addChemModel((IChemModel)object);
-				file.addChemSequence(sequence);
-				writeChemFile((IChemFile)file);
-				return;
-			} else if (object instanceof IAtomContainer) {
-				writeMolecule((IAtomContainer)object);
-				return;
-			}
-		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			logger.debug(ex);
-			throw new CDKException(
-			    "Exception while writing MDL file: " + ex.getMessage(), ex
-			);
-		}
-		throw new CDKException("Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
-	}
+    public void write(IChemObject object) throws CDKException {
+        try {
+            if (object instanceof IAtomContainerSet) {
+                writeMoleculeSet((IAtomContainerSet) object);
+                return;
+            } else if (object instanceof IChemFile) {
+                writeChemFile((IChemFile) object);
+                return;
+            } else if (object instanceof IChemModel) {
+                IChemFile file = object.getBuilder().newInstance(IChemFile.class);
+                IChemSequence sequence = object.getBuilder().newInstance(IChemSequence.class);
+                sequence.addChemModel((IChemModel) object);
+                file.addChemSequence(sequence);
+                writeChemFile((IChemFile) file);
+                return;
+            } else if (object instanceof IAtomContainer) {
+                writeMolecule((IAtomContainer) object);
+                return;
+            }
+        } catch (Exception ex) {
+            logger.error(ex.getMessage());
+            logger.debug(ex);
+            throw new CDKException("Exception while writing MDL file: " + ex.getMessage(), ex);
+        }
+        throw new CDKException(
+                "Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
+    }
 
-	/**
-	 * Writes an {@link IAtomContainerSet}.
-	 *
-	 * @param   som  the {@link IAtomContainerSet} to serialize
-	 */
-	private void writeMoleculeSet(IAtomContainerSet som) throws Exception {
-		for (IAtomContainer mol : som.atomContainers()) {
-		    writeMolecule(mol);
-		}
-	}
+    /**
+     * Writes an {@link IAtomContainerSet}.
+     *
+     * @param   som  the {@link IAtomContainerSet} to serialize
+     */
+    private void writeMoleculeSet(IAtomContainerSet som) throws Exception {
+        for (IAtomContainer mol : som.atomContainers()) {
+            writeMolecule(mol);
+        }
+    }
 
-	private void writeChemFile(IChemFile file) throws Exception {
-		for (IAtomContainer container :
-		     ChemFileManipulator.getAllAtomContainers(file)) {
-			writeMolecule(container);
-		}
-	}
+    private void writeChemFile(IChemFile file) throws Exception {
+        for (IAtomContainer container : ChemFileManipulator.getAllAtomContainers(file)) {
+            writeMolecule(container);
+        }
+    }
 
     private void writeMolecule(IAtomContainer container) throws CDKException {
         try {
@@ -240,28 +237,24 @@ public class SDFWriter extends DefaultChemObjectWriter {
             writer.write(stringWriter.toString());
 
             // write the properties
-            Map<Object,Object> sdFields = container.getProperties();
-			boolean writeAllProperties = propertiesToWrite == null;
-            if(sdFields != null){
+            Map<Object, Object> sdFields = container.getProperties();
+            boolean writeAllProperties = propertiesToWrite == null;
+            if (sdFields != null) {
                 for (Object propKey : sdFields.keySet()) {
                     if (!isCDKInternalProperty(propKey)) {
-						if (writeAllProperties ||
-								propertiesToWrite.contains(propKey)) {
-                        writer.write("> <" + propKey + ">");
-                        writer.newLine();
-                        writer.write("" + sdFields.get(propKey));
-                        writer.newLine();
-                        writer.newLine();
+                        if (writeAllProperties || propertiesToWrite.contains(propKey)) {
+                            writer.write("> <" + propKey + ">");
+                            writer.newLine();
+                            writer.write("" + sdFields.get(propKey));
+                            writer.newLine();
+                            writer.newLine();
+                        }
                     }
                 }
             }
-            }
             writer.write("$$$$\n");
         } catch (IOException exception) {
-            throw new CDKException(
-                "Error while writing a SD file entry: " +
-                exception.getMessage(), exception
-            );
+            throw new CDKException("Error while writing a SD file entry: " + exception.getMessage(), exception);
         }
     }
 
@@ -282,20 +275,15 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     private void initIOSettings() {
-        writerProperties = addSetting(new BooleanIOSetting("writeProperties",
-          IOSetting.Importance.LOW,
-          "Should molecular properties be written?",
-          "true"
-        ));
+        writerProperties = addSetting(new BooleanIOSetting("writeProperties", IOSetting.Importance.LOW,
+                "Should molecular properties be written?", "true"));
         addSettings(new MDLV2000Writer().getSettings());
     }
 
     public void customizeJob() {
-        for(IOSetting setting : getSettings()){
+        for (IOSetting setting : getSettings()) {
             fireIOSettingQuestion(setting);
         }
     }
 
 }
-
-

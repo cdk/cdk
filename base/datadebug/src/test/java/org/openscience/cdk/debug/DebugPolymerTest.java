@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugPolymerTest extends AbstractPolymerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugPolymer();
             }
         });
     }
 
-    @Test public void testDebugPolymer() {
+    @Test
+    public void testDebugPolymer() {
         IPolymer polymer = new DebugPolymer();
         Assert.assertTrue(polymer instanceof DebugPolymer);
     }

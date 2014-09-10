@@ -36,57 +36,60 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugStrandTest extends AbstractStrandTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugStrand();
             }
         });
     }
 
-	@Test public void testDebugStrand() {
-		IStrand oStrand = new DebugStrand();
-		Assert.assertNotNull(oStrand);
-		Assert.assertEquals(oStrand.getMonomerCount(), 0);
+    @Test
+    public void testDebugStrand() {
+        IStrand oStrand = new DebugStrand();
+        Assert.assertNotNull(oStrand);
+        Assert.assertEquals(oStrand.getMonomerCount(), 0);
 
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IMonomer oMono3 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono3.setMonomerName(new String("GLYA16"));
-		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		IAtom oAtom4 = oStrand.getBuilder().newInstance(IAtom.class,"C4");
-		IAtom oAtom5 = oStrand.getBuilder().newInstance(IAtom.class,"C5");
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IMonomer oMono3 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono3.setMonomerName(new String("GLYA16"));
+        IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C1");
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        IAtom oAtom4 = oStrand.getBuilder().newInstance(IAtom.class, "C4");
+        IAtom oAtom5 = oStrand.getBuilder().newInstance(IAtom.class, "C5");
 
-		oStrand.addAtom(oAtom1);
-		oStrand.addAtom(oAtom2);
-		oStrand.addAtom(oAtom3, oMono1);
-		oStrand.addAtom(oAtom4, oMono2);
-		oStrand.addAtom(oAtom5, oMono3);
-		Assert.assertNotNull(oStrand.getAtom(0));
-		Assert.assertNotNull(oStrand.getAtom(1));
-		Assert.assertNotNull(oStrand.getAtom(2));
-		Assert.assertNotNull(oStrand.getAtom(3));
-		Assert.assertNotNull(oStrand.getAtom(4));
-		Assert.assertEquals(oAtom1, oStrand.getAtom(0));
-		Assert.assertEquals(oAtom2, oStrand.getAtom(1));
-		Assert.assertEquals(oAtom3, oStrand.getAtom(2));
-		Assert.assertEquals(oAtom4, oStrand.getAtom(3));
-		Assert.assertEquals(oAtom5, oStrand.getAtom(4));
+        oStrand.addAtom(oAtom1);
+        oStrand.addAtom(oAtom2);
+        oStrand.addAtom(oAtom3, oMono1);
+        oStrand.addAtom(oAtom4, oMono2);
+        oStrand.addAtom(oAtom5, oMono3);
+        Assert.assertNotNull(oStrand.getAtom(0));
+        Assert.assertNotNull(oStrand.getAtom(1));
+        Assert.assertNotNull(oStrand.getAtom(2));
+        Assert.assertNotNull(oStrand.getAtom(3));
+        Assert.assertNotNull(oStrand.getAtom(4));
+        Assert.assertEquals(oAtom1, oStrand.getAtom(0));
+        Assert.assertEquals(oAtom2, oStrand.getAtom(1));
+        Assert.assertEquals(oAtom3, oStrand.getAtom(2));
+        Assert.assertEquals(oAtom4, oStrand.getAtom(3));
+        Assert.assertEquals(oAtom5, oStrand.getAtom(4));
 
-		Assert.assertNull(oStrand.getMonomer("0815"));
-		Assert.assertNotNull(oStrand.getMonomer(""));
-		Assert.assertNotNull(oStrand.getMonomer("TRP279"));
-		Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
-		Assert.assertEquals(oStrand.getMonomer("TRP279").getAtomCount(), 1);
-		Assert.assertNotNull(oStrand.getMonomer("HOH"));
-		Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
-		Assert.assertEquals(oStrand.getMonomer("HOH").getAtomCount(), 1);
-		Assert.assertEquals(oStrand.getMonomer("").getAtomCount(), 2);
-		Assert.assertEquals(oStrand.getAtomCount(), 5);
-		Assert.assertEquals(oStrand.getMonomerCount(), 3);
-	}
+        Assert.assertNull(oStrand.getMonomer("0815"));
+        Assert.assertNotNull(oStrand.getMonomer(""));
+        Assert.assertNotNull(oStrand.getMonomer("TRP279"));
+        Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
+        Assert.assertEquals(oStrand.getMonomer("TRP279").getAtomCount(), 1);
+        Assert.assertNotNull(oStrand.getMonomer("HOH"));
+        Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
+        Assert.assertEquals(oStrand.getMonomer("HOH").getAtomCount(), 1);
+        Assert.assertEquals(oStrand.getMonomer("").getAtomCount(), 2);
+        Assert.assertEquals(oStrand.getAtomCount(), 5);
+        Assert.assertEquals(oStrand.getMonomerCount(), 3);
+    }
 }

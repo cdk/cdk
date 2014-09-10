@@ -80,17 +80,18 @@ import java.util.jar.JarFile;
  * @see Dictionary
  * @see org.openscience.cdk.dict.OWLFile
  */
-@TestClass(value="org.openscience.cdk.qsar.DescriptorEngineTest")
+@TestClass(value = "org.openscience.cdk.qsar.DescriptorEngineTest")
 public class DescriptorEngine {
-    private static String rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-    private Dictionary dict = null;
-    private List<String> classNames = new ArrayList<String>(200);
-    private List<IDescriptor> descriptors = new ArrayList<IDescriptor>(200);
-    private List<IImplementationSpecification> speclist = null;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DescriptorEngine.class);
-    private final IChemObjectBuilder builder;
+    private static String                      rdfNS       = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+
+    private Dictionary                         dict        = null;
+    private List<String>                       classNames  = new ArrayList<String>(200);
+    private List<IDescriptor>                  descriptors = new ArrayList<IDescriptor>(200);
+    private List<IImplementationSpecification> speclist    = null;
+    private static ILoggingTool                logger      = LoggingToolFactory
+                                                                   .createLoggingTool(DescriptorEngine.class);
+    private final IChemObjectBuilder           builder;
 
     /**
      * Instantiates the DescriptorEngine.
@@ -137,10 +138,10 @@ public class DescriptorEngine {
      * @see <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service
      *      Provider Interface (SPI) Introduction</a>
      */
-    @TestMethod(value="testConstructor")
+    @TestMethod(value = "testConstructor")
     public DescriptorEngine(Class<? extends IDescriptor> c, IChemObjectBuilder builder) {
 
-        for(IDescriptor descriptor : ServiceLoader.load(c)){
+        for (IDescriptor descriptor : ServiceLoader.load(c)) {
             descriptor.initialise(builder);
             descriptors.add(descriptor);
             classNames.add(descriptor.getClass().getName());
@@ -154,7 +155,6 @@ public class DescriptorEngine {
         DictionaryDatabase dictDB = new DictionaryDatabase();
         dict = dictDB.getDictionary("descriptor-algorithms");
     }
-
 
     /**
      * Calculates all available (or only those specified) descriptors for a molecule.
@@ -174,12 +174,12 @@ public class DescriptorEngine {
         if (speclist.size() != descriptors.size())
             throw new CDKException("Number of specs and descriptors do not match");
 
-
         for (int i = 0; i < descriptors.size(); i++) {
             IDescriptor descriptor = descriptors.get(i);
             if (descriptor instanceof IMolecularDescriptor) {
                 DescriptorValue value = ((IMolecularDescriptor) descriptor).calculate(molecule);
-                if (value.getException() == null) molecule.setProperty(speclist.get(i), value);
+                if (value.getException() == null)
+                    molecule.setProperty(speclist.get(i), value);
                 else {
                     logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                     logger.debug(value.getException());
@@ -190,7 +190,8 @@ public class DescriptorEngine {
                 while (atoms.hasNext()) {
                     IAtom atom = (IAtom) atoms.next();
                     DescriptorValue value = ((IAtomicDescriptor) descriptor).calculate(atom, molecule);
-                    if (value.getException() == null) atom.setProperty(speclist.get(i), value);
+                    if (value.getException() == null)
+                        atom.setProperty(speclist.get(i), value);
                     else {
                         logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                         logger.debug(value.getException());
@@ -202,7 +203,8 @@ public class DescriptorEngine {
                 while (bonds.hasNext()) {
                     IBond bond = (IBond) bonds.next();
                     DescriptorValue value = ((IBondDescriptor) descriptor).calculate(bond, molecule);
-                    if (value.getException() == null) bond.setProperty(speclist.get(i), value);
+                    if (value.getException() == null)
+                        bond.setProperty(speclist.get(i), value);
                     else {
                         logger.error("Could not calculate descriptor value for: ", descriptor.getClass().getName());
                         logger.debug(value.getException());
@@ -237,7 +239,7 @@ public class DescriptorEngine {
      * @return The type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
-    @TestMethod(value="testDictionaryType")
+    @TestMethod(value = "testDictionaryType")
     public String getDictionaryType(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -259,8 +261,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
                     Attribute attr = element.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") != -1) ||
-                            (attr.getValue().indexOf("atomicDescriptor") != -1)) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") != -1)
+                            || (attr.getValue().indexOf("atomicDescriptor") != -1)) {
                         String[] tmp = attr.getValue().split("#");
                         return tmp[1];
                     }
@@ -289,7 +291,7 @@ public class DescriptorEngine {
      * @return he type of the descriptor as stored in the dictionary, null if no entry is found matching
      *         the supplied identifier
      */
-    @TestMethod(value="testDictionaryType")
+    @TestMethod(value = "testDictionaryType")
     public String getDictionaryType(IImplementationSpecification descriptorSpecification) {
         return getDictionaryType(descriptorSpecification.getSpecificationReference());
     }
@@ -313,7 +315,7 @@ public class DescriptorEngine {
      * @return A List containing the names of the QSAR descriptor classes that this  descriptor was declared
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
-    @TestMethod(value="testDictionaryClass")
+    @TestMethod(value = "testDictionaryClass")
     public String[] getDictionaryClass(String identifier) {
 
         Entry[] dictEntries = dict.getEntries();
@@ -333,8 +335,8 @@ public class DescriptorEngine {
                 for (int i = 0; i < classifications.size(); i++) {
                     Element element = classifications.get(i);
                     Attribute attr = element.getAttribute("resource", rdfNS);
-                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0) ||
-                            (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
+                    if ((attr.getValue().indexOf("molecularDescriptor") >= 0)
+                            || (attr.getValue().indexOf("atomicDescriptor") >= 0)) {
                         continue;
                     }
                     String[] tmp = attr.getValue().split("#");
@@ -343,8 +345,8 @@ public class DescriptorEngine {
             }
         }
 
-
-        if (dictClasses.size() == 0) return null;
+        if (dictClasses.size() == 0)
+            return null;
         else
             return (String[]) dictClasses.toArray(new String[]{});
     }
@@ -366,11 +368,10 @@ public class DescriptorEngine {
      *         to belong to. If an entry for the specified identifier was not found, null is returned.
      */
 
-    @TestMethod(value="testDictionaryClass")
+    @TestMethod(value = "testDictionaryClass")
     public String[] getDictionaryClass(IImplementationSpecification descriptorSpecification) {
         return getDictionaryClass(descriptorSpecification.getSpecificationReference());
     }
-
 
     /**
      * Gets the definition of the descriptor.
@@ -490,7 +491,7 @@ public class DescriptorEngine {
      *
      * @return A List containing descriptor classes
      */
-    @TestMethod(value="testLoadingOfMolecularDescriptors,testLoadingOfAtomicDescriptors,testLoadingOfBondDescriptors")
+    @TestMethod(value = "testLoadingOfMolecularDescriptors,testLoadingOfAtomicDescriptors,testLoadingOfBondDescriptors")
     public List<IDescriptor> getDescriptorInstances() {
         return descriptors;
     }
@@ -510,7 +511,7 @@ public class DescriptorEngine {
      *
      * @return An array containing the unique dictionary classes.
      */
-    @TestMethod(value="testAvailableClass")
+    @TestMethod(value = "testAvailableClass")
     public String[] getAvailableDictionaryClasses() {
         List<String> classList = new ArrayList<String>();
         for (IImplementationSpecification spec : speclist) {
@@ -544,13 +545,10 @@ public class DescriptorEngine {
      *         is specified
      */
     public static List<String> getDescriptorClassNameByInterface(String interfaceName, String[] jarFileNames) {
-        if (interfaceName == null || interfaceName.equals(""))
-            interfaceName = "IDescriptor";
+        if (interfaceName == null || interfaceName.equals("")) interfaceName = "IDescriptor";
 
-        if (!interfaceName.equals("IDescriptor") &&
-                !interfaceName.equals("IMolecularDescriptor") &&
-                !interfaceName.equals("IAtomicDescriptor") &&
-                !interfaceName.equals("IBondDescriptor")) return null;
+        if (!interfaceName.equals("IDescriptor") && !interfaceName.equals("IMolecularDescriptor")
+                && !interfaceName.equals("IAtomicDescriptor") && !interfaceName.equals("IBondDescriptor")) return null;
 
         String[] jars;
         if (jarFileNames == null) {
@@ -587,8 +585,7 @@ public class DescriptorEngine {
 
                         // check that its not abstract or an interface
                         int modifer = klass.getModifiers();
-                        if (Modifier.isAbstract(modifer) ||
-                                Modifier.isInterface(modifer)) continue;
+                        if (Modifier.isAbstract(modifer) || Modifier.isInterface(modifer)) continue;
 
                         // get the interfaces implemented and see if one matches the one we're looking for
                         Class[] interfaces = klass.getInterfaces();
@@ -690,16 +687,13 @@ public class DescriptorEngine {
         return descriptors;
     }
 
-    private IDescriptor instantiate(Class<? extends IDescriptor> c) throws
-                                                                    IllegalAccessException,
-                                                                    InvocationTargetException,
-                                                                    InstantiationException {
-        for(Constructor constructor : c.getConstructors()){
+    private IDescriptor instantiate(Class<? extends IDescriptor> c) throws IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        for (Constructor constructor : c.getConstructors()) {
             Class<?>[] params = constructor.getParameterTypes();
-            if(params.length == 0){
+            if (params.length == 0) {
                 return (IDescriptor) constructor.newInstance();
-            } else if(params.length == 1
-                     && params[0].equals(IChemObjectBuilder.class)){
+            } else if (params.length == 1 && params[0].equals(IChemObjectBuilder.class)) {
                 return (IDescriptor) constructor.newInstance(builder);
             }
         }
@@ -742,4 +736,3 @@ public class DescriptorEngine {
         return specRef;
     }
 }
-

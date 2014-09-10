@@ -54,20 +54,19 @@ import org.xml.sax.helpers.XMLReaderFactory;
 public class Dictionary {
 
     private Map<String, Entry> entries;
-    private String ownNS = null;
+    private String             ownNS = null;
 
     public Dictionary() {
         entries = new Hashtable<String, Entry>();
     }
 
     public static Dictionary unmarshal(Reader reader) {
-        ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(Dictionary.class);
+        ILoggingTool logger = LoggingToolFactory.createLoggingTool(Dictionary.class);
         DictionaryHandler handler = new DictionaryHandler();
         XMLReader parser = null;
         try {
-	    parser = XMLReaderFactory.createXMLReader();
-            logger.debug("Using "+parser);
+            parser = XMLReaderFactory.createXMLReader();
+            logger.debug("Using " + parser);
         } catch (Exception e) {
             logger.error("Could not instantiate any JAXP parser!");
             logger.debug(e);
@@ -91,7 +90,7 @@ public class Dictionary {
             dict = handler.getDictionary();
         } catch (IOException e) {
             logger.error("IOException: " + e.toString());
-	    logger.debug(e);
+            logger.debug(e);
         } catch (SAXException saxe) {
             logger.error("SAXException: " + saxe.getClass().getName());
             logger.debug(saxe);
@@ -110,7 +109,7 @@ public class Dictionary {
         Iterator<Entry> elements = entries.values().iterator();
         int counter = 0;
         while (elements.hasNext() && counter < size) {
-            entryArray[counter] = (Entry)elements.next();
+            entryArray[counter] = (Entry) elements.next();
             counter++;
         }
         return entryArray;
@@ -128,13 +127,14 @@ public class Dictionary {
 
     @TestMethod("testAddEntry")
     public int size() {
-    	return entries.size();
+        return entries.size();
     }
 
     @TestMethod("testNS")
     public void setNS(String nameSpace) {
         ownNS = nameSpace;
     }
+
     @TestMethod("testNS")
     public String getNS() {
         return ownNS;

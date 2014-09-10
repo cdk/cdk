@@ -32,17 +32,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
 
-    public WienerNumbersDescriptorTest() {
-    }
+    public WienerNumbersDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(WienerNumbersDescriptor.class);
+        setDescriptor(WienerNumbersDescriptor.class);
     }
 
     @Test
     public void testWienerNumbersDescriptor() throws Exception {
-        double [] testResult = {18, 2};
+        double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         AtomContainerManipulator.removeHydrogens(mol);
@@ -56,7 +55,7 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
      */
     @Test
     public void testWithExplicitHydrogens() throws Exception {
-        double [] testResult = {18, 2};
+        double[] testResult = {18, 2};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("[H]C([H])([H])C([H])([H])C(=O)O");
         DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
@@ -70,12 +69,12 @@ public class WienerNumbersDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testOriginalWienerPaperCompounds() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-        double [] testResult = {10, 20, 35, 56, 84, 120, 165, 220, 286};
+        double[] testResult = {10, 20, 35, 56, 84, 120, 165, 220, 286};
         String smiles = "CCC";
-        for (int i=0; i<testResult.length; i++) {
+        for (int i = 0; i < testResult.length; i++) {
             smiles += "C"; // create the matching paraffin
             IAtomContainer mol = sp.parseSmiles(smiles);
-            DoubleArrayResult retval = (DoubleArrayResult)descriptor.calculate(mol).getValue();
+            DoubleArrayResult retval = (DoubleArrayResult) descriptor.calculate(mol).getValue();
             Assert.assertEquals(testResult[i], retval.get(0), 0.0001);
         }
     }

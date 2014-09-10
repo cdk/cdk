@@ -48,79 +48,65 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.bond.AtomicNumberDifferenceDescriptorTest")
 public class AtomicNumberDifferenceDescriptor extends AbstractBondDescriptor implements IBondDescriptor {
 
-	private static IsotopeFactory factory = null;
+    private static IsotopeFactory factory        = null;
 
-	private final static String[] descriptorName = {"MNDiff"};
+    private final static String[] descriptorName = {"MNDiff"};
 
-    public AtomicNumberDifferenceDescriptor() {
-    }
+    public AtomicNumberDifferenceDescriptor() {}
 
     private void ensureIsotopeFactory() {
-    	if (factory == null) {
-    		try {
-	            factory = Isotopes.getInstance();
+        if (factory == null) {
+            try {
+                factory = Isotopes.getInstance();
             } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-    	}
+        }
     }
 
-	@TestMethod("testGetSpecification")
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondAtomicNumberImbalance", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
 
-	@TestMethod("testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
+    @TestMethod("testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {}
 
-	@TestMethod("testGetParameters")
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return descriptorName;
     }
 
-    @TestMethod(value="testCalculate_IBond_IAtomContainer,testDescriptor1," +
-        "testDescriptor2")
+    @TestMethod(value = "testCalculate_IBond_IAtomContainer,testDescriptor1," + "testDescriptor2")
     public DescriptorValue calculate(IBond bond, IAtomContainer ac) {
-    	ensureIsotopeFactory();
-    	if (bond.getAtomCount() != 2) {
-    		return new DescriptorValue(
-    			getSpecification(), getParameterNames(),
-    			getParameters(),
-    			new DoubleResult(Double.NaN),
-    			descriptorName, new CDKException("Only 2-center bonds are considered")
-    		);
-    	}
+        ensureIsotopeFactory();
+        if (bond.getAtomCount() != 2) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), descriptorName, new CDKException("Only 2-center bonds are considered"));
+        }
 
-    	IAtom[] atoms = BondManipulator.getAtomArray(bond);
+        IAtom[] atoms = BondManipulator.getAtomArray(bond);
 
-    	return new DescriptorValue(
-    		getSpecification(), getParameterNames(),
-    		getParameters(),
-    		new DoubleResult(
-    			Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber() -
-    					 factory.getElement(atoms[1].getSymbol()).getAtomicNumber())
-    		),
-    		descriptorName);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Math.abs(factory.getElement(atoms[0].getSymbol()).getAtomicNumber()
+                        - factory.getElement(atoms[1].getSymbol()).getAtomicNumber())), descriptorName);
     }
 
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
 
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
     }
 }
-

@@ -32,12 +32,8 @@ import org.openscience.cdk.coverage.ChargesCoverageTest;
  *
  * @cdk.module test-charges
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    ChargesCoverageTest.class,
-    GasteigerMarsiliPartialChargesTest.class,
-    InductivePartialChargesTest.class,
-    PolarizabilityTest.class,
-    AtomTypeChargesTest.class
-})
-public class MchargesTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {ChargesCoverageTest.class, GasteigerMarsiliPartialChargesTest.class,
+        InductivePartialChargesTest.class, PolarizabilityTest.class, AtomTypeChargesTest.class})
+public class MchargesTests {
+}

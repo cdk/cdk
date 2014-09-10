@@ -45,6 +45,6 @@ public class NoSuchAtomException extends CDKException {
      */
     @TestMethod("testNoSuchAtomException_String")
     public NoSuchAtomException(String message) {
-        super( message );
+        super(message);
     }
 }

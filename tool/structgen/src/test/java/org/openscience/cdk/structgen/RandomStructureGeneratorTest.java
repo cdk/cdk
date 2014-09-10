@@ -34,45 +34,42 @@ import java.util.Vector;
  */
 public class RandomStructureGeneratorTest extends CDKTestCase {
 
-	public boolean debug = false;
-	boolean standAlone = false;
+    public boolean debug      = false;
+    boolean        standAlone = false;
 
-	public void setStandAlone(boolean standAlone)
-	{
-		this.standAlone = standAlone;
-	}
+    public void setStandAlone(boolean standAlone) {
+        this.standAlone = standAlone;
+    }
 
-	@Test public void testTwentyRandomStructures() {
-	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
-		RandomGenerator rg = new RandomGenerator(molecule);
-		IAtomContainer result = null;
-		for (int f = 0; f < 50; f++) {
-			result = rg.proposeStructure();
-			Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());
-			Assert.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
-		}
-	}
+    @Test
+    public void testTwentyRandomStructures() {
+        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        RandomGenerator rg = new RandomGenerator(molecule);
+        IAtomContainer result = null;
+        for (int f = 0; f < 50; f++) {
+            result = rg.proposeStructure();
+            Assert.assertEquals(molecule.getAtomCount(), result.getAtomCount());
+            Assert.assertEquals(1, ConnectivityChecker.partitionIntoMolecules(result).getAtomContainerCount());
+        }
+    }
 
-	/**
-	 * @param structures
-	 * @return
-	 */
-	private boolean everythingOk(Vector structures) throws Exception
-	{
-		StructureDiagramGenerator sdg;
-		IAtomContainer mol;
-		if (debug) System.out.println("number of structures in vector: " + structures.size());
-		for (int f = 0; f < structures.size(); f++)
-		{
-			sdg = new StructureDiagramGenerator();
+    /**
+     * @param structures
+     * @return
+     */
+    private boolean everythingOk(Vector structures) throws Exception {
+        StructureDiagramGenerator sdg;
+        IAtomContainer mol;
+        if (debug) System.out.println("number of structures in vector: " + structures.size());
+        for (int f = 0; f < structures.size(); f++) {
+            sdg = new StructureDiagramGenerator();
 
-			mol = (IAtomContainer)structures.elementAt(f);
-			sdg.setMolecule(mol);
+            mol = (IAtomContainer) structures.elementAt(f);
+            sdg.setMolecule(mol);
 
-			sdg.generateCoordinates(new Vector2d(0,1));
-		}
-		return true;
-	}
+            sdg.generateCoordinates(new Vector2d(0, 1));
+        }
+        return true;
+    }
 
 }
-

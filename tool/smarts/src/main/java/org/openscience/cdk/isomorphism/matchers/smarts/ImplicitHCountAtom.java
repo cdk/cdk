@@ -49,26 +49,33 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * @param atom an atom
      * @return obtain the implicit hydrogen count, 0 if null
      */
-    private int getIMPH(IAtom atom){
-        if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET) return 0;
-        else return atom.getImplicitHydrogenCount();
+    private int getIMPH(IAtom atom) {
+        if (atom.getImplicitHydrogenCount() == CDKConstants.UNSET)
+            return 0;
+        else
+            return atom.getImplicitHydrogenCount();
     }
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
-        return (getIMPH(atom)!=0 && getIMPH(atom)==getIMPH(this));
+        return (getIMPH(atom) != 0 && getIMPH(atom) == getIMPH(this));
     }
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("ImplicitHCountAtom(");
+        StringBuilder s = new StringBuilder();
+        s.append("ImplicitHCountAtom(");
         s.append(this.hashCode()).append(", ");
-		s.append("IH:" + getIMPH(this));
-		s.append(')');
-		return s.toString();
+        s.append("IH:" + getIMPH(this));
+        s.append(')');
+        return s.toString();
     }
 }
-

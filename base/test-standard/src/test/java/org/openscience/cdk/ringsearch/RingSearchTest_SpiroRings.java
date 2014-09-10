@@ -43,12 +43,13 @@ public final class RingSearchTest_SpiroRings {
 
     private final IAtomContainer spiro = MoleculeFactory.makeSpiroRings();
 
-    @Test public void testCyclic() {
-        assertThat(new RingSearch(spiro).cyclic().length,
-                   is(spiro.getAtomCount()));
+    @Test
+    public void testCyclic() {
+        assertThat(new RingSearch(spiro).cyclic().length, is(spiro.getAtomCount()));
     }
 
-    @Test public void testCyclic_Int() {
+    @Test
+    public void testCyclic_Int() {
         int n = spiro.getAtomCount();
         RingSearch ringSearch = new RingSearch(spiro);
         for (int i = 0; i < n; i++) {
@@ -56,37 +57,38 @@ public final class RingSearchTest_SpiroRings {
         }
     }
 
-    @Test public void testIsolated() {
+    @Test
+    public void testIsolated() {
         RingSearch search = new RingSearch(spiro);
         int[][] isolated = search.isolated();
         assertThat(isolated.length, is(2));
-        assertThat(4, anyOf(is(isolated[0].length),
-                            is(isolated[1].length)));
-        assertThat(7, anyOf(is(isolated[0].length),
-                            is(isolated[1].length)));
+        assertThat(4, anyOf(is(isolated[0].length), is(isolated[1].length)));
+        assertThat(7, anyOf(is(isolated[0].length), is(isolated[1].length)));
     }
 
-    @Test public void testFused() {
+    @Test
+    public void testFused() {
         assertThat(new RingSearch(spiro).fused().length, is(0));
     }
 
-    @Test public void testRingFragments() {
+    @Test
+    public void testRingFragments() {
         IAtomContainer fragment = new RingSearch(spiro).ringFragments();
         assertThat(fragment.getAtomCount(), is(spiro.getAtomCount()));
         assertThat(fragment.getBondCount(), is(spiro.getBondCount()));
     }
 
-    @Test public void testIsolatedRingFragments() {
+    @Test
+    public void testIsolatedRingFragments() {
         RingSearch search = new RingSearch(spiro);
         List<IAtomContainer> isolated = search.isolatedRingFragments();
         assertThat(isolated.size(), is(2));
-        assertThat(4, anyOf(is(isolated.get(0).getAtomCount()),
-                            is(isolated.get(1).getAtomCount())));
-        assertThat(7, anyOf(is(isolated.get(0).getAtomCount()),
-                            is(isolated.get(1).getAtomCount())));
+        assertThat(4, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
+        assertThat(7, anyOf(is(isolated.get(0).getAtomCount()), is(isolated.get(1).getAtomCount())));
     }
 
-    @Test public void testFusedRingFragments() {
+    @Test
+    public void testFusedRingFragments() {
         RingSearch search = new RingSearch(spiro);
         List<IAtomContainer> fused = search.fusedRingFragments();
         assertThat(fused.size(), is(0));

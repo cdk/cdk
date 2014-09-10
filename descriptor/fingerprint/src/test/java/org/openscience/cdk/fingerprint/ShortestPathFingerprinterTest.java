@@ -51,9 +51,8 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    boolean standAlone = false;
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
+    boolean                     standAlone = false;
+    private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
     public IFingerprinter getBitFingerprinter() {
         return new ShortestPathFingerprinter();
@@ -67,9 +66,13 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol2);
         ShortestPathFingerprinter fingerprinter = new ShortestPathFingerprinter();
         IBitFingerprint bs1 = fingerprinter.getBitFingerprint(mol1);
-        Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 22, bs1.cardinality());
+        Assert.assertEquals(
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 22,
+                bs1.cardinality());
         IBitFingerprint bs2 = fingerprinter.getBitFingerprint(mol2);
-        Assert.assertEquals("Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 11, bs2.cardinality());
+        Assert.assertEquals(
+                "Seems the fingerprint code has changed. This will cause a number of other tests to fail too!", 11,
+                bs2.cardinality());
     }
 
     @Test
@@ -109,8 +112,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     @Test
     public void testGenerateFingerprintIsSubset() throws InvalidSmilesException, CDKException {
 
-        String smilesT =
-                "NC(=O)C1=C2C=CC(Br)=CC2=C(Cl)C=C1";
+        String smilesT = "NC(=O)C1=C2C=CC(Br)=CC2=C(Cl)C=C1";
         String smilesQ = "CC1=C2C=CC(Br)=CC2=C(Cl)C=C1";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer moleculeQ = smilesParser.parseSmiles(smilesQ);
@@ -136,10 +138,10 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
      * @throws FileNotFoundException
      */
     @Test
-    public void testGenerateFingerprintIsNotASubset1() throws InvalidSmilesException, CDKException, FileNotFoundException, FileNotFoundException {
+    public void testGenerateFingerprintIsNotASubset1() throws InvalidSmilesException, CDKException,
+            FileNotFoundException, FileNotFoundException {
 
-        String smilesT =
-                "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
+        String smilesT = "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O";
         String smilesQ = "OC[C@@H](O)[C@@H](O)[C@H](O)[C@@H](O)C(O)=O";
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         smilesParser.kekulise(false);
@@ -464,14 +466,14 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
         System.err.println(bi.toString());
         bi = bi.add(BigInteger.valueOf((long) Math.pow(2, 0)));
         System.err.println(bi.toString());
-//        ShortestPathFingerprinter fpt = new ShortestPathFingerprinter();
-//        fpt.standAlone = true;
-//        fpt.testFingerprinter();
-//        fpt.testFingerprinterArguments();
-//        fpt.testBug706786();
-//        fpt.testBug771485();
-//        fpt.testBug853254();
-//        fpt.testBug931608();
-//        fpt.testBug934819();
+        //        ShortestPathFingerprinter fpt = new ShortestPathFingerprinter();
+        //        fpt.standAlone = true;
+        //        fpt.testFingerprinter();
+        //        fpt.testFingerprinterArguments();
+        //        fpt.testBug706786();
+        //        fpt.testBug771485();
+        //        fpt.testBug853254();
+        //        fpt.testBug931608();
+        //        fpt.testBug934819();
     }
 }

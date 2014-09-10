@@ -37,46 +37,38 @@ import org.openscience.cdk.renderer.font.AWTFontManager;
  */
 public class AWTDrawVisitorTest {
 
-	@Test
-	public void testConstructor() {
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
-		Assert.assertNotNull(visitor);
-	}
+    @Test
+    public void testConstructor() {
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        Assert.assertNotNull(visitor);
+    }
 
-	@Test
-	public void testSetFontManager() {
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
-		visitor.setFontManager(new AWTFontManager());
-		// at least we now know it did not crash...
-		Assert.assertNotNull(visitor);
-	}
+    @Test
+    public void testSetFontManager() {
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        visitor.setFontManager(new AWTFontManager());
+        // at least we now know it did not crash...
+        Assert.assertNotNull(visitor);
+    }
 
-	@Test
-	public void testSetRendererModel() {
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
-		visitor.setRendererModel(new RendererModel());
-		// at least we now know it did not crash...
-		Assert.assertNotNull(visitor);
-	}
+    @Test
+    public void testSetRendererModel() {
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        visitor.setRendererModel(new RendererModel());
+        // at least we now know it did not crash...
+        Assert.assertNotNull(visitor);
+    }
 
     @Test
     public void testGetRendererModel() {
-        Image image = new BufferedImage(
-            100, 100, BufferedImage.TYPE_INT_RGB
-        );
-        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
         RendererModel model = new RendererModel();
         visitor.setRendererModel(model);
@@ -85,34 +77,28 @@ public class AWTDrawVisitorTest {
 
     @Test
     public void testGetStrokeMap() {
-        Image image = new BufferedImage(
-            100, 100, BufferedImage.TYPE_INT_RGB
-        );
-        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
         Assert.assertNotNull(visitor.getStrokeMap());
     }
 
     @Test
-	public void testVisit() {
-		Image image = new BufferedImage(
-			100, 100, BufferedImage.TYPE_INT_RGB
-		);
-		Graphics2D g2d = (Graphics2D)image.getGraphics();
-		AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
-		visitor.setFontManager(new AWTFontManager());
-		visitor.setTransform(new AffineTransform());
-		visitor.visit(new TextElement(2, 3, "Foo", Color.BLACK));
-		// at least we now know it did not crash...
-		Assert.assertNotNull(visitor);
-	}
+    public void testVisit() {
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
+        AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
+        visitor.setFontManager(new AWTFontManager());
+        visitor.setTransform(new AffineTransform());
+        visitor.visit(new TextElement(2, 3, "Foo", Color.BLACK));
+        // at least we now know it did not crash...
+        Assert.assertNotNull(visitor);
+    }
 
     @Test
     public void testGetGraphics() {
-        Image image = new BufferedImage(
-            100, 100, BufferedImage.TYPE_INT_RGB
-        );
-        Graphics2D g2d = (Graphics2D)image.getGraphics();
+        Image image = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = (Graphics2D) image.getGraphics();
         AWTDrawVisitor visitor = new AWTDrawVisitor(g2d);
         Assert.assertEquals(g2d, visitor.getGraphics());
     }

@@ -47,30 +47,32 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV2000ReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLRXNV2000Reader(), "data/mdl/0024.stg02.rxn");
     }
 
-    @Test public void testAccepts() {
-    	MDLRXNV2000Reader reader = new MDLRXNV2000Reader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
-    	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Reaction.class));
+    @Test
+    public void testAccepts() {
+        MDLRXNV2000Reader reader = new MDLRXNV2000Reader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
+        Assert.assertTrue(reader.accepts(ChemModel.class));
+        Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
     /**
      * @cdk.bug 1849923
      */
-    @Test public void testReadReactions1() throws Exception {
+    @Test
+    public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/0024.stg02.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
-        reaction1 = (IReaction)reader1.read(reaction1);
+        reaction1 = (IReaction) reader1.read(reaction1);
         reader1.close();
 
         Assert.assertNotNull(reaction1);
@@ -90,13 +92,14 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
     /**
      * @cdk.bug 1851202
      */
-    @Test public void testBug1851202() throws Exception {
+    @Test
+    public void testBug1851202() throws Exception {
         String filename1 = "data/mdl/0002.stg01.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
-        reaction1 = (IReaction)reader1.read(reaction1);
+        reaction1 = (IReaction) reader1.read(reaction1);
         reader1.close();
 
         Assert.assertNotNull(reaction1);
@@ -113,13 +116,14 @@ public class MDLRXNV2000ReaderTest extends SimpleChemObjectReaderTest {
 
     }
 
-    @Test public void testReadMapping() throws Exception {
+    @Test
+    public void testReadMapping() throws Exception {
         String filename2 = "data/mdl/mappingTest.rxn";
         logger.info("Testing: " + filename2);
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(filename2);
         MDLRXNV2000Reader reader2 = new MDLRXNV2000Reader(ins2);
         IReaction reaction2 = new Reaction();
-        reaction2 = (IReaction)reader2.read(reaction2);
+        reaction2 = (IReaction) reader2.read(reaction2);
         reader2.close();
 
         Assert.assertNotNull(reaction2);

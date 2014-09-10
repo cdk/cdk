@@ -26,42 +26,42 @@ import org.junit.Test;
  */
 public abstract class AbstractDictionaryTest {
 
-	private Dictionary testClass;
+    private Dictionary testClass;
 
-	protected void setTestClass(Dictionary testClass) {
-		this.testClass = testClass;
-	}
+    protected void setTestClass(Dictionary testClass) {
+        this.testClass = testClass;
+    }
 
-	protected Dictionary getTestClass() {
-		return this.testClass;
-	}
+    protected Dictionary getTestClass() {
+        return this.testClass;
+    }
 
-	@Test
-	public void testSetTestClass() {
-		Assert.assertNotNull(this.testClass);
-	}
+    @Test
+    public void testSetTestClass() {
+        Assert.assertNotNull(this.testClass);
+    }
 
-	@Test
-	public void testNS() {
-		Dictionary dict = getTestClass();
-		Assert.assertNotNull(dict);
-		Assert.assertNull(dict.getNS());
-		dict.setNS("http://www.namespace.example.org/");
-		Assert.assertEquals("http://www.namespace.example.org/", dict.getNS());
-	}
+    @Test
+    public void testNS() {
+        Dictionary dict = getTestClass();
+        Assert.assertNotNull(dict);
+        Assert.assertNull(dict.getNS());
+        dict.setNS("http://www.namespace.example.org/");
+        Assert.assertEquals("http://www.namespace.example.org/", dict.getNS());
+    }
 
-	@Test
-	public void testAddEntry() {
-		Dictionary dict = getTestClass();
-		Assert.assertNotNull(dict);
-		Assert.assertEquals(0, dict.size());
-		Assert.assertFalse(dict.hasEntry("someidentifier"));
-		Entry entry = new Entry();
-		entry.setID("someidentifier");
-		dict.addEntry(entry);
-		Assert.assertEquals(1, dict.size());
-		Assert.assertTrue(dict.hasEntry("someidentifier"));
-		Assert.assertEquals(entry, dict.getEntry("someidentifier"));
-	}
+    @Test
+    public void testAddEntry() {
+        Dictionary dict = getTestClass();
+        Assert.assertNotNull(dict);
+        Assert.assertEquals(0, dict.size());
+        Assert.assertFalse(dict.hasEntry("someidentifier"));
+        Entry entry = new Entry();
+        entry.setID("someidentifier");
+        dict.addEntry(entry);
+        Assert.assertEquals(1, dict.size());
+        Assert.assertTrue(dict.hasEntry("someidentifier"));
+        Assert.assertEquals(entry, dict.getEntry("someidentifier"));
+    }
 
 }

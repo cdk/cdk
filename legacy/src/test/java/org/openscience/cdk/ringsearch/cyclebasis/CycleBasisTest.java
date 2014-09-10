@@ -40,76 +40,76 @@ import org.openscience.cdk.CDKTestCase;
 
 public class CycleBasisTest extends CDKTestCase {
 
-	CycleBasis basis;
-	SimpleGraph g;
+    CycleBasis  basis;
+    SimpleGraph g;
 
     @Before
     public void setUp() {
-		g = new SimpleGraph(  );
+        g = new SimpleGraph();
 
-		g.addVertex( "a" );
-		g.addVertex( "b" );
-		g.addVertex( "c" );
-		g.addVertex( "d" );
-		g.addVertex( "e" );
-		g.addVertex( "f" );
-		g.addVertex( "g" );
-		g.addVertex( "h" );
-		g.addVertex( "i" );
-		g.addVertex( "j" );
-		g.addVertex( "k" );
+        g.addVertex("a");
+        g.addVertex("b");
+        g.addVertex("c");
+        g.addVertex("d");
+        g.addVertex("e");
+        g.addVertex("f");
+        g.addVertex("g");
+        g.addVertex("h");
+        g.addVertex("i");
+        g.addVertex("j");
+        g.addVertex("k");
 
-		g.addEdge( "a", "b" );
-		g.addEdge( "a", "c" );
-		g.addEdge( "b", "c" );
-		g.addEdge( "b", "d" );
-		g.addEdge( "c", "d" );
+        g.addEdge("a", "b");
+        g.addEdge("a", "c");
+        g.addEdge("b", "c");
+        g.addEdge("b", "d");
+        g.addEdge("c", "d");
 
-		g.addEdge( "d", "e" );
+        g.addEdge("d", "e");
 
-		g.addEdge( "d", "g" );
+        g.addEdge("d", "g");
 
-		g.addEdge( "e", "f" );
-		g.addEdge( "e", "h" );
-		g.addEdge( "f", "h" );
+        g.addEdge("e", "f");
+        g.addEdge("e", "h");
+        g.addEdge("f", "h");
 
-		g.addEdge( "i", "j" );
-		g.addEdge( "i", "k" );
-		g.addEdge( "j", "k" );
+        g.addEdge("i", "j");
+        g.addEdge("i", "k");
+        g.addEdge("j", "k");
 
-		basis = new CycleBasis(g);
-	}
+        basis = new CycleBasis(g);
+    }
 
     @Test
     public void testCycleBasis_UndirectedGraph() {
-		Assert.assertNotNull(basis);
-	}
+        Assert.assertNotNull(basis);
+    }
 
     @Test
     public void testCycles() {
-		int trueCycleCount = g.edgeSet().size() - g.vertexSet().size()
-			+ new ConnectivityInspector(g).connectedSets().size();
-		Assert.assertEquals(trueCycleCount, basis.cycles().size());
-	}
+        int trueCycleCount = g.edgeSet().size() - g.vertexSet().size()
+                + new ConnectivityInspector(g).connectedSets().size();
+        Assert.assertEquals(trueCycleCount, basis.cycles().size());
+    }
 
     @Test
     public void testWeightVector() {
-		Assert.assertArrayEquals(basis.weightVector(), new int[] {3,3,3,3});
-	}
+        Assert.assertArrayEquals(basis.weightVector(), new int[]{3, 3, 3, 3});
+    }
 
     @Test
     public void testEssentialCycles() {
-		Assert.assertEquals(4, basis.essentialCycles().size());
-	}
+        Assert.assertEquals(4, basis.essentialCycles().size());
+    }
 
     @Test
     public void testRelevantCycles() {
-		Assert.assertEquals(4, basis.relevantCycles().size());
-	}
+        Assert.assertEquals(4, basis.relevantCycles().size());
+    }
 
     @Test
     public void testEquivalenceClasses() {
-		Assert.assertEquals(4, basis.equivalenceClasses().size());
-	}
+        Assert.assertEquals(4, basis.equivalenceClasses().size());
+    }
 
 }

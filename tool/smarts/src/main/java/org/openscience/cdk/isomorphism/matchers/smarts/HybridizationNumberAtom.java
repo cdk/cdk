@@ -36,6 +36,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 
 public class HybridizationNumberAtom extends SMARTSAtom {
+
     Hybridization hybridization;
 
     /**
@@ -73,17 +74,20 @@ public class HybridizationNumberAtom extends SMARTSAtom {
         }
     }
 
-
-    /* (non-Javadoc)
-      * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-      */
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
+     */
     public boolean matches(IAtom atom) {
         return hybridization == atom.getHybridization();
     }
 
-    /* (non-Javadoc)
-      * @see org.openscience.cdk.PseudoAtom#toString()
-      */
+    /*
+     * (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
     public String toString() {
         return ("HybridizationNumberAtom(" + hybridization.toString() + ")");
     }

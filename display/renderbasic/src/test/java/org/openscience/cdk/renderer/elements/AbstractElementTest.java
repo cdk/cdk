@@ -31,36 +31,36 @@ import org.junit.Test;
  */
 public abstract class AbstractElementTest {
 
-	private static IRenderingElement element;
+    private static IRenderingElement element;
 
-	protected static void setRenderingElement(IRenderingElement renderingElement) {
-		element = renderingElement;
-	}
+    protected static void setRenderingElement(IRenderingElement renderingElement) {
+        element = renderingElement;
+    }
 
-	public class MockVisitor implements IRenderingVisitor {
+    public class MockVisitor implements IRenderingVisitor {
 
-		boolean isVisited = false;
+        boolean isVisited = false;
 
-		public void visit(IRenderingElement element) {
-			isVisited = true;
-		}
+        public void visit(IRenderingElement element) {
+            isVisited = true;
+        }
 
-		public void setTransform(AffineTransform transform) {
-			// TODO Auto-generated method stub
-		}
-	}
+        public void setTransform(AffineTransform transform) {
+            // TODO Auto-generated method stub
+        }
+    }
 
-	@Test
-	public void testConstructor() {
-		Assert.assertNotNull(element);
-	}
+    @Test
+    public void testConstructor() {
+        Assert.assertNotNull(element);
+    }
 
-	@Test
-	public void testAccept() {
-		MockVisitor visitor = new MockVisitor();
-		Assert.assertFalse(visitor.isVisited);
-		element.accept(visitor);
-		Assert.assertTrue(visitor.isVisited);
-	}
+    @Test
+    public void testAccept() {
+        MockVisitor visitor = new MockVisitor();
+        Assert.assertFalse(visitor.isVisited);
+        element.accept(visitor);
+        Assert.assertTrue(visitor.isVisited);
+    }
 
 }

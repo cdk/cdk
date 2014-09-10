@@ -32,4 +32,3 @@ public class HybridizationFingerprinterTest extends AbstractFingerprinterTest {
     }
 
 }
-

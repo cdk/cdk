@@ -35,20 +35,18 @@ public class DoubleArrayResultTypeTest extends CDKTestCase {
 
     @Test
     public void testDoubleArrayResultType() {
-		IDescriptorResult type = new DoubleArrayResultType(6);
-		Assert.assertNotNull(type);
-	}
+        IDescriptorResult type = new DoubleArrayResultType(6);
+        Assert.assertNotNull(type);
+    }
 
     @Test
     public void testToString() {
-		Assert.assertEquals("DoubleArrayResultType", new DoubleArrayResultType(7).toString());
-	}
+        Assert.assertEquals("DoubleArrayResultType", new DoubleArrayResultType(7).toString());
+    }
 
     @Test
     public void testLength() {
-		Assert.assertEquals(7, new DoubleArrayResultType(7).length());
-	}
+        Assert.assertEquals(7, new DoubleArrayResultType(7).length());
+    }
 
 }
-
-

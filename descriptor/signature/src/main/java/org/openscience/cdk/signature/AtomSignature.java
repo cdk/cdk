@@ -1,25 +1,25 @@
 /* Copyright (C) 2009-2010 maclean {gilleain.torrance@gmail.com}
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.signature;
 
 import java.util.List;
@@ -141,8 +141,7 @@ public class AtomSignature extends AbstractVertexSignature {
      * @param invariantType the type of invariant (int, string, ...)
      * @param molecule the molecule to create the signature from
      */
-    public AtomSignature(int atomIndex, int height,
-            InvariantType invariantType, IAtomContainer molecule) {
+    public AtomSignature(int atomIndex, int height, InvariantType invariantType, IAtomContainer molecule) {
         super(invariantType);
         this.molecule = molecule;
         super.create(atomIndex, molecule.getAtomCount(), height);
@@ -157,22 +156,23 @@ public class AtomSignature extends AbstractVertexSignature {
      * @param invariantType the type of invariant (int, string, ...)
      * @param molecule the molecule to create the signature from
      */
-    public AtomSignature(IAtom atom, int height,
-            InvariantType invariantType, IAtomContainer molecule) {
+    public AtomSignature(IAtom atom, int height, InvariantType invariantType, IAtomContainer molecule) {
         this(molecule.getAtomNumber(atom), height, invariantType, molecule);
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("getIntLabelTest")
     protected int getIntLabel(int vertexIndex) {
         IAtom atom = molecule.getAtom(vertexIndex);
         return atom.getMassNumber();
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("getConnectedTest")
     protected int[] getConnected(int vertexIndex) {
-        IAtom atom  = this.molecule.getAtom(vertexIndex);
+        IAtom atom = this.molecule.getAtom(vertexIndex);
         List<IAtom> connected = this.molecule.getConnectedAtomsList(atom);
         int[] connectedIndices = new int[connected.size()];
         int indexCounter = 0;
@@ -182,7 +182,8 @@ public class AtomSignature extends AbstractVertexSignature {
         return connectedIndices;
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("getEdgeLabelTest,getAromaticEdgeLabelTest")
     protected String getEdgeLabel(int vertexIndex, int otherVertexIndex) {
         IAtom atomA = this.molecule.getAtom(vertexIndex);
@@ -193,25 +194,32 @@ public class AtomSignature extends AbstractVertexSignature {
                 return "p";
             }
             switch (bond.getOrder()) {
-//                case SINGLE: return "-";
-                case SINGLE: return "";
-                case DOUBLE: return "=";
-                case TRIPLE: return "#";
-                case QUADRUPLE: return "$";
-                default: return "";
+            //                case SINGLE: return "-";
+                case SINGLE:
+                    return "";
+                case DOUBLE:
+                    return "=";
+                case TRIPLE:
+                    return "#";
+                case QUADRUPLE:
+                    return "$";
+                default:
+                    return "";
             }
         } else {
             return "";
         }
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("getVertexSymbolTest")
     protected String getVertexSymbol(int vertexIndex) {
         return this.molecule.getAtom(vertexIndex).getSymbol();
     }
 
-    @Override /** {@inheritDoc} */
+    @Override
+    /** {@inheritDoc} */
     @TestMethod("convertEdgeLabelToColorTest")
     protected int convertEdgeLabelToColor(String edgeLabel) {
         if (edgeLabel.equals("")) {

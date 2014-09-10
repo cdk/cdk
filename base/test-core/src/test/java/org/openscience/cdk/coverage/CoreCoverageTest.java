@@ -32,11 +32,13 @@ public class CoreCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "core.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, CoreCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 

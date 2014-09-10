@@ -35,8 +35,6 @@ import org.openscience.cdk.libio.cml.PDBAtomCustomizerTest;
  * @cdk.module test-pdbcml
  */
 @RunWith(value = Suite.class)
-@SuiteClasses(value = {
-        PDBAtomCustomizerTest.class
-})
+@SuiteClasses(value = {PDBAtomCustomizerTest.class})
 public class MpdbcmlTests {
 }

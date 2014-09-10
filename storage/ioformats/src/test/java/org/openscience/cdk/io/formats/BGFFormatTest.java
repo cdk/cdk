@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class BGFFormatTest extends ChemFormatTest {
 
     public BGFFormatTest() {
-        super.setChemFormat((IChemFormat)BGFFormat.getInstance());
+        super.setChemFormat((IChemFormat) BGFFormat.getInstance());
     }
 
 }

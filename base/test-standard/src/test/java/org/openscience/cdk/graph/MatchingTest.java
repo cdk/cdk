@@ -47,10 +47,10 @@ public class MatchingTest {
     private SmilesParser       smipar = new SmilesParser(bldr);
 
     @Ignore("no operation performed")
-    public void nop() {
-    }
+    public void nop() {}
 
-    @Test public void match() {
+    @Test
+    public void match() {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
@@ -64,7 +64,8 @@ public class MatchingTest {
         assertThat(matching.other(7), is(6));
     }
 
-    @Test public void replace() {
+    @Test
+    public void replace() {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
@@ -77,7 +78,8 @@ public class MatchingTest {
         assertThat(matching.other(6), is(5));
     }
 
-    @Test(expected = IllegalArgumentException.class) public void other() {
+    @Test(expected = IllegalArgumentException.class)
+    public void other() {
         Matching matching = Matching.withCapacity(8);
         matching.match(2, 5);
         matching.match(6, 7);
@@ -85,7 +87,8 @@ public class MatchingTest {
         matching.other(2); // 2 is unmatched!
     }
 
-    @Test public void unmatch() {
+    @Test
+    public void unmatch() {
         Matching matching = Matching.withCapacity(5);
         matching.match(2, 4);
         matching.unmatch(4); // also unmatches 2
@@ -93,44 +96,37 @@ public class MatchingTest {
         assertFalse(matching.matched(2));
     }
 
-    @Test public void perfectArbitaryMatching() {
+    @Test
+    public void perfectArbitaryMatching() {
         Matching matching = Matching.withCapacity(4);
         BitSet subset = new BitSet();
         subset.flip(0, 4);
-        assertTrue(matching.arbitaryMatching(new int[][]{
-                {1},
-                {0, 2},
-                {1, 3},
-                {2}
-        }, subset));
+        assertTrue(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2}}, subset));
     }
 
-    @Test public void imperfectArbitaryMatching() {
+    @Test
+    public void imperfectArbitaryMatching() {
         Matching matching = Matching.withCapacity(5);
         BitSet subset = new BitSet();
         subset.flip(0, 5);
-        assertFalse(matching.arbitaryMatching(new int[][]{
-                {1},
-                {0, 2},
-                {1, 3},
-                {2, 4},
-                {3}
-        }, subset));
+        assertFalse(matching.arbitaryMatching(new int[][]{{1}, {0, 2}, {1, 3}, {2, 4}, {3}}, subset));
     }
 
-    @Test public void fulvelene1() throws Exception {
+    @Test
+    public void fulvelene1() throws Exception {
         int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
         Matching m = Matching.withCapacity(graph.length);
-        BitSet   subset = new BitSet();
+        BitSet subset = new BitSet();
         subset.flip(0, graph.length);
         // arbitary matching will assign a perfect matching here
         assertTrue(m.arbitaryMatching(graph, subset));
     }
 
-    @Test public void fulvelene2() throws Exception {
+    @Test
+    public void fulvelene2() throws Exception {
         int[][] graph = GraphUtil.toAdjList(smipar.parseSmiles("c1cccc1c1cccc1"));
         Matching m = Matching.withCapacity(graph.length);
-        BitSet   subset = new BitSet();
+        BitSet subset = new BitSet();
         subset.flip(0, graph.length);
 
         // induced match - can't be perfected without removing this match
@@ -143,12 +139,12 @@ public class MatchingTest {
         assertTrue(m.perfect(graph, subset));
     }
 
-    @Test public void string() {
+    @Test
+    public void string() {
         Matching matching = Matching.withCapacity(9);
         matching.match(1, 3);
         matching.match(4, 8);
-        assertThat(matching.toString(),
-                   is("[1=3, 4=8]"));
+        assertThat(matching.toString(), is("[1=3, 4=8]"));
     }
 
 }

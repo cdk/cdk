@@ -41,33 +41,33 @@ import java.util.List;
 @TestClass("org.openscience.cdk.tools.manipulator.ChemFileManipulatorTest")
 public class ChemFileManipulator {
 
-	/**
-	 * Get the total number of atoms inside an IChemFile.
-	 *
-	 * @param file       The IChemFile object.
-	 * @return           The number of Atom object inside.
-	 */
+    /**
+     * Get the total number of atoms inside an IChemFile.
+     *
+     * @param file       The IChemFile object.
+     * @return           The number of Atom object inside.
+     */
 
     @TestMethod("testGetAtomCount_IChemFile")
     public static int getAtomCount(IChemFile file) {
-    	int count = 0;
-        for (int i=0; i<file.getChemSequenceCount(); i++) {
-        	count += ChemSequenceManipulator.getAtomCount(file.getChemSequence(i));
+        int count = 0;
+        for (int i = 0; i < file.getChemSequenceCount(); i++) {
+            count += ChemSequenceManipulator.getAtomCount(file.getChemSequence(i));
         }
         return count;
     }
 
     /**
-	 * Get the total number of bonds inside an IChemFile.
-	 *
-	 * @param file       The IChemFile object.
-	 * @return           The number of Bond object inside.
-	 */
+     * Get the total number of bonds inside an IChemFile.
+     *
+     * @param file       The IChemFile object.
+     * @return           The number of Bond object inside.
+     */
     @TestMethod("testGetBondCount_IChemFile")
     public static int getBondCount(IChemFile file) {
-    	int count = 0;
-        for (int i=0; i<file.getChemSequenceCount(); i++) {
-        	count += ChemSequenceManipulator.getBondCount(file.getChemSequence(i));
+        int count = 0;
+        for (int i = 0; i < file.getChemSequenceCount(); i++) {
+            count += ChemSequenceManipulator.getBondCount(file.getChemSequence(i));
         }
         return count;
     }
@@ -79,25 +79,21 @@ public class ChemFileManipulator {
      */
     @TestMethod("testGetAllChemObjects_IChemFile")
     public static List<IChemObject> getAllChemObjects(IChemFile file) {
-    	List<IChemObject> list = new ArrayList<IChemObject>();
-    	//list.add(file); // should not add the original file
-        for (int i=0; i<file.getChemSequenceCount(); i++) {
-        	list.add(file.getChemSequence(i));
-            list.addAll(ChemSequenceManipulator.getAllChemObjects(
-                file.getChemSequence(i)
-            ));
+        List<IChemObject> list = new ArrayList<IChemObject>();
+        //list.add(file); // should not add the original file
+        for (int i = 0; i < file.getChemSequenceCount(); i++) {
+            list.add(file.getChemSequence(i));
+            list.addAll(ChemSequenceManipulator.getAllChemObjects(file.getChemSequence(i)));
         }
         return list;
     }
 
     @TestMethod("testGetAllIDs_IChemFile")
     public static List<String> getAllIDs(IChemFile file) {
-    	List<String> list = new ArrayList<String>();
-    	if (file.getID() != null) list.add(file.getID());
-        for (int i=0; i<file.getChemSequenceCount(); i++) {
-            list.addAll(ChemSequenceManipulator.getAllIDs(
-                file.getChemSequence(i)
-            ));
+        List<String> list = new ArrayList<String>();
+        if (file.getID() != null) list.add(file.getID());
+        for (int i = 0; i < file.getChemSequenceCount(); i++) {
+            list.addAll(ChemSequenceManipulator.getAllIDs(file.getChemSequence(i)));
         }
         return list;
     }
@@ -124,12 +120,12 @@ public class ChemFileManipulator {
     public static List<IChemModel> getAllChemModels(IChemFile file) {
         List<IChemModel> modelsList = new ArrayList<IChemModel>();
 
-	    for (int f = 0; f < file.getChemSequenceCount(); f++){
-		    for (IChemModel model : file.getChemSequence(f).chemModels()) {
-			    modelsList.add(model);
-		    }
-	    }
-	    return modelsList;
+        for (int f = 0; f < file.getChemSequenceCount(); f++) {
+            for (IChemModel model : file.getChemSequence(f).chemModels()) {
+                modelsList.add(model);
+            }
+        }
+        return modelsList;
     }
 
     /**
@@ -142,12 +138,11 @@ public class ChemFileManipulator {
     public static List<IReaction> getAllReactions(IChemFile file) {
         List<IReaction> reactonList = new ArrayList<IReaction>();
         List<IChemModel> chemModel = getAllChemModels(file);
-	    for (int f = 0; f < chemModel.size(); f++){
-		    for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
-		    	reactonList.add(reaction);
-		    }
-	    }
-	    return reactonList;
+        for (int f = 0; f < chemModel.size(); f++) {
+            for (IReaction reaction : chemModel.get(f).getReactionSet().reactions()) {
+                reactonList.add(reaction);
+            }
+        }
+        return reactonList;
     }
 }
-

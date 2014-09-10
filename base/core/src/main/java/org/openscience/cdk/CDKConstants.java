@@ -42,136 +42,134 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.CDKConstantsTest")
 public class CDKConstants {
 
-	public final static Object UNSET = null;
+    public final static Object      UNSET                        = null;
 
-	/** A bond of degree 1.0. */
-	public final static IBond.Order BONDORDER_SINGLE = IBond.Order.SINGLE;
+    /** A bond of degree 1.0. */
+    public final static IBond.Order BONDORDER_SINGLE             = IBond.Order.SINGLE;
 
     /** A bond of degree 2.0. */
-    public final static IBond.Order BONDORDER_DOUBLE = IBond.Order.DOUBLE;
+    public final static IBond.Order BONDORDER_DOUBLE             = IBond.Order.DOUBLE;
 
     /** A bond of degree 3.0. */
-    public final static IBond.Order BONDORDER_TRIPLE = IBond.Order.TRIPLE;
+    public final static IBond.Order BONDORDER_TRIPLE             = IBond.Order.TRIPLE;
 
-    public final static IBond.Order BONDORDER_QUADRUPLE = IBond.Order.QUADRUPLE;
+    public final static IBond.Order BONDORDER_QUADRUPLE          = IBond.Order.QUADRUPLE;
 
     /** A positive atom parity. */
-    public final static int STEREO_ATOM_PARITY_PLUS = 1;
+    public final static int         STEREO_ATOM_PARITY_PLUS      = 1;
     /** A negative atom parity. */
-    public final static int STEREO_ATOM_PARITY_MINUS = -1;
+    public final static int         STEREO_ATOM_PARITY_MINUS     = -1;
     /** A undefined atom parity. */
-    public final static int STEREO_ATOM_PARITY_UNDEFINED = 0;
+    public final static int         STEREO_ATOM_PARITY_UNDEFINED = 0;
 
     /** A undefined hybridization. */
-    public final static int HYBRIDIZATION_UNSET = 0;
+    public final static int         HYBRIDIZATION_UNSET          = 0;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with one p orbital. */
-    public final static int HYBRIDIZATION_SP1 = 1;
+    public final static int         HYBRIDIZATION_SP1            = 1;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with two p orbitals. */
-    public final static int HYBRIDIZATION_SP2 = 2;
+    public final static int         HYBRIDIZATION_SP2            = 2;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals. */
-    public final static int HYBRIDIZATION_SP3 = 3;
+    public final static int         HYBRIDIZATION_SP3            = 3;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with one d orbital. */
-    public final static int HYBRIDIZATION_SP3D1 = 4;
+    public final static int         HYBRIDIZATION_SP3D1          = 4;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with two d orbitals. */
-    public final static int HYBRIDIZATION_SP3D2 = 5;
+    public final static int         HYBRIDIZATION_SP3D2          = 5;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with three d orbitals. */
-    public final static int HYBRIDIZATION_SP3D3 = 6;
+    public final static int         HYBRIDIZATION_SP3D3          = 6;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with four d orbitals. */
-    public final static int HYBRIDIZATION_SP3D4 = 7;
+    public final static int         HYBRIDIZATION_SP3D4          = 7;
     /** A geometry of neighboring atoms when an s orbital is hybridized
      *  with three p orbitals with five d orbitals. */
-    public final static int HYBRIDIZATION_SP3D5 = 8;
+    public final static int         HYBRIDIZATION_SP3D5          = 8;
     /**
      * Carbon NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_CARBON = "carbon nmr shift";
+    public final static String      NMRSHIFT_CARBON              = "carbon nmr shift";
     /** Hydrogen NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_HYDROGEN = "hydrogen nmr shift";
+    public final static String      NMRSHIFT_HYDROGEN            = "hydrogen nmr shift";
     /** Nitrogen NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_NITROGEN = "nitrogen nmr shift";
+    public final static String      NMRSHIFT_NITROGEN            = "nitrogen nmr shift";
 
     /** Phosphorus NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_PHOSPORUS = "phosphorus nmr shift";
+    public final static String      NMRSHIFT_PHOSPORUS           = "phosphorus nmr shift";
 
     /** Fluorine NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_FLUORINE = "fluorine nmr shift";
+    public final static String      NMRSHIFT_FLUORINE            = "fluorine nmr shift";
 
     /** Deuterium NMR shift constant for use as a key in the
      * IChemObject.physicalProperties hashtable.
      * @see org.openscience.cdk.ChemObject
      */
-    public final static String NMRSHIFT_DEUTERIUM = "deuterium nmr shift";
+    public final static String      NMRSHIFT_DEUTERIUM           = "deuterium nmr shift";
 
     /**
      * Property key to store the CIP descriptor label for an atom / bond. The
      * label is a string.
      */
-    public final static String CIP_DESCRIPTOR = "cip.label";
-
+    public final static String      CIP_DESCRIPTOR               = "cip.label";
 
     /* **************************************
-     * Some predefined flags - keep the     *
-     * numbers below 50 free for other      *
-     * purposes                             *
-     ****************************************/
+     * Some predefined flags - keep the * numbers below 50 free for other *
+     * purposes ***************************************
+     */
 
     /** Flag that is set if the chemobject is placed (somewhere).
      */
-    public final static int ISPLACED                 = 0x0001;  // 1 << 0
+    public final static int         ISPLACED                     = 0x0001;                           // 1 << 0
     /** Flag that is set when the chemobject is part of a ring.
      */
-    public final static int ISINRING                 = 0x0002; // 1 << 1
+    public final static int         ISINRING                     = 0x0002;                           // 1 << 1
     /** Flag that is set when the chemobject is part of a ring.
      */
-    public final static int ISNOTINRING              = 0x0004; // 1 << 2
+    public final static int         ISNOTINRING                  = 0x0004;                           // 1 << 2
     /** Flag that is set if a chemobject is part of an aliphatic chain.
      */
-    public final static int ISALIPHATIC              = 0x0008; // 1 << 3 etc.
+    public final static int         ISALIPHATIC                  = 0x0008;                           // 1 << 3 etc.
     /** Flag is set if chemobject has been visited.
      */
-    public final static int VISITED                  = 0x0010; // Use in tree searches // 1 << 4
+    public final static int         VISITED                      = 0x0010;                           // Use in tree searches // 1 << 4
     /** Flag is set if chemobject is part of an aromatic system. */
-    public final static int ISAROMATIC               = 0x0020;  // 1 << 5
+    public final static int         ISAROMATIC                   = 0x0020;                           // 1 << 5
     /** Flag is set if chemobject is part of a conjugated system. */
-    public final static int ISCONJUGATED             = 0x0040;  // 1 << 6
+    public final static int         ISCONJUGATED                 = 0x0040;                           // 1 << 6
     /** Flag is set if a chemobject is mapped to another chemobject.
      *  It is used for example in subgraph isomorphism search.
      */
-    public final static int MAPPED                   = 0x0080;  // 1 << 7
+    public final static int         MAPPED                       = 0x0080;                           // 1 << 7
 
     /** Sets to true if the atom is an hydrogen bond donor. */
-    public final static int IS_HYDROGENBOND_DONOR    = 0x0100;  // 1 << 8
+    public final static int         IS_HYDROGENBOND_DONOR        = 0x0100;                           // 1 << 8
     /** Sets to true if the atom is an hydrogen bond acceptor. */
-    public final static int IS_HYDROGENBOND_ACCEPTOR = 0x0200;  // 1 << 9
+    public final static int         IS_HYDROGENBOND_ACCEPTOR     = 0x0200;                           // 1 << 9
 
     /** Flag is set if a chemobject has reactive center.
      *  It is used for example in reaction.
      */
-    public static final int REACTIVE_CENTER          = 0x0400;  // 1 << 10
+    public static final int         REACTIVE_CENTER              = 0x0400;                           // 1 << 10
     /** Flag is set if an atom could be typed.
      */
-    public static final int IS_TYPEABLE              = 0x0800;  // 1 << 11
+    public static final int         IS_TYPEABLE                  = 0x0800;                           // 1 << 11
 
     /**
      * Flag used for marking uncertainty of the bond order.
@@ -185,126 +183,121 @@ public class CDKConstants {
      * 		written with a lowercase letter, e.g. 'c' rather than 'C'</li>
      * </ul>
      */
-    public final static int SINGLE_OR_DOUBLE = 12;
+    public final static int         SINGLE_OR_DOUBLE             = 12;
     /**
      * Maximum flags array index. Please update this if the value exceeds 16 -
      * the flags are currently stored as a single short value (16-bit) in the
      * ChemObject implementations (default, silent and query).
      */
-    public final static int MAX_FLAG_INDEX = 13;
+    public final static int         MAX_FLAG_INDEX               = 13;
 
     // array of flags is initialised using the static constructor
-    public final static int[] FLAG_MASKS = new int[MAX_FLAG_INDEX + 1];
+    public final static int[]       FLAG_MASKS                   = new int[MAX_FLAG_INDEX + 1];
 
     static {
-        for(int i = 0 ; i < FLAG_MASKS.length; i++)
+        for (int i = 0; i < FLAG_MASKS.length; i++)
             FLAG_MASKS[i] = 1 << i;
     }
-
 
     /**
      * Flag used for JUnit testing the pointer functionality.
      */
-    public final static int DUMMY_POINTER = 1;
+    public final static int         DUMMY_POINTER                = 1;
     /**
      * Maximum pointers array index.
      */
-    public final static int MAX_POINTER_INDEX = 1;
+    public final static int         MAX_POINTER_INDEX            = 1;
 
     /* **************************************
-     * Some predefined property names for    *
-     * ChemObjects                           *
-     ****************************************/
+     * Some predefined property names for * ChemObjects *
+     * **************************************
+     */
 
     /** The title for a IChemObject. */
-    public static final String TITLE = "cdk:Title";
+    public static final String      TITLE                        = "cdk:Title";
 
     /** A remark for a IChemObject.*/
-    public static final String REMARK = "cdk:Remark";
+    public static final String      REMARK                       = "cdk:Remark";
 
     /** A String comment. */
-    public static final String COMMENT = "cdk:Comment";
+    public static final String      COMMENT                      = "cdk:Comment";
 
     /** A List of names. */
-    public static final String NAMES = "cdk:Names";
+    public static final String      NAMES                        = "cdk:Names";
 
     /** A List of annotation remarks. */
-    public static final String ANNOTATIONS = "cdk:Annotations";
+    public static final String      ANNOTATIONS                  = "cdk:Annotations";
 
     /** A description for a IChemObject. */
-    public static final String DESCRIPTION = "cdk:Description";
-
+    public static final String      DESCRIPTION                  = "cdk:Description";
 
     /* **************************************
-    * Some predefined property names for    *
-    * Molecules                             *
-    ****************************************/
+     * Some predefined property names for * Molecules *
+     * **************************************
+     */
 
     /** The Daylight SMILES. */
-	public static final String SMILES = "cdk:SMILES";
+    public static final String      SMILES                       = "cdk:SMILES";
 
     /** The IUPAC International Chemical Identifier. */
-	public static final String INCHI = "cdk:InChI";
+    public static final String      INCHI                        = "cdk:InChI";
 
-	/** The Molecular Formula Identifier. */
-	public static final String FORMULA = "cdk:Formula";
+    /** The Molecular Formula Identifier. */
+    public static final String      FORMULA                      = "cdk:Formula";
 
     /** The IUPAC compatible name generated with AutoNom. */
-    public static final String AUTONOMNAME = "cdk:AutonomName";
+    public static final String      AUTONOMNAME                  = "cdk:AutonomName";
 
     /** The Beilstein Registry Number. */
-    public static final String BEILSTEINRN = "cdk:BeilsteinRN";
+    public static final String      BEILSTEINRN                  = "cdk:BeilsteinRN";
 
     /** The CAS Registry Number. */
-    public static final String CASRN = "cdk:CasRN";
+    public static final String      CASRN                        = "cdk:CasRN";
 
     /** A set of all rings computed for this molecule. */
-    public static final String ALL_RINGS = "cdk:AllRings";
+    public static final String      ALL_RINGS                    = "cdk:AllRings";
 
     /** A smallest set of smallest rings computed for this molecule. */
-    public static final String SMALLEST_RINGS = "cdk:SmallestRings";
+    public static final String      SMALLEST_RINGS               = "cdk:SmallestRings";
 
     /** The essential rings computed for this molecule.
      *  The concept of Essential Rings is defined in
      *  SSSRFinder
      */
-    public static final String ESSENTIAL_RINGS = "cdk:EssentialRings";
+    public static final String      ESSENTIAL_RINGS              = "cdk:EssentialRings";
 
     /** The relevant rings computed for this molecule.
      *  The concept of relevant Rings is defined in
      *  SSSRFinder
      */
-    public static final String RELEVANT_RINGS = "cdk:RelevantRings";
-
+    public static final String      RELEVANT_RINGS               = "cdk:RelevantRings";
 
     /* **************************************
-    * Some predefined property names for    *
-    * Atoms                                 *
-    ****************************************/
+     * Some predefined property names for * Atoms *
+     * **************************************
+     */
 
     /**
      * This property will contain an ArrayList of Integers. Each
      * element of the list indicates the size of the ring the given
      * atom belongs to (if it is a ring atom at all).
      */
-    public static final String RING_SIZES = "cdk:RingSizes";
+    public static final String      RING_SIZES                   = "cdk:RingSizes";
 
     /**
      * This property indicates how many ring bonds are connected to
      * the given atom.
      */
-    public static final String RING_CONNECTIONS = "cdk:RingConnections";
+    public static final String      RING_CONNECTIONS             = "cdk:RingConnections";
 
-     /*
-     *This property indicate how many bond are present on the atom.
-     *
-     */
-    public static final String TOTAL_CONNECTIONS = "cdk:TotalConnections";
     /*
-     *Hydrogen count
-     *
+     * This property indicate how many bond are present on the atom.
      */
-    public static final String TOTAL_H_COUNT = "cdk:TotalHydrogenCount";
+    public static final String      TOTAL_CONNECTIONS            = "cdk:TotalConnections";
+    /*
+     * Hydrogen count
+     */
+    public static final String      TOTAL_H_COUNT                = "cdk:TotalHydrogenCount";
 
     /** The Isotropic Shielding, usually calculated by
       * a quantum chemistry program like Gaussian.
@@ -312,41 +305,38 @@ public class CDKConstants {
       * shifts by subtracting the value from the
       * isotropic shielding value of a standard (e.g. TMS).
       */
-    public static final String ISOTROPIC_SHIELDING = "cdk:IsotropicShielding";
+    public static final String      ISOTROPIC_SHIELDING          = "cdk:IsotropicShielding";
 
     /**
      * A property to indicate RestH being true or false. RestH is a term
      * used in RGroup queries: "if this property is applied ('on'), sites labeled
      * with Rgroup rrr may only be substituted with a member of the Rgroup or with H"
      */
-    public static final String REST_H = "cdk:RestH";
+    public static final String      REST_H                       = "cdk:RestH";
 
-    public static final String ATOM_ATOM_MAPPING = "cdk:AtomAtomMapping";
-
+    public static final String      ATOM_ATOM_MAPPING            = "cdk:AtomAtomMapping";
 
     /* **************************************
-    * Some predefined property names for    *
-    * AtomTypes                             *
-    ****************************************/
+     * Some predefined property names for * AtomTypes *
+     * **************************************
+     */
 
     /** Used as property key for indicating the ring size of a certain atom type. */
-    public static final String PART_OF_RING_OF_SIZE = "cdk:Part of ring of size";
+    public static final String      PART_OF_RING_OF_SIZE         = "cdk:Part of ring of size";
 
     /** Used as property key for indicating the chemical group of a certain atom type. */
-    public static final String CHEMICAL_GROUP_CONSTANT = "cdk:Chemical Group";
+    public static final String      CHEMICAL_GROUP_CONSTANT      = "cdk:Chemical Group";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String SPHERICAL_MATCHER = "cdk:HOSE code spherical matcher";
+    public static final String      SPHERICAL_MATCHER            = "cdk:HOSE code spherical matcher";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String PI_BOND_COUNT = "cdk:Pi Bond Count";
+    public static final String      PI_BOND_COUNT                = "cdk:Pi Bond Count";
 
     /** Used as property key for indicating the HOSE code for a certain atom type. */
-    public static final String LONE_PAIR_COUNT = "cdk:Lone Pair Count";
+    public static final String      LONE_PAIR_COUNT              = "cdk:Lone Pair Count";
 
     /** Used as property key for indicating the number of single electrons on the atom type. */
-    public static final String SINGLE_ELECTRON_COUNT = "cdk:Lone Pair Count";
+    public static final String      SINGLE_ELECTRON_COUNT        = "cdk:Lone Pair Count";
 
 }
-
-

@@ -49,101 +49,105 @@ public class RelevantCyclesTest {
         new RelevantCycles((InitialCycles) null);
     }
 
-    @Test public void paths_norbornane() {
+    @Test
+    public void paths_norbornane() {
         int[][] norbornane = norbornane();
         RelevantCycles relevant = new RelevantCycles(norbornane);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(2));
-        int[][] expected = new int[][]{{5, 6, 2, 1, 0, 5},
-                                       {5, 6, 2, 3, 4, 5}};
+        int[][] expected = new int[][]{{5, 6, 2, 1, 0, 5}, {5, 6, 2, 3, 4, 5}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void paths_bicyclo() {
+    @Test
+    public void paths_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
-                                       {5, 0, 1, 2, 7, 6, 5},
-                                       {5, 4, 3, 2, 7, 6, 5}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5}, {5, 0, 1, 2, 7, 6, 5}, {5, 4, 3, 2, 7, 6, 5}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void paths_napthalene() {
+    @Test
+    public void paths_napthalene() {
         int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(2));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
-                                       {5, 4, 7, 8, 9, 6, 5}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5}, {5, 4, 7, 8, 9, 6, 5}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void paths_anthracene() {
+    @Test
+    public void paths_anthracene() {
         int[][] anthracene = anthracene();
         RelevantCycles relevant = new RelevantCycles(anthracene);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5},
-                                       {9, 6, 5, 4, 7, 8, 9},
-                                       {9, 8, 10, 11, 12, 13, 9}};
+        int[][] expected = new int[][]{{5, 0, 1, 2, 3, 4, 5}, {9, 6, 5, 4, 7, 8, 9}, {9, 8, 10, 11, 12, 13, 9}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void paths_cyclophane_even() {
+    @Test
+    public void paths_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}, {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
+                {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void paths_cyclophane_odd() {
+    @Test
+    public void paths_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         int[][] paths = relevant.paths();
         assertThat(paths.length, is(3));
-        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
-                                       {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
+        int[][] expected = new int[][]{{3, 2, 1, 0, 5, 4, 3}, {3, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3},
+                {3, 6, 7, 8, 9, 10, 11, 0, 5, 4, 3}};
         assertThat(paths, is(expected));
     }
 
-    @Test public void size_norbornane() {
+    @Test
+    public void size_norbornane() {
         int[][] norbornane = norbornane();
         RelevantCycles relevant = new RelevantCycles(norbornane);
         assertThat(relevant.size(), is(2));
     }
 
-    @Test public void size_bicyclo() {
+    @Test
+    public void size_bicyclo() {
         int[][] bicyclo = bicyclo();
         RelevantCycles relevant = new RelevantCycles(bicyclo);
         assertThat(relevant.size(), is(3));
     }
 
-    @Test public void size_napthalene() {
+    @Test
+    public void size_napthalene() {
         int[][] napthalene = naphthalene();
         RelevantCycles relevant = new RelevantCycles(napthalene);
         assertThat(relevant.size(), is(2));
     }
 
-    @Test public void size_anthracene() {
+    @Test
+    public void size_anthracene() {
         int[][] anthracene = anthracene();
         RelevantCycles relevant = new RelevantCycles(anthracene);
         assertThat(relevant.size(), is(3));
     }
 
-    @Test public void size_cyclophane_even() {
+    @Test
+    public void size_cyclophane_even() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         assertThat(relevant.size(), is(3));
     }
 
-    @Test public void size_cyclophane_odd() {
+    @Test
+    public void size_cyclophane_odd() {
         int[][] cyclophane_even = cyclophane_even();
         RelevantCycles relevant = new RelevantCycles(cyclophane_even);
         assertThat(relevant.size(), is(3));

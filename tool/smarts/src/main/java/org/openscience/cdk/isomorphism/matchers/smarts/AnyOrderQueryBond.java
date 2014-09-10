@@ -34,7 +34,7 @@ public class AnyOrderQueryBond extends SMARTSBond {
     private static final long serialVersionUID = -826100570208878645L;
 
     public AnyOrderQueryBond(IChemObjectBuilder builder) {
-    	super(builder);
+        super(builder);
     }
 
     /**
@@ -47,18 +47,21 @@ public class AnyOrderQueryBond extends SMARTSBond {
         super(atom1, atom2, order, builder);
     }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
-	 */
-	public boolean matches(IBond bond) {
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
+     * .openscience.cdk.interfaces.IBond)
+     */
+    public boolean matches(IBond bond) {
         return bond != null; // any bond order is fine
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
     public String toString() {
-		return "AnyOrderQueryBond()";
+        return "AnyOrderQueryBond()";
     }
 }
-

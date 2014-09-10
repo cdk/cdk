@@ -30,13 +30,13 @@ package org.openscience.cdk.interfaces;
  * @cdk.module interfaces
  * @cdk.githash
  */
-public interface IChemObjectListener
-{
-	/**
-	 * Called by objects to notify objects that implemented this interface
-	 * and registered with them as ChemObjectListeners.
+public interface IChemObjectListener {
+
+    /**
+     * Called by objects to notify objects that implemented this interface
+     * and registered with them as ChemObjectListeners.
      *
      * @param event  a ChemObjectChangeEvent object
-	 */
-	public void stateChanged(IChemObjectChangeEvent event);
+     */
+    public void stateChanged(IChemObjectChangeEvent event);
 }

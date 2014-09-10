@@ -36,30 +36,30 @@ import org.openscience.cdk.interfaces.IIsotope;
  */
 public class IsotopesTest extends CDKTestCase {
 
-	@Test
+    @Test
     public void testGetInstance_IChemObjectBuilder() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         Assert.assertNotNull(isofac);
     }
 
     @Test
     public void testGetSize() throws Exception {
-    	Isotopes isofac = Isotopes.getInstance();
-		Assert.assertTrue(isofac.getSize() > 0);
+        Isotopes isofac = Isotopes.getInstance();
+        Assert.assertTrue(isofac.getSize() > 0);
     }
 
     @Test
     public void testConfigure_IAtom() throws Exception {
-    	Isotopes isofac = Isotopes.getInstance();
-		Atom atom = new Atom("H");
+        Isotopes isofac = Isotopes.getInstance();
+        Atom atom = new Atom("H");
         isofac.configure(atom);
         Assert.assertEquals(1, atom.getAtomicNumber().intValue());
     }
 
     @Test
     public void testConfigure_IAtom_IIsotope() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
-		Atom atom = new Atom("H");
+        Isotopes isofac = Isotopes.getInstance();
+        Atom atom = new Atom("H");
         IIsotope isotope = new org.openscience.cdk.Isotope("H", 2);
         isofac.configure(atom, isotope);
         Assert.assertEquals(2, atom.getMassNumber().intValue());
@@ -67,70 +67,70 @@ public class IsotopesTest extends CDKTestCase {
 
     @Test
     public void testGetMajorIsotope_String() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         IIsotope isotope = isofac.getMajorIsotope("Te");
-		Assert.assertEquals(129.9062244, isotope.getExactMass(), 0.0001);
-	}
+        Assert.assertEquals(129.9062244, isotope.getExactMass(), 0.0001);
+    }
 
     @Test
     public void testGetMajorIsotope_int() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         IIsotope isotope = isofac.getMajorIsotope(17);
-		Assert.assertEquals("Cl", isotope.getSymbol());
-	}
+        Assert.assertEquals("Cl", isotope.getSymbol());
+    }
 
     @Test
     public void testGetElement_String() throws Exception {
-		IsotopeFactory elfac = Isotopes.getInstance();
+        IsotopeFactory elfac = Isotopes.getInstance();
         IElement element = elfac.getElement("Br");
-		Assert.assertEquals(35, element.getAtomicNumber().intValue());
-	}
+        Assert.assertEquals(35, element.getAtomicNumber().intValue());
+    }
 
     @Test
     public void testGetElement_int() throws Exception {
-		IsotopeFactory elfac = Isotopes.getInstance();
+        IsotopeFactory elfac = Isotopes.getInstance();
         IElement element = elfac.getElement(6);
-		Assert.assertEquals("C", element.getSymbol());
-	}
+        Assert.assertEquals("C", element.getSymbol());
+    }
 
     @Test
     public void testGetElementSymbol_int() throws Exception {
-		IsotopeFactory elfac = Isotopes.getInstance();
+        IsotopeFactory elfac = Isotopes.getInstance();
         String symbol = elfac.getElementSymbol(8);
-		Assert.assertEquals("O", symbol);
-	}
+        Assert.assertEquals("O", symbol);
+    }
 
     @Test
     public void testGetIsotopes_String() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         IIsotope[] list = isofac.getIsotopes("He");
-		Assert.assertEquals(8, list.length);
-	}
+        Assert.assertEquals(8, list.length);
+    }
 
     @Test
     public void testGetIsotopes() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         IIsotope[] list = isofac.getIsotopes();
-		Assert.assertTrue(list.length > 200);
-	}
+        Assert.assertTrue(list.length > 200);
+    }
 
     @Test
     public void testGetIsotopes_double_double() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         IIsotope[] list = isofac.getIsotopes(87.90, 0.01);
-//        should return:
-//        Isotope match: 88Sr has mass 87.9056121
-//        Isotope match: 88Y has mass 87.9095011
-		Assert.assertEquals(2, list.length);
-		Assert.assertEquals(88, list[0].getMassNumber().intValue());
-		Assert.assertEquals(88, list[1].getMassNumber().intValue());
-	}
+        //        should return:
+        //        Isotope match: 88Sr has mass 87.9056121
+        //        Isotope match: 88Y has mass 87.9095011
+        Assert.assertEquals(2, list.length);
+        Assert.assertEquals(88, list[0].getMassNumber().intValue());
+        Assert.assertEquals(88, list[1].getMassNumber().intValue());
+    }
 
     @Test
     public void testIsElement_String() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
-		Assert.assertTrue(isofac.isElement("C"));
-	}
+        Isotopes isofac = Isotopes.getInstance();
+        Assert.assertTrue(isofac.isElement("C"));
+    }
 
     @Test
     public void testConfigureAtoms_IAtomContainer() throws Exception {
@@ -141,29 +141,33 @@ public class IsotopesTest extends CDKTestCase {
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("F"));
         container.addAtom(new Atom("Cl"));
-		Isotopes isofac = Isotopes.getInstance();
+        Isotopes isofac = Isotopes.getInstance();
         isofac.configureAtoms(container);
-        for (int i=0; i<container.getAtomCount(); i++) {
+        for (int i = 0; i < container.getAtomCount(); i++) {
             Assert.assertTrue(0 < container.getAtom(i).getAtomicNumber());
         }
     }
 
-    @Test public void testGetNaturalMass_IElement() throws Exception {
-		Isotopes isofac = Isotopes.getInstance();
+    @Test
+    public void testGetNaturalMass_IElement() throws Exception {
+        Isotopes isofac = Isotopes.getInstance();
         Assert.assertEquals(1.0079760, isofac.getNaturalMass(new Element("H")), 0.1);
     }
 
-    @Test public void testGetIsotope() throws Exception {
+    @Test
+    public void testGetIsotope() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         Assert.assertEquals(13.00335484, isofac.getIsotope("C", 13).getExactMass(), 0.0000001);
     }
 
-    @Test public void testGetIsotope_NonElement() throws Exception {
+    @Test
+    public void testGetIsotope_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         Assert.assertNull(isofac.getIsotope("R", 13));
     }
 
-    @Test public void testGetIsotopeFromExactMass() throws Exception {
+    @Test
+    public void testGetIsotopeFromExactMass() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope carbon13 = isofac.getIsotope("C", 13);
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 0.0001);
@@ -171,19 +175,22 @@ public class IsotopesTest extends CDKTestCase {
         Assert.assertEquals(13, match.getMassNumber().intValue());
     }
 
-    @Test public void testGetIsotopeFromExactMass_NonElement() throws Exception {
+    @Test
+    public void testGetIsotopeFromExactMass_NonElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("R", 13.00001, 0.0001);
         Assert.assertNull(match);
     }
 
-    @Test public void testYeahSure() throws Exception {
+    @Test
+    public void testYeahSure() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope match = isofac.getIsotope("H", 13.00001, 0.0001);
         Assert.assertNull(match);
     }
 
-    @Test public void testGetIsotopeFromExactMass_LargeTolerance() throws Exception {
+    @Test
+    public void testGetIsotopeFromExactMass_LargeTolerance() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IIsotope carbon13 = isofac.getIsotope("C", 13);
         IIsotope match = isofac.getIsotope(carbon13.getSymbol(), carbon13.getExactMass(), 2.0);
@@ -194,7 +201,7 @@ public class IsotopesTest extends CDKTestCase {
     /**
      * @cdk.bug 3534288
      */
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testNonexistingElement() throws Exception {
         Isotopes isofac = Isotopes.getInstance();
         IAtom xxAtom = new Atom("Xx");
@@ -205,22 +212,22 @@ public class IsotopesTest extends CDKTestCase {
     public void testGetIsotopes_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IIsotope[] list = isofac.getIsotopes("E");
-		Assert.assertNotNull(list);
-		Assert.assertEquals(0, list.length);
-	}
+        Assert.assertNotNull(list);
+        Assert.assertEquals(0, list.length);
+    }
 
     @Test
     public void testGetElement_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IElement element = isofac.getElement("E");
-		Assert.assertNull(element);
-	}
+        Assert.assertNull(element);
+    }
 
     @Test
     public void testGetMajorIsotope_Nonelement() throws Exception {
         IsotopeFactory isofac = Isotopes.getInstance();
         IIsotope isotope = isofac.getMajorIsotope("E");
-		Assert.assertNull(isotope);
-	}
+        Assert.assertNull(isotope);
+    }
 
 }

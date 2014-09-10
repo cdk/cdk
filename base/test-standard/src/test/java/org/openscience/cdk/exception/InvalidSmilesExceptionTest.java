@@ -33,12 +33,10 @@ public class InvalidSmilesExceptionTest extends CDKTestCase {
     }
 
     @Test
-	public void testInvalidSmilesException_String() {
+    public void testInvalidSmilesException_String() {
         final String EXPLANATION = "No, CDK cannot compute the multidollar ligand you search for target X.";
         InvalidSmilesException exception = new InvalidSmilesException(EXPLANATION);
         Assert.assertNotNull(exception);
         Assert.assertEquals(EXPLANATION, exception.getMessage());
     }
 }
-
-

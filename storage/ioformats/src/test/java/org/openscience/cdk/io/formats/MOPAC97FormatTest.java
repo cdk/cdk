@@ -31,10 +31,11 @@ import org.junit.Test;
 public class MOPAC97FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC97FormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC97Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MOPAC97Format.getInstance());
     }
 
-    @Test public void testMatchesMopac97() throws Exception {
-        Assert.assertTrue(((MOPAC97Format)MOPAC97Format.getInstance()).matches(0, "MOPAC  97.00"));
+    @Test
+    public void testMatchesMopac97() throws Exception {
+        Assert.assertTrue(((MOPAC97Format) MOPAC97Format.getInstance()).matches(0, "MOPAC  97.00"));
     }
 }

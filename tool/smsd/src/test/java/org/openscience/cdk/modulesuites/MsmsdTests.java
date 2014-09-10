@@ -29,10 +29,8 @@ import org.openscience.cdk.smsd.SmsdSuite;
  *
  * @cdk.module test-smsd
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SmsdCoverageTest.class,
-    SmsdSuite.class
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SmsdCoverageTest.class, SmsdSuite.class
 //    BondEnergiesTest.class,
 //    CDKMCSTest.class,
 //    SMSDBondInsensitiveTest.class,
@@ -47,4 +45,5 @@ import org.openscience.cdk.smsd.SmsdSuite;
 //    SingleMappingHandlerTest.class,
 //    CDKMCSHandlerTest.class
 })
-public class MsmsdTests {}
+public class MsmsdTests {
+}

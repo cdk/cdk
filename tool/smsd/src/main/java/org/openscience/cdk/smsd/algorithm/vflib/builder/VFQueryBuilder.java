@@ -62,8 +62,6 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IEdge;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.INode;
 import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 
-
-
 /**
  * Class for parsing and generating query graph.
  * @cdk.module smsd
@@ -73,8 +71,8 @@ import org.openscience.cdk.smsd.algorithm.vflib.interfaces.IQuery;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFLibTest")
 public class VFQueryBuilder implements IQuery {
 
-    private List<INode> nodesList;
-    private List<IEdge> edgesList;
+    private List<INode>       nodesList;
+    private List<IEdge>       edgesList;
     private Map<INode, IAtom> nodeBondMap;
 
     /**

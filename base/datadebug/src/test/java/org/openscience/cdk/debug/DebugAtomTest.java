@@ -38,27 +38,32 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugAtomTest extends AbstractAtomTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugAtom();
             }
         });
     }
 
-    @Test public void testDebugAtom() {
+    @Test
+    public void testDebugAtom() {
         IAtom a = new DebugAtom();
         Assert.assertNotNull(a);
     }
 
-    @Test public void testDebugAtom_IElement() {
-    	IChemObject object = newChemObject();
-    	IElement element = object.getBuilder().newInstance(IElement.class);
+    @Test
+    public void testDebugAtom_IElement() {
+        IChemObject object = newChemObject();
+        IElement element = object.getBuilder().newInstance(IElement.class);
         IAtom a = new DebugAtom(element);
         Assert.assertNotNull(a);
     }
 
-    @Test public void testDebugAtom_String() {
+    @Test
+    public void testDebugAtom_String() {
         IAtom a = new DebugAtom("C");
         Assert.assertEquals("C", a.getSymbol());
         Assert.assertNull(a.getPoint2d());
@@ -66,7 +71,8 @@ public class DebugAtomTest extends AbstractAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugAtom_String_Point3d() {
+    @Test
+    public void testDebugAtom_String_Point3d() {
         Point3d point3d = new Point3d(1.0, 2.0, 3.0);
 
         IAtom a = new DebugAtom("C", point3d);
@@ -76,7 +82,8 @@ public class DebugAtomTest extends AbstractAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugAtom_String_Point2d() {
+    @Test
+    public void testDebugAtom_String_Point2d() {
         Point2d point2d = new Point2d(1.0, 2.0);
 
         IAtom a = new DebugAtom("C", point2d);

@@ -31,17 +31,21 @@ import org.junit.Test;
  */
 public abstract class AbstractElectronContainerTest extends AbstractChemObjectTest {
 
-    @Test public void testSetElectronCount_Integer() {
-        IElectronContainer ec = (IElectronContainer)newChemObject();
+    @Test
+    public void testSetElectronCount_Integer() {
+        IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(3);
         Assert.assertEquals(3, ec.getElectronCount().intValue());
     }
-    @Test public void testGetElectronCount() {
+
+    @Test
+    public void testGetElectronCount() {
         testSetElectronCount_Integer();
     }
 
-    @Test public void testClone() throws Exception {
-        IElectronContainer ec = (IElectronContainer)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IElectronContainer ec = (IElectronContainer) newChemObject();
         ec.setElectronCount(2);
         Object clone = ec.clone();
         Assert.assertNotNull(clone);
@@ -51,10 +55,11 @@ public abstract class AbstractElectronContainerTest extends AbstractChemObjectTe
     /**
      * Method to test whether the class complies with RFC #9.
      */
-    @Test public void testToString() {
-        IElectronContainer at = (IElectronContainer)newChemObject();
+    @Test
+    public void testToString() {
+        IElectronContainer at = (IElectronContainer) newChemObject();
         String description = at.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class MDLFormatTest extends ChemFormatMatcherTest {
 
     public MDLFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MDLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MDLFormat.getInstance());
     }
 
 }

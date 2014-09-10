@@ -60,150 +60,151 @@ import java.util.List;
 @TestClass("org.openscience.cdk.ringsearch.SSSRFinderTest")
 public class SSSRFinder {
 
-	private IAtomContainer atomContainer;
-	private CycleBasis cycleBasis;
+    private IAtomContainer atomContainer;
+    private CycleBasis     cycleBasis;
 
-	/**
-	 * Constructs a SSSRFinder for a specified molecule.
-	 *
-	 * @param   container the molecule to be searched for rings
-	 */
-	public SSSRFinder(IAtomContainer container) {
-		this.atomContainer = container;
-	}
+    /**
+     * Constructs a SSSRFinder for a specified molecule.
+     *
+     * @param   container the molecule to be searched for rings
+     */
+    public SSSRFinder(IAtomContainer container) {
+        this.atomContainer = container;
+    }
 
-	/**
-	 * Finds a Smallest Set of Smallest Rings.
-	 * The returned set is not uniquely defined.
-	 *
-	 * @return      a RingSet containing the SSSR
-	 */
+    /**
+     * Finds a Smallest Set of Smallest Rings.
+     * The returned set is not uniquely defined.
+     *
+     * @return      a RingSet containing the SSSR
+     */
     @TestMethod("testFindSSSR,testFindSSSR_IAtomContainer")
     public IRingSet findSSSR() {
-		if (atomContainer==null) {
-			return null;
-		}
-		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
-//		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
-		return ringSet;
+        if (atomContainer == null) {
+            return null;
+        }
+        IRingSet ringSet = toRingSet(atomContainer, cycleBasis().cycles());
+        //		atomContainer.setProperty(CDKConstants.SMALLEST_RINGS, ringSet);
+        return ringSet;
 
-	}
+    }
 
-	/**
-	 * Finds the Set of Essential Rings.
-	 * These rings are contained in every possible SSSR.
-	 * The returned set is uniquely defined.
-	 *
-	 * @return      a RingSet containing the Essential Rings
-	 */
-	public IRingSet findEssentialRings() {
-		if (atomContainer==null) {
-			return null;
-		}
-		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().essentialCycles());
-//		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
-		return ringSet;
-	}
+    /**
+     * Finds the Set of Essential Rings.
+     * These rings are contained in every possible SSSR.
+     * The returned set is uniquely defined.
+     *
+     * @return      a RingSet containing the Essential Rings
+     */
+    public IRingSet findEssentialRings() {
+        if (atomContainer == null) {
+            return null;
+        }
+        IRingSet ringSet = toRingSet(atomContainer, cycleBasis().essentialCycles());
+        //		atomContainer.setProperty(CDKConstants.ESSENTIAL_RINGS, ringSet);
+        return ringSet;
+    }
 
-	/**
-	 * Finds the Set of Relevant Rings.
-	 * These rings are contained in every possible SSSR.
-	 * The returned set is uniquely defined.
-	 *
-	 * @return      a RingSet containing the Relevant Rings
-	 */
-	public IRingSet findRelevantRings() {
-		if (atomContainer==null) {
-			return null;
-		}
+    /**
+     * Finds the Set of Relevant Rings.
+     * These rings are contained in every possible SSSR.
+     * The returned set is uniquely defined.
+     *
+     * @return      a RingSet containing the Relevant Rings
+     */
+    public IRingSet findRelevantRings() {
+        if (atomContainer == null) {
+            return null;
+        }
 
-		IRingSet ringSet = toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());
-//		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
-		return ringSet;
-	}
+        IRingSet ringSet = toRingSet(atomContainer, cycleBasis().relevantCycles().keySet());
+        //		atomContainer.setProperty(CDKConstants.RELEVANT_RINGS, ringSet);
+        return ringSet;
+    }
 
-	/**
-	 * Finds the "interchangeability" equivalence classes.
-	 * The interchangeability relation is described in [GLS00].
-	 *
-	 * @return      a List of RingSets containing the rings in an equivalence class
-	 */
-	public List findEquivalenceClasses() {
-		if (atomContainer==null) {
-			return null;
-		}
+    /**
+     * Finds the "interchangeability" equivalence classes.
+     * The interchangeability relation is described in [GLS00].
+     *
+     * @return      a List of RingSets containing the rings in an equivalence class
+     */
+    public List findEquivalenceClasses() {
+        if (atomContainer == null) {
+            return null;
+        }
 
-		List<IRingSet> equivalenceClasses = new ArrayList<IRingSet>();
+        List<IRingSet> equivalenceClasses = new ArrayList<IRingSet>();
         for (Object o : cycleBasis().equivalenceClasses()) {
             equivalenceClasses.add(toRingSet(atomContainer, (Collection) o));
         }
-		return equivalenceClasses;
-	}
+        return equivalenceClasses;
+    }
 
-	/**
-	 * Returns a vector containing the lengths of the rings in a SSSR.
-	 * The vector is uniquely defined for any SSSR of a molecule.
-	 *
-	 * @return An <code>int[]</code> containing the length of the rings in a SSSR
-	 */
-	public int[] getSSSRWeightVector() {
-		return cycleBasis().weightVector();
-	}
+    /**
+     * Returns a vector containing the lengths of the rings in a SSSR.
+     * The vector is uniquely defined for any SSSR of a molecule.
+     *
+     * @return An <code>int[]</code> containing the length of the rings in a SSSR
+     */
+    public int[] getSSSRWeightVector() {
+        return cycleBasis().weightVector();
+    }
 
-	/**
-	 * Returns a vector containing the size of the "interchangeability" equivalence classes.
-	 * The vector is uniquely defined for any SSSR of a molecule.
-	 *
-	 * @return An <code>int[]</code> containing the size of the equivalence classes in a SSSR
-	 */
-	public int[] getEquivalenceClassesSizeVector() {
-		List equivalenceClasses = cycleBasis().equivalenceClasses();
-		int[] result = new int[equivalenceClasses.size()];
-		for (int i=0; i<equivalenceClasses.size(); i++) {
-			result[i] = ((Collection)equivalenceClasses.get(i)).size();
-		}
-		return result;
-	}
+    /**
+     * Returns a vector containing the size of the "interchangeability" equivalence classes.
+     * The vector is uniquely defined for any SSSR of a molecule.
+     *
+     * @return An <code>int[]</code> containing the size of the equivalence classes in a SSSR
+     */
+    public int[] getEquivalenceClassesSizeVector() {
+        List equivalenceClasses = cycleBasis().equivalenceClasses();
+        int[] result = new int[equivalenceClasses.size()];
+        for (int i = 0; i < equivalenceClasses.size(); i++) {
+            result[i] = ((Collection) equivalenceClasses.get(i)).size();
+        }
+        return result;
+    }
 
-	private CycleBasis cycleBasis() {
-		if (cycleBasis==null) {
-			UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(atomContainer);
+    private CycleBasis cycleBasis() {
+        if (cycleBasis == null) {
+            UndirectedGraph molGraph = MoleculeGraphs.getMoleculeGraph(atomContainer);
 
-			cycleBasis = new CycleBasis(molGraph);
-		}
-		return cycleBasis;
-	}
+            cycleBasis = new CycleBasis(molGraph);
+        }
+        return cycleBasis;
+    }
 
-	private static IRingSet toRingSet(IAtomContainer container, Collection cycles) {
+    private static IRingSet toRingSet(IAtomContainer container, Collection cycles) {
 
-		IRingSet ringSet = container.getBuilder().newInstance(IRingSet.class);
+        IRingSet ringSet = container.getBuilder().newInstance(IRingSet.class);
 
-		Iterator cycleIterator = cycles.iterator();
+        Iterator cycleIterator = cycles.iterator();
 
-		while (cycleIterator.hasNext()) {
-			SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
+        while (cycleIterator.hasNext()) {
+            SimpleCycle cycle = (SimpleCycle) cycleIterator.next();
 
-			IRing ring = container.getBuilder().newInstance(IRing.class);
+            IRing ring = container.getBuilder().newInstance(IRing.class);
 
-			List vertices = cycle.vertexList();
+            List vertices = cycle.vertexList();
 
-			IAtom[] atoms = new IAtom[vertices.size()];
-			atoms[0] = (IAtom) vertices.get(0);
+            IAtom[] atoms = new IAtom[vertices.size()];
+            atoms[0] = (IAtom) vertices.get(0);
             for (int i = 1; i < vertices.size(); i++) {
-				atoms[i] = (IAtom) vertices.get(i);
-				ring.addElectronContainer(container.getBond(atoms[i-1], atoms[i]));
-			}
+                atoms[i] = (IAtom) vertices.get(i);
+                ring.addElectronContainer(container.getBond(atoms[i - 1], atoms[i]));
+            }
 
-            for (IAtom atom : atoms) atom.setFlag(CDKConstants.ISINRING, true);
+            for (IAtom atom : atoms)
+                atom.setFlag(CDKConstants.ISINRING, true);
 
             ring.addElectronContainer(container.getBond(atoms[vertices.size() - 1], atoms[0]));
-			ring.setAtoms(atoms);
+            ring.setAtoms(atoms);
 
-			ringSet.addAtomContainer(ring);
-		}
+            ringSet.addAtomContainer(ring);
+        }
 
-		return ringSet;
+        return ringSet;
 
-	}
+    }
 
 }

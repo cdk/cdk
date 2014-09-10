@@ -23,7 +23,6 @@
  */
 package org.openscience.cdk.similarity;
 
-
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.exception.CDKException;
@@ -65,12 +64,11 @@ import java.util.TreeSet;
  *@cdk.keyword    similarity, tanimoto
  * @cdk.module fingerprint
  */
-@TestClass("org.openscience.cdk.similarity.TanimotoTest") // see also SignatureFingerprintTanimotoTest
-public class Tanimoto
-{
+@TestClass("org.openscience.cdk.similarity.TanimotoTest")
+// see also SignatureFingerprintTanimotoTest
+public class Tanimoto {
 
-    private Tanimoto() {
-    }
+    private Tanimoto() {}
 
     /**
      * Evaluates Tanimoto coefficient for two bit sets.
@@ -81,19 +79,17 @@ public class Tanimoto
      * @throws org.openscience.cdk.exception.CDKException  if bitsets are not of the same length
      */
     @TestMethod("testTanimoto1,testTanimoto2")
-    public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException
-    {
+    public static float calculate(BitSet bitset1, BitSet bitset2) throws CDKException {
         float _bitset1_cardinality = bitset1.cardinality();
         float _bitset2_cardinality = bitset2.cardinality();
         if (bitset1.size() != bitset2.size()) {
             throw new CDKException("Bitsets must have the same bit length");
         }
-        BitSet one_and_two = (BitSet)bitset1.clone();
+        BitSet one_and_two = (BitSet) bitset1.clone();
         one_and_two.and(bitset2);
         float _common_bit_count = one_and_two.cardinality();
-        return _common_bit_count/(_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
+        return _common_bit_count / (_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
     }
-
 
     /**
      * Evaluates Tanimoto coefficient for two <code>IBitFingerprint</code>.
@@ -104,25 +100,20 @@ public class Tanimoto
      * @throws IllegalArgumentException if bitsets are not of the same length
      */
     @TestMethod("testCalculate_BitFingerprint,testCompareBitSetandBitFingerprintTanimoto")
-    public static double calculate( IBitFingerprint fingerprint1,
-                                   IBitFingerprint fingerprint2 ) {
+    public static double calculate(IBitFingerprint fingerprint1, IBitFingerprint fingerprint2) {
         if (fingerprint1.size() != fingerprint2.size()) {
-            throw new IllegalArgumentException(
-                          "Fingerprints must have the same size" );
+            throw new IllegalArgumentException("Fingerprints must have the same size");
         }
         int cardinality1 = fingerprint1.cardinality();
         int cardinality2 = fingerprint2.cardinality();
         // If the fingerprint is an IntArrayFingeprint that could mean a big
         // fingerprint so let's take the safe way out and create a
         // new IntArrayfingerprint
-        IBitFingerprint one_and_two
-            = fingerprint1 instanceof IntArrayFingerprint
-                ? new IntArrayFingerprint(fingerprint1)
-                : new BitSetFingerprint(fingerprint1);
+        IBitFingerprint one_and_two = fingerprint1 instanceof IntArrayFingerprint ? new IntArrayFingerprint(
+                fingerprint1) : new BitSetFingerprint(fingerprint1);
         one_and_two.and(fingerprint2);
         double cardinalityCommon = one_and_two.cardinality();
-        return cardinalityCommon /
-               (cardinality1 + cardinality2 - cardinalityCommon);
+        return cardinalityCommon / (cardinality1 + cardinality2 - cardinalityCommon);
     }
 
     /**
@@ -147,10 +138,10 @@ public class Tanimoto
 
         for (int i = 0; i < n; i++) {
             ab += features1[i] * features2[i];
-            a2 += features1[i]*features1[i];
-            b2 += features2[i]*features2[i];
+            a2 += features1[i] * features1[i];
+            b2 += features2[i] * features2[i];
         }
-        return (float)ab/(float)(a2+b2-ab);
+        return (float) ab / (float) (a2 + b2 - ab);
     }
 
     /**
@@ -193,25 +184,22 @@ public class Tanimoto
      * @return The Tanimoto coefficient
      */
     @TestMethod("testICountFingerprintComparison")
-	public static double calculate( ICountFingerprint fp1,
-			                       ICountFingerprint fp2 ) {
-		long xy=0,
-		     x=0,
-		     y=0;
-		for ( int i= 0; i<fp1.numOfPopulatedbins(); i++ ) {
-			int hash = fp1.getHash(i);
-			for ( int j =0; j<fp2.numOfPopulatedbins(); j++ ) {
-				if ( hash == fp2.getHash(j) ) {
-					xy += fp1.getCount(i) * fp2.getCount(j);
-				}
-			}
-			x += fp1.getCount(i) * fp1.getCount(i);
-		}
-		for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
-			y += fp2.getCount(j) * fp2.getCount(j);
-		}
-	    return ( (double)xy / (x + y - xy) );
-	}
+    public static double calculate(ICountFingerprint fp1, ICountFingerprint fp2) {
+        long xy = 0, x = 0, y = 0;
+        for (int i = 0; i < fp1.numOfPopulatedbins(); i++) {
+            int hash = fp1.getHash(i);
+            for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
+                if (hash == fp2.getHash(j)) {
+                    xy += fp1.getCount(i) * fp2.getCount(j);
+                }
+            }
+            x += fp1.getCount(i) * fp1.getCount(i);
+        }
+        for (int j = 0; j < fp2.numOfPopulatedbins(); j++) {
+            y += fp2.getCount(j) * fp2.getCount(j);
+        }
+        return ((double) xy / (x + y - xy));
+    }
 
     /**
      * Calculates Tanimoto distance for two count fingerprints using method 1.
@@ -221,9 +209,8 @@ public class Tanimoto
      * @return a Tanimoto distance
      */
     @TestMethod("method1")
-    public static double method1( ICountFingerprint fp1,
-                                  ICountFingerprint fp2) {
-    	return calculate(fp1, fp2);
+    public static double method1(ICountFingerprint fp1, ICountFingerprint fp2) {
+        return calculate(fp1, fp2);
     }
 
     /**
@@ -234,42 +221,34 @@ public class Tanimoto
      * @return a Tanimoto distance
      */
     @TestMethod("method2")
-    public static double method2( ICountFingerprint fp1,
-                                  ICountFingerprint fp2) {
+    public static double method2(ICountFingerprint fp1, ICountFingerprint fp2) {
 
-    		long maxSum = 0,
-    		     minSum = 0;
-    		int i = 0,
-    		    j = 0;
-    		while ( i < fp1.numOfPopulatedbins()
-    				|| j < fp2.numOfPopulatedbins() ) {
-    			Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i)
-    					                                     : null;
-    			Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j)
-    					                                     : null;
-    			Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i)
-    					                                      : null;
-    			Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j)
-    					                                      : null;
+        long maxSum = 0, minSum = 0;
+        int i = 0, j = 0;
+        while (i < fp1.numOfPopulatedbins() || j < fp2.numOfPopulatedbins()) {
+            Integer hash1 = i < fp1.numOfPopulatedbins() ? fp1.getHash(i) : null;
+            Integer hash2 = j < fp2.numOfPopulatedbins() ? fp2.getHash(j) : null;
+            Integer count1 = i < fp1.numOfPopulatedbins() ? fp1.getCount(i) : null;
+            Integer count2 = j < fp2.numOfPopulatedbins() ? fp2.getCount(j) : null;
 
-    			if ( count2 == null || (hash1 != null && hash1 < hash2) ) {
-    			maxSum += count1;
-    				i++;
-    				continue;
-    			}
-    			if ( count1 == null || (hash2 != null && hash1 > hash2 ) ) {
-    				maxSum += count2;
-    				j++;
-    				continue;
-    			}
+            if (count2 == null || (hash1 != null && hash1 < hash2)) {
+                maxSum += count1;
+                i++;
+                continue;
+            }
+            if (count1 == null || (hash2 != null && hash1 > hash2)) {
+                maxSum += count2;
+                j++;
+                continue;
+            }
 
-    			if ( hash1.equals(hash2) ) {
-    				maxSum += Math.max(count1, count2);
-    				minSum += Math.min(count1, count2);
-    				i++;
-    				j++;
-    			}
-    		}
-    		return ((double)minSum) / maxSum;
+            if (hash1.equals(hash2)) {
+                maxSum += Math.max(count1, count2);
+                minSum += Math.min(count1, count2);
+                i++;
+                j++;
+            }
+        }
+        return ((double) minSum) / maxSum;
     }
 }

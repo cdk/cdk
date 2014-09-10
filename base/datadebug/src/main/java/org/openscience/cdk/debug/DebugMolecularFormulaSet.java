@@ -35,78 +35,88 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DebugMolecularFormulaSet extends MolecularFormulaSet implements IMolecularFormulaSet {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DebugMolecularFormulaSet.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(DebugMolecularFormulaSet.class);
 
     public DebugMolecularFormulaSet() {
-    	super();
+        super();
     }
 
     public DebugMolecularFormulaSet(IMolecularFormula formula) {
-    	super(formula);
+        super(formula);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void add(IMolecularFormulaSet formulaSet) {
-	    logger.debug("Adding formula set: ", formulaSet);
-	    super.add(formulaSet);
+        logger.debug("Adding formula set: ", formulaSet);
+        super.add(formulaSet);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void addMolecularFormula(IMolecularFormula formula) {
-		logger.debug("Adding formula: ", formula);
-	    super.addMolecularFormula(formula);
+        logger.debug("Adding formula: ", formula);
+        super.addMolecularFormula(formula);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public boolean contains(IMolecularFormula formula) {
-		logger.debug("Contains formula?: ", formula);
-	    return super.contains(formula);
+        logger.debug("Contains formula?: ", formula);
+        return super.contains(formula);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IMolecularFormula getMolecularFormula(int position) {
-		logger.debug("Getting formula at: ", position);
-	    return super.getMolecularFormula(position);
+        logger.debug("Getting formula at: ", position);
+        return super.getMolecularFormula(position);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public Iterator<IMolecularFormula> iterator() {
-		logger.debug("Getting molecular formula iterator...");
-	    return super.iterator();
+        logger.debug("Getting molecular formula iterator...");
+        return super.iterator();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public Iterable<IMolecularFormula> molecularFormulas() {
-		logger.debug("Getting molecular formula iterable...");
-	    return super.molecularFormulas();
+        logger.debug("Getting molecular formula iterable...");
+        return super.molecularFormulas();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeAllMolecularFormulas() {
-	    logger.debug("Removing all formulas...");
-	    super.removeAllMolecularFormulas();
+        logger.debug("Removing all formulas...");
+        super.removeAllMolecularFormulas();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeMolecularFormula(IMolecularFormula formula) {
-	    logger.debug("Removing this formula: ", formula);
-	    super.removeMolecularFormula(formula);
+        logger.debug("Removing this formula: ", formula);
+        super.removeMolecularFormula(formula);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public void removeMolecularFormula(int position) {
-	    logger.debug("Removing the formula at position: ", position);
-	    super.removeMolecularFormula(position);
+        logger.debug("Removing the formula at position: ", position);
+        super.removeMolecularFormula(position);
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public int size() {
-	    logger.debug("Getting the size of this adduct: " + super.size());
-	    return super.size();
+        logger.debug("Getting the size of this adduct: " + super.size());
+        return super.size();
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     public IChemObjectBuilder getBuilder() {
         return DebugChemObjectBuilder.getInstance();
     }

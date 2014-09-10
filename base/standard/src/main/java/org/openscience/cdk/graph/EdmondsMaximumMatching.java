@@ -55,27 +55,27 @@ import java.util.Map;
 final class EdmondsMaximumMatching {
 
     /** The graph we are matching on. */
-    private final int[][] graph;
+    private final int[][]             graph;
 
     /** The current matching. */
-    private final Matching matching;
+    private final Matching            matching;
 
     /** Subset of vertices to be matched. */
-    private final BitSet subset;
+    private final BitSet              subset;
 
     /* Algorithm data structures below. */
 
     /** Storage of the forest, even and odd levels */
-    private final int[] even, odd;
+    private final int[]               even, odd;
 
     /** Special 'nil' vertex. */
-    private static final int nil = -1;
+    private static final int          nil     = -1;
 
     /** Queue of 'even' (free) vertices to start paths from. */
-    private final List<Integer> queue;
+    private final List<Integer>       queue;
 
     /** Union-Find to store blossoms. */
-    private DisjointSetForest dsf;
+    private DisjointSetForest         dsf;
 
     /**
      * Map stores the bridges of the blossom - indexed by with support
@@ -84,13 +84,13 @@ final class EdmondsMaximumMatching {
     private final Map<Integer, Tuple> bridges = new HashMap<Integer, Tuple>();
 
     /** Temporary array to fill with path information. */
-    private final int[] path;
+    private final int[]               path;
 
     /**
      * Temporary bit sets when walking down 'trees' to check for
      * paths/blossoms.
      */
-    private final BitSet vAncestors, wAncestors;
+    private final BitSet              vAncestors, wAncestors;
 
     /**
      * Internal constructor.
@@ -101,18 +101,18 @@ final class EdmondsMaximumMatching {
      */
     private EdmondsMaximumMatching(int[][] graph, Matching matching, BitSet subset) {
 
-        this.graph    = graph;
+        this.graph = graph;
         this.matching = matching;
-        this.subset   = subset;
+        this.subset = subset;
 
         this.even = new int[graph.length];
-        this.odd  = new int[graph.length];
+        this.odd = new int[graph.length];
 
         this.queue = new LinkedList<Integer>();
-        this.dsf   = new DisjointSetForest(graph.length);
+        this.dsf = new DisjointSetForest(graph.length);
 
         // tmp storage of paths in the algorithm
-        path       = new int[graph.length];
+        path = new int[graph.length];
         vAncestors = new BitSet(graph.length);
         wAncestors = new BitSet(graph.length);
 
@@ -151,15 +151,13 @@ final class EdmondsMaximumMatching {
 
             for (int w : graph[v]) {
 
-                if (!subset.get(w))
-                    continue;
+                if (!subset.get(w)) continue;
 
                 // the endpoints of the edge are both at even levels in the
                 // forest - this means it is either an augmenting path or
                 // a blossom
                 if (even[dsf.getRoot(w)] != nil) {
-                    if (check(v, w))
-                        return true;
+                    if (check(v, w)) return true;
                 }
 
                 // add the edge to the forest if is not already and extend
@@ -198,8 +196,7 @@ final class EdmondsMaximumMatching {
     private boolean check(int v, int w) {
 
         // self-loop (within blossom) ignored
-        if (dsf.getRoot(v) == dsf.getRoot(w))
-            return false;
+        if (dsf.getRoot(v) == dsf.getRoot(w)) return false;
 
         vAncestors.clear();
         wAncestors.clear();
@@ -259,8 +256,7 @@ final class EdmondsMaximumMatching {
         curr = dsf.getRoot(curr);
         ancestors.set(curr);
         int parent = dsf.getRoot(even[curr]);
-        if (parent == curr)
-            return curr; // root of tree
+        if (parent == curr) return curr; // root of tree
         ancestors.set(parent);
         return dsf.getRoot(odd[parent]);
     }
@@ -358,14 +354,12 @@ final class EdmondsMaximumMatching {
             path[i++] = start;
 
             // root of the tree
-            if (matching.unmatched(start))
-                return i;
+            if (matching.unmatched(start)) return i;
 
             path[i++] = matching.other(start);
 
             // end of recursive
-            if (path[i - 1] == goal)
-                return i;
+            if (path[i - 1] == goal) return i;
 
             start = odd[path[i - 1]];
         }

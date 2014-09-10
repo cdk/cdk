@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class AlchemyFormatTest extends ChemFormatTest {
 
     public AlchemyFormatTest() {
-        super.setChemFormat((IChemFormat)AlchemyFormat.getInstance());
+        super.setChemFormat((IChemFormat) AlchemyFormat.getInstance());
     }
 
 }

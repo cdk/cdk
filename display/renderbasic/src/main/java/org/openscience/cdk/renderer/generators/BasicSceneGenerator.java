@@ -43,59 +43,62 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.BasicSceneGeneratorTest")
 public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
-	/**
-	 * The width of the head of arrows.
-	 *
-	 * @author egonw
-	 */
-    public static class ArrowHeadWidth extends
-    AbstractGeneratorParameter<Double> {
-    	/** Returns the default arrow head width.
-    	 * @return 10.0 */
-    	public Double getDefault() {
-    		return 10.0;
-    	}
-    }
-    private IGeneratorParameter<Double> arrowHeadWidth =
-    	new ArrowHeadWidth();
+    /**
+     * The width of the head of arrows.
+     *
+     * @author egonw
+     */
+    public static class ArrowHeadWidth extends AbstractGeneratorParameter<Double> {
 
-	/**
-	 * Determines if tooltips are to be shown.
-	 */
-    public static class ShowTooltip extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value.
-    	 * @return {@link Boolean}.FALSE */
+        /** Returns the default arrow head width.
+         * @return 10.0 */
+        public Double getDefault() {
+            return 10.0;
+        }
+    }
+
+    private IGeneratorParameter<Double> arrowHeadWidth = new ArrowHeadWidth();
+
+    /**
+     * Determines if tooltips are to be shown.
+     */
+    public static class ShowTooltip extends AbstractGeneratorParameter<Boolean> {
+
+        /** Returns the default value.
+         * @return {@link Boolean}.FALSE */
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
+
     private ShowTooltip showTooltip = new ShowTooltip();
 
     /**
      * Determines if the molecule's title is depicted.
      */
-    public static class ShowMoleculeTitle extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value.
-    	 * @return {@link Boolean}.FALSE */
-    	public Boolean getDefault() {
+    public static class ShowMoleculeTitle extends AbstractGeneratorParameter<Boolean> {
+
+        /** Returns the default value.
+         * @return {@link Boolean}.FALSE */
+        public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
+
     private ShowMoleculeTitle showMoleculeTitle = new ShowMoleculeTitle();
 
     /**
      * If true, the scale is set such that the diagram
      * fills the whole screen. */
-    public static class FitToScreen extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value.
-    	 * @return {@link Boolean}.FALSE */
-    	public Boolean getDefault() {
+    public static class FitToScreen extends AbstractGeneratorParameter<Boolean> {
+
+        /** Returns the default value.
+         * @return {@link Boolean}.FALSE */
+        public Boolean getDefault() {
             return Boolean.FALSE;
         }
     }
+
     private FitToScreen fitToScreen = new FitToScreen();
 
     /**
@@ -103,24 +106,25 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
      * coordinates to screen space coordinate, such that the entire structure
      * fits the visible screen dimension.
      */
-    public static class Scale extends
-    AbstractGeneratorParameter<Double> {
-    	/** Returns the default value.
-    	 * @return 1.0 */
-    	public Double getDefault() {
+    public static class Scale extends AbstractGeneratorParameter<Double> {
+
+        /** Returns the default value.
+         * @return 1.0 */
+        public Double getDefault() {
             return 1.0;
         }
     }
+
     private IGeneratorParameter<Double> scale = new Scale();
 
     /**
      * The background color of the drawn image.
      */
-    public static class BackgroundColor extends
-    AbstractGeneratorParameter<Color> {
-    	/** Returns the default value.
-    	 * @return {@link Color}.WHITE */
-    	public Color getDefault() {
+    public static class BackgroundColor extends AbstractGeneratorParameter<Color> {
+
+        /** Returns the default value.
+         * @return {@link Color}.WHITE */
+        public Color getDefault() {
             return Color.WHITE;
         }
     }
@@ -128,30 +132,31 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     /**
      * The length on the screen of a typical bond.
      */
-    public static class BondLength extends
-                                   AbstractGeneratorParameter<Double> {
+    public static class BondLength extends AbstractGeneratorParameter<Double> {
+
         /** Returns the default value.
          * @return 40.0 */
         public Double getDefault() {
             return 40.0;
         }
     }
-    private IGeneratorParameter<Double> bondLength = new BondLength();
 
+    private IGeneratorParameter<Double> bondLength      = new BondLength();
 
-    private IGeneratorParameter<Color> backgroundColor = new BackgroundColor();
+    private IGeneratorParameter<Color>  backgroundColor = new BackgroundColor();
 
     /**
      * The foreground color, with which objects are drawn.
      */
-    public static class ForegroundColor extends
-    AbstractGeneratorParameter<Color> {
-    	/** Returns the default value.
-    	 * @return {@link Color}.BLACK*/
-    	public Color getDefault() {
+    public static class ForegroundColor extends AbstractGeneratorParameter<Color> {
+
+        /** Returns the default value.
+         * @return {@link Color}.BLACK*/
+        public Color getDefault() {
             return Color.BLACK;
         }
     }
+
     private IGeneratorParameter<Color> foregroundColor = new ForegroundColor();
 
     /**
@@ -159,51 +164,55 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
      * drawing slower, but at lower resolutions it makes drawings look more
      * smooth.
      */
-    public static class UseAntiAliasing extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** Returns the default value.
-    	 * @return {@link Boolean}.TRUE */
-    	public Boolean getDefault() {
+    public static class UseAntiAliasing extends AbstractGeneratorParameter<Boolean> {
+
+        /** Returns the default value.
+         * @return {@link Boolean}.TRUE */
+        public Boolean getDefault() {
             return Boolean.TRUE;
         }
     }
+
     private IGeneratorParameter<Boolean> useAntiAliasing = new UseAntiAliasing();
 
     /**
      * Area on each of the four margins to keep empty.
      */
-    public static class Margin extends
-    AbstractGeneratorParameter<Double> {
-    	/** Returns the default value.
-    	 * @return 10.0 */
-    	public Double getDefault() {
+    public static class Margin extends AbstractGeneratorParameter<Double> {
+
+        /** Returns the default value.
+         * @return 10.0 */
+        public Double getDefault() {
             return 10.0;
         }
     }
+
     private IGeneratorParameter<Double> margin = new Margin();
 
     /** The font style to use for text. */
-    public static class UsedFontStyle extends
-    AbstractGeneratorParameter<FontStyle> {
-    	/** Returns the default value.
-    	 * @return {@link FontStyle}.NORMAL */
-    	public FontStyle getDefault() {
+    public static class UsedFontStyle extends AbstractGeneratorParameter<FontStyle> {
+
+        /** Returns the default value.
+         * @return {@link FontStyle}.NORMAL */
+        public FontStyle getDefault() {
             return FontStyle.NORMAL;
         }
     }
+
     private IGeneratorParameter<FontStyle> fontStyle = new UsedFontStyle();
 
     /**
      * Font to use for text.
      */
-    public static class FontName extends
-    AbstractGeneratorParameter<String> {
-    	/** Returns the default value.
-    	 * @return Arial */
-    	public String getDefault() {
+    public static class FontName extends AbstractGeneratorParameter<String> {
+
+        /** Returns the default value.
+         * @return Arial */
+        public String getDefault() {
             return "Arial";
         }
     }
+
     private IGeneratorParameter<String> fontName = new FontName();
 
     /**
@@ -213,14 +222,15 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
      *
      * @see Scale
      */
-    public static class ZoomFactor extends
-    AbstractGeneratorParameter<Double> {
-    	/** Returns the default value.
-    	 * @return 1.0 */
-    	public Double getDefault() {
+    public static class ZoomFactor extends AbstractGeneratorParameter<Double> {
+
+        /** Returns the default value.
+         * @return 1.0 */
+        public Double getDefault() {
             return 1.0;
         }
     }
+
     /** A zoom of 100% is defined to be a value of 1.0 */
     private IGeneratorParameter<Double> zoomFactor = new ZoomFactor();
 
@@ -237,22 +247,8 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-                new IGeneratorParameter<?>[] {
-                        backgroundColor,
-                        foregroundColor,
-                        margin,
-                        useAntiAliasing,
-                        fontStyle,
-                        fontName,
-                        zoomFactor,
-                        scale,
-                        bondLength,
-                        fitToScreen,
-                        showMoleculeTitle,
-                        showTooltip,
-                        arrowHeadWidth
-                }
-        );
+        return Arrays.asList(new IGeneratorParameter<?>[]{backgroundColor, foregroundColor, margin, useAntiAliasing,
+                fontStyle, fontName, zoomFactor, scale, bondLength, fitToScreen, showMoleculeTitle, showTooltip,
+                arrowHeadWidth});
     }
 }

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class XYZFormatTest extends ChemFormatTest {
 
     public XYZFormatTest() {
-        super.setChemFormat((IChemFormat)XYZFormat.getInstance());
+        super.setChemFormat((IChemFormat) XYZFormat.getInstance());
     }
 
 }

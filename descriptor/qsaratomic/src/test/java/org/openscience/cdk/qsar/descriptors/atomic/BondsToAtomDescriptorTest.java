@@ -34,20 +34,20 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class BondsToAtomDescriptorTest extends AtomicDescriptorTest {
 
-    public  BondsToAtomDescriptorTest() {}
+    public BondsToAtomDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(BondsToAtomDescriptor.class);
+        setDescriptor(BondsToAtomDescriptor.class);
     }
 
     @Test
     public void testBondsToAtomDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	BondsToAtomDescriptor descriptor   = new BondsToAtomDescriptor();
+        BondsToAtomDescriptor descriptor = new BondsToAtomDescriptor();
         Object[] params = {Integer.valueOf(5)};
         descriptor.setParameters(params);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCCCCC"); //
-        Assert.assertEquals(5, ((IntegerResult)descriptor.calculate(mol.getAtom(0),mol).getValue()).intValue());
+        Assert.assertEquals(5, ((IntegerResult) descriptor.calculate(mol.getAtom(0), mol).getValue()).intValue());
     }
 }

@@ -59,8 +59,8 @@ import org.openscience.cdk.interfaces.IIsotope;
 @TestClass("org.openscience.cdk.config.XMLIsotopeFactoryTest")
 public class XMLIsotopeFactory extends IsotopeFactory {
 
-	private static XMLIsotopeFactory ifac = null;
-    private boolean debug = false;
+    private static XMLIsotopeFactory ifac  = null;
+    private boolean                  debug = false;
 
     /**
      * Private constructor for the IsotopeFactory object.
@@ -69,13 +69,12 @@ public class XMLIsotopeFactory extends IsotopeFactory {
      *      file
      * @param builder The builder from which we the factory will be generated
      */
-	private XMLIsotopeFactory(IChemObjectBuilder builder) throws IOException {
+    private XMLIsotopeFactory(IChemObjectBuilder builder) throws IOException {
         logger.info("Creating new IsotopeFactory");
 
         InputStream ins;
         // ObjIn in = null;
-        String errorMessage = "There was a problem getting org.openscience.cdk." +
-                              "config.isotopes.xml as a stream";
+        String errorMessage = "There was a problem getting org.openscience.cdk." + "config.isotopes.xml as a stream";
         try {
             String configFile = "org/openscience/cdk/config/data/isotopes.xml";
             if (debug) logger.debug("Getting stream for ", configFile);
@@ -91,28 +90,28 @@ public class XMLIsotopeFactory extends IsotopeFactory {
         }
         IsotopeReader reader = new IsotopeReader(ins, builder);
         //in = new ObjIn(ins, new Config().aliasID(false));
-        this.isotopes = new HashMap<String,List<IIsotope>>();
+        this.isotopes = new HashMap<String, List<IIsotope>>();
         List<IIsotope> isotopes = reader.readIsotopes();
-        for (IIsotope isotope : isotopes) add(isotope);
+        for (IIsotope isotope : isotopes)
+            add(isotope);
         if (debug) logger.debug("Found #isotopes in file: ", isotopes.size());
-        /* for (int f = 0; f < isotopes.size(); f++) {
-              Isotope isotope = (Isotope)isotopes.elementAt(f);
-          } What's this loop for?? */
+        /*
+         * for (int f = 0; f < isotopes.size(); f++) { Isotope isotope =
+         * (Isotope)isotopes.elementAt(f); } What's this loop for??
+         */
 
         majorIsotopes = new HashMap<String, IIsotope>();
     }
 
-
-	/**
-	 * Returns an IsotopeFactory instance.
-	 *
+    /**
+     * Returns an IsotopeFactory instance.
+     *
          * @param      builder                 ChemObjectBuilder used to construct the Isotope's
-	 * @return                             The instance value
-	 * @exception  IOException  if isotopic data files could not be read.
-	 */
+     * @return                             The instance value
+     * @exception  IOException  if isotopic data files could not be read.
+     */
     @TestMethod("testGetInstance_IChemObjectBuilder")
-    public static XMLIsotopeFactory getInstance(IChemObjectBuilder builder)
-			 throws IOException {
+    public static XMLIsotopeFactory getInstance(IChemObjectBuilder builder) throws IOException {
         if (ifac == null) {
             ifac = new XMLIsotopeFactory(builder);
         }
@@ -120,4 +119,3 @@ public class XMLIsotopeFactory extends IsotopeFactory {
     }
 
 }
-

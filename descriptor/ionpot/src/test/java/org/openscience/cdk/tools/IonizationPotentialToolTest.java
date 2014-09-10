@@ -69,8 +69,6 @@ public class IonizationPotentialToolTest extends CDKTestCase {
         Aromaticity.cdkLegacy().apply(molecule);
         lpcheck.saturate(molecule);
 
-
-
         List<Double> carbonIPs = new ArrayList<Double>();
         Iterator<IAtom> atoms = molecule.atoms().iterator();
         while (atoms.hasNext()) {

@@ -88,17 +88,17 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.tools.LoggingToolTest")
 public class LoggingTool implements ILoggingTool {
 
-    private boolean doDebug = false;
-    private boolean toSTDOUT = false;
+    private boolean             doDebug              = false;
+    private boolean             toSTDOUT             = false;
 
-    private Logger log4jLogger;
+    private Logger              log4jLogger;
     private static ILoggingTool logger;
-    private String classname;
+    private String              classname;
 
-    private int stackLength;  // NOPMD
+    private int                 stackLength;                 // NOPMD
 
     /** Default number of StackTraceElements to be printed by debug(Exception). */
-    public final int DEFAULT_STACK_LENGTH = 5;
+    public final int            DEFAULT_STACK_LENGTH = 5;
 
     /**
      * Constructs a LoggingTool which produces log lines without any special
@@ -144,27 +144,27 @@ public class LoggingTool implements ILoggingTool {
             logger.debug("Unknown error occured: ", e.getMessage());
         }
         /* **************************************************************
-         * but some JVMs (i.e. MSFT) won't pass the SecurityException to
-         * this exception handler. So we are going to check the JVM
-         * version first
-         ****************************************************************/
+         * but some JVMs (i.e. MSFT) won't pass the SecurityException to this
+         * exception handler. So we are going to check the JVM version first
+         * **************************************************************
+         */
         doDebug = false;
         String strJvmVersion = System.getProperty("java.version");
         if (strJvmVersion.compareTo("1.2") >= 0) {
-          // Use a try {} to catch SecurityExceptions when used in applets
-          try {
-            // by default debugging is set off, but it can be turned on
-            // with starting java like "java -Dcdk.debugging=true"
-            if (System.getProperty("cdk.debugging", "false").equals("true")) {
-              doDebug = true;
+            // Use a try {} to catch SecurityExceptions when used in applets
+            try {
+                // by default debugging is set off, but it can be turned on
+                // with starting java like "java -Dcdk.debugging=true"
+                if (System.getProperty("cdk.debugging", "false").equals("true")) {
+                    doDebug = true;
+                }
+                if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
+                    toSTDOUT = true;
+                }
+            } catch (Exception e) {
+                System.err.println("Could not read the System property used to determine "
+                        + "if logging should be turned on. So continuing without logging.");
             }
-            if (System.getProperty("cdk.debug.stdout", "false").equals("true")) {
-              toSTDOUT = true;
-            }
-          } catch (Exception e) {
-            System.err.println("Could not read the System property used to determine " +
-            		               "if logging should be turned on. So continuing without logging.");
-          }
         }
     }
 
@@ -177,8 +177,8 @@ public class LoggingTool implements ILoggingTool {
     public static void configureLog4j() {
         LoggingTool localLogger = new LoggingTool(LoggingTool.class);
         try { // NOPMD
-            org.apache.log4j.PropertyConfigurator.configure(
-                    LoggingTool.class.getResource("/org/openscience/cdk/config/data/log4j.properties"));
+            org.apache.log4j.PropertyConfigurator.configure(LoggingTool.class
+                    .getResource("/org/openscience/cdk/config/data/log4j.properties"));
         } catch (NullPointerException e) { // NOPMD
             localLogger.error("Properties file not found: ", e.getMessage());
             localLogger.debug(e);
@@ -235,7 +235,7 @@ public class LoggingTool implements ILoggingTool {
     public void debug(Object object) {
         if (doDebug) {
             if (object instanceof Throwable) {
-                debugThrowable((Throwable)object);
+                debugThrowable((Throwable) object);
             } else {
                 debugString("" + object);
             }
@@ -288,22 +288,20 @@ public class LoggingTool implements ILoggingTool {
                 if (reader.ready()) {
                     String traceLine = reader.readLine();
                     int counter = 0;
-                    while (reader.ready() && traceLine != null &&
-                    		(counter < stackLength)) {
+                    while (reader.ready() && traceLine != null && (counter < stackLength)) {
                         debug(traceLine);
                         traceLine = reader.readLine();
                         counter++;
                     }
                 }
             } catch (Exception ioException) {
-                error("Serious error in LoggingTool while printing exception stack trace: " +
-                      ioException.getMessage());
+                error("Serious error in LoggingTool while printing exception stack trace: " + ioException.getMessage());
                 logger.debug(ioException);
             }
             Throwable cause = problem.getCause();
             if (cause != null) {
-            	debug("Caused by: ");
-            	debugThrowable(cause);
+                debug("Caused by: ");
+                debugThrowable(cause);
             }
         }
     }
@@ -440,6 +438,7 @@ public class LoggingTool implements ILoggingTool {
             warnString(result.toString());
         }
     }
+
     /**
      * Use this method for computational demanding debug info.
      * For example:
@@ -477,4 +476,3 @@ public class LoggingTool implements ILoggingTool {
     }
 
 }
-

@@ -38,33 +38,33 @@ import static org.junit.Assert.assertThat;
  */
 public class IsProtonInAromaticSystemDescriptorTest extends AtomicDescriptorTest {
 
-	public  IsProtonInAromaticSystemDescriptorTest() {}
+    public IsProtonInAromaticSystemDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(IsProtonInAromaticSystemDescriptor.class);
+        setDescriptor(IsProtonInAromaticSystemDescriptor.class);
     }
 
-	@Test
-    public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IAtomicDescriptor descriptor  = new IsProtonInAromaticSystemDescriptor();
-		Object[] params = {new Boolean(true)};
-		descriptor.setParameters(params);
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br");
-		addExplicitHydrogens(mol);
+    @Test
+    public void testIsProtonInAromaticSystemDescriptor() throws ClassNotFoundException, CDKException,
+            java.lang.Exception {
+        IAtomicDescriptor descriptor = new IsProtonInAromaticSystemDescriptor();
+        Object[] params = {new Boolean(true)};
+        descriptor.setParameters(params);
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("Oc1cc(OC)c(cc1Br)Br");
+        addExplicitHydrogens(mol);
         assertThat(mol.getAtom(11).getSymbol(), is("H"));
         assertThat(mol.getAtom(12).getSymbol(), is("H"));
         assertThat(mol.getAtom(13).getSymbol(), is("H"));
         assertThat(mol.getAtom(14).getSymbol(), is("H"));
         assertThat(mol.getAtom(15).getSymbol(), is("H"));
         assertThat(mol.getAtom(16).getSymbol(), is("H"));
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(11),mol).getValue()).intValue());
-		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(12),mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(13),mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(14),mol).getValue()).intValue());
-		Assert.assertEquals(0, ((IntegerResult)descriptor.calculate(mol.getAtom(15),mol).getValue()).intValue());
-		Assert.assertEquals(1, ((IntegerResult)descriptor.calculate(mol.getAtom(16),mol).getValue()).intValue());
-	}
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(11), mol).getValue()).intValue());
+        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(12), mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(13), mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(14), mol).getValue()).intValue());
+        Assert.assertEquals(0, ((IntegerResult) descriptor.calculate(mol.getAtom(15), mol).getValue()).intValue());
+        Assert.assertEquals(1, ((IntegerResult) descriptor.calculate(mol.getAtom(16), mol).getValue()).intValue());
+    }
 }
-

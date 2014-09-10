@@ -38,16 +38,15 @@ import org.openscience.cdk.renderer.generators.IGenerator;
  */
 public class ReactionRendererTest {
 
-	@Test
-	public void testConstructor() {
-		List<IGenerator<IAtomContainer>> generators =
-			new ArrayList<IGenerator<IAtomContainer>>();
-		generators.add(new BasicSceneGenerator());
-		generators.add(new BasicAtomGenerator());
-		generators.add(new BasicBondGenerator());
+    @Test
+    public void testConstructor() {
+        List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
+        generators.add(new BasicSceneGenerator());
+        generators.add(new BasicAtomGenerator());
+        generators.add(new BasicBondGenerator());
 
-		ReactionRenderer renderer = new ReactionRenderer(generators, new AWTFontManager());
-		Assert.assertNotNull(renderer);
-	}
+        ReactionRenderer renderer = new ReactionRenderer(generators, new AWTFontManager());
+        Assert.assertNotNull(renderer);
+    }
 
 }

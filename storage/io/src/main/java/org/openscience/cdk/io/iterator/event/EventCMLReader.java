@@ -57,13 +57,12 @@ import org.xml.sax.XMLReader;
  */
 public class EventCMLReader extends DefaultEventChemObjectReader {
 
-    private XMLReader parser;
-    private Reader input;
-    private IChemObjectBuilder builder;
-    private EventCMLHandler cdo;
+    private XMLReader           parser;
+    private Reader              input;
+    private IChemObjectBuilder  builder;
+    private EventCMLHandler     cdo;
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(EventCMLReader.class);;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EventCMLReader.class); ;
 
     /**
      * Define this CMLReader to take the input from a java.io.Reader
@@ -74,8 +73,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
      * @param input    Reader type input
      * @param listener ReaderListener that listens to newMolecule events.
      */
-    public EventCMLReader(Reader input, IReaderListener listener,
-    		              IChemObjectBuilder builder) {
+    public EventCMLReader(Reader input, IReaderListener listener, IChemObjectBuilder builder) {
         this.init();
         this.input = input;
         this.cdo = new EventCMLHandler(this, builder);
@@ -116,9 +114,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         // Aelfred is first alternative.
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("gnu.xml.aelfred2.XmlReader").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("gnu.xml.aelfred2.XmlReader")
+                        .newInstance();
                 logger.info("Using Aelfred2 XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -129,9 +126,8 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
         // Xerces is second alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception e) {
@@ -168,7 +164,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
             logger.debug(e);
             throw new CDKException(error, e);
         } catch (SAXParseException saxe) {
-            SAXParseException spe = (SAXParseException)saxe;
+            SAXParseException spe = (SAXParseException) saxe;
             String error = "Found well-formedness error in line " + spe.getLineNumber();
             logger.error(error);
             logger.debug(saxe);
@@ -187,4 +183,3 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
 
 }
-

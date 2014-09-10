@@ -52,8 +52,7 @@ import java.util.Map;
 @TestClass("org.openscience.cdk.io.MDLValenceTest")
 final class MDLValence {
 
-    private MDLValence() {
-    }
+    private MDLValence() {}
 
     /**
      * Apply the MDL valence model to the provided atom container.
@@ -89,8 +88,7 @@ final class MDLValence {
             Integer charge = atom.getFormalCharge();
             Integer element = atom.getAtomicNumber();
 
-            if (element == null)
-                continue;
+            if (element == null) continue;
 
             // unset = 0 in this case
             charge = charge == null ? 0 : charge;
@@ -131,23 +129,22 @@ final class MDLValence {
     @TestMethod("nitrogen_implicitValence")
     static int implicitValence(int elem, int q, int val) {
         switch (elem) {
-            case 1:  // H
-            case 3:  // Li
-            case 11:  // Na
-            case 19:  // K
-            case 37:  // Rb
-            case 55:  // Cs
-            case 87:  // Fr
-                if (q == 0 && val <= 1)
-                    return 1;
+            case 1: // H
+            case 3: // Li
+            case 11: // Na
+            case 19: // K
+            case 37: // Rb
+            case 55: // Cs
+            case 87: // Fr
+                if (q == 0 && val <= 1) return 1;
                 break;
 
-            case 4:  // Be
-            case 12:  // Mg
-            case 20:  // Ca
-            case 38:  // Sr
-            case 56:  // Ba
-            case 88:  // Ra
+            case 4: // Be
+            case 12: // Mg
+            case 20: // Ca
+            case 38: // Sr
+            case 56: // Ba
+            case 88: // Ra
                 switch (q) {
                     case 0:
                         if (val <= 2) return 2;
@@ -158,7 +155,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 5:  // B
+            case 5: // B
                 switch (q) {
                     case -4:
                         if (val <= 1) return 1;
@@ -185,7 +182,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 6:  // C
+            case 6: // C
                 switch (q) {
                     case -3:
                         if (val <= 1) return 1;
@@ -212,7 +209,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 7:  // N
+            case 7: // N
                 switch (q) {
                     case -2:
                         if (val <= 1) return 1;
@@ -239,7 +236,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 8:  // O
+            case 8: // O
                 switch (q) {
                     case -1:
                         if (val <= 1) return 1;
@@ -266,7 +263,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 9:  // F
+            case 9: // F
                 switch (q) {
                     case 0:
                         if (val <= 1) return 1;
@@ -293,7 +290,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 13:  // Al
+            case 13: // Al
                 switch (q) {
                     case -4:
                         if (val <= 1) return 1;
@@ -325,7 +322,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 14:  // Si
+            case 14: // Si
                 switch (q) {
                     case -3:
                         if (val <= 1) return 1;
@@ -357,7 +354,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 15:  // P
+            case 15: // P
                 switch (q) {
                     case -2:
                         if (val <= 1) return 1;
@@ -389,7 +386,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 16:  // S
+            case 16: // S
                 switch (q) {
                     case -1:
                         if (val <= 1) return 1;
@@ -421,7 +418,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 17:  // Cl
+            case 17: // Cl
                 switch (q) {
                     case 0:
                         if (val <= 1) return 1;
@@ -453,7 +450,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 31:  // Ga
+            case 31: // Ga
                 switch (q) {
                     case -4:
                         if (val <= 1) return 1;
@@ -482,7 +479,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 32:  // Ge
+            case 32: // Ge
                 switch (q) {
                     case -3:
                         if (val <= 1) return 1;
@@ -511,7 +508,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 33:  // As
+            case 33: // As
                 switch (q) {
                     case -2:
                         if (val <= 1) return 1;
@@ -540,7 +537,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 34:  // Se
+            case 34: // Se
                 switch (q) {
                     case -1:
                         if (val <= 1) return 1;
@@ -569,7 +566,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 35:  // Br
+            case 35: // Br
                 switch (q) {
                     case 0:
                         if (val <= 1) return 1;
@@ -598,7 +595,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 49:  // In
+            case 49: // In
                 switch (q) {
                     case -4:
                         if (val <= 1) return 1;
@@ -628,8 +625,8 @@ final class MDLValence {
                 }
                 break;
 
-            case 50:  // Sn
-            case 82:  // Pb
+            case 50: // Sn
+            case 82: // Pb
                 switch (q) {
                     case -3:
                         if (val <= 1) return 1;
@@ -659,8 +656,8 @@ final class MDLValence {
                 }
                 break;
 
-            case 51:  // Sb
-            case 83:  // Bi
+            case 51: // Sb
+            case 83: // Bi
                 switch (q) {
                     case -2:
                         if (val <= 1) return 1;
@@ -690,8 +687,8 @@ final class MDLValence {
                 }
                 break;
 
-            case 52:  // Te
-            case 84:  // Po
+            case 52: // Te
+            case 84: // Po
                 switch (q) {
                     case -1:
                         if (val <= 1) return 1;
@@ -721,8 +718,8 @@ final class MDLValence {
                 }
                 break;
 
-            case 53:  // I
-            case 85:  // At
+            case 53: // I
+            case 85: // At
                 switch (q) {
                     case 0:
                         if (val <= 1) return 1;
@@ -752,7 +749,7 @@ final class MDLValence {
                 }
                 break;
 
-            case 81:  // Tl
+            case 81: // Tl
                 switch (q) {
                     case -4:
                         if (val <= 1) return 1;

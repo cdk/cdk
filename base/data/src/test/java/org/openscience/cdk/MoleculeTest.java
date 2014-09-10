@@ -39,8 +39,10 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class MoleculeTest extends AbstractMoleculeTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new AtomContainer();
             }
@@ -49,13 +51,15 @@ public class MoleculeTest extends AbstractMoleculeTest {
 
     // test constructors
 
-    @Test public void testMolecule() {
+    @Test
+    public void testMolecule() {
         IAtomContainer m = new AtomContainer();
         Assert.assertNotNull(m);
     }
 
-    @Test public void testMolecule_int_int_int_int() {
-        IAtomContainer m = new AtomContainer(5,5,1,1);
+    @Test
+    public void testMolecule_int_int_int_int() {
+        IAtomContainer m = new AtomContainer(5, 5, 1, 1);
         Assert.assertNotNull(m);
         Assert.assertEquals(0, m.getAtomCount());
         Assert.assertEquals(0, m.getBondCount());
@@ -63,19 +67,20 @@ public class MoleculeTest extends AbstractMoleculeTest {
         Assert.assertEquals(0, m.getSingleElectronCount());
     }
 
-    @Test public void testMolecule_IAtomContainer() {
+    @Test
+    public void testMolecule_IAtomContainer() {
         IAtomContainer acetone = new org.openscience.cdk.AtomContainer();
-        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class,"C");
-        IAtom o = acetone.getBuilder().newInstance(IAtom.class,"O");
-        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class,"C");
+        IAtom c1 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom c2 = acetone.getBuilder().newInstance(IAtom.class, "C");
+        IAtom o = acetone.getBuilder().newInstance(IAtom.class, "O");
+        IAtom c3 = acetone.getBuilder().newInstance(IAtom.class, "C");
         acetone.addAtom(c1);
         acetone.addAtom(c2);
         acetone.addAtom(c3);
         acetone.addAtom(o);
-        IBond b1 = acetone.getBuilder().newInstance(IBond.class,c1, c2, IBond.Order.SINGLE);
-        IBond b2 = acetone.getBuilder().newInstance(IBond.class,c1, o, IBond.Order.DOUBLE);
-        IBond b3 = acetone.getBuilder().newInstance(IBond.class,c1, c3, IBond.Order.SINGLE);
+        IBond b1 = acetone.getBuilder().newInstance(IBond.class, c1, c2, IBond.Order.SINGLE);
+        IBond b2 = acetone.getBuilder().newInstance(IBond.class, c1, o, IBond.Order.DOUBLE);
+        IBond b3 = acetone.getBuilder().newInstance(IBond.class, c1, c3, IBond.Order.SINGLE);
         acetone.addBond(b1);
         acetone.addBond(b2);
         acetone.addBond(b3);

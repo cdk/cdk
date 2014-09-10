@@ -27,14 +27,14 @@ import org.junit.Before;
  */
 public class OWLFileTest extends AbstractDictionaryTest {
 
-	@Before
-	public void setTestClass() {
-		super.setTestClass(new OWLFile());
-	}
+    @Before
+    public void setTestClass() {
+        super.setTestClass(new OWLFile());
+    }
 
-	@After
-	public void testTestClass() {
-		Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
-	}
+    @After
+    public void testTestClass() {
+        Assert.assertTrue(getTestClass().getClass().getName().endsWith(".OWLFile"));
+    }
 
 }

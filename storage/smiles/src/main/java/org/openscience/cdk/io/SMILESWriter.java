@@ -57,11 +57,10 @@ import java.io.Writer;
 @TestClass("org.openscience.cdk.io.SMILESWriterTest")
 public class SMILESWriter extends DefaultChemObjectWriter {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SMILESWriter.class);
-    private BufferedWriter writer;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESWriter.class);
+    private BufferedWriter      writer;
 
-    private BooleanIOSetting useAromaticityFlag;
+    private BooleanIOSetting    useAromaticityFlag;
 
     /**
      * Constructs a new SMILESWriter that can write a list of SMILES to a Writer
@@ -69,9 +68,9 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * @param   out  The Writer to write to
      */
     public SMILESWriter(Writer out) {
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
+        try {
+            if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter) out;
             } else {
                 writer = new BufferedWriter(out);
             }
@@ -94,15 +93,15 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
     /**
@@ -123,50 +122,49 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         writer.close();
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IAtomContainerSet.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainerSet.class.equals(interfaces[i])) return true;
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IAtomContainerSet.class.equals(interfaces[i])) return true;
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Writes the content from object to output.
      *
      * @param   object  IChemObject of which the data is outputted.
      */
-	public void write(IChemObject object) throws CDKException {
-		if (object instanceof IAtomContainerSet) {
-		    writeAtomContainerSet((IAtomContainerSet) object);
-		} else if (object instanceof IAtomContainer) {
-		    writeAtomContainer((IAtomContainer) object);
-		} else {
-		    throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
-		}
-	}
+    public void write(IChemObject object) throws CDKException {
+        if (object instanceof IAtomContainerSet) {
+            writeAtomContainerSet((IAtomContainerSet) object);
+        } else if (object instanceof IAtomContainer) {
+            writeAtomContainer((IAtomContainer) object);
+        } else {
+            throw new CDKException("Only supported is writing of ChemFile and Molecule objects.");
+        }
+    }
 
-	/**
-	 * Writes a list of molecules to an OutputStream.
-	 *
-	 * @param   som  MoleculeSet that is written to an OutputStream
-	 */
-	public void writeAtomContainerSet(IAtomContainerSet som)
-	{
-		writeAtomContainer(som.getAtomContainer(0));
-		for (int i = 1; i <= som.getAtomContainerCount() - 1; i++) {
-			try {
-				writeAtomContainer(som.getAtomContainer(i));
-			} catch (Exception exc) {
-			}
-		}
-	}
+    /**
+     * Writes a list of molecules to an OutputStream.
+     *
+     * @param   som  MoleculeSet that is written to an OutputStream
+     */
+    public void writeAtomContainerSet(IAtomContainerSet som) {
+        writeAtomContainer(som.getAtomContainer(0));
+        for (int i = 1; i <= som.getAtomContainerCount() - 1; i++) {
+            try {
+                writeAtomContainer(som.getAtomContainer(i));
+            } catch (Exception exc) {
+            }
+        }
+    }
 
     /**
      * Writes the content from molecule to output.
@@ -175,8 +173,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      */
     public void writeAtomContainer(IAtomContainer molecule) {
         SmilesGenerator sg = new SmilesGenerator();
-        if (useAromaticityFlag.isSet())
-            sg = sg.aromatic();
+        if (useAromaticityFlag.isSet()) sg = sg.aromatic();
         String smiles = "";
         try {
             smiles = sg.create(molecule);
@@ -185,19 +182,15 @@ public class SMILESWriter extends DefaultChemObjectWriter {
             writer.newLine();
             writer.flush();
             logger.debug("file flushed...");
-        } catch(Exception exc) {
+        } catch (Exception exc) {
             logger.error("Error while writing Molecule: ", exc.getMessage());
             logger.debug(exc);
         }
     }
 
     private void initIOSettings() {
-        useAromaticityFlag = addSetting(new BooleanIOSetting(
-            "UseAromaticity",
-            IOSetting.Importance.LOW,
-            "Should aromaticity information be stored in the SMILES?",
-            "false"
-        ));
+        useAromaticityFlag = addSetting(new BooleanIOSetting("UseAromaticity", IOSetting.Importance.LOW,
+                "Should aromaticity information be stored in the SMILES?", "false"));
     }
 
     public void customizeJob() {

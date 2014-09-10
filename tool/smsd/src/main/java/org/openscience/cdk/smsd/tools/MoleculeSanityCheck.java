@@ -122,8 +122,7 @@ public class MoleculeSanityCheck {
 
             for (int i = 0; i < mol.getAtomCount(); i++) {
                 mol.getAtom(i).setFlag(CDKConstants.ISAROMATIC, false);
-                jloop:
-                for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
+                jloop: for (int j = 0; j < ringSet.getAtomContainerCount(); j++) {
                     //logger.debug(i+"\t"+j);
                     IRing ring = (IRing) ringSet.getAtomContainer(j);
                     if (!ring.getFlag(CDKConstants.ISAROMATIC)) {

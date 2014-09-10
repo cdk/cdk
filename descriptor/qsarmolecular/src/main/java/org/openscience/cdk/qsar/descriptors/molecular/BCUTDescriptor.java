@@ -121,14 +121,14 @@ import Jama.Matrix;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.BCUTDescriptorTest")
 public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-    private static ILoggingTool logger =
-            LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
+
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(BCUTDescriptor.class);
 
     // the number of negative & positive eigenvalues
     // to return for each class of BCUT descriptor
-    private int nhigh;
-    private int nlow;
-    private boolean checkAromaticity;
+    private int                 nhigh;
+    private int                 nlow;
+    private boolean             checkAromaticity;
 
     public BCUTDescriptor() {
         // set the default number of BCUT's
@@ -139,10 +139,8 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -225,7 +223,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         return (params);
     }
 
-
     /**
      * Gets the parameterType attribute of the BCUTDescriptor object.
      *
@@ -273,9 +270,12 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
                     for (int k = 0; k < local.getBondCount(); k++) {
                         IBond bond = local.getBond(k);
                         if (bond.contains(local.getAtom(i)) && bond.contains(local.getAtom(j))) {
-                            if (bond.getFlag(CDKConstants.ISAROMATIC)) matrix[i][j] = 0.15;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) matrix[i][j] = 0.1;
-                            else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE) matrix[i][j] = 0.2;
+                            if (bond.getFlag(CDKConstants.ISAROMATIC))
+                                matrix[i][j] = 0.15;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE)
+                                matrix[i][j] = 0.1;
+                            else if (bond.getOrder() == CDKConstants.BONDORDER_DOUBLE)
+                                matrix[i][j] = 0.2;
                             else if (bond.getOrder() == CDKConstants.BONDORDER_TRIPLE) matrix[i][j] = 0.3;
 
                             if (local.getConnectedBondsCount(i) == 1 || local.getConnectedBondsCount(j) == 1) {
@@ -292,8 +292,10 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
             /* set the diagonal entries */
             for (int i = 0; i < natom; i++) {
-                if (vsd != null) matrix[i][i] = vsd[i];
-                else matrix[i][i] = 0.0;
+                if (vsd != null)
+                    matrix[i][i] = vsd[i];
+                else
+                    matrix[i][i] = 0.0;
             }
             return (matrix);
         }
@@ -358,8 +360,8 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         try {
             for (int i = 0; i < molecule.getAtomCount(); i++) {
                 if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-                diagvalue[counter] = Isotopes.getInstance().
-                        getMajorIsotope(molecule.getAtom(i).getSymbol()).getExactMass();
+                diagvalue[counter] = Isotopes.getInstance().getMajorIsotope(molecule.getAtom(i).getSymbol())
+                        .getExactMass();
                 counter++;
             }
         } catch (Exception e) {
@@ -379,12 +381,13 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         try {
             lpcheck.saturate(molecule);
             double[] charges = new double[molecule.getAtomCount()];
-//            pepe = new GasteigerPEPEPartialCharges();
-//            pepe.calculateCharges(molecule);
-//            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] = molecule.getAtom(i).getCharge();
+            //            pepe = new GasteigerPEPEPartialCharges();
+            //            pepe.calculateCharges(molecule);
+            //            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] = molecule.getAtom(i).getCharge();
             peoe = new GasteigerMarsiliPartialCharges();
             peoe.assignGasteigerMarsiliSigmaPartialCharges(molecule, true);
-            for (int i = 0; i < molecule.getAtomCount(); i++) charges[i] += molecule.getAtom(i).getCharge();
+            for (int i = 0; i < molecule.getAtomCount(); i++)
+                charges[i] += molecule.getAtom(i).getCharge();
             for (int i = 0; i < molecule.getAtomCount(); i++) {
                 molecule.getAtom(i).setCharge(charges[i]);
             }
@@ -404,7 +407,6 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         eigenDecomposition = new EigenvalueDecomposition(matrix);
         double[] eval2 = eigenDecomposition.getRealEigenvalues();
 
-
         int[][] topoDistance = PathTools.computeFloydAPSP(AdjacencyMatrix.getMatrix(molecule));
 
         // get polarizability weighted BCUT
@@ -412,7 +414,8 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
         counter = 0;
         for (int i = 0; i < molecule.getAtomCount(); i++) {
             if (molecule.getAtom(i).getSymbol().equals("H")) continue;
-            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), false, topoDistance);
+            diagvalue[counter] = pol.calculateGHEffectiveAtomPolarizability(molecule, molecule.getAtom(i), false,
+                    topoDistance);
             counter++;
         }
         burdenMatrix = BurdenMatrix.evalMatrix(molecule, diagvalue);
@@ -445,23 +448,32 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
         DoubleArrayResult retval = new DoubleArrayResult((lnlow + enlow + lnhigh + enhigh) * 3);
 
-        for (int i = 0; i < lnlow; i++) retval.add(eval1[i]);
-        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
-        for (int i = 0; i < lnhigh; i++) retval.add(eval1[eval1.length - i - 1]);
-        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
+        for (int i = 0; i < lnlow; i++)
+            retval.add(eval1[i]);
+        for (int i = 0; i < enlow; i++)
+            retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++)
+            retval.add(eval1[eval1.length - i - 1]);
+        for (int i = 0; i < enhigh; i++)
+            retval.add(Double.NaN);
 
+        for (int i = 0; i < lnlow; i++)
+            retval.add(eval2[i]);
+        for (int i = 0; i < enlow; i++)
+            retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++)
+            retval.add(eval2[eval2.length - i - 1]);
+        for (int i = 0; i < enhigh; i++)
+            retval.add(Double.NaN);
 
-        for (int i = 0; i < lnlow; i++) retval.add(eval2[i]);
-        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
-        for (int i = 0; i < lnhigh; i++) retval.add(eval2[eval2.length - i - 1]);
-        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
-
-
-        for (int i = 0; i < lnlow; i++) retval.add(eval3[i]);
-        for (int i = 0; i < enlow; i++) retval.add(Double.NaN);
-        for (int i = 0; i < lnhigh; i++) retval.add(eval3[eval3.length - i - 1]);
-        for (int i = 0; i < enhigh; i++) retval.add(Double.NaN);
-
+        for (int i = 0; i < lnlow; i++)
+            retval.add(eval3[i]);
+        for (int i = 0; i < enlow; i++)
+            retval.add(Double.NaN);
+        for (int i = 0; i < lnhigh; i++)
+            retval.add(eval3[eval3.length - i - 1]);
+        for (int i = 0; i < enhigh; i++)
+            retval.add(Double.NaN);
 
         names = new String[3 * nhigh + 3 * nlow];
         counter = 0;
@@ -474,9 +486,8 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
             }
         }
 
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -497,10 +508,9 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult results = new DoubleArrayResult(6);
-        for (int i = 0; i < 6; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < 6; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 }
-
-

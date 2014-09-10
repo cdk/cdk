@@ -37,25 +37,27 @@ public class SymbolAndChargeQueryAtom extends QueryAtom implements IQueryAtom {
         super(atom.getSymbol(), atom.getBuilder());
         setFormalCharge(atom.getFormalCharge());
     }
-    public void setOperator(String str){}
+
+    public void setOperator(String str) {}
+
     public boolean matches(IAtom atom) {
-    	int requiredCharge = this.getFormalCharge() == null ? 0 : this.getFormalCharge();
-    	int foundCharge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
-        return this.getSymbol().equals(atom.getSymbol()) &&
-               requiredCharge == foundCharge;
+        int requiredCharge = this.getFormalCharge() == null ? 0 : this.getFormalCharge();
+        int foundCharge = atom.getFormalCharge() == null ? 0 : atom.getFormalCharge();
+        return this.getSymbol().equals(atom.getSymbol()) && requiredCharge == foundCharge;
     };
 
     public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("SymbolAndChargeQueryAtom(");
-		s.append(this.hashCode() + ", ");
-		s.append(getSymbol() + ", ");
-		s.append(getFormalCharge());
-		s.append(')');
-		return s.toString();
+        StringBuilder s = new StringBuilder();
+        s.append("SymbolAndChargeQueryAtom(");
+        s.append(this.hashCode() + ", ");
+        s.append(getSymbol() + ", ");
+        s.append(getFormalCharge());
+        s.append(')');
+        return s.toString();
     }
 
-    @Override public IAtom clone() throws CloneNotSupportedException {
+    @Override
+    public IAtom clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 }

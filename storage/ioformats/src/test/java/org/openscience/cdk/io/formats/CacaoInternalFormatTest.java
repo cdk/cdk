@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class CacaoInternalFormatTest extends ChemFormatTest {
 
     public CacaoInternalFormatTest() {
-        super.setChemFormat((IChemFormat)CacaoInternalFormat.getInstance());
+        super.setChemFormat((IChemFormat) CacaoInternalFormat.getInstance());
     }
 
 }

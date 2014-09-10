@@ -21,7 +21,6 @@
  */
 package org.openscience.cdk.io;
 
-
 /**
  * Interface for classes aimed to handle {@link IChemObjectReader} errors.
  *
@@ -69,7 +68,6 @@ public interface IChemObjectReaderErrorHandler {
      * @param colStart Start column in the file where the error is found.
      * @param colEnd   End column in the file where the error is found.
      */
-    public void handleError(String message, int row,
-            int colStart, int colEnd, Exception exception);
+    public void handleError(String message, int row, int colStart, int colEnd, Exception exception);
 
 }

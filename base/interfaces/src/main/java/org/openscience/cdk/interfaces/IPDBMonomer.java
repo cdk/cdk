@@ -31,14 +31,14 @@ package org.openscience.cdk.interfaces;
  */
 public interface IPDBMonomer extends IMonomer {
 
-	/**
+    /**
      * Sets the ICode of this monomer.
      *
      * @param newICode  the I code of this monomer
      */
-	public void setICode(String newICode);
+    public void setICode(String newICode);
 
-	/**
+    /**
      * Gets the ICode of this monomer.
      *
      * @return the ICode of this monomer
@@ -79,8 +79,3 @@ public interface IPDBMonomer extends IMonomer {
     @Override
     public IPDBMonomer clone() throws CloneNotSupportedException;
 }
-
-
-
-
-

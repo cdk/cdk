@@ -66,14 +66,14 @@ public class PartialAtomicChargeColors implements IAtomColorer {
         double charge = atom.getCharge();
         if (charge > 0.0) {
             if (charge < 1.0) {
-                int index = 255 - (int)(charge*255.0);
+                int index = 255 - (int) (charge * 255.0);
                 color = new Color(index, index, 255);
             } else {
                 color = Color.blue;
             }
         } else if (charge < 0.0) {
             if (charge > -1.0) {
-                int index = 255 + (int)(charge*255.0);
+                int index = 255 + (int) (charge * 255.0);
                 color = new Color(255, index, index);
             } else {
                 color = Color.red;

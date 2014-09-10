@@ -32,14 +32,14 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.GaussianInputFormatTest")
 public class GaussianInputFormat extends AbstractResourceFormat implements IChemFormat {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public GaussianInputFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new GaussianInputFormat();
-    	return myself;
+        if (myself == null) myself = new GaussianInputFormat();
+        return myself;
     }
 
     @TestMethod("testGetFormatName")
@@ -51,37 +51,45 @@ public class GaussianInputFormat extends AbstractResourceFormat implements IChem
     public String getMIMEType() {
         return "chemical/x-gaussian-input";
     }
+
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
+
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
-        return new String[]{"gau","com"};
+        return new String[]{"gau", "com"};
     }
 
     @TestMethod("testGetReaderClassName")
-    public String getReaderClassName() { return null; }
-    @TestMethod("testGetWriterClassName")
-    public String getWriterClassName() {
-      return "org.openscience.cdk.io.program.GaussianInputWriter";
+    public String getReaderClassName() {
+        return null;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    @TestMethod("testGetWriterClassName")
+    public String getWriterClassName() {
+        return "org.openscience.cdk.io.program.GaussianInputWriter";
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return false;
-	}
+        return false;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.NONE;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.NONE;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

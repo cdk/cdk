@@ -33,14 +33,16 @@ import org.openscience.cdk.silent.AtomContainer;
  */
 public class Mopac7ReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new Mopac7Reader(), "data/mopac/ethylene.dat.out");
     }
 
-    @Test public void testAccepts() {
-    	Mopac7Reader reader = new Mopac7Reader();
-    	reader.setReaderMode(Mode.STRICT);
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() {
+        Mopac7Reader reader = new Mopac7Reader();
+        reader.setReaderMode(Mode.STRICT);
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
 }

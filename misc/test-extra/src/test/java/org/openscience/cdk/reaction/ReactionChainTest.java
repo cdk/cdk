@@ -33,85 +33,90 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class ReactionChainTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-	/**
-	 *  Constructor for the ReactionEngineTest object.
-	 */
-	public ReactionChainTest(){
+    /**
+     *  Constructor for the ReactionEngineTest object.
+     */
+    public ReactionChainTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testReactionChain(){
-		IReactionSet chain = new ReactionChain();
-		Assert.assertNotNull(chain);
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testAddReaction_IReaction_int(){
-		ReactionChain chain = new ReactionChain();
-		IReaction reaction1 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction1");
-		IReaction reaction2 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction2");
-		IReaction reaction3 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction3");
-		chain.addReaction(reaction1, 0);
-		chain.addReaction(reaction2, 1);
-		chain.addReaction(reaction3, 2);
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testReactionChain() {
+        IReactionSet chain = new ReactionChain();
+        Assert.assertNotNull(chain);
+    }
 
-		Assert.assertNotNull(chain);
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testAddReaction_IReaction_int() {
+        ReactionChain chain = new ReactionChain();
+        IReaction reaction1 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction1");
+        IReaction reaction2 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction2");
+        IReaction reaction3 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction3");
+        chain.addReaction(reaction1, 0);
+        chain.addReaction(reaction2, 1);
+        chain.addReaction(reaction3, 2);
 
-	}
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testGetReactionStep_IReaction(){
-		ReactionChain chain = new ReactionChain();
-		IReaction reaction1 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction1");
-		chain.addReaction(reaction1, 0);
-		IReaction reaction2 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction2");
-		IReaction reaction3 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction3");
-		chain.addReaction(reaction1, 0);
-		chain.addReaction(reaction2, 1);
-		chain.addReaction(reaction3, 2);
+        Assert.assertNotNull(chain);
 
-		Assert.assertEquals(1,chain.getReactionStep(reaction2));
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testGetReaction_int(){
-		ReactionChain chain = new ReactionChain();
-		IReaction reaction1 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction1");
-		chain.addReaction(reaction1, 0);
-		IReaction reaction2 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction2");
-		IReaction reaction3 = builder.newInstance(IReaction.class);
-		reaction1.setID("reaction3");
-		chain.addReaction(reaction1, 0);
-		chain.addReaction(reaction2, 1);
-		chain.addReaction(reaction3, 2);
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetReactionStep_IReaction() {
+        ReactionChain chain = new ReactionChain();
+        IReaction reaction1 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction1");
+        chain.addReaction(reaction1, 0);
+        IReaction reaction2 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction2");
+        IReaction reaction3 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction3");
+        chain.addReaction(reaction1, 0);
+        chain.addReaction(reaction2, 1);
+        chain.addReaction(reaction3, 2);
 
-		Assert.assertEquals(reaction2,chain.getReaction(1));
+        Assert.assertEquals(1, chain.getReactionStep(reaction2));
+    }
 
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testGetReaction_int() {
+        ReactionChain chain = new ReactionChain();
+        IReaction reaction1 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction1");
+        chain.addReaction(reaction1, 0);
+        IReaction reaction2 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction2");
+        IReaction reaction3 = builder.newInstance(IReaction.class);
+        reaction1.setID("reaction3");
+        chain.addReaction(reaction1, 0);
+        chain.addReaction(reaction2, 1);
+        chain.addReaction(reaction3, 2);
 
-	}
+        Assert.assertEquals(reaction2, chain.getReaction(1));
+
+    }
 }

@@ -30,29 +30,33 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class NonCHHeavyAtom extends SMARTSAtom {
 
-	private static final long serialVersionUID = 5145049891214205622L;
+    private static final long serialVersionUID = 5145049891214205622L;
 
-	/**
-	 * Creates a new instance
-	 *
-	 */
-	public NonCHHeavyAtom(IChemObjectBuilder builder) {
+    /**
+     * Creates a new instance
+     *
+     */
+    public NonCHHeavyAtom(IChemObjectBuilder builder) {
         super(builder);
-	}
+    }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-	 */
-	public boolean matches(IAtom atom) {
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
+     */
+    public boolean matches(IAtom atom) {
         String symbol = atom.getSymbol();
         return !(symbol.equals("C") || symbol.equals("H"));
 
     }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.PseudoAtom#toString()
-	 */
-	public String toString() {
-		return "NonCHHeavyAtom()";
-	}
+    /*
+     * (non-Javadoc)
+     * @see org.openscience.cdk.PseudoAtom#toString()
+     */
+    public String toString() {
+        return "NonCHHeavyAtom()";
+    }
 }

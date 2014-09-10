@@ -52,13 +52,13 @@ final class VFState extends AbstractVFState {
      * Lookup for the query bonds (bonds1) and target bonds (bonds2) of the
      * isomorphism matching.
      */
-    private final EdgeToBondMap bonds1, bonds2;
+    private final EdgeToBondMap  bonds1, bonds2;
 
     /** Defines how atoms are matched. */
-    private final AtomMatcher atomMatcher;
+    private final AtomMatcher    atomMatcher;
 
     /** Defines how bonds are matched. */
-    private final BondMatcher bondMatcher;
+    private final BondMatcher    bondMatcher;
 
     /**
      * Create a VF state for matching isomorphisms. The query is passed first
@@ -75,14 +75,8 @@ final class VFState extends AbstractVFState {
      * @param bondMatcher what semantic attributes (order/aromatic, query)
      *                    determines bonds to be compatible
      */
-    VFState(IAtomContainer container1,
-            IAtomContainer container2,
-            int[][] g1,
-            int[][] g2,
-            EdgeToBondMap bonds1,
-            EdgeToBondMap bonds2,
-            AtomMatcher atomMatcher,
-            BondMatcher bondMatcher) {
+    VFState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, EdgeToBondMap bonds1,
+            EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
         super(g1, g2);
         this.container1 = container1;
         this.container2 = container2;
@@ -111,8 +105,7 @@ final class VFState extends AbstractVFState {
     boolean feasible(int n, int m) {
 
         // verify atom semantic feasibility
-        if (!atomMatcher.matches(container1.getAtom(n), container2.getAtom(m)))
-            return false;
+        if (!atomMatcher.matches(container1.getAtom(n), container2.getAtom(m))) return false;
 
         // unmapped terminal vertices n and m are adjacent to
         int nTerminal1 = 0, nTerminal2 = 0;
@@ -128,13 +121,10 @@ final class VFState extends AbstractVFState {
             if (m_prime != UNMAPPED) {
                 IBond bond2 = bonds2.get(m, m_prime);
                 // the bond is not present in the target
-                if (bond2 == null)
-                    return false;
+                if (bond2 == null) return false;
                 // verify bond semantic feasibility
-                if (!bondMatcher.matches(bonds1.get(n, n_prime), bond2))
-                    return false;
-            }
-            else {
+                if (!bondMatcher.matches(bonds1.get(n, n_prime), bond2)) return false;
+            } else {
                 if (t1[n_prime] > 0)
                     nTerminal1++;
                 else
@@ -150,13 +140,10 @@ final class VFState extends AbstractVFState {
             if (n_prime != UNMAPPED) {
                 IBond bond1 = bonds1.get(n, n_prime);
                 // the bond is not present in the query
-                if (bond1 == null)
-                    return false;
+                if (bond1 == null) return false;
                 // verify bond semantic feasibility
-                if (!bondMatcher.matches(bond1, bonds2.get(m, m_prime)))
-                    return false;
-            }
-            else {
+                if (!bondMatcher.matches(bond1, bonds2.get(m, m_prime))) return false;
+            } else {
                 if (t2[m_prime] > 0)
                     nTerminal2++;
                 else

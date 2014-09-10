@@ -1,4 +1,3 @@
-
 /* Copyright (C) 2006-2010 Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -39,19 +38,19 @@ import org.openscience.cdk.annotations.TestClass;
 @TestClass("org.openscience.cdk.smsd.algorithm.mcgregor.McgregorHelperTest")
 public class McgregorHelper {
 
-    private final List<String> c_bond_setA;
-    private final List<String> c_bond_setB;
-    private final boolean mappingCheckFlag;
-    private final int mappedAtomCount;
+    private final List<String>  c_bond_setA;
+    private final List<String>  c_bond_setB;
+    private final boolean       mappingCheckFlag;
+    private final int           mappedAtomCount;
     private final List<Integer> mappedAtomsOrg;
-    private final int neighborBondNumA;
-    private final int neighborBondNumB;
+    private final int           neighborBondNumA;
+    private final int           neighborBondNumB;
     private final List<Integer> iBondNeighborAtomsA;
     private final List<Integer> iBondNeighborAtomsB;
-    private final List<String> cBondNeighborsA;
-    private final List<String> cBondNeighborsB;
-    private final int setNumA;
-    private final int setNumB;
+    private final List<String>  cBondNeighborsA;
+    private final List<String>  cBondNeighborsB;
+    private final int           setNumA;
+    private final int           setNumB;
     private final List<Integer> i_bond_setA;
     private final List<Integer> i_bond_setB;
 
@@ -73,20 +72,10 @@ public class McgregorHelper {
      * @param c_bond_setA
      * @param c_bond_setB
      */
-    protected McgregorHelper(boolean mappingCheckFlag,
-            int mappedAtomCount,
-            List<Integer> mappedAtomsOrg,
-            int neighborBondNumA,
-            int neighborBondNumB,
-            List<Integer> iBondNeighborAtomsA,
-            List<Integer> iBondNeighborAtomsB,
-            List<String> cBondNeighborsA,
-            List<String> cBondNeighborsB,
-            int setNumA,
-            int setNumB,
-            List<Integer> i_bond_setA,
-            List<Integer> i_bond_setB,
-            List<String> c_bond_setA,
+    protected McgregorHelper(boolean mappingCheckFlag, int mappedAtomCount, List<Integer> mappedAtomsOrg,
+            int neighborBondNumA, int neighborBondNumB, List<Integer> iBondNeighborAtomsA,
+            List<Integer> iBondNeighborAtomsB, List<String> cBondNeighborsA, List<String> cBondNeighborsB, int setNumA,
+            int setNumB, List<Integer> i_bond_setA, List<Integer> i_bond_setB, List<String> c_bond_setA,
             List<String> c_bond_setB) {
         this.c_bond_setA = c_bond_setA;
         this.c_bond_setB = c_bond_setB;

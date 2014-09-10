@@ -22,14 +22,13 @@
  */
 package org.openscience.cdk.io.formats;
 
-
 /**
  * @cdk.module test-ioformats
  */
 public class ChemDrawFormatTest extends ChemFormatTest {
 
     public ChemDrawFormatTest() {
-        super.setChemFormat((IChemFormat)ChemDrawFormat.getInstance());
+        super.setChemFormat((IChemFormat) ChemDrawFormat.getInstance());
     }
 
 }

@@ -1,21 +1,21 @@
 /* Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
-*
-*  Contact: cdk-devel@lists.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.qsar.descriptors.molecular;
 
 import java.util.ArrayList;
@@ -75,27 +75,26 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.ChiPathDescriptorTest")
 public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     private SmilesParser sp;
 
-    public ChiPathDescriptor() {
-    }
+    public ChiPathDescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiPath",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     @TestMethod("testGetParameterNames")
     public String[] getParameterNames() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testSetParameters_arrayObject")
@@ -105,10 +104,10 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
 
     @TestMethod("testGetParameters")
     public Object[] getParameters() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         String[] names = new String[16];
         for (int i = 0; i < 8; i++) {
@@ -118,10 +117,9 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return names;
     }
 
-
     @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer container) {
-    	if (sp == null) sp = new SmilesParser(container.getBuilder());
+        if (sp == null) sp = new SmilesParser(container.getBuilder());
 
         IAtomContainer localAtomContainer = AtomContainerManipulator.removeHydrogens(container);
         CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(container.getBuilder());
@@ -190,8 +188,8 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
             retval.add(order6v);
             retval.add(order7v);
 
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    retval, getDescriptorNames());
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                    getDescriptorNames());
         } catch (CDKException e) {
             return getDummyDescriptorValue(new CDKException(e.getMessage()));
         }
@@ -201,9 +199,10 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 
     /**
@@ -244,13 +243,12 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         return fragments;
     }
 
-
     private List<List<Integer>> order2(IAtomContainer atomContainer) {
         QueryAtomContainer[] queries = new QueryAtomContainer[1];
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -260,7 +258,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -270,7 +268,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -280,7 +278,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -290,7 +288,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }
@@ -300,7 +298,7 @@ public class ChiPathDescriptor extends AbstractMolecularDescriptor implements IM
         try {
             queries[0] = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(sp.parseSmiles("CCCCCCCC"), false);
         } catch (InvalidSmilesException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
         }
         return ChiIndexUtils.getFragments(atomContainer, queries);
     }

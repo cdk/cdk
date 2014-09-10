@@ -41,48 +41,50 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class VicinitySamplerTest extends CDKTestCase {
 
-	private static SmilesParser parser;
+    private static SmilesParser parser;
 
-	@BeforeClass public static void setUp() {
-		parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
-	}
+    @BeforeClass
+    public static void setUp() {
+        parser = new SmilesParser(SilentChemObjectBuilder.getInstance());
+    }
 
-	@Test public void testVicinitySampler_sample() throws Exception {
-	    IAtomContainer mol = MoleculeFactory.makeEthylPropylPhenantren();
+    @Test
+    public void testVicinitySampler_sample() throws Exception {
+        IAtomContainer mol = MoleculeFactory.makeEthylPropylPhenantren();
 
-	    Isotopes.getInstance().configureAtoms(mol);
-		addImplicitHydrogens(mol);
+        Isotopes.getInstance().configureAtoms(mol);
+        addImplicitHydrogens(mol);
 
-		IAtomContainer temp = null;
-		List structures = VicinitySampler.sample(mol);
+        IAtomContainer temp = null;
+        List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(37, structures.size());
-		for (int f = 0; f < structures.size(); f++) {
-			temp = (IAtomContainer)structures.get(f);
-			Assert.assertNotNull(temp);
-			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
-			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
-		}
+        for (int f = 0; f < structures.size(); f++) {
+            temp = (IAtomContainer) structures.get(f);
+            Assert.assertNotNull(temp);
+            Assert.assertTrue(ConnectivityChecker.isConnected(temp));
+            Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
+        }
 
-	}
+    }
 
-	/**
-	 * @cdk.bug 1632610
-	 */
-	public  void testCycloButene() throws Exception {
-	    IAtomContainer mol = parser.parseSmiles("C=CC=C");
+    /**
+     * @cdk.bug 1632610
+     */
+    public void testCycloButene() throws Exception {
+        IAtomContainer mol = parser.parseSmiles("C=CC=C");
 
-	    Isotopes.getInstance().configureAtoms(mol);
-		addImplicitHydrogens(mol);
+        Isotopes.getInstance().configureAtoms(mol);
+        addImplicitHydrogens(mol);
 
-		IAtomContainer temp = null;
-		List structures = VicinitySampler.sample(mol);
+        IAtomContainer temp = null;
+        List structures = VicinitySampler.sample(mol);
         Assert.assertEquals(1, structures.size());
-		for (int f = 0; f < structures.size(); f++) {
-			temp = (IAtomContainer)structures.get(f);
-			Assert.assertNotNull(temp);
-			Assert.assertTrue(ConnectivityChecker.isConnected(temp));
-			Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
-		}
+        for (int f = 0; f < structures.size(); f++) {
+            temp = (IAtomContainer) structures.get(f);
+            Assert.assertNotNull(temp);
+            Assert.assertTrue(ConnectivityChecker.isConnected(temp));
+            Assert.assertEquals(mol.getAtomCount(), temp.getAtomCount());
+        }
 
-	}
+    }
 }

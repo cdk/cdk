@@ -30,12 +30,10 @@ import org.junit.BeforeClass;
  */
 public class RectangleElementTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new RectangleElement(
-			3, 4, 0, 0, Color.black
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new RectangleElement(3, 4, 0, 0, Color.black);
+        setRenderingElement(element);
+    }
 
 }

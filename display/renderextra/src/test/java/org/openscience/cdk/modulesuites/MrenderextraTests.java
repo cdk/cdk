@@ -48,25 +48,12 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest;
  * @cdk.module  test-renderextra
  */
 @RunWith(Suite.class)
-@SuiteClasses({
-	RenderextraCoverageTest.class,
-	MoleculeSetRendererTest.class,
-	ChemModelRendererTest.class,
-	ReactionRendererTest.class,
-	ReactionSetRendererTest.class,
-	ReactionBoxGeneratorTest.class,
-	ReactionPlusGeneratorTest.class,
-	ReactantsBoxGeneratorTest.class,
-	ProductsBoxGeneratorTest.class,
-	ReactionSceneGeneratorTest.class,
-	ExtendedAtomGeneratorTest.class,
-	ReactionArrowGeneratorTest.class,
-	RadicalGeneratorTest.class,
-	LonePairGeneratorTest.class,
-	AtomContainerBoundsGeneratorTest.class,
-	AtomNumberGeneratorTest.class,
-	AtomMassGeneratorTest.class,
-	BoundsGeneratorTest.class,
-	MappingGeneratorTest.class
-})
-public class MrenderextraTests {}
+@SuiteClasses({RenderextraCoverageTest.class, MoleculeSetRendererTest.class, ChemModelRendererTest.class,
+        ReactionRendererTest.class, ReactionSetRendererTest.class, ReactionBoxGeneratorTest.class,
+        ReactionPlusGeneratorTest.class, ReactantsBoxGeneratorTest.class, ProductsBoxGeneratorTest.class,
+        ReactionSceneGeneratorTest.class, ExtendedAtomGeneratorTest.class, ReactionArrowGeneratorTest.class,
+        RadicalGeneratorTest.class, LonePairGeneratorTest.class, AtomContainerBoundsGeneratorTest.class,
+        AtomNumberGeneratorTest.class, AtomMassGeneratorTest.class, BoundsGeneratorTest.class,
+        MappingGeneratorTest.class})
+public class MrenderextraTests {
+}

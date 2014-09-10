@@ -45,15 +45,14 @@ import static org.mockito.Mockito.when;
 
 public class StandardAtomGeneratorTest {
 
-    private final Font        font     = new Font("Verdana", Font.PLAIN, 12);
-    private final TextOutline element  = new TextOutline("N", font);
-    private final TextOutline hydrogen = new TextOutline("H", font);
+    private final Font                  font          = new Font("Verdana", Font.PLAIN, 12);
+    private final TextOutline           element       = new TextOutline("N", font);
+    private final TextOutline           hydrogen      = new TextOutline("H", font);
     private final StandardAtomGenerator atomGenerator = new StandardAtomGenerator(font);
 
-    @Test public void positionHydrogenAbove() {
-        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Above,
-                                                                     element,
-                                                                     hydrogen);
+    @Test
+    public void positionHydrogenAbove() {
+        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Above, element, hydrogen);
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D hydrogenBounds = positioned.getBounds();
 
@@ -61,10 +60,9 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMinX(), closeTo(hydrogenBounds.getMinX(), 0.01));
     }
 
-    @Test public void positionHydrogenBelow() {
-        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Below,
-                                                                     element,
-                                                                     hydrogen);
+    @Test
+    public void positionHydrogenBelow() {
+        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Below, element, hydrogen);
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D hydrogenBounds = positioned.getBounds();
 
@@ -72,10 +70,9 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMinX(), closeTo(hydrogenBounds.getMinX(), 0.01));
     }
 
-    @Test public void positionHydrogenToLeft() {
-        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Left,
-                                                                     element,
-                                                                     hydrogen);
+    @Test
+    public void positionHydrogenToLeft() {
+        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Left, element, hydrogen);
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D hydrogenBounds = positioned.getBounds();
 
@@ -83,11 +80,10 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMaxY(), closeTo(hydrogenBounds.getMaxY(), 0.01));
     }
 
-    @Test public void positionHydrogenToRight() {
+    @Test
+    public void positionHydrogenToRight() {
 
-        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Right,
-                                                                     element,
-                                                                     hydrogen);
+        TextOutline positioned = atomGenerator.positionHydrogenLabel(HydrogenPosition.Right, element, hydrogen);
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D hydrogenBounds = positioned.getBounds();
 
@@ -95,7 +91,8 @@ public class StandardAtomGeneratorTest {
         assertThat(elementBounds.getMaxY(), closeTo(hydrogenBounds.getMaxY(), 0.01));
     }
 
-    @Test public void positionHydrogenCount() {
+    @Test
+    public void positionHydrogenCount() {
         TextOutline hydrogenCount = new TextOutline("2", font);
         TextOutline positioned = atomGenerator.positionSubscript(hydrogen, hydrogenCount);
 
@@ -106,7 +103,8 @@ public class StandardAtomGeneratorTest {
         assertThat(hydrogenCountBounds.getCenterY(), closeTo(hydrogenBounds.getMaxY(), 0.01));
     }
 
-    @Test public void positionMassLabel() {
+    @Test
+    public void positionMassLabel() {
         TextOutline mass = new TextOutline("15", font);
         TextOutline positioned = atomGenerator.positionMassLabel(mass, element);
 
@@ -117,11 +115,13 @@ public class StandardAtomGeneratorTest {
         assertThat(massBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenHydrogensAreRight() {
+    @Test
+    public void positionOfChargeWhenHydrogensAreRight() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10);
-        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Right, charge, element, localHydrogen);
+        TextOutline localHydrogen = hydrogen.translate(10, 10);
+        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Right, charge, element,
+                localHydrogen);
 
         Rectangle2D hydrogenBounds = localHydrogen.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -130,12 +130,14 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(hydrogenBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenNoHydrogensAreRight() {
+    @Test
+    public void positionOfChargeWhenNoHydrogensAreRight() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10);
+        TextOutline localHydrogen = hydrogen.translate(10, 10);
 
-        TextOutline positioned = atomGenerator.positionChargeLabel(0, HydrogenPosition.Right, charge, element, localHydrogen);
+        TextOutline positioned = atomGenerator.positionChargeLabel(0, HydrogenPosition.Right, charge, element,
+                localHydrogen);
 
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -144,11 +146,13 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenHydrogensAreLeft() {
+    @Test
+    public void positionOfChargeWhenHydrogensAreLeft() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10);
-        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Left, charge, element, localHydrogen);
+        TextOutline localHydrogen = hydrogen.translate(10, 10);
+        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Left, charge, element,
+                localHydrogen);
 
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -157,9 +161,11 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenHydrogensAreBelow() {
+    @Test
+    public void positionOfChargeWhenHydrogensAreBelow() {
         TextOutline charge = new TextOutline("+", font);
-        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Below, charge, element, hydrogen.translate(0,5));
+        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Below, charge, element,
+                hydrogen.translate(0, 5));
 
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -168,11 +174,13 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenTwoHydrogensAreAbove() {
+    @Test
+    public void positionOfChargeWhenTwoHydrogensAreAbove() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10);
-        TextOutline positioned = atomGenerator.positionChargeLabel(2, HydrogenPosition.Above, charge, element, localHydrogen);
+        TextOutline localHydrogen = hydrogen.translate(10, 10);
+        TextOutline positioned = atomGenerator.positionChargeLabel(2, HydrogenPosition.Above, charge, element,
+                localHydrogen);
 
         Rectangle2D hydrogenBounds = localHydrogen.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -181,11 +189,13 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(hydrogenBounds.getMinY(), 0.01));
     }
 
-    @Test public void positionOfChargeWhenOneHydrogenIsAbove() {
+    @Test
+    public void positionOfChargeWhenOneHydrogenIsAbove() {
         // hydrogen is arbitrarily moved to ensure x/y are different from the element
         TextOutline charge = new TextOutline("+", font);
-        TextOutline localHydrogen = hydrogen.translate(10,10);
-        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Above, charge, element, localHydrogen);
+        TextOutline localHydrogen = hydrogen.translate(10, 10);
+        TextOutline positioned = atomGenerator.positionChargeLabel(1, HydrogenPosition.Above, charge, element,
+                localHydrogen);
 
         Rectangle2D elementBounds = element.getBounds();
         Rectangle2D chargeBounds = positioned.getBounds();
@@ -194,37 +204,44 @@ public class StandardAtomGeneratorTest {
         assertThat(chargeBounds.getCenterY(), closeTo(elementBounds.getMinY(), 0.01));
     }
 
-    @Test public void generateWithNoAdjuncts() {
+    @Test
+    public void generateWithNoAdjuncts() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(1));
     }
 
-    @Test public void generateWithHydrogenAdjunct() {
+    @Test
+    public void generateWithHydrogenAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
-    @Test public void generateWithHydrogenAndCountAdjunct() {
+    @Test
+    public void generateWithHydrogenAndCountAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(3));
     }
 
-    @Test public void generateWithMassAdjunct() {
+    @Test
+    public void generateWithMassAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, 15, 0, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
-    @Test public void generateWithChargeAdjunct() {
+    @Test
+    public void generateWithChargeAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 1, 0, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
-    @Test public void generateWithRadicalAdjunct() {
+    @Test
+    public void generateWithRadicalAdjunct() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 0, -1, 0, 1, HydrogenPosition.Right);
         assertThat(symbol.getOutlines().size(), is(2));
     }
 
-    @Test public void hydrogenDodgesMassLabel() {
+    @Test
+    public void hydrogenDodgesMassLabel() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, 15, 0, 0, HydrogenPosition.Left);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(3));
@@ -233,7 +250,8 @@ public class StandardAtomGeneratorTest {
         assertThat(hydrogenShape.getBounds2D().getMaxX(), lessThan(massShape.getBounds2D().getMinX()));
     }
 
-    @Test public void hydrogenAndHydrogenCountDodgesMassLabel() {
+    @Test
+    public void hydrogenAndHydrogenCountDodgesMassLabel() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, 15, 0, 0, HydrogenPosition.Left);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(4));
@@ -250,7 +268,8 @@ public class StandardAtomGeneratorTest {
         assertThat(hydrogenShape.getBounds2D().getMaxX(), lessThan(hydrogenCountShape.getBounds2D().getMinX()));
     }
 
-    @Test public void hydrogenCountDodgesElement() {
+    @Test
+    public void hydrogenCountDodgesElement() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 2, -1, 0, 0, HydrogenPosition.Left);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(3));
@@ -262,7 +281,8 @@ public class StandardAtomGeneratorTest {
         assertThat(hydrogenShape.getBounds2D().getMaxX(), lessThan(hydrogenCountShape.getBounds2D().getMinX()));
     }
 
-    @Test public void hydrogenDoesNotNeedToDodge() {
+    @Test
+    public void hydrogenDoesNotNeedToDodge() {
         AtomSymbol symbol = atomGenerator.generatePeriodicSymbol(7, 1, -1, 0, 0, HydrogenPosition.Left);
         List<Shape> outlines = symbol.getOutlines();
         assertThat(outlines.size(), is(2));
@@ -273,86 +293,81 @@ public class StandardAtomGeneratorTest {
 
     @Test
     public void anion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 0),
-                   is("−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 0), is("−"));
     }
 
     @Test
     public void cation() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(1, 0),
-                   is("+"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(1, 0), is("+"));
     }
 
     @Test
     public void dianion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-2, 0),
-                   is("2−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-2, 0), is("2−"));
     }
 
     @Test
     public void dication() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(2, 0),
-                   is("2+"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(2, 0), is("2+"));
     }
 
     @Test
     public void radical() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(0, 1),
-                   is("•"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(0, 1), is("•"));
     }
 
     @Test
     public void diradical() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(0, 2),
-                   is("2•"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(0, 2), is("2•"));
     }
 
     @Test
     public void diradicalCation() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(1, 2),
-                   is("(2•)+"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(1, 2), is("(2•)+"));
     }
 
     @Test
     public void radicalAndAnion() throws Exception {
-        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 1),
-                   is("(•)−"));
+        assertThat(StandardAtomGenerator.chargeAdjunctText(-1, 1), is("(•)−"));
     }
 
-    @Test public void accessNullPseudoLabel() throws Exception {
+    @Test
+    public void accessNullPseudoLabel() throws Exception {
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn(null);
-        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
-                   is("*"));
+        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"), is("*"));
     }
 
-    @Test public void accessEmptyPseudoLabel() throws Exception {
+    @Test
+    public void accessEmptyPseudoLabel() throws Exception {
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("");
-        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
-                   is("*"));
+        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"), is("*"));
     }
 
-    @Test public void accessRgroupPseudoLabel() throws Exception {
+    @Test
+    public void accessRgroupPseudoLabel() throws Exception {
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("R1");
-        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"),
-                   is("R1"));
+        assertThat(StandardAtomGenerator.accessPseudoLabel(atom, "*"), is("R1"));
     }
 
-    @Test public void numberedRgroupSymbol() {
+    @Test
+    public void numberedRgroupSymbol() {
         AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("R1");
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(2));
     }
 
-    @Test public void pseudoSymbol() {
+    @Test
+    public void pseudoSymbol() {
         AtomSymbol atomSymbol = atomGenerator.generatePseudoSymbol("Protein");
         List<Shape> shapes = atomSymbol.getOutlines();
         assertThat(shapes.size(), is(1));
     }
 
-    @Test public void generatesRgroupPseudoAtom() {
+    @Test
+    public void generatesRgroupPseudoAtom() {
         IAtomContainer container = mock(IAtomContainer.class);
         IPseudoAtom atom = mock(IPseudoAtom.class);
         when(atom.getLabel()).thenReturn("R1");
@@ -362,7 +377,8 @@ public class StandardAtomGeneratorTest {
     }
 
     // the mass symbol is not displayed
-    @Test public void generatesCarbon12() {
+    @Test
+    public void generatesCarbon12() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
@@ -374,7 +390,8 @@ public class StandardAtomGeneratorTest {
         assertThat(shapes.size(), is(1));
     }
 
-    @Test public void generatesCarbon13() {
+    @Test
+    public void generatesCarbon13() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
@@ -386,7 +403,8 @@ public class StandardAtomGeneratorTest {
         assertThat(shapes.size(), is(2));
     }
 
-    @Test public void nullMassNumber() {
+    @Test
+    public void nullMassNumber() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
@@ -398,7 +416,8 @@ public class StandardAtomGeneratorTest {
         assertThat(shapes.size(), is(1));
     }
 
-    @Test public void nullHydrogenCount() {
+    @Test
+    public void nullHydrogenCount() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
@@ -410,7 +429,8 @@ public class StandardAtomGeneratorTest {
         assertThat(shapes.size(), is(1));
     }
 
-    @Test public void nullFormatCharge() {
+    @Test
+    public void nullFormatCharge() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);
@@ -422,7 +442,8 @@ public class StandardAtomGeneratorTest {
         assertThat(shapes.size(), is(1));
     }
 
-    @Test public void nullAtomicNumber() {
+    @Test
+    public void nullAtomicNumber() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(null);
@@ -436,7 +457,8 @@ public class StandardAtomGeneratorTest {
         assertThat(atomSymbol.elementOutline().text(), is("C"));
     }
 
-    @Test public void nullAtomicNumberAndSymbol() {
+    @Test
+    public void nullAtomicNumberAndSymbol() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(null);
@@ -450,7 +472,8 @@ public class StandardAtomGeneratorTest {
         assertThat(atomSymbol.elementOutline().text(), is("?"));
     }
 
-    @Test public void unpairedElectronsAreAccessed() {
+    @Test
+    public void unpairedElectronsAreAccessed() {
         IAtomContainer container = mock(IAtomContainer.class);
         IAtom atom = mock(IAtom.class);
         when(atom.getAtomicNumber()).thenReturn(6);

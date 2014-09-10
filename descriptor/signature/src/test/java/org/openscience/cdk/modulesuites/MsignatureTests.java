@@ -35,15 +35,9 @@ import org.openscience.cdk.similarity.SignatureFingerprintTanimotoTest;
  *
  * @cdk.module  test-signature
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SignatureCoverageTest.class,
-    SignatureQuotientGraphTest.class,
-    OrbitTest.class,
-    MoleculeSignatureTest.class,
-    MoleculeFromSignatureBuilderTest.class,
-    AtomSignatureTest.class,
-    SignatureFingerprinterTest.class,
-    SignatureFingerprintTanimotoTest.class
-})
-public class MsignatureTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SignatureCoverageTest.class, SignatureQuotientGraphTest.class, OrbitTest.class,
+        MoleculeSignatureTest.class, MoleculeFromSignatureBuilderTest.class, AtomSignatureTest.class,
+        SignatureFingerprinterTest.class, SignatureFingerprintTanimotoTest.class})
+public class MsignatureTests {
+}

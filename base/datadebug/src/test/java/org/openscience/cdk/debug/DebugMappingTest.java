@@ -34,18 +34,19 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugMappingTest extends AbstractMappingTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
-                return new DebugMapping(
-                    new DebugAtom(), new DebugAtom()
-                );
+                return new DebugMapping(new DebugAtom(), new DebugAtom());
             }
         });
     }
 
-    @Test public void testDebugMapping_IChemObject_IChemObject() {
-        IMapping mapping =  new DebugMapping(new DebugAtom(), new DebugAtom());
+    @Test
+    public void testDebugMapping_IChemObject_IChemObject() {
+        IMapping mapping = new DebugMapping(new DebugAtom(), new DebugAtom());
         Assert.assertNotNull(mapping);
     }
 

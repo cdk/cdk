@@ -49,8 +49,8 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
 
     public LonePairGenerator() {}
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEmptyContainer")
     public IRenderingElement generate(IAtomContainer container, RendererModel model) {
         ElementGroup group = new ElementGroup();
@@ -62,9 +62,7 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
         final Color RADICAL_COLOR = Color.BLACK;
 
         // XXX : is this the best option?
-        final double ATOM_RADIUS =
-            ((AtomRadius)model.getParameter(AtomRadius.class)).
-            getValue();
+        final double ATOM_RADIUS = ((AtomRadius) model.getParameter(AtomRadius.class)).getValue();
 
         double scale = model.getParameter(Scale.class).getValue();
         double modelAtomRadius = ATOM_RADIUS / scale;
@@ -91,19 +89,15 @@ public class LonePairGenerator implements IGenerator<IAtomContainer> {
                 yRadius += modelAtomRadius;
                 diffx += modelSeparation;
             }
-            group.add(
-                    new OvalElement(xRadius + diffx, yRadius + diffy,
-                            modelPointRadius, true, RADICAL_COLOR));
-            group.add(
-                    new OvalElement(xRadius - diffx, yRadius - diffy,
-                            modelPointRadius, true, RADICAL_COLOR));
+            group.add(new OvalElement(xRadius + diffx, yRadius + diffy, modelPointRadius, true, RADICAL_COLOR));
+            group.add(new OvalElement(xRadius - diffx, yRadius - diffy, modelPointRadius, true, RADICAL_COLOR));
         }
         return group;
     }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
         return Collections.emptyList();
     }

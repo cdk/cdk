@@ -34,12 +34,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class UniColorTest extends TestCase {
 
     public void testGetAtomColor() throws Exception {
-        assertThat(new UniColor(new Color(0x444444)).getAtomColor(null),
-                   is(new Color(0x444444)));
+        assertThat(new UniColor(new Color(0x444444)).getAtomColor(null), is(new Color(0x444444)));
     }
 
     public void testGetAtomColor1() throws Exception {
-        assertThat(new UniColor(new Color(0x444444)).getAtomColor(null, Color.WHITE),
-                   is(new Color(0x444444)));
+        assertThat(new UniColor(new Color(0x444444)).getAtomColor(null, Color.WHITE), is(new Color(0x444444)));
     }
 }

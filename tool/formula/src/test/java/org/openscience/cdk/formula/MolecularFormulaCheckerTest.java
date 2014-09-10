@@ -41,185 +41,186 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 public class MolecularFormulaCheckerTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
-	private IsotopeFactory ifac;
-
-	/**
-	 *  Constructor for the MolecularFormulaCheckerTest object.
-	 *
-	 */
-	public MolecularFormulaCheckerTest(){
-
-		super();
-    	try {
-			ifac = Isotopes.getInstance();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private IsotopeFactory                  ifac;
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-    @Test
-    public void testMolecularFormulaChecker_List(){
+     *  Constructor for the MolecularFormulaCheckerTest object.
+     *
+     */
+    public MolecularFormulaCheckerTest() {
 
-		Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<IRule>()));
-	}
+        super();
+        try {
+            ifac = Isotopes.getInstance();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-    public void testGetRules(){
+    public void testMolecularFormulaChecker_List() {
 
-    	MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(new ArrayList<IRule>());
+        Assert.assertNotNull(new MolecularFormulaChecker(new ArrayList<IRule>()));
+    }
 
-		Assert.assertNotNull(MFChecker.getRules());
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValidSum_IMolecularFormula(){
+    public void testGetRules() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),100);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new ArrayList<IRule>());
 
+        Assert.assertNotNull(MFChecker.getRules());
+    }
 
-		 List<IRule> rules = new ArrayList<IRule>();
-		 rules.add(new MMElementRule());
-
-		 MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
-
-		 Assert.assertEquals(0.0,MFChecker.isValidSum(formula), 0.001);
-
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValid_NOT(){
+    public void testIsValidSum_IMolecularFormula() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),100);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
 
-		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MMElementRule());
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
 
-		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-		IMolecularFormula formulaWith = MFChecker.isValid(formula);
+        Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
 
-        Assert.assertEquals(0.0,formulaWith.getProperty((new MMElementRule()).getClass()));
+    }
 
-	}
-
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValid_IMolecularFormula(){
+    public void testIsValid_NOT() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),100);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
+
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
+
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
+
+        IMolecularFormula formulaWith = MFChecker.isValid(formula);
+
+        Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()));
+
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testIsValid_IMolecularFormula() {
+
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
         formula.setCharge(0);
 
-		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MMElementRule());
-		rules.add(new ChargeRule());
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
+        rules.add(new ChargeRule());
 
-		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
+        Assert.assertEquals(0.0, MFChecker.isValidSum(formula), 0.001);
 
-        Assert.assertEquals(0.0,MFChecker.isValidSum(formula), 0.001);
+    }
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValid_NOT_2Rules(){
+    public void testIsValid_NOT_2Rules() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),100);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 100);
         formula.setCharge(0);
 
-		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MMElementRule());
-		rules.add(new ChargeRule());
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
+        rules.add(new ChargeRule());
 
-		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-		IMolecularFormula formulaWith = MFChecker.isValid(formula);
+        IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(0.0,formulaWith.getProperty((new MMElementRule()).getClass()));
-        Assert.assertEquals(1.0,formulaWith.getProperty((new ChargeRule()).getClass()));
+        Assert.assertEquals(0.0, formulaWith.getProperty((new MMElementRule()).getClass()));
+        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()));
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValidSum_True_2Rules(){
+    public void testIsValidSum_True_2Rules() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),4);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 4);
         formula.setCharge(0);
 
-		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MMElementRule());
-		rules.add(new ChargeRule());
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
+        rules.add(new ChargeRule());
 
-		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
+        Assert.assertEquals(1.0, MFChecker.isValidSum(formula), 0.001);
 
-        Assert.assertEquals(1.0,MFChecker.isValidSum(formula), 0.001);
+    }
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
-	public void testIsValid_True_2Rules(){
+    public void testIsValid_True_2Rules() {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),1);
-		formula.addIsotope( ifac.getMajorIsotope("H"),4);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 1);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 4);
         formula.setCharge(0);
 
-		List<IRule> rules = new ArrayList<IRule>();
-		rules.add(new MMElementRule());
-		rules.add(new ChargeRule());
+        List<IRule> rules = new ArrayList<IRule>();
+        rules.add(new MMElementRule());
+        rules.add(new ChargeRule());
 
-		MolecularFormulaChecker MFChecker =new MolecularFormulaChecker(rules);
+        MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
-		IMolecularFormula formulaWith = MFChecker.isValid(formula);
+        IMolecularFormula formulaWith = MFChecker.isValid(formula);
 
-        Assert.assertEquals(1.0,formulaWith.getProperty((new MMElementRule()).getClass()));
-        Assert.assertEquals(1.0,formulaWith.getProperty((new ChargeRule()).getClass()));
+        Assert.assertEquals(1.0, formulaWith.getProperty((new MMElementRule()).getClass()));
+        Assert.assertEquals(1.0, formulaWith.getProperty((new ChargeRule()).getClass()));
 
-	}
+    }
 }
-

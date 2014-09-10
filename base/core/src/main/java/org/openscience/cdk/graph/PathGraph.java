@@ -68,5 +68,4 @@ abstract class PathGraph {
      */
     abstract void remove(int x, List<int[]> cycles);
 
-
 }

@@ -52,13 +52,13 @@ public class InChINumbersTools {
      */
     @TestMethod("testSimpleNumbering,testHydrogens,testGlycine")
     public static long[] getNumbers(IAtomContainer atomContainer) throws CDKException {
-        String aux =  auxInfo(atomContainer);
+        String aux = auxInfo(atomContainer);
         aux = aux.substring(aux.indexOf("/N:") + 3);
         String numberStringAux = aux.substring(0, aux.indexOf('/'));
         int i = 1;
         long[] numbers = new long[atomContainer.getAtomCount()];
         for (String numberString : numberStringAux.split("\\,"))
-            numbers[Integer.valueOf(numberString)-1] = i++;
+            numbers[Integer.valueOf(numberString) - 1] = i++;
         return numbers;
     }
 
@@ -74,7 +74,7 @@ public class InChINumbersTools {
      */
     @TestMethod("testGlycine_uSmiles")
     public static long[] getUSmilesNumbers(IAtomContainer container) throws CDKException {
-        String aux     = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
+        String aux = auxInfo(container, INCHI_OPTION.RecMet, INCHI_OPTION.FixedH);
         return parseUSmilesNumbers(aux, container);
     }
 
@@ -106,8 +106,8 @@ public class InChINumbersTools {
 
         int index;
         long[] numbers = new long[container.getAtomCount()];
-        int[]  first   = null;
-        int    label   = 1;
+        int[] first = null;
+        int label = 1;
 
         if ((index = aux.indexOf("/R:")) >= 0) { // reconnected metal numbers
             String[] baseNumbers = aux.substring(index + 8, aux.indexOf('/', index + 8)).split(";");
@@ -135,16 +135,15 @@ public class InChINumbersTools {
 
                     // m, 2m, 3m ... need to lookup number in the base numbering
                     if (component.charAt(component.length() - 1) == 'm') {
-                        int n = component.length() > 1 ? Integer.parseInt(component.substring(0, component.length()-1))
-                                                       : 1;
+                        int n = component.length() > 1 ? Integer
+                                .parseInt(component.substring(0, component.length() - 1)) : 1;
                         for (int j = 0; j < n; j++) {
                             String[] numbering = baseNumbers[i + j].split(",");
                             first[i + j] = Integer.parseInt(numbering[0]) - 1;
                             for (String number : numbering)
                                 numbers[Integer.parseInt(number) - 1] = label++;
                         }
-                    }
-                    else {
+                    } else {
                         String[] numbering = component.split(",");
                         first[i] = Integer.parseInt(numbering[0]) - 1;
                         for (String number : numbering)
@@ -156,27 +155,24 @@ public class InChINumbersTools {
                     String[] numbering = baseNumbers[i].split(",");
                     first[i] = Integer.parseInt(numbering[0]) - 1;
                     for (String number : numbering)
-                        numbers[Integer.parseInt(number)- 1 ] = label++;
+                        numbers[Integer.parseInt(number) - 1] = label++;
                 }
             }
         } else {
             throw new IllegalArgumentException("AuxInfo did not contain extractable base numbers (/N: or /R:).");
         }
 
-
         // Rule E: swap any oxygen anion for a double bonded oxygen (InChI sees
         // them as equivalent)
         for (int v : first) {
             if (v >= 0) {
                 IAtom atom = container.getAtom(v);
-                if (atom.getFormalCharge() == null)
-                    continue;
+                if (atom.getFormalCharge() == null) continue;
                 if (atom.getAtomicNumber() == 8 && atom.getFormalCharge() == -1) {
                     List<IAtom> neighbors = container.getConnectedAtomsList(atom);
                     if (neighbors.size() == 1) {
                         IAtom correctedStart = findPiBondedOxygen(container, neighbors.get(0));
-                        if (correctedStart != null)
-                            exch(numbers, v, container.getAtomNumber(correctedStart));
+                        if (correctedStart != null) exch(numbers, v, container.getAtomNumber(correctedStart));
                     }
                 }
             }
@@ -184,8 +180,7 @@ public class InChINumbersTools {
 
         // assign unlabelled atoms
         for (int i = 0; i < numbers.length; i++)
-            if (numbers[i] == 0)
-                numbers[i] = label++;
+            if (numbers[i] == 0) numbers[i] = label++;
 
         return numbers;
     }
@@ -214,10 +209,8 @@ public class InChINumbersTools {
         for (IBond bond : container.getConnectedBondsList(atom)) {
             if (bond.getOrder() == IBond.Order.DOUBLE) {
                 IAtom neighbor = bond.getConnectedAtom(atom);
-                int charge = neighbor.getFormalCharge() == null ? 0
-                                                                : neighbor.getFormalCharge();
-                if (neighbor.getAtomicNumber() == 8 && charge == 0)
-                    return neighbor;
+                int charge = neighbor.getFormalCharge() == null ? 0 : neighbor.getFormalCharge();
+                if (neighbor.getAtomicNumber() == 8 && charge == 0) return neighbor;
             }
         }
         return null;
@@ -244,4 +237,3 @@ public class InChINumbersTools {
     }
 
 }
-

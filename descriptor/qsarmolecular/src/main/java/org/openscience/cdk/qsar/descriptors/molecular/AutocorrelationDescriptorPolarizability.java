@@ -55,9 +55,11 @@ import java.util.Iterator;
  */
 
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.AutocorrelationDescriptorPolarizabilityTest")
-public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDescriptor implements
+        IMolecularDescriptor {
 
     private static final String[] names = {"ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5"};
+
     private static double[] listpolarizability(IAtomContainer container, int[][] dmat) throws CDKException {
         int natom = container.getAtomCount();
         double[] polars = new double[natom];
@@ -74,7 +76,6 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
 
         return polars;
     }
-
 
     /**
      * This method calculate the ATS Autocorrelation descriptor.
@@ -113,7 +114,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         try {
             Aromaticity.cdkLegacy().apply(molecule);
         } catch (CDKException e) {
-           return getDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
+            return getDummyDescriptorValue(new CDKException("Could not percieve aromaticity: " + e.getMessage(), e));
         }
 
         // get the distance matrix for pol calcs as well as for later on
@@ -131,7 +132,8 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
                         if (molecule.getAtom(j).getSymbol().equals("H")) continue;
                         if (distancematrix[i][j] == k) {
                             PolarizabilitySum[k] += w[i] * w[j];
-                        } else PolarizabilitySum[k] += 0.0;
+                        } else
+                            PolarizabilitySum[k] += 0.0;
                     }
                 }
                 if (k > 0) PolarizabilitySum[k] = PolarizabilitySum[k] / 2;
@@ -143,19 +145,21 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
 
             }
 
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    result, getDescriptorNames());
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
+                    getDescriptorNames());
 
         } catch (Exception ex) {
-            return getDummyDescriptorValue(new CDKException("Error while calculating the ATSpolarizabilty descriptor: " + ex.getMessage(), ex));
+            return getDummyDescriptorValue(new CDKException("Error while calculating the ATSpolarizabilty descriptor: "
+                    + ex.getMessage(), ex));
         }
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult results = new DoubleArrayResult(5);
-        for (int i = 0; i < 5; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < 5; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 
     @TestMethod("testGetParameterNames")
@@ -173,7 +177,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -182,8 +186,7 @@ public class AutocorrelationDescriptorPolarizability extends AbstractMolecularDe
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     @TestMethod("testGetDescriptorResultType")

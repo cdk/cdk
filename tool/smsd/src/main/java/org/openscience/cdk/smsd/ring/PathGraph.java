@@ -65,7 +65,7 @@ import org.openscience.cdk.interfaces.IAtomContainer;
 public class PathGraph {
 
     private List<PathEdge> edges;
-    private List<IAtom> atoms;
+    private List<IAtom>    atoms;
     private IAtomContainer mol;
 
     public PathGraph(IAtomContainer molecule) {

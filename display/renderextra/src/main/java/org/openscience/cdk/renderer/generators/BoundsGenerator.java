@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.renderer.generators;
 
-
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
@@ -36,7 +35,6 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
 import org.openscience.cdk.renderer.elements.RectangleElement;
 import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameter;
 
-
 /**
  * Produce a bounding rectangle for various chem objects.
  *
@@ -47,23 +45,24 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.BoundsGeneratorTest")
 public class BoundsGenerator implements IGenerator<IReaction> {
 
-	/**
-	 * The color of the box drawn at the bounds of a
-	 * molecule, molecule set, or reaction.
-	 */
-    public static class BoundsColor extends
-    AbstractGeneratorParameter<Color> {
-    	/** {@inheritDoc} */
+    /**
+     * The color of the box drawn at the bounds of a
+     * molecule, molecule set, or reaction.
+     */
+    public static class BoundsColor extends AbstractGeneratorParameter<Color> {
+
+        /** {@inheritDoc} */
         public Color getDefault() {
             return Color.LIGHT_GRAY;
         }
     }
+
     private IGeneratorParameter<Color> boundsColor = new BoundsColor();
 
     public BoundsGenerator() {}
 
-	/** {@inheritDoc} */
-	@Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEmptyReaction")
     public IRenderingElement generate(IReaction reaction, RendererModel model) {
         ElementGroup elementGroup = new ElementGroup();
@@ -80,25 +79,17 @@ public class BoundsGenerator implements IGenerator<IReaction> {
         return elementGroup;
     }
 
-    private IRenderingElement generate(
-    		IAtomContainerSet moleculeSet) {
+    private IRenderingElement generate(IAtomContainerSet moleculeSet) {
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(moleculeSet);
 
-        return new RectangleElement(totalBounds.getMinX(),
-                                    totalBounds.getMinY(),
-                                    totalBounds.getMaxX(),
-                                    totalBounds.getMaxY(),
-                                    boundsColor.getValue());
+        return new RectangleElement(totalBounds.getMinX(), totalBounds.getMinY(), totalBounds.getMaxX(),
+                totalBounds.getMaxY(), boundsColor.getValue());
     }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
-	public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-            	boundsColor
-            }
-        );
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(new IGeneratorParameter<?>[]{boundsColor});
     }
 }

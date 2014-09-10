@@ -23,14 +23,10 @@ public class TotalHCountAtomTest {
     public void matches() throws Exception {
         TotalHCountAtom matcher = new TotalHCountAtom(4, mock(IChemObjectBuilder.class));
         IAtom atom = mock(IAtom.class);
-        when(atom.getProperty(SMARTSAtomInvariants.KEY)).thenReturn(new SMARTSAtomInvariants(mock(IAtomContainer.class),
-                                                                                             0,
-                                                                                             0,
-                                                                                             Collections.<Integer>emptySet(),
-                                                                                             0,
-                                                                                             0,
-                                                                                             0,
-                                                                                             4));
+        when(atom.getProperty(SMARTSAtomInvariants.KEY))
+                .thenReturn(
+                        new SMARTSAtomInvariants(mock(IAtomContainer.class), 0, 0, Collections.<Integer> emptySet(), 0,
+                                0, 0, 4));
         assertTrue(matcher.matches(atom));
     }
 

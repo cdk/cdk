@@ -47,32 +47,32 @@ import org.openscience.cdk.renderer.elements.path.QuadTo;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.elements.GeneralPathTest")
-public class GeneralPath implements IRenderingElement{
+public class GeneralPath implements IRenderingElement {
 
     /** The color of the path. */
-    public final Color color;
+    public final Color             color;
 
     /** The width of the stroke. */
-    public final double stroke;
+    public final double            stroke;
 
     /** Fill the shape instead of drawing outline. */
-    public final boolean fill;
+    public final boolean           fill;
 
     /** The elements in the path. */
     public final List<PathElement> elements;
 
     /** Winding rule for determining path interior. */
-    public final int winding;
+    public final int               winding;
 
     /**
      * @see PathIterator#WIND_EVEN_ODD
      */
-    public static final int WIND_EVEN_ODD = 0;
+    public static final int        WIND_EVEN_ODD = 0;
 
     /**
      * @see PathIterator#WIND_NON_ZERO
      */
-    public static final int WIND_NON_ZERO = 1;
+    public static final int        WIND_NON_ZERO = 1;
 
     /**
      * Make a path from a list of path elements.
@@ -94,10 +94,10 @@ public class GeneralPath implements IRenderingElement{
      */
     private GeneralPath(List<PathElement> elements, Color color, int winding, double stroke, boolean fill) {
         this.elements = elements;
-        this.color    = color;
-        this.winding  = winding;
-        this.fill     = fill;
-        this.stroke   = stroke;
+        this.color = color;
+        this.winding = winding;
+        this.fill = fill;
+        this.stroke = stroke;
     }
 
     /**

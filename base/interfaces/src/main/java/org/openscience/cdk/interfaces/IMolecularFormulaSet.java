@@ -37,21 +37,21 @@ package org.openscience.cdk.interfaces;
  */
 public interface IMolecularFormulaSet extends ICDKObject {
 
-	/**
+    /**
      *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
      *
      * @param  formulaSet  The MolecularFormulaSet
      */
-	public void add(IMolecularFormulaSet formulaSet);
+    public void add(IMolecularFormulaSet formulaSet);
 
-	/**
-	 * Adds an IMolecularFormula to this chemObject.
-	 *
-	 * @param  formula  The IMolecularFormula to be added to this chemObject
-	 */
-	public void addMolecularFormula(IMolecularFormula formula);
+    /**
+     * Adds an IMolecularFormula to this chemObject.
+     *
+     * @param  formula  The IMolecularFormula to be added to this chemObject
+     */
+    public void addMolecularFormula(IMolecularFormula formula);
 
-	/**
+    /**
      *
      * Returns the IMolecularFormula at position <code>number</code> in the
      * chemObject.
@@ -59,55 +59,56 @@ public interface IMolecularFormulaSet extends ICDKObject {
      * @param  position  The position of the MolecularFormula to be returned.
      * @return           The IMolecularFormula at position <code>number</code> .
      */
-	public IMolecularFormula getMolecularFormula(int position);
+    public IMolecularFormula getMolecularFormula(int position);
 
-	/**
+    /**
      * Returns the array of IMolecularFormula of this chemObject.
      *
      * @return    The array of IMolecularFormulas of this chemObject
      *
      * @see #addMolecularFormula(IMolecularFormula)
      */
-	public Iterable<IMolecularFormula> molecularFormulas();
+    public Iterable<IMolecularFormula> molecularFormulas();
 
-	/**
+    /**
      * Returns the number of MolecularFormulas in this IMolecularFormulaSet.
      *
      * @return     The number of MolecularFormulas in this IMolecularFormulaSet
      */
-	public int size();
+    public int size();
 
-	/**
-	 *  True, if the IMolecularFormulaSet contains the given IMolecularFormula object.
-	 *
-	 * @param  formula  The IMolecularFormula this IMolecularFormulaSet is searched for
-	 * @return          True, if the IMolecularFormulaSet contains the given formula object
-	 */
-	public boolean contains(IMolecularFormula formula);
+    /**
+     *  True, if the IMolecularFormulaSet contains the given IMolecularFormula object.
+     *
+     * @param  formula  The IMolecularFormula this IMolecularFormulaSet is searched for
+     * @return          True, if the IMolecularFormulaSet contains the given formula object
+     */
+    public boolean contains(IMolecularFormula formula);
 
-	/**
-	 *  Removes the given IMolecularFormula from the IMolecularFormulaSet.
-	 *
-	 * @param formula  The IMolecularFormula to be removed
-	 */
-	public void removeMolecularFormula(IMolecularFormula formula);
+    /**
+     *  Removes the given IMolecularFormula from the IMolecularFormulaSet.
+     *
+     * @param formula  The IMolecularFormula to be removed
+     */
+    public void removeMolecularFormula(IMolecularFormula formula);
 
-	/**
-	 *  Removes the IMolecularFormula at the given position from the IMolecularFormulaSet.
-	 *
-	 * @param  position  The position of the IMolecularFormula to be removed.
-	 */
-	public void removeMolecularFormula(int position);
+    /**
+     *  Removes the IMolecularFormula at the given position from the IMolecularFormulaSet.
+     *
+     * @param  position  The position of the IMolecularFormula to be removed.
+     */
+    public void removeMolecularFormula(int position);
 
-	/**
-	 * Removes all IMolecularFormula of this IMolecularFormulaSet.
-	 */
-	public void removeAllMolecularFormulas();
-	/**
-	 * Clones this IMolecularFormulaSet object and its content.
-	 *
-	 * @return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException ;
+    /**
+     * Removes all IMolecularFormula of this IMolecularFormulaSet.
+     */
+    public void removeAllMolecularFormulas();
+
+    /**
+     * Clones this IMolecularFormulaSet object and its content.
+     *
+     * @return    The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException;
 
 }

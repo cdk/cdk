@@ -36,7 +36,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import javax.vecmath.Point3d;
 
-
 /**
  * Evaluates the Petitjean shape indices,
  * <p/>
@@ -77,17 +76,15 @@ import javax.vecmath.Point3d;
 public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
     private static final String[] names = {"topoShape", "geomShape"};
-    public PetitjeanShapeIndexDescriptor() {
-    }
+
+    public PetitjeanShapeIndexDescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanShapeIndex", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * Sets the parameters attribute of the PetitjeanShapeIndexDescriptor object.
@@ -112,7 +109,7 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -127,7 +124,6 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
         // no param names to return
         return (null);
     }
-
 
     /**
      * Gets the parameterType attribute of the PetitjeanShapeIndexDescriptor object.
@@ -170,9 +166,8 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
 
                     Point3d a = container.getAtom(i).getPoint3d();
                     Point3d b = container.getAtom(j).getPoint3d();
-                    distanceMatrix[i][j] = Math.sqrt((a.x - b.x) * (a.x - b.x) +
-                            (a.y - b.y) * (a.y - b.y) +
-                            (a.z - b.z) * (a.z - b.z));
+                    distanceMatrix[i][j] = Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)
+                            + (a.z - b.z) * (a.z - b.z));
                 }
             }
             double gradius = 999999;
@@ -214,5 +209,3 @@ public class PetitjeanShapeIndexDescriptor extends AbstractMolecularDescriptor i
         return new DoubleArrayResultType(2);
     }
 }
-
-

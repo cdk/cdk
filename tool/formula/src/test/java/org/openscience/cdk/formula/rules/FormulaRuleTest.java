@@ -33,67 +33,67 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public abstract class FormulaRuleTest extends CDKTestCase {
 
-	protected static IRule rule;
+    protected static IRule rule;
 
-	public static void setRule(Class ruleClass) throws Exception {
-		if (FormulaRuleTest.rule == null) {
-			Object rule = (Object)ruleClass.newInstance();
-			if (!(rule instanceof IRule)) {
-				throw new CDKException("The passed rule class must be a IRule");
-			}
-			FormulaRuleTest.rule = (IRule)rule;
-		}
-	}
-
-	/**
-	 * Makes sure that the extending class has set the super.rule.
-	 * Each extending class should have this bit of code (JUnit4 formalism):
-	 * <pre>
-	 * @Before public static void setUp() {
-	 *   // Pass a Class, not an Object!
-	 *   setRule(SomeDescriptor.class);
-	 * }
-	 *
-	 * <p>The unit tests in the extending class may use this instance, but
-	 * are not required.
-	 *
-	 * </pre>
-	 */
-	@Test public void testHasSetSuperDotRule() {
-    	Assert.assertNotNull("The extending class must set the super.rule in its setUp() method.", rule);
-	}
-
-	@Test public void testGetParameters() {
-		Object[] params = rule.getParameters();
-//		FIXME: the next would be nice, but not currently agreed-upon policy
-//		assertNotNull(
-//			"The method getParameters() must return a non-null value, possible a zero length Object[] array",
-//			paramNames
-//		);
-//		FIXME: so instead:
-		if (params == null) params = new Object[0];
-		for (int i=0; i<params.length; i++) {
-			Assert.assertNotNull(
-				"A parameter default must not be null.",
-				params[i]
-			);
-		}
-	}
-
-    @Test public void testSetParameters_arrayObject() throws Exception {
-    	Object[] defaultParams = rule.getParameters();
-    	rule.setParameters(defaultParams);
+    public static void setRule(Class ruleClass) throws Exception {
+        if (FormulaRuleTest.rule == null) {
+            Object rule = (Object) ruleClass.newInstance();
+            if (!(rule instanceof IRule)) {
+                throw new CDKException("The passed rule class must be a IRule");
+            }
+            FormulaRuleTest.rule = (IRule) rule;
+        }
     }
 
-    @Test public void testValidate_IMolecularFormula() throws Exception {
-    	IMolecularFormula mf = new MolecularFormula();
-    	mf.addIsotope(new Isotope("C", 13));
-    	mf.addIsotope(new Isotope("H", 2), 4);
-    	rule.validate(new MolecularFormula());
-
-    	// can it handle an empty MF?
-    	rule.validate(new MolecularFormula());
+    /**
+     * Makes sure that the extending class has set the super.rule.
+     * Each extending class should have this bit of code (JUnit4 formalism):
+     * <pre>
+     * @Before public static void setUp() {
+     *   // Pass a Class, not an Object!
+     *   setRule(SomeDescriptor.class);
+     * }
+     *
+     * <p>The unit tests in the extending class may use this instance, but
+     * are not required.
+     *
+     * </pre>
+     */
+    @Test
+    public void testHasSetSuperDotRule() {
+        Assert.assertNotNull("The extending class must set the super.rule in its setUp() method.", rule);
     }
 
+    @Test
+    public void testGetParameters() {
+        Object[] params = rule.getParameters();
+        //		FIXME: the next would be nice, but not currently agreed-upon policy
+        //		assertNotNull(
+        //			"The method getParameters() must return a non-null value, possible a zero length Object[] array",
+        //			paramNames
+        //		);
+        //		FIXME: so instead:
+        if (params == null) params = new Object[0];
+        for (int i = 0; i < params.length; i++) {
+            Assert.assertNotNull("A parameter default must not be null.", params[i]);
+        }
+    }
+
+    @Test
+    public void testSetParameters_arrayObject() throws Exception {
+        Object[] defaultParams = rule.getParameters();
+        rule.setParameters(defaultParams);
+    }
+
+    @Test
+    public void testValidate_IMolecularFormula() throws Exception {
+        IMolecularFormula mf = new MolecularFormula();
+        mf.addIsotope(new Isotope("C", 13));
+        mf.addIsotope(new Isotope("H", 2), 4);
+        rule.validate(new MolecularFormula());
+
+        // can it handle an empty MF?
+        rule.validate(new MolecularFormula());
+    }
 
 }

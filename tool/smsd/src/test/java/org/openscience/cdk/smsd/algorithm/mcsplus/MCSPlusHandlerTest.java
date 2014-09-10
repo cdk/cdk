@@ -55,8 +55,7 @@ public class MCSPlusHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeClass
     public static void setMCSAlgorithm() {
-        AbstractMCSAlgorithmTest.setMCSAlgorithm(
-                new MCSPlusHandler());
+        AbstractMCSAlgorithmTest.setMCSAlgorithm(new MCSPlusHandler());
     }
 
     /**

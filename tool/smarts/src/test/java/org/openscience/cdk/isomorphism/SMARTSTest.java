@@ -50,14 +50,15 @@ import org.openscience.cdk.templates.MoleculeFactory;
  */
 public class SMARTSTest extends CDKTestCase {
 
-	private UniversalIsomorphismTester uiTester;
+    private UniversalIsomorphismTester uiTester;
 
-	@Before
-	public void setUpUITester() {
-		uiTester = new UniversalIsomorphismTester();
-	}
+    @Before
+    public void setUpUITester() {
+        uiTester = new UniversalIsomorphismTester();
+    }
 
-	@Test public void testStrictSMARTS() throws Exception {
+    @Test
+    public void testStrictSMARTS() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
         SmilesParser sp = new SmilesParser(builder);
@@ -74,9 +75,10 @@ public class SMARTSTest extends CDKTestCase {
         Assert.assertFalse(uiTester.isSubgraph(atomContainer, query));
     }
 
-	@Test public void testSMARTS() throws Exception {
+    @Test
+    public void testSMARTS() throws Exception {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		SmilesParser sp = new SmilesParser(builder);
+        SmilesParser sp = new SmilesParser(builder);
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         QueryAtomContainer query = new QueryAtomContainer(builder);
         AnyAtom atom1 = new AnyAtom(builder);
@@ -92,16 +94,17 @@ public class SMARTSTest extends CDKTestCase {
     private IAtomContainer createEthane() {
         IAtomContainer container = new org.openscience.cdk.AtomContainer(); // SMILES "CC"
         IAtom carbon = new org.openscience.cdk.Atom("C");
-        IAtom carbon2 = carbon.getBuilder().newInstance(IAtom.class,"C");
+        IAtom carbon2 = carbon.getBuilder().newInstance(IAtom.class, "C");
         carbon.setImplicitHydrogenCount(3);
         carbon2.setImplicitHydrogenCount(3);
         container.addAtom(carbon);
         container.addAtom(carbon2);
-        container.addBond(carbon.getBuilder().newInstance(IBond.class,carbon, carbon2, IBond.Order.SINGLE));
+        container.addBond(carbon.getBuilder().newInstance(IBond.class, carbon, carbon2, IBond.Order.SINGLE));
         return container;
     }
 
-	@Test public void testImplicitHCountAtom() throws Exception {
+    @Test
+    public void testImplicitHCountAtom() throws Exception {
         IAtomContainer container = createEthane();
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -115,7 +118,8 @@ public class SMARTSTest extends CDKTestCase {
         Assert.assertTrue(uiTester.isSubgraph(container, query1));
     }
 
-	@Test public void testImplicitHCountAtom2() throws Exception {
+    @Test
+    public void testImplicitHCountAtom2() throws Exception {
         IAtomContainer container = createEthane();
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
@@ -129,37 +133,31 @@ public class SMARTSTest extends CDKTestCase {
         Assert.assertFalse(uiTester.isSubgraph(container, query1));
     }
 
-	@Test public void testMatchInherited() {
-		try {
+    @Test
+    public void testMatchInherited() {
+        try {
             IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-			SymbolQueryAtom c1 = new SymbolQueryAtom(
-				new org.openscience.cdk.Atom("C")
-			);
-			SymbolAndChargeQueryAtom c2 = new
-			SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
+            SymbolQueryAtom c1 = new SymbolQueryAtom(new org.openscience.cdk.Atom("C"));
+            SymbolAndChargeQueryAtom c2 = new SymbolAndChargeQueryAtom(new org.openscience.cdk.Atom("C"));
 
-			IAtomContainer c = MoleculeFactory.makeAlkane(2);
+            IAtomContainer c = MoleculeFactory.makeAlkane(2);
 
-			QueryAtomContainer query1 = new QueryAtomContainer(builder);
-			query1.addAtom(c1);
-			query1.addAtom(c2);
-			query1.addBond(new OrderQueryBond(c1,c2,CDKConstants.BONDORDER_SINGLE, builder));
-			Assert.assertTrue(uiTester.isSubgraph(c,query1));
+            QueryAtomContainer query1 = new QueryAtomContainer(builder);
+            query1.addAtom(c1);
+            query1.addAtom(c2);
+            query1.addBond(new OrderQueryBond(c1, c2, CDKConstants.BONDORDER_SINGLE, builder));
+            Assert.assertTrue(uiTester.isSubgraph(c, query1));
 
-			QueryAtomContainer query = new
-			QueryAtomContainer(builder);
-			query.addAtom(c1);
-			query.addAtom(c2);
-			query.addBond(new AnyOrderQueryBond(c1, c2,
-				CDKConstants.BONDORDER_SINGLE, builder)
-			);
-			Assert.assertTrue(uiTester.isSubgraph(c,query));
+            QueryAtomContainer query = new QueryAtomContainer(builder);
+            query.addAtom(c1);
+            query.addAtom(c2);
+            query.addBond(new AnyOrderQueryBond(c1, c2, CDKConstants.BONDORDER_SINGLE, builder));
+            Assert.assertTrue(uiTester.isSubgraph(c, query));
 
-		} catch (CDKException exception) {
-			Assert.fail(exception.getMessage());
-		}
+        } catch (CDKException exception) {
+            Assert.fail(exception.getMessage());
+        }
 
-	}
+    }
 }
-

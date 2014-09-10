@@ -36,7 +36,6 @@ import org.openscience.cdk.templates.AminoAcids;
 
 import java.util.List;
 
-
 /**
  * Class that returns the number of each amino acid in an atom container.
  *
@@ -69,7 +68,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
 
     private IAtomContainerSet substructureSet;
 
-    private static String[] names;
+    private static String[]   names;
 
     /**
      *  Constructor for the AromaticAtomsCountDescriptor object.
@@ -82,7 +81,8 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
         }
 
         names = new String[substructureSet.getAtomContainerCount()];
-        for (int i = 0; i < aas.length; i++) names[i] = "n"+aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT);
+        for (int i = 0; i < aas.length; i++)
+            names[i] = "n" + aas[i].getProperty(AminoAcids.RESIDUE_NAME_SHORT);
     }
 
     /**
@@ -103,11 +103,9 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * Sets the parameters attribute of the AminoAcidsCountDescriptor object.
@@ -121,7 +119,6 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
         // no parameters exist
     }
 
-
     /**
      * Gets the parameters attribute of the AminoAcidsCountDescriptor object.
      *
@@ -133,11 +130,10 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      * Determine the number of amino acids groups the supplied {@link IAtomContainer}.
@@ -154,25 +150,25 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
 
         UniversalIsomorphismTester universalIsomorphismTester = new UniversalIsomorphismTester();
         IAtomContainer substructure;
-        for (int i=0; i<resultLength; i++) {
+        for (int i = 0; i < resultLength; i++) {
             substructure = substructureSet.getAtomContainer(i);
             List<List<RMap>> maps;
             try {
                 maps = universalIsomorphismTester.getSubgraphMaps(ac, substructure);
             } catch (CDKException e) {
                 // TODO is it OK to cast Double.NaN to int?
-                for (int j = 0; j < resultLength; j++) results.add((int) Double.NaN);
-                return new DescriptorValue(getSpecification(), getParameterNames(),
-                        getParameters(), results, getDescriptorNames(),
-                        new CDKException("Error in substructure search: "+e.getMessage()));
+                for (int j = 0; j < resultLength; j++)
+                    results.add((int) Double.NaN);
+                return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                        getDescriptorNames(), new CDKException("Error in substructure search: " + e.getMessage()));
             }
             if (maps != null) {
                 results.add(maps.size());
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-            getParameters(), results, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames());
     }
 
     /**
@@ -212,4 +208,3 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
         return null;
     }
 }
-

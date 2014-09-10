@@ -40,13 +40,13 @@ public class MoleculeSetManipulator {
 
     @TestMethod("testGetAtomCount_IAtomContainerSet")
     public static int getAtomCount(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getAtomCount(set);
-	}
+        return AtomContainerSetManipulator.getAtomCount(set);
+    }
 
     @TestMethod("testGetBondCount_IAtomContainerSet")
     public static int getBondCount(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getBondCount(set);
-	}
+        return AtomContainerSetManipulator.getBondCount(set);
+    }
 
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IMoleculeSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
@@ -65,46 +65,46 @@ public class MoleculeSetManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IMoleculeSet")
     public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getAllAtomContainers(set);
+        return AtomContainerSetManipulator.getAllAtomContainers(set);
     }
 
-	/**
-	 * @param set The collection of IMolecule objects
+    /**
+     * @param set The collection of IMolecule objects
      * @see AtomContainerSetManipulator
      * @return The total charge on the collection of molecules
-	 */
+     */
     @TestMethod("testGetTotalCharge_IMoleculeSet")
     public static double getTotalCharge(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getTotalCharge(set);
-	}
+        return AtomContainerSetManipulator.getTotalCharge(set);
+    }
 
-	/**
-	 * @param set The collection of IMolecule objects
+    /**
+     * @param set The collection of IMolecule objects
      * @see AtomContainerSetManipulator
      * @return The total formal charge on the collection of molecules
-	 */
+     */
     @TestMethod("testGetTotalFormalCharge_IMoleculeSet")
     public static double getTotalFormalCharge(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getTotalFormalCharge(set);
-	}
+        return AtomContainerSetManipulator.getTotalFormalCharge(set);
+    }
 
-	/**
-	 * @param set The collection of IMolecule objects
+    /**
+     * @param set The collection of IMolecule objects
      * @see AtomContainerSetManipulator
      * @return the total implicit hydrogen count on the collection of molecules
-	 */
+     */
     @TestMethod("testGetTotalHydrogenCount_IMoleculeSet")
     public static int getTotalHydrogenCount(IAtomContainerSet set) {
-		return AtomContainerSetManipulator.getTotalHydrogenCount(set);
-	}
+        return AtomContainerSetManipulator.getTotalHydrogenCount(set);
+    }
 
     @TestMethod("testGetAllIDs_IMoleculeSet")
     public static List<String> getAllIDs(IAtomContainerSet set) {
-    	List<String> list = new ArrayList<String>();
-    	// the ID is set in AtomContainerSetManipulator.getAllIDs()
-    	list.addAll(AtomContainerSetManipulator.getAllIDs(set));
-		return list;
-	}
+        List<String> list = new ArrayList<String>();
+        // the ID is set in AtomContainerSetManipulator.getAllIDs()
+        list.addAll(AtomContainerSetManipulator.getAllIDs(set));
+        return list;
+    }
 
     @TestMethod("testSetAtomProperties_IMoleculeSet_Object_Object")
     public static void setAtomProperties(IAtomContainerSet set, Object propKey, Object propVal) {
@@ -127,4 +127,3 @@ public class MoleculeSetManipulator {
     }
 
 }
-

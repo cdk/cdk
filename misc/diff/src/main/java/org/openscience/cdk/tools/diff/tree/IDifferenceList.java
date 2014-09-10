@@ -34,19 +34,19 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public interface IDifferenceList extends IDifference {
 
-	/**
-	 * Adds a new {@link IDifference} as child to this tree. For example, an {@link IAtom} difference
-	 * would have a child difference for {@link Point2d}.
-	 *
-	 * @param childDiff child {@link IDifference} to add to this {@link IDifference}
-	 */
+    /**
+     * Adds a new {@link IDifference} as child to this tree. For example, an {@link IAtom} difference
+     * would have a child difference for {@link Point2d}.
+     *
+     * @param childDiff child {@link IDifference} to add to this {@link IDifference}
+     */
     public void addChild(IDifference childDiff);
 
-	/**
-	 * Adds multiple {@link IDifference}s as child to this tree.
-	 *
-	 * @param children a {@link List} of {@link IDifference}s to add to this {@link IDifference}
-	 */
+    /**
+     * Adds multiple {@link IDifference}s as child to this tree.
+     *
+     * @param children a {@link List} of {@link IDifference}s to add to this {@link IDifference}
+     */
     public void addChildren(List<IDifference> children);
 
     /**

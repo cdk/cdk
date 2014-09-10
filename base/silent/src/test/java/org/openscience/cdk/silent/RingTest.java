@@ -36,37 +36,43 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class RingTest extends AbstractRingTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Ring();
             }
         });
     }
 
-    @Test public void testRing_int_String() {
+    @Test
+    public void testRing_int_String() {
         IRing r = new Ring(5, "C");
         Assert.assertEquals(5, r.getAtomCount());
         Assert.assertEquals(5, r.getBondCount());
     }
 
-    @Test public void testRing_int() {
+    @Test
+    public void testRing_int() {
         IRing r = new Ring(5); // This does not create a ring!
         Assert.assertEquals(0, r.getAtomCount());
         Assert.assertEquals(0, r.getBondCount());
     }
 
-    @Test public void testRing() {
+    @Test
+    public void testRing() {
         IRing ring = new Ring();
         Assert.assertNotNull(ring);
         Assert.assertEquals(0, ring.getAtomCount());
         Assert.assertEquals(0, ring.getBondCount());
     }
 
-    @Test public void testRing_IAtomContainer() {
+    @Test
+    public void testRing_IAtomContainer() {
         IAtomContainer container = newChemObject().getBuilder().newInstance(IAtomContainer.class);
-        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
-        container.addAtom(container.getBuilder().newInstance(IAtom.class,"C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
+        container.addAtom(container.getBuilder().newInstance(IAtom.class, "C"));
 
         IRing ring = new Ring(container);
         Assert.assertNotNull(ring);
@@ -76,43 +82,68 @@ public class RingTest extends AbstractRingTest {
 
     // Overwrite default methods: no notifications are expected!
 
-    @Test public void testNotifyChanged() {
+    @Test
+    public void testNotifyChanged() {
         ChemObjectTestHelper.testNotifyChanged(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlag() {
+
+    @Test
+    public void testNotifyChanged_SetFlag() {
         ChemObjectTestHelper.testNotifyChanged_SetFlag(newChemObject());
     }
-    @Test public void testNotifyChanged_SetFlags() {
+
+    @Test
+    public void testNotifyChanged_SetFlags() {
         ChemObjectTestHelper.testNotifyChanged_SetFlags(newChemObject());
     }
-    @Test public void testNotifyChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testNotifyChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testNotifyChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectTestHelper.testStateChanged_IChemObjectChangeEvent(newChemObject());
     }
-    @Test public void testClone_ChemObjectListeners() throws Exception {
+
+    @Test
+    public void testClone_ChemObjectListeners() throws Exception {
         ChemObjectTestHelper.testClone_ChemObjectListeners(newChemObject());
     }
-    @Test public void testAddListener_IChemObjectListener() {
+
+    @Test
+    public void testAddListener_IChemObjectListener() {
         ChemObjectTestHelper.testAddListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testGetListenerCount() {
+
+    @Test
+    public void testGetListenerCount() {
         ChemObjectTestHelper.testGetListenerCount(newChemObject());
     }
-    @Test public void testRemoveListener_IChemObjectListener() {
+
+    @Test
+    public void testRemoveListener_IChemObjectListener() {
         ChemObjectTestHelper.testRemoveListener_IChemObjectListener(newChemObject());
     }
-    @Test public void testSetNotification_true() {
+
+    @Test
+    public void testSetNotification_true() {
         ChemObjectTestHelper.testSetNotification_true(newChemObject());
     }
-    @Test public void testNotifyChanged_SetProperty() {
+
+    @Test
+    public void testNotifyChanged_SetProperty() {
         ChemObjectTestHelper.testNotifyChanged_SetProperty(newChemObject());
     }
-    @Test public void testNotifyChanged_RemoveProperty() {
+
+    @Test
+    public void testNotifyChanged_RemoveProperty() {
         ChemObjectTestHelper.testNotifyChanged_RemoveProperty(newChemObject());
     }
-    @Test public void testSetAtoms_removeListener() {
+
+    @Test
+    public void testSetAtoms_removeListener() {
         ChemObjectTestHelper.testSetAtoms_removeListener(newChemObject());
     }
 }

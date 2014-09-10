@@ -51,30 +51,13 @@ import org.openscience.cdk.hash.stereo.Tetrahedral3DParityTest;
  * @cdk.module test-hash
  */
 @RunWith(value = Suite.class)
-@SuiteClasses(value = {
-        HashCoverageTest.class,
-        XorshiftTest.class,
-        BasicAtomEncoderTest.class,
-        ConjugatedAtomEncoderTest.class,
-        AbstractHashGeneratorTest.class,
-        BasicAtomHashGeneratorTest.class,
-        SuppressedAtomHashGeneratorTest.class,
-        BasicMoleculeHashGeneratorTest.class,
-        HashGeneratorMakerTest.class,
-        BasicPermutationParityTest.class,
-        CombinedPermutationParityTest.class,
-        Tetrahedral2DParityTest.class,
-        Tetrahedral3DParityTest.class,
-        DoubleBond2DParityTest.class,
-        DoubleBond3DParityTest.class,
-        GeometryEncoderTest.class,
-        MultiStereoEncoderTest.class,
-        GeometricTetrahedralEncoderFactoryTest.class,
-        GeometricDoubleBondEncoderFactoryTest.class,
-        GeometricCumulativeDoubleBondFactoryTest.class,
-        PerturbedAtomHashGeneratorTest.class,
-        MinimumEquivalentCyclicSetTest.class,
-        HashCodeScenariosTest.class
-})
+@SuiteClasses(value = {HashCoverageTest.class, XorshiftTest.class, BasicAtomEncoderTest.class,
+        ConjugatedAtomEncoderTest.class, AbstractHashGeneratorTest.class, BasicAtomHashGeneratorTest.class,
+        SuppressedAtomHashGeneratorTest.class, BasicMoleculeHashGeneratorTest.class, HashGeneratorMakerTest.class,
+        BasicPermutationParityTest.class, CombinedPermutationParityTest.class, Tetrahedral2DParityTest.class,
+        Tetrahedral3DParityTest.class, DoubleBond2DParityTest.class, DoubleBond3DParityTest.class,
+        GeometryEncoderTest.class, MultiStereoEncoderTest.class, GeometricTetrahedralEncoderFactoryTest.class,
+        GeometricDoubleBondEncoderFactoryTest.class, GeometricCumulativeDoubleBondFactoryTest.class,
+        PerturbedAtomHashGeneratorTest.class, MinimumEquivalentCyclicSetTest.class, HashCodeScenariosTest.class})
 public class MhashTests {
 }

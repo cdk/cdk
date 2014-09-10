@@ -30,12 +30,9 @@ import org.junit.BeforeClass;
  */
 public class QuadToTest extends AbstractPathElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		setPathElement(new QuadTo(
-			new Point2d(0,1),
-			new Point2d(2,3)
-		));
-	}
+    @BeforeClass
+    public static void setup() {
+        setPathElement(new QuadTo(new Point2d(0, 1), new Point2d(2, 3)));
+    }
 
 }

@@ -47,109 +47,106 @@ public class SimpleCycle extends UndirectedSubgraph {
     private static final long serialVersionUID = -3330742084804445688L;
 
     /**
-	 * Constructs a cycle in a graph consisting of the specified edges.
-	 *
-	 * @param   g the graph in which the cycle is contained
-	 * @param   edges the edges of the cycle
-	 */
-	public SimpleCycle (UndirectedGraph g, Collection edges) {
-		this(g, new HashSet(edges));
-	}
+     * Constructs a cycle in a graph consisting of the specified edges.
+     *
+     * @param   g the graph in which the cycle is contained
+     * @param   edges the edges of the cycle
+     */
+    public SimpleCycle(UndirectedGraph g, Collection edges) {
+        this(g, new HashSet(edges));
+    }
 
-	/**
-	 * Constructs a cycle in a graph consisting of the specified edges.
-	 *
-	 * @param   g the graph in which the cycle is contained
-	 * @param   edges the edges of the cycle
-	 */
-	public SimpleCycle (UndirectedGraph g, Set edges) {
-		super(g, inducedVertices(edges), edges);
+    /**
+     * Constructs a cycle in a graph consisting of the specified edges.
+     *
+     * @param   g the graph in which the cycle is contained
+     * @param   edges the edges of the cycle
+     */
+    public SimpleCycle(UndirectedGraph g, Set edges) {
+        super(g, inducedVertices(edges), edges);
         // causes a unit test to fail, but the assertions are met
-		// assert checkConsistency();
-	}
+        // assert checkConsistency();
+    }
 
-	static private Set inducedVertices(Set edges) {
-		Set inducedVertices = new HashSet();
-		for (Iterator i = edges.iterator(); i.hasNext();) {
-			Edge edge = (Edge) i.next();
-			inducedVertices.add(edge.getSource());
-			inducedVertices.add(edge.getTarget());
-		}
-		return inducedVertices;
-	}
+    static private Set inducedVertices(Set edges) {
+        Set inducedVertices = new HashSet();
+        for (Iterator i = edges.iterator(); i.hasNext();) {
+            Edge edge = (Edge) i.next();
+            inducedVertices.add(edge.getSource());
+            inducedVertices.add(edge.getTarget());
+        }
+        return inducedVertices;
+    }
 
-	/**
-	 * Returns the sum of the weights of all edges in this cycle.
-	 *
-	 * @return the sum of the weights of all edges in this cycle
-	 */
-	public double weight() {
-		double result = 0;
-		Iterator edgeIterator = edgeSet().iterator();
-		while (edgeIterator.hasNext()) {
-			result += ((Edge)edgeIterator.next()).getWeight();
-		}
-		return result;
-	}
+    /**
+     * Returns the sum of the weights of all edges in this cycle.
+     *
+     * @return the sum of the weights of all edges in this cycle
+     */
+    public double weight() {
+        double result = 0;
+        Iterator edgeIterator = edgeSet().iterator();
+        while (edgeIterator.hasNext()) {
+            result += ((Edge) edgeIterator.next()).getWeight();
+        }
+        return result;
+    }
 
-	/**
-	 * Returns a list of the vertices contained in this cycle.
-	 * The vertices are in the order of a traversal of the cycle.
-	 *
-	 * @return a list of the vertices contained in this cycle
-	 */
-	public List vertexList() {
-		List vertices = new ArrayList(edgeSet().size());
+    /**
+     * Returns a list of the vertices contained in this cycle.
+     * The vertices are in the order of a traversal of the cycle.
+     *
+     * @return a list of the vertices contained in this cycle
+     */
+    public List vertexList() {
+        List vertices = new ArrayList(edgeSet().size());
 
-		Object startVertex = vertexSet().iterator().next();
+        Object startVertex = vertexSet().iterator().next();
 
-		Object vertex = startVertex;
-		Object previousVertex = null;
-		Object nextVertex = null;
+        Object vertex = startVertex;
+        Object previousVertex = null;
+        Object nextVertex = null;
 
-		while (nextVertex != startVertex) {
-			assert(degreeOf(vertex)==2);
-			List edges = edgesOf(vertex);
+        while (nextVertex != startVertex) {
+            assert (degreeOf(vertex) == 2);
+            List edges = edgesOf(vertex);
 
-			vertices.add(vertex);
+            vertices.add(vertex);
 
-			Edge edge = (Edge) edges.get(0);
-			nextVertex = edge.oppositeVertex(vertex);
+            Edge edge = (Edge) edges.get(0);
+            nextVertex = edge.oppositeVertex(vertex);
 
-			if (nextVertex==previousVertex) {
-				edge = (Edge) edges.get(1);
-				nextVertex = edge.oppositeVertex(vertex);
-			}
+            if (nextVertex == previousVertex) {
+                edge = (Edge) edges.get(1);
+                nextVertex = edge.oppositeVertex(vertex);
+            }
 
-			previousVertex = vertex;
-			vertex = nextVertex;
+            previousVertex = vertex;
+            vertex = nextVertex;
 
-		}
+        }
 
+        return vertices;
+    }
 
-		return vertices;
-	}
+    public boolean equals(Object obj) {
+        return (obj instanceof SimpleCycle && edgeSet().equals(((SimpleCycle) obj).edgeSet()));
+    }
 
-	public boolean equals(Object obj) {
-		return (obj instanceof SimpleCycle && edgeSet().equals(((SimpleCycle) obj).edgeSet()));
-	}
+    public String toString() {
+        return vertexList().toString();
+    }
 
-	public String toString() {
-		return vertexList().toString();
-	}
+    public int hashCode() {
+        return edgeSet().hashCode();
+    }
 
-	public int hashCode() {
-		return edgeSet().hashCode();
-	}
-
-	public boolean checkConsistency() {
-		if (vertexSet().size()!=edgeSet().size())
-			return false;
-		for (Object v: vertexSet()) {
-			if (degreeOf(v)!=2)
-				return false;
-		}
-		return true;
-	}
+    public boolean checkConsistency() {
+        if (vertexSet().size() != edgeSet().size()) return false;
+        for (Object v : vertexSet()) {
+            if (degreeOf(v) != 2) return false;
+        }
+        return true;
+    }
 
 }

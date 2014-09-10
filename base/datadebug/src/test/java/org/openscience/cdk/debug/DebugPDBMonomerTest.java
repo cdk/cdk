@@ -34,17 +34,20 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugPDBMonomerTest extends AbstractPDBMonomerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugPDBMonomer();
             }
         });
     }
 
-	@Test public void testDebugPDBMonomer() {
-		IPDBMonomer monomer = new DebugPDBMonomer();
-		Assert.assertNotNull(monomer);
-		Assert.assertEquals(monomer.getICode(), null);
-	}
+    @Test
+    public void testDebugPDBMonomer() {
+        IPDBMonomer monomer = new DebugPDBMonomer();
+        Assert.assertNotNull(monomer);
+        Assert.assertEquals(monomer.getICode(), null);
+    }
 }

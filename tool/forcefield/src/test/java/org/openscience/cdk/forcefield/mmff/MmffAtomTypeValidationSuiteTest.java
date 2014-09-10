@@ -45,11 +45,13 @@ public class MmffAtomTypeValidationSuiteTest extends AbstractMmffAtomTypeValidat
 
     static final MmffAtomTypeMatcher INSTANCE = new MmffAtomTypeMatcher();
 
-    @Override String[] assign(IAtomContainer container) {
+    @Override
+    String[] assign(IAtomContainer container) {
         return INSTANCE.symbolicTypes(container);
     }
 
-    @Override void assertMatchingTypes(IAtomContainer container, String[] actual, String[] expected) {
+    @Override
+    void assertMatchingTypes(IAtomContainer container, String[] actual, String[] expected) {
 
         // create a useful failure message that displays a SMILES and tags incorrectly typed atoms
         String mesg = "";

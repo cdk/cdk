@@ -69,38 +69,29 @@ public class Convertor {
      */
     public static Model molecule2Model(IAtomContainer molecule) {
         Model model = createCDKModel();
-        Resource subject = model.createResource(
-            createIdentifier(model, molecule)
-        );
+        Resource subject = model.createResource(createIdentifier(model, molecule));
         model.add(subject, RDF.type, CDK.MOLECULE);
-        Map<IAtom,Resource> cdkToRDFAtomMap = new HashMap<IAtom, Resource>();
+        Map<IAtom, Resource> cdkToRDFAtomMap = new HashMap<IAtom, Resource>();
         for (IAtom atom : molecule.atoms()) {
-            Resource rdfAtom = model.createResource(
-                createIdentifier(model, atom)
-            );
+            Resource rdfAtom = model.createResource(createIdentifier(model, atom));
             cdkToRDFAtomMap.put(atom, rdfAtom);
             model.add(subject, CDK.HASATOM, rdfAtom);
             if (atom instanceof IPseudoAtom) {
                 model.add(rdfAtom, RDF.type, CDK.PSEUDOATOM);
-                serializePseudoAtomFields(model, rdfAtom, (IPseudoAtom)atom);
+                serializePseudoAtomFields(model, rdfAtom, (IPseudoAtom) atom);
             } else {
                 model.add(rdfAtom, RDF.type, CDK.ATOM);
                 serializeAtomFields(model, rdfAtom, atom);
             }
         }
         for (IBond bond : molecule.bonds()) {
-            Resource rdfBond = model.createResource(
-                createIdentifier(model, bond)
-            );
+            Resource rdfBond = model.createResource(createIdentifier(model, bond));
             model.add(rdfBond, RDF.type, CDK.BOND);
             for (IAtom atom : bond.atoms()) {
                 model.add(rdfBond, CDK.BINDSATOM, cdkToRDFAtomMap.get(atom));
             }
             if (bond.getOrder() != null) {
-                model.add(
-                    rdfBond, CDK.HASORDER,
-                    order2Resource(bond.getOrder())
-                );
+                model.add(rdfBond, CDK.HASORDER, order2Resource(bond.getOrder()));
             }
             model.add(subject, CDK.HASBOND, rdfBond);
             serializeElectronContainerFields(model, rdfBond, bond);
@@ -108,80 +99,71 @@ public class Convertor {
         return model;
     }
 
-    private static void serializePseudoAtomFields(Model model,
-            Resource rdfAtom, IPseudoAtom atom) {
+    private static void serializePseudoAtomFields(Model model, Resource rdfAtom, IPseudoAtom atom) {
         serializeAtomFields(model, rdfAtom, atom);
-        if (atom.getLabel() != CDKConstants.UNSET)
-            model.add(rdfAtom, CDK.HASLABEL, atom.getLabel());
+        if (atom.getLabel() != CDKConstants.UNSET) model.add(rdfAtom, CDK.HASLABEL, atom.getLabel());
     }
 
-    private static void serializeAtomFields(Model model, Resource rdfAtom,
-            IAtom atom) {
+    private static void serializeAtomFields(Model model, Resource rdfAtom, IAtom atom) {
         serializeAtomTypeFields(model, rdfAtom, atom);
         model.add(rdfAtom, RDF.type, CDK.ATOM);
-        if (atom.getSymbol() != CDKConstants.UNSET)
-            model.add(rdfAtom, CDK.SYMBOL, atom.getSymbol());
+        if (atom.getSymbol() != CDKConstants.UNSET) model.add(rdfAtom, CDK.SYMBOL, atom.getSymbol());
     }
 
-    private static void serializeElectronContainerFields(Model model,
-            Resource rdfBond, IElectronContainer bond) {
+    private static void serializeElectronContainerFields(Model model, Resource rdfBond, IElectronContainer bond) {
         serializeChemObjectFields(model, rdfBond, bond);
         if (bond.getElectronCount() != null)
-            model.add(
-                rdfBond, CDK.HASELECTRONCOUNT,
-                bond.getElectronCount().toString()
-            );
+            model.add(rdfBond, CDK.HASELECTRONCOUNT, bond.getElectronCount().toString());
     }
 
-    private static void serializeChemObjectFields(Model model,
-            Resource rdfObject, IChemObject object) {
-        if (object.getID() != null)
-            model.add(rdfObject, CDK.IDENTIFIER, object.getID());
+    private static void serializeChemObjectFields(Model model, Resource rdfObject, IChemObject object) {
+        if (object.getID() != null) model.add(rdfObject, CDK.IDENTIFIER, object.getID());
     }
 
-    private static void deserializeChemObjectFields(
-            Resource rdfObject, IChemObject object) {
+    private static void deserializeChemObjectFields(Resource rdfObject, IChemObject object) {
         Statement identifier = rdfObject.getProperty(CDK.IDENTIFIER);
         if (identifier != null) object.setID(identifier.getString());
     }
 
-    private static void serializeElementFields(Model model,
-            Resource rdfObject, IElement element) {
+    private static void serializeElementFields(Model model, Resource rdfObject, IElement element) {
         serializeChemObjectFields(model, rdfObject, element);
-        if (element.getSymbol() != null)
-            model.add(rdfObject, CDK.SYMBOL, element.getSymbol());
+        if (element.getSymbol() != null) model.add(rdfObject, CDK.SYMBOL, element.getSymbol());
         if (element.getAtomicNumber() != null)
-            model.add(rdfObject, CDK.HASATOMICNUMBER,
-                element.getAtomicNumber().toString());
+            model.add(rdfObject, CDK.HASATOMICNUMBER, element.getAtomicNumber().toString());
     }
 
-    private static void deserializeElementFields(
-            Resource rdfObject, IElement element) {
+    private static void deserializeElementFields(Resource rdfObject, IElement element) {
         deserializeChemObjectFields(rdfObject, element);
         Statement symbol = rdfObject.getProperty(CDK.SYMBOL);
         if (symbol != null) element.setSymbol(symbol.getString());
         Statement atomicNumber = rdfObject.getProperty(CDK.HASATOMICNUMBER);
-        if (atomicNumber != null)
-            element.setAtomicNumber(atomicNumber.getInt());
+        if (atomicNumber != null) element.setAtomicNumber(atomicNumber.getInt());
     }
 
-    private final static Map<Hybridization,Resource> HYBRID_TO_RESOURCE = new HashMap<Hybridization, Resource>(10) {
-        private static final long serialVersionUID = 1027415392461000485L;
-    {
-        put(Hybridization.S, CDK.HYBRID_S);
-        put(Hybridization.SP1, CDK.HYBRID_SP1);
-        put(Hybridization.SP2, CDK.HYBRID_SP2);
-        put(Hybridization.SP3, CDK.HYBRID_SP3);
-        put(Hybridization.PLANAR3, CDK.HYBRID_PLANAR3);
-        put(Hybridization.SP3D1, CDK.HYBRID_SP3D1);
-        put(Hybridization.SP3D2, CDK.HYBRID_SP3D2);
-        put(Hybridization.SP3D3, CDK.HYBRID_SP3D3);
-        put(Hybridization.SP3D4, CDK.HYBRID_SP3D4);
-        put(Hybridization.SP3D5, CDK.HYBRID_SP3D5);
-    }};
+    private final static Map<Hybridization, Resource> HYBRID_TO_RESOURCE = new HashMap<Hybridization, Resource>(10) {
 
-    private static void serializeAtomTypeFields(Model model,
-            Resource rdfObject, IAtomType type) {
+                                                                             private static final long serialVersionUID = 1027415392461000485L;
+                                                                             {
+                                                                                 put(Hybridization.S, CDK.HYBRID_S);
+                                                                                 put(Hybridization.SP1, CDK.HYBRID_SP1);
+                                                                                 put(Hybridization.SP2, CDK.HYBRID_SP2);
+                                                                                 put(Hybridization.SP3, CDK.HYBRID_SP3);
+                                                                                 put(Hybridization.PLANAR3,
+                                                                                         CDK.HYBRID_PLANAR3);
+                                                                                 put(Hybridization.SP3D1,
+                                                                                         CDK.HYBRID_SP3D1);
+                                                                                 put(Hybridization.SP3D2,
+                                                                                         CDK.HYBRID_SP3D2);
+                                                                                 put(Hybridization.SP3D3,
+                                                                                         CDK.HYBRID_SP3D3);
+                                                                                 put(Hybridization.SP3D4,
+                                                                                         CDK.HYBRID_SP3D4);
+                                                                                 put(Hybridization.SP3D5,
+                                                                                         CDK.HYBRID_SP3D5);
+                                                                             }
+                                                                         };
+
+    private static void serializeAtomTypeFields(Model model, Resource rdfObject, IAtomType type) {
         serializeIsotopeFields(model, rdfObject, type);
         if (type.getHybridization() != null) {
             Hybridization hybrid = type.getHybridization();
@@ -192,63 +174,54 @@ public class Convertor {
             model.add(rdfObject, CDK.HASATOMTYPENAME, type.getAtomTypeName());
         }
         if (type.getFormalCharge() != null) {
-            model.add(
-                rdfObject, CDK.HASFORMALCHARGE,
-                type.getFormalCharge().toString()
-            );
+            model.add(rdfObject, CDK.HASFORMALCHARGE, type.getFormalCharge().toString());
         }
         if (type.getMaxBondOrder() != null) {
-            model.add(
-                rdfObject, CDK.HASMAXBONDORDER,
-                order2Resource(type.getMaxBondOrder())
-            );
+            model.add(rdfObject, CDK.HASMAXBONDORDER, order2Resource(type.getMaxBondOrder()));
         }
     }
 
-    private static void serializeIsotopeFields(Model model, Resource rdfObject,
-            IIsotope isotope) {
+    private static void serializeIsotopeFields(Model model, Resource rdfObject, IIsotope isotope) {
         serializeElementFields(model, rdfObject, isotope);
         if (isotope.getMassNumber() != CDKConstants.UNSET) {
-            model.add(
-                 rdfObject, CDK.HASMASSNUMBER,
-                 isotope.getMassNumber().toString()
-            );
+            model.add(rdfObject, CDK.HASMASSNUMBER, isotope.getMassNumber().toString());
         }
         if (isotope.getExactMass() != CDKConstants.UNSET) {
-            model.add(
-                 rdfObject, CDK.HASEXACTMASS,
-                 isotope.getExactMass().toString()
-            );
+            model.add(rdfObject, CDK.HASEXACTMASS, isotope.getExactMass().toString());
         }
         if (isotope.getNaturalAbundance() != CDKConstants.UNSET) {
-            model.add(
-                 rdfObject, CDK.HASNATURALABUNDANCE,
-                 isotope.getNaturalAbundance().toString()
-            );
+            model.add(rdfObject, CDK.HASNATURALABUNDANCE, isotope.getNaturalAbundance().toString());
         }
     }
 
     private final static Map<Resource, Hybridization> RESOURCE_TO_HYBRID = new HashMap<Resource, Hybridization>(10) {
-        private static final long serialVersionUID = -351285511820100853L;
-    {
-        put(CDK.HYBRID_S, Hybridization.S);
-        put(CDK.HYBRID_SP1, Hybridization.SP1);
-        put(CDK.HYBRID_SP2, Hybridization.SP2);
-        put(CDK.HYBRID_SP3, Hybridization.SP3);
-        put(CDK.HYBRID_PLANAR3, Hybridization.PLANAR3);
-        put(CDK.HYBRID_SP3D1, Hybridization.SP3D1);
-        put(CDK.HYBRID_SP3D2, Hybridization.SP3D2);
-        put(CDK.HYBRID_SP3D3, Hybridization.SP3D3);
-        put(CDK.HYBRID_SP3D4, Hybridization.SP3D4);
-        put(CDK.HYBRID_SP3D5, Hybridization.SP3D5);
-    }};
 
-    private static void deserializeAtomTypeFields(
-            Resource rdfObject, IAtomType element) {
+                                                                             private static final long serialVersionUID = -351285511820100853L;
+                                                                             {
+                                                                                 put(CDK.HYBRID_S, Hybridization.S);
+                                                                                 put(CDK.HYBRID_SP1, Hybridization.SP1);
+                                                                                 put(CDK.HYBRID_SP2, Hybridization.SP2);
+                                                                                 put(CDK.HYBRID_SP3, Hybridization.SP3);
+                                                                                 put(CDK.HYBRID_PLANAR3,
+                                                                                         Hybridization.PLANAR3);
+                                                                                 put(CDK.HYBRID_SP3D1,
+                                                                                         Hybridization.SP3D1);
+                                                                                 put(CDK.HYBRID_SP3D2,
+                                                                                         Hybridization.SP3D2);
+                                                                                 put(CDK.HYBRID_SP3D3,
+                                                                                         Hybridization.SP3D3);
+                                                                                 put(CDK.HYBRID_SP3D4,
+                                                                                         Hybridization.SP3D4);
+                                                                                 put(CDK.HYBRID_SP3D5,
+                                                                                         Hybridization.SP3D5);
+                                                                             }
+                                                                         };
+
+    private static void deserializeAtomTypeFields(Resource rdfObject, IAtomType element) {
         deserializeIsotopeFields(rdfObject, element);
         Statement hybrid = rdfObject.getProperty(CDK.HASHYBRIDIZATION);
         if (hybrid != null) {
-            Resource rdfHybrid = (Resource)hybrid.getObject();
+            Resource rdfHybrid = (Resource) hybrid.getObject();
             if (RESOURCE_TO_HYBRID.containsKey(rdfHybrid)) {
                 element.setHybridization(RESOURCE_TO_HYBRID.get(rdfHybrid));
             }
@@ -259,27 +232,21 @@ public class Convertor {
         }
         Statement order = rdfObject.getProperty(CDK.HASMAXBONDORDER);
         if (order != null) {
-            Resource maxOrder = (Resource)order.getResource();
+            Resource maxOrder = (Resource) order.getResource();
             element.setMaxBondOrder(resource2Order(maxOrder));
         }
         Statement formalCharge = rdfObject.getProperty(CDK.HASFORMALCHARGE);
-        if (formalCharge != null)
-            element.setFormalCharge(formalCharge.getInt());
+        if (formalCharge != null) element.setFormalCharge(formalCharge.getInt());
     }
 
-    private static void deserializeIsotopeFields(Resource rdfObject,
-            IIsotope isotope) {
+    private static void deserializeIsotopeFields(Resource rdfObject, IIsotope isotope) {
         deserializeElementFields(rdfObject, isotope);
         Statement massNumber = rdfObject.getProperty(CDK.HASMASSNUMBER);
-        if (massNumber != null)
-            isotope.setMassNumber(massNumber.getInt());
+        if (massNumber != null) isotope.setMassNumber(massNumber.getInt());
         Statement exactMass = rdfObject.getProperty(CDK.HASEXACTMASS);
-        if (exactMass != null)
-            isotope.setExactMass(exactMass.getDouble());
-        Statement naturalAbundance =
-            rdfObject.getProperty(CDK.HASNATURALABUNDANCE);
-        if (naturalAbundance != null)
-            isotope.setNaturalAbundance(naturalAbundance.getDouble());
+        if (exactMass != null) isotope.setExactMass(exactMass.getDouble());
+        Statement naturalAbundance = rdfObject.getProperty(CDK.HASNATURALABUNDANCE);
+        if (naturalAbundance != null) isotope.setNaturalAbundance(naturalAbundance.getDouble());
     }
 
     /**
@@ -329,12 +296,10 @@ public class Convertor {
         return result.toString();
     }
 
-    private static void deserializeElectronContainerFields(
-            Resource rdfObject, IElectronContainer bond) {
+    private static void deserializeElectronContainerFields(Resource rdfObject, IElectronContainer bond) {
         deserializeChemObjectFields(rdfObject, bond);
         Statement count = rdfObject.getProperty(CDK.HASELECTRONCOUNT);
-        if (count != null)
-            bond.setElectronCount(count.getInt());
+        if (count != null) bond.setElectronCount(count.getInt());
     }
 
     /**
@@ -344,15 +309,13 @@ public class Convertor {
      * @param builder {@link IChemObjectBuilder} used to create new {@link IChemObject}s.
      * @return a {@link IAtomContainer} deserialized from the RDF graph.
      */
-    public static IAtomContainer model2Molecule(Model model,
-        IChemObjectBuilder builder) {
-        ResIterator mols =
-            model.listSubjectsWithProperty(RDF.type, CDK.MOLECULE);
+    public static IAtomContainer model2Molecule(Model model, IChemObjectBuilder builder) {
+        ResIterator mols = model.listSubjectsWithProperty(RDF.type, CDK.MOLECULE);
         IAtomContainer mol = null;
         if (mols.hasNext()) {
             Resource rdfMol = mols.next();
             mol = builder.newInstance(IAtomContainer.class);
-            Map<Resource,IAtom> rdfToCDKAtomMap = new HashMap<Resource,IAtom>();
+            Map<Resource, IAtom> rdfToCDKAtomMap = new HashMap<Resource, IAtom>();
             StmtIterator atoms = rdfMol.listProperties(CDK.HASATOM);
             while (atoms.hasNext()) {
                 Resource rdfAtom = atoms.nextStatement().getResource();
@@ -361,8 +324,7 @@ public class Convertor {
                     atom = builder.newInstance(IPseudoAtom.class);
                     atom.setStereoParity(0);
                     Statement label = rdfAtom.getProperty(CDK.HASLABEL);
-                    if (label != null)
-                        ((IPseudoAtom)atom).setLabel(label.getString());
+                    if (label != null) ((IPseudoAtom) atom).setLabel(label.getString());
                 } else {
                     atom = builder.newInstance(IAtom.class);
                 }
@@ -384,8 +346,7 @@ public class Convertor {
                     bond.setAtom(atom, atomCounter);
                     atomCounter++;
                 }
-                Resource order = rdfBond.
-                    getProperty(CDK.HASORDER).getResource();
+                Resource order = rdfBond.getProperty(CDK.HASORDER).getResource();
                 bond.setOrder(resource2Order(order));
                 mol.addBond(bond);
                 deserializeElectronContainerFields(rdfBond, bond);

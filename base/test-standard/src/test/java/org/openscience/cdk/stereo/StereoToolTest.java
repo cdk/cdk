@@ -40,10 +40,10 @@ import org.openscience.cdk.stereo.StereoTool.TetrahedralSign;
  */
 public class StereoToolTest extends CDKTestCase {
 
-    private static final Point3d ORIGIN = new Point3d(0, 0, 0);
-    private static final Vector3d XAXIS = new Vector3d(1, 0, 0);
-    private static final Vector3d YAXIS = new Vector3d(0, 1, 0);
-    private static final Vector3d ZAXIS = new Vector3d(0, 0, 1);
+    private static final Point3d  ORIGIN = new Point3d(0, 0, 0);
+    private static final Vector3d XAXIS  = new Vector3d(1, 0, 0);
+    private static final Vector3d YAXIS  = new Vector3d(0, 1, 0);
+    private static final Vector3d ZAXIS  = new Vector3d(0, 0, 1);
 
     @Test
     public void positivePointPlaneDistanceTest() {
@@ -57,10 +57,10 @@ public class StereoToolTest extends CDKTestCase {
         // make a positive point on the X axis = same direction as the normal
         Point3d pointToMeasurePos = new Point3d(2, 0, 0);
 
-        double distancePos = StereoTool.signedDistanceToPlane(
-                planeNormal, pointInPlane, pointToMeasurePos);
+        double distancePos = StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasurePos);
         Assert.assertEquals(2.0, distancePos, 0.1);
     }
+
     @Test
     public void negativePointPlaneDistanceTest() {
         // the normal for the Y-Z plane is X
@@ -73,8 +73,7 @@ public class StereoToolTest extends CDKTestCase {
         // make a negative point on the X axis = opposite direction to normal
         Point3d pointToMeasureNeg = new Point3d(-2, 0, 0);
 
-        double distance = StereoTool.signedDistanceToPlane(
-                planeNormal, pointInPlane, pointToMeasureNeg);
+        double distance = StereoTool.signedDistanceToPlane(planeNormal, pointInPlane, pointToMeasureNeg);
         Assert.assertEquals(-2.0, distance, 0.1);
     }
 
@@ -97,8 +96,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom baseC = new Atom("C", new Point3d(1, 1, 1));
 
         IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 2));
-        TetrahedralSign tetSign =
-            StereoTool.getHandedness(baseC, baseB, baseA, positiveApex);
+        TetrahedralSign tetSign = StereoTool.getHandedness(baseC, baseB, baseA, positiveApex);
         Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
     }
 
@@ -110,8 +108,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom baseC = new Atom("C", new Point3d(1, 1, 1));
 
         IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 2));
-        TetrahedralSign tetSign =
-            StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
+        TetrahedralSign tetSign = StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
         Assert.assertEquals(TetrahedralSign.PLUS, tetSign);
     }
 
@@ -123,8 +120,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom baseC = new Atom("C", new Point3d(1, 1, 1));
 
         IAtom negativeApex = new Atom("C", new Point3d(0.5, 0.5, -1));
-        TetrahedralSign tetSign =
-            StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
+        TetrahedralSign tetSign = StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
         Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
     }
 
@@ -136,8 +132,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom baseC = new Atom("C", new Point3d(1, 1, -1));
 
         IAtom positiveApex = new Atom("C", new Point3d(0.5, 0.5, 0));
-        TetrahedralSign tetSign =
-            StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
+        TetrahedralSign tetSign = StereoTool.getHandedness(baseA, baseB, baseC, positiveApex);
         Assert.assertEquals(TetrahedralSign.PLUS, tetSign);
     }
 
@@ -149,8 +144,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom baseC = new Atom("C", new Point3d(1, 1, -1));
 
         IAtom negativeApex = new Atom("C", new Point3d(0.5, 0.5, -2));
-        TetrahedralSign tetSign =
-            StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
+        TetrahedralSign tetSign = StereoTool.getHandedness(baseA, baseB, baseC, negativeApex);
         Assert.assertEquals(TetrahedralSign.MINUS, tetSign);
     }
 
@@ -189,8 +183,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom atomC = new Atom("C", new Point3d(2, 1, 0));
         IAtom atomD = new Atom("C", new Point3d(2, 2, 0));
 
-        SquarePlanarShape shape =
-            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        SquarePlanarShape shape = StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
         Assert.assertEquals(SquarePlanarShape.U_SHAPE, shape);
     }
 
@@ -202,8 +195,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom atomC = new Atom("C", new Point3d(2, 2, 0));
         IAtom atomD = new Atom("C", new Point3d(1, 1, 0));
 
-        SquarePlanarShape shape =
-            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        SquarePlanarShape shape = StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
         Assert.assertEquals(SquarePlanarShape.FOUR_SHAPE, shape);
     }
 
@@ -215,22 +207,19 @@ public class StereoToolTest extends CDKTestCase {
         IAtom atomC = new Atom("C", new Point3d(2, 2, 0));
         IAtom atomD = new Atom("C", new Point3d(2, 1, 0));
 
-        SquarePlanarShape shape =
-            StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
+        SquarePlanarShape shape = StereoTool.getSquarePlanarShape(atomA, atomB, atomC, atomD);
         Assert.assertEquals(SquarePlanarShape.Z_SHAPE, shape);
     }
 
     @Test
     public void trigonalBipyramidalTest() {
-        IAtom atomA = new Atom("C", new Point3d(1, 1, 2));  // axis point 1
-        IAtom atomB = new Atom("C", new Point3d(1, 1, 1));  // center of plane
+        IAtom atomA = new Atom("C", new Point3d(1, 1, 2)); // axis point 1
+        IAtom atomB = new Atom("C", new Point3d(1, 1, 1)); // center of plane
         IAtom atomC = new Atom("C", new Point3d(0, 1, 1));
         IAtom atomD = new Atom("C", new Point3d(1, 0, 1));
         IAtom atomE = new Atom("C", new Point3d(2, 2, 1));
-        IAtom atomF = new Atom("C", new Point3d(1, 1, 0));  // axis point 2
-        Assert.assertTrue(
-                StereoTool.isTrigonalBipyramidal(
-                        atomA, atomB, atomC, atomD, atomE, atomF));
+        IAtom atomF = new Atom("C", new Point3d(1, 1, 0)); // axis point 2
+        Assert.assertTrue(StereoTool.isTrigonalBipyramidal(atomA, atomB, atomC, atomD, atomE, atomF));
     }
 
     @Test
@@ -243,9 +232,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom atomF = new Atom("C", new Point3d(1, 3, 1));
         IAtom atomG = new Atom("C", new Point3d(2, 2, 0)); // axis point 2
 
-        Assert.assertTrue(
-                StereoTool.isOctahedral(
-                        atomA, atomB, atomC, atomD, atomE, atomF, atomG));
+        Assert.assertTrue(StereoTool.isOctahedral(atomA, atomB, atomC, atomD, atomE, atomF, atomG));
     }
 
     @Test
@@ -267,9 +254,7 @@ public class StereoToolTest extends CDKTestCase {
         Point3d pointF = new Point3d(3, 3, 0);
 
         Vector3d normal = StereoTool.getNormal(pointA, pointB, pointC);
-        Assert.assertTrue(
-                StereoTool.allCoplanar(
-                        normal, pointA, pointB, pointC, pointD, pointE, pointF));
+        Assert.assertTrue(StereoTool.allCoplanar(normal, pointA, pointB, pointC, pointD, pointE, pointF));
     }
 
     @Test
@@ -278,10 +263,8 @@ public class StereoToolTest extends CDKTestCase {
         IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
         IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 0, 0));
         IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 2, 0));
-        Assert.assertEquals(Stereo.ANTI_CLOCKWISE,
-                StereoTool.getStereo(
-                        closestAtomToViewer, highestCIPPriority,
-                        middleCIPPriority, nearlylowestCIPPriority));
+        Assert.assertEquals(Stereo.ANTI_CLOCKWISE, StereoTool.getStereo(closestAtomToViewer, highestCIPPriority,
+                middleCIPPriority, nearlylowestCIPPriority));
     }
 
     @Test
@@ -290,9 +273,7 @@ public class StereoToolTest extends CDKTestCase {
         IAtom highestCIPPriority = new Atom("I", new Point3d(0, 1, 2));
         IAtom middleCIPPriority = new Atom("Br", new Point3d(0, 2, 0));
         IAtom nearlylowestCIPPriority = new Atom("Cl", new Point3d(0, 0, 0));
-        Assert.assertEquals(Stereo.CLOCKWISE,
-                StereoTool.getStereo(
-                        closestAtomToViewer, highestCIPPriority,
-                        middleCIPPriority, nearlylowestCIPPriority));
+        Assert.assertEquals(Stereo.CLOCKWISE, StereoTool.getStereo(closestAtomToViewer, highestCIPPriority,
+                middleCIPPriority, nearlylowestCIPPriority));
     }
 }

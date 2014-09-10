@@ -48,23 +48,25 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class HINReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(HINReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HINReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new HINReader(), "data/hin/benzene.hin");
     }
 
-    @Test public void testAccepts() {
-    	Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        Assert.assertTrue(chemObjectIO.accepts(ChemFile.class));
     }
 
-    @Test public void testBenzene() throws Exception {
+    @Test
+    public void testBenzene() throws Exception {
         String filename = "data/hin/benzene.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -84,12 +86,13 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         // assertEquals(?, m.getBondCount());
     }
 
-    @Test public void testMoleculeTwo() throws Exception {
+    @Test
+    public void testMoleculeTwo() throws Exception {
         String filename = "data/hin/molecule2.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -109,12 +112,13 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         // assertEquals(?, m.getBondCount());
     }
 
-    @Test public void testMultiple() throws Exception {
+    @Test
+    public void testMultiple() throws Exception {
         String filename = "data/hin/multiple.hin";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         HINReader reader = new HINReader(ins);
-        ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);
@@ -130,7 +134,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(3, som.getAtomContainerCount());
     }
 
-    @Test public void testIsConnectedFromHINFile() throws Exception {
+    @Test
+    public void testIsConnectedFromHINFile() throws Exception {
         String filename = "data/hin/connectivity1.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -146,7 +151,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
      * @cdk.bug 2984581
      * @throws Exception
      */
-    @Test public void testAromaticRingsLine() throws Exception {
+    @Test
+    public void testAromaticRingsLine() throws Exception {
         String filename = "data/hin/bug2984581.hin";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         ISimpleChemObjectReader reader = new HINReader(ins);
@@ -188,8 +194,8 @@ public class HINReaderTest extends SimpleChemObjectReaderTest {
         // make sure that only the phenyl C's were marked as aromatic
         for (IAtom atom : mol.atoms()) {
             if (atom.getSymbol().equals("C"))
-                Assert.assertTrue(atom.getSymbol()+" (index "+mol.getAtomNumber(atom)+") was wrongly marked as aromatic",
-                        atom.getFlag(CDKConstants.ISAROMATIC));
+                Assert.assertTrue(atom.getSymbol() + " (index " + mol.getAtomNumber(atom)
+                        + ") was wrongly marked as aromatic", atom.getFlag(CDKConstants.ISAROMATIC));
         }
 
     }

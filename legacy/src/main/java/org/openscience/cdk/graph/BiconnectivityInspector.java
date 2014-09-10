@@ -50,217 +50,193 @@ import java.util.*;
  */
 @TestClass("org.openscience.cdk.graph.BiconnectivityInspectorTest")
 public class BiconnectivityInspector {
-	private List          biconnectedSets;
-	private UndirectedGraph graph;
 
-	/**
-	 * Creates a biconnectivity inspector for the specified undirected graph.
-	 * @param g the specified graph
-	 */
+    private List            biconnectedSets;
+    private UndirectedGraph graph;
 
-	public BiconnectivityInspector(UndirectedGraph g) {
-		graph = g;
-	}
+    /**
+     * Creates a biconnectivity inspector for the specified undirected graph.
+     * @param g the specified graph
+     */
 
-	private List lazyFindBiconnectedSets(  ) {
+    public BiconnectivityInspector(UndirectedGraph g) {
+        graph = g;
+    }
 
-		if( biconnectedSets == null ) {
-			biconnectedSets = new ArrayList();
+    private List lazyFindBiconnectedSets() {
 
-			Iterator connectedSets =
-				new ConnectivityInspector(graph).connectedSets().iterator();
+        if (biconnectedSets == null) {
+            biconnectedSets = new ArrayList();
 
-			while (connectedSets.hasNext()) {
-				Set connectedSet = (Set) connectedSets.next();
-				if (connectedSet.size() == 1) {
-					continue;
-				}
+            Iterator connectedSets = new ConnectivityInspector(graph).connectedSets().iterator();
 
-				Graph subgraph = new Subgraph(graph, connectedSet, null);
+            while (connectedSets.hasNext()) {
+                Set connectedSet = (Set) connectedSets.next();
+                if (connectedSet.size() == 1) {
+                    continue;
+                }
 
-				// do DFS
+                Graph subgraph = new Subgraph(graph, connectedSet, null);
 
-				// Stack for the DFS
-				Stack vertexStack = new Stack();
+                // do DFS
 
-				Set visitedVertices = new HashSet();
-				Map parent = new HashMap();
-				List dfsVertices = new ArrayList();
+                // Stack for the DFS
+                Stack vertexStack = new Stack();
 
-				Set treeEdges = new HashSet();
+                Set visitedVertices = new HashSet();
+                Map parent = new HashMap();
+                List dfsVertices = new ArrayList();
 
-				Object currentVertex = subgraph.vertexSet().toArray()[0];
+                Set treeEdges = new HashSet();
 
-				vertexStack.push(currentVertex);
-				visitedVertices.add(currentVertex);
+                Object currentVertex = subgraph.vertexSet().toArray()[0];
 
-				while (!vertexStack.isEmpty()) {
+                vertexStack.push(currentVertex);
+                visitedVertices.add(currentVertex);
 
-					currentVertex = vertexStack.pop();
+                while (!vertexStack.isEmpty()) {
 
-					Object parentVertex = parent.get(currentVertex);
+                    currentVertex = vertexStack.pop();
 
-					if (parentVertex != null) {
-						Edge edge = subgraph.getEdge(parentVertex, currentVertex);
+                    Object parentVertex = parent.get(currentVertex);
 
-						// tree edge
-						treeEdges.add(edge);
-					}
+                    if (parentVertex != null) {
+                        Edge edge = subgraph.getEdge(parentVertex, currentVertex);
 
-					visitedVertices.add(currentVertex);
+                        // tree edge
+                        treeEdges.add(edge);
+                    }
 
-					dfsVertices.add(currentVertex);
+                    visitedVertices.add(currentVertex);
 
-					Iterator edges = subgraph.edgesOf(currentVertex).iterator();
-					while (edges.hasNext()) {
-						// find a neighbour vertex of the current vertex
-						Edge edge = (Edge)edges.next();
+                    dfsVertices.add(currentVertex);
 
-						if (!treeEdges.contains(edge)) {
+                    Iterator edges = subgraph.edgesOf(currentVertex).iterator();
+                    while (edges.hasNext()) {
+                        // find a neighbour vertex of the current vertex
+                        Edge edge = (Edge) edges.next();
 
-							Object nextVertex = edge.oppositeVertex(currentVertex);
+                        if (!treeEdges.contains(edge)) {
 
-							if (!visitedVertices.contains(nextVertex)) {
+                            Object nextVertex = edge.oppositeVertex(currentVertex);
 
-								vertexStack.push(nextVertex);
+                            if (!visitedVertices.contains(nextVertex)) {
 
-								parent.put(nextVertex, currentVertex);
+                                vertexStack.push(nextVertex);
 
-							} else {
-								// non-tree edge
-							}
+                                parent.put(nextVertex, currentVertex);
 
-						}
+                            } else {
+                                // non-tree edge
+                            }
 
-					}
-				}
+                        }
 
-				// DFS is finished. Now create the auxiliary graph h
-				// Add all the tree edges as vertices in h
-				SimpleGraph h = new SimpleGraph();
+                    }
+                }
 
-				h.addAllVertices(treeEdges);
+                // DFS is finished. Now create the auxiliary graph h
+                // Add all the tree edges as vertices in h
+                SimpleGraph h = new SimpleGraph();
 
-				visitedVertices.clear();
+                h.addAllVertices(treeEdges);
 
-				Set connected = new HashSet();
+                visitedVertices.clear();
 
+                Set connected = new HashSet();
 
-				for (Iterator it = dfsVertices.iterator(); it.hasNext();) {
-					Object v = it.next();
+                for (Iterator it = dfsVertices.iterator(); it.hasNext();) {
+                    Object v = it.next();
 
-					visitedVertices.add(v);
+                    visitedVertices.add(v);
 
-					// find all adjacent non-tree edges
-					for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator();
-					adjacentEdges.hasNext();) {
-						Edge l = (Edge) adjacentEdges.next();
-						if (!treeEdges.contains(l)) {
-							h.addVertex(l);
-							Object u = l.oppositeVertex(v);
+                    // find all adjacent non-tree edges
+                    for (Iterator adjacentEdges = subgraph.edgesOf(v).iterator(); adjacentEdges.hasNext();) {
+                        Edge l = (Edge) adjacentEdges.next();
+                        if (!treeEdges.contains(l)) {
+                            h.addVertex(l);
+                            Object u = l.oppositeVertex(v);
 
-							// we need to check if (u,v) is a back-edge
-							if (!visitedVertices.contains(u)) {
+                            // we need to check if (u,v) is a back-edge
+                            if (!visitedVertices.contains(u)) {
 
+                                while (u != v) {
+                                    Object pu = parent.get(u);
+                                    Edge f = subgraph.getEdge(u, pu);
 
-								while (u != v) {
-									Object pu = parent.get(u);
-									Edge f = subgraph.getEdge(u, pu);
+                                    h.addEdge(f, l);
 
-									h.addEdge(f, l);
+                                    if (!connected.contains(f)) {
+                                        connected.add(f);
+                                        u = pu;
+                                    } else {
+                                        u = v;
+                                    }
+                                }
+                            }
+                        }
+                    }
 
-									if (!connected.contains(f)) {
-										connected.add(f);
-										u = pu;
-									} else {
-										u = v;
-									}
-								}
-							}
-						}
-					}
+                }
 
+                ConnectivityInspector connectivityInspector = new ConnectivityInspector(h);
 
-				}
+                biconnectedSets.addAll(connectivityInspector.connectedSets());
 
+            }
+        }
 
-				ConnectivityInspector connectivityInspector =
-					new ConnectivityInspector(h);
+        return biconnectedSets;
+    }
 
-				biconnectedSets.addAll(connectivityInspector.connectedSets());
-
-			}
-		}
-
-		return biconnectedSets;
-	}
-
-	/**
-	 * Returns a list of <code>Set</code>s, where each set contains all edge that are
-	 * in the same biconnected component. All graph edges occur in exactly one set.
+    /**
+     * Returns a list of <code>Set</code>s, where each set contains all edge that are
+     * in the same biconnected component. All graph edges occur in exactly one set.
      *
-	 * @return a list of <code>Set</code>s, where each set contains all edge that are
-	 * in the same biconnected component
-	 */
+     * @return a list of <code>Set</code>s, where each set contains all edge that are
+     * in the same biconnected component
+     */
     @TestMethod("testBiconnectedSets")
-    public List biconnectedSets(  ) {
-		return lazyFindBiconnectedSets(  );
-	}
+    public List biconnectedSets() {
+        return lazyFindBiconnectedSets();
+    }
 
-	/*
-	public List hopcroftTarjanKnuthFindBiconnectedSets() {
-		Map rank;
-		Map parent;
-		Map untagged;
-		Map link;
-		Stack activeStack;
-		Map min;
+    /*
+     * public List hopcroftTarjanKnuthFindBiconnectedSets() { Map rank; Map
+     * parent; Map untagged; Map link; Stack activeStack; Map min; int nn;
+     * return biconnectedSets; }
+     */
 
-		int nn;
-
-
-
-
-
-		return biconnectedSets;
-	}
-	*/
-
-
-	private void init() {
-		biconnectedSets = null;
-	}
-
+    private void init() {
+        biconnectedSets = null;
+    }
 
     /**
      * @see org._3pq.jgrapht.event.GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
-    public void edgeAdded( GraphEdgeChangeEvent e ) {
-        init(  );
+    public void edgeAdded(GraphEdgeChangeEvent e) {
+        init();
     }
-
 
     /**
      * @see org._3pq.jgrapht.event.GraphListener#edgeRemoved(GraphEdgeChangeEvent)
      */
-    public void edgeRemoved( GraphEdgeChangeEvent e ) {
-        init(  );
+    public void edgeRemoved(GraphEdgeChangeEvent e) {
+        init();
     }
-
 
     /**
      * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
-    public void vertexAdded( GraphVertexChangeEvent e ) {
-        init(  );
+    public void vertexAdded(GraphVertexChangeEvent e) {
+        init();
     }
-
 
     /**
      * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
-    public void vertexRemoved( GraphVertexChangeEvent e ) {
-        init(  );
+    public void vertexRemoved(GraphVertexChangeEvent e) {
+        init();
     }
 
 }

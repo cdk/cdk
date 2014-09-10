@@ -45,20 +45,35 @@ import org.openscience.cdk.interfaces.IReactionSet;
 public interface IValidator {
 
     public ValidationReport validateAtom(IAtom subject);
+
     public ValidationReport validateAtomContainer(IAtomContainer subject);
+
     public ValidationReport validateAtomType(IAtomType subject);
+
     public ValidationReport validateBond(IBond subject);
+
     public ValidationReport validateChemFile(IChemFile subject);
+
     public ValidationReport validateChemModel(IChemModel subject);
+
     public ValidationReport validateChemObject(IChemObject object);
+
     public ValidationReport validateChemSequence(IChemSequence subject);
+
     public ValidationReport validateCrystal(ICrystal subject);
+
     public ValidationReport validateElectronContainer(IElectronContainer subject);
+
     public ValidationReport validateElement(IElement subject);
+
     public ValidationReport validateIsotope(IIsotope subject);
+
     public ValidationReport validateMolecule(IAtomContainer subject);
+
     public ValidationReport validateReaction(IReaction subject);
+
     public ValidationReport validateMoleculeSet(IAtomContainerSet subject);
+
     public ValidationReport validateReactionSet(IReactionSet subject);
 
 }

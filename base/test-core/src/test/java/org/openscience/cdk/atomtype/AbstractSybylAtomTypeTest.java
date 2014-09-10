@@ -38,38 +38,34 @@ import org.openscience.cdk.silent.SilentChemObjectBuilder;
  */
 abstract public class AbstractSybylAtomTypeTest extends AbstractAtomTypeTest {
 
-	private final static String ATOMTYPE_LIST = "sybyl-atom-types.owl";
+    private final static String            ATOMTYPE_LIST = "sybyl-atom-types.owl";
 
-	protected final static AtomTypeFactory factory = AtomTypeFactory.getInstance(
-		"org/openscience/cdk/dict/data/" + ATOMTYPE_LIST,
-		SilentChemObjectBuilder.getInstance()
-    );
+    protected final static AtomTypeFactory factory       = AtomTypeFactory
+                                                                 .getInstance("org/openscience/cdk/dict/data/"
+                                                                         + ATOMTYPE_LIST,
+                                                                         SilentChemObjectBuilder.getInstance());
 
-	public String getAtomTypeListName() {
-		return ATOMTYPE_LIST;
-	};
+    public String getAtomTypeListName() {
+        return ATOMTYPE_LIST;
+    };
 
-	public AtomTypeFactory getFactory() {
-		return factory;
-	}
+    public AtomTypeFactory getFactory() {
+        return factory;
+    }
 
-	public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
-		return SybylAtomTypeMatcher.getInstance(builder);
-	}
+    public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
+        return SybylAtomTypeMatcher.getInstance(builder);
+    }
 
-    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol) throws Exception {
-        Assert.assertEquals(
-            "The number of expected atom types is unequal to the number of atoms",
-            expectedTypes.length, mol.getAtomCount()
-        );
+    public void assertAtomTypes(Map<String, Integer> testedAtomTypes, String[] expectedTypes, IAtomContainer mol)
+            throws Exception {
+        Assert.assertEquals("The number of expected atom types is unequal to the number of atoms",
+                expectedTypes.length, mol.getAtomCount());
         IAtomTypeMatcher atm = getAtomTypeMatcher(mol.getBuilder());
-        for (int i=0; i<expectedTypes.length; i++) {
+        for (int i = 0; i < expectedTypes.length; i++) {
             IAtom testedAtom = mol.getAtom(i);
             IAtomType foundType = atm.findMatchingAtomType(mol, testedAtom);
-            assertAtomType(testedAtomTypes,
-                "Incorrect perception for atom " + i,
-                expectedTypes[i], foundType
-            );
+            assertAtomType(testedAtomTypes, "Incorrect perception for atom " + i, expectedTypes[i], foundType);
         }
     }
 }

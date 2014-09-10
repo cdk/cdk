@@ -38,8 +38,7 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
 
     private String[] names;
 
-    public KierHallSmartsDescriptorTest() {
-    }
+    public KierHallSmartsDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
@@ -54,7 +53,8 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         return -1;
     }
 
-    @Test public void test1() throws Exception {
+    @Test
+    public void test1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("CCO");
 
@@ -87,7 +87,8 @@ public class KierHallSmartsDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(1, result.get(getIndex("khs.ssNH")));
     }
 
-    @Test public void test3() throws Exception {
+    @Test
+    public void test3() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("C#CC(C)(C)C(C)(C)C#C");
 

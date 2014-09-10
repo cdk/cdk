@@ -46,8 +46,8 @@ import org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
 @TestClass("org.openscience.cdk.geometry.cip.LigancyFourChiralityTest")
 class LigancyFourChirality {
 
-    private IAtom chiralAtom;
-    private ILigand[] ligands;
+    private IAtom                        chiralAtom;
+    private ILigand[]                    ligands;
     private ITetrahedralChirality.Stereo stereo;
 
     /**
@@ -79,7 +79,7 @@ class LigancyFourChirality {
         IAtom[] ligandAtoms = cdkChirality.getLigands();
         this.ligands = new ILigand[ligandAtoms.length];
         VisitedAtoms visitedAtoms = new VisitedAtoms();
-        for (int i=0; i<ligandAtoms.length; i++) {
+        for (int i = 0; i < ligandAtoms.length; i++) {
             // ITetrahedralChirality stores a impl hydrogen as the central atom
             if (ligandAtoms[i] == chiralAtom) {
                 this.ligands[i] = new ImplicitHydrogenLigand(container, visitedAtoms, chiralAtom);
@@ -134,11 +134,11 @@ class LigancyFourChirality {
         System.arraycopy(this.ligands, 0, newAtoms, 0, 4);
 
         // now move atoms around to match the newOrder
-        for (int i=0; i<3; i++) {
+        for (int i = 0; i < 3; i++) {
             if (newAtoms[i].getLigandAtom() != newOrder[i].getLigandAtom()) {
                 // OK, not in the right position
                 // find the incorrect, old position
-                for (int j=i; j<4; j++) {
+                for (int j = i; j < 4; j++) {
                     if (newAtoms[j].getLigandAtom() == newOrder[i].getLigandAtom()) {
                         // found the incorrect position
                         swap(newAtoms, i, j);
@@ -156,7 +156,7 @@ class LigancyFourChirality {
     }
 
     private void swap(ILigand[] ligands, int first, int second) {
-        ILigand tmpLigand= ligands[first];
+        ILigand tmpLigand = ligands[first];
         ligands[first] = ligands[second];
         ligands[second] = tmpLigand;
     }

@@ -24,6 +24,7 @@ import org.openscience.cdk.exception.CDKException;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
 /**
  * This class validate if the charge in the IMolecularFormula correspond with
  * a specific value. As default it is defined as neutral == 0.0.
@@ -48,12 +49,11 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-public class ChargeRule implements IRule{
+public class ChargeRule implements IRule {
 
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(ChargeRule.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(ChargeRule.class);
 
-	private double charge = 0.0;
+    private double              charge = 0.0;
 
     /**
      *  Constructor for the ChargeRule object.
@@ -61,8 +61,7 @@ public class ChargeRule implements IRule{
      *  @throws IOException            If an error occurs when reading atom type information
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
-    public ChargeRule() {
-    }
+    public ChargeRule() {}
 
     /**
      * Sets the parameters attribute of the ChargeRule object.
@@ -73,13 +72,11 @@ public class ChargeRule implements IRule{
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	 if (params.length != 1)
-             throw new CDKException("ChargeRule expects only one parameter");
+        if (params.length != 1) throw new CDKException("ChargeRule expects only one parameter");
 
-       	 if(!(params[0] instanceof Double))
-       		 throw new CDKException("The parameter must be of type Double");
+        if (!(params[0] instanceof Double)) throw new CDKException("The parameter must be of type Double");
 
-       	 charge = (Double) params[0];
+        charge = (Double) params[0];
     }
 
     /**
@@ -89,12 +86,11 @@ public class ChargeRule implements IRule{
      * @see    #setParameters
      */
     public Object[] getParameters() {
-    	// return the parameters as used for the rule validation
+        // return the parameters as used for the rule validation
         Object[] params = new Object[1];
         params[0] = charge;
         return params;
     }
-
 
     /**
      * Validate the charge of this IMolecularFormula.
@@ -104,15 +100,15 @@ public class ChargeRule implements IRule{
      */
 
     public double validate(IMolecularFormula formula) throws CDKException {
-    	logger.info("Start validation of ",formula);
+        logger.info("Start validation of ", formula);
 
-    	if (formula.getCharge() == null) {
-    		return 0.0;
-    	} else if(formula.getCharge() == charge) {
-    		return 1.0;
-    	} else {
-    		return 0.0;
-    	}
+        if (formula.getCharge() == null) {
+            return 0.0;
+        } else if (formula.getCharge() == charge) {
+            return 1.0;
+        } else {
+            return 0.0;
+        }
     }
 
 }

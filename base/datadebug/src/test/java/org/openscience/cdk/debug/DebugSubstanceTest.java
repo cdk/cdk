@@ -30,8 +30,10 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugSubstanceTest extends AbstractSubstanceTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugSubstance();
             }

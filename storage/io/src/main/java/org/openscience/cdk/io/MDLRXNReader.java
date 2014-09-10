@@ -65,9 +65,8 @@ import java.util.StringTokenizer;
 @TestClass("org.openscience.cdk.io.MDLRXNReaderTest")
 public class MDLRXNReader extends DefaultChemObjectReader {
 
-    BufferedReader input = null;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLReader.class);
+    BufferedReader              input  = null;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLReader.class);
 
     /**
      * Constructs a new MDLReader that can read Molecule from a given Reader.
@@ -75,20 +74,22 @@ public class MDLRXNReader extends DefaultChemObjectReader {
      * @param  in  The Reader to read from
      */
     public MDLRXNReader(Reader in) {
-    	this(in, Mode.RELAXED);
+        this(in, Mode.RELAXED);
     }
+
     public MDLRXNReader(Reader in, Mode mode) {
         if (in instanceof BufferedReader) {
-        	input = (BufferedReader)in;
+            input = (BufferedReader) in;
         } else {
-        	input = new BufferedReader(in);
+            input = new BufferedReader(in);
         }
         super.mode = mode;
     }
 
     public MDLRXNReader(InputStream input) {
-    	this(input, Mode.RELAXED);
+        this(input, Mode.RELAXED);
     }
+
     public MDLRXNReader(InputStream input, Mode mode) {
         this(new InputStreamReader(input), mode);
     }
@@ -105,7 +106,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -116,179 +117,180 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemModel.class.equals(interfaces[i])) return true;
-			if (IChemFile.class.equals(interfaces[i])) return true;
-			if (IReaction.class.equals(interfaces[i])) return true;
-			if (IReactionSet.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemModel.class.equals(interfaces[i])) return true;
+            if (IChemFile.class.equals(interfaces[i])) return true;
+            if (IReaction.class.equals(interfaces[i])) return true;
+            if (IReactionSet.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
-   /**
-     * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-     * this (from file, database, internet etc). If the specific implementation
-     * does not support a specific IChemObject it will throw an Exception.
-     *
-     * @param  object                              The object that subclasses
-     *      IChemObject
-     * @return                                     The IChemObject read
-     * @exception  CDKException
-     */
-	public <T extends IChemObject> T read(T object) throws CDKException {
-         if (object instanceof IChemFile) {
-        	 return (T)readChemFile((IChemFile)object);
-         } else if (object instanceof IChemModel) {
-        	 return (T)readChemModel((IChemModel)object);
-         } else if (object instanceof IReactionSet) {
-             return (T)readReactionSet((IReactionSet)object);
-         } else if (object instanceof IReaction) {
-             return (T)readReaction(object.getBuilder());
-         } else {
-             throw new CDKException("Only supported are Reaction, ReactionSet, ChemModel and ChemFile, and not " +
-                 object.getClass().getName() + "."
-             );
-         }
-     }
+    /**
+      * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
+      * this (from file, database, internet etc). If the specific implementation
+      * does not support a specific IChemObject it will throw an Exception.
+      *
+      * @param  object                              The object that subclasses
+      *      IChemObject
+      * @return                                     The IChemObject read
+      * @exception  CDKException
+      */
+    public <T extends IChemObject> T read(T object) throws CDKException {
+        if (object instanceof IChemFile) {
+            return (T) readChemFile((IChemFile) object);
+        } else if (object instanceof IChemModel) {
+            return (T) readChemModel((IChemModel) object);
+        } else if (object instanceof IReactionSet) {
+            return (T) readReactionSet((IReactionSet) object);
+        } else if (object instanceof IReaction) {
+            return (T) readReaction(object.getBuilder());
+        } else {
+            throw new CDKException("Only supported are Reaction, ReactionSet, ChemModel and ChemFile, and not "
+                    + object.getClass().getName() + ".");
+        }
+    }
 
-     @TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(IChemObject object) {
-         if (object instanceof IReaction) {
-             return true;
-         } else if (object instanceof IChemModel) {
-             return true;
-         } else if (object instanceof IChemFile) {
-             return true;
-         } else if (object instanceof IReactionSet) {
-             return true;
-         }
-         return false;
-     }
+        if (object instanceof IReaction) {
+            return true;
+        } else if (object instanceof IChemModel) {
+            return true;
+        } else if (object instanceof IChemFile) {
+            return true;
+        } else if (object instanceof IReactionSet) {
+            return true;
+        }
+        return false;
+    }
 
-     /**
- 	 * Read a ChemFile from a file in MDL RDF format.
- 	 *
- 	 * @param  chemFile The IChemFile
- 	 * @return          The IChemFile that was read from the RDF file.
- 	 */
-     private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
-         IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
+    /**
+    * Read a ChemFile from a file in MDL RDF format.
+    *
+    * @param  chemFile The IChemFile
+    * @return          The IChemFile that was read from the RDF file.
+    */
+    private IChemFile readChemFile(IChemFile chemFile) throws CDKException {
+        IChemSequence chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
 
-         IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
-         chemSequence.addChemModel(readChemModel(chemModel));
-         chemFile.addChemSequence(chemSequence);
- 		return chemFile;
- 	 }
-     /**
-  	 * Read a IChemModel from a file in MDL RDF format.
-  	 *
-  	 * @param  chemModel The IChemModel
-  	 * @return           The IChemModel that was read from the RDF file
-  	 */
-      private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
-    	  IReactionSet setOfReactions = chemModel.getReactionSet();
-          if (setOfReactions == null) {
-         	 setOfReactions = chemModel.getBuilder().newInstance(IReactionSet.class);
-          }
-          chemModel.setReactionSet(readReactionSet(setOfReactions));
-          return chemModel;
-      }
-     /**
- 	 * Read a IReactionSet from a file in MDL RDF format.
- 	 *
- 	 * @param  setOfReactions The IReactionSet
- 	 * @return                The IReactionSet that was read from the RDF file
- 	 */
-     private IReactionSet readReactionSet(IReactionSet setOfReactions) throws CDKException {
+        IChemModel chemModel = chemFile.getBuilder().newInstance(IChemModel.class);
+        chemSequence.addChemModel(readChemModel(chemModel));
+        chemFile.addChemSequence(chemSequence);
+        return chemFile;
+    }
 
-         IReaction r = readReaction(setOfReactions.getBuilder());
- 		  if (r != null) {
- 			setOfReactions.addReaction(r);
- 	      }
+    /**
+    * Read a IChemModel from a file in MDL RDF format.
+    *
+    * @param  chemModel The IChemModel
+    * @return           The IChemModel that was read from the RDF file
+    */
+    private IChemModel readChemModel(IChemModel chemModel) throws CDKException {
+        IReactionSet setOfReactions = chemModel.getReactionSet();
+        if (setOfReactions == null) {
+            setOfReactions = chemModel.getBuilder().newInstance(IReactionSet.class);
+        }
+        chemModel.setReactionSet(readReactionSet(setOfReactions));
+        return chemModel;
+    }
 
-         try {
-             String line;
-             while ((line = input.readLine()) != null) {
-                 logger.debug("line: ", line);
-                 // apparently, this is a SDF file, continue with
-                 // reading mol files
-                 if (line.equals("$$$$")) {
-		 		    r = readReaction(setOfReactions.getBuilder());
+    /**
+    * Read a IReactionSet from a file in MDL RDF format.
+    *
+    * @param  setOfReactions The IReactionSet
+    * @return                The IReactionSet that was read from the RDF file
+    */
+    private IReactionSet readReactionSet(IReactionSet setOfReactions) throws CDKException {
 
-		 		    if (r != null) {
-			 			setOfReactions.addReaction(r);
-		 		    }
-		 		} else {
-		 		    // here the stuff between 'M  END' and '$$$$'
-		 		    if (r != null) {
-			 			// ok, the first lines should start with '>'
-			 			String fieldName = null;
+        IReaction r = readReaction(setOfReactions.getBuilder());
+        if (r != null) {
+            setOfReactions.addReaction(r);
+        }
+
+        try {
+            String line;
+            while ((line = input.readLine()) != null) {
+                logger.debug("line: ", line);
+                // apparently, this is a SDF file, continue with
+                // reading mol files
+                if (line.equals("$$$$")) {
+                    r = readReaction(setOfReactions.getBuilder());
+
+                    if (r != null) {
+                        setOfReactions.addReaction(r);
+                    }
+                } else {
+                    // here the stuff between 'M  END' and '$$$$'
+                    if (r != null) {
+                        // ok, the first lines should start with '>'
+                        String fieldName = null;
                         if (line.startsWith("> ")) {
-			 			    // ok, should extract the field name
+                            // ok, should extract the field name
                             int index = line.indexOf('<');
-			 			    if (index != -1) {
+                            if (index != -1) {
                                 int index2 = line.substring(index).indexOf('>');
-				 				if (index2 != -1) {
-                                    fieldName = line.substring(index+1,index+index2);
-				 				}
-			 			    }
-			 			    // end skip all other lines
-			 			    while ((line = input.readLine()) != null && line.startsWith(">")) {
-			                     logger.debug("data header line: ", line);
-			 			    }
-			 			 }
-			             if (line == null) {
-			                 throw new CDKException("Expecting data line here, but found null!");
-			             }
-			 			String data = line;
-			 			while ((line = input.readLine()) != null &&
-			 			       line.trim().length() > 0) {
-			                 if (line.equals("$$$$")) {
-			                 	logger.error("Expecting data line here, but found end of molecule: ", line);
-			                 	break;
-			                 }
-			                 logger.debug("data line: ", line);
-			 			    data += line;
-			 			    // preserve newlines, unless the line is exactly 80 chars; in that case it
-			 			    // is assumed to continue on the next line. See MDL documentation.
-			 			    if (line.length() < 80) data += System.getProperty("line.separator");
-			 			}
-			 			if (fieldName != null) {
-			 			    logger.info("fieldName, data: ", fieldName, ", ", data);
-			 			    r.setProperty(fieldName, data);
-			 			}
-		 		    }
-		 		}
-             }
-         } catch (CDKException cdkexc) {
-             throw cdkexc;
-         } catch (Exception exception) {
-             String error = "Error while parsing SDF";
-             logger.error(error);
-             logger.debug(exception);
-             throw new CDKException(error, exception);
-         }
+                                if (index2 != -1) {
+                                    fieldName = line.substring(index + 1, index + index2);
+                                }
+                            }
+                            // end skip all other lines
+                            while ((line = input.readLine()) != null && line.startsWith(">")) {
+                                logger.debug("data header line: ", line);
+                            }
+                        }
+                        if (line == null) {
+                            throw new CDKException("Expecting data line here, but found null!");
+                        }
+                        String data = line;
+                        while ((line = input.readLine()) != null && line.trim().length() > 0) {
+                            if (line.equals("$$$$")) {
+                                logger.error("Expecting data line here, but found end of molecule: ", line);
+                                break;
+                            }
+                            logger.debug("data line: ", line);
+                            data += line;
+                            // preserve newlines, unless the line is exactly 80 chars; in that case it
+                            // is assumed to continue on the next line. See MDL documentation.
+                            if (line.length() < 80) data += System.getProperty("line.separator");
+                        }
+                        if (fieldName != null) {
+                            logger.info("fieldName, data: ", fieldName, ", ", data);
+                            r.setProperty(fieldName, data);
+                        }
+                    }
+                }
+            }
+        } catch (CDKException cdkexc) {
+            throw cdkexc;
+        } catch (Exception exception) {
+            String error = "Error while parsing SDF";
+            logger.error(error);
+            logger.debug(exception);
+            throw new CDKException(error, exception);
+        }
 
-         return setOfReactions;
-     }
+        return setOfReactions;
+    }
+
     /**
      * Read a Reaction from a file in MDL RXN format
      *
      * @return  The Reaction that was read from the MDL file.
      */
     private IReaction readReaction(IChemObjectBuilder builder) throws CDKException {
-    	logger.debug("Reading new reaction");
+        logger.debug("Reading new reaction");
         int linecount = 0;
-    	IReaction reaction = builder.newInstance(IReaction.class);
+        IReaction reaction = builder.newInstance(IReaction.class);
         try {
             input.readLine(); // first line should be $RXN
             input.readLine(); // second line
@@ -312,8 +314,9 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 logger.debug("File is empty, returning empty reaction");
                 return reaction;
             }
-            /* this line contains the number of reactants
-               and products */
+            /*
+             * this line contains the number of reactants and products
+             */
             StringTokenizer tokenizer = new StringTokenizer(countsLine);
             reactantCount = Integer.valueOf(tokenizer.nextToken()).intValue();
             logger.info("Expecting " + reactantCount + " reactants in file");
@@ -326,7 +329,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
         // now read the reactants
         try {
-            for (int i=1; i<=reactantCount; i++) {
+            for (int i = 1; i <= reactantCount; i++) {
                 StringBuffer molFile = new StringBuffer();
                 input.readLine(); // announceMDLFileLine
                 String molFileLine = "";
@@ -337,11 +340,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content
-                MDLReader reader = new MDLReader(
-                  new StringReader(molFile.toString()));
-                IAtomContainer reactant = (IAtomContainer)reader.read(
-                  builder.newInstance(IAtomContainer.class)
-                );
+                MDLReader reader = new MDLReader(new StringReader(molFile.toString()));
+                IAtomContainer reactant = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -357,7 +357,7 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
         // now read the products
         try {
-            for (int i=1; i<=productCount; i++) {
+            for (int i = 1; i <= productCount; i++) {
                 StringBuffer molFile = new StringBuffer();
                 input.readLine(); // String announceMDLFileLine =
                 String molFileLine = "";
@@ -368,12 +368,8 @@ public class MDLRXNReader extends DefaultChemObjectReader {
                 } while (!molFileLine.equals("M  END"));
 
                 // read MDL molfile content
-                MDLReader reader = new MDLReader(
-                    new StringReader(molFile.toString()),
-                    super.mode
-                );
-                IAtomContainer product = (IAtomContainer)reader.read(
-                  builder.newInstance(IAtomContainer.class));
+                MDLReader reader = new MDLReader(new StringReader(molFile.toString()), super.mode);
+                IAtomContainer product = (IAtomContainer) reader.read(builder.newInstance(IAtomContainer.class));
                 reader.close();
 
                 // add reactant
@@ -403,17 +399,16 @@ public class MDLRXNReader extends DefaultChemObjectReader {
 
         // map the atoms
         int mappingCount = 0;
-//        IAtom[] reactantAtoms = reactingSide.getAtoms();
-//        IAtom[] producedAtoms = producedSide.getAtoms();
-        for (int i=0; i<reactingSide.getAtomCount(); i++) {
-            for (int j=0; j<producedSide.getAtomCount(); j++) {
-            	IAtom eductAtom = reactingSide.getAtom(i);
-            	IAtom productAtom = producedSide.getAtom(j);
-                if (eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null &&
-                		eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(productAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING))) {
-                    reaction.addMapping(
-                        builder.newInstance(IMapping.class,eductAtom, productAtom)
-                    );
+        //        IAtom[] reactantAtoms = reactingSide.getAtoms();
+        //        IAtom[] producedAtoms = producedSide.getAtoms();
+        for (int i = 0; i < reactingSide.getAtomCount(); i++) {
+            for (int j = 0; j < producedSide.getAtomCount(); j++) {
+                IAtom eductAtom = reactingSide.getAtom(i);
+                IAtom productAtom = producedSide.getAtom(j);
+                if (eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING) != null
+                        && eductAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING).equals(
+                                productAtom.getProperty(CDKConstants.ATOM_ATOM_MAPPING))) {
+                    reaction.addMapping(builder.newInstance(IMapping.class, eductAtom, productAtom));
                     mappingCount++;
                     break;
                 }
@@ -429,4 +424,3 @@ public class MDLRXNReader extends DefaultChemObjectReader {
         input.close();
     }
 }
-

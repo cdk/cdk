@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class TurboMoleFormatTest extends ChemFormatTest {
 
     public TurboMoleFormatTest() {
-        super.setChemFormat((IChemFormat)TurboMoleFormat.getInstance());
+        super.setChemFormat((IChemFormat) TurboMoleFormat.getInstance());
     }
 
 }

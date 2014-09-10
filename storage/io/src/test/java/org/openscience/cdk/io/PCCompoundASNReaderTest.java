@@ -41,24 +41,26 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  */
 public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundASNReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundASNReader(), "data/asn/pubchem/cid1.asn");
     }
 
-    @Test public void testAccepts() {
-    	PCCompoundASNReader reader = new PCCompoundASNReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        PCCompoundASNReader reader = new PCCompoundASNReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    @Test public void testReading() throws Exception {
+    @Test
+    public void testReading() throws Exception {
         String filename = "data/asn/pubchem/cid1.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundASNReader reader = new PCCompoundASNReader(ins);
-        IChemFile cFile = (IChemFile)reader.read(new ChemFile());
+        IChemFile cFile = (IChemFile) reader.read(new ChemFile());
         reader.close();
         List<IAtomContainer> containers = ChemFileManipulator.getAllAtomContainers(cFile);
         Assert.assertEquals(1, containers.size());
@@ -81,8 +83,7 @@ public class PCCompoundASNReaderTest extends SimpleChemObjectReaderTest {
 
         // some extracted props
         Assert.assertEquals("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
-        		molecule.getProperty(CDKConstants.INCHI));
-        Assert.assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C",
-        		molecule.getProperty(CDKConstants.SMILES));
+                molecule.getProperty(CDKConstants.INCHI));
+        Assert.assertEquals("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.getProperty(CDKConstants.SMILES));
     }
 }

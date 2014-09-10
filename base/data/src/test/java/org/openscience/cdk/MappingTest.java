@@ -37,18 +37,21 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class MappingTest extends AbstractMappingTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new Mapping(new Atom(), new Atom());
             }
         });
     }
 
-    @Test public void testMapping_IChemObject_IChemObject() {
+    @Test
+    public void testMapping_IChemObject_IChemObject() {
         IChemObject object = newChemObject();
-        IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class),
-            object.getBuilder().newInstance(IAtom.class));
+        IMapping mapping = new Mapping(object.getBuilder().newInstance(IAtom.class), object.getBuilder().newInstance(
+                IAtom.class));
         Assert.assertNotNull(mapping);
     }
 

@@ -63,8 +63,3 @@ public interface IStereoElement extends ICDKObject {
     IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds);
 
 }
-
-
-
-
-

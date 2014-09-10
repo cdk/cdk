@@ -148,8 +148,8 @@ public class RingSearchTest {
 
         CyclicVertexSearch cyclicSearch = mock(CyclicVertexSearch.class);
         IAtomContainer container = mock(IAtomContainer.class);
-        IAtom a1   = mock(IAtom.class);
-        IAtom a2   = mock(IAtom.class);
+        IAtom a1 = mock(IAtom.class);
+        IAtom a2 = mock(IAtom.class);
         IBond bond = mock(IBond.class);
 
         when(container.getAtomNumber(a1)).thenReturn(42);
@@ -220,20 +220,25 @@ public class RingSearchTest {
         when(cyclicSearch.fused()).thenReturn(new int[0][0]);
         when(container.getAtomCount()).thenReturn(3);
         when(container.getBuilder()).thenReturn(builder);
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
-                .thenReturn(mock(IAtomContainer.class));
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
         when(container.bonds()).thenReturn(new Iterable<IBond>() {
-            @Override public Iterator<IBond> iterator() {
+
+            @Override
+            public Iterator<IBond> iterator() {
                 return new Iterator<IBond>() {
-                    @Override public boolean hasNext() {
+
+                    @Override
+                    public boolean hasNext() {
                         return false;
                     }
 
-                    @Override public IBond next() {
+                    @Override
+                    public IBond next() {
                         return null;
                     }
 
-                    @Override public void remove() {
+                    @Override
+                    public void remove() {
 
                     }
                 };
@@ -265,25 +270,30 @@ public class RingSearchTest {
         when(cyclicSearch.isolated()).thenReturn(new int[][]{{0, 1}, {2}});
         when(container.getBuilder()).thenReturn(builder);
         when(container.bonds()).thenReturn(new Iterable<IBond>() {
-            @Override public Iterator<IBond> iterator() {
+
+            @Override
+            public Iterator<IBond> iterator() {
                 return new Iterator<IBond>() {
-                    @Override public boolean hasNext() {
+
+                    @Override
+                    public boolean hasNext() {
                         return false;
                     }
 
-                    @Override public IBond next() {
+                    @Override
+                    public IBond next() {
                         return null;
                     }
 
-                    @Override public void remove() {
+                    @Override
+                    public void remove() {
 
                     }
                 };
             }
         });
         when(container.getAtom(anyInt())).thenReturn(mock(IAtom.class));
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
-                .thenReturn(mock(IAtomContainer.class));
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
 
         ringSearch.isolatedRingFragments();
 
@@ -310,20 +320,25 @@ public class RingSearchTest {
 
         when(cyclicSearch.fused()).thenReturn(new int[][]{{0, 1}, {2}});
         when(container.getBuilder()).thenReturn(builder);
-        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0))
-                .thenReturn(mock(IAtomContainer.class));
+        when(builder.newInstance(IAtomContainer.class, 0, 0, 0, 0)).thenReturn(mock(IAtomContainer.class));
         when(container.bonds()).thenReturn(new Iterable<IBond>() {
-            @Override public Iterator<IBond> iterator() {
+
+            @Override
+            public Iterator<IBond> iterator() {
                 return new Iterator<IBond>() {
-                    @Override public boolean hasNext() {
+
+                    @Override
+                    public boolean hasNext() {
                         return false;
                     }
 
-                    @Override public IBond next() {
+                    @Override
+                    public IBond next() {
                         return null;
                     }
 
-                    @Override public void remove() {
+                    @Override
+                    public void remove() {
 
                     }
                 };
@@ -344,17 +359,18 @@ public class RingSearchTest {
         verify(builder, times(2)).newInstance(IAtomContainer.class, 0, 0, 0, 0);
     }
 
-
-    @Test public void connectingEdge1() {
-        IAtomContainer mol  = diSpiroPentane();
-        RingSearch     rs   = new RingSearch(mol);
+    @Test
+    public void connectingEdge1() {
+        IAtomContainer mol = diSpiroPentane();
+        RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
         assertThat(mol.getBondCount(), is(frag.getBondCount() + 1));
     }
 
-    @Test public void connectingEdge2() {
-        IAtomContainer mol  = triSpiroPentane();
-        RingSearch     rs   = new RingSearch(mol);
+    @Test
+    public void connectingEdge2() {
+        IAtomContainer mol = triSpiroPentane();
+        RingSearch rs = new RingSearch(mol);
         IAtomContainer frag = rs.ringFragments();
         assertThat(mol.getBondCount(), is(frag.getBondCount()));
     }
@@ -436,68 +452,68 @@ public class RingSearchTest {
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-        IAtom a1 = builder.newInstance(IAtom.class,"C");
+        IAtom a1 = builder.newInstance(IAtom.class, "C");
         a1.setFormalCharge(0);
         mol.addAtom(a1);
-        IAtom a2 = builder.newInstance(IAtom.class,"C");
+        IAtom a2 = builder.newInstance(IAtom.class, "C");
         a2.setFormalCharge(0);
         mol.addAtom(a2);
-        IAtom a3 = builder.newInstance(IAtom.class,"C");
+        IAtom a3 = builder.newInstance(IAtom.class, "C");
         a3.setFormalCharge(0);
         mol.addAtom(a3);
-        IAtom a4 = builder.newInstance(IAtom.class,"C");
+        IAtom a4 = builder.newInstance(IAtom.class, "C");
         a4.setFormalCharge(0);
         mol.addAtom(a4);
-        IAtom a5 = builder.newInstance(IAtom.class,"C");
+        IAtom a5 = builder.newInstance(IAtom.class, "C");
         a5.setFormalCharge(0);
         mol.addAtom(a5);
-        IAtom a6 = builder.newInstance(IAtom.class,"C");
+        IAtom a6 = builder.newInstance(IAtom.class, "C");
         a6.setFormalCharge(0);
         mol.addAtom(a6);
-        IAtom a7 = builder.newInstance(IAtom.class,"C");
+        IAtom a7 = builder.newInstance(IAtom.class, "C");
         a7.setFormalCharge(0);
         mol.addAtom(a7);
-        IAtom a8 = builder.newInstance(IAtom.class,"C");
+        IAtom a8 = builder.newInstance(IAtom.class, "C");
         a8.setFormalCharge(0);
         mol.addAtom(a8);
-        IAtom a9 = builder.newInstance(IAtom.class,"C");
+        IAtom a9 = builder.newInstance(IAtom.class, "C");
         a9.setFormalCharge(0);
         mol.addAtom(a9);
-        IAtom a10 = builder.newInstance(IAtom.class,"C");
+        IAtom a10 = builder.newInstance(IAtom.class, "C");
         a10.setFormalCharge(0);
         mol.addAtom(a10);
-        IAtom a11 = builder.newInstance(IAtom.class,"C");
+        IAtom a11 = builder.newInstance(IAtom.class, "C");
         a11.setFormalCharge(0);
         mol.addAtom(a11);
-        IBond b1 = builder.newInstance(IBond.class,a1, a2, IBond.Order.SINGLE);
+        IBond b1 = builder.newInstance(IBond.class, a1, a2, IBond.Order.SINGLE);
         mol.addBond(b1);
-        IBond b2 = builder.newInstance(IBond.class,a2, a3, IBond.Order.SINGLE);
+        IBond b2 = builder.newInstance(IBond.class, a2, a3, IBond.Order.SINGLE);
         mol.addBond(b2);
-        IBond b3 = builder.newInstance(IBond.class,a1, a3, IBond.Order.SINGLE);
+        IBond b3 = builder.newInstance(IBond.class, a1, a3, IBond.Order.SINGLE);
         mol.addBond(b3);
-        IBond b4 = builder.newInstance(IBond.class,a3, a4, IBond.Order.SINGLE);
+        IBond b4 = builder.newInstance(IBond.class, a3, a4, IBond.Order.SINGLE);
         mol.addBond(b4);
-        IBond b5 = builder.newInstance(IBond.class,a4, a5, IBond.Order.SINGLE);
+        IBond b5 = builder.newInstance(IBond.class, a4, a5, IBond.Order.SINGLE);
         mol.addBond(b5);
-        IBond b6 = builder.newInstance(IBond.class,a3, a5, IBond.Order.SINGLE);
+        IBond b6 = builder.newInstance(IBond.class, a3, a5, IBond.Order.SINGLE);
         mol.addBond(b6);
-        IBond b7 = builder.newInstance(IBond.class,a6, a7, IBond.Order.SINGLE);
+        IBond b7 = builder.newInstance(IBond.class, a6, a7, IBond.Order.SINGLE);
         mol.addBond(b7);
-        IBond b8 = builder.newInstance(IBond.class,a7, a8, IBond.Order.SINGLE);
+        IBond b8 = builder.newInstance(IBond.class, a7, a8, IBond.Order.SINGLE);
         mol.addBond(b8);
-        IBond b9 = builder.newInstance(IBond.class,a3, a8, IBond.Order.SINGLE);
+        IBond b9 = builder.newInstance(IBond.class, a3, a8, IBond.Order.SINGLE);
         mol.addBond(b9);
-        IBond b10 = builder.newInstance(IBond.class,a6, a8, IBond.Order.SINGLE);
+        IBond b10 = builder.newInstance(IBond.class, a6, a8, IBond.Order.SINGLE);
         mol.addBond(b10);
-        IBond b11 = builder.newInstance(IBond.class,a8, a9, IBond.Order.SINGLE);
+        IBond b11 = builder.newInstance(IBond.class, a8, a9, IBond.Order.SINGLE);
         mol.addBond(b11);
-        IBond b12 = builder.newInstance(IBond.class,a9, a10, IBond.Order.SINGLE);
+        IBond b12 = builder.newInstance(IBond.class, a9, a10, IBond.Order.SINGLE);
         mol.addBond(b12);
-        IBond b13 = builder.newInstance(IBond.class,a8, a10, IBond.Order.SINGLE);
+        IBond b13 = builder.newInstance(IBond.class, a8, a10, IBond.Order.SINGLE);
         mol.addBond(b13);
-        IBond b14 = builder.newInstance(IBond.class,a8, a11, IBond.Order.SINGLE);
+        IBond b14 = builder.newInstance(IBond.class, a8, a11, IBond.Order.SINGLE);
         mol.addBond(b14);
-        IBond b15 = builder.newInstance(IBond.class,a3, a11, IBond.Order.SINGLE);
+        IBond b15 = builder.newInstance(IBond.class, a3, a11, IBond.Order.SINGLE);
         mol.addBond(b15);
         return mol;
     }

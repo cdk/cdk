@@ -43,7 +43,7 @@ public class PharmacophoreAngleBond extends Bond {
      * @param patom3 The third pharmacophore group
      */
     public PharmacophoreAngleBond(PharmacophoreAtom patom1, PharmacophoreAtom patom2, PharmacophoreAtom patom3) {
-        super(new PharmacophoreAtom[] {patom1, patom2, patom3});
+        super(new PharmacophoreAtom[]{patom1, patom2, patom3});
     }
 
     /**
@@ -62,12 +62,11 @@ public class PharmacophoreAngleBond extends Bond {
         double b2 = atom3.getPoint3d().distanceSquared(atom2.getPoint3d());
         double c2 = atom2.getPoint3d().distanceSquared(atom1.getPoint3d());
 
-        double cosangle = (b2+c2-a2) / (2*Math.sqrt(b2)*Math.sqrt(c2));
-        if (-1.0-epsilon < cosangle && -1.0+epsilon > cosangle) return 180.0;
-        if (1.0-epsilon < cosangle && 1.0+epsilon > cosangle) return 0.0;
+        double cosangle = (b2 + c2 - a2) / (2 * Math.sqrt(b2) * Math.sqrt(c2));
+        if (-1.0 - epsilon < cosangle && -1.0 + epsilon > cosangle) return 180.0;
+        if (1.0 - epsilon < cosangle && 1.0 + epsilon > cosangle) return 0.0;
 
         return Math.acos(cosangle) * 180.0 / Math.PI;
     }
-
 
 }

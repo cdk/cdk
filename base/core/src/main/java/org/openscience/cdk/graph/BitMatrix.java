@@ -65,16 +65,16 @@ final class BitMatrix {
     private final BitSet[] rows;
 
     /** keep track of row swaps. */
-    private final int[] indices;
+    private final int[]    indices;
 
     /** maximum number of rows. */
-    private final int max;
+    private final int      max;
 
     /** number of columns. */
-    private final int n;
+    private final int      n;
 
     /** current number of rows. */
-    private int m;
+    private int            m;
 
     /**
      * Create a new bit matrix with the given number of columns and rows. Note
@@ -99,7 +99,8 @@ final class BitMatrix {
      * @param i row index
      * @param j row index
      */
-    @TestMethod("swap") void swap(int i, int j) {
+    @TestMethod("swap")
+    void swap(int i, int j) {
         BitSet row = rows[i];
         int k = indices[i];
         rows[i] = rows[j];
@@ -116,8 +117,7 @@ final class BitMatrix {
      */
     private int rowIndex(int j) {
         for (int i = 0; i < indices.length; i++) {
-            if (indices[i] == j)
-                return i;
+            if (indices[i] == j) return i;
         }
         return -1;
     }
@@ -159,8 +159,7 @@ final class BitMatrix {
      */
     @TestMethod("swap,clear")
     public void add(BitSet row) {
-        if (m >= max)
-            throw new IndexOutOfBoundsException("initalise matrix with more rows");
+        if (m >= max) throw new IndexOutOfBoundsException("initalise matrix with more rows");
         rows[m] = row;
         indices[m] = m;
         m++;
@@ -191,12 +190,10 @@ final class BitMatrix {
 
             int i = indexOf(x, y);
 
-            if (i < 0)
-                return eliminate(x + 1, y);
+            if (i < 0) return eliminate(x + 1, y);
 
             // reorder rows
-            if (i != y)
-                swap(i, y);
+            if (i != y) swap(i, y);
 
             // xor row with all vectors that have x set
             // note: rows above y are not touched, this isn't an issue in
@@ -204,14 +201,12 @@ final class BitMatrix {
             //       new additions being independent. However starting from
             //       j = 0 allows you to change this but of course is slower.
             for (int j = y + 1; j < m; j++)
-                if (rows[j].get(x))
-                    rows[j] = xor(rows[j], rows[y]);
+                if (rows[j].get(x)) rows[j] = xor(rows[j], rows[y]);
 
             y++;
         }
         return y;
     }
-
 
     /**
      * Index of the the first row after {@literal y} where {@literal x} is set.
@@ -220,17 +215,18 @@ final class BitMatrix {
      * @param y row index
      * @return the first index where {@literal x} is set, index is < 0 if none
      */
-    @TestMethod("indexOf") int indexOf(int x, int y) {
+    @TestMethod("indexOf")
+    int indexOf(int x, int y) {
         for (int j = y; j < m; j++) {
-            if (rows[j].get(x))
-                return j;
+            if (rows[j].get(x)) return j;
         }
         return -1;
     }
 
     /** @inheritDoc */
     @TestMethod("string")
-    @Override public String toString() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder((4 + n) * m);
         for (int j = 0; j < m; j++) {
             sb.append(indices[j]).append(": ");
@@ -268,8 +264,7 @@ final class BitMatrix {
 
         int rows = 0, cols = 0;
         for (final Cycle c : cycles) {
-            if (c.edgeVector().length() > cols)
-                cols = c.edgeVector().length();
+            if (c.edgeVector().length() > cols) cols = c.edgeVector().length();
             rows++;
         }
 
@@ -293,8 +288,7 @@ final class BitMatrix {
 
         int rows = 1, cols = cycle.edgeVector().length();
         for (final Cycle c : cycles) {
-            if (c.edgeVector().length() > cols)
-                cols = c.edgeVector().length();
+            if (c.edgeVector().length() > cols) cols = c.edgeVector().length();
             rows++;
         }
 

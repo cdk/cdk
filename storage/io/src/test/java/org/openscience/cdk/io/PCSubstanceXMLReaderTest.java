@@ -38,24 +38,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class PCSubstanceXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCSubstanceXMLReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new PCSubstanceXMLReader(), "data/asn/pubchem/sid577309.xml");
     }
 
-    @Test public void testAccepts() throws Exception {
-    	PCSubstanceXMLReader reader = new PCSubstanceXMLReader();
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() throws Exception {
+        PCSubstanceXMLReader reader = new PCSubstanceXMLReader();
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
-    @Test public void testReading() throws Exception {
+    @Test
+    public void testReading() throws Exception {
         String filename = "data/asn/pubchem/sid577309.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
-        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         Assert.assertNotNull(molecule);
 
         // check atom stuff

@@ -51,26 +51,25 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class ReactionManipulatorTest extends CDKTestCase {
 
-	private IReaction reaction;
-   	private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    private IReaction          reaction;
+    private IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
 
-	public ReactionManipulatorTest() {
-		super();
-	}
+    public ReactionManipulatorTest() {
+        super();
+    }
 
     @Before
     public void setUp() throws Exception {
-		String filename1 = "data/mdl/reaction-1.rxn";
+        String filename1 = "data/mdl/reaction-1.rxn";
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNReader reader1 = new MDLRXNReader(ins1);
-        ReactionSet set = (ReactionSet)reader1.read(new ReactionSet());
+        ReactionSet set = (ReactionSet) reader1.read(new ReactionSet());
         reaction = set.getReaction(0);
         reader1.close();
     }
 
-
-
-    @Test public void testReverse_IReaction() {
+    @Test
+    public void testReverse_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setDirection(IReaction.Direction.BACKWARD);
         IAtomContainer water = new AtomContainer();
@@ -78,14 +77,15 @@ public class ReactionManipulatorTest extends CDKTestCase {
         reaction.addReactant(new AtomContainer());
         reaction.addProduct(new AtomContainer());
 
-        Reaction reversedReaction = (Reaction)ReactionManipulator.reverse(reaction);
+        Reaction reversedReaction = (Reaction) ReactionManipulator.reverse(reaction);
         Assert.assertEquals(IReaction.Direction.FORWARD, reversedReaction.getDirection());
         Assert.assertEquals(2, reversedReaction.getProductCount());
         Assert.assertEquals(1, reversedReaction.getReactantCount());
         Assert.assertEquals(3.0, reversedReaction.getProductCoefficient(water), 0.00001);
     }
 
-    @Test public void testGetAllIDs_IReaction() {
+    @Test
+    public void testGetAllIDs_IReaction() {
         Reaction reaction = new Reaction();
         reaction.setID("r1");
         IAtomContainer water = new AtomContainer();
@@ -100,186 +100,195 @@ public class ReactionManipulatorTest extends CDKTestCase {
         Assert.assertNotNull(ids);
         Assert.assertEquals(5, ids.size());
     }
-    /**
-	 * A unit test suite for JUnit. Test of mapped IAtoms
-	 *
-	 * @return    The test suite
-	 */
-    @Test public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
-    	IReaction reaction = builder.newInstance(IReaction.class);
-    	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
-    	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
 
-    	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
+    /**
+     * A unit test suite for JUnit. Test of mapped IAtoms
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testGetMappedChemObject_IReaction_IAtom() throws Exception {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
+        IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
+
+        IMapping mapping = builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
         reaction.addMapping(mapping);
-        mapping = builder.newInstance(IMapping.class,reactant.getAtom(1),product.getAtom(1));
+        mapping = builder.newInstance(IMapping.class, reactant.getAtom(1), product.getAtom(1));
         reaction.addMapping(mapping);
-        mapping = builder.newInstance(IMapping.class,reactant.getAtom(2),product.getAtom(2));
+        mapping = builder.newInstance(IMapping.class, reactant.getAtom(2), product.getAtom(2));
         reaction.addMapping(mapping);
 
         reaction.addReactant(reactant);
         reaction.addProduct(product);
 
-        IAtom mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
+        IAtom mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, reactant.getAtom(0));
         Assert.assertEquals(mappedAtom, product.getAtom(0));
 
-        mappedAtom = (IAtom)ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
+        mappedAtom = (IAtom) ReactionManipulator.getMappedChemObject(reaction, product.getAtom(1));
         Assert.assertEquals(mappedAtom, reactant.getAtom(1));
 
-
     }
-    /**
-	 * A unit test suite for JUnit. Test of mapped IBond
-	 *
-	 * @return    The test suite
-	 */
-    @Test public void testGetMappedChemObject_IReaction_IBond()throws ClassNotFoundException, CDKException, java.lang.Exception {
-    	IReaction reaction = builder.newInstance(IReaction.class);
-    	IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
-    	IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
 
-    	IMapping mapping = builder.newInstance(IMapping.class,reactant.getAtom(0),product.getAtom(0));
+    /**
+     * A unit test suite for JUnit. Test of mapped IBond
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testGetMappedChemObject_IReaction_IBond() throws ClassNotFoundException, CDKException,
+            java.lang.Exception {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        IAtomContainer reactant = (new SmilesParser(builder)).parseSmiles("[C+]-C=C");
+        IAtomContainer product = (new SmilesParser(builder)).parseSmiles("C=C=C");
+
+        IMapping mapping = builder.newInstance(IMapping.class, reactant.getAtom(0), product.getAtom(0));
         reaction.addMapping(mapping);
-        mapping = builder.newInstance(IMapping.class,reactant.getBond(0),product.getBond(0));
+        mapping = builder.newInstance(IMapping.class, reactant.getBond(0), product.getBond(0));
         reaction.addMapping(mapping);
-        mapping = builder.newInstance(IMapping.class,reactant.getBond(1),product.getBond(1));
+        mapping = builder.newInstance(IMapping.class, reactant.getBond(1), product.getBond(1));
         reaction.addMapping(mapping);
 
         reaction.addReactant(reactant);
         reaction.addProduct(product);
 
-        IBond mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
+        IBond mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, reactant.getBond(0));
         Assert.assertEquals(mappedBond, product.getBond(0));
 
-        mappedBond = (IBond)ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
+        mappedBond = (IBond) ReactionManipulator.getMappedChemObject(reaction, product.getBond(1));
         Assert.assertEquals(mappedBond, reactant.getBond(1));
     }
 
-	@Test public void testGetAtomCount_IReaction() throws Exception {
+    @Test
+    public void testGetAtomCount_IReaction() throws Exception {
         Assert.assertEquals(19, ReactionManipulator.getAtomCount(reaction));
-	}
+    }
 
-	@Test public void testGetBondCount_IReaction() throws Exception {
+    @Test
+    public void testGetBondCount_IReaction() throws Exception {
         Assert.assertEquals(18, ReactionManipulator.getBondCount(reaction));
-	}
+    }
 
-	@Test public void testGetAllAtomContainers_IReaction() throws Exception {
-		Assert.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
-	}
+    @Test
+    public void testGetAllAtomContainers_IReaction() throws Exception {
+        Assert.assertEquals(3, ReactionManipulator.getAllAtomContainers(reaction).size());
+    }
 
-	@Test public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
-		ReactionManipulator.setAtomProperties(reaction, "test", "ok");
-		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-		while (atomContainers.hasNext()) {
-			IAtomContainer container = atomContainers.next();
-			Iterator<IAtom> atoms = container.atoms().iterator();
-			while (atoms.hasNext()) {
-				IAtom atom = atoms.next();
-				Assert.assertNotNull(atom.getProperty("test"));
-				Assert.assertEquals("ok", atom.getProperty("test"));
-			}
-		}
-	}
+    @Test
+    public void testSetAtomProperties_IReactionSet_Object_Object() throws Exception {
+        ReactionManipulator.setAtomProperties(reaction, "test", "ok");
+        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        while (atomContainers.hasNext()) {
+            IAtomContainer container = atomContainers.next();
+            Iterator<IAtom> atoms = container.atoms().iterator();
+            while (atoms.hasNext()) {
+                IAtom atom = atoms.next();
+                Assert.assertNotNull(atom.getProperty("test"));
+                Assert.assertEquals("ok", atom.getProperty("test"));
+            }
+        }
+    }
 
-	@Test public void testGetAllChemObjects_IReactionSet() {
-		List<IChemObject> allObjects = ReactionManipulator.getAllChemObjects(reaction);
-		// does not recurse beyond the IAtomContainer, so:
-		// reaction, 2xreactant, 1xproduct
-		Assert.assertEquals(4, allObjects.size());
-	}
+    @Test
+    public void testGetAllChemObjects_IReactionSet() {
+        List<IChemObject> allObjects = ReactionManipulator.getAllChemObjects(reaction);
+        // does not recurse beyond the IAtomContainer, so:
+        // reaction, 2xreactant, 1xproduct
+        Assert.assertEquals(4, allObjects.size());
+    }
 
-	@Test public void testGetRelevantAtomContainer_IReaction_IAtom() {
-		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-		while (atomContainers.hasNext()) {
-			IAtomContainer container = atomContainers.next();
-			IAtom anAtom = container.getAtom(0);
-			Assert.assertEquals(
-				container,
-				ReactionManipulator.getRelevantAtomContainer(reaction, anAtom)
-			);
-		}
-	}
+    @Test
+    public void testGetRelevantAtomContainer_IReaction_IAtom() {
+        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        while (atomContainers.hasNext()) {
+            IAtomContainer container = atomContainers.next();
+            IAtom anAtom = container.getAtom(0);
+            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, anAtom));
+        }
+    }
 
-	@Test public void testGetRelevantAtomContainer_IReaction_IBond() {
-		Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
-		while (atomContainers.hasNext()) {
-			IAtomContainer container = atomContainers.next();
-			IBond aBond = container.getBond(0);
-			Assert.assertEquals(
-				container,
-				ReactionManipulator.getRelevantAtomContainer(reaction, aBond)
-			);
-		}
-	}
+    @Test
+    public void testGetRelevantAtomContainer_IReaction_IBond() {
+        Iterator<IAtomContainer> atomContainers = ReactionManipulator.getAllAtomContainers(reaction).iterator();
+        while (atomContainers.hasNext()) {
+            IAtomContainer container = atomContainers.next();
+            IBond aBond = container.getBond(0);
+            Assert.assertEquals(container, ReactionManipulator.getRelevantAtomContainer(reaction, aBond));
+        }
+    }
 
-	@Test public void testRemoveElectronContainer_IReaction_IElectronContainer() {
-		IReaction reaction = builder.newInstance(IReaction.class);
-		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-		mol.addAtom(builder.newInstance(IAtom.class,"C"));
-		mol.addAtom(builder.newInstance(IAtom.class,"C"));
-		mol.addBond(0, 1, Order.SINGLE);
-		Assert.assertEquals(2,mol.getAtomCount());
-		Assert.assertEquals(1,mol.getBondCount());
-		reaction.addReactant(mol);
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		ReactionManipulator.removeElectronContainer(reaction, mol.getBond(0));
+    @Test
+    public void testRemoveElectronContainer_IReaction_IElectronContainer() {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addBond(0, 1, Order.SINGLE);
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        reaction.addReactant(mol);
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        ReactionManipulator.removeElectronContainer(reaction, mol.getBond(0));
 
-		Assert.assertEquals(2,mol.getAtomCount());
-		Assert.assertEquals(0,mol.getBondCount());
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(0, mol.getBondCount());
 
-	}
+    }
 
-	@Test public void testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom() {
-		IReaction reaction = builder.newInstance(IReaction.class);
-		IAtomContainer mol = builder.newInstance(IAtomContainer.class);
-		mol.addAtom(builder.newInstance(IAtom.class,"C"));
-		mol.addAtom(builder.newInstance(IAtom.class,"C"));
-		mol.addBond(0, 1, Order.SINGLE);
-		Assert.assertEquals(2,mol.getAtomCount());
-		Assert.assertEquals(1,mol.getBondCount());
-		reaction.addReactant(mol);
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		ReactionManipulator.removeAtomAndConnectedElectronContainers(reaction,mol.getAtom(0));
+    @Test
+    public void testRemoveAtomAndConnectedElectronContainers_IReaction_IAtom() {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        IAtomContainer mol = builder.newInstance(IAtomContainer.class);
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addAtom(builder.newInstance(IAtom.class, "C"));
+        mol.addBond(0, 1, Order.SINGLE);
+        Assert.assertEquals(2, mol.getAtomCount());
+        Assert.assertEquals(1, mol.getBondCount());
+        reaction.addReactant(mol);
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        ReactionManipulator.removeAtomAndConnectedElectronContainers(reaction, mol.getAtom(0));
 
-		Assert.assertEquals(1,mol.getAtomCount());
-		Assert.assertEquals(0,mol.getBondCount());
-	}
+        Assert.assertEquals(1, mol.getAtomCount());
+        Assert.assertEquals(0, mol.getBondCount());
+    }
 
-	@Test public void testGetAllMolecules_IReaction() {
-		IReaction reaction = builder.newInstance(IReaction.class);
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
-	}
+    @Test
+    public void testGetAllMolecules_IReaction() {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        Assert.assertEquals(5, ReactionManipulator.getAllMolecules(reaction).getAtomContainerCount());
+    }
 
-	@Test public void testGetAllProducts_IReaction() {
-		IReaction reaction = builder.newInstance(IReaction.class);
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
-	}
+    @Test
+    public void testGetAllProducts_IReaction() {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        Assert.assertEquals(3, ReactionManipulator.getAllReactants(reaction).getAtomContainerCount());
+    }
 
-	@Test public void testGetAllReactants_IReaction() {
-		IReaction reaction = builder.newInstance(IReaction.class);
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addReactant(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		reaction.addProduct(builder.newInstance(IAtomContainer.class));
-		Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
-	}
+    @Test
+    public void testGetAllReactants_IReaction() {
+        IReaction reaction = builder.newInstance(IReaction.class);
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addReactant(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        reaction.addProduct(builder.newInstance(IAtomContainer.class));
+        Assert.assertEquals(2, ReactionManipulator.getAllProducts(reaction).getAtomContainerCount());
+    }
 
 }
-

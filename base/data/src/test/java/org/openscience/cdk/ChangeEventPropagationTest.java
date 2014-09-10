@@ -26,7 +26,6 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
 import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
 import org.openscience.cdk.interfaces.IChemObjectListener;
 
-
 /**
  * Checks the propagation of ChangeEvents through a
  * nested set of objects.
@@ -37,38 +36,39 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  */
 public class ChangeEventPropagationTest extends CDKTestCase {
 
-    @BeforeClass public static void setUp() {}
+    @BeforeClass
+    public static void setUp() {}
 
-    @Test public void testPropagation() {
+    @Test
+    public void testPropagation() {
         ChemFile cf = new ChemFile();
-	ChemSequence cs = new ChemSequence();
-	ChemModel cm = new ChemModel();
-	IAtomContainerSet som = new AtomContainerSet();
+        ChemSequence cs = new ChemSequence();
+        ChemModel cm = new ChemModel();
+        IAtomContainerSet som = new AtomContainerSet();
         IAtomContainer mol = new AtomContainer();
-	Atom a1 = new Atom("C");
-	Atom a2 = new Atom("C");
-	Bond b1 = new Bond(a1, a2);
-	mol.addAtom(a1);
-	mol.addAtom(a2);
-	mol.addBond(b1);
-	som.addAtomContainer(mol);
-	cm.setMoleculeSet(som);
-	cs.addChemModel(cm);
-	cf.addChemSequence(cs);
-	TestListener ts = new TestListener();
-	cf.addListener(ts);
-	a2.setSymbol("N");
-	Assert.assertTrue(ts.changedObject instanceof Atom);
-	Assert.assertEquals("N", ((Atom)ts.changedObject).getSymbol());
+        Atom a1 = new Atom("C");
+        Atom a2 = new Atom("C");
+        Bond b1 = new Bond(a1, a2);
+        mol.addAtom(a1);
+        mol.addAtom(a2);
+        mol.addBond(b1);
+        som.addAtomContainer(mol);
+        cm.setMoleculeSet(som);
+        cs.addChemModel(cm);
+        cf.addChemSequence(cs);
+        TestListener ts = new TestListener();
+        cf.addListener(ts);
+        a2.setSymbol("N");
+        Assert.assertTrue(ts.changedObject instanceof Atom);
+        Assert.assertEquals("N", ((Atom) ts.changedObject).getSymbol());
     }
 
-    class TestListener implements IChemObjectListener
-    {
-	    ChemObject changedObject = null;
+    class TestListener implements IChemObjectListener {
 
-	    public void stateChanged(IChemObjectChangeEvent evt)
-	    {
-		    changedObject = (ChemObject)evt.getSource();
-	    }
+        ChemObject changedObject = null;
+
+        public void stateChanged(IChemObjectChangeEvent evt) {
+            changedObject = (ChemObject) evt.getSource();
+        }
     }
 }

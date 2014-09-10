@@ -44,15 +44,15 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public ZagrebIndexDescriptorTest() {
-    }
+    public ZagrebIndexDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
         setDescriptor(ZagrebIndexDescriptor.class);
     }
 
-    @Test public void testZagrebIndexDescriptor() throws java.lang.Exception {
+    @Test
+    public void testZagrebIndexDescriptor() throws java.lang.Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         Assert.assertEquals(16, ((DoubleResult) descriptor.calculate(mol).getValue()).doubleValue(), 0.0001);
@@ -84,4 +84,3 @@ public class ZagrebIndexDescriptorTest extends MolecularDescriptorTest {
 
     }
 }
-

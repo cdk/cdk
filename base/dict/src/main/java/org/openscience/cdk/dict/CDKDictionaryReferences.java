@@ -53,19 +53,19 @@ public class CDKDictionaryReferences {
 
     public static void makeReferencesExplicit(IChemObject object) {
         if (object instanceof IAtom) {
-            makeReferencesExplicitForAtom((IAtom)object);
+            makeReferencesExplicitForAtom((IAtom) object);
         } else if (object instanceof IBond) {
-            makeReferencesExplicitForBond((IBond)object);
+            makeReferencesExplicitForBond((IBond) object);
         } else if (object instanceof IChemModel) {
-            makeReferencesExplicitForChemModel((IChemModel)object);
+            makeReferencesExplicitForChemModel((IChemModel) object);
         } else if (object instanceof IIsotope) {
-            makeReferencesExplicitForIsotope((IIsotope)object);
+            makeReferencesExplicitForIsotope((IIsotope) object);
         } else if (object instanceof IElement) {
-            makeReferencesExplicitForElement((IElement)object);
-        }  else if (object instanceof IAtomContainer) {
-            makeReferencesExplicitForMolecule((IAtomContainer)object);
+            makeReferencesExplicitForElement((IElement) object);
+        } else if (object instanceof IAtomContainer) {
+            makeReferencesExplicitForMolecule((IAtomContainer) object);
         } else if (object instanceof IReaction) {
-            makeReferencesExplicitForReaction((IReaction)object);
+            makeReferencesExplicitForReaction((IReaction) object);
         }
     }
 
@@ -114,8 +114,10 @@ public class CDKDictionaryReferences {
     private static void makeReferencesExplicitForMolecule(IAtomContainer molecule) {
         int selfCounter = 0;
         molecule.setProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
-        /* remark: this is not strictly true... the Compendium includes the
-                   ion pair, which normally would not considered a CDK molecule */
+        /*
+         * remark: this is not strictly true... the Compendium includes the ion
+         * pair, which normally would not considered a CDK molecule
+         */
     }
 
     private static void makeReferencesExplicitForReaction(IReaction reaction) {
@@ -124,4 +126,3 @@ public class CDKDictionaryReferences {
     }
 
 }
-

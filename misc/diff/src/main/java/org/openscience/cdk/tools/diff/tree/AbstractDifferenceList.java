@@ -61,7 +61,8 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
     /** {@inheritDoc} */
     @TestMethod("testChildDiffs")
     public Iterable<IDifference> getChildren() {
-        return new Iterable<IDifference>(){
+        return new Iterable<IDifference>() {
+
             public Iterator<IDifference> iterator() {
                 return differences.iterator();
             }

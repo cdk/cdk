@@ -235,13 +235,13 @@ import java.util.TreeSet;
 public final class TripletShortCycles {
 
     /** Adjacency list representation of the graph. */
-    private final int[][] graph;
+    private final int[][]   graph;
 
     /**
      * Whether the basis should be canonical. By definition a canonical set
      * depends on the atom order.
      */
-    private final boolean canonical;
+    private final boolean   canonical;
 
     /** The current cycle basis. */
     private final Set<Path> basis = new TreeSet<Path>();
@@ -259,7 +259,7 @@ public final class TripletShortCycles {
     public TripletShortCycles(final MinimumCycleBasis mcb, final boolean canonical) {
 
         // don't reorder neighbors as the MCB was already done on this ordering
-        this.graph     = copy(mcb.graph);
+        this.graph = copy(mcb.graph);
         this.canonical = canonical;
 
         // all minimum cycle basis paths belong to the set
@@ -268,11 +268,10 @@ public final class TripletShortCycles {
 
         // count the number of cycles each vertex belongs to and try to find a
         // cycle though the triple of 'v' and two of it's neighbors
-        final int   ord     = graph.length;
+        final int ord = graph.length;
         final int[] nCycles = nCycles(basis, ord);
         for (int v = 0; v < ord; v++) {
-            if (nCycles[v] > 1)
-                findTriple(v);
+            if (nCycles[v] > 1) findTriple(v);
         }
     }
 
@@ -281,10 +280,9 @@ public final class TripletShortCycles {
      *
      * @return paths of the basis
      */
-    @TestMethod("empty,unmodifiable,naphthalenePaths,anthracenePaths," +
-                        "norbornanePaths")
+    @TestMethod("empty,unmodifiable,naphthalenePaths,anthracenePaths," + "norbornanePaths")
     public int[][] paths() {
-        int     i     = 0;
+        int i = 0;
         int[][] paths = new int[size()][];
 
         for (final Path path : basis)
@@ -311,8 +309,8 @@ public final class TripletShortCycles {
      */
     private void findTriple(final int v) {
 
-        int[] ws  = graph[v];
-        int   deg = ws.length;
+        int[] ws = graph[v];
+        int deg = ws.length;
 
         // disconnect 'v' from its neighbors 'ws'
         disconnect(ws, v);
@@ -328,8 +326,7 @@ public final class TripletShortCycles {
             for (int j = i + 1; j < deg; j++) {
 
                 // ignore if there is an exciting cycle through the the triple
-                if (canonical && exists(ws[i], v, ws[j]))
-                    continue;
+                if (canonical && exists(ws[i], v, ws[j])) continue;
 
                 // if there is a path between u and w, form a cycle by appending
                 // v and storing in the basis
@@ -337,9 +334,8 @@ public final class TripletShortCycles {
 
                     // canonic, use the a shortest path (dependant on vertex
                     // order) - non-canonic, use all possible shortest paths
-                    int[][] paths = canonical ? new int[][]{ sp.pathTo(ws[j]) }
-                                              : sp.pathsTo(ws[j]);
-                    for(int[] path : paths)
+                    int[][] paths = canonical ? new int[][]{sp.pathTo(ws[j])} : sp.pathsTo(ws[j]);
+                    for (int[] path : paths)
                         basis.add(new Path(append(path, v)));
                 }
             }
@@ -359,8 +355,7 @@ public final class TripletShortCycles {
      */
     private boolean exists(final int u, final int v, final int w) {
         for (final Path path : basis) {
-            if (path.contains(u, v, w))
-                return true;
+            if (path.contains(u, v, w)) return true;
         }
         return false;
     }
@@ -380,8 +375,7 @@ public final class TripletShortCycles {
         for (final int w : ws) {
             final int deg = graph[w].length;
             for (int i = 0; i < deg; i++) {
-                if (graph[w][i] == v)
-                    graph[w][i] = w;
+                if (graph[w][i] == v) graph[w][i] = w;
             }
         }
     }
@@ -398,8 +392,7 @@ public final class TripletShortCycles {
         for (final int w : ws) {
             final int deg = graph[w].length;
             for (int i = 0; i < deg; i++) {
-                if (graph[w][i] == w)
-                    graph[w][i] = v;
+                if (graph[w][i] == w) graph[w][i] = v;
             }
         }
     }
@@ -475,8 +468,7 @@ public final class TripletShortCycles {
     private static int min(final int[] xs) {
         int min = 0;
         for (int i = 0; i < xs.length; i++) {
-            if (xs[i] < xs[min])
-                min = i;
+            if (xs[i] < xs[min]) min = i;
         }
         return min;
     }
@@ -561,16 +553,13 @@ public final class TripletShortCycles {
         }
 
         /** @inheritDoc */
-        @Override public int compareTo(final Path that) {
-            if (this.len() > that.len())
-                return +1;
-            if (this.len() < that.len())
-                return -1;
+        @Override
+        public int compareTo(final Path that) {
+            if (this.len() > that.len()) return +1;
+            if (this.len() < that.len()) return -1;
             for (int i = 0; i < len(); i++) {
-                if (this.vertices[i] > that.vertices[i])
-                    return +1;
-                if (this.vertices[i] < that.vertices[i])
-                    return -1;
+                if (this.vertices[i] > that.vertices[i]) return +1;
+                if (this.vertices[i] < that.vertices[i]) return -1;
             }
             return 0;
         }

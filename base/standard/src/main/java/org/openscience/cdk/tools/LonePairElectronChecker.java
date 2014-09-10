@@ -42,80 +42,75 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class LonePairElectronChecker {
 
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(LonePairElectronChecker.class);
-	private static AtomTypeFactory factory;
+    private static ILoggingTool    logger = LoggingToolFactory.createLoggingTool(LonePairElectronChecker.class);
+    private static AtomTypeFactory factory;
 
-	private void createAtomTypeFactory(IChemObjectBuilder builder) {
-		if (factory == null) {
-			factory = AtomTypeFactory.getInstance(
-				"org/openscience/cdk/dict/data/cdk-atom-types.owl", builder
-			);
-		}
-	}
+    private void createAtomTypeFactory(IChemObjectBuilder builder) {
+        if (factory == null) {
+            factory = AtomTypeFactory.getInstance("org/openscience/cdk/dict/data/cdk-atom-types.owl", builder);
+        }
+    }
 
     /**
      * Determines of all atoms on the AtomContainer have the
      * right number the lone pair electrons.
      */
-	public boolean isSaturated(IAtomContainer container) throws CDKException {
+    public boolean isSaturated(IAtomContainer container) throws CDKException {
         return allSaturated(container);
     }
 
-	/**
+    /**
      * Determines of all atoms on the AtomContainer have
      * the right number the lone pair electrons.
-	 */
-	public boolean allSaturated(IAtomContainer ac) throws CDKException
-	{
+     */
+    public boolean allSaturated(IAtomContainer ac) throws CDKException {
         logger.debug("Are all atoms saturated?");
         for (int f = 0; f < ac.getAtomCount(); f++) {
-        	if (!isSaturated(ac.getAtom(f), ac))
-        		return false;
+            if (!isSaturated(ac.getAtom(f), ac)) return false;
         }
         return true;
     }
 
-	/**
-	 * Checks if an Atom is saturated their lone pair electrons
-	 * by comparing it with known AtomTypes.
-	 *
-	 * @return       True, if it's right saturated
-	 */
-	public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
-		createAtomTypeFactory(ac.getBuilder());
-		IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
-		int lpCount = (Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
-		int foundLPCount = ac.getConnectedLonePairsCount(atom);
+    /**
+     * Checks if an Atom is saturated their lone pair electrons
+     * by comparing it with known AtomTypes.
+     *
+     * @return       True, if it's right saturated
+     */
+    public boolean isSaturated(IAtom atom, IAtomContainer ac) throws CDKException {
+        createAtomTypeFactory(ac.getBuilder());
+        IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
+        int lpCount = (Integer) atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        int foundLPCount = ac.getConnectedLonePairsCount(atom);
         return foundLPCount >= lpCount;
     }
 
-	/**
-	 * Saturates a molecule by setting appropriate number lone pair electrons.
-	 */
-	public void saturate(IAtomContainer atomContainer) throws CDKException {
+    /**
+     * Saturates a molecule by setting appropriate number lone pair electrons.
+     */
+    public void saturate(IAtomContainer atomContainer) throws CDKException {
         logger.info("Saturating atomContainer by adjusting lone pair electrons...");
         boolean allSaturated = allSaturated(atomContainer);
         if (!allSaturated) {
-            for(int i=0 ; i < atomContainer.getAtomCount() ; i++ ){
-            	saturate(atomContainer.getAtom(i), atomContainer);
+            for (int i = 0; i < atomContainer.getAtomCount(); i++) {
+                saturate(atomContainer.getAtom(i), atomContainer);
             }
         }
     }
 
-	/**
-	 * Saturates an IAtom by adding the appropriate number lone pairs.
-	 */
-	public void saturate(IAtom atom, IAtomContainer ac) throws CDKException {
+    /**
+     * Saturates an IAtom by adding the appropriate number lone pairs.
+     */
+    public void saturate(IAtom atom, IAtomContainer ac) throws CDKException {
         logger.info("Saturating atom by adjusting lone pair electrons...");
-		IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
-		int lpCount = (Integer)atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
-		int missingLPs = lpCount - ac.getConnectedLonePairsCount(atom);
+        IAtomType atomType = factory.getAtomType(atom.getAtomTypeName());
+        int lpCount = (Integer) atomType.getProperty(CDKConstants.LONE_PAIR_COUNT);
+        int missingLPs = lpCount - ac.getConnectedLonePairsCount(atom);
 
-		for (int j = 0; j < missingLPs; j++) {
-			ILonePair lp = atom.getBuilder().newInstance(ILonePair.class,atom);
-			ac.addLonePair(lp);
-		}
+        for (int j = 0; j < missingLPs; j++) {
+            ILonePair lp = atom.getBuilder().newInstance(ILonePair.class, atom);
+            ac.addLonePair(lp);
+        }
     }
 
 }

@@ -25,51 +25,50 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 public class RDFProtonDescriptor_GHR_topolTest extends AtomicDescriptorTest {
 
-	public RDFProtonDescriptor_GHR_topolTest() {
-    }
+    public RDFProtonDescriptor_GHR_topolTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(RDFProtonDescriptor_GHR_topol.class);
+        setDescriptor(RDFProtonDescriptor_GHR_topol.class);
     }
 
-	@Test
+    @Test
     public void testExample1() throws Exception {
-		//firstly read file to molecule
-		String filename = "data/mdl/hydroxyamino.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		ChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
-		IChemSequence seq = chemFile.getChemSequence(0);
-		IChemModel model = seq.getChemModel(0);
+        //firstly read file to molecule
+        String filename = "data/mdl/hydroxyamino.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        ChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
+        IChemSequence seq = chemFile.getChemSequence(0);
+        IChemModel model = seq.getChemModel(0);
         IAtomContainerSet som = model.getMoleculeSet();
         IAtomContainer mol = som.getAtomContainer(0);
 
-		for (int i=0; i < mol.getAtomCount(); i++) {
-//			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
-			if(mol.getAtom(i).getSymbol().equals("H")){
-				//secondly perform calculation on it.
-				RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
-				DescriptorValue dv = descriptor.calculate(mol.getAtom(i),mol );
-				IDescriptorResult result = dv.getValue();
-//				System.out.println("array: " + result.toString());
-				Assert.assertNotNull(result);
-			}
+        for (int i = 0; i < mol.getAtomCount(); i++) {
+            //			System.out.println("Atom: " + mol.getAtom(i).getSymbol());
+            if (mol.getAtom(i).getSymbol().equals("H")) {
+                //secondly perform calculation on it.
+                RDFProtonDescriptor_GHR_topol descriptor = new RDFProtonDescriptor_GHR_topol();
+                DescriptorValue dv = descriptor.calculate(mol.getAtom(i), mol);
+                IDescriptorResult result = dv.getValue();
+                //				System.out.println("array: " + result.toString());
+                Assert.assertNotNull(result);
+            }
 
-		}
-	}
+        }
+    }
 
     @Test
     public void testReturnsNaNForNonHydrogen() throws Exception {
         IAtomContainer mol = new AtomContainer();
         IAtom atom = new Atom("O");
         mol.addAtom(atom);
-        DescriptorValue dv = descriptor.calculate(atom,mol );
+        DescriptorValue dv = descriptor.calculate(atom, mol);
         IDescriptorResult result = dv.getValue();
         Assert.assertNotNull(result);
         Assert.assertTrue(result instanceof DoubleArrayResult);
-        DoubleArrayResult dResult = (DoubleArrayResult)result;
-        for (int i=0; i<result.length(); i++) {
+        DoubleArrayResult dResult = (DoubleArrayResult) result;
+        for (int i = 0; i < result.length(); i++) {
             Assert.assertEquals(Double.NaN, dResult.get(i), 0.000001);
         }
     }

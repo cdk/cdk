@@ -27,7 +27,7 @@ package org.openscience.cdk.io.formats;
 public class MoSSOutputFormatTest extends ChemFormatMatcherTest {
 
     public MoSSOutputFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MoSSOutputFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MoSSOutputFormat.getInstance());
     }
 
 }

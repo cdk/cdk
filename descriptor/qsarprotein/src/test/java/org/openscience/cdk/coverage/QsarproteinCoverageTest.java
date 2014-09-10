@@ -30,11 +30,13 @@ public class QsarproteinCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "qsarprotein.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, QsarproteinCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 }

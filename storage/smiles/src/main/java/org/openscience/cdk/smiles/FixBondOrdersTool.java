@@ -76,8 +76,8 @@ public class FixBondOrdersTool {
     private static class Matrix {
 
         private int[] mArray;
-        private int rowCount;
-        private int columnCount;
+        private int   rowCount;
+        private int   columnCount;
 
         public Matrix(Integer rows, Integer cols) {
 
@@ -135,18 +135,17 @@ public class FixBondOrdersTool {
     /**
      * Constructor for the FixBondOrdersTool object.
      */
-    public FixBondOrdersTool() {
-    }
+    public FixBondOrdersTool() {}
 
-/**
- * kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
- * @param molecule The {@link IAtomContainer} to kekulise
- * @return The {@link IAtomContainer} with kekule structure
- * @throws CDKException
- */
+    /**
+     * kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
+     * @param molecule The {@link IAtomContainer} to kekulise
+     * @return The {@link IAtomContainer} with kekule structure
+     * @throws CDKException
+     */
     @TestMethod("testLargeRingSystem")
     public IAtomContainer kekuliseAromaticRings(IAtomContainer molecule) throws CDKException {
-    	IAtomContainer mNew = null;
+        IAtomContainer mNew = null;
         try {
             mNew = (IAtomContainer) molecule.clone();
         } catch (Exception e) {
@@ -222,10 +221,11 @@ public class FixBondOrdersTool {
 
             if (solveMatrix(M, atomNos, bondNos, freeValencies, atomNoPairs, bondOrders)) {
                 for (int j = 0; j < bondOrders.size(); j++) {
-                    mNew.getBond(bondNos.get(j)).setOrder(bondOrders.get(j) == 1 ? IBond.Order.SINGLE : IBond.Order.DOUBLE);
+                    mNew.getBond(bondNos.get(j)).setOrder(
+                            bondOrders.get(j) == 1 ? IBond.Order.SINGLE : IBond.Order.DOUBLE);
                 }
             } else {
-//                TODO Put any failure code here
+                //                TODO Put any failure code here
             }
         }
         return mNew;
@@ -251,9 +251,7 @@ public class FixBondOrdersTool {
             } else {
                 for (IAtom a : r.atoms()) {
                     Hybridization h = a.getHybridization();
-                    if (h == CDKConstants.UNSET
-                            || !(h == Hybridization.SP2
-                            || h == Hybridization.PLANAR3)) {
+                    if (h == CDKConstants.UNSET || !(h == Hybridization.SP2 || h == Hybridization.PLANAR3)) {
                         i.remove();
                         break;
                     }
@@ -294,12 +292,12 @@ public class FixBondOrdersTool {
     private List<List<Integer>> assignRingGroups(List<Integer[]> rBondsArray) {
         List<List<Integer>> ringGroups;
         ringGroups = new ArrayList<List<Integer>>();
-        for (int i = 0; i < rBondsArray.size() - 1; i++) {    //for each ring except the last in rBondsArray
+        for (int i = 0; i < rBondsArray.size() - 1; i++) { //for each ring except the last in rBondsArray
             for (int j = 0; j < rBondsArray.get(i).length; j++) { //for each bond in each ring
 
                 //check there's no shared bond with any other ring already in ringGroups
                 for (int k = i + 1; k < rBondsArray.size(); k++) {
-                    for (int l = 0; l < rBondsArray.get(k).length; l++) {  //for each ring in each ring
+                    for (int l = 0; l < rBondsArray.get(k).length; l++) { //for each ring in each ring
 
                         //Is there a bond in common? Then add both rings
                         if (rBondsArray.get(i)[j] == rBondsArray.get(k)[l]) {
@@ -444,13 +442,15 @@ public class FixBondOrdersTool {
      * @param M
      * @return The List of free valencies available for extra ring bonding
      */
-    private List<Integer> getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M, IRingSet rs) {
+    private List<Integer> getFreeValenciesForRingGroup(IAtomContainer molecule, List<Integer> atomsToCheck, Matrix M,
+            IRingSet rs) {
         List<Integer> fvtc = new ArrayList<Integer>();
         for (int i = 0; i < atomsToCheck.size(); i++) {
             int j = atomsToCheck.get(i);
 
             //Put in an implicit hydrogen atom for Planar3 C- atoms in 5-membered rings (it doesn't get put in by the Smiles parser)
-            if (("C".equals(molecule.getAtom(j).getSymbol())) && (molecule.getAtom(j).getHybridization() == Hybridization.PLANAR3)) {
+            if (("C".equals(molecule.getAtom(j).getSymbol()))
+                    && (molecule.getAtom(j).getHybridization() == Hybridization.PLANAR3)) {
 
                 //Check that ring containing the atom is five-membered
                 for (IAtomContainer ac : rs.atomContainers()) {
@@ -475,7 +475,8 @@ public class FixBondOrdersTool {
             } else {
                 implicitH = molecule.getAtom(j).getImplicitHydrogenCount();
             }
-            fvtc.add(molecule.getAtom(j).getValency() - (implicitH + (int) molecule.getBondOrderSum(molecule.getAtom(j))) + M.sumOfRow(i));
+            fvtc.add(molecule.getAtom(j).getValency()
+                    - (implicitH + (int) molecule.getBondOrderSum(molecule.getAtom(j))) + M.sumOfRow(i));
         }
         return fvtc;
     }
@@ -505,7 +506,8 @@ public class FixBondOrdersTool {
      * @param bondOrder
      * @return True or false for success or failure
      */
-    private Boolean solveMatrix(Matrix M, List<Integer> atomNos, List<Integer> bondNos, List<Integer> freeValencies, List<Integer[]> atomNoPairs, List<Integer> bondOrder) {
+    private Boolean solveMatrix(Matrix M, List<Integer> atomNos, List<Integer> bondNos, List<Integer> freeValencies,
+            List<Integer[]> atomNoPairs, List<Integer> bondOrder) {
 
         // Look for bonds that need to be a certain order
         List<Integer> solved = new ArrayList<Integer>();
@@ -610,7 +612,7 @@ public class FixBondOrdersTool {
                         badChoice = 1;
                     }
                     if (bondOrder.get(j) == 0 && badChoice == 0) {
-//                            javax.swing.JOptionPane.showMessageDialog(null, j);
+                        //                            javax.swing.JOptionPane.showMessageDialog(null, j);
                         bondOrder.set(j, 1);
                         ring = 0;
                         thisRun = 1;

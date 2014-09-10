@@ -47,7 +47,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class NonPlanarBondsTest {
 
     // [C@H](C)(N)O
-    @Test public void clockwise_implH_1() {
+    @Test
+    public void clockwise_implH_1() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -56,12 +57,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(0),
-                                                                m.getAtom(1),
-                                                                m.getAtom(2),
-                                                                m.getAtom(3)},
-                                                    ITetrahedralChirality.Stereo.CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(2),
+                m.getAtom(3)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.DOWN));
         assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
@@ -70,7 +67,8 @@ public class NonPlanarBondsTest {
 
     // [C@H](CC)(N)O
     // N is favoured over CC
-    @Test public void clockwise_implH_2() {
+    @Test
+    public void clockwise_implH_2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
@@ -81,12 +79,8 @@ public class NonPlanarBondsTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(0),
-                                                                m.getAtom(1),
-                                                                m.getAtom(3),
-                                                                m.getAtom(4)},
-                                                    ITetrahedralChirality.Stereo.CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(3),
+                m.getAtom(4)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
@@ -95,7 +89,8 @@ public class NonPlanarBondsTest {
     }
 
     // [C@H](C)(N)O
-    @Test public void anticlockwise_implH_1() {
+    @Test
+    public void anticlockwise_implH_1() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.00d, 1.50d));
         m.addAtom(atom("C", 3, 0.00d, 0.00d));
@@ -104,12 +99,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 1, IBond.Order.SINGLE);
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(0),
-                                                                m.getAtom(1),
-                                                                m.getAtom(2),
-                                                                m.getAtom(3)},
-                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(2),
+                m.getAtom(3)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.UP));
         assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
@@ -118,7 +109,8 @@ public class NonPlanarBondsTest {
 
     // [C@H](CC)(N)O
     // N is favoured over CC
-    @Test public void anticlockwise_implH_2() {
+    @Test
+    public void anticlockwise_implH_2() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -1.30d, 2.25d));
         m.addAtom(atom("C", 2, 0.00d, 1.50d));
@@ -129,12 +121,8 @@ public class NonPlanarBondsTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(0),
-                                                                m.getAtom(1),
-                                                                m.getAtom(3),
-                                                                m.getAtom(4)},
-                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(3),
+                m.getAtom(4)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(1).getStereo(), is(IBond.Stereo.NONE));
@@ -143,7 +131,8 @@ public class NonPlanarBondsTest {
     }
 
     // [C@@](CCC)(C)(N)O
-    @Test public void clockwise_1() {
+    @Test
+    public void clockwise_1() {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
@@ -158,12 +147,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
         m.addBond(0, 6, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(1),
-                                                                m.getAtom(4),
-                                                                m.getAtom(5),
-                                                                m.getAtom(6)},
-                                                    ITetrahedralChirality.Stereo.CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
+                m.getAtom(6)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.UP));
@@ -172,7 +157,8 @@ public class NonPlanarBondsTest {
     }
 
     // [C@@](CCC)(C1)(C)C1 (favour acyclic)
-    @Test public void clockwise_2() {
+    @Test
+    public void clockwise_2() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
@@ -190,12 +176,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 6, IBond.Order.SINGLE);
         m.addBond(4, 6, IBond.Order.SINGLE);
         m.addBond(6, 7, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(1),
-                                                                m.getAtom(4),
-                                                                m.getAtom(5),
-                                                                m.getAtom(6)},
-                                                    ITetrahedralChirality.Stereo.CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
+                m.getAtom(6)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
@@ -204,7 +186,8 @@ public class NonPlanarBondsTest {
     }
 
     // [C@](CCC)(C)(N)O
-    @Test public void anticlockwise_1() {
+    @Test
+    public void anticlockwise_1() {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 0, -1.47d, 3.62d));
         m.addAtom(atom("C", 2, -1.13d, 2.16d));
@@ -219,12 +202,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
         m.addBond(0, 6, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(1),
-                                                                m.getAtom(4),
-                                                                m.getAtom(5),
-                                                                m.getAtom(6)},
-                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
+                m.getAtom(6)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.DOWN));
@@ -233,7 +212,8 @@ public class NonPlanarBondsTest {
     }
 
     // [C@](CCC)(C1)(C)C1 (favour acyclic)
-    @Test public void anticlockwise_2() {
+    @Test
+    public void anticlockwise_2() {
         IAtomContainer m = new AtomContainer(8, 8, 0, 0);
         m.addAtom(atom("C", 0, -0.96d, -1.04d));
         m.addAtom(atom("C", 2, 0.18d, -0.08d));
@@ -251,12 +231,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 6, IBond.Order.SINGLE);
         m.addBond(4, 6, IBond.Order.SINGLE);
         m.addBond(6, 7, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{m.getAtom(1),
-                                                                m.getAtom(4),
-                                                                m.getAtom(5),
-                                                                m.getAtom(6)},
-                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(1), m.getAtom(4), m.getAtom(5),
+                m.getAtom(6)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(0).getStereo(), is(IBond.Stereo.NONE));
         assertThat(m.getBond(3).getStereo(), is(IBond.Stereo.NONE));
@@ -264,7 +240,8 @@ public class NonPlanarBondsTest {
         assertThat(m.getBond(5).getStereo(), is(IBond.Stereo.NONE));
     }
 
-    @Test public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
+    @Test
+    public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -279,19 +256,15 @@ public class NonPlanarBondsTest {
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
-        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2),
-                                                   new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                               m.getAtom(4), m.getAtom(5)},
-                                                   ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4),
+                m.getAtom(5)}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(),
-                   is(IBond.Stereo.DOWN));
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
-                   is(IBond.Stereo.UP));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(), is(IBond.Stereo.DOWN));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(), is(IBond.Stereo.UP));
     }
 
-
-    @Test public void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
+    @Test
+    public void nonPlanarBondsForClockwsieExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -306,18 +279,15 @@ public class NonPlanarBondsTest {
         m.addBond(3, 4, IBond.Order.SINGLE);
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
-        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2),
-                                                   new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                               m.getAtom(4), m.getAtom(5)},
-                                                   ITetrahedralChirality.Stereo.CLOCKWISE));
+        m.addStereoElement(new ExtendedTetrahedral(m.getAtom(2), new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4),
+                m.getAtom(5)}, ITetrahedralChirality.Stereo.CLOCKWISE));
         NonplanarBonds.assign(m);
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(),
-                   is(IBond.Stereo.UP));
-        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(),
-                   is(IBond.Stereo.DOWN));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(0)).getStereo(), is(IBond.Stereo.UP));
+        assertThat(m.getBond(m.getAtom(1), m.getAtom(6)).getStereo(), is(IBond.Stereo.DOWN));
     }
 
-    @Test public void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
+    @Test
+    public void clockwiseSortShouldHandleExactlyOppositeAtoms() throws Exception {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 0, 4.50d, -14.84d));
         m.addAtom(atom("C", 3, 4.51d, -13.30d));
@@ -334,14 +304,8 @@ public class NonPlanarBondsTest {
         m.addBond(0, 6, IBond.Order.SINGLE);
         m.addBond(7, 4, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
-        m.addStereoElement(new TetrahedralChirality(m.getAtom(0),
-                                                    new IAtom[]{
-                                                            m.getAtom(2),
-                                                            m.getAtom(4),
-                                                            m.getAtom(6),
-                                                            m.getAtom(3),
-                                                    },
-                                                    ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        m.addStereoElement(new TetrahedralChirality(m.getAtom(0), new IAtom[]{m.getAtom(2), m.getAtom(4), m.getAtom(6),
+                m.getAtom(3),}, ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
         NonplanarBonds.assign(m);
         assertThat(m.getBond(4).getStereo(), is(IBond.Stereo.DOWN));
     }

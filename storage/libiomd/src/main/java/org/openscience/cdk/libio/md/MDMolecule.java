@@ -34,73 +34,72 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  */
 public class MDMolecule extends AtomContainer {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -3129626782945020908L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3129626782945020908L;
 
-	//List of Residues
-   	private List residues;
+    //List of Residues
+    private List              residues;
 
-   	//List of ChargeGroups
-   	private List chargeGroups;
+    //List of ChargeGroups
+    private List              chargeGroups;
 
-	public MDMolecule() {
-		super();
-	}
+    public MDMolecule() {
+        super();
+    }
 
-	public MDMolecule(IAtomContainer container) {
-		super(container);
-	}
+    public MDMolecule(IAtomContainer container) {
+        super(container);
+    }
 
-	public List getResidues() {
-		return residues;
-	}
+    public List getResidues() {
+        return residues;
+    }
 
-	public void setResidues(List residues) {
-		this.residues = residues;
-	}
+    public void setResidues(List residues) {
+        this.residues = residues;
+    }
 
-	/**
-	 * Add a Residue to the MDMolecule if not already present.
-	 * @param residue Residue to add
-	 */
-	public void addResidue(Residue residue){
-		if (residues==null) residues=new ArrayList();
+    /**
+     * Add a Residue to the MDMolecule if not already present.
+     * @param residue Residue to add
+     */
+    public void addResidue(Residue residue) {
+        if (residues == null) residues = new ArrayList();
 
-		//Check if exists
-		if (residues.contains(residue)){
-			System.out.println("Residue: " + residue.getName() + " already present in molecule: " + getID());
-			return;
-		}
+        //Check if exists
+        if (residues.contains(residue)) {
+            System.out.println("Residue: " + residue.getName() + " already present in molecule: " + getID());
+            return;
+        }
 
-		residues.add(residue);
-	}
+        residues.add(residue);
+    }
 
+    public List getChargeGroups() {
+        return chargeGroups;
+    }
 
-	public List getChargeGroups() {
-		return chargeGroups;
-	}
+    public void setChargeGroups(List chargeGroups) {
+        this.chargeGroups = chargeGroups;
+    }
 
-	public void setChargeGroups(List chargeGroups) {
-		this.chargeGroups = chargeGroups;
-	}
+    /**
+     * Add a ChargeGroup to the MDMolecule if not already present.
+     *
+     * @param chargeGroup {@link ChargeGroup} to add
+     */
+    public void addChargeGroup(ChargeGroup chargeGroup) {
+        if (chargeGroups == null) chargeGroups = new ArrayList();
 
-	/**
-	 * Add a ChargeGroup to the MDMolecule if not already present.
-	 *
-	 * @param chargeGroup {@link ChargeGroup} to add
-	 */
-	public void addChargeGroup(ChargeGroup chargeGroup){
-		if (chargeGroups==null) chargeGroups=new ArrayList();
+        //Check if exists
+        if (chargeGroups.contains(chargeGroup)) {
+            System.out.println("Charge group: " + chargeGroup.getNumber() + " already present in molecule: " + getID());
+            return;
+        }
 
-		//Check if exists
-		if (chargeGroups.contains(chargeGroup)){
-			System.out.println("Charge group: " + chargeGroup.getNumber() + " already present in molecule: " + getID());
-			return;
-		}
-
-		chargeGroups.add(chargeGroup);
-	}
+        chargeGroups.add(chargeGroup);
+    }
 
 }

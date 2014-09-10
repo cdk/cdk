@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class SMARTSFormatTest extends ChemFormatTest {
 
     public SMARTSFormatTest() {
-        super.setChemFormat((IChemFormat)SMARTSFormat.getInstance());
+        super.setChemFormat((IChemFormat) SMARTSFormat.getInstance());
     }
 
 }

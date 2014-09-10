@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class JMEFormatTest extends ChemFormatTest {
 
     public JMEFormatTest() {
-        super.setChemFormat((IChemFormat)JMEFormat.getInstance());
+        super.setChemFormat((IChemFormat) JMEFormat.getInstance());
     }
 
 }

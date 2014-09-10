@@ -44,20 +44,10 @@ import org.openscience.cdk.geometry.cip.rules.MassNumberRuleTest;
  *
  * @cdk.module  test-cip
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    CipCoverageTest.class,
-    CIPToolTest.class,
-    LigandTest.class,
-    TerminalLigandTest.class,
-    ImplicitHydrogenLigandTest.class,
-    ImmutableHydrogenTest.class,
-    LigancyFourChiralityTest.class,
-    AtomicNumberRuleTest.class,
-    CIPLigandRuleTest.class,
-    MassNumberRuleTest.class,
-    CombinedAtomicMassNumberRuleTest.class,
-    CIPSMILESTest.class,
-    VisitedAtomsTest.class
-})
-public class McipTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {CipCoverageTest.class, CIPToolTest.class, LigandTest.class, TerminalLigandTest.class,
+        ImplicitHydrogenLigandTest.class, ImmutableHydrogenTest.class, LigancyFourChiralityTest.class,
+        AtomicNumberRuleTest.class, CIPLigandRuleTest.class, MassNumberRuleTest.class,
+        CombinedAtomicMassNumberRuleTest.class, CIPSMILESTest.class, VisitedAtomsTest.class})
+public class McipTests {
+}

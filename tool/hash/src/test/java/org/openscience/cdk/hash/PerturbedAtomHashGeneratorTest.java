@@ -54,79 +54,46 @@ public class PerturbedAtomHashGeneratorTest {
         SeedGenerator seeding = new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER);
         Pseudorandom pseudorandom = new Xorshift();
 
-        MoleculeHashGenerator basic = new BasicMoleculeHashGenerator(new BasicAtomHashGenerator(seeding,
-                                                                                                pseudorandom,
-                                                                                                8));
+        MoleculeHashGenerator basic = new BasicMoleculeHashGenerator(new BasicAtomHashGenerator(seeding, pseudorandom,
+                8));
         MoleculeHashGenerator perturb = new BasicMoleculeHashGenerator(new PerturbedAtomHashGenerator(seeding,
-                                                                                                      new BasicAtomHashGenerator(seeding,
-                                                                                                                                 pseudorandom,
-                                                                                                                                 8),
-                                                                                                      pseudorandom,
-                                                                                                      StereoEncoderFactory.EMPTY,
-                                                                                                      new MinimumEquivalentCyclicSet(),
-                                                                                                      AtomSuppression.unsuppressed()));
+                new BasicAtomHashGenerator(seeding, pseudorandom, 8), pseudorandom, StereoEncoderFactory.EMPTY,
+                new MinimumEquivalentCyclicSet(), AtomSuppression.unsuppressed()));
         // basic encoding should say these are the same
         assertThat(basic.generate(m1), is(basic.generate(m2)));
 
         // perturbed encoding should differentiate them
         assertThat(perturb.generate(m1), is(not(perturb.generate(m2))));
 
-
     }
 
     @Test
     public void testCombine() throws Exception {
         Xorshift prng = new Xorshift();
-        PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER),
-                                                                              new BasicAtomHashGenerator(new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER),
-                                                                                                         prng,
-                                                                                                         8),
-                                                                              prng,
-                                                                              StereoEncoderFactory.EMPTY,
-                                                                              new MinimumEquivalentCyclicSet(),
-                                                                              AtomSuppression.unsuppressed());
-        long[][] perturbed = new long[][]{
-                {1, 2, 3, 4},
-                {1, 1, 1, 1},
-                {1, 2, 2, 4},
-                {2, 2, 2, 2},
-        };
+        PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(
+                BasicAtomEncoder.ATOMIC_NUMBER), new BasicAtomHashGenerator(new SeedGenerator(
+                BasicAtomEncoder.ATOMIC_NUMBER), prng, 8), prng, StereoEncoderFactory.EMPTY,
+                new MinimumEquivalentCyclicSet(), AtomSuppression.unsuppressed());
+        long[][] perturbed = new long[][]{{1, 2, 3, 4}, {1, 1, 1, 1}, {1, 2, 2, 4}, {2, 2, 2, 2},};
 
         long _0 = 1 ^ 2 ^ 3 ^ 4;
-        long _1 = 1 ^ prng.next(1) ^ prng.next(prng.next(1)) ^ prng
-                .next(prng.next(prng.next(1)));
+        long _1 = 1 ^ prng.next(1) ^ prng.next(prng.next(1)) ^ prng.next(prng.next(prng.next(1)));
         long _2 = 1 ^ 2 ^ prng.next(2) ^ 4;
-        long _3 = 2 ^ prng.next(2) ^ prng.next(prng.next(2)) ^ prng
-                .next(prng.next(prng.next(2)));
+        long _3 = 2 ^ prng.next(2) ^ prng.next(prng.next(2)) ^ prng.next(prng.next(prng.next(2)));
 
         long[] values = generator.combine(perturbed);
         Assert.assertArrayEquals(values, new long[]{_0, _1, _2, _3});
     }
 
     public IAtomContainer cyclopentylcyclopentane() {
-        IAtom[] atoms = new IAtom[]{new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-        };
-        IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE),
-                                    new Bond(atoms[0], atoms[4], SINGLE),
-                                    new Bond(atoms[1], atoms[2], SINGLE),
-                                    new Bond(atoms[2], atoms[3], SINGLE),
-                                    new Bond(atoms[3], atoms[4], SINGLE),
-                                    new Bond(atoms[5], atoms[6], SINGLE),
-                                    new Bond(atoms[5], atoms[9], SINGLE),
-                                    new Bond(atoms[6], atoms[7], SINGLE),
-                                    new Bond(atoms[7], atoms[8], SINGLE),
-                                    new Bond(atoms[8], atoms[9], SINGLE),
-                                    new Bond(atoms[8], atoms[0], SINGLE),
-        };
+        IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),};
+        IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE), new Bond(atoms[0], atoms[4], SINGLE),
+                new Bond(atoms[1], atoms[2], SINGLE), new Bond(atoms[2], atoms[3], SINGLE),
+                new Bond(atoms[3], atoms[4], SINGLE), new Bond(atoms[5], atoms[6], SINGLE),
+                new Bond(atoms[5], atoms[9], SINGLE), new Bond(atoms[6], atoms[7], SINGLE),
+                new Bond(atoms[7], atoms[8], SINGLE), new Bond(atoms[8], atoms[9], SINGLE),
+                new Bond(atoms[8], atoms[0], SINGLE),};
         IAtomContainer mol = new AtomContainer(0, 0, 0, 0);
         mol.setAtoms(atoms);
         mol.setBonds(bonds);
@@ -137,29 +104,14 @@ public class PerturbedAtomHashGeneratorTest {
      * @cdk.inchi InChI=1S/C10H18/c1-2-6-10-8-4-3-7-9(10)5-1/h9-10H,1-8H2
      */
     public IAtomContainer decahydronaphthalene() {
-        IAtom[] atoms = new IAtom[]{new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-                                    new Atom("C"),
-        };
-        IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE),
-                                    new Bond(atoms[0], atoms[5], SINGLE),
-                                    new Bond(atoms[1], atoms[2], SINGLE),
-                                    new Bond(atoms[2], atoms[3], SINGLE),
-                                    new Bond(atoms[3], atoms[4], SINGLE),
-                                    new Bond(atoms[6], atoms[5], SINGLE),
-                                    new Bond(atoms[5], atoms[4], SINGLE),
-                                    new Bond(atoms[4], atoms[7], SINGLE),
-                                    new Bond(atoms[6], atoms[9], SINGLE),
-                                    new Bond(atoms[7], atoms[8], SINGLE),
-                                    new Bond(atoms[8], atoms[9], SINGLE),
-        };
+        IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),
+                new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),};
+        IBond[] bonds = new IBond[]{new Bond(atoms[0], atoms[1], SINGLE), new Bond(atoms[0], atoms[5], SINGLE),
+                new Bond(atoms[1], atoms[2], SINGLE), new Bond(atoms[2], atoms[3], SINGLE),
+                new Bond(atoms[3], atoms[4], SINGLE), new Bond(atoms[6], atoms[5], SINGLE),
+                new Bond(atoms[5], atoms[4], SINGLE), new Bond(atoms[4], atoms[7], SINGLE),
+                new Bond(atoms[6], atoms[9], SINGLE), new Bond(atoms[7], atoms[8], SINGLE),
+                new Bond(atoms[8], atoms[9], SINGLE),};
         IAtomContainer mol = new AtomContainer(0, 0, 0, 0);
         mol.setAtoms(atoms);
         mol.setBonds(bonds);

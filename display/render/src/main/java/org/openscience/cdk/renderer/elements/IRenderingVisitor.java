@@ -31,13 +31,13 @@ import java.awt.geom.AffineTransform;
  */
 public interface IRenderingVisitor {
 
-	/**
-	 * Translates a {@link IRenderingElement} into a widget toolkit specific
-	 * rendering element.
-	 *
-	 * @param element Abstract rendering element reflecting some part of the
-	 *                chemical drawing.
-	 */
+    /**
+     * Translates a {@link IRenderingElement} into a widget toolkit specific
+     * rendering element.
+     *
+     * @param element Abstract rendering element reflecting some part of the
+     *                chemical drawing.
+     */
     public abstract void visit(IRenderingElement element);
 
     /**

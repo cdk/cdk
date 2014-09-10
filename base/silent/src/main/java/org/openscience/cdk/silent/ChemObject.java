@@ -45,334 +45,301 @@ import org.openscience.cdk.interfaces.IChemObjectListener;
  * @cdk.githash
  *@cdk.module    silent
  */
-public class ChemObject implements Serializable, IChemObject, Cloneable
-{
+public class ChemObject implements Serializable, IChemObject, Cloneable {
 
-	/**
+    /**
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 2798134548764323328L;
+     */
+    private static final long   serialVersionUID = 2798134548764323328L;
 
-	/**
-	 *  A hashtable for the storage of any kind of properties of this IChemObject.
-	 */
-	private Map<Object, Object> properties;
-	/**
-	 *  You will frequently have to use some flags on a IChemObject. For example, if
-	 *  you want to draw a molecule and see if you've already drawn an atom, or in
-	 *  a ring search to check whether a vertex has been visited in a graph
-	 *  traversal. Use these flags while addressing particular positions in the
-	 *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
-	 *  per object should be more than enough.
-	 */
-	private short flags; // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
+    /**
+     *  A hashtable for the storage of any kind of properties of this IChemObject.
+     */
+    private Map<Object, Object> properties;
+    /**
+     *  You will frequently have to use some flags on a IChemObject. For example, if
+     *  you want to draw a molecule and see if you've already drawn an atom, or in
+     *  a ring search to check whether a vertex has been visited in a graph
+     *  traversal. Use these flags while addressing particular positions in the
+     *  flag array with self-defined constants (flags[VISITED] = true). 100 flags
+     *  per object should be more than enough.
+     */
+    private short               flags;                                  // flags are currently stored as a single short value MAX_FLAG_INDEX < 16
 
-	/**
-	 *  The ID is null by default.
-	 */
-	private String identifier;
+    /**
+     *  The ID is null by default.
+     */
+    private String              identifier;
 
+    /**
+     *  Constructs a new IChemObject.
+     */
+    public ChemObject() {
+        properties = null;
+        identifier = null;
+    }
 
-	/**
-	 *  Constructs a new IChemObject.
-	 */
-	public ChemObject()
-	{
-		properties = null;
-		identifier = null;
-	}
+    /**
+     * Constructs a new IChemObject by copying the flags, and the
+     * identifier. It does not copy the listeners and properties.
+     *
+     * @param chemObject the object to copy
+     */
+    public ChemObject(IChemObject chemObject) {
+        // copy the flags
+        flags = chemObject.getFlagValue().shortValue();
+        // copy the identifier
+        identifier = chemObject.getID();
+    }
 
-	/**
-	 * Constructs a new IChemObject by copying the flags, and the
-	 * identifier. It does not copy the listeners and properties.
-	 *
-	 * @param chemObject the object to copy
-	 */
-	public ChemObject(IChemObject chemObject) {
-		// copy the flags
-		flags = chemObject.getFlagValue().shortValue();
-		// copy the identifier
-		identifier = chemObject.getID();
-	}
+    /**
+     *  Use this to add yourself to this IChemObject as a listener. In order to do
+     *  so, you must implement the ChemObjectListener Interface.
+     *
+     *@param  col  the ChemObjectListener
+     *@see         #removeListener
+     */
+    public void addListener(IChemObjectListener col) {}
 
-	/**
-	 *  Use this to add yourself to this IChemObject as a listener. In order to do
-	 *  so, you must implement the ChemObjectListener Interface.
-	 *
-	 *@param  col  the ChemObjectListener
-	 *@see         #removeListener
-	 */
-	public void addListener(IChemObjectListener col) {}
+    /**
+     *  Returns the number of ChemObjectListeners registered with this object.
+     *
+     *@return    the number of registered listeners.
+     */
+    public int getListenerCount() {
+        return 0;
+    }
 
+    /**
+     *  Use this to remove a ChemObjectListener from the ListenerList of this
+     *  IChemObject. It will then not be notified of change in this object anymore.
+     *
+     *@param  col  The ChemObjectListener to be removed
+     *@see         #addListener
+     */
+    public void removeListener(IChemObjectListener col) {}
 
-	/**
-	 *  Returns the number of ChemObjectListeners registered with this object.
-	 *
-	 *@return    the number of registered listeners.
-	 */
-	public int getListenerCount() {
-	    return 0;
-	}
+    /**
+     *  This should be triggered by an method that changes the content of an object
+     *  to that the registered listeners can react to it.
+     */
+    public void notifyChanged() {}
 
+    /**
+     *  This should be triggered by an method that changes the content of an object
+     *  to that the registered listeners can react to it. This is a version of
+     *  notifyChanged() which allows to propagate a change event while preserving
+     *  the original origin.
+     *
+     *@param  evt  A ChemObjectChangeEvent pointing to the source of where
+     *		the change happend
+     */
+    public void notifyChanged(IChemObjectChangeEvent evt) {}
 
-	/**
-	 *  Use this to remove a ChemObjectListener from the ListenerList of this
-	 *  IChemObject. It will then not be notified of change in this object anymore.
-	 *
-	 *@param  col  The ChemObjectListener to be removed
-	 *@see         #addListener
-	 */
-	public void removeListener(IChemObjectListener col) {}
+    /**
+     * Lazy creation of properties hash.
+     *
+     * @return    Returns in instance of the properties
+     */
+    private Map<Object, Object> lazyProperties() {
+        if (properties == null) {
+            properties = new LinkedHashMap<Object, Object>();
+        }
+        return properties;
+    }
 
-	/**
-	 *  This should be triggered by an method that changes the content of an object
-	 *  to that the registered listeners can react to it.
-	 */
-	public void notifyChanged() {}
+    /**
+     *  Sets a property for a IChemObject.
+     *
+     *@param  description  An object description of the property (most likely a
+     *      unique string)
+     *@param  property     An object with the property itself
+     *@see                 #getProperty
+     *@see                 #removeProperty
+     */
+    public void setProperty(Object description, Object property) {
+        lazyProperties().put(description, property);
+    }
 
-	/**
-	 *  This should be triggered by an method that changes the content of an object
-	 *  to that the registered listeners can react to it. This is a version of
-	 *  notifyChanged() which allows to propagate a change event while preserving
-	 *  the original origin.
-	 *
-	 *@param  evt  A ChemObjectChangeEvent pointing to the source of where
-	 *		the change happend
-	 */
-	public void notifyChanged(IChemObjectChangeEvent evt) {}
-
-	/**
-	 * Lazy creation of properties hash.
-	 *
-	 * @return    Returns in instance of the properties
-	 */
-	private Map<Object, Object> lazyProperties()
-	{
-		if (properties == null)
-		{
-			properties = new LinkedHashMap<Object, Object>();
-		}
-		return properties;
-	}
-
-
-	/**
-	 *  Sets a property for a IChemObject.
-	 *
-	 *@param  description  An object description of the property (most likely a
-	 *      unique string)
-	 *@param  property     An object with the property itself
-	 *@see                 #getProperty
-	 *@see                 #removeProperty
-	 */
-	public void setProperty(Object description, Object property)
-	{
-		lazyProperties().put(description, property);
-	}
-
-
-	/**
-	 *  Removes a property for a IChemObject.
-	 *
-	 *@param  description  The object description of the property (most likely a
-	 *      unique string)
-	 *@see                 #setProperty
-	 *@see                 #getProperty
-	 */
-	public void removeProperty(Object description)
-	{
-		if (properties == null) {
+    /**
+     *  Removes a property for a IChemObject.
+     *
+     *@param  description  The object description of the property (most likely a
+     *      unique string)
+     *@see                 #setProperty
+     *@see                 #getProperty
+     */
+    public void removeProperty(Object description) {
+        if (properties == null) {
             return;
         }
         lazyProperties().remove(description);
-	}
+    }
 
-	/**
-	 *  Returns a property for the IChemObject. The value will be cast to the
+    /**
+     *  Returns a property for the IChemObject. The value will be cast to the
      *  required return type.
-	 *
-	 *@param  description  An object description of the property (most likely a
-	 *      unique string)
-	 *@return              The object containing the property. Returns null if
-	 *      propert is not set.
-	 *@see                 #setProperty
-	 *@see                 #removeProperty
-	 */
-	public <T> T getProperty(Object description)
-	{
-        if (properties == null)
-            return null;
+     *
+     *@param  description  An object description of the property (most likely a
+     *      unique string)
+     *@return              The object containing the property. Returns null if
+     *      propert is not set.
+     *@see                 #setProperty
+     *@see                 #removeProperty
+     */
+    public <T> T getProperty(Object description) {
+        if (properties == null) return null;
         // can't check the type
         @SuppressWarnings("unchecked")
         T value = (T) lazyProperties().get(description);
         return value;
-	}
+    }
 
     /**
      * @inheritDoc
      */
     @TestMethod("testGetProperty_Object_Class,testGetProperty_Object_ClassCast")
     @Override
-    public <T> T getProperty(Object description, Class<T> c)
-	{
+    public <T> T getProperty(Object description, Class<T> c) {
         Object value = lazyProperties().get(description);
 
-        if(c.isInstance(value)) {
+        if (c.isInstance(value)) {
 
             @SuppressWarnings("unchecked")
             T typed = (T) value;
             return typed;
 
-        } else if(value != null){
-            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected " + c
-                    .getSimpleName() + " got " + value.getClass().getSimpleName());
+        } else if (value != null) {
+            throw new IllegalArgumentException("attempted to access a property of incorrect type, expected "
+                    + c.getSimpleName() + " got " + value.getClass().getSimpleName());
         }
 
         return null;
 
-	}
+    }
 
+    /**
+     *  Returns a Map with the IChemObject's properties.
+     *
+     *@return    The object's properties as an Hashtable
+     *@see       #addProperties
+     */
+    public Map<Object, Object> getProperties() {
+        return lazyProperties();
+    }
 
-	/**
-	 *  Returns a Map with the IChemObject's properties.
-	 *
-	 *@return    The object's properties as an Hashtable
-	 *@see       #addProperties
-	 */
-	public Map<Object,Object> getProperties()
-	{
-		return lazyProperties();
-	}
-
-	/**
-	 *  Clones this <code>IChemObject</code>. It clones the identifier, flags,
-	 *  properties and pointer vectors. The ChemObjectListeners are not cloned, and
-	 *  neither is the content of the pointer vectors.
-	 *
-	 *@return    The cloned object
-	 */
-	public Object clone() throws CloneNotSupportedException
-	{
-		ChemObject clone = (ChemObject)super.clone();
-		// clone the flags
-		clone.flags = this.getFlagValue();
-
+    /**
+     *  Clones this <code>IChemObject</code>. It clones the identifier, flags,
+     *  properties and pointer vectors. The ChemObjectListeners are not cloned, and
+     *  neither is the content of the pointer vectors.
+     *
+     *@return    The cloned object
+     */
+    public Object clone() throws CloneNotSupportedException {
+        ChemObject clone = (ChemObject) super.clone();
+        // clone the flags
+        clone.flags = this.getFlagValue();
 
         // clone the properties - using the HashMap copy constructor
         // this does not deep copy all objects but this was not done
         // originally
-		if (properties != null) {
-			clone.properties = new HashMap<Object, Object>(getProperties());
-		}
+        if (properties != null) {
+            clone.properties = new HashMap<Object, Object>(getProperties());
+        }
 
-		return clone;
-	}
+        return clone;
+    }
 
-
-	/**
-	 *  Compares a IChemObject with this IChemObject.
-	 *
-	 *@param  object  Object of type AtomType
-	 *@return         true if the atom types are equal
-	 */
-	public boolean compare(Object object)
-	{
-		if (!(object instanceof IChemObject))
-		{
-			return false;
-		}
-		ChemObject chemObj = (ChemObject) object;
+    /**
+     *  Compares a IChemObject with this IChemObject.
+     *
+     *@param  object  Object of type AtomType
+     *@return         true if the atom types are equal
+     */
+    public boolean compare(Object object) {
+        if (!(object instanceof IChemObject)) {
+            return false;
+        }
+        ChemObject chemObj = (ChemObject) object;
         return Objects.equal(identifier, chemObj.identifier);
     }
 
+    /**
+     *  Returns the identifier (ID) of this object.
+     *
+     *@return    a String representing the ID value
+     *@see       #setID
+     */
+    public String getID() {
+        return this.identifier;
+    }
 
-	/**
-	 *  Returns the identifier (ID) of this object.
-	 *
-	 *@return    a String representing the ID value
-	 *@see       #setID
-	 */
-	public String getID()
-	{
-		return this.identifier;
-	}
+    /**
+     *  Sets the identifier (ID) of this object.
+     *
+     *@param  identifier  a String representing the ID value
+     *@see                #getID
+     */
+    public void setID(String identifier) {
+        this.identifier = identifier;
+    }
 
-
-	/**
-	 *  Sets the identifier (ID) of this object.
-	 *
-	 *@param  identifier  a String representing the ID value
-	 *@see                #getID
-	 */
-	public void setID(String identifier)
-	{
-		this.identifier = identifier;
-	}
-
-
-	/**
-	 * @inheritDoc
-	 */
+    /**
+     * @inheritDoc
+     */
     @Override
-	public void setFlag(int mask, boolean value)
-	{
+    public void setFlag(int mask, boolean value) {
         // set/unset a bit in the flags value
         if (value)
             flags |= mask;
         else
             flags &= ~(mask);
 
-	}
-
+    }
 
     /**
      * @inheritDoc
      */
     @Override
-    public boolean getFlag(int mask)
-	{
-		return (flags & mask) != 0;
-	}
+    public boolean getFlag(int mask) {
+        return (flags & mask) != 0;
+    }
 
     /**
      * @inheritDoc
      */
-    public Short getFlagValue(){
+    public Short getFlagValue() {
         return flags; // auto-boxing
     }
 
     /** @inheritDoc */
-    public void setProperties(Map<Object, Object> properties)
-    {
+    public void setProperties(Map<Object, Object> properties) {
         this.properties = null;
-        if (properties != null)
-            addProperties(properties);
+        if (properties != null) addProperties(properties);
     }
 
-	/**
-	 *  Sets the properties of this object.
-	 *
-	 *@param  properties  a Hashtable specifying the property values
-	 *@see                #getProperties
-	 */
-	public void addProperties(Map<Object, Object> properties)
-	{
+    /**
+     *  Sets the properties of this object.
+     *
+     *@param  properties  a Hashtable specifying the property values
+     *@see                #getProperties
+     */
+    public void addProperties(Map<Object, Object> properties) {
         if (properties == null) return;
-		lazyProperties().putAll(properties);
-	}
-
+        lazyProperties().putAll(properties);
+    }
 
     /**
      * @inheritDoc
      */
     @Override
-    public void setFlags(boolean[] flagsNew){
-        for(int i = 0; i < flagsNew.length ; i++)
+    public void setFlags(boolean[] flagsNew) {
+        for (int i = 0; i < flagsNew.length; i++)
             setFlag(CDKConstants.FLAG_MASKS[i], flagsNew[i]);
     }
 
@@ -380,47 +347,44 @@ public class ChemObject implements Serializable, IChemObject, Cloneable
      * @inheritDoc
      */
     @Override
-    public boolean[] getFlags(){
+    public boolean[] getFlags() {
         // could use a list a invoke .toArray() on the return
         boolean[] flagArray = new boolean[CDKConstants.MAX_FLAG_INDEX + 1];
-        for(int i = 0 ; i < CDKConstants.FLAG_MASKS.length; i++){
+        for (int i = 0; i < CDKConstants.FLAG_MASKS.length; i++) {
             int mask = CDKConstants.FLAG_MASKS[i];
             flagArray[i] = getFlag(mask);
         }
         return flagArray;
     }
 
-	/**
+    /**
      * Clones this <code>IChemObject</code>, but preserves references to <code>Object</code>s.
      *
-	 * @return    Shallow copy of this IChemObject
-	 * @see       #clone
-	 */
-	public Object shallowCopy()
-	{
-		Object copy = null;
-		try {
-			copy = super.clone();
-		} catch (Exception e) {
-			e.printStackTrace(System.err);
-		}
-		return copy;
-	}
+     * @return    Shallow copy of this IChemObject
+     * @see       #clone
+     */
+    public Object shallowCopy() {
+        Object copy = null;
+        try {
+            copy = super.clone();
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
+        return copy;
+    }
 
     public IChemObjectBuilder getBuilder() {
         return SilentChemObjectBuilder.getInstance();
     }
 
-	private boolean doNotification = true;
+    private boolean doNotification = true;
 
-	public void setNotification(boolean bool) {
-		this.doNotification = bool;
-	}
+    public void setNotification(boolean bool) {
+        this.doNotification = bool;
+    }
 
-	public boolean getNotification() {
-		return this.doNotification;
-	}
+    public boolean getNotification() {
+        return this.doNotification;
+    }
 
 }
-
-

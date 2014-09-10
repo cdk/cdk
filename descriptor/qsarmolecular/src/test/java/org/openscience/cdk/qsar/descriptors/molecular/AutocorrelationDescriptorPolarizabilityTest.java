@@ -15,25 +15,24 @@ import org.openscience.cdk.qsar.DescriptorValue;
 
 public class AutocorrelationDescriptorPolarizabilityTest extends MolecularDescriptorTest {
 
-	public AutocorrelationDescriptorPolarizabilityTest() {
-		super();
-	}
+    public AutocorrelationDescriptorPolarizabilityTest() {
+        super();
+    }
 
-	@Before
+    @Before
     public void setUp() throws Exception {
-		setDescriptor(AutocorrelationDescriptorPolarizability.class);
-	}
+        setDescriptor(AutocorrelationDescriptorPolarizability.class);
+    }
 
-	public void ignoreCalculate_IAtomContainer() throws Exception {
-		String filename = "data/mdl/clorobenzene.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-				filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins);
-		IAtomContainer container = reader.read(new AtomContainer());
-		DescriptorValue count = descriptor.calculate(container);
-		System.out.println(count.getValue());
+    public void ignoreCalculate_IAtomContainer() throws Exception {
+        String filename = "data/mdl/clorobenzene.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer container = reader.read(new AtomContainer());
+        DescriptorValue count = descriptor.calculate(container);
+        System.out.println(count.getValue());
 
-		Assert.fail("Not validated yet");
-	}
+        Assert.fail("Not validated yet");
+    }
 
 }

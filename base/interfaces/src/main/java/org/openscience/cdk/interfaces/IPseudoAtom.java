@@ -58,8 +58,3 @@ public interface IPseudoAtom extends IAtom {
     public IPseudoAtom clone() throws CloneNotSupportedException;
 
 }
-
-
-
-
-

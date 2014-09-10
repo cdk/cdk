@@ -39,7 +39,8 @@ abstract class AbstractDescriptor implements IDescriptor {
      *
      * @param builder chem object build
      */
-    @Override public void initialise(IChemObjectBuilder builder) {
+    @Override
+    public void initialise(IChemObjectBuilder builder) {
         // do nothing
     }
 

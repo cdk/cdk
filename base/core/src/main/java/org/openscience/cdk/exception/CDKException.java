@@ -34,16 +34,16 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.exception.CDKExceptionTest")
 public class CDKException extends Exception {
 
-	private static final long serialVersionUID = 8371328769230823678L;
+    private static final long serialVersionUID = 8371328769230823678L;
 
-	/**
+    /**
      * Constructs a new CDKException with the given message.
      *
      * @param message for the constructed exception
      */
     @TestMethod("testCDKException_String")
     public CDKException(String message) {
-        super( message );
+        super(message);
     }
 
     /**
@@ -58,4 +58,3 @@ public class CDKException extends Exception {
         super(message, cause);
     }
 }
-

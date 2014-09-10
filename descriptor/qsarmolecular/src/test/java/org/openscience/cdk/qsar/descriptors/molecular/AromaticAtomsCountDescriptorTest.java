@@ -39,11 +39,11 @@ import org.openscience.cdk.templates.MoleculeFactory;
 
 public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
 
-    public AromaticAtomsCountDescriptorTest() {
-    }
+    public AromaticAtomsCountDescriptorTest() {}
 
-    @Before public void setUp() throws Exception {
-    	setDescriptor(AromaticAtomsCountDescriptor.class);
+    @Before
+    public void setUp() throws Exception {
+        setDescriptor(AromaticAtomsCountDescriptor.class);
     }
 
     @Test
@@ -58,10 +58,9 @@ public class AromaticAtomsCountDescriptorTest extends MolecularDescriptorTest {
     @Test
     public void testViaFlags() throws Exception {
         IAtomContainer molecule = MoleculeFactory.makeBenzene();
-    	for (Iterator atoms=molecule.atoms().iterator(); atoms.hasNext();) {
-    		((IAtom)atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
-    	}
-    	Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
+        for (Iterator atoms = molecule.atoms().iterator(); atoms.hasNext();) {
+            ((IAtom) atoms.next()).setFlag(CDKConstants.ISAROMATIC, true);
+        }
+        Assert.assertEquals(6, ((IntegerResult) descriptor.calculate(molecule).getValue()).intValue());
     }
 }
-

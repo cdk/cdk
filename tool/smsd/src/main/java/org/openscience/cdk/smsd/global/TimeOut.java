@@ -36,9 +36,9 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.smsd.global.TimeOutTest")
 public class TimeOut {
 
-    private static TimeOut instance = null;
-    private double time = -1;
-    private boolean timeOutFlag = false;
+    private static TimeOut instance    = null;
+    private double         time        = -1;
+    private boolean        timeOutFlag = false;
 
     /**
      * Get Instance of the timeout. This starts the timeout counter.
@@ -53,8 +53,7 @@ public class TimeOut {
         return instance;
     }
 
-    protected TimeOut() {
-    }
+    protected TimeOut() {}
 
     /**
      * set cutoff value for time out eg. -1 for infinite and 0.23 for

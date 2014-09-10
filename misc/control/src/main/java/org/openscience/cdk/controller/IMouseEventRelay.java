@@ -30,21 +30,21 @@ package org.openscience.cdk.controller;
  */
 public interface IMouseEventRelay {
 
-	/**
-	 * Event to signal that the left mouse button has been released.
-	 *
-	 * @param screenCoordX the x part of the screen coordinate where the event happened.
-	 * @param screenCoordY the y part of the screen coordinate where the event happened.
-	 */
-	public abstract void mouseClickedUp(int screenCoordX, int screenCoordY);
-
-	/**
-     * Event to signal that the left mouse button has been pushed but not released yet.
-	 *
+    /**
+     * Event to signal that the left mouse button has been released.
+     *
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
-	 */
-	public abstract void mouseClickedDown(int screenCoordX, int screenCoordY);
+     */
+    public abstract void mouseClickedUp(int screenCoordX, int screenCoordY);
+
+    /**
+     * Event to signal that the left mouse button has been pushed but not released yet.
+     *
+     * @param screenCoordX the x part of the screen coordinate where the event happened.
+     * @param screenCoordY the y part of the screen coordinate where the event happened.
+     */
+    public abstract void mouseClickedDown(int screenCoordX, int screenCoordY);
 
     /**
      * Event to signal that the right mouse button has been pushed but not released yet.
@@ -52,56 +52,56 @@ public interface IMouseEventRelay {
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
      */
-	public abstract void mouseClickedDownRight(int screenCoordX, int screenCoordY);
+    public abstract void mouseClickedDownRight(int screenCoordX, int screenCoordY);
 
-	/**
+    /**
      * Event to signal that the right mouse button has been released.
      *
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
      */
-	public abstract void mouseClickedUpRight(int screenCoordX, int screenCoordY);
+    public abstract void mouseClickedUpRight(int screenCoordX, int screenCoordY);
 
-	/**
+    /**
      * Event to signal that a mouse button has been double clicked.
-	 *
+     *
      * @param screenCoordX the x part of the screen coordinate where the event happened.
      * @param screenCoordY the y part of the screen coordinate where the event happened.
-	 */
-	public abstract void mouseClickedDouble(int screenCoordX, int screenCoordY);
+     */
+    public abstract void mouseClickedDouble(int screenCoordX, int screenCoordY);
 
-	/**
+    /**
      * Event to signal that a mouse has been moved to the new coordinates.
-	 *
+     *
      * @param screenCoordX the x part of the latest screen coordinate.
      * @param screenCoordY the y part of the latest screen coordinate.
-	 */
-	public abstract void mouseMove(int screenCoordX, int screenCoordY);
+     */
+    public abstract void mouseMove(int screenCoordX, int screenCoordY);
 
-	/**
-	 *
+    /**
+     *
      * @param screenCoordX
      * @param screenCoordY
-	 */
-	public abstract void mouseEnter(int screenCoordX, int screenCoordY);
+     */
+    public abstract void mouseEnter(int screenCoordX, int screenCoordY);
 
-	/**
-	 *
+    /**
+     *
      * @param screenCoordX
      * @param screenCoordY
-	 */
-	public abstract void mouseExit(int screenCoordX, int screenCoordY);
+     */
+    public abstract void mouseExit(int screenCoordX, int screenCoordY);
 
-	/**
+    /**
      * Event to signal that a mouse has been dragged from one point to
      * a next.
-	 *
-	 * @param screenCoordXFrom the x part of the screen coordinate dragged from.
-	 * @param screenCoordYFrom the y part of the screen coordinate dragged from.
-	 * @param screenCoordXTo   the x part of the screen coordinate dragged to.
-	 * @param screenCoordYTo   the y part of the screen coordinate dragged to.
-	 */
-	public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
+     *
+     * @param screenCoordXFrom the x part of the screen coordinate dragged from.
+     * @param screenCoordYFrom the y part of the screen coordinate dragged from.
+     * @param screenCoordXTo   the x part of the screen coordinate dragged to.
+     * @param screenCoordYTo   the y part of the screen coordinate dragged to.
+     */
+    public abstract void mouseDrag(int screenCoordXFrom, int screenCoordYFrom, int screenCoordXTo, int screenCoordYTo);
 
     /**
      * Event to signal that the mouse wheel has been rotated a certain amount forward.
@@ -109,14 +109,14 @@ public interface IMouseEventRelay {
      * @param rotation an platform-specific amount of rotation of the wheel
      * @see #mouseWheelMovedBackward(int)
      */
-	public abstract void mouseWheelMovedForward(int rotation);
+    public abstract void mouseWheelMovedForward(int rotation);
 
-	/**
+    /**
      * Event to signal that the mouse wheel has been rotated a certain amount backward.
      *
      * @param rotation an platform-specific amount of rotation of the wheel
      * @see #mouseWheelMovedForward(int)
      */
-	public abstract void mouseWheelMovedBackward(int rotation);
+    public abstract void mouseWheelMovedBackward(int rotation);
 
 }

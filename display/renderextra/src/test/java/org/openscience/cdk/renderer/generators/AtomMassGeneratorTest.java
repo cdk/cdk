@@ -36,12 +36,12 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  */
 public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
 
-	private AtomMassGenerator generator;
+    private AtomMassGenerator generator;
 
-	@Override
-	public Rectangle getCustomCanvas() {
-		return null;
-	}
+    @Override
+    public Rectangle getCustomCanvas() {
+        return null;
+    }
 
     @Before
     public void setup() {
@@ -53,14 +53,14 @@ public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
         super.setTestedGenerator(generator);
     }
 
-	@Test
-	public void testEmptyContainer() {
-		IAtomContainer emptyContainer = super.builder.newInstance(IAtomContainer.class);
+    @Test
+    public void testEmptyContainer() {
+        IAtomContainer emptyContainer = super.builder.newInstance(IAtomContainer.class);
 
-		// nothing should be made
-		IRenderingElement root = generator.generate(emptyContainer, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
-	}
+        // nothing should be made
+        IRenderingElement root = generator.generate(emptyContainer, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(0, elements.size());
+    }
 
 }

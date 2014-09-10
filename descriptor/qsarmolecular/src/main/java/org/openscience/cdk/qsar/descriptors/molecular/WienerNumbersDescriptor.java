@@ -34,7 +34,6 @@ import org.openscience.cdk.qsar.result.DoubleArrayResultType;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-
 /**
  * This descriptor calculates the Wiener numbers. This includes the Wiener Path number
  * and the Wiener Polarity Number.
@@ -69,12 +68,12 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WienerNumbersDescriptorTest")
 public class WienerNumbersDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {"WPATH", "WPOL"};
+    private static final String[] names            = {"WPATH", "WPOL"};
 
-    double[][] matr = null;
-    DoubleArrayResult wienerNumbers = null;
-    ConnectionMatrix connectionMatrix = new ConnectionMatrix();
-    AtomContainerManipulator atm =  new AtomContainerManipulator();
+    double[][]                    matr             = null;
+    DoubleArrayResult             wienerNumbers    = null;
+    ConnectionMatrix              connectionMatrix = new ConnectionMatrix();
+    AtomContainerManipulator      atm              = new AtomContainerManipulator();
 
     /**
      *  Constructor for the WienerNumbersDescriptor object.
@@ -101,11 +100,9 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the WienerNumbersDescriptor object.
@@ -121,7 +118,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         // no parameters for this descriptor
     }
 
-
     /**
      *  Gets the parameters attribute of the WienerNumbersDescriptor object.
      *
@@ -136,11 +132,10 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         // no parameters to return
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      * Calculate the Wiener numbers.
@@ -153,7 +148,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         wienerNumbers = new DoubleArrayResult(2);
         double wienerPathNumber = 0; //wienerPath
         double wienerPolarityNumber = 0; //wienerPol
-
 
         matr = ConnectionMatrix.getMatrix(AtomContainerManipulator.removeHydrogens(atomContainer));
         int[][] distances = PathTools.computeFloydAPSP(matr);
@@ -173,8 +167,8 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
 
         wienerNumbers.add(wienerPathNumber);
         wienerNumbers.add(wienerPolarityNumber);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                wienerNumbers, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), wienerNumbers,
+                getDescriptorNames());
     }
 
     /**
@@ -206,8 +200,6 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         return (null);
     }
 
-
-
     /**
      *  Gets the parameterType attribute of the WienerNumbersDescriptor object.
      *
@@ -219,4 +211,3 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
         return (null);
     }
 }
-

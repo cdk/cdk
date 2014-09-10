@@ -43,230 +43,127 @@ import org.openscience.cdk.io.MDLV2000Reader;
  */
 public class BremserPredictorTest extends CDKTestCase {
 
-	static boolean standAlone = false;
+    static boolean standAlone = false;
 
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@return    Description of the Return Value
-	 */
-	@Test public void testConstructor() {
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		Assert.assertNotNull(bp);
-	}
+    /**
+     *  A unit test for JUnit
+     *
+     *@return    Description of the Return Value
+     */
+    @Test
+    public void testConstructor() {
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        Assert.assertNotNull(bp);
+    }
 
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@return    Description of the Return Value
-	 */
-	@Test public void testPrediction() throws Exception
-	{
-		String[] data = {
-     "=C(//)",
-     "=OCC(//)",
-     "CC(//)",
-     "CC(//)",
-     "CCC(//)",
-     "CC(//)",
-     "CC(//)",
-     "CCC(//)",
-     "CCC(//)",
-     "CC(//)",
-     "CC(//)",
-     "CC(//)",
-     "CC(//)",
-     "CCO(//)",
-     "CC(//)",
-     "CCO(//)",
-     "CCO(//)",
-     "CC(//)",
-     "O(//)",
-     "CC(//)",
-     "CCC(//)",
-     "CCC(//)",
-     "CCC(//)"
-		};
+    /**
+     *  A unit test for JUnit
+     *
+     *@return    Description of the Return Value
+     */
+    @Test
+    public void testPrediction() throws Exception {
+        String[] data = {"=C(//)", "=OCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CC(//)", "CC(//)", "CCC(//)", "CCC(//)",
+                "CC(//)", "CC(//)", "CC(//)", "CC(//)", "CCO(//)", "CC(//)", "CCO(//)", "CCO(//)", "CC(//)", "O(//)",
+                "CC(//)", "CCC(//)", "CCC(//)", "CCC(//)"};
 
-			double[] result = {
-     112.6,
-     198.6,
-     29.6,
-     29.6,
-     40.1,
-     29.6,
-     29.6,
-     40.1,
-     40.1,
-     29.6,
-     29.6,
-     29.6,
-     29.6,
-     73.1,
-     29.6,
-     73.1,
-     73.1,
-     29.6,
-     54.7,
-     29.6,
-     40.1,
-     40.1,
-     40.1
-		};
+        double[] result = {112.6, 198.6, 29.6, 29.6, 40.1, 29.6, 29.6, 40.1, 40.1, 29.6, 29.6, 29.6, 29.6, 73.1, 29.6,
+                73.1, 73.1, 29.6, 54.7, 29.6, 40.1, 40.1, 40.1};
 
-		double prediction;
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		for (int f = 0; f < data.length; f++)
-		{
-			prediction = bp.predict(data[f]);
-			//logger.debug("\"" + prediction + "\",");
-			Assert.assertEquals(result[f], prediction, 0.001);
-		}
+        double prediction;
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        for (int f = 0; f < data.length; f++) {
+            prediction = bp.predict(data[f]);
+            //logger.debug("\"" + prediction + "\",");
+            Assert.assertEquals(result[f], prediction, 0.001);
+        }
 
-	}
+    }
 
-	/**
-	 *  A unit test for JUnit
-	 *
-	 *@return    Description of the Return Value
-	 */
-	@Test public void testGetConfidenceLimit() throws Exception
-	{
-double[] result = {
-     28.5,
-     25.7,
-     28.5,
-     34.9,
-     28.5,
-     25.7,
-     25.4,
-     28.5,
-     28.5,
-     14.8,
-     13.3,
-     23.0,
-     34.9,
-     25.7,
-     25.7,
-     28.5,
-     25.7,
-     25.7,
-     13.3,
-     14.4,
-     14.4,
-     8.9,
-     14.8,
-     14.8,
-     13.3,
-     13.3,
-     13.3,
-     14.4,
-     14.4,
-     13.3,
-     14.4,
-     14.4,
-     8.9,
-     14.8,
-     14.8,
-     13.3,
-     13.3,
-     13.3,
-     14.4,
-     14.4,
-     13.3
-		};
+    /**
+     *  A unit test for JUnit
+     *
+     *@return    Description of the Return Value
+     */
+    @Test
+    public void testGetConfidenceLimit() throws Exception {
+        double[] result = {28.5, 25.7, 28.5, 34.9, 28.5, 25.7, 25.4, 28.5, 28.5, 14.8, 13.3, 23.0, 34.9, 25.7, 25.7,
+                28.5, 25.7, 25.7, 13.3, 14.4, 14.4, 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3, 14.4, 14.4,
+                8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
         IAtomContainer molecule = null;
-		String filename = "data/mdl/BremserPredictionTest.mol";
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-		MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-		molecule = reader.read(new AtomContainer());
-		double prediction;
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		String s = null;
-		removeHydrogens(molecule);
-		//logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
-		for (int f = 0; f < molecule.getAtomCount(); f++)
-		{
-			s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
-			prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
-			//logger.debug("\"" + prediction + "\",");
-			Assert.assertEquals(result[f], prediction, 0.001);
-		}
+        String filename = "data/mdl/BremserPredictionTest.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        molecule = reader.read(new AtomContainer());
+        double prediction;
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        String s = null;
+        removeHydrogens(molecule);
+        //logger.debug("Molecule has " + molecule.getAtomCount() + " atoms.");
+        for (int f = 0; f < molecule.getAtomCount(); f++) {
+            s = hcg.getHOSECode(molecule, molecule.getAtom(f), 1);
+            prediction = bp.getConfidenceLimit(hcg.makeBremserCompliant(s));
+            //logger.debug("\"" + prediction + "\",");
+            Assert.assertEquals(result[f], prediction, 0.001);
+        }
 
-	}
+    }
 
-	@Test public void testFailure1()
-	{
-		boolean correct = false;
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		try
-		{
-			bp.predict("dumb code");
-		}
-		catch(Exception exc)
-		{
-			if (exc instanceof org.openscience.cdk.exception.CDKException)
-			{
-				correct = true;
-			}
-		}
-		Assert.assertTrue(correct);
-	}
+    @Test
+    public void testFailure1() {
+        boolean correct = false;
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        try {
+            bp.predict("dumb code");
+        } catch (Exception exc) {
+            if (exc instanceof org.openscience.cdk.exception.CDKException) {
+                correct = true;
+            }
+        }
+        Assert.assertTrue(correct);
+    }
 
-	@Test public void testFailure2()
-	{
-		boolean correct = false;
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		try
-		{
-			bp.getConfidenceLimit("dumb code");
-		}
-		catch(Exception exc)
-		{
-			if (exc instanceof org.openscience.cdk.exception.CDKException)
-			{
-				correct = true;
-			}
-		}
-		Assert.assertTrue(correct);
-	}
+    @Test
+    public void testFailure2() {
+        boolean correct = false;
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        try {
+            bp.getConfidenceLimit("dumb code");
+        } catch (Exception exc) {
+            if (exc instanceof org.openscience.cdk.exception.CDKException) {
+                correct = true;
+            }
+        }
+        Assert.assertTrue(correct);
+    }
 
-	@Test public void testFailure3()
-	{
-		boolean correct = false;
-		String test = null;
-		BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
-		try
-		{
-			bp.predict(test);
-		}
-		catch(Exception exc)
-		{
-			if (exc instanceof org.openscience.cdk.exception.CDKException)
-			{
-				correct = true;
-			}
-		}
-		Assert.assertTrue(correct);
-	}
+    @Test
+    public void testFailure3() {
+        boolean correct = false;
+        String test = null;
+        BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
+        try {
+            bp.predict(test);
+        } catch (Exception exc) {
+            if (exc instanceof org.openscience.cdk.exception.CDKException) {
+                correct = true;
+            }
+        }
+        Assert.assertTrue(correct);
+    }
 
+    private void removeHydrogens(IAtomContainer ac) {
+        org.openscience.cdk.interfaces.IAtom atom = null;
+        int f = ac.getAtomCount() - 1;
 
-	private void removeHydrogens(IAtomContainer ac)
-	{
-		org.openscience.cdk.interfaces.IAtom atom = null;
-		int f = ac.getAtomCount() - 1;
-
-		do{
-			atom = ac.getAtom(f);
-			if (atom.getSymbol().equals("H"))
-			{
-				ac.removeAtomAndConnectedElectronContainers(atom);
-			}
-			f--;
-		}
-		while(f >= 0);
-	}
+        do {
+            atom = ac.getAtom(f);
+            if (atom.getSymbol().equals("H")) {
+                ac.removeAtomAndConnectedElectronContainers(atom);
+            }
+            f--;
+        } while (f >= 0);
+    }
 
 }
-

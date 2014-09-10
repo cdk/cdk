@@ -52,110 +52,101 @@ import java.util.Iterator;
 @TestClass("org.openscience.cdk.graph.rebond.RebondToolTest")
 public class RebondTool {
 
-  private double maxCovalentRadius;
-  private double minBondDistance;
-  private double bondTolerance;
+    private double maxCovalentRadius;
+    private double minBondDistance;
+    private double bondTolerance;
 
-  private Bspt bspt;
+    private Bspt   bspt;
 
-  public RebondTool(double maxCovalentRadius, double minBondDistance,
-                    double bondTolerance) {
-    this.maxCovalentRadius = maxCovalentRadius;
-    this.bondTolerance = bondTolerance;
-    this.minBondDistance = minBondDistance;
-    this.bspt = null;
-  }
-
-  /**
-   * Rebonding using a Binary Space Partition Tree. Note, that any bonds
-   * defined will be deleted first. It assumes the unit of 3D space to
-   * be 1 &Acircle;ngstrom.
-   */
-  @TestMethod("testRebond_IAtomContainer")
-  public void rebond(IAtomContainer container) throws CDKException {
-    container.removeAllBonds();
-    maxCovalentRadius = 0.0;
-    // construct a new binary space partition tree
-    bspt = new Bspt(3);
-    Iterator<IAtom> atoms = container.atoms().iterator();
-    while (atoms.hasNext()) {
-      IAtom atom = atoms.next();
-      double myCovalentRadius = atom.getCovalentRadius();
-      if (myCovalentRadius == 0.0) {
-          throw new CDKException("Atom(s) does not have covalentRadius defined.");
-      }
-      if (myCovalentRadius > maxCovalentRadius)
-        maxCovalentRadius = myCovalentRadius;
-      TupleAtom tupleAtom = new TupleAtom(atom);
-      bspt.addTuple(tupleAtom);
+    public RebondTool(double maxCovalentRadius, double minBondDistance, double bondTolerance) {
+        this.maxCovalentRadius = maxCovalentRadius;
+        this.bondTolerance = bondTolerance;
+        this.minBondDistance = minBondDistance;
+        this.bspt = null;
     }
-    // rebond all atoms
-    atoms = container.atoms().iterator();
-    while (atoms.hasNext()) {
-      bondAtom(container, (IAtom)atoms.next());
-    }
-  }
 
-  /**
-   * Rebonds one atom by looking up nearby atom using the binary space partition tree.
-   */
-  private void bondAtom(IAtomContainer container, IAtom atom) {
-    double myCovalentRadius = atom.getCovalentRadius();
-    double searchRadius = myCovalentRadius + maxCovalentRadius + bondTolerance;
-    Point tupleAtom = new Point(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
-    for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements(); ) {
-      IAtom atomNear = ((TupleAtom)e.nextElement()).getAtom();
-      if (atomNear != atom && container.getBond(atom, atomNear) == null) {
-        boolean bonded = isBonded(myCovalentRadius,  atomNear.getCovalentRadius(), e.foundDistance2());
-        if (bonded) {
-          IBond bond = atom.getBuilder().newInstance(IBond.class,atom, atomNear, IBond.Order.SINGLE);
-          container.addBond(bond);
+    /**
+     * Rebonding using a Binary Space Partition Tree. Note, that any bonds
+     * defined will be deleted first. It assumes the unit of 3D space to
+     * be 1 &Acircle;ngstrom.
+     */
+    @TestMethod("testRebond_IAtomContainer")
+    public void rebond(IAtomContainer container) throws CDKException {
+        container.removeAllBonds();
+        maxCovalentRadius = 0.0;
+        // construct a new binary space partition tree
+        bspt = new Bspt(3);
+        Iterator<IAtom> atoms = container.atoms().iterator();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            double myCovalentRadius = atom.getCovalentRadius();
+            if (myCovalentRadius == 0.0) {
+                throw new CDKException("Atom(s) does not have covalentRadius defined.");
+            }
+            if (myCovalentRadius > maxCovalentRadius) maxCovalentRadius = myCovalentRadius;
+            TupleAtom tupleAtom = new TupleAtom(atom);
+            bspt.addTuple(tupleAtom);
         }
-      }
-    }
-  }
-
-  /**
-   * Returns the bond order for the bond. At this moment, it only returns
-   * 0 or 1, but not 2 or 3, or aromatic bond order.
-   */
-
-  private boolean isBonded(double covalentRadiusA,
-                           double covalentRadiusB,
-                           double distance2) {
-    double maxAcceptable =
-      covalentRadiusA + covalentRadiusB + bondTolerance;
-    double maxAcceptable2 = maxAcceptable * maxAcceptable;
-    double minBondDistance2 = this.minBondDistance*this.minBondDistance;
-    if (distance2 < minBondDistance2)
-      return false;
-      return distance2 <= maxAcceptable2;
-  }
-
-
-  class TupleAtom implements Bspt.Tuple {
-    IAtom atom;
-
-    TupleAtom(IAtom atom) {
-      this.atom = atom;
+        // rebond all atoms
+        atoms = container.atoms().iterator();
+        while (atoms.hasNext()) {
+            bondAtom(container, (IAtom) atoms.next());
+        }
     }
 
-    public double getDimValue(int dim) {
-      if (dim == 0)
-        return atom.getPoint3d().x;
-      if (dim == 1)
-        return atom.getPoint3d().y;
-      return atom.getPoint3d().z;
+    /**
+     * Rebonds one atom by looking up nearby atom using the binary space partition tree.
+     */
+    private void bondAtom(IAtomContainer container, IAtom atom) {
+        double myCovalentRadius = atom.getCovalentRadius();
+        double searchRadius = myCovalentRadius + maxCovalentRadius + bondTolerance;
+        Point tupleAtom = new Point(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+        for (Bspt.EnumerateSphere e = bspt.enumHemiSphere(tupleAtom, searchRadius); e.hasMoreElements();) {
+            IAtom atomNear = ((TupleAtom) e.nextElement()).getAtom();
+            if (atomNear != atom && container.getBond(atom, atomNear) == null) {
+                boolean bonded = isBonded(myCovalentRadius, atomNear.getCovalentRadius(), e.foundDistance2());
+                if (bonded) {
+                    IBond bond = atom.getBuilder().newInstance(IBond.class, atom, atomNear, IBond.Order.SINGLE);
+                    container.addBond(bond);
+                }
+            }
+        }
     }
 
-    public IAtom getAtom() {
-      return this.atom;
+    /**
+     * Returns the bond order for the bond. At this moment, it only returns
+     * 0 or 1, but not 2 or 3, or aromatic bond order.
+     */
+
+    private boolean isBonded(double covalentRadiusA, double covalentRadiusB, double distance2) {
+        double maxAcceptable = covalentRadiusA + covalentRadiusB + bondTolerance;
+        double maxAcceptable2 = maxAcceptable * maxAcceptable;
+        double minBondDistance2 = this.minBondDistance * this.minBondDistance;
+        if (distance2 < minBondDistance2) return false;
+        return distance2 <= maxAcceptable2;
     }
 
-    public String toString() {
-      return ("<" + atom.getPoint3d().x + "," + atom.getPoint3d().y + "," +
-              atom.getPoint3d().z + ">");
+    class TupleAtom implements Bspt.Tuple {
+
+        IAtom atom;
+
+        TupleAtom(IAtom atom) {
+            this.atom = atom;
+        }
+
+        public double getDimValue(int dim) {
+            if (dim == 0) return atom.getPoint3d().x;
+            if (dim == 1) return atom.getPoint3d().y;
+            return atom.getPoint3d().z;
+        }
+
+        public IAtom getAtom() {
+            return this.atom;
+        }
+
+        public String toString() {
+            return ("<" + atom.getPoint3d().x + "," + atom.getPoint3d().y + "," + atom.getPoint3d().z + ">");
+        }
     }
-  }
 
 }

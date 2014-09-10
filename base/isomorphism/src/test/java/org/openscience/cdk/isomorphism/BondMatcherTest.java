@@ -40,7 +40,8 @@ import static org.openscience.cdk.CDKConstants.ISAROMATIC;
  */
 public class BondMatcherTest {
 
-    @Test public void anyMatch() {
+    @Test
+    public void anyMatch() {
         BondMatcher matcher = BondMatcher.forAny();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -52,7 +53,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(null, null));
     }
 
-    @Test public void aromaticMatch() {
+    @Test
+    public void aromaticMatch() {
         BondMatcher matcher = BondMatcher.forOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -64,7 +66,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticMatch() {
+    @Test
+    public void aliphaticMatch() {
         BondMatcher matcher = BondMatcher.forOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -76,7 +79,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aromaticStrictMatch() {
+    @Test
+    public void aromaticStrictMatch() {
         BondMatcher matcher = BondMatcher.forStrictOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -88,7 +92,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticStrictMatch() {
+    @Test
+    public void aliphaticStrictMatch() {
         BondMatcher matcher = BondMatcher.forStrictOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -100,7 +105,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticMismatch_aromatic() {
+    @Test
+    public void aliphaticMismatch_aromatic() {
         BondMatcher matcher = BondMatcher.forOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -112,7 +118,8 @@ public class BondMatcherTest {
         assertTrue(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticStrictMismatch_aromatic() {
+    @Test
+    public void aliphaticStrictMismatch_aromatic() {
         BondMatcher matcher = BondMatcher.forStrictOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -124,7 +131,8 @@ public class BondMatcherTest {
         assertFalse(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticMismatch_order() {
+    @Test
+    public void aliphaticMismatch_order() {
         BondMatcher matcher = BondMatcher.forOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -136,7 +144,8 @@ public class BondMatcherTest {
         assertFalse(matcher.matches(bond2, bond1));
     }
 
-    @Test public void aliphaticStrictMismatch_order() {
+    @Test
+    public void aliphaticStrictMismatch_order() {
         BondMatcher matcher = BondMatcher.forStrictOrder();
         IBond bond1 = mock(IBond.class);
         IBond bond2 = mock(IBond.class);
@@ -148,7 +157,8 @@ public class BondMatcherTest {
         assertFalse(matcher.matches(bond2, bond1));
     }
 
-    @Test public void queryMatch() {
+    @Test
+    public void queryMatch() {
         BondMatcher matcher = BondMatcher.forQuery();
         IQueryBond bond1 = mock(IQueryBond.class);
         IBond bond2 = mock(IBond.class);

@@ -77,22 +77,19 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
      * @throws NullPointerException     the list of encoders was null
      * @throws IllegalArgumentException the list of encoders was empty
      */
-    @TestMethod("testConstruction_Null,testConstruction_Empty," +
-                        "testConstruction_Modification")
+    @TestMethod("testConstruction_Null,testConstruction_Empty," + "testConstruction_Modification")
     public ConjugatedAtomEncoder(List<AtomEncoder> encoders) {
-        if (encoders == null)
-            throw new NullPointerException("null list of encoders");
-        if (encoders.isEmpty())
-            throw new IllegalArgumentException("no encoders provided");
-        this.encoders = Collections
-                .unmodifiableList(new ArrayList<AtomEncoder>(encoders));
+        if (encoders == null) throw new NullPointerException("null list of encoders");
+        if (encoders.isEmpty()) throw new IllegalArgumentException("no encoders provided");
+        this.encoders = Collections.unmodifiableList(new ArrayList<AtomEncoder>(encoders));
     }
 
     /**
      * @inheritDoc
      */
     @TestMethod("testEncode,testEncode_Single")
-    @Override public int encode(IAtom atom, IAtomContainer container) {
+    @Override
+    public int encode(IAtom atom, IAtomContainer container) {
         int hash = 179426549;
         for (AtomEncoder encoder : encoders)
             hash = 31 * hash + encoder.encode(atom, container);
@@ -116,8 +113,7 @@ final class ConjugatedAtomEncoder implements AtomEncoder {
      */
     @TestMethod("testCreate_Null,testCreate_Null2")
     public static AtomEncoder create(AtomEncoder encoder, AtomEncoder... encoders) {
-        if (encoder == null || encoders == null)
-            throw new NullPointerException("null encoders provided");
+        if (encoder == null || encoders == null) throw new NullPointerException("null encoders provided");
         List<AtomEncoder> tmp = new ArrayList<AtomEncoder>(encoders.length + 1);
         tmp.add(encoder);
         for (AtomEncoder e : encoders)

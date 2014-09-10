@@ -72,25 +72,23 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.APolDescriptorTest")
 public class APolDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(APolDescriptor.class);
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(APolDescriptor.class);
     /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
-    private static double[] polarizabilities;
-    private static final String[] names = {"apol"};
+    private static double[]       polarizabilities;
+    private static final String[] names  = {"apol"};
 
     /**
      *  Constructor for the APolDescriptor object.
      */
     public APolDescriptor() {
         if (polarizabilities == null) {
-            polarizabilities = new double[] {0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76,
-                1.1, 0.802, 0.557, 0.3956, 23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411,
-                43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5, 6.8, 6.1, 7.1, 8.12, 6.07,
-                4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6, 8.6,
-                4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2,
-                31.4, 30.1, 28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2,
-                13.1, 11.1, 9.7, 8.5, 7.6, 6.5, 5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7,
-                38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23, 22.7, 20.5,19.7,23.8,18.2,17.5};
+            polarizabilities = new double[]{0, 0.666793, 0.204956, 24.3, 5.6, 3.03, 1.76, 1.1, 0.802, 0.557, 0.3956,
+                    23.6, 10.6, 6.8, 5.38, 3.63, 2.9, 2.18, 1.6411, 43.4, 22.8, 17.8, 14.6, 12.4, 11.6, 9.4, 8.4, 7.5,
+                    6.8, 6.1, 7.1, 8.12, 6.07, 4.31, 3.77, 3.05, 2.4844, 47.3, 27.6, 22.7, 17.9, 15.7, 12.8, 11.4, 9.6,
+                    8.6, 4.8, 7.2, 7.2, 10.2, 7.7, 6.6, 5.5, 5.35, 4.044, 59.6, 39.7, 31.1, 29.6, 28.2, 31.4, 30.1,
+                    28.8, 27.7, 23.5, 25.5, 24.5, 23.6, 22.7, 21.8, 21, 21.9, 16.2, 13.1, 11.1, 9.7, 8.5, 7.6, 6.5,
+                    5.8, 5.7, 7.6, 6.8, 7.4, 6.8, 6, 5.3, 48.7, 38.3, 32.1, 32.1, 25.4, 27.4, 24.8, 24.5, 23.3, 23,
+                    22.7, 20.5, 19.7, 23.8, 18.2, 17.5};
         }
     }
 
@@ -111,10 +109,8 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      */
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -131,7 +127,6 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
         // no parameters for this descriptor
     }
 
-
     /**
      *  Gets the parameters attribute of the APolDescriptor object.
      *
@@ -146,11 +141,10 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      * Calculate the sum of atomic polarizabilities in an {@link IAtomContainer}.
@@ -180,9 +174,9 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
                     new DoubleResult(apol), getDescriptorNames());
         } catch (Exception ex1) {
             logger.debug(ex1);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    new DoubleResult(Double.NaN), getDescriptorNames(),
-                    new CDKException("Problems with IsotopeFactory due to " + ex1.toString(), ex1));
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), getDescriptorNames(), new CDKException("Problems with IsotopeFactory due to "
+                    + ex1.toString(), ex1));
         }
     }
 
@@ -202,7 +196,6 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
         return new DoubleResult(0.0);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the APolDescriptor object.
      *
@@ -213,7 +206,6 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
         // no param names to return
         return (null);
     }
-
 
     /**
      *  Gets the parameterType attribute of the APolDescriptor object.
@@ -226,4 +218,3 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
         return (null);
     }
 }
-

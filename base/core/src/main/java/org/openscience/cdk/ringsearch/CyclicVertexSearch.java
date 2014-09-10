@@ -86,4 +86,3 @@ public interface CyclicVertexSearch {
      */
     int[] vertexColor();
 }
-

@@ -31,7 +31,6 @@ import org.openscience.cdk.qsar.result.DoubleResult;
 import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
-
 /**
  *  According to the Petitjean definition, the eccentricity of a vertex corresponds to
  *  the distance from that vertex to the most remote vertex in the graph.
@@ -67,13 +66,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.PetitjeanNumberDescriptorTest")
 public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     private static final String[] names = {"PetitjeanNumber"};
 
     /**
      *  Constructor for the PetitjeanNumberDescriptor object
      */
-    public PetitjeanNumberDescriptor() { }
-
+    public PetitjeanNumberDescriptor() {}
 
     /**
      *  Gets the specification attribute of the PetitjeanNumberDescriptor object
@@ -83,11 +82,9 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#petitjeanNumber", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the PetitjeanNumberDescriptor object
@@ -100,7 +97,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         // no parameters for this descriptor
     }
 
-
     /**
      *  Gets the parameters attribute of the PetitjeanNumberDescriptor object
      *
@@ -112,11 +108,10 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         // no parameters to return
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      *  Evaluate the descriptor for the molecule.
@@ -131,10 +126,12 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         int diameter = PathTools.getMolecularGraphDiameter(cloneContainer);
         int radius = PathTools.getMolecularGraphRadius(cloneContainer);
 
-        if (diameter == 0) petitjeanNumber = 0;
-        else petitjeanNumber = (diameter - radius)/(double)diameter;
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(petitjeanNumber),
-                getDescriptorNames());
+        if (diameter == 0)
+            petitjeanNumber = 0;
+        else
+            petitjeanNumber = (diameter - radius) / (double) diameter;
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                petitjeanNumber), getDescriptorNames());
     }
 
     /**
@@ -164,8 +161,6 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         return (null);
     }
 
-
-
     /**
      *  Gets the parameterType attribute of the PetitjeanNumberDescriptor object
      *
@@ -177,4 +172,3 @@ public class PetitjeanNumberDescriptor extends AbstractMolecularDescriptor imple
         return (null);
     }
 }
-

@@ -36,53 +36,51 @@ public class ProblemMarkerTest extends CDKTestCase {
 
     @Test
     public void testUnmarkWithError_IChemObject() {
-		IChemObject object = new ChemObject();
-		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.markWithError(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.unmarkWithError(object);
-		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-	}
+        IChemObject object = new ChemObject();
+        Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+        ProblemMarker.markWithError(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+        ProblemMarker.unmarkWithError(object);
+        Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+    }
 
     @Test
     public void testUnmarkWithWarning_IChemObject() {
-		IChemObject object = new ChemObject();
-		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		ProblemMarker.markWithWarning(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		ProblemMarker.unmarkWithWarning(object);
-		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-	}
+        IChemObject object = new ChemObject();
+        Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        ProblemMarker.markWithWarning(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        ProblemMarker.unmarkWithWarning(object);
+        Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+    }
 
     @Test
     public void testUnmark_IChemObject() {
-		IChemObject object = new ChemObject();
-		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		ProblemMarker.markWithWarning(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		ProblemMarker.markWithError(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.unmark(object);
-		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-	}
+        IChemObject object = new ChemObject();
+        Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        ProblemMarker.markWithWarning(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        ProblemMarker.markWithError(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+        ProblemMarker.unmark(object);
+        Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+    }
 
     @Test
     public void testMarkWithError_IChemObject() {
-		IChemObject object = new ChemObject();
-		Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-		ProblemMarker.markWithError(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
-	}
+        IChemObject object = new ChemObject();
+        Assert.assertNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+        ProblemMarker.markWithError(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.ERROR_MARKER));
+    }
 
     @Test
     public void testMarkWithWarning_IChemObject() {
-		IChemObject object = new ChemObject();
-		Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-		ProblemMarker.markWithWarning(object);
-		Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
-	}
+        IChemObject object = new ChemObject();
+        Assert.assertNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+        ProblemMarker.markWithWarning(object);
+        Assert.assertNotNull(object.getProperty(ProblemMarker.WARNING_MARKER));
+    }
 
 }
-
-

@@ -59,26 +59,25 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.VSPReaderTest")
 public class VASPReader extends DefaultChemObjectReader {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(VASPReader.class);
+    private static ILoggingTool logger  = LoggingToolFactory.createLoggingTool(VASPReader.class);
 
     // This variable is used to parse the input file
-    protected StringTokenizer st =  new StringTokenizer("", "");;
-    protected String fieldVal;
-    protected int repVal = 0;
+    protected StringTokenizer   st      = new StringTokenizer("", "");                            ;
+    protected String            fieldVal;
+    protected int               repVal  = 0;
 
-    protected BufferedReader inputBuffer;
+    protected BufferedReader    inputBuffer;
 
     // VASP VARIABLES
-    int natom = 1;
-    int ntype = 1;
-    double acell[] = new double[3];
-    double[][] rprim = new double[3][3];
-    String info = "";
-    String line;
-    String[] anames; //size is ntype. Contains the names of the atoms
-    int natom_type[]; //size is natom. Contain the atomic number
-    String representation; // "Direct" only so far
+    int                         natom   = 1;
+    int                         ntype   = 1;
+    double                      acell[] = new double[3];
+    double[][]                  rprim   = new double[3][3];
+    String                      info    = "";
+    String                      line;
+    String[]                    anames;                                                          //size is ntype. Contains the names of the atoms
+    int                         natom_type[];                                                    //size is natom. Contain the atomic number
+    String                      representation;                                                  // "Direct" only so far
 
     /**
      * Creates a new <code>VASPReader</code> instance.
@@ -87,7 +86,7 @@ public class VASPReader extends DefaultChemObjectReader {
      */
     public VASPReader(Reader input) {
         if (input instanceof BufferedReader) {
-            this.inputBuffer = (BufferedReader)input;
+            this.inputBuffer = (BufferedReader) input;
         } else {
             this.inputBuffer = new BufferedReader(input);
         }
@@ -109,7 +108,7 @@ public class VASPReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.inputBuffer = (BufferedReader)input;
+            this.inputBuffer = (BufferedReader) input;
         } else {
             this.inputBuffer = new BufferedReader(input);
         }
@@ -120,24 +119,23 @@ public class VASPReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class classObject) {
-		return IChemFile.class.isAssignableFrom(classObject);
-	}
+        return IChemFile.class.isAssignableFrom(classObject);
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            IChemFile cf = (IChemFile)object;
+            IChemFile cf = (IChemFile) object;
             try {
                 cf = readChemFile(cf);
             } catch (IOException exception) {
-                String error = "Input/Output error while reading from input: " +
-                    exception.getMessage();
+                String error = "Input/Output error while reading from input: " + exception.getMessage();
                 logger.error(error);
                 logger.debug(exception);
                 throw new CDKException(error, exception);
             }
-            return (T)cf;
+            return (T) cf;
         } else {
             throw new CDKException("Only supported is reading of ChemFile.");
         }
@@ -170,7 +168,7 @@ public class VASPReader extends DefaultChemObjectReader {
         anames = new String[ntype];
 
         nextVASPTokenFollowing("ATOM");
-        for(int i = 0; i < ntype; i++) {
+        for (int i = 0; i < ntype; i++) {
             anames[i] = fieldVal;
             nextVASPToken(false);
         }
@@ -178,7 +176,7 @@ public class VASPReader extends DefaultChemObjectReader {
         // Get the number of atom of each type
         int[] natom_type = new int[ntype];
         natom = 0;
-        for(int i = 0; i < ntype; i++) {
+        for (int i = 0; i < ntype; i++) {
             natom_type[i] = Integer.parseInt(fieldVal);
             nextVASPToken(false);
             natom = natom + natom_type[i];
@@ -187,14 +185,14 @@ public class VASPReader extends DefaultChemObjectReader {
         // Get the representation type of the primitive vectors
         // only "Direct" is recognize now.
         representation = fieldVal;
-        if(representation.equals("Direct")) {
+        if (representation.equals("Direct")) {
             logger.info("Direct representation");
             // DO NOTHING
         } else {
             throw new CDKException("This VASP file is not supported. Please contact the Jmol developpers");
         }
 
-        while(nextVASPToken(false) != null) {
+        while (nextVASPToken(false) != null) {
 
             logger.debug("New crystal started...");
 
@@ -202,13 +200,13 @@ public class VASPReader extends DefaultChemObjectReader {
             chemModel = sequence.getBuilder().newInstance(IChemModel.class);
 
             // Get acell
-            for(int i=0; i<3; i++) {
+            for (int i = 0; i < 3; i++) {
                 acell[i] = FortranFormat.atof(fieldVal); // all the same FIX?
             }
 
             // Get primitive vectors
-            for(int i = 0; i < 3; i++) {
-                for(int j = 0; j < 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
                     nextVASPToken(false);
                     rprim[i][j] = FortranFormat.atof(fieldVal);
                 }
@@ -217,13 +215,12 @@ public class VASPReader extends DefaultChemObjectReader {
             // Get atomic position
             int[] atomType = new int[natom];
             double[][] xred = new double[natom][3];
-            int atomIndex=0;
+            int atomIndex = 0;
 
-            for(int i = 0; i < ntype; i++) {
-                for(int j = 0; j < natom_type[i] ; j++) {
+            for (int i = 0; i < ntype; i++) {
+                for (int j = 0; j < natom_type[i]; j++) {
                     try {
-                        atomType[atomIndex] = Isotopes.getInstance().
-                            getElement(anames[i]).getAtomicNumber();
+                        atomType[atomIndex] = Isotopes.getInstance().getElement(anames[i]).getAtomicNumber();
                     } catch (Exception exception) {
                         throw new CDKException("Could not determine atomic number!", exception);
                     }
@@ -237,29 +234,22 @@ public class VASPReader extends DefaultChemObjectReader {
                     nextVASPToken(false);
                     xred[atomIndex][2] = FortranFormat.atof(fieldVal);
 
-                    atomIndex = atomIndex+1;
+                    atomIndex = atomIndex + 1;
                     // FIXME: store atom
                 }
             }
 
-            crystal.setA(new Vector3d(rprim[0][0]*acell[0],
-                                      rprim[0][1]*acell[0],
-                                      rprim[0][2]*acell[0]));
-            crystal.setB(new Vector3d(rprim[1][0]*acell[1],
-                                      rprim[1][1]*acell[1],
-                                      rprim[1][2]*acell[1]));
-            crystal.setC(new Vector3d(rprim[2][0]*acell[2],
-                                      rprim[2][1]*acell[2],
-                                      rprim[2][2]*acell[2]));
-            for (int i=0; i<atomType.length; i++) {
+            crystal.setA(new Vector3d(rprim[0][0] * acell[0], rprim[0][1] * acell[0], rprim[0][2] * acell[0]));
+            crystal.setB(new Vector3d(rprim[1][0] * acell[1], rprim[1][1] * acell[1], rprim[1][2] * acell[1]));
+            crystal.setC(new Vector3d(rprim[2][0] * acell[2], rprim[2][1] * acell[2], rprim[2][2] * acell[2]));
+            for (int i = 0; i < atomType.length; i++) {
                 String symbol = "Du";
                 try {
-                    symbol = Isotopes.getInstance().
-                        getElement(atomType[i]).getSymbol();
+                    symbol = Isotopes.getInstance().getElement(atomType[i]).getSymbol();
                 } catch (Exception exception) {
                     throw new CDKException("Could not determine element symbol!", exception);
                 }
-                IAtom atom = sequence.getBuilder().newInstance(IAtom.class,symbol);
+                IAtom atom = sequence.getBuilder().newInstance(IAtom.class, symbol);
                 atom.setAtomicNumber(atomType[i]);
                 // convert fractional to cartesian
                 double[] frac = new double[3];
@@ -280,8 +270,6 @@ public class VASPReader extends DefaultChemObjectReader {
 
         return sequence;
     }
-
-
 
     /**
     * Find the next token of an VASP file.
@@ -317,7 +305,6 @@ public class VASPReader extends DefaultChemObjectReader {
         return this.fieldVal;
     } //end nextVASPToken(boolean newLine)
 
-
     /**
      * Find the next token of a VASP file begining
      * with the *next* line.
@@ -332,7 +319,7 @@ public class VASPReader extends DefaultChemObjectReader {
                 index = index + string.length();
                 line = line.substring(index);
                 st = new StringTokenizer(line, " =\t");
-                while(!st.hasMoreTokens() && inputBuffer.ready()) {
+                while (!st.hasMoreTokens() && inputBuffer.ready()) {
                     line = inputBuffer.readLine();
                     st = new StringTokenizer(line, " =\t");
                 }

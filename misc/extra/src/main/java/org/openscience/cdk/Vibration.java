@@ -37,7 +37,7 @@ public class Vibration {
      * Label identifying this vibration. For example, the
      * frequency in reciprocal centimeters could be used.
      */
-    private String label;
+    private String         label;
 
     /**
      * List of atom vectors of type double[3]

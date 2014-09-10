@@ -151,10 +151,9 @@ public final class ExtendedTetrahedral implements IStereoElement {
     public static IAtom[] findTerminalAtoms(IAtomContainer container, IAtom focus) {
         List<IBond> focusBonds = container.getConnectedBondsList(focus);
 
-        if (focusBonds.size() != 2)
-            throw new IllegalArgumentException("focus must have exactly 2 neighbors");
+        if (focusBonds.size() != 2) throw new IllegalArgumentException("focus must have exactly 2 neighbors");
 
-        IAtom left  = focusBonds.get(0).getConnectedAtom(focus);
+        IAtom left = focusBonds.get(0).getConnectedAtom(focus);
         IAtom right = focusBonds.get(1).getConnectedAtom(focus);
 
         return new IAtom[]{left, right};
@@ -173,10 +172,9 @@ public final class ExtendedTetrahedral implements IStereoElement {
     public IAtom[] findTerminalAtoms(IAtomContainer container) {
         List<IBond> focusBonds = container.getConnectedBondsList(focus);
 
-        if (focusBonds.size() != 2)
-            throw new IllegalArgumentException("focus must have exactly 2 neighbors");
+        if (focusBonds.size() != 2) throw new IllegalArgumentException("focus must have exactly 2 neighbors");
 
-        final IAtom left  = focusBonds.get(0).getConnectedAtom(focus);
+        final IAtom left = focusBonds.get(0).getConnectedAtom(focus);
         final IAtom right = focusBonds.get(1).getConnectedAtom(focus);
 
         List<IAtom> leftAtoms = container.getConnectedAtomsList(left);
@@ -192,34 +190,28 @@ public final class ExtendedTetrahedral implements IStereoElement {
      * @inheritDoc
      */
     @TestMethod("containsAnAtom")
-    @Override public boolean contains(IAtom atom) {
+    @Override
+    public boolean contains(IAtom atom) {
         // no way to test terminals
-        return focus.equals(atom)
-                || peripherals[0].equals(atom)
-                || peripherals[1].equals(atom)
-                || peripherals[2].equals(atom)
-                || peripherals[3].equals(atom);
+        return focus.equals(atom) || peripherals[0].equals(atom) || peripherals[1].equals(atom)
+                || peripherals[2].equals(atom) || peripherals[3].equals(atom);
     }
 
     /**
      * @inheritDoc
      */
-    @Override public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
-        return new ExtendedTetrahedral(atoms.get(focus),
-                                       new IAtom[]{
-                                               atoms.get(peripherals[0]),
-                                               atoms.get(peripherals[1]),
-                                               atoms.get(peripherals[2]),
-                                               atoms.get(peripherals[3])
-                                       },
-                                       winding);
+    @Override
+    public IStereoElement map(Map<IAtom, IAtom> atoms, Map<IBond, IBond> bonds) {
+        return new ExtendedTetrahedral(atoms.get(focus), new IAtom[]{atoms.get(peripherals[0]),
+                atoms.get(peripherals[1]), atoms.get(peripherals[2]), atoms.get(peripherals[3])}, winding);
     }
 
     /**
      * @inheritDoc
      */
     @TestMethod("noBuilder")
-    @Override public IChemObjectBuilder getBuilder() {
+    @Override
+    public IChemObjectBuilder getBuilder() {
         throw new UnsupportedOperationException("non-domain object");
     }
 }

@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class PubChemASNFormatTest extends ChemFormatMatcherTest {
 
     public PubChemASNFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)PubChemASNFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) PubChemASNFormat.getInstance());
     }
 
 }

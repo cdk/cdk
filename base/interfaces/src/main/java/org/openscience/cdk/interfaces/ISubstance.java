@@ -30,4 +30,3 @@ package org.openscience.cdk.interfaces;
 public interface ISubstance extends IAtomContainerSet {
 
 }
-

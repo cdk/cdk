@@ -30,11 +30,13 @@ public class LibiocmlCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "libiocml.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, LibiocmlCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 }

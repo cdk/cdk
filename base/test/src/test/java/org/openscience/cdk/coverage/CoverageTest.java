@@ -40,10 +40,10 @@ abstract public class CoverageTest {
 
     private final static String BASEPACKAGENAME = "org.openscience.cdk.";
 
-    private static ClassLoader classLoader;
+    private static ClassLoader  classLoader;
     private static List<String> classesToTest;
 
-    private static String module;
+    private static String       module;
 
     protected static void loadClassList(String classList, ClassLoader loader) throws Exception {
         classLoader = loader;
@@ -59,9 +59,7 @@ abstract public class CoverageTest {
             String rawClassName = reader.readLine();
             if (rawClassName == null) break;
             rawClassName = rawClassName.substring(20);
-            String className = convertSlash2Dot(
-                rawClassName.substring(0, rawClassName.indexOf('.'))
-            );
+            String className = convertSlash2Dot(rawClassName.substring(0, rawClassName.indexOf('.')));
             classesToTest.add(className);
         }
     }
@@ -72,7 +70,7 @@ abstract public class CoverageTest {
         int untestedClassesCount = 0;
         Iterator<String> classes = classesToTest.iterator();
         while (classes.hasNext()) {
-            String className = (String)classes.next();
+            String className = (String) classes.next();
             int errors = checkClass(className);
             if (errors == -1) {
                 untestedClassesCount++;
@@ -82,9 +80,9 @@ abstract public class CoverageTest {
             }
         }
         if (missingTestsCount > 0 || untestedClassesCount > 0) {
-            Assert.fail("The " + module + " module is not fully tested! Missing number of method tests: " +
-                 missingTestsCount + " in number of classes: " + uncoveredClassesCount + "; " +
-                 "Missing test classes: " + untestedClassesCount);
+            Assert.fail("The " + module + " module is not fully tested! Missing number of method tests: "
+                    + missingTestsCount + " in number of classes: " + uncoveredClassesCount + "; "
+                    + "Missing test classes: " + untestedClassesCount);
         }
         return true;
     }
@@ -108,43 +106,43 @@ abstract public class CoverageTest {
             // make map of methods in the test class
             List<String> testMethodNames = new ArrayList<String>();
             Method[] testMethods = testClass.getMethods();
-            for (int i=0; i<testMethods.length; i++) {
+            for (int i = 0; i < testMethods.length; i++) {
                 testMethodNames.add(testMethods[i].getName());
             }
-
 
             // now process the methods of the class to be tested
             // now the methods.
             boolean nonstaticMethods = false;
             Method[] methods = coreClass.getDeclaredMethods();
-            for (int i=0; i<methods.length; i++) {
+            for (int i = 0; i < methods.length; i++) {
                 int modifiers = methods[i].getModifiers();
-                if (!Modifier.isPrivate(modifiers) &&
-                    !removePackage(methods[i].getName()).startsWith("access")) {
+                if (!Modifier.isPrivate(modifiers) && !removePackage(methods[i].getName()).startsWith("access")) {
                     String testMethod = "test" + capitalizeName(removePackage(methods[i].getName()));
                     Class[] paramTypes = methods[i].getParameterTypes();
-                    for (int j=0; j<paramTypes.length; j++) {
+                    for (int j = 0; j < paramTypes.length; j++) {
                         if (paramTypes[j].isArray()) {
-                        	if (paramTypes[j].getComponentType().isArray()) {
-                        		testMethod = testMethod + "_array" +
-                        			stripBrackets(removePackage(paramTypes[j].getComponentType().getSimpleName())) +
-                        			removePackage(paramTypes[j].getComponentType().getComponentType().getName());
-                        	} else {
-                        		testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
-                        	}
+                            if (paramTypes[j].getComponentType().isArray()) {
+                                testMethod = testMethod
+                                        + "_array"
+                                        + stripBrackets(removePackage(paramTypes[j].getComponentType().getSimpleName()))
+                                        + removePackage(paramTypes[j].getComponentType().getComponentType().getName());
+                            } else {
+                                testMethod = testMethod + "_array"
+                                        + removePackage(paramTypes[j].getComponentType().getName());
+                            }
                         } else {
                             testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
                         }
                     }
                     // replace '$' with '_'
                     testMethod = replaceFunnyCharacters(testMethod);
-                    if (!testMethod.equals("testClass$_String") &&
-                    	!testMethod.startsWith("test_SWITCH_TABLE")) {
-                    	if (!testMethodNames.contains(testMethod)) {
-                    		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                    		missingTestsCount++;
-                    	}
-                    	if (!Modifier.isStatic(modifiers)) nonstaticMethods = true;
+                    if (!testMethod.equals("testClass$_String") && !testMethod.startsWith("test_SWITCH_TABLE")) {
+                        if (!testMethodNames.contains(testMethod)) {
+                            System.out.println(removePackage(coreClass.getName())
+                                    + ": missing the expected test method: " + testMethod);
+                            missingTestsCount++;
+                        }
+                        if (!Modifier.isStatic(modifiers)) nonstaticMethods = true;
                     }
                 }
             }
@@ -153,34 +151,39 @@ abstract public class CoverageTest {
             // only test if public nonstatic methods are present in the class
             if (nonstaticMethods) {
 
-            	Constructor[] constructors = coreClass.getDeclaredConstructors();
-            	for (int i=0; i<constructors.length; i++) {
-            		int modifiers = constructors[i].getModifiers();
-            		if (!Modifier.isPrivate(modifiers)) {
-            			String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
-            			Class[] paramTypes = constructors[i].getParameterTypes();
-            			for (int j=0; j<paramTypes.length; j++) {
-            				if (paramTypes[j].isArray()) {
-                            	if (paramTypes[j].getComponentType().isArray()) {
-                            		testMethod = testMethod + "_array" +
-                            			stripBrackets(removePackage(paramTypes[j].getComponentType().getSimpleName())) +
-                            			removePackage(paramTypes[j].getComponentType().getComponentType().getName());
-                            	} else {
-                            		testMethod = testMethod + "_array" + removePackage(paramTypes[j].getComponentType().getName());
-                            	}
-            				} else {
-            					testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
-            				}
-            			}
-            			testMethod = replaceFunnyCharacters(testMethod);
-                        if (!testMethod.equals("testClass$_String")) {
-                        	if (!testMethodNames.contains(testMethod)) {
-                        		System.out.println(removePackage(coreClass.getName()) + ": missing the expected test method: " + testMethod);
-                        		missingTestsCount++;
-                        	}
+                Constructor[] constructors = coreClass.getDeclaredConstructors();
+                for (int i = 0; i < constructors.length; i++) {
+                    int modifiers = constructors[i].getModifiers();
+                    if (!Modifier.isPrivate(modifiers)) {
+                        String testMethod = "test" + capitalizeName(removePackage(constructors[i].getName()));
+                        Class[] paramTypes = constructors[i].getParameterTypes();
+                        for (int j = 0; j < paramTypes.length; j++) {
+                            if (paramTypes[j].isArray()) {
+                                if (paramTypes[j].getComponentType().isArray()) {
+                                    testMethod = testMethod
+                                            + "_array"
+                                            + stripBrackets(removePackage(paramTypes[j].getComponentType()
+                                                    .getSimpleName()))
+                                            + removePackage(paramTypes[j].getComponentType().getComponentType()
+                                                    .getName());
+                                } else {
+                                    testMethod = testMethod + "_array"
+                                            + removePackage(paramTypes[j].getComponentType().getName());
+                                }
+                            } else {
+                                testMethod = testMethod + "_" + removePackage(paramTypes[j].getName());
+                            }
                         }
-            		}
-            	}
+                        testMethod = replaceFunnyCharacters(testMethod);
+                        if (!testMethod.equals("testClass$_String")) {
+                            if (!testMethodNames.contains(testMethod)) {
+                                System.out.println(removePackage(coreClass.getName())
+                                        + ": missing the expected test method: " + testMethod);
+                                missingTestsCount++;
+                            }
+                        }
+                    }
+                }
             }
 
             return missingTestsCount;
@@ -190,32 +193,32 @@ abstract public class CoverageTest {
         }
     }
 
-	private String replaceFunnyCharacters(String testMethod) {
-	    if (testMethod.indexOf('$') != -1) {
-	    	StringBuffer output = new StringBuffer();
-	    	for (int j=0; j<testMethod.length(); j++) {
-	    		char ch = testMethod.charAt(j);
-	    		if (ch == '$') {
-	    			if (j+1 == testMethod.length() || testMethod.charAt(j+1) == '_') {
-	    				// drop if it's the last char, or if the next is an underscore too
-	    			} else {
-	    				output.append('_');
-	    			}
-	    		} else {
-	    			output.append(ch);
-	    		}
-	    	}
-	    	testMethod = output.toString();
-	    }
-	    return testMethod;
+    private String replaceFunnyCharacters(String testMethod) {
+        if (testMethod.indexOf('$') != -1) {
+            StringBuffer output = new StringBuffer();
+            for (int j = 0; j < testMethod.length(); j++) {
+                char ch = testMethod.charAt(j);
+                if (ch == '$') {
+                    if (j + 1 == testMethod.length() || testMethod.charAt(j + 1) == '_') {
+                        // drop if it's the last char, or if the next is an underscore too
+                    } else {
+                        output.append('_');
+                    }
+                } else {
+                    output.append(ch);
+                }
+            }
+            testMethod = output.toString();
+        }
+        return testMethod;
     }
 
     private String stripBrackets(String string) {
-		// remove the [] at the end
-		return string.substring(0,string.length()-2);
-	}
+        // remove the [] at the end
+        return string.substring(0, string.length() - 2);
+    }
 
-	private Class loadClass(String className) {
+    private Class loadClass(String className) {
         Class loadedClass = null;
         try {
             loadedClass = classLoader.loadClass(className);
@@ -227,7 +230,7 @@ abstract public class CoverageTest {
     }
 
     private String removePackage(String className) {
-        return className.substring(1+className.lastIndexOf('.'));
+        return className.substring(1 + className.lastIndexOf('.'));
     }
 
     private String capitalizeName(String name) {
@@ -237,14 +240,14 @@ abstract public class CoverageTest {
         } else if (name.length() == 1) {
             capitalizedName = name.toUpperCase();
         } else if (name.length() > 1) {
-            capitalizedName = name.substring(0,1).toUpperCase() + name.substring(1);
+            capitalizedName = name.substring(0, 1).toUpperCase() + name.substring(1);
         }
         return capitalizedName;
     }
 
     private static String convertSlash2Dot(String className) {
         StringBuffer sb = new StringBuffer();
-        for (int i=0; i<className.length(); i++) {
+        for (int i = 0; i < className.length(); i++) {
             if (className.charAt(i) == '/') {
                 sb.append('.');
             } else {

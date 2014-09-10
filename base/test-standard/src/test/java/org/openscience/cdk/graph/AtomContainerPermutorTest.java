@@ -30,71 +30,63 @@ import org.openscience.cdk.interfaces.IBond;
  */
 public class AtomContainerPermutorTest extends CDKTestCase {
 
-	@Test public void testAtomPermutation()
-	{
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		AtomContainer result;
-		String atoms = new String("");
-		ac.addAtom(new Atom("C"));
-		ac.addAtom(new Atom("N"));
-		ac.addAtom(new Atom("P"));
-		ac.addAtom(new Atom("O"));
-		ac.addAtom(new Atom("S"));
-		ac.addAtom(new Atom("Br"));
-		ac.addBond(0, 1, IBond.Order.SINGLE);
-		ac.addBond(1, 2, IBond.Order.SINGLE);
-		ac.addBond(2, 3, IBond.Order.SINGLE);
-		ac.addBond(3, 4, IBond.Order.SINGLE);
-		ac.addBond(4, 5, IBond.Order.SINGLE);
-		AtomContainerAtomPermutor acap = new
-		AtomContainerAtomPermutor(ac);
-		int counter = 0;
-		while(acap.hasNext())
-		{
-			counter ++;
-			atoms = "";
-			result = (AtomContainer)acap.next();
-			for (int f = 0; f < result.getAtomCount(); f++)
-			{
-				atoms += result.getAtom(f).getSymbol();
-			}
-		}
-		Assert.assertEquals(719, counter);
-	}
+    @Test
+    public void testAtomPermutation() {
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
+        AtomContainer result;
+        String atoms = new String("");
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("N"));
+        ac.addAtom(new Atom("P"));
+        ac.addAtom(new Atom("O"));
+        ac.addAtom(new Atom("S"));
+        ac.addAtom(new Atom("Br"));
+        ac.addBond(0, 1, IBond.Order.SINGLE);
+        ac.addBond(1, 2, IBond.Order.SINGLE);
+        ac.addBond(2, 3, IBond.Order.SINGLE);
+        ac.addBond(3, 4, IBond.Order.SINGLE);
+        ac.addBond(4, 5, IBond.Order.SINGLE);
+        AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(ac);
+        int counter = 0;
+        while (acap.hasNext()) {
+            counter++;
+            atoms = "";
+            result = (AtomContainer) acap.next();
+            for (int f = 0; f < result.getAtomCount(); f++) {
+                atoms += result.getAtom(f).getSymbol();
+            }
+        }
+        Assert.assertEquals(719, counter);
+    }
 
-	@Test public void testBondPermutation()
-	{
-		AtomContainer ac = new org.openscience.cdk.AtomContainer();
-		AtomContainer result;
-		String bonds = new String("");
-		ac.addAtom(new Atom("C"));
-		ac.addAtom(new Atom("N"));
-		ac.addAtom(new Atom("P"));
-		ac.addAtom(new Atom("O"));
-		ac.addAtom(new Atom("S"));
-		ac.addAtom(new Atom("Br"));
-		ac.addBond(0, 1, IBond.Order.SINGLE);
-		ac.addBond(1, 2, IBond.Order.DOUBLE);
-		ac.addBond(2, 3, IBond.Order.TRIPLE);
-		ac.addBond(3, 4, IBond.Order.QUADRUPLE);
-		ac.addBond(4, 5, IBond.Order.SINGLE); // was 5.0 !
-		AtomContainerBondPermutor acap = new
-		AtomContainerBondPermutor(ac);
-		int counter = 0;
-		while(acap.hasNext())
-		{
-			counter ++;
-			bonds = "";
-			result = (AtomContainer)acap.next();
-			for (int f = 0; f < result.getBondCount(); f++)
-			{
-				bonds += result.getBond(f).getOrder();
-			}
-			//logger.debug(bonds);
-		}
-		Assert.assertEquals(119, counter);
-	}
-
+    @Test
+    public void testBondPermutation() {
+        AtomContainer ac = new org.openscience.cdk.AtomContainer();
+        AtomContainer result;
+        String bonds = new String("");
+        ac.addAtom(new Atom("C"));
+        ac.addAtom(new Atom("N"));
+        ac.addAtom(new Atom("P"));
+        ac.addAtom(new Atom("O"));
+        ac.addAtom(new Atom("S"));
+        ac.addAtom(new Atom("Br"));
+        ac.addBond(0, 1, IBond.Order.SINGLE);
+        ac.addBond(1, 2, IBond.Order.DOUBLE);
+        ac.addBond(2, 3, IBond.Order.TRIPLE);
+        ac.addBond(3, 4, IBond.Order.QUADRUPLE);
+        ac.addBond(4, 5, IBond.Order.SINGLE); // was 5.0 !
+        AtomContainerBondPermutor acap = new AtomContainerBondPermutor(ac);
+        int counter = 0;
+        while (acap.hasNext()) {
+            counter++;
+            bonds = "";
+            result = (AtomContainer) acap.next();
+            for (int f = 0; f < result.getBondCount(); f++) {
+                bonds += result.getBond(f).getOrder();
+            }
+            //logger.debug(bonds);
+        }
+        Assert.assertEquals(119, counter);
+    }
 
 }
-

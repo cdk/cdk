@@ -32,136 +32,146 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class ToleranceRangeRuleTest extends FormulaRuleTest {
 
-	private static IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-	/**
+    /**
     *  The JUnit setup method
     */
-    @BeforeClass public static void setUp() throws Exception {
-    	builder = DefaultChemObjectBuilder.getInstance();
-    	setRule(ToleranceRangeRule.class);
+    @BeforeClass
+    public static void setUp() throws Exception {
+        builder = DefaultChemObjectBuilder.getInstance();
+        setRule(ToleranceRangeRule.class);
     }
+
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testToleranceRangeRule() throws Exception {
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testToleranceRangeRule() throws Exception {
 
-		IRule rule  = new ToleranceRangeRule();
-		Assert.assertNotNull(rule);
+        IRule rule = new ToleranceRangeRule();
+        Assert.assertNotNull(rule);
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefault() throws Exception {
+    }
 
-		IRule rule  = new ToleranceRangeRule();
-		Object[] objects = rule.getParameters();
-		Assert.assertEquals(2, objects.length);
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefault() throws Exception {
 
-		double mass = (Double) objects[0];
-		Assert.assertEquals(0.0, mass, 0.00001);
-		double tolerance = (Double) objects[1];
-		Assert.assertEquals(0.05, tolerance, 0.00001);
+        IRule rule = new ToleranceRangeRule();
+        Object[] objects = rule.getParameters();
+        Assert.assertEquals(2, objects.length);
 
-	}
+        double mass = (Double) objects[0];
+        Assert.assertEquals(0.0, mass, 0.00001);
+        double tolerance = (Double) objects[1];
+        Assert.assertEquals(0.05, tolerance, 0.00001);
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testSetParameters() throws Exception {
+    }
 
-		IRule rule  = new ToleranceRangeRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testSetParameters() throws Exception {
 
-		Object[] params = new Object[2];
-		params[0] = 133.0;
+        IRule rule = new ToleranceRangeRule();
+
+        Object[] params = new Object[2];
+        params[0] = 133.0;
         params[1] = 0.00005;
-		rule.setParameters(params);
+        rule.setParameters(params);
 
         Object[] objects = rule.getParameters();
 
         Assert.assertEquals(2, objects.length);
 
-		double mass = (Double) objects[0];
-		Assert.assertEquals(133.0, mass, 0.00001);
-		double tolerance = (Double) objects[1];
-		Assert.assertEquals(0.00005, tolerance, 0.00001);
+        double mass = (Double) objects[0];
+        Assert.assertEquals(133.0, mass, 0.00001);
+        double tolerance = (Double) objects[1];
+        Assert.assertEquals(0.00005, tolerance, 0.00001);
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidFalse() throws Exception {
+    }
 
-		IRule rule  = new ToleranceRangeRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidFalse() throws Exception {
 
-		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newInstance(IIsotope.class,"C");
-    	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
+        IRule rule = new ToleranceRangeRule();
+
+        IMolecularFormula formula = new MolecularFormula();
+        IIsotope carb = builder.newInstance(IIsotope.class, "C");
+        carb.setExactMass(12.00);
+        IIsotope cl = builder.newInstance(IIsotope.class, "Cl");
         cl.setExactMass(34.96885268);
         formula.addIsotope(carb);
         formula.addIsotope(cl);
 
-        Assert.assertEquals(0.0, rule.validate(formula),0.0001);
-	}
+        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+    }
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidFalse_SetParam() throws Exception {
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidFalse_SetParam() throws Exception {
 
-		IRule rule  = new ToleranceRangeRule();
+        IRule rule = new ToleranceRangeRule();
 
-		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newInstance(IIsotope.class,"C");
-    	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
-        cl.setExactMass(34.96885268);
-        formula.addIsotope(carb);
-        formula.addIsotope(cl);
-
-        Object[] params = new Object[2];
-		params[0] = 46.0; // real -> 46.96885268
-        params[1] = 0.00005;
-		rule.setParameters(params);
-
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
-	}
-
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidTrue() throws Exception {
-
-		IRule rule  = new ToleranceRangeRule();
-
-		IMolecularFormula formula = new MolecularFormula();
-		IIsotope carb = builder.newInstance(IIsotope.class,"C");
-    	carb.setExactMass(12.00);
-    	IIsotope cl = builder.newInstance(IIsotope.class,"Cl");
+        IMolecularFormula formula = new MolecularFormula();
+        IIsotope carb = builder.newInstance(IIsotope.class, "C");
+        carb.setExactMass(12.00);
+        IIsotope cl = builder.newInstance(IIsotope.class, "Cl");
         cl.setExactMass(34.96885268);
         formula.addIsotope(carb);
         formula.addIsotope(cl);
 
         Object[] params = new Object[2];
-		params[0] = 46.96885268;
+        params[0] = 46.0; // real -> 46.96885268
         params[1] = 0.00005;
-		rule.setParameters(params);
+        rule.setParameters(params);
 
-		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
-	}
+        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+    }
+
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidTrue() throws Exception {
+
+        IRule rule = new ToleranceRangeRule();
+
+        IMolecularFormula formula = new MolecularFormula();
+        IIsotope carb = builder.newInstance(IIsotope.class, "C");
+        carb.setExactMass(12.00);
+        IIsotope cl = builder.newInstance(IIsotope.class, "Cl");
+        cl.setExactMass(34.96885268);
+        formula.addIsotope(carb);
+        formula.addIsotope(cl);
+
+        Object[] params = new Object[2];
+        params[0] = 46.96885268;
+        params[1] = 0.00005;
+        rule.setParameters(params);
+
+        Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
 
 }

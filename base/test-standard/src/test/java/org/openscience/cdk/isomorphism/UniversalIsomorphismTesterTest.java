@@ -68,44 +68,43 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
  * @cdk.module test-standard
  * @cdk.require java1.4+
  */
-public class UniversalIsomorphismTesterTest extends CDKTestCase
-{
+public class UniversalIsomorphismTesterTest extends CDKTestCase {
 
-	boolean standAlone = false;
-	private UniversalIsomorphismTester uiTester;
+    boolean                            standAlone = false;
+    private UniversalIsomorphismTester uiTester;
 
-	@Before
-	public void setUpUITester() {
-		uiTester = new UniversalIsomorphismTester();
-	}
+    @Before
+    public void setUpUITester() {
+        uiTester = new UniversalIsomorphismTester();
+    }
 
-	@Test public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception
-	{
-	    IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
-	    IAtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		Aromaticity.cdkLegacy().apply(mol);
-		Aromaticity.cdkLegacy().apply(frag1);
+    @Test
+    public void testIsSubgraph_IAtomContainer_IAtomContainer() throws java.lang.Exception {
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = MoleculeFactory.makeCyclohexene(); //one double bond in ring
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
-		if(standAlone) {
-			System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
+        if (standAlone) {
+            System.out.println("Cyclohexene is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
         } else {
             Assert.assertTrue(uiTester.isSubgraph(mol, frag1));
         }
 
+    }
 
-	}
-
-	/**
+    /**
      * @cdk.bug 1708336
      */
-	@Test public void testSFBug1708336() throws Exception {
-		IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
+    @Test
+    public void testSFBug1708336() throws Exception {
+        IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IAtomContainer atomContainer = builder.newInstance(IAtomContainer.class);
-        atomContainer.addAtom(builder.newInstance(IAtom.class,"C"));
-        atomContainer.addAtom(builder.newInstance(IAtom.class,"C"));
-        atomContainer.addAtom(builder.newInstance(IAtom.class,"N"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "C"));
+        atomContainer.addAtom(builder.newInstance(IAtom.class, "N"));
         atomContainer.addBond(0, 1, IBond.Order.SINGLE);
         atomContainer.addBond(1, 2, IBond.Order.SINGLE);
         IQueryAtomContainer query = new QueryAtomContainer(DefaultChemObjectBuilder.getInstance());
@@ -130,42 +129,43 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         List<List<RMap>> list = uiTester.getSubgraphMaps(atomContainer, query);
 
         Assert.assertTrue(list.isEmpty());
-	}
+    }
 
-	@Test public void test2() throws java.lang.Exception
-	{
-	    IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
-	    IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		Aromaticity.cdkLegacy().apply(mol);
-		Aromaticity.cdkLegacy().apply(frag1);
+    @Test
+    public void test2() throws java.lang.Exception {
+        IAtomContainer mol = MoleculeFactory.makeAlphaPinene();
+        IAtomContainer frag1 = MoleculeFactory.makeCyclohexane(); // no double bond in ring
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
-		if(standAlone){
-			System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
-		} else {
+        if (standAlone) {
+            System.out.println("Cyclohexane is a subgraph of alpha-Pinen: " + uiTester.isSubgraph(mol, frag1));
+        } else {
             Assert.assertTrue(!uiTester.isSubgraph(mol, frag1));
         }
-	}
+    }
 
-	@Test public void test3() throws java.lang.Exception
-	{
-	    IAtomContainer mol = MoleculeFactory.makeIndole();
-	    IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		Aromaticity.cdkLegacy().apply(mol);
-		Aromaticity.cdkLegacy().apply(frag1);
+    @Test
+    public void test3() throws java.lang.Exception {
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
-		if(standAlone) {
-			System.out.println("Pyrrole is a subgraph of Indole: " + uiTester.isSubgraph(mol, frag1));
+        if (standAlone) {
+            System.out.println("Pyrrole is a subgraph of Indole: " + uiTester.isSubgraph(mol, frag1));
         } else {
             Assert.assertTrue(uiTester.isSubgraph(mol, frag1));
         }
-	}
+    }
 
-	@Test public void testBasicQueryAtomContainer() throws Exception {
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    @Test
+    public void testBasicQueryAtomContainer() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = sp.parseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
         IAtomContainer SMILESquery = sp.parseSmiles("CC"); // acetic acid anhydride
         QueryAtomContainer query = QueryAtomContainerCreator.createBasicQueryContainer(SMILESquery);
@@ -173,29 +173,29 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Assert.assertTrue(uiTester.isSubgraph(atomContainer, query));
     }
 
-	@Test public void testGetSubgraphAtomsMaps_IAtomContainer() throws java.lang.Exception
-	{
-		int[] result1 = {6, 5, 7, 8, 0};
-		int[] result2 = {3, 4, 2, 1, 0};
+    @Test
+    public void testGetSubgraphAtomsMaps_IAtomContainer() throws java.lang.Exception {
+        int[] result1 = {6, 5, 7, 8, 0};
+        int[] result2 = {3, 4, 2, 1, 0};
 
-		IAtomContainer mol = MoleculeFactory.makeIndole();
-		IAtomContainer frag1 = MoleculeFactory.makePyrrole();
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
-		Aromaticity.cdkLegacy().apply(mol);
-		Aromaticity.cdkLegacy().apply(frag1);
+        IAtomContainer mol = MoleculeFactory.makeIndole();
+        IAtomContainer frag1 = MoleculeFactory.makePyrrole();
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(frag1);
+        Aromaticity.cdkLegacy().apply(mol);
+        Aromaticity.cdkLegacy().apply(frag1);
 
-		List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol, frag1);
-		List<RMap> first = list.get(0);
-		for (int i = 0; i < first.size(); i++) {
-			RMap rmap = first.get(i);
-			Assert.assertEquals(rmap.getId1(), result1[i]);
-			Assert.assertEquals(rmap.getId2(), result2[i]);
-		}
-	}
+        List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol, frag1);
+        List<RMap> first = list.get(0);
+        for (int i = 0; i < first.size(); i++) {
+            RMap rmap = first.get(i);
+            Assert.assertEquals(rmap.getId1(), result1[i]);
+            Assert.assertEquals(rmap.getId2(), result2[i]);
+        }
+    }
 
-    @Test public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception
-    {
+    @Test
+    public void testGetSubgraphMap_IAtomContainer_IAtomContainer() throws Exception {
         String molfile = "data/mdl/decalin.mol";
         String queryfile = "data/mdl/decalin.mol";
         IAtomContainer mol = new AtomContainer();
@@ -226,7 +226,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 1110537
      */
-    @Test public void testGetOverlaps_IAtomContainer_IAtomContainer()  throws Exception{
+    @Test
+    public void testGetOverlaps_IAtomContainer_IAtomContainer() throws Exception {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
@@ -239,17 +240,18 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
 
         List<IAtomContainer> list = uiTester.getOverlaps(mol1, mol2);
         Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+        Assert.assertEquals(11, ((AtomContainer) list.get(0)).getAtomCount());
 
         list = uiTester.getOverlaps(mol2, mol1);
         Assert.assertEquals(1, list.size());
-        Assert.assertEquals(11, ((AtomContainer)list.get(0)).getAtomCount());
+        Assert.assertEquals(11, ((AtomContainer) list.get(0)).getAtomCount());
     }
 
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testBug2944080()  throws Exception {
+    @Test
+    public void testBug2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
@@ -266,7 +268,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testGetSubgraphAtomsMap_2944080()  throws Exception {
+    @Test
+    public void testGetSubgraphAtomsMap_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
@@ -280,7 +283,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testGetSubgraphMap_2944080()  throws Exception {
+    @Test
+    public void testGetSubgraphMap_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
@@ -294,17 +298,15 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testSearchNoConditions_2944080()  throws Exception {
+    @Test
+    public void testSearchNoConditions_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
-        List<List<RMap>> maplist = uiTester.search(
-            mol1, mol2, new BitSet(),
-            UniversalIsomorphismTester.getBitSet(mol2),
-            false, false
-        );
+        List<List<RMap>> maplist = uiTester.search(mol1, mol2, new BitSet(),
+                UniversalIsomorphismTester.getBitSet(mol2), false, false);
         Assert.assertNotNull(maplist);
         Assert.assertEquals(1, maplist.size());
     }
@@ -312,24 +314,23 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testSearch_2944080()  throws Exception {
+    @Test
+    public void testSearch_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCC(=CC)C(=O)NC(N)=O");
 
         //Test for atom mapping between the mols
-        List<List<RMap>> list = uiTester.
-            search(mol1, mol2, new BitSet(), new BitSet(), true, true);
+        List<List<RMap>> list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), true, true);
         Assert.assertEquals(3, list.size());
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             List<RMap> first = list.get(i);
             Assert.assertNotSame(0, first.size());
         }
 
-        list = uiTester.
-            search(mol1, mol2, new BitSet(), new BitSet(), false, false);
+        list = uiTester.search(mol1, mol2, new BitSet(), new BitSet(), false, false);
         Assert.assertEquals(1, list.size());
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             List<RMap> first = list.get(i);
             Assert.assertNotSame(0, first.size());
         }
@@ -338,7 +339,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 2944080
      */
-    @Test public void testGetSubgraphAtomsMaps_2944080() throws Exception {
+    @Test
+    public void testGetSubgraphAtomsMaps_2944080() throws Exception {
         SmilesParser smilesParser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol1 = smilesParser.parseSmiles("CCC(CC)(C(=O)NC(=O)NC(C)=O)Br");
         IAtomContainer mol2 = smilesParser.parseSmiles("CCCC(=O)NC(N)=O");
@@ -346,14 +348,15 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertNotSame(0, list.size());
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             List<RMap> first = list.get(i);
             Assert.assertNotNull(first);
             Assert.assertNotSame(0, first.size());
         }
     }
 
-    @Test public void testGetSubgraphAtomsMap_Butane() throws Exception {
+    @Test
+    public void testGetSubgraphAtomsMap_Butane() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeAlkane(4);
         IAtomContainer mol2 = MoleculeFactory.makeAlkane(4);
 
@@ -367,14 +370,15 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Assert.assertEquals(4, maplist.size());
     }
 
-    @Test public void testGetSubgraphAtomsMaps_Butane() throws Exception {
+    @Test
+    public void testGetSubgraphAtomsMaps_Butane() throws Exception {
         IAtomContainer mol1 = MoleculeFactory.makeAlkane(4);
         IAtomContainer mol2 = MoleculeFactory.makeAlkane(4);
 
         List<List<RMap>> list = uiTester.getSubgraphAtomsMaps(mol1, mol2);
         Assert.assertNotNull(list);
         Assert.assertEquals(2, list.size());
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             List<RMap> first = list.get(i);
             Assert.assertNotNull(first);
             Assert.assertEquals(4, first.size());
@@ -384,7 +388,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 999330
      */
-    @Test public void testSFBug999330() throws Exception {
+    @Test
+    public void testSFBug999330() throws Exception {
         String file1 = "data/mdl/5SD.mol";
         String file2 = "data/mdl/ADN.mol";
         IAtomContainer mol1 = new AtomContainer();
@@ -395,33 +400,35 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         InputStream ins2 = this.getClass().getClassLoader().getResourceAsStream(file2);
         new MDLV2000Reader(ins2, Mode.STRICT).read(mol2);
         AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
-        mol2 = new AtomContainer((AtomContainer)permutor.next());
+        mol2 = new AtomContainer((AtomContainer) permutor.next());
 
         List<IAtomContainer> list1 = uiTester.getOverlaps(mol1, mol2);
         List<IAtomContainer> list2 = uiTester.getOverlaps(mol2, mol1);
         Assert.assertEquals(1, list1.size());
         Assert.assertEquals(1, list2.size());
-        Assert.assertEquals(((AtomContainer)list1.get(0)).getAtomCount(),
-                     ((AtomContainer)list2.get(0)).getAtomCount());
+        Assert.assertEquals(((AtomContainer) list1.get(0)).getAtomCount(),
+                ((AtomContainer) list2.get(0)).getAtomCount());
     }
 
-    @Test public void testItself() throws Exception{
-    	String smiles="C1CCCCCCC1CC";
-       	QueryAtomContainer query=QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles),true);
-    	IAtomContainer ac = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
-       	if (standAlone)
-    	{
-    		System.out.println("AtomCount of query: " + query.getAtomCount());
-    		System.out.println("AtomCount of target: " + ac.getAtomCount());
+    @Test
+    public void testItself() throws Exception {
+        String smiles = "C1CCCCCCC1CC";
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomContainer(new SmilesParser(
+                DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles), true);
+        IAtomContainer ac = new SmilesParser(DefaultChemObjectBuilder.getInstance()).parseSmiles(smiles);
+        if (standAlone) {
+            System.out.println("AtomCount of query: " + query.getAtomCount());
+            System.out.println("AtomCount of target: " + ac.getAtomCount());
 
-    	}
+        }
 
-       	boolean matched =uiTester.isSubgraph(ac,query);
-    	if (standAlone) System.out.println("QueryAtomContainer matched: " + matched);
-       	if (!standAlone) Assert.assertTrue(matched);
+        boolean matched = uiTester.isSubgraph(ac, query);
+        if (standAlone) System.out.println("QueryAtomContainer matched: " + matched);
+        if (!standAlone) Assert.assertTrue(matched);
     }
 
-    @Test public void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
+    @Test
+    public void testIsIsomorph_IAtomContainer_IAtomContainer() throws Exception {
         AtomContainer ac1 = new AtomContainer();
         ac1.addAtom(new Atom("C"));
         AtomContainer ac2 = new AtomContainer();
@@ -430,7 +437,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Assert.assertTrue(uiTester.isSubgraph(ac1, ac2));
     }
 
-    @Test public void testAnyAtomAnyBondCase() throws Exception {
+    @Test
+    public void testAnyAtomAnyBondCase() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
         IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
@@ -443,18 +451,19 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
     /**
      * @cdk.bug 1633201
      */
-    @Test public void testFirstArgumentMustNotBeAnQueryAtomContainer() throws Exception {
-    	SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+    @Test
+    public void testFirstArgumentMustNotBeAnQueryAtomContainer() throws Exception {
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("O1C=CC=C1");
         IAtomContainer queryac = sp.parseSmiles("C1CCCC1");
         QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomAnyBondContainer(queryac, false);
 
         try {
-        	uiTester.isSubgraph(query, target);
-        	Assert.fail("The UniversalIsomorphism should check when the first arguments is a QueryAtomContainer");
+            uiTester.isSubgraph(query, target);
+            Assert.fail("The UniversalIsomorphism should check when the first arguments is a QueryAtomContainer");
         } catch (Exception e) {
-			// OK, it must Assert.fail!
-		}
+            // OK, it must Assert.fail!
+        }
     }
 
     @Test
@@ -479,10 +488,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         IAtomContainer query = sp.parseSmiles("N");
 
         UniversalIsomorphismTester tester = new UniversalIsomorphismTester();
-        Assert.assertFalse("Single carbon and nitrogen should not match",
-                           tester.isIsomorph(target, query));
-        Assert.assertFalse("Single nitrogen and carbon should not match",
-                           tester.isIsomorph(query, target));
+        Assert.assertFalse("Single carbon and nitrogen should not match", tester.isIsomorph(target, query));
+        Assert.assertFalse("Single nitrogen and carbon should not match", tester.isIsomorph(query, target));
     }
 
     /**
@@ -497,8 +504,8 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         QueryAtomContainer query = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(queryac);
 
         List<List<RMap>> matches = uiTester.getIsomorphMaps(target, query);
-        Assert.assertEquals(1,matches.size());
-        Assert.assertEquals(1,matches.get(0).size());
+        Assert.assertEquals(1, matches.size());
+        Assert.assertEquals(1, matches.get(0).size());
         RMap mapping = matches.get(0).get(0);
         Assert.assertEquals(0, mapping.getId1());
         Assert.assertEquals(0, mapping.getId2());
@@ -518,7 +525,7 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         QueryAtomContainer query = QueryAtomContainerCreator.createSymbolAndBondOrderQueryContainer(queryac);
 
         List<List<RMap>> matches = uiTester.getIsomorphMaps(target, query);
-        Assert.assertEquals(2,matches.size());
+        Assert.assertEquals(2, matches.size());
         Assert.assertEquals(1, matches.get(0).size());
         Assert.assertEquals(1, matches.get(1).size());
         RMap map1 = matches.get(0).get(0);
@@ -560,39 +567,37 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         Assert.assertEquals(matches, atomMappings);
     }
 
- 	@Test
- 	public void testUITTimeoutFix() throws Exception {
-		// Load molecules
- 		String filename = "data/mdl/UITTimeout.sdf";
-  		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(
-  				filename);
-  		ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
-   		ChemFile content = (ChemFile) reader.read(new ChemFile());
-   		List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
-   		IAtomContainer[] molecules = new IAtomContainer[2];
-   		for (int j = 0; j < 2; j++) {
-   			IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);
-   			CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.getInstance(aAtomContainer.getBuilder());
-   			CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.getInstance(aAtomContainer.getBuilder());
-   			for (int i = 0; i < aAtomContainer.getAtomCount(); i++) {
-   				IAtom tmpAtom = aAtomContainer.getAtom(i);
-   					IAtomType tmpType = tmpMatcher.findMatchingAtomType(aAtomContainer, tmpAtom);
-   					AtomTypeManipulator.configure(tmpAtom, tmpType);
-   					tmpAdder.addImplicitHydrogens(aAtomContainer, tmpAtom);
-   			}
-   			AtomContainerManipulator
-   					.convertImplicitToExplicitHydrogens(aAtomContainer);
-   			molecules[j] = aAtomContainer;
-   		}
-   		QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomForPseudoAtomQueryContainer(molecules[1]);
-   		// test
-   		long starttime = System.currentTimeMillis();
-   		uiTester.setTimeout(200);
-   		uiTester.getSubgraphAtomsMaps(molecules[0], query);
-   		long duration = System.currentTimeMillis() - starttime;
-   		// The search must last much longer then two seconds if the timeout not works
-   		Assert.assertTrue(duration < 2000);
-   	}
+    @Test
+    public void testUITTimeoutFix() throws Exception {
+        // Load molecules
+        String filename = "data/mdl/UITTimeout.sdf";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
+        ChemFile content = (ChemFile) reader.read(new ChemFile());
+        List<IAtomContainer> cList = ChemFileManipulator.getAllAtomContainers(content);
+        IAtomContainer[] molecules = new IAtomContainer[2];
+        for (int j = 0; j < 2; j++) {
+            IAtomContainer aAtomContainer = (IAtomContainer) cList.get(j);
+            CDKAtomTypeMatcher tmpMatcher = CDKAtomTypeMatcher.getInstance(aAtomContainer.getBuilder());
+            CDKHydrogenAdder tmpAdder = CDKHydrogenAdder.getInstance(aAtomContainer.getBuilder());
+            for (int i = 0; i < aAtomContainer.getAtomCount(); i++) {
+                IAtom tmpAtom = aAtomContainer.getAtom(i);
+                IAtomType tmpType = tmpMatcher.findMatchingAtomType(aAtomContainer, tmpAtom);
+                AtomTypeManipulator.configure(tmpAtom, tmpType);
+                tmpAdder.addImplicitHydrogens(aAtomContainer, tmpAtom);
+            }
+            AtomContainerManipulator.convertImplicitToExplicitHydrogens(aAtomContainer);
+            molecules[j] = aAtomContainer;
+        }
+        QueryAtomContainer query = QueryAtomContainerCreator.createAnyAtomForPseudoAtomQueryContainer(molecules[1]);
+        // test
+        long starttime = System.currentTimeMillis();
+        uiTester.setTimeout(200);
+        uiTester.getSubgraphAtomsMaps(molecules[0], query);
+        long duration = System.currentTimeMillis() - starttime;
+        // The search must last much longer then two seconds if the timeout not works
+        Assert.assertTrue(duration < 2000);
+    }
 
     /**
      * @cdk.bug 3513335
@@ -611,16 +616,18 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         IQueryAtom a3 = new AliphaticSymbolAtom("C", DefaultChemObjectBuilder.getInstance());
         q.addAtom(a3);
         //setting bonds
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b0 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
+        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b0 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
+                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
         b0.setAtoms(new IAtom[]{a0, a1});
         q.addBond(b0);
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b1 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
+        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b1 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
+                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
         b1.setAtoms(new IAtom[]{a1, a2});
         q.addBond(b1);
-        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b2 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
+        org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond b2 = new org.openscience.cdk.isomorphism.matchers.smarts.OrderQueryBond(
+                IBond.Order.SINGLE, DefaultChemObjectBuilder.getInstance());
         b2.setAtoms(new IAtom[]{a2, a3});
         q.addBond(b2);
-
 
         //Creating 'SCCS' target molecule
         AtomContainer target = new AtomContainer();
@@ -649,11 +656,9 @@ public class UniversalIsomorphismTesterTest extends CDKTestCase
         tb2.setOrder(IBond.Order.SINGLE);
         target.addBond(tb2);
 
-
         //Isomorphism check
         boolean res = uiTester.isSubgraph(target, q);
         Assert.assertFalse("C**C should not match SCCS", res);
     }
 
 }
-

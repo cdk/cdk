@@ -44,7 +44,7 @@ package org.openscience.cdk.tools;
  **/
 public class DataFeatures {
 
-    public final static int NONE = 0;
+    public final static int NONE                               = 0;
 
     // The int allows for up to 750 different properties. Should
     // be enough for now.
@@ -52,41 +52,40 @@ public class DataFeatures {
     // COORDINATE SYSTEMS
 
     /** @cdk.dictref bodf:coordinates2D */
-    public final static int HAS_2D_COORDINATES = 1<<0;
+    public final static int HAS_2D_COORDINATES                 = 1 << 0;
     /** @cdk.dictref bodf:coordinates3D */
-    public final static int HAS_3D_COORDINATES = 1<<1;
+    public final static int HAS_3D_COORDINATES                 = 1 << 1;
     /** @cdk.dictref bodf:fractionalUnitCellCoordinatesCoordinates */
-    public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1<<2;
+    public final static int HAS_FRACTIONAL_CRYSTAL_COORDINATES = 1 << 2;
 
     // ATOMIC FEATURES
     //                      HAS_ATOMS ??
 
     /** @cdk.dictref bodf:hasAtomElementSymbol */
-    public final static int HAS_ATOM_ELEMENT_SYMBOL = 1<<3;
+    public final static int HAS_ATOM_ELEMENT_SYMBOL            = 1 << 3;
     /** @cdk.dictref bodf:partialAtomicCharges */
-    public final static int HAS_ATOM_PARTIAL_CHARGES = 1<<4;
+    public final static int HAS_ATOM_PARTIAL_CHARGES           = 1 << 4;
     /** @cdk.dictref bodf:formalAtomicCharges */
-    public final static int HAS_ATOM_FORMAL_CHARGES = 1<<5;
+    public final static int HAS_ATOM_FORMAL_CHARGES            = 1 << 5;
     /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_ATOM_HYBRIDIZATIONS = 1<<6;
+    public final static int HAS_ATOM_HYBRIDIZATIONS            = 1 << 6;
     /** @cdk.dictref bodf:massNumbers */
-    public final static int HAS_ATOM_MASS_NUMBERS = 1<<7;
+    public final static int HAS_ATOM_MASS_NUMBERS              = 1 << 7;
     /** @cdk.dictref bodf:isotopeNumbers */
-    public final static int HAS_ATOM_ISOTOPE_NUMBERS = 1<<8;
+    public final static int HAS_ATOM_ISOTOPE_NUMBERS           = 1 << 8;
 
     // GRAPH FEATURES
 
     /** @cdk.dictref bodf:graphRepresentation */
-    public final static int HAS_GRAPH_REPRESENTATION = 1<<9;
+    public final static int HAS_GRAPH_REPRESENTATION           = 1 << 9;
     /** @cdk.dictref bodf:dietzRepresentation */
-    public final static int HAS_DIETZ_REPRESENTATION = 1<<10;
+    public final static int HAS_DIETZ_REPRESENTATION           = 1 << 10;
 
     // MODEL FEATURES
 
     /** FIXME: NOT YET IN BODF !!! **/
-    public final static int HAS_UNITCELL_PARAMETERS = 1<<11;
+    public final static int HAS_UNITCELL_PARAMETERS            = 1 << 11;
     /** FIXME: NOT YET IN BODF !!! **/
-        public final static int HAS_REACTIONS = 1<<12;
+    public final static int HAS_REACTIONS                      = 1 << 12;
 
 }
-

@@ -42,28 +42,26 @@ import org.openscience.cdk.tools.manipulator.BondManipulator;
 @TestClass("org.openscience.cdk.graph.matrix.ConnectionMatrixTest")
 public class ConnectionMatrix implements IGraphMatrix {
 
-	/**
-	 * Returns the connection matrix representation of this AtomContainer.
-	 *
+    /**
+     * Returns the connection matrix representation of this AtomContainer.
+     *
      * @param  container The AtomContainer for which the matrix is calculated
-	 * @return           A connection matrix representing this AtomContainer
-	 */
+     * @return           A connection matrix representing this AtomContainer
+     */
     @TestMethod("testGetMatrix_IAtomContainer")
     public static double[][] getMatrix(IAtomContainer container) {
-		IBond bond = null;
-		int indexAtom1;
-		int indexAtom2;
-		double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];
-		for (int f = 0; f < container.getBondCount(); f++)
-		{
-			bond = container.getBond(f);
-			indexAtom1 = container.getAtomNumber(bond.getAtom(0));
-			indexAtom2 = container.getAtomNumber(bond.getAtom(1));
-			conMat[indexAtom1][indexAtom2] = BondManipulator.destroyBondOrder(bond.getOrder());
-			conMat[indexAtom2][indexAtom1] = BondManipulator.destroyBondOrder(bond.getOrder());
-		}
-		return conMat;
-	}
+        IBond bond = null;
+        int indexAtom1;
+        int indexAtom2;
+        double[][] conMat = new double[container.getAtomCount()][container.getAtomCount()];
+        for (int f = 0; f < container.getBondCount(); f++) {
+            bond = container.getBond(f);
+            indexAtom1 = container.getAtomNumber(bond.getAtom(0));
+            indexAtom2 = container.getAtomNumber(bond.getAtom(1));
+            conMat[indexAtom1][indexAtom2] = BondManipulator.destroyBondOrder(bond.getOrder());
+            conMat[indexAtom2][indexAtom1] = BondManipulator.destroyBondOrder(bond.getOrder());
+        }
+        return conMat;
+    }
 
 }
-

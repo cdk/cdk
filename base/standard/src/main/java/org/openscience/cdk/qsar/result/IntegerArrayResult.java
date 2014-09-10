@@ -31,17 +31,17 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.result.IntegerArrayResultTest")
 public class IntegerArrayResult extends IntegerArrayResultType {
 
-	private static final long serialVersionUID = 4077762427385735922L;
+    private static final long serialVersionUID = 4077762427385735922L;
 
-    private List<Integer> array;
+    private List<Integer>     array;
 
     public IntegerArrayResult() {
-    	super(0);
+        super(0);
         this.array = new ArrayList<Integer>();
     }
 
     public IntegerArrayResult(int size) {
-    	super(size);
+        super(size);
         this.array = new ArrayList<Integer>(size);
     }
 
@@ -55,26 +55,25 @@ public class IntegerArrayResult extends IntegerArrayResultType {
      */
     @TestMethod("testGet_int")
     public int get(int index) {
-    	if (index >= this.array.size()) {
-    		return 0;
-    	}
+        if (index >= this.array.size()) {
+            return 0;
+        }
         return this.array.get(index);
     }
 
     @TestMethod("testSize")
     public int length() {
-    	return Math.max(super.length(), this.array.size());
+        return Math.max(super.length(), this.array.size());
     }
 
     @TestMethod("testToString")
     public String toString() {
-    	StringBuilder buf = new StringBuilder();
-        for (int i=0; i<length(); i++) {
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < length(); i++) {
             buf.append(get(i));
-            if (i+1<length()) buf.append(',');
+            if (i + 1 < length()) buf.append(',');
         }
         return buf.toString();
     }
 
 }
-

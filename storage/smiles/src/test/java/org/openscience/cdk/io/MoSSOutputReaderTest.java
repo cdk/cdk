@@ -35,16 +35,19 @@ import org.openscience.cdk.interfaces.IAtomContainerSet;
  */
 public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new MoSSOutputReader(), "data/moss/TKO.mossoutput");
     }
 
-    @Test public void testAccepts() {
+    @Test
+    public void testAccepts() {
         MoSSOutputReader reader = new MoSSOutputReader();
         Assert.assertTrue(reader.accepts(AtomContainerSet.class));
     }
 
-    @Test public void testExampleFile_MolReading() throws Exception {
+    @Test
+    public void testExampleFile_MolReading() throws Exception {
         String filename = "data/moss/TKO.mossoutput";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
@@ -52,34 +55,23 @@ public class MoSSOutputReaderTest extends SimpleChemObjectReaderTest {
         moleculeSet = reader.read(moleculeSet);
         Assert.assertEquals(19, moleculeSet.getAtomContainerCount());
         for (IAtomContainer mol : moleculeSet.atomContainers()) {
-            Assert.assertEquals(
-                Integer.valueOf(mol.getProperty("atomCount").toString()).intValue(),
-                mol.getAtomCount()
-            );
-            Assert.assertEquals(
-                Integer.valueOf(mol.getProperty("bondCount").toString()).intValue(),
-                mol.getBondCount());
+            Assert.assertEquals(Integer.valueOf(mol.getProperty("atomCount").toString()).intValue(), mol.getAtomCount());
+            Assert.assertEquals(Integer.valueOf(mol.getProperty("bondCount").toString()).intValue(), mol.getBondCount());
         }
     }
 
-    @Test public void testExampleFile_SupportColumns() throws Exception {
+    @Test
+    public void testExampleFile_SupportColumns() throws Exception {
         String filename = "data/moss/TKO.mossoutput";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MoSSOutputReader reader = new MoSSOutputReader(ins);
         IAtomContainerSet moleculeSet = new AtomContainerSet();
         moleculeSet = reader.read(moleculeSet);
-        Assert.assertEquals(
-            5.06,
-            Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString())
-                .doubleValue(),
-            0.01
-        );
-        Assert.assertEquals(
-            1.74,
-            Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString())
-                .doubleValue(),
-            0.01
-        );
+        Assert.assertEquals(5.06, Double
+                .valueOf(moleculeSet.getAtomContainer(0).getProperty("focusSupport").toString()).doubleValue(), 0.01);
+        Assert.assertEquals(1.74,
+                Double.valueOf(moleculeSet.getAtomContainer(0).getProperty("complementSupport").toString())
+                        .doubleValue(), 0.01);
     }
 
 }

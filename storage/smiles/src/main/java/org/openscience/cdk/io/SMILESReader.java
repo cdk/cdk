@@ -67,10 +67,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.SMILESReaderTest")
 public class SMILESReader extends DefaultChemObjectReader {
 
-    private BufferedReader input = null;
-    private SmilesParser sp = null;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SMILESReader.class);
+    private BufferedReader      input  = null;
+    private SmilesParser        sp     = null;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(SMILESReader.class);
 
     /**
      * Construct a new reader from a Reader and a specified builder object.
@@ -80,7 +79,6 @@ public class SMILESReader extends DefaultChemObjectReader {
     public SMILESReader(Reader input) {
         this.input = new BufferedReader(input);
     }
-
 
     public SMILESReader(InputStream input) {
         this(new InputStreamReader(input));
@@ -98,7 +96,7 @@ public class SMILESReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -111,17 +109,17 @@ public class SMILESReader extends DefaultChemObjectReader {
 
     @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		if (IAtomContainerSet.class.equals(classObject)) return true;
-		if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
+        if (IAtomContainerSet.class.equals(classObject)) return true;
+        if (IChemFile.class.equals(classObject)) return true;
+        Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
             if (IAtomContainerSet.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        return false;
+    }
 
     /**
      * reads the content from a XYZ input. It can only return a
@@ -138,15 +136,13 @@ public class SMILESReader extends DefaultChemObjectReader {
         if (object instanceof IAtomContainerSet) {
             return (T) readAtomContainerSet((IAtomContainerSet) object);
         } else if (object instanceof IChemFile) {
-            IChemFile file = (IChemFile)object;
+            IChemFile file = (IChemFile) object;
             IChemSequence sequence = file.getBuilder().newInstance(IChemSequence.class);
             IChemModel chemModel = file.getBuilder().newInstance(IChemModel.class);
-            chemModel.setMoleculeSet(readAtomContainerSet(
-                    file.getBuilder().newInstance(IAtomContainerSet.class)
-            ));
+            chemModel.setMoleculeSet(readAtomContainerSet(file.getBuilder().newInstance(IAtomContainerSet.class)));
             sequence.addChemModel(chemModel);
             file.addChemSequence(sequence);
-            return (T)file;
+            return (T) file;
         } else {
             throw new CDKException("Only supported is reading of MoleculeSet objects.");
         }
@@ -167,14 +163,14 @@ public class SMILESReader extends DefaultChemObjectReader {
             while (line != null) {
                 logger.debug("Line: ", line);
 
-                String[] tokens = line.split("[\\s\\t]+",2);
+                String[] tokens = line.split("[\\s\\t]+", 2);
                 if (tokens.length > 2) throw new Exception("Malformed line");
 
                 String SMILES = tokens[0];
                 String name = null;
                 if (tokens.length == 2) name = tokens[1];
 
-                logger.debug("Line contains SMILES and name: ", SMILES, " + " , name);
+                logger.debug("Line contains SMILES and name: ", SMILES, " + ", name);
 
                 try {
                     IAtomContainer molecule = sp.parseSmiles(SMILES);
@@ -187,7 +183,11 @@ public class SMILESReader extends DefaultChemObjectReader {
                     logger.warn("Because of: ", exception.getMessage());
                     logger.debug(exception);
                 }
-                if (input.ready()) { line = input.readLine(); } else { line = null; }
+                if (input.ready()) {
+                    line = input.readLine();
+                } else {
+                    line = null;
+                }
             }
         } catch (Exception exception) {
             logger.error("Error while reading SMILES line: ", exception.getMessage());

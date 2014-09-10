@@ -32,72 +32,64 @@ import java.awt.event.ActionEvent;
 /**
  * @cdk.module test-structgen
  */
-public class SingleStructureRandomGeneratorTest
-{
-	String mf;
-	SingleStructureRandomGenerator ssrg;
+public class SingleStructureRandomGeneratorTest {
 
-	public SingleStructureRandomGeneratorTest() throws Exception
-	{
-		System.out.println("Instantiating MoleculeListViewer");
-		System.out.println("Instantiating SingleStructureRandomGenerator");
-		ssrg = new SingleStructureRandomGenerator();
-		System.out.println("Assining unbonded set of atoms");
-		AtomContainer ac = getBunchOfUnbondedAtoms();
-		mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(ac));
-		System.out.println("Molecular Formula is: " + mf);
-		ssrg.setAtomContainer(ac);
-	}
+    String                         mf;
+    SingleStructureRandomGenerator ssrg;
 
+    public SingleStructureRandomGeneratorTest() throws Exception {
+        System.out.println("Instantiating MoleculeListViewer");
+        System.out.println("Instantiating SingleStructureRandomGenerator");
+        ssrg = new SingleStructureRandomGenerator();
+        System.out.println("Assining unbonded set of atoms");
+        AtomContainer ac = getBunchOfUnbondedAtoms();
+        mf = MolecularFormulaManipulator.getString(MolecularFormulaManipulator.getMolecularFormula(ac));
+        System.out.println("Molecular Formula is: " + mf);
+        ssrg.setAtomContainer(ac);
+    }
 
-	private boolean showIt(IAtomContainer molecule, String name) throws Exception
-	{
-		StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-		sdg.setMolecule((IAtomContainer)molecule.clone());
-		sdg.generateCoordinates(new Vector2d(0,1));
-		return true;
-	}
+    private boolean showIt(IAtomContainer molecule, String name) throws Exception {
+        StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+        sdg.setMolecule((IAtomContainer) molecule.clone());
+        sdg.generateCoordinates(new Vector2d(0, 1));
+        return true;
+    }
 
-	private AtomContainer getBunchOfUnbondedAtoms()
-	{
-	    IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
-		fixCarbonHCount(molecule);
-		molecule.removeAllElectronContainers();
-		return (AtomContainer)molecule;
-	}
+    private AtomContainer getBunchOfUnbondedAtoms() {
+        IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
+        fixCarbonHCount(molecule);
+        molecule.removeAllElectronContainers();
+        return (AtomContainer) molecule;
+    }
 
-	private void fixCarbonHCount(IAtomContainer mol)
-	{
-		/* the following line are just a quick fix for this
-		   particluar carbon-only molecule until we have a proper
-		   hydrogen count configurator
-		 */
-		double bondCount = 0;
-		org.openscience.cdk.interfaces.IAtom atom;
-		 for (int f = 0; f < mol.getAtomCount(); f++)
-		{
-			atom = mol.getAtom(f);
-			bondCount =  mol.getBondOrderSum(atom);
-			if (bondCount > 4) System.out.println("bondCount: " + bondCount);
-			atom.setImplicitHydrogenCount(4 - (int)bondCount -
-				(atom.getCharge()==null ? 0 : atom.getCharge().intValue())
-			);
-		}
-	}
+    private void fixCarbonHCount(IAtomContainer mol) {
+        /*
+         * the following line are just a quick fix for this particluar
+         * carbon-only molecule until we have a proper hydrogen count
+         * configurator
+         */
+        double bondCount = 0;
+        org.openscience.cdk.interfaces.IAtom atom;
+        for (int f = 0; f < mol.getAtomCount(); f++) {
+            atom = mol.getAtom(f);
+            bondCount = mol.getBondOrderSum(atom);
+            if (bondCount > 4) System.out.println("bondCount: " + bondCount);
+            atom.setImplicitHydrogenCount(4 - (int) bondCount
+                    - (atom.getCharge() == null ? 0 : atom.getCharge().intValue()));
+        }
+    }
 
-	class MoreAction extends AbstractAction
-	{
+    class MoreAction extends AbstractAction {
 
         private static final long serialVersionUID = -7405706755621468840L;
 
-        public void actionPerformed(ActionEvent e)
-        {
-        	try{
-        		IAtomContainer ac = ssrg.generate();
-        		showIt(ac, "Randomly generated for " + mf);
-        	}
-        	catch(Exception ex){System.err.println(ex.getMessage());}
+        public void actionPerformed(ActionEvent e) {
+            try {
+                IAtomContainer ac = ssrg.generate();
+                showIt(ac, "Randomly generated for " + mf);
+            } catch (Exception ex) {
+                System.err.println(ex.getMessage());
+            }
         }
-	}
+    }
 }
-

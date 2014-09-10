@@ -45,7 +45,8 @@ import static org.junit.Assert.assertTrue;
 
 public class IdentityTemplateLibraryTest {
 
-    @Test public void decodeCoordinates() throws Exception {
+    @Test
+    public void decodeCoordinates() throws Exception {
         Point2d[] points = IdentityTemplateLibrary.decodeCoordinates("12.5, 5.5, 4, 2");
         assertThat(points.length, is(2));
         assertThat(points[0].x, closeTo(12.5, 0.01));
@@ -54,40 +55,34 @@ public class IdentityTemplateLibraryTest {
         assertThat(points[1].y, closeTo(2, 0.01));
     }
 
-    @Test public void encodeCoordinates() throws Exception {
-        Point2d[] points = new Point2d[]{
-                new Point2d(12.5f, 5.5f),
-                new Point2d(4f, 2f)
-        };
+    @Test
+    public void encodeCoordinates() throws Exception {
+        Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
         String str = IdentityTemplateLibrary.encodeCoordinates(points);
         assertThat(str, is("12.500, 5.500, 4.000, 2.000"));
 
     }
 
-    @Test public void encodeEntry() {
+    @Test
+    public void encodeEntry() {
         String smiles = "CO";
-        Point2d[] points = new Point2d[]{
-                new Point2d(12.5f, 5.5f),
-                new Point2d(4f, 2f)
-        };
+        Point2d[] points = new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)};
         String encoded = IdentityTemplateLibrary.encodeEntry(new SimpleEntry<String, Point2d[]>(smiles, points));
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encoded);
         System.out.println(Arrays.toString(entry.getValue()));
-        assertThat(encoded,
-                   is("CO 12.500, 5.500, 4.000, 2.000"));
+        assertThat(encoded, is("CO 12.500, 5.500, 4.000, 2.000"));
     }
 
-    @Test public void decodeEntry() {
+    @Test
+    public void decodeEntry() {
         String encode = "CO 12.500, 5.500, 4.000, 2.000";
         Map.Entry<String, Point2d[]> entry = IdentityTemplateLibrary.decodeEntry(encode);
         assertThat(entry.getKey(), is("CO"));
-        assertThat(entry.getValue(), is(new Point2d[]{
-                new Point2d(12.5f, 5.5f),
-                new Point2d(4f, 2f)
-        }));
+        assertThat(entry.getValue(), is(new Point2d[]{new Point2d(12.5f, 5.5f), new Point2d(4f, 2f)}));
     }
 
-    @Test public void assignEthanolNoEntry() {
+    @Test
+    public void assignEthanolNoEntry() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
@@ -101,7 +96,8 @@ public class IdentityTemplateLibraryTest {
         assertFalse(IdentityTemplateLibrary.empty().assignLayout(container));
     }
 
-    @Test public void assignEthanol() {
+    @Test
+    public void assignEthanol() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(new Atom("O"));
         container.addAtom(new Atom("C"));
@@ -123,7 +119,8 @@ public class IdentityTemplateLibraryTest {
         assertThat(container.getAtom(2).getPoint2d().y, closeTo(1, 0.01));
     }
 
-    @Test public void store() throws IOException {
+    @Test
+    public void store() throws IOException {
         IdentityTemplateLibrary lib = IdentityTemplateLibrary.empty();
         lib.add(IdentityTemplateLibrary.decodeEntry("[C][C][O] 0, 1, 2, 3, 4, 5"));
         lib.add(IdentityTemplateLibrary.decodeEntry("[C][C] 0, 1, 2, 3"));
@@ -131,7 +128,7 @@ public class IdentityTemplateLibraryTest {
         lib.store(baos);
         baos.close();
         assertThat(new String(baos.toByteArray()),
-                   is("[C][C][O] 0.000, 1.000, 2.000, 3.000, 4.000, 5.000" + System.getProperty("line.separator") +
-                              "[C][C] 0.000, 1.000, 2.000, 3.000" + System.getProperty("line.separator")));
+                is("[C][C][O] 0.000, 1.000, 2.000, 3.000, 4.000, 5.000" + System.getProperty("line.separator")
+                        + "[C][C] 0.000, 1.000, 2.000, 3.000" + System.getProperty("line.separator")));
     }
 }

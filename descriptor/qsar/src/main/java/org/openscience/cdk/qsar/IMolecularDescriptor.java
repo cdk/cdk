@@ -58,4 +58,3 @@ public interface IMolecularDescriptor extends IDescriptor {
     public IDescriptorResult getDescriptorResultType();
 
 }
-

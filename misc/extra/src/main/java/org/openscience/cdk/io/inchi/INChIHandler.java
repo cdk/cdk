@@ -50,18 +50,17 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class INChIHandler extends DefaultHandler {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(INChIHandler.class);
+    private static ILoggingTool       logger = LoggingToolFactory.createLoggingTool(INChIHandler.class);
     private INChIContentProcessorTool inchiTool;
 
-    private ChemFile chemFile;
-    private ChemSequence chemSequence;
-    private ChemModel chemModel;
-    private IAtomContainerSet setOfMolecules;
-    private IAtomContainer tautomer;
+    private ChemFile                  chemFile;
+    private ChemSequence              chemSequence;
+    private ChemModel                 chemModel;
+    private IAtomContainerSet         setOfMolecules;
+    private IAtomContainer            tautomer;
 
     /** Used to store all chars between two tags */
-    private String currentChars;
+    private String                    currentChars;
 
     /**
      * Constructor for the IChIHandler.
@@ -70,8 +69,7 @@ public class INChIHandler extends DefaultHandler {
         inchiTool = new INChIContentProcessorTool();
     }
 
-    public void doctypeDecl(String name, String publicId, String systemId)
-        throws Exception {
+    public void doctypeDecl(String name, String publicId, String systemId) throws Exception {
         logger.info("DocType root element: " + name);
         logger.info("DocType root PUBLIC: " + publicId);
         logger.info("DocType root SYSTEM: " + systemId);
@@ -101,8 +99,7 @@ public class INChIHandler extends DefaultHandler {
             if (tautomer != null) {
                 logger.info("Parsing <formula> chars: ", currentChars);
                 tautomer = new AtomContainer(inchiTool.processFormula(
-                	setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars
-                ));
+                        setOfMolecules.getBuilder().newInstance(IAtomContainer.class), currentChars));
             } else {
                 logger.warn("Cannot set atom info for empty tautomer");
             }
@@ -127,8 +124,7 @@ public class INChIHandler extends DefaultHandler {
      * @param raw       the complete element name (with namespace part)
      * @param atts      the attributes of this element
      */
-    public void startElement(String uri, String local,
-                             String raw, Attributes atts) {
+    public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         logger.debug("startElement: ", raw);
         logger.debug("uri: ", uri);
@@ -137,8 +133,7 @@ public class INChIHandler extends DefaultHandler {
         if ("INChI".equals(local)) {
             // check version
             for (int i = 0; i < atts.getLength(); i++) {
-                if (atts.getQName(i).equals("version"))
-                    logger.info("INChI version: ", atts.getValue(i));
+                if (atts.getQName(i).equals("version")) logger.info("INChI version: ", atts.getValue(i));
             }
         } else if ("structure".equals(local)) {
             tautomer = new AtomContainer();

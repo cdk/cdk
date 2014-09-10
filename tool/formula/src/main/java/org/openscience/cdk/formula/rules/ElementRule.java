@@ -56,13 +56,11 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-public class ElementRule implements IRule{
+public class ElementRule implements IRule {
 
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(ElementRule.class);
 
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(ElementRule.class);
-
-	private MolecularFormulaRange mfRange;
+    private MolecularFormulaRange mfRange;
 
     /**
      *  Constructor for the ElementRule object.
@@ -70,8 +68,7 @@ public class ElementRule implements IRule{
      *  @throws IOException            If an error occurs when reading atom type information
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
-    public ElementRule(){
-    }
+    public ElementRule() {}
 
     /**
      * Sets the parameters attribute of the ElementRule object.
@@ -82,13 +79,12 @@ public class ElementRule implements IRule{
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	 if (params.length != 1)
-             throw new CDKException("ElementRule expects one parameters");
+        if (params.length != 1) throw new CDKException("ElementRule expects one parameters");
 
-       	 if(!(params[0] instanceof MolecularFormulaRange))
-       		 throw new CDKException("The parameter must be of type MolecularFormulaExpand");
+        if (!(params[0] instanceof MolecularFormulaRange))
+            throw new CDKException("The parameter must be of type MolecularFormulaExpand");
 
-       	mfRange = (MolecularFormulaRange)params[0];
+        mfRange = (MolecularFormulaRange) params[0];
     }
 
     /**
@@ -98,12 +94,11 @@ public class ElementRule implements IRule{
      * @see    #setParameters
      */
     public Object[] getParameters() {
-    	// return the parameters as used for the rule validation
+        // return the parameters as used for the rule validation
         Object[] params = new Object[1];
         params[0] = mfRange;
         return params;
     }
-
 
     /**
      * Validate the occurrence of this IMolecularFormula.
@@ -113,24 +108,20 @@ public class ElementRule implements IRule{
      */
 
     public double validate(IMolecularFormula formula) throws CDKException {
-    	logger.info("Start validation of ",formula);
-    	ensureDefaultOccurElements(formula.getBuilder());
+        logger.info("Start validation of ", formula);
+        ensureDefaultOccurElements(formula.getBuilder());
 
-    	double isValid = 1.0;
-    	Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
-    	while(itElem.hasNext()){
-    		IElement element = itElem.next();
-    		int occur = MolecularFormulaManipulator.getElementCount(formula, element);
-    		IIsotope elemIsotope = formula.getBuilder().newInstance(
-    		    IIsotope.class, element.getSymbol()
-    		);
-    		if((occur < mfRange.getIsotopeCountMin(elemIsotope))
-    			|| ( occur > mfRange.getIsotopeCountMax(elemIsotope)))
-    		{
-    			isValid = 0.0;
-    			break;
-    		}
-    	}
+        double isValid = 1.0;
+        Iterator<IElement> itElem = MolecularFormulaManipulator.elements(formula).iterator();
+        while (itElem.hasNext()) {
+            IElement element = itElem.next();
+            int occur = MolecularFormulaManipulator.getElementCount(formula, element);
+            IIsotope elemIsotope = formula.getBuilder().newInstance(IIsotope.class, element.getSymbol());
+            if ((occur < mfRange.getIsotopeCountMin(elemIsotope)) || (occur > mfRange.getIsotopeCountMax(elemIsotope))) {
+                isValid = 0.0;
+                break;
+            }
+        }
 
         return isValid;
     }
@@ -139,24 +130,18 @@ public class ElementRule implements IRule{
      * Initiate the MolecularFormulaExpand with the maximum and minimum occurrence of the Elements.
      * In this case all elements of the periodic table are loaded.
      */
-    private void ensureDefaultOccurElements(IChemObjectBuilder builder){
-    	if (mfRange == null) {
-    		String[] elements = new String[]{
-    				"C", "H", "O", "N", "Si", "P", "S", "F", "Cl",
-    				"Br", "I", "Sn", "B", "Pb", "Tl", "Ba", "In", "Pd",
-    				"Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co",
-    				"Fe", "Cr", "Ti", "Ca", "K", "Al", "Mg", "Na", "Ce",
-    				"Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb",
-    				"Tm", "Er", "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm",
-    				"Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh",
-    				"Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As",
-    				"Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be", "Li",
-    				"Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
-    				"Th", "Pa", "U", "Np", "Pu"};
+    private void ensureDefaultOccurElements(IChemObjectBuilder builder) {
+        if (mfRange == null) {
+            String[] elements = new String[]{"C", "H", "O", "N", "Si", "P", "S", "F", "Cl", "Br", "I", "Sn", "B", "Pb",
+                    "Tl", "Ba", "In", "Pd", "Pt", "Os", "Ag", "Zr", "Se", "Zn", "Cu", "Ni", "Co", "Fe", "Cr", "Ti",
+                    "Ca", "K", "Al", "Mg", "Na", "Ce", "Hg", "Au", "Ir", "Re", "W", "Ta", "Hf", "Lu", "Yb", "Tm", "Er",
+                    "Ho", "Dy", "Tb", "Gd", "Eu", "Sm", "Pm", "Nd", "Pr", "La", "Cs", "Xe", "Te", "Sb", "Cd", "Rh",
+                    "Ru", "Tc", "Mo", "Nb", "Y", "Sr", "Rb", "Kr", "As", "Ge", "Ga", "Mn", "V", "Sc", "Ar", "Ne", "Be",
+                    "Li", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu"};
 
-    		mfRange = new MolecularFormulaRange();
-    		for(int i = 0; i < elements.length ; i++)
-    			mfRange.addIsotope( builder.newInstance(IIsotope.class, elements[i]), 0, 50);
-    	}
+            mfRange = new MolecularFormulaRange();
+            for (int i = 0; i < elements.length; i++)
+                mfRange.addIsotope(builder.newInstance(IIsotope.class, elements[i]), 0, 50);
+        }
     }
 }

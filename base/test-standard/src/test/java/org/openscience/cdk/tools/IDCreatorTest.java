@@ -37,15 +37,13 @@ import org.openscience.cdk.tools.manipulator.MoleculeSetManipulator;
  */
 public class IDCreatorTest extends CDKTestCase {
 
-	public IDCreatorTest() {
-		super();
-	}
+    public IDCreatorTest() {
+        super();
+    }
 
-
-
-	@Test
+    @Test
     public void testCreateIDs_IChemObject() {
-	    IAtomContainer mol = new AtomContainer();
+        IAtomContainer mol = new AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         mol.addAtom(atom1);
@@ -58,10 +56,11 @@ public class IDCreatorTest extends CDKTestCase {
         Assert.assertEquals("b1", bond.getID());
         List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(4, ids.size());
-	}
+    }
 
-	@Test public void testKeepingIDs() {
-	    IAtomContainer mol = new AtomContainer();
+    @Test
+    public void testKeepingIDs() {
+        IAtomContainer mol = new AtomContainer();
         Atom atom = new Atom("C");
         atom.setID("atom1");
         mol.addAtom(atom);
@@ -72,10 +71,11 @@ public class IDCreatorTest extends CDKTestCase {
         Assert.assertNotNull(mol.getID());
         List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(2, ids.size());
-	}
+    }
 
-	@Test public void testNoDuplicateCreation() {
-	    IAtomContainer mol = new AtomContainer();
+    @Test
+    public void testNoDuplicateCreation() {
+        IAtomContainer mol = new AtomContainer();
         Atom atom1 = new Atom("C");
         Atom atom2 = new Atom("C");
         atom1.setID("a1");
@@ -86,14 +86,15 @@ public class IDCreatorTest extends CDKTestCase {
         Assert.assertEquals("a2", atom2.getID());
         List<String> ids = AtomContainerManipulator.getAllIDs(mol);
         Assert.assertEquals(3, ids.size());
-	}
+    }
 
-	/**
-	 * @cdk.bug 1455341
-	 */
-	@Test public void testCallingTwice() {
-	    IAtomContainerSet molSet = new AtomContainerSet();
-	    IAtomContainer mol = new AtomContainer();
+    /**
+     * @cdk.bug 1455341
+     */
+    @Test
+    public void testCallingTwice() {
+        IAtomContainerSet molSet = new AtomContainerSet();
+        IAtomContainer mol = new AtomContainer();
         Atom atom0 = new Atom("C");
         Atom atom2 = new Atom("C");
         atom0.setID("a1");
@@ -132,7 +133,6 @@ public class IDCreatorTest extends CDKTestCase {
         List<String> idsAfter = MoleculeSetManipulator.getAllIDs(molSet);
         Assert.assertTrue(idsAfter.contains("a1"));
         Assert.assertEquals(10, idsAfter.size());
-	}
+    }
 
 }
-

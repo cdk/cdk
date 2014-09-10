@@ -31,38 +31,42 @@ public class LoggingToolTestDebugTrue extends AbstractLoggingToolTest {
         String originalValue = System.getProperty("cdk.debugging");
         System.setProperty("cdk.debugging", "true");
         LoggingTool logger = new LoggingTool(this);
-        if (originalValue != null)
-            System.setProperty("cdk.debugging", originalValue);
+        if (originalValue != null) System.setProperty("cdk.debugging", originalValue);
         return logger;
     }
 
-    @Test public void testLoggingTool() throws Exception {
+    @Test
+    public void testLoggingTool() throws Exception {
         LoggingTool logger = new LoggingTool();
         Assert.assertNotNull(logger);
     }
 
-    @Test public void testLoggingTool_Class() throws Exception {
+    @Test
+    public void testLoggingTool_Class() throws Exception {
         LoggingTool logger = new LoggingTool(this.getClass());
         Assert.assertNotNull(logger);
     }
 
-    @Test public void testClass$_String() throws Exception {
+    @Test
+    public void testClass$_String() throws Exception {
         // no idea why the Coverage test requires this test
         Assert.assertTrue(true);
     }
 
-    @Test public void testConfigureLog4j() throws Exception {
+    @Test
+    public void testConfigureLog4j() throws Exception {
         LoggingTool.configureLog4j();
     }
 
-    @Test public void testDebug_Object() throws Exception {
+    @Test
+    public void testDebug_Object() throws Exception {
         LoggingTool logger = getLoggingTool();
         logger.debug(this);
     }
 
-    @Test public void testCreate() throws Exception {
+    @Test
+    public void testCreate() throws Exception {
         ILoggingTool logger = LoggingTool.create(this.getClass());
         Assert.assertNotNull(logger);
     }
 }
-

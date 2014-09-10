@@ -34,15 +34,13 @@ public class BsptTest extends CDKTestCase {
 
     @Test
     public void testToString() {
-		Bspt bspt = new Bspt(3);
-		Assert.assertNotNull(bspt.toString());
-	}
+        Bspt bspt = new Bspt(3);
+        Assert.assertNotNull(bspt.toString());
+    }
 
     @Test
     public void testBspt() {
-		Bspt bspt = new Bspt(3);
-		Assert.assertNotNull(bspt);
-	}
+        Bspt bspt = new Bspt(3);
+        Assert.assertNotNull(bspt);
+    }
 }
-
-

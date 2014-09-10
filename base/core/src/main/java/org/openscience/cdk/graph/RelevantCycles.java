@@ -114,12 +114,12 @@ public final class RelevantCycles {
      * @param initial set of initial cycles.
      * @throws NullPointerException null InitialCycles provided
      */
-    @TestMethod("noInitialCycles") RelevantCycles(final InitialCycles initial) {
+    @TestMethod("noInitialCycles")
+    RelevantCycles(final InitialCycles initial) {
 
         checkNotNull(initial, "No InitialCycles provided");
 
-        this.basis = new GreedyBasis(initial.numberOfCycles(),
-                                     initial.numberOfEdges());
+        this.basis = new GreedyBasis(initial.numberOfCycles(), initial.numberOfEdges());
 
         // processing by size add cycles which are independent of smaller cycles
         for (final int length : initial.lengths()) {
@@ -137,8 +137,7 @@ public final class RelevantCycles {
     private List<Cycle> independent(final Collection<Cycle> cycles) {
         final List<Cycle> independent = new ArrayList<Cycle>(cycles.size());
         for (final Cycle cycle : cycles) {
-            if (basis.isIndependent(cycle))
-                independent.add(cycle);
+            if (basis.isIndependent(cycle)) independent.add(cycle);
         }
         return independent;
     }
@@ -159,8 +158,7 @@ public final class RelevantCycles {
      *
      * @return array of vertex paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
-                        "paths_cyclophane_odd,paths_cyclophane_even")
+    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_odd,paths_cyclophane_even")
     public int[][] paths() {
         final int[][] paths = new int[size()][0];
         int i = 0;
@@ -176,8 +174,7 @@ public final class RelevantCycles {
      *
      * @return size of relevant cycle set
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," +
-                        "size_cyclophane_odd,size_cyclophane_even")
+    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_odd,size_cyclophane_even")
     public int size() {
         int size = 0;
         for (final Cycle c : basis.members())

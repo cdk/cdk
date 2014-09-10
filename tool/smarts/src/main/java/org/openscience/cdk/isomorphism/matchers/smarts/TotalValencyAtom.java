@@ -58,4 +58,3 @@ public final class TotalValencyAtom extends SMARTSAtom {
         return invariants(atom).valence() == valence;
     }
 }
-

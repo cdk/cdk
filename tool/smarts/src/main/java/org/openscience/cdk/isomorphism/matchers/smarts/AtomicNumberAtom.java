@@ -46,12 +46,15 @@ public class AtomicNumberAtom extends SMARTSAtom {
         this.setAtomicNumber(atomicNumber);
     }
 
-    /* (non-Javadoc)
-    * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
-    */
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
+     */
     @Override
     public boolean matches(IAtom atom) {
-        return Preconditions.checkNotNull(atom.getAtomicNumber(),
-                                          "Atomic number is not set.").equals(this.getAtomicNumber());
+        return Preconditions.checkNotNull(atom.getAtomicNumber(), "Atomic number is not set.").equals(
+                this.getAtomicNumber());
     }
 }

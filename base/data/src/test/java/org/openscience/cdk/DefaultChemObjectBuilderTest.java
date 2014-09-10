@@ -31,14 +31,16 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class DefaultChemObjectBuilderTest extends AbstractChemObjectBuilderTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setRootObject(new ChemObject());
     }
 
-    @Test public void testGetInstance() {
-    	Object builder = DefaultChemObjectBuilder.getInstance();
-    	Assert.assertNotNull(builder);
-    	Assert.assertTrue(builder instanceof IChemObjectBuilder);
+    @Test
+    public void testGetInstance() {
+        Object builder = DefaultChemObjectBuilder.getInstance();
+        Assert.assertNotNull(builder);
+        Assert.assertTrue(builder instanceof IChemObjectBuilder);
         Assert.assertTrue(builder instanceof DefaultChemObjectBuilder);
     }
 

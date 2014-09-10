@@ -45,13 +45,11 @@ public class ConvertorTest extends CDKTestCase {
     /**
      * @cdk.bug 1748257
      */
-    @Ignore("moved to MDMoleculeTest") public void testBug1748257 () {
-    }
-
+    @Ignore("moved to MDMoleculeTest")
+    public void testBug1748257() {}
 
     @Test
     public void testCdkBondToCMLBond_Wedge() throws IOException {
-
 
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);
@@ -79,7 +77,6 @@ public class ConvertorTest extends CDKTestCase {
     @Test
     public void testCdkBondToCMLBond_Hatch() throws IOException {
 
-
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
         IBond bond = builder.newInstance(IBond.class);
         bond.setOrder(IBond.Order.SINGLE);
@@ -101,8 +98,6 @@ public class ConvertorTest extends CDKTestCase {
 
         Assert.assertTrue(actual.contains(expected));
 
-
     }
-
 
 }

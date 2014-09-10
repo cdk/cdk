@@ -42,12 +42,11 @@ import java.util.List;
 
 public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public GravitationalIndexDescriptorTest() {
-    }
+    public GravitationalIndexDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(GravitationalIndexDescriptor.class);
+        setDescriptor(GravitationalIndexDescriptor.class);
     }
 
     @Test
@@ -72,4 +71,3 @@ public class GravitationalIndexDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(16.302948232909483, retval.get(8), 0.00000001);
     }
 }
-

@@ -48,18 +48,10 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testCBrIFCl() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("FC(Br)(Cl)I");
-        ILigand ligandF = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
-        ILigand ligandBr = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
-        );
-        ILigand ligandCl = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
-        );
-        ILigand ligandI = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
-        );
+        ILigand ligandF = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
+        ILigand ligandBr = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
+        ILigand ligandCl = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
+        ILigand ligandI = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
         Assert.assertEquals(-1, rule.compare(ligandF, ligandI));
         Assert.assertEquals(-1, rule.compare(ligandF, ligandBr));
@@ -84,9 +76,7 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testCompare_Identity() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
-        ILigand ligand = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
+        ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
         Assert.assertEquals(0, rule.compare(ligand, ligand));
     }
@@ -94,12 +84,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testCompare() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
-        ILigand ligand1 = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
-        ILigand ligand2 = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
-        );
+        ILigand ligand1 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
+        ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
         Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
         Assert.assertEquals(1, rule.compare(ligand2, ligand1));
@@ -181,12 +167,8 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testImplicitHydrogen_Same() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([13C])[H]");
-        ILigand ligand1 = new ImplicitHydrogenLigand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1)
-        );
-        ILigand ligand2 = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4)
-        );
+        ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
+        ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(4));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
         Assert.assertEquals(0, rule.compare(ligand1, ligand2));
         Assert.assertEquals(0, rule.compare(ligand2, ligand1));
@@ -195,22 +177,14 @@ public class CIPLigandRuleTest extends CDKTestCase {
     @Test
     public void testImplicitHydrogen() throws Exception {
         IAtomContainer molecule = smiles.parseSmiles("CC(Br)([2H])[H]");
-        ILigand ligand1 = new ImplicitHydrogenLigand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1)
-        );
-        ILigand ligand2 = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3)
-        );
+        ILigand ligand1 = new ImplicitHydrogenLigand(molecule, new VisitedAtoms(), molecule.getAtom(1));
+        ILigand ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(3));
         ISequenceSubRule<ILigand> rule = new CIPLigandRule();
         Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
         Assert.assertEquals(1, rule.compare(ligand2, ligand1));
 
-        ligand2 = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2)
-        );
+        ligand2 = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(2));
         Assert.assertEquals(-1, rule.compare(ligand1, ligand2));
         Assert.assertEquals(1, rule.compare(ligand2, ligand1));
     }
 }
-
-

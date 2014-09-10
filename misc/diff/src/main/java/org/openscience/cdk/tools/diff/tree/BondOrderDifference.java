@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.tools.diff.tree.BondOrderDifferenceTest")
 public class BondOrderDifference implements IDifference {
 
-    private String name;
+    private String      name;
     private IBond.Order first;
     private IBond.Order second;
 
@@ -65,9 +65,6 @@ public class BondOrderDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : first) +
-            "/" +
-            (second == null ? "NA" : second);
+        return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }
 }

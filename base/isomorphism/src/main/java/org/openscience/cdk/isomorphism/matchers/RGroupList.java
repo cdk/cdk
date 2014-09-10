@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 
 import org.openscience.cdk.exception.CDKException;
 
-
 /**
  * Represents a list of Rgroup substitutes to be associated with some
  * {@link RGroupQuery}.
@@ -45,21 +44,22 @@ import org.openscience.cdk.exception.CDKException;
  * @author Mark Rijnbeek
  */
 public class RGroupList {
-	/**
-	 * Default value for occurrence field.
-	 */
-    public final static String DEFAULT_OCCURRENCE=">0";
 
-	/**
+    /**
+     * Default value for occurrence field.
+     */
+    public final static String DEFAULT_OCCURRENCE = ">0";
+
+    /**
      * Unique number to identify the Rgroup.
      */
-    private int rGroupNumber;
+    private int                rGroupNumber;
 
     /**
      * Indicates that sites labeled with this Rgroup may only be
      * substituted with a member of the Rgroup or with hydrogen.
      */
-    private boolean restH;
+    private boolean            restH;
 
     /**
      * Occurrence required:
@@ -73,19 +73,18 @@ public class RGroupList {
      * Any non-contradictory combination of the preceding values is also
      * allowed; for example "1, 3-7, 9, >11".
      */
-    private String occurrence;
+    private String             occurrence;
 
     /**
      * List of substitute structures.
      */
-    private List<RGroup> rGroups;
+    private List<RGroup>       rGroups;
 
     /**
      * The rGroup (say B) that is required when this one (say A) exists.<p>
      * This captures the "LOG" information 'IF A (this) THEN B'.
      */
-    private int requiredRGroupNumber;
-
+    private int                requiredRGroupNumber;
 
     /**
      * Default constructor.
@@ -94,7 +93,7 @@ public class RGroupList {
         setRGroupNumber(rGroupNumber);
         this.restH = false;
         this.occurrence = DEFAULT_OCCURRENCE;
-        this.requiredRGroupNumber=0;
+        this.requiredRGroupNumber = 0;
     }
 
     /**
@@ -200,22 +199,22 @@ public class RGroupList {
             do {
                 //Number: "n"
                 if (match("^\\d+$", cond)) {
-                    if (Integer.valueOf(cond)<0) // not allowed
+                    if (Integer.valueOf(cond) < 0) // not allowed
                         return false;
                     break;
                 }
                 //Range: "n-m"
                 if (match("^\\d+-\\d+$", cond)) {
-                    int from = Integer.valueOf(cond.substring(0,cond.indexOf('-')));
-                    int to = Integer.valueOf(cond.substring(cond.indexOf('-')+1,cond.length()));
-                    if (from<0 || to <0 || to<from) // not allowed
+                    int from = Integer.valueOf(cond.substring(0, cond.indexOf('-')));
+                    int to = Integer.valueOf(cond.substring(cond.indexOf('-') + 1, cond.length()));
+                    if (from < 0 || to < 0 || to < from) // not allowed
                         return false;
                     break;
                 }
                 //Smaller than: "<n"
-                if (match("^<\\d+$", cond)){
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('<')+1,cond.length()));
-                    if(n==0) // not allowed
+                if (match("^<\\d+$", cond)) {
+                    int n = Integer.valueOf(cond.substring(cond.indexOf('<') + 1, cond.length()));
+                    if (n == 0) // not allowed
                         return false;
                     break;
                 }
@@ -225,7 +224,7 @@ public class RGroupList {
                 }
 
                 return false;
-            } while (1==0);
+            } while (1 == 0);
         }
 
         return true;
@@ -246,7 +245,6 @@ public class RGroupList {
             return false;
     }
 
-
     /**
      * Matches the 'occurrence' condition with a provided maximum number of
      * RGroup attachments. Returns the valid occurrences (numeric) for these
@@ -264,35 +262,34 @@ public class RGroupList {
         List<Integer> validValues = new ArrayList<Integer>();
 
         for (int val = 0; val <= maxAttachments; val++) {
-            boolean addVal=false;
+            boolean addVal = false;
 
             StringTokenizer st = new StringTokenizer(occurrence, ",");
             while (st.hasMoreTokens() && !addVal) {
                 String cond = st.nextToken().trim().replaceAll(" ", "");
                 if (match("^\\d+$", cond)) { // n
-                    if(Integer.valueOf(cond) == val)
-                        addVal=true;
+                    if (Integer.valueOf(cond) == val) addVal = true;
                 }
                 if (match("^\\d+-\\d+$", cond)) { // n-m
-                    int from = Integer.valueOf(cond.substring(0,cond.indexOf('-')));
-                    int to = Integer.valueOf(cond.substring(cond.indexOf('-')+1,cond.length()));
-                    if ( val>=from && val <=to)  {
-                        addVal=true;
+                    int from = Integer.valueOf(cond.substring(0, cond.indexOf('-')));
+                    int to = Integer.valueOf(cond.substring(cond.indexOf('-') + 1, cond.length()));
+                    if (val >= from && val <= to) {
+                        addVal = true;
                     }
                 }
                 if (match("^>\\d+$", cond)) { // <n
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('>')+1,cond.length()));
-                    if(val>n){
-                        addVal=true;
+                    int n = Integer.valueOf(cond.substring(cond.indexOf('>') + 1, cond.length()));
+                    if (val > n) {
+                        addVal = true;
                     }
                 }
                 if (match("^<\\d+$", cond)) { // >n
-                    int n = Integer.valueOf(cond.substring(cond.indexOf('<')+1,cond.length()));
-                    if(val<n){
-                        addVal=true;
+                    int n = Integer.valueOf(cond.substring(cond.indexOf('<') + 1, cond.length()));
+                    if (val < n) {
+                        addVal = true;
                     }
                 }
-                if (addVal)  {
+                if (addVal) {
                     validValues.add(val);
                 }
 
@@ -302,7 +299,7 @@ public class RGroupList {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof RGroupList && this.rGroupNumber == ((RGroupList)obj).rGroupNumber)
+        if (obj instanceof RGroupList && this.rGroupNumber == ((RGroupList) obj).rGroupNumber)
             return true;
         else
             return false;
@@ -311,6 +308,5 @@ public class RGroupList {
     public int hashCode() {
         return this.rGroupNumber;
     }
-
 
 }

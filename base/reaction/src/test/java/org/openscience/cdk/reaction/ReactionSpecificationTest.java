@@ -31,46 +31,44 @@ public class ReactionSpecificationTest extends CDKTestCase {
         super();
     }
 
-	private final static String REAC_REF = "bla";
-	private final static String REAC_IMPL_TITLE = "bla2";
-	private final static String REAC_IMPL_VENDOR = "bla3";
-	private final static String REAC_IMPL_ID = "bla4";
+    private final static String REAC_REF         = "bla";
+    private final static String REAC_IMPL_TITLE  = "bla2";
+    private final static String REAC_IMPL_VENDOR = "bla3";
+    private final static String REAC_IMPL_ID     = "bla4";
 
-    @Test public void testReactionSpecification_String_String_String_String() {
-		ReactionSpecification spec = new ReactionSpecification(
-            REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR
-		);
-		Assert.assertNotNull(spec);
-	}
+    @Test
+    public void testReactionSpecification_String_String_String_String() {
+        ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
+                REAC_IMPL_VENDOR);
+        Assert.assertNotNull(spec);
+    }
 
-    @Test public void testGetImplementationVendor() {
-		ReactionSpecification spec = new ReactionSpecification(
-            REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR
-		);
-		Assert.assertEquals(REAC_IMPL_VENDOR, spec.getImplementationVendor());
-	}
+    @Test
+    public void testGetImplementationVendor() {
+        ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
+                REAC_IMPL_VENDOR);
+        Assert.assertEquals(REAC_IMPL_VENDOR, spec.getImplementationVendor());
+    }
 
-    @Test public void testGetSpecificationReference() {
-		ReactionSpecification spec = new ReactionSpecification(
-            REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR
-		);
-		Assert.assertEquals(REAC_REF, spec.getSpecificationReference());
-	}
+    @Test
+    public void testGetSpecificationReference() {
+        ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
+                REAC_IMPL_VENDOR);
+        Assert.assertEquals(REAC_REF, spec.getSpecificationReference());
+    }
 
-    @Test public void testGetImplementationIdentifier() {
-		ReactionSpecification spec = new ReactionSpecification(
-            REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR
-		);
-		Assert.assertEquals(REAC_IMPL_ID, spec.getImplementationIdentifier());
-	}
+    @Test
+    public void testGetImplementationIdentifier() {
+        ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
+                REAC_IMPL_VENDOR);
+        Assert.assertEquals(REAC_IMPL_ID, spec.getImplementationIdentifier());
+    }
 
-    @Test public void testGetImplementationTitle() {
-		ReactionSpecification spec = new ReactionSpecification(
-            REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID, REAC_IMPL_VENDOR
-		);
-		Assert.assertEquals(REAC_IMPL_TITLE, spec.getImplementationTitle());
-	}
+    @Test
+    public void testGetImplementationTitle() {
+        ReactionSpecification spec = new ReactionSpecification(REAC_REF, REAC_IMPL_TITLE, REAC_IMPL_ID,
+                REAC_IMPL_VENDOR);
+        Assert.assertEquals(REAC_IMPL_TITLE, spec.getImplementationTitle());
+    }
 
 }
-
-

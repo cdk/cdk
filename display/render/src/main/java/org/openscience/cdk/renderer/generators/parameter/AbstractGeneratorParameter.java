@@ -30,8 +30,7 @@ import org.openscience.cdk.renderer.generators.IGeneratorParameter;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParameterTest")
-public abstract class AbstractGeneratorParameter<T>
-    implements IGeneratorParameter<T>{
+public abstract class AbstractGeneratorParameter<T> implements IGeneratorParameter<T> {
 
     private T parameterSetting;
 

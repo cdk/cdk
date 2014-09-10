@@ -44,26 +44,21 @@ import static org.mockito.Mockito.when;
  */
 public class GeometryEncoderTest {
 
-
     @Test(expected = IllegalArgumentException.class)
-    public void testConstruction_Empty(){
-        new GeometryEncoder(new int[0],
-                            mock(PermutationParity.class),
-                            mock(GeometricParity.class));
+    public void testConstruction_Empty() {
+        new GeometryEncoder(new int[0], mock(PermutationParity.class), mock(GeometricParity.class));
     }
 
     @Test
-    public void testConstruction_Singleton(){
+    public void testConstruction_Singleton() {
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(1,
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[3];
+        StereoEncoder encoder = new GeometryEncoder(1, permutation, geometric);
+        long[] prev = new long[3];
         long[] result = new long[3];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -75,20 +70,17 @@ public class GeometryEncoderTest {
         assertThat(result, is(new long[]{1, 15543053, 1}));
     }
 
-
     @Test
     public void testEncode_Clockwise() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[3];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1}, permutation, geometric);
+        long[] prev = new long[3];
         long[] result = new long[3];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -105,15 +97,13 @@ public class GeometryEncoderTest {
     public void testEncode_Clockwise_Alt() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(-1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[3];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1}, permutation, geometric);
+        long[] prev = new long[3];
         long[] result = new long[3];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -130,15 +120,13 @@ public class GeometryEncoderTest {
     public void testEncode_Clockwise_Two() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[6];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3}, permutation, geometric);
+        long[] prev = new long[6];
         long[] result = new long[6];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -155,15 +143,13 @@ public class GeometryEncoderTest {
     public void testEncode_Anticlockwise() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[3];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1}, permutation, geometric);
+        long[] prev = new long[3];
         long[] result = new long[3];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -180,15 +166,13 @@ public class GeometryEncoderTest {
     public void testEncode_Anticlockwise_Alt() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(-1);
         when(geometric.parity()).thenReturn(-1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[3];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1}, permutation, geometric);
+        long[] prev = new long[3];
         long[] result = new long[3];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -201,20 +185,17 @@ public class GeometryEncoderTest {
 
     }
 
-
     @Test
     public void testEncode_Anticlockwise_Two() throws Exception {
 
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[6];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3}, permutation, geometric);
+        long[] prev = new long[6];
         long[] result = new long[6];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -223,22 +204,20 @@ public class GeometryEncoderTest {
         assertTrue(encoder.encode(prev, result));
 
         // check only the value at index '1' was changed
-        assertThat(result, is(new long[]{1, 15521419, 1, 15521419, 1 ,1}));
+        assertThat(result, is(new long[]{1, 15521419, 1, 15521419, 1, 1}));
 
     }
 
-
-    @Test public void testEncode_NoGeometry() {
+    @Test
+    public void testEncode_NoGeometry() {
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(+1);
         when(geometric.parity()).thenReturn(0);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[6];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3}, permutation, geometric);
+        long[] prev = new long[6];
         long[] result = new long[6];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -248,20 +227,19 @@ public class GeometryEncoderTest {
         assertTrue(encoder.encode(prev, result));
 
         // check no values modified
-        assertThat(result, is(new long[]{1, 1, 1, 1, 1 ,1}));
+        assertThat(result, is(new long[]{1, 1, 1, 1, 1, 1}));
     }
 
-    @Test public void testEncode_NoPermutation() {
+    @Test
+    public void testEncode_NoPermutation() {
         PermutationParity permutation = mock(PermutationParity.class);
-        GeometricParity   geometric   = mock(GeometricParity.class);
+        GeometricParity geometric = mock(GeometricParity.class);
 
         when(permutation.parity(any(long[].class))).thenReturn(0);
         when(geometric.parity()).thenReturn(+1);
 
-        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3},
-                                                    permutation,
-                                                    geometric);
-        long[] prev   = new long[6];
+        StereoEncoder encoder = new GeometryEncoder(new int[]{1, 3}, permutation, geometric);
+        long[] prev = new long[6];
         long[] result = new long[6];
         Arrays.fill(prev, 1);
         Arrays.fill(result, 1);
@@ -270,7 +248,7 @@ public class GeometryEncoderTest {
         assertFalse(encoder.encode(prev, result));
 
         // check no values modified
-        assertThat(result, is(new long[]{1, 1, 1, 1, 1 ,1}));
+        assertThat(result, is(new long[]{1, 1, 1, 1, 1, 1}));
 
         // geometric parity should not be called
         verify(geometric, never()).parity();

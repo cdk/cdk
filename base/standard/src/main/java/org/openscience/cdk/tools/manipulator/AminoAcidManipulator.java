@@ -43,19 +43,18 @@ import org.openscience.cdk.interfaces.IBond;
 @TestClass("org.openscience.cdk.tools.manipulator.AminoAcidManipulatorTest")
 public class AminoAcidManipulator {
 
-	/**
-	 * Removes the singly bonded oxygen from the acid group of the AminoAcid.
-	 *
-	 * @param acid AminoAcid from which to remove the oxygen
-	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid
-	 */
+    /**
+     * Removes the singly bonded oxygen from the acid group of the AminoAcid.
+     *
+     * @param acid AminoAcid from which to remove the oxygen
+     * @throws CDKException when the C-terminus is not defined for the given AminoAcid
+     */
     @TestMethod("testRemoveAcidicOxygen_IAminoAcid")
     public static void removeAcidicOxygen(IAminoAcid acid) throws CDKException {
-		if (acid.getCTerminus() == null)
-			throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
+        if (acid.getCTerminus() == null) throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
 
-		java.util.List<IBond> bonds = acid.getConnectedBondsList(acid.getCTerminus());
-		// ok, look for the oxygen which is singly bonded
+        java.util.List<IBond> bonds = acid.getConnectedBondsList(acid.getCTerminus());
+        // ok, look for the oxygen which is singly bonded
         for (IBond bond : bonds) {
             if (bond.getOrder() == CDKConstants.BONDORDER_SINGLE) {
                 for (int j = 0; j < bond.getAtomCount(); j++) {
@@ -66,26 +65,21 @@ public class AminoAcidManipulator {
                 }
             }
         }
-	}
+    }
 
-	/**
-	 * Adds the singly bonded oxygen from the acid group of the AminoAcid.
-	 *
-	 * @param  acid         AminoAcid to which to add the oxygen
-	 * @throws CDKException when the C-terminus is not defined for the given AminoAcid
-	 */
+    /**
+     * Adds the singly bonded oxygen from the acid group of the AminoAcid.
+     *
+     * @param  acid         AminoAcid to which to add the oxygen
+     * @throws CDKException when the C-terminus is not defined for the given AminoAcid
+     */
     @TestMethod("testAddAcidicOxygen_IAminoAcid")
     public static void addAcidicOxygen(IAminoAcid acid) throws CDKException {
-		if (acid.getCTerminus() == null)
-			throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
+        if (acid.getCTerminus() == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
-		IAtom acidicOxygen = acid.getBuilder().newInstance(IAtom.class,"O");
-		acid.addAtom(acidicOxygen);
-		acid.addBond(
-			acid.getBuilder().newInstance(IBond.class,acid.getCTerminus(),
-			acidicOxygen,
-			CDKConstants.BONDORDER_SINGLE)
-		);
-	}
+        IAtom acidicOxygen = acid.getBuilder().newInstance(IAtom.class, "O");
+        acid.addAtom(acidicOxygen);
+        acid.addBond(acid.getBuilder().newInstance(IBond.class, acid.getCTerminus(), acidicOxygen,
+                CDKConstants.BONDORDER_SINGLE));
+    }
 }
-

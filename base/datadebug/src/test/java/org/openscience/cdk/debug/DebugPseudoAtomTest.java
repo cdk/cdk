@@ -38,15 +38,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugPseudoAtom();
             }
         });
     }
 
-    @Test public void testDebugPseudoAtom() {
+    @Test
+    public void testDebugPseudoAtom() {
         IPseudoAtom a = new DebugPseudoAtom();
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());
@@ -54,8 +57,9 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugPseudoAtom_IElement() {
-    	IElement element = newChemObject().getBuilder().newInstance(IElement.class);
+    @Test
+    public void testDebugPseudoAtom_IElement() {
+        IElement element = newChemObject().getBuilder().newInstance(IElement.class);
         IPseudoAtom a = new DebugPseudoAtom(element);
         Assert.assertEquals("R", a.getSymbol());
         Assert.assertNull(a.getPoint3d());
@@ -63,7 +67,8 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugPseudoAtom_String() {
+    @Test
+    public void testDebugPseudoAtom_String() {
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label);
         Assert.assertEquals("R", a.getSymbol());
@@ -73,7 +78,8 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugPseudoAtom_String_Point2d() {
+    @Test
+    public void testDebugPseudoAtom_String_Point2d() {
         Point2d point = new Point2d(1.0, 2.0);
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label, point);
@@ -84,7 +90,8 @@ public class DebugPseudoAtomTest extends AbstractPseudoAtomTest {
         Assert.assertNull(a.getFractionalPoint3d());
     }
 
-    @Test public void testDebugPseudoAtom_String_Point3d() {
+    @Test
+    public void testDebugPseudoAtom_String_Point3d() {
         Point3d point = new Point3d(1.0, 2.0, 3.0);
         String label = "Arg255";
         IPseudoAtom a = new DebugPseudoAtom(label, point);

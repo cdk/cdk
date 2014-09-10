@@ -30,40 +30,42 @@ import org.openscience.cdk.CDKTestCase;
  */
 public abstract class ReactionMechanismTest extends CDKTestCase {
 
-	protected static IReactionMechanism reactionMechanism;
+    protected static IReactionMechanism reactionMechanism;
 
-	 /**
-	  * Defining reaction mechanism.
-	  *
-	  * @param descriptorClass
-	  * @throws Exception
-	  */
-	public static void setMechanism(Class<?> descriptorClass) throws Exception {
-		if (ReactionMechanismTest.reactionMechanism == null) {
-			Object descriptor = (Object)descriptorClass.newInstance();
-			if (!(descriptor instanceof IReactionMechanism)) {
-				throw new CDKException("The passed reaction class must be a IReactionMechanism");
-			}
-			ReactionMechanismTest.reactionMechanism = (IReactionMechanism)descriptor;
-		}
-	}
+    /**
+     * Defining reaction mechanism.
+     *
+     * @param descriptorClass
+     * @throws Exception
+     */
+    public static void setMechanism(Class<?> descriptorClass) throws Exception {
+        if (ReactionMechanismTest.reactionMechanism == null) {
+            Object descriptor = (Object) descriptorClass.newInstance();
+            if (!(descriptor instanceof IReactionMechanism)) {
+                throw new CDKException("The passed reaction class must be a IReactionMechanism");
+            }
+            ReactionMechanismTest.reactionMechanism = (IReactionMechanism) descriptor;
+        }
+    }
 
-	/**
-	 * Makes sure that the extending class has set the super.descriptor.
-	 * Each extending class should have this bit of code (JUnit3 formalism):
-	 * <pre>
-	 * public void setUp() {
-	 *   // Pass a Class, not an Object!
-	 *   setDescriptor(SomeDescriptor.class);
-	 * }
-	 *
-	 * <p>The unit tests in the extending class may use this instance, but
-	 * are not required.
-	 *
-	 * </pre>
-	 */
-	@Test public void testHasSetSuperDotDescriptor() {
-		Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.", reactionMechanism);
-	}
+    /**
+     * Makes sure that the extending class has set the super.descriptor.
+     * Each extending class should have this bit of code (JUnit3 formalism):
+     * <pre>
+     * public void setUp() {
+     *   // Pass a Class, not an Object!
+     *   setDescriptor(SomeDescriptor.class);
+     * }
+     *
+     * <p>The unit tests in the extending class may use this instance, but
+     * are not required.
+     *
+     * </pre>
+     */
+    @Test
+    public void testHasSetSuperDotDescriptor() {
+        Assert.assertNotNull("The extending class must set the super.descriptor in its setUp() method.",
+                reactionMechanism);
+    }
 
 }

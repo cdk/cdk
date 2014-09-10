@@ -46,15 +46,15 @@ public class AtomTypeDiff {
      */
     private AtomTypeDiff() {}
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testMatchAgainstItself,testDiff")
-    public static String diff( IChemObject first, IChemObject second ) {
+    public static String diff(IChemObject first, IChemObject second) {
         IDifference difference = difference(first, second);
         if (difference == null) {
             return "";
@@ -63,28 +63,34 @@ public class AtomTypeDiff {
         }
     }
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testDifference")
-    public static IDifference difference( IChemObject first, IChemObject second ) {
+    public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IAtomType && second instanceof IAtomType)) {
             return null;
         }
-        IAtomType firstElem = (IAtomType)first;
-        IAtomType secondElem = (IAtomType)second;
+        IAtomType firstElem = (IAtomType) first;
+        IAtomType secondElem = (IAtomType) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("AtomTypeDiff");
         totalDiff.addChild(StringDifference.construct("N", firstElem.getAtomTypeName(), secondElem.getAtomTypeName()));
-        totalDiff.addChild(BondOrderDifference.construct("MBO", firstElem.getMaxBondOrder(), secondElem.getMaxBondOrder()));
-        totalDiff.addChild(DoubleDifference.construct("BOS", firstElem.getBondOrderSum(), secondElem.getBondOrderSum()));
-        totalDiff.addChild(IntegerDifference.construct("FC", firstElem.getFormalCharge(), secondElem.getFormalCharge()));
-        totalDiff.addChild(AtomTypeHybridizationDifference.construct("H", firstElem.getHybridization(), secondElem.getHybridization()));
-        totalDiff.addChild(IntegerDifference.construct("NC", firstElem.getFormalNeighbourCount(), secondElem.getFormalNeighbourCount()));
-        totalDiff.addChild(DoubleDifference.construct("CR", firstElem.getCovalentRadius(), secondElem.getCovalentRadius()));
+        totalDiff.addChild(BondOrderDifference.construct("MBO", firstElem.getMaxBondOrder(),
+                secondElem.getMaxBondOrder()));
+        totalDiff
+                .addChild(DoubleDifference.construct("BOS", firstElem.getBondOrderSum(), secondElem.getBondOrderSum()));
+        totalDiff
+                .addChild(IntegerDifference.construct("FC", firstElem.getFormalCharge(), secondElem.getFormalCharge()));
+        totalDiff.addChild(AtomTypeHybridizationDifference.construct("H", firstElem.getHybridization(),
+                secondElem.getHybridization()));
+        totalDiff.addChild(IntegerDifference.construct("NC", firstElem.getFormalNeighbourCount(),
+                secondElem.getFormalNeighbourCount()));
+        totalDiff.addChild(DoubleDifference.construct("CR", firstElem.getCovalentRadius(),
+                secondElem.getCovalentRadius()));
         totalDiff.addChild(IntegerDifference.construct("V", firstElem.getValency(), secondElem.getValency()));
         totalDiff.addChild(IsotopeDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {

@@ -63,10 +63,10 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * Key indicates where the grouping should be store in the query
      * properties.
      */
-    public static final String KEY = "COMPONENT.GROUPING";
+    public static final String        KEY = "COMPONENT.GROUPING";
 
     /** The required  (query) and the targetComponents of the target. */
-    private final int[] queryComponents, targetComponents;
+    private final int[]               queryComponents, targetComponents;
 
     /** Connected components of the target. */
     private final ConnectedComponents cc;
@@ -94,9 +94,8 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param target target structure
      */
     public ComponentGrouping(IAtomContainer query, int[][] target) {
-        this(query.getProperty(KEY, int[].class),
-             query.getProperty(KEY) != null ? new ConnectedComponents(target)
-                                            : null);
+        this(query.getProperty(KEY, int[].class), query.getProperty(KEY) != null ? new ConnectedComponents(target)
+                : null);
     }
 
     /**
@@ -107,7 +106,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
      * @param cc        connected component of the target
      */
     public ComponentGrouping(int[] grouping, ConnectedComponents cc) {
-        this.queryComponents  = grouping;
+        this.queryComponents = grouping;
         this.cc = cc;
         this.targetComponents = cc != null ? cc.components() : null;
     }
@@ -123,8 +122,7 @@ public final class ComponentGrouping implements Predicate<int[]> {
     public boolean apply(final int[] mapping) {
 
         // no grouping required
-        if (queryComponents == null)
-            return true;
+        if (queryComponents == null) return true;
 
         // bidirectional map of query/target components, last index
         // of query components holds the count
@@ -133,25 +131,22 @@ public final class ComponentGrouping implements Predicate<int[]> {
 
         // verify we don't have any collisions
         for (int v = 0; v < mapping.length; v++) {
-            if (queryComponents[v] == 0)
-                continue;
+            if (queryComponents[v] == 0) continue;
 
             int w = mapping[v];
 
-            int queryComponent  = queryComponents[v];
+            int queryComponent = queryComponents[v];
             int targetComponent = targetComponents[w];
 
             // is the target component already used by a query component?
             if (usedBy[targetComponent] == 0)
                 usedBy[targetComponent] = queryComponent;
-            else if (usedBy[targetComponent] != queryComponent)
-                return false;
+            else if (usedBy[targetComponent] != queryComponent) return false;
 
             // is the query component already used in a target component?
             if (usedIn[queryComponent] == 0)
                 usedIn[queryComponent] = targetComponent;
-            else if (usedIn[queryComponent] != targetComponent)
-                return false;
+            else if (usedIn[queryComponent] != targetComponent) return false;
 
         }
 

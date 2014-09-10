@@ -77,24 +77,23 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
  * @cdk.bug     1632419
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.RDFProtonDescriptor_GSRTest")
 public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
-    private boolean checkAromaticity = false;
-    private IAtomContainer acold = null;
-    private IRingSet varRingSet = null;
-    private IAtomContainerSet varAtomContainerSet = null;
+    private boolean                   checkAromaticity    = false;
+    private IAtomContainer            acold               = null;
+    private IRingSet                  varRingSet          = null;
+    private IAtomContainerSet         varAtomContainerSet = null;
 
-    private final static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(RDFProtonDescriptor_GSR.class);
+    private final static ILoggingTool logger              = LoggingToolFactory
+                                                                  .createLoggingTool(RDFProtonDescriptor_GSR.class);
 
-    private final int gsr_desc_length = 7;
+    private final int                 gsr_desc_length     = 7;
 
     /**
      * Constructor for the RDFProtonDescriptor object
      */
-    public RDFProtonDescriptor_GSR() {
-    }
+    public RDFProtonDescriptor_GSR() {}
 
     /**
      * Gets the specification attribute of the RDFProtonDescriptor_GSR
@@ -102,12 +101,11 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
      *
      * @return The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -117,7 +115,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
      * @param params Parameters are the proton position and a boolean (true if you need to detect aromaticity)
      * @throws CDKException Possible Exceptions
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("RDFProtonDescriptor only expects one parameters");
@@ -128,14 +126,13 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         checkAromaticity = (Boolean) params[0];
     }
 
-
     /**
      * Gets the parameters attribute of the RDFProtonDescriptor
      * object
      *
      * @return The parameters value
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -152,23 +149,21 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         return descriptorNames;
     }
 
-
     private DescriptorValue getDummyDescriptorValue(Exception e) {
         DoubleArrayResult result = new DoubleArrayResult(gsr_desc_length);
-        for (int i = 0; i < gsr_desc_length; i++) result.add(Double.NaN);
-        return new DescriptorValue(
-                getSpecification(), getParameterNames(),
-                getParameters(), result,
+        for (int i = 0; i < gsr_desc_length; i++)
+            result.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), result,
                 getDescriptorNames(), e);
     }
 
-    @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet)  {
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) {
         return (calculate(atom, varAtomContainerSet, null));
     }
 
-    @TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset)  {
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer, IRingSet precalculatedringset) {
         IAtomContainer varAtomContainer;
         try {
             varAtomContainer = (IAtomContainer) atomContainer.clone();
@@ -179,21 +174,18 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         int atomPosition = atomContainer.getAtomNumber(atom);
         IAtom clonedAtom = varAtomContainer.getAtom(atomPosition);
 
-
-        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(
-                gsr_desc_length
-        );
+        DoubleArrayResult rdfProtonCalculatedValues = new DoubleArrayResult(gsr_desc_length);
         if (!atom.getSymbol().equals("H")) {
             return getDummyDescriptorValue(new CDKException("Invalid atom specified"));
         }
 
-/////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
-/////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
+        /////////////////////////FIRST SECTION OF MAIN METHOD: DEFINITION OF MAIN VARIABLES
+        /////////////////////////AND AROMATICITY AND PI-SYSTEM AND RINGS DETECTION
 
         IAtomContainer mol = varAtomContainer.getBuilder().newInstance(IAtomContainer.class, varAtomContainer);
         if (varAtomContainer != acold) {
             acold = varAtomContainer;
-// DETECTION OF pi SYSTEMS
+            // DETECTION OF pi SYSTEMS
             varAtomContainerSet = ConjugatedPiSystemsDetector.detect(mol);
             if (precalculatedringset == null)
                 try {
@@ -221,7 +213,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         IRingSet rsAtom;
         IRing ring;
         IRingSet ringsWithThisBond;
-// SET ISINRING FLAGS FOR BONDS
+        // SET ISINRING FLAGS FOR BONDS
         Iterator<IBond> bondsInContainer = varAtomContainer.bonds().iterator();
         while (bondsInContainer.hasNext()) {
             IBond bond = bondsInContainer.next();
@@ -231,7 +223,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
             }
         }
 
-// SET ISINRING FLAGS FOR ATOMS
+        // SET ISINRING FLAGS FOR ATOMS
         IRingSet ringsWithThisAtom;
 
         for (int w = 0; w < varAtomContainer.getAtomCount(); w++) {
@@ -243,11 +235,11 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
 
         IAtomContainer detected = varAtomContainerSet.getAtomContainer(0);
 
-// neighboors[0] is the atom joined to the target proton:
+        // neighboors[0] is the atom joined to the target proton:
         List<IAtom> neighboors = mol.getConnectedAtomsList(clonedAtom);
         IAtom neighbour0 = neighboors.get(0);
 
-// 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
+        // 2', 3', 4', 5', 6', and 7' atoms up to the target are detected:
         List<IAtom> atomsInSecondSphere = mol.getConnectedAtomsList(neighbour0);
         List<IAtom> atomsInThirdSphere;
         List<IAtom> atomsInFourthSphere;
@@ -255,14 +247,14 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         List<IAtom> atomsInSixthSphere;
         List<IAtom> atomsInSeventhSphere;
 
-// SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
+        // SOME LISTS ARE CREATED FOR STORING OF INTERESTING ATOMS AND BONDS DURING DETECTION
         ArrayList<Integer> singles = new ArrayList<Integer>(); // list of any bond not rotatable
         ArrayList<Integer> doubles = new ArrayList<Integer>(); // list with only double bonds
         ArrayList<Integer> atoms = new ArrayList<Integer>(); // list with all the atoms in spheres
-//atoms.add( Integer.valueOf( mol.getAtomNumber(neighboors[0]) ) );
+        //atoms.add( Integer.valueOf( mol.getAtomNumber(neighboors[0]) ) );
         ArrayList<Integer> bondsInCycloex = new ArrayList<Integer>(); // list for bonds in cycloexane-like rings
 
-// 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
+        // 2', 3', 4', 5', 6', and 7' bonds up to the target are detected:
         IBond secondBond; // (remember that first bond is proton bond)
         IBond thirdBond; //
         IBond fourthBond; //
@@ -270,13 +262,13 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         IBond sixthBond; //
         IBond seventhBond; //
 
-// definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
+        // definition of some variables used in the main FOR loop for detection of interesting atoms and bonds:
         boolean theBondIsInA6MemberedRing; // this is like a flag for bonds which are in cycloexane-like rings (rings with more than 4 at.)
         IBond.Order bondOrder;
         int bondNumber;
         int sphere;
 
-// THIS MAIN FOR LOOP DETECT RIGID BONDS IN 7 SPHERES:
+        // THIS MAIN FOR LOOP DETECT RIGID BONDS IN 7 SPHERES:
         for (IAtom curAtomSecond : atomsInSecondSphere) {
             secondBond = mol.getBond(neighbour0, curAtomSecond);
             if (mol.getAtomNumber(curAtomSecond) != atomPosition && getIfBondIsNotRotatable(mol, secondBond, detected)) {
@@ -284,13 +276,15 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                 bondOrder = secondBond.getOrder();
                 bondNumber = mol.getBondNumber(secondBond);
                 theBondIsInA6MemberedRing = false;
-                checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomSecond), atoms, sphere, theBondIsInA6MemberedRing);
+                checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex,
+                        mol.getAtomNumber(curAtomSecond), atoms, sphere, theBondIsInA6MemberedRing);
                 atomsInThirdSphere = mol.getConnectedAtomsList(curAtomSecond);
                 if (atomsInThirdSphere.size() > 0) {
                     for (IAtom curAtomThird : atomsInThirdSphere) {
                         thirdBond = mol.getBond(curAtomThird, curAtomSecond);
                         // IF THE ATOMS IS IN THE THIRD SPHERE AND IN A CYCLOEXANE-LIKE RING, IT IS STORED IN THE PROPER LIST:
-                        if (mol.getAtomNumber(curAtomThird) != atomPosition && getIfBondIsNotRotatable(mol, thirdBond, detected)) {
+                        if (mol.getAtomNumber(curAtomThird) != atomPosition
+                                && getIfBondIsNotRotatable(mol, thirdBond, detected)) {
                             sphere = 3;
                             bondOrder = thirdBond.getOrder();
                             bondNumber = mol.getBondNumber(thirdBond);
@@ -309,48 +303,67 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                                     }
                                 }
                             }
-                            checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomThird), atoms, sphere, theBondIsInA6MemberedRing);
+                            checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex,
+                                    mol.getAtomNumber(curAtomThird), atoms, sphere, theBondIsInA6MemberedRing);
                             theBondIsInA6MemberedRing = false;
                             atomsInFourthSphere = mol.getConnectedAtomsList(curAtomThird);
                             if (atomsInFourthSphere.size() > 0) {
                                 for (IAtom curAtomFourth : atomsInFourthSphere) {
                                     fourthBond = mol.getBond(curAtomThird, curAtomFourth);
-                                    if (mol.getAtomNumber(curAtomFourth) != atomPosition && getIfBondIsNotRotatable(mol, fourthBond, detected)) {
+                                    if (mol.getAtomNumber(curAtomFourth) != atomPosition
+                                            && getIfBondIsNotRotatable(mol, fourthBond, detected)) {
                                         sphere = 4;
                                         bondOrder = fourthBond.getOrder();
                                         bondNumber = mol.getBondNumber(fourthBond);
                                         theBondIsInA6MemberedRing = false;
-                                        checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomFourth), atoms, sphere, theBondIsInA6MemberedRing);
+                                        checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex,
+                                                mol.getAtomNumber(curAtomFourth), atoms, sphere,
+                                                theBondIsInA6MemberedRing);
                                         atomsInFifthSphere = mol.getConnectedAtomsList(curAtomFourth);
                                         if (atomsInFifthSphere.size() > 0) {
                                             for (IAtom curAtomFifth : atomsInFifthSphere) {
                                                 fifthBond = mol.getBond(curAtomFifth, curAtomFourth);
-                                                if (mol.getAtomNumber(curAtomFifth) != atomPosition && getIfBondIsNotRotatable(mol, fifthBond, detected)) {
+                                                if (mol.getAtomNumber(curAtomFifth) != atomPosition
+                                                        && getIfBondIsNotRotatable(mol, fifthBond, detected)) {
                                                     sphere = 5;
                                                     bondOrder = fifthBond.getOrder();
                                                     bondNumber = mol.getBondNumber(fifthBond);
                                                     theBondIsInA6MemberedRing = false;
-                                                    checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomFifth), atoms, sphere, theBondIsInA6MemberedRing);
+                                                    checkAndStore(bondNumber, bondOrder, singles, doubles,
+                                                            bondsInCycloex, mol.getAtomNumber(curAtomFifth), atoms,
+                                                            sphere, theBondIsInA6MemberedRing);
                                                     atomsInSixthSphere = mol.getConnectedAtomsList(curAtomFifth);
                                                     if (atomsInSixthSphere.size() > 0) {
                                                         for (IAtom curAtomSixth : atomsInSixthSphere) {
                                                             sixthBond = mol.getBond(curAtomFifth, curAtomSixth);
-                                                            if (mol.getAtomNumber(curAtomSixth) != atomPosition && getIfBondIsNotRotatable(mol, sixthBond, detected)) {
+                                                            if (mol.getAtomNumber(curAtomSixth) != atomPosition
+                                                                    && getIfBondIsNotRotatable(mol, sixthBond, detected)) {
                                                                 sphere = 6;
                                                                 bondOrder = sixthBond.getOrder();
                                                                 bondNumber = mol.getBondNumber(sixthBond);
                                                                 theBondIsInA6MemberedRing = false;
-                                                                checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomSixth), atoms, sphere, theBondIsInA6MemberedRing);
-                                                                atomsInSeventhSphere = mol.getConnectedAtomsList(curAtomSixth);
+                                                                checkAndStore(bondNumber, bondOrder, singles, doubles,
+                                                                        bondsInCycloex,
+                                                                        mol.getAtomNumber(curAtomSixth), atoms, sphere,
+                                                                        theBondIsInA6MemberedRing);
+                                                                atomsInSeventhSphere = mol
+                                                                        .getConnectedAtomsList(curAtomSixth);
                                                                 if (atomsInSeventhSphere.size() > 0) {
                                                                     for (IAtom curAtomSeventh : atomsInSeventhSphere) {
-                                                                        seventhBond = mol.getBond(curAtomSeventh, curAtomSixth);
-                                                                        if (mol.getAtomNumber(curAtomSeventh) != atomPosition && getIfBondIsNotRotatable(mol, seventhBond, detected)) {
+                                                                        seventhBond = mol.getBond(curAtomSeventh,
+                                                                                curAtomSixth);
+                                                                        if (mol.getAtomNumber(curAtomSeventh) != atomPosition
+                                                                                && getIfBondIsNotRotatable(mol,
+                                                                                        seventhBond, detected)) {
                                                                             sphere = 7;
                                                                             bondOrder = seventhBond.getOrder();
                                                                             bondNumber = mol.getBondNumber(seventhBond);
                                                                             theBondIsInA6MemberedRing = false;
-                                                                            checkAndStore(bondNumber, bondOrder, singles, doubles, bondsInCycloex, mol.getAtomNumber(curAtomSeventh), atoms, sphere, theBondIsInA6MemberedRing);
+                                                                            checkAndStore(bondNumber, bondOrder,
+                                                                                    singles, doubles, bondsInCycloex,
+                                                                                    mol.getAtomNumber(curAtomSeventh),
+                                                                                    atoms, sphere,
+                                                                                    theBondIsInA6MemberedRing);
                                                                         }
                                                                     }
                                                                 }
@@ -379,70 +392,70 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         double limitSup;
         double step;
 
-////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS
+        ////////////////////////THE FOUTH DESCRIPTOR IS gS(r), WHICH TAKES INTO ACCOUNT SINGLE BONDS IN RIGID SYSTEMS
 
-	Vector3d a_a = new Vector3d();
-	Vector3d a_b = new Vector3d();
-	Vector3d b_a = new Vector3d();
-	Vector3d b_b = new Vector3d();
-	Point3d middlePoint = new Point3d();
-	double angle = 0;
+        Vector3d a_a = new Vector3d();
+        Vector3d a_b = new Vector3d();
+        Vector3d b_a = new Vector3d();
+        Vector3d b_b = new Vector3d();
+        Point3d middlePoint = new Point3d();
+        double angle = 0;
 
-	if(singles.size() > 0) {
-		double dist0;
-		double dist1;
-		IAtom singleBondAtom0;
-		IAtom singleBondAtom1;
-		position = 0;
-		IBond theSingleBond = null;
-		limitInf = 0;
-		limitSup = Math.PI / 2;
-		step = (limitSup - limitInf)/7;
-		smooth = -1.15;
-		for(double ghs = 0; ghs < limitSup; ghs = ghs + step) {
-			sum = 0;
-			for( int sing = 0; sing < singles.size(); sing++ ) {
-				angle = 0;
-				partial = 0;
-				Integer thisSingleBond = singles.get(sing);
-				position = thisSingleBond;
-				theSingleBond = mol.getBond(position);
-				middlePoint = theSingleBond.get3DCenter();
-				singleBondAtom0 = theSingleBond.getAtom(0);
-				singleBondAtom1 = theSingleBond.getAtom(1);
-				dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
-				dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
+        if (singles.size() > 0) {
+            double dist0;
+            double dist1;
+            IAtom singleBondAtom0;
+            IAtom singleBondAtom1;
+            position = 0;
+            IBond theSingleBond = null;
+            limitInf = 0;
+            limitSup = Math.PI / 2;
+            step = (limitSup - limitInf) / 7;
+            smooth = -1.15;
+            for (double ghs = 0; ghs < limitSup; ghs = ghs + step) {
+                sum = 0;
+                for (int sing = 0; sing < singles.size(); sing++) {
+                    angle = 0;
+                    partial = 0;
+                    Integer thisSingleBond = singles.get(sing);
+                    position = thisSingleBond;
+                    theSingleBond = mol.getBond(position);
+                    middlePoint = theSingleBond.get3DCenter();
+                    singleBondAtom0 = theSingleBond.getAtom(0);
+                    singleBondAtom1 = theSingleBond.getAtom(1);
+                    dist0 = calculateDistanceBetweenTwoAtoms(singleBondAtom0, atom);
+                    dist1 = calculateDistanceBetweenTwoAtoms(singleBondAtom1, atom);
 
-				a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-				if(dist1 > dist0) a_b.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y, singleBondAtom0.getPoint3d().z);
-				else a_b.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y, singleBondAtom1.getPoint3d().z);
-				b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
-				b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
+                    a_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    if (dist1 > dist0)
+                        a_b.set(singleBondAtom0.getPoint3d().x, singleBondAtom0.getPoint3d().y,
+                                singleBondAtom0.getPoint3d().z);
+                    else
+                        a_b.set(singleBondAtom1.getPoint3d().x, singleBondAtom1.getPoint3d().y,
+                                singleBondAtom1.getPoint3d().z);
+                    b_a.set(middlePoint.x, middlePoint.y, middlePoint.z);
+                    b_b.set(atom.getPoint3d().x, atom.getPoint3d().y, atom.getPoint3d().z);
 
-				values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond );
+                    values = calculateDistanceBetweenAtomAndBond(atom, theSingleBond);
 
-				angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
-					//System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
+                    angle = calculateAngleBetweenTwoLines(a_a, a_b, b_a, b_b);
+                    //System.out.println("ANGLe: "+angle+ " "+ mol.getAtomNumber(atomsInSingleBond[0]) +" " +mol.getAtomNumber(atomsInSingleBond[1]));
 
-				partial = (1 / (Math.pow( values[0], 2 ))) * Math.exp( smooth * (Math.pow( (ghs - angle) , 2)));
-				sum += partial;
-			}
-			//gSr_function.add(new Double(sum));
-			rdfProtonCalculatedValues.add(sum);
-			logger.debug("RDF gSr prob.: " + sum +  " at distance " + ghs);
-		}
-	}
-	else {
-		return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
-	}
-	return new DescriptorValue(
-		getSpecification(), getParameterNames(),
-		getParameters(), rdfProtonCalculatedValues,
-		getDescriptorNames());
-	}
+                    partial = (1 / (Math.pow(values[0], 2))) * Math.exp(smooth * (Math.pow((ghs - angle), 2)));
+                    sum += partial;
+                }
+                //gSr_function.add(new Double(sum));
+                rdfProtonCalculatedValues.add(sum);
+                logger.debug("RDF gSr prob.: " + sum + " at distance " + ghs);
+            }
+        } else {
+            return getDummyDescriptorValue(new CDKException("Some error occurred. Please report"));
+        }
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), rdfProtonCalculatedValues,
+                getDescriptorNames());
+    }
 
-
-//Others definitions
+    //Others definitions
 
     private boolean getIfBondIsNotRotatable(IAtomContainer mol, IBond bond, IAtomContainer detected) {
         boolean isBondNotRotatable = false;
@@ -456,8 +469,10 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
             if (atom1.getFlag(CDKConstants.ISINRING)) {
                 counter += 1;
             } else {
-                if (atom1.getSymbol().equals("H")) counter += 1;
-                else counter += 0;
+                if (atom1.getSymbol().equals("H"))
+                    counter += 1;
+                else
+                    counter += 0;
             }
         }
         if (atom0.getSymbol().equals("N") && atom1.getSymbol().equals("C")) {
@@ -499,10 +514,9 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
     }
 
     // this method store atoms and bonds in proper lists:
-    private void checkAndStore(int bondToStore, IBond.Order bondOrder,
-                               ArrayList<Integer> singleVec, ArrayList<Integer> doubleVec,
-                               ArrayList<Integer> cycloexVec, int a1,
-                               ArrayList<Integer> atomVec, int sphere, boolean isBondInCycloex) {
+    private void checkAndStore(int bondToStore, IBond.Order bondOrder, ArrayList<Integer> singleVec,
+            ArrayList<Integer> doubleVec, ArrayList<Integer> cycloexVec, int a1, ArrayList<Integer> atomVec,
+            int sphere, boolean isBondInCycloex) {
         if (!atomVec.contains(Integer.valueOf(a1))) {
             if (sphere < 6) atomVec.add(a1);
         }
@@ -528,7 +542,6 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         return distance;
     }
 
-
     // given a double bond
     // this method returns a bond bonded to this double bond
     private int getNearestBondtoAGivenAtom(IAtomContainer mol, IAtom atom, IBond bond) {
@@ -549,11 +562,10 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
                 if (values[0] < distance) {
                     nearestBond = partial;
                 }
-                /* XXX commented this out, because is has no effect
-                     *
-                     else {
-                        nearestBond = nearestBond;
-                    }*/
+                /*
+                 * XXX commented this out, because is has no effect else {
+                 * nearestBond = nearestBond; }
+                 */
             }
         }
         return nearestBond;
@@ -573,20 +585,18 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
         return values;
     }
 
-
     /**
      * Gets the parameterNames attribute of the RDFProtonDescriptor
      * object
      *
      * @return The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
         return params;
     }
-
 
     /**
      * Gets the parameterType attribute of the RDFProtonDescriptor
@@ -595,7 +605,7 @@ public class RDFProtonDescriptor_GSR extends AbstractAtomicDescriptor implements
      * @param name Description of the Parameter
      * @return The parameterType value
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         if (name.equals("checkAromaticity")) return Boolean.TRUE;
         return null;

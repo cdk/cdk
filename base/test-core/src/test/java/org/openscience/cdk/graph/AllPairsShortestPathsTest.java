@@ -64,9 +64,7 @@ public class AllPairsShortestPathsTest {
             }
         }
 
-
     }
-
 
     @Test
     public void testFrom_Atom_Benzene() throws Exception {
@@ -93,7 +91,6 @@ public class AllPairsShortestPathsTest {
         assertNotNull(asp.from(c4));
         assertNotNull(asp.from(c5));
         assertNotNull(asp.from(c6));
-
 
         {
             IAtom[] expected = new IAtom[]{c1, c2, c3};
@@ -139,7 +136,6 @@ public class AllPairsShortestPathsTest {
         assertNotNull(asp.from(3));
         assertNotNull(asp.from(4));
         assertNotNull(asp.from(5));
-
 
         {
             int[] expected = new int[]{0, 1, 2};

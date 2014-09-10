@@ -31,19 +31,17 @@ import org.openscience.cdk.interfaces.IChemObjectChangeEvent;
  * @cdk.module data
  * @cdk.githash
  */
-public class ChemObjectChangeEvent extends java.util.EventObject implements IChemObjectChangeEvent
-{
+public class ChemObjectChangeEvent extends java.util.EventObject implements IChemObjectChangeEvent {
 
     private static final long serialVersionUID = 5418604788783986725L;
 
     /**
-	 * Constructs a ChemObjectChangeEvent with a reference
-	 * to the object where it originated.
-	 *
-	 * @param   source The reference to the object where this change event originated
-	 */
-	public ChemObjectChangeEvent(Object source)
-	{
-		super(source);
-	}
+     * Constructs a ChemObjectChangeEvent with a reference
+     * to the object where it originated.
+     *
+     * @param   source The reference to the object where this change event originated
+     */
+    public ChemObjectChangeEvent(Object source) {
+        super(source);
+    }
 }

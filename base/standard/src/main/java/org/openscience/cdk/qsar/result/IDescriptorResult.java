@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @cdk.module standard
  * @cdk.githash
  */
-public interface IDescriptorResult extends Serializable{
+public interface IDescriptorResult extends Serializable {
 
     /**
      * String representation of the result.
@@ -44,4 +44,3 @@ public interface IDescriptorResult extends Serializable{
     public int length();
 
 }
-

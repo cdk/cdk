@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class MMODFormatTest extends ChemFormatTest {
 
     public MMODFormatTest() {
-        super.setChemFormat((IChemFormat)MMODFormat.getInstance());
+        super.setChemFormat((IChemFormat) MMODFormat.getInstance());
     }
 
 }

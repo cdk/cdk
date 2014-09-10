@@ -137,7 +137,7 @@ class ChiIndexUtils {
             IsotopeFactory ifac = Isotopes.getInstance();
             ifac.configureAtoms(atomContainer);
         } catch (IOException e) {
-            throw new CDKException("IO problem occured when using the CDK atom config\n"+e.getMessage(), e);
+            throw new CDKException("IO problem occured when using the CDK atom config\n" + e.getMessage(), e);
         }
         double sum = 0;
         for (Object aFragList : fragList) {
@@ -184,7 +184,6 @@ class ChiIndexUtils {
         return valency - atom.getFormalCharge();
     }
 
-
     /**
      * Evaluates the empirical delt V for some S environments.
      * <p/>
@@ -205,17 +204,16 @@ class ChiIndexUtils {
         List<IAtom> connected = atomContainer.getConnectedAtomsList(atom);
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("S")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
-                return .89;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) return .89;
         }
 
         int count = 0;
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
-                count++;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) count++;
         }
-        if (count == 1) return 1.33; // check whether it's a S in -SO-
+        if (count == 1)
+            return 1.33; // check whether it's a S in -SO-
         else if (count == 2) return 2.67; // check whether it's a S in -SO2-
 
         return -1;
@@ -241,10 +239,8 @@ class ChiIndexUtils {
 
         for (IAtom connectedAtom : connected) {
             if (connectedAtom.getSymbol().equals("O")
-                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE)
-                conditions++;
-            if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE)
-                conditions++;
+                    && atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.DOUBLE) conditions++;
+            if (atomContainer.getBond(atom, connectedAtom).getOrder() == IBond.Order.SINGLE) conditions++;
         }
         if (conditions == 5) return 2.22;
         return -1;
@@ -295,4 +291,3 @@ class ChiIndexUtils {
     }
 
 }
-

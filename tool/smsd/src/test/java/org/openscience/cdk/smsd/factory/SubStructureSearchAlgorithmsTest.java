@@ -49,14 +49,8 @@ public class SubStructureSearchAlgorithmsTest {
      */
     @Test
     public void testSubStructureSearchAlgorithms() {
-        Assert.assertNotNull(
-                new Isomorphism(
-                Algorithm.CDKMCS,
-                true));
-        Assert.assertNotNull(
-                new Isomorphism(
-                Algorithm.CDKMCS,
-                false));
+        Assert.assertNotNull(new Isomorphism(Algorithm.CDKMCS, true));
+        Assert.assertNotNull(new Isomorphism(Algorithm.CDKMCS, false));
     }
 
     /**
@@ -104,8 +98,8 @@ public class SubStructureSearchAlgorithmsTest {
     @Test
     public void testInit_3args_3() throws Exception {
         System.out.println("init");
-//        String sourceMolFileName = "";
-//        String targetMolFileName = "";
+        //        String sourceMolFileName = "";
+        //        String targetMolFileName = "";
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer target = sp.parseSmiles("C\\C=C/OCC=C");
         IAtomContainer queryac = sp.parseSmiles("CCCOCC(C)=C");

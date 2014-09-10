@@ -34,17 +34,17 @@ public class Permutor {
     /**
      * The current rank of the permutation to use
      */
-    private int currentRank;
+    private int    currentRank;
 
     /**
      * The maximum rank possible, given the size
      */
-    private int maxRank;
+    private int    maxRank;
 
     /**
      * The number of objects to permute
      */
-    private int size;
+    private int    size;
 
     /**
      * For accessing part of the permutation space
@@ -87,8 +87,8 @@ public class Permutor {
      * @param permutation the permutation to use, as an int array
      */
     public void setPermutation(int[] permutation) {
-//        this.currentRank = this.rankPermutationLexicographically(permutation);
-        currentRank = rankPermutationLexicographically(permutation) - 1;    // TMP
+        //        this.currentRank = this.rankPermutationLexicographically(permutation);
+        currentRank = rankPermutationLexicographically(permutation) - 1; // TMP
     }
 
     /**

@@ -48,28 +48,14 @@ import org.openscience.cdk.smiles.smarts.parser.SmartsQueryVisitorTest;
  *
  * @cdk.module test-smarts
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    SmartsCoverageTest.class,
-    SMARTSTest.class,
-    ParserTest.class,
-    SMARTSSearchTest.class,
-    RecursiveTest.class,
-    SmartsDumpVisitorTest.class,
-    SmartsQueryVisitorTest.class,
-    SMARTSQueryToolTest.class,
-    AnyOrderQueryBondTest.class,
-    DaylightSMARTSAtomInvariantsTest.class,
-    SmallestRingAtomTest.class,
-    RingMembershipAtomTest.class,
-    TotalRingConnectionAtomTest.class,
-    TotalHCountAtomTest.class,
-    ExplicitConnectionAtomTest.class,
-    TotalValencyAtomTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {SmartsCoverageTest.class, SMARTSTest.class, ParserTest.class, SMARTSSearchTest.class,
+        RecursiveTest.class, SmartsDumpVisitorTest.class, SmartsQueryVisitorTest.class, SMARTSQueryToolTest.class,
+        AnyOrderQueryBondTest.class, DaylightSMARTSAtomInvariantsTest.class, SmallestRingAtomTest.class,
+        RingMembershipAtomTest.class, TotalRingConnectionAtomTest.class, TotalHCountAtomTest.class,
+        ExplicitConnectionAtomTest.class, TotalValencyAtomTest.class,
 
-    // need these here to avoid circular dependencies
-    VFSubstructureTest.class,
-    UllmannSubstructureTest.class,
-    MappingPredicatesTest.class
-})
-public class MsmartsTests {}
+        // need these here to avoid circular dependencies
+        VFSubstructureTest.class, UllmannSubstructureTest.class, MappingPredicatesTest.class})
+public class MsmartsTests {
+}

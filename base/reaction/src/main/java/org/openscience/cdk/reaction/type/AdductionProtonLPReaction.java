@@ -76,115 +76,112 @@ import java.util.Iterator;
  *
  * @see AdductionLPMechanism
  **/
-@TestClass(value="org.openscience.cdk.reaction.type.AdductionProtonLPReactionTest")
-public class AdductionProtonLPReaction extends ReactionEngine implements IReactionProcess{
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(AdductionProtonLPReaction.class);
+@TestClass(value = "org.openscience.cdk.reaction.type.AdductionProtonLPReactionTest")
+public class AdductionProtonLPReaction extends ReactionEngine implements IReactionProcess {
 
-	/**
-	 * Constructor of the AdductionProtonLPReaction object.
-	 *
-	 */
-	public AdductionProtonLPReaction(){
-	}
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AdductionProtonLPReaction.class);
 
-	/**
-	 *  Gets the specification attribute of the AdductionProtonLPReaction object.
-	 *
-	 *@return    The specification value
-	 */
-    @TestMethod("testGetSpecification")
-	public ReactionSpecification getSpecification() {
-		return new ReactionSpecification(
-				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonLP",
-				this.getClass().getName(),
-				"$Id$",
-				"The Chemistry Development Kit");
-	}
-	/**
-	 *  Initiate process.
-	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
-	 *  from the class tools.HydrogenAdder.
-	 *
+    /**
+     * Constructor of the AdductionProtonLPReaction object.
      *
-	 *@exception  CDKException  Description of the Exception
+     */
+    public AdductionProtonLPReaction() {}
+
+    /**
+     *  Gets the specification attribute of the AdductionProtonLPReaction object.
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
+    public ReactionSpecification getSpecification() {
+        return new ReactionSpecification(
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonLP", this
+                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+    }
+
+    /**
+     *  Initiate process.
+     *  It is needed to call the addExplicitHydrogensToSatisfyValency
+     *  from the class tools.HydrogenAdder.
+     *
+     *
+     *@exception  CDKException  Description of the Exception
 
      * @param  reactants         reactants of the reaction
     * @param  agents            agents of the reaction (Must be in this case null)
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
-	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
-		logger.debug("initiate reaction: AdductionProtonLPReaction");
+        logger.debug("initiate reaction: AdductionProtonLPReaction");
 
-		if (reactants.getAtomContainerCount() != 1) {
-			throw new CDKException("AdductionProtonLPReaction only expects one reactant");
-		}
-		if (agents != null) {
-			throw new CDKException("AdductionProtonLPReaction don't expects agents");
-		}
+        if (reactants.getAtomContainerCount() != 1) {
+            throw new CDKException("AdductionProtonLPReaction only expects one reactant");
+        }
+        if (agents != null) {
+            throw new CDKException("AdductionProtonLPReaction don't expects agents");
+        }
 
-		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
-		IAtomContainer reactant = reactants.getAtomContainer(0);
+        IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
+        IAtomContainer reactant = reactants.getAtomContainer(0);
 
-		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
-		if( ipr != null && !ipr.isSetParameter())
-			setActiveCenters(reactant);
+        IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+        if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-		if(AtomContainerManipulator.getTotalCharge(reactant) > 0)
-			return setOfReactions;
+        if (AtomContainerManipulator.getTotalCharge(reactant) > 0) return setOfReactions;
 
-		Iterator<IAtom> atoms = reactant.atoms().iterator();
+        Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
-			IAtom atomi = atoms.next(); // Atom pos 1
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER) &&
-					(atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
-					&& reactant.getConnectedLonePairsCount(atomi) > 0 && reactant.getConnectedSingleElectronsCount(atomi) == 0){
+            IAtom atomi = atoms.next(); // Atom pos 1
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && (atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
+                    && reactant.getConnectedLonePairsCount(atomi) > 0
+                    && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
 
-				ArrayList<IAtom> atomList = new ArrayList<IAtom>();
-				atomList.add(atomi);
-				IAtom atomH = reactant.getBuilder().newInstance(IAtom.class,"H");
-				atomH.setFormalCharge(1);
-				atomList.add(atomH);
+                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                atomList.add(atomi);
+                IAtom atomH = reactant.getBuilder().newInstance(IAtom.class, "H");
+                atomH.setFormalCharge(1);
+                atomList.add(atomH);
 
-				IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
-				moleculeSet.addAtomContainer(reactant);
-				IAtomContainer adduct = reactant.getBuilder().newInstance(IAtomContainer.class);
-				adduct.addAtom(atomH);
-				moleculeSet.addAtomContainer(adduct);
+                IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                moleculeSet.addAtomContainer(reactant);
+                IAtomContainer adduct = reactant.getBuilder().newInstance(IAtomContainer.class);
+                adduct.addAtom(atomH);
+                moleculeSet.addAtomContainer(adduct);
 
-				IReaction reaction = mechanism.initiate(moleculeSet, atomList, null);
-				if(reaction == null)
-					continue;
-				else
-					setOfReactions.addReaction(reaction);
+                IReaction reaction = mechanism.initiate(moleculeSet, atomList, null);
+                if (reaction == null)
+                    continue;
+                else
+                    setOfReactions.addReaction(reaction);
 
-			}
-		}
+            }
+        }
 
-		return setOfReactions;
-	}
-	/**
-	 * set the active center for this molecule.
-	 * The active center will be those which correspond with X=Y-Z-H.
-	 * <pre>
-	 * [X-]
-	 *  </pre>
-	 *
-	 * @param reactant The molecule to set the activity
-	 * @throws CDKException
-	 */
+        return setOfReactions;
+    }
+
+    /**
+     * set the active center for this molecule.
+     * The active center will be those which correspond with X=Y-Z-H.
+     * <pre>
+     * [X-]
+     *  </pre>
+     *
+     * @param reactant The molecule to set the activity
+     * @throws CDKException
+     */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-    	if(AtomContainerManipulator.getTotalCharge(reactant) > 0)
-			return;
+        if (AtomContainerManipulator.getTotalCharge(reactant) > 0) return;
 
-    	Iterator<IAtom> atoms = reactant.atoms().iterator();
+        Iterator<IAtom> atoms = reactant.atoms().iterator();
         while (atoms.hasNext()) {
-			IAtom atomi = atoms.next(); // Atom pos 1
-			if((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
-					&& reactant.getConnectedLonePairsCount(atomi) > 0
-					&& reactant.getConnectedSingleElectronsCount(atomi) == 0){
-				atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+            IAtom atomi = atoms.next(); // Atom pos 1
+            if ((atomi.getFormalCharge() == CDKConstants.UNSET ? 0 : atomi.getFormalCharge()) <= 0
+                    && reactant.getConnectedLonePairsCount(atomi) > 0
+                    && reactant.getConnectedSingleElectronsCount(atomi) == 0) {
+                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
 
             }
         }

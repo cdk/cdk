@@ -91,8 +91,6 @@ public class Molecules {
         result.addAtom(c6);
         result.addAtom(c7);
 
-
-
         IBond bond1 = new Bond(c1, c2, IBond.Order.SINGLE);
         IBond bond2 = new Bond(c2, c3, IBond.Order.DOUBLE);
         IBond bond3 = new Bond(c3, c4, IBond.Order.SINGLE);
@@ -133,7 +131,6 @@ public class Molecules {
         IAtom c2 = result.getBuilder().newInstance(IAtom.class, "C");
         IAtom c3 = result.getBuilder().newInstance(IAtom.class, "C");
 
-
         result.addAtom(c1);
         result.addAtom(c2);
         result.addAtom(c3);
@@ -149,10 +146,9 @@ public class Molecules {
         adder.addImplicitHydrogens(result);
         Aromaticity.cdkLegacy().apply(result);
 
-         SmilesGenerator sg = new SmilesGenerator();
+        SmilesGenerator sg = new SmilesGenerator();
         String oldSmiles = sg.create(result);
         System.out.println("Propane " + oldSmiles);
-
 
         return result;
     }
@@ -185,7 +181,6 @@ public class Molecules {
         IBond bond3 = new Bond(c3, c4, IBond.Order.SINGLE);
         IBond bond4 = new Bond(c4, c5, IBond.Order.SINGLE);
         IBond bond5 = new Bond(c5, c6, IBond.Order.SINGLE);
-
 
         result.addBond(bond1);
         result.addBond(bond2);
@@ -235,14 +230,12 @@ public class Molecules {
         IBond bond5 = new Bond(c5, c6, IBond.Order.SINGLE);
         IBond bond6 = new Bond(c6, c1, IBond.Order.DOUBLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
         result.addBond(bond4);
         result.addBond(bond5);
         result.addBond(bond6);
-
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
@@ -291,8 +284,6 @@ public class Molecules {
         result.addAtom(c9);
         result.addAtom(c10);
 
-
-
         IBond bond1 = new Bond(c1, c2, IBond.Order.SINGLE);
         IBond bond2 = new Bond(c2, c3, IBond.Order.DOUBLE);
         IBond bond3 = new Bond(c3, c4, IBond.Order.SINGLE);
@@ -304,7 +295,6 @@ public class Molecules {
         IBond bond9 = new Bond(c8, c9, IBond.Order.SINGLE);
         IBond bond10 = new Bond(c9, c10, IBond.Order.DOUBLE);
         IBond bond11 = new Bond(c10, c6, IBond.Order.SINGLE);
-
 
         result.addBond(bond1);
         result.addBond(bond2);
@@ -394,23 +384,24 @@ public class Molecules {
 
         return result;
     }
-//
-//    public static Molecule createNeopentane() {
-//        Molecule result = new DefaultMolecule();
-//        Atom c0 = result.addAtom("C");
-//        Atom c1 = result.addAtom("C");
-//        Atom c2 = result.addAtom("C");
-//        Atom c3 = result.addAtom("C");
-//        Atom c4 = result.addAtom("C");
-//
-//        result.connect(c0, c1, 1);
-//        result.connect(c0, c2, 1);
-//        result.connect(c0, c3, 1);
-//        result.connect(c0, c4, 1);
-//
-//        return result;
-//    }
-//
+
+    //
+    //    public static Molecule createNeopentane() {
+    //        Molecule result = new DefaultMolecule();
+    //        Atom c0 = result.addAtom("C");
+    //        Atom c1 = result.addAtom("C");
+    //        Atom c2 = result.addAtom("C");
+    //        Atom c3 = result.addAtom("C");
+    //        Atom c4 = result.addAtom("C");
+    //
+    //        result.connect(c0, c1, 1);
+    //        result.connect(c0, c2, 1);
+    //        result.connect(c0, c3, 1);
+    //        result.connect(c0, c4, 1);
+    //
+    //        return result;
+    //    }
+    //
 
     public static IAtomContainer createCubane() throws CDKException {
         IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -475,44 +466,45 @@ public class Molecules {
 
         return result;
     }
-//
-//    public static Molecule createBicyclo220hexane() {
-//        Molecule result = new DefaultMolecule();
-//        Atom c0 = result.addAtom("C");
-//        Atom c1 = result.addAtom("C");
-//        Atom c2 = result.addAtom("C");
-//        Atom c3 = result.addAtom("C");
-//        Atom c4 = result.addAtom("C");
-//        Atom c5 = result.addAtom("C");
-//
-//        result.connect(c0, c1, 1);
-//        result.connect(c1, c2, 1);
-//        result.connect(c2, c3, 1);
-//        result.connect(c3, c4, 1);
-//        result.connect(c4, c5, 1);
-//        result.connect(c5, c0, 1);
-//        result.connect(c2, c5, 1);
-//
-//        return result;
-//    }
-//
-//    public static Molecule createEthylbenzeneWithSuperatom() {
-//        Molecule result = Molecules.createBenzene();
-//        Atom carbon1 = result.addAtom("C");
-//        Atom carbon2 = result.addAtom("C");
-//        Bond crossingBond = result.connect(result.getAtom(0), carbon1, 1);
-//        result.connect(carbon1, carbon2, 1);
-//
-//        Superatom substructure = result.addSuperatom();
-//        substructure.addAtom(carbon1);
-//        substructure.addAtom(carbon2);
-//        substructure.addCrossingBond(crossingBond);
-//        substructure.setCrossingVector(crossingBond, 0.1, 0.1);
-//        substructure.setLabel("Ethyl");
-//
-//        return result;
-//    }
-//
+
+    //
+    //    public static Molecule createBicyclo220hexane() {
+    //        Molecule result = new DefaultMolecule();
+    //        Atom c0 = result.addAtom("C");
+    //        Atom c1 = result.addAtom("C");
+    //        Atom c2 = result.addAtom("C");
+    //        Atom c3 = result.addAtom("C");
+    //        Atom c4 = result.addAtom("C");
+    //        Atom c5 = result.addAtom("C");
+    //
+    //        result.connect(c0, c1, 1);
+    //        result.connect(c1, c2, 1);
+    //        result.connect(c2, c3, 1);
+    //        result.connect(c3, c4, 1);
+    //        result.connect(c4, c5, 1);
+    //        result.connect(c5, c0, 1);
+    //        result.connect(c2, c5, 1);
+    //
+    //        return result;
+    //    }
+    //
+    //    public static Molecule createEthylbenzeneWithSuperatom() {
+    //        Molecule result = Molecules.createBenzene();
+    //        Atom carbon1 = result.addAtom("C");
+    //        Atom carbon2 = result.addAtom("C");
+    //        Bond crossingBond = result.connect(result.getAtom(0), carbon1, 1);
+    //        result.connect(carbon1, carbon2, 1);
+    //
+    //        Superatom substructure = result.addSuperatom();
+    //        substructure.addAtom(carbon1);
+    //        substructure.addAtom(carbon2);
+    //        substructure.addCrossingBond(crossingBond);
+    //        substructure.setCrossingVector(crossingBond, 0.1, 0.1);
+    //        substructure.setLabel("Ethyl");
+    //
+    //        return result;
+    //    }
+    //
 
     public static IAtomContainer createPyridine() throws CDKException {
         IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
@@ -592,7 +584,6 @@ public class Molecules {
         IBond bond6 = new Bond(c6, c1, IBond.Order.DOUBLE);
         IBond bond7 = new Bond(c7, c1, IBond.Order.SINGLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
@@ -644,7 +635,6 @@ public class Molecules {
         IBond bond6 = new Bond(c6, c1, IBond.Order.DOUBLE);
         IBond bond7 = new Bond(c7, c1, IBond.Order.SINGLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
@@ -692,14 +682,12 @@ public class Molecules {
         IBond bond5 = new Bond(c5, c6, IBond.Order.SINGLE);
         IBond bond6 = new Bond(c6, c1, IBond.Order.SINGLE);
 
-
         result.addBond(bond1);
         result.addBond(bond2);
         result.addBond(bond3);
         result.addBond(bond4);
         result.addBond(bond5);
         result.addBond(bond6);
-
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(result);
         CDKHydrogenAdder adder = CDKHydrogenAdder.getInstance(result.getBuilder());
@@ -720,7 +708,6 @@ public class Molecules {
         result.addAtom(c1);
         result.addAtom(c2);
         result.addAtom(c3);
-
 
         IBond bond1 = new Bond(c1, c2, IBond.Order.SINGLE);
         IBond bond2 = new Bond(c2, c3, IBond.Order.SINGLE);
@@ -751,7 +738,6 @@ public class Molecules {
         result.addAtom(c3);
         result.addAtom(c4);
 
-
         IBond bond1 = new Bond(c1, c2, IBond.Order.SINGLE);
         IBond bond2 = new Bond(c2, c3, IBond.Order.SINGLE);
         IBond bond3 = new Bond(c2, c4, IBond.Order.SINGLE);
@@ -768,64 +754,64 @@ public class Molecules {
         return result;
     }
 
-//    private IAtomContainer createBenzaldehyde() {
-//        Molecule result = new DefaultMolecule();
-//        Atom c1 = result.addAtom("C");
-//        Atom c2 = result.addAtom("C");
-//        Atom c3 = result.addAtom("C");
-//        Atom c4 = result.addAtom("C");
-//        Atom c5 = result.addAtom("C");
-//        Atom c6 = result.addAtom("C");
-//        Atom c7 = result.addAtom("C");
-//        Atom o8 = result.addAtom("O");
-//
-//        result.connect(c1, c2, 1);
-//        result.connect(c2, c3, 2);
-//        result.connect(c3, c4, 1);
-//        result.connect(c4, c5, 2);
-//        result.connect(c5, c6, 1);
-//        result.connect(c6, c1, 2);
-//        result.connect(c7, c1, 1);
-//        result.connect(c7, o8, 2);
-//
-//        return result;
-//    }
-//
-//    private IAtomContainer createBenzoicAcid() {
-//        Molecule result = createBenzaldehyde();
-//
-//        result.connect(result.getAtom(6), result.addAtom("O"), 1);
-//
-//        return result;
-//    }
-//
-//    private IAtomContainer createBlockedBenzaldehyde() {
-//        Molecule result = createBenzaldehyde();
-//
-//        result.connect(result.getAtom(6), result.addAtom("H"), 1);
-//
-//        return result;
-//    }
-//    private Molecule create4Toluene() {
-//        Molecule result = new DefaultMolecule();
-//        Atom c1 = result.addAtom("C");
-//        Atom c2 = result.addAtom("C");
-//        Atom c3 = result.addAtom("C");
-//        Atom c4 = result.addAtom("C");
-//        Atom c5 = result.addAtom("C");
-//        Atom c6 = result.addAtom("C");
-//        Atom c7 = result.addAtom("C");
-//
-//        result.connect(c1, c2, 1);
-//        result.connect(c2, c3, 2);
-//        result.connect(c3, c4, 1);
-//        result.connect(c4, c5, 2);
-//        result.connect(c5, c6, 1);
-//        result.connect(c6, c1, 2);
-//        result.connect(c7, c4, 1);
-//
-//        return result;
-//    }
+    //    private IAtomContainer createBenzaldehyde() {
+    //        Molecule result = new DefaultMolecule();
+    //        Atom c1 = result.addAtom("C");
+    //        Atom c2 = result.addAtom("C");
+    //        Atom c3 = result.addAtom("C");
+    //        Atom c4 = result.addAtom("C");
+    //        Atom c5 = result.addAtom("C");
+    //        Atom c6 = result.addAtom("C");
+    //        Atom c7 = result.addAtom("C");
+    //        Atom o8 = result.addAtom("O");
+    //
+    //        result.connect(c1, c2, 1);
+    //        result.connect(c2, c3, 2);
+    //        result.connect(c3, c4, 1);
+    //        result.connect(c4, c5, 2);
+    //        result.connect(c5, c6, 1);
+    //        result.connect(c6, c1, 2);
+    //        result.connect(c7, c1, 1);
+    //        result.connect(c7, o8, 2);
+    //
+    //        return result;
+    //    }
+    //
+    //    private IAtomContainer createBenzoicAcid() {
+    //        Molecule result = createBenzaldehyde();
+    //
+    //        result.connect(result.getAtom(6), result.addAtom("O"), 1);
+    //
+    //        return result;
+    //    }
+    //
+    //    private IAtomContainer createBlockedBenzaldehyde() {
+    //        Molecule result = createBenzaldehyde();
+    //
+    //        result.connect(result.getAtom(6), result.addAtom("H"), 1);
+    //
+    //        return result;
+    //    }
+    //    private Molecule create4Toluene() {
+    //        Molecule result = new DefaultMolecule();
+    //        Atom c1 = result.addAtom("C");
+    //        Atom c2 = result.addAtom("C");
+    //        Atom c3 = result.addAtom("C");
+    //        Atom c4 = result.addAtom("C");
+    //        Atom c5 = result.addAtom("C");
+    //        Atom c6 = result.addAtom("C");
+    //        Atom c7 = result.addAtom("C");
+    //
+    //        result.connect(c1, c2, 1);
+    //        result.connect(c2, c3, 2);
+    //        result.connect(c3, c4, 1);
+    //        result.connect(c4, c5, 2);
+    //        result.connect(c5, c6, 1);
+    //        result.connect(c6, c1, 2);
+    //        result.connect(c7, c4, 1);
+    //
+    //        return result;
+    //    }
     public static IAtomContainer createSimpleImine() throws CDKException {
         IAtomContainer result = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
 

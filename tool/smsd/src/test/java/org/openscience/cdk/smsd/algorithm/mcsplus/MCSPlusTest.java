@@ -37,24 +37,19 @@ import org.openscience.cdk.exception.CDKException;
  */
 public class MCSPlusTest {
 
-    public MCSPlusTest() {
-    }
+    public MCSPlusTest() {}
 
     @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    public static void setUpClass() throws Exception {}
 
     @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+    public static void tearDownClass() throws Exception {}
 
     @Before
-    public void setUp() {
-    }
+    public void setUp() {}
 
     @After
-    public void tearDown() {
-    }
+    public void tearDown() {}
 
     @Test
     public void testSomeMethod() throws CDKException {

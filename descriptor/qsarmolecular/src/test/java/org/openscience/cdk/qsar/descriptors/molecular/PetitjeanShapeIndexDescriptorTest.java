@@ -44,15 +44,15 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
-    public PetitjeanShapeIndexDescriptorTest() {
-    }
+    public PetitjeanShapeIndexDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
         setDescriptor(PetitjeanShapeIndexDescriptor.class);
     }
 
-    @Test public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
+    @Test
+    public void testPetitjeanShapeIndexDescriptor() throws ClassNotFoundException, CDKException, Exception {
         // first molecule is nbutane, second is naphthalene
         String filename = "data/mdl/petitejean.sdf";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -84,4 +84,3 @@ public class PetitjeanShapeIndexDescriptorTest extends MolecularDescriptorTest {
 
     }
 }
-

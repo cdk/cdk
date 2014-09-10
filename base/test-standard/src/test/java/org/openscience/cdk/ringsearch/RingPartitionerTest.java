@@ -36,29 +36,25 @@ import org.openscience.cdk.templates.MoleculeFactory;
  * @author         kaihartmann
  * @cdk.created    2005-05-24
  */
-public class RingPartitionerTest extends CDKTestCase
-{
+public class RingPartitionerTest extends CDKTestCase {
 
-	static boolean standAlone = false;
-	//private static ILoggingTool logger = null;
+    static boolean standAlone = false;
 
+    //private static ILoggingTool logger = null;
 
-
-	public RingPartitionerTest()
-	{
-		super();
-	}
+    public RingPartitionerTest() {
+        super();
+    }
 
     @Test
-    public void testConvertToAtomContainer_IRingSet()
-	{
+    public void testConvertToAtomContainer_IRingSet() {
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
 
-		IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
-		IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
+        IRingSet ringSet = Cycles.sssr(molecule).toRingSet();
+        IAtomContainer ac = RingPartitioner.convertToAtomContainer(ringSet);
         Assert.assertEquals(7, ac.getAtomCount());
         Assert.assertEquals(8, ac.getBondCount());
-	}
+    }
 
     @Test
     public void testPartitionIntoRings() {
@@ -80,4 +76,3 @@ public class RingPartitionerTest extends CDKTestCase
     }
 
 }
-

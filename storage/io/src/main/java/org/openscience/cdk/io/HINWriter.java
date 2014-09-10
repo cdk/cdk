@@ -67,8 +67,7 @@ public class HINWriter extends DefaultChemObjectWriter {
                 writer = new BufferedWriter(out);
             }
         } catch (Exception exc) {
-            LoggingToolFactory.createLoggingTool(HINWriter.class)
-                .debug(exc.toString());
+            LoggingToolFactory.createLoggingTool(HINWriter.class).debug(exc.toString());
         }
     }
 
@@ -166,18 +165,16 @@ public class HINWriter extends DefaultChemObjectWriter {
 
                 int i = 0;
                 while (atoms.hasNext()) {
-                	IAtom atom = atoms.next();
+                    IAtom atom = atoms.next();
                     String line = "atom ";
 
                     sym = atom.getSymbol();
                     chrg = atom.getCharge();
                     Point3d point = atom.getPoint3d();
 
-                    line = line + Integer.toString(i + 1) + " - " + sym + " ** - " +
-                            Double.toString(chrg) + " " +
-                            Double.toString(point.x) + " " +
-                            Double.toString(point.y) + " " +
-                            Double.toString(point.z) + " ";
+                    line = line + Integer.toString(i + 1) + " - " + sym + " ** - " + Double.toString(chrg) + " "
+                            + Double.toString(point.x) + " " + Double.toString(point.y) + " "
+                            + Double.toString(point.z) + " ";
 
                     String buf = "";
                     int ncon = 0;
@@ -194,9 +191,12 @@ public class HINWriter extends DefaultChemObjectWriter {
                             // get the serial no for this atom
                             serial = mol.getAtomNumber(connectedAtom);
 
-                            if (bondOrder == IBond.Order.SINGLE) bondType = "s";
-                            else if (bondOrder == IBond.Order.DOUBLE) bondType = "d";
-                            else if (bondOrder == IBond.Order.TRIPLE) bondType = "t";
+                            if (bondOrder == IBond.Order.SINGLE)
+                                bondType = "s";
+                            else if (bondOrder == IBond.Order.DOUBLE)
+                                bondType = "d";
+                            else if (bondOrder == IBond.Order.TRIPLE)
+                                bondType = "t";
                             else if (bond.getFlag(CDKConstants.ISAROMATIC)) bondType = "a";
                             buf = buf + Integer.toString(serial + 1) + " " + bondType + " ";
                             ncon++;
@@ -216,5 +216,3 @@ public class HINWriter extends DefaultChemObjectWriter {
         }
     }
 }
-
-

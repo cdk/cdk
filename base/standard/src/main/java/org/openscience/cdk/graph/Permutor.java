@@ -58,17 +58,17 @@ public class Permutor {
     /**
      * The current rank of the permutation to use
      */
-    private int currentRank;
+    private int    currentRank;
 
     /**
      * The maximum rank possible, given the size
      */
-    private int maxRank;
+    private int    maxRank;
 
     /**
      * The number of objects to permute
      */
-    private int size;
+    private int    size;
 
     /**
      * For accessing part of the permutation space

@@ -36,17 +36,16 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
 
-    public KappaShapeIndicesDescriptorTest() {
-    }
+    public KappaShapeIndicesDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(KappaShapeIndicesDescriptor.class);
+        setDescriptor(KappaShapeIndicesDescriptor.class);
     }
 
     @Test
     public void testKappaShapeIndicesDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-        double [] testResult = {5, 2.25, 4};
+        double[] testResult = {5, 2.25, 4};
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer mol = sp.parseSmiles("O=C(O)CC");
         AtomContainerManipulator.removeHydrogens(mol);
@@ -58,4 +57,3 @@ public class KappaShapeIndicesDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(testResult[2], retval.get(2), 0.0001);
     }
 }
-

@@ -32,10 +32,11 @@ import org.junit.Test;
 public class MOPAC2007FormatTest extends ChemFormatMatcherTest {
 
     public MOPAC2007FormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC2007Format.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MOPAC2007Format.getInstance());
     }
 
-    @Test public void matchesMopac2007() throws Exception {
-        Assert.assertTrue(((MOPAC2007Format)MOPAC2007Format.getInstance()).matches(0, "MOPAC2007"));
+    @Test
+    public void matchesMopac2007() throws Exception {
+        Assert.assertTrue(((MOPAC2007Format) MOPAC2007Format.getInstance()).matches(0, "MOPAC2007"));
     }
 }

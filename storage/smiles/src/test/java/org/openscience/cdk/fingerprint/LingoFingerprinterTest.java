@@ -51,8 +51,8 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Ignore("tested by testFingerprint")
-    @Test public void testGetRawFingerprint() {
-    }
+    @Test
+    public void testGetRawFingerprint() {}
 
     @Test
     public void testFingerprint() throws Exception {
@@ -62,6 +62,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
         Map<String, Integer> map = lfp.getRawFingerprint(mol);
         Assert.assertEquals(5, map.size());
         String[] subs = {"O(N", "(NC", "NC)", "C)P", ")PS"};
-        for (String s : subs) Assert.assertTrue(map.containsKey(s));
+        for (String s : subs)
+            Assert.assertTrue(map.containsKey(s));
     }
 }

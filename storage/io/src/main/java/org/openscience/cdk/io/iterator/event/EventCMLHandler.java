@@ -48,22 +48,21 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 */
 public class EventCMLHandler extends CMLHandler {
 
-	private IChemObjectBuilder builder;
-    private IAtomContainer currentMolecule;
-    private IAtom currentAtom;
+    private IChemObjectBuilder           builder;
+    private IAtomContainer               currentMolecule;
+    private IAtom                        currentAtom;
 
-    private Map<String,Integer> atomEnumeration;
+    private Map<String, Integer>         atomEnumeration;
 
-    private int numberOfAtoms = 0;
+    private int                          numberOfAtoms = 0;
 
-    private int bond_a1;
-    private int bond_a2;
-    private IBond.Order bond_order;
-    private IBond.Stereo bond_stereo;
-    private String bond_id;
+    private int                          bond_a1;
+    private int                          bond_a2;
+    private IBond.Order                  bond_order;
+    private IBond.Stereo                 bond_stereo;
+    private String                       bond_id;
 
-    protected static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
+    protected static ILoggingTool        logger        = LoggingToolFactory.createLoggingTool(EventCMLHandler.class);
 
     private DefaultEventChemObjectReader eventReader;
 
@@ -71,9 +70,8 @@ public class EventCMLHandler extends CMLHandler {
     * Constructs an iterating-abled CDO. After reading one molecule it
     * fires a frameRead event.
     */
-    public EventCMLHandler(DefaultEventChemObjectReader eventReader,
-    		                IChemObjectBuilder builder) {
-    	super(builder.newInstance(IChemFile.class));
+    public EventCMLHandler(DefaultEventChemObjectReader eventReader, IChemObjectBuilder builder) {
+        super(builder.newInstance(IChemFile.class));
         this.eventReader = eventReader;
         this.builder = builder;
         clearData();
@@ -122,14 +120,14 @@ public class EventCMLHandler extends CMLHandler {
         logger.debug("START:" + objectType);
         if (objectType.equals("Molecule")) {
             currentMolecule = builder.newInstance(IAtomContainer.class);
-            atomEnumeration = new Hashtable<String,Integer>();
+            atomEnumeration = new Hashtable<String, Integer>();
         } else if (objectType.equals("Atom")) {
-            currentAtom = builder.newInstance(IAtom.class,"H");
+            currentAtom = builder.newInstance(IAtom.class, "H");
             logger.debug("Atom # " + numberOfAtoms);
             numberOfAtoms++;
         } else if (objectType.equals("Bond")) {
             bond_id = null;
-            bond_stereo = (IBond.Stereo)CDKConstants.UNSET;
+            bond_stereo = (IBond.Stereo) CDKConstants.UNSET;
         }
     }
 
@@ -146,14 +144,12 @@ public class EventCMLHandler extends CMLHandler {
             currentMolecule.addAtom(currentAtom);
         } else if (objectType.equals("Bond")) {
             logger.debug("Bond(" + bond_id + "): " + bond_a1 + ", " + bond_a2 + ", " + bond_order);
-            if (bond_a1 > currentMolecule.getAtomCount() ||
-            bond_a2 > currentMolecule.getAtomCount()) {
-                logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 +
-                " and " + bond_a2);
+            if (bond_a1 > currentMolecule.getAtomCount() || bond_a2 > currentMolecule.getAtomCount()) {
+                logger.error("Cannot add bond between at least one non-existant atom: " + bond_a1 + " and " + bond_a2);
             } else {
-            	IAtom a1 = currentMolecule.getAtom(bond_a1);
-            	IAtom a2 = currentMolecule.getAtom(bond_a2);
-                IBond b = builder.newInstance(IBond.class,a1, a2, bond_order);
+                IAtom a1 = currentMolecule.getAtom(bond_a1);
+                IAtom a2 = currentMolecule.getAtom(bond_a2);
+                IBond b = builder.newInstance(IBond.class, a1, a2, bond_order);
                 if (bond_id != null) b.setID(bond_id);
                 if (bond_stereo != CDKConstants.UNSET) {
                     b.setStereo(bond_stereo);
@@ -167,8 +163,7 @@ public class EventCMLHandler extends CMLHandler {
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
     */
-    public void setObjectProperty(String objectType, String propertyType,
-    String propertyValue) {
+    public void setObjectProperty(String objectType, String propertyType, String propertyValue) {
         logger.debug("objectType: " + objectType);
         logger.debug("propType: " + propertyType);
         logger.debug("property: " + propertyValue);
@@ -195,60 +190,59 @@ public class EventCMLHandler extends CMLHandler {
         } else if (objectType.equals("PseudoAtom")) {
             if (propertyType.equals("label")) {
                 if (!(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = builder.newInstance(IPseudoAtom.class,currentAtom);
+                    currentAtom = builder.newInstance(IPseudoAtom.class, currentAtom);
                 }
-                ((IPseudoAtom)currentAtom).setLabel(propertyValue);
+                ((IPseudoAtom) currentAtom).setLabel(propertyValue);
             }
         } else if (objectType.equals("Atom")) {
             if (propertyType.equals("type")) {
                 if (propertyValue.equals("R") && !(currentAtom instanceof IPseudoAtom)) {
-                    currentAtom = builder.newInstance(IPseudoAtom.class,currentAtom);
+                    currentAtom = builder.newInstance(IPseudoAtom.class, currentAtom);
                 }
                 currentAtom.setSymbol(propertyValue);
             } else if (propertyType.equals("x2")) {
-            	Point2d coord = currentAtom.getPoint2d();
-            	if (coord == null) coord = new Point2d();
-            	coord.x = Double.parseDouble(propertyValue);
-            	currentAtom.setPoint2d(coord);
+                Point2d coord = currentAtom.getPoint2d();
+                if (coord == null) coord = new Point2d();
+                coord.x = Double.parseDouble(propertyValue);
+                currentAtom.setPoint2d(coord);
             } else if (propertyType.equals("y2")) {
-            	Point2d coord = currentAtom.getPoint2d();
-            	if (coord == null) coord = new Point2d();
-            	coord.y = Double.parseDouble(propertyValue);
-            	currentAtom.setPoint2d(coord);
+                Point2d coord = currentAtom.getPoint2d();
+                if (coord == null) coord = new Point2d();
+                coord.y = Double.parseDouble(propertyValue);
+                currentAtom.setPoint2d(coord);
             } else if (propertyType.equals("x3")) {
-            	Point3d coord = currentAtom.getPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.x = Double.parseDouble(propertyValue);
-            	currentAtom.setPoint3d(coord);
+                Point3d coord = currentAtom.getPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.x = Double.parseDouble(propertyValue);
+                currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("y3")) {
-            	Point3d coord = currentAtom.getPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.y = Double.parseDouble(propertyValue);
-            	currentAtom.setPoint3d(coord);
+                Point3d coord = currentAtom.getPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.y = Double.parseDouble(propertyValue);
+                currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("z3")) {
-            	Point3d coord = currentAtom.getPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.z = Double.parseDouble(propertyValue);
-            	currentAtom.setPoint3d(coord);
+                Point3d coord = currentAtom.getPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.z = Double.parseDouble(propertyValue);
+                currentAtom.setPoint3d(coord);
             } else if (propertyType.equals("xFract")) {
-            	Point3d coord = currentAtom.getFractionalPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.x = Double.parseDouble(propertyValue);
-            	currentAtom.setFractionalPoint3d(coord);
+                Point3d coord = currentAtom.getFractionalPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.x = Double.parseDouble(propertyValue);
+                currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("yFract")) {
-            	Point3d coord = currentAtom.getFractionalPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.y = Double.parseDouble(propertyValue);
-            	currentAtom.setFractionalPoint3d(coord);
+                Point3d coord = currentAtom.getFractionalPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.y = Double.parseDouble(propertyValue);
+                currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("zFract")) {
-            	Point3d coord = currentAtom.getFractionalPoint3d();
-            	if (coord == null) coord = new Point3d();
-            	coord.z = Double.parseDouble(propertyValue);
-            	currentAtom.setFractionalPoint3d(coord);
+                Point3d coord = currentAtom.getFractionalPoint3d();
+                if (coord == null) coord = new Point3d();
+                coord.z = Double.parseDouble(propertyValue);
+                currentAtom.setFractionalPoint3d(coord);
             } else if (propertyType.equals("formalCharge")) {
                 currentAtom.setFormalCharge(Integer.parseInt(propertyValue));
-            } else if (propertyType.equals("charge") ||
-            propertyType.equals("partialCharge")) {
+            } else if (propertyType.equals("charge") || propertyType.equals("partialCharge")) {
                 currentAtom.setCharge(Double.parseDouble(propertyValue));
             } else if (propertyType.equals("hydrogenCount")) {
                 currentAtom.setImplicitHydrogenCount(Integer.parseInt(propertyValue));
@@ -257,7 +251,7 @@ public class EventCMLHandler extends CMLHandler {
             } else if (propertyType.equals("atomicNumber")) {
                 currentAtom.setAtomicNumber(Integer.parseInt(propertyValue));
             } else if (propertyType.equals("massNumber")) {
-                currentAtom.setMassNumber((int)Double.parseDouble(propertyValue));
+                currentAtom.setMassNumber((int) Double.parseDouble(propertyValue));
             } else if (propertyType.equals("id")) {
                 logger.debug("id: ", propertyValue);
                 currentAtom.setID(propertyValue);
@@ -275,13 +269,13 @@ public class EventCMLHandler extends CMLHandler {
                 try {
                     Double order = Double.parseDouble(propertyValue);
                     if (order == 1.0) {
-                    	bond_order = IBond.Order.SINGLE;
+                        bond_order = IBond.Order.SINGLE;
                     } else if (order == 2.0) {
-                    	bond_order = IBond.Order.DOUBLE;
+                        bond_order = IBond.Order.DOUBLE;
                     } else if (order == 3.0) {
-                    	bond_order = IBond.Order.TRIPLE;
+                        bond_order = IBond.Order.TRIPLE;
                     } else if (order == 4.0) {
-                    	bond_order = IBond.Order.QUADRUPLE;
+                        bond_order = IBond.Order.QUADRUPLE;
                     } else {
                         bond_order = IBond.Order.SINGLE;
                     }
@@ -301,4 +295,3 @@ public class EventCMLHandler extends CMLHandler {
     }
 
 }
-

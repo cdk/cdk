@@ -30,35 +30,34 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class AtomTypeMapperTest extends CDKTestCase {
 
-	@Test public void testGetInstance_String() {
-		AtomTypeMapper mapper = AtomTypeMapper.getInstance(
-			"org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
-		);
-		Assert.assertNotNull(mapper);
-	}
+    @Test
+    public void testGetInstance_String() {
+        AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl");
+        Assert.assertNotNull(mapper);
+    }
 
-	@Test public void testGetInstance_String_InputStream() {
-		AtomTypeMapper mapper = AtomTypeMapper.getInstance(
-			"org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl",
-		    this.getClass().getClassLoader().getResourceAsStream(
-		        "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"
-		    )
-		);
-		Assert.assertNotNull(mapper);
-	}
+    @Test
+    public void testGetInstance_String_InputStream() {
+        AtomTypeMapper mapper = AtomTypeMapper.getInstance("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl", this
+                .getClass().getClassLoader()
+                .getResourceAsStream("org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl"));
+        Assert.assertNotNull(mapper);
+    }
 
-	@Test public void testGetMapping() {
-		final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
-		AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
-		Assert.assertNotNull(mapper);
-		Assert.assertEquals(mapping, mapper.getMapping());
-	}
+    @Test
+    public void testGetMapping() {
+        final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
+        AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
+        Assert.assertNotNull(mapper);
+        Assert.assertEquals(mapping, mapper.getMapping());
+    }
 
-	@Test public void testMapAtomType_String() {
-		final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
-		AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
-		Assert.assertNotNull(mapper);
-		Assert.assertEquals("C.3", mapper.mapAtomType("C.sp3"));
-	}
+    @Test
+    public void testMapAtomType_String() {
+        final String mapping = "org/openscience/cdk/dict/data/cdk-sybyl-mappings.owl";
+        AtomTypeMapper mapper = AtomTypeMapper.getInstance(mapping);
+        Assert.assertNotNull(mapper);
+        Assert.assertEquals("C.3", mapper.mapAtomType("C.sp3"));
+    }
 
 }

@@ -39,14 +39,10 @@ public class TerminalLigandTest extends CDKTestCase {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 
-        ILigand ligand = new TerminalLigand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
+        ILigand ligand = new TerminalLigand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         Assert.assertNotNull(ligand);
         Assert.assertEquals(molecule, ligand.getAtomContainer());
         Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
         Assert.assertEquals(molecule.getAtom(0), ligand.getLigandAtom());
     }
 }
-
-

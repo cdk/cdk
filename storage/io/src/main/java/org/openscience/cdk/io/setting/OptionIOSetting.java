@@ -39,9 +39,7 @@ public class OptionIOSetting extends IOSetting {
      * OptionIOSetting is IOSetting for which the value must be
      * in the list of possible options.
      */
-    public OptionIOSetting(String name, Importance level,
-                           String question, List<String> settings,
-                           String defaultSetting) {
+    public OptionIOSetting(String name, Importance level, String question, List<String> settings, String defaultSetting) {
         super(name, level, question, defaultSetting);
         this.settings = settings;
         if (!this.settings.contains(defaultSetting)) {
@@ -70,7 +68,7 @@ public class OptionIOSetting extends IOSetting {
      */
     public void setSetting(int setting) throws CDKException {
         if (setting < settings.size() + 1 && setting > 0) {
-            this.setting = (String)settings.get(setting-1);
+            this.setting = (String) settings.get(setting - 1);
         } else {
             throw new CDKException("Setting " + setting + " does not exist.");
         }

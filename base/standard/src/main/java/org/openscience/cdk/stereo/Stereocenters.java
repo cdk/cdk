@@ -114,22 +114,22 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 public final class Stereocenters {
 
     /** native CDK structure representation. */
-    private final IAtomContainer container;
+    private final IAtomContainer  container;
 
     /** adjacency list representation for fast traversal. */
-    private final int[][] g;
+    private final int[][]         g;
 
     /** lookup bonds by the index of their atoms. */
-    private final EdgeToBondMap bondMap;
+    private final EdgeToBondMap   bondMap;
 
     /** the type of stereo center - indexed by atom. */
-    private final Stereocenter[] stereocenters;
+    private final Stereocenter[]  stereocenters;
 
     /** the stereo elements - indexed by atom. */
     private final StereoElement[] elements;
 
     /** basic cycle information (i.e. is atom/bond cyclic) and cycle systems. */
-    private final RingSearch ringSearch;
+    private final RingSearch      ringSearch;
 
     /**
      * Determine the stereocenter atoms in the provided container based on
@@ -172,8 +172,7 @@ public final class Stereocenters {
         this.stereocenters = new Stereocenter[graph.length];
         this.elements = new StereoElement[graph.length];
 
-        if (createElements() == 0)
-            return;
+        if (createElements() == 0) return;
 
         int[] symmetry = toIntArray(Canon.symmetry(container, graph));
 
@@ -196,8 +195,7 @@ public final class Stereocenters {
      * @return the type of element
      */
     public Type elementType(final int v) {
-        if (stereocenters[v] == Stereocenter.Non || elements[v] == null)
-            return Type.None;
+        if (stereocenters[v] == Stereocenter.Non || elements[v] == null) return Type.None;
         return elements[v].type;
     }
 
@@ -208,8 +206,7 @@ public final class Stereocenters {
      * @return the atom at index {@code v} is a stereocenter
      */
     public boolean isStereocenter(int v) {
-        return stereocenters[v] == Stereocenter.True ||
-                stereocenters[v] == Stereocenter.Para;
+        return stereocenters[v] == Stereocenter.True || stereocenters[v] == Stereocenter.Para;
     }
 
     /**
@@ -248,21 +245,18 @@ public final class Stereocenters {
         // non-stereogenic
         Arrays.fill(stereocenters, Stereocenter.Non);
 
-        VERTICES:
-        for (int i = 0; i < g.length; i++) {
+        VERTICES: for (int i = 0; i < g.length; i++) {
 
             // determine hydrogen count, connectivity and valence
             int h = container.getAtom(i).getImplicitHydrogenCount();
             int x = g[i].length + h;
             int v = h;
 
-            if (x < 2 || x > 4 || h > 1)
-                continue;
+            if (x < 2 || x > 4 || h > 1) continue;
 
             int piNeighbor = 0;
             for (int w : g[i]) {
-                if (atomicNumber(container.getAtom(w)) == 1)
-                    h++;
+                if (atomicNumber(container.getAtom(w)) == 1) h++;
                 switch (bondMap.get(i, w).getOrder()) {
                     case SINGLE:
                         v++;
@@ -281,7 +275,7 @@ public final class Stereocenters {
             switch (supportedType(i, v, h, x)) {
                 case Bicoordinate:
                     stereocenters[i] = Stereocenter.Potential;
-                    elements[i]      = new Bicoordinate(i, g[i]);
+                    elements[i] = new Bicoordinate(i, g[i]);
                     nElements++;
                     int u = g[i][0];
                     int w = g[i][1];
@@ -304,15 +298,14 @@ public final class Stereocenters {
                     if (!tricoordinate[w]) {
                         if (elements[w] != null && elements[w].type == Type.Bicoordinate) {
                             stereocenters[u] = Stereocenter.Potential;
-                            elements[u]      = new Tricoordinate(u, w, g[u]);
+                            elements[u] = new Tricoordinate(u, w, g[u]);
                         }
                         continue;
                     }
 
                     // TODO: we reject all cyclic double bonds but could
                     // TODO: allow flexible rings (> 7 atoms)
-                    if (ringSearch.cyclic(w, u))
-                        continue;
+                    if (ringSearch.cyclic(w, u)) continue;
 
                     stereocenters[w] = Stereocenter.Potential;
                     stereocenters[u] = Stereocenter.Potential;
@@ -337,8 +330,7 @@ public final class Stereocenters {
             if (elements[v] != null && elements[v].type == Type.Bicoordinate) {
                 int u = elements[v].neighbors[0];
                 int w = elements[v].neighbors[1];
-                if (elements[u] != null && elements[w] != null
-                        && elements[u].type == Type.Tricoordinate
+                if (elements[u] != null && elements[w] != null && elements[u].type == Type.Tricoordinate
                         && elements[w].type == Type.Tricoordinate) {
                     ((Tricoordinate) elements[u]).other = w;
                     ((Tricoordinate) elements[w]).other = u;
@@ -372,11 +364,9 @@ public final class Stereocenters {
                     if (!visited[symmetry[w]]) {
                         visited[symmetry[w]] = true;
                         nUnique++;
-                    }
-                    else {
+                    } else {
                         // is symmetric neighbor non-terminal
-                        if (g[w].length > 1)
-                            terminal = false;
+                        if (g[w].length > 1) terminal = false;
                     }
                 }
 
@@ -388,11 +378,10 @@ public final class Stereocenters {
                 if (nUnique == ws.length)
                     stereocenters[v] = Stereocenter.True;
 
-                    // all the symmetric neighbors are terminal then 'v' can not
-                    // be a stereocenter. There is an automorphism which inverts
-                    // only this stereocenter
-                else if (terminal)
-                    stereocenters[v] = Stereocenter.Non;
+                // all the symmetric neighbors are terminal then 'v' can not
+                // be a stereocenter. There is an automorphism which inverts
+                // only this stereocenter
+                else if (terminal) stereocenters[v] = Stereocenter.Non;
             }
         }
     }
@@ -418,8 +407,7 @@ public final class Stereocenters {
                 cyclic.set(v);
                 if (stereocenters[v] == Stereocenter.Potential)
                     potential.add(elements[v]);
-                else if (stereocenters[v] == Stereocenter.True)
-                    trueCentres.add(elements[v]);
+                else if (stereocenters[v] == Stereocenter.True) trueCentres.add(elements[v]);
             }
 
             // there is only 1 potential and 0 true stereocenters in this cycle
@@ -443,10 +431,8 @@ public final class Stereocenters {
                             if (!visited[symmetry[w]]) {
                                 visited[symmetry[w]] = true;
                                 nUnique++;
-                            }
-                            else {
-                                if (g[w].length > 1)
-                                    terminal = false;
+                            } else {
+                                if (g[w].length > 1) terminal = false;
                             }
                         }
                     }
@@ -457,17 +443,13 @@ public final class Stereocenters {
 
                     int deg = g[element.focus].length;
 
-                    if (deg == 3 || (deg == 4 && nUnique == 2))
-                        paraElements.add(element);
+                    if (deg == 3 || (deg == 4 && nUnique == 2)) paraElements.add(element);
 
                     // remove those we know cannot possibly be stereocenters
-                    if (deg == 4 && nUnique == 1 && terminal)
-                        stereocenters[element.focus] = Stereocenter.Non;
-                }
-                else if (element.type == Type.Tricoordinate) {
+                    if (deg == 4 && nUnique == 1 && terminal) stereocenters[element.focus] = Stereocenter.Non;
+                } else if (element.type == Type.Tricoordinate) {
                     Tricoordinate either = (Tricoordinate) element;
-                    if (stereocenters[either.other] == Stereocenter.True)
-                        paraElements.add(element);
+                    if (stereocenters[either.other] == Stereocenter.True) paraElements.add(element);
                 }
             }
 
@@ -479,7 +461,6 @@ public final class Stereocenters {
                     stereocenters[para.focus] = Stereocenter.Non;
         }
     }
-
 
     /**
      * Determine the type of stereo chemistry (if any) which could be supported
@@ -507,12 +488,10 @@ public final class Stereocenters {
         // x: connected atoms
         // q: formal charge
 
-
         int q = charge(atom);
 
         // more than one hydrogen
-        if (h > 1)
-            return Type.None;
+        if (h > 1) return Type.None;
 
         switch (atomicNumber(atom)) {
             case 0: // stop the nulls on pseudo atoms messing up anything else
@@ -521,32 +500,22 @@ public final class Stereocenters {
                 return q == -1 && v == 4 && x == 4 ? Type.Tetracoordinate : Type.None;
 
             case 6: // carbon
-                if (v != 4 || q != 0)
-                    return Type.None;
-                if (x == 2)
-                    return Type.Bicoordinate;
-                if (x == 3)
-                    return Type.Tricoordinate;
-                if (x == 4)
-                    return Type.Tetracoordinate;
+                if (v != 4 || q != 0) return Type.None;
+                if (x == 2) return Type.Bicoordinate;
+                if (x == 3) return Type.Tricoordinate;
+                if (x == 4) return Type.Tetracoordinate;
                 return Type.None;
             case 7: // nitrogen
-                if (x == 2 && v == 3 && h == 0 && q == 0)
-                    return Type.Tricoordinate;
-                if (x == 3 && v == 4 && q == 1)
-                    return Type.Tricoordinate;
+                if (x == 2 && v == 3 && h == 0 && q == 0) return Type.Tricoordinate;
+                if (x == 3 && v == 4 && q == 1) return Type.Tricoordinate;
                 if (x == 4 && h == 0 && (q == 0 && v == 5 || q == 1 && v == 4))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 return x == 3 && h == 0 && inThreeMemberRing(i) ? Type.Tetracoordinate : Type.None;
 
-
             case 14: // silicon
-                if (v != 4 || q != 0)
-                    return Type.None;
-                if (x == 3)
-                    return Type.Tricoordinate;
-                if (x == 4)
-                    return Type.Tetracoordinate;
+                if (v != 4 || q != 0) return Type.None;
+                if (x == 3) return Type.Tricoordinate;
+                if (x == 4) return Type.Tetracoordinate;
                 return Type.None;
             case 15: // phosphorus
                 if (x == 4 && (q == 0 && v == 5 && h == 0 || q == 1 && v == 4))
@@ -556,8 +525,7 @@ public final class Stereocenters {
                 if (x == 3 && q == 0 && v == 3 && h == 0)
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
             case 16: // sulphur
-                if (h > 0)
-                    return Type.None;
+                if (h > 0) return Type.None;
                 if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
@@ -565,20 +533,15 @@ public final class Stereocenters {
                 return Type.None;
 
             case 32: // germanium
-                if (v != 4 || q != 0)
-                    return Type.None;
-                if (x == 3)
-                    return Type.Tricoordinate;
-                if (x == 4)
-                    return Type.Tetracoordinate;
+                if (v != 4 || q != 0) return Type.None;
+                if (x == 3) return Type.Tricoordinate;
+                if (x == 4) return Type.Tetracoordinate;
                 return Type.None;
             case 33: // arsenic
-                if (x == 4 && q == 1 && v == 4)
-                    return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
+                if (x == 4 && q == 1 && v == 4) return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 return Type.None;
             case 34: // selenium
-                if (h > 0)
-                    return Type.None;
+                if (h > 0) return Type.None;
                 if (q == 0 && ((v == 4 && x == 3) || (v == 6 && x == 4)))
                     return verifyTerminalHCount(i) ? Type.Tetracoordinate : Type.None;
                 if (q == 1 && ((v == 3 && x == 3) || (v == 5 && x == 4)))
@@ -620,12 +583,10 @@ public final class Stereocenters {
             found = found || (idx > 0 && counts[idx] > 1);
         }
 
-        if (!found)
-            return true;
+        if (!found) return true;
 
         for (int i = 1; i < counts.length; i++) {
-            if (counts[i] < 2)
-                continue;
+            if (counts[i] < 2) continue;
 
             int terminalCount = 0;
             int terminalHCount = 0;
@@ -634,20 +595,17 @@ public final class Stereocenters {
                 int hCount = 0;
                 int[] ws = g[atoms[i][j]];
                 for (int w : g[atoms[i][j]]) {
-                    if (atomicNumber(container.getAtom(w)) == 1)
-                        hCount++;
+                    if (atomicNumber(container.getAtom(w)) == 1) hCount++;
                 }
 
                 // is terminal?
                 if (ws.length - hCount == 1) {
                     terminalCount++;
-                    terminalHCount += hCount + container.getAtom(atoms[i][j])
-                                                        .getImplicitHydrogenCount();
+                    terminalHCount += hCount + container.getAtom(atoms[i][j]).getImplicitHydrogenCount();
                 }
             }
 
-            if (terminalCount > 1 && terminalHCount > 0)
-                return false;
+            if (terminalCount > 1 && terminalHCount > 0) return false;
         }
 
         return true;
@@ -663,9 +621,9 @@ public final class Stereocenters {
      */
     private static int indexNeighbor(IAtom atom) {
         switch (atomicNumber(atom)) {
-            case 7:  // N
+            case 7: // N
                 return 1;
-            case 8:  // O
+            case 8: // O
                 return 2;
             case 16: // S
                 return 3;
@@ -693,8 +651,7 @@ public final class Stereocenters {
         // is a neighbors neighbor adjacent?
         for (int w : g[v])
             for (int u : g[w])
-                if (adj.get(u))
-                    return true;
+                if (adj.get(u)) return true;
         return false;
     }
 
@@ -708,10 +665,8 @@ public final class Stereocenters {
      */
     private static int atomicNumber(IAtom a) {
         Integer elem = a.getAtomicNumber();
-        if (elem != null)
-            return elem;
-        if (a instanceof IPseudoAtom)
-            return 0;
+        if (elem != null) return elem;
+        if (a instanceof IPseudoAtom) return 0;
         throw new IllegalArgumentException("an atom had an undefieind atomic number");
     }
 
@@ -785,6 +740,7 @@ public final class Stereocenters {
      * equivalence directly.
      */
     private static abstract class StereoElement {
+
         int   focus;
         int[] neighbors;
         Type  type;
@@ -792,6 +748,7 @@ public final class Stereocenters {
 
     /** Represents a tetrahedral stereocenter with 2 neighbors. */
     private static final class Bicoordinate extends StereoElement {
+
         Bicoordinate(int v, int[] neighbors) {
             this.focus = v;
             this.type = Type.Bicoordinate;
@@ -801,6 +758,7 @@ public final class Stereocenters {
 
     /** Represents a tetrahedral stereocenter with 3 or 4 neighbors. */
     private static final class Tetracoordinate extends StereoElement {
+
         Tetracoordinate(int v, int[] neighbors) {
             this.focus = v;
             this.type = Type.Tetracoordinate;
@@ -834,8 +792,7 @@ public final class Stereocenters {
             // remove the other neighbor from neighbors when checking
             // equivalence
             for (int i = 0; i < neighbors.length; i++) {
-                if (neighbors[i] != other)
-                    this.neighbors[n++] = neighbors[i];
+                if (neighbors[i] != other) this.neighbors[n++] = neighbors[i];
             }
         }
     }

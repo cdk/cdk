@@ -36,12 +36,12 @@ import org.openscience.cdk.renderer.elements.IRenderingElement;
  */
 public class MappingGeneratorTest extends AbstractGeneratorTest {
 
-	private MappingGenerator generator;
+    private MappingGenerator generator;
 
-	@Override
-	public Rectangle getCustomCanvas() {
-		return null;
-	}
+    @Override
+    public Rectangle getCustomCanvas() {
+        return null;
+    }
 
     @Before
     public void setup() {
@@ -54,14 +54,14 @@ public class MappingGeneratorTest extends AbstractGeneratorTest {
         super.setTestedGenerator(generator);
     }
 
-	@Test
-	public void testEmptyReaction() {
-		IReaction emptyReaction = super.builder.newInstance(IReaction.class);
+    @Test
+    public void testEmptyReaction() {
+        IReaction emptyReaction = super.builder.newInstance(IReaction.class);
 
-		// nothing should be made
-		IRenderingElement root = generator.generate(emptyReaction, model);
-		List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
-		Assert.assertEquals(0, elements.size());
-	}
+        // nothing should be made
+        IRenderingElement root = generator.generate(emptyReaction, model);
+        List<IRenderingElement> elements = elementUtil.getAllSimpleElements(root);
+        Assert.assertEquals(0, elements.size());
+    }
 
 }

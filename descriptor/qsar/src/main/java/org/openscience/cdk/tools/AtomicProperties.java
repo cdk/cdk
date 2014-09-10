@@ -41,87 +41,84 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.tools.AtomicPropertiesTest")
 public class AtomicProperties {
 
-    private static AtomicProperties ap=null;
+    private static AtomicProperties ap                  = null;
 
-	private Map<String, Double> htMass=new Hashtable<String,Double>();
-	private Map<String, Double> htVdWVolume=new Hashtable<String, Double>();
-	private Map<String, Double> htElectronegativity=new Hashtable<String, Double>();
-	private Map<String, Double> htPolarizability=new Hashtable<String, Double>();
+    private Map<String, Double>     htMass              = new Hashtable<String, Double>();
+    private Map<String, Double>     htVdWVolume         = new Hashtable<String, Double>();
+    private Map<String, Double>     htElectronegativity = new Hashtable<String, Double>();
+    private Map<String, Double>     htPolarizability    = new Hashtable<String, Double>();
 
-
-	private AtomicProperties() throws IOException {
+    private AtomicProperties() throws IOException {
 
         String configFile = "org/openscience/cdk/config/data/whim_weights.txt";
-	    InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(configFile);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
         bufferedReader.readLine(); // header
 
-		String Line;
-		while (true) {
-			Line=bufferedReader.readLine();
-			if (Line == null) {
-				break;
-			}
-			String[] components = Line.split("\t");
+        String Line;
+        while (true) {
+            Line = bufferedReader.readLine();
+            if (Line == null) {
+                break;
+            }
+            String[] components = Line.split("\t");
 
-			String symbol=components[0];
-			htMass.put(symbol,Double.parseDouble(components[1]));
-			htVdWVolume.put(symbol, Double.parseDouble(components[2]));
-			htElectronegativity.put(symbol, Double.parseDouble(components[3]));
-			htPolarizability.put(symbol, Double.parseDouble(components[4]));
-		}
+            String symbol = components[0];
+            htMass.put(symbol, Double.parseDouble(components[1]));
+            htVdWVolume.put(symbol, Double.parseDouble(components[2]));
+            htElectronegativity.put(symbol, Double.parseDouble(components[3]));
+            htPolarizability.put(symbol, Double.parseDouble(components[4]));
+        }
 
-		bufferedReader.close();
-	}
+        bufferedReader.close();
+    }
 
     @TestMethod("testGetVdWVolume")
-	public double getVdWVolume(String symbol) {
-		return htVdWVolume.get(symbol);
-	}
+    public double getVdWVolume(String symbol) {
+        return htVdWVolume.get(symbol);
+    }
 
     @TestMethod("testGetNormalizedVdWVolume")
-	public double getNormalizedVdWVolume(String symbol) {
-		return this.getVdWVolume(symbol)/this.getVdWVolume("C");
-	}
+    public double getNormalizedVdWVolume(String symbol) {
+        return this.getVdWVolume(symbol) / this.getVdWVolume("C");
+    }
 
     @TestMethod("testGetElectronegativity")
-	public double getElectronegativity(String symbol) {
-		return htElectronegativity.get(symbol);
-	}
+    public double getElectronegativity(String symbol) {
+        return htElectronegativity.get(symbol);
+    }
 
     @TestMethod("testGetNormalizedElectronegativity")
-	public double getNormalizedElectronegativity(String symbol) {
-		return this.getElectronegativity(symbol)/this.getElectronegativity("C");
-	}
+    public double getNormalizedElectronegativity(String symbol) {
+        return this.getElectronegativity(symbol) / this.getElectronegativity("C");
+    }
 
     @TestMethod("testGetPolarizability")
     public double getPolarizability(String symbol) {
-		return htPolarizability.get(symbol);
-	}
+        return htPolarizability.get(symbol);
+    }
 
     @TestMethod("testGetNormalizedPolarizability")
-	public double getNormalizedPolarizability(String symbol) {
-		return this.getPolarizability(symbol)/this.getPolarizability("C");
-	}
+    public double getNormalizedPolarizability(String symbol) {
+        return this.getPolarizability(symbol) / this.getPolarizability("C");
+    }
 
     @TestMethod("testGetMass")
     public double getMass(String symbol) {
-		return htMass.get(symbol);
-	}
+        return htMass.get(symbol);
+    }
 
     @TestMethod("testGetNormalizedMass")
-	public double getNormalizedMass(String symbol) {
-		return this.getMass(symbol)/this.getMass("C");
-	}
+    public double getNormalizedMass(String symbol) {
+        return this.getMass(symbol) / this.getMass("C");
+    }
 
-	@TestMethod("testGetInstance")
-	public static AtomicProperties getInstance() throws IOException
-	{
-		if (ap == null) {
-			ap = new AtomicProperties();
-		}
-		return ap;
-	}
-
+    @TestMethod("testGetInstance")
+    public static AtomicProperties getInstance() throws IOException {
+        if (ap == null) {
+            ap = new AtomicProperties();
+        }
+        return ap;
+    }
 
 }

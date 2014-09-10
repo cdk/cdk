@@ -30,12 +30,10 @@ import org.junit.BeforeClass;
  */
 public class OvalElementTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new OvalElement(
-			3, 4, Color.orange
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new OvalElement(3, 4, Color.orange);
+        setRenderingElement(element);
+    }
 
 }

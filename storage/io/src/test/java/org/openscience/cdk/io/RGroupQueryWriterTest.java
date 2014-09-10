@@ -47,12 +47,13 @@ import org.openscience.cdk.isomorphism.matchers.RGroupQuery;
  */
 public class RGroupQueryWriterTest extends ChemObjectIOTest {
 
-	private static IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-	@BeforeClass public static void setup() {
-		builder = DefaultChemObjectBuilder.getInstance();
-		setChemObjectIO(new RGroupQueryWriter());
-	}
+    @BeforeClass
+    public static void setup() {
+        builder = DefaultChemObjectBuilder.getInstance();
+        setChemObjectIO(new RGroupQueryWriter());
+    }
 
     @Test
     @Override
@@ -61,98 +62,98 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
     }
 
     @Test
-	public void testRgroupQueryFile_1() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.1.mol");
+    public void testRgroupQueryFile_1() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.1.mol");
 
-		Assert.assertEquals("AAL lines", 0, countSubstring("AAL",rgFile));
-		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 3, countSubstring("APO",rgFile));
-		Assert.assertTrue (rgFile.contains("M  LOG  1   1   0   1   0,1-3"));
-		Assert.assertEquals("Total #lines", 59, countSubstring("\n",rgFile));
-	}
+        Assert.assertEquals("AAL lines", 0, countSubstring("AAL", rgFile));
+        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 3, countSubstring("APO", rgFile));
+        Assert.assertTrue(rgFile.contains("M  LOG  1   1   0   1   0,1-3"));
+        Assert.assertEquals("Total #lines", 59, countSubstring("\n", rgFile));
+    }
 
-	@Test
-	public void testRgroupQueryFile_2() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.2.mol");
+    @Test
+    public void testRgroupQueryFile_2() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.2.mol");
 
-		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
-		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 5, countSubstring("APO",rgFile));
-		Assert.assertTrue (rgFile.contains("M  RGP  4   1  11   2   2   3   2   4   1"));
-		Assert.assertEquals("Total #lines", 107, countSubstring("\n",rgFile));
-	}
+        Assert.assertEquals("AAL lines", 1, countSubstring("AAL", rgFile));
+        Assert.assertEquals("LOG lines", 3, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 5, countSubstring("APO", rgFile));
+        Assert.assertTrue(rgFile.contains("M  RGP  4   1  11   2   2   3   2   4   1"));
+        Assert.assertEquals("Total #lines", 107, countSubstring("\n", rgFile));
+    }
 
-	@Test
-	public void testRgroupQueryFile_3() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.3.mol");
-		Assert.assertEquals("AAL lines", 2, countSubstring("AAL",rgFile));
-		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 2, countSubstring("APO",rgFile));
-		Assert.assertEquals("Total #lines", 66, countSubstring("\n",rgFile));
-		Assert.assertTrue (rgFile.contains("M  RGP  2   5   1   7   1"));
-	}
+    @Test
+    public void testRgroupQueryFile_3() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.3.mol");
+        Assert.assertEquals("AAL lines", 2, countSubstring("AAL", rgFile));
+        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 2, countSubstring("APO", rgFile));
+        Assert.assertEquals("Total #lines", 66, countSubstring("\n", rgFile));
+        Assert.assertTrue(rgFile.contains("M  RGP  2   5   1   7   1"));
+    }
 
-	@Test
-	public void testRgroupQueryFile_4() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.4.mol");
-		Assert.assertEquals("AAL lines", 0, countSubstring("AAL",rgFile));
-		Assert.assertEquals("\\$CTAB lines", 3, countSubstring("\\$CTAB",rgFile));
-		// the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
-		Assert.assertEquals("APO lines", 0, countSubstring("APO",rgFile));
-		Assert.assertEquals("Total #lines", 46, countSubstring("\n",rgFile));
-		Assert.assertTrue (rgFile.contains("M  RGP  1   6   1"));
-	}
+    @Test
+    public void testRgroupQueryFile_4() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.4.mol");
+        Assert.assertEquals("AAL lines", 0, countSubstring("AAL", rgFile));
+        Assert.assertEquals("\\$CTAB lines", 3, countSubstring("\\$CTAB", rgFile));
+        // the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
+        Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
+        Assert.assertEquals("Total #lines", 46, countSubstring("\n", rgFile));
+        Assert.assertTrue(rgFile.contains("M  RGP  1   6   1"));
+    }
 
-	@Test
-	public void testRgroupQueryFile_5() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.5.mol");
-		Assert.assertEquals("LOG lines", 4, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 0, countSubstring("APO",rgFile));
-		Assert.assertEquals("M  RGP lines", 2, countSubstring("M  RGP",rgFile)); //overflow
-		Assert.assertEquals("Total #lines", 132, countSubstring("\n",rgFile));
-	}
+    @Test
+    public void testRgroupQueryFile_5() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.5.mol");
+        Assert.assertEquals("LOG lines", 4, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 0, countSubstring("APO", rgFile));
+        Assert.assertEquals("M  RGP lines", 2, countSubstring("M  RGP", rgFile)); //overflow
+        Assert.assertEquals("Total #lines", 132, countSubstring("\n", rgFile));
+    }
 
-	@Test
-	public void testRgroupQueryFile_6() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.6.mol");
-		Assert.assertEquals("AAL lines", 1, countSubstring("AAL",rgFile));
-		Assert.assertEquals("LOG lines", 3, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 1, countSubstring("APO",rgFile));
-		Assert.assertEquals("Total #lines", 57, countSubstring("\n",rgFile));
-	}
+    @Test
+    public void testRgroupQueryFile_6() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.6.mol");
+        Assert.assertEquals("AAL lines", 1, countSubstring("AAL", rgFile));
+        Assert.assertEquals("LOG lines", 3, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 1, countSubstring("APO", rgFile));
+        Assert.assertEquals("Total #lines", 57, countSubstring("\n", rgFile));
+    }
 
-	@Test
-	public void testRgroupQueryFile_7() throws Exception {
-		String rgFile =recreate("data/mdl/rgfile.7.mol");
-		Assert.assertEquals("LOG lines", 1, countSubstring("LOG",rgFile));
-		Assert.assertEquals("APO lines", 2, countSubstring("APO",rgFile));
-		Assert.assertTrue (rgFile.contains("M  RGP  3   4  32   6  32   7  32"));
-		Assert.assertEquals("Total #lines", 53, countSubstring("\n",rgFile));
-	}
+    @Test
+    public void testRgroupQueryFile_7() throws Exception {
+        String rgFile = recreate("data/mdl/rgfile.7.mol");
+        Assert.assertEquals("LOG lines", 1, countSubstring("LOG", rgFile));
+        Assert.assertEquals("APO lines", 2, countSubstring("APO", rgFile));
+        Assert.assertTrue(rgFile.contains("M  RGP  3   4  32   6  32   7  32"));
+        Assert.assertEquals("Total #lines", 53, countSubstring("\n", rgFile));
+    }
 
-	private int countSubstring (String regExp,String text) {
-		Pattern p = Pattern.compile(regExp);
-		Matcher m = p.matcher(text); // get a matcher object
-		int count = 0;
-		while(m.find())
-			count++;
-		return count;
-	}
+    private int countSubstring(String regExp, String text) {
+        Pattern p = Pattern.compile(regExp);
+        Matcher m = p.matcher(text); // get a matcher object
+        int count = 0;
+        while (m.find())
+            count++;
+        return count;
+    }
 
-	public void testAcceptsAtLeastOneDebugObject() {}
-	public void testAcceptsAtLeastOneNonotifyObject() {}
+    public void testAcceptsAtLeastOneDebugObject() {}
 
-	private String recreate(String file) throws CDKException {
-		StringWriter sw = new StringWriter();
-		RGroupQueryWriter rgw = new RGroupQueryWriter (sw);
-		InputStream ins = this.getClass().getClassLoader().getResourceAsStream(file);
-		RGroupQueryReader reader = new RGroupQueryReader(ins);
-		RGroupQuery rGroupQuery  = (RGroupQuery)reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
-		rgw.write(rGroupQuery);
-		String out = sw.toString();
-		return out;
+    public void testAcceptsAtLeastOneNonotifyObject() {}
 
-	}
+    private String recreate(String file) throws CDKException {
+        StringWriter sw = new StringWriter();
+        RGroupQueryWriter rgw = new RGroupQueryWriter(sw);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(file);
+        RGroupQueryReader reader = new RGroupQueryReader(ins);
+        RGroupQuery rGroupQuery = (RGroupQuery) reader.read(new RGroupQuery(DefaultChemObjectBuilder.getInstance()));
+        rgw.write(rGroupQuery);
+        String out = sw.toString();
+        return out;
 
+    }
 
 }

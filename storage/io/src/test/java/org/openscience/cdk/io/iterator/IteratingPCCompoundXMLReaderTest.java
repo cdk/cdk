@@ -39,26 +39,24 @@ import java.io.InputStreamReader;
  */
 public class IteratingPCCompoundXMLReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundXMLReaderTest.class);
 
-    @Test public void testList() throws Exception {
+    @Test
+    public void testList() throws Exception {
         String filename = "data/asn/pubchem/aceticAcids38.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingPCCompoundXMLReader reader = new IteratingPCCompoundXMLReader(
-        	new InputStreamReader(ins),
-        	DefaultChemObjectBuilder.getInstance()
-        );
+        IteratingPCCompoundXMLReader reader = new IteratingPCCompoundXMLReader(new InputStreamReader(ins),
+                DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         IAtomContainerSet set = DefaultChemObjectBuilder.getInstance().newInstance(IAtomContainerSet.class);
         while (reader.hasNext()) {
-//        	System.out.println("next molecule found");
+            //        	System.out.println("next molecule found");
             Object object = reader.next();
             Assert.assertNotNull(object);
             Assert.assertTrue(object instanceof IAtomContainer);
-            set.addAtomContainer((IAtomContainer)object);
+            set.addAtomContainer((IAtomContainer) object);
             molCount++;
         }
 

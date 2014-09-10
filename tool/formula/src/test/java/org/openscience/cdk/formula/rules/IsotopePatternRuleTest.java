@@ -36,118 +36,124 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public class IsotopePatternRuleTest extends FormulaRuleTest {
 
-	private static IChemObjectBuilder builder;
-	private static IsotopeFactory ifac;
+    private static IChemObjectBuilder builder;
+    private static IsotopeFactory     ifac;
 
-	/**
+    /**
      *  The JUnit setup method
      */
-    @BeforeClass public static void setUp() throws Exception {
-    	builder = DefaultChemObjectBuilder.getInstance();
-    	ifac = Isotopes.getInstance();
-    	setRule(IsotopePatternRule.class);
+    @BeforeClass
+    public static void setUp() throws Exception {
+        builder = DefaultChemObjectBuilder.getInstance();
+        ifac = Isotopes.getInstance();
+        setRule(IsotopePatternRule.class);
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testIsotopePatternRule() throws Exception {
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testIsotopePatternRule() throws Exception {
 
-		IRule rule  = new IsotopePatternRule();
-		Assert.assertNotNull(rule);
+        IRule rule = new IsotopePatternRule();
+        Assert.assertNotNull(rule);
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefault() throws Exception {
+    }
 
-		IRule rule  = new IsotopePatternRule();
-		Object[] objects = rule.getParameters();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefault() throws Exception {
 
-		Assert.assertNull(objects[0]);
-	}
+        IRule rule = new IsotopePatternRule();
+        Object[] objects = rule.getParameters();
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testSetParameters() throws Exception {
+        Assert.assertNull(objects[0]);
+    }
 
-		IRule rule  = new IsotopePatternRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testSetParameters() throws Exception {
 
-		Object[] params = new Object[2];
+        IRule rule = new IsotopePatternRule();
 
-		params[0] = new ArrayList<Double[]>();
-		params[1] = 0.0001;
-		rule.setParameters(params);
+        Object[] params = new Object[2];
 
-		Object[] objects = rule.getParameters();
+        params[0] = new ArrayList<Double[]>();
+        params[1] = 0.0001;
+        rule.setParameters(params);
 
-		Assert.assertNotNull(objects[0]);
-		Assert.assertEquals(2,objects.length);
-	}
+        Object[] objects = rule.getParameters();
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testValid_Bromine() throws Exception {
+        Assert.assertNotNull(objects[0]);
+        Assert.assertEquals(2, objects.length);
+    }
 
-		List<double[]> spectrum = new ArrayList<double[]>();
-		spectrum.add(new double[]{157.8367,51.399});
-		spectrum.add(new double[]{159.8346,100.00});
-		spectrum.add(new double[]{161.8326,48.639});
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testValid_Bromine() throws Exception {
 
-		IRule rule  = new IsotopePatternRule();
-		Object[] params = new Object[2];
-		params[0] = spectrum;
-		params[1] = 0.001;
-		rule.setParameters(params);
+        List<double[]> spectrum = new ArrayList<double[]>();
+        spectrum.add(new double[]{157.8367, 51.399});
+        spectrum.add(new double[]{159.8346, 100.00});
+        spectrum.add(new double[]{161.8326, 48.639});
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),2);
-		formula.addIsotope( ifac.getMajorIsotope("Br"),2);
+        IRule rule = new IsotopePatternRule();
+        Object[] params = new Object[2];
+        params[0] = spectrum;
+        params[1] = 0.001;
+        rule.setParameters(params);
+
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 2);
+        formula.addIsotope(ifac.getMajorIsotope("Br"), 2);
         formula.setCharge(0);
 
-        Assert.assertEquals(0.0, rule.validate(formula),0.0001);
-	}
+        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+    }
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidTrue() throws Exception {
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidTrue() throws Exception {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(ifac.getMajorIsotope("C"),5);
-		formula.addIsotope( ifac.getMajorIsotope("H"),13);
-		formula.addIsotope( ifac.getMajorIsotope("N"),2);
-		formula.addIsotope( ifac.getMajorIsotope("O"),2);
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(ifac.getMajorIsotope("C"), 5);
+        formula.addIsotope(ifac.getMajorIsotope("H"), 13);
+        formula.addIsotope(ifac.getMajorIsotope("N"), 2);
+        formula.addIsotope(ifac.getMajorIsotope("O"), 2);
         formula.setCharge(0);
 
+        /** experimental results*/
 
-		/** experimental results*/
+        List<double[]> spectrum = new ArrayList<double[]>();
+        spectrum.add(new double[]{133.0977, 100.00});
+        spectrum.add(new double[]{134.09475, 0.6});
+        spectrum.add(new double[]{134.1010, 5.4});
 
-		List<double[]> spectrum = new ArrayList<double[]>();
-		spectrum.add(new double[]{133.0977 ,100.00});
-		spectrum.add(new double[]{134.09475,0.6});
-		spectrum.add(new double[]{134.1010 ,5.4});
+        IRule rule = new IsotopePatternRule();
+        Object[] params = new Object[2];
+        params[0] = spectrum;
+        params[1] = 0.001;
+        rule.setParameters(params);
 
-		IRule rule  = new IsotopePatternRule();
-		Object[] params = new Object[2];
-		params[0] = spectrum;
-		params[1] = 0.001;
-		rule.setParameters(params);
-
-		Assert.assertEquals(0.9433, rule.validate(formula),0.001);
-	}
+        Assert.assertEquals(0.9433, rule.validate(formula), 0.001);
+    }
 
 }

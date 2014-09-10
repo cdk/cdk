@@ -55,10 +55,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.XYZWriterTest")
 public class XYZWriter extends DefaultChemObjectWriter {
 
-    private BufferedWriter writer;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(XYZWriter.class);
-    private FormatStringBuffer fsb;
+    private BufferedWriter      writer;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(XYZWriter.class);
+    private FormatStringBuffer  fsb;
 
     /**
     * Constructor.
@@ -66,10 +65,10 @@ public class XYZWriter extends DefaultChemObjectWriter {
     * @param out the stream to write the XYZ file to.
     */
     public XYZWriter(Writer out) {
-    	fsb = new FormatStringBuffer("%-8.6f");
-    	try {
-    		if (out instanceof BufferedWriter) {
-                writer = (BufferedWriter)out;
+        fsb = new FormatStringBuffer("%-8.6f");
+        try {
+            if (out instanceof BufferedWriter) {
+                writer = (BufferedWriter) out;
             } else {
                 writer = new BufferedWriter(out);
             }
@@ -91,15 +90,15 @@ public class XYZWriter extends DefaultChemObjectWriter {
     }
 
     public void setWriter(Writer out) throws CDKException {
-    	if (out instanceof BufferedWriter) {
-            writer = (BufferedWriter)out;
+        if (out instanceof BufferedWriter) {
+            writer = (BufferedWriter) out;
         } else {
             writer = new BufferedWriter(out);
         }
     }
 
     public void setWriter(OutputStream output) throws CDKException {
-    	setWriter(new OutputStreamWriter(output));
+        setWriter(new OutputStreamWriter(output));
     }
 
     /**
@@ -107,26 +106,26 @@ public class XYZWriter extends DefaultChemObjectWriter {
      */
     @TestMethod("testClose")
     public void close() throws IOException {
-    	writer.close();
+        writer.close();
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		if (IAtomContainer.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IAtomContainer.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        if (IAtomContainer.class.equals(classObject)) return true;
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IAtomContainer.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IAtomContainer)object);
-            } catch(Exception ex) {
+                writeMolecule((IAtomContainer) object);
+            } catch (Exception ex) {
                 throw new CDKException("Error while writing XYZ file: " + ex.getMessage(), ex);
             }
         } else {
@@ -151,21 +150,20 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
             String s2 = null; // FIXME: add some interesting comment
             if (s2 != null) {
-            	writer.write(s2, 0, s2.length());
+                writer.write(s2, 0, s2.length());
             }
             writer.newLine();
 
             // Loop through the atoms and write them out:
             Iterator<IAtom> atoms = mol.atoms().iterator();
             while (atoms.hasNext()) {
-            	IAtom a = atoms.next();
+                IAtom a = atoms.next();
                 st = a.getSymbol();
 
                 Point3d p3 = a.getPoint3d();
                 if (p3 != null) {
-                    st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t"
-                            + (p3.y < 0 ? "" : " ") + fsb.format(p3.y) + "\t"
-                            + (p3.z < 0 ? "" : " ") + fsb.format(p3.z);
+                    st = st + "\t" + (p3.x < 0 ? "" : " ") + fsb.format(p3.x) + "\t" + (p3.y < 0 ? "" : " ")
+                            + fsb.format(p3.y) + "\t" + (p3.z < 0 ? "" : " ") + fsb.format(p3.z);
                 } else {
                     st = st + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0) + "\t " + fsb.format(0.0);
                 }
@@ -180,11 +178,9 @@ public class XYZWriter extends DefaultChemObjectWriter {
 
             }
         } catch (IOException e) {
-//            throw e;
+            //            throw e;
             logger.error("Error while writing file: ", e.getMessage());
             logger.debug(e);
         }
     }
 }
-
-

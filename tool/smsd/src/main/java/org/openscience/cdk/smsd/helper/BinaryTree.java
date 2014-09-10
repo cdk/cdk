@@ -1,4 +1,3 @@
-
 /**
  *
  * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
@@ -28,7 +27,6 @@ package org.openscience.cdk.smsd.helper;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
-
 /**
  * Class to construct a Binary tree for McGregor search.
  * @cdk.module smsd
@@ -46,12 +44,13 @@ public class BinaryTree {
     public BinaryTree(int value) {
         this.value = value;
     }
+
     /**
      * not equal is initialized as null
      */
-    private BinaryTree equal = null;
+    private BinaryTree equal    = null;
     private BinaryTree notEqual = null;
-    private int value = -1;
+    private int        value    = -1;
 
     /**
      * Return value of the node

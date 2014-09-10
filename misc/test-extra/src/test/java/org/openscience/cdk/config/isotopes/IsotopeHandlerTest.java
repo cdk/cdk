@@ -32,7 +32,6 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class IsotopeHandlerTest extends CDKTestCase {
 
-
     // serious testing is done in IsotopeFactoryTest; the factory
     // requires this class to work properly. But nevertheless:
 
@@ -61,14 +60,13 @@ public class IsotopeHandlerTest extends CDKTestCase {
     @Test
     public void testCharacters_arraychar_int_int() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
-    	Assert.assertTrue(true);
+        Assert.assertTrue(true);
     }
-
 
     @Test
     public void testEndElement_String_String_String() {
         // nothing I can test here that IsotopeFactoryTest doesn't do
-    	Assert.assertTrue(true);
+        Assert.assertTrue(true);
     }
 
 }

@@ -30,17 +30,17 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class AromaticSymbolAtom extends SMARTSAtom {
 
-	public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
-		super(builder);
-		setFlag(CDKConstants.ISAROMATIC, true);
-		setSymbol(symbol);
-	}
+    public AromaticSymbolAtom(String symbol, IChemObjectBuilder builder) {
+        super(builder);
+        setFlag(CDKConstants.ISAROMATIC, true);
+        setSymbol(symbol);
+    }
 
-	public boolean matches(IAtom atom) {
-		return atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
-	}
+    public boolean matches(IAtom atom) {
+        return atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
+    }
 
-	public String toString() {
-		return "AromaticSymbolAtom(" + getSymbol() + ")";
-	}
+    public String toString() {
+        return "AromaticSymbolAtom(" + getSymbol() + ")";
+    }
 }

@@ -84,9 +84,9 @@ public final class SelectionVisibility extends SymbolVisibility {
     /**
      * @inheritDoc
      */
-    @Override public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
-        if (isSelected(atom, model) && (showAll || !hasSelectedBond(neighbors, model)))
-            return true;
+    @Override
+    public boolean visible(IAtom atom, List<IBond> neighbors, RendererModel model) {
+        if (isSelected(atom, model) && (showAll || !hasSelectedBond(neighbors, model))) return true;
         return delegate.visible(atom, neighbors, model);
     }
 
@@ -97,10 +97,8 @@ public final class SelectionVisibility extends SymbolVisibility {
      * @return object is selected
      */
     static boolean isSelected(IChemObject object, RendererModel model) {
-        if (object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null)
-            return true;
-        if (model.getSelection() != null)
-            return model.getSelection().contains(object);
+        if (object.getProperty(StandardGenerator.HIGHLIGHT_COLOR) != null) return true;
+        if (model.getSelection() != null) return model.getSelection().contains(object);
         return false;
     }
 
@@ -112,8 +110,7 @@ public final class SelectionVisibility extends SymbolVisibility {
      */
     static boolean hasSelectedBond(List<IBond> bonds, RendererModel model) {
         for (IBond bond : bonds) {
-            if (isSelected(bond, model))
-                return true;
+            if (isSelected(bond, model)) return true;
         }
         return false;
     }

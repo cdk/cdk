@@ -30,12 +30,11 @@ import org.openscience.cdk.interfaces.IAtom;
  */
 public interface IQueryAtom extends IAtom {
 
-	/**
-	 * Returns true of the given <code>atom</code> matches this IQueryAtom.
-	 *
-	 * @param atom IAtom to match against
-	 * @return     true, if this IQueryAtom matches the given IAtom
-	 */
-	public boolean matches(IAtom atom);
+    /**
+     * Returns true of the given <code>atom</code> matches this IQueryAtom.
+     *
+     * @param atom IAtom to match against
+     * @return     true, if this IQueryAtom matches the given IAtom
+     */
+    public boolean matches(IAtom atom);
 }
-

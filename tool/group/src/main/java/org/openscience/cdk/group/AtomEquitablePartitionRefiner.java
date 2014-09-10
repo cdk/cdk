@@ -32,8 +32,8 @@ import java.util.Set;
  * @cdk.module group
  *
  */
-public class AtomEquitablePartitionRefiner extends
-        AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
+public class AtomEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
+        IEquitablePartitionRefiner {
 
     /**
      * A reference to the discrete refiner, which has the connectivity info.

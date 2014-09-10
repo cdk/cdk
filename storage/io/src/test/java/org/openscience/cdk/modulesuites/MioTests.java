@@ -64,47 +64,20 @@ import org.openscience.cdk.io.program.Mopac7WriterTest;
  *
  * @cdk.module test-io
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    IoCoverageTest.class,
-    CMLIOTests.class,
-    CMLReaderTest.class,
-    CDKSourceCodeWriterTest.class,
-    CIFReaderTest.class,
-    CTXReaderTest.class,
-    Gaussian98ReaderTest.class,
-    GhemicalReaderTest.class,
-    HINReaderTest.class,
-    MDLReaderTest.class,
-    MDLV2000ReaderTest.class,
-    MDLV3000ReaderTest.class,
-    SDFReaderTest.class,
-    MDLV2000WriterTest.class,
-    SDFWriterTest.class,
-    MDLRXNReaderTest.class,
-    MDLRXNV2000ReaderTest.class,
-    MDLRXNV3000ReaderTest.class,
-    MDLRXNWriterTest.class,
-    Mol2ReaderTest.class,
-    Mol2WriterTest.class,
-    Mopac7ReaderTest.class,
-    Mopac7WriterTest.class,
-    PCCompoundASNReaderTest.class,
-    PMPReaderTest.class,
-    RGroupQueryReaderTest.class,
-    RGroupQueryWriterTest.class,
-    ShelXReaderTest.class,
-    XYZReaderTest.class,
-    XYZWriterTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {IoCoverageTest.class, CMLIOTests.class, CMLReaderTest.class, CDKSourceCodeWriterTest.class,
+        CIFReaderTest.class, CTXReaderTest.class, Gaussian98ReaderTest.class, GhemicalReaderTest.class,
+        HINReaderTest.class, MDLReaderTest.class, MDLV2000ReaderTest.class, MDLV3000ReaderTest.class,
+        SDFReaderTest.class, MDLV2000WriterTest.class, SDFWriterTest.class, MDLRXNReaderTest.class,
+        MDLRXNV2000ReaderTest.class, MDLRXNV3000ReaderTest.class, MDLRXNWriterTest.class, Mol2ReaderTest.class,
+        Mol2WriterTest.class, Mopac7ReaderTest.class, Mopac7WriterTest.class, PCCompoundASNReaderTest.class,
+        PMPReaderTest.class, RGroupQueryReaderTest.class, RGroupQueryWriterTest.class, ShelXReaderTest.class,
+        XYZReaderTest.class, XYZWriterTest.class,
 
-    ReaderFactoryTest.class,
-    WriterFactoryTest.class,
-    ChemObjectIOInstantionTests.class,
+        ReaderFactoryTest.class, WriterFactoryTest.class, ChemObjectIOInstantionTests.class,
 
         // cdk.io.iterator package
-    IteratingSDFReaderTest.class,
-    IteratingPCCompoundASNReaderTest.class,
-    IteratingPCCompoundXMLReaderTest.class,
-    IteratingPCSubstancesXMLReaderTest.class
-})
-public class MioTests {}
+        IteratingSDFReaderTest.class, IteratingPCCompoundASNReaderTest.class, IteratingPCCompoundXMLReaderTest.class,
+        IteratingPCSubstancesXMLReaderTest.class})
+public class MioTests {
+}

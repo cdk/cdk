@@ -74,12 +74,12 @@ public class ConjugatedPiSystemsDetector {
         IAtomContainerSet piSystemSet = ac.getBuilder().newInstance(IAtomContainerSet.class);
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	IAtom atom = ac.getAtom(i);
+            IAtom atom = ac.getAtom(i);
             atom.setFlag(CDKConstants.VISITED, false);
         }
 
         for (int i = 0; i < ac.getAtomCount(); i++) {
-        	IAtom firstAtom = ac.getAtom(i);
+            IAtom firstAtom = ac.getAtom(i);
             // if this atom was already visited in a previous DFS, continue
             if (firstAtom.getFlag(CDKConstants.VISITED) || checkAtom(ac, firstAtom) == -1) {
                 continue;
@@ -129,7 +129,6 @@ public class ConjugatedPiSystemsDetector {
         return piSystemSet;
     }
 
-
     /**
      *  Check an Atom whether it may be conjugated or not.
      *
@@ -143,41 +142,44 @@ public class ConjugatedPiSystemsDetector {
         List<IBond> bonds = ac.getConnectedBondsList(currentAtom);
         if (currentAtom.getFlag(CDKConstants.ISAROMATIC)) {
             check = 0;
-        } else if (currentAtom.getFormalCharge() == 1 /*&& currentAtom.getSymbol().equals("C")*/) {
+        } else if (currentAtom.getFormalCharge() == 1 /*
+                                                       * &&
+                                                       * currentAtom.getSymbol
+                                                       * ().equals("C")
+                                                       */) {
             check = 0;
         } else if (currentAtom.getFormalCharge() == -1) {
-			//// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
-		    int counterOfPi = 0;
+            //// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
+            int counterOfPi = 0;
             for (IAtom atom : atoms) {
                 if (ac.getMaximumBondOrder(atom) != IBond.Order.SINGLE) {
                     counterOfPi++;
                 }
             }
-		    if(counterOfPi > 0) check = 0;
-        }else {
-			int se = ac.getConnectedSingleElectronsCount(currentAtom);
-			if (se == 1) {
-				check = 0;  //// DETECTION of radicals
-			}else if (ac.getConnectedLonePairsCount(currentAtom) > 0
-				/*&& (currentAtom.getSymbol().equals("N")*/) {
-				check = 0;  //// DETECTION of  lone pair
-			}else {
+            if (counterOfPi > 0) check = 0;
+        } else {
+            int se = ac.getConnectedSingleElectronsCount(currentAtom);
+            if (se == 1) {
+                check = 0; //// DETECTION of radicals
+            } else if (ac.getConnectedLonePairsCount(currentAtom) > 0
+            /* && (currentAtom.getSymbol().equals("N") */) {
+                check = 0; //// DETECTION of  lone pair
+            } else {
                 int highOrderBondCount = 0;
-			    for (int j = 0; j < atoms.size(); j++) {
-					IBond bond = bonds.get(j);
-					if (bond == null || bond.getOrder() != IBond.Order.SINGLE) {
-					    highOrderBondCount++;
-					} else {
+                for (int j = 0; j < atoms.size(); j++) {
+                    IBond bond = bonds.get(j);
+                    if (bond == null || bond.getOrder() != IBond.Order.SINGLE) {
+                        highOrderBondCount++;
+                    } else {
                     }
-			    }
-			    if (highOrderBondCount == 1) {
-			    	check = 0;
-			    } else if (highOrderBondCount > 1) {
-			    	check = 1;
-			    }
-			}
+                }
+                if (highOrderBondCount == 1) {
+                    check = 0;
+                } else if (highOrderBondCount > 1) {
+                    check = 1;
+                }
+            }
         }
         return check;
     }
 }
-

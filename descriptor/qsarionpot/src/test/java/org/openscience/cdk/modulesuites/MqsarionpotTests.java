@@ -31,11 +31,8 @@ import org.openscience.cdk.qsar.descriptors.molecular.IPMolecularLearningDescrip
  *
  * @cdk.module  test-qsarionpot
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    QsarionpotCoverageTest.class,
-    IPAtomicLearningDescriptorTest.class,
-    IPBondLearningDescriptorTest.class,
-    IPMolecularLearningDescriptorTest.class
-})
-public class MqsarionpotTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {QsarionpotCoverageTest.class, IPAtomicLearningDescriptorTest.class,
+        IPBondLearningDescriptorTest.class, IPMolecularLearningDescriptorTest.class})
+public class MqsarionpotTests {
+}

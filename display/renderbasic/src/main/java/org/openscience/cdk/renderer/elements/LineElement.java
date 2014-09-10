@@ -43,7 +43,7 @@ public class LineElement implements IRenderingElement {
     public final double width;
 
     /** The color of the line. **/
-    public final Color color;
+    public final Color  color;
 
     /**
      * Make a line element.
@@ -56,10 +56,8 @@ public class LineElement implements IRenderingElement {
      * @param color the color of the line
      */
     @TestMethod("testConstructor")
-    public LineElement(
-          double firstPointX, double firstPointY,
-          double secondPointX, double secondPointY,
-          double width, Color color) {
+    public LineElement(double firstPointX, double firstPointY, double secondPointX, double secondPointY, double width,
+            Color color) {
         this.firstPointX = firstPointX;
         this.firstPointY = firstPointY;
         this.secondPointX = secondPointX;
@@ -69,7 +67,7 @@ public class LineElement implements IRenderingElement {
     }
 
     /** {@inheritDoc} **/
-	@TestMethod("testAccept")
+    @TestMethod("testAccept")
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }

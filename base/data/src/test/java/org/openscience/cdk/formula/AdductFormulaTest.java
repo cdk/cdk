@@ -36,15 +36,16 @@ import org.openscience.cdk.interfaces.IMolecularFormula;
  */
 public class AdductFormulaTest extends AbstractAdductFormulaTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setBuilder(DefaultChemObjectBuilder.getInstance());
     }
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdductFormula() {
         IAdductFormula mfS = new AdductFormula();
@@ -52,10 +53,10 @@ public class AdductFormulaTest extends AbstractAdductFormulaTest {
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
     @Test
     public void testAdductFormula_IMolecularFormula() {
         IAdductFormula mfS = new AdductFormula(getBuilder().newInstance(IMolecularFormula.class));

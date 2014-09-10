@@ -33,102 +33,73 @@ public class DescriptorValueTest extends CDKTestCase {
         super();
     }
 
-	private final static String DESC_REF = "bla";
-	private final static String DESC_IMPL_TITLE = "bla2";
-	private final static String DESC_IMPL_VENDOR = "bla3";
-	private final static String DESC_IMPL_ID = "bla4";
+    private final static String DESC_REF         = "bla";
+    private final static String DESC_IMPL_TITLE  = "bla2";
+    private final static String DESC_IMPL_VENDOR = "bla3";
+    private final static String DESC_IMPL_ID     = "bla4";
 
     @Test
     public void testDescriptorValue_DescriptorSpecification_arrayString_arrayObject_IDescriptorResult_arrayString() {
-        DescriptorSpecification spec = new DescriptorSpecification(
-                DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-        );
-        DescriptorValue value = new DescriptorValue(
-                spec, new String[0], new Object[0],
-                new DoubleResult(0.7),
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], new DoubleResult(0.7),
                 new String[]{"bla"});
         Assert.assertNotNull(value);
     }
 
     @Test
     public void testGetValue() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" });
-		Assert.assertEquals(doubleVal, value.getValue());
-	}
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        Assert.assertEquals(doubleVal, value.getValue());
+    }
 
     @Test
     public void testGetSpecification() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" });
-		Assert.assertEquals(spec, value.getSpecification());
-	}
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        Assert.assertEquals(spec, value.getSpecification());
+    }
 
     @Test
     public void testGetParameters() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" });
-		Assert.assertEquals(0, value.getParameters().length);
-	}
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        Assert.assertEquals(0, value.getParameters().length);
+    }
 
     @Test
     public void testGetParameterNames() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" });
-		Assert.assertEquals(0, value.getParameterNames().length);
-	}
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        Assert.assertEquals(0, value.getParameterNames().length);
+    }
 
     @Test
     public void testGetNames() {
-		DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" });
-		Assert.assertEquals(1, value.getNames().length);
-	}
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"});
+        Assert.assertEquals(1, value.getNames().length);
+    }
 
     @Test
     public void testGetException() {
-       DescriptorSpecification spec = new DescriptorSpecification(
-	        DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID, DESC_IMPL_VENDOR
-		);
-		DoubleResult doubleVal = new DoubleResult(0.7);
-		DescriptorValue value = new DescriptorValue(
-			spec, new String[0], new Object[0],
-			doubleVal,
-			new String[]{ "bla" },
-            new CDKException("A test exception")
-        );
-        Assert.assertEquals("org.openscience.cdk.exception.CDKException: A test exception", value.getException().toString());
+        DescriptorSpecification spec = new DescriptorSpecification(DESC_REF, DESC_IMPL_TITLE, DESC_IMPL_ID,
+                DESC_IMPL_VENDOR);
+        DoubleResult doubleVal = new DoubleResult(0.7);
+        DescriptorValue value = new DescriptorValue(spec, new String[0], new Object[0], doubleVal, new String[]{"bla"},
+                new CDKException("A test exception"));
+        Assert.assertEquals("org.openscience.cdk.exception.CDKException: A test exception", value.getException()
+                .toString());
     }
 }
-
-

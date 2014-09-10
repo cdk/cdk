@@ -37,15 +37,15 @@ import java.io.InputStream;
  */
 public class IteratingPCCompoundASNReaderTest extends CDKTestCase {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(IteratingPCCompoundASNReaderTest.class);
 
-    @Test public void testList() throws Exception {
+    @Test
+    public void testList() throws Exception {
         String filename = "data/asn/pubchem/list.asn";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(
-            ins, DefaultChemObjectBuilder.getInstance());
+        IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(ins,
+                DefaultChemObjectBuilder.getInstance());
 
         int molCount = 0;
         while (reader.hasNext()) {

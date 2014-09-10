@@ -30,11 +30,13 @@ public class StructgenCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "structgen.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, StructgenCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 }

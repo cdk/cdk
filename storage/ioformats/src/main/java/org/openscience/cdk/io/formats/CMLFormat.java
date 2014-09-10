@@ -32,88 +32,91 @@ import org.openscience.cdk.tools.DataFeatures;
 @TestClass("org.openscience.cdk.io.formats.CMLFormatTest")
 public class CMLFormat extends SimpleChemFormatMatcher implements IChemFormatMatcher {
 
-	private static IResourceFormat myself = null;
+    private static IResourceFormat myself = null;
 
     public CMLFormat() {}
 
     @TestMethod("testResourceFormatSet")
     public static IResourceFormat getInstance() {
-    	if (myself == null) myself = new CMLFormat();
-    	return myself;
+        if (myself == null) myself = new CMLFormat();
+        return myself;
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetFormatName")
     public String getFormatName() {
         return "Chemical Markup Language";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetMIMEType")
     public String getMIMEType() {
         return "chemical/x-cml";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetPreferredNameExtension")
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetNameExtensions")
     public String[] getNameExtensions() {
         return new String[]{"cml", "xml"};
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetReaderClassName")
     public String getReaderClassName() {
-      return "org.openscience.cdk.io.CMLReader";
+        return "org.openscience.cdk.io.CMLReader";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testGetWriterClassName")
     public String getWriterClassName() {
-      return "org.openscience.cdk.io.CMLWriter";
+        return "org.openscience.cdk.io.CMLWriter";
     }
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testMatches")
     public boolean matches(int lineNumber, String line) {
-        if ((line.indexOf("http://www.xml-cml.org/schema") != -1) ||
-            (line.indexOf("<atom") != -1) ||
-            (line.indexOf("<molecule") != -1) ||
-            (line.indexOf("<reaction") != -1) ||
-            (line.indexOf("<cml") != -1) ||
-            (line.indexOf("<bond") != -1)) {
+        if ((line.indexOf("http://www.xml-cml.org/schema") != -1) || (line.indexOf("<atom") != -1)
+                || (line.indexOf("<molecule") != -1) || (line.indexOf("<reaction") != -1)
+                || (line.indexOf("<cml") != -1) || (line.indexOf("<bond") != -1)) {
             return true;
         }
         return false;
     }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testIsXMLBased")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testIsXMLBased")
     public boolean isXMLBased() {
-		return true;
-	}
+        return true;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetSupportedDataFeatures")
-	public int getSupportedDataFeatures() {
-		return DataFeatures.HAS_2D_COORDINATES |
-               DataFeatures.HAS_3D_COORDINATES |
-               DataFeatures.HAS_ATOM_PARTIAL_CHARGES |
-               DataFeatures.HAS_ATOM_FORMAL_CHARGES |
-               DataFeatures.HAS_ATOM_MASS_NUMBERS |
-               DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS |
-               DataFeatures.HAS_GRAPH_REPRESENTATION |
-               DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
-	}
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetSupportedDataFeatures")
+    public int getSupportedDataFeatures() {
+        return DataFeatures.HAS_2D_COORDINATES | DataFeatures.HAS_3D_COORDINATES
+                | DataFeatures.HAS_ATOM_PARTIAL_CHARGES | DataFeatures.HAS_ATOM_FORMAL_CHARGES
+                | DataFeatures.HAS_ATOM_MASS_NUMBERS | DataFeatures.HAS_ATOM_ISOTOPE_NUMBERS
+                | DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
+    }
 
-    /** {@inheritDoc} */ @Override
-	@TestMethod("testGetRequiredDataFeatures")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetRequiredDataFeatures")
     public int getRequiredDataFeatures() {
-		return DataFeatures.NONE;
-	}
+        return DataFeatures.NONE;
+    }
 }

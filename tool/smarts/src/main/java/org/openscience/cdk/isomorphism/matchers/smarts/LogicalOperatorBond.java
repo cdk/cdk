@@ -30,24 +30,25 @@ import org.openscience.cdk.isomorphism.matchers.IQueryBond;
  * @cdk.keyword SMARTS
  */
 public class LogicalOperatorBond extends SMARTSBond {
-	private static final long serialVersionUID = 7508020488830371461L;
 
-	/**
-	 * Left child
-	 */
-	private IQueryBond left;
+    private static final long serialVersionUID = 7508020488830371461L;
+
+    /**
+     * Left child
+     */
+    private IQueryBond        left;
 
     /**
      * Name of the operator
      */
-    private String operator;
+    private String            operator;
 
     /**
      * Right child
      */
-    private IQueryBond right;
+    private IQueryBond        right;
 
-    public LogicalOperatorBond(IChemObjectBuilder builder){
+    public LogicalOperatorBond(IChemObjectBuilder builder) {
         super(builder);
     }
 
@@ -76,28 +77,28 @@ public class LogicalOperatorBond extends SMARTSBond {
     }
 
     public boolean matches(IBond bond) {
-    	boolean matchesLeft = left.matches(bond);
-    	if (right != null) {
-    		boolean matchesRight = right.matches(bond);
-    		if ("and".equals(operator)) {
-    			return matchesLeft && matchesRight;
-    		} else if ("or".equals(operator)) {
-    			return matchesLeft || matchesRight;
-    		} else {
-    			return false;
-    		}
-    	} else {
-    		if ("not".equals(operator)) {
-    			return (!matchesLeft);
-    		} else {
-    			return matchesLeft;
-    		}
-    	}
+        boolean matchesLeft = left.matches(bond);
+        if (right != null) {
+            boolean matchesRight = right.matches(bond);
+            if ("and".equals(operator)) {
+                return matchesLeft && matchesRight;
+            } else if ("or".equals(operator)) {
+                return matchesLeft || matchesRight;
+            } else {
+                return false;
+            }
+        } else {
+            if ("not".equals(operator)) {
+                return (!matchesLeft);
+            } else {
+                return matchesLeft;
+            }
+        }
     }
 
     public void setAtoms(IAtom[] atoms) {
-    	super.setAtoms(atoms);
-    	((IBond)left).setAtoms(atoms);
-    	if (right != null) ((IBond)right).setAtoms(atoms);
+        super.setAtoms(atoms);
+        ((IBond) left).setAtoms(atoms);
+        if (right != null) ((IBond) right).setAtoms(atoms);
     }
 }

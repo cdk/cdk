@@ -48,7 +48,7 @@ public class MCSPlus {
     /**
     * Default constructor added
     */
-    public MCSPlus(){
+    public MCSPlus() {
 
     }
 
@@ -84,7 +84,8 @@ public class MCSPlus {
      * @return
      * @throws CDKException
      */
-    protected List<List<Integer>> getOverlaps(IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds) throws CDKException {
+    protected List<List<Integer>> getOverlaps(IAtomContainer ac1, IAtomContainer ac2, boolean shouldMatchBonds)
+            throws CDKException {
         Stack<List<Integer>> maxCliqueSet = null;
         List<List<Integer>> mappings = new ArrayList<List<Integer>>();
         try {
@@ -94,16 +95,16 @@ public class MCSPlus {
             List<Integer> C_edges = gcg.getCEgdes();
             List<Integer> D_edges = gcg.getDEgdes();
 
-//            System.err.println("**************************************************");
-//            System.err.println("C_edges: " + C_edges.size());
-//            System.out.println("D_edges: " + D_edges.size());
+            //            System.err.println("**************************************************");
+            //            System.err.println("C_edges: " + C_edges.size());
+            //            System.out.println("D_edges: " + D_edges.size());
 
             BKKCKCF init = new BKKCKCF(comp_graph_nodes, C_edges, D_edges);
             maxCliqueSet = init.getMaxCliqueSet();
 
-//            System.err.println("**************************************************");
-//            System.err.println("Max_Cliques_Set: " + maxCliqueSet.size());
-//            System.out.println("Best Clique Size: " + init.getBestCliqueSize());
+            //            System.err.println("**************************************************");
+            //            System.err.println("Max_Cliques_Set: " + maxCliqueSet.size());
+            //            System.out.println("Best Clique Size: " + init.getBestCliqueSize());
 
             //clear all the compatibility graph content
             gcg.clear();

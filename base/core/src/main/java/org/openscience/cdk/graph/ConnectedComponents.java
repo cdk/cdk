@@ -27,13 +27,13 @@ public final class ConnectedComponents {
     private final int[][] g;
 
     /** Stores the component of each vertex. */
-    private final int[] component;
+    private final int[]   component;
 
     /** The number of components. */
-    private int components;
+    private int           components;
 
     /** The number remaining vertices. */
-    private int remaining;
+    private int           remaining;
 
     /**
      * Compute the connected components of an adjacency list, {@code g}.
@@ -45,8 +45,7 @@ public final class ConnectedComponents {
         this.component = new int[g.length];
         this.remaining = g.length;
         for (int i = 0; remaining > 0 && i < g.length; i++)
-            if (component[i] == 0)
-                visit(i, ++components);
+            if (component[i] == 0) visit(i, ++components);
     }
 
     /**
@@ -59,8 +58,7 @@ public final class ConnectedComponents {
         remaining--;
         component[v] = c;
         for (int w : g[v])
-            if (component[w] == 0)
-                visit(w, c);
+            if (component[w] == 0) visit(w, c);
     }
 
     /**

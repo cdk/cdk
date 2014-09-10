@@ -44,8 +44,7 @@ import static org.junit.Assert.assertThat;
  */
 public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
 
     public IFingerprinter getBitFingerprinter() {
         return new MACCSFingerprinter();
@@ -78,7 +77,6 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
         BitSet bs3 = printer.getBitFingerprint(mol3).asBitSet();
 
         Assert.assertEquals(166, printer.getSize());
-
 
         Assert.assertFalse(bs1.get(165));
         Assert.assertTrue(bs1.get(124));
@@ -128,7 +126,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
     public void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();
-        IAtomContainer subStructure   = bug706786_2();
+        IAtomContainer subStructure = bug706786_2();
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(superStructure);
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(subStructure);
@@ -137,12 +135,15 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
         IFingerprinter fpr = new MACCSFingerprinter();
         IBitFingerprint superBits = fpr.getBitFingerprint(superStructure);
-        IBitFingerprint subBits   = fpr.getBitFingerprint(subStructure);
+        IBitFingerprint subBits = fpr.getBitFingerprint(subStructure);
 
-        assertThat(superBits.asBitSet(),
-                   is(asBitSet(53, 56, 65, 71, 73, 88, 97, 100, 104, 111, 112, 126, 130, 136, 138, 139, 140, 142, 143, 144, 145, 148, 149, 151, 153, 156, 158, 159, 162, 163, 164)));
-        assertThat(subBits.asBitSet(),
-                   is(asBitSet(56, 97, 100, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 162, 163, 164)));
+        assertThat(
+                superBits.asBitSet(),
+                is(asBitSet(53, 56, 65, 71, 73, 88, 97, 100, 104, 111, 112, 126, 130, 136, 138, 139, 140, 142, 143,
+                        144, 145, 148, 149, 151, 153, 156, 158, 159, 162, 163, 164)));
+        assertThat(
+                subBits.asBitSet(),
+                is(asBitSet(56, 97, 100, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 162, 163, 164)));
     }
 
 }

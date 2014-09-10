@@ -36,11 +36,10 @@ public class ProteinBuilderToolTest extends CDKTestCase {
         Assert.assertNotNull(protein);
         Assert.assertEquals(4, protein.getMonomerCount());
         Assert.assertEquals(1, protein.getStrandCount());
-        Assert.assertEquals(18+1, protein.getAtomCount());
+        Assert.assertEquals(18 + 1, protein.getAtomCount());
         // 1=terminal oxygen
-        Assert.assertEquals(14+3+1, protein.getBondCount());
+        Assert.assertEquals(14 + 3 + 1, protein.getBondCount());
         // 3 = extra back bone bonds, 1=bond to terminal oxygen
     }
 
 }
-

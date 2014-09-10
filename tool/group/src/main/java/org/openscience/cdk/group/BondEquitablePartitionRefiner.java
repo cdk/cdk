@@ -36,8 +36,8 @@ import org.openscience.cdk.annotations.TestMethod;
  *
  */
 @TestClass("BondEquitablePartitionRefinerTest")
-public class BondEquitablePartitionRefiner extends
-        AbstractEquitablePartitionRefiner implements IEquitablePartitionRefiner {
+public class BondEquitablePartitionRefiner extends AbstractEquitablePartitionRefiner implements
+        IEquitablePartitionRefiner {
 
     /**
      * A reference to the discrete refiner, which has the connectivity info.

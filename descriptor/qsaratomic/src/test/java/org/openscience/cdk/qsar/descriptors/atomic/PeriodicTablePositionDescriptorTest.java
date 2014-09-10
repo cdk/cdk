@@ -35,18 +35,18 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class PeriodicTablePositionDescriptorTest extends AtomicDescriptorTest {
 
-	public  PeriodicTablePositionDescriptorTest() {}
+    public PeriodicTablePositionDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(PeriodicTablePositionDescriptor.class);
+        setDescriptor(PeriodicTablePositionDescriptor.class);
     }
 
-	@Test
+    @Test
     public void testPeriodicTablePositionDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IAtomicDescriptor descriptor  = new PeriodicTablePositionDescriptor();
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CCCl"); //
-		Assert.assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(2),mol).getValue()).intValue());
-	}
+        IAtomicDescriptor descriptor = new PeriodicTablePositionDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CCCl"); //
+        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol.getAtom(2), mol).getValue()).intValue());
+    }
 }

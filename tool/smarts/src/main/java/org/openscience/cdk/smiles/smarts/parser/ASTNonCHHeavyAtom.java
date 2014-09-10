@@ -16,17 +16,17 @@ package org.openscience.cdk.smiles.smarts.parser;
  */
 
 class ASTNonCHHeavyAtom extends SimpleNode {
-  public ASTNonCHHeavyAtom(int id) {
-    super(id);
-  }
 
-  public ASTNonCHHeavyAtom(SMARTSParser p, int id) {
-    super(p, id);
-  }
+    public ASTNonCHHeavyAtom(int id) {
+        super(id);
+    }
 
+    public ASTNonCHHeavyAtom(SMARTSParser p, int id) {
+        super(p, id);
+    }
 
-  /** Accept the visitor. **/
-  public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
-    return visitor.visit(this, data);
-  }
+    /** Accept the visitor. **/
+    public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
+        return visitor.visit(this, data);
+    }
 }

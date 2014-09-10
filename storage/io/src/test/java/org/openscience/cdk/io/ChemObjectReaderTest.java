@@ -36,7 +36,7 @@ import org.junit.Test;
 public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
 
     protected static IChemObjectReader chemObjectIO;
-    protected static String testFile;
+    protected static String            testFile;
 
     public static void setChemObjectReader(IChemObjectReader aChemObjectReader, String testFile) {
         ChemObjectIOTest.setChemObjectIO(aChemObjectReader);
@@ -44,13 +44,15 @@ public abstract class ChemObjectReaderTest extends ChemObjectIOTest {
         ChemObjectReaderTest.testFile = testFile;
     }
 
-    @Test public void testSetReader_InputStream() throws Exception {
+    @Test
+    public void testSetReader_InputStream() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         chemObjectIO.setReader(ins);
     }
 
-    @Test public void testSetReader_Reader() throws Exception {
+    @Test
+    public void testSetReader_Reader() throws Exception {
         Assert.assertNotNull("No test file has been set!", testFile);
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         chemObjectIO.setReader(new InputStreamReader(ins));

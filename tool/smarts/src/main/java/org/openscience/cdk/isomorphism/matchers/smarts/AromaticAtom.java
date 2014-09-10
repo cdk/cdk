@@ -1,4 +1,4 @@
- /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,38 +22,42 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.interfaces.IChemObjectBuilder;
 
- /**
- * This matcher any aromatic atom. This assumes that aromaticity in the molecule
- * has been perceived.
- *
- * @cdk.module  smarts
- * @cdk.githash
- * @cdk.keyword SMARTS
- */
+/**
+* This matcher any aromatic atom. This assumes that aromaticity in the molecule
+* has been perceived.
+*
+* @cdk.module  smarts
+* @cdk.githash
+* @cdk.keyword SMARTS
+*/
 public class AromaticAtom extends SMARTSAtom {
 
     private static final long serialVersionUID = -3345204886992669829L;
+
     /**
      * Creates a new instance
      *
      */
     public AromaticAtom(IChemObjectBuilder builder) {
         super(builder);
-    	setFlag(CDKConstants.ISAROMATIC, true);
+        setFlag(CDKConstants.ISAROMATIC, true);
     }
 
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
-    	return atom.getFlag(CDKConstants.ISAROMATIC);
+        return atom.getFlag(CDKConstants.ISAROMATIC);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
     public String toString() {
-		return "AromaticAtom()";
+        return "AromaticAtom()";
     }
 }
-

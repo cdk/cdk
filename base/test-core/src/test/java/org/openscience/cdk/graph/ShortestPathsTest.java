@@ -133,7 +133,7 @@ public class ShortestPathsTest {
     public void testIsPrecedingPathTo() {
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
         int[][] graph = GraphUtil.toAdjList(benzene);
-        int[]   order = new int[]{0,1,2,3,4,5};
+        int[] order = new int[]{0, 1, 2, 3, 4, 5};
         ShortestPaths paths = new ShortestPaths(graph, benzene, 0, order);
         assertFalse(paths.isPrecedingPathTo(1));
         assertFalse(paths.isPrecedingPathTo(2));
@@ -233,14 +233,8 @@ public class ShortestPathsTest {
         ShortestPaths paths = new ShortestPaths(pentadecaspiro, pentadecaspiro.getAtom(0));
 
         // first path is determined by storage order and will always be the same
-        int[] expected = new int[]{0, 2, 6, 66, 10, 14, 68,
-                18, 22, 70, 26, 30, 72,
-                34, 38, 74, 42, 46, 76,
-                50, 54, 78, 58, 62, 80,
-                64, 60, 79, 56, 52, 77,
-                48, 44, 75, 40, 36, 73,
-                32, 28, 71, 24, 20, 69,
-                16, 12, 67, 8, 4, 1};
+        int[] expected = new int[]{0, 2, 6, 66, 10, 14, 68, 18, 22, 70, 26, 30, 72, 34, 38, 74, 42, 46, 76, 50, 54, 78,
+                58, 62, 80, 64, 60, 79, 56, 52, 77, 48, 44, 75, 40, 36, 73, 32, 28, 71, 24, 20, 69, 16, 12, 67, 8, 4, 1};
 
         int[] path = paths.pathTo(pentadecaspiro.getAtom(1));
         assertArrayEquals(expected, path);
@@ -266,14 +260,8 @@ public class ShortestPathsTest {
         ShortestPaths paths = new ShortestPaths(pentadecaspiro, pentadecaspiro.getAtom(0));
 
         // first path is determined by storage order and will always be the same
-        int[] expected = new int[]{0, 2, 6, 66, 10, 14, 68,
-                18, 22, 70, 26, 30, 72,
-                34, 38, 74, 42, 46, 76,
-                50, 54, 78, 58, 62, 80,
-                64, 60, 79, 56, 52, 77,
-                48, 44, 75, 40, 36, 73,
-                32, 28, 71, 24, 20, 69,
-                16, 12, 67, 8, 4, 1};
+        int[] expected = new int[]{0, 2, 6, 66, 10, 14, 68, 18, 22, 70, 26, 30, 72, 34, 38, 74, 42, 46, 76, 50, 54, 78,
+                58, 62, 80, 64, 60, 79, 56, 52, 77, 48, 44, 75, 40, 36, 73, 32, 28, 71, 24, 20, 69, 16, 12, 67, 8, 4, 1};
 
         int[] path = paths.pathTo(1);
         assertArrayEquals(expected, path);
@@ -390,7 +378,6 @@ public class ShortestPathsTest {
 
     }
 
-
     @Test
     public void testPathsTo_Atom_Spiroundecane() {
 
@@ -406,12 +393,8 @@ public class ShortestPathsTest {
 
         // path order is determined by storage order, given the same input,
         // the output order will never change
-        int[][] expected = new int[][]{
-                {1, 0, 5, 4, 6, 10, 9},
-                {1, 2, 3, 4, 6, 10, 9},
-                {1, 0, 5, 4, 7, 8, 9},
-                {1, 2, 3, 4, 7, 8, 9}
-        };
+        int[][] expected = new int[][]{{1, 0, 5, 4, 6, 10, 9}, {1, 2, 3, 4, 6, 10, 9}, {1, 0, 5, 4, 7, 8, 9},
+                {1, 2, 3, 4, 7, 8, 9}};
 
         assertArrayEquals(expected, paths.pathsTo(spiroundecane.getAtom(9)));
 
@@ -432,12 +415,8 @@ public class ShortestPathsTest {
 
         // path order is determined by storage order, given the same input,
         // the output order will never change
-        int[][] expected = new int[][]{
-                {1, 0, 5, 4, 6, 10, 9},
-                {1, 2, 3, 4, 6, 10, 9},
-                {1, 0, 5, 4, 7, 8, 9},
-                {1, 2, 3, 4, 7, 8, 9}
-        };
+        int[][] expected = new int[][]{{1, 0, 5, 4, 6, 10, 9}, {1, 2, 3, 4, 6, 10, 9}, {1, 0, 5, 4, 7, 8, 9},
+                {1, 2, 3, 4, 7, 8, 9}};
 
         assertArrayEquals(expected, paths.pathsTo(9));
 
@@ -454,7 +433,6 @@ public class ShortestPathsTest {
         assertArrayEquals(expected, paths.pathsTo(3));
 
     }
-
 
     @Test
     public void testPathsTo_Atom_Norbornane() {
@@ -515,7 +493,6 @@ public class ShortestPathsTest {
             }
 
         }
-
 
     }
 
@@ -627,7 +604,6 @@ public class ShortestPathsTest {
         assertArrayEquals(new IAtom[]{a, b, c, d}, paths.atomsTo(3));
         assertArrayEquals(new IAtom[]{a, b, e}, paths.atomsTo(4));
 
-
     }
 
     /**
@@ -669,7 +645,6 @@ public class ShortestPathsTest {
         assertArrayEquals(new IAtom[]{c1, c2, c3, c4}, paths.atomsTo(3));
 
     }
-
 
     @Test
     public void testAtomsTo_Atom_Disconnected() {
@@ -889,7 +864,6 @@ public class ShortestPathsTest {
 
     }
 
-
     @Test
     public void testNPathsTo_Atom_Norbornane() {
 
@@ -969,7 +943,7 @@ public class ShortestPathsTest {
         assertThat(paths.nPathsTo(pentadecaspiro.getAtom(71)), is(8192));
         assertThat(paths.nPathsTo(pentadecaspiro.getAtom(69)), is(16384));
         assertThat(paths.nPathsTo(pentadecaspiro.getAtom(67)), is(32768));
-        assertThat(paths.nPathsTo(pentadecaspiro.getAtom(1)),  is(65536));
+        assertThat(paths.nPathsTo(pentadecaspiro.getAtom(1)), is(65536));
     }
 
     @Test
@@ -1129,7 +1103,8 @@ public class ShortestPathsTest {
 
     }
 
-    @Test public void testDistanceTo_Int_Benzene_limited() {
+    @Test
+    public void testDistanceTo_Int_Benzene_limited() {
         IAtomContainer benzene = MoleculeFactory.makeBenzene();
 
         ShortestPaths paths = new ShortestPaths(GraphUtil.toAdjList(benzene), benzene, 0, 2, null);

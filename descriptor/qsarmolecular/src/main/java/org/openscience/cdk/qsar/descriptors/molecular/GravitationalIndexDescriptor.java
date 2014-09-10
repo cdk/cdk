@@ -40,7 +40,6 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
 
-
 /**
  * IDescriptor characterizing the mass distribution of the molecule.
  * Described by Katritzky et al. {@cdk.cite KAT96}.
@@ -87,10 +86,10 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.GravitationalIndexDescriptorTest")
 public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(GravitationalIndexDescriptor.class);
 
     private class pair {
+
         int x, y;
 
         public pair() {
@@ -99,21 +98,16 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
     }
 
-    private static final String[] names = {
-            "GRAV-1", "GRAV-2", "GRAV-3",
-            "GRAVH-1", "GRAVH-2", "GRAVH-3",
-            "GRAV-4", "GRAV-5", "GRAV-6"
-    };
+    private static final String[] names = {"GRAV-1", "GRAV-2", "GRAV-3", "GRAVH-1", "GRAVH-2", "GRAVH-3", "GRAV-4",
+            "GRAV-5", "GRAV-6"          };
 
-    public GravitationalIndexDescriptor() {
-    }
+    public GravitationalIndexDescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#gravitationalIndex", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -140,7 +134,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -156,7 +150,6 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         return (null);
     }
 
-
     /**
      * Gets the parameterType attribute of the GravitationalIndexDescriptor object.
      *
@@ -168,12 +161,13 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         return (null);
     }
 
-     private DescriptorValue getDummyDescriptorValue(Exception e) {
+    private DescriptorValue getDummyDescriptorValue(Exception e) {
         int ndesc = getDescriptorNames().length;
         DoubleArrayResult results = new DoubleArrayResult(ndesc);
-        for (int i = 0; i < ndesc; i++) results.add(Double.NaN);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), results, getDescriptorNames(), e);
+        for (int i = 0; i < ndesc; i++)
+            results.add(Double.NaN);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), results,
+                getDescriptorNames(), e);
     }
 
     /**
@@ -231,9 +225,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 return getDummyDescriptorValue(new CDKException("GravitationalIndex: Only handles 2 center bonds"));
             }
 
-            if (b.getAtom(0).getSymbol().equals("H") ||
-                    b.getAtom(1).getSymbol().equals("H")) continue;
-
+            if (b.getAtom(0).getSymbol().equals("H") || b.getAtom(1).getSymbol().equals("H")) continue;
 
             mass1 = factory.getMajorIsotope(b.getAtom(0).getSymbol()).getMassNumber();
             mass2 = factory.getMajorIsotope(b.getAtom(1).getSymbol()).getMassNumber();
@@ -259,7 +251,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         }
         int npair = x.size() * (x.size() - 1) / 2;
         pair[] p = new pair[npair];
-        for (int i = 0; i < npair; i++) p[i] = new pair();
+        for (int i = 0; i < npair; i++)
+            p[i] = new pair();
         int pcount = 0;
         for (int i = 0; i < x.size() - 1; i++) {
             for (int j = i + 1; j < x.size(); j++) {
@@ -267,8 +260,7 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
                 int a = x.get(i);
                 int b = x.get(j);
                 for (int k = 0; k < pcount; k++) {
-                    if ((p[k].x == a && p[k].y == b) ||
-                            (p[k].y == a && p[k].x == b)) present = 1;
+                    if ((p[k].x == a && p[k].y == b) || (p[k].y == a && p[k].x == b)) present = 1;
                 }
                 if (present == 1) continue;
                 p[pcount].x = a;
@@ -295,7 +287,6 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
             allheavysum += (mass1 * mass2) / dist;
         }
 
-
         DoubleArrayResult retval = new DoubleArrayResult(9);
         retval.add(heavysum);
         retval.add(Math.sqrt(heavysum));
@@ -309,8 +300,8 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
         retval.add(Math.sqrt(allheavysum));
         retval.add(Math.pow(allheavysum, 1.0 / 3.0));
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -330,5 +321,3 @@ public class GravitationalIndexDescriptor extends AbstractMolecularDescriptor im
     }
 
 }
-
-

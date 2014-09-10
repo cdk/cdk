@@ -141,30 +141,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.CPSADescriptorTest")
 public class CPSADescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {
-            "PPSA-1", "PPSA-2", "PPSA-3",
-            "PNSA-1", "PNSA-2", "PNSA-3",
-            "DPSA-1", "DPSA-2", "DPSA-3",
-            "FPSA-1", "FPSA-2", "FPSA-3",
-            "FNSA-1", "FNSA-2", "FNSA-3",
-            "WPSA-1", "WPSA-2", "WPSA-3",
-            "WNSA-1", "WNSA-2", "WNSA-3",
-            "RPCG", "RNCG", "RPCS", "RNCS",
-            "THSA", "TPSA", "RHSA", "RPSA"
-    };
+    private static final String[] names  = {"PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1",
+            "DPSA-2", "DPSA-3", "FPSA-1", "FPSA-2", "FPSA-3", "FNSA-1", "FNSA-2", "FNSA-3", "WPSA-1", "WPSA-2",
+            "WPSA-3", "WNSA-1", "WNSA-2", "WNSA-3", "RPCG", "RNCG", "RPCS", "RNCS", "THSA", "TPSA", "RHSA", "RPSA"};
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
+    private static ILoggingTool   logger = LoggingToolFactory.createLoggingTool(CPSADescriptor.class);
 
-    public CPSADescriptor() {
-    }
+    public CPSADescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#CPSA",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -191,7 +179,7 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -206,7 +194,6 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         // no param names to return
         return (null);
     }
-
 
     /**
      * Gets the parameterType attribute of the CPSADescriptor object.
@@ -231,9 +218,10 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         DoubleArrayResult retval = new DoubleArrayResult();
 
         if (!GeometryUtil.has3DCoordinates(atomContainer)) {
-            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    retval, getDescriptorNames(), new CDKException("Molecule must have 3D coordinates"));
+            for (int i = 0; i < 29; i++)
+                retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                    getDescriptorNames(), new CDKException("Molecule must have 3D coordinates"));
         }
 
         IAtomContainer container;
@@ -241,17 +229,18 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             container = (IAtomContainer) atomContainer.clone();
         } catch (CloneNotSupportedException e) {
             logger.debug("Error during clone");
-             for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    retval, getDescriptorNames(), new CDKException("Error during clone"+e.getMessage()));
+            for (int i = 0; i < 29; i++)
+                retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                    getDescriptorNames(), new CDKException("Error during clone" + e.getMessage()));
         }
 
-//        IsotopeFactory factory = null;
-//        try {
-//            factory = IsotopeFactory.getInstance(container.getNewBuilder());
-//        } catch (Exception e) {
-//            logger.debug(e);
-//        }
+        //        IsotopeFactory factory = null;
+        //        try {
+        //            factory = IsotopeFactory.getInstance(container.getNewBuilder());
+        //        } catch (Exception e) {
+        //            logger.debug(e);
+        //        }
 
         GasteigerMarsiliPartialCharges peoe;
         try {
@@ -259,9 +248,10 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             peoe.assignGasteigerMarsiliSigmaPartialCharges(container, true);
         } catch (Exception e) {
             logger.debug("Error in assigning Gasteiger-Marsilli charges");
-            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    retval, getDescriptorNames(), new CDKException("Error in getting G-M charges"));
+            for (int i = 0; i < 29; i++)
+                retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                    getDescriptorNames(), new CDKException("Error in getting G-M charges"));
         }
 
         NumericalSurface surface;
@@ -270,10 +260,10 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
             surface.calculateSurface();
         } catch (NullPointerException npe) {
             logger.debug("Error in surface area calculation");
-            for (int i = 0; i < 29; i++) retval.add(Double.NaN);
-            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                    retval, getDescriptorNames(),
-                    new CDKException("Error in surface area calculation"));
+            for (int i = 0; i < 29; i++)
+                retval.add(Double.NaN);
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                    getDescriptorNames(), new CDKException("Error in surface area calculation"));
         }
 
         //double molecularWeight = mfa.getMass();
@@ -395,9 +385,8 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         retval.add(rhsa);
         retval.add(rpsa);
 
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -416,5 +405,3 @@ public class CPSADescriptor extends AbstractMolecularDescriptor implements IMole
         return new DoubleArrayResultType(29);
     }
 }
-
-

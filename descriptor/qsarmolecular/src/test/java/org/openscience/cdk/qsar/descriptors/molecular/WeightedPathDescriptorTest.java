@@ -44,12 +44,11 @@ import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 
 public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
 
-    public WeightedPathDescriptorTest() {
-    }
+    public WeightedPathDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(WeightedPathDescriptor.class);
+        setDescriptor(WeightedPathDescriptor.class);
     }
 
     @Test
@@ -99,7 +98,5 @@ public class WeightedPathDescriptorTest extends MolecularDescriptorTest {
         Assert.assertEquals(0, result.get(3), 0.000001);
         Assert.assertEquals(19.02049, result.get(4), 0.00001);
 
-
     }
 }
-

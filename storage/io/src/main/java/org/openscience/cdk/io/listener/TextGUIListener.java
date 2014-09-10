@@ -49,9 +49,9 @@ import org.openscience.cdk.io.setting.OptionIOSetting;
 public class TextGUIListener implements IReaderListener, IWriterListener {
 
     private BufferedReader in;
-    private PrintWriter out;
+    private PrintWriter    out;
 
-    private Importance level = Importance.HIGH;
+    private Importance     level = Importance.HIGH;
 
     public TextGUIListener(Importance level) {
         this.level = level;
@@ -68,7 +68,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
      */
     public void setOutputWriter(Writer writer) {
         if (writer instanceof PrintWriter) {
-            this.out = (PrintWriter)writer;
+            this.out = (PrintWriter) writer;
         } else if (writer == null) {
             this.out = null;
         } else {
@@ -81,7 +81,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
      */
     public void setInputReader(Reader reader) {
         if (reader instanceof BufferedReader) {
-            this.in = (BufferedReader)reader;
+            this.in = (BufferedReader) reader;
         } else if (reader == null) {
             this.in = null;
         } else {
@@ -106,7 +106,7 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
             // post the question
             this.out.print(setting.getQuestion());
             if (setting instanceof BooleanIOSetting) {
-                BooleanIOSetting boolSet = (BooleanIOSetting)setting;
+                BooleanIOSetting boolSet = (BooleanIOSetting) setting;
                 boolean set = boolSet.isSet();
                 if (set) {
                     this.out.print(" [Yn]");
@@ -114,12 +114,12 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                     this.out.print(" [yN]");
                 }
             } else if (setting instanceof OptionIOSetting) {
-                OptionIOSetting optionSet = (OptionIOSetting)setting;
+                OptionIOSetting optionSet = (OptionIOSetting) setting;
                 List<String> settings = optionSet.getOptions();
-                for (int i=0; i<settings.size(); i++) {
+                for (int i = 0; i < settings.size(); i++) {
                     this.out.println();
-                    String option = (String)settings.get(i);
-                    this.out.print((i+1) + ". " + option);
+                    String option = (String) settings.get(i);
+                    this.out.print((i + 1) + ". " + option);
                     if (option.equals(setting.getSetting())) {
                         this.out.print(" (Default)");
                     }
@@ -139,12 +139,13 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
                 boolean gotAnswer = false;
                 while (!gotAnswer) {
                     try {
-                        this.out.print("> "); this.out.flush();
+                        this.out.print("> ");
+                        this.out.flush();
                         String answer = in.readLine();
                         if (answer.length() == 0) {
                             // pressed ENTER -> take default
                         } else if (setting instanceof OptionIOSetting) {
-                            ((OptionIOSetting)setting).setSetting(Integer.parseInt(answer));
+                            ((OptionIOSetting) setting).setSetting(Integer.parseInt(answer));
                         } else if (setting instanceof BooleanIOSetting) {
                             if (answer.equalsIgnoreCase("n") || answer.equalsIgnoreCase("no")) {
                                 answer = "false";
@@ -171,6 +172,3 @@ public class TextGUIListener implements IReaderListener, IWriterListener {
     }
 
 }
-
-
-

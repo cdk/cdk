@@ -55,21 +55,21 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
         int firstLength = first == null ? 0 : first.length;
         int secondLength = second == null ? 0 : second.length;
         if (firstLength == secondLength) {
-            for (int i=0; i<firstLength; i++) {
+            for (int i = 0; i < firstLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], second[i]));
             }
         } else if (firstLength < secondLength) {
-            for (int i=0; i<firstLength; i++) {
+            for (int i = 0; i < firstLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], second[i]));
             }
-            for (int i=firstLength; i<secondLength; i++) {
+            for (int i = firstLength; i < secondLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, null, second[i]));
             }
         } else { // secondLength < firstLength
-            for (int i=0; i<secondLength; i++) {
+            for (int i = 0; i < secondLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], second[i]));
             }
-            for (int i=secondLength; i<firstLength; i++) {
+            for (int i = secondLength; i < firstLength; i++) {
                 totalDiff.addChild(BooleanDifference.construct("" + i, first[i], null));
             }
         }

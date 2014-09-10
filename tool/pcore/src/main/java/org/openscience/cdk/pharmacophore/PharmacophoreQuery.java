@@ -43,6 +43,7 @@ import java.util.List;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreQueryTest")
 public class PharmacophoreQuery extends QueryAtomContainer {
+
     private List<Object> exclusionVolumes;
 
     public PharmacophoreQuery() {
@@ -50,7 +51,6 @@ public class PharmacophoreQuery extends QueryAtomContainer {
         super(DefaultChemObjectBuilder.getInstance());
         exclusionVolumes = new ArrayList<Object>();
     }
-
 
     /**
      * String representation of this query.

@@ -41,4 +41,3 @@ public class DescriptorExceptionTest extends CDKTestCase {
     }
 
 }
-

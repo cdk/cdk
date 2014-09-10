@@ -39,30 +39,36 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class RDFCalculatorTest extends CDKTestCase {
 
-    @Test public void testRDFCalculator_double_double_double_double() {
+    @Test
+    public void testRDFCalculator_double_double_double_double() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
 
         Assert.assertNotNull(calculator);
     }
 
-    @Test public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
-        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
-            new IRDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
-                    return 1.0;
-                }
+    @Test
+    public void testRDFCalculator_double_double_double_double_RDFWeightFunction() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
+
+            public double calculate(org.openscience.cdk.interfaces.IAtom atom,
+                    org.openscience.cdk.interfaces.IAtom atom2) {
+                return 1.0;
             }
-        );
+        });
 
         Assert.assertNotNull(calculator);
     }
 
-    @Test public void testCalculate() {
+    @Test
+    public void testCalculate() {
         RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0);
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
-        Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
-        Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
-        h2mol.addAtom(h1); h2mol.addAtom(h2);
+        Atom h1 = new Atom("H");
+        h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
+        Atom h2 = new Atom("H");
+        h2.setPoint3d(new Point3d(0.5, 0.0, 0.0));
+        h2mol.addAtom(h1);
+        h2mol.addAtom(h2);
 
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
@@ -72,24 +78,28 @@ public class RDFCalculatorTest extends CDKTestCase {
 
         // test whether the RDFs are identical
         Assert.assertEquals(rdf1.length, rdf2.length);
-        for (int i=0; i<rdf1.length; i++) {
+        for (int i = 0; i < rdf1.length; i++) {
             Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
 
-    @Test public void testCalculate_RDFWeightFunction() {
-        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
-            new IRDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
-                    return 1.0;
-                }
+    @Test
+    public void testCalculate_RDFWeightFunction() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
+
+            public double calculate(org.openscience.cdk.interfaces.IAtom atom,
+                    org.openscience.cdk.interfaces.IAtom atom2) {
+                return 1.0;
             }
-        );
+        });
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
-        Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
-        Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
-        h2mol.addAtom(h1); h2mol.addAtom(h2);
+        Atom h1 = new Atom("H");
+        h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
+        Atom h2 = new Atom("H");
+        h2.setPoint3d(new Point3d(0.5, 0.0, 0.0));
+        h2mol.addAtom(h1);
+        h2mol.addAtom(h2);
 
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
@@ -99,26 +109,30 @@ public class RDFCalculatorTest extends CDKTestCase {
 
         // test whether the RDFs are identical
         Assert.assertEquals(rdf1.length, rdf2.length);
-        for (int i=0; i<rdf1.length; i++) {
+        for (int i = 0; i < rdf1.length; i++) {
             Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
 
-    @Test public void testCalculate_RDFWeightFunction2() {
-        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
-            new IRDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
-                    return atom.getCharge()*atom2.getCharge();
-                }
+    @Test
+    public void testCalculate_RDFWeightFunction2() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new IRDFWeightFunction() {
+
+            public double calculate(org.openscience.cdk.interfaces.IAtom atom,
+                    org.openscience.cdk.interfaces.IAtom atom2) {
+                return atom.getCharge() * atom2.getCharge();
             }
-        );
+        });
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
-        Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
-          h1.setCharge(+1.0);
-        Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
-          h2.setCharge(-1.0);
-        h2mol.addAtom(h1); h2mol.addAtom(h2);
+        Atom h1 = new Atom("H");
+        h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
+        h1.setCharge(+1.0);
+        Atom h2 = new Atom("H");
+        h2.setPoint3d(new Point3d(0.5, 0.0, 0.0));
+        h2.setCharge(-1.0);
+        h2mol.addAtom(h1);
+        h2mol.addAtom(h2);
 
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
@@ -128,26 +142,30 @@ public class RDFCalculatorTest extends CDKTestCase {
 
         // test whether the RDFs are identical
         Assert.assertEquals(rdf1.length, rdf2.length);
-        for (int i=0; i<rdf1.length; i++) {
+        for (int i = 0; i < rdf1.length; i++) {
             Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
 
     }
 
-    @Test public void testCalculate_With_Gauss() {
-        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3,
-            new IRDFWeightFunction() {
-                public double calculate(org.openscience.cdk.interfaces.IAtom atom, org.openscience.cdk.interfaces.IAtom atom2) {
-                    return atom.getCharge()*atom2.getCharge();
-                }
+    @Test
+    public void testCalculate_With_Gauss() {
+        RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3, new IRDFWeightFunction() {
+
+            public double calculate(org.openscience.cdk.interfaces.IAtom atom,
+                    org.openscience.cdk.interfaces.IAtom atom2) {
+                return atom.getCharge() * atom2.getCharge();
             }
-        );
+        });
         AtomContainer h2mol = new org.openscience.cdk.AtomContainer();
-        Atom h1 = new Atom("H"); h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
-          h1.setCharge(+1.0);
-        Atom h2 = new Atom("H"); h2.setPoint3d(new Point3d( 0.5, 0.0, 0.0));
-          h2.setCharge(-1.0);
-        h2mol.addAtom(h1); h2mol.addAtom(h2);
+        Atom h1 = new Atom("H");
+        h1.setPoint3d(new Point3d(-0.5, 0.0, 0.0));
+        h1.setCharge(+1.0);
+        Atom h2 = new Atom("H");
+        h2.setPoint3d(new Point3d(0.5, 0.0, 0.0));
+        h2.setCharge(-1.0);
+        h2mol.addAtom(h1);
+        h2mol.addAtom(h2);
 
         double[] rdf1 = calculator.calculate(h2mol, h1);
         double[] rdf2 = calculator.calculate(h2mol, h2);
@@ -157,9 +175,8 @@ public class RDFCalculatorTest extends CDKTestCase {
 
         // test whether the RDFs are identical
         Assert.assertEquals(rdf1.length, rdf2.length);
-        for (int i=0; i<rdf1.length; i++) {
+        for (int i = 0; i < rdf1.length; i++) {
             Assert.assertEquals(rdf1[i], rdf2[i], 0.00001);
         }
     }
 }
-

@@ -46,16 +46,19 @@ import org.openscience.cdk.silent.AtomContainer;
  */
 public class XYZWriterTest extends ChemObjectIOTest {
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setChemObjectIO(new XYZWriter());
     }
 
-    @Test public void testAccepts() throws Exception {
-    	XYZWriter reader = new XYZWriter();
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() throws Exception {
+        XYZWriter reader = new XYZWriter();
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
-    @Test public void testWriting() throws Exception {
+    @Test
+    public void testWriting() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
@@ -71,20 +74,20 @@ public class XYZWriterTest extends ChemObjectIOTest {
         writer.close();
 
         String output = writer.toString();
-//        logger.debug(output);
+        //        logger.debug(output);
         // count lines
         int lineCount = 0;
-        BufferedReader reader = new BufferedReader(
-        	new StringReader(output)
-        );
-        while (reader.readLine() != null) lineCount++;
+        BufferedReader reader = new BufferedReader(new StringReader(output));
+        while (reader.readLine() != null)
+            lineCount++;
         Assert.assertEquals(4, lineCount);
     }
 
     /**
      * @cdk.bug 2215774
      */
-    @Test public void testWriting_Point2d() throws Exception {
+    @Test
+    public void testWriting_Point2d() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");
@@ -103,7 +106,8 @@ public class XYZWriterTest extends ChemObjectIOTest {
     /**
      * @cdk.bug 2215775
      */
-    @Test public void testSixDecimalOuput() throws Exception {
+    @Test
+    public void testSixDecimalOuput() throws Exception {
         StringWriter writer = new StringWriter();
         IAtomContainer molecule = new AtomContainer();
         IAtom atom1 = new Atom("C");

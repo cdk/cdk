@@ -53,8 +53,7 @@ public class SingleMappingHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeClass
     public static void setMCSAlgorithm() {
-        AbstractMCSAlgorithmTest.setMCSAlgorithm(
-                new SingleMappingHandler(true));
+        AbstractMCSAlgorithmTest.setMCSAlgorithm(new SingleMappingHandler(true));
     }
 
     /**

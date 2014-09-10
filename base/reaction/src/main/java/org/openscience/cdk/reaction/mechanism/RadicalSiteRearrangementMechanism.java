@@ -46,10 +46,10 @@ import java.util.List;
  * @cdk.module     reaction
  * @cdk.githash
  */
-@TestClass(value="org.openscience.cdk.reaction.mechanism.RadicalSiteRearrangementMechanismTest")
-public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
+@TestClass(value = "org.openscience.cdk.reaction.mechanism.RadicalSiteRearrangementMechanismTest")
+public class RadicalSiteRearrangementMechanism implements IReactionMechanism {
 
-	/**
+    /**
      * Initiates the process for the given mechanism. The atoms to apply are mapped between
      * reactants and products.
      *
@@ -63,66 +63,66 @@ public class RadicalSiteRearrangementMechanism implements IReactionMechanism{
      * 					  It is the bond which is moved
      * @return            The Reaction mechanism
      *
-	 */
-    @TestMethod(value="testInitiate_IAtomContainerSet_ArrayList_ArrayList")
-	public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList,ArrayList<IBond> bondList) throws CDKException {
-		CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
-		if (atomContainerSet.getAtomContainerCount() != 1) {
-			throw new CDKException("RadicalSiteRearrangementMechanism only expects one IMolecule");
-		}
-		if (atomList.size() != 3) {
-			throw new CDKException("RadicalSiteRearrangementMechanism expects three atoms in the ArrayList");
-		}
-		if (bondList.size() != 1) {
-			throw new CDKException("RadicalSiteRearrangementMechanism only expect one bond in the ArrayList");
-		}
-		IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
-		IAtomContainer reactantCloned;
-		try {
-			reactantCloned = (IAtomContainer) molecule.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new CDKException("Could not clone IMolecule!", e);
-		}
-		IAtom atom1 = atomList.get(0);// Atom to be moved
-		IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
-		IAtom atom2 = atomList.get(1);// Atom to receive the new bonding with a ISingleElectron
-		IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
-		IAtom atom3 = atomList.get(2);// Atom which loss the atom
-		IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
-		IBond bond1 = bondList.get(0);// Bond to move
-		int posBond1 = molecule.getBondNumber(bond1);
+     */
+    @TestMethod(value = "testInitiate_IAtomContainerSet_ArrayList_ArrayList")
+    public IReaction initiate(IAtomContainerSet atomContainerSet, ArrayList<IAtom> atomList, ArrayList<IBond> bondList)
+            throws CDKException {
+        CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.getInstance(atomContainerSet.getBuilder());
+        if (atomContainerSet.getAtomContainerCount() != 1) {
+            throw new CDKException("RadicalSiteRearrangementMechanism only expects one IMolecule");
+        }
+        if (atomList.size() != 3) {
+            throw new CDKException("RadicalSiteRearrangementMechanism expects three atoms in the ArrayList");
+        }
+        if (bondList.size() != 1) {
+            throw new CDKException("RadicalSiteRearrangementMechanism only expect one bond in the ArrayList");
+        }
+        IAtomContainer molecule = atomContainerSet.getAtomContainer(0);
+        IAtomContainer reactantCloned;
+        try {
+            reactantCloned = (IAtomContainer) molecule.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new CDKException("Could not clone IMolecule!", e);
+        }
+        IAtom atom1 = atomList.get(0);// Atom to be moved
+        IAtom atom1C = reactantCloned.getAtom(molecule.getAtomNumber(atom1));
+        IAtom atom2 = atomList.get(1);// Atom to receive the new bonding with a ISingleElectron
+        IAtom atom2C = reactantCloned.getAtom(molecule.getAtomNumber(atom2));
+        IAtom atom3 = atomList.get(2);// Atom which loss the atom
+        IAtom atom3C = reactantCloned.getAtom(molecule.getAtomNumber(atom3));
+        IBond bond1 = bondList.get(0);// Bond to move
+        int posBond1 = molecule.getBondNumber(bond1);
 
+        reactantCloned.removeBond(reactantCloned.getBond(posBond1));
+        IBond newBond = atom1.getBuilder().newInstance(IBond.class, atom1C, atom2C, IBond.Order.SINGLE);
+        reactantCloned.addBond(newBond);
 
-		reactantCloned.removeBond(reactantCloned.getBond(posBond1));
-		IBond newBond = atom1.getBuilder().newInstance(IBond.class,atom1C,
-				atom2C, IBond.Order.SINGLE);
-		reactantCloned.addBond(newBond);
+        List<ISingleElectron> selectron = reactantCloned.getConnectedSingleElectronsList(atom2C);
+        reactantCloned.removeSingleElectron(selectron.get(selectron.size() - 1));
+        atom2C.setHybridization(null);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
+        if (type == null || type.getAtomTypeName().equals("X")) return null;
 
-		List<ISingleElectron> selectron = reactantCloned.getConnectedSingleElectronsList(atom2C);
-		reactantCloned.removeSingleElectron(selectron.get(selectron.size() -1));
-		atom2C.setHybridization(null);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
-		IAtomType type = atMatcher.findMatchingAtomType(reactantCloned, atom2C);
-		if (type == null || type.getAtomTypeName().equals("X")) return null;
+        reactantCloned.addSingleElectron(atom2C.getBuilder().newInstance(ISingleElectron.class, atom3C));
+        atom3C.setHybridization(null);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
+        type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
+        if (type == null || type.getAtomTypeName().equals("X")) return null;
 
-		reactantCloned.addSingleElectron(atom2C.getBuilder().newInstance(ISingleElectron.class, atom3C));
-		atom3C.setHybridization(null);
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactantCloned);
-		type = atMatcher.findMatchingAtomType(reactantCloned, atom3C);
-		if (type == null || type.getAtomTypeName().equals("X")) return null;
+        IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
+        reaction.addReactant(molecule);
 
-		IReaction reaction = atom2C.getBuilder().newInstance(IReaction.class);
-		reaction.addReactant(molecule);
+        /* mapping */
+        for (IAtom atom : molecule.atoms()) {
+            IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class, atom,
+                    reactantCloned.getAtom(molecule.getAtomNumber(atom)));
+            reaction.addMapping(mapping);
+        }
 
-		/* mapping */
-		for(IAtom atom:molecule.atoms()){
-			IMapping mapping = atom2C.getBuilder().newInstance(IMapping.class,atom, reactantCloned.getAtom(molecule.getAtomNumber(atom)));
-			reaction.addMapping(mapping);
-	    }
+        reaction.addProduct(reactantCloned);
 
-    	reaction.addProduct(reactantCloned);
-
-		return reaction;
-	}
+        return reaction;
+    }
 
 }

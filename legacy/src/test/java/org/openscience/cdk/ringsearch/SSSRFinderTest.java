@@ -49,45 +49,44 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class SSSRFinderTest extends CDKTestCase {
 
-    private final ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(SSSRFinderTest.class);
+    private final ILoggingTool logger = LoggingToolFactory.createLoggingTool(SSSRFinderTest.class);
 
     public SSSRFinderTest() {
         super();
     }
 
     @Test
-    public void testSSSRFinder_IAtomContainer()
-    {
+    public void testSSSRFinder_IAtomContainer() {
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
         SSSRFinder finder = new SSSRFinder(molecule);
         Assert.assertNotNull(finder);
     }
 
-    @Test public void testFindSSSR()
-    {
+    @Test
+    public void testFindSSSR() {
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
-    @Test public void testFindSSSR_IAtomContainer()
-    {
+    @Test
+    public void testFindSSSR_IAtomContainer() {
         IAtomContainer molecule = MoleculeFactory.makeAlphaPinene();
         SSSRFinder sssrFinder = new SSSRFinder(molecule);
         IRingSet ringSet = sssrFinder.findSSSR();
         Assert.assertEquals(2, ringSet.getAtomContainerCount());
     }
 
-    @Test public void testGetAtomContainerCount() throws Exception
-    {
+    @Test
+    public void testGetAtomContainerCount() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(1, ringSet.getAtomContainerCount());
     }
 
-    @Test public void testRingFlags1() throws Exception {
+    @Test
+    public void testRingFlags1() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("c1ccccc1");
         new SSSRFinder(molecule).findSSSR();
@@ -101,7 +100,8 @@ public class SSSRFinderTest extends CDKTestCase {
         Assert.assertEquals("All atoms in benzene were not marked as being in a ring", 6, count);
     }
 
-    @Test public void testRingFlags2() throws Exception {
+    @Test
+    public void testRingFlags2() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCCC1CC");
         new SSSRFinder(molecule).findSSSR();
@@ -115,8 +115,8 @@ public class SSSRFinderTest extends CDKTestCase {
         Assert.assertEquals("All ring atoms in 2-ethyl cyclopentane were not marked as being in a ring", 5, count);
     }
 
-    @Test public void testBicyclicCompound() throws Exception
-    {
+    @Test
+    public void testBicyclicCompound() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCC(CCCCC2)C2C1");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
@@ -126,16 +126,16 @@ public class SSSRFinderTest extends CDKTestCase {
     /**
      * @cdk.bug 826942
      */
-    @Test public void testSFBug826942() throws Exception
-    {
+    @Test
+    public void testSFBug826942() throws Exception {
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer molecule = sp.parseSmiles("C1CCC2C(C1)C4CCC3(CCCCC23)(C4)");
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         Assert.assertEquals(4, ringSet.getAtomContainerCount());
     }
 
-    @Test public void testProblem1() throws Exception
-    {
+    @Test
+    public void testProblem1() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-sep3D.mol";
@@ -148,15 +148,14 @@ public class SSSRFinderTest extends CDKTestCase {
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
         Assert.assertEquals(3, ringSet.getAtomContainerCount());
-        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-        {
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             ring = (IRing) ringSet.getAtomContainer(f);
             logger.debug("ring: " + toString(ring, molecule));
         }
     }
 
-    @Test public void testLoopProblem() throws Exception
-    {
+    @Test
+    public void testLoopProblem() throws Exception {
         String filename = "data/mdl/ring_03419.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
@@ -167,16 +166,14 @@ public class SSSRFinderTest extends CDKTestCase {
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
         Assert.assertEquals(12, ringSet.getAtomContainerCount());
-        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-        {
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             IRing ring = (IRing) ringSet.getAtomContainer(f);
             logger.debug("ring: " + toString(ring, molecule));
         }
     }
 
-
-    @Test public void testProblem2() throws Exception
-    {
+    @Test
+    public void testProblem2() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-buried.mol";
@@ -189,14 +186,14 @@ public class SSSRFinderTest extends CDKTestCase {
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
         Assert.assertEquals(10, ringSet.getAtomContainerCount());
-        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-        {
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             ring = (IRing) ringSet.getAtomContainer(f);
             logger.debug("ring: " + toString(ring, molecule));
         }
     }
 
-    @Test public void testProblem3() throws Exception {
+    @Test
+    public void testProblem3() throws Exception {
         IAtomContainer molecule = null;
         IRing ring = null;
         String filename = "data/mdl/figueras-test-inring.mol";
@@ -209,8 +206,7 @@ public class SSSRFinderTest extends CDKTestCase {
         IRingSet ringSet = new SSSRFinder(molecule).findSSSR();
         logger.debug("Found ring set of size: " + ringSet.getAtomContainerCount());
         Assert.assertEquals(5, ringSet.getAtomContainerCount());
-        for (int f = 0; f < ringSet.getAtomContainerCount(); f++)
-        {
+        for (int f = 0; f < ringSet.getAtomContainerCount(); f++) {
             ring = (IRing) ringSet.getAtomContainer(f);
             logger.debug("ring: " + toString(ring, molecule));
         }
@@ -219,7 +215,8 @@ public class SSSRFinderTest extends CDKTestCase {
     /**
      * @cdk.bug 891021
      */
-    @Test public void testBug891021() throws Exception {
+    @Test
+    public void testBug891021() throws Exception {
         IAtomContainer molecule = null;
         String filename = "data/mdl/too.many.rings.mol";
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -233,21 +230,18 @@ public class SSSRFinderTest extends CDKTestCase {
         Assert.assertEquals(57, ringSet.getAtomContainerCount());
     }
 
-
-     /**
-      * Convenience method for giving a string representation
-      * of this ring based on the number of the atom in a given
-      * molecule.
-      *
-      * @param molecule  A molecule to determine an atom number for each ring atom
-      * @return          string representation of this ring
-      */
-    private String toString(IRing ring, IAtomContainer molecule) throws Exception
-    {
+    /**
+     * Convenience method for giving a string representation
+     * of this ring based on the number of the atom in a given
+     * molecule.
+     *
+     * @param molecule  A molecule to determine an atom number for each ring atom
+     * @return          string representation of this ring
+     */
+    private String toString(IRing ring, IAtomContainer molecule) throws Exception {
         String str = "";
-        for (int f = 0; f < ring.getAtomCount(); f++)
-        {
-            str += molecule.getAtomNumber(ring.getAtom(f)) +  " - ";
+        for (int f = 0; f < ring.getAtomCount(); f++) {
+            str += molecule.getAtomNumber(ring.getAtom(f)) + " - ";
         }
         return str;
     }
@@ -257,29 +251,28 @@ public class SSSRFinderTest extends CDKTestCase {
      * in *some* SSSR (minimum cycle basis).
      */
     @Category(SlowTest.class)
-    @Test  public void testBuckyballRelevantRings() throws Exception {
+    @Test
+    public void testBuckyballRelevantRings() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetRelevant = new SSSRFinder(buckyball).findRelevantRings();
-        ringCount(ringSetRelevant,6,20);
-        ringCount(ringSetRelevant,5,12);
+        ringCount(ringSetRelevant, 6, 20);
+        ringCount(ringSetRelevant, 5, 12);
 
-        Assert.assertFalse("Duplicate rings exist",
-                           checkForDuplicateRingsInSet(ringSetRelevant));
+        Assert.assertFalse("Duplicate rings exist", checkForDuplicateRingsInSet(ringSetRelevant));
     }
 
     /**
      * Method findSSSR() computes one (of possibly several) SSSRs.
      */
     @Category(SlowTest.class)
-    @Test  public void testBuckyballSSSR() throws Exception {
+    @Test
+    public void testBuckyballSSSR() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
         IRingSet ringSetSSSR = new SSSRFinder(buckyball).findSSSR();
-        ringCount(ringSetSSSR,6,19);
-        ringCount(ringSetSSSR,5,12);
-        Assert.assertFalse("Duplicate rings exist",
-                           checkForDuplicateRingsInSet(ringSetSSSR));
+        ringCount(ringSetSSSR, 6, 19);
+        ringCount(ringSetSSSR, 5, 12);
+        Assert.assertFalse("Duplicate rings exist", checkForDuplicateRingsInSet(ringSetSSSR));
     }
-
 
     /**
      * Method findEssentialRings() computes the rings (cycles) contained
@@ -288,33 +281,30 @@ public class SSSRFinderTest extends CDKTestCase {
      * can be chosen for a SSSR. In other words, none of the 20 6-rings
      * is essential.
      */
-    @Test public void testBuckyballEssentialRings() throws Exception {
+    @Test
+    public void testBuckyballEssentialRings() throws Exception {
         IAtomContainer buckyball = createBuckyBall();
-        IRingSet ringSetEssential =
-            new SSSRFinder(buckyball).findEssentialRings();
-        ringCount(ringSetEssential,6,0);
-        ringCount(ringSetEssential,5,12);
-        Assert.assertFalse("Duplicate rings exist",
-                           checkForDuplicateRingsInSet(ringSetEssential));
+        IRingSet ringSetEssential = new SSSRFinder(buckyball).findEssentialRings();
+        ringCount(ringSetEssential, 6, 0);
+        ringCount(ringSetEssential, 5, 12);
+        Assert.assertFalse("Duplicate rings exist", checkForDuplicateRingsInSet(ringSetEssential));
     }
 
     /**
      * Creates a bucky ball molecule.
      * @return bucky ball molecule
      */
-    private IAtomContainer createBuckyBall () throws Exception {
+    private IAtomContainer createBuckyBall() throws Exception {
         IAtomContainer molecule = null;
         String filename = "data/mdl/buckyball.mol";
-        InputStream ins =
-            this.getClass().getClassLoader().getResourceAsStream(filename);
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
-        molecule = (IAtomContainer)reader.read(new AtomContainer());
+        molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
-        Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount()==60 );
-        Assert.assertTrue("Bond count is 90 ", molecule.getBondCount()==90 );
+        Assert.assertTrue("Atom count is 60 ", molecule.getAtomCount() == 60);
+        Assert.assertTrue("Bond count is 90 ", molecule.getBondCount() == 90);
         return molecule;
     }
-
 
     /**
      * Validates that the SSSR has found the expected number of rings
@@ -323,18 +313,15 @@ public class SSSRFinderTest extends CDKTestCase {
      * @param ringSizeForCounting particular ring size to count
      * @param expectedNumOfRings the expected number of rings
      */
-    private void ringCount
-    (IRingSet ringSet, int ringSizeForCounting, int expectedNumOfRings) {
+    private void ringCount(IRingSet ringSet, int ringSizeForCounting, int expectedNumOfRings) {
         int ringCount = 0;
-        for (IAtomContainer ring : ringSet.atomContainers() ) {
+        for (IAtomContainer ring : ringSet.atomContainers()) {
             if (ring.getAtomCount() == ringSizeForCounting) {
                 ringCount++;
             }
         }
-        Assert.assertTrue("Counting rings of size "+ringSizeForCounting,
-                           expectedNumOfRings ==ringCount);
+        Assert.assertTrue("Counting rings of size " + ringSizeForCounting, expectedNumOfRings == ringCount);
     }
-
 
     /**
      * Checks if the ringSet (created by SSSR) contains rings with
@@ -342,28 +329,26 @@ public class SSSRFinderTest extends CDKTestCase {
      */
     static boolean checkForDuplicateRingsInSet(IRingSet ringset) {
         // Make a list of rings
-        List<IAtomContainer> ringList=new ArrayList <IAtomContainer>();
-        for (IAtomContainer atCont : ringset.atomContainers() ) {
+        List<IAtomContainer> ringList = new ArrayList<IAtomContainer>();
+        for (IAtomContainer atCont : ringset.atomContainers()) {
             ringList.add(atCont);
         }
         //Outer loop over rings
         for (IAtomContainer ring : ringList) {
             // Inner loop over rings
             for (IAtomContainer otherRing : ringList) {
-                if (otherRing.hashCode() != ring.hashCode() &&
-                    otherRing.getAtomCount()==ring.getAtomCount()) {
+                if (otherRing.hashCode() != ring.hashCode() && otherRing.getAtomCount() == ring.getAtomCount()) {
 
                     // check if the two rings have all the same atoms in them -
                     // this should not happen (="duplicate" rings)
-                    boolean sameAtoms=true;
-                    DUP_LOOP:
-                    for (IAtom at : ring.atoms() ) {
-                        if (!otherRing.contains(at))  {
-                                sameAtoms=false;
-                                break DUP_LOOP;
+                    boolean sameAtoms = true;
+                    DUP_LOOP: for (IAtom at : ring.atoms()) {
+                        if (!otherRing.contains(at)) {
+                            sameAtoms = false;
+                            break DUP_LOOP;
                         }
                     }
-                    if (sameAtoms)  {
+                    if (sameAtoms) {
                         return true;
                     }
                 }
@@ -373,5 +358,3 @@ public class SSSRFinderTest extends CDKTestCase {
     }
 
 }
-
-

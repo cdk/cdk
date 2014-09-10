@@ -40,15 +40,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.config.OWLBasedAtomTypeConfiguratorTest")
 public class OWLBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
 
-    private InputStream ins = null;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
+    private InputStream         ins    = null;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLBasedAtomTypeConfigurator.class);
 
     @TestMethod("testCDKBasedAtomTypeConfigurator")
-    public OWLBasedAtomTypeConfigurator() {
-    }
+    public OWLBasedAtomTypeConfigurator() {}
 
-    /** {@inheritDoc} */ @Override
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testSetInputStream_InputStream")
     public void setInputStream(InputStream ins) {
         this.ins = ins;

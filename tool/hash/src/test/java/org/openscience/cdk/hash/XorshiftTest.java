@@ -38,16 +38,11 @@ public class XorshiftTest {
 
     @Test
     public void testNext() throws Exception {
-        assertThat(generator.next(5L),
-                   is(178258005L));
-        assertThat(generator.next(178258005L),
-                   is(5651489766934405L));
-        assertThat(generator.next(5651489766934405L),
-                   is(-9127299601691290113L));
-        assertThat(generator.next(-9127299601691290113L),
-                   is(146455018630021125L));
-        assertThat(generator.next(146455018630021125L),
-                   is(2104002940825447L));
+        assertThat(generator.next(5L), is(178258005L));
+        assertThat(generator.next(178258005L), is(5651489766934405L));
+        assertThat(generator.next(5651489766934405L), is(-9127299601691290113L));
+        assertThat(generator.next(-9127299601691290113L), is(146455018630021125L));
+        assertThat(generator.next(146455018630021125L), is(2104002940825447L));
     }
 
     @Test
@@ -64,8 +59,7 @@ public class XorshiftTest {
         }
 
         for (int v : values) {
-            assertTrue(v + " was not within 0.1 % of a uniform distribution",
-                       99000 <= v && v <= 101000);
+            assertTrue(v + " was not within 0.1 % of a uniform distribution", 99000 <= v && v <= 101000);
         }
     }
 

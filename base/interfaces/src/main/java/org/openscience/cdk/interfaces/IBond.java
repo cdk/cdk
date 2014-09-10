@@ -40,18 +40,12 @@ public interface IBond extends IElectronContainer {
      * A list of permissible bond orders.
      *
      */
-	public enum Order {
-		SINGLE(1),
-		DOUBLE(2),
-		TRIPLE(3),
-		QUADRUPLE(4),
-		QUINTUPLE(5),
-		SEXTUPLE(6),
-		UNSET(0);
+    public enum Order {
+        SINGLE(1), DOUBLE(2), TRIPLE(3), QUADRUPLE(4), QUINTUPLE(5), SEXTUPLE(6), UNSET(0);
 
         private final Integer bondedElectronPairs;
 
-        private Order(Integer bondedElectronPairs){
+        private Order(Integer bondedElectronPairs) {
             this.bondedElectronPairs = bondedElectronPairs;
         }
 
@@ -68,99 +62,97 @@ public interface IBond extends IElectronContainer {
          *
          * @return number of bonded electron pairs
          */
-        public Integer numeric(){
+        public Integer numeric() {
             return bondedElectronPairs;
         }
 
-	}
+    }
 
-
-	/**
-	 * Enumeration of possible stereo types of two-atom bonds. The
-	 * Stereo type defines not just define the stereochemistry, but also the
-	 * which atom is the stereo center for which the Stereo is defined.
-	 * The first atom in the IBond (index = 0) is the <i>start</i> atom, while
-	 * the second atom (index = 1) is the <i>end</i> atom.
-	 */
-	public enum Stereo {
-	    /** A bond for which there is no stereochemistry. */
-		NONE,
-		/** A bond pointing up of which the start atom is the stereocenter and
-		 * the end atom is above the drawing plane. */
-		UP,
-		/** A bond pointing up of which the end atom is the stereocenter and
-		 * the start atom is above the drawing plane. */
-		UP_INVERTED,
-		/** A bond pointing down of which the start atom is the stereocenter
-		 * and the end atom is below the drawing plane. */
-		DOWN,
-		/** A bond pointing down of which the end atom is the stereocenter and
-		 * the start atom is below the drawing plane. */
-		DOWN_INVERTED,
-		/** A bond for which there is stereochemistry, we just do not know
-		 *  if it is UP or DOWN. The start atom is the stereocenter.
-		 */
-		UP_OR_DOWN,
+    /**
+     * Enumeration of possible stereo types of two-atom bonds. The
+     * Stereo type defines not just define the stereochemistry, but also the
+     * which atom is the stereo center for which the Stereo is defined.
+     * The first atom in the IBond (index = 0) is the <i>start</i> atom, while
+     * the second atom (index = 1) is the <i>end</i> atom.
+     */
+    public enum Stereo {
+        /** A bond for which there is no stereochemistry. */
+        NONE,
+        /** A bond pointing up of which the start atom is the stereocenter and
+         * the end atom is above the drawing plane. */
+        UP,
+        /** A bond pointing up of which the end atom is the stereocenter and
+         * the start atom is above the drawing plane. */
+        UP_INVERTED,
+        /** A bond pointing down of which the start atom is the stereocenter
+         * and the end atom is below the drawing plane. */
+        DOWN,
+        /** A bond pointing down of which the end atom is the stereocenter and
+         * the start atom is below the drawing plane. */
+        DOWN_INVERTED,
+        /** A bond for which there is stereochemistry, we just do not know
+         *  if it is UP or DOWN. The start atom is the stereocenter.
+         */
+        UP_OR_DOWN,
         /** A bond for which there is stereochemistry, we just do not know
          *  if it is UP or DOWN. The end atom is the stereocenter.
          */
         UP_OR_DOWN_INVERTED,
-		/** Indication that this double bond has a fixed, but unknown E/Z
-		 * configuration.
-		 */
-		E_OR_Z,
+        /** Indication that this double bond has a fixed, but unknown E/Z
+         * configuration.
+         */
+        E_OR_Z,
         /** Indication that this double bond has a E configuration.
          */
         E,
         /** Indication that this double bond has a Z configuration.
          */
         Z,
-		/** Indication that this double bond has a fixed configuration, defined
-		 * by the 2D and/or 3D coordinates.
-		 */
-		E_Z_BY_COORDINATES
-	}
+        /** Indication that this double bond has a fixed configuration, defined
+         * by the 2D and/or 3D coordinates.
+         */
+        E_Z_BY_COORDINATES
+    }
 
-	/**
-	 *  Returns the Iterable to atoms making up this bond.
-	 *
-	 *@return    An Iterable to atoms participating in this bond
-	 *@see       #setAtoms
-	 */
-	public Iterable<IAtom> atoms();
+    /**
+     *  Returns the Iterable to atoms making up this bond.
+     *
+     *@return    An Iterable to atoms participating in this bond
+     *@see       #setAtoms
+     */
+    public Iterable<IAtom> atoms();
 
-	/**
-	 * Sets the array of atoms making up this bond.
-	 *
-	 * @param  atoms  An array of atoms that forms this bond
-	 * @see           #atoms
-	 */
-	public void setAtoms(IAtom[] atoms);
+    /**
+     * Sets the array of atoms making up this bond.
+     *
+     * @param  atoms  An array of atoms that forms this bond
+     * @see           #atoms
+     */
+    public void setAtoms(IAtom[] atoms);
 
-	/**
-	 * Returns the number of Atoms in this Bond.
-	 *
-	 * @return    The number of Atoms in this Bond
-	 */
-	public int getAtomCount();
+    /**
+     * Returns the number of Atoms in this Bond.
+     *
+     * @return    The number of Atoms in this Bond
+     */
+    public int getAtomCount();
 
-	/**
-	 * Returns an Atom from this bond.
-	 *
-	 * @param  position  The position in this bond where the atom is
-	 * @return           The atom at the specified position
-	 * @see              #setAtom
-	 */
-	public IAtom getAtom(int position);
+    /**
+     * Returns an Atom from this bond.
+     *
+     * @param  position  The position in this bond where the atom is
+     * @return           The atom at the specified position
+     * @see              #setAtom
+     */
+    public IAtom getAtom(int position);
 
-
-	/**
-	 * Returns the atom connected to the given atom.
-	 *
-	 * @param  atom  The atom the bond partner is searched of
-	 * @return       the connected atom or null if the given atom is not part of the bond
-	 */
-	public IAtom getConnectedAtom(IAtom atom);
+    /**
+     * Returns the atom connected to the given atom.
+     *
+     * @param  atom  The atom the bond partner is searched of
+     * @return       the connected atom or null if the given atom is not part of the bond
+     */
+    public IAtom getConnectedAtom(IAtom atom);
 
     /**
      * Returns all the atoms in the bond connected to the given atom.
@@ -171,89 +163,88 @@ public interface IBond extends IElectronContainer {
     public IAtom[] getConnectedAtoms(IAtom atom);
 
     /**
-	 * Returns true if the given atom participates in this bond.
-	 *
-	 * @param  atom  The atom to be tested if it participates in this bond
-	 * @return       true if the atom participates in this bond
-	 */
-	public boolean contains(IAtom atom);
+     * Returns true if the given atom participates in this bond.
+     *
+     * @param  atom  The atom to be tested if it participates in this bond
+     * @return       true if the atom participates in this bond
+     */
+    public boolean contains(IAtom atom);
 
-	/**
-	 * Sets an Atom in this bond.
-	 *
-	 * @param  atom      The atom to be set
-	 * @param  position  The position in this bond where the atom is to be inserted
-	 * @see              #getAtom
-	 */
-	public void setAtom(IAtom atom, int position);
+    /**
+     * Sets an Atom in this bond.
+     *
+     * @param  atom      The atom to be set
+     * @param  position  The position in this bond where the atom is to be inserted
+     * @see              #getAtom
+     */
+    public void setAtom(IAtom atom, int position);
 
-	/**
-	 * Returns the bond order of this bond.
-	 *
-	 * @return The bond order of this bond
-	 * @see    org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants
-	 *         for predefined values.
-	 * @see    #setOrder
-	 */
-	public Order getOrder();
+    /**
+     * Returns the bond order of this bond.
+     *
+     * @return The bond order of this bond
+     * @see    org.openscience.cdk.CDKConstants org.openscience.cdk.CDKConstants
+     *         for predefined values.
+     * @see    #setOrder
+     */
+    public Order getOrder();
 
-	/**
-	 * Sets the bond order of this bond.
-	 *
-	 * @param  order The bond order to be assigned to this bond
-	 * @see          org.openscience.cdk.CDKConstants for predefined values.
-	 * @see          #getOrder
-	 */
-	public void setOrder(Order order);
+    /**
+     * Sets the bond order of this bond.
+     *
+     * @param  order The bond order to be assigned to this bond
+     * @see          org.openscience.cdk.CDKConstants for predefined values.
+     * @see          #getOrder
+     */
+    public void setOrder(Order order);
 
-	/**
-	 * Returns the stereo descriptor for this bond.
-	 *
-	 * @return    The stereo descriptor for this bond
-	 * @see       #setStereo
-	 */
-	public IBond.Stereo getStereo();
+    /**
+     * Returns the stereo descriptor for this bond.
+     *
+     * @return    The stereo descriptor for this bond
+     * @see       #setStereo
+     */
+    public IBond.Stereo getStereo();
 
-	/**
-	 * Sets the stereo descriptor for this bond.
-	 *
-	 * @param  stereo  The stereo descriptor to be assigned to this bond.
-	 * @see            #getStereo
-	 */
-	public void setStereo(IBond.Stereo stereo);
+    /**
+     * Sets the stereo descriptor for this bond.
+     *
+     * @param  stereo  The stereo descriptor to be assigned to this bond.
+     * @see            #getStereo
+     */
+    public void setStereo(IBond.Stereo stereo);
 
-	/**
-	 * Returns the geometric 2D center of the bond.
-	 *
-	 * @return    The geometric 2D center of the bond
-	 */
-	public Point2d get2DCenter();
+    /**
+     * Returns the geometric 2D center of the bond.
+     *
+     * @return    The geometric 2D center of the bond
+     */
+    public Point2d get2DCenter();
 
-	/**
-	 * Returns the geometric 3D center of the bond.
-	 *
-	 * @return    The geometric 3D center of the bond
-	 */
-	public Point3d get3DCenter();
+    /**
+     * Returns the geometric 3D center of the bond.
+     *
+     * @return    The geometric 3D center of the bond
+     */
+    public Point3d get3DCenter();
 
-	/**
-	 * Compares a bond with this bond.
-	 *
-	 * @param  object  Object of type Bond
-	 * @return         Return true, if the bond is equal to this bond
-	 */
-	public boolean compare(Object object);
+    /**
+     * Compares a bond with this bond.
+     *
+     * @param  object  Object of type Bond
+     * @return         Return true, if the bond is equal to this bond
+     */
+    public boolean compare(Object object);
 
-	/**
-	 * Checks whether a bond is connected to another one.
-	 * This can only be true if the bonds have an Atom in common.
-	 *
-	 * @param  bond  The bond which is checked to be connect with this one
-	 * @return       True, if the bonds share an atom, otherwise false
-	 */
-	public boolean isConnectedTo(IBond bond);
+    /**
+     * Checks whether a bond is connected to another one.
+     * This can only be true if the bonds have an Atom in common.
+     *
+     * @param  bond  The bond which is checked to be connect with this one
+     * @return       True, if the bonds share an atom, otherwise false
+     */
+    public boolean isConnectedTo(IBond bond);
 
     /** @inheritDoc */
     public IBond clone() throws CloneNotSupportedException;
 }
-

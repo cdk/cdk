@@ -47,24 +47,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class CTXReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CTXReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(CTXReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new CTXReader(), "data/ctx/methanol_with_descriptors.ctx");
     }
 
-    @Test public void testAccepts() {
-    	CTXReader reader = new CTXReader();
-    	Assert.assertTrue(reader.accepts(ChemFile.class));
+    @Test
+    public void testAccepts() {
+        CTXReader reader = new CTXReader();
+        Assert.assertTrue(reader.accepts(ChemFile.class));
     }
 
-    @Test public void testMethanol() throws Exception {
+    @Test
+    public void testMethanol() throws Exception {
         String filename = "data/ctx/methanol_with_descriptors.ctx";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CTXReader reader = new CTXReader(ins);
-        IChemFile chemFile = (ChemFile)reader.read((ChemObject)new ChemFile());
+        IChemFile chemFile = (ChemFile) reader.read((ChemObject) new ChemFile());
         reader.close();
 
         Assert.assertNotNull(chemFile);

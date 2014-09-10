@@ -27,11 +27,10 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class RGraphTest extends CDKTestCase {
 
-	@Test public void testRGraph() {
-		RGraph graph = new RGraph();
-		Assert.assertNotNull(graph);
-	}
+    @Test
+    public void testRGraph() {
+        RGraph graph = new RGraph();
+        Assert.assertNotNull(graph);
+    }
 
 }
-
-

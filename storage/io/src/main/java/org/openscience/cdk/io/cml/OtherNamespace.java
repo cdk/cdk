@@ -32,47 +32,45 @@ import org.xml.sax.Attributes;
  */
 final class OtherNamespace implements ICMLModule {
 
-	/** {@inheritDoc} */
-	@Override
-	public void startDocument() {
-		// ignore content from other namespaces
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void startDocument() {
+        // ignore content from other namespaces
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void endDocument() {
-		// ignore content from other namespaces
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void endDocument() {
+        // ignore content from other namespaces
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void startElement(CMLStack xpath, String uri, String local,
-			String raw, Attributes atts) {
-		// ignore content from other namespaces
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
+        // ignore content from other namespaces
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void endElement(CMLStack xpath, String uri, String local, String raw) {
-		// ignore content from other namespaces
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void endElement(CMLStack xpath, String uri, String local, String raw) {
+        // ignore content from other namespaces
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void characterData(CMLStack xpath, char[] ch, int start, int length) {
-		// ignore content from other namespaces
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void characterData(CMLStack xpath, char[] ch, int start, int length) {
+        // ignore content from other namespaces
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public IChemFile returnChemFile() {
-		// ignore content from other namespaces
-		return null;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public IChemFile returnChemFile() {
+        // ignore content from other namespaces
+        return null;
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	public void inherit(ICMLModule conv) {
-	}
+    /** {@inheritDoc} */
+    @Override
+    public void inherit(ICMLModule conv) {}
 
 }

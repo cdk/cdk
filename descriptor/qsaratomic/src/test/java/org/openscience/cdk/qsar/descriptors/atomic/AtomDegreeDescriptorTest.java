@@ -35,18 +35,18 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AtomDegreeDescriptorTest extends AtomicDescriptorTest {
 
-	public  AtomDegreeDescriptorTest() {}
+    public AtomDegreeDescriptorTest() {}
 
     @Before
     public void setUp() throws Exception {
-    	setDescriptor(AtomDegreeDescriptor.class);
+        setDescriptor(AtomDegreeDescriptor.class);
     }
 
-	@Test
+    @Test
     public void testAtomDegreeDescriptor() throws ClassNotFoundException, CDKException, java.lang.Exception {
-		IAtomicDescriptor descriptor  = new AtomDegreeDescriptor();
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
-		IAtomContainer mol = sp.parseSmiles("CC(C)CCCC"); //
-		Assert.assertEquals(3, ((IntegerResult)descriptor.calculate(mol.getAtom(1), mol).getValue()).intValue());
-	}
+        IAtomicDescriptor descriptor = new AtomDegreeDescriptor();
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        IAtomContainer mol = sp.parseSmiles("CC(C)CCCC"); //
+        Assert.assertEquals(3, ((IntegerResult) descriptor.calculate(mol.getAtom(1), mol).getValue()).intValue());
+    }
 }

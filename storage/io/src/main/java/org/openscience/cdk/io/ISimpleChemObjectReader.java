@@ -62,4 +62,3 @@ public interface ISimpleChemObjectReader extends IChemObjectReader {
     public <T extends IChemObject> T read(T object) throws CDKException;
 
 }
-

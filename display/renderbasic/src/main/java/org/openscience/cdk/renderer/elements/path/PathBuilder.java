@@ -50,7 +50,7 @@ public class PathBuilder {
     private List<PathElement> elements;
 
     /** The color of the path */
-    private Color color;
+    private Color             color;
 
     /**
      * Make a new path builder with a default color of black.
@@ -74,8 +74,8 @@ public class PathBuilder {
      *
      * @param element the element to add to the path
      */
-    private <T extends PathElement> void add( T element ) {
-        elements.add( element );
+    private <T extends PathElement> void add(T element) {
+        elements.add(element);
     }
 
     /**
@@ -85,8 +85,8 @@ public class PathBuilder {
      * @param point the point to move to
      * @return a reference to this builder
      */
-    public PathBuilder moveTo( Point2d point ) {
-        add( new MoveTo( point ) );
+    public PathBuilder moveTo(Point2d point) {
+        add(new MoveTo(point));
         return this;
     }
 
@@ -96,8 +96,8 @@ public class PathBuilder {
      * @param point the point to make a line to
      * @return a reference to this builder
      */
-    public PathBuilder lineTo( Point2d point ) {
-        add( new LineTo( point ) );
+    public PathBuilder lineTo(Point2d point) {
+        add(new LineTo(point));
         return this;
     }
 
@@ -108,8 +108,8 @@ public class PathBuilder {
      * @param ep the end point of the curve
      * @return a reference to this builder
      */
-    public PathBuilder quadTo( Point2d cp, Point2d ep ) {
-        add( new QuadTo( cp, ep ) );
+    public PathBuilder quadTo(Point2d cp, Point2d ep) {
+        add(new QuadTo(cp, ep));
         return this;
     }
 
@@ -121,8 +121,8 @@ public class PathBuilder {
      * @param ep the end point of the curve
      * @return  a reference to this builder
      */
-    public PathBuilder cubicTo( Point2d cp1, Point2d cp2, Point2d ep ) {
-        add( new CubicTo( cp1, cp2, ep ) );
+    public PathBuilder cubicTo(Point2d cp1, Point2d cp2, Point2d ep) {
+        add(new CubicTo(cp1, cp2, ep));
         return this;
     }
 
@@ -130,7 +130,7 @@ public class PathBuilder {
      * Close the path.
      */
     public void close() {
-        add( new Close() );
+        add(new Close());
     }
 
     /**
@@ -139,9 +139,9 @@ public class PathBuilder {
      * @param  color the new {@link Color}.
      * @return       returns itself.
      */
-    public PathBuilder color( Color color ) {
-    	this.color = color;
-    	return this;
+    public PathBuilder color(Color color) {
+        this.color = color;
+        return this;
     }
 
     /**
@@ -150,6 +150,6 @@ public class PathBuilder {
      * @return the newly created path
      */
     public GeneralPath createPath() {
-        return new GeneralPath( elements, color );
+        return new GeneralPath(elements, color);
     }
 }

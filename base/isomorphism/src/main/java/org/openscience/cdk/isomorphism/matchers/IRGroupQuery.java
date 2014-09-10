@@ -45,28 +45,27 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public interface IRGroupQuery extends IChemObject {
 
-
-	/**
+    /**
      * Setter for the root structure of this R-Group.
-	 * @see #getRootStructure
-	 * @param rootStructure the root structure (or scaffold) container
-	 *
-	 */
-	public void setRootStructure(IAtomContainer rootStructure);
+     * @see #getRootStructure
+     * @param rootStructure the root structure (or scaffold) container
+     *
+     */
+    public void setRootStructure(IAtomContainer rootStructure);
 
-	/**
-	 * Getter for the root structure of this R-Group.
-	 * @see #setRootStructure
-	 * @return the root structure (or scaffold) container
-	 */
-	public IAtomContainer getRootStructure();
+    /**
+     * Getter for the root structure of this R-Group.
+     * @see #setRootStructure
+     * @return the root structure (or scaffold) container
+     */
+    public IAtomContainer getRootStructure();
 
-	/**
-	 * Setter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
+    /**
+     * Setter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
      * @see #getRootAttachmentPoints()
-	 * @param rootAttachmentPoints Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment.
-	 */
-	public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints);
+     * @param rootAttachmentPoints Map with per R-group pseudo atom another map with an Integer and an IBond, the integer indicating 1st or 2nd attachment.
+     */
+    public void setRootAttachmentPoints(Map<IAtom, Map<Integer, IBond>> rootAttachmentPoints);
 
     /**
      * Getter for root attachment points = bonds that connect R pseudo-atoms to the scaffold.
@@ -110,7 +109,6 @@ public interface IRGroupQuery extends IChemObject {
      * @return true when valid
      */
     public boolean areSubstituentsDefined();
-
 
     /**
      * Checks validity of RGroupQuery.

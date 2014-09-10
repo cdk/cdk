@@ -36,7 +36,7 @@ package org.openscience.cdk.graph.invariant;
 final class InvariantRanker {
 
     /** Auxiliary array for merge sort. */
-    private final int[] aux;
+    private final int[]      aux;
 
     /**
      * Length at which the sub-array should be sorted using insertion sort. As
@@ -89,9 +89,9 @@ final class InvariantRanker {
 
         int[] tmp = aux;
 
-        int  u         = currEq[0];
-        int  labelTick = tmp[u] = (int) prev[u];
-        long label     = labelTick;
+        int u = currEq[0];
+        int labelTick = tmp[u] = (int) prev[u];
+        long label = labelTick;
 
         for (int i = 1; i < n; i++) {
             int v = currEq[i];
@@ -104,12 +104,10 @@ final class InvariantRanker {
             if (curr[v] != curr[u] || prev[v] != tmp[u]) {
                 tmp[v] = (int) prev[v];
                 prev[v] = labelTick;
-                label   = labelTick;
+                label = labelTick;
                 nRanks++;
-            }
-            else {
-                if (nEquivalent == 0 || nextEq[nEquivalent - 1] != u)
-                    nextEq[nEquivalent++] = u;
+            } else {
+                if (nEquivalent == 0 || nextEq[nEquivalent - 1] != u) nextEq[nEquivalent++] = u;
                 nextEq[nEquivalent++] = v;
                 tmp[v] = (int) prev[v];
                 prev[v] = label;
@@ -118,8 +116,7 @@ final class InvariantRanker {
             u = v;
         }
 
-        if (nEquivalent < nextEq.length)
-            nextEq[nEquivalent] = -1;
+        if (nEquivalent < nextEq.length) nextEq[nEquivalent] = -1;
 
         return nRanks;
     }
@@ -149,8 +146,7 @@ final class InvariantRanker {
         sortBy(vs, lo + split, len - split, curr, prev);
 
         // sub arrays already sorted, no need to merge
-        if (!less(vs[lo + split], vs[lo + split - 1], curr, prev))
-            return;
+        if (!less(vs[lo + split], vs[lo + split - 1], curr, prev)) return;
 
         merge(vs, lo, split, len, curr, prev);
     }

@@ -31,7 +31,7 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AminoAcidManipulatorTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     public AminoAcidManipulatorTest() {
         super();
@@ -39,28 +39,26 @@ public class AminoAcidManipulatorTest extends CDKTestCase {
 
     @Test
     public void testRemoveAcidicOxygen_IAminoAcid() throws Exception {
-		IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
-		glycine.add(new SmilesParser(builder).parseSmiles("C(C(=O)O)N"));
-		Assert.assertEquals(5, glycine.getAtomCount());
-		glycine.addCTerminus(glycine.getAtom(1));
-		AminoAcidManipulator.removeAcidicOxygen(glycine);
-		Assert.assertEquals(4, glycine.getAtomCount());
-	}
+        IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
+        glycine.add(new SmilesParser(builder).parseSmiles("C(C(=O)O)N"));
+        Assert.assertEquals(5, glycine.getAtomCount());
+        glycine.addCTerminus(glycine.getAtom(1));
+        AminoAcidManipulator.removeAcidicOxygen(glycine);
+        Assert.assertEquals(4, glycine.getAtomCount());
+    }
 
-	/**
-	 * @cdk.bug 1646861
-	 */
+    /**
+     * @cdk.bug 1646861
+     */
     @Test
     public void testAddAcidicOxygen_IAminoAcid() throws Exception {
-		// FIXME: I think this is the proper test, but it currently fails
-		IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
-		glycine.add(new SmilesParser(builder).parseSmiles("C(C=O)N"));
-		Assert.assertEquals(4, glycine.getAtomCount());
-		glycine.addCTerminus(glycine.getAtom(1));
-		AminoAcidManipulator.addAcidicOxygen(glycine);
-		Assert.assertEquals(5, glycine.getAtomCount());
-	}
+        // FIXME: I think this is the proper test, but it currently fails
+        IAminoAcid glycine = builder.newInstance(IAminoAcid.class);
+        glycine.add(new SmilesParser(builder).parseSmiles("C(C=O)N"));
+        Assert.assertEquals(4, glycine.getAtomCount());
+        glycine.addCTerminus(glycine.getAtom(1));
+        AminoAcidManipulator.addAcidicOxygen(glycine);
+        Assert.assertEquals(5, glycine.getAtomCount());
+    }
 
 }
-
-

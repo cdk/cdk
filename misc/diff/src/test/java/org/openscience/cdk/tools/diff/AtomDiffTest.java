@@ -35,26 +35,29 @@ import static org.mockito.Mockito.when;
  */
 public class AtomDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IAtom atom1 = mock(IAtom.class);
         String result = AtomDiff.diff(atom1, atom1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getSymbol()).thenReturn("H");
         when(atom2.getSymbol()).thenReturn("C");
 
-        String result = AtomDiff.diff( atom1, atom2 );
+        String result = AtomDiff.diff(atom1, atom2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "AtomDiff");
         assertContains(result, "H/C");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IAtom atom1 = mock(IAtom.class);
         IAtom atom2 = mock(IAtom.class);
         when(atom1.getSymbol()).thenReturn("H");
@@ -64,33 +67,33 @@ public class AtomDiffTest extends CDKTestCase {
         Assert.assertNotNull(difference);
     }
 
-    @Ignore("unit test did not test AtomDiff but rather the ability of AtomContainer" +
-                    "to be serialized. This is already tested in each respective domain module")
+    @Ignore("unit test did not test AtomDiff but rather the ability of AtomContainer"
+            + "to be serialized. This is already tested in each respective domain module")
     public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
-//        IAtom atom = new Atom("C");
-//
-//        File tmpFile = File.createTempFile("serialized", ".dat");
-//        tmpFile.deleteOnExit();
-//        String objFilename = tmpFile.getAbsolutePath();
-//
-//        FileOutputStream fout = new FileOutputStream(objFilename);
-//        ObjectOutputStream ostream = new ObjectOutputStream(fout);
-//        ostream.writeObject(atom);
-//
-//        ostream.close();
-//        fout.close();
-//
-//        // now read the serialized atom in
-//        FileInputStream fin = new FileInputStream(objFilename);
-//        ObjectInputStream istream  = new ObjectInputStream(fin);
-//        Object obj = istream.readObject();
-//
-//        Assert.assertTrue(obj instanceof IAtom);
-//
-//        IAtom newAtom = (IAtom) obj;
-//        String diff = AtomDiff.diff(atom, newAtom);
-//
-//        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
+        //        IAtom atom = new Atom("C");
+        //
+        //        File tmpFile = File.createTempFile("serialized", ".dat");
+        //        tmpFile.deleteOnExit();
+        //        String objFilename = tmpFile.getAbsolutePath();
+        //
+        //        FileOutputStream fout = new FileOutputStream(objFilename);
+        //        ObjectOutputStream ostream = new ObjectOutputStream(fout);
+        //        ostream.writeObject(atom);
+        //
+        //        ostream.close();
+        //        fout.close();
+        //
+        //        // now read the serialized atom in
+        //        FileInputStream fin = new FileInputStream(objFilename);
+        //        ObjectInputStream istream  = new ObjectInputStream(fin);
+        //        Object obj = istream.readObject();
+        //
+        //        Assert.assertTrue(obj instanceof IAtom);
+        //
+        //        IAtom newAtom = (IAtom) obj;
+        //        String diff = AtomDiff.diff(atom, newAtom);
+        //
+        //        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
 
     }
 }

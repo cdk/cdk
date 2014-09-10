@@ -36,176 +36,191 @@ import org.junit.Test;
  */
 public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
 
-	@Test public void testGetStrandName()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		oStrand.setStrandName("A");
+    @Test
+    public void testGetStrandName() {
+        IStrand oStrand = (IStrand) newChemObject();
+        oStrand.setStrandName("A");
 
-		Assert.assertEquals("A", oStrand.getStrandName());
-	}
+        Assert.assertEquals("A", oStrand.getStrandName());
+    }
 
-	@Test public void testGetStrandType()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		oStrand.setStrandType("DNA");
+    @Test
+    public void testGetStrandType() {
+        IStrand oStrand = (IStrand) newChemObject();
+        oStrand.setStrandType("DNA");
 
-		Assert.assertEquals("DNA", oStrand.getStrandType());
-	}
+        Assert.assertEquals("DNA", oStrand.getStrandType());
+    }
 
-	/** The methods above effectively test SetStrandName and
-	 * SetStrandType as well, but I include SetStrandName and
-	 * SetStrandType explicitly as well (for concinstency).
-	 */
+    /** The methods above effectively test SetStrandName and
+     * SetStrandType as well, but I include SetStrandName and
+     * SetStrandType explicitly as well (for concinstency).
+     */
 
-	@Test public void testSetStrandName_String()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		oStrand.setStrandName("A");
+    @Test
+    public void testSetStrandName_String() {
+        IStrand oStrand = (IStrand) newChemObject();
+        oStrand.setStrandName("A");
 
-		Assert.assertEquals("A", oStrand.getStrandName());
-	}
+        Assert.assertEquals("A", oStrand.getStrandName());
+    }
 
-	@Test public void testSetStrandType_String()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		oStrand.setStrandType("DNA");
+    @Test
+    public void testSetStrandType_String() {
+        IStrand oStrand = (IStrand) newChemObject();
+        oStrand.setStrandType("DNA");
 
-		Assert.assertEquals("DNA", oStrand.getStrandType());
-	}
+        Assert.assertEquals("DNA", oStrand.getStrandType());
+    }
 
-	@Test public void testAddAtom_IAtom() {
-		IStrand oStrand = (IStrand)newChemObject();
-		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		oStrand.addAtom(oAtom1);
-		oStrand.addAtom(oAtom2);
+    @Test
+    public void testAddAtom_IAtom() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C1");
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        oStrand.addAtom(oAtom1);
+        oStrand.addAtom(oAtom2);
 
-		Assert.assertEquals(2, oStrand.getAtomCount());
-	}
+        Assert.assertEquals(2, oStrand.getAtomCount());
+    }
 
-	@Test public void testAddAtom_IAtom_IMonomer() {
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom1);
-		oStrand.addAtom(oAtom2);
-		oStrand.addAtom(oAtom3, oMono1);
+    @Test
+    public void testAddAtom_IAtom_IMonomer() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C1");
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom1);
+        oStrand.addAtom(oAtom2);
+        oStrand.addAtom(oAtom3, oMono1);
 
-		Assert.assertEquals(2, oStrand.getMonomer("").getAtomCount());
-		Assert.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
-	}
+        Assert.assertEquals(2, oStrand.getMonomer("").getAtomCount());
+        Assert.assertEquals(1, oStrand.getMonomer("TRP279").getAtomCount());
+    }
 
-	@Test public void testGetMonomerCount() {
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
+    @Test
+    public void testGetMonomerCount() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom2, oMono1);
+        oStrand.addAtom(oAtom3, oMono2);
 
-		Assert.assertEquals(2, oStrand.getMonomerCount());
-	}
+        Assert.assertEquals(2, oStrand.getMonomerCount());
+    }
 
-	@Test public void testGetMonomer_String() {
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
+    @Test
+    public void testGetMonomer_String() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom2, oMono1);
+        oStrand.addAtom(oAtom3, oMono2);
 
-		Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
-		Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
-		Assert.assertNull(oStrand.getMonomer("TEST"));
-	}
+        Assert.assertEquals(oMono1, oStrand.getMonomer("TRP279"));
+        Assert.assertEquals(oMono2, oStrand.getMonomer("HOH"));
+        Assert.assertNull(oStrand.getMonomer("TEST"));
+    }
 
-	@Test public void testGetMonomerNames() {
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
-		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
-		IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMon.setMonomerName("");
-		oMon.setMonomerType("UNKNOWN");
-		monomers.put("", oMon);
-		monomers.put("TRP279", oMono1);
-		monomers.put("HOH", oMono2);
+    @Test
+    public void testGetMonomerNames() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom2, oMono1);
+        oStrand.addAtom(oAtom3, oMono2);
+        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMon.setMonomerName("");
+        oMon.setMonomerType("UNKNOWN");
+        monomers.put("", oMon);
+        monomers.put("TRP279", oMono1);
+        monomers.put("HOH", oMono2);
 
-		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
-/*
-		Assert.assertEquals(3, oStrand.getMonomerNames().size());
-		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono2.getMonomerName()));
-*/
-	}
+        Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+        /*
+         * Assert.assertEquals(3, oStrand.getMonomerNames().size());
+         * Assert.assertTrue
+         * (oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+         * Assert.
+         * assertTrue(oStrand.getMonomerNames().contains(oMono2.getMonomerName
+         * ()));
+         */
+    }
 
-	@Test public void testRemoveMonomer_String()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class,"C1");
-		oStrand.addAtom(oAtom1, oMono1);
-		Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		Assert.assertEquals(1, oStrand.getAtomCount());
-		oStrand.removeMonomer("TRP279");
-		Assert.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
-		Assert.assertEquals(0, oStrand.getAtomCount());
-	}
+    @Test
+    public void testRemoveMonomer_String() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IAtom oAtom1 = oStrand.getBuilder().newInstance(IAtom.class, "C1");
+        oStrand.addAtom(oAtom1, oMono1);
+        Assert.assertTrue(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assert.assertEquals(1, oStrand.getAtomCount());
+        oStrand.removeMonomer("TRP279");
+        Assert.assertFalse(oStrand.getMonomerNames().contains(oMono1.getMonomerName()));
+        Assert.assertEquals(0, oStrand.getAtomCount());
+    }
 
-	@Test public void testGetMonomers()	{
-		IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
-		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
-		IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMon.setMonomerName("");
-		oMon.setMonomerType("UNKNOWN");
-		monomers.put("", oMon);
-		monomers.put("TRP279", oMono1);
-		monomers.put("HOH", oMono2);
+    @Test
+    public void testGetMonomers() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom2, oMono1);
+        oStrand.addAtom(oAtom3, oMono2);
+        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMon.setMonomerName("");
+        oMon.setMonomerType("UNKNOWN");
+        monomers.put("", oMon);
+        monomers.put("TRP279", oMono1);
+        monomers.put("HOH", oMono2);
 
-		Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
-	}
+        Assert.assertEquals(monomers.keySet(), oStrand.getMonomerNames());
+    }
 
     /**
      * Method to test whether the class complies with RFC #9.
      */
-    @Test public void testToString() {
-        IStrand oStrand = (IStrand)newChemObject();
-		IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono1.setMonomerName(new String("TRP279"));
-		IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMono2.setMonomerName(new String("HOH"));
-		IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class,"C2");
-		IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class,"C3");
-		oStrand.addAtom(oAtom2, oMono1);
-		oStrand.addAtom(oAtom3, oMono2);
-		Map<String,IMonomer> monomers = new Hashtable<String,IMonomer>();
-		IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
-		oMon.setMonomerName("");
-		oMon.setMonomerType("UNKNOWN");
-		monomers.put("", oMon);
-		monomers.put("TRP279", oMono1);
-		monomers.put("HOH", oMono2);
+    @Test
+    public void testToString() {
+        IStrand oStrand = (IStrand) newChemObject();
+        IMonomer oMono1 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono1.setMonomerName(new String("TRP279"));
+        IMonomer oMono2 = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMono2.setMonomerName(new String("HOH"));
+        IAtom oAtom2 = oStrand.getBuilder().newInstance(IAtom.class, "C2");
+        IAtom oAtom3 = oStrand.getBuilder().newInstance(IAtom.class, "C3");
+        oStrand.addAtom(oAtom2, oMono1);
+        oStrand.addAtom(oAtom3, oMono2);
+        Map<String, IMonomer> monomers = new Hashtable<String, IMonomer>();
+        IMonomer oMon = oStrand.getBuilder().newInstance(IMonomer.class);
+        oMon.setMonomerName("");
+        oMon.setMonomerType("UNKNOWN");
+        monomers.put("", oMon);
+        monomers.put("TRP279", oMono1);
+        monomers.put("HOH", oMono2);
         String description = oStrand.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue('\n' != description.charAt(i));
             Assert.assertTrue('\r' != description.charAt(i));
         }
@@ -214,8 +229,9 @@ public abstract class AbstractStrandTest extends AbstractAtomContainerTest {
     /**
      * Method to test the clone() method
      */
-    @Test public void testClone() throws Exception {
-    	IStrand strand = (IStrand)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IStrand strand = (IStrand) newChemObject();
         Object clone = strand.clone();
         Assert.assertTrue(clone instanceof IStrand);
     }

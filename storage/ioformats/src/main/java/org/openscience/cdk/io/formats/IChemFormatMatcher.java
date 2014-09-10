@@ -25,6 +25,7 @@ package org.openscience.cdk.io.formats;
 
 import com.google.common.primitives.Ints;
 import java.util.List;
+
 /**
  * This interface is used for classes that are able to match a certain
  * chemical file format. For example: Chemical Markup Language, PDB etc.
@@ -57,10 +58,10 @@ public interface IChemFormatMatcher extends IChemFormat {
     static final class MatchResult implements Comparable<MatchResult> {
 
         /** Did the format match. */
-        private final boolean matched;
+        private final boolean     matched;
 
         /** When did the format match. */
-        private final int position;
+        private final int         position;
 
         /** Which format matched. */
         private final IChemFormat format;
@@ -88,8 +89,7 @@ public interface IChemFormatMatcher extends IChemFormat {
          * @throws IllegalArgumentException there was no match
          */
         public IChemFormat format() {
-            if (!matched)
-                throw new IllegalArgumentException("result did not match");
+            if (!matched) throw new IllegalArgumentException("result did not match");
             return format;
         }
 
@@ -97,9 +97,9 @@ public interface IChemFormatMatcher extends IChemFormat {
          * Compares the match result with another, results with lower position
          * are ordered before those with higher position.
          */
-        @Override public int compareTo(MatchResult that) {
+        @Override
+        public int compareTo(MatchResult that) {
             return Ints.compare(this.position, that.position);
         }
     }
 }
-

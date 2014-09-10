@@ -34,24 +34,22 @@ public class ElementComparatorTest extends CDKTestCase {
 
     @Test
     public void testElementComparator() {
-		ElementComparator comp = new ElementComparator();
-		Assert.assertNotNull(comp);
-	}
+        ElementComparator comp = new ElementComparator();
+        Assert.assertNotNull(comp);
+    }
 
-	/**
-	 * @cdk.bug 1638375
-	 */
+    /**
+     * @cdk.bug 1638375
+     */
     @Test
     public void testCompare_Object_Object() {
-		ElementComparator comp = new ElementComparator();
+        ElementComparator comp = new ElementComparator();
 
-		Assert.assertTrue(comp.compare("C", "H") < 0);
-		Assert.assertTrue(comp.compare("H", "O") < 0);
-		Assert.assertTrue(comp.compare("N", "O") < 0);
-		Assert.assertEquals(0, comp.compare("Cl", "Cl"));
-		Assert.assertTrue(comp.compare("Cl", "C") > 0);
-	}
+        Assert.assertTrue(comp.compare("C", "H") < 0);
+        Assert.assertTrue(comp.compare("H", "O") < 0);
+        Assert.assertTrue(comp.compare("N", "O") < 0);
+        Assert.assertEquals(0, comp.compare("Cl", "Cl"));
+        Assert.assertTrue(comp.compare("Cl", "C") > 0);
+    }
 
 }
-
-

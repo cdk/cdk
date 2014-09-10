@@ -73,38 +73,36 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.io.PMPReaderTest")
 public class PMPReader extends DefaultChemObjectReader {
 
-    private static final String PMP_ZORDER = "ZOrder";
-    private static final String PMP_ID = "Id";
+    private static final String   PMP_ZORDER   = "ZOrder";
+    private static final String   PMP_ID       = "Id";
 
-	private BufferedReader input;
+    private BufferedReader        input;
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PMPReader.class);
+    private static ILoggingTool   logger       = LoggingToolFactory.createLoggingTool(PMPReader.class);
 
     /* Keep a copy of the PMP model */
-    private IAtomContainer modelStructure;
-    private IChemObject chemObject;
+    private IAtomContainer        modelStructure;
+    private IChemObject           chemObject;
     /* Keep an index of PMP id -> AtomCountainer id */
-    private Map<Integer, Integer> atomids = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> atomids      = new Hashtable<Integer, Integer>();
     private Map<Integer, Integer> atomGivenIds = new Hashtable<Integer, Integer>();
-    private Map<Integer, Integer> atomZOrders = new Hashtable<Integer, Integer>();
-    private Map<Integer, Integer> bondids = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> atomZOrders  = new Hashtable<Integer, Integer>();
+    private Map<Integer, Integer> bondids      = new Hashtable<Integer, Integer>();
     private Map<Integer, Integer> bondAtomOnes = new Hashtable<Integer, Integer>();
     private Map<Integer, Integer> bondAtomTwos = new Hashtable<Integer, Integer>();
-    private Map<Integer, Double> bondOrders = new Hashtable<Integer, Double>();
+    private Map<Integer, Double>  bondOrders   = new Hashtable<Integer, Double>();
 
     /* Often used patterns */
-    Pattern objHeader;
-    Pattern objCommand;
-    Pattern atomTypePattern;
+    Pattern                       objHeader;
+    Pattern                       objCommand;
+    Pattern                       atomTypePattern;
 
-    int lineNumber = 0;
-    int bondCounter = 0;
-	private RebondTool rebonder;
+    int                           lineNumber   = 0;
+    int                           bondCounter  = 0;
+    private RebondTool            rebonder;
 
     /*
      * construct a new reader from a Reader type object
-     *
      * @param input reader from which input is read
      */
     public PMPReader(Reader input) {
@@ -135,7 +133,7 @@ public class PMPReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -146,17 +144,17 @@ public class PMPReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * reads the content from a PMP input. It can only return a
@@ -166,9 +164,9 @@ public class PMPReader extends DefaultChemObjectReader {
      *
      * @see IChemFile
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T)readChemFile((IChemFile)object);
+            return (T) readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -177,10 +175,10 @@ public class PMPReader extends DefaultChemObjectReader {
     // private procedures
 
     private String readLine() throws IOException {
-    	String line = input.readLine();
-    	lineNumber = lineNumber + 1;
-    	logger.debug("LINE (" + lineNumber + "): ", line);
-    	return line;
+        String line = input.readLine();
+        lineNumber = lineNumber + 1;
+        logger.debug("LINE (" + lineNumber + "): ", line);
+        return line;
     }
 
     /**
@@ -214,7 +212,7 @@ public class PMPReader extends DefaultChemObjectReader {
                     }
                 } else if (line.startsWith("%%Model Start")) {
                     // parse Model section
-                	modelStructure = chemFile.getBuilder().newInstance(IAtomContainer.class);
+                    modelStructure = chemFile.getBuilder().newInstance(IAtomContainer.class);
                     while (input.ready() && line != null && !(line.startsWith("%%Model End"))) {
                         Matcher objHeaderMatcher = objHeader.matcher(line);
                         if (objHeaderMatcher.matches()) {
@@ -245,12 +243,14 @@ public class PMPReader extends DefaultChemObjectReader {
                             }
                             if (chemObject instanceof IAtom) {
                                 atomids.put(Integer.valueOf(id), Integer.valueOf(modelStructure.getAtomCount()));
-                                atomZOrders.put(Integer.valueOf((String)chemObject.getProperty(PMP_ZORDER)), Integer.valueOf(id));
-                                atomGivenIds.put(Integer.valueOf((String)chemObject.getProperty(PMP_ID)), Integer.valueOf(id));
-                                modelStructure.addAtom((IAtom)chemObject);
-//                            } else if (chemObject instanceof IBond) {
-//                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-//                                molecule.addBond((IBond)chemObject);
+                                atomZOrders.put(Integer.valueOf((String) chemObject.getProperty(PMP_ZORDER)),
+                                        Integer.valueOf(id));
+                                atomGivenIds.put(Integer.valueOf((String) chemObject.getProperty(PMP_ID)),
+                                        Integer.valueOf(id));
+                                modelStructure.addAtom((IAtom) chemObject);
+                                //                            } else if (chemObject instanceof IBond) {
+                                //                                bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+                                //                                molecule.addBond((IBond)chemObject);
                             } else {
                                 logger.error("chemObject is not initialized or of bad class type");
                             }
@@ -259,45 +259,40 @@ public class PMPReader extends DefaultChemObjectReader {
                         line = readLine();
                     }
                     if (line.startsWith("%%Model End")) {
-                    	// during the Model Start, all bonds are cached as PMP files might
-                    	// define bonds *before* the involved atoms :(
-                    	// the next lines dump the cache into the atom container
+                        // during the Model Start, all bonds are cached as PMP files might
+                        // define bonds *before* the involved atoms :(
+                        // the next lines dump the cache into the atom container
 
-//                  	bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
-//                  	molecule.addBond((IBond)chemObject);
-                    	int bondsFound = bondids.size();
-                    	logger.debug("Found #bonds: ", bondsFound);
-                    	logger.debug("#atom ones: ", bondAtomOnes.size());
-                    	logger.debug("#atom twos: ", bondAtomTwos.size());
-                    	logger.debug("#orders: ", bondOrders.size());
-                    	Iterator<Integer> bonds = bondids.keySet().iterator();
-                    	while (bonds.hasNext()) {
-                    		Integer index = bonds.next();
-                    		double order = (bondOrders.get(index) != null ? ((Double)bondOrders.get(index)).doubleValue() : 1.0);
-                    		logger.debug("index: ", index);
-                    		logger.debug("ones: ", bondAtomOnes.get(index));
-                    		IAtom atom1 = modelStructure.getAtom(
-                    			((Integer)atomids.get(
-                    				(Integer)bondAtomOnes.get(index)
-                    			)).intValue()
-                    		);
-                    		IAtom atom2 = modelStructure.getAtom(
-                        		((Integer)atomids.get(
-                        			(Integer)bondAtomTwos.get(index)
-                        		)).intValue()
-                        	);
-                    		IBond bond = modelStructure.getBuilder().newInstance(IBond.class,atom1, atom2);
-                    		if (order == 1.0) {
-                    			bond.setOrder(IBond.Order.SINGLE);
-                    		} else if (order == 2.0) {
-                    			bond.setOrder(IBond.Order.DOUBLE);
-                    		} else if (order == 3.0) {
-                    			bond.setOrder(IBond.Order.TRIPLE);
-                    		} else if (order == 4.0) {
-                    			bond.setOrder(IBond.Order.QUADRUPLE);
-                    		}
-                    		modelStructure.addBond(bond);
-                    	}
+                        //                  	bondids.put(new Integer(id), new Integer(molecule.getAtomCount()));
+                        //                  	molecule.addBond((IBond)chemObject);
+                        int bondsFound = bondids.size();
+                        logger.debug("Found #bonds: ", bondsFound);
+                        logger.debug("#atom ones: ", bondAtomOnes.size());
+                        logger.debug("#atom twos: ", bondAtomTwos.size());
+                        logger.debug("#orders: ", bondOrders.size());
+                        Iterator<Integer> bonds = bondids.keySet().iterator();
+                        while (bonds.hasNext()) {
+                            Integer index = bonds.next();
+                            double order = (bondOrders.get(index) != null ? ((Double) bondOrders.get(index))
+                                    .doubleValue() : 1.0);
+                            logger.debug("index: ", index);
+                            logger.debug("ones: ", bondAtomOnes.get(index));
+                            IAtom atom1 = modelStructure.getAtom(((Integer) atomids.get((Integer) bondAtomOnes
+                                    .get(index))).intValue());
+                            IAtom atom2 = modelStructure.getAtom(((Integer) atomids.get((Integer) bondAtomTwos
+                                    .get(index))).intValue());
+                            IBond bond = modelStructure.getBuilder().newInstance(IBond.class, atom1, atom2);
+                            if (order == 1.0) {
+                                bond.setOrder(IBond.Order.SINGLE);
+                            } else if (order == 2.0) {
+                                bond.setOrder(IBond.Order.DOUBLE);
+                            } else if (order == 3.0) {
+                                bond.setOrder(IBond.Order.TRIPLE);
+                            } else if (order == 4.0) {
+                                bond.setOrder(IBond.Order.QUADRUPLE);
+                            }
+                            modelStructure.addBond(bond);
+                        }
                     }
                 } else if (line.startsWith("%%Traj Start")) {
                     chemSequence = chemFile.getBuilder().newInstance(IChemSequence.class);
@@ -310,69 +305,59 @@ public class PMPReader extends DefaultChemObjectReader {
                             crystal = chemFile.getBuilder().newInstance(ICrystal.class);
                             while (input.ready() && line != null && !(line.startsWith("%%End Frame"))) {
                                 // process frame data
-                            	if (line.startsWith("%%Atom Coords")) {
-                                	// calculate Z: as it is not explicitely given, try to derive it from the
-                                	// energy per fragment and the total energy
-                                	if (energyFragment != 0.0 && energyTotal != 0.0) {
-                                		Z = (int)Math.round(energyTotal/energyFragment);
-                                		logger.debug("Z derived from energies: ", Z);
-                                	}
+                                if (line.startsWith("%%Atom Coords")) {
+                                    // calculate Z: as it is not explicitely given, try to derive it from the
+                                    // energy per fragment and the total energy
+                                    if (energyFragment != 0.0 && energyTotal != 0.0) {
+                                        Z = (int) Math.round(energyTotal / energyFragment);
+                                        logger.debug("Z derived from energies: ", Z);
+                                    }
                                     // add atomC as atoms to crystal
                                     int expatoms = modelStructure.getAtomCount();
-                                    for (int molCount = 1; molCount<=Z; molCount++) {
-                                    	IAtomContainer clone = modelStructure.getBuilder().newInstance(IAtomContainer.class);
-                                    	for (int i=0; i < expatoms; i++) {
-                                    		line = readLine();
-                                    		IAtom a = clone.getBuilder().newInstance(IAtom.class);
-                                    		StringTokenizer st = new StringTokenizer(line, " ");
-                                    		a.setPoint3d(
-                                    			new Point3d(
-                                    				Double.parseDouble(st.nextToken()),
-                                    				Double.parseDouble(st.nextToken()),
-                                    				Double.parseDouble(st.nextToken())
-                                    			)
-                                    		);
-                                    		a.setCovalentRadius(0.6);
-                                    		IAtom modelAtom = modelStructure.getAtom(atomids.get(atomGivenIds.get(Integer.valueOf(i+1))));
-                                    		a.setSymbol(modelAtom.getSymbol());
-                                    		clone.addAtom(a);
-                                    	}
-                                    	rebonder.rebond(clone);
-                                    	crystal.add(clone);
+                                    for (int molCount = 1; molCount <= Z; molCount++) {
+                                        IAtomContainer clone = modelStructure.getBuilder().newInstance(
+                                                IAtomContainer.class);
+                                        for (int i = 0; i < expatoms; i++) {
+                                            line = readLine();
+                                            IAtom a = clone.getBuilder().newInstance(IAtom.class);
+                                            StringTokenizer st = new StringTokenizer(line, " ");
+                                            a.setPoint3d(new Point3d(Double.parseDouble(st.nextToken()), Double
+                                                    .parseDouble(st.nextToken()), Double.parseDouble(st.nextToken())));
+                                            a.setCovalentRadius(0.6);
+                                            IAtom modelAtom = modelStructure.getAtom(atomids.get(atomGivenIds
+                                                    .get(Integer.valueOf(i + 1))));
+                                            a.setSymbol(modelAtom.getSymbol());
+                                            clone.addAtom(a);
+                                        }
+                                        rebonder.rebond(clone);
+                                        crystal.add(clone);
                                     }
                                 } else if (line.startsWith("%%E/Frag")) {
-                                	line = readLine().trim();
-                                	energyFragment = Double.parseDouble(line);
+                                    line = readLine().trim();
+                                    energyFragment = Double.parseDouble(line);
                                 } else if (line.startsWith("%%Tot E")) {
-                                	line = readLine().trim();
-                                	energyTotal = Double.parseDouble(line);
+                                    line = readLine().trim();
+                                    energyTotal = Double.parseDouble(line);
                                 } else if (line.startsWith("%%Lat Vects")) {
                                     StringTokenizer st;
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setA(new Vector3d(
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken())
-                                    ));
+                                    crystal.setA(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
+                                            .nextToken()), Double.parseDouble(st.nextToken())));
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setB(new Vector3d(
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken())
-                                    ));
+                                    crystal.setB(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
+                                            .nextToken()), Double.parseDouble(st.nextToken())));
                                     line = readLine();
                                     st = new StringTokenizer(line, " ");
-                                    crystal.setC(new Vector3d(
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken()),
-                                        Double.parseDouble(st.nextToken())
-                                    ));
+                                    crystal.setC(new Vector3d(Double.parseDouble(st.nextToken()), Double.parseDouble(st
+                                            .nextToken()), Double.parseDouble(st.nextToken())));
                                 } else if (line.startsWith("%%Space Group")) {
                                     line = readLine().trim();
-                                    /* standardize space group name.
-                                       See Crystal.setSpaceGroup() */
+                                    /*
+                                     * standardize space group name. See
+                                     * Crystal.setSpaceGroup()
+                                     */
                                     if ("P 21 21 21 (1)".equals(line)) {
                                         crystal.setSpaceGroup("P 2_1 2_1 2_1");
                                     } else {
@@ -402,7 +387,7 @@ public class PMPReader extends DefaultChemObjectReader {
             logger.error("An CDKException happened: ", e.getMessage());
             logger.debug(e);
             chemFile = null;
-		}
+        }
 
         return chemFile;
     }
@@ -417,28 +402,28 @@ public class PMPReader extends DefaultChemObjectReader {
                 if (atomTypeMatcher.matches()) {
                     int atomicnum = Integer.parseInt(atomTypeMatcher.group(1));
                     String type = atomTypeMatcher.group(2);
-                    ((IAtom)chemObject).setAtomicNumber(atomicnum);
-                    ((IAtom)chemObject).setSymbol(type);
+                    ((IAtom) chemObject).setAtomicNumber(atomicnum);
+                    ((IAtom) chemObject).setSymbol(type);
                 } else {
                     logger.error("Incorrectly formated field value: " + field + ".");
                 }
             } else if ("Charge".equals(command)) {
                 try {
                     double charge = Double.parseDouble(field);
-                    ((IAtom)chemObject).setCharge(charge);
+                    ((IAtom) chemObject).setCharge(charge);
                 } catch (NumberFormatException e) {
                     logger.error("Incorrectly formated float field: " + field + ".");
                 }
             } else if ("CMAPPINGS".equals(command)) {
             } else if ("FFType".equals(command)) {
             } else if ("Id".equals(command)) {
-            	// ok, should take this into account too
-            	chemObject.setProperty(PMP_ID, field);
+                // ok, should take this into account too
+                chemObject.setProperty(PMP_ID, field);
             } else if ("Mass".equals(command)) {
             } else if ("XYZ".equals(command)) {
             } else if ("ZOrder".equals(command)) {
-            	// ok, should take this into account too
-            	chemObject.setProperty(PMP_ZORDER, field);
+                // ok, should take this into account too
+                chemObject.setProperty(PMP_ZORDER, field);
             } else {
                 logger.warn("Unkown PMP Atom command: " + command);
             }
@@ -448,8 +433,8 @@ public class PMPReader extends DefaultChemObjectReader {
                 // this assumes that the atoms involved in this bond are
                 // already added, which seems the case in the PMP files
                 bondAtomOnes.put(Integer.valueOf(bondCounter), Integer.valueOf(atomid));
-//                IAtom a = molecule.getAtom(realatomid);
-//                ((IBond)chemObject).setAtomAt(a, 0);
+                //                IAtom a = molecule.getAtom(realatomid);
+                //                ((IBond)chemObject).setAtomAt(a, 0);
             } else if ("Atom2".equals(command)) {
                 int atomid = Integer.parseInt(field);
                 // this assumes that the atoms involved in this bond are
@@ -457,15 +442,15 @@ public class PMPReader extends DefaultChemObjectReader {
                 logger.debug("atomids: " + atomids);
                 logger.debug("atomid: " + atomid);
                 bondAtomTwos.put(Integer.valueOf(bondCounter), Integer.valueOf(atomid));
-//                IAtom a = molecule.getAtom(realatomid);
-//                ((IBond)chemObject).setAtomAt(a, 1);
+                //                IAtom a = molecule.getAtom(realatomid);
+                //                ((IBond)chemObject).setAtomAt(a, 1);
             } else if ("Order".equals(command)) {
                 double order = Double.parseDouble(field);
                 bondOrders.put(Integer.valueOf(bondCounter), order);
-//                ((IBond)chemObject).setOrder(order);
+                //                ((IBond)chemObject).setOrder(order);
             } else if ("Id".equals(command)) {
-            	int bondid = Integer.parseInt(field);
-            	bondids.put(Integer.valueOf(bondCounter), Integer.valueOf(bondid));
+                int bondid = Integer.parseInt(field);
+                bondids.put(Integer.valueOf(bondCounter), Integer.valueOf(bondid));
             } else if ("Label".equals(command)) {
             } else if ("3DGridOrigin".equals(command)) {
             } else if ("3DGridMatrix".equals(command)) {
@@ -480,9 +465,9 @@ public class PMPReader extends DefaultChemObjectReader {
 
     private void constructObject(IChemObjectBuilder builder, String object) {
         if ("Atom".equals(object)) {
-            chemObject = builder.newInstance(IAtom.class,"C");
+            chemObject = builder.newInstance(IAtom.class, "C");
         } else if ("Bond".equals(object)) {
-        	bondCounter++;
+            bondCounter++;
             chemObject = builder.newInstance(IBond.class);
         } else if ("Model".equals(object)) {
             modelStructure = builder.newInstance(IAtomContainer.class);

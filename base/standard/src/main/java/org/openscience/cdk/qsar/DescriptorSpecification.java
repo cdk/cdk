@@ -34,12 +34,12 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.qsar.DescriptorSpecificationTest")
 public class DescriptorSpecification implements Serializable, IImplementationSpecification {
 
-	private static final long serialVersionUID = 7044545275802343828L;
+    private static final long serialVersionUID = 7044545275802343828L;
 
-    private String specificationReference;
-    private String implementationTitle;
-    private String implementationIdentifier;
-    private String implementationVendor;
+    private String            specificationReference;
+    private String            implementationTitle;
+    private String            implementationIdentifier;
+    private String            implementationVendor;
 
     /**
      * Container for specifying the type of descriptor.
@@ -57,11 +57,8 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
      * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
-    public DescriptorSpecification(
-        String specificationReference,
-        String implementationTitle,
-        String implementationIdentifier,
-        String implementationVendor) {
+    public DescriptorSpecification(String specificationReference, String implementationTitle,
+            String implementationIdentifier, String implementationVendor) {
         this.specificationReference = specificationReference;
         this.implementationTitle = implementationTitle;
         this.implementationIdentifier = implementationIdentifier;
@@ -81,15 +78,13 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
      * @param implementationVendor Name of the organisation/person/program/whatever
      *          who wrote/packaged the implementation.
      */
-    public DescriptorSpecification(
-            String specificationReference,
-            String implementationTitle,
+    public DescriptorSpecification(String specificationReference, String implementationTitle,
             String implementationVendor) {
-            this.specificationReference = specificationReference;
-            this.implementationTitle = implementationTitle;
-            this.implementationIdentifier = CDK.getVersion();
-            this.implementationVendor = implementationVendor;
-        }
+        this.specificationReference = specificationReference;
+        this.implementationTitle = implementationTitle;
+        this.implementationIdentifier = CDK.getVersion();
+        this.implementationVendor = implementationVendor;
+    }
 
     @TestMethod("testGetSpecificationReference")
     public String getSpecificationReference() {
@@ -112,4 +107,3 @@ public class DescriptorSpecification implements Serializable, IImplementationSpe
     }
 
 }
-

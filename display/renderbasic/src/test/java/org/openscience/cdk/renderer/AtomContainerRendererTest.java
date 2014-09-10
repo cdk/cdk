@@ -51,63 +51,59 @@ import org.openscience.cdk.renderer.generators.IGenerator;
  */
 public class AtomContainerRendererTest {
 
-	private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder        builder = SilentChemObjectBuilder.getInstance();
 
-	private StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+    private StructureDiagramGenerator sdg     = new StructureDiagramGenerator();
 
-	public IAtomContainer layout(IAtomContainer molecule) {
-		sdg.setMolecule(molecule);
-		try {
-			sdg.generateCoordinates();
-		} catch (Exception e) {
-			System.err.println(e);
-		}
-		return sdg.getMolecule();
-	}
+    public IAtomContainer layout(IAtomContainer molecule) {
+        sdg.setMolecule(molecule);
+        try {
+            sdg.generateCoordinates();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return sdg.getMolecule();
+    }
 
-	public IAtomContainer makeSquare() {
-		IAtomContainer square = builder.newInstance(IAtomContainer.class);
-		square.addAtom(builder.newInstance(IAtom.class,"C"));
-		square.addAtom(builder.newInstance(IAtom.class,"C"));
-		square.addAtom(builder.newInstance(IAtom.class,"C"));
-		square.addAtom(builder.newInstance(IAtom.class,"C"));
-		square.addBond(0, 1, IBond.Order.SINGLE);
-		square.addBond(0, 3, IBond.Order.SINGLE);
-		square.addBond(1, 2, IBond.Order.SINGLE);
-		square.addBond(2, 3, IBond.Order.SINGLE);
+    public IAtomContainer makeSquare() {
+        IAtomContainer square = builder.newInstance(IAtomContainer.class);
+        square.addAtom(builder.newInstance(IAtom.class, "C"));
+        square.addAtom(builder.newInstance(IAtom.class, "C"));
+        square.addAtom(builder.newInstance(IAtom.class, "C"));
+        square.addAtom(builder.newInstance(IAtom.class, "C"));
+        square.addBond(0, 1, IBond.Order.SINGLE);
+        square.addBond(0, 3, IBond.Order.SINGLE);
+        square.addBond(1, 2, IBond.Order.SINGLE);
+        square.addBond(2, 3, IBond.Order.SINGLE);
 
-		return layout(square);
-	}
+        return layout(square);
+    }
 
-	@Test
-	public void testSquareMolecule() {
-	    IAtomContainer square = makeSquare();
+    @Test
+    public void testSquareMolecule() {
+        IAtomContainer square = makeSquare();
 
-		List<IGenerator<IAtomContainer>> generators =
-			new ArrayList<IGenerator<IAtomContainer>>();
-		generators.add(new BasicSceneGenerator());
-		generators.add(new BasicBondGenerator());
-		BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
-		generators.add(atomGenerator);
+        List<IGenerator<IAtomContainer>> generators = new ArrayList<IGenerator<IAtomContainer>>();
+        generators.add(new BasicSceneGenerator());
+        generators.add(new BasicBondGenerator());
+        BasicAtomGenerator atomGenerator = new BasicAtomGenerator();
+        generators.add(atomGenerator);
 
-		AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
-		RendererModel model = renderer.getRenderer2DModel();
-		model.getParameter(CompactShape.class).setValue(Shape.OVAL);
-		model.getParameter(CompactAtom.class).setValue(true);
-		model.getParameter(KekuleStructure.class).setValue(true);
-		model.getParameter(ShowEndCarbons.class).setValue(true);
+        AtomContainerRenderer renderer = new AtomContainerRenderer(generators, new AWTFontManager());
+        RendererModel model = renderer.getRenderer2DModel();
+        model.getParameter(CompactShape.class).setValue(Shape.OVAL);
+        model.getParameter(CompactAtom.class).setValue(true);
+        model.getParameter(KekuleStructure.class).setValue(true);
+        model.getParameter(ShowEndCarbons.class).setValue(true);
 
-		ElementUtility visitor = new ElementUtility();
-		Rectangle screen = new Rectangle(0, 0, 100, 100);
-		renderer.setup(square, screen);
-		renderer.paint(square, visitor);
+        ElementUtility visitor = new ElementUtility();
+        Rectangle screen = new Rectangle(0, 0, 100, 100);
+        renderer.setup(square, screen);
+        renderer.paint(square, visitor);
 
-		for (IRenderingElement element : visitor.getElements()) {
-			Assert.assertTrue(
-			    visitor.toString(element).contains("Line") ||
-			    visitor.toString(element).contains("Oval")
-			);
-		}
-	}
+        for (IRenderingElement element : visitor.getElements()) {
+            Assert.assertTrue(visitor.toString(element).contains("Line") || visitor.toString(element).contains("Oval"));
+        }
+    }
 
 }

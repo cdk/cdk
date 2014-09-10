@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class SDFFormatTest extends ChemFormatMatcherTest {
 
     public SDFFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)SDFFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) SDFFormat.getInstance());
     }
 
 }

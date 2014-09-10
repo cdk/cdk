@@ -30,19 +30,19 @@ import org.openscience.cdk.interfaces.IPDBStructure;
  */
 public class PDBStructure extends ChemObject implements IPDBStructure {
 
-	private static final long serialVersionUID = -1877529009319324448L;
+    private static final long  serialVersionUID = -1877529009319324448L;
 
-	public final static String HELIX = "helix";
-	public final static String SHEET = "sheet";
-	public final static String TURN = "turn";
+    public final static String HELIX            = "helix";
+    public final static String SHEET            = "sheet";
+    public final static String TURN             = "turn";
 
-    private String structureType;
-    private Character startChainID;
-    private Integer startSequenceNumber;
-    private Character startInsertionCode;
-    private Character endChainID;
-    private Integer endSequenceNumber;
-    private Character endInsertionCode;
+    private String             structureType;
+    private Character          startChainID;
+    private Integer            startSequenceNumber;
+    private Character          startInsertionCode;
+    private Character          endChainID;
+    private Integer            endSequenceNumber;
+    private Character          endInsertionCode;
 
     /**
      * get the ending Chain identifier of this structure.
@@ -50,110 +50,123 @@ public class PDBStructure extends ChemObject implements IPDBStructure {
      * @return the ending Chain identifier of this structure
      */
     public Character getEndChainID() {
-    	return endChainID;
+        return endChainID;
     }
+
     /**
      * set the ending Chain identifier of this structure.
      *
      * @param endChainID  the ending Chain identifier of this structure
      */
     public void setEndChainID(Character endChainID) {
-    	this.endChainID = endChainID;
+        this.endChainID = endChainID;
     }
+
     /**
      * get the ending Code for insertion of residues of this structure.
      *
      * @return the ending Code for insertion of residues of this structure
      */
     public Character getEndInsertionCode() {
-    	return endInsertionCode;
+        return endInsertionCode;
     }
+
     /**
      * set the ending Code for insertion of residues of this structure.
      *
      * @param endInsertionCode  the ending Code for insertion of residues of this structure
      */
     public void setEndInsertionCode(Character endInsertionCode) {
-    	this.endInsertionCode = endInsertionCode;
+        this.endInsertionCode = endInsertionCode;
     }
+
     /**
      * get the ending sequence number of this structure.
      *
      * @return the ending sequence number of this structure
      */
     public Integer getEndSequenceNumber() {
-    	return endSequenceNumber;
+        return endSequenceNumber;
     }
+
     /**
      * set the ending sequence number of this structure.
      *
      * @param endSequenceNumber  the ending sequence number of this structure
      */
     public void setEndSequenceNumber(Integer endSequenceNumber) {
-    	this.endSequenceNumber = endSequenceNumber;
+        this.endSequenceNumber = endSequenceNumber;
     }
+
     /**
      * get start Chain identifier of this structure.
      *
      * @return the start Chain identifier of this structure
      */
     public Character getStartChainID() {
-    	return startChainID;
+        return startChainID;
     }
+
     /**
      * set the start Chain identifier of this structure.
      *
      * @param startChainID  the start Chain identifier of this structure
      */
     public void setStartChainID(Character startChainID) {
-    	this.startChainID = startChainID;
+        this.startChainID = startChainID;
     }
+
     /**
      * get start Code for insertion of residues of this structure.
      *
      * @return the start Code for insertion of residues of this structure
      */
     public Character getStartInsertionCode() {
-    	return startInsertionCode;
+        return startInsertionCode;
     }
+
     /**
      * set the start Chain identifier of this structure.
      *
      * @param startInsertionCode  the start Chain identifier of this structure
      */
     public void setStartInsertionCode(Character startInsertionCode) {
-    	this.startInsertionCode = startInsertionCode;
+        this.startInsertionCode = startInsertionCode;
     }
+
     /**
      * get the start sequence number of this structure.
      *
      * @return the start sequence number of this structure
      */
     public Integer getStartSequenceNumber() {
-    	return startSequenceNumber;
+        return startSequenceNumber;
     }
+
     /**
      * set the start sequence number of this structure.
      *
      * @param startSequenceNumber  the start sequence number of this structure
      */
     public void setStartSequenceNumber(Integer startSequenceNumber) {
-    	this.startSequenceNumber = startSequenceNumber;
+        this.startSequenceNumber = startSequenceNumber;
     }
+
     /**
      * get Structure Type of this structure.
      *
      * @return the Structure Type of this structure
      */
     public String getStructureType() {
-    	return structureType;
+        return structureType;
     }
+
     /**
      * set the Structure Type of this structure.
      *
      * @param structureType  the Structure Type of this structure
      */
     public void setStructureType(String structureType) {
-    	this.structureType = structureType;
+        this.structureType = structureType;
     }
 }

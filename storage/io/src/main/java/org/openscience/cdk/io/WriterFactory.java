@@ -46,12 +46,12 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  **/
 public class WriterFactory {
 
-    private final static String IO_FORMATS_LIST = "io-formats.set";
+    private final static String                          IO_FORMATS_LIST = "io-formats.set";
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(WriterFactory.class);
+    private static ILoggingTool                          logger          = LoggingToolFactory
+                                                                                 .createLoggingTool(WriterFactory.class);
 
-    private static List<IChemFormat> formats = null;
+    private static List<IChemFormat>                     formats         = null;
 
     private static Map<String, Class<IChemObjectWriter>> registeredReaders;
 
@@ -65,10 +65,7 @@ public class WriterFactory {
     public void registerWriter(Class<?> writer) {
         if (writer == null) return;
         if (IChemObjectWriter.class.isAssignableFrom(writer)) {
-            registeredReaders.put(
-                writer.getName(),
-                (Class<IChemObjectWriter>)writer
-            );
+            registeredReaders.put(writer.getName(), (Class<IChemObjectWriter>) writer);
         }
     }
 
@@ -82,22 +79,22 @@ public class WriterFactory {
      * @see    org.openscience.cdk.tools.DataFeatures
      */
     public IChemFormat[] findChemFormats(int features) {
-    	if (formats == null) loadFormats();
+        if (formats == null) loadFormats();
 
         Iterator<IChemFormat> iter = formats.iterator();
         List<IChemFormat> matches = new ArrayList<IChemFormat>();
-    	while (iter.hasNext()) {
-    		IChemFormat format = (IChemFormat)iter.next();
-    		if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
-    	}
+        while (iter.hasNext()) {
+            IChemFormat format = (IChemFormat) iter.next();
+            if ((format.getSupportedDataFeatures() & features) == features) matches.add(format);
+        }
 
-    	return (IChemFormat[])matches.toArray(new IChemFormat[matches.size()]);
+        return (IChemFormat[]) matches.toArray(new IChemFormat[matches.size()]);
     }
 
     public int formatCount() {
-    	if (formats == null) loadFormats();
+        if (formats == null) loadFormats();
 
-    	return formats.size();
+        return formats.size();
     }
 
     private void loadFormats() {
@@ -105,9 +102,8 @@ public class WriterFactory {
             formats = new ArrayList<IChemFormat>();
             try {
                 logger.debug("Starting loading Formats...");
-                BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    this.getClass().getClassLoader().getResourceAsStream(IO_FORMATS_LIST)
-                ));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader()
+                        .getResourceAsStream(IO_FORMATS_LIST)));
                 int formatCount = 0;
                 while (reader.ready()) {
                     // load them one by one
@@ -115,11 +111,11 @@ public class WriterFactory {
                     formatCount++;
                     try {
                         Class<?> formatClass = this.getClass().getClassLoader().loadClass(formatName);
-                    	Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
-                    	IResourceFormat format = (IResourceFormat)getinstanceMethod.invoke(null, new Object[0]);
+                        Method getinstanceMethod = formatClass.getMethod("getInstance", new Class[0]);
+                        IResourceFormat format = (IResourceFormat) getinstanceMethod.invoke(null, new Object[0]);
                         if (format instanceof IChemFormat) {
-                            formats.add((IChemFormat)format);
-                        	logger.info("Loaded IChemFormat: " + format.getClass().getName());
+                            formats.add((IChemFormat) format);
+                            logger.info("Loaded IChemFormat: " + format.getClass().getName());
                         }
                     } catch (ClassNotFoundException exception) {
                         logger.error("Could not find this IResourceFormat: ", formatName);
@@ -146,13 +142,12 @@ public class WriterFactory {
             if (writerClassName != null) {
                 try {
                     if (registeredReaders.containsKey(writerClassName)) {
-                        Class<IChemObjectWriter> writer =
-                            registeredReaders.get(writerClassName);
+                        Class<IChemObjectWriter> writer = registeredReaders.get(writerClassName);
                         if (writer != null) return writer.newInstance();
                     }
                     // make a new instance of this class
-                	return (IChemObjectWriter)this.getClass().getClassLoader().
-                        loadClass(writerClassName).newInstance();
+                    return (IChemObjectWriter) this.getClass().getClassLoader().loadClass(writerClassName)
+                            .newInstance();
                 } catch (ClassNotFoundException exception) {
                     logger.error("Could not find this ChemObjectWriter: ", writerClassName);
                     logger.debug(exception);
@@ -169,4 +164,3 @@ public class WriterFactory {
         return null;
     }
 }
-

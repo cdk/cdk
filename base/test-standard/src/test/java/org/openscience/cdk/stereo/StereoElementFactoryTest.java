@@ -58,7 +58,8 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  */
 public class StereoElementFactoryTest {
 
-    @Test public void e_but2ene() {
+    @Test
+    public void e_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -2.19d, 1.64d));
         m.addAtom(atom("C", 1, -1.36d, 1.64d));
@@ -68,14 +69,15 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
 
-        StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
     }
 
-    @Test public void z_but2ene() {
+    @Test
+    public void z_but2ene() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 3, -2.46d, 1.99d));
         m.addAtom(atom("C", 1, -1.74d, 0.68d));
@@ -85,14 +87,15 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.DOUBLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
 
-        StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(1), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
     }
 
-    @Test public void unspec_but2ene_byCoordinates() {
+    @Test
+    public void unspec_but2ene_byCoordinates() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.37d, 1.64d));
         m.addAtom(atom("C", 1, -2.19d, 1.63d));
@@ -102,14 +105,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
 
-
-        StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNull(element);
     }
 
-    @Test public void unspec_but2ene_wavyBond() {
+    @Test
+    public void unspec_but2ene_wavyBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
         m.addAtom(atom("C", 1, -2.10d, 1.46d));
@@ -119,13 +122,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE, IBond.Stereo.UP_OR_DOWN);
 
-        StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNull(element);
     }
 
-    @Test public void unspec_but2ene_crossBond() {
+    @Test
+    public void unspec_but2ene_crossBond() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -1.27d, 1.48d));
         m.addAtom(atom("C", 1, -2.10d, 1.46d));
@@ -135,13 +139,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(0, 3, IBond.Order.SINGLE);
 
-        StereoElementFactory       factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNull(element);
     }
 
-    @Test public void r_butan2ol() {
+    @Test
+    public void r_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -152,13 +157,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
-    @Test public void s_butan2ol() {
+    @Test
+    public void s_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -169,13 +175,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
-    @Test public void r_butan2ol_3d() {
+    @Test
+    public void r_butan2ol_3d() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, 0.56d, 0.05d, 0.71d));
         m.addAtom(atom("C", 2, -0.53d, 0.51d, -0.30d));
@@ -186,13 +193,14 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
-    @Test public void s_butan2ol_3d() {
+    @Test
+    public void s_butan2ol_3d() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 1, -0.17d, -0.12d, -0.89d));
         m.addAtom(atom("C", 2, 1.12d, -0.91d, -0.51d));
@@ -203,13 +211,14 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
-    @Test public void r_butan2ol_3d_expH() {
+    @Test
+    public void r_butan2ol_3d_expH() {
         IAtomContainer m = new AtomContainer(6, 5, 0, 0);
         m.addAtom(atom("C", 0, -0.07d, -0.14d, 0.50d));
         m.addAtom(atom("C", 2, -0.05d, -1.20d, -0.65d));
@@ -222,13 +231,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
-    @Test public void s_butan2ol_3d_expH() {
+    @Test
+    public void s_butan2ol_3d_expH() {
         IAtomContainer m = new AtomContainer(6, 5, 0, 0);
         m.addAtom(atom("C", 0, -0.17d, -0.12d, -0.89d));
         m.addAtom(atom("C", 2, 1.12d, -0.91d, -0.51d));
@@ -241,13 +251,14 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
         m.addBond(0, 5, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), Stereocenters.of(m));
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
-    @Test public void unspec_butan2ol() {
+    @Test
+    public void unspec_butan2ol() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -259,7 +270,7 @@ public class StereoElementFactoryTest {
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
 
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), null);
         assertNull(element);
     }
@@ -267,7 +278,8 @@ public class StereoElementFactoryTest {
     /**
      * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m1/s1
      */
-    @Test public void r_methanesulfinylethane() {
+    @Test
+    public void r_methanesulfinylethane() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("S", 0, 0.01d, 1.50d));
         m.addAtom(atom("C", 3, 0.03d, 0.00d));
@@ -278,7 +290,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
@@ -287,7 +299,8 @@ public class StereoElementFactoryTest {
     /**
      * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m0/s1
      */
-    @Test public void s_methanesulfinylethane() {
+    @Test
+    public void s_methanesulfinylethane() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("S", 0, 0.01d, 1.50d));
         m.addAtom(atom("C", 3, 0.03d, 0.00d));
@@ -298,13 +311,14 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(2, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.DOUBLE);
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(0), null);
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
-    @Test public void e_but2ene_3d() {
+    @Test
+    public void e_but2ene_3d() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, -0.19d, 0.09d, -0.27d));
         m.addAtom(atom("C", 1, 0.22d, -1.15d, 0.05d));
@@ -314,14 +328,15 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
 
-        StereoElementFactory       factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(OPPOSITE));
     }
 
-    @Test public void z_but2ene_3d() {
+    @Test
+    public void z_but2ene_3d() {
         IAtomContainer m = new AtomContainer(4, 3, 0, 0);
         m.addAtom(atom("C", 1, 0.05d, -1.28d, 0.13d));
         m.addAtom(atom("C", 1, -0.72d, -0.58d, -0.72d));
@@ -331,14 +346,15 @@ public class StereoElementFactoryTest {
         m.addBond(0, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
 
-        StereoElementFactory       factory = StereoElementFactory.using3DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using3DCoordinates(m);
         IDoubleBondStereochemistry element = factory.createGeometric(m.getBond(0), null);
 
         assertNotNull(element);
         assertThat(element.getStereo(), is(TOGETHER));
     }
 
-    @Test public void inverse_style_downbond() {
+    @Test
+    public void inverse_style_downbond() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -349,17 +365,17 @@ public class StereoElementFactoryTest {
         m.addBond(1, 2, IBond.Order.SINGLE);
         m.addBond(1, 3, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE);
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
         assertNotNull(element);
         assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
     }
 
-
     // this example mocks a case where the down bond is inverse but is shared
     // between two stereo-centres - we can't create an element for atom 1 as
     // this bond is used to specify atom '2'
-    @Test public void inverse_style_downbond_ambiguous() throws CDKException {
+    @Test
+    public void inverse_style_downbond_ambiguous() throws CDKException {
         IAtomContainer m = new AtomContainer(6, 4, 0, 0);
         m.addAtom(atom("O", 1, -0.46d, 1.98d));
         m.addAtom(atom("C", 1, -1.28d, 1.96d));
@@ -373,7 +389,7 @@ public class StereoElementFactoryTest {
         m.addBond(2, 4, IBond.Order.SINGLE);
         m.addBond(2, 5, IBond.Order.SINGLE);
 
-        StereoElementFactory  factory = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory factory = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = factory.createTetrahedral(m.getAtom(1), Stereocenters.of(m));
         assertNull(element);
     }
@@ -383,7 +399,8 @@ public class StereoElementFactoryTest {
      * http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272
      * @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
      */
-    @Test public void inverse_style_downbond_dopachrome() throws Exception {
+    @Test
+    public void inverse_style_downbond_dopachrome() throws Exception {
         MDLV2000Reader mdl = null;
         try {
             mdl = new MDLV2000Reader(getClass().getResourceAsStream("/data/mdl/CPD-7272.mol"));
@@ -395,12 +412,12 @@ public class StereoElementFactoryTest {
             assertThat(ses.length, is(1));
             assertNotNull(ses[0]);
         } finally {
-            if (mdl != null)
-                mdl.close();
+            if (mdl != null) mdl.close();
         }
     }
 
-    @Test public void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom2DCoordinates_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -416,15 +433,15 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.DOWN);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom2DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -440,15 +457,15 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.UP);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -460,15 +477,15 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1),
-                                                    m.getAtom(4), m.getAtom(3)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(4), m.getAtom(3)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom2DCoordinatesImplicitHydrogens_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -480,15 +497,15 @@ public class StereoElementFactoryTest {
         m.addBond(2, 3, IBond.Order.DOUBLE, IBond.Stereo.NONE);
         m.addBond(3, 4, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1),
-                                                    m.getAtom(4), m.getAtom(3)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(1), m.getAtom(4), m.getAtom(3)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom2DCoordinatesNoNonplanarBonds() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 0, -1.13d, 1.49d));
@@ -504,13 +521,13 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE, IBond.Stereo.NONE);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using2DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertNull(et);
     }
 
-
-    @Test public void createExtendedTetrahedralFrom3DCoordinates_cw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom3DCoordinates_cw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, 0.1925, -2.7911, 1.8739));
         m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
@@ -526,15 +543,15 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
+    @Test
+    public void createExtendedTetrahedralFrom3DCoordinates_ccw() throws Exception {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, 1.3810, -0.7495, -1.4012));
         m.addAtom(atom("C", 0, -0.4383, -2.0366, 0.8166));
@@ -550,15 +567,15 @@ public class StereoElementFactoryTest {
         m.addBond(1, 6, IBond.Order.SINGLE);
         m.addBond(3, 5, IBond.Order.SINGLE);
 
-        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m)
-                                                     .createExtendedTetrahedral(2, Stereocenters.of(m));
+        ExtendedTetrahedral et = StereoElementFactory.using3DCoordinates(m).createExtendedTetrahedral(2,
+                Stereocenters.of(m));
         assertThat(et.winding(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
-        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6),
-                                                    m.getAtom(4), m.getAtom(5)}));
+        assertThat(et.peripherals(), is(new IAtom[]{m.getAtom(0), m.getAtom(6), m.getAtom(4), m.getAtom(5)}));
         assertThat(et.focus(), is(m.getAtom(2)));
     }
 
-    @Test public void createExtendedTetrahedral() throws CDKException {
+    @Test
+    public void createExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -574,7 +591,8 @@ public class StereoElementFactoryTest {
         assertThat(m.stereoElements().iterator().next(), is(instanceOf(ExtendedTetrahedral.class)));
     }
 
-    @Test public void doNotCreateNonStereogenicExtendedTetrahedral() throws CDKException {
+    @Test
+    public void doNotCreateNonStereogenicExtendedTetrahedral() throws CDKException {
         IAtomContainer m = new AtomContainer(7, 6, 0, 0);
         m.addAtom(atom("C", 3, -1.56d, 0.78d));
         m.addAtom(atom("C", 1, -1.13d, 1.49d));
@@ -596,7 +614,8 @@ public class StereoElementFactoryTest {
      * (e.g. CHEBI:7621). The parity computation should consider this, here
      * we check we get the correct (anti-clockwise) configuration.
      */
-    @Test public void differentBondLengthsDoNotAffectWinding() {
+    @Test
+    public void differentBondLengthsDoNotAffectWinding() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("O", 1, 14.50d, -8.72d));
         m.addAtom(atom("N", 2, 14.50d, -11.15d));
@@ -608,7 +627,7 @@ public class StereoElementFactoryTest {
         m.addBond(3, 2, IBond.Order.SINGLE);
         m.addBond(2, 4, IBond.Order.SINGLE, IBond.Stereo.DOWN);
 
-        StereoElementFactory  sef     = StereoElementFactory.using2DCoordinates(m);
+        StereoElementFactory sef = StereoElementFactory.using2DCoordinates(m);
         ITetrahedralChirality element = sef.createTetrahedral(2, Stereocenters.of(m));
 
         assertThat(element.getChiralAtom(), is(m.getAtom(2)));
@@ -619,11 +638,11 @@ public class StereoElementFactoryTest {
         assertThat(ligands[2], is(m.getAtom(3)));
         assertThat(ligands[3], is(m.getAtom(4)));
 
-        assertThat(element.getStereo(),
-                   is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
+        assertThat(element.getStereo(), is(ITetrahedralChirality.Stereo.ANTI_CLOCKWISE));
     }
 
-    @Test public void always2DTetrahedralElements() {
+    @Test
+    public void always2DTetrahedralElements() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, 0.34d, 2.28d));
         m.addAtom(atom("O", 1, 1.17d, 2.28d));
@@ -641,12 +660,12 @@ public class StereoElementFactoryTest {
         m.addBond(2, 6, IBond.Order.SINGLE);
         m.addBond(3, 7, IBond.Order.SINGLE);
 
-        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m)
-                                                            .createAll();
+        List<IStereoElement> elements = StereoElementFactory.using2DCoordinates(m).createAll();
         assertThat(elements.size(), is(3));
     }
 
-    @Test public void onlyCreateStereoForConsitionalDifferencesIn3D() {
+    @Test
+    public void onlyCreateStereoForConsitionalDifferencesIn3D() {
         IAtomContainer m = new AtomContainer(8, 7, 0, 0);
         m.addAtom(atom("C", 1, -1.00d, -0.25d, 1.22d));
         m.addAtom(atom("O", 1, -1.82d, 0.20d, 2.30d));
@@ -664,14 +683,14 @@ public class StereoElementFactoryTest {
         m.addBond(2, 6, IBond.Order.SINGLE);
         m.addBond(3, 7, IBond.Order.SINGLE);
 
-        List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m)
-                                                            .createAll();
+        List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m).createAll();
         // XXX: really 3 but we can't tell the middle centre is one ATM, see
         //      'dontCreateStereoForNonStereogenicIn3D'
         assertThat(elements.size(), is(2));
     }
 
-    @Test public void dontCreateStereoForNonStereogenicIn3D() {
+    @Test
+    public void dontCreateStereoForNonStereogenicIn3D() {
         IAtomContainer m = new AtomContainer(5, 4, 0, 0);
         m.addAtom(atom("C", 0, 0.00d, 0.00d, 0.00d));
         m.addAtom(atom("H", 0, -0.36d, -0.51d, 0.89d));
@@ -683,8 +702,7 @@ public class StereoElementFactoryTest {
         m.addBond(0, 3, IBond.Order.SINGLE);
         m.addBond(0, 4, IBond.Order.SINGLE);
 
-        List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m)
-                                                            .createAll();
+        List<IStereoElement> elements = StereoElementFactory.using3DCoordinates(m).createAll();
 
         // methane carbon is of course non-stereogenic
         assertThat(elements.size(), is(0));

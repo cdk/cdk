@@ -29,7 +29,8 @@ public class ControlCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "control.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, ControlCoverageTest.class.getClassLoader());
     }
 

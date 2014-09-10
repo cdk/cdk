@@ -38,19 +38,23 @@ public class ExtraReaderFactoryTest extends AbstractReaderFactoryTest {
 
     private ReaderFactory factory = new ReaderFactory();
 
-    @Test public void testINChI() throws Exception {
+    @Test
+    public void testINChI() throws Exception {
         expectReader("data/inchi/guanine.inchi.xml", INChIFormat.getInstance(), -1, -1);
     }
 
-    @Test public void testINChIPlainText() throws Exception {
+    @Test
+    public void testINChIPlainText() throws Exception {
         expectReader("data/inchi/guanine.inchi", INChIPlainTextFormat.getInstance(), -1, -1);
     }
 
-    @Test public void testVASP() throws Exception {
+    @Test
+    public void testVASP() throws Exception {
         expectReader("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance(), -1, -1);
     }
 
-    @Test public void testGamess() throws Exception {
+    @Test
+    public void testGamess() throws Exception {
         expectReader("data/gamess/ch3oh_gam.out", GamessFormat.getInstance(), -1, -1);
     }
 

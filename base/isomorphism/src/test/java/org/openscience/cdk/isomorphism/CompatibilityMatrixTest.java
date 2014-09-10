@@ -104,13 +104,7 @@ public class CompatibilityMatrixTest {
         m.set(1, 0);
         m.set(1, 3);
         m.set(2, 4);
-        assertThat(m.fix(),
-                   is(new int[][]{
-                           {0, 1, 1, 0, 1},
-                           {1, 0, 0, 1, 0},
-                           {0, 0, 0, 0, 1},
-                           {0, 0, 0, 0, 0},
-                           {0, 0, 0, 0, 0},
-                   }));
+        assertThat(m.fix(), is(new int[][]{{0, 1, 1, 0, 1}, {1, 0, 0, 1, 0}, {0, 0, 0, 0, 1}, {0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0},}));
     }
 }

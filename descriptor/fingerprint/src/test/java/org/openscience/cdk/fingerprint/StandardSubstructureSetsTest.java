@@ -31,12 +31,12 @@ import org.openscience.cdk.CDKTestCase;
  */
 public class StandardSubstructureSetsTest extends CDKTestCase {
 
-	@Test public void testGetFunctionalGroupSubstructureSet() throws Exception {
-		String[] smarts = null;
-		smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
-		Assert.assertNotNull(smarts);
-		Assert.assertEquals(307, smarts.length);
+    @Test
+    public void testGetFunctionalGroupSubstructureSet() throws Exception {
+        String[] smarts = null;
+        smarts = StandardSubstructureSets.getFunctionalGroupSMARTS();
+        Assert.assertNotNull(smarts);
+        Assert.assertEquals(307, smarts.length);
     }
 
 }
-

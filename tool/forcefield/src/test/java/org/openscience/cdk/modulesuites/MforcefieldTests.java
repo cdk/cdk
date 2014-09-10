@@ -31,11 +31,8 @@ import org.openscience.cdk.modeling.builder3d.MMFF94BasedParameterSetReaderTest;
  *
  * @cdk.module test-forcefield
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    ForcefieldCoverageTest.class,
-    MMFF94PartialChargesTest.class,
-    MMFF94BasedParameterSetReaderTest.class,
-    ForceFieldConfiguratorTest.class
-})
-public class MforcefieldTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {ForcefieldCoverageTest.class, MMFF94PartialChargesTest.class,
+        MMFF94BasedParameterSetReaderTest.class, ForceFieldConfiguratorTest.class})
+public class MforcefieldTests {
+}

@@ -36,10 +36,9 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class DictionaryValidator extends AbstractValidator {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(DictionaryValidator.class);
 
-    private DictionaryDatabase db;
+    private DictionaryDatabase  db;
 
     public DictionaryValidator(DictionaryDatabase db) {
         this.db = db;
@@ -47,23 +46,18 @@ public class DictionaryValidator extends AbstractValidator {
 
     public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();
-        Map<Object,Object> properties = subject.getProperties();
+        Map<Object, Object> properties = subject.getProperties();
         Iterator<Object> iter = properties.keySet().iterator();
         ValidationTest noNamespace = new ValidationTest(subject,
-            "Dictionary Reference lacks a namespace indicating the dictionary."
-        );
-        ValidationTest noDict = new ValidationTest(subject,
-            "The referenced dictionary does not exist."
-        );
-        ValidationTest noEntry = new ValidationTest(subject,
-            "The referenced entry does not exist in the dictionary."
-        );
+                "Dictionary Reference lacks a namespace indicating the dictionary.");
+        ValidationTest noDict = new ValidationTest(subject, "The referenced dictionary does not exist.");
+        ValidationTest noEntry = new ValidationTest(subject, "The referenced entry does not exist in the dictionary.");
         while (iter.hasNext()) {
             Object key = iter.next();
             if (key instanceof String) {
-                String keyName = (String)key;
+                String keyName = (String) key;
                 if (keyName.startsWith(DictionaryDatabase.DICTREFPROPERTYNAME)) {
-                    String dictRef = (String)properties.get(keyName);
+                    String dictRef = (String) properties.get(keyName);
                     String details = "Dictref being anaylyzed: " + dictRef + ". ";
                     noNamespace.setDetails(details);
                     noDict.setDetails(details);
@@ -71,12 +65,12 @@ public class DictionaryValidator extends AbstractValidator {
                     int index = dictRef.indexOf(':');
                     if (index != -1) {
                         report.addOK(noNamespace);
-                        String dict = dictRef.substring(0,index);
+                        String dict = dictRef.substring(0, index);
                         logger.debug("Looking for dictionary:" + dict);
                         if (db.hasDictionary(dict)) {
                             report.addOK(noDict);
-                            if (dictRef.length() > index+1) {
-                                String entry = dictRef.substring(index+1);
+                            if (dictRef.length() > index + 1) {
+                                String entry = dictRef.substring(index + 1);
                                 logger.debug("Looking for entry:" + entry);
                                 if (db.hasEntry(dict, entry)) {
                                     report.addOK(noEntry);

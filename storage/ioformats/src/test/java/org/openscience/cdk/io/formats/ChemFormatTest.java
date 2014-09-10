@@ -38,49 +38,45 @@ abstract public class ChemFormatTest extends ResourceFormatTest {
         this.chemFormat = format;
     }
 
-    @Test public void testChemFormatSet() {
-        Assert.assertNotNull(
-            "You must use setChemFormat() to set the IChemFormat object.",
-            chemFormat
-        );
+    @Test
+    public void testChemFormatSet() {
+        Assert.assertNotNull("You must use setChemFormat() to set the IChemFormat object.", chemFormat);
     }
 
-    @Test public void testGetReaderClassName() throws Exception {
+    @Test
+    public void testGetReaderClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getReaderClassName() != null) {
             String readerClass = chemFormat.getReaderClassName();
-            Assert.assertNotSame(
-                "Reader Class name String must be of non-zero length",
-                0, readerClass.length()
-            );
+            Assert.assertNotSame("Reader Class name String must be of non-zero length", 0, readerClass.length());
             Class<?> reader = Class.forName(readerClass);
             Assert.assertNotNull(reader);
         }
     }
 
-    @Test public void testGetWriterClassName() throws Exception {
+    @Test
+    public void testGetWriterClassName() throws Exception {
         // two valid output options: NULL and non-zero, existing class
         if (chemFormat.getWriterClassName() != null) {
             String writerClass = chemFormat.getWriterClassName();
-            Assert.assertNotSame(
-                "Writer Class name String must be of non-zero length",
-                0, writerClass.length()
-            );
+            Assert.assertNotSame("Writer Class name String must be of non-zero length", 0, writerClass.length());
             Class<?> writer = Class.forName(writerClass);
             Assert.assertNotNull(writer);
         }
     }
 
-    @Test public void testGetSupportedDataFeatures() {
+    @Test
+    public void testGetSupportedDataFeatures() {
         int supported = chemFormat.getSupportedDataFeatures();
         Assert.assertTrue(supported >= DataFeatures.NONE);
-        Assert.assertTrue(supported <= 1<<13); // 13 features, so: all summed <= 1<<13
+        Assert.assertTrue(supported <= 1 << 13); // 13 features, so: all summed <= 1<<13
     }
 
-    @Test public void testGetRequiredDataFeatures() {
+    @Test
+    public void testGetRequiredDataFeatures() {
         int required = chemFormat.getRequiredDataFeatures();
         Assert.assertTrue(required >= DataFeatures.NONE);
-        Assert.assertTrue(required <= 1<<13); // 13 features, so: all summed <= 1<<13
+        Assert.assertTrue(required <= 1 << 13); // 13 features, so: all summed <= 1<<13
 
         // test that the required features is a subset of the supported features
         int supported = chemFormat.getSupportedDataFeatures();

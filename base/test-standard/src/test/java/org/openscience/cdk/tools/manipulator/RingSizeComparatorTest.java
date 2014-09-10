@@ -36,16 +36,16 @@ public class RingSizeComparatorTest extends CDKTestCase {
 
     @Test
     public void testRingSizeComparator_int() {
-		RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
-		Assert.assertNotNull(comp);
-	}
+        RingSizeComparator comp = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
+        Assert.assertNotNull(comp);
+    }
 
     @Test
     public void testCompare() {
         IChemObjectBuilder builder = DefaultChemObjectBuilder.getInstance();
-		IRing cycloPentane = builder.newInstance(IRing.class,5, "C");
-		IRing cycloHexane = builder.newInstance(IRing.class,6, "C");
-        IRing cycloHexane2 = builder.newInstance(IRing.class,6, "C");
+        IRing cycloPentane = builder.newInstance(IRing.class, 5, "C");
+        IRing cycloHexane = builder.newInstance(IRing.class, 6, "C");
+        IRing cycloHexane2 = builder.newInstance(IRing.class, 6, "C");
 
         RingSizeComparator ringSizeComparator = new RingSizeComparator(RingSizeComparator.LARGE_FIRST);
         Assert.assertTrue(ringSizeComparator.compare(cycloHexane, cycloPentane) == -1);
@@ -59,5 +59,3 @@ public class RingSizeComparatorTest extends CDKTestCase {
     }
 
 }
-
-

@@ -61,14 +61,16 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
         super(atomContainer.getBondCount(), atomContainer);
     }
 
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.graph.AtomContainerPermutor#containerFromPermutation(int[])
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.graph.AtomContainerPermutor#containerFromPermutation
+     * (int[])
      */
     @TestMethod("containerFromPermutationTest")
     public IAtomContainer containerFromPermutation(int[] permutation) {
         try {
-            IAtomContainer permutedContainer =
-                (IAtomContainer) super.atomContainer.clone();
+            IAtomContainer permutedContainer = (IAtomContainer) super.atomContainer.clone();
             int n = permutedContainer.getBondCount();
             IBond[] permutedBonds = new IBond[n];
             for (int i = 0; i < n; i++) {
@@ -82,4 +84,3 @@ public class AtomContainerBondPermutor extends AtomContainerPermutor {
     }
 
 }
-

@@ -38,30 +38,29 @@ import org.openscience.cdk.tools.SaturationChecker;
  * @cdk.module structgen
  * @cdk.githash
  */
-public class CrossoverMachine
-{
-	PartialFilledStructureMerger pfsm;
+public class CrossoverMachine {
 
-	/** selects a partitioning mode*/
-	int splitMode = 2;
-	/** selects a partitioning scale*/
-	int numatoms = 5;
-	/** Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode. */
-    public static final int SPLIT_MODE_RADNDOM = 0;
+    PartialFilledStructureMerger pfsm;
+
+    /** selects a partitioning mode*/
+    int                          splitMode                = 2;
+    /** selects a partitioning scale*/
+    int                          numatoms                 = 5;
+    /** Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode. */
+    public static final int      SPLIT_MODE_RADNDOM       = 0;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_DEPTH_FIRST mode. */
-    public static final int SPLIT_MODE_DEPTH_FIRST = 1;
+    public static final int      SPLIT_MODE_DEPTH_FIRST   = 1;
     /** Indicates that <code>crossover</code> is using SPLIT_MODE_BREADTH_FIRST mode. */
-    public static final int SPLIT_MODE_BREADTH_FIRST = 2;
+    public static final int      SPLIT_MODE_BREADTH_FIRST = 2;
 
     /**
      * Constructs a new CrossoverMachine operator.
      */
-    public CrossoverMachine()
-    {
-		pfsm = new PartialFilledStructureMerger();
+    public CrossoverMachine() {
+        pfsm = new PartialFilledStructureMerger();
     }
 
-	/**
+    /**
      * Performs the n point crossover of two {@link IAtomContainer}.
      * Precondition: The atoms in the molecules are ordered by properties to
      * preserve (e. g. atom symbol). Due to its randomized nature, this method
@@ -71,156 +70,142 @@ public class CrossoverMachine
      * @return The children.
      * @exception CDKException if it was not possible to form offsprings.
      */
-    public List<IAtomContainer> doCrossover(IAtomContainer dad, IAtomContainer mom) throws CDKException
-    {
-    	int tries=0;
-    	while(true){
-			int dim = dad.getAtomCount();
-			IAtomContainer[] redChild = new IAtomContainer[2];
-			IAtomContainer[] blueChild = new IAtomContainer[2];
+    public List<IAtomContainer> doCrossover(IAtomContainer dad, IAtomContainer mom) throws CDKException {
+        int tries = 0;
+        while (true) {
+            int dim = dad.getAtomCount();
+            IAtomContainer[] redChild = new IAtomContainer[2];
+            IAtomContainer[] blueChild = new IAtomContainer[2];
 
-			List<Integer> redAtoms = new ArrayList<Integer>();
-			List<Integer> blueAtoms = new ArrayList<Integer>();
+            List<Integer> redAtoms = new ArrayList<Integer>();
+            List<Integer> blueAtoms = new ArrayList<Integer>();
 
-			/* *randomly divide atoms into two parts: redAtoms and blueAtoms.***/
-			if (splitMode==SPLIT_MODE_RADNDOM)
-			{
-				/*better way to randomly divide atoms into two parts: redAtoms and blueAtoms.*/
-				for (int i = 0; i < dim; i++)
-					redAtoms.add(Integer.valueOf(i));
-				for (int i = 0; i < (dim - numatoms); i++)
-				{   int ranInt = RandomNumbersTool.randomInt(0,redAtoms.size()-1);
-					redAtoms.remove(Integer.valueOf(ranInt));
-					blueAtoms.add(Integer.valueOf(ranInt));
-				}
+            /* *randomly divide atoms into two parts: redAtoms and blueAtoms.** */
+            if (splitMode == SPLIT_MODE_RADNDOM) {
+                /*
+                 * better way to randomly divide atoms into two parts: redAtoms
+                 * and blueAtoms.
+                 */
+                for (int i = 0; i < dim; i++)
+                    redAtoms.add(Integer.valueOf(i));
+                for (int i = 0; i < (dim - numatoms); i++) {
+                    int ranInt = RandomNumbersTool.randomInt(0, redAtoms.size() - 1);
+                    redAtoms.remove(Integer.valueOf(ranInt));
+                    blueAtoms.add(Integer.valueOf(ranInt));
+                }
 
-			}
-			else
-			{
-				/*split graph using depth/breadth first traverse*/
-				ChemGraph graph = new ChemGraph(dad);
-				graph.setNumAtoms(numatoms);
-				if (splitMode==SPLIT_MODE_DEPTH_FIRST)
-				{
-					redAtoms = graph.pickDFgraph();
-				}
-				else
-				{
-					//this is SPLIT_MODE_BREADTH_FIRST
-					redAtoms = graph.pickBFgraph();
-				}
+            } else {
+                /* split graph using depth/breadth first traverse */
+                ChemGraph graph = new ChemGraph(dad);
+                graph.setNumAtoms(numatoms);
+                if (splitMode == SPLIT_MODE_DEPTH_FIRST) {
+                    redAtoms = graph.pickDFgraph();
+                } else {
+                    //this is SPLIT_MODE_BREADTH_FIRST
+                    redAtoms = graph.pickBFgraph();
+                }
 
-				for (int i = 0; i < dim; i++){
-					Integer element = Integer.valueOf(i);
-					if (!(redAtoms.contains(element)))
-					{
-						blueAtoms.add(element);
-					}
-				}
-			}
-			/* * dividing over ***/
-			redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad);
-			blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class,dad);
-			redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom);
-			blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class,mom);
+                for (int i = 0; i < dim; i++) {
+                    Integer element = Integer.valueOf(i);
+                    if (!(redAtoms.contains(element))) {
+                        blueAtoms.add(element);
+                    }
+                }
+            }
+            /* * dividing over ** */
+            redChild[0] = dad.getBuilder().newInstance(IAtomContainer.class, dad);
+            blueChild[0] = dad.getBuilder().newInstance(IAtomContainer.class, dad);
+            redChild[1] = dad.getBuilder().newInstance(IAtomContainer.class, mom);
+            blueChild[1] = dad.getBuilder().newInstance(IAtomContainer.class, mom);
 
-			List<IAtom> blueAtomsInRedChild0 = new ArrayList<IAtom>();
-			for (int j = 0; j < blueAtoms.size(); j++)
-			{
-				blueAtomsInRedChild0.add(redChild[0].getAtom((Integer)blueAtoms.get(j)));
-			}
-			for (int j = 0; j < blueAtomsInRedChild0.size(); j++)
-			{
-				redChild[0].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild0.get(j));
-			}
-			List<IAtom> blueAtomsInRedChild1 = new ArrayList<IAtom>();
-			for (int j = 0; j < blueAtoms.size(); j++)
-			{
-				blueAtomsInRedChild1.add(redChild[1].getAtom((Integer)blueAtoms.get(j)));
-			}
-			for (int j = 0; j < blueAtomsInRedChild1.size(); j++)
-			{
-				redChild[1].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild1.get(j));
-			}
-			List<IAtom> redAtomsInBlueChild0 = new ArrayList<IAtom>();
-			for (int j = 0; j < redAtoms.size(); j++)
-			{
-				redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer)redAtoms.get(j)));
-			}
-			for (int j = 0; j < redAtomsInBlueChild0.size(); j++)
-			{
-				blueChild[0].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild0.get(j));
-			}
-			List<IAtom> redAtomsInBlueChild1 = new ArrayList<IAtom>();
-			for (int j = 0; j < redAtoms.size(); j++)
-			{
-				redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer)redAtoms.get(j)));
-			}
-			for (int j = 0; j < redAtomsInBlueChild1.size(); j++)
-			{
-				blueChild[1].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild1.get(j));
-			}
-			//if the two fragments of one and only one parent have an uneven number
-			//of attachment points, we need to rearrange them
-			SaturationChecker satCheck = new SaturationChecker();
-			double red1attachpoints=0;
-			for(int i=0;i<redChild[0].getAtomCount();i++){
-				red1attachpoints += satCheck.getCurrentMaxBondOrder(redChild[0].getAtom(i),redChild[0]);
-			}
-			double red2attachpoints=0;
-			for(int i=0;i<redChild[1].getAtomCount();i++){
-				red2attachpoints += satCheck.getCurrentMaxBondOrder(redChild[1].getAtom(i),redChild[1]);
-			}
-			boolean isok=true;
-			if(red1attachpoints % 2 ==1 ^ red2attachpoints % 2==1){
-				isok=false;
-				IAtomContainer firstToBalance = redChild[1];
-				IAtomContainer secondToBalance = blueChild[0];
-				if(red1attachpoints % 2 == 1){
-					firstToBalance = redChild[0];
-					secondToBalance = blueChild[1];
-				}
-				//we need an atom which has
-				//- an uneven number of "attachment points" and
-				//- an even number of outgoing bonds
-				for(IAtom atom : firstToBalance.atoms()){
-					if(satCheck.getCurrentMaxBondOrder(atom,firstToBalance)%2==1 && firstToBalance.getBondOrderSum(atom)%2==0){
-						//we remove this from it's current container and add it to the other one
-						firstToBalance.removeAtomAndConnectedElectronContainers(atom);
-						secondToBalance.addAtom(atom);
-						isok=true;
-						break;
-					}
-				}
-			}
-			//if we have combineable fragments
-			if(isok){
-				//combine the fragments crosswise
-				IAtomContainerSet[] newstrucs = new IAtomContainerSet[2];
-				newstrucs[0] = dad.getBuilder().newInstance(IAtomContainerSet.class);
-				newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(redChild[0]));
-				newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(blueChild[1]));
-				newstrucs[1] = dad.getBuilder().newInstance(IAtomContainerSet.class);
-				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(redChild[1]));
-				newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(blueChild[0]));
+            List<IAtom> blueAtomsInRedChild0 = new ArrayList<IAtom>();
+            for (int j = 0; j < blueAtoms.size(); j++) {
+                blueAtomsInRedChild0.add(redChild[0].getAtom((Integer) blueAtoms.get(j)));
+            }
+            for (int j = 0; j < blueAtomsInRedChild0.size(); j++) {
+                redChild[0].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild0.get(j));
+            }
+            List<IAtom> blueAtomsInRedChild1 = new ArrayList<IAtom>();
+            for (int j = 0; j < blueAtoms.size(); j++) {
+                blueAtomsInRedChild1.add(redChild[1].getAtom((Integer) blueAtoms.get(j)));
+            }
+            for (int j = 0; j < blueAtomsInRedChild1.size(); j++) {
+                redChild[1].removeAtomAndConnectedElectronContainers(blueAtomsInRedChild1.get(j));
+            }
+            List<IAtom> redAtomsInBlueChild0 = new ArrayList<IAtom>();
+            for (int j = 0; j < redAtoms.size(); j++) {
+                redAtomsInBlueChild0.add(blueChild[0].getAtom((Integer) redAtoms.get(j)));
+            }
+            for (int j = 0; j < redAtomsInBlueChild0.size(); j++) {
+                blueChild[0].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild0.get(j));
+            }
+            List<IAtom> redAtomsInBlueChild1 = new ArrayList<IAtom>();
+            for (int j = 0; j < redAtoms.size(); j++) {
+                redAtomsInBlueChild1.add(blueChild[1].getAtom((Integer) redAtoms.get(j)));
+            }
+            for (int j = 0; j < redAtomsInBlueChild1.size(); j++) {
+                blueChild[1].removeAtomAndConnectedElectronContainers(redAtomsInBlueChild1.get(j));
+            }
+            //if the two fragments of one and only one parent have an uneven number
+            //of attachment points, we need to rearrange them
+            SaturationChecker satCheck = new SaturationChecker();
+            double red1attachpoints = 0;
+            for (int i = 0; i < redChild[0].getAtomCount(); i++) {
+                red1attachpoints += satCheck.getCurrentMaxBondOrder(redChild[0].getAtom(i), redChild[0]);
+            }
+            double red2attachpoints = 0;
+            for (int i = 0; i < redChild[1].getAtomCount(); i++) {
+                red2attachpoints += satCheck.getCurrentMaxBondOrder(redChild[1].getAtom(i), redChild[1]);
+            }
+            boolean isok = true;
+            if (red1attachpoints % 2 == 1 ^ red2attachpoints % 2 == 1) {
+                isok = false;
+                IAtomContainer firstToBalance = redChild[1];
+                IAtomContainer secondToBalance = blueChild[0];
+                if (red1attachpoints % 2 == 1) {
+                    firstToBalance = redChild[0];
+                    secondToBalance = blueChild[1];
+                }
+                //we need an atom which has
+                //- an uneven number of "attachment points" and
+                //- an even number of outgoing bonds
+                for (IAtom atom : firstToBalance.atoms()) {
+                    if (satCheck.getCurrentMaxBondOrder(atom, firstToBalance) % 2 == 1
+                            && firstToBalance.getBondOrderSum(atom) % 2 == 0) {
+                        //we remove this from it's current container and add it to the other one
+                        firstToBalance.removeAtomAndConnectedElectronContainers(atom);
+                        secondToBalance.addAtom(atom);
+                        isok = true;
+                        break;
+                    }
+                }
+            }
+            //if we have combineable fragments
+            if (isok) {
+                //combine the fragments crosswise
+                IAtomContainerSet[] newstrucs = new IAtomContainerSet[2];
+                newstrucs[0] = dad.getBuilder().newInstance(IAtomContainerSet.class);
+                newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(redChild[0]));
+                newstrucs[0].add(ConnectivityChecker.partitionIntoMolecules(blueChild[1]));
+                newstrucs[1] = dad.getBuilder().newInstance(IAtomContainerSet.class);
+                newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(redChild[1]));
+                newstrucs[1].add(ConnectivityChecker.partitionIntoMolecules(blueChild[0]));
 
-				//and merge
-				List<IAtomContainer> children=new ArrayList<IAtomContainer>(2);
-				for (int f = 0; f < 2; f++)
-				{
-					try{
-						children.add(f, pfsm.generate(newstrucs[f]));
-					}catch(Exception ex){
-						//if children are not correct, the outer loop will repeat,
-						//so we ignore this
-					}
-				}
-				if(children.size()==2 && ConnectivityChecker.isConnected(children.get(0)) && ConnectivityChecker.isConnected(children.get(1)))
-					return children;
-			}
-			tries++;
-			if(tries>20)
-				throw new CDKException("Could not mate these properly");
-    	}
+                //and merge
+                List<IAtomContainer> children = new ArrayList<IAtomContainer>(2);
+                for (int f = 0; f < 2; f++) {
+                    try {
+                        children.add(f, pfsm.generate(newstrucs[f]));
+                    } catch (Exception ex) {
+                        //if children are not correct, the outer loop will repeat,
+                        //so we ignore this
+                    }
+                }
+                if (children.size() == 2 && ConnectivityChecker.isConnected(children.get(0))
+                        && ConnectivityChecker.isConnected(children.get(1))) return children;
+            }
+            tries++;
+            if (tries > 20) throw new CDKException("Could not mate these properly");
+        }
     }
 }

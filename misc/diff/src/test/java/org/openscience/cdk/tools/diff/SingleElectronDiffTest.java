@@ -34,13 +34,15 @@ import static org.mockito.Mockito.when;
  */
 public class SingleElectronDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         ISingleElectron bond1 = mock(ISingleElectron.class);
         String result = SingleElectronDiff.diff(bond1, bond1);
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 
@@ -53,7 +55,7 @@ public class SingleElectronDiffTest extends CDKTestCase {
         when(bond1.getAtom()).thenReturn(carbon);
         when(bond2.getAtom()).thenReturn(oxygen);
 
-        String result = SingleElectronDiff.diff( bond1, bond2 );
+        String result = SingleElectronDiff.diff(bond1, bond2);
         Assert.assertNotNull(result);
         Assert.assertNotSame(0, result.length());
         assertContains(result, "SingleElectronDiff");
@@ -61,7 +63,8 @@ public class SingleElectronDiffTest extends CDKTestCase {
         assertContains(result, "C/O");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 

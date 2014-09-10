@@ -67,20 +67,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.smsd.algorithm.vflib.VFlibTurboHandlerTest")
 public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
 
-    private static List<Map<IAtom, IAtom>> allAtomMCS = null;
-    private static Map<IAtom, IAtom> atomsMCS = null;
-    private static List<Map<IAtom, IAtom>> allAtomMCSCopy = null;
-    private static Map<Integer, Integer> firstMCS = null;
-    private static List<Map<Integer, Integer>> allMCS = null;
-    private static List<Map<Integer, Integer>> allMCSCopy = null;
-    private IQueryAtomContainer queryMol = null;
-    private IAtomContainer mol1 = null;
-    private IAtomContainer mol2 = null;
-    private Map<INode, IAtom> vfLibSolutions = null;
-    private int vfMCSSize = -1;
-    private boolean bond_Match_Flag = false;
-    private final static ILoggingTool Logger =
-            LoggingToolFactory.createLoggingTool(VFlibTurboHandler.class);
+    private static List<Map<IAtom, IAtom>>     allAtomMCS      = null;
+    private static Map<IAtom, IAtom>           atomsMCS        = null;
+    private static List<Map<IAtom, IAtom>>     allAtomMCSCopy  = null;
+    private static Map<Integer, Integer>       firstMCS        = null;
+    private static List<Map<Integer, Integer>> allMCS          = null;
+    private static List<Map<Integer, Integer>> allMCSCopy      = null;
+    private IQueryAtomContainer                queryMol        = null;
+    private IAtomContainer                     mol1            = null;
+    private IAtomContainer                     mol2            = null;
+    private Map<INode, IAtom>                  vfLibSolutions  = null;
+    private int                                vfMCSSize       = -1;
+    private boolean                            bond_Match_Flag = false;
+    private final static ILoggingTool          Logger          = LoggingToolFactory
+                                                                       .createLoggingTool(VFlibTurboHandler.class);
 
     /**
      * Constructor for an extended VF Algorithm for the MCS search
@@ -189,7 +189,7 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     }
 
     private void searchVFMappings() {
-//        System.out.println("searchVFMappings ");
+        //        System.out.println("searchVFMappings ");
         IQuery query = null;
         IMapper mapper = null;
         vfLibSolutions = new HashMap<INode, IAtom>();
@@ -234,11 +234,11 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
             mappings = mgit.getMappings();
             mgit = null;
         }
-//        System.out.println("\nSol count after MG" + mappings.size());
+        //        System.out.println("\nSol count after MG" + mappings.size());
         setMcGregorMappings(mappings);
         vfMCSSize = vfMCSSize / 2;
-//        System.out.println("After set Sol count MG" + allMCS.size());
-//        System.out.println("MCSSize " + vfMCSSize + "\n");
+        //        System.out.println("After set Sol count MG" + allMCS.size());
+        //        System.out.println("MCSSize " + vfMCSSize + "\n");
     }
 
     private void setVFMappings(boolean RONP, IQuery query) {
@@ -275,15 +275,15 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
                 }
             }
         }
-//            System.out.println("indexindexMapping " + indexindexMapping.size());
-//            System.out.println("MCS Size " + vfMCSSize);
+        //            System.out.println("indexindexMapping " + indexindexMapping.size());
+        //            System.out.println("MCS Size " + vfMCSSize);
         if (!atomatomMapping.isEmpty() && !hasMap(indexindexMapping, allMCSCopy)
                 && indexindexMapping.size() == vfMCSSize) {
             allAtomMCSCopy.add(counter, atomatomMapping);
             allMCSCopy.add(counter, indexindexMapping);
             counter++;
         }
-//        System.out.println("allMCSCopy " + allMCSCopy.size());
+        //        System.out.println("allMCSCopy " + allMCSCopy.size());
     }
 
     private void setMcGregorMappings(List<List<Integer>> mappings) throws CDKException {
@@ -328,17 +328,17 @@ public class VFlibTurboHandler extends AbstractSubGraph implements IMCSBase {
     public boolean isSubgraph(boolean shouldMatchBonds) {
         setBondMatchFlag(shouldMatchBonds);
         searchVFMappings();
-//        boolean flag = mcgregorFlag();
-//        if (flag && !vfLibSolutions.isEmpty()) {
-//            try {
-//                searchMcGregorMapping();
-//            } catch (CDKException ex) {
-//                Logger.error(Level.SEVERE, null, ex);
-//            } catch (IOException ex) {
-//                Logger.error(Level.SEVERE, null, ex);
-//            }
-//
-//        } else
+        //        boolean flag = mcgregorFlag();
+        //        if (flag && !vfLibSolutions.isEmpty()) {
+        //            try {
+        //                searchMcGregorMapping();
+        //            } catch (CDKException ex) {
+        //                Logger.error(Level.SEVERE, null, ex);
+        //            } catch (IOException ex) {
+        //                Logger.error(Level.SEVERE, null, ex);
+        //            }
+        //
+        //        } else
 
         if (!allAtomMCSCopy.isEmpty()) {
             allAtomMCS.addAll(allAtomMCSCopy);

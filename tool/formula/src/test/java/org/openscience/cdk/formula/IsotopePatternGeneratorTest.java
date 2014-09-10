@@ -35,221 +35,224 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
  * @author         Miguel Rojas
  * @cdk.created    2007-03-01
  */
-public class IsotopePatternGeneratorTest extends CDKTestCase{
+public class IsotopePatternGeneratorTest extends CDKTestCase {
 
-	private final static IChemObjectBuilder builder =
-	    SilentChemObjectBuilder.getInstance();
-	/**
-	 *  Constructor for the IsotopePatternGeneratorTest object
-	 *
-	 */
-	public IsotopePatternGeneratorTest(){
-		super();
-	}
+    private final static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-    @Test public void testIsotopePatternGenerator() {
-    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
-		Assert.assertNotNull(isotopeGe);
-    }
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-    @Test public void testIsotopePatternGenerator_double() {
-    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
-		Assert.assertNotNull(isotopeGe);
+    /**
+     *  Constructor for the IsotopePatternGeneratorTest object
+     *
+     */
+    public IsotopePatternGeneratorTest() {
+        super();
     }
 
+    /**
+     * A unit test for JUnit.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testIsotopePatternGenerator() {
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
+        Assert.assertNotNull(isotopeGe);
+    }
 
     /**
-	 * A unit test for JUnit:
-	 *
-	 * @return    Description of the Return Value
-	 */
+     * A unit test for JUnit.
+     *
+     * @return    Description of the Return Value
+     */
     @Test
-	public void testGetIsotopes_IMolecularFormula(){
-		IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P1", builder);
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
-		IsotopePattern isos = isotopeGe.getIsotopes(molFor);
-		Assert.assertEquals(2,isos.getNumberOfIsotopes(),0.001);
-	}
+    public void testIsotopePatternGenerator_double() {
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator();
+        Assert.assertNotNull(isotopeGe);
+    }
+
     /**
-	 * A unit test for JUnit:
-	 *
-	 * @return    Description of the Return Value
-	 */
+     * A unit test for JUnit:
+     *
+     * @return    Description of the Return Value
+     */
     @Test
-	public void testGetIsotopes_IMolecularFormula_withoutONE(){
-		IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P", builder);
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
-		IsotopePattern isos = isotopeGe.getIsotopes(molFor);
-		Assert.assertEquals(6,isos.getNumberOfIsotopes(),0.001);
-	}
+    public void testGetIsotopes_IMolecularFormula() {
+        IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P1", builder);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+        IsotopePattern isos = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(2, isos.getNumberOfIsotopes(), 0.001);
+    }
 
-	/**
-	 * A unit test for JUnit: Isotopes of the Bromine.
-	 *
-	 * @return    Description of the Return Value
-	 */
-    @Test
-	public void testGetIsotopes1(){
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
-
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
-
-		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
-
-	}
     /**
-	 * A unit test for JUnit: Isotopes of the Bromine.
-	 *
-	 * @return    Description of the Return Value
-	 */
+     * A unit test for JUnit:
+     *
+     * @return    Description of the Return Value
+     */
     @Test
-	public void testCalculateIsotopesAllBromine(){
-    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
-    	double[] massResults = {157.836669,159.834630,161.832580};
-    	double[] abundResults = {.512,1.00,.487};
+    public void testGetIsotopes_IMolecularFormula_withoutONE() {
+        IMolecularFormula molFor = MolecularFormulaManipulator.getMajorIsotopeMolecularFormula("C41H79N8O3P", builder);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
+        IsotopePattern isos = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(6, isos.getNumberOfIsotopes(), 0.001);
+    }
 
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"Br"));
+    /**
+     * A unit test for JUnit: Isotopes of the Bromine.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testGetIsotopes1() {
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 
-		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
+        Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 
-		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
-		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
-		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
+    }
 
-		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
+    /**
+     * A unit test for JUnit: Isotopes of the Bromine.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testCalculateIsotopesAllBromine() {
+        // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+        double[] massResults = {157.836669, 159.834630, 161.832580};
+        double[] abundResults = {.512, 1.00, .487};
 
-	}
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "Br"));
 
-	/**
-	 * A unit test for JUnit: Isotopes of the Iodemethylidyne.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test
-	public void testCalculateIsotopesIodemethylidyne(){
-    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
-    	double[] massResults = {138.904480,139.907839};
-    	double[] abundResults = {1.00,.011};
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.1);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"));
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"I"));
+        Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 
-		Assert.assertEquals(2, molFor.getIsotopeCount());
+        Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+        Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+        Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
 
-		Assert.assertEquals(2, isoPattern.getNumberOfIsotopes());
+    }
 
-		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
-		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+    /**
+     * A unit test for JUnit: Isotopes of the Iodemethylidyne.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testCalculateIsotopesIodemethylidyne() {
+        // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+        double[] massResults = {138.904480, 139.907839};
+        double[] abundResults = {1.00, .011};
 
-		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "C"));
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "I"));
 
-	}
-	/**
-	 * A unit test for JUnit: Isotopes of the n-Carbone.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test
-	public void testCalculateIsotopesnCarbono(){
-    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
-    	double[] massResults = {120.000000,121.003360,122.006709};
-    	double[] abundResults = {1.00,.108,0.005};
+        Assert.assertEquals(2, molFor.getIsotopeCount());
 
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"),10);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(.01);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 
+        Assert.assertEquals(2, isoPattern.getNumberOfIsotopes());
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+        Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
 
-		Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
+        Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
 
-		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
-		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
-		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
+    }
 
-		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
+    /**
+     * A unit test for JUnit: Isotopes of the n-Carbone.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testCalculateIsotopesnCarbono() {
+        // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+        double[] massResults = {120.000000, 121.003360, 122.006709};
+        double[] abundResults = {1.00, .108, 0.005};
 
-	}
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "C"), 10);
 
-	/**
-	 * A unit test for JUnit.
-	 *
-	 * @return    Description of the Return Value
-	 */
-	@Test
-	public void testCalculateIsotopesOrthinine(){
-    	// RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
-    	double[] massResults = {133.097720,134.094750,134.101079,134.103990,135.101959,135.104430};
-    	double[] abundResults = {1.00,.006,.054,0.002,0.004,0.001};
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"C"),5);
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"H"),13);
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"N"),2);
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"O"),2);
+        Assert.assertEquals(3, isoPattern.getNumberOfIsotopes());
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+        Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+        Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+        Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
 
-		Assert.assertEquals(6, isoPattern.getNumberOfIsotopes());
+        Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
 
-		Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
-		Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
-		Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
-		Assert.assertEquals(massResults[3], isoPattern.getIsotope(3).getMass(), 0.01);
-		Assert.assertEquals(massResults[4], isoPattern.getIsotope(4).getMass(), 0.01);
-		Assert.assertEquals(massResults[5], isoPattern.getIsotope(5).getMass(), 0.01);
+    }
 
-		Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[3], isoPattern.getIsotope(3).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[4], isoPattern.getIsotope(4).getIntensity(), 0.01);
-		Assert.assertEquals(abundResults[5], isoPattern.getIsotope(5).getIntensity(), 0.01);
+    /**
+     * A unit test for JUnit.
+     *
+     * @return    Description of the Return Value
+     */
+    @Test
+    public void testCalculateIsotopesOrthinine() {
+        // RESULTS ACCORDING PAGE: http://www2.sisweb.com/mstools/isotope.htm
+        double[] massResults = {133.097720, 134.094750, 134.101079, 134.103990, 135.101959, 135.104430};
+        double[] abundResults = {1.00, .006, .054, 0.002, 0.004, 0.001};
 
-	}
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "C"), 5);
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "H"), 13);
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "N"), 2);
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "O"), 2);
 
-	/**
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.0010);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+
+        Assert.assertEquals(6, isoPattern.getNumberOfIsotopes());
+
+        Assert.assertEquals(massResults[0], isoPattern.getIsotope(0).getMass(), 0.01);
+        Assert.assertEquals(massResults[1], isoPattern.getIsotope(1).getMass(), 0.01);
+        Assert.assertEquals(massResults[2], isoPattern.getIsotope(2).getMass(), 0.01);
+        Assert.assertEquals(massResults[3], isoPattern.getIsotope(3).getMass(), 0.01);
+        Assert.assertEquals(massResults[4], isoPattern.getIsotope(4).getMass(), 0.01);
+        Assert.assertEquals(massResults[5], isoPattern.getIsotope(5).getMass(), 0.01);
+
+        Assert.assertEquals(abundResults[0], isoPattern.getIsotope(0).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[1], isoPattern.getIsotope(1).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[2], isoPattern.getIsotope(2).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[3], isoPattern.getIsotope(3).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[4], isoPattern.getIsotope(4).getIntensity(), 0.01);
+        Assert.assertEquals(abundResults[5], isoPattern.getIsotope(5).getIntensity(), 0.01);
+
+    }
+
+    /**
      * @cdk.bug 3273205
-	 */
-	@Test
-	public void testCalculateIsotopesMn(){
+     */
+    @Test
+    public void testCalculateIsotopesMn() {
 
-		IMolecularFormula molFor = new MolecularFormula();
-		molFor.addIsotope(builder.newInstance(IIsotope.class,"Mn"),1);
+        IMolecularFormula molFor = new MolecularFormula();
+        molFor.addIsotope(builder.newInstance(IIsotope.class, "Mn"), 1);
 
-		IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.001);
-		IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.001);
+        IsotopePattern isoPattern = isotopeGe.getIsotopes(molFor);
 
-		Assert.assertEquals(1, isoPattern.getNumberOfIsotopes());
+        Assert.assertEquals(1, isoPattern.getNumberOfIsotopes());
 
-	}
+    }
 }
-

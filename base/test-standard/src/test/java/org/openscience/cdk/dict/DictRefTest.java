@@ -42,28 +42,28 @@ public class DictRefTest extends CDKTestCase {
 
     @Test
     public void testDictRef_String_String() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	Assert.assertNotNull(dictRef);
+        DictRef dictRef = new DictRef("bar:foo", "bla");
+        Assert.assertNotNull(dictRef);
     }
 
     @Test
     public void testGetType() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	Assert.assertEquals("bar:foo", dictRef.getType());
+        DictRef dictRef = new DictRef("bar:foo", "bla");
+        Assert.assertEquals("bar:foo", dictRef.getType());
     }
 
     @Test
     public void testGetDictRef() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
-    	Assert.assertEquals("bla", dictRef.getReference());
+        DictRef dictRef = new DictRef("bar:foo", "bla");
+        Assert.assertEquals("bla", dictRef.getReference());
     }
 
     /** Test for RFC #9 */
     @Test
     public void testToString() {
-    	DictRef dictRef = new DictRef("bar:foo", "bla");
+        DictRef dictRef = new DictRef("bar:foo", "bla");
         String description = dictRef.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }

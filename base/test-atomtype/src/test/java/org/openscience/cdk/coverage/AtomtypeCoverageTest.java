@@ -32,11 +32,13 @@ public class AtomtypeCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "atomtype.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, AtomtypeCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         super.runCoverageTest();
     }
 

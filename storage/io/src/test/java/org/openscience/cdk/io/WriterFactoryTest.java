@@ -38,31 +38,32 @@ public class WriterFactoryTest extends CDKTestCase {
 
     private WriterFactory factory = new WriterFactory();
 
-    @Test public void testFormatCount() {
-    	Assert.assertTrue(factory.formatCount() > 0);
+    @Test
+    public void testFormatCount() {
+        Assert.assertTrue(factory.formatCount() > 0);
     }
 
-    @Test public void testFindChemFormats() {
+    @Test
+    public void testFindChemFormats() {
         IChemFormat[] formats = factory.findChemFormats(DataFeatures.HAS_3D_COORDINATES);
         Assert.assertNotNull(formats);
         Assert.assertTrue(formats.length > 0);
     }
 
-    @Test public void testCreateWriter_IChemFormat() {
-    	IChemFormat format = (IChemFormat)XYZFormat.getInstance();
+    @Test
+    public void testCreateWriter_IChemFormat() {
+        IChemFormat format = (IChemFormat) XYZFormat.getInstance();
         IChemObjectWriter writer = factory.createWriter(format);
         Assert.assertNotNull(writer);
         Assert.assertEquals(format.getFormatName(), writer.getFormat().getFormatName());
     }
 
-    @Test public void testCustomWriter() {
+    @Test
+    public void testCustomWriter() {
         WriterFactory factory = new WriterFactory();
         factory.registerWriter(CustomWriter.class);
         IChemObjectWriter writer = factory.createWriter(new CustomFormat());
         Assert.assertNotNull(writer);
-        Assert.assertEquals(
-            new CustomWriter().getClass().getName(),
-            writer.getClass().getName()
-        );
+        Assert.assertEquals(new CustomWriter().getClass().getName(), writer.getClass().getName());
     }
 }

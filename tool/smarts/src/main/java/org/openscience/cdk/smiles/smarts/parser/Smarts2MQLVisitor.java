@@ -28,20 +28,21 @@ package org.openscience.cdk.smiles.smarts.parser;
  * @cdk.keyword SMARTS AST
  */
 public class Smarts2MQLVisitor implements SMARTSParserVisitor {
-    public Object visit(ASTRingIdentifier node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	String symbolIdentified = "";
-    boolean not = false;
+    public Object visit(ASTRingIdentifier node, Object data) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    String  symbolIdentified = "";
+    boolean not              = false;
 
     public Object visit(ASTAtom node, Object data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	public Object visit(SimpleNode node, Object data) {
+    public Object visit(SimpleNode node, Object data) {
         return node.childrenAccept(this, data);
     }
 
@@ -62,21 +63,19 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         for (int i = 0; i < node.jjtGetNumChildren(); i++) {
             Node child = node.jjtGetChild(i);
             if (child instanceof ASTAtom) {
-                local = (String)child.jjtAccept(this, local);
+                local = (String) child.jjtAccept(this, local);
             } else if (child instanceof ASTLowAndBond) {
                 i++;
                 Node nextChild = node.jjtGetChild(i); // the next child should
                 // be another smarts
-                String bond = (String)child.jjtAccept(this, local);
+                String bond = (String) child.jjtAccept(this, local);
                 local = local + bond;
                 local = (String) nextChild.jjtAccept(this, local);
             } else if (child instanceof ASTSmarts) { // implicit single bond
-                if (!"".equals(local))
-                    local = local + "-";
+                if (!"".equals(local)) local = local + "-";
                 local = (String) child.jjtAccept(this, local);
             } else if (child instanceof ASTExplicitAtom) {
-                if (!"".equals(local))
-                    local = local + "-";
+                if (!"".equals(local)) local = local + "-";
                 local = (String) child.jjtAccept(this, local);
             }
         }
@@ -117,30 +116,30 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
         String bond = "";
         int bondType = node.getBondType();
         switch (bondType) {
-        case SMARTSParserConstants.ANY_BOND:
-            bond = "~";
-            break;
-        case SMARTSParserConstants.S_BOND:
-            bond = "-";
-            break;
-        case SMARTSParserConstants.D_BOND:
-            bond = "=";
-            break;
-        case SMARTSParserConstants.T_BOND:
-            bond = "#";
-            break;
-        case SMARTSParserConstants.AR_BOND:
-            bond = ":";
-            break;
-        case SMARTSParserConstants.R_BOND:
-            bond = "$~1"; // TODO: only one ring is assumed here. Should handle more
-            break;
-        case SMARTSParserConstants.UP_S_BOND:
-        case SMARTSParserConstants.DN_S_BOND:
-        case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
-        case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
-            bond = "-";
-            break;
+            case SMARTSParserConstants.ANY_BOND:
+                bond = "~";
+                break;
+            case SMARTSParserConstants.S_BOND:
+                bond = "-";
+                break;
+            case SMARTSParserConstants.D_BOND:
+                bond = "=";
+                break;
+            case SMARTSParserConstants.T_BOND:
+                bond = "#";
+                break;
+            case SMARTSParserConstants.AR_BOND:
+                bond = ":";
+                break;
+            case SMARTSParserConstants.R_BOND:
+                bond = "$~1"; // TODO: only one ring is assumed here. Should handle more
+                break;
+            case SMARTSParserConstants.UP_S_BOND:
+            case SMARTSParserConstants.DN_S_BOND:
+            case SMARTSParserConstants.UP_OR_UNSPECIFIED_S_BOND:
+            case SMARTSParserConstants.DN_OR_UNSPECIFIED_S_BOND:
+                bond = "-";
+                break;
         }
         return bond;
     }
@@ -151,11 +150,11 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTLowAndExpression node, Object data) {
-        String left = (String)node.jjtGetChild(0).jjtAccept(this, data);
+        String left = (String) node.jjtGetChild(0).jjtAccept(this, data);
         if (node.jjtGetNumChildren() == 1) {
             return left;
         }
-        String right = (String)node.jjtGetChild(1).jjtAccept(this, data);
+        String right = (String) node.jjtGetChild(1).jjtAccept(this, data);
         if ("".equals(left)) {
             return right;
         } else if ("".equals(right)) {
@@ -166,11 +165,11 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTOrExpression node, Object data) {
-        String left = (String)node.jjtGetChild(0).jjtAccept(this, data);
+        String left = (String) node.jjtGetChild(0).jjtAccept(this, data);
         if (node.jjtGetNumChildren() == 1) {
             return left;
         }
-        String right = (String)node.jjtGetChild(1).jjtAccept(this, data);
+        String right = (String) node.jjtGetChild(1).jjtAccept(this, data);
         if ("".equals(left)) {
             return right;
         } else if ("".equals(right)) {
@@ -182,11 +181,11 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
 
     // TODO: the precedence needs to be addressed
     public Object visit(ASTExplicitHighAndExpression node, Object data) {
-        String left = (String)node.jjtGetChild(0).jjtAccept(this, data);
+        String left = (String) node.jjtGetChild(0).jjtAccept(this, data);
         if (node.jjtGetNumChildren() == 1) {
             return left;
         }
-        String right = (String)node.jjtGetChild(1).jjtAccept(this, data);
+        String right = (String) node.jjtGetChild(1).jjtAccept(this, data);
         if ("".equals(left)) {
             return right;
         } else if ("".equals(right)) {
@@ -195,13 +194,14 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
             return left + "&" + right;
         }
     }
-//  TODO: the precedence needs to be addressed
+
+    //  TODO: the precedence needs to be addressed
     public Object visit(ASTImplicitHighAndExpression node, Object data) {
-        String left = (String)node.jjtGetChild(0).jjtAccept(this, data);
+        String left = (String) node.jjtGetChild(0).jjtAccept(this, data);
         if (node.jjtGetNumChildren() == 1) {
             return left;
         }
-        String right = (String)node.jjtGetChild(1).jjtAccept(this, data);
+        String right = (String) node.jjtGetChild(1).jjtAccept(this, data);
         if ("".equals(left)) {
             return right;
         } else if ("".equals(right)) {
@@ -231,7 +231,7 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTTotalHCount node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
@@ -241,12 +241,12 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTExplicitConnectivity node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
     public Object visit(ASTAtomicNumber node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
@@ -255,7 +255,7 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTCharge node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
@@ -269,17 +269,17 @@ public class Smarts2MQLVisitor implements SMARTSParserVisitor {
     }
 
     public Object visit(ASTTotalConnectivity node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
     public Object visit(ASTValence node, Object data) {
-//      TODO: a property? not sure. just making things up here :)
+        //      TODO: a property? not sure. just making things up here :)
         return data;
     }
 
     public Object visit(ASTRingMembership node, Object data) {
-//      TODO: "ring" is a property, but how about the number of rings?
+        //      TODO: "ring" is a property, but how about the number of rings?
         return "ring";
     }
 

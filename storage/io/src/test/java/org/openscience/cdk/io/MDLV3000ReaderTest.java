@@ -47,22 +47,24 @@ import java.io.StringReader;
  */
 public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLV3000ReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new MDLV3000Reader(), "data/mdl/molV3000.mol");
     }
 
-    @Test public void testAccepts() {
-    	MDLV3000Reader reader = new MDLV3000Reader();
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() {
+        MDLV3000Reader reader = new MDLV3000Reader();
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
     /**
      * @cdk.bug 1571207
      */
-    @Test public void testBug1571207() throws Exception {
+    @Test
+    public void testBug1571207() throws Exception {
         String filename = "data/mdl/molV3000.mol";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
@@ -80,16 +82,17 @@ public class MDLV3000ReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(5.1053, atom.getPoint2d().y, 0.0001);
     }
 
-    @Test public void testEmptyString() throws Exception {
-    	String emptyString = "";
-    	MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
-    	try {
-    		reader.read(new AtomContainer());
+    @Test
+    public void testEmptyString() throws Exception {
+        String emptyString = "";
+        MDLV3000Reader reader = new MDLV3000Reader(new StringReader(emptyString));
+        try {
+            reader.read(new AtomContainer());
             reader.close();
-    		Assert.fail("Should have received a CDK Exception");
-    	} catch (CDKException cdkEx) {
-    		Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
-    	}
+            Assert.fail("Should have received a CDK Exception");
+        } catch (CDKException cdkEx) {
+            Assert.assertEquals("Expected a header line, but found nothing.", cdkEx.getMessage());
+        }
     }
 
     @Test

@@ -38,8 +38,7 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class AtomMappingTools {
 
-	private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMappingTools.class);
 
     /**
      * Returns a Map with the AtomNumbers, the first number corresponds to the first (or the largest
@@ -52,8 +51,8 @@ public class AtomMappingTools {
      * @return a Map of the mapped atoms
      * @throws CDKException if there is an error in the UniversalIsomorphismTester
      */
-    public static Map<Integer,Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
-            IAtomContainer secondAtomContainer, Map<Integer,Integer> mappedAtoms) throws CDKException {
+    public static Map<Integer, Integer> mapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
+            IAtomContainer secondAtomContainer, Map<Integer, Integer> mappedAtoms) throws CDKException {
         //logger.debug("**** GT MAP ATOMS ****");
         //Map atoms onto each other
         if (firstAtomContainer.getAtomCount() < 1 & secondAtomContainer.getAtomCount() < 1) {
@@ -70,10 +69,11 @@ public class AtomMappingTools {
                 map = list.get(i);
                 atom1 = firstAtomContainer.getAtom(map.getId1());
                 atom2 = secondAtomContainer.getAtom(map.getId2());
-                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1), secondAtomContainer.getAtomNumber(atom2)))
-                {
-                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.getAtomNumber(atom1)), Integer.valueOf(secondAtomContainer.getAtomNumber(atom2)));
-//                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
+                if (checkAtomMapping(firstAtomContainer, secondAtomContainer, firstAtomContainer.getAtomNumber(atom1),
+                        secondAtomContainer.getAtomNumber(atom2))) {
+                    mappedAtoms.put(Integer.valueOf(firstAtomContainer.getAtomNumber(atom1)),
+                            Integer.valueOf(secondAtomContainer.getAtomNumber(atom2)));
+                    //                    logger.debug("#:"+countMappedAtoms+" Atom:"+firstAtomContainer.getAtomNumber(atom1)+" is mapped to Atom:"+secondAtomContainer.getAtomNumber(atom2));
                 } else {
                     logger.error("Error: Atoms are not similar !!");
                 }
@@ -84,17 +84,18 @@ public class AtomMappingTools {
         return mappedAtoms;
     }
 
-	private static boolean checkAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom){
-		IAtom firstAtom=firstAC.getAtom(posFirstAtom);
-		IAtom secondAtom=secondAC.getAtom(posSecondAtom);
-		if (firstAtom.getSymbol().equals(secondAtom.getSymbol()) && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size() &&
-				firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum() &&
-				firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()
-		        ){
-			return true;
-		}else {
-			return false;
-		}
-	}
+    private static boolean checkAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom,
+            int posSecondAtom) {
+        IAtom firstAtom = firstAC.getAtom(posFirstAtom);
+        IAtom secondAtom = secondAC.getAtom(posSecondAtom);
+        if (firstAtom.getSymbol().equals(secondAtom.getSymbol())
+                && firstAC.getConnectedAtomsList(firstAtom).size() == secondAC.getConnectedAtomsList(secondAtom).size()
+                && firstAtom.getBondOrderSum() == secondAtom.getBondOrderSum()
+                && firstAtom.getMaxBondOrder() == secondAtom.getMaxBondOrder()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

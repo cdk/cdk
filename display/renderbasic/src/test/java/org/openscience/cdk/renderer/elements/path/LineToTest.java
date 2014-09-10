@@ -30,9 +30,9 @@ import org.junit.BeforeClass;
  */
 public class LineToTest extends AbstractPathElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		setPathElement(new LineTo(new Point2d(0,1)));
-	}
+    @BeforeClass
+    public static void setup() {
+        setPathElement(new LineTo(new Point2d(0, 1)));
+    }
 
 }

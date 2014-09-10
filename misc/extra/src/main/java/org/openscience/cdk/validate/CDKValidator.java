@@ -32,22 +32,20 @@ import org.openscience.cdk.interfaces.IChemSequence;
  */
 public class CDKValidator extends AbstractValidator {
 
-    public CDKValidator() {
-    }
+    public CDKValidator() {}
 
     public ValidationReport validateChemFile(IChemFile subject) {
         return validateChemFileNulls(subject);
     }
+
     public ValidationReport validateChemSequence(IChemSequence subject) {
         return validateChemSequenceNulls(subject);
     }
 
     private ValidationReport validateChemFileNulls(IChemFile chemFile) {
         ValidationReport report = new ValidationReport();
-        ValidationTest hasNulls = new ValidationTest(chemFile,
-            "ChemFile contains a null ChemSequence."
-        );
-        for (int i=0; i < chemFile.getChemSequenceCount(); i++) { // DIRTY !!!! FIXME !!!!!
+        ValidationTest hasNulls = new ValidationTest(chemFile, "ChemFile contains a null ChemSequence.");
+        for (int i = 0; i < chemFile.getChemSequenceCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
             if (chemFile.getChemSequence(i) == null) {
                 report.addError(hasNulls);
@@ -60,10 +58,8 @@ public class CDKValidator extends AbstractValidator {
 
     private ValidationReport validateChemSequenceNulls(IChemSequence sequence) {
         ValidationReport report = new ValidationReport();
-        ValidationTest hasNulls = new ValidationTest(sequence,
-            "ChemSequence contains a null ChemModel."
-        );
-        for (int i=0; i < sequence.getChemModelCount(); i++) { // DIRTY !!!! FIXME !!!!!
+        ValidationTest hasNulls = new ValidationTest(sequence, "ChemSequence contains a null ChemModel.");
+        for (int i = 0; i < sequence.getChemModelCount(); i++) { // DIRTY !!!! FIXME !!!!!
             // but it does not seem to work on 1.4.2 otherwise....
             if (sequence.getChemModel(i) == null) {
                 report.addError(hasNulls);

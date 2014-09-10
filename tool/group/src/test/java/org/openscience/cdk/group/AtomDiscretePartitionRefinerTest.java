@@ -42,8 +42,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 
-    public static IChemObjectBuilder builder =
-            SilentChemObjectBuilder.getInstance();
+    public static IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
 
     @Test
     public void defaultConstructorTest() {
@@ -55,9 +54,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
     public void advancedConstructorTest() {
         boolean ignoreElements = true;
         boolean ignoreBondOrder = true;
-        AtomDiscretePartitionRefiner refiner =
-                new AtomDiscretePartitionRefiner(
-                        ignoreElements, ignoreBondOrder);
+        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner(ignoreElements, ignoreBondOrder);
         Assert.assertNotNull(refiner);
     }
 
@@ -106,8 +103,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         boolean ignoreElements = true;
         boolean ignoreBondOrder = false;
-        AtomDiscretePartitionRefiner refiner =
-                new AtomDiscretePartitionRefiner(ignoreElements, ignoreBondOrder);
+        AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner(ignoreElements, ignoreBondOrder);
         refiner.refine(ac);
         PermutationGroup autG = refiner.getAutomorphismGroup();
         Assert.assertEquals(8, autG.order());
@@ -193,8 +189,8 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
 
     @Test
     public void getAutomorphismPartitionTest() {
-        String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1)," +
-                           "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
+        String acpString = "C0C1C2C3C4C5C6C7C8C9 0:1(2),1:2(1),2:3(2),3:4(1),"
+                + "4:5(2),5:6(1),6:7(2),7:8(1),8:9(2),5:9(1),0:9(1)";
         IAtomContainer ac = AtomContainerPrinter.fromString(acpString, builder);
         AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
         Partition autP = refiner.getAutomorphismPartition(ac);
@@ -218,8 +214,7 @@ public class AtomDiscretePartitionRefinerTest extends CDKTestCase {
         refiner.refine(mol);
         Partition autP = refiner.getAutomorphismPartition();
 
-        Assert.assertEquals(
-                "Wrong number of equivalent classes", 6, autP.size());
+        Assert.assertEquals("Wrong number of equivalent classes", 6, autP.size());
         Partition expected = Partition.fromString("0,4|1,3|2|5,9|6,8|7");
         Assert.assertEquals("Wrong class assignment", expected, autP);
     }

@@ -52,16 +52,19 @@ public class OWLAtomTypeMappingHandlerTest extends CDKTestCase {
         Assert.assertNull(handler.getAtomTypeMappings());
     }
 
-    @Test public void testEndElement_String_String_String() {
-    	Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+    @Test
+    public void testEndElement_String_String_String() {
+        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
-    @Test public void testStartElement_String_String_String_Attributes() {
-    	Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+    @Test
+    public void testStartElement_String_String_String_Attributes() {
+        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
-    @Test public void testCharacters_arraychar_int_int() {
-    	Assert.assertTrue(true); // tested by testGetAtomTypeMappings
+    @Test
+    public void testCharacters_arraychar_int_int() {
+        Assert.assertTrue(true); // tested by testGetAtomTypeMappings
     }
 
 }

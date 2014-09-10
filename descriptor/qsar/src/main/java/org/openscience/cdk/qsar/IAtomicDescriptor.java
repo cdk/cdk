@@ -41,4 +41,3 @@ public interface IAtomicDescriptor extends IDescriptor {
     public DescriptorValue calculate(IAtom atom, IAtomContainer container);
 
 }
-

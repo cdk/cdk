@@ -27,7 +27,6 @@ import java.util.Arrays;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
-
 /**
  * Implementation of a union-find data structure, largely copied from
  * code due to Derrick Stolee.

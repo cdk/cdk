@@ -63,21 +63,20 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.keyword    file format, SMILES
  */
 @TestClass("org.openscience.cdk.io.iterator.IteratingSMILESReaderTest")
-public class IteratingSMILESReader
-extends DefaultIteratingChemObjectReader<IAtomContainer> {
+public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
-    private BufferedReader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(IteratingSMILESReader.class);
-    private SmilesParser sp = null;
+    private BufferedReader           input;
+    private static ILoggingTool      logger           = LoggingToolFactory
+                                                              .createLoggingTool(IteratingSMILESReader.class);
+    private SmilesParser             sp               = null;
 
-    private boolean nextAvailableIsKnown;
-    private boolean hasNext;
-    private IAtomContainer nextMolecule;
+    private boolean                  nextAvailableIsKnown;
+    private boolean                  hasNext;
+    private IAtomContainer           nextMolecule;
     private final IChemObjectBuilder builder;
 
     /** Store the problem input as a property. */
-    public static final String BAD_SMILES_INPUT = "bad.smiles.input";
+    public static final String       BAD_SMILES_INPUT = "bad.smiles.input";
 
     /**
      * Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
@@ -161,8 +160,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
     private String suffix(final String line) {
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
-            if (c == ' ' || c == '\t')
-                return line.substring(i + 1);
+            if (c == ' ' || c == '\t') return line.substring(i + 1);
         }
         return "";
     }
@@ -178,8 +176,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
             return sp.parseSmiles(line);
         } catch (CDKException e) {
             logger.error("Error while reading the SMILES from: " + line + ", ", e);
-            final IAtomContainer empty = builder.newInstance(IAtomContainer.class,
-                                                             0, 0, 0, 0);
+            final IAtomContainer empty = builder.newInstance(IAtomContainer.class, 0, 0, 0, 0);
             empty.setProperty(BAD_SMILES_INPUT, line);
             return empty;
         }
@@ -209,8 +206,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
     public void close() throws IOException {
-        if (input != null)
-            input.close();
+        if (input != null) input.close();
     }
 
     @TestMethod("testRemove")
@@ -218,13 +214,13 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
         throw new UnsupportedOperationException();
     }
 
-	@TestMethod("testSetReader_Reader")
+    @TestMethod("testSetReader_Reader")
     public void setReader(Reader reader) {
-		if (reader instanceof BufferedReader) {
-			input = (BufferedReader)reader;
-		} else {
-			input = new BufferedReader(reader);
-		}
+        if (reader instanceof BufferedReader) {
+            input = (BufferedReader) reader;
+        } else {
+            input = new BufferedReader(reader);
+        }
         nextMolecule = null;
         nextAvailableIsKnown = false;
         hasNext = false;
@@ -232,8 +228,7 @@ extends DefaultIteratingChemObjectReader<IAtomContainer> {
 
     @TestMethod("testSetReader1,testSetReader_InputStream")
     public void setReader(InputStream reader) {
-	    setReader(new InputStreamReader(reader));
+        setReader(new InputStreamReader(reader));
     }
 
 }
-

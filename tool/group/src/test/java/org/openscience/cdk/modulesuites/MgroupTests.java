@@ -38,18 +38,10 @@ import org.openscience.cdk.group.PermutationTest;
  *
  * @cdk.module test-group
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-        AbstractDiscretePartitionRefinerTest.class,
-        AtomDiscretePartitionRefinerTest.class,
-        AtomEquitablePartitionRefinerTest.class,
-        AtomGroupTests.class,
-        AtomPermutationTests.class,
-        BondDiscretePartitionRefinerTest.class,
-        BondEquitablePartitionRefinerTest.class,
-        BondGroupTests.class,
-        PartitionTest.class,
-        PermutationTest.class,
-        PermutationGroupTest.class
-})
-public class MgroupTests {}
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {AbstractDiscretePartitionRefinerTest.class, AtomDiscretePartitionRefinerTest.class,
+        AtomEquitablePartitionRefinerTest.class, AtomGroupTests.class, AtomPermutationTests.class,
+        BondDiscretePartitionRefinerTest.class, BondEquitablePartitionRefinerTest.class, BondGroupTests.class,
+        PartitionTest.class, PermutationTest.class, PermutationGroupTest.class})
+public class MgroupTests {
+}

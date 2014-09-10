@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class GhemicalSPMFormatTest extends ChemFormatMatcherTest {
 
     public GhemicalSPMFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)GhemicalSPMFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) GhemicalSPMFormat.getInstance());
     }
 
 }

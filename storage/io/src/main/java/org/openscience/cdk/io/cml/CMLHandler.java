@@ -43,16 +43,15 @@ import org.xml.sax.helpers.DefaultHandler;
  **/
 public class CMLHandler extends DefaultHandler {
 
-    private ICMLModule conv;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CMLHandler.class);
-    private boolean debug = true;
+    private ICMLModule              conv;
+    private static ILoggingTool     logger = LoggingToolFactory.createLoggingTool(CMLHandler.class);
+    private boolean                 debug  = true;
 
-    private Map<String,ICMLModule> userConventions;
+    private Map<String, ICMLModule> userConventions;
 
-    private CMLStack xpath;
-    private CMLStack conventionStack;
-    private CMLModuleStack moduleStack;
+    private CMLStack                xpath;
+    private CMLStack                conventionStack;
+    private CMLModuleStack          moduleStack;
 
     /**
      * Constructor for the CMLHandler.
@@ -61,14 +60,14 @@ public class CMLHandler extends DefaultHandler {
      **/
     public CMLHandler(IChemFile chemFile) {
         conv = new CMLCoreModule(chemFile);
-        userConventions = new Hashtable<String,ICMLModule>();
+        userConventions = new Hashtable<String, ICMLModule>();
         xpath = new CMLStack();
         conventionStack = new CMLStack();
         moduleStack = new CMLModuleStack();
     }
 
     public void registerConvention(String convention, ICMLModule conv) {
-      userConventions.put(convention, conv);
+        userConventions.put(convention, conv);
     }
 
     /**
@@ -77,8 +76,8 @@ public class CMLHandler extends DefaultHandler {
      * @param ch        characters to handle
      */
     public void characters(char ch[], int start, int length) {
-       if (debug) logger.debug(new String(ch, start, length));
-       conv.characterData(xpath, ch, start, length);
+        if (debug) logger.debug(new String(ch, start, length));
+        conv.characterData(xpath, ch, start, length);
     }
 
     public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
@@ -116,8 +115,7 @@ public class CMLHandler extends DefaultHandler {
                 conv = new CMLReactionModule(conv);
             }
             conventionStack.push("CMLR");
-        } else if (uri == null || uri.length() == 0 ||
-        		   uri.startsWith("http://www.xml-cml.org/")) {
+        } else if (uri == null || uri.length() == 0 || uri.startsWith("http://www.xml-cml.org/")) {
             // assume CML Core
 
             // Detect conventions
@@ -133,10 +131,12 @@ public class CMLHandler extends DefaultHandler {
                 } else {
                     logger.info("New Convention: ", convName);
                     if (convName.equals("CML")) {
-                        /* Don't reset the convention handler to CMLCore,
-                           becuase all handlers should extend this handler,
-                           and use it for any content other then specifically
-                           put into the specific convention */
+                        /*
+                         * Don't reset the convention handler to CMLCore,
+                         * becuase all handlers should extend this handler, and
+                         * use it for any content other then specifically put
+                         * into the specific convention
+                         */
                     } else if (convName.equals("PDB")) {
                         conv = new PDBConvention(conv);
                     } else if (convName.equals("PMP")) {
@@ -149,10 +149,10 @@ public class CMLHandler extends DefaultHandler {
                     } else if (convName.equals("qsar:DescriptorValue")) {
                         conv = new QSARConvention(conv);
                     } else if (userConventions.containsKey(convName)) {
-                            //unknown convention. userConvention?
-                            ICMLModule newconv = (ICMLModule)userConventions.get(convName);
-                            newconv.inherit(conv);
-                            conv = newconv;
+                        //unknown convention. userConvention?
+                        ICMLModule newconv = (ICMLModule) userConventions.get(convName);
+                        newconv.inherit(conv);
+                        conv = newconv;
                     } else {
                         logger.warn("Detected unknown convention: ", convName);
                     }
@@ -163,8 +163,8 @@ public class CMLHandler extends DefaultHandler {
                 conventionStack.push(conventionStack.current());
             }
         } else {
-        	 conv = new OtherNamespace();
-        	 conventionStack.push("Other");
+            conv = new OtherNamespace();
+            conventionStack.push("Other");
         }
         moduleStack.push(conv);
         if (debug) logger.debug("ConventionStack: ", conventionStack);

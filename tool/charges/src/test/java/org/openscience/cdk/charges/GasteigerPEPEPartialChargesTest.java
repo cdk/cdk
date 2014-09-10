@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.charges;
 
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
@@ -49,7 +48,7 @@ import java.util.List;
  */
 public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
 
-    private IChemObjectBuilder builder = SilentChemObjectBuilder.getInstance();
+    private IChemObjectBuilder      builder = SilentChemObjectBuilder.getInstance();
     private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
     /**
@@ -96,20 +95,20 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(mol1);
         lpcheck.saturate(mol1);
 
-
         List<Boolean> oldBondOrders = new ArrayList<Boolean>();
-        for (int i = 0; i < mol1.getBondCount(); i++) oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+        for (int i = 0; i < mol1.getBondCount(); i++)
+            oldBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
         peoe.calculateCharges(mol1);
 
         List<Boolean> newBondOrders = new ArrayList<Boolean>();
-        for (int i = 0; i < mol1.getBondCount(); i++) newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
+        for (int i = 0; i < mol1.getBondCount(); i++)
+            newBondOrders.add(mol1.getBond(i).getFlag(CDKConstants.ISAROMATIC));
 
         for (int i = 0; i < oldBondOrders.size(); i++) {
-            Assert.assertEquals("bond "+i+" does not match", oldBondOrders.get(i), newBondOrders.get(i));
+            Assert.assertEquals("bond " + i + " does not match", oldBondOrders.get(i), newBondOrders.get(i));
         }
     }
-
 
     @Test
     public void testAromaticAndNonAromatic() throws Exception {
@@ -137,10 +136,8 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         peoe.calculateCharges(mol1);
         peoe.calculateCharges(mol2);
         for (int i = 0; i < mol1.getAtomCount(); i++) {
-            Assert.assertEquals("charge on atom " + i + " does not match",
-                    mol1.getAtom(i).getCharge(),
-                    mol2.getAtom(i).getCharge(),
-                    0.01);
+            Assert.assertEquals("charge on atom " + i + " does not match", mol1.getAtom(i).getCharge(), mol2.getAtom(i)
+                    .getCharge(), 0.01);
         }
 
     }
@@ -272,7 +269,6 @@ public class GasteigerPEPEPartialChargesTest extends CDKTestCase {
         lpcheck.saturate(molecule);
 
         Assert.assertNotNull(peoe.assignrPiMarsilliFactors(set));
-
 
     }
 }

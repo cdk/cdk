@@ -43,15 +43,15 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.dict.EntryTest")
 public class Entry {
 
-	private String className;
-    private String label;
-    private String identifier;
+    private String       className;
+    private String       label;
+    private String       identifier;
     private List<String> descriptorInfo;
-	private String definition;
-	private String description;
-	private Object rawContent;
+    private String       definition;
+    private String       description;
+    private Object       rawContent;
 
-	@TestMethod("testConstructor_String_String,testConstructor_IDLowerCasing")
+    @TestMethod("testConstructor_String_String,testConstructor_IDLowerCasing")
     public Entry(String identifier, String term) {
         this.identifier = identifier.toLowerCase();
         this.label = term;
@@ -60,7 +60,7 @@ public class Entry {
 
     @TestMethod("testConstructor_String")
     public Entry(String identifier) {
-    	this(identifier, "");
+        this(identifier, "");
     }
 
     @TestMethod("testConstructor")
@@ -90,27 +90,27 @@ public class Entry {
 
     @TestMethod("testDefinition")
     public String getDefinition() {
-    	return this.definition;
+        return this.definition;
     }
 
     @TestMethod("testDefinition")
     public void setDefinition(String definition) {
-    	this.definition = definition;
+        this.definition = definition;
     }
 
     @TestMethod("testDescription")
     public String getDescription() {
-    	return this.description;
+        return this.description;
     }
 
     @TestMethod("testDescription")
     public void setDescription(String description) {
-    	this.description = description;
+        this.description = description;
     }
 
     @TestMethod("testDescriptorMetadata")
     public void setDescriptorMetadata(String metadata) {
-        this.descriptorInfo.add( metadata );
+        this.descriptorInfo.add(metadata);
     }
 
     @TestMethod("testDescriptorMetadata")
@@ -123,35 +123,35 @@ public class Entry {
         return "Entry[" + getID() + "](" + getLabel() + ")";
     }
 
-	/**
-	 * @return Returns the rawContent.
-	 */
+    /**
+     * @return Returns the rawContent.
+     */
     @TestMethod("testRawContent")
-	public Object getRawContent() {
-		return rawContent;
-	}
+    public Object getRawContent() {
+        return rawContent;
+    }
 
-	/**
-	 * @param rawContent The rawContent to set.
-	 */
+    /**
+     * @param rawContent The rawContent to set.
+     */
     @TestMethod("testRawContent")
-	public void setRawContent(Object rawContent) {
-		this.rawContent = rawContent;
-	}
+    public void setRawContent(Object rawContent) {
+        this.rawContent = rawContent;
+    }
 
-	/**
-	 * @return Returns the className.
-	 */
+    /**
+     * @return Returns the className.
+     */
     @TestMethod("testClassName")
-	public String getClassName() {
-		return className;
-	}
+    public String getClassName() {
+        return className;
+    }
 
-	/**
-	 * @param className The className to set.
-	 */
+    /**
+     * @param className The className to set.
+     */
     @TestMethod("testClassName")
-	public void setClassName(String className) {
-		this.className = className;
-	}
+    public void setClassName(String className) {
+        this.className = className;
+    }
 }

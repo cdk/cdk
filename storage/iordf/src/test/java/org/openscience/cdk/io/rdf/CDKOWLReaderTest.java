@@ -39,25 +39,25 @@ import java.io.InputStreamReader;
  */
 public class CDKOWLReaderTest extends SimpleChemObjectReaderTest {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(CDKOWLReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new CDKOWLReader(), "data/owl/molecule.n3");
     }
 
-    @Test public void testAccepts() {
-    	Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() {
+        Assert.assertTrue(chemObjectIO.accepts(AtomContainer.class));
     }
 
-    @Test public void testMolecule() throws Exception {
+    @Test
+    public void testMolecule() throws Exception {
         String filename = "data/owl/molecule.n3";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
-        CDKOWLReader reader = new CDKOWLReader(
-            new InputStreamReader(ins)
-        );
-        IAtomContainer mol = (IAtomContainer)reader.read(new AtomContainer());
+        CDKOWLReader reader = new CDKOWLReader(new InputStreamReader(ins));
+        IAtomContainer mol = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
 
         Assert.assertNotNull(mol);

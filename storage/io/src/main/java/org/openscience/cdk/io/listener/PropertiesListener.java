@@ -47,7 +47,7 @@ import org.openscience.cdk.io.setting.IOSetting;
  */
 public class PropertiesListener implements IReaderListener, IWriterListener {
 
-    private Properties props;
+    private Properties  props;
     private PrintWriter out;
 
     public PropertiesListener(Properties props) {
@@ -60,7 +60,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
      */
     public void setOutputWriter(Writer writer) {
         if (writer instanceof PrintWriter) {
-            this.out = (PrintWriter)writer;
+            this.out = (PrintWriter) writer;
         } else if (writer == null) {
             this.out = null;
         } else {
@@ -91,6 +91,3 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
     }
 
 }
-
-
-

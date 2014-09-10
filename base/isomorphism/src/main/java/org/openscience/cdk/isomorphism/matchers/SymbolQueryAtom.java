@@ -28,8 +28,9 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
 
     private static final long serialVersionUID = -5774610415273279451L;
-    private String ID;
-    private int HCount=0;
+    private String            ID;
+    private int               HCount           = 0;
+
     public SymbolQueryAtom(IChemObjectBuilder builder) {
         super(builder);
     }
@@ -37,36 +38,36 @@ public class SymbolQueryAtom extends QueryAtom implements IQueryAtom {
     public SymbolQueryAtom(IAtom atom) {
         super(atom.getSymbol(), atom.getBuilder());
     }
-    public void setHCount(int m_HCount){
-       HCount = m_HCount;
+
+    public void setHCount(int m_HCount) {
+        HCount = m_HCount;
     }
 
     public boolean matches(IAtom atom) {
-        if(ID!=null && HCount==0)
-           return this.getSymbol()!=(atom.getSymbol());
-        else if(ID==null && HCount!=0){
-            return (this.getImplicitHydrogenCount()==HCount);
-        }
-        else
+        if (ID != null && HCount == 0)
+            return this.getSymbol() != (atom.getSymbol());
+        else if (ID == null && HCount != 0) {
+            return (this.getImplicitHydrogenCount() == HCount);
+        } else
             return this.getSymbol().equals(atom.getSymbol());
     };
-    public void setOperator(String str){
+
+    public void setOperator(String str) {
         ID = str;
 
     }
 
-
     public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("SymbolQueryAtom(");
-		s.append(this.hashCode() + ", ");
-		s.append(getSymbol());
-		s.append(')');
-		return s.toString();
+        StringBuilder s = new StringBuilder();
+        s.append("SymbolQueryAtom(");
+        s.append(this.hashCode() + ", ");
+        s.append(getSymbol());
+        s.append(')');
+        return s.toString();
     }
 
-    @Override public IAtom clone() throws CloneNotSupportedException {
+    @Override
+    public IAtom clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
 }
-

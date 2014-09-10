@@ -47,17 +47,14 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.dict.DictDBTest")
 public class DictionaryDatabase {
 
-    public final static String DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
+    public final static String      DICTREFPROPERTYNAME = "org.openscience.cdk.dict";
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(DictionaryDatabase.class);
+    private ILoggingTool            logger              = LoggingToolFactory
+                                                                .createLoggingTool(DictionaryDatabase.class);
 
-    private String[] dictionaryNames = {
-        "chemical", "elements", "descriptor-algorithms","reaction-processes"
-    };
-    private String[] dictionaryTypes = {
-        "xml", "owl", "owl", "owl_React"
-    };
+    private String[]                dictionaryNames     = {"chemical", "elements", "descriptor-algorithms",
+            "reaction-processes"                        };
+    private String[]                dictionaryTypes     = {"xml", "owl", "owl", "owl_React"};
 
     private Map<String, Dictionary> dictionaries;
 
@@ -65,12 +62,10 @@ public class DictionaryDatabase {
     public DictionaryDatabase() {
         // read dictionaries distributed with CDK
         dictionaries = new Hashtable<String, Dictionary>();
-        for (int i=0; i<dictionaryNames.length; i++) {
+        for (int i = 0; i < dictionaryNames.length; i++) {
             String name = dictionaryNames[i];
             String type = dictionaryTypes[i];
-            Dictionary dictionary = readDictionary(
-                "org/openscience/cdk/dict/data/" + name, type
-            );
+            Dictionary dictionary = readDictionary("org/openscience/cdk/dict/data/" + name, type);
             if (dictionary != null) {
                 dictionaries.put(name.toLowerCase(), dictionary);
                 logger.debug("Read dictionary: ", name);
@@ -81,14 +76,14 @@ public class DictionaryDatabase {
     private Dictionary readDictionary(String databaseLocator, String type) {
         Dictionary dictionary;
         // to distinguish between OWL: QSAR & REACT
-        if(type.contains("_React"))
-        	databaseLocator += "." + type.substring(0, type.length()-6);
+        if (type.contains("_React"))
+            databaseLocator += "." + type.substring(0, type.length() - 6);
         else
-        	databaseLocator += "." + type;
+            databaseLocator += "." + type;
         logger.info("Reading dictionary from ", databaseLocator);
         try {
-            InputStreamReader reader = new InputStreamReader(
-                this.getClass().getClassLoader().getResourceAsStream(databaseLocator));
+            InputStreamReader reader = new InputStreamReader(this.getClass().getClassLoader()
+                    .getResourceAsStream(databaseLocator));
             if (type.equals("owl")) {
                 dictionary = OWLFile.unmarshal(reader);
             } else if (type.equals("owl_React")) {
@@ -137,7 +132,7 @@ public class DictionaryDatabase {
 
     @TestMethod("testOWLDictionary")
     public Dictionary getDictionary(String dictionaryName) {
-    	return dictionaries.get(dictionaryName);
+        return dictionaries.get(dictionaryName);
     }
 
     /**
@@ -154,9 +149,8 @@ public class DictionaryDatabase {
             // FIXME: dummy method that needs an implementation
             Entry[] entries = dictionary.getEntries();
             String[] entryNames = new String[entries.length];
-            logger.info("Found ", "" + entryNames.length, " entries in dictionary ",
-              dictionaryName);
-            for (int i=0; i<entries.length; i++) {
+            logger.info("Found ", "" + entryNames.length, " entries in dictionary ", dictionaryName);
+            for (int i = 0; i < entries.length; i++) {
                 entryNames[i] = entries[i].getLabel();
             }
             return entryNames;
@@ -164,7 +158,7 @@ public class DictionaryDatabase {
     }
 
     public Entry[] getDictionaryEntry(String dictionaryName) {
-        Dictionary dictionary = (Dictionary)dictionaries.get(dictionaryName);
+        Dictionary dictionary = (Dictionary) dictionaries.get(dictionaryName);
         return dictionary.getEntries();
     }
 
@@ -190,7 +184,7 @@ public class DictionaryDatabase {
      */
     public boolean hasEntry(String dictName, String entryID) {
         if (hasDictionary(dictName)) {
-            Dictionary dictionary = (Dictionary)dictionaries.get(dictName);
+            Dictionary dictionary = (Dictionary) dictionaries.get(dictName);
             return dictionary.hasEntry(entryID.toLowerCase());
         } else {
             return false;

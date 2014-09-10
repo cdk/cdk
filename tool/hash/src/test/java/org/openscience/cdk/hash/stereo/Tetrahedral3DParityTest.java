@@ -46,47 +46,44 @@ public class Tetrahedral3DParityTest {
         new Tetrahedral3DParity(new Point3d[0]);
     }
 
-    @Test public void testParity_Three_Clockwise() {
-        Point3d[] coords = new Point3d[]{
-                new Point3d(1.70,  0.98, -0.51), // -O
-                new Point3d(2.65, -0.83,  0.62), // -N
-                new Point3d(0.26, -0.33,  0.95), // -C
+    @Test
+    public void testParity_Three_Clockwise() {
+        Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
+                new Point3d(2.65, -0.83, 0.62), // -N
+                new Point3d(0.26, -0.33, 0.95), // -C
                 new Point3d(1.44, -0.33, -0.03), // C (centre)
         };
         assertThat(new Tetrahedral3DParity(coords).parity(), is(CLOCKWISE));
     }
 
-    @Test public void testParity_Three_Anticlockwise() {
-        Point3d[] coords = new Point3d[]{
-                new Point3d(1.70,  0.98, -0.51), // -O
-                new Point3d(0.26, -0.33,  0.95), // -C
-                new Point3d(2.65, -0.83,  0.62), // -N
+    @Test
+    public void testParity_Three_Anticlockwise() {
+        Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
+                new Point3d(0.26, -0.33, 0.95), // -C
+                new Point3d(2.65, -0.83, 0.62), // -N
                 new Point3d(1.44, -0.33, -0.03), // C (centre)
         };
         assertThat(new Tetrahedral3DParity(coords).parity(), is(ANTICLOCKWISE));
     }
 
-    @Test public void testParity_Four_Clockwise() {
-        Point3d[] coords = new Point3d[]{
-                new Point3d(1.70,  0.98, -0.51), // -O
-                new Point3d(2.65, -0.83,  0.62), // -N
-                new Point3d(0.26, -0.33,  0.95), // -C
+    @Test
+    public void testParity_Four_Clockwise() {
+        Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
+                new Point3d(2.65, -0.83, 0.62), // -N
+                new Point3d(0.26, -0.33, 0.95), // -C
                 new Point3d(1.21, -0.97, -0.89), // -H
         };
         assertThat(new Tetrahedral3DParity(coords).parity(), is(CLOCKWISE));
     }
 
-
-    @Test public void testParity_Four_Anticlockwise() {
-        Point3d[] coords = new Point3d[]{
-                new Point3d(1.70,  0.98, -0.51), // -O
-                new Point3d(0.26, -0.33,  0.95), // -C
-                new Point3d(2.65, -0.83,  0.62), // -N
+    @Test
+    public void testParity_Four_Anticlockwise() {
+        Point3d[] coords = new Point3d[]{new Point3d(1.70, 0.98, -0.51), // -O
+                new Point3d(0.26, -0.33, 0.95), // -C
+                new Point3d(2.65, -0.83, 0.62), // -N
                 new Point3d(1.21, -0.97, -0.89), // -H
         };
         assertThat(new Tetrahedral3DParity(coords).parity(), is(ANTICLOCKWISE));
     }
-
-
 
 }

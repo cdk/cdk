@@ -87,8 +87,8 @@ public final class Permutation {
     @TestMethod("equalsTest,equalsTest_null,equalsTest_difference")
     public boolean equals(Object other) {
 
-        if(this == other) return true;
-        if(other == null || getClass() != other.getClass()) return false;
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
 
         return Arrays.equals(values, ((Permutation) other).values);
 
@@ -99,7 +99,7 @@ public final class Permutation {
      */
     @Override
     public int hashCode() {
-    	return Arrays.hashCode(values);
+        return Arrays.hashCode(values);
     }
 
     /**
@@ -170,15 +170,15 @@ public final class Permutation {
      */
     @TestMethod("getOrbitTest")
     public List<Integer> getOrbit(int element) {
-		List<Integer> orbit = new ArrayList<Integer>();
-		orbit.add(element);
-		int i = values[element];
-		while (i != element && orbit.size() < values.length) {
-			orbit.add(i);
-			i = values[i];
-		}
-		return orbit;
-	}
+        List<Integer> orbit = new ArrayList<Integer>();
+        orbit.add(element);
+        int i = values[element];
+        while (i != element && orbit.size() < values.length) {
+            orbit.add(i);
+            i = values[i];
+        }
+        return orbit;
+    }
 
     /**
      * Set the value at the specified index.
@@ -201,7 +201,7 @@ public final class Permutation {
     @TestMethod("setToTest")
     public void setTo(Permutation other) {
 
-        if(this.values.length != other.values.length)
+        if (this.values.length != other.values.length)
             throw new IllegalArgumentException("permutations are different size");
 
         for (int i = 0; i < this.values.length; i++) {

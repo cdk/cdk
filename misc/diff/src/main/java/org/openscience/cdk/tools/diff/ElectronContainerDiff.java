@@ -43,39 +43,40 @@ public class ElectronContainerDiff {
      */
     private ElectronContainerDiff() {}
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testMatchAgainstItself,testDiff")
-    public static String diff( IChemObject first, IChemObject second ) {
-    	IDifference diff = difference(first, second);
-    	if (diff == null) {
-    		return "";
-    	} else {
-    		return diff.toString();
-    	}
+    public static String diff(IChemObject first, IChemObject second) {
+        IDifference diff = difference(first, second);
+        if (diff == null) {
+            return "";
+        } else {
+            return diff.toString();
+        }
     }
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testDifference")
-    public static IDifference difference( IChemObject first, IChemObject second ) {
+    public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IElectronContainer && second instanceof IElectronContainer)) {
             return null;
         }
-        IElectronContainer firstEC = (IElectronContainer)first;
-        IElectronContainer secondEC = (IElectronContainer)second;
+        IElectronContainer firstEC = (IElectronContainer) first;
+        IElectronContainer secondEC = (IElectronContainer) second;
         IDifferenceList totalDiff = new ChemObjectDifference("ElectronContainerDiff");
-        totalDiff.addChild(IntegerDifference.construct("eCount", firstEC.getElectronCount(), secondEC.getElectronCount()));
+        totalDiff.addChild(IntegerDifference.construct("eCount", firstEC.getElectronCount(),
+                secondEC.getElectronCount()));
         totalDiff.addChild(ChemObjectDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {
             return totalDiff;

@@ -56,139 +56,129 @@ import java.util.Map;
  *@cdk.set        qsar-descriptors
  *@cdk.dictref qsar-descriptors:period
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PeriodicTablePositionDescriptorTest")
 public class PeriodicTablePositionDescriptor extends AbstractAtomicDescriptor implements IAtomicDescriptor {
 
     private static final String[] names = {"periodicTablePosition"};
-    public Map<String, Integer> periodicTable;
+    public Map<String, Integer>   periodicTable;
 
-	/**
-	 *  Constructor for the PeriodicTablePositionDescriptor object
-	 */
-	public PeriodicTablePositionDescriptor() {
-	    if (periodicTable == null) {
-		periodicTable = new Hashtable<String, Integer>();
-		periodicTable.put("H", 1);
-		periodicTable.put("Li", 2);
-		periodicTable.put("Be", 2);
-		periodicTable.put("B", 2);
-		periodicTable.put("C", 2);
-		periodicTable.put("N", 2);
-		periodicTable.put("O", 2);
-		periodicTable.put("F", 2);
-		periodicTable.put("Na", 3);
-		periodicTable.put("Mg", 3);
-		periodicTable.put("Al", 3);
-		periodicTable.put("Si", 3);
-		periodicTable.put("P", 3);
-		periodicTable.put("S", 3);
-		periodicTable.put("Cl", 3);
-		periodicTable.put("K", 4);
-		periodicTable.put("Ca", 4);
-		periodicTable.put("Ga", 4);
-		periodicTable.put("Ge", 4);
-		periodicTable.put("As", 4);
-		periodicTable.put("Se", 4);
-		periodicTable.put("Br", 4);
-		periodicTable.put("Rb", 5);
-		periodicTable.put("Sr", 5);
-		periodicTable.put("In", 5);
-		periodicTable.put("Sn", 5);
-		periodicTable.put("Sb", 5);
-		periodicTable.put("Te", 5);
-		periodicTable.put("I", 5);
-		periodicTable.put("Cs", 6);
-		periodicTable.put("Ba", 6);
-		periodicTable.put("Tl", 6);
-		periodicTable.put("Pb", 6);
-		periodicTable.put("Bi", 6);
-		periodicTable.put("Po", 6);
-		periodicTable.put("At", 6);
-		periodicTable.put("Fr", 7);
-		periodicTable.put("Ra", 7);
-	    }
-	}
-
-
-	/**
-	 *  Gets the specification attribute of the PeriodicTablePositionDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod(value="testGetSpecification")
-    public DescriptorSpecification getSpecification() {
-		return new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
-				this.getClass().getName(),
-				"The Chemistry Development Kit");
-	}
-
-
-	/**
-     * This descriptor does not have any parameter to be set.
+    /**
+     *  Constructor for the PeriodicTablePositionDescriptor object
      */
-    @TestMethod(value="testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    	// no parameters
+    public PeriodicTablePositionDescriptor() {
+        if (periodicTable == null) {
+            periodicTable = new Hashtable<String, Integer>();
+            periodicTable.put("H", 1);
+            periodicTable.put("Li", 2);
+            periodicTable.put("Be", 2);
+            periodicTable.put("B", 2);
+            periodicTable.put("C", 2);
+            periodicTable.put("N", 2);
+            periodicTable.put("O", 2);
+            periodicTable.put("F", 2);
+            periodicTable.put("Na", 3);
+            periodicTable.put("Mg", 3);
+            periodicTable.put("Al", 3);
+            periodicTable.put("Si", 3);
+            periodicTable.put("P", 3);
+            periodicTable.put("S", 3);
+            periodicTable.put("Cl", 3);
+            periodicTable.put("K", 4);
+            periodicTable.put("Ca", 4);
+            periodicTable.put("Ga", 4);
+            periodicTable.put("Ge", 4);
+            periodicTable.put("As", 4);
+            periodicTable.put("Se", 4);
+            periodicTable.put("Br", 4);
+            periodicTable.put("Rb", 5);
+            periodicTable.put("Sr", 5);
+            periodicTable.put("In", 5);
+            periodicTable.put("Sn", 5);
+            periodicTable.put("Sb", 5);
+            periodicTable.put("Te", 5);
+            periodicTable.put("I", 5);
+            periodicTable.put("Cs", 6);
+            periodicTable.put("Ba", 6);
+            periodicTable.put("Tl", 6);
+            periodicTable.put("Pb", 6);
+            periodicTable.put("Bi", 6);
+            periodicTable.put("Po", 6);
+            periodicTable.put("At", 6);
+            periodicTable.put("Fr", 7);
+            periodicTable.put("Ra", 7);
+        }
     }
 
+    /**
+     *  Gets the specification attribute of the PeriodicTablePositionDescriptor object
+     *
+     *@return    The specification value
+     */
+    @TestMethod(value = "testGetSpecification")
+    public DescriptorSpecification getSpecification() {
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#period",
+                this.getClass().getName(), "The Chemistry Development Kit");
+    }
 
-	/**
-	 *  Gets the parameters attribute of the PeriodicTablePositionDescriptor object
-	 *
-	 *@return    The parameters value
+    /**
+     * This descriptor does not have any parameter to be set.
+     */
+    @TestMethod(value = "testSetParameters_arrayObject")
+    public void setParameters(Object[] params) throws CDKException {
+        // no parameters
+    }
+
+    /**
+     *  Gets the parameters attribute of the PeriodicTablePositionDescriptor object
+     *
+     *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
 
+    /**
+     *  This method calculates the period of an atom.
+     *
+     * @param  atom              The IAtom for which the DescriptorValue is requested
+     * @param  container         Parameter is the atom container.
+     * @return                   The period
+     */
+
+    @TestMethod(value = "testCalculate_IAtomContainer")
+    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
+        int period;
+        String symbol = atom.getSymbol();
+        period = periodicTable.get(symbol);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new IntegerResult(period),
+                names);
+    }
 
     /**
-	 *  This method calculates the period of an atom.
-	 *
-	 * @param  atom              The IAtom for which the DescriptorValue is requested
-     * @param  container         Parameter is the atom container.
-	 * @return                   The period
-	 */
-
-	@TestMethod(value="testCalculate_IAtomContainer")
-    public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
-		int period;
-		String symbol = atom.getSymbol();
-		period = periodicTable.get(symbol);
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new IntegerResult(period),
-                names);
-	}
-
-
-	/**
-	 *  Gets the parameterNames attribute of the PeriodicTablePositionDescriptor object
-	 *
-	 *@return    The parameterNames value
-	 */
-	@TestMethod(value="testGetParameterNames")
+     *  Gets the parameterNames attribute of the PeriodicTablePositionDescriptor object
+     *
+     *@return    The parameterNames value
+     */
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
-	}
+    }
 
-
-	/**
-	 *  Gets the parameterType attribute of the PeriodicTablePositionDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	@TestMethod(value="testGetParameterType_String")
+    /**
+     *  Gets the parameterType attribute of the PeriodicTablePositionDescriptor object
+     *
+     *@param  name  Description of the Parameter
+     *@return       The parameterType value
+     */
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
         return null;
-	}
+    }
 }
-

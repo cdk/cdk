@@ -32,32 +32,32 @@ import org.junit.Test;
  */
 public class TextElementTest {
 
-	@Test
-	public void testConstructor() {
-		TextElement elem = new TextElement(0,0,"Foo",Color.ORANGE);
-		Assert.assertNotNull(elem);
-	}
+    @Test
+    public void testConstructor() {
+        TextElement elem = new TextElement(0, 0, "Foo", Color.ORANGE);
+        Assert.assertNotNull(elem);
+    }
 
-	class MockVisitor implements IRenderingVisitor {
+    class MockVisitor implements IRenderingVisitor {
 
-		boolean isVisited = false;
+        boolean isVisited = false;
 
-		public void visit(IRenderingElement element) {
-			isVisited = true;
-		}
+        public void visit(IRenderingElement element) {
+            isVisited = true;
+        }
 
-		public void setTransform(AffineTransform transform) {
-			// TODO Auto-generated method stub
-		}
-	}
+        public void setTransform(AffineTransform transform) {
+            // TODO Auto-generated method stub
+        }
+    }
 
-	@Test
-	public void testAccept() {
-		TextElement elem = new TextElement(0,0,"Foo",Color.ORANGE);
-		MockVisitor visitor = new MockVisitor();
-		Assert.assertFalse(visitor.isVisited);
-		elem.accept(visitor);
-		Assert.assertTrue(visitor.isVisited);
-	}
+    @Test
+    public void testAccept() {
+        TextElement elem = new TextElement(0, 0, "Foo", Color.ORANGE);
+        MockVisitor visitor = new MockVisitor();
+        Assert.assertFalse(visitor.isVisited);
+        elem.accept(visitor);
+        Assert.assertTrue(visitor.isVisited);
+    }
 
 }

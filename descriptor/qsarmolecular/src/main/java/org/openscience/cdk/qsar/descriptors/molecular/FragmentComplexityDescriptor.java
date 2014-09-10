@@ -48,13 +48,13 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.FragmentComplexityDescriptorTest")
 public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
-    private static final String[] names = {"fragC"};
 
+    private static final String[] names = {"fragC"};
 
     /**
      *  Constructor for the FragmentComplexityDescriptor object.
      */
-    public FragmentComplexityDescriptor() { }
+    public FragmentComplexityDescriptor() {}
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor
@@ -74,11 +74,9 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#NilaComplexity", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      *  Sets the parameters attribute of the FragmentComplexityDescriptor object.
@@ -96,7 +94,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         }
     }
 
-
     /**
      *  Gets the parameters attribute of the FragmentComplexityDescriptor object.
      *
@@ -109,7 +106,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         // return the parameters as used for the descriptor calculation
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -136,8 +133,7 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         }
         int B = container.getBondCount() + AtomContainerManipulator.getImplicitHydrogenCount(container);
         double C = Math.abs(B * B - A * A + A) + (H / 100);
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), new DoubleResult(C),
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(C),
                 getDescriptorNames());
     }
 
@@ -157,7 +153,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         return new DoubleResult(0.0);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the FragmentComplexityDescriptor object.
      *
@@ -168,8 +163,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
         return null;
     }
 
-
-
     /**
      *  Gets the parameterType attribute of the FragmentComplexityDescriptor object.
      *
@@ -178,9 +171,6 @@ public class FragmentComplexityDescriptor extends AbstractMolecularDescriptor im
      */
     @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-       return null;
+        return null;
     }
 }
-
-
-

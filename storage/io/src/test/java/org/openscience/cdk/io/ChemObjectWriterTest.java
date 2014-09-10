@@ -43,22 +43,21 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
 
     protected static IChemObjectWriter chemObjectIO;
 
-    public static void setChemObjectWriter(IChemObjectWriter aChemObjectWriter){
+    public static void setChemObjectWriter(IChemObjectWriter aChemObjectWriter) {
         ChemObjectIOTest.setChemObjectIO(aChemObjectWriter);
         ChemObjectWriterTest.chemObjectIO = aChemObjectWriter;
     }
 
-    private static IChemObject[] allChemObjectsTypes = {
-        new ChemFile(), new ChemModel(),
-        new Reaction(), new AtomContainerSet(), new AtomContainer()
-    };
+    private static IChemObject[] allChemObjectsTypes = {new ChemFile(), new ChemModel(), new Reaction(),
+            new AtomContainerSet(), new AtomContainer()};
 
     /**
      * Unit tests that iterates over all common objects that can be
      * serialized and tests that if it is marked as accepted with
      * <code>accepts</code>, that it can actually be written too.
      */
-    @Test public void testAcceptsWriteConsistency() throws CDKException {
+    @Test
+    public void testAcceptsWriteConsistency() throws CDKException {
         Assert.assertNotNull("The IChemObjectWriter is not set.", chemObjectIO);
         for (IChemObject object : allChemObjectsTypes) {
             if (chemObjectIO.accepts(object.getClass())) {
@@ -68,9 +67,8 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
                     chemObjectIO.write(object);
                 } catch (CDKException exception) {
                     if (exception.getMessage().contains("Only supported")) {
-                        Assert.fail("IChemObject of type " +
-                            object.getClass().getName() + " is marked as " +
-                            "accepted, but failed to be written.");
+                        Assert.fail("IChemObject of type " + object.getClass().getName() + " is marked as "
+                                + "accepted, but failed to be written.");
                     } else {
                         throw exception;
                     }
@@ -79,13 +77,15 @@ public abstract class ChemObjectWriterTest extends ChemObjectIOTest {
         }
     }
 
-    @Test public void testSetWriter_Writer() throws Exception {
+    @Test
+    public void testSetWriter_Writer() throws Exception {
         Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
         StringWriter testWriter = new StringWriter();
         chemObjectIO.setWriter(testWriter);
     }
 
-    @Test public void testSetWriter_OutputStream() throws Exception {
+    @Test
+    public void testSetWriter_OutputStream() throws Exception {
         Assert.assertNotNull("No IChemObjectWriter has been set!", chemObjectIO);
         ByteArrayOutputStream testStream = new ByteArrayOutputStream();
         chemObjectIO.setWriter(testStream);

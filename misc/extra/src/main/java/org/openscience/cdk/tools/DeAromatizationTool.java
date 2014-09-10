@@ -50,84 +50,80 @@ import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
 @TestClass("org.openscience.cdk.tools.DeAromatizationToolTest")
 public class DeAromatizationTool {
 
-	/**
-	 * Methods that takes a ring of which all bonds are aromatic, and assigns single
-	 * and double bonds. It does this in a non-general way by looking at the ring
-	 * size and take everything as a special case.
-	 *
-	 * @param ring Ring to dearomatize
-	 * @return  False if it could not convert the aromatic ring bond into single and double bonds
-	 */
+    /**
+     * Methods that takes a ring of which all bonds are aromatic, and assigns single
+     * and double bonds. It does this in a non-general way by looking at the ring
+     * size and take everything as a special case.
+     *
+     * @param ring Ring to dearomatize
+     * @return  False if it could not convert the aromatic ring bond into single and double bonds
+     */
     @TestMethod("testDeAromatize_IRing,testPyridine,testBezene")
     public static boolean deAromatize(IRing ring) {
-		boolean allaromatic=true;
-		for(int i=0;i<ring.getBondCount();i++){
-			if(!ring.getBond(i).getFlag(CDKConstants.ISAROMATIC))
-				allaromatic=false;
-		}
-		if(!allaromatic)
-			return false;
-		for(int i=0;i<ring.getBondCount();i++){
-			if(ring.getBond(i).getFlag(CDKConstants.ISAROMATIC))
-				ring.getBond(i).setOrder(IBond.Order.SINGLE);
-		}
-		boolean result = false;
-		IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(ring);
-//		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
-		if (ring.getRingSize() == 6) {
-			if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 6) {
-				result = DeAromatizationTool.deAromatizeBenzene(ring);
-			} else if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 5 &&
-			           MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
-				result = DeAromatizationTool.deAromatizePyridine(ring);
-			}
-		}
-		if (ring.getRingSize() == 5) {
-            if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 4 &&
-            		MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
-				result= deAromatizePyrolle(ring);
-			}
-		}
-		return result;
-	}
+        boolean allaromatic = true;
+        for (int i = 0; i < ring.getBondCount(); i++) {
+            if (!ring.getBond(i).getFlag(CDKConstants.ISAROMATIC)) allaromatic = false;
+        }
+        if (!allaromatic) return false;
+        for (int i = 0; i < ring.getBondCount(); i++) {
+            if (ring.getBond(i).getFlag(CDKConstants.ISAROMATIC)) ring.getBond(i).setOrder(IBond.Order.SINGLE);
+        }
+        boolean result = false;
+        IMolecularFormula formula = MolecularFormulaManipulator.getMolecularFormula(ring);
+        //		Map elementCounts = new MFAnalyser(ring).getFormulaHashtable();
+        if (ring.getRingSize() == 6) {
+            if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 6) {
+                result = DeAromatizationTool.deAromatizeBenzene(ring);
+            } else if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 5
+                    && MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
+                result = DeAromatizationTool.deAromatizePyridine(ring);
+            }
+        }
+        if (ring.getRingSize() == 5) {
+            if (MolecularFormulaManipulator.getElementCount(formula, new Element("C")) == 4
+                    && MolecularFormulaManipulator.getElementCount(formula, new Element("N")) == 1) {
+                result = deAromatizePyrolle(ring);
+            }
+        }
+        return result;
+    }
 
-	private static boolean deAromatizePyridine(IRing ring) {
-		return deAromatizeBenzene(ring); // same task to do
-	}
+    private static boolean deAromatizePyridine(IRing ring) {
+        return deAromatizeBenzene(ring); // same task to do
+    }
 
-	private static boolean deAromatizePyrolle(IRing ring) {
-		if (ring.getBondCount() != 5) return false;
-		for (int i = 0; i<ring.getAtomCount(); i++) {
-			IAtom atom=ring.getAtom(i);
-			if(atom.getSymbol().equals("N")){
-				int done=0;
-				IBond bond=null;
-				int count=0;
-				while(done!=2){
-					bond=getNextBond(atom,bond,ring);
-					if(bond.getAtom(0)==atom)
-						atom=bond.getAtom(1);
-					else
-						atom=bond.getAtom(0);
-					count++;
-					if(count%2==0){
-						bond.setOrder(IBond.Order.DOUBLE);
-						done++;
-					}
-				}
-				break;
-			}
-		}
-		return true;
-	}
+    private static boolean deAromatizePyrolle(IRing ring) {
+        if (ring.getBondCount() != 5) return false;
+        for (int i = 0; i < ring.getAtomCount(); i++) {
+            IAtom atom = ring.getAtom(i);
+            if (atom.getSymbol().equals("N")) {
+                int done = 0;
+                IBond bond = null;
+                int count = 0;
+                while (done != 2) {
+                    bond = getNextBond(atom, bond, ring);
+                    if (bond.getAtom(0) == atom)
+                        atom = bond.getAtom(1);
+                    else
+                        atom = bond.getAtom(0);
+                    count++;
+                    if (count % 2 == 0) {
+                        bond.setOrder(IBond.Order.DOUBLE);
+                        done++;
+                    }
+                }
+                break;
+            }
+        }
+        return true;
+    }
 
-	private static IBond getNextBond(IAtom atom, IBond bond, IRing ring){
-		List<IBond> bonds=ring.getConnectedBondsList(atom);
-		for(int i=0;i<bonds.size();i++)
-			if(bonds.get(i)!=bond)
-				return (IBond)bonds.get(i);
-		return null;
-	}
+    private static IBond getNextBond(IAtom atom, IBond bond, IRing ring) {
+        List<IBond> bonds = ring.getConnectedBondsList(atom);
+        for (int i = 0; i < bonds.size(); i++)
+            if (bonds.get(i) != bond) return (IBond) bonds.get(i);
+        return null;
+    }
 
     private static boolean deAromatizeBenzene(IRing ring) {
         if (ring.getBondCount() != 6) return false;

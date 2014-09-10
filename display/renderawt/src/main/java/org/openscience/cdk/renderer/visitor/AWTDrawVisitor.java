@@ -1,21 +1,21 @@
 /* Copyright (C) 2008 Gilleain Torrance <gilleain.torrance@gmail.com>
-*
-*  Contact: cdk-devel@list.sourceforge.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received a copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+ *
+ *  Contact: cdk-devel@list.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 package org.openscience.cdk.renderer.visitor;
 
 import java.awt.BasicStroke;
@@ -65,7 +65,6 @@ import org.openscience.cdk.renderer.generators.BasicSceneGenerator.ArrowHeadWidt
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.renderer.generators.BasicSceneGenerator.UseAntiAliasing;
 
-
 /**
  * Implementation of the {@link IDrawVisitor} interface for the AWT
  * widget toolkit, allowing molecules to be rendered with toolkits based on
@@ -81,57 +80,55 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      * The font manager cannot be set by the constructor as it needs to
      * be managed by the Renderer.
      */
-    private AWTFontManager fontManager;
+    private AWTFontManager                  fontManager;
 
     /**
      * The renderer model cannot be set by the constructor as it needs to
      * be managed by the Renderer.
      */
-	private RendererModel rendererModel;
+    private RendererModel                   rendererModel;
 
-	private final Map<Integer, BasicStroke> strokeMap =
-	    new HashMap<Integer, BasicStroke>();
+    private final Map<Integer, BasicStroke> strokeMap = new HashMap<Integer, BasicStroke>();
 
-	/**
-	 * Returns the current {@link RendererModel}.
-	 *
-	 * @return the current model
-	 */
+    /**
+     * Returns the current {@link RendererModel}.
+     *
+     * @return the current model
+     */
     @TestMethod("testGetRendererModel")
-	public RendererModel getRendererModel() {
-		return rendererModel;
-	}
+    public RendererModel getRendererModel() {
+        return rendererModel;
+    }
 
-	/**
-	 * Returns the current stroke map.
-	 *
-	 * @return a {@link Map} with Integer as keys and {@link BasicStroke}s.
-	 */
+    /**
+     * Returns the current stroke map.
+     *
+     * @return a {@link Map} with Integer as keys and {@link BasicStroke}s.
+     */
     @TestMethod("testGetStrokeMap")
-	public Map<Integer, BasicStroke> getStrokeMap() {
-		return strokeMap;
-	}
+    public Map<Integer, BasicStroke> getStrokeMap() {
+        return strokeMap;
+    }
 
-	private final Map<TextAttribute, Object> map =
-        new Hashtable<TextAttribute, Object>();
+    private final Map<TextAttribute, Object> map = new Hashtable<TextAttribute, Object>();
 
-    private final float minStroke;
+    private final float                      minStroke;
 
-    private final boolean strokeCache;
+    private final boolean                    strokeCache;
 
-	private final Graphics2D graphics;
+    private final Graphics2D                 graphics;
 
-	/**
-	 * Returns the {@link Graphics2D} for for this visitor.
-	 *
-	 * @return the {@link Graphics2D} object
-	 */
+    /**
+     * Returns the {@link Graphics2D} for for this visitor.
+     *
+     * @return the {@link Graphics2D} object
+     */
     @TestMethod("testGetGraphics")
-	public Graphics2D getGraphics() {
-		return graphics;
-	}
+    public Graphics2D getGraphics() {
+        return graphics;
+    }
 
-	/**
+    /**
      * Constructs a new {@link IDrawVisitor} using the AWT widget toolkit,
      * taking a {@link Graphics2D} object to which the chemical content
      * is drawn.
@@ -139,9 +136,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      * @param graphics {@link Graphics2D} to which will be drawn
      */
     @TestMethod("testConstructor")
-	public AWTDrawVisitor(Graphics2D graphics) {
-		this(graphics, true, 1.5f);
-	}
+    public AWTDrawVisitor(Graphics2D graphics) {
+        this(graphics, true, 1.5f);
+    }
 
     /**
      * Internal constructor.
@@ -182,7 +179,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         float width = (float) (line.width * transform.getScaleX());
         if (width < minStroke) width = minStroke;
 
-        int key   = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
+        int key = (int) (width * 4); // store 2.25, 2.5, 2.75 etc to separate keys
 
         if (strokeCache && strokeMap.containsKey(key)) {
             this.graphics.setStroke(strokeMap.get(key));
@@ -192,15 +189,11 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             strokeMap.put(key, stroke);
         }
 
-        double[] coordinates = new double[]{
-                line.firstPointX, line.firstPointY,
-                line.secondPointX, line.secondPointY
-        };
+        double[] coordinates = new double[]{line.firstPointX, line.firstPointY, line.secondPointX, line.secondPointY};
 
         graphics.setColor(line.color);
         transform.transform(coordinates, 0, coordinates, 0, 2);
-        graphics.draw(new Line2D.Double(coordinates[0], coordinates[1],
-                                        coordinates[2], coordinates[3]));
+        graphics.draw(new Line2D.Double(coordinates[0], coordinates[1], coordinates[2], coordinates[3]));
         graphics.setStroke(savedStroke);
     }
 
@@ -210,54 +203,46 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         int diameter = scaleX(oval.radius * 2);
 
         if (oval.fill) {
-        	this.graphics.fillOval(transformX(oval.xCoord) - radius,
-                        transformY(oval.yCoord) - radius,
-                        diameter,
-                        diameter );
+            this.graphics.fillOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
+                    diameter);
         } else {
-        	this.graphics.drawOval(transformX(oval.xCoord) - radius,
-                        transformY(oval.yCoord) - radius,
-                        diameter,
-                        diameter );
+            this.graphics.drawOval(transformX(oval.xCoord) - radius, transformY(oval.yCoord) - radius, diameter,
+                    diameter);
         }
     }
 
     private int scaleX(double xCoord) {
-        return (int) (xCoord*transform.getScaleX());
+        return (int) (xCoord * transform.getScaleX());
     }
 
     private int scaleY(double yCoord) {
-        return (int) (yCoord*-transform.getScaleY());
+        return (int) (yCoord * -transform.getScaleY());
     }
 
     private int transformX(double xCoord) {
-        return (int) transform( xCoord, 1 )[0];
+        return (int) transform(xCoord, 1)[0];
     }
 
     private int transformY(double yCoord) {
-        return (int) transform( 1, yCoord )[1];
+        return (int) transform(1, yCoord)[1];
     }
 
     private double[] transform(double xCoord, double yCoord) {
-        double [] result = new double[2];
-        transform.transform( new double[] {xCoord,yCoord}, 0, result, 0, 1 );
+        double[] result = new double[2];
+        transform.transform(new double[]{xCoord, yCoord}, 0, result, 0, 1);
         return result;
     }
 
     private Color getBackgroundColor() {
-        if (rendererModel == null)
-            return new BasicSceneGenerator.BackgroundColor().getDefault();
+        if (rendererModel == null) return new BasicSceneGenerator.BackgroundColor().getDefault();
 
         return rendererModel.getParameter(BasicSceneGenerator.BackgroundColor.class).getValue();
     }
 
     private void visit(TextElement textElement) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point = this.getTextBasePoint(
-                textElement.text, textElement.xCoord, textElement.yCoord, graphics);
-        Rectangle2D textBounds =
-                this.getTextBounds(
-                        textElement.text, textElement.xCoord, textElement.yCoord, graphics);
+        Point point = this.getTextBasePoint(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
+        Rectangle2D textBounds = this.getTextBounds(textElement.text, textElement.xCoord, textElement.yCoord, graphics);
         this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textElement.color);
@@ -266,11 +251,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     private void visit(WedgeLineElement wedge) {
         // make the vector normal to the wedge axis
-        Vector2d normal =
-            new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
+        Vector2d normal = new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
         normal.normalize();
-        normal.scale(
-                rendererModel.getParameter(WedgeWidth.class).getValue()
+        normal.scale(rendererModel.getParameter(WedgeWidth.class).getValue()
                 / rendererModel.getParameter(Scale.class).getValue());
 
         // make the triangle corners
@@ -285,23 +268,21 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         } else if (wedge.type == WedgeLineElement.TYPE.WEDGED) {
             this.drawFilledWedge(vertexA, vertexB, vertexC);
         } else if (wedge.type == WedgeLineElement.TYPE.INDIFF) {
-			this.drawIndiffWedge(vertexA, vertexB, vertexC);
-		}
+            this.drawIndiffWedge(vertexA, vertexB, vertexC);
+        }
     }
 
-    private void drawFilledWedge(
-            Point2d vertexA, Point2d vertexB, Point2d vertexC) {
+    private void drawFilledWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         int[] pointB = this.transformPoint(vertexB.x, vertexB.y);
         int[] pointC = this.transformPoint(vertexC.x, vertexC.y);
         int[] pointA = this.transformPoint(vertexA.x, vertexA.y);
 
-        int[] xCoords = new int[] { pointB[0], pointC[0], pointA[0] };
-        int[] yCoords = new int[] { pointB[1], pointC[1], pointA[1] };
+        int[] xCoords = new int[]{pointB[0], pointC[0], pointA[0]};
+        int[] yCoords = new int[]{pointB[1], pointC[1], pointA[1]};
         this.graphics.fillPolygon(xCoords, yCoords, 3);
     }
 
-    private void drawDashedWedge(
-            Point2d vertexA, Point2d vertexB, Point2d vertexC) {
+    private void drawDashedWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
         // store the current stroke
         Stroke storedStroke = this.graphics.getStroke();
         this.graphics.setStroke(new BasicStroke(1));
@@ -331,43 +312,43 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         this.graphics.setStroke(storedStroke);
     }
 
-	private void drawIndiffWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
-		// store the current stroke
-		Stroke storedStroke = this.graphics.getStroke();
-		this.graphics.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+    private void drawIndiffWedge(Point2d vertexA, Point2d vertexB, Point2d vertexC) {
+        // store the current stroke
+        Stroke storedStroke = this.graphics.getStroke();
+        this.graphics.setStroke(new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-		// calculate the distances between lines
-		double distance = vertexB.distance(vertexA);
-		double gapFactor = 0.05;
-		double gap = distance * gapFactor;
-		double numberOfDashes = distance / gap;
-		double displacement = 0;
+        // calculate the distances between lines
+        double distance = vertexB.distance(vertexA);
+        double gapFactor = 0.05;
+        double gap = distance * gapFactor;
+        double numberOfDashes = distance / gap;
+        double displacement = 0;
 
-		// draw by interpolating along the edges of the triangle
-		Point2d point1 = new Point2d();
-		boolean flip = false;
-		point1.interpolate(vertexA, vertexB, displacement);
-		int[] p1T = this.transformPoint(point1.x, point1.y);
-		displacement += gapFactor;
-		for (int i = 0; i < numberOfDashes; i++) {
-			Point2d point2 = new Point2d();
-			if (flip) {
-				point2.interpolate(vertexA, vertexC, displacement);
-			} else {
-				point2.interpolate(vertexA, vertexB, displacement);
-			}
-			flip = !flip;
-			int[] p2T = this.transformPoint(point2.x, point2.y);
-			this.graphics.drawLine(p1T[0], p1T[1], p2T[0], p2T[1]);
-			if (distance * (displacement + gapFactor) >= distance) {
-				break;
-			} else {
-				p1T = p2T;
-				displacement += gapFactor;
-			}
-		}
-		this.graphics.setStroke(storedStroke);
-	}
+        // draw by interpolating along the edges of the triangle
+        Point2d point1 = new Point2d();
+        boolean flip = false;
+        point1.interpolate(vertexA, vertexB, displacement);
+        int[] p1T = this.transformPoint(point1.x, point1.y);
+        displacement += gapFactor;
+        for (int i = 0; i < numberOfDashes; i++) {
+            Point2d point2 = new Point2d();
+            if (flip) {
+                point2.interpolate(vertexA, vertexC, displacement);
+            } else {
+                point2.interpolate(vertexA, vertexB, displacement);
+            }
+            flip = !flip;
+            int[] p2T = this.transformPoint(point2.x, point2.y);
+            this.graphics.drawLine(p1T[0], p1T[1], p2T[0], p2T[1]);
+            if (distance * (displacement + gapFactor) >= distance) {
+                break;
+            } else {
+                p1T = p2T;
+                displacement += gapFactor;
+            }
+        }
+        this.graphics.setStroke(storedStroke);
+    }
 
     private void visit(AtomSymbolElement atomSymbol) {
         this.graphics.setFont(this.fontManager.getFont());
@@ -384,26 +365,18 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         double xOffset = bounds.getX();
         double yOffset = bounds.getY() + bounds.getHeight();
 
-        bounds.setRect(xy[0] - (w/2),
-                       xy[1] - (h/2),
-                       w, h);
+        bounds.setRect(xy[0] - (w / 2), xy[1] - (h / 2), w, h);
 
         double padding = h / 4;
-        Shape  shape   = new RoundRectangle2D.Double(bounds.getX() - (padding / 2),
-                                                     bounds.getY() - (padding / 2),
-                                                     bounds.getWidth() + padding,
-                                                     bounds.getHeight() + padding,
-                                                     padding,
-                                                     padding);
+        Shape shape = new RoundRectangle2D.Double(bounds.getX() - (padding / 2), bounds.getY() - (padding / 2),
+                bounds.getWidth() + padding, bounds.getHeight() + padding, padding, padding);
 
         this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(shape);
         this.graphics.setColor(atomSymbol.color);
-        this.graphics.drawString(atomSymbol.text,
-                                 (int) (bounds.getX() - xOffset),
-                                 (int) (bounds.getY() + h - yOffset));
+        this.graphics.drawString(atomSymbol.text, (int) (bounds.getX() - xOffset), (int) (bounds.getY() + h - yOffset));
 
-        int offset = 10;    // XXX
+        int offset = 10; // XXX
         String chargeString;
         if (atomSymbol.formalCharge == 0) {
             return;
@@ -422,36 +395,26 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
         int xCoord = (int) bounds.getCenterX();
         int yCoord = (int) bounds.getCenterY();
-        if (atomSymbol.alignment == 1) {           // RIGHT
-            this.graphics.drawString(
-                    chargeString, xCoord + offset, (int)bounds.getMinY());
-        } else if (atomSymbol.alignment == -1) {   // LEFT
-            this.graphics.drawString(
-                    chargeString, xCoord - offset, (int)bounds.getMinY());
-        } else if (atomSymbol.alignment == 2) {    // TOP
-            this.graphics.drawString(
-                    chargeString, xCoord, yCoord - offset);
-        } else if (atomSymbol.alignment == -2) {   // BOT
-            this.graphics.drawString(
-                    chargeString, xCoord, yCoord + offset);
+        if (atomSymbol.alignment == 1) { // RIGHT
+            this.graphics.drawString(chargeString, xCoord + offset, (int) bounds.getMinY());
+        } else if (atomSymbol.alignment == -1) { // LEFT
+            this.graphics.drawString(chargeString, xCoord - offset, (int) bounds.getMinY());
+        } else if (atomSymbol.alignment == 2) { // TOP
+            this.graphics.drawString(chargeString, xCoord, yCoord - offset);
+        } else if (atomSymbol.alignment == -2) { // BOT
+            this.graphics.drawString(chargeString, xCoord, yCoord + offset);
         }
 
     }
 
     private void visit(RectangleElement rectangle) {
         this.graphics.setColor(rectangle.color);
-        int width  = scaleX(rectangle.width);
+        int width = scaleX(rectangle.width);
         int height = scaleY(rectangle.height);
         if (rectangle.filled) {
-            this.graphics.fillRect(transformX(rectangle.xCoord),
-                                   transformY(rectangle.yCoord) - height,
-                                   width,
-                                   height);
+            this.graphics.fillRect(transformX(rectangle.xCoord), transformY(rectangle.yCoord) - height, width, height);
         } else {
-            this.graphics.drawRect(transformX(rectangle.xCoord),
-                                   transformY(rectangle.yCoord) - height,
-                                   width,
-                                   height);
+            this.graphics.drawRect(transformX(rectangle.xCoord), transformY(rectangle.yCoord) - height, width, height);
         }
     }
 
@@ -475,33 +438,41 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.fill(cpy);
         } else {
             Stroke stroke = this.graphics.getStroke();
-            this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+            this.graphics.setStroke(new BasicStroke((float) (path.stroke * transform.getScaleX()),
+                    BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
             this.graphics.draw(cpy);
             this.graphics.setStroke(stroke);
         }
     }
 
-    private static PathIterator getPathIterator(final GeneralPath path,final AffineTransform transform) {
+    private static PathIterator getPathIterator(final GeneralPath path, final AffineTransform transform) {
         return new PathIterator() {
 
             int index;
 
             private int type(Type type) {
-                switch ( type ) {
-                    case MoveTo: return SEG_MOVETO;
-                    case LineTo: return SEG_LINETO;
-                    case QuadTo: return SEG_QUADTO;
-                    case CubicTo: return SEG_CUBICTO;
-                    case Close: return SEG_CLOSE;
-                    default: return SEG_CLOSE;
+                switch (type) {
+                    case MoveTo:
+                        return SEG_MOVETO;
+                    case LineTo:
+                        return SEG_LINETO;
+                    case QuadTo:
+                        return SEG_QUADTO;
+                    case CubicTo:
+                        return SEG_CUBICTO;
+                    case Close:
+                        return SEG_CLOSE;
+                    default:
+                        return SEG_CLOSE;
                 }
             }
+
             public void next() {
-               index++;
+                index++;
             }
 
             public boolean isDone() {
-                return index>= path.elements.size();
+                return index >= path.elements.size();
             }
 
             public int getWindingRule() {
@@ -514,57 +485,51 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                 return type(path.elements.get(index).type);
             }
 
-            public int currentSegment( float[] coords ) {
+            public int currentSegment(float[] coords) {
 
-                float[] src = path.elements.get( index ).points();
-                transform.transform( src, 0, coords, 0, src.length/2 );
-                return type(path.elements.get( index ).type());
+                float[] src = path.elements.get(index).points();
+                transform.transform(src, 0, coords, 0, src.length / 2);
+                return type(path.elements.get(index).type());
             }
         };
     }
 
     private void visit(ArrowElement line) {
-    	double scale = rendererModel.getParameter(
-    			Scale.class).getValue();
-    	Stroke savedStroke = graphics.getStroke();
+        double scale = rendererModel.getParameter(Scale.class).getValue();
+        Stroke savedStroke = graphics.getStroke();
 
-    	int w = (int) (line.width * scale);
-    	if (strokeMap.containsKey(w)) {
-    		graphics.setStroke(strokeMap.get(w));
-    	} else {
-    		BasicStroke stroke = new BasicStroke(w);
-    		graphics.setStroke(stroke);
-    		strokeMap.put(w, stroke);
-    	}
+        int w = (int) (line.width * scale);
+        if (strokeMap.containsKey(w)) {
+            graphics.setStroke(strokeMap.get(w));
+        } else {
+            BasicStroke stroke = new BasicStroke(w);
+            graphics.setStroke(stroke);
+            strokeMap.put(w, stroke);
+        }
 
-    	graphics.setColor(line.color);
-    	int[] a = this.transformPoint(line.startX, line.startY);
-    	int[] b = this.transformPoint(line.endX, line.endY);
-    	graphics.drawLine(a[0], a[1], b[0], b[1]);
-    	double aW = rendererModel.getParameter(
-    			ArrowHeadWidth.class
-    	).getValue() / scale;
-    	if(line.direction){
-    		int[] c = this.transformPoint(line.startX-aW, line.startY-aW);
-    		int[] d = this.transformPoint(line.startX-aW, line.startY+aW);
-    		graphics.drawLine(a[0], a[1], c[0], c[1]);
-    		graphics.drawLine(a[0], a[1], d[0], d[1]);
-    	}else{
-    		int[] c = this.transformPoint(line.endX+aW, line.endY-aW);
-    		int[] d = this.transformPoint(line.endX+aW, line.endY+aW);
-    		graphics.drawLine(b[0], b[1], c[0], c[1]);
-    		graphics.drawLine(b[0], b[1], d[0], d[1]);
-    	}
-    	graphics.setStroke(savedStroke);
+        graphics.setColor(line.color);
+        int[] a = this.transformPoint(line.startX, line.startY);
+        int[] b = this.transformPoint(line.endX, line.endY);
+        graphics.drawLine(a[0], a[1], b[0], b[1]);
+        double aW = rendererModel.getParameter(ArrowHeadWidth.class).getValue() / scale;
+        if (line.direction) {
+            int[] c = this.transformPoint(line.startX - aW, line.startY - aW);
+            int[] d = this.transformPoint(line.startX - aW, line.startY + aW);
+            graphics.drawLine(a[0], a[1], c[0], c[1]);
+            graphics.drawLine(a[0], a[1], d[0], d[1]);
+        } else {
+            int[] c = this.transformPoint(line.endX + aW, line.endY - aW);
+            int[] d = this.transformPoint(line.endX + aW, line.endY + aW);
+            graphics.drawLine(b[0], b[1], c[0], c[1]);
+            graphics.drawLine(b[0], b[1], d[0], d[1]);
+        }
+        graphics.setStroke(savedStroke);
     }
 
     private void visit(TextGroupElement textGroup) {
         this.graphics.setFont(this.fontManager.getFont());
-        Point point =
-            super.getTextBasePoint(
-                    textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
-        Rectangle2D textBounds =
-            this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
+        Point point = super.getTextBasePoint(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
+        Rectangle2D textBounds = this.getTextBounds(textGroup.text, textGroup.xCoord, textGroup.yCoord, graphics);
         this.graphics.setColor(getBackgroundColor());
         this.graphics.fill(textBounds);
         this.graphics.setColor(textGroup.color);
@@ -574,7 +539,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         int yCoord = (int) textBounds.getCenterY();
         int xCoord1 = (int) textBounds.getMinX();
         int yCoord1 = (int) textBounds.getMinY();
-        int xCoord2 = point.x + (int)textBounds.getWidth();
+        int xCoord2 = point.x + (int) textBounds.getWidth();
         int yCoord2 = (int) textBounds.getMaxY();
 
         int oWidth = xCoord2 - xCoord1;
@@ -625,9 +590,9 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
             this.graphics.drawString(child.text, childx, childy);
             if (child.subscript != null) {
                 Rectangle2D childBounds = getTextBounds(child.text, childx, childy, graphics);
-                int scx = (int)(childx + (childBounds.getWidth() * 0.75));
-                int scy = (int)(childy + (childBounds.getHeight() / 3));
-                Font font = this.graphics.getFont();   // TODO : move to font manager
+                int scx = (int) (childx + (childBounds.getWidth() * 0.75));
+                int scy = (int) (childy + (childBounds.getHeight() / 3));
+                Font font = this.graphics.getFont(); // TODO : move to font manager
                 Font subscriptFont = font.deriveFont(font.getStyle(), font.getSize() - 2);
                 this.graphics.setFont(subscriptFont);
                 this.graphics.drawString(child.subscript, scx, scy);
@@ -658,14 +623,13 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
         else if (element instanceof PathElement)
             visit((PathElement) element);
         else if (element instanceof GeneralPath)
-            visit((GeneralPath)element);
+            visit((GeneralPath) element);
         else if (element instanceof ArrowElement)
             visit((ArrowElement) element);
         else if (element instanceof Bounds) {
             // ignore
         } else
-            System.err.println("Visitor method for "
-                    + element.getClass().getName() + " is not implemented");
+            System.err.println("Visitor method for " + element.getClass().getName() + " is not implemented");
         this.graphics.setColor(savedColor);
     }
 
@@ -685,12 +649,10 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
         if (rendererModel.hasParameter(UseAntiAliasing.class)) {
-        	if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
-        			.getValue()) {
-        		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-        				RenderingHints.VALUE_ANTIALIAS_ON);
-        		// g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
-        	}
+            if ((boolean) rendererModel.getParameter(UseAntiAliasing.class).getValue()) {
+                graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                // g.setStroke(new BasicStroke((int)rendererModel.getBondWidth()));
+            }
         }
     }
 

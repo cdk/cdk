@@ -31,23 +31,22 @@ import org.junit.Test;
 public class PubChemSubstanceXMLFormatTest extends ChemFormatMatcherTest {
 
     public PubChemSubstanceXMLFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)PubChemSubstanceXMLFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) PubChemSubstanceXMLFormat.getInstance());
     }
 
     /**
      * @cdk.bug 2832835
      */
-    @Test @Override
+    @Test
+    @Override
     public void testMatches() throws Exception {
-        String header =
-            "<?xml version=\"\"?><PC-Substance/>";
+        String header = "<?xml version=\"\"?><PC-Substance/>";
         Assert.assertTrue(matches(header));
     }
 
     @Test
     public void testFalsePositive() throws Exception {
-        String header =
-            "<?xml version=\"\"?><PC-Substances><PC-Substance/></PC-Substances>";
+        String header = "<?xml version=\"\"?><PC-Substances><PC-Substance/></PC-Substances>";
         Assert.assertFalse(matches(header));
     }
 
@@ -56,8 +55,7 @@ public class PubChemSubstanceXMLFormatTest extends ChemFormatMatcherTest {
      */
     @Test
     public void testFalsePositiveWithNewlines() throws Exception {
-        String header =
-            "<PC-Substances>\n<PC-Substance/>\n</PC-Substances>";
+        String header = "<PC-Substances>\n<PC-Substance/>\n</PC-Substances>";
         Assert.assertFalse(matches(header));
     }
 

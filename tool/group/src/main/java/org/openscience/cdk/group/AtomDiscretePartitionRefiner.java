@@ -125,8 +125,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @param ignoreBondOrders ignore bond order when making automorphisms
      */
     @TestMethod("advancedConstructorTest")
-    public AtomDiscretePartitionRefiner(
-            boolean ignoreElements, boolean ignoreBondOrders) {
+    public AtomDiscretePartitionRefiner(boolean ignoreElements, boolean ignoreBondOrders) {
         this.ignoreElements = ignoreElements;
         this.ignoreBondOrders = ignoreBondOrders;
     }
@@ -202,8 +201,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
             setupConnectionTable(atomContainer);
         }
 
-        Map<String, SortedSet<Integer>> cellMap =
-                new HashMap<String, SortedSet<Integer>>();
+        Map<String, SortedSet<Integer>> cellMap = new HashMap<String, SortedSet<Integer>>();
         int numberOfAtoms = atomContainer.getAtomCount();
         for (int atomIndex = 0; atomIndex < numberOfAtoms; atomIndex++) {
             String symbol = atomContainer.getAtom(atomIndex).getSymbol();
@@ -304,8 +302,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @return the full automorphism group
      */
     @TestMethod("getAutomorphismGroup_StartingGroupTest")
-    public PermutationGroup getAutomorphismGroup(
-            IAtomContainer atomContainer, PermutationGroup group) {
+    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group) {
         setup(atomContainer, group);
         super.refine(getElementPartition(atomContainer));
         return super.getAutomorphismGroup();
@@ -319,8 +316,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
      * @return the automorphism group starting with this partition
      */
     @TestMethod("getAutomorphismGroup_StartingPartitionTest")
-    public PermutationGroup getAutomorphismGroup(
-            IAtomContainer atomContainer, Partition initialPartition) {
+    public PermutationGroup getAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition) {
         setup(atomContainer);
         super.refine(initialPartition);
         return super.getAutomorphismGroup();
@@ -366,7 +362,7 @@ public class AtomDiscretePartitionRefiner extends AbstractDiscretePartitionRefin
                 if (!ignoreBondOrders) {
                     IBond bond = atomContainer.getBond(atom, connected);
                     boolean isArom = bond.getFlag(CDKConstants.ISAROMATIC);
-                    int orderNumber = (isArom)? 5 : bond.getOrder().numeric();
+                    int orderNumber = (isArom) ? 5 : bond.getOrder().numeric();
                     bondOrders[atomIndex][i] = orderNumber;
                 }
                 i++;

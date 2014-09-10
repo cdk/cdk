@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -79,158 +78,160 @@ import java.util.Iterator;
  *
  * @see RadicalSiteRearrangementMechanism
  **/
-@TestClass(value="org.openscience.cdk.reaction.type.RadicalSiteHrBetaReactionTest")
-public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReactionProcess{
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(RadicalSiteHrBetaReaction.class);
+@TestClass(value = "org.openscience.cdk.reaction.type.RadicalSiteHrBetaReactionTest")
+public class RadicalSiteHrBetaReaction extends ReactionEngine implements IReactionProcess {
 
-	/**
-	 * Constructor of the RadicalSiteHrBetaReaction object
-	 *
-	 */
-	public RadicalSiteHrBetaReaction(){
-	}
-	/**
-	 *  Gets the specification attribute of the RadicalSiteHrBetaReaction object
-	 *
-	 *@return    The specification value
-	 */
-    @TestMethod("testGetSpecification")
-	public ReactionSpecification getSpecification() {
-		return new ReactionSpecification(
-				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteHrBeta",
-				this.getClass().getName(),
-				"$Id$",
-				"The Chemistry Development Kit");
-	}
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(RadicalSiteHrBetaReaction.class);
 
-	/**
-	 *  Initiate process.
-	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
-	 *  from the class tools.HydrogenAdder.
-	 *
+    /**
+     * Constructor of the RadicalSiteHrBetaReaction object
      *
-	 *@exception  CDKException  Description of the Exception
+     */
+    public RadicalSiteHrBetaReaction() {}
+
+    /**
+     *  Gets the specification attribute of the RadicalSiteHrBetaReaction object
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
+    public ReactionSpecification getSpecification() {
+        return new ReactionSpecification(
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteHrBeta", this
+                        .getClass().getName(), "$Id$", "The Chemistry Development Kit");
+    }
+
+    /**
+     *  Initiate process.
+     *  It is needed to call the addExplicitHydrogensToSatisfyValency
+     *  from the class tools.HydrogenAdder.
+     *
+     *
+     *@exception  CDKException  Description of the Exception
 
      * @param  reactants         reactants of the reaction
     * @param  agents            agents of the reaction (Must be in this case null)
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
-	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
-		logger.debug("initiate reaction: RadicalSiteHrBetaReaction");
+        logger.debug("initiate reaction: RadicalSiteHrBetaReaction");
 
-		if (reactants.getAtomContainerCount() != 1) {
-			throw new CDKException("RadicalSiteHrBetaReaction only expects one reactant");
-		}
-		if (agents != null) {
-			throw new CDKException("RadicalSiteHrBetaReaction don't expects agents");
-		}
+        if (reactants.getAtomContainerCount() != 1) {
+            throw new CDKException("RadicalSiteHrBetaReaction only expects one reactant");
+        }
+        if (agents != null) {
+            throw new CDKException("RadicalSiteHrBetaReaction don't expects agents");
+        }
 
-		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
-		IAtomContainer reactant = reactants.getAtomContainer(0);
+        IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
+        IAtomContainer reactant = reactants.getAtomContainer(0);
 
-		AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
+        AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(reactant);
         Aromaticity.cdkLegacy().apply(reactant);
-		AllRingsFinder arf = new AllRingsFinder();
-		IRingSet ringSet = arf.findAllRings(reactant);
-		for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
-			IRing ring = (IRing)ringSet.getAtomContainer(ir);
-			for (int jr = 0; jr < ring.getAtomCount(); jr++) {
-				IAtom aring = ring.getAtom(jr);
-				aring.setFlag(CDKConstants.ISINRING, true);
-			}
-		}
-		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
-		if( ipr != null && !ipr.isSetParameter())
-			setActiveCenters(reactant);
+        AllRingsFinder arf = new AllRingsFinder();
+        IRingSet ringSet = arf.findAllRings(reactant);
+        for (int ir = 0; ir < ringSet.getAtomContainerCount(); ir++) {
+            IRing ring = (IRing) ringSet.getAtomContainer(ir);
+            for (int jr = 0; jr < ring.getAtomCount(); jr++) {
+                IAtom aring = ring.getAtom(jr);
+                aring.setFlag(CDKConstants.ISINRING, true);
+            }
+        }
+        /*
+         * if the parameter hasActiveCenter is not fixed yet, set the active
+         * centers
+         */
+        IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+        if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
-		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		Iterator<IAtom> atomis = reactant.atoms().iterator();
-		while(atomis.hasNext()){
-			IAtom  atomi = atomis.next();
-			if(atomi.getFlag(CDKConstants.REACTIVE_CENTER)
-					&& reactant.getConnectedSingleElectronsCount(atomi) == 1) {
+        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        Iterator<IAtom> atomis = reactant.atoms().iterator();
+        while (atomis.hasNext()) {
+            IAtom atomi = atomis.next();
+            if (atomi.getFlag(CDKConstants.REACTIVE_CENTER) && reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-				hcg.getSpheres(reactant, atomi, 3, true);
-				Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-				while(atomls.hasNext()){
-					IAtom atoml = atomls.next();
-					if(atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER) && !atoml.getFlag(CDKConstants.ISINRING) &&
-							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  &&
-							reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE){
+                hcg.getSpheres(reactant, atomi, 3, true);
+                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
+                while (atomls.hasNext()) {
+                    IAtom atoml = atomls.next();
+                    if (atoml != null && atoml.getFlag(CDKConstants.REACTIVE_CENTER)
+                            && !atoml.getFlag(CDKConstants.ISINRING)
+                            && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
+                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
 
-						Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
-						while(atomhs.hasNext()){
-							IAtom atomh = atomhs.next();
-							if( reactant.getBond(atomh, atoml).getFlag(CDKConstants.REACTIVE_CENTER) &&
-									atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getSymbol().equals("H")){
+                        Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
+                        while (atomhs.hasNext()) {
+                            IAtom atomh = atomhs.next();
+                            if (reactant.getBond(atomh, atoml).getFlag(CDKConstants.REACTIVE_CENTER)
+                                    && atomh.getFlag(CDKConstants.REACTIVE_CENTER) && atomh.getSymbol().equals("H")) {
 
-								ArrayList<IAtom> atomList = new ArrayList<IAtom>();
-				            	atomList.add(atomh);
-				            	atomList.add(atomi);
-				            	atomList.add(atoml);
-				            	ArrayList<IBond> bondList = new ArrayList<IBond>();
-				            	bondList.add(reactant.getBond(atomh, atoml));
+                                ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                                atomList.add(atomh);
+                                atomList.add(atomi);
+                                atomList.add(atoml);
+                                ArrayList<IBond> bondList = new ArrayList<IBond>();
+                                bondList.add(reactant.getBond(atomh, atoml));
 
-								IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
-								moleculeSet.addAtomContainer(reactant);
-								IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-								if(reaction == null)
-									continue;
-								else
-									setOfReactions.addReaction(reaction);
+                                IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(
+                                        IAtomContainerSet.class);
+                                moleculeSet.addAtomContainer(reactant);
+                                IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
+                                if (reaction == null)
+                                    continue;
+                                else
+                                    setOfReactions.addReaction(reaction);
 
-							}
+                            }
 
-						}
+                        }
 
-					}
-				}
-			}
-		}
-		return setOfReactions;
-	}
-	/**
-	 * set the active center for this molecule.
-	 * The active center will be those which correspond with [A*]-(C)_3-C4[H]
-	 * <pre>
-	 * C: Atom with single electron
-	 * C5: Atom with Hydrogen
-	 *  </pre>
-	 *
-	 * @param reactant The molecule to set the activity
-	 * @throws CDKException
-	 */
-	private void setActiveCenters(IAtomContainer reactant) throws CDKException {
-		HOSECodeGenerator hcg = new HOSECodeGenerator();
-		Iterator<IAtom> atomis = reactant.atoms().iterator();
-		while(atomis.hasNext()){
-			IAtom  atomi = atomis.next();
-			if(reactant.getConnectedSingleElectronsCount(atomi) == 1) {
+                    }
+                }
+            }
+        }
+        return setOfReactions;
+    }
 
-				hcg.getSpheres(reactant, atomi, 3, true);
-				Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
-				while(atomls.hasNext()){
-					IAtom atoml = atomls.next();
-					if(atoml != null && !atoml.getFlag(CDKConstants.ISINRING) &&
-							(atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0 && !atoml.equals("H")  &&
-							reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE){
+    /**
+     * set the active center for this molecule.
+     * The active center will be those which correspond with [A*]-(C)_3-C4[H]
+     * <pre>
+     * C: Atom with single electron
+     * C5: Atom with Hydrogen
+     *  </pre>
+     *
+     * @param reactant The molecule to set the activity
+     * @throws CDKException
+     */
+    private void setActiveCenters(IAtomContainer reactant) throws CDKException {
+        HOSECodeGenerator hcg = new HOSECodeGenerator();
+        Iterator<IAtom> atomis = reactant.atoms().iterator();
+        while (atomis.hasNext()) {
+            IAtom atomi = atomis.next();
+            if (reactant.getConnectedSingleElectronsCount(atomi) == 1) {
 
-						Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
-						while(atomhs.hasNext()){
-							IAtom atomh = atomhs.next();
-							if(atomh.getSymbol().equals("H")){
-								atomi.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								atoml.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								atomh.setFlag(CDKConstants.REACTIVE_CENTER,true);
-								reactant.getBond(atomh, atoml).setFlag(CDKConstants.REACTIVE_CENTER,true);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                hcg.getSpheres(reactant, atomi, 3, true);
+                Iterator<IAtom> atomls = hcg.getNodesInSphere(3).iterator();
+                while (atomls.hasNext()) {
+                    IAtom atoml = atomls.next();
+                    if (atoml != null && !atoml.getFlag(CDKConstants.ISINRING)
+                            && (atoml.getFormalCharge() == CDKConstants.UNSET ? 0 : atoml.getFormalCharge()) == 0
+                            && !atoml.equals("H") && reactant.getMaximumBondOrder(atoml) == IBond.Order.SINGLE) {
+
+                        Iterator<IAtom> atomhs = reactant.getConnectedAtomsList(atoml).iterator();
+                        while (atomhs.hasNext()) {
+                            IAtom atomh = atomhs.next();
+                            if (atomh.getSymbol().equals("H")) {
+                                atomi.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                atoml.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                atomh.setFlag(CDKConstants.REACTIVE_CENTER, true);
+                                reactant.getBond(atomh, atoml).setFlag(CDKConstants.REACTIVE_CENTER, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

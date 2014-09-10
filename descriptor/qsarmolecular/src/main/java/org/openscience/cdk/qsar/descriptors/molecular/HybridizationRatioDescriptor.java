@@ -56,8 +56,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     /**
      * Constructor for the HybridizationRatioDescriptor object.
      */
-    public HybridizationRatioDescriptor() {
-    }
+    public HybridizationRatioDescriptor() {}
 
     /**
      * Returns a {@link DescriptorSpecification} which specifies which descriptor is implemented by this class.
@@ -68,9 +67,8 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#hybratio", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -83,9 +81,7 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
-    public void setParameters(Object[] params) throws CDKException {
-    }
-
+    public void setParameters(Object[] params) throws CDKException {}
 
     /**
      * Gets the parameters attribute of the HybridizationRatioDescriptor object.
@@ -112,10 +108,9 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
      * @return a dummy value
      */
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-        return new DescriptorValue(getSpecification(), getParameterNames(),
-                getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), getDescriptorNames(), e);
     }
-
 
     /**
      * Calculate sp3/sp2 hybridization ratio in the supplied {@link IAtomContainer}.
@@ -132,12 +127,13 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
             int nsp3 = 0;
             for (IAtom atom : clone.atoms()) {
                 if (!atom.getSymbol().equals("C")) continue;
-                if (atom.getHybridization() == Hybridization.SP2) nsp2++;
+                if (atom.getHybridization() == Hybridization.SP2)
+                    nsp2++;
                 else if (atom.getHybridization() == Hybridization.SP3) nsp3++;
             }
             double ratio = nsp3 / (double) (nsp2 + nsp3);
             return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(ratio), getDescriptorNames());
+                    new DoubleResult(ratio), getDescriptorNames());
         } catch (CloneNotSupportedException e) {
             return getDummyDescriptorValue(e);
         } catch (CDKException e) {
@@ -161,7 +157,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
         return new DoubleResult(0.0);
     }
 
-
     /**
      * Gets the parameterNames attribute of the HybridizationRatioDescriptor object.
      *
@@ -173,7 +168,6 @@ public class HybridizationRatioDescriptor extends AbstractMolecularDescriptor im
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      * Gets the parameterType attribute of the HybridizationRatioDescriptor object.

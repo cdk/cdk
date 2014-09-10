@@ -87,30 +87,26 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
     /** {@inheritDoc} */
     @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
-		if (IAtomContainer.class.equals(classObject)) return true;
+        if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
             if (IAtomContainer.class.equals(interfaces[i])) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
-            return false;
+        return false;
     }
 
     /** {@inheritDoc} */
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {
-                writeMolecule((IAtomContainer)object);
+                writeMolecule((IAtomContainer) object);
             } catch (Exception ex) {
-                throw new CDKException(
-                    "Error while writing HIN file: " + ex.getMessage(), ex
-                );
+                throw new CDKException("Error while writing HIN file: " + ex.getMessage(), ex);
             }
         } else {
-            throw new CDKException(
-                "CDKOWLWriter only supports output of IMolecule classes."
-            );
+            throw new CDKException("CDKOWLWriter only supports output of IMolecule classes.");
         }
     }
 

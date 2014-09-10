@@ -54,12 +54,12 @@ import org.xmlpull.v1.XmlPullParserFactory;
 @TestClass("org.openscience.cdk.io.PCCompoundXMLReaderTest")
 public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
-	private Reader input;
-    private XmlPullParser parser;
-    private PubChemXMLHelper parserHelper;
+    private Reader             input;
+    private XmlPullParser      parser;
+    private PubChemXMLHelper   parserHelper;
     private IChemObjectBuilder builder;
 
-    IAtomContainer molecule = null;
+    IAtomContainer             molecule = null;
 
     /**
      * Construct a new reader from a Reader type object.
@@ -85,17 +85,16 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
 
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
-    	try {
-    		XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
-    				System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null
-    		);
-    		factory.setNamespaceAware(true);
-    		parser = factory.newPullParser();
-    		this.input = input;
-    		parser.setInput(input);
-    	} catch (Exception exception) {
-    		throw new CDKException("Error while creating reader: " + exception.getMessage(), exception);
-    	}
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
+                    System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
+            factory.setNamespaceAware(true);
+            parser = factory.newPullParser();
+            this.input = input;
+            parser.setInput(input);
+        } catch (Exception exception) {
+            throw new CDKException("Error while creating reader: " + exception.getMessage(), exception);
+        }
     }
 
     @TestMethod("testSetReader_InputStream")
@@ -103,24 +102,24 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
-	}
+    }
 
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IAtomContainer) {
-        	try {
-            	parserHelper = new PubChemXMLHelper(object.getBuilder());
-            	builder = object.getBuilder();
-        		return (T)readMolecule();
-        	} catch (IOException e) {
-        		throw new CDKException("An IO Exception occured while reading the file.", e);
-        	} catch (CDKException e) {
-        		throw e;
-        	} catch (Exception e) {
-        		throw new CDKException("An error occured: " + e.getMessage(), e);
-        	}
+            try {
+                parserHelper = new PubChemXMLHelper(object.getBuilder());
+                builder = object.getBuilder();
+                return (T) readMolecule();
+            } catch (IOException e) {
+                throw new CDKException("An IO Exception occured while reading the file.", e);
+            } catch (CDKException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new CDKException("An error occured: " + e.getMessage(), e);
+            }
         } else {
             throw new CDKException("Only supported is reading of IMolecule objects.");
         }
@@ -134,19 +133,19 @@ public class PCCompoundXMLReader extends DefaultChemObjectReader {
     // private procedures
 
     private IAtomContainer readMolecule() throws Exception {
-    	boolean foundCompound = false;
-    	while (parser.next() != XmlPullParser.END_DOCUMENT) {
-    		if (parser.getEventType() == XmlPullParser.START_TAG) {
-    			if (parser.getName().equals("PC-Compound")) {
-    				foundCompound = true;
-    				break;
-    			}
-    		}
-    	}
-    	if (foundCompound) {
-    		return parserHelper.parseMolecule(parser, builder);
-    	}
-    	return null;
+        boolean foundCompound = false;
+        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.getEventType() == XmlPullParser.START_TAG) {
+                if (parser.getName().equals("PC-Compound")) {
+                    foundCompound = true;
+                    break;
+                }
+            }
+        }
+        if (foundCompound) {
+            return parserHelper.parseMolecule(parser, builder);
+        }
+        return null;
     }
 
 }

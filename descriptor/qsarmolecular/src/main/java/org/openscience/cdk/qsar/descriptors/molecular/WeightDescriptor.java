@@ -73,7 +73,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
     /**
      *  Constructor for the WeightDescriptor object.
      */
-    public WeightDescriptor() { }
+    public WeightDescriptor() {}
 
     /**
      * Returns a <code>Map</code> which specifies which descriptor is implemented by this class.
@@ -91,10 +91,8 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
      */
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weight",
+                this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     /**
@@ -117,7 +115,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         elementName = (String) params[0];
     }
 
-
     /**
      *  Gets the parameters attribute of the WeightDescriptor object.
      *
@@ -132,19 +129,20 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return params;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         String name = "w";
-        if (elementName.equals("*")) name = "MW";
-        else name += elementName;
+        if (elementName.equals("*"))
+            name = "MW";
+        else
+            name += elementName;
         return new String[]{name};
     }
 
     private DescriptorValue getDummyDescriptorValue(Exception e) {
-         return new DescriptorValue(getSpecification(), getParameterNames(),
-                 getParameters(), new DoubleResult(Double.NaN), getDescriptorNames(), e);
-     }
-
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                Double.NaN), getDescriptorNames(), e);
+    }
 
     /**
      * Calculate the weight of specified element type in the supplied {@link IAtomContainer}.
@@ -160,7 +158,7 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     //logger.debug("WEIGHT: "+container.getAtomAt(i).getSymbol() +" " +IsotopeFactory.getInstance().getMajorIsotope( container.getAtomAt(i).getSymbol() ).getExactMass());
-                    weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                    weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol()).getExactMass();
                     Integer hcount = container.getAtom(i).getImplicitHydrogenCount();
                     if (hcount == CDKConstants.UNSET) hcount = 0;
                     weight += (hcount * 1.00782504);
@@ -168,27 +166,26 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             } catch (Exception e) {
                 return getDummyDescriptorValue(e);
             }
-        }
-        else if (elementName.equals("H")) {
+        } else if (elementName.equals("H")) {
             try {
-                IIsotope h=Isotopes.getInstance().getMajorIsotope("H");
+                IIsotope h = Isotopes.getInstance().getMajorIsotope("H");
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
-                    }
-                    else {
+                        weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol())
+                                .getExactMass();
+                    } else {
                         weight += (container.getAtom(i).getImplicitHydrogenCount() * h.getExactMass());
                     }
                 }
             } catch (Exception e) {
                 return getDummyDescriptorValue(e);
             }
-        }
-        else {
+        } else {
             try {
                 for (int i = 0; i < container.getAtomCount(); i++) {
                     if (container.getAtom(i).getSymbol().equals(elementName)) {
-                        weight += Isotopes.getInstance().getMajorIsotope( container.getAtom(i).getSymbol() ).getExactMass();
+                        weight += Isotopes.getInstance().getMajorIsotope(container.getAtom(i).getSymbol())
+                                .getExactMass();
                     }
                 }
             } catch (Exception e) {
@@ -196,8 +193,8 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
             }
         }
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(weight), getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(weight),
+                getDescriptorNames());
 
     }
 
@@ -217,7 +214,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return new DoubleResult(0.0);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the WeightDescriptor object.
      *
@@ -230,7 +226,6 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return params;
     }
 
-
     /**
      *  Gets the parameterType attribute of the WeightDescriptor object.
      *
@@ -242,4 +237,3 @@ public class WeightDescriptor extends AbstractMolecularDescriptor implements IMo
         return "";
     }
 }
-

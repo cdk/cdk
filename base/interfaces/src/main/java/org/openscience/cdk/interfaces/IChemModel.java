@@ -28,37 +28,37 @@ package org.openscience.cdk.interfaces;
  */
 public interface IChemModel extends IChemObject {
 
-	/**
-	 * Returns the IAtomContainerSet of this ChemModel.
-	 *
-	 * @return   The {@link IAtomContainerSet} of this ChemModel
+    /**
+     * Returns the IAtomContainerSet of this ChemModel.
+     *
+     * @return   The {@link IAtomContainerSet} of this ChemModel
      * @see      #setMoleculeSet
-	 */
-	public IAtomContainerSet getMoleculeSet();
+     */
+    public IAtomContainerSet getMoleculeSet();
 
-	/**
-	 * Sets the IAtomContainerSet of this ChemModel.
-	 *
-	 * @param   setOfMolecules  the content of this model
+    /**
+     * Sets the IAtomContainerSet of this ChemModel.
+     *
+     * @param   setOfMolecules  the content of this model
      * @see      #getMoleculeSet
-	 */
-	public void setMoleculeSet(IAtomContainerSet setOfMolecules);
+     */
+    public void setMoleculeSet(IAtomContainerSet setOfMolecules);
 
-	/**
-	 * Returns the RingSet of this ChemModel.
-	 *
-	 * @return the ringset of this model
+    /**
+     * Returns the RingSet of this ChemModel.
+     *
+     * @return the ringset of this model
      * @see      #setRingSet
-	 */
-	public IRingSet getRingSet();
+     */
+    public IRingSet getRingSet();
 
-	/**
-	 * Sets the RingSet of this ChemModel.
-	 *
-	 * @param   ringSet         the content of this model
+    /**
+     * Sets the RingSet of this ChemModel.
+     *
+     * @param   ringSet         the content of this model
      * @see      #getRingSet
-	 */
-	public void setRingSet(IRingSet ringSet);
+     */
+    public void setRingSet(IRingSet ringSet);
 
     /**
      * Gets the Crystal contained in this ChemModel.
@@ -100,4 +100,3 @@ public interface IChemModel extends IChemObject {
     public boolean isEmpty();
 
 }
-

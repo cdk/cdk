@@ -31,7 +31,7 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.tools.diff.tree.IntegerDifferenceTest")
 public class IntegerDifference implements IDifference {
 
-    private String name;
+    private String  name;
     private Integer first;
     private Integer second;
 
@@ -70,9 +70,6 @@ public class IntegerDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : first) +
-            "/" +
-            (second == null ? "NA" : second);
+        return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }
 }

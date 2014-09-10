@@ -33,22 +33,20 @@ public class DoubleResultTypeTest extends CDKTestCase {
         super();
     }
 
-	@Test
-	public void testDoubleResultType() {
-		IDescriptorResult type = new DoubleResultType();
-		Assert.assertNotNull(type);
-	}
+    @Test
+    public void testDoubleResultType() {
+        IDescriptorResult type = new DoubleResultType();
+        Assert.assertNotNull(type);
+    }
 
     @Test
     public void testToString() {
-		Assert.assertEquals("DoubleResultType", new DoubleResultType().toString());
-	}
+        Assert.assertEquals("DoubleResultType", new DoubleResultType().toString());
+    }
 
     @Test
     public void testLength() {
-		Assert.assertEquals(1, new DoubleResultType().length());
-	}
+        Assert.assertEquals(1, new DoubleResultType().length());
+    }
 
 }
-
-

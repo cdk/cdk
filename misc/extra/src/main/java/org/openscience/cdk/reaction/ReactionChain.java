@@ -28,7 +28,6 @@ import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IReaction;
 
-
 /**
  * Classes that extends the definition of reaction to a chain reaction.
  * This is designed to contains a set of reactions which are lineal linked as
@@ -40,67 +39,65 @@ import org.openscience.cdk.interfaces.IReaction;
  * @cdk.module  extra
  * @cdk.githash
  */
-@TestClass(value="org.openscience.cdk.reaction.ReactionChainTest")
-public class ReactionChain extends ReactionSet{
+@TestClass(value = "org.openscience.cdk.reaction.ReactionChainTest")
+public class ReactionChain extends ReactionSet {
 
-	HashMap<IReaction, Integer> hashMapChain = new HashMap<IReaction,Integer>();
-	/**
+    HashMap<IReaction, Integer> hashMapChain     = new HashMap<IReaction, Integer>();
+    /**
      * Determines if a de-serialized object is compatible with this class.
      *
      * This value must only be changed if and only if the new version
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 5006986269373043994L;
+     */
+    private static final long   serialVersionUID = 5006986269373043994L;
 
-	/**
-	 * Added a IReaction for this chain in position.
-	 *
-	 * @param reaction  The IReaction
-	 * @param position  The position in this chain where the reaction is to be inserted
-	 */
-    @TestMethod(value="testAddReaction_IReaction_int")
-	public void addReaction(IReaction reaction, int position){
-		hashMapChain.put(reaction, position);
-		this.addReaction(reaction);
-	}
-	/**
-	 * Get the position of the reaction into this chain reaction object.
-	 * @param reaction The IReaction to look at
-	 * @return         The position of the IReaction in this chain
-	 */
-    @TestMethod(value="testGetReactionStep_IReaction")
-	public int getReactionStep(IReaction reaction){
+    /**
+     * Added a IReaction for this chain in position.
+     *
+     * @param reaction  The IReaction
+     * @param position  The position in this chain where the reaction is to be inserted
+     */
+    @TestMethod(value = "testAddReaction_IReaction_int")
+    public void addReaction(IReaction reaction, int position) {
+        hashMapChain.put(reaction, position);
+        this.addReaction(reaction);
+    }
 
-		if(hashMapChain.containsKey(reaction))
-			return hashMapChain.get(reaction);
-		else
-			return -1;
-	}
+    /**
+     * Get the position of the reaction into this chain reaction object.
+     * @param reaction The IReaction to look at
+     * @return         The position of the IReaction in this chain
+     */
+    @TestMethod(value = "testGetReactionStep_IReaction")
+    public int getReactionStep(IReaction reaction) {
 
+        if (hashMapChain.containsKey(reaction))
+            return hashMapChain.get(reaction);
+        else
+            return -1;
+    }
 
-	/**
-	 * Get the reaction of this chain reaction object at the position.
-	 *
-	 * @param  position The position of the IReaction in this chain to look for
-	 * @return          Reaction The IReaction to look at
-	 *
-	 */
-    @TestMethod(value="testGetReaction_int")
-	public IReaction getReaction(int position){
+    /**
+     * Get the reaction of this chain reaction object at the position.
+     *
+     * @param  position The position of the IReaction in this chain to look for
+     * @return          Reaction The IReaction to look at
+     *
+     */
+    @TestMethod(value = "testGetReaction_int")
+    public IReaction getReaction(int position) {
 
-		if(hashMapChain.containsKey(position))
-			return null;
+        if (hashMapChain.containsKey(position)) return null;
 
-		Set<Entry<IReaction, Integer>> entries = hashMapChain.entrySet();
-		for(Iterator<Entry<IReaction, Integer>> it = entries.iterator(); it.hasNext();){
-			Entry<IReaction, Integer> entry = it.next();
-			if(entry.getValue().equals(position))
-				return entry.getKey();
-		}
+        Set<Entry<IReaction, Integer>> entries = hashMapChain.entrySet();
+        for (Iterator<Entry<IReaction, Integer>> it = entries.iterator(); it.hasNext();) {
+            Entry<IReaction, Integer> entry = it.next();
+            if (entry.getValue().equals(position)) return entry.getKey();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

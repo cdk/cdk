@@ -38,5 +38,3 @@ public class CDKRNodeTest extends CDKTestCase {
         Assert.assertNotNull(node.getForbidden());
     }
 }
-
-

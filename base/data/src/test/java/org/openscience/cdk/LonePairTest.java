@@ -37,21 +37,25 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class LonePairTest extends AbstractLonePairTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new LonePair();
             }
         });
     }
 
-    @Test public void testLonePair() {
+    @Test
+    public void testLonePair() {
         ILonePair lp = new LonePair();
         Assert.assertNull(lp.getAtom());
         Assert.assertEquals(2, lp.getElectronCount().intValue());
     }
 
-    @Test public void testLonePair_IAtom() {
+    @Test
+    public void testLonePair_IAtom() {
         IAtom atom = new Atom("N");
         ILonePair lp = new LonePair(atom);
         Assert.assertEquals(2, lp.getElectronCount().intValue());

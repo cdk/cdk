@@ -29,16 +29,18 @@ import org.junit.Test;
  */
 public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
 
-    @Test public void testAddChemSequence_IChemSequence() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testAddChemSequence_IChemSequence() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
-    @Test public void testRemoveChemSequence_int() {
-    	IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testRemoveChemSequence_int() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
@@ -47,8 +49,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         Assert.assertEquals(2, cs.getChemSequenceCount());
     }
 
-    @Test public void testGetChemSequence_int() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testGetChemSequence_int() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         IChemSequence second = cs.getBuilder().newInstance(IChemSequence.class);
         cs.addChemSequence(second);
@@ -56,8 +59,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         Assert.assertEquals(second, cs.getChemSequence(1));
     }
 
-    @Test public void testGrowChemSequenceArray() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testGrowChemSequenceArray() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
@@ -68,8 +72,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         Assert.assertEquals(6, cs.getChemSequenceCount());
     }
 
-    @Test public void testChemSequences() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testChemSequences() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
@@ -78,8 +83,9 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
         Assert.assertEquals(3, cs.getChemSequenceCount());
     }
 
-    @Test public void testGetChemSequenceCount() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testGetChemSequenceCount() {
+        IChemFile cs = (IChemFile) newChemObject();
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
         cs.addChemSequence(cs.getBuilder().newInstance(IChemSequence.class));
@@ -88,18 +94,20 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
     }
 
     /** Test for RFC #9 */
-    @Test public void testToString() {
-        IChemFile cs = (IChemFile)newChemObject();
+    @Test
+    public void testToString() {
+        IChemFile cs = (IChemFile) newChemObject();
         String description = cs.toString();
-        for (int i=0; i< description.length(); i++) {
+        for (int i = 0; i < description.length(); i++) {
             Assert.assertTrue(description.charAt(i) != '\n');
             Assert.assertTrue(description.charAt(i) != '\r');
         }
     }
 
-    @Test public void testStateChanged_IChemObjectChangeEvent() {
+    @Test
+    public void testStateChanged_IChemObjectChangeEvent() {
         ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
-        IChemFile chemObject = (IChemFile)newChemObject();
+        IChemFile chemObject = (IChemFile) newChemObject();
         chemObject.addListener(listener);
 
         chemObject.addChemSequence(chemObject.getBuilder().newInstance(IChemSequence.class));
@@ -107,42 +115,47 @@ public abstract class AbstractChemFileTest extends AbstractChemObjectTest {
     }
 
     private class ChemObjectListenerImpl implements IChemObjectListener {
+
         private boolean changed;
 
         private ChemObjectListenerImpl() {
             changed = false;
         }
 
-        @Test public void stateChanged(IChemObjectChangeEvent e) {
+        @Test
+        public void stateChanged(IChemObjectChangeEvent e) {
             changed = true;
         }
 
-        @Test public void reset() {
+        @Test
+        public void reset() {
             changed = false;
         }
     }
 
-	@Test public void testClone() throws Exception {
-        IChemFile file = (IChemFile)newChemObject();
+    @Test
+    public void testClone() throws Exception {
+        IChemFile file = (IChemFile) newChemObject();
         Object clone = file.clone();
         Assert.assertTrue(clone instanceof IChemFile);
     }
 
-    @Test public void testClone_ChemSequence() throws Exception {
-		IChemFile file = (IChemFile)newChemObject();
-		file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 1
-		file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 2
-		file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 3
-		file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 4
+    @Test
+    public void testClone_ChemSequence() throws Exception {
+        IChemFile file = (IChemFile) newChemObject();
+        file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 1
+        file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 2
+        file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 3
+        file.addChemSequence(file.getBuilder().newInstance(IChemSequence.class)); // 4
 
-		IChemFile clone = (IChemFile)file.clone();
-		Assert.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
-		for (int f = 0; f < file.getChemSequenceCount(); f++) {
-			for (int g = 0; g < clone.getChemSequenceCount(); g++) {
-				Assert.assertNotNull(file.getChemSequence(f));
-				Assert.assertNotNull(clone.getChemSequence(g));
-				Assert.assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
-			}
-		}
+        IChemFile clone = (IChemFile) file.clone();
+        Assert.assertEquals(file.getChemSequenceCount(), clone.getChemSequenceCount());
+        for (int f = 0; f < file.getChemSequenceCount(); f++) {
+            for (int g = 0; g < clone.getChemSequenceCount(); g++) {
+                Assert.assertNotNull(file.getChemSequence(f));
+                Assert.assertNotNull(clone.getChemSequence(g));
+                Assert.assertNotSame(file.getChemSequence(f), clone.getChemSequence(g));
+            }
+        }
     }
 }

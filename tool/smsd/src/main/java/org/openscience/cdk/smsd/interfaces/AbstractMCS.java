@@ -50,7 +50,8 @@ public abstract class AbstractMCS {
      * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
      * @throws CDKException
      */
-    public abstract void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen, boolean cleanAndConfigureMolecule) throws CDKException;
+    public abstract void init(IAtomContainer source, IAtomContainer target, boolean removeHydrogen,
+            boolean cleanAndConfigureMolecule) throws CDKException;
 
     /**
      * initialize query and target molecules.
@@ -65,6 +66,7 @@ public abstract class AbstractMCS {
      * @throws CDKException
      */
     public abstract void init(IQueryAtomContainer source, IAtomContainer target) throws CDKException;
+
     /**
      * initialize query and target molecules.
      *

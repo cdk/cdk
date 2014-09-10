@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class VASPFormatTest extends ChemFormatMatcherTest {
 
     public VASPFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)VASPFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) VASPFormat.getInstance());
     }
 
 }

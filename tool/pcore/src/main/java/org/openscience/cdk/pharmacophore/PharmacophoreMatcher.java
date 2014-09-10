@@ -136,24 +136,24 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 @TestClass("org.openscience.cdk.pharmacophore.PharmacophoreMatcherTest")
 public class PharmacophoreMatcher {
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PharmacophoreMatcher.class);
-    private PharmacophoreQuery pharmacophoreQuery = null;
-    private List<List<PharmacophoreAtom>> matchingPAtoms = null;
-    private List<List<IBond>> matchingPBonds = null;
 
-    private List<List<RMap>> bondMapping;
-    private IAtomContainer pharmacophoreMolecule = null;
+    private ILoggingTool                  logger                = LoggingToolFactory
+                                                                        .createLoggingTool(PharmacophoreMatcher.class);
+    private PharmacophoreQuery            pharmacophoreQuery    = null;
+    private List<List<PharmacophoreAtom>> matchingPAtoms        = null;
+    private List<List<IBond>>             matchingPBonds        = null;
 
-    private List<HashMap<IBond, IBond>> bondMapHash = null;
+    private List<List<RMap>>              bondMapping;
+    private IAtomContainer                pharmacophoreMolecule = null;
+
+    private List<HashMap<IBond, IBond>>   bondMapHash           = null;
 
     /**
      * An empty constructor.
      * <p/>
      * You should set the query before performing a match
      */
-    public PharmacophoreMatcher() {
-    }
+    public PharmacophoreMatcher() {}
 
     /**
      * Initialize the matcher with a query.
@@ -165,7 +165,6 @@ public class PharmacophoreMatcher {
     public PharmacophoreMatcher(PharmacophoreQuery pharmacophoreQuery) {
         this.pharmacophoreQuery = pharmacophoreQuery;
     }
-
 
     /**
      * Performs the pharmacophore matching.
@@ -206,10 +205,12 @@ public class PharmacophoreMatcher {
         if (!GeometryUtil.has3DCoordinates(atomContainer)) throw new CDKException("Molecule must have 3D coordinates");
         if (pharmacophoreQuery == null) throw new CDKException("Must set the query pharmacophore before matching");
         if (!checkQuery(pharmacophoreQuery))
-            throw new CDKException("A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
+            throw new CDKException(
+                    "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
         String title = (String) atomContainer.getProperty(CDKConstants.TITLE);
 
-        if (initializeTarget) pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
+        if (initializeTarget)
+            pharmacophoreMolecule = getPharmacophoreMolecule(atomContainer);
         else {
             // even though the atoms comprising the pcore groups are
             // constant, their coords will differ, so we need to make
@@ -217,7 +218,8 @@ public class PharmacophoreMatcher {
             for (IAtom iAtom : pharmacophoreMolecule.atoms()) {
                 PharmacophoreAtom patom = (PharmacophoreAtom) iAtom;
                 List<Integer> tmpList = new ArrayList<Integer>();
-                for (int idx : patom.getMatchingAtoms()) tmpList.add(idx);
+                for (int idx : patom.getMatchingAtoms())
+                    tmpList.add(idx);
                 Point3d coords = getEffectiveCoordinates(atomContainer, tmpList);
                 patom.setPoint3d(coords);
             }
@@ -231,7 +233,6 @@ public class PharmacophoreMatcher {
         logger.debug("  Got " + bondMapping.size() + " hits");
         return bondMapping.size() > 0;
     }
-
 
     /**
      * Get the matching pharmacophore constraints.
@@ -261,8 +262,7 @@ public class PharmacophoreMatcher {
                 int bondID = map.getId1();
                 bondList.add(pharmacophoreMolecule.getBond(bondID));
 
-                tmphash.put(pharmacophoreMolecule.getBond(map.getId1()),
-                        pharmacophoreQuery.getBond(map.getId2()));
+                tmphash.put(pharmacophoreMolecule.getBond(map.getId1()), pharmacophoreQuery.getBond(map.getId2()));
             }
             bondMapHash.add(tmphash);
             matchingPBonds.add(bondList);
@@ -336,7 +336,8 @@ public class PharmacophoreMatcher {
 
             // convert the list of ints to a string
             String s = "";
-            for (int i : ilist) s += i;
+            for (int i : ilist)
+                s += i;
             tmp.add(s);
         }
 
@@ -390,7 +391,8 @@ public class PharmacophoreMatcher {
             // 2 hydrophobic groups separated by X unit). In such a case we want to find
             // the atoms matching the pgroup SMARTS just once, rather than redoing the
             // matching for each instance of the pcore query atom.
-            if (!map.containsKey(qatom.getSymbol())) map.put(qatom.getSymbol(), smarts);
+            if (!map.containsKey(qatom.getSymbol()))
+                map.put(qatom.getSymbol(), smarts);
             else if (map.get(qatom.getSymbol()).equals(smarts)) {
                 continue;
             }
@@ -488,10 +490,8 @@ public class PharmacophoreMatcher {
 
                 // finally we can add the unique angle to the target
                 for (IAtom[] seq : unique) {
-                    PharmacophoreAngleBond pbond = new PharmacophoreAngleBond(
-                            (PharmacophoreAtom) seq[0],
-                            (PharmacophoreAtom) seq[1],
-                            (PharmacophoreAtom) seq[2]);
+                    PharmacophoreAngleBond pbond = new PharmacophoreAngleBond((PharmacophoreAtom) seq[0],
+                            (PharmacophoreAtom) seq[1], (PharmacophoreAtom) seq[2]);
                     pharmacophoreMolecule.addBond(pbond);
                     nangleDefs++;
                 }
@@ -499,7 +499,6 @@ public class PharmacophoreMatcher {
             }
             logger.debug("Added " + nangleDefs + " defs to the target pcore molecule");
         }
-
 
         return pharmacophoreMolecule;
     }
@@ -520,7 +519,8 @@ public class PharmacophoreMatcher {
 
     private int[] intIndices(List<Integer> atomIndices) {
         int[] ret = new int[atomIndices.size()];
-        for (int i = 0; i < atomIndices.size(); i++) ret[i] = atomIndices.get(i);
+        for (int i = 0; i < atomIndices.size(); i++)
+            ret[i] = atomIndices.get(i);
         return ret;
     }
 
@@ -587,7 +587,8 @@ public class PharmacophoreMatcher {
             String label = pqatom.getSymbol();
             String smarts = pqatom.getSmarts();
 
-            if (!map.containsKey(label)) map.put(label, smarts);
+            if (!map.containsKey(label))
+                map.put(label, smarts);
             else {
                 if (!map.get(label).equals(smarts)) return false;
             }

@@ -43,24 +43,26 @@ public abstract class AbstractDiscretePartitionRefiner {
      * and the best permutation found so far.
      *
      */
-    public enum Result { WORSE, EQUAL, BETTER };
+    public enum Result {
+        WORSE, EQUAL, BETTER
+    };
 
     /**
      * If true, then at least one partition has been refined
      * to a permutation (IE : to a discrete partition).
      */
-    private boolean bestExist;
+    private boolean                    bestExist;
 
     /**
      * The best permutation is the one that gives the maximal
      * half-matrix string (so far) when applied to the graph.
      */
-    private Permutation best;
+    private Permutation                best;
 
     /**
      * The first permutation seen when refining.
      */
-    private Permutation first;
+    private Permutation                first;
 
     /**
      * An equitable refiner.
@@ -70,7 +72,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     /**
      * The automorphism group that is used to prune the search.
      */
-    private PermutationGroup group;
+    private PermutationGroup           group;
 
     /**
      * A refiner - it is necessary to call {@link #setup} before use.
@@ -136,8 +138,8 @@ public abstract class AbstractDiscretePartitionRefiner {
         final DisjointSetForest forest = new DisjointSetForest(n);
         group.apply(new PermutationGroup.Backtracker() {
 
-            boolean[] inOrbit = new boolean[n];
-            private int inOrbitCount = 0;
+            boolean[]       inOrbit      = new boolean[n];
+            private int     inOrbitCount = 0;
             private boolean isFinished;
 
             @Override
@@ -191,9 +193,7 @@ public abstract class AbstractDiscretePartitionRefiner {
         int size = permutation.size();
         for (int indexI = 0; indexI < size - 1; indexI++) {
             for (int indexJ = indexI + 1; indexJ < size; indexJ++) {
-                builder.append(getConnectivity(
-                        permutation.get(indexI), permutation.get(indexJ))
-                );
+                builder.append(getConnectivity(permutation.get(indexI), permutation.get(indexJ)));
             }
         }
         return builder.toString();
@@ -206,7 +206,7 @@ public abstract class AbstractDiscretePartitionRefiner {
      */
     @TestMethod("getHalfMatrixStringTest")
     public String getBestHalfMatrixString() {
-       return getHalfMatrixString(best);
+        return getHalfMatrixString(best);
     }
 
     /**
@@ -217,7 +217,7 @@ public abstract class AbstractDiscretePartitionRefiner {
     @TestMethod("getFirstMatrixStringTest")
     public String getFirstHalfMatrixString() {
         return getHalfMatrixString(first);
-     }
+    }
 
     /**
      * Get the initial (unpermuted) half-matrix string.
@@ -269,7 +269,6 @@ public abstract class AbstractDiscretePartitionRefiner {
     public boolean isCanonical() {
         return best.isIdentity();
     }
-
 
     /**
      * Refine the partition. The main entry point for subclasses.
@@ -324,8 +323,7 @@ public abstract class AbstractDiscretePartitionRefiner {
                 Set<Integer> blockCopy = finer.copyBlock(firstNonDiscreteCell);
                 for (int vertexInBlock = 0; vertexInBlock < vertexCount; vertexInBlock++) {
                     if (blockCopy.contains(vertexInBlock)) {
-                        Partition nextPartition =
-                            finer.splitBefore(firstNonDiscreteCell, vertexInBlock);
+                        Partition nextPartition = finer.splitBefore(firstNonDiscreteCell, vertexInBlock);
 
                         this.refine(group, nextPartition);
 

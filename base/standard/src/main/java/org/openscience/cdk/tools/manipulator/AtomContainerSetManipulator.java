@@ -47,21 +47,21 @@ public class AtomContainerSetManipulator {
 
     @TestMethod("testGetAtomCount_IAtomContainerSet")
     public static int getAtomCount(IAtomContainerSet set) {
-		int count = 0;
+        int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {
             count += (atomContainer).getAtomCount();
         }
         return count;
-	}
+    }
 
     @TestMethod("testGetBondCount_IAtomContainerSet")
     public static int getBondCount(IAtomContainerSet set) {
-		int count = 0;
+        int count = 0;
         for (IAtomContainer atomContainer : set.atomContainers()) {
             count += (atomContainer).getBondCount();
         }
         return count;
-	}
+    }
 
     @TestMethod("testRemoveAtomAndConnectedElectronContainers_IAtomContainerSet_IAtom")
     public static void removeAtomAndConnectedElectronContainers(IAtomContainerSet set, IAtom atom) {
@@ -97,7 +97,7 @@ public class AtomContainerSetManipulator {
         }
     }
 
-	/**
+    /**
      * Returns all the AtomContainer's of a MoleculeSet.
      *
      * @param set The collection of IAtomContainer objects
@@ -105,55 +105,55 @@ public class AtomContainerSetManipulator {
      */
     @TestMethod("testGetAllAtomContainers_IAtomContainerSet")
     public static List<IAtomContainer> getAllAtomContainers(IAtomContainerSet set) {
-    	List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
+        List<IAtomContainer> atomContainerList = new ArrayList<IAtomContainer>();
         for (IAtomContainer atomContainer : set.atomContainers()) {
             atomContainerList.add(atomContainer);
         }
-    	return atomContainerList;
+        return atomContainerList;
     }
 
-	/**
-	 * @param set The collection of IAtomContainer objects
+    /**
+     * @param set The collection of IAtomContainer objects
      * @return The summed charges of all atoms in this set.
-	 */
+     */
     @TestMethod("testGetTotalCharge_IAtomContainerSet")
     public static double getTotalCharge(IAtomContainerSet set) {
-		double charge = 0;
-		for (int i = 0; i < set.getAtomContainerCount(); i++) {
-			int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
-			double stoich = set.getMultiplier(i);
-			charge += stoich * thisCharge;
-		}
-		return charge;
-	}
+        double charge = 0;
+        for (int i = 0; i < set.getAtomContainerCount(); i++) {
+            int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
+            double stoich = set.getMultiplier(i);
+            charge += stoich * thisCharge;
+        }
+        return charge;
+    }
 
-	/**
-	 * @param set The collection of IAtomContainer objects
+    /**
+     * @param set The collection of IAtomContainer objects
      * @return The summed formal charges of all atoms in this set.
-	 */
+     */
     @TestMethod("testGetTotalFormalCharge_IAtomContainerSet")
     public static double getTotalFormalCharge(IAtomContainerSet set) {
-		int charge = 0;
-		for (int i = 0; i < set.getAtomContainerCount(); i++) {
-			int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
-			double stoich = set.getMultiplier(i);
-			charge += stoich * thisCharge;
-		}
-		return charge;
-	}
+        int charge = 0;
+        for (int i = 0; i < set.getAtomContainerCount(); i++) {
+            int thisCharge = AtomContainerManipulator.getTotalFormalCharge(set.getAtomContainer(i));
+            double stoich = set.getMultiplier(i);
+            charge += stoich * thisCharge;
+        }
+        return charge;
+    }
 
-	/**
-	 * @param set  The collection of IAtomContainer objects
+    /**
+     * @param set  The collection of IAtomContainer objects
      * @return The summed implicit hydrogens of all atoms in this set.
-	 */
+     */
     @TestMethod("testGetTotalHydrogenCount_IAtomContainerSet")
     public static int getTotalHydrogenCount(IAtomContainerSet set) {
-		int hCount = 0;
-		for (int i = 0; i < set.getAtomContainerCount(); i++) {
-			hCount += AtomContainerManipulator.getTotalHydrogenCount(set.getAtomContainer(i));
-		}
-		return hCount;
-	}
+        int hCount = 0;
+        for (int i = 0; i < set.getAtomContainerCount(); i++) {
+            hCount += AtomContainerManipulator.getTotalHydrogenCount(set.getAtomContainer(i));
+        }
+        return hCount;
+    }
 
     @TestMethod("testGetAllIDs_IAtomContainerSet")
     public static List<String> getAllIDs(IAtomContainerSet set) {
@@ -242,14 +242,11 @@ public class AtomContainerSetManipulator {
      * @param atomContainerSet The collection of IAtomContainer objects
      */
     @TestMethod("testContainsByID_IAtomContainerSet_IAtomContainer")
-	public static boolean containsByID(IAtomContainerSet atomContainerSet,
-			String id) {
-		for(IAtomContainer ac : atomContainerSet.atomContainers()){
-			if(ac.getID()!=null && ac.getID().equals(id))
-				return true;
-		}
-		return false;
-	}
+    public static boolean containsByID(IAtomContainerSet atomContainerSet, String id) {
+        for (IAtomContainer ac : atomContainerSet.atomContainers()) {
+            if (ac.getID() != null && ac.getID().equals(id)) return true;
+        }
+        return false;
+    }
 
 }
-

@@ -63,18 +63,22 @@ abstract class Suppressed {
 
     /** Default 'empty' implementation always returns false. */
     private static final class Empty extends Suppressed {
+
         /** @inheritDoc */
-        @Override boolean contains(int i) {
+        @Override
+        boolean contains(int i) {
             return false;
         }
 
         /** @inheritDoc */
-        @Override int count() {
+        @Override
+        int count() {
             return 0;
         }
 
         /** @inheritDoc */
-        @Override int[] toArray() {
+        @Override
+        int[] toArray() {
             return new int[0];
         }
     }
@@ -99,19 +103,22 @@ abstract class Suppressed {
         }
 
         /** @inheritDoc */
-        @Override boolean contains(int i) {
+        @Override
+        boolean contains(int i) {
             return set.get(i);
         }
 
         /** @inheritDoc */
-        @Override int count() {
+        @Override
+        int count() {
             return set.cardinality();
         }
 
         /** @inheritDoc */
-        @Override int[] toArray() {
+        @Override
+        int[] toArray() {
             int[] xs = new int[count()];
-            int   n  = 0;
+            int n = 0;
             for (int i = set.nextSetBit(0); i >= 0; i = set.nextSetBit(i + 1)) {
                 xs[n++] = i;
             }

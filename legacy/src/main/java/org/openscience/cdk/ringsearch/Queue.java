@@ -35,38 +35,37 @@ import java.util.Vector;
  * @cdk.githash
  */
 @TestClass("org.openscience.cdk.ringsearch.QueueTest")
-public class Queue extends Vector
-{
+public class Queue extends Vector {
 
     private static final long serialVersionUID = 1008167867733841614L;
 
     /**
-	 * Constructs an empty Queue
-	 *
-	 */
-	public Queue(){
-		super();
-	}
+     * Constructs an empty Queue
+     *
+     */
+    public Queue() {
+        super();
+    }
 
-	/**
-	 *  Places an Object into the queue
-	 *
-	 * @param   o  The object to be pushed into the queue
-	 */
+    /**
+     *  Places an Object into the queue
+     *
+     * @param   o  The object to be pushed into the queue
+     */
     @TestMethod("testOperations")
-    public void push(Object o){
-		addElement(o);
-	}
+    public void push(Object o) {
+        addElement(o);
+    }
 
-	/**
-	 * Returns an Object from the queue
-	 *
-	 * @return The object that had been pushed first into the queue
-	 */
+    /**
+     * Returns an Object from the queue
+     *
+     * @return The object that had been pushed first into the queue
+     */
     @TestMethod("testOperations")
-    public Object pop(){
-		Object o = elementAt(0);
-		removeElementAt(0);
-		return o;
-	}
+    public Object pop() {
+        Object o = elementAt(0);
+        removeElementAt(0);
+        return o;
+    }
 }

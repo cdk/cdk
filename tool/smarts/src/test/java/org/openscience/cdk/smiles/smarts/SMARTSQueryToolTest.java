@@ -197,9 +197,8 @@ public class SMARTSQueryToolTest extends CDKTestCase {
      */
     @Test
     public void testMethane() throws Exception {
-        IAtomContainer methane =
-             SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
-        IAtom carbon = methane.getBuilder().newInstance(IAtom.class,Elements.CARBON);
+        IAtomContainer methane = SilentChemObjectBuilder.getInstance().newInstance(IAtomContainer.class);
+        IAtom carbon = methane.getBuilder().newInstance(IAtom.class, Elements.CARBON);
         carbon.setImplicitHydrogenCount(4);
         methane.addAtom(carbon);
 
@@ -223,12 +222,10 @@ public class SMARTSQueryToolTest extends CDKTestCase {
 
         AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(furan);
 
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(),
-                                           Cycles.mcb()));
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.cdk(), Cycles.mcb()));
         assertTrue(sqt.matches(furan, true));
 
-        sqt.setAromaticity(new Aromaticity(ElectronDonation.piBonds(),
-                                           Cycles.mcb()));
+        sqt.setAromaticity(new Aromaticity(ElectronDonation.piBonds(), Cycles.mcb()));
         assertFalse(sqt.matches(furan, true));
     }
 

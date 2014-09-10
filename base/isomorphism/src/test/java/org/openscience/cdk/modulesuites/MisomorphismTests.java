@@ -43,24 +43,12 @@ import org.openscience.cdk.isomorphism.matchers.SymbolSetQueryAtomTest;
  *
  * @cdk.module  test-isomorphism
  */
-@RunWith(value=Suite.class)
-@SuiteClasses(value={
-    IsomorphismCoverageTest.class,
-    RGroupListTest.class,
-    SymbolSetQueryAtomTest.class,
-    QueryAtomContainerCreatorTest.class,
+@RunWith(value = Suite.class)
+@SuiteClasses(value = {IsomorphismCoverageTest.class, RGroupListTest.class, SymbolSetQueryAtomTest.class,
+        QueryAtomContainerCreatorTest.class,
 
-    AtomMatcherTest.class,
-    BondMatcherTest.class,
-    AbstractVFStateTest.class,
-    VFSubStateTest.class,
-    VFStateTest.class,
-    VentoFoggiaTest.class,
-    UllmannStateTest.class,
-    CompatibilityMatrixTest.class,
-    StateStreamTest.class,
-    UllmannTest.class,
-    StereoMatchTest.class,
-    ComponentGroupingTest.class
-})
-public class MisomorphismTests {}
+        AtomMatcherTest.class, BondMatcherTest.class, AbstractVFStateTest.class, VFSubStateTest.class,
+        VFStateTest.class, VentoFoggiaTest.class, UllmannStateTest.class, CompatibilityMatrixTest.class,
+        StateStreamTest.class, UllmannTest.class, StereoMatchTest.class, ComponentGroupingTest.class})
+public class MisomorphismTests {
+}

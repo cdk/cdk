@@ -91,7 +91,7 @@ public class HINReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -102,17 +102,17 @@ public class HINReader extends DefaultChemObjectReader {
         setReader(new InputStreamReader(input));
     }
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
+        Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
             if (IChemFile.class.equals(anInterface)) return true;
         }
         Class superClass = classObject.getSuperclass();
         if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        return false;
+    }
 
     /**
      * Reads the content from a HIN input. It can only return a
@@ -122,24 +122,26 @@ public class HINReader extends DefaultChemObjectReader {
      *
      * @see org.openscience.cdk.ChemFile
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T)readChemFile((IChemFile)object);
+            return (T) readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
     }
 
-    private String getMolName( String line) {
-        if (line == null) return("");
-        StringTokenizer st = new StringTokenizer(line," ");
+    private String getMolName(String line) {
+        if (line == null) return ("");
+        StringTokenizer st = new StringTokenizer(line, " ");
         int ntok = st.countTokens();
-        String[] toks = new String[ ntok ];
+        String[] toks = new String[ntok];
         for (int j = 0; j < ntok; j++) {
             toks[j] = st.nextToken();
         }
-        if (toks.length == 3) return(toks[2]);
-        else return("");
+        if (toks.length == 3)
+            return (toks[2]);
+        else
+            return ("");
     }
 
     /**
@@ -174,10 +176,9 @@ public class HINReader extends DefaultChemObjectReader {
                 }
             }
 
-
             // start the actual molecule data - may be multiple molecule
             line = input.readLine();
-            while(true) {
+            while (true) {
                 if (line == null) break; // end of file
                 if (line.startsWith(";")) continue; // comment line
 
@@ -186,7 +187,7 @@ public class HINReader extends DefaultChemObjectReader {
                     line = input.readLine();
                 }
                 IAtomContainer m = file.getBuilder().newInstance(IAtomContainer.class);
-                m.setProperty(CDKConstants.TITLE ,info);
+                m.setProperty(CDKConstants.TITLE, info);
 
                 // Each element of cons is an ArrayList of length 3 which stores
                 // the start and end indices and bond order of each bond
@@ -205,8 +206,9 @@ public class HINReader extends DefaultChemObjectReader {
                     tokenizer = new StringTokenizer(line, " ");
 
                     int ntoken = tokenizer.countTokens();
-                    String[] toks = new String[ ntoken ];
-                    for (int i = 0; i < ntoken; i++) toks[i] = tokenizer.nextToken();
+                    String[] toks = new String[ntoken];
+                    for (int i = 0; i < ntoken; i++)
+                        toks[i] = tokenizer.nextToken();
 
                     String sym = toks[3];
                     double charge = Double.parseDouble(toks[6]);
@@ -215,15 +217,15 @@ public class HINReader extends DefaultChemObjectReader {
                     double z = Double.parseDouble(toks[9]);
                     int nbond = Integer.parseInt(toks[10]);
 
-                    IAtom atom = file.getBuilder().newInstance(IAtom.class,sym, new Point3d(x,y,z));
+                    IAtom atom = file.getBuilder().newInstance(IAtom.class, sym, new Point3d(x, y, z));
                     atom.setCharge(charge);
 
                     IBond.Order bo = IBond.Order.SINGLE;
 
-                    for (int j = 11; j < (11+nbond*2); j += 2) {
+                    for (int j = 11; j < (11 + nbond * 2); j += 2) {
                         int s = Integer.parseInt(toks[j]) - 1; // since atoms start from 1 in the file
-                        char bt = toks[j+1].charAt(0);
-                        switch(bt) {
+                        char bt = toks[j + 1].charAt(0);
+                        switch (bt) {
                             case 's':
                                 bo = IBond.Order.SINGLE;
                                 break;
@@ -241,7 +243,7 @@ public class HINReader extends DefaultChemObjectReader {
                         ar.add(atomSerial);
                         ar.add(s);
                         ar.add(bo);
-                        cons.add( ar );
+                        cons.add(ar);
                     }
                     m.addAtom(atom);
                     atomSerial++;
@@ -253,8 +255,7 @@ public class HINReader extends DefaultChemObjectReader {
                     IAtom s = m.getAtom((Integer) ar.get(0));
                     IAtom e = m.getAtom((Integer) ar.get(1));
                     IBond.Order bo = (IBond.Order) ar.get(2);
-                    if (!isConnected(m, s, e))
-                        m.addBond(file.getBuilder().newInstance(IBond.class,s, e, bo));
+                    if (!isConnected(m, s, e)) m.addBond(file.getBuilder().newInstance(IBond.class, s, e, bo));
                 }
                 mols.add(m);
 
@@ -287,15 +288,16 @@ public class HINReader extends DefaultChemObjectReader {
                 int n = 0;
                 for (int i = 2; i < toks.length; i += 2) {
                     int molnum = Integer.parseInt(toks[i]); // starts from 1
-                    int atnum = Integer.parseInt(toks[i+1]); // starts from 1
-                    mols.get(molnum-1).getAtom(atnum-1).setFlag(CDKConstants.ISAROMATIC, true);
+                    int atnum = Integer.parseInt(toks[i + 1]); // starts from 1
+                    mols.get(molnum - 1).getAtom(atnum - 1).setFlag(CDKConstants.ISAROMATIC, true);
                     n++;
                 }
                 assert n == natom;
             }
         }
 
-        for (IAtomContainer mol : mols) setOfMolecules.addAtomContainer(mol);
+        for (IAtomContainer mol : mols)
+            setOfMolecules.addAtomContainer(mol);
         chemModel.setMoleculeSet(setOfMolecules);
         chemSequence.addChemModel(chemModel);
         file.addChemSequence(chemSequence);
@@ -310,7 +312,3 @@ public class HINReader extends DefaultChemObjectReader {
         return false;
     }
 }
-
-
-
-

@@ -32,7 +32,7 @@ import org.openscience.cdk.interfaces.IAtomType;
 @TestClass("org.openscience.cdk.tools.diff.tree.AtomTypeHybridizationDifferenceTest")
 public class AtomTypeHybridizationDifference implements IDifference {
 
-    private String name;
+    private String                  name;
     private IAtomType.Hybridization first;
     private IAtomType.Hybridization second;
 
@@ -65,9 +65,6 @@ public class AtomTypeHybridizationDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : first) +
-            "/" +
-            (second == null ? "NA" : second);
+        return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }
 }

@@ -37,8 +37,11 @@ public class HydrogenAtom extends SMARTSAtom {
         super(builder);
     }
 
-    /* (non-Javadoc)
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org.openscience.cdk.interfaces.IAtom)
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
+     * .openscience.cdk.interfaces.IAtom)
      */
     public boolean matches(IAtom atom) {
         if (!atom.getSymbol().equals("H")) {
@@ -64,10 +67,8 @@ public class HydrogenAtom extends SMARTSAtom {
 
         //isotopic hydrogen specifications, e.g. deuterium [2H] or tritium etc
         if (atom.getMassNumber() != null) {
-            if (getMassNumber().intValue() == atom.getMassNumber().intValue())
-                return true;
-        }
-        else {
+            if (getMassNumber().intValue() == atom.getMassNumber().intValue()) return true;
+        } else {
             // target atom is [H], so make sure query atom has mass number = 1
             if (getMassNumber() == 1) return true;
         }

@@ -33,11 +33,13 @@ public class Log4jCoverageTest extends CoverageAnnotationTest {
 
     private final static String CLASS_LIST = "log4j.javafiles";
 
-    @BeforeClass public static void setUp() throws Exception {
+    @BeforeClass
+    public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, Log4jCoverageTest.class.getClassLoader());
     }
 
-    @Test public void testCoverage() {
+    @Test
+    public void testCoverage() {
         Assert.assertTrue(super.runCoverageTest());
     }
 

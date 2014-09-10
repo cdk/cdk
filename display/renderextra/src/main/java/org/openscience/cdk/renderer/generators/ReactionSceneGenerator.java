@@ -39,44 +39,39 @@ import org.openscience.cdk.renderer.generators.parameter.AbstractGeneratorParame
 @TestClass("org.openscience.cdk.renderer.generators.ReactionSceneGeneratorTest")
 public class ReactionSceneGenerator implements IGenerator<IReaction> {
 
-	/** Boolean that indicates if boxes are drawn around the reaction. */
-    public static class ShowReactionBoxes extends
-    AbstractGeneratorParameter<Boolean> {
-    	/** {@inheritDoc} */
-    	public Boolean getDefault() {
-    		return Boolean.TRUE;
-    	}
+    /** Boolean that indicates if boxes are drawn around the reaction. */
+    public static class ShowReactionBoxes extends AbstractGeneratorParameter<Boolean> {
+
+        /** {@inheritDoc} */
+        public Boolean getDefault() {
+            return Boolean.TRUE;
+        }
     }
-    private IGeneratorParameter<Boolean> showReactionBoxes =
-    	new ShowReactionBoxes();
+
+    private IGeneratorParameter<Boolean> showReactionBoxes = new ShowReactionBoxes();
 
     /** Double which indicates how wide the arrow head is in screen pixels. */
-    public static class ArrowHeadWidth extends
-    AbstractGeneratorParameter<Double> {
-    	/** {@inheritDoc} */
-    	public Double getDefault() {
-    		return 10.0;
-    	}
+    public static class ArrowHeadWidth extends AbstractGeneratorParameter<Double> {
+
+        /** {@inheritDoc} */
+        public Double getDefault() {
+            return 10.0;
+        }
     }
-    private IGeneratorParameter<Double> arrowHeadWidth =
-    	new ArrowHeadWidth();
 
-	/** {@inheritDoc} */
-	@Override
+    private IGeneratorParameter<Double> arrowHeadWidth = new ArrowHeadWidth();
+
+    /** {@inheritDoc} */
+    @Override
     @TestMethod("testEmptyReaction")
-	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		return new ElementGroup();
-	}
+    public IRenderingElement generate(IReaction reaction, RendererModel model) {
+        return new ElementGroup();
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
     public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-            	showReactionBoxes,
-            	arrowHeadWidth
-            }
-        );
+        return Arrays.asList(new IGeneratorParameter<?>[]{showReactionBoxes, arrowHeadWidth});
     }
 }

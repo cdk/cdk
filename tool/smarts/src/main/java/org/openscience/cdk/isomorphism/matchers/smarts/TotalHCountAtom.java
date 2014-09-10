@@ -1,6 +1,6 @@
 /* Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
  *               2013       European Bioinformatics Institute
-  *                         John May
+ *                         John May
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *

@@ -43,16 +43,16 @@ public interface ISingleElectron extends IElectronContainer {
      *
      * @return the associated Atom.
      * @see    #setAtom
-	 */
-	public IAtom getAtom();
+     */
+    public IAtom getAtom();
 
-	/**
-	 * Sets the associated Atom.
-	 *
-	 * @param atom the Atom this SingleElectron will be associated with
+    /**
+     * Sets the associated Atom.
+     *
+     * @param atom the Atom this SingleElectron will be associated with
      * @see    #getAtom
-	 */
-	public void setAtom(IAtom atom);
+     */
+    public void setAtom(IAtom atom);
 
     /**
      * Returns true if the given atom participates in this SingleElectron.
@@ -63,5 +63,3 @@ public interface ISingleElectron extends IElectronContainer {
     public boolean contains(IAtom atom);
 
 }
-
-

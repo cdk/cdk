@@ -57,44 +57,39 @@ import org.openscience.cdk.qsar.result.DoubleResult;
  * @cdk.bug     1628461
  * @see MMFF94PartialCharges
  */
-@TestClass(value="org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
+@TestClass(value = "org.openscience.cdk.qsar.descriptors.atomic.PartialTChargeMMFF94DescriptorTest")
 public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
 
     private static final String[] names = {"partialTCMMFF94"};
 
-    private MMFF94PartialCharges mmff;
-
+    private MMFF94PartialCharges  mmff;
 
     /**
      *  Constructor for the PartialTChargeMMFF94Descriptor object
      */
     public PartialTChargeMMFF94Descriptor() {
-    	mmff = new MMFF94PartialCharges();
+        mmff = new MMFF94PartialCharges();
     }
-
 
     /**
      *  Gets the specification attribute of the PartialTChargeMMFF94Descriptor  object
      *
      *@return    The specification value
      */
-    @TestMethod(value="testGetSpecification")
+    @TestMethod(value = "testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94",
-            this.getClass().getName(),
-            "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94", this
+                        .getClass().getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * This descriptor does not have any parameter to be set.
      */
-    @TestMethod(value="testSetParameters_arrayObject")
+    @TestMethod(value = "testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-    	// no parameters
+        // no parameters
     }
-
 
     /**
      *  Gets the parameters attribute of the PartialTChargeMMFF94Descriptor
@@ -103,16 +98,15 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return    The parameters value
      *@see #setParameters
      */
-    @TestMethod(value="testGetParameters")
+    @TestMethod(value = "testGetParameters")
     public Object[] getParameters() {
         return null;
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
-
 
     /**
      *  The method returns partial charges assigned to an heavy atom through MMFF94 method.
@@ -122,15 +116,15 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  ac                AtomContainer
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
-    @TestMethod(value="testCalculate_IAtomContainer")
+    @TestMethod(value = "testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         int position = ac.getAtomNumber(atom);
         try {
-	        ac = (IAtomContainer)ac.clone();
-	    } catch (CloneNotSupportedException e) {
-	        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                           new DoubleResult(Double.NaN), names);
-		}
+            ac = (IAtomContainer) ac.clone();
+        } catch (CloneNotSupportedException e) {
+            return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(
+                    Double.NaN), names);
+        }
         atom = ac.getAtom(position);
         String originalAtomtypeName = atom.getAtomTypeName();
         Integer originalNeighborCount = atom.getFormalNeighbourCount();
@@ -150,10 +144,8 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
         atom.setValency(originalValency);
         atom.setHybridization(originalHybridization);
 
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                aphaPartialCharge, names);
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), aphaPartialCharge, names);
     }
-
 
     /**
      *  Gets the parameterNames attribute of the PartialTChargeMMFF94Descriptor
@@ -161,11 +153,10 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *
      * @return    The parameterNames value
      */
-    @TestMethod(value="testGetParameterNames")
+    @TestMethod(value = "testGetParameterNames")
     public String[] getParameterNames() {
         return new String[0];
     }
-
 
     /**
      *  Gets the parameterType attribute of the PartialTChargeMMFF94Descriptor
@@ -174,9 +165,8 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@param  name  Description of the Parameter
      *@return       The parameterType value
      */
-    @TestMethod(value="testGetParameterType_String")
+    @TestMethod(value = "testGetParameterType_String")
     public Object getParameterType(String name) {
-    	 return null;
+        return null;
     }
 }
-

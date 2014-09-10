@@ -35,74 +35,81 @@ import static org.hamcrest.CoreMatchers.is;
  */
 public class CMLStackTest extends CDKTestCase {
 
-    @Test public void testPush_String() {
-    	// the class has a hardcoded default length. Test going beyond this.
-    	CMLStack stack = new CMLStack();
-    	for (int i=0; i<100; i++) {
-    		stack.push("element");
-    	}
+    @Test
+    public void testPush_String() {
+        // the class has a hardcoded default length. Test going beyond this.
+        CMLStack stack = new CMLStack();
+        for (int i = 0; i < 100; i++) {
+            stack.push("element");
+        }
     }
 
-    @Test public void testPop() {
-    	CMLStack stack = new CMLStack();
-    	stack.push("first");
-    	stack.push("second");
-    	stack.push("third");
-    	Assert.assertEquals("third", stack.pop());
-    	Assert.assertEquals("second", stack.pop());
-    	Assert.assertEquals("first", stack.pop());
-    	try {
-    		Assert.assertEquals("doesNotExist", stack.pop());
-    		Assert.fail("Should have received an ArrayIndexOutOfBoundsException");
-    	} catch (Exception exception) {
-    		// OK, should happen
-    	}
+    @Test
+    public void testPop() {
+        CMLStack stack = new CMLStack();
+        stack.push("first");
+        stack.push("second");
+        stack.push("third");
+        Assert.assertEquals("third", stack.pop());
+        Assert.assertEquals("second", stack.pop());
+        Assert.assertEquals("first", stack.pop());
+        try {
+            Assert.assertEquals("doesNotExist", stack.pop());
+            Assert.fail("Should have received an ArrayIndexOutOfBoundsException");
+        } catch (Exception exception) {
+            // OK, should happen
+        }
     }
 
-    @Test public void testCurrent() {
-    	CMLStack stack = new CMLStack();
-    	stack.push("first");
-    	Assert.assertEquals("first", stack.current());
-    	stack.push("second");
-    	Assert.assertEquals("second", stack.current());
-    	stack.push("third");
-    	Assert.assertEquals("third", stack.current());
-    	stack.pop();
-    	Assert.assertEquals("second", stack.current());
-    	stack.pop();
-    	Assert.assertEquals("first", stack.current());
+    @Test
+    public void testCurrent() {
+        CMLStack stack = new CMLStack();
+        stack.push("first");
+        Assert.assertEquals("first", stack.current());
+        stack.push("second");
+        Assert.assertEquals("second", stack.current());
+        stack.push("third");
+        Assert.assertEquals("third", stack.current());
+        stack.pop();
+        Assert.assertEquals("second", stack.current());
+        stack.pop();
+        Assert.assertEquals("first", stack.current());
     }
 
-    @Test public void testEndsWith_String() {
-    	CMLStack stack = new CMLStack();
-    	stack.push("first");
-    	Assert.assertTrue(stack.endsWith("first"));
-    	stack.push("second");
-    	Assert.assertFalse(stack.endsWith("first"));
-    	Assert.assertTrue(stack.endsWith("second"));
-    	stack.push("third");
-    	Assert.assertTrue(stack.endsWith("third"));
+    @Test
+    public void testEndsWith_String() {
+        CMLStack stack = new CMLStack();
+        stack.push("first");
+        Assert.assertTrue(stack.endsWith("first"));
+        stack.push("second");
+        Assert.assertFalse(stack.endsWith("first"));
+        Assert.assertTrue(stack.endsWith("second"));
+        stack.push("third");
+        Assert.assertTrue(stack.endsWith("third"));
     }
 
-    @Test public void testEndsWith_String_String() {
-    	CMLStack stack = new CMLStack();
-    	stack.push("first");
-    	stack.push("second");
-    	Assert.assertFalse(stack.endsWith("second", "first"));
-    	Assert.assertTrue(stack.endsWith("first", "second"));
-    	stack.push("third");
-    	Assert.assertTrue(stack.endsWith("second", "third"));
+    @Test
+    public void testEndsWith_String_String() {
+        CMLStack stack = new CMLStack();
+        stack.push("first");
+        stack.push("second");
+        Assert.assertFalse(stack.endsWith("second", "first"));
+        Assert.assertTrue(stack.endsWith("first", "second"));
+        stack.push("third");
+        Assert.assertTrue(stack.endsWith("second", "third"));
     }
 
-    @Test public void testEndsWith_String_String_String() {
-    	CMLStack stack = new CMLStack();
-    	stack.push("first");
-    	stack.push("second");
-    	stack.push("third");
-    	Assert.assertTrue(stack.endsWith("first", "second", "third"));
+    @Test
+    public void testEndsWith_String_String_String() {
+        CMLStack stack = new CMLStack();
+        stack.push("first");
+        stack.push("second");
+        stack.push("third");
+        Assert.assertTrue(stack.endsWith("first", "second", "third"));
     }
 
-    @Test public void testSize() {
+    @Test
+    public void testSize() {
         CMLStack stack = new CMLStack();
         Assert.assertThat(stack.size(), is(0));
         stack.push("first");

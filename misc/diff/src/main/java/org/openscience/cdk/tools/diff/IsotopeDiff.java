@@ -43,13 +43,13 @@ public class IsotopeDiff {
      */
     private IsotopeDiff() {}
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as a {@link String}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return a {@link String} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testMatchAgainstItself,testDiff")
     public static String diff(IChemObject first, IChemObject second) {
         IDifference diff = difference(first, second);
@@ -60,24 +60,25 @@ public class IsotopeDiff {
         }
     }
 
-	/**
-	 * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-	 *
-	 * @param first  the first of the two classes to compare
-	 * @param second the second of the two classes to compare
-	 * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-	 */
+    /**
+     * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
+     *
+     * @param first  the first of the two classes to compare
+     * @param second the second of the two classes to compare
+     * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
+     */
     @TestMethod("testDifference")
     public static IDifference difference(IChemObject first, IChemObject second) {
         if (!(first instanceof IIsotope && second instanceof IIsotope)) {
             return null;
         }
-        IIsotope firstElem = (IIsotope)first;
-        IIsotope secondElem = (IIsotope)second;
+        IIsotope firstElem = (IIsotope) first;
+        IIsotope secondElem = (IIsotope) second;
         ChemObjectDifference totalDiff = new ChemObjectDifference("IsotopeDiff");
         totalDiff.addChild(IntegerDifference.construct("MN", firstElem.getMassNumber(), secondElem.getMassNumber()));
         totalDiff.addChild(DoubleDifference.construct("EM", firstElem.getExactMass(), secondElem.getExactMass()));
-        totalDiff.addChild(DoubleDifference.construct("AB", firstElem.getNaturalAbundance(), secondElem.getNaturalAbundance()));
+        totalDiff.addChild(DoubleDifference.construct("AB", firstElem.getNaturalAbundance(),
+                secondElem.getNaturalAbundance()));
         totalDiff.addChild(ElementDiff.difference(first, second));
         if (totalDiff.childCount() > 0) {
             return totalDiff;

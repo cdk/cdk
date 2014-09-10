@@ -36,7 +36,8 @@ import static org.mockito.Mockito.when;
  */
 public class AtomContainerDiffTest extends CDKTestCase {
 
-    @Test public void testMatchAgainstItself() {
+    @Test
+    public void testMatchAgainstItself() {
         IAtomContainer container = mock(IAtomContainer.class);
         when(container.getElectronContainerCount()).thenReturn(1);
         when(container.getElectronContainer(0)).thenReturn(mock(IBond.class));
@@ -44,7 +45,8 @@ public class AtomContainerDiffTest extends CDKTestCase {
         assertZeroLength(result);
     }
 
-    @Test public void testDiff() {
+    @Test
+    public void testDiff() {
 
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
@@ -83,7 +85,8 @@ public class AtomContainerDiffTest extends CDKTestCase {
         assertContains(result, "C/O");
     }
 
-    @Test public void testDifference() {
+    @Test
+    public void testDifference() {
         IAtom carbon = mock(IAtom.class);
         IAtom oxygen = mock(IAtom.class);
 
@@ -115,36 +118,36 @@ public class AtomContainerDiffTest extends CDKTestCase {
         Assert.assertNotNull(result);
     }
 
-    @Ignore("unit test did not test AtomContainerDiff but rather the ability of AtomContainer" +
-                    "to be serialized. This is already tested in each respective domain module")
+    @Ignore("unit test did not test AtomContainerDiff but rather the ability of AtomContainer"
+            + "to be serialized. This is already tested in each respective domain module")
     public void testDiffFromSerialized() throws IOException, ClassNotFoundException {
-//        IAtomContainer atomContainer = new AtomContainer();
-//        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
-//        bond1.setOrder(IBond.Order.SINGLE);
-//        atomContainer.addBond(bond1);
-//
-//        File tmpFile = File.createTempFile("serialized", ".dat");
-//        tmpFile.deleteOnExit();
-//        String objFilename = tmpFile.getAbsolutePath();
-//
-//        FileOutputStream fout = new FileOutputStream(objFilename);
-//        ObjectOutputStream ostream = new ObjectOutputStream(fout);
-//        ostream.writeObject(atomContainer);
-//
-//        ostream.close();
-//        fout.close();
-//
-//        // now read the serialized atomContainer in
-//        FileInputStream fin = new FileInputStream(objFilename);
-//        ObjectInputStream istream = new ObjectInputStream(fin);
-//        Object obj = istream.readObject();
-//
-//        Assert.assertTrue(obj instanceof IAtomContainer);
-//
-//        IAtomContainer newAtomContainer = (IAtomContainer) obj;
-//        String diff = AtomDiff.diff(atomContainer, newAtomContainer);
-//
-//        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
+        //        IAtomContainer atomContainer = new AtomContainer();
+        //        IBond bond1 = new Bond(new Atom("C"), new Atom("C"));
+        //        bond1.setOrder(IBond.Order.SINGLE);
+        //        atomContainer.addBond(bond1);
+        //
+        //        File tmpFile = File.createTempFile("serialized", ".dat");
+        //        tmpFile.deleteOnExit();
+        //        String objFilename = tmpFile.getAbsolutePath();
+        //
+        //        FileOutputStream fout = new FileOutputStream(objFilename);
+        //        ObjectOutputStream ostream = new ObjectOutputStream(fout);
+        //        ostream.writeObject(atomContainer);
+        //
+        //        ostream.close();
+        //        fout.close();
+        //
+        //        // now read the serialized atomContainer in
+        //        FileInputStream fin = new FileInputStream(objFilename);
+        //        ObjectInputStream istream = new ObjectInputStream(fin);
+        //        Object obj = istream.readObject();
+        //
+        //        Assert.assertTrue(obj instanceof IAtomContainer);
+        //
+        //        IAtomContainer newAtomContainer = (IAtomContainer) obj;
+        //        String diff = AtomDiff.diff(atomContainer, newAtomContainer);
+        //
+        //        Assert.assertTrue("There were differences between original and deserialized version!", diff.equals(""));
 
     }
 }

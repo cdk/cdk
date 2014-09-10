@@ -47,16 +47,15 @@ public class SimpleAtomComparator implements Comparator<IAtom>, Serializable {
 
     private static final long serialVersionUID = 2345252069991872083L;
 
-
-	@TestMethod("testCompare_NullHybridization,testCompare_SameHybridization,testCompare_DifferentHybridization,testCompare_DifferentSymbol")
+    @TestMethod("testCompare_NullHybridization,testCompare_SameHybridization,testCompare_DifferentHybridization,testCompare_DifferentSymbol")
     @Override
-	public int compare(IAtom o1, IAtom o2) {
-		if (o1.getSymbol().equalsIgnoreCase(o2.getSymbol())) {
-			if (o1.getHybridization() != null && o2.getHybridization() != null) {
-				return o1.getHybridization().compareTo(o2.getHybridization());
-			}
-			return 0;
-		}
-		return 10 * o1.getSymbol().compareToIgnoreCase(o2.getSymbol());
-	}
+    public int compare(IAtom o1, IAtom o2) {
+        if (o1.getSymbol().equalsIgnoreCase(o2.getSymbol())) {
+            if (o1.getHybridization() != null && o2.getHybridization() != null) {
+                return o1.getHybridization().compareTo(o2.getHybridization());
+            }
+            return 0;
+        }
+        return 10 * o1.getSymbol().compareToIgnoreCase(o2.getSymbol());
+    }
 }

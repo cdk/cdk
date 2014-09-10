@@ -45,138 +45,138 @@ import static org.mockito.Mockito.when;
  */
 public class BasicAtomEncoderTest {
 
-    @Test public void testAtomicNumber() {
+    @Test
+    public void testAtomicNumber() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.ATOMIC_NUMBER;
 
         when(atom.getAtomicNumber()).thenReturn(6);
-        assertThat(encoder.encode(atom, container),
-                   is(6));
+        assertThat(encoder.encode(atom, container), is(6));
 
         verify(atom, times(1)).getAtomicNumber();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testAtomicNumber_Null() {
+    @Test
+    public void testAtomicNumber_Null() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.ATOMIC_NUMBER;
 
         when(atom.getAtomicNumber()).thenReturn(null);
-        assertThat(encoder.encode(atom, container),
-                   is(32451169));
+        assertThat(encoder.encode(atom, container), is(32451169));
         verify(atom, times(1)).getAtomicNumber();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testMassNumber() {
+    @Test
+    public void testMassNumber() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.MASS_NUMBER;
 
         when(atom.getMassNumber()).thenReturn(12);
-        assertThat(encoder.encode(atom, container),
-                   is(12));
+        assertThat(encoder.encode(atom, container), is(12));
 
         verify(atom, times(1)).getMassNumber();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testMassNumber_Null() {
+    @Test
+    public void testMassNumber_Null() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.MASS_NUMBER;
 
         when(atom.getMassNumber()).thenReturn(null);
-        assertThat(encoder.encode(atom, container),
-                   is(32451179));
+        assertThat(encoder.encode(atom, container), is(32451179));
         verify(atom, times(1)).getMassNumber();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testFormalNumber() {
+    @Test
+    public void testFormalNumber() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.FORMAL_CHARGE;
 
         when(atom.getFormalCharge()).thenReturn(-2);
-        assertThat(encoder.encode(atom, container),
-                   is(-2));
+        assertThat(encoder.encode(atom, container), is(-2));
 
         verify(atom, times(1)).getFormalCharge();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testFormalNumber_Null() {
+    @Test
+    public void testFormalNumber_Null() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.FORMAL_CHARGE;
 
         when(atom.getFormalCharge()).thenReturn(null);
-        assertThat(encoder.encode(atom, container),
-                   is(32451193));
+        assertThat(encoder.encode(atom, container), is(32451193));
         verify(atom, times(1)).getFormalCharge();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testNConnectedAtoms() {
+    @Test
+    public void testNConnectedAtoms() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.N_CONNECTED_ATOMS;
 
         when(container.getConnectedAtomsCount(atom)).thenReturn(2);
-        assertThat(encoder.encode(atom, container),
-                   is(2));
+        assertThat(encoder.encode(atom, container), is(2));
         verify(container, times(1)).getConnectedAtomsCount(atom);
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testBondOrderSum() {
+    @Test
+    public void testBondOrderSum() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.BOND_ORDER_SUM;
 
         when(container.getBondOrderSum(atom)).thenReturn(3D);
-        assertThat(encoder.encode(atom, container),
-                   is(new Double(3D).hashCode()));
+        assertThat(encoder.encode(atom, container), is(new Double(3D).hashCode()));
         verify(container, times(1)).getBondOrderSum(atom);
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testOrbitalHybridization() {
+    @Test
+    public void testOrbitalHybridization() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
 
         when(atom.getHybridization()).thenReturn(IAtomType.Hybridization.SP2);
-        assertThat(encoder.encode(atom, container),
-                   is(IAtomType.Hybridization.SP2.ordinal()));
+        assertThat(encoder.encode(atom, container), is(IAtomType.Hybridization.SP2.ordinal()));
 
         verify(atom, times(1)).getHybridization();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testOrbitalHybridization_Null() {
+    @Test
+    public void testOrbitalHybridization_Null() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
 
         when(atom.getHybridization()).thenReturn(null);
-        assertThat(encoder.encode(atom, container),
-                   is(32451301));
+        assertThat(encoder.encode(atom, container), is(32451301));
         verify(atom, times(1)).getHybridization();
         verifyNoMoreInteractions(atom, container);
     }
 
-    @Test public void testFreeRadicals() {
+    @Test
+    public void testFreeRadicals() {
         IAtom atom = mock(IAtom.class);
         IAtomContainer container = mock(IAtomContainer.class);
         AtomEncoder encoder = BasicAtomEncoder.FREE_RADICALS;
 
         when(container.getConnectedSingleElectronsCount(atom)).thenReturn(1);
-        assertThat(encoder.encode(atom, container),
-                   is(1));
+        assertThat(encoder.encode(atom, container), is(1));
         verify(container, times(1)).getConnectedSingleElectronsCount(atom);
         verifyNoMoreInteractions(atom, container);
     }

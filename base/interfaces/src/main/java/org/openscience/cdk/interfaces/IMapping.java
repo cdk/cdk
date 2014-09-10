@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-
 /**
  * Represents a mapping of two atoms.
  *
@@ -45,4 +44,3 @@ public interface IMapping extends IChemObject {
     public IChemObject getChemObject(int pos);
 
 }
-

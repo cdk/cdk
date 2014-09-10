@@ -30,6 +30,7 @@ import org.openscience.cdk.formula.IsotopePatternSimilarity;
 import org.openscience.cdk.interfaces.IMolecularFormula;
 import org.openscience.cdk.tools.ILoggingTool;
 import org.openscience.cdk.tools.LoggingToolFactory;
+
 /**
  * This class validate if the Isotope Pattern from a given IMolecularFormula
  *  correspond with other to compare.
@@ -54,20 +55,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  * @cdk.created 2007-11-20
  * @cdk.githash
  */
-public class IsotopePatternRule implements IRule{
+public class IsotopePatternRule implements IRule {
 
+    private static ILoggingTool      logger        = LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
 
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(IsotopePatternRule.class);
+    /** Accuracy on the mass measuring isotope pattern*/
+    private double                   toleranceMass = 0.001;
 
-	/** Accuracy on the mass measuring isotope pattern*/
-	private double toleranceMass = 0.001;
+    private IsotopePattern           pattern;
 
-	private IsotopePattern  pattern;
+    IsotopePatternGenerator          isotopeGe;
 
-	IsotopePatternGenerator isotopeGe;
-
-	private IsotopePatternSimilarity is;
+    private IsotopePatternSimilarity is;
 
     /**
      *  Constructor for the IsotopePatternRule object.
@@ -76,9 +75,9 @@ public class IsotopePatternRule implements IRule{
      *  @throws ClassNotFoundException If an error occurs during tom typing
      */
     public IsotopePatternRule() {
-    	isotopeGe = new IsotopePatternGenerator(0.01);
-    	is = new IsotopePatternSimilarity();
-		is.seTolerance(toleranceMass);
+        isotopeGe = new IsotopePatternGenerator(0.01);
+        is = new IsotopePatternSimilarity();
+        is.seTolerance(toleranceMass);
     }
 
     /**
@@ -90,22 +89,18 @@ public class IsotopePatternRule implements IRule{
      * @see                   #getParameters
      */
     public void setParameters(Object[] params) throws CDKException {
-    	 if (params.length != 2)
-             throw new CDKException("IsotopePatternRule expects two parameter");
+        if (params.length != 2) throw new CDKException("IsotopePatternRule expects two parameter");
 
-       	 if(!(params[0] instanceof List ))
-       		 throw new CDKException("The parameter one must be of type List<Double[]>");
+        if (!(params[0] instanceof List)) throw new CDKException("The parameter one must be of type List<Double[]>");
 
+        if (!(params[1] instanceof Double)) throw new CDKException("The parameter two must be of type Double");
 
-       	 if(!(params[1] instanceof Double ))
-       		 throw new CDKException("The parameter two must be of type Double");
+        pattern = new IsotopePattern();
+        for (double[] listISO : (List<double[]>) params[0]) {
+            pattern.addIsotope(new IsotopeContainer(listISO[0], listISO[1]));
+        }
 
-       	 pattern = new IsotopePattern();
-       	 for(double[] listISO:(List<double[]>) params[0]){
-       		 pattern.addIsotope(new IsotopeContainer(listISO[0],listISO[1]));
-       	 }
-
-         is.seTolerance((Double) params[1]);
+        is.seTolerance((Double) params[1]);
     }
 
     /**
@@ -115,13 +110,12 @@ public class IsotopePatternRule implements IRule{
      * @see    #setParameters
      */
     public Object[] getParameters() {
-    	// return the parameters as used for the rule validation
+        // return the parameters as used for the rule validation
         Object[] params = new Object[2];
         params[0] = pattern;
         params[1] = toleranceMass;
         return params;
     }
-
 
     /**
      * Validate the isotope pattern of this IMolecularFormula. Important, first
@@ -133,14 +127,13 @@ public class IsotopePatternRule implements IRule{
      */
 
     public double validate(IMolecularFormula formula) throws CDKException {
-    	logger.info("Start validation of ",formula);
+        logger.info("Start validation of ", formula);
 
+        IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
+        IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
+        IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
 
-    	IsotopePatternGenerator isotopeGe = new IsotopePatternGenerator(0.1);
-		IsotopePattern patternIsoPredicted = isotopeGe.getIsotopes(formula);
-		IsotopePattern patternIsoNormalize = IsotopePatternManipulator.normalize(patternIsoPredicted);
-
-    	return is.compare(pattern, patternIsoNormalize);
+        return is.compare(pattern, patternIsoNormalize);
     }
 
 }

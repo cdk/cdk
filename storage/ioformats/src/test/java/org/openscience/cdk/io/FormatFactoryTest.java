@@ -75,118 +75,148 @@ public class FormatFactoryTest extends CDKTestCase {
 
     private static FormatFactory factory;
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         factory = new FormatFactory();
     }
 
-    @Test public void testGaussian94() throws Exception {
-        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out",
-                     Gaussian94Format.getInstance());
+    @Test
+    public void testGaussian94() throws Exception {
+        expectFormat("data/gaussian/4-cyanophenylnitrene-Benzazirine-TS.g94.out", Gaussian94Format.getInstance());
     }
-    @Test public void testGaussian98() throws Exception {
+
+    @Test
+    public void testGaussian98() throws Exception {
         expectFormat("data/gaussian/g98.out", Gaussian98Format.getInstance());
     }
-    @Test public void testGaussian92() throws Exception {
+
+    @Test
+    public void testGaussian92() throws Exception {
         expectFormat("data/gaussian/phenylnitrene.g92.out", Gaussian92Format.getInstance());
     }
 
-    @Test public void testGhemical() throws Exception {
+    @Test
+    public void testGhemical() throws Exception {
         expectFormat("data/ghemical/ethene.mm1gp", GhemicalSPMFormat.getInstance());
     }
 
-    @Test public void testJaguar() throws Exception {
+    @Test
+    public void testJaguar() throws Exception {
         expectFormat("data/jaguar/ch4-opt.out", JaguarFormat.getInstance());
     }
 
-    @Test public void testINChI() throws Exception {
+    @Test
+    public void testINChI() throws Exception {
         expectFormat("data/inchi/guanine.inchi.xml", INChIFormat.getInstance());
     }
 
-    @Test public void testINChIPlainText() throws Exception {
+    @Test
+    public void testINChIPlainText() throws Exception {
         expectFormat("data/inchi/guanine.inchi", INChIPlainTextFormat.getInstance());
     }
 
-    @Test public void testVASP() throws Exception {
+    @Test
+    public void testVASP() throws Exception {
         expectFormat("data/vasp/LiMoS2_optimisation_ISIF3.vasp", VASPFormat.getInstance());
     }
 
-    @Test public void testAces2() throws Exception {
+    @Test
+    public void testAces2() throws Exception {
         expectFormat("data/aces2/ch3oh_ace.out", Aces2Format.getInstance());
     }
 
-    @Test public void testADF() throws Exception {
+    @Test
+    public void testADF() throws Exception {
         expectFormat("data/adf/ammonia.adf.out", ADFFormat.getInstance());
     }
 
-    @Test public void testGamess() throws Exception {
+    @Test
+    public void testGamess() throws Exception {
         expectFormat("data/gamess/ch3oh_gam.out", GamessFormat.getInstance());
     }
 
-    @Test public void testABINIT() throws Exception {
+    @Test
+    public void testABINIT() throws Exception {
         expectFormat("data/abinit/t54.in", ABINITFormat.getInstance());
     }
 
-    @Test public void testCML() throws Exception {
+    @Test
+    public void testCML() throws Exception {
         expectFormat("data/cml/estron.cml", CMLFormat.getInstance());
     }
 
-    @Test public void testXYZ() throws Exception {
+    @Test
+    public void testXYZ() throws Exception {
         expectFormat("data/xyz/bf3.xyz", XYZFormat.getInstance());
     }
 
-    @Test public void testShelX() throws Exception {
+    @Test
+    public void testShelX() throws Exception {
         expectFormat("data/shelx/frame_1.res", ShelXFormat.getInstance());
     }
 
-    @Test public void testMDLMol() throws Exception {
+    @Test
+    public void testMDLMol() throws Exception {
         expectFormat("data/mdl/bug1014344-1.mol", MDLFormat.getInstance());
     }
 
-    @Test public void testMDLMolV2000() throws Exception {
+    @Test
+    public void testMDLMolV2000() throws Exception {
         expectFormat("data/mdl/methylbenzol.mol", MDLV2000Format.getInstance());
     }
 
-    @Test public void testDetection() throws Exception {
-    	expectFormat("data/mdl/withcharges.mol", MDLV2000Format.getInstance());
+    @Test
+    public void testDetection() throws Exception {
+        expectFormat("data/mdl/withcharges.mol", MDLV2000Format.getInstance());
     }
 
-    @Test public void testMDLMolV3000() throws Exception {
+    @Test
+    public void testMDLMolV3000() throws Exception {
         expectFormat("data/mdl/molV3000.mol", MDLV3000Format.getInstance());
     }
 
-    @Test public void testPDB() throws Exception {
+    @Test
+    public void testPDB() throws Exception {
         expectFormat("data/pdb/coffeine.pdb", PDBFormat.getInstance());
     }
 
-    @Test public void testMol2() throws Exception {
-    	expectFormat("data/mol2/fromWebsite.mol2", Mol2Format.getInstance());
+    @Test
+    public void testMol2() throws Exception {
+        expectFormat("data/mol2/fromWebsite.mol2", Mol2Format.getInstance());
     }
 
-    @Test public void testCTX() throws Exception {
-    	expectFormat("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance());
+    @Test
+    public void testCTX() throws Exception {
+        expectFormat("data/ctx/methanol_with_descriptors.ctx", CTXFormat.getInstance());
     }
 
-    @Test public void testPubChemCompoundASN() throws Exception {
+    @Test
+    public void testPubChemCompoundASN() throws Exception {
         expectFormat("data/asn/pubchem/cid1.asn", PubChemASNFormat.getInstance());
     }
 
-    @Test public void testPubChemSubstancesASN() throws Exception {
+    @Test
+    public void testPubChemSubstancesASN() throws Exception {
         expectFormat("data/asn/pubchem/list.asn", PubChemSubstancesASNFormat.getInstance());
     }
 
-    @Test public void testPubChemCompoundsXML() throws Exception {
+    @Test
+    public void testPubChemCompoundsXML() throws Exception {
         expectFormat("data/asn/pubchem/aceticAcids38.xml", PubChemCompoundsXMLFormat.getInstance());
     }
 
-    @Test public void testPubChemSubstancesXML() throws Exception {
+    @Test
+    public void testPubChemSubstancesXML() throws Exception {
         expectFormat("data/asn/pubchem/taxols.xml", PubChemSubstancesXMLFormat.getInstance());
     }
 
-    @Test public void testPubChemSubstanceXML() throws Exception {
+    @Test
+    public void testPubChemSubstanceXML() throws Exception {
         expectFormat("data/asn/pubchem/sid577309.xml", PubChemSubstanceXMLFormat.getInstance());
     }
 
-    @Test public void testPubChemCompoundXML() throws Exception {
+    @Test
+    public void testPubChemCompoundXML() throws Exception {
         expectFormat("data/asn/pubchem/cid1145.xml", PubChemCompoundXMLFormat.getInstance());
     }
 
@@ -194,7 +224,7 @@ public class FormatFactoryTest extends CDKTestCase {
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         Assert.assertNotNull("Cannot find file: " + filename, ins);
         if (expectedFormat instanceof IChemFormatMatcher) {
-        	factory.registerFormat((IChemFormatMatcher)expectedFormat);
+            factory.registerFormat((IChemFormatMatcher) expectedFormat);
         }
         ins = new BufferedInputStream(ins);
         IChemFormat format = factory.guessFormat(ins);
@@ -205,16 +235,15 @@ public class FormatFactoryTest extends CDKTestCase {
     /**
      * @cdk.bug 2153298
      */
-    @Test public void testGuessFormat() throws Exception {
+    @Test
+    public void testGuessFormat() throws Exception {
         String filename = "data/xyz/bf3.xyz";
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
         input = new BufferedInputStream(input);
         IChemFormat format = factory.guessFormat(input);
         Assert.assertNotNull(format);
         // make sure the InputStream is properly reset
-        BufferedReader reader = new BufferedReader(
-            new InputStreamReader(input)
-        );
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line = reader.readLine();
         Assert.assertNotNull(line);
         Assert.assertEquals("4", line);
@@ -223,17 +252,15 @@ public class FormatFactoryTest extends CDKTestCase {
         Assert.assertEquals("Bortrifluorid", line);
     }
 
-    @Test public void testGuessFormat_Gz() throws Exception {
+    @Test
+    public void testGuessFormat_Gz() throws Exception {
         String filename = "data/xyz/bf3.xyz.gz";
-        InputStream input = new BufferedInputStream(new GZIPInputStream(
-            this.getClass().getClassLoader().getResourceAsStream(filename)
-        ));
+        InputStream input = new BufferedInputStream(new GZIPInputStream(this.getClass().getClassLoader()
+                .getResourceAsStream(filename)));
         IChemFormat format = factory.guessFormat(input);
         Assert.assertNotNull(format);
         // make sure the InputStream is properly reset
-        BufferedReader reader = new BufferedReader(
-            new InputStreamReader(input)
-        );
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         String line = reader.readLine();
         Assert.assertNotNull(line);
         Assert.assertEquals("4", line);
@@ -242,12 +269,11 @@ public class FormatFactoryTest extends CDKTestCase {
         Assert.assertEquals("Bortrifluorid", line);
     }
 
-    @Test public void testGuessFormat_Reader() throws Exception {
+    @Test
+    public void testGuessFormat_Reader() throws Exception {
         String filename = "data/xyz/bf3.xyz";
         InputStream input = this.getClass().getClassLoader().getResourceAsStream(filename);
-        BufferedReader reader = new BufferedReader(
-            new InputStreamReader(input)
-        );
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
         IChemFormat format = factory.guessFormat(reader);
         Assert.assertNotNull(format);
         // make sure the Reader is properly reset
@@ -261,43 +287,76 @@ public class FormatFactoryTest extends CDKTestCase {
 
     @Test
     public void testGetFormats() {
-    	List<IChemFormatMatcher> formats = factory.getFormats();
-    	Assert.assertNotNull(formats);
-    	Assert.assertNotSame(0, formats.size());
-    	for (IChemFormatMatcher matcher : formats) {
-    		Assert.assertNotNull(matcher);
-    	}
+        List<IChemFormatMatcher> formats = factory.getFormats();
+        Assert.assertNotNull(formats);
+        Assert.assertNotSame(0, formats.size());
+        for (IChemFormatMatcher matcher : formats) {
+            Assert.assertNotNull(matcher);
+        }
     }
 
     class DummyFormat implements IChemFormatMatcher {
 
-		@Override public String getReaderClassName() { return null; }
-		@Override public String getWriterClassName() { return null; }
-		@Override public int getSupportedDataFeatures() { return 0; }
-		@Override public int getRequiredDataFeatures() { return 0; }
-		@Override public String getFormatName() { return "Dummy Format"; }
-		@Override public String getMIMEType() { return null; }
-		@Override public boolean isXMLBased() { return false; }
-		@Override public String getPreferredNameExtension() { return "dummy"; }
-		@Override public String[] getNameExtensions() {
-			return new String[] { "dummy", "dum" };
-		}
+        @Override
+        public String getReaderClassName() {
+            return null;
+        }
 
-		@Override
-		public MatchResult matches(List<String> lines) {
-			if(lines.size() > 0  && lines.get(0).startsWith("DummyFormat:")){
+        @Override
+        public String getWriterClassName() {
+            return null;
+        }
+
+        @Override
+        public int getSupportedDataFeatures() {
+            return 0;
+        }
+
+        @Override
+        public int getRequiredDataFeatures() {
+            return 0;
+        }
+
+        @Override
+        public String getFormatName() {
+            return "Dummy Format";
+        }
+
+        @Override
+        public String getMIMEType() {
+            return null;
+        }
+
+        @Override
+        public boolean isXMLBased() {
+            return false;
+        }
+
+        @Override
+        public String getPreferredNameExtension() {
+            return "dummy";
+        }
+
+        @Override
+        public String[] getNameExtensions() {
+            return new String[]{"dummy", "dum"};
+        }
+
+        @Override
+        public MatchResult matches(List<String> lines) {
+            if (lines.size() > 0 && lines.get(0).startsWith("DummyFormat:")) {
                 return new MatchResult(true, this, 0);
             }
             return NO_MATCH;
-		}
+        }
     }
 
     @Test
     public void testRegisterFormat() throws IOException {
-    	factory.registerFormat(new DummyFormat());
-    	StringReader reader = new StringReader("DummyFormat:");
-    	IChemFormat format = factory.guessFormat(reader);
-    	Assert.assertNotNull(format);
-    	Assert.assertTrue(format instanceof DummyFormat);
+        factory.registerFormat(new DummyFormat());
+        StringReader reader = new StringReader("DummyFormat:");
+        IChemFormat format = factory.guessFormat(reader);
+        Assert.assertNotNull(format);
+        Assert.assertTrue(format instanceof DummyFormat);
     }
 }

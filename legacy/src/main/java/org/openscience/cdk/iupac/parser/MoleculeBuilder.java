@@ -50,11 +50,11 @@ import org.openscience.cdk.tools.manipulator.AtomTypeManipulator;
  *
  * @cdk.require ant1.6
  */
-public class MoleculeBuilder
-{
+public class MoleculeBuilder {
+
     /** The molecule which is worked upon throughout the class and returned at the end */
     private IAtomContainer currentMolecule = null;
-    private IAtom endOfChain;
+    private IAtom          endOfChain;
 
     public MoleculeBuilder(IChemObjectBuilder builder) {
         currentMolecule = builder.newInstance(IAtomContainer.class);
@@ -70,29 +70,23 @@ public class MoleculeBuilder
     /**
      * Builds the main chain which may act as a foundation for futher working groups.
      *
- * @param mainChain The parsed prefix which depicts the chain's length.
+    * @param mainChain The parsed prefix which depicts the chain's length.
      * @param isMainCyclic A flag to show if the molecule is a ring. 0 means not a ring, 1 means is a ring.
      * @return A Molecule containing the requested chain.
      */
-    private IAtomContainer buildChain(int length, boolean isMainCyclic)
-    {
+    private IAtomContainer buildChain(int length, boolean isMainCyclic) {
         IAtomContainer currentChain;
-        if (length > 0)
-        {
+        if (length > 0) {
             //If is cyclic
-            if (isMainCyclic)
-            {
+            if (isMainCyclic) {
                 //Rely on CDK's ring class constructor to generate our cyclic molecules.
                 currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
                 currentChain.add(currentMolecule.getBuilder().newInstance(IRing.class, length, "C"));
             } //Else must not be cyclic
-            else
-            {
+            else {
                 currentChain = MoleculeFactory.makeAlkane(length);
             }
-        }
-        else
-        {
+        } else {
             currentChain = currentMolecule.getBuilder().newInstance(IAtomContainer.class);
         }
 
@@ -107,16 +101,13 @@ public class MoleculeBuilder
      * @param attachedGroups A vector of AttachedGroup's representing functional groups.
      * @see #addFunGroup
      */
-    private void buildFunGroups(List<AttachedGroup> attachedGroups)
-    {
+    private void buildFunGroups(List<AttachedGroup> attachedGroups) {
         Iterator<AttachedGroup> groupsIterator = attachedGroups.iterator();
-        while (groupsIterator.hasNext())
-        {
+        while (groupsIterator.hasNext()) {
             AttachedGroup attachedGroup = groupsIterator.next();
 
             Iterator<Token> locationsIterator = attachedGroup.getLocations().iterator();
-            while (locationsIterator.hasNext())
-            {
+            while (locationsIterator.hasNext()) {
                 Token locationToken = locationsIterator.next();
                 addFunGroup(attachedGroup.getName(), Integer.parseInt(locationToken.image) - 1);
             }
@@ -129,145 +120,107 @@ public class MoleculeBuilder
      * @param funGroupToken The token which denotes this specific functional group.
      * @param addPos The atom to add the group to.
      */
-    private void addFunGroup(String funGroupToken, int addPos)
-    {
+    private void addFunGroup(String funGroupToken, int addPos) {
         //BOND MODIFICATION
         //Alkanes - Single bond
-        if ("an".equals(funGroupToken))
-        {
+        if ("an".equals(funGroupToken)) {
             //Do nothing since all bonds are single by default.
         }
         //Alkenes - Double bond
-        else if ("en".equals(funGroupToken))
-        {
+        else if ("en".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 //Set the first bond to an order of 2 (i.e. a double bond)
                 currentMolecule.getBond(0).setOrder(IBond.Order.DOUBLE);
-            }
-            else
-            {
+            } else {
                 //Set the addPos'th bond to an order of 2 (i.e. a double bond)
                 currentMolecule.getBond(addPos).setOrder(IBond.Order.DOUBLE);
             }
         }
         //Alkynes - Tripple bond
-        else if ("yn".equals(funGroupToken))
-        {
+        else if ("yn".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 //Set the first bond to an order of 3 (i.e. a tripple bond)
                 currentMolecule.getBond(0).setOrder(IBond.Order.TRIPLE);
-            }
-            else
-            {
+            } else {
                 //Set the addPos'th bond to an order of 3 (i.e. a tripple bond)
                 currentMolecule.getBond(addPos).setOrder(IBond.Order.TRIPLE);
             }
         }
         //FUNCTIONAL GROUP SUFFIXES
         //Ending "e"
-        else if ("e".equals(funGroupToken))
-        {
+        else if ("e".equals(funGroupToken)) {
             //Do nothing, since the "e" is found at the end of chain names
             //with a bond modifer but no functional groups.
         }
         //Alcohols
-        else if ("ol".equals(funGroupToken) || "hydroxy".equals(funGroupToken))
-        {
+        else if ("ol".equals(funGroupToken) || "hydroxy".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("O", endOfChain, IBond.Order.SINGLE, 1);
-            }
-            else
-            {
+            } else {
                 addAtom("O", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 1);
             }
         }
         //Aldehydes
-        else if ("al".equals(funGroupToken))
-        {
+        else if ("al".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
         }
         //Carboxylic acid
-        else if ("oic acid".equals(funGroupToken))
-        {
+        else if ("oic acid".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
             addAtom("O", endOfChain, IBond.Order.SINGLE, 1);
         }
         //Carboxylic Acid Chloride
-        else if ("oyl chloride".equals(funGroupToken))
-        {
+        else if ("oyl chloride".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
             addAtom("Cl", endOfChain, IBond.Order.SINGLE, 0);
         }
         //PREFIXES
         //Halogens
         //Chlorine
-        else if ("chloro".equals(funGroupToken))
-        {
+        else if ("chloro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("Cl", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("Cl", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Fluorine
-        else if ("fluoro".equals(funGroupToken))
-        {
+        else if ("fluoro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("F", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("F", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Bromine
-        else if ("bromo".equals(funGroupToken))
-        {
+        else if ("bromo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("Br", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("Br", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Iodine
-        else if ("iodo".equals(funGroupToken))
-        {
+        else if ("iodo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("I", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("I", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
         }
         //Nitro
-        else if ("nitro".equals(funGroupToken))
-        {
+        else if ("nitro".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 0);
             }
 
@@ -279,89 +232,61 @@ public class MoleculeBuilder
             addAtom("O", nitrogenAtom, IBond.Order.DOUBLE, 0);
         }
         //Oxo
-        else if ("oxo".equals(funGroupToken))
-        {
+        else if ("oxo".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("O", currentMolecule.getFirstAtom(), IBond.Order.DOUBLE, 0);
-            }
-            else
-            {
+            } else {
                 addAtom("O", currentMolecule.getAtom(addPos), IBond.Order.DOUBLE, 0);
             }
         }
         //Nitrile
-        else if ("nitrile".equals(funGroupToken) )
-        {
+        else if ("nitrile".equals(funGroupToken)) {
             addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.TRIPLE, 0);
         }
         //Benzene
-        else if ("phenyl".equals(funGroupToken) )
-        {
+        else if ("phenyl".equals(funGroupToken)) {
             IAtomContainer benzene = MoleculeFactory.makeBenzene();
             //Detect Aromacity in the benzene ring.
-            try
-            {
-            	AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
+            try {
+                AtomContainerManipulator.percieveAtomTypesAndConfigureAtoms(benzene);
                 Aromaticity.cdkLegacy().apply(benzene);
-            }
-            catch (CDKException exc)
-            {
-//                logger.debug("No atom detected");
+            } catch (CDKException exc) {
+                //                logger.debug("No atom detected");
             }
             currentMolecule.add(benzene);
 
             IBond joiningBond;
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
-                joiningBond = currentMolecule.getBuilder().newInstance(
-                    IBond.class, currentMolecule.getFirstAtom(), benzene.getFirstAtom()
-                );
-            }
-            else
-            {
-                joiningBond = currentMolecule.getBuilder().newInstance(
-                    IBond.class, currentMolecule.getAtom(addPos), benzene.getFirstAtom()
-                );
+            if (addPos < 0) {
+                joiningBond = currentMolecule.getBuilder().newInstance(IBond.class, currentMolecule.getFirstAtom(),
+                        benzene.getFirstAtom());
+            } else {
+                joiningBond = currentMolecule.getBuilder().newInstance(IBond.class, currentMolecule.getAtom(addPos),
+                        benzene.getFirstAtom());
             }
             currentMolecule.addBond(joiningBond);
-        }
-        else if ("amino".equals(funGroupToken) )
-        {
+        } else if ("amino".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("N", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
-            }
-            else
-            {
+            } else {
                 addAtom("N", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         }
         //ORGANO METALLICS ADDED AS PREFIXES
-        else if ("alumino".equals(funGroupToken) )
-        {
+        else if ("alumino".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("Al", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
-            }
-            else
-            {
+            } else {
                 addAtom("Al", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
-        }
-        else if ("litho".equals(funGroupToken) )
-        {
+        } else if ("litho".equals(funGroupToken)) {
             //If functional group hasn't had a location specified:
-            if (addPos < 0)
-            {
+            if (addPos < 0) {
                 addAtom("Li", currentMolecule.getFirstAtom(), IBond.Order.SINGLE, 2);
-            }
-            else
-            {
+            } else {
                 addAtom("Li", currentMolecule.getAtom(addPos), IBond.Order.SINGLE, 2);
             }
         }
@@ -369,45 +294,38 @@ public class MoleculeBuilder
 
         //FUNCTIONAL GROUPS WHICH MAY HAVE THEIR OWN SUBSTITUENTS
         //Esters ("...oate")
-        else if ("oate".equals(funGroupToken))
-        {
+        else if ("oate".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
             addAtom("O", endOfChain, IBond.Order.SINGLE, 0);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Amines
-        else if ("amine".equals(funGroupToken))
-        {
+        else if ("amine".equals(funGroupToken)) {
             addAtom("N", endOfChain, IBond.Order.SINGLE, 1);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Amides
-        else if ("amide".equals(funGroupToken))
-        {
+        else if ("amide".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 0);
             addAtom("N", endOfChain, IBond.Order.SINGLE, 1);
             //Set the end of the chain to be built on for unspecified substituents.
             endOfChain = currentMolecule.getLastAtom();
         }
         //Ketones
-        else if ("one".equals(funGroupToken))
-        {
+        else if ("one".equals(funGroupToken)) {
             addAtom("O", endOfChain, IBond.Order.DOUBLE, 2);
             //End of chain doesn't change in this case
         }
         //Organometals
-        else if (getMetalAtomicSymbol (funGroupToken) != null)
-        {
-            currentMolecule.addAtom(
-                    currentMolecule.getBuilder().newInstance(IAtom.class, getMetalAtomicSymbol (funGroupToken)));
+        else if (getMetalAtomicSymbol(funGroupToken) != null) {
+            currentMolecule.addAtom(currentMolecule.getBuilder().newInstance(IAtom.class,
+                    getMetalAtomicSymbol(funGroupToken)));
             endOfChain = currentMolecule.getLastAtom();
-        }
-        else
-        {
-//            logger.debug("Encountered unknown group: " + funGroupToken + " at " + addPos +
-//            "\nThe parser thinks this is valid but the molecule builder has no logic for it");
+        } else {
+            //            logger.debug("Encountered unknown group: " + funGroupToken + " at " + addPos +
+            //            "\nThe parser thinks this is valid but the molecule builder has no logic for it");
         }
     }
 
@@ -417,50 +335,28 @@ public class MoleculeBuilder
      * @param metalName The name of the metal, e.g. lead
      * @return The given metal's atomic symbol e.g. Pb or null if none exist.
      */
-    String getMetalAtomicSymbol (String metalName)
-    {
-        if ("aluminium".equals(metalName))
-        {
+    String getMetalAtomicSymbol(String metalName) {
+        if ("aluminium".equals(metalName)) {
             return "Al";
-        }
-        else if ("magnesium".equals(metalName) )
-        {
+        } else if ("magnesium".equals(metalName)) {
             return "Mg";
-        }
-        else if ("gallium".equals(metalName))
-        {
+        } else if ("gallium".equals(metalName)) {
             return "Ga";
-        }
-        else if ("indium".equals(metalName))
-        {
+        } else if ("indium".equals(metalName)) {
             return "In";
-        }
-        else if ("thallium".equals(metalName))
-        {
+        } else if ("thallium".equals(metalName)) {
             return "Tl";
-        }
-        else if ("germanium".equals(metalName))
-        {
+        } else if ("germanium".equals(metalName)) {
             return "Ge";
-        }
-        else if ("tin".equals(metalName))
-        {
+        } else if ("tin".equals(metalName)) {
             return "Sn";
-        }
-        else if ("lead".equals(metalName))
-        {
+        } else if ("lead".equals(metalName)) {
             return "Pb";
-        }
-        else if ("arsenic".equals(metalName))
-        {
+        } else if ("arsenic".equals(metalName)) {
             return "As";
-        }
-        else if ("antimony".equals(metalName))
-        {
+        } else if ("antimony".equals(metalName)) {
             return "Sb";
-        }
-        else if ("bismuth".equals(metalName))
-        {
+        } else if ("bismuth".equals(metalName)) {
             return "Bi";
         }
 
@@ -476,14 +372,11 @@ public class MoleculeBuilder
      * @param bondOrder The order of the bond to use to join the two atoms.
      * @param hydrogenCount The number of hydrogen atoms connected to this atom.
      */
-    private void addAtom(String newAtomType, IAtom otherConnectingAtom, Order bondOrder, int hydrogenCount)
-    {
+    private void addAtom(String newAtomType, IAtom otherConnectingAtom, Order bondOrder, int hydrogenCount) {
         //Create the new atom and bond.
         IAtom newAtom = currentMolecule.getBuilder().newInstance(IAtom.class, newAtomType);
         newAtom.setImplicitHydrogenCount(hydrogenCount);
-        IBond newBond = currentMolecule.getBuilder().newInstance(
-            IBond.class, newAtom, otherConnectingAtom, bondOrder
-        );
+        IBond newBond = currentMolecule.getBuilder().newInstance(IBond.class, newAtom, otherConnectingAtom, bondOrder);
 
         //Add the new atom and bond to the molecule.
         currentMolecule.addAtom(newAtom);
@@ -495,16 +388,13 @@ public class MoleculeBuilder
      *
      * @param attachedSubstituents A vector of AttachedGroup's representing substituents.
      */
-    private void addHeads(List<AttachedGroup> attachedSubstituents)
-    {
+    private void addHeads(List<AttachedGroup> attachedSubstituents) {
         Iterator<AttachedGroup> substituentsIterator = attachedSubstituents.iterator();
-        while (substituentsIterator.hasNext())
-        {
+        while (substituentsIterator.hasNext()) {
             AttachedGroup attachedSubstituent = substituentsIterator.next();
 
             Iterator<Token> locationsIterator = attachedSubstituent.getLocations().iterator();
-            while (locationsIterator.hasNext())
-            {
+            while (locationsIterator.hasNext()) {
                 Token locationToken = locationsIterator.next();
 
                 int joinLocation = Integer.parseInt(locationToken.image) - 1;
@@ -512,20 +402,16 @@ public class MoleculeBuilder
 
                 //If join location wasn't specified we must be dealing with the "hack" which makes
                 //mainchains a substituent if a real substituent has already been parsed and interpreted as a main chain
-                if (joinLocation < 0)
-                {
+                if (joinLocation < 0) {
                     connectingAtom = endOfChain;
-                }
-                else
-                {
+                } else {
                     connectingAtom = currentMolecule.getAtom(joinLocation);
                 }
 
                 IAtomContainer subChain = buildChain(attachedSubstituent.getLength(), false);
 
-                IBond linkingBond = currentMolecule.getBuilder().newInstance(
-                    IBond.class, subChain.getFirstAtom(), connectingAtom
-                );
+                IBond linkingBond = currentMolecule.getBuilder().newInstance(IBond.class, subChain.getFirstAtom(),
+                        connectingAtom);
                 currentMolecule.addBond(linkingBond);
                 currentMolecule.add(subChain);
             }
@@ -542,14 +428,12 @@ public class MoleculeBuilder
      * @param isMainCyclic An indication of if the main chain is cyclic.
      * @return The molecule as built from the parsed tokens.
      */
-    protected IAtomContainer buildMolecule(int mainChain, List<AttachedGroup> attachedSubstituents
-    , List<AttachedGroup> attachedGroups, boolean isMainCyclic, String name) throws
-                                                                             ParseException, CDKException
-    {
+    protected IAtomContainer buildMolecule(int mainChain, List<AttachedGroup> attachedSubstituents,
+            List<AttachedGroup> attachedGroups, boolean isMainCyclic, String name) throws ParseException, CDKException {
         //Set up the molecle's name
         currentMolecule.setID(name);
         //Build the main chain
-        currentMolecule.add(buildChain(mainChain,isMainCyclic));
+        currentMolecule.add(buildChain(mainChain, isMainCyclic));
 
         //Set the last atom here if a main chain has been built,
         //if not rely on the functional group setting one of it's atoms as last
@@ -562,15 +446,15 @@ public class MoleculeBuilder
         addHeads(attachedSubstituents);
 
         //Add the hydrogens to create a balanced molecule
-    	CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
-    	Iterator<IAtom> atoms = currentMolecule.atoms().iterator();
-    	while (atoms.hasNext()) {
-    		IAtom atom = atoms.next();
-    		IAtomType type = matcher.findMatchingAtomType(currentMolecule, atom);
-    		AtomTypeManipulator.configure(atom, type);
-    	}
-    	CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(currentMolecule.getBuilder());
-    	hAdder.addImplicitHydrogens(currentMolecule);
+        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.getInstance(currentMolecule.getBuilder());
+        Iterator<IAtom> atoms = currentMolecule.atoms().iterator();
+        while (atoms.hasNext()) {
+            IAtom atom = atoms.next();
+            IAtomType type = matcher.findMatchingAtomType(currentMolecule, atom);
+            AtomTypeManipulator.configure(atom, type);
+        }
+        CDKHydrogenAdder hAdder = CDKHydrogenAdder.getInstance(currentMolecule.getBuilder());
+        hAdder.addImplicitHydrogens(currentMolecule);
 
         return currentMolecule;
     }

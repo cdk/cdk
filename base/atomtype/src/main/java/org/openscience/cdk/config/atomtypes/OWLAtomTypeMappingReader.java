@@ -45,10 +45,9 @@ import org.xml.sax.XMLReader;
 @TestClass("org.openscience.cdk.config.atomtypes.OWLAtomTypeMappingReaderTest")
 public class OWLAtomTypeMappingReader {
 
-    private XMLReader parser;
-    private Reader input;
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
+    private XMLReader           parser;
+    private Reader              input;
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(OWLAtomTypeReader.class);
 
     /**
      * Instantiates the XML based AtomTypeReader.
@@ -80,9 +79,8 @@ public class OWLAtomTypeMappingReader {
         // Xerces is an alternative
         if (!success) {
             try {
-                parser = (XMLReader)this.getClass().getClassLoader().
-                        loadClass("org.apache.xerces.parsers.SAXParser").
-                        newInstance();
+                parser = (XMLReader) this.getClass().getClassLoader().loadClass("org.apache.xerces.parsers.SAXParser")
+                        .newInstance();
                 logger.info("Using Xerces XML parser.");
                 success = true;
             } catch (Exception exception) {
@@ -101,8 +99,8 @@ public class OWLAtomTypeMappingReader {
      * @return         a Map with atom type mappings. Null, if some reading error occurred.
      */
     @TestMethod("testReadAtomTypeMappings,testReadAtomTypes_CDK2Sybyl")
-    public Map<String,String> readAtomTypeMappings() {
-    	Map<String,String> mappings = null;
+    public Map<String, String> readAtomTypeMappings() {
+        Map<String, String> mappings = null;
         try {
             parser.setFeature("http://xml.org/sax/features/validation", false);
             logger.info("Deactivated validation");
@@ -116,14 +114,13 @@ public class OWLAtomTypeMappingReader {
             parser.parse(new InputSource(input));
             mappings = handler.getAtomTypeMappings();
         } catch (IOException exception) {
-            logger.error("IOException: ",exception.getMessage());
+            logger.error("IOException: ", exception.getMessage());
             logger.debug(exception);
         } catch (SAXException saxe) {
             logger.error("SAXException: ", saxe.getMessage());
             logger.debug(saxe);
         }
-        return mappings == null ? new HashMap<String,String>() : mappings;
+        return mappings == null ? new HashMap<String, String>() : mappings;
     }
 
 }
-

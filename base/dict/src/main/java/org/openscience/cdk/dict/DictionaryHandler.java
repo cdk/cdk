@@ -29,20 +29,18 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public class DictionaryHandler extends DefaultHandler {
 
-    private boolean inEntry = false;
+    private boolean inEntry        = false;
     private boolean inMetadataList = false;
-    Entry entry;
+    Entry           entry;
 
     /** Used to store all chars between two tags */
-    private String currentChars;
+    private String  currentChars;
 
-    Dictionary dict;
+    Dictionary      dict;
 
     public DictionaryHandler() {}
 
-    public void doctypeDecl(String name, String publicId, String systemId)
-        throws Exception {
-    }
+    public void doctypeDecl(String name, String publicId, String systemId) throws Exception {}
 
     public void startDocument() {
         dict = new Dictionary();
@@ -57,8 +55,7 @@ public class DictionaryHandler extends DefaultHandler {
         }
     }
 
-    public void startElement(String uri, String local,
-                             String raw, Attributes atts) {
+    public void startElement(String uri, String local, String raw, Attributes atts) {
         currentChars = "";
         if ("entry".equals(local) && !"bibtex:entry".equals(raw) && !inEntry) {
             inEntry = true;
@@ -84,22 +81,21 @@ public class DictionaryHandler extends DefaultHandler {
         // RG: I think so and so I save a combination of the dictRef attribute
         // and the content attribute
         if ("metadata".equals(local) && inMetadataList) {
-            for (int i = 0; i < atts.getLength()-1; i += 2) {
+            for (int i = 0; i < atts.getLength() - 1; i += 2) {
 
                 String dictRefValue = "";
                 if (atts.getQName(i).equals("dictRef")) {
                     dictRefValue = atts.getValue(i);
                 }
-                if (atts.getQName(i+1).equals("content")) {
-                    String content = atts.getValue(i+1);
+                if (atts.getQName(i + 1).equals("content")) {
+                    String content = atts.getValue(i + 1);
                     if (content.indexOf("qsar-descriptors-metadata:") == 0) {
-                        entry.setDescriptorMetadata(dictRefValue+"/"+content);
+                        entry.setDescriptorMetadata(dictRefValue + "/" + content);
                     }
                 }
             }
         }
     }
-
 
     public void characters(char character[], int start, int length) {
         currentChars += new String(character, start, length);

@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.interfaces;
 
-
 /**
  * A sequence of ChemModels, which can, for example, be used to
  * store the course of a reaction. Each state of the reaction would be
@@ -32,20 +31,20 @@ package org.openscience.cdk.interfaces;
  */
 public interface IChemSequence extends IChemObject {
 
-	/**
-	 * Adds an chemModel to this container.
-	 *
-	 * @param  chemModel The chemModel to be added to this container
+    /**
+     * Adds an chemModel to this container.
+     *
+     * @param  chemModel The chemModel to be added to this container
      * @see              #getChemModel
-	 */
-	public void addChemModel(IChemModel chemModel);
+     */
+    public void addChemModel(IChemModel chemModel);
 
-	/**
-	 * Remove a ChemModel from this ChemSequence.
-	 *
-	 * @param  pos  The position of the ChemModel to be removed.
-	 */
-	public void removeChemModel(int pos);
+    /**
+     * Remove a ChemModel from this ChemSequence.
+     *
+     * @param  pos  The position of the ChemModel to be removed.
+     */
+    public void removeChemModel(int pos);
 
     /**
      * Returns an Iterable to ChemModels in this container.
@@ -53,23 +52,23 @@ public interface IChemSequence extends IChemObject {
      * @return    The Iterable to ChemModels in this container
      * @see       #addChemModel
      */
-     public Iterable<IChemModel> chemModels();
+    public Iterable<IChemModel> chemModels();
 
-	/**
-	 * Returns the ChemModel at position <code>number</code> in the
-	 * container.
-	 *
-	 * @param  number  The position of the ChemModel to be returned.
-	 * @return         The ChemModel at position <code>number</code>.
+    /**
+     * Returns the ChemModel at position <code>number</code> in the
+     * container.
+     *
+     * @param  number  The position of the ChemModel to be returned.
+     * @return         The ChemModel at position <code>number</code>.
      * @see            #addChemModel
-	 */
-	public IChemModel getChemModel(int number);
+     */
+    public IChemModel getChemModel(int number);
 
-	/**
-	 * Returns the number of ChemModels in this Container.
-	 *
-	 * @return    The number of ChemModels in this Container
-	 */
-	public int getChemModelCount();
+    /**
+     * Returns the number of ChemModels in this Container.
+     *
+     * @return    The number of ChemModels in this Container
+     */
+    public int getChemModelCount();
 
 }

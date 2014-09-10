@@ -55,11 +55,10 @@ import org.openscience.cdk.interfaces.IAtomContainer;
  * @see ConjugatedAtomEncoder
  */
 @TestClass("org.openscience.cdk.hash.SeedGeneratorTest")
-final class SeedGenerator extends AbstractHashGenerator
-        implements AtomHashGenerator {
+final class SeedGenerator extends AbstractHashGenerator implements AtomHashGenerator {
 
     /* used to encode atom attributes */
-    private final AtomEncoder encoder;
+    private final AtomEncoder     encoder;
 
     /** Optional suppression of atoms. */
     private final AtomSuppression suppression;
@@ -99,8 +98,7 @@ final class SeedGenerator extends AbstractHashGenerator
      */
     SeedGenerator(AtomEncoder encoder, Pseudorandom pseudorandom, AtomSuppression suppression) {
         super(pseudorandom);
-        if (encoder == null)
-            throw new NullPointerException("encoder cannot be null");
+        if (encoder == null) throw new NullPointerException("encoder cannot be null");
         if (suppression == null)
             throw new NullPointerException("suppression cannot be null, use AtomSuppression.unsuppressed()");
         this.encoder = encoder;
@@ -111,19 +109,19 @@ final class SeedGenerator extends AbstractHashGenerator
      * @inheritDoc
      */
     @TestMethod("testGenerate,testGenerate_SizeSeeding")
-    @Override public long[] generate(IAtomContainer container) {
+    @Override
+    public long[] generate(IAtomContainer container) {
 
         Suppressed suppressed = suppression.suppress(container);
 
         int n = container.getAtomCount();
-        int m = n - suppressed.count();   // number of non-suppressed vertices
+        int m = n - suppressed.count(); // number of non-suppressed vertices
         int seed = m > 1 ? 9803 % m : 1;
 
         long[] hashes = new long[n];
 
         for (int i = 0; i < n; i++) {
-            hashes[i] = distribute(seed * encoder.encode(container.getAtom(i),
-                                                         container));
+            hashes[i] = distribute(seed * encoder.encode(container.getAtom(i), container));
         }
         return hashes;
     }

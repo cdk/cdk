@@ -28,7 +28,7 @@ package org.openscience.cdk.io.formats;
 public class MOPAC7InputFormatTest extends ChemFormatMatcherTest {
 
     public MOPAC7InputFormatTest() {
-        super.setChemFormatMatcher((IChemFormatMatcher)MOPAC7InputFormat.getInstance());
+        super.setChemFormatMatcher((IChemFormatMatcher) MOPAC7InputFormat.getInstance());
     }
 
 }

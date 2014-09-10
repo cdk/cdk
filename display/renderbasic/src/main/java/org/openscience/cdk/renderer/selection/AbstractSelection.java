@@ -36,32 +36,33 @@ import org.openscience.cdk.interfaces.IChemObject;
  */
 public abstract class AbstractSelection implements IChemObjectSelection {
 
-	/**
-	 * Static implementation of an empty selection.
-	 */
+    /**
+     * Static implementation of an empty selection.
+     */
     public static IChemObjectSelection EMPTY_SELECTION = new AbstractSelection() {
 
-    	/** {@inheritDoc} */
-        public IAtomContainer getConnectedAtomContainer() {
-            return null;
-        }
+                                                           /** {@inheritDoc} */
+                                                           public IAtomContainer getConnectedAtomContainer() {
+                                                               return null;
+                                                           }
 
-    	/** {@inheritDoc} */
-        public boolean isFilled() {
-            return false;
-        }
+                                                           /** {@inheritDoc} */
+                                                           public boolean isFilled() {
+                                                               return false;
+                                                           }
 
-    	/** {@inheritDoc} */
-        public boolean contains(IChemObject obj) {
-            return false;
-        }
+                                                           /** {@inheritDoc} */
+                                                           public boolean contains(IChemObject obj) {
+                                                               return false;
+                                                           }
 
-    	/** {@inheritDoc} */
-        public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
-            return Collections.emptySet();
-        }
+                                                           /** {@inheritDoc} */
+                                                           public <E extends IChemObject> Collection<E> elements(
+                                                                   Class<E> clazz) {
+                                                               return Collections.emptySet();
+                                                           }
 
-    };
+                                                       };
 
     /** {@inheritDoc} */
     public void select(IChemModel chemModel) {

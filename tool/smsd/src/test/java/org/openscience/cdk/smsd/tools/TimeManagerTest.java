@@ -32,7 +32,8 @@ import org.openscience.cdk.SlowTest;
  * @author Asad
  * @cdk.module test-smsd
  */
-@Category(SlowTest.class) // test uses Thread.sleep...
+@Category(SlowTest.class)
+// test uses Thread.sleep...
 public class TimeManagerTest extends CDKTestCase {
 
     @Test

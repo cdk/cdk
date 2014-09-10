@@ -32,92 +32,99 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
  */
 public class MMElementRuleTest extends FormulaRuleTest {
 
-	private static IChemObjectBuilder builder;
+    private static IChemObjectBuilder builder;
 
-	/**
+    /**
     *  The JUnit setup method
     */
-    @BeforeClass public static void setUp() throws Exception {
-    	builder = DefaultChemObjectBuilder.getInstance();
-    	setRule(MMElementRule.class);
+    @BeforeClass
+    public static void setUp() throws Exception {
+        builder = DefaultChemObjectBuilder.getInstance();
+        setRule(MMElementRule.class);
     }
 
     /**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testMMElementRule() throws Exception {
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testMMElementRule() throws Exception {
 
-		IRule rule  = new MMElementRule();
-		Assert.assertNotNull(rule);
+        IRule rule = new MMElementRule();
+        Assert.assertNotNull(rule);
 
-	}
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefault() throws Exception {
+    }
 
-		IRule rule  = new MMElementRule();
-		Object[] objects = rule.getParameters();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefault() throws Exception {
 
-		Assert.assertSame(MMElementRule.Database.WILEY, objects[0]);
-		Assert.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
+        IRule rule = new MMElementRule();
+        Object[] objects = rule.getParameters();
 
-	}
+        Assert.assertSame(MMElementRule.Database.WILEY, objects[0]);
+        Assert.assertSame(MMElementRule.RangeMass.Minus500, objects[1]);
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testSetParameters() throws Exception {
+    }
 
-		IRule rule  = new MMElementRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testSetParameters() throws Exception {
 
-		Object[] params = new Object[2];
+        IRule rule = new MMElementRule();
 
-		params[0] = MMElementRule.Database.DNP;
-		params[1] = MMElementRule.RangeMass.Minus1000;
+        Object[] params = new Object[2];
 
-		rule.setParameters(params);
-		Object[] objects = rule.getParameters();
+        params[0] = MMElementRule.Database.DNP;
+        params[1] = MMElementRule.RangeMass.Minus1000;
 
-		Assert.assertSame(MMElementRule.Database.DNP, objects[0]);
-		Assert.assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
-	}
+        rule.setParameters(params);
+        Object[] objects = rule.getParameters();
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidFalse() throws Exception {
+        Assert.assertSame(MMElementRule.Database.DNP, objects[0]);
+        Assert.assertSame(MMElementRule.RangeMass.Minus1000, objects[1]);
+    }
 
-		IRule rule  = new MMElementRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidFalse() throws Exception {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
-		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),200);
+        IRule rule = new MMElementRule();
 
-		Assert.assertEquals(0.0, rule.validate(formula),0.0001);
-	}
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 200);
 
-	/**
-	 * A unit test suite for JUnit.
-	 *
-	 * @return    The test suite
-	 */
-	@Test public void testDefaultValidTrue() throws Exception {
+        Assert.assertEquals(0.0, rule.validate(formula), 0.0001);
+    }
 
-		IRule rule  = new MMElementRule();
+    /**
+     * A unit test suite for JUnit.
+     *
+     * @return    The test suite
+     */
+    @Test
+    public void testDefaultValidTrue() throws Exception {
 
-		IMolecularFormula formula = new MolecularFormula();
-		formula.addIsotope(builder.newInstance(IIsotope.class,"C"),2);
-		formula.addIsotope(builder.newInstance(IIsotope.class,"H"),6);
+        IRule rule = new MMElementRule();
 
-		Assert.assertEquals(1.0, rule.validate(formula),0.0001);
-	}
+        IMolecularFormula formula = new MolecularFormula();
+        formula.addIsotope(builder.newInstance(IIsotope.class, "C"), 2);
+        formula.addIsotope(builder.newInstance(IIsotope.class, "H"), 6);
+
+        Assert.assertEquals(1.0, rule.validate(formula), 0.0001);
+    }
 }

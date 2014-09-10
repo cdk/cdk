@@ -44,8 +44,7 @@ import org.openscience.cdk.tools.periodictable.PeriodicTable;
  *
  * @see org.openscience.cdk.config.XMLIsotopeFactory
  */
-public class Element extends ChemObject implements Serializable, IElement, Cloneable
-{
+public class Element extends ChemObject implements Serializable, IElement, Cloneable {
 
     /**
      * Determines if a de-serialized object is compatible with this class.
@@ -54,14 +53,14 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * of this class is incompatible with the old version. See Sun docs
      * for <a href=http://java.sun.com/products/jdk/1.1/docs/guide
      * /serialization/spec/version.doc.html>details</a>.
-	 */
-	private static final long serialVersionUID = 3062529834691231436L;
+     */
+    private static final long serialVersionUID = 3062529834691231436L;
 
-	/** The element symbol for this element as listed in the periodic table. */
-    protected String symbol;
+    /** The element symbol for this element as listed in the periodic table. */
+    protected String          symbol;
 
     /** The atomic number for this element giving their position in the periodic table. */
-    protected Integer atomicNumber = (Integer) CDKConstants.UNSET;
+    protected Integer         atomicNumber     = (Integer) CDKConstants.UNSET;
 
     /**
      * Constructs an empty Element.
@@ -79,9 +78,9 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param element IElement to copy information from
      */
     public Element(IElement element) {
-    	super(element);
-    	this.symbol = element.getSymbol();
-    	this.atomicNumber = element.getAtomicNumber();
+        super(element);
+        this.symbol = element.getSymbol();
+        this.atomicNumber = element.getAtomicNumber();
     }
 
     /**
@@ -102,22 +101,22 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
      * @param   atomicNumber  The atomicNumber of this element.
      */
     public Element(String symbol, Integer atomicNumber) {
-        this.symbol       = symbol;
+        this.symbol = symbol;
         this.atomicNumber = atomicNumber;
     }
 
     /**
      * Returns the atomic number of this element.
      *
-	 *  <p>Once instantiated all field not filled by passing parameters
-	 * to the constructor are null. Elements can be configured by using
-	 * the IsotopeFactory.configure() method:
-	 * <pre>
-	 *   Element element = new Element("C");
-	 *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
-	 *   if.configure(element);
-	 * </pre>
-	 * </p>
+     *  <p>Once instantiated all field not filled by passing parameters
+     * to the constructor are null. Elements can be configured by using
+     * the IsotopeFactory.configure() method:
+     * <pre>
+     *   Element element = new Element("C");
+     *   IsotopeFactory if = IsotopeFactory.getInstance(element.getNewBuilder());
+     *   if.configure(element);
+     * </pre>
+     * </p>
      *
      * @return The atomic number of this element
      *
@@ -164,13 +163,13 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         StringBuffer resultString = new StringBuffer(32);
         resultString.append("Element(").append(hashCode());
         if (getSymbol() != null) {
-        	resultString.append(", S:").append(getSymbol());
+            resultString.append(", S:").append(getSymbol());
         }
         if (getID() != null) {
-        	resultString.append(", ID:").append(getID());
+            resultString.append(", ID:").append(getID());
         }
         if (getAtomicNumber() != null) {
-        	resultString.append(", AN:").append(getAtomicNumber());
+            resultString.append(", AN:").append(getAtomicNumber());
         }
         resultString.append(')');
         return resultString.toString();
@@ -193,8 +192,7 @@ public class Element extends ChemObject implements Serializable, IElement, Clone
         if (!super.compare(object)) {
             return false;
         }
-        Element elem = (Element)object;
-        return Objects.equal(atomicNumber, elem.atomicNumber)
-                && Objects.equal(symbol, elem.symbol);
+        Element elem = (Element) object;
+        return Objects.equal(atomicNumber, elem.atomicNumber) && Objects.equal(symbol, elem.symbol);
     }
 }

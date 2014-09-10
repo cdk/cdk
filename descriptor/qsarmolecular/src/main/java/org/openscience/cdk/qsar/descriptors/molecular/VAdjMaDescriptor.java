@@ -60,67 +60,61 @@ import org.openscience.cdk.qsar.result.IDescriptorResult;
  */
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.VAdjMaDescriptorTest")
 public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
+
     private static final String[] names = {"VAdjMat"};
 
     /**
-	 *  Constructor for the VAdjMaDescriptor object
-	 */
-	public VAdjMaDescriptor() { }
+     *  Constructor for the VAdjMaDescriptor object
+     */
+    public VAdjMaDescriptor() {}
 
-
-	/**
-	 *  Gets the specification attribute of the VAdjMaDescriptor object
-	 *
-	 *@return    The specification value
-	 */
-	@TestMethod("testGetSpecification")
+    /**
+     *  Gets the specification attribute of the VAdjMaDescriptor object
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
-        return new DescriptorSpecification(
-            "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
-		    this.getClass().getName(),
-		    "The Chemistry Development Kit");
-	}
+        return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vAdjMa",
+                this.getClass().getName(), "The Chemistry Development Kit");
+    }
 
-
-	/**
-	 *  Sets the parameters attribute of the VAdjMaDescriptor object
-	 *
-	 *@param  params            The new parameters value
-	 *@exception  CDKException  Description of the Exception
-	 */
-	@TestMethod("testSetParameters_arrayObject")
+    /**
+     *  Sets the parameters attribute of the VAdjMaDescriptor object
+     *
+     *@param  params            The new parameters value
+     *@exception  CDKException  Description of the Exception
+     */
+    @TestMethod("testSetParameters_arrayObject")
     public void setParameters(Object[] params) throws CDKException {
-		// no parameters for this descriptor
-	}
+        // no parameters for this descriptor
+    }
 
-
-	/**
-	 *  Gets the parameters attribute of the VAdjMaDescriptor object
-	 *
-	 *@return    The parameters value
-	 */
-	@TestMethod("testGetParameters")
+    /**
+     *  Gets the parameters attribute of the VAdjMaDescriptor object
+     *
+     *@return    The parameters value
+     */
+    @TestMethod("testGetParameters")
     public Object[] getParameters() {
-		// no parameters to return
-		return (null);
-	}
+        // no parameters to return
+        return (null);
+    }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
 
-
     /**
-	 *  calculates the VAdjMa descriptor for an atom container
-	 *
-	 *@param  atomContainer                AtomContainer
-	 *@return                   VAdjMa
+     *  calculates the VAdjMa descriptor for an atom container
+     *
+     *@param  atomContainer                AtomContainer
+     *@return                   VAdjMa
 
-	 */
-	@TestMethod("testCalculate_IAtomContainer")
+     */
+    @TestMethod("testCalculate_IAtomContainer")
     public DescriptorValue calculate(IAtomContainer atomContainer) {
-
 
         int n = 0; // count all heavy atom - heavy atom bonds
         for (IBond bond : atomContainer.bonds()) {
@@ -133,9 +127,9 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
         if (n > 0) {
             vadjMa += (Math.log(n) / Math.log(2)) + 1;
         }
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                new DoubleResult(vadjMa), getDescriptorNames());
-	}
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), new DoubleResult(vadjMa),
+                getDescriptorNames());
+    }
 
     /**
      * Returns the specific type of the DescriptorResult object.
@@ -153,7 +147,6 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
         return new DoubleResult(0.0);
     }
 
-
     /**
      *  Gets the parameterNames attribute of the VAdjMaDescriptor object
      *
@@ -165,17 +158,14 @@ public class VAdjMaDescriptor extends AbstractMolecularDescriptor implements IMo
         return (null);
     }
 
-
-
-	/**
-	 *  Gets the parameterType attribute of the VAdjMaDescriptor object
-	 *
-	 *@param  name  Description of the Parameter
-	 *@return       The parameterType value
-	 */
-	@TestMethod("testGetParameterType_String")
+    /**
+     *  Gets the parameterType attribute of the VAdjMaDescriptor object
+     *
+     *@param  name  Description of the Parameter
+     *@return       The parameterType value
+     */
+    @TestMethod("testGetParameterType_String")
     public Object getParameterType(String name) {
-		return (null);
-	}
+        return (null);
+    }
 }
-

@@ -40,24 +40,26 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(PCCompoundXMLReaderTest.class);
 
-    @BeforeClass public static void setup() throws Exception {
+    @BeforeClass
+    public static void setup() throws Exception {
         setSimpleChemObjectReader(new PCCompoundXMLReader(), "data/asn/pubchem/cid1145.xml");
     }
 
-    @Test public void testAccepts() throws Exception {
-    	PCCompoundXMLReader reader = new PCCompoundXMLReader();
-    	Assert.assertTrue(reader.accepts(AtomContainer.class));
+    @Test
+    public void testAccepts() throws Exception {
+        PCCompoundXMLReader reader = new PCCompoundXMLReader();
+        Assert.assertTrue(reader.accepts(AtomContainer.class));
     }
 
-    @Test public void testReading() throws Exception {
+    @Test
+    public void testReading() throws Exception {
         String filename = "data/asn/pubchem/cid1145.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
-        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
         Assert.assertNotNull(molecule);
 
@@ -80,12 +82,13 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         Assert.assertEquals(0.5, point.y, 0.00000001);
     }
 
-    @Test public void testReading3DCoords() throws Exception {
+    @Test
+    public void testReading3DCoords() throws Exception {
         String filename = "data/asn/pubchem/cid176.xml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
-        IAtomContainer molecule = (IAtomContainer)reader.read(new AtomContainer());
+        IAtomContainer molecule = (IAtomContainer) reader.read(new AtomContainer());
         reader.close();
         Assert.assertNotNull(molecule);
 
@@ -95,7 +98,7 @@ public class PCCompoundXMLReaderTest extends SimpleChemObjectReaderTest {
         Point3d point = molecule.getAtom(0).getPoint3d();
         Assert.assertNotNull(point);
         Assert.assertEquals(-0.9598, point.x, 0.0001);
-        Assert.assertEquals( 1.5616, point.y, 0.0001);
-        Assert.assertEquals( 1.8714, point.z, 0.0001);
+        Assert.assertEquals(1.5616, point.y, 0.0001);
+        Assert.assertEquals(1.8714, point.z, 0.0001);
     }
 }

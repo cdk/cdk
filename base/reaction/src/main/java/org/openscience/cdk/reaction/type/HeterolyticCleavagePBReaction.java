@@ -18,7 +18,6 @@
  */
 package org.openscience.cdk.reaction.type;
 
-
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
@@ -80,122 +79,125 @@ import java.util.Iterator;
  *
  * @see HeterolyticCleavageMechanism
  **/
-@TestClass(value="org.openscience.cdk.reaction.type.HeterolyticCleavagePBReactionTest")
-public class HeterolyticCleavagePBReaction extends ReactionEngine implements IReactionProcess{
-	private static ILoggingTool logger =
-	    LoggingToolFactory.createLoggingTool(HeterolyticCleavagePBReaction.class);
+@TestClass(value = "org.openscience.cdk.reaction.type.HeterolyticCleavagePBReactionTest")
+public class HeterolyticCleavagePBReaction extends ReactionEngine implements IReactionProcess {
 
-	/**
-	 * Constructor of the HeterolyticCleavagePBReaction object.
-	 *
-	 */
-	public HeterolyticCleavagePBReaction(){
-	}
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(HeterolyticCleavagePBReaction.class);
 
-	/**
-	 *  Gets the specification attribute of the HeterolyticCleavagePBReaction object.
-	 *
-	 *@return    The specification value
-	 */
-    @TestMethod("testGetSpecification")
-	public ReactionSpecification getSpecification() {
-		return new ReactionSpecification(
-				"http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#HeterolyticCleavagePB",
-				this.getClass().getName(),
-				"$Id$",
-				"The Chemistry Development Kit");
-	}
-	/**
-	 *  Initiate process.
-	 *  It is needed to call the addExplicitHydrogensToSatisfyValency
-	 *  from the class tools.HydrogenAdder.
-	 *
+    /**
+     * Constructor of the HeterolyticCleavagePBReaction object.
      *
-	 *@exception  CDKException  Description of the Exception
+     */
+    public HeterolyticCleavagePBReaction() {}
+
+    /**
+     *  Gets the specification attribute of the HeterolyticCleavagePBReaction object.
+     *
+     *@return    The specification value
+     */
+    @TestMethod("testGetSpecification")
+    public ReactionSpecification getSpecification() {
+        return new ReactionSpecification(
+                "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#HeterolyticCleavagePB",
+                this.getClass().getName(), "$Id$", "The Chemistry Development Kit");
+    }
+
+    /**
+     *  Initiate process.
+     *  It is needed to call the addExplicitHydrogensToSatisfyValency
+     *  from the class tools.HydrogenAdder.
+     *
+     *
+     *@exception  CDKException  Description of the Exception
 
      * @param  reactants         reactants of the reaction
     * @param  agents            agents of the reaction (Must be in this case null)
      */
     @TestMethod("testInitiate_IAtomContainerSet_IAtomContainerSet")
-	public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException{
+    public IReactionSet initiate(IAtomContainerSet reactants, IAtomContainerSet agents) throws CDKException {
 
-		logger.debug("initiate reaction: HeterolyticCleavagePBReaction");
+        logger.debug("initiate reaction: HeterolyticCleavagePBReaction");
 
-		if (reactants.getAtomContainerCount() != 1) {
-			throw new CDKException("HeterolyticCleavagePBReaction only expects one reactant");
-		}
-		if (agents != null) {
-			throw new CDKException("HeterolyticCleavagePBReaction don't expects agents");
-		}
+        if (reactants.getAtomContainerCount() != 1) {
+            throw new CDKException("HeterolyticCleavagePBReaction only expects one reactant");
+        }
+        if (agents != null) {
+            throw new CDKException("HeterolyticCleavagePBReaction don't expects agents");
+        }
 
-		IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
-		IAtomContainer reactant = reactants.getAtomContainer(0);
+        IReactionSet setOfReactions = reactants.getBuilder().newInstance(IReactionSet.class);
+        IAtomContainer reactant = reactants.getAtomContainer(0);
 
-		/* if the parameter hasActiveCenter is not fixed yet, set the active centers*/
-		IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
-		if( ipr != null && !ipr.isSetParameter())
-			setActiveCenters(reactant);
+        /*
+         * if the parameter hasActiveCenter is not fixed yet, set the active
+         * centers
+         */
+        IParameterReact ipr = super.getParameterClass(SetReactionCenter.class);
+        if (ipr != null && !ipr.isSetParameter()) setActiveCenters(reactant);
 
         Iterator<IBond> bondis = reactant.bonds().iterator();
         while (bondis.hasNext()) {
             IBond bondi = bondis.next();
             IAtom atom1 = bondi.getAtom(0);
             IAtom atom2 = bondi.getAtom(1);
-            if(bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() != IBond.Order.SINGLE
-					&& atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
-					&& (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
-					&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
-	  				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
+            if (bondi.getFlag(CDKConstants.REACTIVE_CENTER) && bondi.getOrder() != IBond.Order.SINGLE
+                    && atom1.getFlag(CDKConstants.REACTIVE_CENTER) && atom2.getFlag(CDKConstants.REACTIVE_CENTER)
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+                    && reactant.getConnectedSingleElectronsCount(atom1) == 0
+                    && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
 
-             	/**/
-				for (int j = 0; j < 2; j++){
+                /**/
+                for (int j = 0; j < 2; j++) {
 
-					ArrayList<IAtom> atomList = new ArrayList<IAtom>();
-                	if (j == 0){
-                		atomList.add(atom1);
-                		atomList.add(atom2);
-                	}else{
-                		atomList.add(atom2);
-                		atomList.add(atom1);
-                	}
-                	ArrayList<IBond> bondList = new ArrayList<IBond>();
-                	bondList.add(bondi);
+                    ArrayList<IAtom> atomList = new ArrayList<IAtom>();
+                    if (j == 0) {
+                        atomList.add(atom1);
+                        atomList.add(atom2);
+                    } else {
+                        atomList.add(atom2);
+                        atomList.add(atom1);
+                    }
+                    ArrayList<IBond> bondList = new ArrayList<IBond>();
+                    bondList.add(bondi);
 
-					IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
-					moleculeSet.addAtomContainer(reactant);
-					IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
-					if(reaction == null)
-						continue;
-					else
-						setOfReactions.addReaction(reaction);
-				}
-			}
-		}
-		return setOfReactions;
-	}
-	/**
-	 * set the active center for this molecule.
-	 * The active center will be those which correspond with A-B. If
-	 * the bond is simple, it will be broken forming two fragments
-	 * <pre>
-	 * A: Atom
-	 * #/=/-: bond
-	 * B: Atom
-	 *  </pre>
-	 *
-	 * @param reactant The molecule to set the activity
-	 * @throws CDKException
-	 */
+                    IAtomContainerSet moleculeSet = reactant.getBuilder().newInstance(IAtomContainerSet.class);
+                    moleculeSet.addAtomContainer(reactant);
+                    IReaction reaction = mechanism.initiate(moleculeSet, atomList, bondList);
+                    if (reaction == null)
+                        continue;
+                    else
+                        setOfReactions.addReaction(reaction);
+                }
+            }
+        }
+        return setOfReactions;
+    }
+
+    /**
+     * set the active center for this molecule.
+     * The active center will be those which correspond with A-B. If
+     * the bond is simple, it will be broken forming two fragments
+     * <pre>
+     * A: Atom
+     * #/=/-: bond
+     * B: Atom
+     *  </pre>
+     *
+     * @param reactant The molecule to set the activity
+     * @throws CDKException
+     */
     private void setActiveCenters(IAtomContainer reactant) throws CDKException {
         Iterator<IBond> bonds = reactant.bonds().iterator();
         while (bonds.hasNext()) {
-        	 IBond bond = bonds.next();
-             IAtom atom1 = bond.getAtom(0);
-             IAtom atom2 = bond.getAtom(1);
-             if( bond.getOrder() != IBond.Order.SINGLE
-            	&&	 (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
- 				&& (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
-  				&& reactant.getConnectedSingleElectronsCount(atom1) == 0 && reactant.getConnectedSingleElectronsCount(atom2) == 0){
+            IBond bond = bonds.next();
+            IAtom atom1 = bond.getAtom(0);
+            IAtom atom2 = bond.getAtom(1);
+            if (bond.getOrder() != IBond.Order.SINGLE
+                    && (atom1.getFormalCharge() == CDKConstants.UNSET ? 0 : atom1.getFormalCharge()) == 0
+                    && (atom2.getFormalCharge() == CDKConstants.UNSET ? 0 : atom2.getFormalCharge()) == 0
+                    && reactant.getConnectedSingleElectronsCount(atom1) == 0
+                    && reactant.getConnectedSingleElectronsCount(atom2) == 0) {
                 atom1.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 atom2.setFlag(CDKConstants.REACTIVE_CENTER, true);
                 bond.setFlag(CDKConstants.REACTIVE_CENTER, true);

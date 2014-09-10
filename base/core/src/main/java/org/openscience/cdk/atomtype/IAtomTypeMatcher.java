@@ -37,16 +37,16 @@ import org.openscience.cdk.interfaces.IAtomType;
  */
 public interface IAtomTypeMatcher {
 
-     /**
-      * Method that assigns an atom type to a given atom belonging to an atom
-      * container.
-      *
-      * @param  container AtomContainer of which the <code>atom</code> is part
-      * @param  atom      Atom for which a matching atom type is searched
-      * @return           The matching AtomType
-      * @throws           CDKException when something went wrong with going through
-      *                   the AtomType's
-      */
+    /**
+     * Method that assigns an atom type to a given atom belonging to an atom
+     * container.
+     *
+     * @param  container AtomContainer of which the <code>atom</code> is part
+     * @param  atom      Atom for which a matching atom type is searched
+     * @return           The matching AtomType
+     * @throws           CDKException when something went wrong with going through
+     *                   the AtomType's
+     */
     public IAtomType findMatchingAtomType(IAtomContainer container, IAtom atom) throws CDKException;
 
     /**
@@ -57,6 +57,6 @@ public interface IAtomTypeMatcher {
      * @throws           CDKException when something went wrong with going through
      *                   the AtomType's
      */
-   public IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
+    public IAtomType[] findMatchingAtomTypes(IAtomContainer container) throws CDKException;
 
 }

@@ -54,21 +54,18 @@ public class ZMatrixTools {
      *
      * @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
      */
-    public static Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms,
-                                        double[] angles,    int[] second_atoms,
-                                        double[] dihedrals, int[] third_atoms) {
+    public static Point3d[] zmatrixToCartesian(double[] distances, int[] first_atoms, double[] angles,
+            int[] second_atoms, double[] dihedrals, int[] third_atoms) {
         Point3d[] cartesianCoords = new Point3d[distances.length];
-        for (int index=0; index<distances.length; index++) {
-            if (index==0) {
-                cartesianCoords[index] = new Point3d(0d,0d,0d);
-            } else if (index==1) {
-                cartesianCoords[index] = new Point3d(distances[1],0d,0d);
-            } else if (index==2) {
-                cartesianCoords[index] = new Point3d(-Math.cos((angles[2]/180)*Math.PI)*distances[2]+distances[1],
-                                           Math.sin((angles[2]/180)*Math.PI)*distances[2],
-                                           0d);
-                if (first_atoms[index] == 0)
-                    cartesianCoords[index].x = (cartesianCoords[index].x - distances[1]) * -1;
+        for (int index = 0; index < distances.length; index++) {
+            if (index == 0) {
+                cartesianCoords[index] = new Point3d(0d, 0d, 0d);
+            } else if (index == 1) {
+                cartesianCoords[index] = new Point3d(distances[1], 0d, 0d);
+            } else if (index == 2) {
+                cartesianCoords[index] = new Point3d(-Math.cos((angles[2] / 180) * Math.PI) * distances[2]
+                        + distances[1], Math.sin((angles[2] / 180) * Math.PI) * distances[2], 0d);
+                if (first_atoms[index] == 0) cartesianCoords[index].x = (cartesianCoords[index].x - distances[1]) * -1;
             } else {
                 Vector3d cd = new Vector3d();
                 cd.sub(cartesianCoords[third_atoms[index]], cartesianCoords[second_atoms[index]]);
@@ -79,8 +76,8 @@ public class ZMatrixTools {
                 Vector3d n1 = new Vector3d();
                 n1.cross(cd, bc);
 
-                Vector3d n2 = rotate(n1,bc,-dihedrals[index]);
-                Vector3d ba = rotate(bc,n2,-angles[index]);
+                Vector3d n2 = rotate(n1, bc, -dihedrals[index]);
+                Vector3d ba = rotate(bc, n2, -angles[index]);
 
                 ba.normalize();
                 ba.scale(distances[index]);
@@ -102,6 +99,3 @@ public class ZMatrixTools {
     }
 
 }
-
-
-

@@ -43,8 +43,8 @@ import static org.mockito.Mockito.when;
 public class MultiStereoEncoderTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void testConstruction_Empty(){
-        new MultiStereoEncoder(Collections.<StereoEncoder>emptyList());
+    public void testConstruction_Empty() {
+        new MultiStereoEncoder(Collections.<StereoEncoder> emptyList());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class MultiStereoEncoderTest {
         StereoEncoder encoder = new MultiStereoEncoder(Arrays.asList(a, b));
 
         long[] current = new long[5];
-        long[] next    = new long[5];
+        long[] next = new long[5];
 
         when(a.encode(current, next)).thenReturn(true);
         when(b.encode(current, next)).thenReturn(true);
@@ -80,7 +80,7 @@ public class MultiStereoEncoderTest {
         StereoEncoder encoder = new MultiStereoEncoder(Arrays.asList(a, b));
 
         long[] current = new long[0];
-        long[] next    = new long[0];
+        long[] next = new long[0];
 
         when(a.encode(current, next)).thenReturn(true);
         when(b.encode(current, next)).thenReturn(true);
@@ -101,6 +101,5 @@ public class MultiStereoEncoderTest {
         verify(a, times(2)).encode(current, next);
         verify(b, times(2)).encode(current, next);
     }
-
 
 }

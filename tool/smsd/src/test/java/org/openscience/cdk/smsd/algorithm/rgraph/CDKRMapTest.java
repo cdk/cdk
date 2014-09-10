@@ -38,5 +38,3 @@ public class CDKRMapTest extends CDKTestCase {
         Assert.assertEquals(2, node.getId2());
     }
 }
-
-

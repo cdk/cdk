@@ -40,7 +40,7 @@ public class RingSizeComparator implements Comparator<IRing> {
     /** Flag to denote that the set is order with the smallest ring first */
     public final static int SMALL_FIRST = 2;
 
-    int sortOrder = SMALL_FIRST;
+    int                     sortOrder   = SMALL_FIRST;
 
     /**
     * Constructs a new comparator to sort rings by size.
@@ -53,8 +53,7 @@ public class RingSizeComparator implements Comparator<IRing> {
     }
 
     @TestMethod("testCompare")
-    public int compare(IRing object1, IRing object2) throws ClassCastException
-    {
+    public int compare(IRing object1, IRing object2) throws ClassCastException {
         int size1 = object1.getAtomCount();
         int size2 = object2.getAtomCount();
         if (size1 == size2) return 0;
@@ -73,4 +72,3 @@ public class RingSizeComparator implements Comparator<IRing> {
         return 0;
     }
 }
-

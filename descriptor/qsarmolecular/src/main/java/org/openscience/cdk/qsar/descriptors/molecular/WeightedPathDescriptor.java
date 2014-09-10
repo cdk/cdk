@@ -37,7 +37,6 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * Evaluates the weighted path descriptors.
  * <p/>
@@ -88,21 +87,16 @@ import java.util.List;
 @TestClass("org.openscience.cdk.qsar.descriptors.molecular.WeightedPathDescriptorTest")
 public class WeightedPathDescriptor extends AbstractMolecularDescriptor implements IMolecularDescriptor {
 
-    private static final String[] names = {
-            "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"
-    };
+    private static final String[] names = {"WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5"};
 
-    public WeightedPathDescriptor() {
-    }
+    public WeightedPathDescriptor() {}
 
     @TestMethod("testGetSpecification")
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
-                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath",
-                this.getClass().getName(),
-                "The Chemistry Development Kit");
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#weightedPath", this.getClass()
+                        .getName(), "The Chemistry Development Kit");
     }
-
 
     /**
      * Sets the parameters attribute of the WeightedPathDescriptor object.
@@ -127,7 +121,7 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         return (null);
     }
 
-    @TestMethod(value="testNamesConsistency")
+    @TestMethod(value = "testNamesConsistency")
     public String[] getDescriptorNames() {
         return names;
     }
@@ -142,7 +136,6 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         // no param names to return
         return (null);
     }
-
 
     /**
      * Gets the parameterType attribute of the WeightedPathDescriptor object.
@@ -182,7 +175,8 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         // heteroatoms
         double[] pathWts = getPathWeights(pathList, local);
         double mid = 0.0;
-        for (double pathWt3 : pathWts) mid += pathWt3;
+        for (double pathWt3 : pathWts)
+            mid += pathWt3;
         mid += natom; // since we don't calculate paths of length 0 above
 
         retval.add(mid);
@@ -202,7 +196,8 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (double pathWt2 : pathWts) mid += pathWt2;
+        for (double pathWt2 : pathWts)
+            mid += pathWt2;
         mid += count;
         retval.add(mid);
 
@@ -221,7 +216,8 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (double pathWt1 : pathWts) mid += pathWt1;
+        for (double pathWt1 : pathWts)
+            mid += pathWt1;
         mid += count;
         retval.add(mid);
 
@@ -240,13 +236,13 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
         }
         pathWts = getPathWeights(pathList, local);
         mid = 0.0;
-        for (double pathWt : pathWts) mid += pathWt;
+        for (double pathWt : pathWts)
+            mid += pathWt;
         mid += count;
         retval.add(mid);
 
-
-        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(),
-                retval, getDescriptorNames());
+        return new DescriptorValue(getSpecification(), getParameterNames(), getParameters(), retval,
+                getDescriptorNames());
     }
 
     /**
@@ -282,5 +278,3 @@ public class WeightedPathDescriptor extends AbstractMolecularDescriptor implemen
     }
 
 }
-
-

@@ -42,13 +42,16 @@ public class OrderQueryBond extends SMARTSBond {
      * @param order the order of bond
      */
     public OrderQueryBond(IBond.Order order, IChemObjectBuilder builder) {
-    	super(builder);
-    	this.setOrder(order);
+        super(builder);
+        this.setOrder(order);
     }
 
-	/* (non-Javadoc)
-	 * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org.openscience.cdk.interfaces.IBond)
-	 */
+    /*
+     * (non-Javadoc)
+     * @see
+     * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
+     * .openscience.cdk.interfaces.IBond)
+     */
     public boolean matches(IBond bond) {
         if (bond.getFlag(CDKConstants.ISAROMATIC) ^ getFlag(CDKConstants.ISAROMATIC)) return false;
 
@@ -60,16 +63,16 @@ public class OrderQueryBond extends SMARTSBond {
         return bond.getOrder() == getOrder();
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
     public String toString() {
-		StringBuilder s = new StringBuilder();
-		s.append("OrderQueryBond(");
+        StringBuilder s = new StringBuilder();
+        s.append("OrderQueryBond(");
         s.append(this.hashCode() + ", ");
-		s.append("#O:" + getOrder());
-		s.append(')');
-		return s.toString();
+        s.append("#O:" + getOrder());
+        s.append(')');
+        return s.toString();
     }
 }
-

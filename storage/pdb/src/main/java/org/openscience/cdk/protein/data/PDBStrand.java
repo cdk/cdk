@@ -44,42 +44,42 @@ import org.openscience.cdk.interfaces.IMonomer;
  */
 public class PDBStrand extends Strand {
 
-	private static final long serialVersionUID = 8278569309787734236L;
+    private static final long serialVersionUID = 8278569309787734236L;
 
-	List<String> sequentialListOfMonomers;
+    List<String>              sequentialListOfMonomers;
 
-	/**
-	 * Constructs a new Polymer to store the Monomers.
-	 */
-	public PDBStrand() {
-		super();
-		sequentialListOfMonomers = new ArrayList<String>();
-	}
+    /**
+     * Constructs a new Polymer to store the Monomers.
+     */
+    public PDBStrand() {
+        super();
+        sequentialListOfMonomers = new ArrayList<String>();
+    }
 
-	/**
-	 * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-	 * record of the iCode.
-	 *
-	 * @param oAtom  The atom to add
-	 * @param oMonomer  The monomer the atom belongs to
-	 */
-	public void addAtom(IAtom oAtom, IMonomer oMonomer) {
-		super.addAtom(oAtom, oMonomer);
-		if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
-			sequentialListOfMonomers.add(oMonomer.getMonomerName());
-	}
+    /**
+     * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+     * record of the iCode.
+     *
+     * @param oAtom  The atom to add
+     * @param oMonomer  The monomer the atom belongs to
+     */
+    public void addAtom(IAtom oAtom, IMonomer oMonomer) {
+        super.addAtom(oAtom, oMonomer);
+        if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
+            sequentialListOfMonomers.add(oMonomer.getMonomerName());
+    }
 
-	/**
-	 * Returns the monomer names in the order in which they were added.
-	 *
-	 * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
-	 */
-	public Collection<String> getMonomerNamesInSequentialOrder() {
-		// don't return the original
-		return new ArrayList<String>(sequentialListOfMonomers);
-	}
+    /**
+     * Returns the monomer names in the order in which they were added.
+     *
+     * @see org.openscience.cdk.interfaces.IPolymer#getMonomerNames()
+     */
+    public Collection<String> getMonomerNamesInSequentialOrder() {
+        // don't return the original
+        return new ArrayList<String>(sequentialListOfMonomers);
+    }
 
-	public String toString() {
+    public String toString() {
         StringBuilder stringContent = new StringBuilder();
         stringContent.append("PDBPolymer(");
         stringContent.append(this.hashCode()).append(", ");

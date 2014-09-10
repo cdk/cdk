@@ -97,7 +97,6 @@ abstract class State {
      */
     abstract int[] mapping();
 
-
     /**
      * Current size of the state. If <i>size</i> is the current number of mapped
      * candidates.

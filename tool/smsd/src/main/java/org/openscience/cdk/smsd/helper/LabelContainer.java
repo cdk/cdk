@@ -39,9 +39,9 @@ import org.openscience.cdk.annotations.TestMethod;
 @TestClass("org.openscience.cdk.smsd.helper.LabelContainerTest")
 public class LabelContainer {
 
-    private List<String> labelMap = null;
-    private int labelCounter = 0;
-    private static LabelContainer instance = null;
+    private List<String>          labelMap     = null;
+    private int                   labelCounter = 0;
+    private static LabelContainer instance     = null;
 
     protected LabelContainer() {
 

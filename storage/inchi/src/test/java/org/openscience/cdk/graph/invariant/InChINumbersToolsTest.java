@@ -104,62 +104,64 @@ public class InChINumbersToolsTest extends CDKTestCase {
         SmilesParser parser = new SmilesParser(DefaultChemObjectBuilder.getInstance());
         IAtomContainer atomContainer = parser.parseSmiles("N1C=NC2=CC=CC=C12");
         String auxInfo = InChINumbersTools.auxInfo(atomContainer, INCHI_OPTION.FixedH);
-        String expected = "AuxInfo=1/1/" +
-                "N:6,7,5,8,2,4,9,3,1/" +
-                "E:(1,2)(3,4)(6,7)(8,9)/" +
-                "F:7,6,8,5,2,9,4,1,3/" +
-                "rA:9NCNCCCCCC/" +
-                "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" +
-                "rC:;;;;;;;;;";
+        String expected = "AuxInfo=1/1/" + "N:6,7,5,8,2,4,9,3,1/" + "E:(1,2)(3,4)(6,7)(8,9)/" + "F:7,6,8,5,2,9,4,1,3/"
+                + "rA:9NCNCCCCCC/" + "rB:s1;d2;s3;d4;s5;d6;s7;s1s4d8;/" + "rC:;;;;;;;;;";
         assertThat(auxInfo, is(expected));
     }
 
-    @Test public void parseStandard() throws Exception {
-        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/0/N:3,2,1/rA:3OCC/rB:s1;s2;/rC:;;;",
-                                                         mock(3)),
-                   is(new long[]{3, 2, 1}));
+    @Test
+    public void parseStandard() throws Exception {
+        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/0/N:3,2,1/rA:3OCC/rB:s1;s2;/rC:;;;", mock(3)),
+                is(new long[]{3, 2, 1}));
     }
 
-    @Test public void parseRecMet() throws Exception {
+    @Test
+    public void parseRecMet() throws Exception {
 
         // C(=O)O[Pt](N)(N)Cl
-        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/1/N:3,2,4;7;5;6;1/E:(2,3);;;;/F:5m/E:m;;;;/CRV:;;2*1-1;/rA:7PtOCONNCl/rB:s1;s2;d3;s1;s1;s1;/rC:;;;;;;;/R:/0/N:3,7,5,6,4,2,1/E:(3,4)",
-                                                         mock(7)),
-                   is(new long[]{7, 6, 1, 5, 3, 4, 2}));
+        assertThat(
+                InChINumbersTools.parseUSmilesNumbers(
+                        "AuxInfo=1/1/N:3,2,4;7;5;6;1/E:(2,3);;;;/F:5m/E:m;;;;/CRV:;;2*1-1;/rA:7PtOCONNCl/rB:s1;s2;d3;s1;s1;s1;/rC:;;;;;;;/R:/0/N:3,7,5,6,4,2,1/E:(3,4)",
+                        mock(7)), is(new long[]{7, 6, 1, 5, 3, 4, 2}));
     }
 
-    @Test public void parseFixedH() throws Exception {
+    @Test
+    public void parseFixedH() throws Exception {
         // N1C=NC=C1
-        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/1/N:4,5,2,3,1/E:(1,2)(4,5)/F:5,4,2,1,3/rA:5NCNCC/rB:s1;d2;s3;s1d4;/rC:;;;;;",
-                                                         mock(5)),
-                   is(new long[]{4, 3, 5, 2, 1}));
+        assertThat(InChINumbersTools.parseUSmilesNumbers(
+                "AuxInfo=1/1/N:4,5,2,3,1/E:(1,2)(4,5)/F:5,4,2,1,3/rA:5NCNCC/rB:s1;d2;s3;s1d4;/rC:;;;;;", mock(5)),
+                is(new long[]{4, 3, 5, 2, 1}));
     }
 
-    @Test public void parseDisconnected() throws Exception {
+    @Test
+    public void parseDisconnected() throws Exception {
         // O.N1C=NC=C1
-        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/1/N:5,6,3,4,2;1/E:(1,2)(4,5);/F:6,5,3,2,4;m/rA:6ONCNCC/rB:;s2;d3;s4;s2d5;/rC:;;;;;;",
-                                                         mock(6)),
-                   is(new long[]{6, 4, 3, 5, 2, 1}));
+        assertThat(InChINumbersTools.parseUSmilesNumbers(
+                "AuxInfo=1/1/N:5,6,3,4,2;1/E:(1,2)(4,5);/F:6,5,3,2,4;m/rA:6ONCNCC/rB:;s2;d3;s4;s2d5;/rC:;;;;;;",
+                mock(6)), is(new long[]{6, 4, 3, 5, 2, 1}));
     }
 
-    @Test public void parseMultipleDisconnected() throws Exception {
+    @Test
+    public void parseMultipleDisconnected() throws Exception {
         // O.N1C=NC=C1.O.O=O
-        assertThat(InChINumbersTools.parseUSmilesNumbers("AuxInfo=1/1/N:5,6,3,4,2;8,9;1;7/E:(1,2)(4,5);(1,2);;/F:6,5,3,2,4;3m/E:;m;;/rA:9ONCNCCOOO/rB:;s2;d3;s4;s2d5;;;d8;/rC:;;;;;;;;;",
-                                                         mock(9)),
-                   is(new long[]{8, 4, 3, 5, 2, 1, 9, 6, 7}));
+        assertThat(
+                InChINumbersTools.parseUSmilesNumbers(
+                        "AuxInfo=1/1/N:5,6,3,4,2;8,9;1;7/E:(1,2)(4,5);(1,2);;/F:6,5,3,2,4;3m/E:;m;;/rA:9ONCNCCOOO/rB:;s2;d3;s4;s2d5;;;d8;/rC:;;;;;;;;;",
+                        mock(9)), is(new long[]{8, 4, 3, 5, 2, 1, 9, 6, 7}));
     }
 
     // if '[O-]' is first start at '=O' instead
-    @Test public void favorCarbonyl() throws Exception {
+    @Test
+    public void favorCarbonyl() throws Exception {
         IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("P([O-])=O");
-        assertThat(InChINumbersTools.getUSmilesNumbers(container),
-                   is(new long[]{3, 2, 1}));
+        assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[]{3, 2, 1}));
     }
 
-    @Test public void unlabelledHydrogens() throws Exception {
-        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance()).parseSmiles("[H]C([H])([H])[H]");
-        assertThat(InChINumbersTools.getUSmilesNumbers(container),
-                   is(new long[]{2, 1, 3, 4, 5}));
+    @Test
+    public void unlabelledHydrogens() throws Exception {
+        IAtomContainer container = new SmilesParser(SilentChemObjectBuilder.getInstance())
+                .parseSmiles("[H]C([H])([H])[H]");
+        assertThat(InChINumbersTools.getUSmilesNumbers(container), is(new long[]{2, 1, 3, 4, 5}));
     }
 
     static IAtomContainer mock(int nAtoms) {

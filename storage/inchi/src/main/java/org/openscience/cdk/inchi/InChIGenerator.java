@@ -102,7 +102,7 @@ import org.openscience.cdk.stereo.ExtendedTetrahedral;
 @TestClass("org.openscience.cdk.inchi.InChIGeneratorTest")
 public class InChIGenerator {
 
-    protected JniInchiInput input;
+    protected JniInchiInput  input;
 
     protected JniInchiOutput output;
 
@@ -145,8 +145,8 @@ public class InChIGenerator {
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds) throws
-            CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, String options, boolean ignoreAromaticBonds)
+            throws CDKException {
         try {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
@@ -154,7 +154,6 @@ public class InChIGenerator {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
-
 
     /**
      * <p>Constructor. Generates InChI from CDK AtomContainer.
@@ -167,8 +166,8 @@ public class InChIGenerator {
      * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
      * @throws CDKException
      */
-    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options,
-                             boolean ignoreAromaticBonds) throws CDKException {
+    protected InChIGenerator(IAtomContainer atomContainer, List<INCHI_OPTION> options, boolean ignoreAromaticBonds)
+            throws CDKException {
         try {
             input = new JniInchiInput(options);
             generateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
@@ -176,7 +175,6 @@ public class InChIGenerator {
             throw new CDKException("InChI generation failed: " + jie.getMessage(), jie);
         }
     }
-
 
     /**
      * <p>Reads atoms, bonds etc from atom container and converts to format
@@ -195,7 +193,7 @@ public class InChIGenerator {
         boolean all3d = true;
         boolean all2d = true;
         while (atoms.hasNext()) {
-            IAtom atom = (IAtom)atoms.next();
+            IAtom atom = (IAtom) atoms.next();
             if (atom.getPoint3d() == null) {
                 all3d = false;
             }
@@ -215,7 +213,7 @@ public class InChIGenerator {
         Map<IAtom, JniInchiAtom> atomMap = new HashMap<IAtom, JniInchiAtom>();
         atoms = atomContainer.atoms().iterator();
         while (atoms.hasNext()) {
-        	IAtom atom = atoms.next();
+            IAtom atom = atoms.next();
 
             // Get coordinates
             // Use 3d if possible, otherwise 2d or none
@@ -252,7 +250,7 @@ public class InChIGenerator {
             // Check whether isotopic
             Integer isotopeNumber = atom.getMassNumber();
             if (isotopeNumber != CDKConstants.UNSET && ifact != null) {
-                IAtom isotope = atomContainer.getBuilder().newInstance(IAtom.class,el);
+                IAtom isotope = atomContainer.getBuilder().newInstance(IAtom.class, el);
                 ifact.configure(isotope);
                 if (isotope.getMassNumber().intValue() == isotopeNumber.intValue()) {
                     isotopeNumber = 0;
@@ -284,10 +282,9 @@ public class InChIGenerator {
             }
         }
 
-
         // Process bonds
         Map<IBond, JniInchiBond> bondMap = new HashMap<IBond, JniInchiBond>();
-        Iterator<IBond> bonds =  atomContainer.bonds().iterator();
+        Iterator<IBond> bonds = atomContainer.bonds().iterator();
         while (bonds.hasNext()) {
             IBond bond = bonds.next();
 
@@ -299,7 +296,7 @@ public class InChIGenerator {
             INCHI_BOND_TYPE order;
             IBond.Order bo = bond.getOrder();
             if (!ignore && bond.getFlag(CDKConstants.ISAROMATIC)) {
-            	order = INCHI_BOND_TYPE.ALTERN;
+                order = INCHI_BOND_TYPE.ALTERN;
             } else if (bo == CDKConstants.BONDORDER_SINGLE) {
                 order = INCHI_BOND_TYPE.SINGLE;
             } else if (bo == CDKConstants.BONDORDER_DOUBLE) {
@@ -336,14 +333,11 @@ public class InChIGenerator {
             // Bond starting (pointy end of wedge) above the plane
             else if (stereo == IBond.Stereo.UP_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2UP);
-            }
-            else if (stereo == IBond.Stereo.E_OR_Z) {
+            } else if (stereo == IBond.Stereo.E_OR_Z) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.DOUBLE_EITHER);
-            }
-            else if (stereo == IBond.Stereo.UP_OR_DOWN) {
+            } else if (stereo == IBond.Stereo.UP_OR_DOWN) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_1EITHER);
-            }
-            else if (stereo == IBond.Stereo.UP_OR_DOWN_INVERTED) {
+            } else if (stereo == IBond.Stereo.UP_OR_DOWN_INVERTED) {
                 ibond.setStereoDefinition(INCHI_BOND_STEREO.SINGLE_2EITHER);
             }
             // Bond with undefined stereochemistry
@@ -358,12 +352,12 @@ public class InChIGenerator {
 
         // Process tetrahedral stereo elements
         for (IStereoElement stereoElem : atomContainer.stereoElements()) {
-        	if (stereoElem instanceof ITetrahedralChirality) {
-        		ITetrahedralChirality chirality = (ITetrahedralChirality)stereoElem;
-        		IAtom[] surroundingAtoms = chirality.getLigands();
-        		Stereo stereoType = chirality.getStereo();
+            if (stereoElem instanceof ITetrahedralChirality) {
+                ITetrahedralChirality chirality = (ITetrahedralChirality) stereoElem;
+                IAtom[] surroundingAtoms = chirality.getLigands();
+                Stereo stereoType = chirality.getStereo();
 
-        		JniInchiAtom atC = (JniInchiAtom) atomMap.get(chirality.getChiralAtom());
+                JniInchiAtom atC = (JniInchiAtom) atomMap.get(chirality.getChiralAtom());
                 JniInchiAtom at0 = (JniInchiAtom) atomMap.get(surroundingAtoms[0]);
                 JniInchiAtom at1 = (JniInchiAtom) atomMap.get(surroundingAtoms[1]);
                 JniInchiAtom at2 = (JniInchiAtom) atomMap.get(surroundingAtoms[2]);
@@ -380,39 +374,39 @@ public class InChIGenerator {
                 JniInchiStereo0D jniStereo = new JniInchiStereo0D(atC, at0, at1, at2, at3,
                         INCHI_STEREOTYPE.TETRAHEDRAL, p);
                 input.addStereo0D(jniStereo);
-        	} else if (stereoElem instanceof IDoubleBondStereochemistry) {
-        		IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry)stereoElem;
-        		IBond[] surroundingBonds = dbStereo.getBonds();
-        		if (surroundingBonds[0] == null || surroundingBonds[1] == null)
-        			throw new CDKException("Cannot generate an InChI with incomplete double bond info");
-        		org.openscience.cdk.interfaces.IDoubleBondStereochemistry.
-        		    Conformation stereoType = dbStereo.getStereo();
+            } else if (stereoElem instanceof IDoubleBondStereochemistry) {
+                IDoubleBondStereochemistry dbStereo = (IDoubleBondStereochemistry) stereoElem;
+                IBond[] surroundingBonds = dbStereo.getBonds();
+                if (surroundingBonds[0] == null || surroundingBonds[1] == null)
+                    throw new CDKException("Cannot generate an InChI with incomplete double bond info");
+                org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation stereoType = dbStereo
+                        .getStereo();
 
-        		IBond stereoBond = dbStereo.getStereoBond();
+                IBond stereoBond = dbStereo.getStereoBond();
                 JniInchiAtom at0 = null;
                 JniInchiAtom at1 = null;
                 JniInchiAtom at2 = null;
                 JniInchiAtom at3 = null;
                 // TODO: I should check for two atom bonds... or maybe that should happen when you
                 //    create a double bond stereochemistry
-        		if (stereoBond.contains(surroundingBonds[0].getAtom(0))) {
-        			// first atom is A
+                if (stereoBond.contains(surroundingBonds[0].getAtom(0))) {
+                    // first atom is A
                     at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
                     at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
-        		} else {
-        			// first atom is X
+                } else {
+                    // first atom is X
                     at0 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(0));
                     at1 = (JniInchiAtom) atomMap.get(surroundingBonds[0].getAtom(1));
-        		}
-        		if (stereoBond.contains(surroundingBonds[1].getAtom(0))) {
-        			// first atom is B
+                }
+                if (stereoBond.contains(surroundingBonds[1].getAtom(0))) {
+                    // first atom is B
                     at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
-        		} else {
-        			// first atom is Y
+                } else {
+                    // first atom is Y
                     at2 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(1));
                     at3 = (JniInchiAtom) atomMap.get(surroundingBonds[1].getAtom(0));
-        		}
+                }
                 INCHI_PARITY p = INCHI_PARITY.UNKNOWN;
                 if (stereoType == org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conformation.TOGETHER) {
                     p = INCHI_PARITY.ODD;
@@ -422,15 +416,13 @@ public class InChIGenerator {
                     throw new CDKException("Unknown double bond stereochemistry");
                 }
 
-                JniInchiStereo0D jniStereo = new JniInchiStereo0D(
-                	null, at0, at1, at2, at3, INCHI_STEREOTYPE.DOUBLEBOND, p
-                );
+                JniInchiStereo0D jniStereo = new JniInchiStereo0D(null, at0, at1, at2, at3,
+                        INCHI_STEREOTYPE.DOUBLEBOND, p);
                 input.addStereo0D(jniStereo);
-        	} else if (stereoElem instanceof ExtendedTetrahedral) {
-
+            } else if (stereoElem instanceof ExtendedTetrahedral) {
 
                 ExtendedTetrahedral extendedTetrahedral = (ExtendedTetrahedral) stereoElem;
-                Stereo              winding             = extendedTetrahedral.winding();
+                Stereo winding = extendedTetrahedral.winding();
 
                 // The periphals (p<i>) and terminals (t<i>) are refering to
                 // the following atoms. The focus (f) is also shown.
@@ -440,7 +432,7 @@ public class InChIGenerator {
                 //     t0 = f = t1
                 //    /         \
                 //   p1         p3
-                IAtom[] terminals   = extendedTetrahedral.findTerminalAtoms(atomContainer);
+                IAtom[] terminals = extendedTetrahedral.findTerminalAtoms(atomContainer);
                 IAtom[] peripherals = extendedTetrahedral.peripherals();
 
                 // InChI API is particualar about the input, each terminal atom
@@ -458,15 +450,13 @@ public class InChIGenerator {
                 if (t0Bonds.size() == 2) {
                     IAtom replace = t0Bonds.remove(0).getConnectedAtom(terminals[0]);
                     for (int i = 0; i < peripherals.length; i++)
-                        if (replace == peripherals[i])
-                            peripherals[i] = terminals[0];
+                        if (replace == peripherals[i]) peripherals[i] = terminals[0];
                 }
 
                 if (t1Bonds.size() == 2) {
                     IAtom replace = t1Bonds.remove(0).getConnectedAtom(terminals[1]);
                     for (int i = 0; i < peripherals.length; i++)
-                        if (replace == peripherals[i])
-                            peripherals[i] = terminals[1];
+                        if (replace == peripherals[i]) peripherals[i] = terminals[1];
                 }
 
                 // the neighbor attached to each terminal atom that we will
@@ -480,16 +470,13 @@ public class InChIGenerator {
                     if (i != 0 && t0Neighbor == peripherals[i]) {
                         swap(peripherals, i, 0);
                         winding = winding.invert();
-                    }
-                    else if (i != 1 && terminals[0] == peripherals[i]) {
+                    } else if (i != 1 && terminals[0] == peripherals[i]) {
                         swap(peripherals, i, 1);
                         winding = winding.invert();
-                    }
-                    else if (i != 2 && terminals[1] == peripherals[i]) {
+                    } else if (i != 2 && terminals[1] == peripherals[i]) {
                         swap(peripherals, i, 2);
                         winding = winding.invert();
-                    }
-                    else if (i != 3 && t1Neighbor == peripherals[i]) {
+                    } else if (i != 3 && t1Neighbor == peripherals[i]) {
                         swap(peripherals, i, 3);
                         winding = winding.invert();
                     }
@@ -504,11 +491,8 @@ public class InChIGenerator {
                     throw new CDKException("Unknown extended tetrahedral chirality");
 
                 JniInchiStereo0D jniStereo = new JniInchiStereo0D(atomMap.get(extendedTetrahedral.focus()),
-                                                                  atomMap.get(peripherals[0]),
-                                                                  atomMap.get(peripherals[1]),
-                                                                  atomMap.get(peripherals[2]),
-                                                                  atomMap.get(peripherals[3]),
-                                                                  INCHI_STEREOTYPE.ALLENE, parity);
+                        atomMap.get(peripherals[0]), atomMap.get(peripherals[1]), atomMap.get(peripherals[2]),
+                        atomMap.get(peripherals[3]), INCHI_STEREOTYPE.ALLENE, parity);
                 input.addStereo0D(jniStereo);
             }
         }
@@ -523,8 +507,7 @@ public class InChIGenerator {
     private static List<IBond> onlySingleBonded(List<IBond> bonds) {
         List<IBond> filtered = new ArrayList<IBond>();
         for (IBond bond : bonds) {
-            if (bond.getOrder() == IBond.Order.SINGLE)
-                filtered.add(bond);
+            if (bond.getOrder() == IBond.Order.SINGLE) filtered.add(bond);
         }
         return filtered;
     }
@@ -542,7 +525,7 @@ public class InChIGenerator {
      */
     @TestMethod("testGetInchiFromLandDAlanine3D,testGetInchiEandZ12Dichloroethene2D")
     public INCHI_RET getReturnStatus() {
-        return(output.getReturnStatus());
+        return (output.getReturnStatus());
     }
 
     /**
@@ -550,7 +533,7 @@ public class InChIGenerator {
      */
     @TestMethod("testGetInchiEandZ12Dichloroethene2D,testGetInchiFromEthyne,testGetInchiFromEthene")
     public String getInchi() {
-        return(output.getInchi());
+        return (output.getInchi());
     }
 
     /**
@@ -564,12 +547,10 @@ public class InChIGenerator {
             if (key.getReturnStatus() == INCHI_KEY.OK) {
                 return key.getKey();
             } else {
-                throw new CDKException("Error while creating InChIKey: " +
-                                       key.getReturnStatus());
+                throw new CDKException("Error while creating InChIKey: " + key.getReturnStatus());
             }
         } catch (JniInchiException exception) {
-            throw new CDKException("Error while creating InChIKey: " +
-                                   exception.getMessage(), exception);
+            throw new CDKException("Error while creating InChIKey: " + exception.getMessage(), exception);
         }
     }
 
@@ -578,7 +559,7 @@ public class InChIGenerator {
      */
     @TestMethod("testGetAuxInfo")
     public String getAuxInfo() {
-        return(output.getAuxInfo());
+        return (output.getAuxInfo());
     }
 
     /**
@@ -586,7 +567,7 @@ public class InChIGenerator {
      */
     @TestMethod("testGetMessage,testGetWarningMessage")
     public String getMessage() {
-        return(output.getMessage());
+        return (output.getMessage());
     }
 
     /**
@@ -594,6 +575,6 @@ public class InChIGenerator {
      */
     @TestMethod("testGetLog")
     public String getLog() {
-        return(output.getLog());
+        return (output.getLog());
     }
 }

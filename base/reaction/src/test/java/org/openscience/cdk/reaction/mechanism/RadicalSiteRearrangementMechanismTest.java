@@ -31,39 +31,42 @@ import org.openscience.cdk.reaction.ReactionMechanismTest;
  */
 public class RadicalSiteRearrangementMechanismTest extends ReactionMechanismTest {
 
-	/**
-	 *  The JUnit setup method
-	 */
-	 @BeforeClass public static void setUp() throws Exception {
-	 	setMechanism(RadicalSiteRearrangementMechanism.class);
-	 }
+    /**
+     *  The JUnit setup method
+     */
+    @BeforeClass
+    public static void setUp() throws Exception {
+        setMechanism(RadicalSiteRearrangementMechanism.class);
+    }
 
-	/**
-	 *  Constructor for the RadicalSiteRearrangementMechanismTest object.
-	 */
-	public RadicalSiteRearrangementMechanismTest(){
+    /**
+     *  Constructor for the RadicalSiteRearrangementMechanismTest object.
+     */
+    public RadicalSiteRearrangementMechanismTest() {
         super();
-	}
+    }
 
-	/**
-	 * Junit test.
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testRadicalSiteRearrangementMechanism(){
-		IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
-		Assert.assertNotNull(mechanism);
-	}
+    /**
+     * Junit test.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testRadicalSiteRearrangementMechanism() {
+        IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
+        Assert.assertNotNull(mechanism);
+    }
 
-	/**
-	 * Junit test.
-	 * TODDO: REACT: add an example
-	 *
-	 * @throws Exception
-	 */
-	@Test public void testInitiate_IAtomContainerSet_ArrayList_ArrayList(){
-		IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
+    /**
+     * Junit test.
+     * TODDO: REACT: add an example
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testInitiate_IAtomContainerSet_ArrayList_ArrayList() {
+        IReactionMechanism mechanism = new RadicalSiteRearrangementMechanism();
 
-		Assert.assertNotNull(mechanism);
-	}
+        Assert.assertNotNull(mechanism);
+    }
 }

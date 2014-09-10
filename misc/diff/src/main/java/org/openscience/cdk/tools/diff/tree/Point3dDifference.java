@@ -53,21 +53,12 @@ public class Point3dDifference extends AbstractDifferenceList implements IDiffer
         if (first == null && second == null) return null;
 
         Point3dDifference totalDiff = new Point3dDifference(name);
-        totalDiff.addChild(DoubleDifference.construct(
-        	"x",
-        	first == null ? null : first.x,
-        	second == null ? null : second.x
-        ));
-        totalDiff.addChild(DoubleDifference.construct(
-        	"y",
-        	first == null ? null : first.y,
-        	second == null ? null : second.y
-        ));
-        totalDiff.addChild(DoubleDifference.construct(
-            "z",
-            first == null ? null : first.z,
-            second == null ? null : second.z
-        ));
+        totalDiff.addChild(DoubleDifference.construct("x", first == null ? null : first.x, second == null ? null
+                : second.x));
+        totalDiff.addChild(DoubleDifference.construct("y", first == null ? null : first.y, second == null ? null
+                : second.y));
+        totalDiff.addChild(DoubleDifference.construct("z", first == null ? null : first.z, second == null ? null
+                : second.z));
         if (totalDiff.childCount() == 0) {
             return null;
         }

@@ -86,7 +86,7 @@ public final class AllCycles {
     private final List<int[]> cycles = new ArrayList<int[]>();
 
     /** Indicates whether the perception completed. */
-    private final boolean completed;
+    private final boolean     completed;
 
     /**
      * Compute all simple cycles up to given <i>maxCycleSize</i> in the provided
@@ -107,26 +107,21 @@ public final class AllCycles {
      * @param maxCycleSize the maximum cycle size to perceive
      * @param maxDegree    escape clause to stop the algorithm running forever
      */
-    public AllCycles(final int[][] graph,
-                     final int maxCycleSize,
-                     final int maxDegree) {
+    public AllCycles(final int[][] graph, final int maxCycleSize, final int maxDegree) {
 
         // get the order in which we remove vertices, the rank tells us
         // the index in the ordered array of each vertex
         int[] rank = rank(graph);
         int[] vertices = verticesInOrder(rank);
 
-        PathGraph pGraph =
-                graph.length < 64
-                ? new RegularPathGraph(graph, rank, maxCycleSize)
-                : new JumboPathGraph(graph, rank, maxCycleSize);
+        PathGraph pGraph = graph.length < 64 ? new RegularPathGraph(graph, rank, maxCycleSize) : new JumboPathGraph(
+                graph, rank, maxCycleSize);
 
         // perceive the cycles by removing the vertices in order
         int removed = 0;
         for (final int v : vertices) {
 
-            if (pGraph.degree(v) > maxDegree)
-                break; // or could throw exception...
+            if (pGraph.degree(v) > maxDegree) break; // or could throw exception...
 
             pGraph.remove(v, cycles);
             removed++;

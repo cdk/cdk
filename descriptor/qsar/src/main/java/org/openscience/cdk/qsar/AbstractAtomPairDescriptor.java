@@ -31,7 +31,6 @@ package org.openscience.cdk.qsar;
  * @cdk.module qsar
  * @cdk.githash
  */
-public abstract class AbstractAtomPairDescriptor extends AbstractDescriptor
-        implements IAtomPairDescriptor {
+public abstract class AbstractAtomPairDescriptor extends AbstractDescriptor implements IAtomPairDescriptor {
 
 }

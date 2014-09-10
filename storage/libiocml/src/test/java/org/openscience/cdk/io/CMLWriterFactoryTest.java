@@ -37,16 +37,13 @@ public class CMLWriterFactoryTest {
 
     private WriterFactory factory = new WriterFactory();
 
-    @Test public void testCMLWriter() {
+    @Test
+    public void testCMLWriter() {
         WriterFactory factory = new WriterFactory();
         factory.registerWriter(CMLWriter.class);
-        IChemObjectWriter writer =
-            factory.createWriter((IChemFormat)CMLFormat.getInstance());
+        IChemObjectWriter writer = factory.createWriter((IChemFormat) CMLFormat.getInstance());
         Assert.assertNotNull(writer);
-        Assert.assertEquals(
-            new CMLWriter().getClass().getName(),
-            writer.getClass().getName()
-        );
+        Assert.assertEquals(new CMLWriter().getClass().getName(), writer.getClass().getName());
     }
 
 }

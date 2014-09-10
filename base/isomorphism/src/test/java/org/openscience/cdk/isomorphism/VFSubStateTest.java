@@ -47,12 +47,11 @@ import static org.mockito.Mockito.when;
 public class VFSubStateTest {
 
     // 0-look-ahead
-    @Test public void infeasibleAtoms() throws Exception {
+    @Test
+    public void infeasibleAtoms() throws Exception {
         AtomMatcher mock = mock(AtomMatcher.class);
-        when(mock.matches(any(IAtom.class),
-                          any(IAtom.class))).thenReturn(false);
-        VFSubState state = createBenzeneToNaphthalene(mock,
-                                                      mock(BondMatcher.class));
+        when(mock.matches(any(IAtom.class), any(IAtom.class))).thenReturn(false);
+        VFSubState state = createBenzeneToNaphthalene(mock, mock(BondMatcher.class));
         for (int i = 0; i < state.nMax(); i++) {
             for (int j = 0; j < state.mMax(); j++) {
                 assertFalse(state.feasible(i, j));
@@ -61,12 +60,11 @@ public class VFSubStateTest {
     }
 
     // 0-look-ahead
-    @Test public void infeasibleBonds() throws Exception {
+    @Test
+    public void infeasibleBonds() throws Exception {
         BondMatcher mock = mock(BondMatcher.class);
-        when(mock.matches(any(IBond.class),
-                          any(IBond.class))).thenReturn(false);
-        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                      mock);
+        when(mock.matches(any(IBond.class), any(IBond.class))).thenReturn(false);
+        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), mock);
         state.m1[0] = 0;
         state.m1[1] = 1;
         state.m1[2] = 2;
@@ -80,9 +78,9 @@ public class VFSubStateTest {
     }
 
     // 1-look-ahead
-    @Test public void infeasibleTerminalCount() throws Exception {
-        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                      BondMatcher.forAny());
+    @Test
+    public void infeasibleTerminalCount() throws Exception {
+        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertTrue(state.feasible(0, 0)); // 0,0 is feasible
         // XXX: depends on molecule order not changing
         state.t1[1] = 1;
@@ -91,9 +89,9 @@ public class VFSubStateTest {
     }
 
     // 2-look-ahead
-    @Test public void infeasibleRemainCount() throws Exception {
-        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(),
-                                                      BondMatcher.forAny());
+    @Test
+    public void infeasibleRemainCount() throws Exception {
+        VFSubState state = createBenzeneToNaphthalene(AtomMatcher.forAny(), BondMatcher.forAny());
         assertTrue(state.feasible(0, 0)); // 0,0 is feasible
         // XXX: depends on molecule order not changing
         state.m1[1] = 1;
@@ -108,8 +106,7 @@ public class VFSubStateTest {
      * Benzene:     InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
      * Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
      */
-    VFSubState createBenzeneToNaphthalene(AtomMatcher atomMatcher,
-                                          BondMatcher bondMatcher) throws Exception {
+    VFSubState createBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher) throws Exception {
         IAtomContainer container1 = TestMoleculeFactory.makeBenzene();
         IAtomContainer container2 = TestMoleculeFactory.makeNaphthalene();
         GraphUtil.EdgeToBondMap bonds1 = GraphUtil.EdgeToBondMap.withSpaceFor(container1);

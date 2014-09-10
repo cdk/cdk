@@ -50,7 +50,8 @@ public abstract class AbstractCDKObjectTest extends CDKTestCase {
         return AbstractCDKObjectTest.builder.newTestObject();
     }
 
-    @Test public void testGetBuilder() {
+    @Test
+    public void testGetBuilder() {
         IChemObject chemObject = newChemObject();
         Object object = chemObject.getBuilder();
         Assert.assertNotNull(object);

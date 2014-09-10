@@ -74,11 +74,10 @@ final class IdentityTemplateLibrary {
 
     private final Map<String, Point2d[]> templateMap = new HashMap<String, Point2d[]>();
 
-    private final SmilesGenerator smigen = SmilesGenerator.unique();
-    private final ILoggingTool    logger = LoggingToolFactory.createLoggingTool(getClass());
+    private final SmilesGenerator        smigen      = SmilesGenerator.unique();
+    private final ILoggingTool           logger      = LoggingToolFactory.createLoggingTool(getClass());
 
-    private IdentityTemplateLibrary() {
-    }
+    private IdentityTemplateLibrary() {}
 
     /**
      * Create a library entry from an atom container. Note the entry is not added to the library.
@@ -126,10 +125,8 @@ final class IdentityTemplateLibrary {
      */
     static Entry<String, Point2d[]> decodeEntry(String str) {
         final int i = str.indexOf(' ');
-        if (i < 0)
-            throw new IllegalArgumentException();
-        return new SimpleEntry<String, Point2d[]>(str.substring(0, i),
-                                                  decodeCoordinates(str.substring(i + 1)));
+        if (i < 0) throw new IllegalArgumentException();
+        return new SimpleEntry<String, Point2d[]>(str.substring(0, i), decodeCoordinates(str.substring(i + 1)));
     }
 
     /**
@@ -142,12 +139,10 @@ final class IdentityTemplateLibrary {
         String[] strs = str.split(", ");
         Point2d[] points = new Point2d[strs.length / 2];
         for (int i = 0; i < strs.length; i += 2) {
-            points[i / 2] = new Point2d(Double.parseDouble(strs[i]),
-                                        Double.parseDouble(strs[i + 1]));
+            points[i / 2] = new Point2d(Double.parseDouble(strs[i]), Double.parseDouble(strs[i + 1]));
         }
         return points;
     }
-
 
     /**
      * Encodes an entry in a compact string representation. The encoded entry is a SMILES string
@@ -173,8 +168,7 @@ final class IdentityTemplateLibrary {
     static String encodeCoordinates(Point2d[] points) {
         StringBuilder sb = new StringBuilder();
         for (Point2d point : points) {
-            if (sb.length() > 0)
-                sb.append(", ");
+            if (sb.length() > 0) sb.append(", ");
             sb.append(String.format("%.3f", point.x));
             sb.append(", ");
             sb.append(String.format("%.3f", point.y));
@@ -188,8 +182,7 @@ final class IdentityTemplateLibrary {
      * @param entry entry
      */
     void add(Entry<String, Point2d[]> entry) {
-        if (entry != null)
-            templateMap.put(entry.getKey(), entry.getValue());
+        if (entry != null) templateMap.put(entry.getKey(), entry.getValue());
     }
 
     /**
@@ -219,10 +212,8 @@ final class IdentityTemplateLibrary {
             // find the points in the library
             Point2d[] points = templateMap.get(smiles);
 
-
             // no matching entry
-            if (points == null)
-                return false;
+            if (points == null) return false;
 
             // set the points
             for (int i = 0; i < n; i++) {
@@ -255,8 +246,7 @@ final class IdentityTemplateLibrary {
         try {
             return load(in);
         } catch (IOException e) {
-            throw new IllegalArgumentException("Could not load template library from resource " + resource,
-                                               e);
+            throw new IllegalArgumentException("Could not load template library from resource " + resource, e);
         } finally {
             try {
                 if (in != null) in.close();

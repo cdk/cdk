@@ -34,15 +34,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugElectronContainerTest extends AbstractElectronContainerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugElectronContainer();
             }
         });
     }
 
-    @Test public void testDebugElectronContainer() {
+    @Test
+    public void testDebugElectronContainer() {
         IElectronContainer ec = new DebugElectronContainer();
         Assert.assertNotNull(ec);
         Assert.assertEquals(0, ec.getElectronCount().intValue());

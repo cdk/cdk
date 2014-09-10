@@ -40,17 +40,18 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class AminoAcidTest extends AbstractAminoAcidTest {
 
-    @BeforeClass public static void setUp() {
-       	setTestObjectBuilder(
-       	    new ITestObjectBuilder() {
-                public IChemObject newTestObject() {
-                    return new AminoAcid();
-                }
-       	    }
-       	);
+    @BeforeClass
+    public static void setUp() {
+        setTestObjectBuilder(new ITestObjectBuilder() {
+
+            public IChemObject newTestObject() {
+                return new AminoAcid();
+            }
+        });
     }
 
-    @Test public void testAminoAcid() {
+    @Test
+    public void testAminoAcid() {
         IAminoAcid oAminoAcid = new AminoAcid();
         Assert.assertNotNull(oAminoAcid);
     }

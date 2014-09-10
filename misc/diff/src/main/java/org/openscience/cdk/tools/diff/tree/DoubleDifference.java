@@ -33,9 +33,9 @@ public class DoubleDifference implements IDifference {
 
     private final static double ERROR = 0.000000001;
 
-    private String name;
-    private Double first;
-    private Double second;
+    private String              name;
+    private Double              first;
+    private Double              second;
 
     private DoubleDifference(String name, Double first, Double second) {
         this.name = name;
@@ -72,9 +72,6 @@ public class DoubleDifference implements IDifference {
      */
     @TestMethod("testToString")
     public String toString() {
-        return name + ":" +
-            (first == null ? "NA" : first) +
-            "/" +
-            (second == null ? "NA" : second);
+        return name + ":" + (first == null ? "NA" : first) + "/" + (second == null ? "NA" : second);
     }
 }

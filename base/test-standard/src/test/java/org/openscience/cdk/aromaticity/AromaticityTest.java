@@ -45,69 +45,59 @@ import static org.junit.Assert.assertTrue;
  */
 public class AromaticityTest {
 
-    private final Aromaticity cdk      = new Aromaticity(ElectronDonation.cdk(),
-                                                         Cycles.all());
-    private final Aromaticity cdkExo   = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(),
-                                                         Cycles.all());
-    private final Aromaticity daylight = new Aromaticity(ElectronDonation.daylight(),
-                                                         Cycles.all());
+    private final Aromaticity cdk      = new Aromaticity(ElectronDonation.cdk(), Cycles.all());
+    private final Aromaticity cdkExo   = new Aromaticity(ElectronDonation.cdkAllowingExocyclic(), Cycles.all());
+    private final Aromaticity daylight = new Aromaticity(ElectronDonation.daylight(), Cycles.all());
 
-    @Test public void benzene() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("C1=CC=CC=C1"))).size(),
-                   is(6));
-        assertThat(daylight.findBonds(smiles("C1=CC=CC=C1")).size(),
-                   is(6));
+    @Test
+    public void benzene() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("C1=CC=CC=C1"))).size(), is(6));
+        assertThat(daylight.findBonds(smiles("C1=CC=CC=C1")).size(), is(6));
     }
 
-    @Test public void furan() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("C1=CC=CO1"))).size(),
-                   is(5));
-        assertThat(daylight.findBonds(smiles("C1=CC=CO1")).size(),
-                   is(5));
+    @Test
+    public void furan() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("C1=CC=CO1"))).size(), is(5));
+        assertThat(daylight.findBonds(smiles("C1=CC=CO1")).size(), is(5));
     }
 
-    @Test public void quinone() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(),
-                   is(0));
-        assertThat(cdkExo.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(),
-                   is(6));
-        assertThat(daylight.findBonds(smiles("O=C1C=CC(=O)C=C1")).size(),
-                   is(0));
+    @Test
+    public void quinone() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(), is(0));
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=CC(=O)C=C1"))).size(), is(6));
+        assertThat(daylight.findBonds(smiles("O=C1C=CC(=O)C=C1")).size(), is(0));
     }
 
-    @Test public void azulene() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("C1=CC2=CC=CC=CC2=C1"))).size(),
-                   is(10));
-        assertThat(daylight.findBonds(smiles("C1=CC2=CC=CC=CC2=C1")).size(),
-                   is(10));
+    @Test
+    public void azulene() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("C1=CC2=CC=CC=CC2=C1"))).size(), is(10));
+        assertThat(daylight.findBonds(smiles("C1=CC2=CC=CC=CC2=C1")).size(), is(10));
     }
 
     // 4-oxo-1H-pyridin-1-ide
-    @Test public void oxypyridinide() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
-                   is(0));
-        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
-                   is(0));
-        assertThat(daylight.findBonds(smiles("O=C1C=C[N-]C=C1")).size(),
-                   is(6));
+    @Test
+    public void oxypyridinide() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(), is(0));
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(), is(0));
+        assertThat(daylight.findBonds(smiles("O=C1C=C[N-]C=C1")).size(), is(6));
     }
 
     // 2-Pyridone
-    @Test public void pyridinone() throws Exception {
-        assertThat(cdk.findBonds(type(smiles("O=C1NC=CC=C1"))).size(),
-                   is(0));
-        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(),
-                   is(0));
-        assertThat(daylight.findBonds(smiles("O=C1NC=CC=C1")).size(),
-                   is(6));
+    @Test
+    public void pyridinone() throws Exception {
+        assertThat(cdk.findBonds(type(smiles("O=C1NC=CC=C1"))).size(), is(0));
+        assertThat(cdkExo.findBonds(type(smiles("O=C1C=C[N-]C=C1"))).size(), is(0));
+        assertThat(daylight.findBonds(smiles("O=C1NC=CC=C1")).size(), is(6));
     }
 
-    @Test public void subset() throws Exception {
-        assertThat(daylight.findBonds(smiles("[O-][Cu++]123([O-])CN4C=NC5=C4C(N=CN5)=[O+]1.O=S(=O)([OH+]2)[OH+]3")).size(),
-                   is(5));
+    @Test
+    public void subset() throws Exception {
+        assertThat(daylight.findBonds(smiles("[O-][Cu++]123([O-])CN4C=NC5=C4C(N=CN5)=[O+]1.O=S(=O)([OH+]2)[OH+]3"))
+                .size(), is(5));
     }
 
-    @Test public void clearFlags_cyclobutadiene() throws Exception {
+    @Test
+    public void clearFlags_cyclobutadiene() throws Exception {
         IAtomContainer cyclobutadiene = smiles("c1ccc1");
         daylight.apply(cyclobutadiene);
         for (IBond bond : cyclobutadiene.bonds())
@@ -116,7 +106,8 @@ public class AromaticityTest {
             assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
-    @Test public void clearFlags_quinone() throws Exception {
+    @Test
+    public void clearFlags_quinone() throws Exception {
         IAtomContainer quinone = smiles("O=c1ccc(=O)cc1");
         daylight.apply(quinone);
         for (IBond bond : quinone.bonds())
@@ -125,7 +116,8 @@ public class AromaticityTest {
             assertFalse(atom.getFlag(CDKConstants.ISAROMATIC));
     }
 
-    @Test public void validSum() throws Exception {
+    @Test
+    public void validSum() throws Exception {
         // aromatic
         assertTrue(Aromaticity.validSum(2));
         assertTrue(Aromaticity.validSum(6));
@@ -152,11 +144,10 @@ public class AromaticityTest {
         assertFalse(Aromaticity.validSum(15));
     }
 
-    @Test public void electronSum() throws Exception {
-        assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0},
-                                           new int[]{1, 1, 1, 1},
-                                           new int[]{0, 1, 2, 3}),
-                   is(4));
+    @Test
+    public void electronSum() throws Exception {
+        assertThat(Aromaticity.electronSum(new int[]{0, 1, 2, 3, 0}, new int[]{1, 1, 1, 1}, new int[]{0, 1, 2, 3}),
+                is(4));
     }
 
     static IAtomContainer smiles(String smi) throws Exception {

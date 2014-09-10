@@ -33,20 +33,19 @@ import org.openscience.cdk.smiles.SmilesParser;
  */
 public class AromaticityCalculatorTest extends CDKTestCase {
 
-	public AromaticityCalculatorTest() {
-		super();
-	}
+    public AromaticityCalculatorTest() {
+        super();
+    }
 
     @Test
     public void testIsAromatic_IRing_IAtomContainer() throws Exception {
-		SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
+        SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
 
-		IAtomContainer mol = sp.parseSmiles("c1ccncc1");
-		IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
+        IAtomContainer mol = sp.parseSmiles("c1ccncc1");
+        IRingSet rs = (new AllRingsFinder()).findAllRings(mol);
 
-		Assert.assertEquals(1, rs.getAtomContainerCount());
-		Assert.assertTrue(AromaticityCalculator.isAromatic((IRing)rs.getAtomContainer(0), mol));
-	}
+        Assert.assertEquals(1, rs.getAtomContainerCount());
+        Assert.assertTrue(AromaticityCalculator.isAromatic((IRing) rs.getAtomContainer(0), mol));
+    }
 
 }
-

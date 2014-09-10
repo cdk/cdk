@@ -38,35 +38,29 @@ import org.openscience.cdk.tools.LoggingToolFactory;
 @TestClass("org.openscience.cdk.renderer.generators.AtomMassGeneratorTest")
 public class AtomMassGenerator extends BasicAtomGenerator {
 
-    private ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
+    private ILoggingTool logger = LoggingToolFactory.createLoggingTool(AtomMassGenerator.class);
 
-	/**
-	 * Returns true if the mass number of this element is set and not
-	 * equal the mass number of the most abundant isotope of this element.
-	 *
-	 * @param  atom      {@link IAtom} which is being examined
-	 * @param  container {@link IAtomContainer} of which the atom is part
-	 * @param  model     the {@link RendererModel}
-	 * @return true, when mass number information should be depicted
-	 */
-	@TestMethod("showCarbon_ShowEndCarbonsTest")
-	public boolean showCarbon(
-	        IAtom atom, IAtomContainer container, RendererModel model) {
+    /**
+     * Returns true if the mass number of this element is set and not
+     * equal the mass number of the most abundant isotope of this element.
+     *
+     * @param  atom      {@link IAtom} which is being examined
+     * @param  container {@link IAtomContainer} of which the atom is part
+     * @param  model     the {@link RendererModel}
+     * @return true, when mass number information should be depicted
+     */
+    @TestMethod("showCarbon_ShowEndCarbonsTest")
+    public boolean showCarbon(IAtom atom, IAtomContainer container, RendererModel model) {
 
-		Integer massNumber = atom.getMassNumber();
-		if (massNumber != null) {
-			try {
-				Integer expectedMassNumber
-						= Isotopes.getInstance()
-							.getMajorIsotope(atom.getSymbol())
-								.getMassNumber();
-				if (massNumber != expectedMassNumber)
-					return true;
-			} catch (IOException e) {
-				logger.warn(e);
-			}
-		}
-		return super.showCarbon(atom, container, model);
-	}
+        Integer massNumber = atom.getMassNumber();
+        if (massNumber != null) {
+            try {
+                Integer expectedMassNumber = Isotopes.getInstance().getMajorIsotope(atom.getSymbol()).getMassNumber();
+                if (massNumber != expectedMassNumber) return true;
+            } catch (IOException e) {
+                logger.warn(e);
+            }
+        }
+        return super.showCarbon(atom, container, model);
+    }
 }

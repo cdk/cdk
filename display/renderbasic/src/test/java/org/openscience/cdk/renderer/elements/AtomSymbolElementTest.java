@@ -30,12 +30,10 @@ import org.junit.BeforeClass;
  */
 public class AtomSymbolElementTest extends AbstractElementTest {
 
-	@BeforeClass
-	public static void setup() {
-		IRenderingElement element = new AtomSymbolElement(
-			3, 4, "C", 0, 0, 0, Color.black
-		);
-		setRenderingElement(element);
-	}
+    @BeforeClass
+    public static void setup() {
+        IRenderingElement element = new AtomSymbolElement(3, 4, "C", 0, 0, 0, Color.black);
+        setRenderingElement(element);
+    }
 
 }

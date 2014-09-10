@@ -41,10 +41,12 @@ abstract class PermutationParity {
      * implicit hydrogens.
      */
     public static final PermutationParity IDENTITY = new PermutationParity() {
-        @Override public int parity(long[] current) {
-            return 1;
-        }
-    };
+
+                                                       @Override
+                                                       public int parity(long[] current) {
+                                                           return 1;
+                                                       }
+                                                   };
 
     /**
      * Calculate the permutation parity of a permutation on the current values.

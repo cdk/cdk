@@ -32,9 +32,7 @@ public class ArrowElementTest extends AbstractElementTest {
 
     @BeforeClass
     public static void setup() {
-        IRenderingElement element = new ArrowElement(
-            0, 0, 1, 1, 1.0, true, Color.orange
-        );
+        IRenderingElement element = new ArrowElement(0, 0, 1, 1, 1.0, true, Color.orange);
         setRenderingElement(element);
     }
 

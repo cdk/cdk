@@ -48,25 +48,25 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
 final class UllmannState extends State {
 
     /** Adjacency list representations. */
-    final int[][] g1, g2;
+    final int[][]               g1, g2;
 
     /** Query and target bond maps. */
     private final EdgeToBondMap bond1, bonds2;
 
     /** The compatibility matrix. */
-    final CompatibilityMatrix matrix;
+    final CompatibilityMatrix   matrix;
 
     /** Current mapped values. */
-    final int[] m1, m2;
+    final int[]                 m1, m2;
 
     /** Size of the current mapping. */
-    int size = 0;
+    int                         size     = 0;
 
     /** How bond semantics are matched. */
-    private final BondMatcher bondMatcher;
+    private final BondMatcher   bondMatcher;
 
     /** Indicates a vertex is unmapped. */
-    private static int UNMAPPED = -1;
+    private static int          UNMAPPED = -1;
 
     /**
      * Create a state for matching subgraphs using the Ullmann refinement
@@ -81,11 +81,8 @@ final class UllmannState extends State {
      * @param atomMatcher method of matching atom semantics
      * @param bondMatcher method of matching bond semantics
      */
-    public UllmannState(IAtomContainer container1, IAtomContainer container2,
-                        int[][] g1, int[][] g2,
-                        EdgeToBondMap bonds1, EdgeToBondMap bonds2,
-                        AtomMatcher atomMatcher,
-                        BondMatcher bondMatcher) {
+    public UllmannState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
+            EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher) {
         this.bondMatcher = bondMatcher;
         this.g1 = g1;
         this.g2 = g2;
@@ -100,9 +97,7 @@ final class UllmannState extends State {
         matrix = new CompatibilityMatrix(g1.length, g2.length);
         for (int i = 0; i < g1.length; i++) {
             for (int j = 0; j < g2.length; j++) {
-                if (g1[i].length <= g2[j].length
-                        && atomMatcher.matches(container1.getAtom(i),
-                                               container2.getAtom(j))) {
+                if (g1[i].length <= g2[j].length && atomMatcher.matches(container1.getAtom(i), container2.getAtom(j))) {
                     matrix.set(i, j);
                 }
             }
@@ -110,35 +105,38 @@ final class UllmannState extends State {
     }
 
     /** @inheritDoc */
-    @Override int nextN(int n) {
+    @Override
+    int nextN(int n) {
         return size; // we progress down the rows of the matrix
     }
 
     /** @inheritDoc */
-    @Override int nextM(int n, int m) {
+    @Override
+    int nextM(int n, int m) {
         for (int i = m + 1; i < g2.length; i++)
-            if (m2[i] == UNMAPPED)
-                return i;
+            if (m2[i] == UNMAPPED) return i;
         return g2.length;
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override int nMax() {
+    @Override
+    int nMax() {
         return g1.length;
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override int mMax() {
+    @Override
+    int mMax() {
         return g2.length;
     }
 
     /** @inheritDoc */
-    @Override boolean add(int n, int m) {
+    @Override
+    boolean add(int n, int m) {
 
-        if (!matrix.get(n, m))
-            return false;
+        if (!matrix.get(n, m)) return false;
 
         // fix the mapping
         matrix.markRow(n, -(n + 1));
@@ -150,8 +148,7 @@ final class UllmannState extends State {
             m1[n] = m;
             m2[m] = n;
             return true;
-        }
-        else {
+        } else {
             // mapping became invalid - unfix mapping
             matrix.resetRows(n, -(n + 1));
             return false;
@@ -159,7 +156,8 @@ final class UllmannState extends State {
     }
 
     /** @inheritDoc */
-    @Override void remove(int n, int m) {
+    @Override
+    void remove(int n, int m) {
         size--;
         m1[n] = m2[m] = UNMAPPED;
         matrix.resetRows(n, -(n + 1));
@@ -192,13 +190,11 @@ final class UllmannState extends State {
                         changed = true;
 
                         // no more mappings for n in the feasibility matrix
-                        if (!hasCandidate(n))
-                            return false;
+                        if (!hasCandidate(n)) return false;
                     }
                 }
             }
-        }
-        while (changed);
+        } while (changed);
         return true;
     }
 
@@ -215,15 +211,12 @@ final class UllmannState extends State {
         for (int n_prime : g1[n]) {
             boolean found = false;
             for (int m_prime : g2[m]) {
-                if (matrix.get(n_prime, m_prime)
-                        && bondMatcher.matches(bond1.get(n, n_prime),
-                                               bonds2.get(m, m_prime))) {
+                if (matrix.get(n_prime, m_prime) && bondMatcher.matches(bond1.get(n, n_prime), bonds2.get(m, m_prime))) {
                     found = true;
                     break;
                 }
             }
-            if (!found)
-                return false;
+            if (!found) return false;
         }
         return true;
     }
@@ -237,19 +230,20 @@ final class UllmannState extends State {
      */
     private boolean hasCandidate(int n) {
         for (int j = (n * matrix.mCols), end = (j + matrix.mCols); j < end; j++)
-            if (matrix.get(j))
-                return true;
+            if (matrix.get(j)) return true;
         return false;
     }
 
     /** @inheritDoc */
-    @Override int[] mapping() {
+    @Override
+    int[] mapping() {
         return Arrays.copyOf(m1, m1.length);
     }
 
     /** @inheritDoc */
     @TestMethod("accessors")
-    @Override int size() {
+    @Override
+    int size() {
         return size;
     }
 }

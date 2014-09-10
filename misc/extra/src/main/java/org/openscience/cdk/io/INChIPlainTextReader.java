@@ -72,7 +72,7 @@ import org.openscience.cdk.io.inchi.INChIContentProcessorTool;
 @TestClass("org.openscience.cdk.io.INChIPlainTextReaderTest")
 public class INChIPlainTextReader extends DefaultChemObjectReader {
 
-    private BufferedReader input;
+    private BufferedReader            input;
     private INChIContentProcessorTool inchiTool;
 
     /**
@@ -102,7 +102,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
     @TestMethod("testSetReader_Reader")
     public void setReader(Reader input) {
         if (input instanceof BufferedReader) {
-            this.input = (BufferedReader)input;
+            this.input = (BufferedReader) input;
         } else {
             this.input = new BufferedReader(input);
         }
@@ -118,17 +118,17 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      */
     private void init() {}
 
-	@TestMethod("testAccepts")
+    @TestMethod("testAccepts")
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
-		Class<?>[] interfaces = classObject.getInterfaces();
-		for (int i=0; i<interfaces.length; i++) {
-			if (IChemFile.class.equals(interfaces[i])) return true;
-		}
-    Class superClass = classObject.getSuperclass();
-    if (superClass != null) return this.accepts(superClass);
-		return false;
-	}
+        Class<?>[] interfaces = classObject.getInterfaces();
+        for (int i = 0; i < interfaces.length; i++) {
+            if (IChemFile.class.equals(interfaces[i])) return true;
+        }
+        Class superClass = classObject.getSuperclass();
+        if (superClass != null) return this.accepts(superClass);
+        return false;
+    }
 
     /**
      * Reads a IChemObject of type object from input.
@@ -137,9 +137,9 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
      * @param  object type of requested IChemObject
      * @return the content in a ChemFile object
      */
-	public <T extends IChemObject> T read(T object) throws CDKException {
+    public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
-            return (T)readChemFile((IChemFile)object);
+            return (T) readChemFile((IChemFile) object);
         } else {
             throw new CDKException("Only supported is reading of ChemFile objects.");
         }
@@ -156,7 +156,7 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         // have to do stuff here
         try {
             String line = null;
-            while ((line = input.readLine())!=null) {
+            while ((line = input.readLine()) != null) {
                 if (line.startsWith("INChI=") || line.startsWith("InChI=")) {
                     // ok, the fun starts
                     cf = cf.getBuilder().newInstance(IChemFile.class);
@@ -171,12 +171,11 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
                     //final String hydrogens = tokenizer.nextToken().substring(1); // 1-6H
 
                     IAtomContainer parsedContent = inchiTool.processFormula(
-                    		cf.getBuilder().newInstance(IAtomContainer.class), formula
-                    );
+                            cf.getBuilder().newInstance(IAtomContainer.class), formula);
                     inchiTool.processConnections(connections, parsedContent, -1);
 
                     IAtomContainerSet moleculeSet = cf.getBuilder().newInstance(IAtomContainerSet.class);
-                    moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class,parsedContent));
+                    moleculeSet.addAtomContainer(cf.getBuilder().newInstance(IAtomContainer.class, parsedContent));
                     IChemModel model = cf.getBuilder().newInstance(IChemModel.class);
                     model.setMoleculeSet(moleculeSet);
                     IChemSequence sequence = cf.getBuilder().newInstance(IChemSequence.class);
@@ -196,4 +195,3 @@ public class INChIPlainTextReader extends DefaultChemObjectReader {
         input.close();
     }
 }
-

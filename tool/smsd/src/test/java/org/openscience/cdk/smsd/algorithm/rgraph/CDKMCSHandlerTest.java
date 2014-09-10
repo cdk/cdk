@@ -54,8 +54,7 @@ public class CDKMCSHandlerTest extends AbstractMCSAlgorithmTest {
 
     @BeforeClass
     public static void setMCSAlgorithm() {
-        AbstractMCSAlgorithmTest.setMCSAlgorithm(
-                new CDKMCSHandler());
+        AbstractMCSAlgorithmTest.setMCSAlgorithm(new CDKMCSHandler());
     }
 
     /**

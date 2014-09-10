@@ -28,7 +28,6 @@ import java.util.List;
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 
-
 /**
  * <p>
  * A permutation group with a Schreier-Sims representation. For a number n, a
@@ -109,12 +108,12 @@ public class PermutationGroup {
     /**
      * The size of the group - strictly, the size of the permutation
      */
-    private final int size;
+    private final int       size;
 
     /**
      * The base of the group
      */
-    private Permutation base;
+    private Permutation     base;
 
     /**
      * Make a group with just a single identity permutation of size n.
@@ -197,7 +196,7 @@ public class PermutationGroup {
      */
     @TestMethod("getSizeTest")
     public int getSize() {
-    	return size;
+        return size;
     }
 
     /**
@@ -207,19 +206,19 @@ public class PermutationGroup {
      */
     @TestMethod("orderTest")
     public long order() {
-    	// A group may have a size larger than Integer.MAX_INTEGER
-    	// (2 ** 32 - 1) - for example sym(13) is larger.
-    	long total = 1;
-    	for (int i = 0; i < size; i++) {
-    		int sum = 0;
-    		for (int j = 0; j < size; j++) {
-    			if (this.permutations[i][j] != null) {
-    				sum++;
-    			}
-    		}
-    		total *= sum;
-    	}
-    	return total;
+        // A group may have a size larger than Integer.MAX_INTEGER
+        // (2 ** 32 - 1) - for example sym(13) is larger.
+        long total = 1;
+        for (int i = 0; i < size; i++) {
+            int sum = 0;
+            for (int j = 0; j < size; j++) {
+                if (this.permutations[i][j] != null) {
+                    sum++;
+                }
+            }
+            total *= sum;
+        }
+        return total;
     }
 
     /**
@@ -233,7 +232,6 @@ public class PermutationGroup {
     public Permutation get(int uIndex, int uSubIndex) {
         return this.permutations[uIndex][uSubIndex];
     }
-
 
     /**
      * Get the traversal U<sub>i</sub> from the list of transversals.
@@ -299,9 +297,9 @@ public class PermutationGroup {
     }
 
     private void backtrack(int l, Permutation g, Backtracker backtracker) {
-    	if (backtracker.isFinished()) {
-    		return;
-    	}
+        if (backtracker.isFinished()) {
+            return;
+        }
         if (l == size) {
             backtracker.applyTo(g);
         } else {
@@ -323,10 +321,14 @@ public class PermutationGroup {
     public List<Permutation> all() {
         final List<Permutation> permutations = new ArrayList<Permutation>();
         Backtracker counter = new Backtracker() {
+
             public void applyTo(Permutation p) {
                 permutations.add(p);
             }
-            public boolean isFinished() { return false; }
+
+            public boolean isFinished() {
+                return false;
+            }
         };
         this.apply(counter);
         return permutations;
@@ -373,23 +375,23 @@ public class PermutationGroup {
      */
     @TestMethod("enterTest")
     public void enter(Permutation g) {
-       int deg = size;
-       int i = test(g);
-       if (i == deg) {
-           return;
-       } else {
-           permutations[i][g.get(base.get(i))] = new Permutation(g);
-       }
+        int deg = size;
+        int i = test(g);
+        if (i == deg) {
+            return;
+        } else {
+            permutations[i][g.get(base.get(i))] = new Permutation(g);
+        }
 
-       for (int j = 0; j <= i; j++) {
-           for (int a = 0; a < deg; a++) {
-               Permutation h = permutations[j][a];
-               if (h != null) {
-                   Permutation f = g.multiply(h);
-                   enter(f);
-               }
-           }
-       }
+        for (int j = 0; j <= i; j++) {
+            for (int a = 0; a < deg; a++) {
+                Permutation h = permutations[j][a];
+                if (h != null) {
+                    Permutation f = g.multiply(h);
+                    enter(f);
+                }
+            }
+        }
     }
 
     /**

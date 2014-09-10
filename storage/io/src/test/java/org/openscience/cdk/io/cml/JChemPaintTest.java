@@ -46,18 +46,18 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class JChemPaintTest extends CDKTestCase {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(JChemPaintTest.class);
 
     /**
      * This one tests a CML2 file.
      */
-    @Test public void testSalt() throws Exception {
+    @Test
+    public void testSalt() throws Exception {
         String filename = "data/cml/COONa.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content
@@ -82,12 +82,13 @@ public class JChemPaintTest extends CDKTestCase {
     /**
      * This one tests reading of output from the WWMM matrix (KEGG collection).
      */
-    @Test public void testWWMMOutput() throws Exception {
+    @Test
+    public void testWWMMOutput() throws Exception {
         String filename = "data/cml/keggtest.cml";
         logger.info("Testing: " + filename);
         InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
         CMLReader reader = new CMLReader(ins);
-        IChemFile chemFile = (IChemFile)reader.read(new org.openscience.cdk.ChemFile());
+        IChemFile chemFile = (IChemFile) reader.read(new org.openscience.cdk.ChemFile());
         reader.close();
 
         // test the resulting ChemFile content

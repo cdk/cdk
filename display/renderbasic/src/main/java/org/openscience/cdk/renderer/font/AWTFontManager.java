@@ -35,9 +35,9 @@ public class AWTFontManager extends AbstractFontManager {
 
     private HashMap<Integer, Font> fontSizeToFontMap;
 
-    private int minFontSize;
+    private int                    minFontSize;
 
-    private Font currentFont;
+    private Font                   currentFont;
 
     /**
      * Make a manager for fonts in AWT, with a minimum font size of 9.
@@ -60,11 +60,9 @@ public class AWTFontManager extends AbstractFontManager {
 
         for (int i = 0; i < 20; i++) {
             if (super.getFontStyle() == IFontManager.FontStyle.NORMAL) {
-                this.fontSizeToFontMap.put(size,
-                        new Font(super.getFontName(), Font.PLAIN, size));
+                this.fontSizeToFontMap.put(size, new Font(super.getFontName(), Font.PLAIN, size));
             } else {
-                this.fontSizeToFontMap.put(size,
-                        new Font(super.getFontName(), Font.BOLD, size));
+                this.fontSizeToFontMap.put(size, new Font(super.getFontName(), Font.BOLD, size));
             }
             this.registerFontSizeMapping(scale, size);
             size += 1;

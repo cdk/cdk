@@ -34,7 +34,8 @@ public class PDBReaderFactoryTest extends AbstractReaderFactoryTest {
 
     private ReaderFactory factory = new ReaderFactory();
 
-    @Test public void testPDB() throws Exception {
+    @Test
+    public void testPDB() throws Exception {
         expectReader("data/pdb/coffeine.pdb", PDBFormat.getInstance(), -1, -1);
     }
 }

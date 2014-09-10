@@ -45,29 +45,31 @@ import org.openscience.cdk.tools.LoggingToolFactory;
  */
 public class MDLRXNV3000ReaderTest extends SimpleChemObjectReaderTest {
 
-    private static ILoggingTool logger =
-        LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
+    private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MDLRXNV3000ReaderTest.class);
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         setSimpleChemObjectReader(new MDLRXNV3000Reader(), "data/mdl/reaction_v3.rxn");
     }
 
-    @Test public void testAccepts() {
-    	MDLRXNV3000Reader reader = new MDLRXNV3000Reader();
-    	Assert.assertTrue(reader.accepts(ChemModel.class));
-    	Assert.assertTrue(reader.accepts(Reaction.class));
+    @Test
+    public void testAccepts() {
+        MDLRXNV3000Reader reader = new MDLRXNV3000Reader();
+        Assert.assertTrue(reader.accepts(ChemModel.class));
+        Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
     /**
      * @cdk.bug 1849925
      */
-    @Test public void testReadReactions1() throws Exception {
+    @Test
+    public void testReadReactions1() throws Exception {
         String filename1 = "data/mdl/reaction_v3.rxn";
         logger.info("Testing: " + filename1);
         InputStream ins1 = this.getClass().getClassLoader().getResourceAsStream(filename1);
         MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, Mode.STRICT);
         IReaction reaction1 = new Reaction();
-        reaction1 = (IReaction)reader1.read(reaction1);
+        reaction1 = (IReaction) reader1.read(reaction1);
         reader1.close();
 
         Assert.assertNotNull(reaction1);

@@ -46,17 +46,15 @@ import org.openscience.cdk.renderer.generators.ReactionSceneGenerator.ShowReacti
 @TestClass("org.openscience.cdk.renderer.generators.ReactantsBoxGeneratorTest")
 public class ReactantsBoxGenerator implements IGenerator<IReaction> {
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testEmptyReaction")
-	public IRenderingElement generate(IReaction reaction, RendererModel model) {
-		if (!model.getParameter(ShowReactionBoxes.class).getValue())
-			return null;
-	    if (reaction.getReactantCount() == 0)
-	    	return new ElementGroup();
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testEmptyReaction")
+    public IRenderingElement generate(IReaction reaction, RendererModel model) {
+        if (!model.getParameter(ShowReactionBoxes.class).getValue()) return null;
+        if (reaction.getReactantCount() == 0) return new ElementGroup();
 
-		double separation = model.getParameter(BondLength.class)
-    		.getValue() / model.getParameter(Scale.class).getValue()/2;
+        double separation = model.getParameter(BondLength.class).getValue()
+                / model.getParameter(Scale.class).getValue() / 2;
         Rectangle2D totalBounds = BoundsCalculator.calculateBounds(reaction.getReactants());
 
         ElementGroup diagram = new ElementGroup();
@@ -64,24 +62,17 @@ public class ReactantsBoxGenerator implements IGenerator<IReaction> {
         double minY = totalBounds.getMinY();
         double maxX = totalBounds.getMaxX();
         double maxY = totalBounds.getMaxY();
-        Color foregroundColor = model.getParameter(
-            BasicSceneGenerator.ForegroundColor.class).getValue();
-        diagram.add(new RectangleElement(
-            minX - separation, minY - separation, maxX + separation, maxY + separation, foregroundColor
-        ));
-        diagram.add(new TextElement(
-            (minX+maxX)/2, minY-separation, "Reactants", foregroundColor
-        ));
+        Color foregroundColor = model.getParameter(BasicSceneGenerator.ForegroundColor.class).getValue();
+        diagram.add(new RectangleElement(minX - separation, minY - separation, maxX + separation, maxY + separation,
+                foregroundColor));
+        diagram.add(new TextElement((minX + maxX) / 2, minY - separation, "Reactants", foregroundColor));
         return diagram;
-	}
+    }
 
-	/** {@inheritDoc} */
-	@Override
-	@TestMethod("testGetParameters")
-	public List<IGeneratorParameter<?>> getParameters() {
-        return Arrays.asList(
-            new IGeneratorParameter<?>[] {
-            }
-        );
+    /** {@inheritDoc} */
+    @Override
+    @TestMethod("testGetParameters")
+    public List<IGeneratorParameter<?>> getParameters() {
+        return Arrays.asList(new IGeneratorParameter<?>[]{});
     }
 }

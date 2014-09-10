@@ -34,16 +34,19 @@ import org.openscience.cdk.interfaces.ITestObjectBuilder;
  */
 public class DebugMonomerTest extends AbstractMonomerTest {
 
-    @BeforeClass public static void setUp() {
+    @BeforeClass
+    public static void setUp() {
         setTestObjectBuilder(new ITestObjectBuilder() {
+
             public IChemObject newTestObject() {
                 return new DebugMonomer();
             }
         });
     }
 
-	@Test public void testDebugMonomer() {
-		IMonomer oMonomer = new DebugMonomer();
+    @Test
+    public void testDebugMonomer() {
+        IMonomer oMonomer = new DebugMonomer();
         Assert.assertNotNull(oMonomer);
-	}
+    }
 }

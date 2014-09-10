@@ -191,9 +191,9 @@ public class MmffAtomTypeMatcherTest {
         container.addBond(39, 48, IBond.Order.SINGLE);
         container.addBond(48, 49, IBond.Order.SINGLE);
         String[] expected = {"HOCO", "OC=O", "COO", "O=CO", "CR", "HC", "NC=O", "HNCO", "C=ON", "O=CN", "CR", "HC",
-                             "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR", "HC", "HC", "CR", "HC", "HC",
-                             "CR", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "CB",
-                             "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC", "CB", "HC"};
+                "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR", "HC", "HC", "CR", "HC", "HC", "CR", "HC", "CR",
+                "HC", "HC", "HC", "CR", "HC", "HC", "HC", "CR", "HC", "HC", "CB", "CB", "HC", "CB", "HC", "CB", "HC",
+                "CB", "HC", "CB", "HC"};
         String[] actual = INSTANCE.symbolicTypes(container);
         Assert.assertArrayEquals(expected, actual);
     }
@@ -237,7 +237,8 @@ public class MmffAtomTypeMatcherTest {
      * don't seem right, here 'CONN' and 'NC=O' is definitely correct. Previously the test expected
      * N2OX but this is for nitrogen cations so '*[NH+]([O-])*', NC=O is more likely to be correct.
      */
-    @Test public void hydroxyurea() {
+    @Test
+    public void hydroxyurea() {
         IAtomContainer container = new AtomContainer(9, 8, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("O", 0));
@@ -266,7 +267,8 @@ public class MmffAtomTypeMatcherTest {
      * not mentioned what type they are assigned. This test simply shows molecular hydrogens don't
      * break the assignment and are set to null.
      */
-    @Test public void molecularHydrogenDoesNotBreakAssignment() {
+    @Test
+    public void molecularHydrogenDoesNotBreakAssignment() {
         IAtomContainer container = new AtomContainer(2, 1, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("H", 0));
@@ -281,7 +283,8 @@ public class MmffAtomTypeMatcherTest {
      * nitrogen was being assigned NPYL by MMFF94AtomTypeMatcherTest. It is now assigned 'NR:
      * NITROGEN IN ALIPHATIC AMINES'.
      */
-    @Test public void methylamine() {
+    @Test
+    public void methylamine() {
         IAtomContainer container = new AtomContainer(7, 6, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("N", 0));
@@ -305,7 +308,8 @@ public class MmffAtomTypeMatcherTest {
      * MMFF94AtomTypeMatcherTest.testSthi would not assign STHI in thiophene. This is no longer the
      * case.
      */
-    @Test public void thiophene() {
+    @Test
+    public void thiophene() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
@@ -334,7 +338,8 @@ public class MmffAtomTypeMatcherTest {
      * MMFF94AtomTypeMatcherTest.testOar would not assign OFUR in thiophene. This is no longer the
      * case. Note the CDK used 'Oar' instead of the actual 'OFUR' type.
      */
-    @Test public void furane() {
+    @Test
+    public void furane() {
         IAtomContainer container = new AtomContainer(9, 9, 0, 0);
         container.addAtom(atom("H", 0));
         container.addAtom(atom("C", 0));
@@ -359,7 +364,8 @@ public class MmffAtomTypeMatcherTest {
         Assert.assertArrayEquals(expected, actual);
     }
 
-    @Test public void methane() {
+    @Test
+    public void methane() {
         IAtomContainer container = new AtomContainer();
         container.addAtom(atom("C", 0));
         container.addAtom(atom("H", 0));

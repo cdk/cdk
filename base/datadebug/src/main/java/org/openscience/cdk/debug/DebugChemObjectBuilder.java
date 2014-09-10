@@ -19,7 +19,6 @@
  */
 package org.openscience.cdk.debug;
 
-
 import org.openscience.cdk.DynamicFactory;
 import org.openscience.cdk.interfaces.IAdductFormula;
 import org.openscience.cdk.interfaces.IAminoAcid;
@@ -88,85 +87,84 @@ import org.openscience.cdk.stereo.TetrahedralChirality;
  */
 public class DebugChemObjectBuilder implements IChemObjectBuilder {
 
-	private static volatile IChemObjectBuilder instance = null;
-    private static final Object lock = new Object();
-    private final DynamicFactory factory = new DynamicFactory(200);
+    private static volatile IChemObjectBuilder instance = null;
+    private static final Object                lock     = new Object();
+    private final DynamicFactory               factory  = new DynamicFactory(200);
 
-	private DebugChemObjectBuilder() {
+    private DebugChemObjectBuilder() {
 
         // self reference required for stereo-elements
         final IChemObjectBuilder self = this;
 
         // elements
-        factory.register(IAtom.class,         DebugAtom.class);
-        factory.register(IPseudoAtom.class,   DebugPseudoAtom.class);
-        factory.register(IElement.class,      DebugElement.class);
-        factory.register(IAtomType.class,     DebugAtomType.class);
+        factory.register(IAtom.class, DebugAtom.class);
+        factory.register(IPseudoAtom.class, DebugPseudoAtom.class);
+        factory.register(IElement.class, DebugElement.class);
+        factory.register(IAtomType.class, DebugAtomType.class);
         factory.register(IFragmentAtom.class, DebugFragmentAtom.class);
-        factory.register(IPDBAtom.class,      DebugPDBAtom.class);
-        factory.register(IIsotope.class,      DebugIsotope.class);
+        factory.register(IPDBAtom.class, DebugPDBAtom.class);
+        factory.register(IIsotope.class, DebugIsotope.class);
 
         // electron containers
-        factory.register(IBond.class,              DebugBond.class);
+        factory.register(IBond.class, DebugBond.class);
         factory.register(IElectronContainer.class, DebugElectronContainer.class);
-        factory.register(ISingleElectron.class,    DebugSingleElectron.class);
-        factory.register(ILonePair.class,          DebugLonePair.class);
+        factory.register(ISingleElectron.class, DebugSingleElectron.class);
+        factory.register(ILonePair.class, DebugLonePair.class);
 
         // atom containers
         factory.register(IAtomContainer.class, DebugAtomContainer.class);
-        factory.register(IRing.class,          DebugRing.class);
-        factory.register(ICrystal.class,       DebugCrystal.class);
-        factory.register(IPolymer.class,       DebugPolymer.class);
-        factory.register(IPDBPolymer.class,    DebugPDBPolymer.class);
-        factory.register(IMonomer.class,       DebugMonomer.class);
-        factory.register(IPDBMonomer.class,    DebugPDBMonomer.class);
-        factory.register(IBioPolymer.class,    DebugBioPolymer.class);
-        factory.register(IPDBStructure.class,  DebugPDBStructure.class);
-        factory.register(IAminoAcid.class,     DebugAminoAcid.class);
-        factory.register(IStrand.class,        DebugStrand.class);
+        factory.register(IRing.class, DebugRing.class);
+        factory.register(ICrystal.class, DebugCrystal.class);
+        factory.register(IPolymer.class, DebugPolymer.class);
+        factory.register(IPDBPolymer.class, DebugPDBPolymer.class);
+        factory.register(IMonomer.class, DebugMonomer.class);
+        factory.register(IPDBMonomer.class, DebugPDBMonomer.class);
+        factory.register(IBioPolymer.class, DebugBioPolymer.class);
+        factory.register(IPDBStructure.class, DebugPDBStructure.class);
+        factory.register(IAminoAcid.class, DebugAminoAcid.class);
+        factory.register(IStrand.class, DebugStrand.class);
 
         // reactions
-        factory.register(IReaction.class,       DebugReaction.class);
+        factory.register(IReaction.class, DebugReaction.class);
         factory.register(IReactionScheme.class, DebugReactionScheme.class);
 
         // formula
         factory.register(IMolecularFormula.class, DebugMolecularFormula.class);
-        factory.register(IAdductFormula.class,    DebugAdductFormula.class);
+        factory.register(IAdductFormula.class, DebugAdductFormula.class);
 
         // chem object sets
-        factory.register(IAtomContainerSet.class,    DebugAtomContainerSet.class);
+        factory.register(IAtomContainerSet.class, DebugAtomContainerSet.class);
         factory.register(IMolecularFormulaSet.class, DebugMolecularFormulaSet.class);
-        factory.register(IReactionSet.class,         DebugReactionSet.class);
-        factory.register(IRingSet.class,             DebugRingSet.class);
-        factory.register(IChemModel.class,           DebugChemModel.class);
-        factory.register(IChemFile.class,            DebugChemFile.class);
-        factory.register(IChemSequence.class,        DebugChemSequence.class);
-        factory.register(ISubstance.class,           DebugSubstance.class);
+        factory.register(IReactionSet.class, DebugReactionSet.class);
+        factory.register(IRingSet.class, DebugRingSet.class);
+        factory.register(IChemModel.class, DebugChemModel.class);
+        factory.register(IChemFile.class, DebugChemFile.class);
+        factory.register(IChemSequence.class, DebugChemSequence.class);
+        factory.register(ISubstance.class, DebugSubstance.class);
 
         // stereo components (requires some modification after instantiation)
-        factory.register(ITetrahedralChirality.class,
-                         TetrahedralChirality.class,
-                         new DynamicFactory.CreationModifier<TetrahedralChirality>() {
-                             @Override
-                             public void modify(TetrahedralChirality instance) {
-                                 instance.setBuilder(self);
-                             }
-                         });
-        factory.register(IDoubleBondStereochemistry.class,
-                         DoubleBondStereochemistry.class,
-                         new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
-                             @Override
-                             public void modify(DoubleBondStereochemistry instance) {
-                                 instance.setBuilder(self);
-                             }
-                         });
+        factory.register(ITetrahedralChirality.class, TetrahedralChirality.class,
+                new DynamicFactory.CreationModifier<TetrahedralChirality>() {
+
+                    @Override
+                    public void modify(TetrahedralChirality instance) {
+                        instance.setBuilder(self);
+                    }
+                });
+        factory.register(IDoubleBondStereochemistry.class, DoubleBondStereochemistry.class,
+                new DynamicFactory.CreationModifier<DoubleBondStereochemistry>() {
+
+                    @Override
+                    public void modify(DoubleBondStereochemistry instance) {
+                        instance.setBuilder(self);
+                    }
+                });
 
         // miscellaneous
-        factory.register(IMapping.class,    DebugMapping.class);
+        factory.register(IMapping.class, DebugMapping.class);
         factory.register(IChemObject.class, DebugChemObject.class);
 
     }
-
 
     /**
      * Access the singleton instance of this DebugChemObjectBuilder. <p/>
@@ -196,17 +194,14 @@ public class DebugChemObjectBuilder implements IChemObjectBuilder {
             }
         }
         return result;
-	}
-
+    }
 
     /**
      * @inheritDoc
      */
     @Override
-    public <T extends ICDKObject>T newInstance(Class<T> clazz, Object... params) {
+    public <T extends ICDKObject> T newInstance(Class<T> clazz, Object... params) {
         return factory.ofClass(clazz, params);
     }
 
 }
-
-

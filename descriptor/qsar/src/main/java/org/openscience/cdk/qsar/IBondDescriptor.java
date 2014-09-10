@@ -41,4 +41,3 @@ public interface IBondDescriptor extends IDescriptor {
     public DescriptorValue calculate(IBond bond, IAtomContainer atomContainer);
 
 }
-

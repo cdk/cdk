@@ -39,9 +39,7 @@ public class LigandTest extends CDKTestCase {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 
-        ILigand ligand = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
+        ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         Assert.assertNotNull(ligand);
         Assert.assertEquals(molecule, ligand.getAtomContainer());
         Assert.assertEquals(molecule.getAtom(1), ligand.getCentralAtom());
@@ -53,14 +51,10 @@ public class LigandTest extends CDKTestCase {
         SmilesParser smiles = new SmilesParser(SilentChemObjectBuilder.getInstance());
         IAtomContainer molecule = smiles.parseSmiles("ClC(Br)(I)[H]");
 
-        ILigand ligand = new Ligand(
-            molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0)
-        );
+        ILigand ligand = new Ligand(molecule, new VisitedAtoms(), molecule.getAtom(1), molecule.getAtom(0));
         Assert.assertTrue(ligand.getVisitedAtoms().isVisited(molecule.getAtom(1)));
         Assert.assertTrue(ligand.isVisited(molecule.getAtom(1)));
         Assert.assertFalse(ligand.getVisitedAtoms().isVisited(molecule.getAtom(0)));
         Assert.assertFalse(ligand.isVisited(molecule.getAtom(0)));
     }
 }
-
-

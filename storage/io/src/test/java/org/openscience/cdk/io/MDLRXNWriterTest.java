@@ -50,28 +50,31 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
 
     private static IChemObjectBuilder builder;
 
-    @BeforeClass public static void setup() {
+    @BeforeClass
+    public static void setup() {
         builder = DefaultChemObjectBuilder.getInstance();
         setChemObjectIO(new MDLRXNWriter());
     }
 
-    @Test public void testAccepts() throws Exception {
-    	MDLRXNWriter reader = new MDLRXNWriter();
-    	Assert.assertTrue(reader.accepts(Reaction.class));
+    @Test
+    public void testAccepts() throws Exception {
+        MDLRXNWriter reader = new MDLRXNWriter();
+        Assert.assertTrue(reader.accepts(Reaction.class));
     }
 
-    @Test public void testRoundtrip() throws Exception {
+    @Test
+    public void testRoundtrip() throws Exception {
         IReaction reaction = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
-        hydroxide.addAtom(builder.newInstance(IAtom.class,"O"));
+        hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction.addReactant(hydroxide);
         IAtomContainer proton = builder.newInstance(IAtomContainer.class);
-        proton.addAtom(builder.newInstance(IAtom.class,"H"));
+        proton.addAtom(builder.newInstance(IAtom.class, "H"));
         reaction.addReactant(proton);
         IAtomContainer water = builder.newInstance(IAtomContainer.class);
-        water.addAtom(builder.newInstance(IAtom.class,"O"));
+        water.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction.addProduct(water);
-        reaction.addMapping(new Mapping(hydroxide.getAtom(0),water.getAtom(0)));
+        reaction.addMapping(new Mapping(hydroxide.getAtom(0), water.getAtom(0)));
 
         // now serialize to MDL RXN
         StringWriter writer = new StringWriter(10000);
@@ -86,7 +89,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reaction2 = (IReaction)reader.read(reaction2);
+        reaction2 = (IReaction) reader.read(reaction2);
         reader.close();
 
         Assert.assertEquals(2, reaction2.getReactantCount());
@@ -94,17 +97,18 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         Assert.assertEquals(1, reaction2.getMappingCount());
     }
 
-    @Test public void testReactionSet_1() throws Exception {
+    @Test
+    public void testReactionSet_1() throws Exception {
         IReaction reaction11 = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
-        hydroxide.addAtom(builder.newInstance(IAtom.class,"O"));
+        hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction11.addReactant(hydroxide);
         IAtomContainer proton = builder.newInstance(IAtomContainer.class);
-        proton.addAtom(builder.newInstance(IAtom.class,"H"));
+        proton.addAtom(builder.newInstance(IAtom.class, "H"));
         reaction11.addReactant(proton);
 
         IAtomContainer water = builder.newInstance(IAtomContainer.class);
-        water.addAtom(builder.newInstance(IAtom.class,"O"));
+        water.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction11.addProduct(water);
 
         IReactionSet reactionSet = new ReactionSet();
@@ -123,7 +127,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReaction reaction2 = builder.newInstance(IReaction.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reaction2 = (IReaction)reader.read(reaction2);
+        reaction2 = (IReaction) reader.read(reaction2);
         reader.close();
 
         Assert.assertEquals(2, reaction2.getReactantCount());
@@ -133,30 +137,30 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         Assert.assertEquals(1, reaction2.getProducts().getAtomContainer(0).getAtomCount());
     }
 
-
-    @Test public void testReactionSet_2() throws Exception {
+    @Test
+    public void testReactionSet_2() throws Exception {
         IReaction reaction11 = builder.newInstance(IReaction.class);
         IAtomContainer hydroxide = builder.newInstance(IAtomContainer.class);
-        hydroxide.addAtom(builder.newInstance(IAtom.class,"O"));
+        hydroxide.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction11.addReactant(hydroxide);
         IAtomContainer proton = builder.newInstance(IAtomContainer.class);
-        proton.addAtom(builder.newInstance(IAtom.class,"H"));
+        proton.addAtom(builder.newInstance(IAtom.class, "H"));
         reaction11.addReactant(proton);
 
         IAtomContainer water = builder.newInstance(IAtomContainer.class);
-        water.addAtom(builder.newInstance(IAtom.class,"O"));
+        water.addAtom(builder.newInstance(IAtom.class, "O"));
         reaction11.addProduct(water);
 
         IReaction reaction12 = builder.newInstance(IReaction.class);
         IAtomContainer h = builder.newInstance(IAtomContainer.class);
-        h.addAtom(builder.newInstance(IAtom.class,"H"));
+        h.addAtom(builder.newInstance(IAtom.class, "H"));
         IAtomContainer n = builder.newInstance(IAtomContainer.class);
-        n.addAtom(builder.newInstance(IAtom.class,"N"));
+        n.addAtom(builder.newInstance(IAtom.class, "N"));
         reaction12.addReactant(h);
         reaction12.addReactant(n);
         IAtomContainer ammonia = builder.newInstance(IAtomContainer.class);
-        ammonia.addAtom(builder.newInstance(IAtom.class,"N"));
-        ammonia.addAtom(builder.newInstance(IAtom.class,"H"));
+        ammonia.addAtom(builder.newInstance(IAtom.class, "N"));
+        ammonia.addAtom(builder.newInstance(IAtom.class, "H"));
         ammonia.addBond(0, 1, IBond.Order.SINGLE);
         reaction12.addProduct(ammonia);
 
@@ -177,7 +181,7 @@ public class MDLRXNWriterTest extends ChemObjectIOTest {
         // now deserialize the MDL RXN output
         IReactionSet reactionSetF = builder.newInstance(IReactionSet.class);
         MDLRXNReader reader = new MDLRXNReader(new StringReader(file));
-        reactionSetF = (IReactionSet)reader.read(reactionSetF);
+        reactionSetF = (IReactionSet) reader.read(reactionSetF);
         reader.close();
 
         Assert.assertEquals(2, reactionSetF.getReactionCount());

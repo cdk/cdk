@@ -27,12 +27,12 @@ package org.openscience.cdk;
  */
 public interface IImplementationSpecification {
 
-	/**
-	 * Pointer to a dictionary or ontology describing a unique
-	 * algorithm.
-	 *
-	 * @return the URN pointing to a (virtual) dictionary or ontology.
-	 */
+    /**
+     * Pointer to a dictionary or ontology describing a unique
+     * algorithm.
+     *
+     * @return the URN pointing to a (virtual) dictionary or ontology.
+     */
     public String getSpecificationReference();
 
     /**
@@ -60,4 +60,3 @@ public interface IImplementationSpecification {
     public String getImplementationVendor();
 
 }
-

@@ -36,37 +36,37 @@ package org.openscience.cdk.interfaces;
  */
 public interface IMonomer extends IAtomContainer {
 
-	/**
-	 * Retrieve the monomer name.
-	 *
-	 * @return The name of the Monomer object
+    /**
+     * Retrieve the monomer name.
+     *
+     * @return The name of the Monomer object
      * @see    #setMonomerName
-	 */
-	public String getMonomerName();
+     */
+    public String getMonomerName();
 
-	/**
-	 * Retrieve the monomer type.
-	 *
-	 * @return The type of the Monomer object
+    /**
+     * Retrieve the monomer type.
+     *
+     * @return The type of the Monomer object
      * @see    #setMonomerType
-	 */
-	public String getMonomerType();
+     */
+    public String getMonomerType();
 
-	/**
-	 * Set the name of the Monomer object.
-	 *
-	 * @param cMonomerName  The new name for this monomer
+    /**
+     * Set the name of the Monomer object.
+     *
+     * @param cMonomerName  The new name for this monomer
      * @see    #getMonomerName
-	 */
-	public void setMonomerName(String cMonomerName);
+     */
+    public void setMonomerName(String cMonomerName);
 
-	/**
-	 * Set the type of the Monomer object.
-	 *
-	 * @param cMonomerType  The new type for this monomer
+    /**
+     * Set the type of the Monomer object.
+     *
+     * @param cMonomerType  The new type for this monomer
      * @see    #getMonomerType
-	 */
-	public void setMonomerType(String cMonomerType);
+     */
+    public void setMonomerType(String cMonomerType);
 
     /**
      * @inheritDoc

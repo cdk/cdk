@@ -31,27 +31,27 @@ import org.openscience.cdk.DefaultChemObjectBuilder;
  *
  * @cdk.module test-isomorphism
  */
-public class SymbolSetQueryAtomTest extends CDKTestCase
-{
+public class SymbolSetQueryAtomTest extends CDKTestCase {
 
     private static SymbolSetQueryAtom symbolSet = null;
 
-    @BeforeClass static public void setUp() {
+    @BeforeClass
+    static public void setUp() {
         symbolSet = new SymbolSetQueryAtom(DefaultChemObjectBuilder.getInstance());
         symbolSet.addSymbol("C");
         symbolSet.addSymbol("Fe");
     }
 
-	@Test public void testMatches()
-	{
+    @Test
+    public void testMatches() {
         Atom c = new Atom("C");
         Atom n = new Atom("N");
-		Assert.assertTrue(symbolSet.matches(c));
+        Assert.assertTrue(symbolSet.matches(c));
         Assert.assertFalse(symbolSet.matches(n));
-	}
+    }
 
-    @Test public void testRemoveSymbol()
-    {
+    @Test
+    public void testRemoveSymbol() {
         symbolSet.removeSymbol("Fe");
         Assert.assertEquals(1, symbolSet.getSymbolSet().size());
         Assert.assertFalse(symbolSet.hasSymbol("Fe"));
@@ -59,8 +59,8 @@ public class SymbolSetQueryAtomTest extends CDKTestCase
         symbolSet.addSymbol("Fe");
     }
 
-    @Test public void testHasSymbol()
-    {
+    @Test
+    public void testHasSymbol() {
         Assert.assertTrue(symbolSet.hasSymbol("C"));
         Assert.assertFalse(symbolSet.hasSymbol("N"));
     }

@@ -53,15 +53,13 @@ final class EdgeShortCycles {
      *  given initial cycles. */
     EdgeShortCycles(InitialCycles initialCycles) {
 
-        int[][] graph  = initialCycles.graph();
-        int[]   sizeOf = new int[initialCycles.numberOfEdges()];
+        int[][] graph = initialCycles.graph();
+        int[] sizeOf = new int[initialCycles.numberOfEdges()];
 
         this.paths = new ArrayList<int[]>(initialCycles.numberOfCycles());
 
         // cycles are returned ordered by length
         for (final InitialCycles.Cycle cycle : initialCycles.cycles()) {
-
-
 
             final int length = cycle.length();
             final int[] path = cycle.path();
@@ -70,9 +68,9 @@ final class EdgeShortCycles {
 
             // check if any vertex is the shortest through a vertex in the path
             for (int i = 1; i < path.length; i++) {
-                int idx = initialCycles.indexOfEdge(path[i-1], path[i]);
+                int idx = initialCycles.indexOfEdge(path[i - 1], path[i]);
                 if (sizeOf[idx] < 1 || length <= sizeOf[idx]) {
-                    found       = true;
+                    found = true;
                     sizeOf[idx] = length;
                 }
             }
@@ -91,8 +89,7 @@ final class EdgeShortCycles {
      *
      * @return the paths
      */
-    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," +
-                        "paths_cyclophane_even")
+    @TestMethod("paths_bicyclo,paths_napthalene,paths_anthracene," + "paths_cyclophane_even")
     int[][] paths() {
         int[][] paths = new int[this.paths.size()][0];
         for (int i = 0; i < this.paths.size(); i++) {
@@ -106,8 +103,7 @@ final class EdgeShortCycles {
      *
      * @return number of cycles
      */
-    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," +
-                        "size_cyclophane_even")
+    @TestMethod("size_bicyclo,size_napthalene,size_anthracene," + "size_cyclophane_even")
     int size() {
         return paths.size();
     }

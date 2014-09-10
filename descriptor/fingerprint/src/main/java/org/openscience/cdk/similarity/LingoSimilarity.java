@@ -43,8 +43,7 @@ import java.util.TreeSet;
 @TestClass("org.openscience.cdk.similarity.LingoSimilarityTest")
 public class LingoSimilarity {
 
-    private LingoSimilarity() {
-    }
+    private LingoSimilarity() {}
 
     /**
      * Evaluate the LINGO similarity between two key,value sty;e fingerprints.
