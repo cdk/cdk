@@ -143,7 +143,7 @@ public class PathTools {
     }
 
     /**
-     * Recursivly perfoms a depth first search in a molecular graphs contained in
+     * Recursively performs a depth first search in a molecular graphs contained in
      * the AtomContainer molecule, starting at the root atom and returning when it
      * hits the target atom.
      * <p>

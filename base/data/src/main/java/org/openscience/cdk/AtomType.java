@@ -93,7 +93,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
 
     /**
      * The formal number of neighbours this atom type can have with CDKConstants_UNSET
-     * as default. This includes explicitely and implicitely connected atoms, including
+     * as default. This includes explicitely and implicitly connected atoms, including
      * implicit hydrogens.
      */
     protected Integer                 formalNeighbourCount = (Integer) CDKConstants.UNSET;
@@ -131,7 +131,7 @@ public class AtomType extends Isotope implements IAtomType, Serializable, Clonea
      * Constructs an isotope by copying the symbol, atomic number,
      * flags, identifier, exact mass, natural abundance and mass
      * number from the given IIsotope. It does not copy the
-     * listeners and properties. If the element is an instanceof
+     * listeners and properties. If the element is an instance of
      * IAtomType, then the maximum bond order, bond order sum,
      * van der Waals and covalent radii, formal charge, hybridization,
      * electron valency, formal neighbour count and atom type name

@@ -306,7 +306,7 @@ public class VASPReader extends DefaultChemObjectReader {
     } //end nextVASPToken(boolean newLine)
 
     /**
-     * Find the next token of a VASP file begining
+     * Find the next token of a VASP file beginning
      * with the *next* line.
      */
     public String nextVASPTokenFollowing(String string) throws IOException {

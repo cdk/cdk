@@ -35,7 +35,7 @@ import static org.openscience.cdk.graph.InitialCycles.Cycle;
 
 /**
  * Greedily compute a cycle basis from a provided set of initial cycles using
- * gaussian elimination.
+ * Gaussian elimination.
  *
  * @author John May
  * @cdk.module core

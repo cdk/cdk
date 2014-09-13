@@ -58,7 +58,7 @@ public final class PeriodicTable {
      * Get the Van der Waals radius for the element in question.
      *
      * @param symbol The symbol of the element
-     * @return the van der waals radius
+     * @return the Van der waals radius
      */
     @TestMethod("testTable")
     public static Double getVdwRadius(String symbol) {
@@ -194,7 +194,7 @@ public final class PeriodicTable {
 
     /**
      * Enumeration of chemical series and the elements which are members of each
-     * serie.
+     * series.
      */
     private enum Series {
         NonMetals(Sulfur, Selenium, Oxygen, Carbon, Phosphorus, Hydrogen, Nitrogen), NobleGasses(Helium, Krypton,
@@ -258,7 +258,7 @@ public final class PeriodicTable {
     /**
      * Lazily obtain the CAS ID Mapping.
      *
-     * @return cas id mapping
+     * @return CAS id mapping
      */
     private static Map<Elements, String> casIds() {
         Map<Elements, String> result = ids;

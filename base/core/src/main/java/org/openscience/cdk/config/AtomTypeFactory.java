@@ -172,9 +172,9 @@ public class AtomTypeFactory {
     }
 
     /**
-     * Read the config from a text file.
+     * Read the configuration from a text file.
      *
-     * @param  fileName  name of the config file
+     * @param  fileName  name of the configuration file
      * @param  builder     INewChemObjectBuilder used to make IChemObject instances
      */
     private void readConfiguration(String fileName, IChemObjectBuilder builder) {

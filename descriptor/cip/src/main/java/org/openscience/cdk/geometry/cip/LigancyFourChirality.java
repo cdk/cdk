@@ -67,7 +67,7 @@ class LigancyFourChirality {
     }
 
     /**
-     * Creates a new data model for chirality for the CIP rules based on a chirality defination
+     * Creates a new data model for chirality for the CIP rules based on a chirality definition
      * in the CDK data model with {@link ITetrahedralChirality}.
      *
      * @param container    {@link IAtomContainer} to which the chiral atom belongs.
@@ -93,7 +93,7 @@ class LigancyFourChirality {
     /**
      * Returns the four ligands for this chirality.
      *
-     * @return An array of gour {@link ILigand}s.
+     * @return An array of four {@link ILigand}s.
      */
     @TestMethod("testConstructor")
     public ILigand[] getLigands() {

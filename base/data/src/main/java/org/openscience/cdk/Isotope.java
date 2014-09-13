@@ -132,7 +132,7 @@ public class Isotope extends Element implements Serializable, IIsotope, Cloneabl
      * Constructs an empty by copying the symbol, atomic number,
      * flags, and identifier from the given IElement. It does
      * not copy the listeners and properties. If the element is
-     * an instanceof IIsotope, then the exact mass, natural
+     * an instance of IIsotope, then the exact mass, natural
      * abundance and mass number are copied too.
      *
      * @param element IElement to copy information from

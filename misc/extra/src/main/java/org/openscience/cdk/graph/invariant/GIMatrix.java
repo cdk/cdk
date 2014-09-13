@@ -25,9 +25,9 @@ import org.openscience.cdk.graph.invariant.exception.MatrixNotInvertibleExceptio
 
 /**
  * This class is intended to provide the user an efficient way of implementing matrix of double number and
- * using normal operations (linear operations, addition, substraction, multiplication, inversion, concatenation)
+ * using normal operations (linear operations, addition, subtraction, multiplication, inversion, concatenation)
  * on them. The internal representation of a matrix is an array of array of double objects. For the moment,
- * double class is the best way I have developped to perform exact operation on numbers; however, for
+ * double class is the best way I have developed to perform exact operation on numbers; however, for
  * irdoubles, normal operations on float and doubles have to be performed, with the well-known risks of error
  * this implies. This class also provides a way of representing matrix as arrays of String for output use.
  *
@@ -436,7 +436,7 @@ public class GIMatrix {
 
     /**
      * Returns the transpose of this matrix. The transpose of a matrix A = {a(i,j)} is the matrix B = {b(i,j)}
-     * such that b(i,j) = a(j,i) for every i,j i.e. it is the symetrical reflexion of the matrix along its
+     * such that b(i,j) = a(j,i) for every i,j i.e. it is the symmetrical reflection of the matrix along its
      * diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
      * @return the matrix's transpose as a Matrix object
      * @exception BadMatrixFormatException if the matrix is not square
@@ -526,7 +526,7 @@ public class GIMatrix {
 
     /**
      * Returns the transpose of this matrix. The transpose of a matrix A = {a(i,j)} is the matrix B = {b(i,j)}
-     * such that b(i,j) = a(j,i) for every i,j i.e. it is the symetrical reflexion of the matrix along its
+     * such that b(i,j) = a(j,i) for every i,j i.e. it is the symmetrical reflection of the matrix along its
      * diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
      * @return the matrix's transpose as a Matrix object
      * @exception BadMatrixFormatException if the matrix is not square
@@ -657,12 +657,12 @@ public class GIMatrix {
     } // method multiply(double)
 
     /**
-     * Returns the result of the matricial multiplication of this matrix by another one. The matrix passed
+     * Returns the result of the matrix multiplication of this matrix by another one. The matrix passed
      * as parameter <i>follows</i> this matrix in the multiplication, so for an example if the dimension of
      * the actual matrix is mxn, the dimension of the second one should be nxp in order for the multiplication
      * to be performed (otherwise an exception will be thrown) and the resulting matrix will have dimension mxp.
-     * @param matrix the matrix following this one in the matricial multiplication
-     * @return the resulting matrix of the matricial multiplication
+     * @param matrix the matrix following this one in the matrix multiplication
+     * @return the resulting matrix of the matrix multiplication
      * @exception BadMatrixFormatException if the matrix passed in arguments has wrong dimensions
      */
     public GIMatrix multiply(GIMatrix matrix) throws BadMatrixFormatException {
@@ -684,7 +684,7 @@ public class GIMatrix {
     /**
      * Returns the determinant of this matrix. The matrix must be
      * square in order to use this method, otherwise an exception will be thrown.
-     * <i>Warning: this algorithm is very unefficient and takes too much time to compute
+     * <i>Warning: this algorithm is very inefficient and takes too much time to compute
      * with large matrices.</i>
      * @return the determinant of the matrix
      * @exception BadMatrixFormatException if the matrix is not square

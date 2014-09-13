@@ -70,7 +70,7 @@ public class BondManipulator {
      *
      * @param first  The first bond order object
      * @param second The second bond order object
-     * @return true if the first bond order is lower than the second one, false othrwise
+     * @return true if the first bond order is lower than the second one, false otherwise
      * @see #isHigherOrder(org.openscience.cdk.interfaces.IBond.Order, org.openscience.cdk.interfaces.IBond.Order)
      */
     @TestMethod("testIsLowerOrder_IBond_Order_IBond_Order")
@@ -96,7 +96,7 @@ public class BondManipulator {
      *
      * @param first  The first bond order object
      * @param second  The second bond order object
-     * @return true if the first bond order is higher than the second one, false othrwise
+     * @return true if the first bond order is higher than the second one, false otherwise
      * @see #isLowerOrder(org.openscience.cdk.interfaces.IBond.Order, org.openscience.cdk.interfaces.IBond.Order)
      */
     @TestMethod("testIsHigherOrder_IBond_Order_IBond_Order")

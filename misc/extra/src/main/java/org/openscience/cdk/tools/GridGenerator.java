@@ -185,7 +185,7 @@ public class GridGenerator {
     }
 
     /**
-     * Method calculates coordiantes from a given grid point.
+     * Method calculates coordinates from a given grid point.
      */
     public Point3d getCoordinatesFromGridPoint(Point3d gridPoint) {
         double dx = minx + latticeConstant * gridPoint.x;
@@ -195,7 +195,7 @@ public class GridGenerator {
     }
 
     /**
-     * Method calculates coordiantes from a given grid array position.
+     * Method calculates coordinates from a given grid array position.
      */
     public Point3d getCoordinatesFromGridPoint(int gridPoint) {
         int dimCounter = 0;

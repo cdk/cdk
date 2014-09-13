@@ -64,7 +64,7 @@ import static org.openscience.cdk.graph.GraphUtil.EdgeToBondMap;
  * graph has multiple MCB then the relevant cycles is the union of all MCBs. The
  * number of relevant cycles may be exponential but it is possible to determine
  * how many relevant cycles there are in polynomial time without generating
- * them. For chemical graphs the number of relevant cycles is usually withing
+ * them. For chemical graphs the number of relevant cycles is usually within
  * manageable bounds. </li> <li>{@link #essential()} - essential cycles of a
  * graph. Similar to the relevant cycles the set is unique for a graph. If a
  * graph has a single MCB then the essential cycles and MCB are the same. If the

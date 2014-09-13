@@ -196,9 +196,9 @@ public abstract class IsotopeFactory {
     /**
      * Returns the most abundant (major) isotope with a given atomic number.
      *
-     * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
+     * <p>The isotope's abundance is for atoms with atomic number 60 and smaller
      * defined as a number that is proportional to the 100 of the most abundant
-     * isotope. For atoms with higher atomic numbers, the abundancy is defined
+     * isotope. For atoms with higher atomic numbers, the abundance is defined
      * as a percentage.
      *
      * @param  atomicNumber  The atomicNumber for which an isotope is to be returned
@@ -313,7 +313,7 @@ public abstract class IsotopeFactory {
 
     /**
      * Configures an atom. Finds the correct element type
-     * by looking at the atoms element symbol. If the element symbol is not recognized, it will
+     * by looking at the atoms element symbol. If the element symbol is not recognised, it will
      * throw an {@link IllegalArgumentException}.
      *
      * @param  atom  The atom to be configured

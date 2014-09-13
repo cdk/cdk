@@ -67,7 +67,7 @@ public class AtomTypeTools {
      *	 <li>SphericalMatcher (HoSe Code)
      *  </ul>
      *
-     *@param aromaticity booelan true/false true if aromaticity should be calculated
+     *@param aromaticity boolean true/false true if aromaticity should be calculated
      *@return                sssrf ringSetofTheMolecule
      *@exception  Exception  Description of the Exception
      */

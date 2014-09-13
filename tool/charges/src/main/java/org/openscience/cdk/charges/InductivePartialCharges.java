@@ -272,7 +272,7 @@ public class InductivePartialCharges implements IChargeCalculator {
      *@param  atomPosition      position of target atom
      *@param  ElEn              electronegativity of target atom
      *@param  as        step in iteration
-     *@return                   The atomic charge increment fot the target atom
+     *@return                   The atomic charge increment for the target atom
      *@exception  CDKException  Description of the Exception
      */
     private double getAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as)

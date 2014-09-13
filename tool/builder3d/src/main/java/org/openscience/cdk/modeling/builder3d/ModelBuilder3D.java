@@ -391,7 +391,7 @@ public class ModelBuilder3D {
      * Sets a branch atom to a ring or aliphatic chain.
      *
      *@param  unplacedAtom    The new branchAtom
-     *@param  atomA           placed atom to which the unplaced satom is connected
+     *@param  atomA           placed atom to which the unplaced atom is connected
      *@param  atomNeighbours  placed atomNeighbours of atomA
      */
     private void setBranchAtom(IAtomContainer molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours,
@@ -609,7 +609,7 @@ public class ModelBuilder3D {
 
     /**
      * Returns the number of loaded templates. Note that it may return 0 because
-     * templates are lazy loaded, that is upon the first ring being layed out.
+     * templates are lazy loaded, that is upon the first ring being laid out.
      *
      * @return 0, if not templates are loaded
      */

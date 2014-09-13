@@ -41,7 +41,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 /**
  * Dictionary with entries.
  *
- * <p>FIXME: this should be replace by a uptodate Dictionary Schema
+ * <p>FIXME: this should be replaced by an uptodate Dictionary Schema
  * DOM type thing.
  *
  * @author     Egon Willighagen

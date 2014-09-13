@@ -64,7 +64,7 @@ import org.openscience.cdk.io.formats.IResourceFormat;
  * Unavailable feature(s):
  * <ul>
  * <!--	<li><b>GAMESS version number</b>: The version number can be retrieved.</li> -->
- * <!--	<li><b>Point group symetry information</b>: The point group is associated with the set of molecules.</li> -->
+ * <!--	<li><b>Point group symmetry information</b>: The point group is associated with the set of molecules.</li> -->
  * <!--	<li><b>MOPAC charges</b>: The point group is associated with the set of molecules.</li> -->
  * 	<li><b>Energies</b>: They are associated with the previously read set of coordinates.</li>
  * 	<li><b>Normal coordinates of vibrations</b>: They are associated with the previously read set of coordinates.</li>
@@ -100,7 +100,7 @@ public class GamessReader extends DefaultChemObjectReader {
     public static final boolean BOHR_UNIT        = true;
 
     /**
-     * Double constant that contains the convertion factor from Bohr unit to
+     * Double constant that contains the conversion factor from Bohr unit to
      * &Aring;ngstrom unit.
      */
     //TODO Check the accuracy of this comment.
@@ -418,7 +418,7 @@ public class GamessReader extends DefaultChemObjectReader {
      * @param	coordinatesUnits	<code>BOHR_UNIT</code> if coordinates are given in Bohr unit and <code>ANGSTROM_UNIT</code>
      *                              if they are given in &Aring;ngstr&ouml;m unit.
      *
-     * @return	The scaling convertion factor: 1 if no scaling is needed and <code>BOHR_TO_ANGSTROM</code> if scaling has to be performed.
+     * @return	The scaling conversion factor: 1 if no scaling is needed and <code>BOHR_TO_ANGSTROM</code> if scaling has to be performed.
      *
      * @see org.openscience.cdk.PhysicalConstants#BOHR_TO_ANGSTROM
      * @see org.openscience.cdk.io.GamessReader#BOHR_UNIT

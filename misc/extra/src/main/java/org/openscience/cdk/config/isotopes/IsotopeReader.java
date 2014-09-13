@@ -121,7 +121,7 @@ public class IsotopeReader {
      * It turns of XML validation before parsing.
      *
      * @return a List of Isotope's. Returns an empty list is some reading error
-     *         occured.
+     *         occurred.
      */
     @TestMethod("testReadIsotopes,testReadIsotopes2")
     public List<IIsotope> readIsotopes() {

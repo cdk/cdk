@@ -309,7 +309,7 @@ public class CDKConstants {
 
     /**
      * A property to indicate RestH being true or false. RestH is a term
-     * used in RGroup queries: "if this property is applied ('on'), sites labeled
+     * used in RGroup queries: "if this property is applied ('on'), sites labelled
      * with Rgroup rrr may only be substituted with a member of the Rgroup or with H"
      */
     public static final String      REST_H                       = "cdk:RestH";

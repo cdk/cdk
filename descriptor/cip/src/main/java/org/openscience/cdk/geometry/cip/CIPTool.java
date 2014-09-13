@@ -48,7 +48,7 @@ import static org.openscience.cdk.interfaces.IDoubleBondStereochemistry.Conforma
  * {@link CIPLigandRule} class.
  *
  * <p>Basic use starts from a {@link ITetrahedralChirality} and therefore
- * assumes atoms with four neighbors:
+ * assumes atoms with four neighbours:
  * <pre>
  * IAtom[] ligandAtoms =
  *   mol.getConnectedAtomsList(centralAtom).toArray(new IAtom[4]);
@@ -203,7 +203,7 @@ public class CIPTool {
 
     /**
      * Obtain the ligands connected to the 'atom' excluding 'exclude'. This is
-     * mainly meant as util for double-bond labelling.
+     * mainly meant as a utility for double-bond labelling.
      *
      * @param atom      an atom
      * @param container a structure to which 'atom' belongs
@@ -244,7 +244,7 @@ public class CIPTool {
      * Reorders the {@link ILigand} objects in the array according to the CIP rules.
      *
      * @param ligands Array of {@link ILigand}s to be reordered.
-     * @return        Reorderd array of {@link ILigand}s.
+     * @return        Reordered array of {@link ILigand}s.
      */
     @TestMethod("testOrder")
     public static ILigand[] order(ILigand[] ligands) {
@@ -287,7 +287,7 @@ public class CIPTool {
     }
 
     /**
-     * Creates a ligancy four chirality around a single chiral atom, where the involved
+     * Creates a ligancy for chirality around a single chiral atom, where the involved
      * atoms are identified by there index in the {@link IAtomContainer}. For the four ligand
      * atoms, {@link #HYDROGEN} can be passed as index, which will indicate the presence of
      * an implicit hydrogen, not explicitly present in the chemical graph of the

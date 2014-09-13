@@ -35,7 +35,7 @@ public class Vibration {
 
     /**
      * Label identifying this vibration. For example, the
-     * frequency in reciprocal centimeters could be used.
+     * frequency in reciprocal centimetres could be used.
      */
     private String         label;
 

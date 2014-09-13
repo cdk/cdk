@@ -85,7 +85,7 @@ public class Electronegativity {
      *
      * @param ac                    IAtomContainer
      * @param atom                  atom for which effective atom electronegativity should be calculated
-     * @param maxIterations         The maximal number of Iteration
+     * @param maxIterations         The maximal number of Iterations
      * @param maxResonStruc         The maximal number of Resonance Structures
      *
      * @return piElectronegativity
@@ -123,9 +123,9 @@ public class Electronegativity {
     }
 
     /**
-     * set the maximal number of Iterations.
+     * set the maximum number of Iterations.
      *
-     * @param maxIterations The number maximal of iterations
+     * @param maxIterations The maximal number of iterations
      */
     @TestMethod("testSetMaxIterations_Int")
     public void setMaxIterations(int maxIterations) {
@@ -133,9 +133,9 @@ public class Electronegativity {
     }
 
     /**
-     * set the maximal number of resonance structures.
+     * set the maximum number of resonance structures.
      *
-     * @param maxResonStruc The number maximal of resonance structures
+     * @param maxResonStruc The maximal number of resonance structures
      */
     @TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc) {
@@ -143,9 +143,9 @@ public class Electronegativity {
     }
 
     /**
-     * get the maximal number of Iterations.
+     * get the maximum number of Iterations.
      *
-     * @return The number maximal of iterations
+     * @return The maximal number of iterations
      */
     @TestMethod("testGetMaxIterations")
     public int getMaxIterations() {
@@ -153,9 +153,9 @@ public class Electronegativity {
     }
 
     /**
-     * get the maximal number of resonance structures.
+     * get the maximum number of resonance structures.
      *
-     * @return The number maximal of resonance structures
+     * @return The maximal number of resonance structures
      */
     @TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc() {

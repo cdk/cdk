@@ -476,8 +476,8 @@ public class DynamicFactory {
 
     /**
      * Converts the provided array of classes to a version with 'boxed'
-     * primitives. This will convert {int, int, int} to {Integer, Interger,
-     * Interger}.
+     * primitives. This will convert {int, int, int} to {Integer, Integer,
+     * Integer}.
      *
      * @param classes converted classes
      * @return converted types
