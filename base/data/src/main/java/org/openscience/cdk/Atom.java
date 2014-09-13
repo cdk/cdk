@@ -151,7 +151,7 @@ public class Atom extends AtomType implements IAtom, Serializable, Cloneable {
      * and covalent radii, formal charge, hybridization, electron
      * valency, formal neighbour count and atom type name from the
      * given IAtomType. It does not copy the listeners and
-     * properties. If the element is an instanceof
+     * properties. If the element is an instance of
      * IAtom, then the 2D, 3D and fractional coordinates, partial
      * atomic charge, hydrogen count and stereo parity are copied
      * too.

@@ -46,7 +46,7 @@ public class AtomTools {
     /**
      * Generate coordinates for all atoms which are singly bonded and have
      * no coordinates. This is useful when hydrogens are present but have
-     * no coords. It knows about C, O, N, S only and will give tetrahedral or
+     * no coordinates. It knows about C, O, N, S only and will give tetrahedral or
      * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
      * if available. Angles are tetrahedral or trigonal
      *
@@ -108,7 +108,7 @@ public class AtomTools {
      * if covalent radii cannot be found, use bond length of 1.0
      *
      * @param  atom1  stationary atom
-     * @param  atom2  moveable atom
+     * @param  atom2  movable atom
      * @param  point2 coordinates for atom 2
      * @return        new coords for atom 2
      */

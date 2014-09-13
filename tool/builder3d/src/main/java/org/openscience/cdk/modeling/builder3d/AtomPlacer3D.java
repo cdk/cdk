@@ -561,7 +561,7 @@ public class AtomPlacer3D {
      *  Gets numberOfUnplacedHeavyAtoms (no Flag ISPLACED, no Hydrogens)
      *
      * @param  ac AtomContainer
-     * @return int #UnplacedAtoms
+     * @return #UnplacedAtoms
      */
     public int numberOfUnplacedHeavyAtoms(IAtomContainer ac) {
         int nUnplacedHeavyAtoms = 0;

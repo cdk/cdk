@@ -61,7 +61,7 @@ public class CDKBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * Reads the atom types from the CDK based atom type list.
      *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
-     * @throws        IOException when a problem occured with reading from the InputStream
+     * @throws        IOException when a problem occurred with reading from the InputStream
      * @return        A List with read IAtomType's.
      */
     @TestMethod("testReadAtomTypes_IChemObjectBuilder")

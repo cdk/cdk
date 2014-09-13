@@ -184,7 +184,7 @@ public class ChemObject implements Serializable, IChemObject, Cloneable {
      *  the original origin.
      *
      *@param  evt  A ChemObjectChangeEvent pointing to the source of where
-     *		the change happend
+     *		the change happened
      */
     public void notifyChanged(IChemObjectChangeEvent evt) {
         if (getNotification() && getListenerCount() > 0) {

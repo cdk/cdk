@@ -29,7 +29,7 @@ import java.util.List;
  * Analyses a molecular formula given in String format and builds
  * an AtomContainer with the Atoms in the molecular formula.
  *
- * About implict H handling: By default the methods to calculate formula, natural and canonical mass
+ * About implicit H handling: By default the methods to calculate formula, natural and canonical mass
  * use the explicit Hs and only the explicit Hs if there is at least one in the molecule, implicit Hs are
  * ignored. If there is no explicit H and only then the implicit Hs are used. If you use the constructor
  * MFAnalyser(IAtomContainer ac, boolean useboth) and set useboth to true, all explicit Hs and all implicit Hs are used,

@@ -132,9 +132,9 @@ public class PiElectronegativity {
     }
 
     /**
-     * set the maximal number of Iterations.
+     * set the maximum number of Iterations.
      *
-     * @param maxIterations The number maximal of iterations
+     * @param maxIterations The maximum number of iterations
      */
     @TestMethod("testSetMaxIterations_Int")
     public void setMaxIterations(int maxIterations) {
@@ -142,9 +142,9 @@ public class PiElectronegativity {
     }
 
     /**
-     * set the maximal number of resonance structures.
+     * set the maximum number of resonance structures.
      *
-     * @param maxResonStruc The number maximal of resonance structures
+     * @param maxResonStruc The maximum number of resonance structures
      */
     @TestMethod("testSetMaxResonStruc_Int")
     public void setMaxResonStruc(int maxResonStruc) {
@@ -152,9 +152,9 @@ public class PiElectronegativity {
     }
 
     /**
-     * get the maximal number of Iterations.
+     * get the maximum number of Iterations.
      *
-     * @return The number maximal of iterations
+     * @return The maximum number of iterations
      */
     @TestMethod("testGetMaxIterations")
     public int getMaxIterations() {
@@ -162,9 +162,9 @@ public class PiElectronegativity {
     }
 
     /**
-     * get the maximal number of resonance structures.
+     * get the maximum number of resonance structures.
      *
-     * @return The number maximal of resonance structures
+     * @return The maximum number of resonance structures
      */
     @TestMethod("testGetMaxResonStruc")
     public int getMaxResonStruc() {

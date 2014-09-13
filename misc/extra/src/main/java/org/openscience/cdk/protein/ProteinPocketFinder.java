@@ -185,7 +185,7 @@ public class ProteinPocketFinder {
      * the corresponding grid point is identified and set to the value
      * of the proteinInterior variable.
      * The atom radius and solvent radius is accounted for with the variables:
-     * double rAtom, and dpuble rSolvent.
+     * double rAtom, and double rSolvent.
      *
      * @throws Exception
      */

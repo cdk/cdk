@@ -64,7 +64,7 @@ public class TXTBasedAtomTypeConfigurator implements IAtomTypeConfigurator {
      * Reads a text based configuration file.
      *
      * @param builder IChemObjectBuilder used to construct the IAtomType's.
-     * @throws        IOException when a problem occured with reading from the InputStream
+     * @throws        IOException when a problem occurred with reading from the InputStream
      * @return        A List with read IAtomType's.
      */
     @TestMethod("testReadAtomTypes_IChemObjectBuilder")

@@ -104,7 +104,7 @@ import java.util.TreeSet;
  * of rings stored in the PubChem fingerprint associated with the entry. The
  * fingerprints were obtained directly from PubChem and decoded using the <a
  * href= "ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">
- * specification</a>. Sizes underlined and colored red represent rings which may
+ * specification</a>. Sizes underlined and coloured red represent rings which may
  * or may not be present depending on the atom ordering. It can be seen from the
  * PubChem fingerprint that even using a consistent canonical labelling rings
  * may be absent which would be present if the subgraph was used.
@@ -303,7 +303,7 @@ public final class TripletShortCycles {
 
     /**
      * Try and find cycles through the triple formed from <i>v</i> and any two
-     * of it's neighbors.
+     * of it's neighbours.
      *
      * @param v a vertex in the graph
      */
@@ -362,7 +362,7 @@ public final class TripletShortCycles {
 
     /**
      * Temporarily disconnect <i>v</i> from the <i>graph</i> by forming loops
-     * for each of it's neighbors, <i>ws</i>. A loop is an edge in which both
+     * for each of it's neighbours, <i>ws</i>. A loop is an edge in which both
      * end points are the. Technically <i>v</i> is never removed but we can't
      * reach <i>v</i> from any other vertex which is sufficient to trace the
      * triple cycles using {@link ShortestPaths}.
@@ -382,7 +382,7 @@ public final class TripletShortCycles {
 
     /**
      * Reconnect <i>v</i> with the <i>graph</i> by un-looping each of it's
-     * neighbors, <i>ws</i>.
+     * neighbours, <i>ws</i>.
      *
      * @param ws vertices adjacent to <i>v</i>
      * @param v  a vertex <i>v</i>

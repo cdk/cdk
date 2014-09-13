@@ -47,7 +47,7 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  * The extended tetrahedral stereochemistry can be represented and handled the
  * same as normal tetrahedral stereochemistry. However the handling of the
  * neighbours is subtly different. To assist in the description here are how
- * atoms are refered to.
+ * atoms are referred to.
  *
  * <pre>{@code
  * p0           p2     p<i>: periphals
@@ -59,8 +59,8 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  *
  * The data structure stores, the central 'focus' atom and the four peripheral
  * atoms. The peripheral atoms are stored in a single array, {@code {p0, p1,
- * p2, p3}}, the first two and last two entires should be attached to the same
- * terminal atom (t0 or t1). For conveineve the terminal atoms can be found with
+ * p2, p3}}, the first two and last two entries should be attached to the same
+ * terminal atom (t0 or t1). For convenience the terminal atoms can be found with
  * {@link #findTerminalAtoms(IAtomContainer)}.
  * <p/>
  * <pre>{@code
@@ -70,13 +70,13 @@ import static org.openscience.cdk.interfaces.ITetrahedralChirality.Stereo;
  *  /          \              / \
  * p1           p3           p1  p3
  * }</pre>
- * The configuration treates the focus and terminal atoms as a single atom, the
- * neighbors {@code {p1, p2, p3}} then proceeded either clockwise or
+ * The configuration treats the focus and terminal atoms as a single atom, the
+ * neighbours {@code {p1, p2, p3}} then proceeded either clockwise or
  * anti-clockwise when the centre (t0/f/t1) is viewed from the first peripheral
  * atom {@code p0}.
  *
  * <p/>
- * If any of the periphals are implicit hydrogen atoms, then the terminal atom
+ * If any of the peripherals are implicit hydrogen atoms, then the terminal atom
  * to which the hydrogen is attached can be used as a placeholder.
  *
  * @author John May
@@ -120,9 +120,9 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
     /**
      * The neighbouring peripherals atoms, these are attached to the terminal
-     * atoms in the cumulate dsystem.
+     * atoms in the cumulated system.
      *
-     * @return the peropheral atoms
+     * @return the peripheral atoms
      */
     @TestMethod("peripheralsAreNotModifable")
     public IAtom[] peripherals() {
@@ -161,7 +161,7 @@ public final class ExtendedTetrahedral implements IStereoElement {
 
     /**
      * Helper method to locate two terminal atoms in a container for this
-     * exteneded tetrahedral element. The atoms are ordered such that the first
+     * extended tetrahedral element. The atoms are ordered such that the first
      * index is attached to the first two peripheral atoms and the second index
      * is attached to the second two peripheral atoms.
      *

@@ -939,7 +939,7 @@ public class CDKAtomTypeMatcher implements IAtomTypeMatcher {
      * @param atom an atom to test
      * @param container container of the atom
      *
-     * @return whether the atom's only bonds are to hetroatoms
+     * @return whether the atom's only bonds are to heteroatoms
      * @see #perceiveNitrogens(org.openscience.cdk.interfaces.IAtomContainer, org.openscience.cdk.interfaces.IAtom)
      */
     private boolean isSingleHeteroAtom(IAtom atom, IAtomContainer container) {

@@ -108,11 +108,10 @@ public class EquivalentClassPartitioner {
 
     /**
      * Prepare the node identifier. The purpose of this is to increase the
-     * differentiatation of the nodes. Detailed information please see the
+     * differentiation of the nodes. Detailed information please see the
      * corresponding literature.
      *
-     * @param atomContainer
-     *            atoms and bonds of the molecule
+     * @param atomContainer atoms and bonds of the molecule
      * @return an array of node identifier
      */
     public double[] prepareNode(IAtomContainer atomContainer) {

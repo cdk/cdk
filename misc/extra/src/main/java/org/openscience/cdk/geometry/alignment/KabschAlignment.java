@@ -62,7 +62,7 @@ import Jama.Matrix;
  * for display, the second molecule must be rotated and translated by calling
  * <code>rotateAtomContainer</code>. However, since this will also translate the
  * second molecule, the first molecule should also be translated to the center of mass
- * of the substructure specifed for this molecule. This center of mass can be obtained
+ * of the substructure specified for this molecule. This center of mass can be obtained
  * by a call to <code>getCenterOfMass</code> and then manually translating the coordinates.
  * Thus an example would be
  * <pre>
@@ -177,7 +177,7 @@ public class KabschAlignment {
      *
      * @param al1 An array of {@link Atom} objects
      * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
-     *            so that the RMDS is minimzed to the coordinates of the first array
+     *            so that the RMDS is minimized to the coordinates of the first array
      * @throws CDKException if the number of Atom's are not the same in the two arrays
      */
     public KabschAlignment(IAtom[] al1, IAtom[] al2) throws CDKException {
@@ -201,7 +201,7 @@ public class KabschAlignment {
      *
      * @param al1 An array of {@link Atom} objects
      * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
-     *            so that the RMDS is minimzed to the coordinates of the first array
+     *            so that the RMDS is minimized to the coordinates of the first array
      * @param wts A vector atom weights.
      * @throws CDKException if the number of Atom's are not the same in the two arrays or
      *                         length of the weight vector is not the same as the Atom arrays
@@ -231,7 +231,7 @@ public class KabschAlignment {
      *
      * @param ac1 An {@link IAtomContainer}
      * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-     *            so that the RMDS is minimzed to the coordinates of the first one
+     *            so that the RMDS is minimized to the coordinates of the first one
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
      */
     @TestMethod("testAlign")
@@ -255,7 +255,7 @@ public class KabschAlignment {
      *
      * @param ac1 An {@link IAtomContainer}
      * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-     *            so that the RMDS is minimzed to the coordinates of the first one
+     *            so that the RMDS is minimized to the coordinates of the first one
      * @param wts A vector atom weights.
      * @throws CDKException if the number of atom's are not the same in the two AtomContainer's or
      *                         length of the weight vector is not the same as number of atoms.

@@ -186,9 +186,9 @@ public class Isotopes extends IsotopeFactory {
     /**
      * Returns the most abundant (major) isotope with a given atomic number.
      *
-     * <p>The isotope's abundancy is for atoms with atomic number 60 and smaller
+     * <p>The isotope's abundance is for atoms with atomic number 60 and smaller
      * defined as a number that is proportional to the 100 of the most abundant
-     * isotope. For atoms with higher atomic numbers, the abundancy is defined
+     * isotope. For atoms with higher atomic numbers, the abundance is defined
      * as a percentage.
      *
      * @param  atomicNumber  The atomicNumber for which an isotope is to be returned

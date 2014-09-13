@@ -35,7 +35,7 @@ import org.openscience.cdk.interfaces.IChemObjectBuilder;
 public interface IAtomTypeConfigurator {
 
     /**
-     * Sets the file containing the config data.
+     * Sets the file containing the configuration data.
      *
      * @param ins InputStream from which the atom type definitions are to be read
      */

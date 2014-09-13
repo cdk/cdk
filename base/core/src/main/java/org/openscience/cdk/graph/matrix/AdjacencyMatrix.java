@@ -45,7 +45,7 @@ public class AdjacencyMatrix implements IGraphMatrix {
      * Returns the adjacency matrix for the given AtomContainer.
      *
      * @param  container The AtomContainer for which the matrix is calculated
-     * @return           A adjacency matrix representating this AtomContainer
+     * @return           An adjacency matrix representing this AtomContainer
      */
     @TestMethod("testGetMatrix_IAtomContainer")
     public static int[][] getMatrix(IAtomContainer container) {

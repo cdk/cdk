@@ -126,7 +126,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     /**
      *  Gets the maximum resonance structures to be searched.
      *
-     * @return the maximum numebr of resonance structures that will be returned
+     * @return the maximum number of resonance structures that will be returned
      */
     @TestMethod("testGetMaxResoStruc")
     public int getMaxResoStruc() {
@@ -240,7 +240,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             IAtomContainer container = it.next();
             ac = setFlags(container, ac, true);
 
-            // Aromatic don't brake its double bond homolitically
+            // Aromatic don't break its double bond homolytically
             if (Aromaticity.cdkLegacy().apply(ac))
                 reactionList1.remove(reactionHCPB);
             else
@@ -254,7 +254,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
             }
             ac = setFlags(container, ac, false);
 
-            /* processing for which bonds which are not in resonance */
+            /* processing for bonds which are not in resonance */
             for (int number = 0; number < ac.getBondCount(); number++) {
                 IAtomContainer aa = setAntiFlags(container, ac, number, true);
                 if (aa != null) {
@@ -283,8 +283,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
         }
 
         /*
-         * 2: search whose atoms which don't keep their formal charge and set
-         * flags
+         * 2: search whose atoms which don't keep their formal charge and set flags
          */
         double[][] sumCharges = new double[iSet.getAtomContainerCount()][ac.getAtomCount()];
         for (int i = 1; i < iSet.getAtomContainerCount(); i++) {
@@ -368,7 +367,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
                     }
                 }
                 logger.debug("Atom1:" + atom1 + ",Atom2:" + atom2);
-                /* diferency of electronegativity 1 lower */
+                /* difference of electronegativity 1 lower */
                 double max1 = Math.max(electronegativity[0], electronegativity[1]);
                 double min1 = Math.min(electronegativity[0], electronegativity[1]);
                 double DX = 1.0;
@@ -461,7 +460,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
      * remove the aromaticity flags.
      *
      * @param ac The IAtomContainer to remove flags
-     * @return   The IATomContainer with the flags removed
+     * @return   The IAtomContainer with the flags removed
      */
     private IAtomContainer removingFlagsAromaticity(IAtomContainer ac) {
         Iterator<IAtom> atoms = ac.atoms().iterator();
@@ -515,7 +514,7 @@ public class GasteigerPEPEPartialCharges implements IChargeCalculator {
     }
 
     /**
-     * get the possibles structures after hyperconjugation interactions for bonds which
+     * get the possible structures after hyperconjugation interactions for bonds which
      * do not belong to any resonance structure.
      *
      * @param ac IAtomContainer

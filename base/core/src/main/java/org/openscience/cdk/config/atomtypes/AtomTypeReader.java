@@ -112,7 +112,7 @@ public class AtomTypeReader {
      * Reads the atom types from the data file.
      *
      * @param  builder The IChemObjectBuilder used to create new IAtomType's.
-     * @return         a List with atom types. Is empty if some reading error occured.
+     * @return         a List with atom types. Is empty if some reading error occurred.
      */
     @TestMethod("testReadAtomTypes2,testReadAtomTypes_CDK,testReadAtomTypes_FF,testReadAtomTypes_IChemObjectBuilder")
     public List<IAtomType> readAtomTypes(IChemObjectBuilder builder) {

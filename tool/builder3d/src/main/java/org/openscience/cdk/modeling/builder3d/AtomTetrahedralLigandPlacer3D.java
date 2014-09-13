@@ -74,10 +74,10 @@ public class AtomTetrahedralLigandPlacer3D {
 
     /**
      *  Generate coordinates for all atoms which are singly bonded and have no
-     *  coordinates. This is useful when hydrogens are present but have no coords.
+     *  coordinates. This is useful when hydrogens are present but have no coordinates.
      *  It knows about C, O, N, S only and will give tetrahedral or trigonal
      *  geometry elsewhere. Bond lengths are computed from covalent radii or taken
-     *  out of a paramter set if available. Angles are tetrahedral or trigonal
+     *  out of a parameter set if available. Angles are tetrahedral or trigonal
      *
      *@param  atomContainer  the set of atoms involved
      * @throws CDKException
@@ -123,9 +123,9 @@ public class AtomTetrahedralLigandPlacer3D {
      *  If covalent radii cannot be found, use bond length of 1.0
      *
      *@param  atom1          stationary atom
-     *@param  atom2          moveable atom
+     *@param  atom2          movable atom
      *@param  point2         coordinates for atom 2
-     *@return                new coords for atom 2
+     *@return                new coordinates for atom 2
      *@exception  Exception  Description of the Exception
      */
     public Point3d rescaleBondLength(IAtom atom1, IAtom atom2, Point3d point2) {
@@ -150,7 +150,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *  Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
      *  Initially designed for hydrogens. The ligands of refAtom are identified and
      *  those with 3D coordinates used to generate the new points. (This allows
-     *  strucures with partially known 3D coordinates to be used, as when groups
+     *  structures with partially known 3D coordinates to be used, as when groups
      *  are added.) "Bent" and "non-planar" groups can be formed by taking a subset
      *  of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated
      *  from (1,iii) nomenclature: A is point to which new ones are "attached". A
@@ -323,7 +323,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *  Calculates substituent points. Calculate substituent points for (0) zero
      *  ligands of aPoint. The resultant points are randomly oriented: (i) 1 points
      *  required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0 (iii) 3 points:
-     *  equilateral triangle in xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
+     *  equilateral triangle in the xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
      *  -x,-x,x where 3x**2 = bond length
      *
      *@param  aPoint   to which substituents are added
@@ -672,8 +672,8 @@ public class AtomTetrahedralLigandPlacer3D {
     /**
      * Gets the distance between two atoms out of the parameter set.
      *
-     *@param  id1            id of the paramter set for atom1 (atom1.getAtomTypeName())
-     *@param  id2            id of the paramter set for atom2
+     *@param  id1            id of the parameter set for atom1 (atom1.getAtomTypeName())
+     *@param  id2            id of the parameter set for atom2
      *@return                The distanceValue value
      *@exception  Exception  Description of the Exception
      */
@@ -726,7 +726,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *	take placed neighbours to stereocenter
      *		create a x b
      *	     if right handed system (spatproduct >0)
-     *			if unplaced is not up (relativ to stereocenter)
+     *			if unplaced is not up (relative to stereocenter)
      *				n=b x a
      *	     Determine angle between n and possible ligand place points
      *	     if angle smaller than 90 degrees take this branch point
@@ -810,7 +810,7 @@ public class AtomTetrahedralLigandPlacer3D {
      *  Gets all placed neighbouring atoms of a atom.
      *
      *@param  atom  central atom (Atom)
-     *@param  ac    the molecul
+     *@param  ac    the molecule
      *@return       all connected and placed atoms to the central atom
      *      ((AtomContainer)
      */

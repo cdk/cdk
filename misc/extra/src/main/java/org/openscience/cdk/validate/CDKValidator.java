@@ -23,7 +23,7 @@ import org.openscience.cdk.interfaces.IChemFile;
 import org.openscience.cdk.interfaces.IChemSequence;
 
 /**
- * This Validator tests the internal datastructures, and
+ * This Validator tests the internal data structures, and
  * tries to detect inconsistencies in it.
  *
  * @author   Egon Willighagen
