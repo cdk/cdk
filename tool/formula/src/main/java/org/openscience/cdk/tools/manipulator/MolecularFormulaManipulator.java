@@ -808,7 +808,8 @@ public class MolecularFormulaManipulator {
         IAtom hAtom = null;
         for (IAtom iAtom : atomContainer.atoms()) {
             formula.addIsotope(iAtom);
-            charge += iAtom.getFormalCharge();
+            if (iAtom.getFormalCharge() != null)
+                charge += iAtom.getFormalCharge();
 
             if (iAtom.getImplicitHydrogenCount() != null && (iAtom.getImplicitHydrogenCount() > 0)) {
                 if (hAtom == null) hAtom = atomContainer.getBuilder().newInstance(IAtom.class, "H");
