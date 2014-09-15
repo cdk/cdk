@@ -27,6 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openscience.cdk.Atom;
 import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.CDKTestCase;
 import org.openscience.cdk.ChemFile;
 import org.openscience.cdk.DefaultChemObjectBuilder;
@@ -633,6 +634,21 @@ public class MolecularFormulaManipulatorTest extends CDKTestCase {
         Assert.assertEquals(MolecularFormulaManipulator.getElementCount(mf2, elemH),
                 MolecularFormulaManipulator.getElementCount(mf1, elemH));
 
+	}
+
+    @Test
+    public void testGetMolecularFormula_IAtomNullCharge(){
+        IAtomContainer ac = builder.newInstance(IAtomContainer.class);
+        ac.addAtom(builder.newInstance(IAtom.class,"C"));
+        ac.getAtom(0).setFormalCharge((Integer)CDKConstants.UNSET);
+        ac.addAtom(builder.newInstance(IAtom.class,"C"));
+        ac.addAtom(builder.newInstance(IAtom.class,"H"));
+        ac.addAtom(builder.newInstance(IAtom.class,"H"));
+        ac.addAtom(builder.newInstance(IAtom.class,"H"));
+        ac.addAtom(builder.newInstance(IAtom.class,"H"));
+
+        IMolecularFormula mf1 = MolecularFormulaManipulator.getMolecularFormula(ac);
+        Assert.assertNotNull(mf1);
     }
 
     @Test
