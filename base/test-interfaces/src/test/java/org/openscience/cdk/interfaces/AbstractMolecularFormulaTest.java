@@ -245,6 +245,14 @@ public abstract class AbstractMolecularFormulaTest extends CDKTestCase {
 
     }
 
+    @Test
+    public void testMolecularFormula_NullCharge() {
+        IMolecularFormula mf = getBuilder().newInstance(IMolecularFormula.class);
+        IMolecularFormula mf2 = getBuilder().newInstance(IMolecularFormula.class);
+        mf2.setCharge(0);
+        mf.add(mf2);
+    }
+
     /**
      * A unit test suite for JUnit.
      *
