@@ -88,7 +88,11 @@ public class MolecularFormula implements IMolecularFormula {
         for (IIsotope newIsotope : formula.isotopes()) {
             addIsotope(newIsotope, formula.getIsotopeCount(newIsotope));
         }
-        if (formula.getCharge() != null) charge += formula.getCharge();
+        if (formula.getCharge() != null)
+            if (charge != null)
+                charge += formula.getCharge();
+            else
+                charge = formula.getCharge();
         return this;
     }
 
