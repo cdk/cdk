@@ -164,7 +164,7 @@ public class AtomTypeAwareSaturationChecker implements IValencyChecker, IDeduceB
     private void checkBond(IAtomContainer atomContainer, int index) throws CDKException {
         IBond bond = atomContainer.getBond(index);
 
-        if (bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE) && bond != null) {
+        if (bond != null && bond.getFlag(CDKConstants.SINGLE_OR_DOUBLE)) {
             try {
                 oldBondOrder = bond.getOrder();
                 bond.setOrder(IBond.Order.SINGLE);
