@@ -71,8 +71,6 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * TestCase for the reading MDL mol files using one test file.
