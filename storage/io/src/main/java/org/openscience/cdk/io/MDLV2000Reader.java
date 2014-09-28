@@ -1843,6 +1843,9 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
         /** 3D Feature Properties. */
         M_$3D,
 
+        /** ACDLabs Atom Label */
+        M_ZZC,
+        
         /** End of Block. */
         M_END,
 

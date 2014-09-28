@@ -315,6 +315,13 @@ public class CDKConstants {
     public static final String      REST_H                       = "cdk:RestH";
 
     public static final String      ATOM_ATOM_MAPPING            = "cdk:AtomAtomMapping";
+        
+    /** 
+     * Atom number/label that can be applied using the Manual Numbering 
+     * Tool in ACD/ChemSketch.
+     */
+    public static final String      ACDLABS_LABEL                = "cdk:ACDLabsAtomLabel";
+    
 
     /* **************************************
      * Some predefined property names for * AtomTypes *
