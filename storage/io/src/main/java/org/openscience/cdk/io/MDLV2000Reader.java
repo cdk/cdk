@@ -121,11 +121,18 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
     /** Delimits Structure-Data (SD) Files. */
     private static final String      RECORD_DELIMITER = "$$$$";
 
-    /** Valid pseudo labels. */
+    /** 
+     *  @deprecated  Incorrect spelling
+    */
     private static final Set<String> PSUEDO_LABELS    = ImmutableSet.<String> builder().add("*").add("A").add("Q")
                                                               .add("L").add("LP").add("R") // XXX: not in spec
                                                               .add("R#").build();
 
+    /** Valid pseudo labels. */
+    private static final Set<String> PSEUDO_LABELS    = ImmutableSet.<String> builder().add("*").add("A").add("Q")
+                                                              .add("L").add("LP").add("R") // XXX: not in spec
+                                                              .add("R#").build();
+    
     public MDLV2000Reader() {
         this(new StringReader(""));
     }
@@ -981,7 +988,7 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
      * @return the symbol is a valid pseudo element
      */
     static boolean isPseudoElement(final String symbol) {
-        return PSUEDO_LABELS.contains(symbol);
+        return PSEUDO_LABELS.contains(symbol);
     }
 
     /**
