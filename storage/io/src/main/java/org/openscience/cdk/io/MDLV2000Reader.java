@@ -870,6 +870,45 @@ public class MDLV2000Reader extends DefaultChemObjectReader {
                     }
                     break;
 
+                // M  ZZC aaa c...
+                // 
+                // c: first character of the label, extends to EOL.
+                //
+                // Proprietary atom labels created by ACD/Labs ChemSketch using the Manual Numbering Tool.
+                // This atom property appears to be undocumented, but experimentation leads to the following
+                // specification (tested with ACD/ChemSketch version 12.00 Build 29305, 25 Nov 2008)
+                //
+                // It's not necessary to label any/all atoms but if a label is present, the following applies:
+                //
+                // The atom label(s) consist of an optional prefix, a required numeric label, and optional suffix.
+                //                         
+                // The numeric label is an integer in the range 0 - 999 inclusive.
+                // 
+                // If present, the prefix and suffix can each contain 1 - 50 characters, from the set of printable 
+                // ASCII characters shown here
+                //                            
+                //    !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+                //                    
+                // In addition, both the prefix and suffix may contain leading and/or trailing and/or embedded 
+                // whitespace, included within the limit of 50 characters. These should be preserved when read.
+                //                    
+                // Long labels in the mol/sdfile are not truncated or wrapped onto multiple lines. As a result, the
+                // line could be 114 characters in length (excluding the newline).
+                //
+                // By stopping and restarting the Manual Numbering Tool, it's possible to create non-sequential
+                // or even duplicate numbers or labels. This is reasonable for the intended purpose of the tool - 
+                // labelling the structure as you wish. If unique labels are required, downstream processing will be
+                // necessary to enforce this.
+                //
+                case M_ZZC:
+                    if (mode == Mode.STRICT) {
+                        throw new CDKException("Atom property ZZC is illegal in STRICT mode");
+                    }
+                    index = readMolfileInt(line, 7) - 1;
+                    String atomLabel = line.substring(11);  // DO NOT TRIM
+                    container.getAtom(offset + index).setProperty(CDKConstants.ACDLABS_LABEL, atomLabel);
+                    break;    
+                                    
                 // M  END
                 //
                 // This entry goes at the end of the properties block and is required for molfiles which contain a
