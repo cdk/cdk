@@ -158,6 +158,13 @@ public class MDLV2000PropertiesBlockTest {
         assertThat(((IPseudoAtom) mock.getAtom(3)).getLabel(), is("Gly"));
     }
 
+    @Test
+    public void acdAtomLabel() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("M  ZZC   1 6", mock);
+        verify(mock.getAtom(0)).setProperty(CDKConstants.ACDLABS_LABEL, "6");
+    }
+    
     static IAtomContainer mock(int n) {
         IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
         for (int i = 0; i < n; i++)
