@@ -341,7 +341,7 @@ public final class Canon {
         Integer elem = atom.getAtomicNumber();
         if (elem != null) return elem;
         if (atom instanceof IPseudoAtom) return 0;
-        throw new NullPointerException("a non-psuedo atom had unset atomic number");
+        throw new NullPointerException("a non-pseudoatom had unset atomic number");
     }
 
     /**
@@ -357,7 +357,7 @@ public final class Canon {
         Integer h = atom.getImplicitHydrogenCount();
         if (h != null) return h;
         if (atom instanceof IPseudoAtom) return 0;
-        throw new NullPointerException("a non-psuedo atom had unset hydrogen count");
+        throw new NullPointerException("a non-pseudoatom had unset hydrogen count");
     }
 
     /**

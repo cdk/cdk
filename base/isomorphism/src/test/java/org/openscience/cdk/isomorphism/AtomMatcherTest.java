@@ -81,7 +81,7 @@ public class AtomMatcherTest {
     }
 
     @Test
-    public void elementPsuedo() throws Exception {
+    public void elementPseudo() throws Exception {
         AtomMatcher matcher = AtomMatcher.forElement();
         IAtom atom1 = mock(IPseudoAtom.class);
         IAtom atom2 = mock(IPseudoAtom.class);
