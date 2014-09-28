@@ -1,4 +1,5 @@
 /* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *                    2014  Mark B Vine (orcid:0000-0002-7794-0426)
  *
  * Contact: cdk-devel@slists.sourceforge.net
  *
@@ -19,7 +20,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *  */
+ */
 package org.openscience.cdk.io;
 
 import java.io.BufferedReader;
@@ -35,6 +36,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.ChemFile;
@@ -65,8 +67,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
 
 /**
  * TestCase for the reading MDL mol files using one test file.
@@ -1404,4 +1408,138 @@ public class MDLV2000ReaderTest extends SimpleChemObjectReaderTest {
         assertThat(container.getAtom(1).getImplicitHydrogenCount(), is(0));
 
     }
+    
+    /**
+     * The non-standard ACDLabs atom label property should throw a CDKException in STRICT mode.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_Strict() throws Exception {
+        String filename = "data/mdl/chemsketch-all-atoms-labelled.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins, Mode.STRICT);
+        try {
+            IAtomContainer mol = reader.read(new AtomContainer());
+            fail();     // Force failure if expected exception not thrown
+        }
+        catch (CDKException cdke) {
+                        // Do nothing, test passed
+        }
+        finally {
+            reader.close();
+        }
+    }
+    
+    /**
+     * Test a simple ChemSketch label containing an integer.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel() throws Exception {
+        String filename = "data/mdl/chemsketch-one-atom-labelled.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is("6"));
+    }
+    
+    /**
+     * Test ChemSketch labels containing all non-whitespace printable ASCII characters.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_PrintableAscii() throws Exception {
+        String filename = "data/mdl/chemsketch-printable-ascii.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        // Printable ASCII characters, excluding whitespace. Note each string contains an atom number
+        String[] expected = 
+        {   
+            "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~", 
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",    
+            "012345678901234567890123456789012345678901234567890"
+        };
+        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[0]));
+        assertThat((String) mol.getAtom(1).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[1]));
+        assertThat((String) mol.getAtom(2).getProperty(CDKConstants.ACDLABS_LABEL), is(expected[2]));
+    }
+    
+    /**
+     * Check that multiple atom labels are all read.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_AllAtomsLabelled() throws Exception {
+        String filename = "data/mdl/chemsketch-all-atoms-labelled.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        Iterable<IAtom> atoms = mol.atoms();
+        for (IAtom atom : atoms){
+            Assert.assertNotNull(atom.getProperty(CDKConstants.ACDLABS_LABEL));
+        }
+    }
+    
+    /**
+     * Check that leading and trailing whitespace in atom labels is preserved on reading.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_LeadingTrailingWhitespace() throws Exception {
+        String filename = "data/mdl/chemsketch-leading-and-trailing-whitespace-in-prefix-and-suffix.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        // Leading and trailing whitespace in both prefix and suffix
+        String expected = " a 1 b ";
+        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+    }
+    
+    /**
+     * Check that embedded whitespace in atom labels is preserved on reading.
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_EmbeddedWhitespace() throws Exception {
+        String filename = "data/mdl/chemsketch-whitespace-in-prefix-and-suffix.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        // Embedded whitespace in both prefix and suffix
+        String expected = "a b1c d";
+        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+    }
+    
+    /**
+     * Check reading of largest permissible label (50 char prefix + 3 digits + 50 char suffix).
+     * @throws Exception
+     */
+    @Test
+    public void testAcdChemSketchLabel_MaxSizeLabel() throws Exception {
+        String filename = "data/mdl/chemsketch-longest-prefix-and-suffix.mol";
+        InputStream ins = this.getClass().getClassLoader().getResourceAsStream(filename);
+        MDLV2000Reader reader = new MDLV2000Reader(ins);
+        IAtomContainer mol = reader.read(new AtomContainer());
+        reader.close();
+        
+        // Longest allowed atom label is 113 characters
+        String prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
+        String digits = "999";
+        String suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
+        String expected = prefix + digits + suffix;
+        
+        assertThat((String) mol.getAtom(0).getProperty(CDKConstants.ACDLABS_LABEL), is(expected));
+    }
 }
+

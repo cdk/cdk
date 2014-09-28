@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- *                    John May <jwmay@users.sf.net>
+ * Copyright (c) 2013  European Bioinformatics Institute (EMBL-EBI)
+ *                     John May <jwmay@users.sf.net>
+ *               2014  Mark B Vine (orcid:0000-0002-7792-0426)
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -93,6 +94,12 @@ public class MDLV2000PropertiesBlockTest {
         assertThat(MDLV2000Reader.PropertyKey.of("S  SKP  5"), is(MDLV2000Reader.PropertyKey.SKIP));
     }
 
+    /** ACDLabs ChemSketch atom labels */
+    @Test
+    public void m_zzc_padding() throws Exception {
+        assertThat(MDLV2000Reader.PropertyKey.of("M  ZZC  "), is(MDLV2000Reader.PropertyKey.M_ZZC));
+    }
+    
     @Test
     public void anion() throws Exception {
         IAtomContainer mock = mock(3);
@@ -152,6 +159,13 @@ public class MDLV2000PropertiesBlockTest {
         assertThat(((IPseudoAtom) mock.getAtom(3)).getLabel(), is("Gly"));
     }
 
+    @Test
+    public void acdAtomLabel() throws Exception {
+        IAtomContainer mock = mock(3);
+        read("M  ZZC   1 6", mock);
+        verify(mock.getAtom(0)).setProperty(CDKConstants.ACDLABS_LABEL, "6");
+    }
+    
     static IAtomContainer mock(int n) {
         IAtomContainer mock = new AtomContainer(n, 0, 0, 0);
         for (int i = 0; i < n; i++)

@@ -1,4 +1,5 @@
-/* Copyright (C) 1997-2007   Christoph Steinbeck <steinbeck@users.sf.net>
+/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *                    2014  Mark B Vine (orcid:0000-0000-7794-0426)
  *
  *  Contact: cdk-devel@lists.sourceforge.net
  *
@@ -316,6 +317,13 @@ public class CDKConstants {
 
     public static final String      ATOM_ATOM_MAPPING            = "cdk:AtomAtomMapping";
 
+    /** 
+     * Atom number/label that can be applied using the Manual Numbering 
+     * Tool in ACD/ChemSketch.
+     */
+    public static final String      ACDLABS_LABEL                = "cdk:ACDLabsAtomLabel";
+    
+    
     /* **************************************
      * Some predefined property names for * AtomTypes *
      * **************************************
