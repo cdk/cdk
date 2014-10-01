@@ -35,6 +35,7 @@ public class SwingEventRelay implements IViewEventRelay {
         component = painter;
     }
 
+    @Override
     public void updateView() {
         System.out.println("updateView in SwingEventRelay");
         component.repaint();

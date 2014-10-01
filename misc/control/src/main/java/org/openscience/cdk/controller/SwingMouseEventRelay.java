@@ -37,6 +37,7 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
         this.relay = relay;
     }
 
+    @Override
     public void mouseMoved(MouseEvent event) {
         relay.mouseMove(event.getX(), event.getY());
     }
@@ -45,6 +46,7 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
         System.out.println("updating View now in SwingMouseEventRelay");
     }
 
+    @Override
     public void mouseDragged(MouseEvent event) {
         //check http://www.leepoint.net/notes-java/examples/mouse/020dragdemo.html for implementation
         relay.mouseDrag(dragFromX, dragFromY, event.getX(), event.getY());
@@ -58,6 +60,7 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
     /** true means mouse was pressed in ball and still in panel.*/
     private boolean _canDrag  = false;
 
+    @Override
     public void mouseClicked(MouseEvent event) {
         //normal mouseClicked is the same as mousePressed and mouseReleased after that
 
@@ -68,14 +71,17 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
 
     }
 
+    @Override
     public void mouseEntered(MouseEvent event) {
         relay.mouseEnter(event.getX(), event.getY());
     }
 
+    @Override
     public void mouseExited(MouseEvent event) {
         relay.mouseExit(event.getX(), event.getY());
     }
 
+    @Override
     public void mousePressed(MouseEvent event) {
         // TODO Auto-generated method stub
         relay.mouseClickedDown(event.getX(), event.getY());
@@ -84,6 +90,7 @@ public class SwingMouseEventRelay implements MouseMotionListener, MouseListener 
         dragFromY = event.getY();
     }
 
+    @Override
     public void mouseReleased(MouseEvent event) {
         // TODO Auto-generated method stub
         relay.mouseClickedUp(event.getX(), event.getY());

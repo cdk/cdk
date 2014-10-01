@@ -27,6 +27,7 @@ import org.junit.Test;
  */
 public class LoggingToolTest extends AbstractLoggingToolTest {
 
+    @Override
     public LoggingTool getLoggingTool() {
         String originalValue = System.getProperty("cdk.debugging");
         System.setProperty("cdk.debugging", "false");

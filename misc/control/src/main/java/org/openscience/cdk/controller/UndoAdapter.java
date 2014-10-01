@@ -50,6 +50,7 @@ public class UndoAdapter implements UndoableEditListener {
      * javax.swing.event.UndoableEditListener#undoableEditHappened(javax.swing
      * .event.UndoableEditEvent)
      */
+    @Override
     public void undoableEditHappened(UndoableEditEvent arg0) {
         UndoableEdit edit = arg0.getEdit();
         undoManager.addEdit(edit);

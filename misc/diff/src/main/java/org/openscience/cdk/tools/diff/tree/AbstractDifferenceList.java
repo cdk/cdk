@@ -44,6 +44,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
 
     /** {@inheritDoc} */
     @TestMethod("testAddChild")
+    @Override
     public void addChild(IDifference childDiff) {
         if (childDiff != null) {
             differences.add(childDiff);
@@ -52,6 +53,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
 
     /** {@inheritDoc} */
     @TestMethod("testChildDiffs")
+    @Override
     public void addChildren(List<IDifference> children) {
         if (children != null) {
             differences.addAll(children);
@@ -60,9 +62,11 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
 
     /** {@inheritDoc} */
     @TestMethod("testChildDiffs")
+    @Override
     public Iterable<IDifference> getChildren() {
         return new Iterable<IDifference>() {
 
+            @Override
             public Iterator<IDifference> iterator() {
                 return differences.iterator();
             }
@@ -71,6 +75,7 @@ public abstract class AbstractDifferenceList implements IDifferenceList {
 
     /** {@inheritDoc} */
     @TestMethod("testAddChild")
+    @Override
     public int childCount() {
         return differences.size();
     }

@@ -34,6 +34,7 @@ public class Geometry3DValidator extends AbstractValidator {
     public Geometry3DValidator() {}
 
     // assumes 1 unit in the coordinate system is one angstrom
+    @Override
     public ValidationReport validateBond(IBond subject) {
         ValidationReport report = new ValidationReport();
         // only consider two atom bonds

@@ -50,6 +50,7 @@ public class BasicValidator extends AbstractValidator {
 
     public BasicValidator() {}
 
+    @Override
     public ValidationReport validateAtom(IAtom subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateCharge(subject));
@@ -58,6 +59,7 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
+    @Override
     public ValidationReport validateBond(IBond subject) {
         ValidationReport report = new ValidationReport();
         report.addReport(validateStereoChemistry(subject));
@@ -65,10 +67,12 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
+    @Override
     public ValidationReport validateIsotope(IIsotope subject) {
         return validateIsotopeExistence(subject);
     }
 
+    @Override
     public ValidationReport validateMolecule(IAtomContainer subject) {
         ValidationReport report = new ValidationReport();
         ValidationTest emptyMolecule = new ValidationTest(subject, "Molecule does not contain any atom");
@@ -96,6 +100,7 @@ public class BasicValidator extends AbstractValidator {
         return report;
     }
 
+    @Override
     public ValidationReport validateReaction(IReaction subject) {
         ValidationReport report = new ValidationReport();
         IAtomContainer container1 = subject.getBuilder().newInstance(IAtomContainer.class);

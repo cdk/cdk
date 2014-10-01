@@ -85,6 +85,7 @@ public class BooleanArrayDifference extends AbstractDifferenceList implements ID
      * @return a {@link String}
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         if (differences.size() == 0) return "";
 

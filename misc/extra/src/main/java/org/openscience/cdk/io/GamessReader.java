@@ -156,21 +156,25 @@ public class GamessReader extends DefaultChemObjectReader {
     //TODO Update comment with appropriate information to comply Constructor's documentation.
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return GamessFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -188,6 +192,7 @@ public class GamessReader extends DefaultChemObjectReader {
      * org.openscience.cdk.io.ChemObjectReader#read(org.openscience.cdk.ChemObject
      * )
      */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             try {
@@ -439,6 +444,7 @@ public class GamessReader extends DefaultChemObjectReader {
      */
     //TODO Answer the question : What are all concerned ressources ?
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         /*
          * Closes the BufferedReader used to read the file content.

@@ -44,6 +44,7 @@ public class DictionaryValidator extends AbstractValidator {
         this.db = db;
     }
 
+    @Override
     public ValidationReport validateChemObject(IChemObject subject) {
         ValidationReport report = new ValidationReport();
         Map<Object, Object> properties = subject.getProperties();

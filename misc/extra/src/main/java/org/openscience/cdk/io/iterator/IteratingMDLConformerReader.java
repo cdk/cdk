@@ -71,6 +71,7 @@ public class IteratingMDLConformerReader implements Iterator {
     }
 
     @TestMethod("testSDF")
+    @Override
     public boolean hasNext() {
 
         boolean slurpedConformers = false;
@@ -101,6 +102,7 @@ public class IteratingMDLConformerReader implements Iterator {
     }
 
     @TestMethod("testSDF")
+    @Override
     public Object next() {
         if (!nextIsKnown) hasNext();
         nextIsKnown = false;
@@ -110,6 +112,7 @@ public class IteratingMDLConformerReader implements Iterator {
     }
 
     @TestMethod("testRemove")
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
