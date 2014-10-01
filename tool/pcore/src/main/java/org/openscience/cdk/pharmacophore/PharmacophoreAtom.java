@@ -133,6 +133,7 @@ public class PharmacophoreAtom extends Atom {
     }
 
     @TestMethod("testEquals")
+    @Override
     public boolean equals(Object o) {
         if (!(o instanceof PharmacophoreAtom)) return false;
 

@@ -62,6 +62,7 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         return (getIMPH(atom) != 0 && getIMPH(atom) == getIMPH(this));
     }
@@ -70,6 +71,7 @@ public class ImplicitHCountAtom extends SMARTSAtom {
      * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("ImplicitHCountAtom(");

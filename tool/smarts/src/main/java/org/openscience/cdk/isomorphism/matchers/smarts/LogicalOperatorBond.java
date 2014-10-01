@@ -76,6 +76,7 @@ public class LogicalOperatorBond extends SMARTSBond {
         this.right = right;
     }
 
+    @Override
     public boolean matches(IBond bond) {
         boolean matchesLeft = left.matches(bond);
         if (right != null) {
@@ -96,6 +97,7 @@ public class LogicalOperatorBond extends SMARTSBond {
         }
     }
 
+    @Override
     public void setAtoms(IAtom[] atoms) {
         super.setAtoms(atoms);
         ((IBond) left).setAtoms(atoms);

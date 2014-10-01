@@ -121,6 +121,7 @@ public class IsotopeContainer {
      * @return    The cloned object
      */
     @TestMethod("testClone")
+    @Override
     public Object clone() throws CloneNotSupportedException {
         IsotopeContainer isoClone = new IsotopeContainer();
         isoClone.setFormula(getFormula());

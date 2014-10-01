@@ -139,6 +139,7 @@ public class MurckoFragmenter implements IFragmenter {
      * @throws CDKException
      */
     @TestMethod("testMF1, testMF2, testMF3, testMF4, testMF5, testMF6")
+    @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         Set<Long> fragmentSet = new HashSet<Long>();
         frameMap.clear();
@@ -358,6 +359,7 @@ public class MurckoFragmenter implements IFragmenter {
      * @see #getFrameworksAsContainers()
      */
     @TestMethod("testMF1")
+    @Override
     public String[] getFragments() {
         List<String> allfrags = new ArrayList<String>();
         allfrags.addAll(getSmilesFromAtomContainers(frameMap.values()));
@@ -371,6 +373,7 @@ public class MurckoFragmenter implements IFragmenter {
      * @return An array of structures representing frameworks and ring systems
      */
     @TestMethod("testGetFragmentsAsContainers")
+    @Override
     public IAtomContainer[] getFragmentsAsContainers() {
         List<IAtomContainer> allfrags = new ArrayList<IAtomContainer>();
         allfrags.addAll(frameMap.values());

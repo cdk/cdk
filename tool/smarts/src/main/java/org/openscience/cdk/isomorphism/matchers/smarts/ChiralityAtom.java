@@ -78,6 +78,7 @@ public class ChiralityAtom extends SMARTSAtom {
         super(builder);
     }
 
+    @Override
     public boolean matches(IAtom atom) {
         // match testing is done after the match is complete
         return true;

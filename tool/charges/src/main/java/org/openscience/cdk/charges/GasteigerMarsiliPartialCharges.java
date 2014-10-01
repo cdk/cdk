@@ -207,6 +207,7 @@ public class GasteigerMarsiliPartialCharges implements IChargeCalculator {
     }
 
     @TestMethod("testCalculateCharges_IAtomContainer")
+    @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
             this.assignGasteigerMarsiliSigmaPartialCharges(container, true);

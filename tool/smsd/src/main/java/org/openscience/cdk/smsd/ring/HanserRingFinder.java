@@ -93,6 +93,7 @@ public class HanserRingFinder implements RingFinder {
      * @return a {@link Collection} of {@link List}s containing one ring each
      * @see org.openscience.cdk.smsd.ring.RingFinder#findRings(org.openscience.cdk.interfaces.IAtomContainer)
      */
+    @Override
     public Collection<List<IAtom>> findRings(IAtomContainer molecule) {
         if (molecule == null) return null;
         rings.clear();
@@ -116,6 +117,7 @@ public class HanserRingFinder implements RingFinder {
      * @return report collected the rings
      * @see org.openscience.cdk.smsd.ring.RingFinder#getRingSet(org.openscience.cdk.interfaces.IAtomContainer)
      */
+    @Override
     public IRingSet getRingSet(IAtomContainer molecule) throws CDKException {
 
         Collection<List<IAtom>> cycles = findRings(molecule);

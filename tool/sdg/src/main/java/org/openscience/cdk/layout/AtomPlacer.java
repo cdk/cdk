@@ -69,6 +69,7 @@ public class AtomPlacer {
 
     final Comparator<IAtom>     ATOM_ORDER = new Comparator<IAtom>() {
 
+                                               @Override
                                                public int compare(IAtom a, IAtom b) {
                                                    return weight(a).compareTo(weight(b));
                                                }

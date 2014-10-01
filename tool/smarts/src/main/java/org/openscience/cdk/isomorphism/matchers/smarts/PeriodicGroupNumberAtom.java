@@ -55,6 +55,7 @@ public class PeriodicGroupNumberAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         String symbol = atom.getSymbol();
         int group = PeriodicTable.getGroup(symbol);
@@ -65,6 +66,7 @@ public class PeriodicGroupNumberAtom extends SMARTSAtom {
      * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
+    @Override
     public String toString() {
         return ("PeriodicGroupNumberAtom(" + this.groupNumber + ")");
     }

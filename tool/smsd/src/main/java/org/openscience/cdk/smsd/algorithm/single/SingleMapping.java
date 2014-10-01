@@ -220,6 +220,7 @@ public class SingleMapping {
         List<Map.Entry<K, V>> list = new LinkedList<Map.Entry<K, V>>(map.entrySet());
         Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
 
+            @Override
             public int compare(Map.Entry<K, V> object1, Map.Entry<K, V> object2) {
                 return object1.getValue().compareTo(object2.getValue());
             }

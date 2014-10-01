@@ -52,6 +52,7 @@ class SimpleNode implements Node, Cloneable {
      * (non-Javadoc)
      * @see java.lang.Object#clone()
      */
+    @Override
     public Object clone() {
         Constructor constructor = null;
         Node clone = null;
@@ -71,18 +72,23 @@ class SimpleNode implements Node, Cloneable {
         return clone;
     }
 
+    @Override
     public void jjtOpen() {}
 
+    @Override
     public void jjtClose() {}
 
+    @Override
     public void jjtSetParent(Node n) {
         parent = n;
     }
 
+    @Override
     public Node jjtGetParent() {
         return parent;
     }
 
+    @Override
     public void jjtAddChild(Node n, int i) {
         if (children == null) {
             children = new Node[i + 1];
@@ -94,6 +100,7 @@ class SimpleNode implements Node, Cloneable {
         children[i] = n;
     }
 
+    @Override
     public void jjtRemoveChild(int i) {
         if (i >= children.length) return;
         Node[] c = new Node[children.length - 1];
@@ -104,15 +111,18 @@ class SimpleNode implements Node, Cloneable {
         children = c;
     }
 
+    @Override
     public Node jjtGetChild(int i) {
         return children[i];
     }
 
+    @Override
     public int jjtGetNumChildren() {
         return (children == null) ? 0 : children.length;
     }
 
     /** Accept the visitor. * */
+    @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }
@@ -134,6 +144,7 @@ class SimpleNode implements Node, Cloneable {
      * otherwise overriding toString() is probably all you need to do.
      */
 
+    @Override
     public String toString() {
         return SMARTSParserTreeConstants.jjtNodeName[id];
     }

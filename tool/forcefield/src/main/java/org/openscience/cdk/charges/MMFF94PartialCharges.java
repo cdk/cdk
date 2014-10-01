@@ -136,6 +136,7 @@ public class MMFF94PartialCharges implements IChargeCalculator {
         return ac;
     }
 
+    @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
             assignMMFF94PartialCharges(container);

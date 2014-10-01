@@ -80,6 +80,7 @@ public class HybridizationNumberAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         return hybridization == atom.getHybridization();
     }
@@ -88,6 +89,7 @@ public class HybridizationNumberAtom extends SMARTSAtom {
      * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
+    @Override
     public String toString() {
         return ("HybridizationNumberAtom(" + hybridization.toString() + ")");
     }

@@ -85,6 +85,7 @@ public class RDBERule implements IRule {
      *
      * @see                   #getParameters
      */
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 2) throw new CDKException("RDBERule expects two parameters");
 
@@ -103,6 +104,7 @@ public class RDBERule implements IRule {
      * @return The parameters value
      * @see    #setParameters
      */
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the rule validation
         Object[] params = new Object[2];
@@ -118,6 +120,7 @@ public class RDBERule implements IRule {
      * @return          A double value meaning 1.0 True, 0.0 False
      */
 
+    @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
 

@@ -15,6 +15,7 @@ public class CanonicalLabellingAdaptor implements ICanonicalMoleculeLabeller {
     /**
      * {@inheritDoc}
      */
+    @Override
     public IAtomContainer getCanonicalMolecule(IAtomContainer container) {
         return AtomContainerAtomPermutor.permute(getCanonicalPermutation(container), container);
     }
@@ -22,6 +23,7 @@ public class CanonicalLabellingAdaptor implements ICanonicalMoleculeLabeller {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int[] getCanonicalPermutation(IAtomContainer container) {
         CanonicalLabeler labeler = new CanonicalLabeler();
         labeler.canonLabel(container);

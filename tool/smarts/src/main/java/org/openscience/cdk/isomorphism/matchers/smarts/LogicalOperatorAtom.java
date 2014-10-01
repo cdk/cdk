@@ -92,6 +92,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
      * .openscience.cdk.interfaces.IAtom)
      */
     @Deprecated
+    @Override
     public boolean matches(IAtom atom) {
         boolean val = false;
         boolean matchesLeft = left.matches(atom);
@@ -118,6 +119,7 @@ public final class LogicalOperatorAtom extends SMARTSAtom {
      * @see org.openscience.cdk.ChemObject#getFlag(int)
      */
     @Deprecated
+    @Override
     public boolean getFlag(int flagType) {
         boolean val = false;
         boolean leftFlag = left.getFlag(flagType);

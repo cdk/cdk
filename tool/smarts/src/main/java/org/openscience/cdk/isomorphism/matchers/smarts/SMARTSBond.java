@@ -43,6 +43,7 @@ public class SMARTSBond extends QueryBond implements IQueryBond {
         super(atom1, atom2, order, builder);
     }
 
+    @Override
     public boolean matches(IBond bond) {
         return false;
 

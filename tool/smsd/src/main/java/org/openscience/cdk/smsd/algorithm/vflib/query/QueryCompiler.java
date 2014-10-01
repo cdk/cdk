@@ -117,6 +117,7 @@ public class QueryCompiler implements IQueryCompiler {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IQuery compile() {
         return this.queryMolecule == null ? build(molecule) : build(queryMolecule);
     }

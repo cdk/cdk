@@ -99,6 +99,7 @@ public abstract class AbstractMCSTest {
             return null;
         }
 
+        @Override
         public List<Map<Integer, Integer>> getAllMapping() {
             return null;
         }

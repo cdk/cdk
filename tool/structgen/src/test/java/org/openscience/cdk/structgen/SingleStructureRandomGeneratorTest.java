@@ -83,6 +83,7 @@ public class SingleStructureRandomGeneratorTest {
 
         private static final long serialVersionUID = -7405706755621468840L;
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             try {
                 IAtomContainer ac = ssrg.generate();

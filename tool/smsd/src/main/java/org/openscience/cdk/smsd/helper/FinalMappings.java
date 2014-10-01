@@ -65,6 +65,7 @@ public class FinalMappings implements IFinalMapping {
      *
      */
     @TestMethod("testAdd")
+    @Override
     synchronized public void add(Map<Integer, Integer> mapping) {
         mappings.add(mapping);
     }
@@ -74,6 +75,7 @@ public class FinalMappings implements IFinalMapping {
      * @param list list of mappings
      */
     @TestMethod("testSet")
+    @Override
     synchronized public final void set(List<Map<Integer, Integer>> list) {
         this.clear();
         mappings.addAll(list);
@@ -84,6 +86,7 @@ public class FinalMappings implements IFinalMapping {
      *
      */
     @TestMethod("testGetIterator")
+    @Override
     synchronized public Iterator<Map<Integer, Integer>> getIterator() {
         Iterator<Map<Integer, Integer>> iterator = mappings.iterator();
         return iterator;
@@ -94,6 +97,7 @@ public class FinalMappings implements IFinalMapping {
      *
      */
     @TestMethod("testClear")
+    @Override
     synchronized public void clear() {
         FinalMappings.mappings.clear();
     }
@@ -103,6 +107,7 @@ public class FinalMappings implements IFinalMapping {
      *
      */
     @TestMethod("testGetFinalMapping")
+    @Override
     synchronized public List<Map<Integer, Integer>> getFinalMapping() {
         return mappings;
     }
@@ -112,6 +117,7 @@ public class FinalMappings implements IFinalMapping {
      *
      */
     @TestMethod("testGetSize")
+    @Override
     synchronized public int getSize() {
         return mappings.size();
     }

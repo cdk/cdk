@@ -43,6 +43,7 @@ public class StereoBond extends SMARTSBond {
         this.direction = direction;
     }
 
+    @Override
     public boolean matches(IBond bond) {
         return Order.SINGLE.equals(bond.getOrder());
     }

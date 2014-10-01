@@ -79,6 +79,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param target
      */
     @TestMethod("testSet_MolHandler_MolHandler")
+    @Override
     public void set(MolHandler source, MolHandler target) {
         this.source = source.getMolecule();
         this.target = target.getMolecule();
@@ -90,6 +91,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
      * @param target
      */
     @TestMethod("testSet_IQueryAtomContainer_MolHandler")
+    @Override
     public void set(IQueryAtomContainer source, IAtomContainer target) {
         this.source = source;
         this.target = target;
@@ -241,6 +243,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /** {@inheritDoc}
      */
     @TestMethod("testGetAllMapping")
+    @Override
     public List<Map<Integer, Integer>> getAllMapping() {
         return Collections.unmodifiableList(allMCS);
     }
@@ -248,6 +251,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /** {@inheritDoc}
      */
     @TestMethod("testGetFirstMapping")
+    @Override
     public Map<Integer, Integer> getFirstMapping() {
         return Collections.unmodifiableMap(firstMCS);
     }
@@ -255,6 +259,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /** {@inheritDoc}
      */
     @TestMethod("testGetAllAtomMapping")
+    @Override
     public List<Map<IAtom, IAtom>> getAllAtomMapping() {
         return Collections.unmodifiableList(allAtomMCS);
     }
@@ -262,6 +267,7 @@ public class CDKMCSHandler extends AbstractMCSAlgorithm implements IMCSBase {
     /** {@inheritDoc}
      */
     @TestMethod("testGetFirstAtomMapping")
+    @Override
     public Map<IAtom, IAtom> getFirstAtomMapping() {
         return Collections.unmodifiableMap(firstAtomMCS);
     }

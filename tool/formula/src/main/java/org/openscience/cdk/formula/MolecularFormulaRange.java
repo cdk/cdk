@@ -166,6 +166,7 @@ public class MolecularFormulaRange implements Cloneable {
     public Iterable<IIsotope> isotopes() {
         return new Iterable<IIsotope>() {
 
+            @Override
             public Iterator<IIsotope> iterator() {
                 return isotopesMax.keySet().iterator();
             }
@@ -199,6 +200,7 @@ public class MolecularFormulaRange implements Cloneable {
      * @return    The cloned object
      */
     @TestMethod("testClone")
+    @Override
     public Object clone() throws CloneNotSupportedException {
 
         MolecularFormulaRange clone = new MolecularFormulaRange();

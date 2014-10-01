@@ -63,6 +63,7 @@ public class StructGenAtomTypeGuesser implements IAtomTypeGuesser {
      * @exception CDKException Exception thrown if something goes wrong
      * @return                 the matching AtomType
      */
+    @Override
     public List<IAtomType> possibleAtomTypes(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {

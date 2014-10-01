@@ -50,14 +50,17 @@ public class StructGenMatcherTest extends AbstractAtomTypeTest {
     private final static AtomTypeFactory factory       = AtomTypeFactory.getInstance("org/openscience/cdk/config/data/"
                                                                + ATOMTYPE_LIST, SilentChemObjectBuilder.getInstance());
 
+    @Override
     public String getAtomTypeListName() {
         return ATOMTYPE_LIST;
     };
 
+    @Override
     public AtomTypeFactory getFactory() {
         return factory;
     }
 
+    @Override
     public IAtomTypeMatcher getAtomTypeMatcher(IChemObjectBuilder builder) {
         return new StructGenMatcher();
     }

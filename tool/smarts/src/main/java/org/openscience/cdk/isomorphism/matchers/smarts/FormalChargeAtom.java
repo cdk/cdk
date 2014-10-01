@@ -48,6 +48,7 @@ public class FormalChargeAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         return atom.getFormalCharge() == this.formalCharge;
     }
@@ -56,6 +57,7 @@ public class FormalChargeAtom extends SMARTSAtom {
      * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("FormalChargeAtom(");

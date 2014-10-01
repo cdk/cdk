@@ -53,6 +53,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
     public StructGenMatcher() {}
 
     @TestMethod("testFindMatchingAtomType_IAtomContainer")
+    @Override
     public IAtomType[] findMatchingAtomTypes(IAtomContainer atomContainer) throws CDKException {
         IAtomType[] types = new IAtomType[atomContainer.getAtomCount()];
         int typeCounter = 0;
@@ -72,6 +73,7 @@ public class StructGenMatcher implements IAtomTypeMatcher {
      * @exception CDKException Exception thrown if something goes wrong
      * @return                 the matching AtomType
      */
+    @Override
     public IAtomType findMatchingAtomType(IAtomContainer atomContainer, IAtom atom) throws CDKException {
         if (factory == null) {
             try {

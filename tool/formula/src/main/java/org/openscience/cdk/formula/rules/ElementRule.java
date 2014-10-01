@@ -78,6 +78,7 @@ public class ElementRule implements IRule {
      *
      * @see                   #getParameters
      */
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("ElementRule expects one parameters");
 
@@ -93,6 +94,7 @@ public class ElementRule implements IRule {
      * @return The parameters value
      * @see    #setParameters
      */
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the rule validation
         Object[] params = new Object[1];
@@ -107,6 +109,7 @@ public class ElementRule implements IRule {
      * @return          An ArrayList containing 9 elements in the order described above
      */
 
+    @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
         ensureDefaultOccurElements(formula.getBuilder());

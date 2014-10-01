@@ -95,6 +95,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      * @return true if the target angle lies within the range of the query constraint
      */
     @TestMethod("testMatches")
+    @Override
     public boolean matches(IBond bond) {
         if (bond instanceof PharmacophoreAngleBond) {
             PharmacophoreAngleBond pbond = (PharmacophoreAngleBond) bond;
@@ -127,6 +128,7 @@ public class PharmacophoreQueryAngleBond extends Bond implements IQueryBond {
      * @return String representation of and angle constraint
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append("AC::").append(getAtom(0)).append("::").append(getAtom(1)).append("::").append(getAtom(2));
