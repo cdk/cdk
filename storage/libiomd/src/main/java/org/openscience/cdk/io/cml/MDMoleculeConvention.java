@@ -71,6 +71,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
      *
      * @cdk.todo The JavaDoc of this class needs to be converted into HTML
      */
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         //		<molecule convention="md:mdMolecule"
         //	          xmlns="http://www.xml-cml.org/schema"
@@ -181,6 +182,7 @@ public class MDMoleculeConvention extends CMLCoreModule {
     /**
      * Finish up parsing of elements in mdmolecule.
      */
+    @Override
     public void endElement(CMLStack xpath, String uri, String name, String raw) {
         if (name.equals("molecule")) {
             //			System.out.println("Ending element mdmolecule");

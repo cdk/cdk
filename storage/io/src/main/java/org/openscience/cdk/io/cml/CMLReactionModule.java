@@ -49,6 +49,7 @@ public class CMLReactionModule extends CMLCoreModule {
         logger.debug("New CML-Reaction Module!");
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         if ("reaction".equals(local)) {
             //            cdo.startObject("Reaction");
@@ -148,6 +149,7 @@ public class CMLReactionModule extends CMLCoreModule {
         }
     }
 
+    @Override
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if ("reaction".equals(local)) {
             //            cdo.endObject("Reaction");

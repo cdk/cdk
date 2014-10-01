@@ -74,6 +74,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
      * @return returns a {@link CDKOWLFormat}.
      */
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
     }
@@ -86,18 +87,21 @@ public class CDKOWLReader extends DefaultChemObjectReader {
      * @deprecated
      */
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = reader;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         this.input = new InputStreamReader(input);
     }
 
     /** {@inheritDoc} */
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -110,6 +114,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
     }
 
     /** {@inheritDoc} */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (!(object instanceof IAtomContainer))
             throw new CDKException("Only supported is reading of IMolecule objects.");
@@ -126,6 +131,7 @@ public class CDKOWLReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

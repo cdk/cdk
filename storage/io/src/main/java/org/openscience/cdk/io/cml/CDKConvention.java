@@ -49,11 +49,13 @@ public class CDKConvention extends CMLCoreModule {
         super(conv);
     }
 
+    @Override
     public void startDocument() {
         super.startDocument();
         isBond = false;
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         isBond = false;
         if (xpath.toString().endsWith("string/")) {
@@ -67,6 +69,7 @@ public class CDKConvention extends CMLCoreModule {
         }
     }
 
+    @Override
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         if (isBond) {

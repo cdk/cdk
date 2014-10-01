@@ -80,6 +80,7 @@ public class ChemtoolFormat extends AbstractResourceFormat implements IChemForma
     }
 
     @TestMethod("testGetWriterClassName")
+    @Override
     public String getWriterClassName() {
         return null;
     }

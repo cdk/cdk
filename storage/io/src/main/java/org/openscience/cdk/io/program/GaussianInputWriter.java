@@ -95,10 +95,12 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return GaussianInputFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -107,21 +109,25 @@ public class GaussianInputWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
     }
 
     @TestMethod("testWrite")
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {

@@ -65,27 +65,32 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
      *
      * @return returns a {@link CDKOWLFormat}.
      */
+    @Override
     public IResourceFormat getFormat() {
         return CDKOWLFormat.getInstance();
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setWriter(Writer out) throws CDKException {
         this.output = out;
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         this.output = new OutputStreamWriter(output);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void close() throws IOException {
         if (output != null) output.close();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -98,6 +103,7 @@ public class CDKOWLWriter extends DefaultChemObjectWriter {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {

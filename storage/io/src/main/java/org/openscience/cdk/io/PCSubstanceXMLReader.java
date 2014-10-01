@@ -79,11 +79,13 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return PubChemSubstanceXMLFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader input) throws CDKException {
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
@@ -98,15 +100,18 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return IAtomContainer.class.isAssignableFrom(classObject);
     }
 
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {
@@ -126,6 +131,7 @@ public class PCSubstanceXMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

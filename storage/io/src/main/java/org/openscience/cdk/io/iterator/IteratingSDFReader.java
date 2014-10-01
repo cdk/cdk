@@ -174,6 +174,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return currentFormat;
     }
@@ -211,6 +212,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     /**
      * Returns true if another IMolecule can be read.
      */
+    @Override
     public boolean hasNext() {
 
         if (nextAvailableIsKnown) {
@@ -359,6 +361,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     /**
      * Returns the next IMolecule.
      */
+    @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -371,15 +374,18 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) {
         if (reader instanceof BufferedReader) {
             input = (BufferedReader) reader;
@@ -392,6 +398,7 @@ public class IteratingSDFReader extends DefaultIteratingChemObjectReader<IAtomCo
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));
     }

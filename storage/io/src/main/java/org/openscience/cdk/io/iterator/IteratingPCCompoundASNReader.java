@@ -90,10 +90,12 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return PubChemSubstancesASNFormat.getInstance();
     }
 
+    @Override
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -162,6 +164,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
         return bracketsOpen - bracketsClose;
     }
 
+    @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -174,10 +177,12 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
@@ -199,6 +204,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) {
         if (reader instanceof BufferedReader) {
             input = (BufferedReader) reader;
@@ -211,6 +217,7 @@ public class IteratingPCCompoundASNReader extends DefaultIteratingChemObjectRead
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));
     }

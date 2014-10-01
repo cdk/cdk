@@ -52,6 +52,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
     /**
      * No customization for bonds.
      */
+    @Override
     public void customize(IBond bond, Object nodeToAdd) throws Exception {
         // nothing to do
     }
@@ -59,6 +60,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
     /**
      * Customize Atom.
      */
+    @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         // nothing to do
     }
@@ -66,6 +68,7 @@ public class MDMoleculeCustomizer implements ICMLCustomizer {
     /**
      * Customize Molecule.
      */
+    @Override
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         if (!(nodeToAdd instanceof CMLMolecule)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 

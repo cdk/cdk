@@ -69,6 +69,7 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         return new MDLV2000Reader();
     }
 
+    @Override
     protected boolean isRecordEnd(String line) {
         return line.equals("$$$$");
     }
@@ -82,6 +83,7 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         return MDLFormat.getInstance();
     }
 
+    @Override
     protected IChemObject processContent() throws CDKException {
         /*
          * return chemObjectReader.read(builder.newInstance(IMolecule.class));
@@ -127,6 +129,7 @@ public class RandomAccessSDFReader extends RandomAccessReader {
         return chemObjectReader.accepts(classObject);
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("Cannot remove entries with " + "the RandomAccessSDFReader");
     }

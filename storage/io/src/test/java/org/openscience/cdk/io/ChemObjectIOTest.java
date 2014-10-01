@@ -172,6 +172,7 @@ public abstract class ChemObjectIOTest extends CDKTestCase {
 
         private int timesCalled = 0;
 
+        @Override
         public void processIOSettingQuestion(IOSetting setting) {
             timesCalled++;
         }

@@ -66,6 +66,7 @@ public class CMLResolver implements EntityResolver {
      * @param systemId the SYSTEM identifier of the DTD
      * @return the CML DTD as an InputSource or null if id's unresolvable
      */
+    @Override
     public InputSource resolveEntity(String publicId, String systemId) {
         logger.debug("CMLResolver: resolving ", publicId, ", ", systemId);
         systemId = systemId.toLowerCase();

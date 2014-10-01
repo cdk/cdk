@@ -59,6 +59,7 @@ public class CMLReaderTest extends SimpleChemObjectReaderTest {
     }
 
     @Test(expected = CDKException.class)
+    @Override
     public void testSetReader_Reader() throws Exception {
         InputStream ins = ChemObjectReaderTest.class.getClassLoader().getResourceAsStream(testFile);
         chemObjectIO.setReader(new InputStreamReader(ins));

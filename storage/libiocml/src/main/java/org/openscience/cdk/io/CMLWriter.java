@@ -165,10 +165,12 @@ public class CMLWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
 
+    @Override
     public void setWriter(final Writer writer) throws CDKException {
 
         // OutputStream doesn't handle encoding - the serializers read/write in the same format we're okay
@@ -183,6 +185,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
 
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         this.output = output;
     }
@@ -191,11 +194,13 @@ public class CMLWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         if (output != null) output.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -217,6 +222,7 @@ public class CMLWriter extends DefaultChemObjectWriter {
      *
      * @param object A Molecule of AtomContaineSet object
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
 
         if (!(object instanceof IAtomContainer) && !(object instanceof IAtomContainerSet)

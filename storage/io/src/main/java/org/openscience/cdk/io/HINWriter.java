@@ -80,10 +80,12 @@ public class HINWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return HINFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -92,6 +94,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -100,11 +103,13 @@ public class HINWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
@@ -114,6 +119,7 @@ public class HINWriter extends DefaultChemObjectWriter {
         return false;
     }
 
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {

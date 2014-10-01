@@ -45,17 +45,20 @@ public class MDLMolConvention extends CMLCoreModule {
         super(conv);
     }
 
+    @Override
     public void startDocument() {
         super.startDocument();
         //        cdo.startObject("Frame");
         currentChemModel = currentChemFile.getBuilder().newInstance(IChemModel.class);
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         logger.debug("MDLMol element: name");
         super.startElement(xpath, uri, local, raw, atts);
     }
 
+    @Override
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
         String s = new String(ch, start, length).trim();
         if (xpath.toString().endsWith("string/") && BUILTIN.equals("stereo")) {

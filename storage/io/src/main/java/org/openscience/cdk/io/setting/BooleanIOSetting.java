@@ -38,6 +38,7 @@ public class BooleanIOSetting extends IOSetting {
      * Sets the setting for a certain question. The setting
      * is a boolean, and it accepts only "true" and "false".
      */
+    @Override
     public void setSetting(String setting) throws CDKException {
         if (setting.equals("true") || setting.equals("false")) {
             this.setting = setting;

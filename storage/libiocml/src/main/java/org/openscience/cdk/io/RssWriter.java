@@ -79,15 +79,18 @@ public class RssWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CMLRSSFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -96,11 +99,13 @@ public class RssWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return true;
     }
@@ -116,6 +121,7 @@ public class RssWriter extends DefaultChemObjectWriter {
      * org.openscience.cdk.io.IChemObjectWriter#write(org.openscience.cdk.interfaces
      * .IChemObject)
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
         try {
             ProcessingInstruction processingInstruction = new ProcessingInstruction("xml-stylesheet",

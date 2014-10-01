@@ -110,10 +110,12 @@ public class PDBWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return PDBFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -122,11 +124,13 @@ public class PDBWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (ICrystal.class.equals(classObject)) return true;
@@ -142,6 +146,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
         return false;
     }
 
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof ICrystal) {
             writeCrystal((ICrystal) object);
@@ -333,6 +338,7 @@ public class PDBWriter extends DefaultChemObjectWriter {
       * Flushes the output and closes this object.
       */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }

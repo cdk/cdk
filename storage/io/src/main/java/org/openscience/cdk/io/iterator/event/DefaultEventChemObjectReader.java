@@ -42,6 +42,7 @@ public abstract class DefaultEventChemObjectReader extends ChemObjectIO implemen
         return accepts(object.getClass());
     }
 
+    @Override
     public boolean accepts(Class<? extends IChemObject> objectClass) {
         // leave it up the read(IChemObject) to decide by default
         return true;

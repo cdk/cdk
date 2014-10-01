@@ -68,6 +68,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
         }
     }
 
+    @Override
     public void frameRead(ReaderEvent event) {}
 
     /**
@@ -77,6 +78,7 @@ public class PropertiesListener implements IReaderListener, IWriterListener {
      * <p>Note: if the input reader is <code>null</code>, then the method
      * does not wait for an answer, and takes the default.
      */
+    @Override
     public void processIOSettingQuestion(IOSetting setting) {
         String questionName = setting.getName();
         if (props != null) {

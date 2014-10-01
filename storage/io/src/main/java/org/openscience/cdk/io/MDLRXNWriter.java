@@ -109,10 +109,12 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return MDLFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -121,6 +123,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -142,11 +145,13 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IReaction.class.equals(classObject)) return true;
         if (IReactionSet.class.equals(classObject)) return true;
@@ -168,6 +173,7 @@ public class MDLRXNWriter extends DefaultChemObjectWriter {
      *
      * @see org.openscience.cdk.ChemFile
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IReactionSet) {
             writeReactionSet((IReactionSet) object);

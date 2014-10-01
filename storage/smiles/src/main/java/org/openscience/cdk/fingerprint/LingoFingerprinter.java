@@ -71,11 +71,13 @@ public class LingoFingerprinter implements IFingerprinter {
         this.q = q;
     }
 
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
 
     @TestMethod("testFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer atomContainer) throws CDKException {
         Aromaticity.cdkLegacy().apply(atomContainer);
         String smiles = refactorSmiles(gen.create(atomContainer));
@@ -91,6 +93,7 @@ public class LingoFingerprinter implements IFingerprinter {
     }
 
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return -1;
     }

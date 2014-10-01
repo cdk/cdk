@@ -52,6 +52,7 @@ public class OptionIOSetting extends IOSetting {
      * a CDKException when the setting is not valid.
      *
      */
+    @Override
     public void setSetting(String setting) throws CDKException {
         if (settings.contains(setting)) {
             this.setting = setting;

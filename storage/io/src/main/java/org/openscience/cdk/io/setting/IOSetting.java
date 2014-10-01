@@ -60,6 +60,7 @@ public abstract class IOSetting implements ISetting {
         this.setting = defaultSetting;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }

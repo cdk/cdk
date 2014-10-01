@@ -39,6 +39,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
 
     boolean standAlone = false;
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new LingoFingerprinter();
     }
@@ -52,6 +53,7 @@ public class LingoFingerprinterTest extends AbstractFingerprinterTest {
 
     @Ignore("tested by testFingerprint")
     @Test
+    @Override
     public void testGetRawFingerprint() {}
 
     @Test

@@ -109,6 +109,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      * @return An instance of {@link org.openscience.cdk.io.formats.SMILESFormat}
      */
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
@@ -119,6 +120,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      * @return  true if there are molecules to read, false otherwise
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
+    @Override
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -188,6 +190,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      * @return The next molecule
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testSMILESTitles,testSMILESFile")
+    @Override
     public IAtomContainer next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -205,16 +208,19 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
      * @throws IOException if there is an error during closing
      */
     @TestMethod("testSMILESFileWithNames,testSMILESFileWithSpacesAndTabs,testClose")
+    @Override
     public void close() throws IOException {
         if (input != null) input.close();
     }
 
     @TestMethod("testRemove")
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) {
         if (reader instanceof BufferedReader) {
             input = (BufferedReader) reader;
@@ -227,6 +233,7 @@ public class IteratingSMILESReader extends DefaultIteratingChemObjectReader<IAto
     }
 
     @TestMethod("testSetReader1,testSetReader_InputStream")
+    @Override
     public void setReader(InputStream reader) {
         setReader(new InputStreamReader(reader));
     }

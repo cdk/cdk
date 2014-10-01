@@ -120,6 +120,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
      * @throws CDKException
      */
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -129,16 +130,19 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return RGroupQueryFormat.getInstance();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
@@ -150,6 +154,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }
@@ -160,6 +165,7 @@ public class RGroupQueryReader extends DefaultChemObjectReader {
      * @return IChemObject read from file
      * @param object class must be of type RGroupQuery
      */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof RGroupQuery) {
             return (T) parseRGFile((RGroupQuery) object);

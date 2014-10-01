@@ -275,6 +275,7 @@ public class IteratingSDFReaderTest extends CDKTestCase {
 
     class MyListener implements IChemObjectIOListener {
 
+        @Override
         public void processIOSettingQuestion(IOSetting setting) {
             if ("ForceReadAs3DCoordinates".equals(setting.getName())) {
                 try {

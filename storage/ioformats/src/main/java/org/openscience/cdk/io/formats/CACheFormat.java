@@ -76,6 +76,7 @@ public class CACheFormat extends SimpleChemFormatMatcher implements IChemFormatM
     }
 
     @TestMethod("testGetWriterClassName")
+    @Override
     public String getWriterClassName() {
         return null;
     }

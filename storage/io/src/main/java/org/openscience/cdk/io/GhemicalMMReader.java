@@ -75,11 +75,13 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return GhemicalMMFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this.input = (BufferedReader) input;
@@ -89,14 +91,17 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() {}
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IChemFile.class.equals(classObject)) return true;
         if (IChemModel.class.equals(classObject)) return true;
@@ -110,6 +115,7 @@ public class GhemicalMMReader extends DefaultChemObjectReader {
         return false;
     }
 
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemModel) {
             return (T) readChemModel((IChemModel) object);

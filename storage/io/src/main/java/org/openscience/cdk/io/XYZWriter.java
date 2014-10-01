@@ -85,10 +85,12 @@ public class XYZWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return XYZFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -97,6 +99,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -105,11 +108,13 @@ public class XYZWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         Class<?>[] interfaces = classObject.getInterfaces();
@@ -121,6 +126,7 @@ public class XYZWriter extends DefaultChemObjectWriter {
         return false;
     }
 
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainer) {
             try {

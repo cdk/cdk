@@ -83,6 +83,7 @@ final class CMLStack {
     /**
      * Returns a String representation of the stack.
      */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append('/');

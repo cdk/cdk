@@ -130,10 +130,12 @@ public class SDFWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return SDFFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -142,6 +144,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -150,11 +153,13 @@ public class SDFWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -181,6 +186,7 @@ public class SDFWriter extends DefaultChemObjectWriter {
      *
      * @see #accepts(Class)
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
         try {
             if (object instanceof IAtomContainerSet) {

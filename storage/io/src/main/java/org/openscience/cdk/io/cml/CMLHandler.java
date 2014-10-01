@@ -75,6 +75,7 @@ public class CMLHandler extends DefaultHandler {
      *
      * @param ch        characters to handle
      */
+    @Override
     public void characters(char ch[], int start, int length) {
         if (debug) logger.debug(new String(ch, start, length));
         conv.characterData(xpath, ch, start, length);
@@ -85,10 +86,12 @@ public class CMLHandler extends DefaultHandler {
     /**
      * Calling this procedure signals the end of the XML document.
      */
+    @Override
     public void endDocument() {
         conv.endDocument();
     }
 
+    @Override
     public void endElement(String uri, String local, String raw) {
         if (debug) logger.debug("</" + raw + ">");
         conv.endElement(xpath, uri, local, raw);
@@ -98,12 +101,14 @@ public class CMLHandler extends DefaultHandler {
         conv = moduleStack.current();
     }
 
+    @Override
     public void startDocument() {
         conv.startDocument();
         conventionStack.push("CML");
         moduleStack.push(conv);
     }
 
+    @Override
     public void startElement(String uri, String local, String raw, Attributes atts) {
         xpath.push(local);
         if (debug) logger.debug("<", raw, "> -> ", xpath);

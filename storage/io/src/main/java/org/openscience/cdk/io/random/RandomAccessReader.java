@@ -123,6 +123,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
      *
      * Record numbers are zero-based!
      */
+    @Override
     public synchronized IChemObject readRecord(int record) throws Exception {
         String buffer = readContent(record);
         if (chemObjectReader == null)
@@ -378,14 +379,17 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
      * (non-Javadoc)
      * @see java.util.Iterator#hasNext()
      */
+    @Override
     public boolean hasNext() {
         return currentRecord < (records - 1);
     }
 
+    @Override
     public boolean hasPrevious() {
         return currentRecord > 0;
     }
 
+    @Override
     public IChemObject first() {
         try {
             return readRecord(0);
@@ -395,6 +399,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         }
     }
 
+    @Override
     public IChemObject last() {
         try {
             return readRecord(records - 1);
@@ -408,6 +413,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
      * (non-Javadoc)
      * @see java.util.Iterator#next()
      */
+    @Override
     public IChemObject next() {
         try {
             return readRecord(currentRecord + 1);
@@ -420,6 +426,7 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
     /*
      * (non-Javadoc)
      */
+    @Override
     public IChemObject previous() {
         try {
             return readRecord(currentRecord - 1);
@@ -429,31 +436,38 @@ public abstract class RandomAccessReader extends DefaultRandomAccessChemObjectRe
         }
     }
 
+    @Override
     public void set(IChemObject arg0) {
 
     }
 
+    @Override
     public void add(IChemObject arg0) {
 
     }
 
+    @Override
     public int previousIndex() {
         return currentRecord - 1;
     }
 
+    @Override
     public int nextIndex() {
         return currentRecord + 1;
     }
 
+    @Override
     public int size() {
         return records;
     }
 
+    @Override
     public void addChemObjectIOListener(IChemObjectIOListener listener) {
         super.addChemObjectIOListener(listener);
         if (chemObjectReader != null) chemObjectReader.addChemObjectIOListener(listener);
     }
 
+    @Override
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {
         super.removeChemObjectIOListener(listener);
         if (chemObjectReader != null) chemObjectReader.removeChemObjectIOListener(listener);
