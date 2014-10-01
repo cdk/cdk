@@ -626,6 +626,19 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <rulesets>
+                        <ruleset>/pmd/custom.xml</ruleset>
+                    </rulesets>
+                    <excludeRoots>
+                        <excludeRoot>${basedir}/target/generated-sources/javacc</excludeRoot>
+                    </excludeRoots>
+                </configuration>
+            </plugin>
         </plugins>
     </reporting>
 
