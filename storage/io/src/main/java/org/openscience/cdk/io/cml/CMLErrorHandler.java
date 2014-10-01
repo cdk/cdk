@@ -79,6 +79,7 @@ public class CMLErrorHandler implements ErrorHandler {
      *
      * @param exception   Exception to output
      **/
+    @Override
     public void error(SAXParseException exception) throws SAXException {
         if (reportErrors) print("error", exception);
         if (abortOnErrors) throw exception;
@@ -89,6 +90,7 @@ public class CMLErrorHandler implements ErrorHandler {
      *
      * @param exception   Exception to output
      **/
+    @Override
     public void fatalError(SAXParseException exception) throws SAXException {
         if (reportErrors) print("fatal", exception);
         if (abortOnErrors) throw exception;
@@ -99,6 +101,7 @@ public class CMLErrorHandler implements ErrorHandler {
      *
      * @param exception   Exception to output
      **/
+    @Override
     public void warning(SAXParseException exception) throws SAXException {
         if (reportErrors) print("warning", exception);
     }

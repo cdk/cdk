@@ -54,6 +54,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         super(conv);
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         if (name.equals("list")) {
@@ -86,6 +87,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         }
     }
 
+    @Override
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = local;
         if (current == ENERGY) {
@@ -107,6 +109,7 @@ public class JMOLANIMATIONConvention extends CMLCoreModule {
         }
     }
 
+    @Override
     public void characterData(CMLStack xpath, char ch[], int start, int length) {
         if (current == ENERGY) {
             frame_energy = new String(ch, start, length);

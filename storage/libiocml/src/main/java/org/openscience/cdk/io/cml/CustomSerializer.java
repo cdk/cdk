@@ -63,6 +63,7 @@ public class CustomSerializer extends Serializer {
      * Overwrite the {@link Serializer#writeXMLDeclaration()} method, and have
      * it not output the XML declaration.
      */
+    @Override
     protected void writeXMLDeclaration() throws IOException {
         // do nothing
     }

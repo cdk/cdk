@@ -140,8 +140,10 @@ public class RGroupQueryWriterTest extends ChemObjectIOTest {
         return count;
     }
 
+    @Override
     public void testAcceptsAtLeastOneDebugObject() {}
 
+    @Override
     public void testAcceptsAtLeastOneNonotifyObject() {}
 
     private String recreate(String file) throws CDKException {

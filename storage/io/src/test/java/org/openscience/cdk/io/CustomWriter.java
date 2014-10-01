@@ -39,28 +39,37 @@ import org.openscience.cdk.io.setting.IOSetting;
  */
 public class CustomWriter extends ChemObjectIO implements IChemObjectWriter {
 
+    @Override
     public void setWriter(Writer writer) throws CDKException {}
 
+    @Override
     public void setWriter(OutputStream writer) throws CDKException {}
 
+    @Override
     public void write(IChemObject object) throws CDKException {}
 
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         return false;
     }
 
+    @Override
     public void addChemObjectIOListener(IChemObjectIOListener listener) {}
 
+    @Override
     public void close() throws IOException {}
 
+    @Override
     public IResourceFormat getFormat() {
         return null;
     }
 
+    @Override
     public IOSetting[] getIOSettings() {
         return null;
     }
 
+    @Override
     public void removeChemObjectIOListener(IChemObjectIOListener listener) {}
 
 }

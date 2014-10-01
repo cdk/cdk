@@ -39,6 +39,7 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
     protected IChemObjectReader.Mode        mode         = IChemObjectReader.Mode.RELAXED;
     protected IChemObjectReaderErrorHandler errorHandler = null;
 
+    @Override
     public boolean accepts(Class<? extends IChemObject> objectClass) {
         return false; // it's an iterator, idiot.
     }
@@ -48,26 +49,31 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
     /**
      * File IO generally does not support removing of entries.
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void setReaderMode(ISimpleChemObjectReader.Mode mode) {
         this.mode = mode;
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setErrorHandler(IChemObjectReaderErrorHandler handler) {
         this.errorHandler = handler;
     }
 
     /** {@inheritDoc} */
+    @Override
     public void handleError(String message) throws CDKException {
         if (this.errorHandler != null) this.errorHandler.handleError(message);
         if (this.mode == Mode.STRICT) throw new CDKException(message);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void handleError(String message, Exception exception) throws CDKException {
         if (this.errorHandler != null) this.errorHandler.handleError(message, exception);
         if (this.mode == Mode.STRICT) {
@@ -76,12 +82,14 @@ public abstract class DefaultIteratingChemObjectReader<T extends IChemObject> ex
     }
 
     /** {@inheritDoc} */
+    @Override
     public void handleError(String message, int row, int colStart, int colEnd) throws CDKException {
         if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd);
         if (this.mode == Mode.STRICT) throw new CDKException(message);
     }
 
     /** {@inheritDoc} */
+    @Override
     public void handleError(String message, int row, int colStart, int colEnd, Exception exception) throws CDKException {
         if (this.errorHandler != null) this.errorHandler.handleError(message, row, colStart, colEnd, exception);
         if (this.mode == Mode.STRICT) {

@@ -100,10 +100,12 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return PubChemSubstancesXMLFormat.getInstance();
     }
 
+    @Override
     public boolean hasNext() {
         if (!nextAvailableIsKnown) {
             hasNext = false;
@@ -136,6 +138,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
         return hasNext;
     }
 
+    @Override
     public IChemModel next() {
         if (!nextAvailableIsKnown) {
             hasNext();
@@ -148,15 +151,18 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         primarySource.close();
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         primarySource = reader;
         try {
@@ -170,6 +176,7 @@ public class IteratingPCSubstancesXMLReader extends DefaultIteratingChemObjectRe
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream reader) throws CDKException {
         setReader(new InputStreamReader(reader));
     }

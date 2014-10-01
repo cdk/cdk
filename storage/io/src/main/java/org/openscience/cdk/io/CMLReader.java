@@ -102,6 +102,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
@@ -111,11 +112,13 @@ public class CMLReader extends DefaultChemObjectReader {
      * Use setReader(InputStream) instead.
      */
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         throw new CDKException("Invalid method call; use SetReader(InputStream) instead.");
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         this.input = input;
     }
@@ -168,6 +171,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -185,6 +189,7 @@ public class CMLReader extends DefaultChemObjectReader {
      *
      * @return the content in a ChemFile object
      */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemFile) {
             return (T) readChemFile((IChemFile) object);
@@ -241,6 +246,7 @@ public class CMLReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         if (input != null) input.close();
     }

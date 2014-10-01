@@ -99,24 +99,28 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return MoSSOutputFormat.getInstance();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     /** {@inheritDoc} */
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> testClass) {
         if (IAtomContainerSet.class.equals(testClass)) return true;
         if (IChemFile.class.equals(testClass)) return true;
@@ -136,6 +140,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
      * @param  object an {@link IAtomContainerSet} into which the data is stored.
      * @return        the content in a {@link IAtomContainerSet} object
      */
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IAtomContainerSet) {
             IAtomContainerSet cf = (IAtomContainerSet) object;
@@ -195,6 +200,7 @@ public class MoSSOutputReader extends DefaultChemObjectReader {
 
     /** {@inheritDoc} */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

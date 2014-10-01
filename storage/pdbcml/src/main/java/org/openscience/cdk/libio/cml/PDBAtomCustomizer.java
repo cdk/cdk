@@ -52,6 +52,7 @@ import org.openscience.cdk.interfaces.IBond;
 public class PDBAtomCustomizer implements ICMLCustomizer {
 
     @TestMethod("testPDBAtomCustomization")
+    @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         if (!(nodeToAdd instanceof Element)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
@@ -154,10 +155,12 @@ public class PDBAtomCustomizer implements ICMLCustomizer {
         return string != null && string.trim().length() > 0;
     }
 
+    @Override
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }
 
+    @Override
     public void customize(IBond bond, Object nodeToAdd) throws Exception {
         // nothing to do at this moment
     }

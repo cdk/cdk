@@ -99,11 +99,13 @@ public class PDBConvention extends CMLCoreModule {
         super(conv);
     }
 
+    @Override
     public void endDocument() {
         storeData();
         super.endDocument();
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = raw;
         isELSYM = false;
@@ -196,6 +198,7 @@ public class PDBConvention extends CMLCoreModule {
 
     }
 
+    @Override
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         String name = raw;
 
@@ -225,6 +228,7 @@ public class PDBConvention extends CMLCoreModule {
 
     }
 
+    @Override
     public void characterData(CMLStack xpath, char[] ch, int start, int length) {
 
         String s = new String(ch, start, length).trim();
@@ -291,6 +295,7 @@ public class PDBConvention extends CMLCoreModule {
         }
     }
 
+    @Override
     protected void storeData() {
         if (inchi != null) {
             //            cdo.setObjectProperty("Molecule", "inchi", inchi);
@@ -300,6 +305,7 @@ public class PDBConvention extends CMLCoreModule {
         storeBondData();
     }
 
+    @Override
     protected void storeAtomData() {
         logger.debug("No atoms: ", atomCounter);
         if (atomCounter == 0) {

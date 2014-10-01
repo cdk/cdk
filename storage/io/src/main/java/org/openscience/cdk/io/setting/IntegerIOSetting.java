@@ -38,6 +38,7 @@ public class IntegerIOSetting extends IOSetting {
      * Sets the setting for a certain question. The setting
      * is a boolean, and it accepts only "true" and "false".
      */
+    @Override
     public void setSetting(String setting) throws CDKException {
         try {
             Integer.parseInt(setting);

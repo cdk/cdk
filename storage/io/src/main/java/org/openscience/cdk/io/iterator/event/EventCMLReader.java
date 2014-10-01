@@ -82,10 +82,12 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return CMLFormat.getInstance();
     }
 
+    @Override
     public IAtomContainer getAtomContainer() {
         return cdo.getAtomContainer();
     }
@@ -178,6 +180,7 @@ public class EventCMLReader extends DefaultEventChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

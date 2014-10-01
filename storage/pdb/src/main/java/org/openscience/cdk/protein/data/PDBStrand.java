@@ -63,6 +63,7 @@ public class PDBStrand extends Strand {
      * @param oAtom  The atom to add
      * @param oMonomer  The monomer the atom belongs to
      */
+    @Override
     public void addAtom(IAtom oAtom, IMonomer oMonomer) {
         super.addAtom(oAtom, oMonomer);
         if (!sequentialListOfMonomers.contains(oMonomer.getMonomerName()))
@@ -79,6 +80,7 @@ public class PDBStrand extends Strand {
         return new ArrayList<String>(sequentialListOfMonomers);
     }
 
+    @Override
     public String toString() {
         StringBuilder stringContent = new StringBuilder();
         stringContent.append("PDBPolymer(");

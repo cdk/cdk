@@ -43,31 +43,37 @@ public class GaussianInputFormat extends AbstractResourceFormat implements IChem
     }
 
     @TestMethod("testGetFormatName")
+    @Override
     public String getFormatName() {
         return "Gaussian Input";
     }
 
     @TestMethod("testGetMIMEType")
+    @Override
     public String getMIMEType() {
         return "chemical/x-gaussian-input";
     }
 
     @TestMethod("testGetPreferredNameExtension")
+    @Override
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     @TestMethod("testGetNameExtensions")
+    @Override
     public String[] getNameExtensions() {
         return new String[]{"gau", "com"};
     }
 
     @TestMethod("testGetReaderClassName")
+    @Override
     public String getReaderClassName() {
         return null;
     }
 
     @TestMethod("testGetWriterClassName")
+    @Override
     public String getWriterClassName() {
         return "org.openscience.cdk.io.program.GaussianInputWriter";
     }

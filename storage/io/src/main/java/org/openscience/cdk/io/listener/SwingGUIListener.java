@@ -61,6 +61,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
         this.level = level;
     }
 
+    @Override
     public void frameRead(ReaderEvent event) {}
 
     /**
@@ -70,6 +71,7 @@ public class SwingGUIListener implements IReaderListener, IWriterListener {
      * <p>Note: if the input reader is <code>null</code>, then the method
      * does not wait for an answer, and takes the default.
      */
+    @Override
     public void processIOSettingQuestion(IOSetting setting) {
         // post the question
         if (setting.getLevel().ordinal() <= this.level.ordinal()) {

@@ -165,6 +165,7 @@ public class CMLCoreModule implements ICMLModule {
         inherit(conv);
     }
 
+    @Override
     public void inherit(ICMLModule convention) {
         if (convention instanceof CMLCoreModule) {
             CMLCoreModule conv = (CMLCoreModule) convention;
@@ -232,6 +233,7 @@ public class CMLCoreModule implements ICMLModule {
         }
     }
 
+    @Override
     public IChemFile returnChemFile() {
         return currentChemFile;
     }
@@ -324,6 +326,7 @@ public class CMLCoreModule implements ICMLModule {
         //        cAxis = new Vector3d();
     }
 
+    @Override
     public void startDocument() {
         logger.info("Start XML Doc");
         // cdo.startDocument();
@@ -339,6 +342,7 @@ public class CMLCoreModule implements ICMLModule {
         curRef = 0;
     }
 
+    @Override
     public void endDocument() {
         //        cdo.endDocument();
         if (currentReactionSet != null && currentReactionSet.getReactionCount() == 0 && currentReaction != null) {
@@ -366,6 +370,7 @@ public class CMLCoreModule implements ICMLModule {
         logger.info("End XML Doc");
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         String name = local;
         logger.debug("StartElement");
@@ -688,6 +693,7 @@ public class CMLCoreModule implements ICMLModule {
         }
     }
 
+    @Override
     public void endElement(CMLStack xpath, String uri, String name, String raw) {
         logger.debug("EndElement: ", name);
 
@@ -1184,6 +1190,7 @@ public class CMLCoreModule implements ICMLModule {
         elementTitle = "";
     }
 
+    @Override
     public void characterData(CMLStack xpath, char[] ch, int start, int length) {
         currentChars = currentChars + new String(ch, start, length);
         logger.debug("CD: ", currentChars);

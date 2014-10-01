@@ -68,6 +68,7 @@ public interface IChemObjectIO extends Closeable {
      * @throws throws an {@link IOException} when the wrapper IO class cannot be closed.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException;
 
     /**

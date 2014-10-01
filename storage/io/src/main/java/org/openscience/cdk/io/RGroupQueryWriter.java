@@ -95,6 +95,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
      */
     @SuppressWarnings("unchecked")
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (Class<?> anInterface : interfaces) {
@@ -109,6 +110,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.close();
     }
@@ -140,6 +142,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
      * Returns output format.
      */
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return RGroupQueryFormat.getInstance();
     }
@@ -147,6 +150,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
     /**
      * Sets the writer to given output stream.
      */
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -154,6 +158,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
     /**
      * Sets the writer.
      */
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -167,6 +172,7 @@ public class RGroupQueryWriter extends DefaultChemObjectWriter {
      * @throws CDKException
      * @throws IOException
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (!(object instanceof IRGroupQuery)) {
             throw new CDKException("Only IRGroupQuery input is accepted.");

@@ -87,21 +87,25 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return Gaussian03Format.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader reader) throws CDKException {
         this.input = new BufferedReader(input);
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -111,6 +115,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
         return false;
     }
 
+    @Override
     public <T extends IChemObject> T read(T object) throws CDKException {
         if (object instanceof IChemSequence) {
             return (T) readChemSequence((IChemSequence) object);
@@ -122,6 +127,7 @@ public class Gaussian03Reader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         input.close();
     }

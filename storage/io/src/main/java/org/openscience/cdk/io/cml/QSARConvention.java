@@ -63,6 +63,7 @@ public class QSARConvention extends CMLCoreModule {
         super(conv);
     }
 
+    @Override
     public void startElement(CMLStack xpath, String uri, String local, String raw, Attributes atts) {
         //        <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
         //            convention="qsar:DescriptorValue">
@@ -111,6 +112,7 @@ public class QSARConvention extends CMLCoreModule {
         }
     }
 
+    @Override
     public void endElement(CMLStack xpath, String uri, String local, String raw) {
         if (xpath.endsWith("molecule", "propertyList", "property")) {
             //    		cdo.endObject("MolecularDescriptor");

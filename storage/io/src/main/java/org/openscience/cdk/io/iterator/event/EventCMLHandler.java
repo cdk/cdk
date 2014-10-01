@@ -93,6 +93,7 @@ public class EventCMLHandler extends CMLHandler {
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
     */
+    @Override
     public void startDocument() {
         logger.info("New CDO Object");
     }
@@ -101,6 +102,7 @@ public class EventCMLHandler extends CMLHandler {
     * Procedure required by the CDOInterface. This function is only
     * supposed to be called by the JCFL library
     */
+    @Override
     public void endDocument() {
         logger.debug("Closing document");
         logger.info("End CDO Object");

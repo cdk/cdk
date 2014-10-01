@@ -151,11 +151,13 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return PDBFormat.getInstance();
     }
 
     @TestMethod("testSetReader_Reader")
+    @Override
     public void setReader(Reader input) throws CDKException {
         if (input instanceof BufferedReader) {
             this._oInput = (BufferedReader) input;
@@ -165,11 +167,13 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testSetReader_InputStream")
+    @Override
     public void setReader(InputStream input) throws CDKException {
         setReader(new InputStreamReader(input));
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         Class<?>[] interfaces = classObject.getInterfaces();
         for (int i = 0; i < interfaces.length; i++) {
@@ -193,6 +197,7 @@ public class PDBReader extends DefaultChemObjectReader {
      * @exception   CDKException
      *
      */
+    @Override
     public <T extends IChemObject> T read(T oObj) throws CDKException {
         if (oObj instanceof IChemFile) {
             if (pdbFactory == null) {
@@ -733,6 +738,7 @@ public class PDBReader extends DefaultChemObjectReader {
     }
 
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         _oInput.close();
     }

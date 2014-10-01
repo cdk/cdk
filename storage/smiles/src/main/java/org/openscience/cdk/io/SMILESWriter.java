@@ -88,10 +88,12 @@ public class SMILESWriter extends DefaultChemObjectWriter {
     }
 
     @TestMethod("testGetFormat")
+    @Override
     public IResourceFormat getFormat() {
         return SMILESFormat.getInstance();
     }
 
+    @Override
     public void setWriter(Writer out) throws CDKException {
         if (out instanceof BufferedWriter) {
             writer = (BufferedWriter) out;
@@ -100,6 +102,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
         }
     }
 
+    @Override
     public void setWriter(OutputStream output) throws CDKException {
         setWriter(new OutputStreamWriter(output));
     }
@@ -117,12 +120,14 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      * Flushes the output and closes this object.
      */
     @TestMethod("testClose")
+    @Override
     public void close() throws IOException {
         writer.flush();
         writer.close();
     }
 
     @TestMethod("testAccepts")
+    @Override
     public boolean accepts(Class<? extends IChemObject> classObject) {
         if (IAtomContainer.class.equals(classObject)) return true;
         if (IAtomContainerSet.class.equals(classObject)) return true;
@@ -141,6 +146,7 @@ public class SMILESWriter extends DefaultChemObjectWriter {
      *
      * @param   object  IChemObject of which the data is outputted.
      */
+    @Override
     public void write(IChemObject object) throws CDKException {
         if (object instanceof IAtomContainerSet) {
             writeAtomContainerSet((IAtomContainerSet) object);

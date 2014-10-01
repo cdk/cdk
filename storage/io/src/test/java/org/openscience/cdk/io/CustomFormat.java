@@ -32,38 +32,47 @@ import org.openscience.cdk.io.formats.IChemFormat;
  */
 public class CustomFormat implements IChemFormat {
 
+    @Override
     public String getReaderClassName() {
         return null;
     }
 
+    @Override
     public int getRequiredDataFeatures() {
         return 0;
     }
 
+    @Override
     public int getSupportedDataFeatures() {
         return 0;
     }
 
+    @Override
     public String getWriterClassName() {
         return "org.openscience.cdk.io.CustomWriter";
     }
 
+    @Override
     public String getFormatName() {
         return null;
     }
 
+    @Override
     public String getMIMEType() {
         return null;
     }
 
+    @Override
     public String[] getNameExtensions() {
         return null;
     }
 
+    @Override
     public String getPreferredNameExtension() {
         return null;
     }
 
+    @Override
     public boolean isXMLBased() {
         return false;
     }

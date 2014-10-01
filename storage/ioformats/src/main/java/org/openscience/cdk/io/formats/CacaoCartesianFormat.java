@@ -45,46 +45,55 @@ public class CacaoCartesianFormat extends AbstractResourceFormat implements IChe
     }
 
     @TestMethod("testGetFormatName")
+    @Override
     public String getFormatName() {
         return "Cacao Cartesian";
     }
 
     @TestMethod("testGetMIMEType")
+    @Override
     public String getMIMEType() {
         return null;
     }
 
     @TestMethod("testGetPreferredNameExtension")
+    @Override
     public String getPreferredNameExtension() {
         return getNameExtensions()[0];
     }
 
     @TestMethod("testGetNameExtensions")
+    @Override
     public String[] getNameExtensions() {
         return new String[]{"caccrt"};
     }
 
     @TestMethod("testGetReaderClassName")
+    @Override
     public String getReaderClassName() {
         return null;
     }
 
     @TestMethod("testGetWriterClassName")
+    @Override
     public String getWriterClassName() {
         return null;
     }
 
     @TestMethod("testIsXMLBased")
+    @Override
     public boolean isXMLBased() {
         return false;
     }
 
     @TestMethod("testGetSupportedDataFeatures")
+    @Override
     public int getSupportedDataFeatures() {
         return DataFeatures.NONE;
     }
 
     @TestMethod("testGetRequiredDataFeatures")
+    @Override
     public int getRequiredDataFeatures() {
         return DataFeatures.NONE;
     }
