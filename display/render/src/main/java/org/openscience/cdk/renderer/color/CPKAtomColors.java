@@ -18,13 +18,13 @@
  */
 package org.openscience.cdk.renderer.color;
 
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
-
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Colors atoms using CPK color scheme {@cdk.cite BER2001}.

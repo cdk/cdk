@@ -22,14 +22,17 @@
  */
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
+
+import org.openscience.cdk.AtomContainer;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.AtomContainer;
-import static org.junit.Assert.*;
 
 /**
  * @cdk.module test-smsd

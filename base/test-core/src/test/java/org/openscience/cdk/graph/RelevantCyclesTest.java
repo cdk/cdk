@@ -23,15 +23,15 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
-
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.openscience.cdk.graph.InitialCyclesTest.anthracene;
 import static org.openscience.cdk.graph.InitialCyclesTest.bicyclo;
 import static org.openscience.cdk.graph.InitialCyclesTest.cyclophane_even;
 import static org.openscience.cdk.graph.InitialCyclesTest.naphthalene;
 import static org.openscience.cdk.graph.InitialCyclesTest.norbornane;
+
+import org.junit.Test;
 
 /**
  * @author John May

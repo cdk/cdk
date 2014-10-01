@@ -22,18 +22,20 @@
  */
 package org.openscience.cdk.smsd.interfaces;
 
-import org.openscience.cdk.smsd.tools.MolHandler;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 import org.openscience.cdk.DefaultChemObjectBuilder;
 import org.openscience.cdk.exception.InvalidSmilesException;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.smiles.SmilesParser;
 import org.openscience.cdk.smsd.algorithm.vflib.VFlibSubStructureHandler;
-import static org.junit.Assert.*;
+import org.openscience.cdk.smsd.tools.MolHandler;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

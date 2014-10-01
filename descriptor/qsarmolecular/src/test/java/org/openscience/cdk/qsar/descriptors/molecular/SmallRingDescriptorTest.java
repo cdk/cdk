@@ -28,18 +28,27 @@
 
 package org.openscience.cdk.qsar.descriptors.molecular;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.io.MDLV2000Reader;
+import org.openscience.cdk.io.MDLV2000Writer;
+import org.openscience.cdk.qsar.DescriptorValue;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.openscience.cdk.*;
-import org.openscience.cdk.qsar.*;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.io.*;
-import org.openscience.cdk.qsar.result.*;
-import org.openscience.cdk.tools.*;
-
-import java.util.*;
-import java.util.zip.*;
-import java.io.*;
 
 /**
  * Test for small rings descriptor.

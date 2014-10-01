@@ -21,9 +21,10 @@
  */
 package org.openscience.cdk.smsd.helper;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Unit testing for the {@link LabelContainer} class.

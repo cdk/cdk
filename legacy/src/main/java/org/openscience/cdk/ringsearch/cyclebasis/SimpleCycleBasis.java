@@ -25,16 +25,28 @@
 
 package org.openscience.cdk.ringsearch.cyclebasis;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import org.openscience.cdk.graph.BFSShortestPath;
+import org.openscience.cdk.graph.MinimalPathIterator;
+
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.ConnectivityInspector;
 import org._3pq.jgrapht.graph.SimpleGraph;
 import org._3pq.jgrapht.graph.Subgraph;
-import org.openscience.cdk.graph.BFSShortestPath;
-import org.openscience.cdk.graph.MinimalPathIterator;
-
-import java.util.*;
 
 /**
  * Auxiliary class for <code>CycleBasis</code>.

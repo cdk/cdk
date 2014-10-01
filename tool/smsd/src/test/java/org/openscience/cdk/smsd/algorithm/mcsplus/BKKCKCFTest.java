@@ -23,13 +23,15 @@
 
 package org.openscience.cdk.smsd.algorithm.mcsplus;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * @cdk.module test-smsd

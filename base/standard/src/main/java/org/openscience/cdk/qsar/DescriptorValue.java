@@ -22,7 +22,12 @@ import java.io.Serializable;
 
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
-import org.openscience.cdk.qsar.result.*;
+import org.openscience.cdk.qsar.result.BooleanResult;
+import org.openscience.cdk.qsar.result.DoubleArrayResult;
+import org.openscience.cdk.qsar.result.DoubleResult;
+import org.openscience.cdk.qsar.result.IDescriptorResult;
+import org.openscience.cdk.qsar.result.IntegerArrayResult;
+import org.openscience.cdk.qsar.result.IntegerResult;
 
 /**
  * Class that is used to store descriptor values as IChemObject properties.

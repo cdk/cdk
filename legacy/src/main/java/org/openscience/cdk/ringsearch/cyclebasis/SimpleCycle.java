@@ -22,12 +22,18 @@
  */
 package org.openscience.cdk.ringsearch.cyclebasis;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.openscience.cdk.annotations.TestClass;
+
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.graph.UndirectedSubgraph;
-import org.openscience.cdk.annotations.TestClass;
-
-import java.util.*;
 
 /**
  * A cycle in a graph G is a subgraph in which every vertex has even degree.

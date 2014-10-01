@@ -22,17 +22,19 @@
  */
 package org.openscience.cdk.smsd.algorithm.single;
 
+import static org.junit.Assert.assertNotNull;
+
+import org.openscience.cdk.Atom;
+import org.openscience.cdk.AtomContainer;
+import org.openscience.cdk.exception.CDKException;
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openscience.cdk.Atom;
-import org.openscience.cdk.AtomContainer;
-import org.openscience.cdk.exception.CDKException;
-import org.openscience.cdk.interfaces.IAtom;
-import static org.junit.Assert.*;
-import org.openscience.cdk.interfaces.IAtomContainer;
 
 /**
  * @author Syed Asad Rahman <asad@ebi.ac.uk>

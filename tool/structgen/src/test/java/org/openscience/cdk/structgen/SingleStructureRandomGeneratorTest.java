@@ -19,15 +19,16 @@
 
 package org.openscience.cdk.structgen;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.vecmath.Vector2d;
+
 import org.openscience.cdk.AtomContainer;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.layout.StructureDiagramGenerator;
 import org.openscience.cdk.templates.MoleculeFactory;
 import org.openscience.cdk.tools.manipulator.MolecularFormulaManipulator;
-
-import javax.swing.*;
-import javax.vecmath.Vector2d;
-import java.awt.event.ActionEvent;
 
 /**
  * @cdk.module test-structgen

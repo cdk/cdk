@@ -23,18 +23,22 @@
  */
 package org.openscience.cdk.graph;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.openscience.cdk.graph.BitMatrixTest.toBitSet;
 
 import java.util.Arrays;
 import java.util.BitSet;
 
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-import static org.openscience.cdk.graph.BitMatrixTest.toBitSet;
-import static org.openscience.cdk.graph.InitialCycles.Cycle;
+import org.openscience.cdk.graph.InitialCycles.Cycle;
+
+import org.junit.Test;
 
 /**
  * @author John May

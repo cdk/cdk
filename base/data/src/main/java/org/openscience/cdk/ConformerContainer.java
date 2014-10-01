@@ -18,13 +18,18 @@
  */
 package org.openscience.cdk;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import javax.vecmath.Point3d;
+
 import org.openscience.cdk.annotations.TestClass;
 import org.openscience.cdk.annotations.TestMethod;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
-
-import javax.vecmath.Point3d;
-import java.util.*;
 
 /**
  * A memory-efficient data structure to store conformers for a single molecule.

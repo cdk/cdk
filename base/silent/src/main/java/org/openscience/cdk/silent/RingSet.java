@@ -19,9 +19,13 @@
 
 package org.openscience.cdk.silent;
 
-import org.openscience.cdk.interfaces.*;
-
 import java.io.Serializable;
+
+import org.openscience.cdk.interfaces.IAtom;
+import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
+import org.openscience.cdk.interfaces.IRing;
+import org.openscience.cdk.interfaces.IRingSet;
 
 /**
  * Maintains a set of Ring objects.
