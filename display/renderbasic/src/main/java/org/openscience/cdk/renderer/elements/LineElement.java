@@ -68,6 +68,7 @@ public class LineElement implements IRenderingElement {
 
     /** {@inheritDoc} **/
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor visitor) {
         visitor.visit(this);
     }

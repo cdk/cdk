@@ -164,6 +164,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implemen
      * @param reactionSet
      * @param screen
      */
+    @Override
     public void setup(IReactionSet reactionSet, Rectangle screen) {
         this.setScale(reactionSet);
         Rectangle2D bounds = BoundsCalculator.calculateBounds(reactionSet);
@@ -179,6 +180,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implemen
      *
      * @param reactionSet
      */
+    @Override
     public void setScale(IReactionSet reactionSet) {
         double bondLength = AverageBondLengthCalculator.calculateAverageBondLength(reactionSet);
         double scale = this.calculateScaleForBondLength(bondLength);
@@ -215,6 +217,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implemen
      * @param resetCenter
      *     if true, set the draw center to be the center of bounds
      */
+    @Override
     public void paint(IReactionSet reactionSet, IDrawVisitor drawVisitor, Rectangle2D bounds, boolean resetCenter) {
 
         // total up the bounding boxes
@@ -246,6 +249,7 @@ public class ReactionSetRenderer extends AbstractRenderer<IReactionSet> implemen
      * @return returns the scale that causes the drawn bond lengths in pixels to match
      *         the given model bond length
      */
+    @Override
     public double calculateScaleForBondLength(double modelBondLength) {
         if (Double.isNaN(modelBondLength) || modelBondLength == 0) {
             return rendererModel.getParameter(Scale.class).getDefault();

@@ -50,6 +50,7 @@ public class AtomMassGenerator extends BasicAtomGenerator {
      * @return true, when mass number information should be depicted
      */
     @TestMethod("showCarbon_ShowEndCarbonsTest")
+    @Override
     public boolean showCarbon(IAtom atom, IAtomContainer container, RendererModel model) {
 
         Integer massNumber = atom.getMassNumber();

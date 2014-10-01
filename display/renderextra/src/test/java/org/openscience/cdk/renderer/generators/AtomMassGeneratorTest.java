@@ -44,6 +44,7 @@ public class AtomMassGeneratorTest extends BasicAtomGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         model.registerParameters(new BasicSceneGenerator());

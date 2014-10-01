@@ -83,6 +83,7 @@ public class RendererModel implements Serializable, Cloneable {
     public static class SelectionColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
+        @Override
         public Color getDefault() {
             return new Color(0x49DFFF);
         }
@@ -94,6 +95,7 @@ public class RendererModel implements Serializable, Cloneable {
     public static class ExternalHighlightColor extends AbstractGeneratorParameter<Color> {
 
         /** {@inheritDoc} */
+        @Override
         public Color getDefault() {
             return Color.gray;
         }
@@ -107,6 +109,7 @@ public class RendererModel implements Serializable, Cloneable {
     public static class ColorHash extends AbstractGeneratorParameter<Map<IChemObject, Color>> {
 
         /** {@inheritDoc} */
+        @Override
         public Map<IChemObject, Color> getDefault() {
             return new Hashtable<IChemObject, Color>();
         }

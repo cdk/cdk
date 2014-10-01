@@ -68,6 +68,7 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setFontName(String fontName) {
         if (this.fontName.equals(fontName)) {
             return;
@@ -78,6 +79,7 @@ public abstract class AbstractFontManager implements IFontManager {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setFontStyle(IFontManager.FontStyle fontStyle) {
         if (this.fontStyle == fontStyle) {
             return;

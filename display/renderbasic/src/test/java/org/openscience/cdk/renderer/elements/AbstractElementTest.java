@@ -41,10 +41,12 @@ public abstract class AbstractElementTest {
 
         boolean isVisited = false;
 
+        @Override
         public void visit(IRenderingElement element) {
             isVisited = true;
         }
 
+        @Override
         public void setTransform(AffineTransform transform) {
             // TODO Auto-generated method stub
         }

@@ -42,21 +42,25 @@ public abstract class AbstractSelection implements IChemObjectSelection {
     public static IChemObjectSelection EMPTY_SELECTION = new AbstractSelection() {
 
                                                            /** {@inheritDoc} */
+                                                           @Override
                                                            public IAtomContainer getConnectedAtomContainer() {
                                                                return null;
                                                            }
 
                                                            /** {@inheritDoc} */
+                                                           @Override
                                                            public boolean isFilled() {
                                                                return false;
                                                            }
 
                                                            /** {@inheritDoc} */
+                                                           @Override
                                                            public boolean contains(IChemObject obj) {
                                                                return false;
                                                            }
 
                                                            /** {@inheritDoc} */
+                                                           @Override
                                                            public <E extends IChemObject> Collection<E> elements(
                                                                    Class<E> clazz) {
                                                                return Collections.emptySet();
@@ -65,6 +69,7 @@ public abstract class AbstractSelection implements IChemObjectSelection {
                                                        };
 
     /** {@inheritDoc} */
+    @Override
     public void select(IChemModel chemModel) {
         // TODO Auto-generated method stub
 

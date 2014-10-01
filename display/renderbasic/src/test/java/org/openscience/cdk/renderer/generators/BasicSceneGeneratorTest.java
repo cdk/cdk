@@ -49,6 +49,7 @@ public class BasicSceneGeneratorTest extends AbstractGeneratorTest {
     }
 
     @Before
+    @Override
     public void setup() {
         super.setup();
         this.generator = new BasicSceneGenerator();

@@ -52,6 +52,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default arrow head width.
          * @return 10.0 */
+        @Override
         public Double getDefault() {
             return 10.0;
         }
@@ -66,6 +67,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -80,6 +82,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -94,6 +97,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -110,6 +114,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 1.0 */
+        @Override
         public Double getDefault() {
             return 1.0;
         }
@@ -124,6 +129,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Color}.WHITE */
+        @Override
         public Color getDefault() {
             return Color.WHITE;
         }
@@ -136,6 +142,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 40.0 */
+        @Override
         public Double getDefault() {
             return 40.0;
         }
@@ -152,6 +159,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Color}.BLACK*/
+        @Override
         public Color getDefault() {
             return Color.BLACK;
         }
@@ -168,6 +176,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link Boolean}.TRUE */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -182,6 +191,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 10.0 */
+        @Override
         public Double getDefault() {
             return 10.0;
         }
@@ -194,6 +204,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return {@link FontStyle}.NORMAL */
+        @Override
         public FontStyle getDefault() {
             return FontStyle.NORMAL;
         }
@@ -208,6 +219,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return Arial */
+        @Override
         public String getDefault() {
             return "Arial";
         }
@@ -226,6 +238,7 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
 
         /** Returns the default value.
          * @return 1.0 */
+        @Override
         public Double getDefault() {
             return 1.0;
         }
@@ -240,12 +253,14 @@ public class BasicSceneGenerator implements IGenerator<IAtomContainer> {
     public BasicSceneGenerator() {}
 
     /** {@inheritDoc} */
+    @Override
     public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
         return new ElementGroup();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public List<IGeneratorParameter<?>> getParameters() {
         return Arrays.asList(new IGeneratorParameter<?>[]{backgroundColor, foregroundColor, margin, useAntiAliasing,
                 fontStyle, fontName, zoomFactor, scale, bondLength, fitToScreen, showMoleculeTitle, showTooltip,

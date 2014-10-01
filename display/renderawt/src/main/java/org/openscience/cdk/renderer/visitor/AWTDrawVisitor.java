@@ -467,24 +467,29 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
                 }
             }
 
+            @Override
             public void next() {
                 index++;
             }
 
+            @Override
             public boolean isDone() {
                 return index >= path.elements.size();
             }
 
+            @Override
             public int getWindingRule() {
                 return path.winding;
             }
 
+            @Override
             public int currentSegment(double[] coords) {
                 path.elements.get(index).points(coords);
                 transform.transform(coords, 0, coords, 0, 3);
                 return type(path.elements.get(index).type);
             }
 
+            @Override
             public int currentSegment(float[] coords) {
 
                 float[] src = path.elements.get(index).points();
@@ -602,6 +607,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     /** {@inheritDoc} */
     @TestMethod("testVisit")
+    @Override
     public void visit(IRenderingElement element) {
         Color savedColor = this.graphics.getColor();
         if (element instanceof ElementGroup)
@@ -640,12 +646,14 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
      * @param fontManager the {@link IFontManager} to be used
      */
     @TestMethod("testSetFontManager")
+    @Override
     public void setFontManager(IFontManager fontManager) {
         this.fontManager = (AWTFontManager) fontManager;
     }
 
     /** {@inheritDoc} */
     @TestMethod("testSetRendererModel")
+    @Override
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
         if (rendererModel.hasParameter(UseAntiAliasing.class)) {

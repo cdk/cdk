@@ -39,10 +39,13 @@ public class AbstractAWTDrawVisitorTest {
 
     private final class NestedAWTDrawVisitor extends AbstractAWTDrawVisitor {
 
+        @Override
         public void visit(IRenderingElement element) {}
 
+        @Override
         public void setRendererModel(RendererModel rendererModel) {}
 
+        @Override
         public void setFontManager(IFontManager fontManager) {}
     }
 

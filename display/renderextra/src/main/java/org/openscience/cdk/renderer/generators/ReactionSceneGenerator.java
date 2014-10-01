@@ -43,6 +43,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     public static class ShowReactionBoxes extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -54,6 +55,7 @@ public class ReactionSceneGenerator implements IGenerator<IReaction> {
     public static class ArrowHeadWidth extends AbstractGeneratorParameter<Double> {
 
         /** {@inheritDoc} */
+        @Override
         public Double getDefault() {
             return 10.0;
         }

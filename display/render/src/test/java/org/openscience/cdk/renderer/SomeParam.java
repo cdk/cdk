@@ -32,14 +32,17 @@ public class SomeParam extends AbstractGeneratorParameter<Boolean> {
 
     Boolean value = Boolean.FALSE;
 
+    @Override
     public Boolean getDefault() {
         return Boolean.FALSE;
     }
 
+    @Override
     public Boolean getValue() {
         return value;
     }
 
+    @Override
     public void setValue(Boolean value) {
         this.value = value;
     }

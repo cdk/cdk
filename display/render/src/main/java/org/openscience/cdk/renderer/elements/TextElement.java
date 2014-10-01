@@ -63,6 +63,7 @@ public class TextElement implements IRenderingElement {
 
     /** {@inheritDoc} */
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor visotor) {
         visotor.visit(this);
     }

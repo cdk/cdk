@@ -59,6 +59,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -68,6 +69,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -84,6 +86,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -93,6 +96,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -110,6 +114,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -119,6 +124,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -139,6 +145,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -148,6 +155,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -166,6 +174,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -175,6 +184,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -191,6 +201,7 @@ public class RendererModelTest {
 
             IGeneratorParameter<Boolean> someParam = new SomeParam();
 
+            @Override
             public List<IGeneratorParameter<?>> getParameters() {
                 return new ArrayList<IGeneratorParameter<?>>() {
 
@@ -200,6 +211,7 @@ public class RendererModelTest {
                 };
             }
 
+            @Override
             public IRenderingElement generate(IChemObject object, RendererModel model) {
                 // TODO Auto-generated method stub
                 return null;
@@ -300,20 +312,25 @@ public class RendererModelTest {
 
     class MockSelection implements IChemObjectSelection {
 
+        @Override
         public void select(IChemModel chemModel) {}
 
+        @Override
         public IAtomContainer getConnectedAtomContainer() {
             return null;
         }
 
+        @Override
         public boolean isFilled() {
             return false;
         }
 
+        @Override
         public boolean contains(IChemObject obj) {
             return false;
         }
 
+        @Override
         public <E extends IChemObject> Collection<E> elements(Class<E> clazz) {
             return null;
         }
@@ -335,6 +352,7 @@ public class RendererModelTest {
 
         boolean isChanged = false;
 
+        @Override
         public void stateChanged(EventObject event) {
             isChanged = true;
         }

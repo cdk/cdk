@@ -60,6 +60,7 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IRenderingElement generate(IAtomContainer ac, RendererModel model) {
         ElementGroup diagram = new ElementGroup();
         diagram.add(this.sceneGenerator.generate(ac, model));
@@ -70,6 +71,7 @@ public class BasicGenerator implements IGenerator<IAtomContainer> {
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public List<IGeneratorParameter<?>> getParameters() {
         ArrayList<IGeneratorParameter<?>> list = new ArrayList<IGeneratorParameter<?>>();
         list.addAll(this.atomGenerator.getParameters());

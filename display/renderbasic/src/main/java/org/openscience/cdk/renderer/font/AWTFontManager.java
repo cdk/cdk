@@ -53,6 +53,7 @@ public class AWTFontManager extends AbstractFontManager {
     }
 
     /** {@inheritDoc} */
+    @Override
     protected void makeFonts() {
         int size = this.minFontSize;
         double scale = 0.5;
@@ -71,6 +72,7 @@ public class AWTFontManager extends AbstractFontManager {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void setFontForZoom(double zoom) {
         int size = this.getFontSizeForZoom(zoom);
         if (size != -1) {

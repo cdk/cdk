@@ -137,6 +137,7 @@ public class TextGroupElement extends TextElement {
      * {@inheritDoc}
      */
     @TestMethod("testAccept")
+    @Override
     public void accept(IRenderingVisitor v) {
         v.visit(this);
     }

@@ -54,6 +54,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     public static class ShowImplicitHydrogens extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -66,6 +67,7 @@ public class ExtendedAtomGenerator extends BasicAtomGenerator {
     public static class ShowAtomTypeNames extends AbstractGeneratorParameter<Boolean> {
 
         /** {@inheritDoc} */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }

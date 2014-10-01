@@ -134,6 +134,7 @@ public abstract class AbstractAWTDrawVisitor implements IDrawVisitor {
      * @param transform the new {@link AffineTransform}.
      */
     @TestMethod("testSetAffineTransformation")
+    @Override
     public void setTransform(AffineTransform transform) {
         this.transform = transform;
     }

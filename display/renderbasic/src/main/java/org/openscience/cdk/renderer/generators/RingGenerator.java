@@ -59,6 +59,7 @@ public class RingGenerator extends BasicBondGenerator {
 
         /** Returns the default value.
          * @return {@link Boolean}.TRUE */
+        @Override
         public Boolean getDefault() {
             return Boolean.TRUE;
         }
@@ -73,6 +74,7 @@ public class RingGenerator extends BasicBondGenerator {
 
         /** Returns the default value.
          * @return {@link Boolean}.FALSE */
+        @Override
         public Boolean getDefault() {
             return Boolean.FALSE;
         }
@@ -91,6 +93,7 @@ public class RingGenerator extends BasicBondGenerator {
          *
          * @return the maximum ring size
          */
+        @Override
         public Integer getDefault() {
 
             return 8;
@@ -106,6 +109,7 @@ public class RingGenerator extends BasicBondGenerator {
 
         /** Returns the default value.
          * @return 0.35 */
+        @Override
         public Double getDefault() {
             return 0.35;
         }
@@ -127,6 +131,7 @@ public class RingGenerator extends BasicBondGenerator {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IRenderingElement generateRingElements(IBond bond, IRing ring, RendererModel model) {
         if (ringIsAromatic(ring) && showAromaticity.getValue()
                 && ring.getAtomCount() < maxDrawableAromaticRing.getValue()) {
@@ -182,6 +187,7 @@ public class RingGenerator extends BasicBondGenerator {
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public List<IGeneratorParameter<?>> getParameters() {
         // Get our super class's version of things
         List<IGeneratorParameter<?>> superPars = super.getParameters();
