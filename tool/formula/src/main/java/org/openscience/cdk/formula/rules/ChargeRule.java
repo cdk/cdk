@@ -71,6 +71,7 @@ public class ChargeRule implements IRule {
      *
      * @see                   #getParameters
      */
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 1) throw new CDKException("ChargeRule expects only one parameter");
 
@@ -85,6 +86,7 @@ public class ChargeRule implements IRule {
      * @return The parameters value
      * @see    #setParameters
      */
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the rule validation
         Object[] params = new Object[1];
@@ -99,6 +101,7 @@ public class ChargeRule implements IRule {
      * @return          A double value meaning 1.0 True, 0.0 False
      */
 
+    @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
 

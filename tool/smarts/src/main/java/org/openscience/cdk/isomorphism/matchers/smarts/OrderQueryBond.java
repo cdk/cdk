@@ -52,6 +52,7 @@ public class OrderQueryBond extends SMARTSBond {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
      * .openscience.cdk.interfaces.IBond)
      */
+    @Override
     public boolean matches(IBond bond) {
         if (bond.getFlag(CDKConstants.ISAROMATIC) ^ getFlag(CDKConstants.ISAROMATIC)) return false;
 
@@ -67,6 +68,7 @@ public class OrderQueryBond extends SMARTSBond {
      * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
+    @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append("OrderQueryBond(");

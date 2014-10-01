@@ -82,6 +82,7 @@ public final class RecursiveSmartsAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
 
         if (!((IQueryAtom) query.getAtom(0)).matches(atom)) return false;

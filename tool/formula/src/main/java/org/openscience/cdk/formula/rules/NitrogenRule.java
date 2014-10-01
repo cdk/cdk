@@ -68,6 +68,7 @@ public class NitrogenRule implements IRule {
      *
      * @see                   #getParameters
      */
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params != null) throw new CDKException("NitrogenRule doesn't expect parameters");
 
@@ -79,6 +80,7 @@ public class NitrogenRule implements IRule {
      * @return The parameters value
      * @see    #setParameters
      */
+    @Override
     public Object[] getParameters() {
         return null;
     }
@@ -90,6 +92,7 @@ public class NitrogenRule implements IRule {
      * @return          A double value meaning 1.0 True, 0.0 False
      */
 
+    @Override
     public double validate(IMolecularFormula formula) throws CDKException {
         logger.info("Start validation of ", formula);
 

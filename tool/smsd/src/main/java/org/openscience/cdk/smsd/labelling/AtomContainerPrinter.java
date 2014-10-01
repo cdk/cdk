@@ -34,6 +34,7 @@ public class AtomContainerPrinter {
         /**
          * {@inheritDoc}
          */
+        @Override
         public int compareTo(Edge o) {
             if (first < o.first || (first == o.first && last < o.last)) {
                 return -1;

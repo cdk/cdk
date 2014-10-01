@@ -52,6 +52,7 @@ public abstract class SMARTSAtom extends QueryAtom implements IQueryAtom {
         return inv;
     }
 
+    @Override
     public boolean matches(IAtom atom) {
         return false;
     }

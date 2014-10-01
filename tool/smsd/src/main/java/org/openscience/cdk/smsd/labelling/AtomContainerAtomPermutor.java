@@ -23,6 +23,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
     /**
      * {@inheritDoc}
      */
+    @Override
     public IAtomContainer next() {
         int[] p = super.getNextPermutation();
         return AtomContainerAtomPermutor.permute(p, original);
@@ -92,6 +93,7 @@ public class AtomContainerAtomPermutor extends Permutor implements Iterator<IAto
     /**
      * {@inheritDoc}
      */
+    @Override
     public void remove() {
         // can just increase rank....
     }

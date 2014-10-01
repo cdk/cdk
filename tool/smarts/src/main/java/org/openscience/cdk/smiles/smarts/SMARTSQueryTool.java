@@ -198,6 +198,7 @@ public class SMARTSQueryTool {
     Map<String, QueryAtomContainer>  cache           = new LinkedHashMap<String, QueryAtomContainer>(MAX_ENTRIES + 1,
                                                              .75F, true) {
 
+                                                         @Override
                                                          public boolean removeEldestEntry(Map.Entry eldest) {
                                                              return size() > MAX_ENTRIES;
                                                          }

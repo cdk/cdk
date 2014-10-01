@@ -26,6 +26,7 @@ class ASTNonCHHeavyAtom extends SimpleNode {
     }
 
     /** Accept the visitor. **/
+    @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

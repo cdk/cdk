@@ -102,6 +102,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * @param atomContainer The input molecule.
      */
     @TestMethod("testEF1,testEF2,testEF3,testEF4,testEF5,testEF6,testEF7")
+    @Override
     public void generateFragments(IAtomContainer atomContainer) throws CDKException {
         fragMap.clear();
         run(atomContainer);
@@ -198,6 +199,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * @return a String[] of the fragments.
      */
     @TestMethod("testEF1,testEF2,testEF3,testEF4,testEF5,testEF6,testEF7")
+    @Override
     public String[] getFragments() {
         return (new ArrayList<String>(fragMap.keySet())).toArray(new String[0]);
     }
@@ -208,6 +210,7 @@ public class ExhaustiveFragmenter implements IFragmenter {
      * @return a IAtomContainer[] of the fragments.
      */
     @TestMethod("testEF5,testEF6,testEF7")
+    @Override
     public IAtomContainer[] getFragmentsAsContainers() {
         return (new ArrayList<IAtomContainer>(fragMap.values())).toArray(new IAtomContainer[0]);
     }

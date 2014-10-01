@@ -121,6 +121,7 @@ public class AbstractReactionLabeller {
             /**
              * {@inheritDoc}
              */
+            @Override
             public int compare(IMapping o1, IMapping o2) {
                 IChemObject o10 = o1.getChemObject(0);
                 IChemObject o20 = o2.getChemObject(0);

@@ -54,16 +54,19 @@ public class EdgeBuilder implements IEdge {
     }
 
     /** {@inheritDoc} */
+    @Override
     public INode getSource() {
         return source;
     }
 
     /** {@inheritDoc} */
+    @Override
     public INode getTarget() {
         return target;
     }
 
     /** {@inheritDoc} */
+    @Override
     public VFBondMatcher getBondMatcher() {
         return matcher;
     }

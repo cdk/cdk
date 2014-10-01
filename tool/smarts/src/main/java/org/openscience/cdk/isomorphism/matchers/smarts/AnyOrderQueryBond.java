@@ -53,6 +53,7 @@ public class AnyOrderQueryBond extends SMARTSBond {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
      * .openscience.cdk.interfaces.IBond)
      */
+    @Override
     public boolean matches(IBond bond) {
         return bond != null; // any bond order is fine
     }
@@ -61,6 +62,7 @@ public class AnyOrderQueryBond extends SMARTSBond {
      * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
+    @Override
     public String toString() {
         return "AnyOrderQueryBond()";
     }

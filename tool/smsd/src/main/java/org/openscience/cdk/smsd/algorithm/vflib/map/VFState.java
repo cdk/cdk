@@ -115,6 +115,7 @@ public class VFState implements IState {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void backTrack() {
         if (queryPath.isEmpty() || isGoal()) {
             map.clear();
@@ -130,26 +131,31 @@ public class VFState implements IState {
     }
 
     /** {@inheritDoc} */
+    @Override
     public Map<INode, IAtom> getMap() {
         return new HashMap<INode, IAtom>(map);
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean hasNextCandidate() {
         return !candidates.isEmpty();
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean isDead() {
         return query.countNodes() > target.getAtomCount();
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean isGoal() {
         return map.size() == query.countNodes();
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean isMatchFeasible(Match match) {
         if (map.containsKey(match.getQueryNode()) || map.containsValue(match.getTargetAtom())) {
             return false;
@@ -164,11 +170,13 @@ public class VFState implements IState {
     }
 
     /** {@inheritDoc} */
+    @Override
     public Match nextCandidate() {
         return candidates.remove(candidates.size() - 1);
     }
 
     /** {@inheritDoc} */
+    @Override
     public IState nextState(Match match) {
         return new VFState(this, match);
     }

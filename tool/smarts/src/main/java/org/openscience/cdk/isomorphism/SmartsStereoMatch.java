@@ -110,6 +110,7 @@ public final class SmartsStereoMatch implements Predicate<int[]> {
      * @return the stereo chemistry is value
      */
     @TestMethod("tetrahedral_match,tetrahedral_mismatch")
+    @Override
     public boolean apply(final int[] mapping) {
         for (final int u : queryStereoIndices) {
             switch (queryTypes[u]) {

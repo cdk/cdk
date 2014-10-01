@@ -14,6 +14,7 @@ public class SignatureReactionCanoniser extends AbstractReactionLabeller impleme
     /**
      * {@inheritDoc}
      */
+    @Override
     public IReaction getCanonicalReaction(IReaction reaction) {
         return super.labelReaction(reaction, labeller);
     }

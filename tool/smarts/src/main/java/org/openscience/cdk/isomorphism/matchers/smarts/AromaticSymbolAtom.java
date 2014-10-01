@@ -36,10 +36,12 @@ public class AromaticSymbolAtom extends SMARTSAtom {
         setSymbol(symbol);
     }
 
+    @Override
     public boolean matches(IAtom atom) {
         return atom.getFlag(CDKConstants.ISAROMATIC) && atom.getSymbol().equals(this.getSymbol());
     }
 
+    @Override
     public String toString() {
         return "AromaticSymbolAtom(" + getSymbol() + ")";
     }

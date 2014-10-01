@@ -117,6 +117,7 @@ public class DefaultRGraphAtomMatcher implements AtomMatcher {
 
     /** {@inheritDoc}
      */
+    @Override
     public boolean matches(IAtomContainer targetContainer, IAtom targetAtom) {
         if (qAtom instanceof IQueryAtom) {
             if (!((IQueryAtom) qAtom).matches(targetAtom)) {

@@ -85,16 +85,19 @@ public class VFQueryBuilder implements IQuery {
     }
 
     /** {@inheritDoc} */
+    @Override
     public Iterable<IEdge> edges() {
         return Collections.unmodifiableList(edgesList);
     }
 
     /** {@inheritDoc} */
+    @Override
     public Iterable<INode> nodes() {
         return Collections.unmodifiableList(nodesList);
     }
 
     /** {@inheritDoc} */
+    @Override
     public INode getNode(int index) {
         return nodesList.get(index);
     }
@@ -116,11 +119,13 @@ public class VFQueryBuilder implements IQuery {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IEdge getEdge(int index) {
         return edgesList.get(index);
     }
 
     /** {@inheritDoc} */
+    @Override
     public IEdge getEdge(INode source, INode target) {
         if (source == target) {
             return null;
@@ -151,16 +156,19 @@ public class VFQueryBuilder implements IQuery {
     }
 
     /** {@inheritDoc} */
+    @Override
     public IAtom getAtom(INode node) {
         return nodeBondMap.get(node);
     }
 
     /** {@inheritDoc} */
+    @Override
     public int countNodes() {
         return nodesList.size();
     }
 
     /** {@inheritDoc} */
+    @Override
     public int countEdges() {
         return edgesList.size();
     }

@@ -122,6 +122,7 @@ public class IsotopePattern {
      * @return    The cloned object
      */
     @TestMethod("testClone")
+    @Override
     public Object clone() throws CloneNotSupportedException {
         IsotopePattern isoClone = new IsotopePattern();
         IsotopeContainer isoHighest = getMonoIsotope();

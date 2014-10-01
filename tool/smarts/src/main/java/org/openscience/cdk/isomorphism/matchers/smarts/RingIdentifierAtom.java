@@ -46,6 +46,7 @@ public class RingIdentifierAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         return this.atom.matches(atom);
     }

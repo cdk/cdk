@@ -78,6 +78,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      * @return true if the current query group has the same symbol as the target group
      */
     @TestMethod("testMatches")
+    @Override
     public boolean matches(IAtom atom) {
         PharmacophoreAtom patom = (PharmacophoreAtom) atom;
         return patom.getSymbol().equals(getSymbol());
@@ -94,6 +95,7 @@ public class PharmacophoreQueryAtom extends Atom implements IQueryAtom {
      * @return String representation of this pharmacophore group
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuffer s = new StringBuffer();
         s.append(getSymbol()).append(" [").append(getSmarts()).append(']');

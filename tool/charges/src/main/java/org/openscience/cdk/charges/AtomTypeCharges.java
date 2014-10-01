@@ -131,6 +131,7 @@ public class AtomTypeCharges implements IChargeCalculator {
     }
 
     @TestMethod("testCharges_pOC,testCharges_pOP,testCharges_pOS," + "testCharges_p_p,testCharges_p_n")
+    @Override
     public void calculateCharges(IAtomContainer container) throws CDKException {
         try {
             this.setInitialCharges(container);

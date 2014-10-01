@@ -58,6 +58,7 @@ public class PharmacophoreQuery extends QueryAtomContainer {
      * @return string representation of this query
      */
     @TestMethod("testToString")
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("PharmacophoreQuery(").append(this.hashCode()).append(", ");

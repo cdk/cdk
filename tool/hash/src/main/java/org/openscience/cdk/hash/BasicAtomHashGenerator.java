@@ -145,6 +145,7 @@ final class BasicAtomHashGenerator extends AbstractAtomHashGenerator implements 
      * @return hash codes for atoms
      */
     @TestMethod("testGenerate_Simple,testGenerate_ZeroDepth,testGenerate_Disconnected")
+    @Override
     long[] generate(long[] current, StereoEncoder encoder, int[][] graph, Suppressed suppressed) {
 
         int n = graph.length;

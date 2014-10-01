@@ -49,6 +49,7 @@ public class AliphaticAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         return !atom.getFlag(CDKConstants.ISAROMATIC);
 
@@ -58,6 +59,7 @@ public class AliphaticAtom extends SMARTSAtom {
      * (non-Javadoc)
      * @see org.openscience.cdk.PseudoAtom#toString()
      */
+    @Override
     public String toString() {
         return "AliphaticAtom()";
     }

@@ -47,6 +47,7 @@ public class RingBond extends SMARTSBond {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
      * .openscience.cdk.interfaces.IBond)
      */
+    @Override
     public boolean matches(IBond bond) {
         return bond.getFlag(CDKConstants.ISINRING);
     }

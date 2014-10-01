@@ -127,6 +127,7 @@ public class VFMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule targetMolecule graph
      */
+    @Override
     public boolean hasMap(IAtomContainer targetMolecule) {
         IState state = new VFState(query, new TargetProperties(targetMolecule));
         maps.clear();
@@ -134,6 +135,7 @@ public class VFMapper implements IMapper {
     }
 
     /** {@inheritDoc} */
+    @Override
     public List<Map<INode, IAtom>> getMaps(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -146,6 +148,7 @@ public class VFMapper implements IMapper {
      * @param target
      *
      */
+    @Override
     public Map<INode, IAtom> getFirstMap(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -154,6 +157,7 @@ public class VFMapper implements IMapper {
     }
 
     /** {@inheritDoc} */
+    @Override
     public int countMaps(IAtomContainer target) {
         IState state = new VFState(query, new TargetProperties(target));
         maps.clear();
@@ -164,6 +168,7 @@ public class VFMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule targetMolecule graph
      */
+    @Override
     public boolean hasMap(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -173,6 +178,7 @@ public class VFMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule
      */
+    @Override
     public List<Map<INode, IAtom>> getMaps(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -185,6 +191,7 @@ public class VFMapper implements IMapper {
      * @param targetMolecule
      *
      */
+    @Override
     public Map<INode, IAtom> getFirstMap(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();
@@ -195,6 +202,7 @@ public class VFMapper implements IMapper {
     /** {@inheritDoc}
      * @param targetMolecule
      */
+    @Override
     public int countMaps(TargetProperties targetMolecule) {
         IState state = new VFState(query, targetMolecule);
         maps.clear();

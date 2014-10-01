@@ -109,6 +109,7 @@ public class DefaultVFBondMatcher implements VFBondMatcher {
      * @param targetBond target bond
      * @return true if bonds match
      */
+    @Override
     public boolean matches(TargetProperties targetConatiner, IBond targetBond) {
         if (this.smartQueryBond != null) {
             return smartQueryBond.matches(targetBond);

@@ -14,6 +14,7 @@ public class SmilesReactionCanoniser extends AbstractReactionLabeller implements
     /**
      * {@inheritDoc}
      */
+    @Override
     public IReaction getCanonicalReaction(IReaction reaction) {
         return super.labelReaction(reaction, labeller);
     }

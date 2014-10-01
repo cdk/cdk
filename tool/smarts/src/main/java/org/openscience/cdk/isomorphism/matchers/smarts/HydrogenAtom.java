@@ -43,6 +43,7 @@ public class HydrogenAtom extends SMARTSAtom {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#matches(org
      * .openscience.cdk.interfaces.IAtom)
      */
+    @Override
     public boolean matches(IAtom atom) {
         if (!atom.getSymbol().equals("H")) {
             return false;

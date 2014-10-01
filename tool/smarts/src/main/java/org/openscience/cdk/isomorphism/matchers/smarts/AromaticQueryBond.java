@@ -58,6 +58,7 @@ public class AromaticQueryBond extends SMARTSBond {
      * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#matches(org
      * .openscience.cdk.interfaces.IBond)
      */
+    @Override
     public boolean matches(IBond bond) {
         return bond.getFlag(CDKConstants.ISAROMATIC);
     }
@@ -66,6 +67,7 @@ public class AromaticQueryBond extends SMARTSBond {
      * (non-Javadoc)
      * @see org.openscience.cdk.Bond#toString()
      */
+    @Override
     public String toString() {
         return "AromaticQueryBond()";
     }

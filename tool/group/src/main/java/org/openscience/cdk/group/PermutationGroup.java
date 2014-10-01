@@ -264,6 +264,7 @@ public class PermutationGroup {
 
             private boolean finished = false;
 
+            @Override
             public void applyTo(Permutation p) {
                 for (Permutation f : results) {
                     Permutation h = f.invert().multiply(p);
@@ -277,6 +278,7 @@ public class PermutationGroup {
                 }
             }
 
+            @Override
             public boolean isFinished() {
                 return finished;
             }
@@ -322,10 +324,12 @@ public class PermutationGroup {
         final List<Permutation> permutations = new ArrayList<Permutation>();
         Backtracker counter = new Backtracker() {
 
+            @Override
             public void applyTo(Permutation p) {
                 permutations.add(p);
             }
 
+            @Override
             public boolean isFinished() {
                 return false;
             }

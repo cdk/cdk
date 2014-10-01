@@ -72,6 +72,7 @@ class ASTCharge extends SimpleNode {
      * org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience
      * .cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.Object)
      */
+    @Override
     public Object jjtAccept(SMARTSParserVisitor visitor, Object data) {
         return visitor.visit(this, data);
     }

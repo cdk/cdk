@@ -120,6 +120,7 @@ public class RingFilter {
         /**
          * {@inheritDoc}
          */
+        @Override
         public int compare(List<?> o1, List<?> o2) {
             if (o1.size() > o2.size()) return +1;
             if (o1.size() < o2.size()) return -1;

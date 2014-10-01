@@ -59,6 +59,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     }
 
     @Test
+    @Override
     public void testNumberOfUnplacedHeavyAtoms_IAtomContainer() {
         IAtomContainer molecule = MoleculeFactory.makeAlkane(5);
         for (int i = 0; i < 3; i++) {
@@ -69,6 +70,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     }
 
     @Test
+    @Override
     public void testGetPlacedHeavyAtoms_IAtomContainer_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = MoleculeFactory.makeBenzene();
@@ -86,6 +88,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     }
 
     @Test
+    @Override
     public void testGetPlacedHeavyAtom_IAtomContainer_IAtom_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = MoleculeFactory.makeAlkane(7);
@@ -102,6 +105,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     }
 
     @Test
+    @Override
     public void testGetPlacedHeavyAtom_IAtomContainer_IAtom() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = MoleculeFactory.makeCyclohexane();
@@ -120,6 +124,7 @@ public class FurtherAtomPlacer3DTest extends AtomPlacer3DTest {
     }
 
     @Test
+    @Override
     public void testGeometricCenterAllPlacedAtoms_IAtomContainer() {
         AtomPlacer3D atmplacer = new AtomPlacer3D();
         IAtomContainer molecule = MoleculeFactory.makeAlkane(2);
