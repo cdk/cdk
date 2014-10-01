@@ -77,6 +77,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#partialTChargeMMFF94", this
@@ -87,6 +88,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      * This descriptor does not have any parameter to be set.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters
     }
@@ -99,11 +101,13 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -117,6 +121,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         int position = ac.getAtomNumber(atom);
         try {
@@ -154,6 +159,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -166,6 +172,7 @@ public class PartialTChargeMMFF94Descriptor extends AbstractAtomicDescriptor {
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

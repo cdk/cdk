@@ -71,6 +71,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#distanceToAtom", this.getClass()
@@ -84,6 +85,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("DistanceToAtomDescriptor only expects two parameters");
@@ -100,6 +102,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         Object[] params = new Object[1];
         params[0] = focusPosition;
@@ -107,6 +110,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"distanceToAtom"};
     }
@@ -120,6 +124,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double distanceToAtom;
 
@@ -161,6 +166,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "The position of the focus atom";
@@ -174,6 +180,7 @@ public class DistanceToAtomDescriptor extends AbstractAtomicDescriptor implement
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return 0;
     }

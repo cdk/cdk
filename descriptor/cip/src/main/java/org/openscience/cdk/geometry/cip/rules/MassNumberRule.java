@@ -46,6 +46,7 @@ class MassNumberRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc} */
     @TestMethod("testCompare_Identity,testCompare,testOrder")
+    @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         ensureFactory();
         return getMassNumber(ligand1).compareTo(getMassNumber(ligand2));

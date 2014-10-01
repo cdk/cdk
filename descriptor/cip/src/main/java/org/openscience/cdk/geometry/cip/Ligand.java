@@ -59,6 +59,7 @@ public class Ligand implements ILigand {
      * @return the IAtomContainer
      */
     @TestMethod("testConstructorAndGetMethods")
+    @Override
     public IAtomContainer getAtomContainer() {
         return container;
     }
@@ -69,6 +70,7 @@ public class Ligand implements ILigand {
      * @return the central atom
      */
     @TestMethod("testConstructorAndGetMethods")
+    @Override
     public IAtom getCentralAtom() {
         return centralAtom;
     }
@@ -80,6 +82,7 @@ public class Ligand implements ILigand {
      * @return the ligand atom
      */
     @TestMethod("testConstructorAndGetMethods")
+    @Override
     public IAtom getLigandAtom() {
         return ligandAtom;
     }

@@ -82,6 +82,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
     public CarbonTypesDescriptor() {}
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#carbonTypes", this.getClass()
@@ -97,6 +98,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -108,12 +110,14 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -124,6 +128,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -136,6 +141,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }
@@ -147,6 +153,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      * @return An ArrayList containing 9 elements in the order described above
      */
     @TestMethod("testCalculate_IAtomContainer,testButane,testComplex1,testComplex2")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         int c1sp1 = 0;
         int c2sp1 = 0;
@@ -224,6 +231,7 @@ public class CarbonTypesDescriptor extends AbstractMolecularDescriptor implement
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResultType(9);
     }

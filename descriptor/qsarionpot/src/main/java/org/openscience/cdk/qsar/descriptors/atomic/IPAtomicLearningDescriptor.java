@@ -78,6 +78,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ionizationPotential", this
@@ -88,6 +89,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -97,11 +99,13 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -114,6 +118,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      *@return                   The ionization potential. Not possible the ionization.
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         double value = 0;
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
@@ -162,6 +167,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -173,6 +179,7 @@ public class IPAtomicLearningDescriptor extends AbstractAtomicDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

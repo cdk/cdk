@@ -95,6 +95,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
     private static final String[] names  = {"MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R"};
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia", this.getClass()
@@ -109,6 +110,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -120,12 +122,14 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -136,6 +140,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -148,6 +153,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }
@@ -171,6 +177,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      */
 
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (!GeometryUtil.has3DCoordinates(container))
             return getDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
@@ -277,6 +284,7 @@ public class MomentOfInertiaDescriptor extends AbstractMolecularDescriptor imple
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(7);
     }

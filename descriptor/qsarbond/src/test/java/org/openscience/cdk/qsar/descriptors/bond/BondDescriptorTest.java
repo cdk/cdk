@@ -43,6 +43,7 @@ public abstract class BondDescriptorTest extends DescriptorTest<IBondDescriptor>
 
     public BondDescriptorTest() {}
 
+    @Override
     public void setDescriptor(Class<? extends IBondDescriptor> descriptorClass) throws Exception {
         if (descriptor == null) {
             Object descriptor = descriptorClass.newInstance();

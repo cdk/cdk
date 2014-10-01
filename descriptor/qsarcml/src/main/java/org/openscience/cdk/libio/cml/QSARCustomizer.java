@@ -66,14 +66,17 @@ public class QSARCustomizer implements ICMLCustomizer {
     private final static String QSAR_NAMESPACE = "qsar";
     private final static String QSAR_URI       = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
+    @Override
     public void customize(IBond bond, Object nodeToAdd) throws Exception {
         customizeIChemObject(bond, nodeToAdd);
     }
 
+    @Override
     public void customize(IAtom atom, Object nodeToAdd) throws Exception {
         customizeIChemObject(atom, nodeToAdd);
     }
 
+    @Override
     public void customize(IAtomContainer molecule, Object nodeToAdd) throws Exception {
         customizeIChemObject(molecule, nodeToAdd);
     }

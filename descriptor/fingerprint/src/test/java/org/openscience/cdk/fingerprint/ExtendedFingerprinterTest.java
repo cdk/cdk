@@ -50,6 +50,7 @@ import org.openscience.cdk.tools.diff.AtomContainerDiff;
  */
 public class ExtendedFingerprinterTest extends AbstractFixedLengthFingerprinterTest {
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new ExtendedFingerprinter();
     }

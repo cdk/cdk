@@ -101,6 +101,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#aminoAcidsCount", this.getClass()
@@ -115,6 +116,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters exist
     }
@@ -126,11 +128,13 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -144,6 +148,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @see #setParameters
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer ac) {
         int resultLength = substructureSet.getAtomContainerCount();
         IntegerArrayResult results = new IntegerArrayResult(resultLength);
@@ -183,6 +188,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(20);
     }
@@ -193,6 +199,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -204,6 +211,7 @@ public class AminoAcidCountDescriptor extends AbstractMolecularDescriptor implem
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

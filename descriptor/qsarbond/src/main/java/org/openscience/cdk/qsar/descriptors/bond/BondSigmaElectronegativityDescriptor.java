@@ -82,6 +82,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#bondSigmaElectronegativity", this
@@ -92,6 +93,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("SigmaElectronegativityDescriptor only expects one parameter");
@@ -110,6 +112,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -118,6 +121,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -135,6 +139,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      *@return                   return the sigma electronegativity
      */
     @TestMethod(value = "testCalculate_IBond_IAtomContainer,testBondSigmaElectronegativityDescriptor,testBondSigmaElectronegativityDescriptor_Methyl_chloride")
+    @Override
     public DescriptorValue calculate(IBond aBond, IAtomContainer atomContainer) {
         IAtomContainer ac;
         IBond bond;
@@ -165,6 +170,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
     * @return    The parameterNames value
     */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "maxIterations";
@@ -178,6 +184,7 @@ public class BondSigmaElectronegativityDescriptor extends AbstractBondDescriptor
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return 0;
     }

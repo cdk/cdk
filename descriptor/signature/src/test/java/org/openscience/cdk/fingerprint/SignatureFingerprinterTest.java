@@ -35,6 +35,7 @@ import java.util.Map;
  */
 public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new SignatureFingerprinter();
     }
@@ -47,6 +48,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
+    @Override
     public void testGetRawFingerprint() throws Exception {
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());
@@ -70,6 +72,7 @@ public class SignatureFingerprinterTest extends AbstractFingerprinterTest {
     }
 
     @Test
+    @Override
     public void testGetCountFingerprint() throws Exception {
         SignatureFingerprinter fingerprinter = new SignatureFingerprinter(0);
         SmilesParser sp = new SmilesParser(DefaultChemObjectBuilder.getInstance());

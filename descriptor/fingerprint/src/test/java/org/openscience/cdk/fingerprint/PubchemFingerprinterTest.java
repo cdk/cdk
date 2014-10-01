@@ -55,6 +55,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
 
     SmilesParser parser;
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
     }
@@ -293,6 +294,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
                 this.mol = mol;
             }
 
+            @Override
             public BitSet call() throws Exception {
                 BitSet fp = null;
                 IFingerprinter fpr = new PubchemFingerprinter(DefaultChemObjectBuilder.getInstance());
@@ -330,6 +332,7 @@ public class PubchemFingerprinterTest extends AbstractFixedLengthFingerprinterTe
      * superstructure.
      */
     @Test
+    @Override
     public void testBug934819() throws Exception {
 
         IAtomContainer subStructure = bug934819_1();

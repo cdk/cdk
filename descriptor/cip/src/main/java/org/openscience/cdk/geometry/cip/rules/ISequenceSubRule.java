@@ -44,6 +44,7 @@ public interface ISequenceSubRule<ILigand> extends Comparator<ILigand> {
      * @return 1 if ligand1 is of higher precedence than ligand2, -1 if ligand2 is
      *         of higher precedence than ligan1, and 0 if they have equal precedence
      */
+    @Override
     public int compare(ILigand ligand1, ILigand ligand2);
 
 }

@@ -80,6 +80,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#stabilizationPlusCharge", this
@@ -94,6 +95,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
 
     }
@@ -105,11 +107,13 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -123,6 +127,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      *@return                   return the stabilization value
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
 
         IAtomContainer clone;
@@ -152,6 +157,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return null;
     }
@@ -164,6 +170,7 @@ public class StabilizationPlusChargeDescriptor extends AbstractAtomicDescriptor 
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

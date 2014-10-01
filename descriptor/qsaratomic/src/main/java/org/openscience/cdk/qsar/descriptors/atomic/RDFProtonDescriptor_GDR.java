@@ -108,6 +108,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
      * @return The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#rdfProtonCalculatedValues", this
@@ -122,6 +123,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
      * @throws CDKException Possible Exceptions
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("RDFProtonDescriptor only expects one parameters");
@@ -139,6 +141,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
      * @return The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -147,6 +150,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -160,6 +164,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
     }
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer varAtomContainerSet) {
         return (calculate(atom, varAtomContainerSet, null));
     }
@@ -593,6 +598,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
      * @return The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -607,6 +613,7 @@ public class RDFProtonDescriptor_GDR extends AbstractAtomicDescriptor implements
      *@return The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if (name.equals("checkAromaticity")) return Boolean.TRUE;
         return null;

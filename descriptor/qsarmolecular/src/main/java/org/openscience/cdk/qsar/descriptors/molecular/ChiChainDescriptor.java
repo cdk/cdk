@@ -96,6 +96,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     public ChiChainDescriptor() {}
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#chiChain", this.getClass()
@@ -103,26 +104,31 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     }
 
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null; //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -137,6 +143,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
     }
 
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (sp == null) sp = new SmilesParser(container.getBuilder());
 
@@ -214,6 +221,7 @@ public class ChiChainDescriptor extends AbstractMolecularDescriptor implements I
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(10);
     }

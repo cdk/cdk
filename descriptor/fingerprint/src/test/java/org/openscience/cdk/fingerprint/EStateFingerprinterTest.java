@@ -43,6 +43,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(EStateFingerprinterTest.class);
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new EStateFingerprinter();
     }
@@ -74,6 +75,7 @@ public class EStateFingerprinterTest extends AbstractFixedLengthFingerprinterTes
      * fragments match hydrogen counts.
      */
     @Test
+    @Override
     public void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();

@@ -97,6 +97,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#PartialTChargePEOE", this
@@ -107,6 +108,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * This descriptor does not have any parameter to be set.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
@@ -132,6 +134,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      *@see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[3];
@@ -142,6 +145,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -155,6 +159,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * @return                   an array of doubles with partial charges of [heavy, proton_1 ... proton_n]
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer ac) {
         // FIXME: for now I'll cache a few modified atomic properties, and restore them at the end of this method
         Double originalCharge = atom.getCharge();
@@ -225,6 +230,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "maxIterations";
@@ -241,6 +247,7 @@ public class PartialTChargePEOEDescriptor extends AbstractAtomicDescriptor {
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
         if ("lpeChecker".equals(name)) return Boolean.TRUE;

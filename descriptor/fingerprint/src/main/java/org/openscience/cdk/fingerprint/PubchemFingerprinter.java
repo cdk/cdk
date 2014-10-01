@@ -117,6 +117,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @see #getFingerprintAsBytes()
      */
     @TestMethod("testFingerprint")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer atomContainer) throws CDKException {
         generateFp(atomContainer);
         BitSet fp = new BitSet(FP_SIZE);
@@ -128,6 +129,7 @@ public class PubchemFingerprinter implements IFingerprinter {
 
     /** {@inheritDoc} */
     @TestMethod("testGetRawFingerprint")
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer iAtomContainer) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -138,6 +140,7 @@ public class PubchemFingerprinter implements IFingerprinter {
      * @return The bit length of the fingerprint
      */
     @TestMethod("testGetSize")
+    @Override
     public int getSize() {
         return FP_SIZE;
     }

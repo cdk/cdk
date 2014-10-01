@@ -46,6 +46,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
 
     private static ILoggingTool logger = LoggingToolFactory.createLoggingTool(MACCSFingerprinterTest.class);
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new MACCSFingerprinter();
     }
@@ -123,6 +124,7 @@ public class MACCSFingerprinterTest extends AbstractFixedLengthFingerprinterTest
      * fragments match hydrogen counts.
      */
     @Test
+    @Override
     public void testBug706786() throws Exception {
 
         IAtomContainer superStructure = bug706786_1();

@@ -69,11 +69,13 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         Assert.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.addListener(new IChemObjectListener() {
 
+            @Override
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
         Assert.assertEquals(0, hydrogen.getListenerCount());
         hydrogen.removeListener(new IChemObjectListener() {
 
+            @Override
             public void stateChanged(IChemObjectChangeEvent event) {}
         });
         Assert.assertEquals(0, hydrogen.getListenerCount());
@@ -81,6 +83,7 @@ public class ImmutableHydrogenTest extends CDKTestCase {
         hydrogen.notifyChanged();
         hydrogen.notifyChanged(new IChemObjectChangeEvent() {
 
+            @Override
             public Object getSource() {
                 return new String();
             }

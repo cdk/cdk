@@ -46,6 +46,7 @@ public class CIPLigandRule implements ISequenceSubRule<ILigand> {
 
     /** {@inheritDoc} */
     @TestMethod("testCompare,testCompare_Identity,testOrder")
+    @Override
     public int compare(ILigand ligand1, ILigand ligand2) {
         int numberComp = numberRule.compare(ligand1, ligand2);
         if (numberComp != 0) return numberComp;

@@ -54,6 +54,7 @@ public class ShortestPathFingerprinterTest extends AbstractFixedLengthFingerprin
     boolean                     standAlone = false;
     private static ILoggingTool logger     = LoggingToolFactory.createLoggingTool(ShortestPathFingerprinter.class);
 
+    @Override
     public IFingerprinter getBitFingerprinter() {
         return new ShortestPathFingerprinter();
     }

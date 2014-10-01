@@ -333,6 +333,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#kierHallSmarts", this.getClass()
@@ -348,6 +349,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params != null) throw new CDKException("Must not supply any parameters");
     }
@@ -359,11 +361,13 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -383,6 +387,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return Counts of the fragments
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (container == null || container.getAtomCount() == 0) {
             return getDummyDescriptorValue(new CDKException("Container was null or else had no atoms"));
@@ -431,6 +436,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(smarts.length);
     }
@@ -441,6 +447,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return null;
     }
@@ -452,6 +459,7 @@ public class KierHallSmartsDescriptor extends AbstractMolecularDescriptor implem
      * @return An Object whose class is that of the parameter requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

@@ -89,6 +89,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @return An object containing the descriptor specification
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#covalentradius", this.getClass()
@@ -99,6 +100,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * This descriptor does have any parameter.
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
@@ -108,11 +110,13 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @see #setParameters
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"covalentRadius"};
     }
@@ -126,6 +130,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      */
 
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer container) {
         if (factory == null)
             try {
@@ -156,6 +161,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -167,6 +173,7 @@ public class CovalentRadiusDescriptor extends AbstractAtomicDescriptor implement
      * @return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

@@ -74,6 +74,7 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
      * This method calculate the ATS Autocorrelation descriptor.
      */
     @TestMethod("test1")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
         try {
@@ -125,26 +126,31 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     }
 
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationMass", this
@@ -152,11 +158,13 @@ public class AutocorrelationDescriptorMass extends AbstractMolecularDescriptor i
     }
 
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(5);
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
 
     }

@@ -43,6 +43,7 @@ public abstract class AtomicDescriptorTest extends DescriptorTest<IAtomicDescrip
 
     public AtomicDescriptorTest() {}
 
+    @Override
     public void setDescriptor(Class<? extends IAtomicDescriptor> descriptorClass) throws Exception {
         if (descriptor == null) {
             Object descriptor = descriptorClass.newInstance();

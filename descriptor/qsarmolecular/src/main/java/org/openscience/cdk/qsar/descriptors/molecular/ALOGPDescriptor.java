@@ -1868,6 +1868,7 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      * @return the result of the calculation
      */
     @TestMethod("testCalculate_IAtomContainer,testChloroButane")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         IAtomContainer container;
         try {
@@ -1940,35 +1941,42 @@ public class ALOGPDescriptor extends AbstractMolecularDescriptor implements IMol
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(3);
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",
                 this.getClass().getName(), "The Chemistry Development Kit");
     }
 
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }
 
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return null;
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return strings;
     }

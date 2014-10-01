@@ -108,6 +108,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -123,6 +124,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -136,12 +138,14 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters for this descriptor
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -154,6 +158,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      * {@link org.openscience.cdk.config.XMLIsotopeFactory}
      */
     @TestMethod("testCalculate_IAtomContainer,testAPolDescriptorTest")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         double apol = 0;
         int atomicNumber;
@@ -192,6 +197,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResult(0.0);
     }
@@ -202,6 +208,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -214,6 +221,7 @@ public class APolDescriptor extends AbstractMolecularDescriptor implements IMole
      *@return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }

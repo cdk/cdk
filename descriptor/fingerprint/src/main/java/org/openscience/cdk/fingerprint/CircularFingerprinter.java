@@ -229,6 +229,7 @@ public class CircularFingerprinter implements IFingerprinter {
      * @return the fingerprint
      */
     @TestMethod("testGetBitFingerprint")
+    @Override
     public IBitFingerprint getBitFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
         final int FOLDING_SIZE = 1024;
@@ -249,6 +250,7 @@ public class CircularFingerprinter implements IFingerprinter {
      * @return the count fingerprint
      */
     @TestMethod("testGetCountFingerprint")
+    @Override
     public ICountFingerprint getCountFingerprint(IAtomContainer mol) throws CDKException {
         calculate(mol);
 
@@ -271,30 +273,38 @@ public class CircularFingerprinter implements IFingerprinter {
         // implement a custom instance that provides a window directly into the summary content
         return new ICountFingerprint() {
 
+            @Override
             public long size() {
                 return 4294967296l;
             }
 
+            @Override
             public int numOfPopulatedbins() {
                 return sz;
             }
 
+            @Override
             public int getCount(int index) {
                 return count[index];
             }
 
+            @Override
             public int getHash(int index) {
                 return hash[index];
             }
 
+            @Override
             public void merge(ICountFingerprint fp) {}
 
+            @Override
             public void setBehaveAsBitFingerprint(boolean behaveAsBitFingerprint) {}
 
+            @Override
             public boolean hasHash(int hash) {
                 return map.containsKey(hash);
             }
 
+            @Override
             public int getCountForHash(int hash) {
                 return map.containsKey(hash) ? map.get(hash) : 0;
             }
@@ -304,6 +314,7 @@ public class CircularFingerprinter implements IFingerprinter {
     /**
      * Invalid: it is not appropriate to convert the integer hash codes into strings.
      */
+    @Override
     public Map<String, Integer> getRawFingerprint(IAtomContainer mol) throws CDKException {
         throw new UnsupportedOperationException();
     }
@@ -313,6 +324,7 @@ public class CircularFingerprinter implements IFingerprinter {
      *
      * @return the size of the fingerprint
      */
+    @Override
     public int getSize() {
         return 1024;
     }

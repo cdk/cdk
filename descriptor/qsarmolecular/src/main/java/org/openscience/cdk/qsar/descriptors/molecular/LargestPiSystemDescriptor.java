@@ -90,6 +90,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#largestPiSystem", this.getClass()
@@ -107,6 +108,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("LargestPiSystemDescriptor only expects one parameter");
@@ -125,6 +127,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -133,6 +136,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -156,6 +160,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @see #setParameters
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         boolean[] originalFlag4 = new boolean[container.getAtomCount()];
         for (int i = 0; i < originalFlag4.length; i++) {
@@ -221,6 +226,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerResult(1);
     }
@@ -275,6 +281,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -288,6 +295,7 @@ public class LargestPiSystemDescriptor extends AbstractMolecularDescriptor imple
      * @return An Object of class equal to that of the parameter being requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("checkAromaticity".equals(name)) return Boolean.FALSE;
         return null;

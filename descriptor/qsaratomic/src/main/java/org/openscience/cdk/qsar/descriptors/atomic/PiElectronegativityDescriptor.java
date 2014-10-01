@@ -87,6 +87,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#piElectronegativity", this
@@ -101,6 +102,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@exception  CDKException  Description of the Exception
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 3) throw new CDKException("PartialPiChargeDescriptor only expects three parameter");
 
@@ -125,6 +127,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[3];
@@ -135,6 +138,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return descriptorNames;
     }
@@ -148,6 +152,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@return                   return the pi electronegativity
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clone;
         IAtom localAtom;
@@ -183,6 +188,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "maxIterations";
@@ -199,6 +205,7 @@ public class PiElectronegativityDescriptor extends AbstractAtomicDescriptor impl
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         if ("maxIterations".equals(name)) return Integer.MAX_VALUE;
         if ("lpeChecker".equals(name)) return Boolean.TRUE;

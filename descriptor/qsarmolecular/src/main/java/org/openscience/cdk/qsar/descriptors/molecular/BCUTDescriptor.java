@@ -138,6 +138,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#BCUT",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -155,6 +156,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // we expect 3 parameters
         if (params.length != 3) {
@@ -184,6 +186,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         Object params[] = new Object[3];
         params[0] = this.nhigh;
@@ -193,6 +196,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
     }
 
     @TestMethod("testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         String[] names;
         String[] suffix = {"w", "c", "p"};
@@ -215,6 +219,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[3];
         params[0] = "nhigh";
@@ -230,6 +235,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         Object object = null;
         if (name.equals("nhigh")) object = 1;
@@ -311,6 +317,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      *         of highest and lowest eigenvalues (for each class of BCUT) will be returned.
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         int counter;
         IAtomContainer molecule;
@@ -502,6 +509,7 @@ public class BCUTDescriptor extends AbstractMolecularDescriptor implements IMole
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(6);
     }

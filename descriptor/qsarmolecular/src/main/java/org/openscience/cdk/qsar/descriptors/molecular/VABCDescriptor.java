@@ -49,6 +49,7 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
      * {@inheritDoc}
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#vabc",
                 this.getClass().getName(), "The Chemistry Development Kit");
@@ -56,6 +57,7 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /** {@inheritDoc} */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length != 0) {
             throw new CDKException("The VABCDescriptor expects zero parameters");
@@ -64,12 +66,14 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return new Object[0];
 
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return new String[]{"VABC"};
     }
@@ -86,6 +90,7 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
      * @return A double containing the volume
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         double volume;
         try {
@@ -100,18 +105,21 @@ public class VABCDescriptor extends AbstractMolecularDescriptor implements IMole
 
     /** {@inheritDoc} */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleResultType();
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
 
     /** {@inheritDoc} */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return null;
     }

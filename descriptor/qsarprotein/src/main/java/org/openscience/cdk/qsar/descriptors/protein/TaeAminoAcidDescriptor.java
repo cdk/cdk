@@ -207,6 +207,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
     }
 
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#taeAminoAcid", this.getClass()
@@ -221,6 +222,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      *          Description of the Exception
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -231,12 +233,14 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      * @return The parameters value
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         // no parameters to return
         return (null);
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         String[] names = new String[ndesc];
         for (int i = 0; i < names.length; i++)
@@ -250,6 +254,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      * @return The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -262,6 +267,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      * @return The parameterType value
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }
@@ -282,6 +288,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      * @return A DoubleArrayResult value representing the 147 TAE descriptors
      */
     @TestMethod("testTaeAminoAcidDescriptor")
+    @Override
     public DescriptorValue calculate(IAtomContainer container) {
         if (TAEParams == null) return getDummyDescriptorValue(new CDKException("TAE parameters were not initialized"));
         if (!(container instanceof IBioPolymer))
@@ -337,6 +344,7 @@ public class TaeAminoAcidDescriptor extends AbstractMolecularDescriptor implemen
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(147);
     }

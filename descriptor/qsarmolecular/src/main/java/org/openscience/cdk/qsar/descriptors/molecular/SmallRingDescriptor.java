@@ -78,12 +78,14 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
     public SmallRingDescriptor() {}
 
     @TestMethod("nop")
+    @Override
     public void initialise(IChemObjectBuilder builder) {}
 
     /**
      * Fetch descriptor specification.
      */
     @TestMethod("nop")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#smallRings", this.getClass()
@@ -94,12 +96,14 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * Set parameters: ignored, there are none.
      */
     @TestMethod("nop")
+    @Override
     public void setParameters(Object[] params) throws CDKException {}
 
     /**
      * Get parameters: returns empty array, there are none.
      */
     @TestMethod("nop")
+    @Override
     public Object[] getParameters() {
         return new Object[0];
     }
@@ -108,6 +112,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * Returns the names of the descriptors made available by this class.
      */
     @TestMethod("nop")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -116,6 +121,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * Returns a placeholder with the descriptor size and type.
      */
     @TestMethod("nop")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new IntegerArrayResult(names.length);
     }
@@ -124,6 +130,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * Get parameters: empty, there are none.
      */
     @TestMethod("nop")
+    @Override
     public String[] getParameterNames() {
         return new String[0];
     }
@@ -132,6 +139,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * Parameter types: there aren't any.
      */
     @TestMethod("nop")
+    @Override
     public Object getParameterType(String name) {
         return true;
     }
@@ -144,6 +152,7 @@ public class SmallRingDescriptor implements IMolecularDescriptor {
      * @return the various ring-based descriptors generated
      */
     @TestMethod("testDescriptors")
+    @Override
     public DescriptorValue calculate(IAtomContainer mol) {
         this.mol = mol;
         try {

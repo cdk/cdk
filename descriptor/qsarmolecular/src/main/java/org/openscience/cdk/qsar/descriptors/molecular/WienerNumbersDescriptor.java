@@ -98,6 +98,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      * @return An object containing the descriptor specification
      */
     @TestMethod("testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#wienerNumbers", this.getClass()
@@ -114,6 +115,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
     *@see #getParameters
      */
     @TestMethod("testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         // no parameters for this descriptor
     }
@@ -127,12 +129,14 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@see #setParameters
      */
     @TestMethod("testGetParameters")
+    @Override
     public Object[] getParameters() {
         return (null);
         // no parameters to return
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -144,6 +148,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@return wiener numbers as array of 2 doubles
      */
     @TestMethod("testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtomContainer atomContainer) {
         wienerNumbers = new DoubleArrayResult(2);
         double wienerPathNumber = 0; //wienerPath
@@ -183,6 +188,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *         the actual type of values returned by the descriptor in the {@link org.openscience.cdk.qsar.DescriptorValue} object
      */
     @TestMethod("testGetDescriptorResultType")
+    @Override
     public IDescriptorResult getDescriptorResultType() {
         return new DoubleArrayResultType(2);
     }
@@ -195,6 +201,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@return    The parameterNames value
      */
     @TestMethod("testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         // no param names to return
         return (null);
@@ -207,6 +214,7 @@ public class WienerNumbersDescriptor extends AbstractMolecularDescriptor impleme
      *@return       An Object of class equal to that of the parameter being requested
      */
     @TestMethod("testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return (null);
     }

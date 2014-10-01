@@ -80,6 +80,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@return    The specification value
      */
     @TestMethod(value = "testGetSpecification")
+    @Override
     public DescriptorSpecification getSpecification() {
         return new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#isProtonInAromaticSystem", this
@@ -94,6 +95,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@exception  CDKException  Possible Exceptions
      */
     @TestMethod(value = "testSetParameters_arrayObject")
+    @Override
     public void setParameters(Object[] params) throws CDKException {
         if (params.length > 1) {
             throw new CDKException("IsProtonInAromaticSystemDescriptor only expects two parameters");
@@ -111,6 +113,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@return    The parameters value
      */
     @TestMethod(value = "testGetParameters")
+    @Override
     public Object[] getParameters() {
         // return the parameters as used for the descriptor calculation
         Object[] params = new Object[1];
@@ -119,6 +122,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
     }
 
     @TestMethod(value = "testNamesConsistency")
+    @Override
     public String[] getDescriptorNames() {
         return names;
     }
@@ -132,6 +136,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@return                   true if the proton is bonded to an aromatic atom.
      */
     @TestMethod(value = "testCalculate_IAtomContainer")
+    @Override
     public DescriptorValue calculate(IAtom atom, IAtomContainer atomContainer) {
         IAtomContainer clonedAtomContainer;
         try {
@@ -183,6 +188,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@return    The parameterNames value
      */
     @TestMethod(value = "testGetParameterNames")
+    @Override
     public String[] getParameterNames() {
         String[] params = new String[1];
         params[0] = "checkAromaticity";
@@ -197,6 +203,7 @@ public class IsProtonInAromaticSystemDescriptor extends AbstractAtomicDescriptor
      *@return       The parameterType value
      */
     @TestMethod(value = "testGetParameterType_String")
+    @Override
     public Object getParameterType(String name) {
         return true;
     }
